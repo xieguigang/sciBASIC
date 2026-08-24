@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::269c11f267922c7fb63e61c003f1f2e2, Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::2d70c58c145bb398c5ca6c21b0ce65ff, Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 259
-    '    Code Lines: 113 (43.63%)
-    ' Comment Lines: 108 (41.70%)
-    '    - Xml Docs: 71.30%
+    '   Total Lines: 269
+    '    Code Lines: 118 (43.87%)
+    ' Comment Lines: 112 (41.64%)
+    '    - Xml Docs: 68.75%
     ' 
-    '   Blank Lines: 38 (14.67%)
-    '     File Size: 10.83 KB
+    '   Blank Lines: 39 (14.50%)
+    '     File Size: 11.45 KB
 
 
     '     Class BTreeNode

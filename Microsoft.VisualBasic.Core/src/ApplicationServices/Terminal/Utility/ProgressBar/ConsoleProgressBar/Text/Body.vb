@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9132d07cf07e1a5c1a824c7a29ce96ed, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb"
+﻿#Region "Microsoft.VisualBasic::1004094aaf5551d27dd12a1ef196b620, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 74 (46.84%)
-    ' Comment Lines: 67 (42.41%)
+    '   Total Lines: 160
+    '    Code Lines: 75 (46.88%)
+    ' Comment Lines: 67 (41.88%)
     '    - Xml Docs: 89.55%
     ' 
-    '   Blank Lines: 17 (10.76%)
-    '     File Size: 7.03 KB
+    '   Blank Lines: 18 (11.25%)
+    '     File Size: 7.07 KB
 
 
     '     Class Text

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af0079c08e8717711dfaece43adc6b67, Microsoft.VisualBasic.Core\src\Extensions\Security\SHA.vb"
+﻿#Region "Microsoft.VisualBasic::29811e68f5521e8838ea41af3b3d9ff1, Microsoft.VisualBasic.Core\src\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 285
-    '    Code Lines: 122 (42.81%)
-    ' Comment Lines: 88 (30.88%)
+    '   Total Lines: 273
+    '    Code Lines: 112 (41.03%)
+    ' Comment Lines: 88 (32.23%)
     '    - Xml Docs: 43.18%
     ' 
-    '   Blank Lines: 75 (26.32%)
-    '     File Size: 11.90 KB
+    '   Blank Lines: 73 (26.74%)
+    '     File Size: 12.02 KB
 
 
     '     Class SHA256

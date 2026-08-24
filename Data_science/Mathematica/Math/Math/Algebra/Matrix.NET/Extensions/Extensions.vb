@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74ac0e61b6c1583c78147f66dd73f0aa, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::af1184d3353a4c405a07610cdc885e4a, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 99 (66.89%)
-    ' Comment Lines: 27 (18.24%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 325
+    '    Code Lines: 212 (65.23%)
+    ' Comment Lines: 76 (23.38%)
+    '    - Xml Docs: 76.32%
     ' 
-    '   Blank Lines: 22 (14.86%)
-    '     File Size: 5.30 KB
+    '   Blank Lines: 37 (11.38%)
+    '     File Size: 12.71 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: CenterNormalize, ColumnVector, Covariance, eig, ncol
-    '                   nrow, rand, size
+    '         Function: Apply, CenterNormalize, ColumnVector, Covariance, eig
+    '                   flatten, Mean, ncol, nrow, r
+    '                   rand, shape, size, Sort, Std
+    '                   sum, Sum, t
     ' 
     '         Sub: Print
     ' 

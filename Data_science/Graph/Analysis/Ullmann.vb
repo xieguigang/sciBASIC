@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82c77f26810f024b0ea23cae82ca537b, Data_science\Graph\Analysis\Ullmann.vb"
+﻿#Region "Microsoft.VisualBasic::eb392316bbb3b43a8c9ddb133b9517ac, Data_science\Graph\Analysis\Ullmann.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 167
-    '    Code Lines: 128 (76.65%)
-    ' Comment Lines: 16 (9.58%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 170
+    '    Code Lines: 128 (75.29%)
+    ' Comment Lines: 19 (11.18%)
+    '    - Xml Docs: 89.47%
     ' 
-    '   Blank Lines: 23 (13.77%)
-    '     File Size: 6.52 KB
+    '   Blank Lines: 23 (13.53%)
+    '     File Size: 6.77 KB
 
 
     '     Class Ullmann

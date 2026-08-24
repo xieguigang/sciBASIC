@@ -1,3 +1,97 @@
+﻿#Region "Microsoft.VisualBasic::2ee72d9813334f5634b766a4d44785c6, Microsoft.VisualBasic.Core\src\Net\FtpClient\FtpModels.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 86 (49.43%)
+    ' Comment Lines: 46 (26.44%)
+    '    - Xml Docs: 73.91%
+    ' 
+    '   Blank Lines: 42 (24.14%)
+    '     File Size: 5.92 KB
+
+
+    '     Class FtpClientOptions
+    ' 
+    '         Properties: ConnectTimeout, DataChannelEncryption, EnableSsl, Encoding, ImplicitSsl
+    '                     ValidateCertificate
+    ' 
+    '     Class FtpCredentials
+    ' 
+    '         Properties: Anonymous, Password, UserName
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class FtpResponse
+    ' 
+    '         Properties: IsSuccess, RawLines, StatusCode, StatusText
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class FtpFileInfo
+    ' 
+    '         Properties: LastModified, Path, Size
+    ' 
+    '     Class FtpException
+    ' 
+    '         Properties: StatusCode
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class FtpConnectionException
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class FtpAuthenticationException
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class FtpProtocolException
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class FtpFileNotFoundException
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' FtpModels.vb - FTP 客户端辅助类型定义
 '

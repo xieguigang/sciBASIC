@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0809e617a5a56173150bbb740c000336, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\TextRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::ad1aeb9911d6d1eb44218318fef581ec, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\TextRectangle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 76.00%
     ' 
     '   Blank Lines: 22 (13.41%)
-    '     File Size: 5.51 KB
+    '     File Size: 5.50 KB
 
 
     '     Class TextRectangle

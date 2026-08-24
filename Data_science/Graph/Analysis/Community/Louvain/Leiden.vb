@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06ccbf8df55681e2972939546fa8005b, Data_science\Graph\Analysis\Louvain\Leiden.vb"
+﻿#Region "Microsoft.VisualBasic::e3c1fe7461da3252996bc6f877dae5e8, Data_science\Graph\Analysis\Community\Louvain\Leiden.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 839
-    '    Code Lines: 471 (56.14%)
-    ' Comment Lines: 213 (25.39%)
+    '   Total Lines: 837
+    '    Code Lines: 469 (56.03%)
+    ' Comment Lines: 213 (25.45%)
     '    - Xml Docs: 65.26%
     ' 
-    '   Blank Lines: 155 (18.47%)
-    '     File Size: 31.51 KB
+    '   Blank Lines: 155 (18.52%)
+    '     File Size: 31.42 KB
 
 
     '     Class LeidenCommunity

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e4873b1cea27461b46920d5de76e5a, Data\BinaryData\HDF5\dataset\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::862a538a184f51823d00a4b3d616abc0, Data\BinaryData\HDF5\dataset\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 36 (63.16%)
-    ' Comment Lines: 9 (15.79%)
+    '   Total Lines: 69
+    '    Code Lines: 45 (65.22%)
+    ' Comment Lines: 9 (13.04%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (21.05%)
-    '     File Size: 2.09 KB
+    '   Blank Lines: 15 (21.74%)
+    '     File Size: 2.38 KB
 
 
     '     Class Hdf5Dataset
     ' 
-    '         Properties: dataLayout, dataSpace, dataType, pipeline, scalar
+    '         Properties: dataLayout, dataSpace, dataType, pipeline, rank
+    '                     scalar
     ' 
     '         Function: data, readDataSet, ToString
     ' 

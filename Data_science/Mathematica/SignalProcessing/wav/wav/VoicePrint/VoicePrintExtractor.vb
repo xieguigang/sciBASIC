@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f2917afee003edc3555b344b08df4bf, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrintExtractor.vb"
+﻿#Region "Microsoft.VisualBasic::639a9bd0b868cb08a5b17dad46f5d93e, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrintExtractor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 47.50%
     ' 
     '   Blank Lines: 73 (18.30%)
-    '     File Size: 14.43 KB
+    '     File Size: 14.44 KB
 
 
     ' Class VoicePrintOptions

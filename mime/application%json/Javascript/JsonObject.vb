@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b08b1d2159a4ef202464e61aa1b1ca2, mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::c8832b6a0d2cfadfbad9400ae7c608ae, mime\application%json\Javascript\JsonObject.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 76.81%
     ' 
     '   Blank Lines: 45 (15.52%)
-    '     File Size: 10.35 KB
+    '     File Size: 10.40 KB
 
 
     '     Class JsonObject

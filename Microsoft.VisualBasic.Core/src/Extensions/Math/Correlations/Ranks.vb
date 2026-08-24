@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d441abd42a10040d1d76a8ccb0c8ae1b, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::70d555c5b3cb7be5ee5bb896831cb8f2, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 51 (65.38%)
-    ' Comment Lines: 16 (20.51%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 98
+    '    Code Lines: 56 (57.14%)
+    ' Comment Lines: 29 (29.59%)
+    '    - Xml Docs: 89.66%
     ' 
-    '   Blank Lines: 11 (14.10%)
-    '     File Size: 3.10 KB
+    '   Blank Lines: 13 (13.27%)
+    '     File Size: 3.94 KB
 
 
     '     Delegate Function
@@ -54,7 +54,7 @@
     ' 
     '     Module Ranks
     ' 
-    '         Function: Best, Sort
+    '         Function: argsort, Best, Sort
     ' 
     ' 
     ' 

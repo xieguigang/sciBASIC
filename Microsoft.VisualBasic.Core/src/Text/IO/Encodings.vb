@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::825938a0ef487abc46c075f2f27cdb49, Microsoft.VisualBasic.Core\src\Text\IO\Encodings.vb"
+﻿#Region "Microsoft.VisualBasic::d7b566b183548a248af1b698deaa93e1, Microsoft.VisualBasic.Core\src\Text\IO\Encodings.vb"
 
     ' Author:
     ' 
@@ -35,18 +35,17 @@
     ' Code Statistics:
 
     '   Total Lines: 42
-    '    Code Lines: 16 (38.10%)
+    '    Code Lines: 15 (35.71%)
     ' Comment Lines: 20 (47.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (14.29%)
-    '     File Size: 1.37 KB
+    '   Blank Lines: 7 (16.67%)
+    '     File Size: 1.36 KB
 
 
     '     Enum Encodings
     ' 
-    '         Unicode, UTF16, UTF32, UTF7, UTF8
-    '         UTF8WithoutBOM
+    '         Unicode, UTF16, UTF32, UTF8, UTF8WithoutBOM
     ' 
     '  
     ' 

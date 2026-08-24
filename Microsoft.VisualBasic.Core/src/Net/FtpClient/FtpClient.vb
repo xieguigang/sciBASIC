@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::bf5a70d6c476355a0127d086772a0ccf, Microsoft.VisualBasic.Core\src\Net\FtpClient\FtpClient.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 949
+    '    Code Lines: 612 (64.49%)
+    ' Comment Lines: 188 (19.81%)
+    '    - Xml Docs: 35.64%
+    ' 
+    '   Blank Lines: 149 (15.70%)
+    '     File Size: 39.52 KB
+
+
+    '     Class FtpClient
+    ' 
+    '         Properties: Credentials, Host, IsAuthenticated, IsConnected, IsSecureConnection
+    '                     Port
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ParseEpsvResponse, ParseMdtmDate, ParsePasvResponse, ValidateServerCertificate
+    ' 
+    '         Sub: CloseControlConnection, CloseDataConnection, Disconnect, Dispose, Finalize
+    '              SafeCloseTcp, ThrowIfDisposed
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' FtpClient.vb - 基于 BCL TcpClient 从头实现的 FTP 客户端
 '

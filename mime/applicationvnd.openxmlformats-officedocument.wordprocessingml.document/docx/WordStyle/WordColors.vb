@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7350c0ffbdcfeadc0879cfa655beabad, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordStyle\WordColors.vb"
+﻿#Region "Microsoft.VisualBasic::c98234d7b8b730ace16c9513418bdafd, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordStyle\WordColors.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 27 (84.38%)
-    ' Comment Lines: 4 (12.50%)
+    '   Total Lines: 31
+    '    Code Lines: 27 (87.10%)
+    ' Comment Lines: 4 (12.90%)
     '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 1 (3.12%)
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 1.35 KB
 
 
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 常用颜色常量（使用 OOXML 的 6 位十六进制 RGB 格式）。

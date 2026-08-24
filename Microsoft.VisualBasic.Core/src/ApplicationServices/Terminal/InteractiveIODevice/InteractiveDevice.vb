@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b73335fbe4c50f645bf3d4d90f43db4c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::8b8a718d9693a73a89ea79e66cfbdb53, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 216
-    '    Code Lines: 118 (54.63%)
-    ' Comment Lines: 62 (28.70%)
+    '   Total Lines: 217
+    '    Code Lines: 119 (54.84%)
+    ' Comment Lines: 62 (28.57%)
     '    - Xml Docs: 30.65%
     ' 
-    '   Blank Lines: 36 (16.67%)
-    '     File Size: 8.66 KB
+    '   Blank Lines: 36 (16.59%)
+    '     File Size: 8.69 KB
 
 
     '     Class InteractiveDevice

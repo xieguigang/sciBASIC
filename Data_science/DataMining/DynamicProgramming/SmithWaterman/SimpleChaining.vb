@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1386717a718ecb9c6c2da87df742d753, Data_science\DataMining\DynamicProgramming\SmithWaterman\SimpleChaining.vb"
+﻿#Region "Microsoft.VisualBasic::fd86bca2eaf339f53226d41078f6810d, Data_science\DataMining\DynamicProgramming\SmithWaterman\SimpleChaining.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 135 (68.53%)
-    ' Comment Lines: 35 (17.77%)
-    '    - Xml Docs: 42.86%
+    '   Total Lines: 251
+    '    Code Lines: 157 (62.55%)
+    ' Comment Lines: 62 (24.70%)
+    '    - Xml Docs: 54.84%
     ' 
-    '   Blank Lines: 27 (13.71%)
-    '     File Size: 7.69 KB
+    '   Blank Lines: 32 (12.75%)
+    '     File Size: 10.42 KB
 
 
     '     Module SimpleChaining
     ' 
     '         Properties: FromAComparator
     ' 
-    '         Function: Chaining, ChainingImpl, populateChains, sort
+    '         Function: Chaining, ChainingImpl, populateChains, sort, topScoreMatch
     ' 
     '         Sub: printLowerMatrix
     '         Structure ComparatorHelper

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23af9d66f0dfea244754fabaa4ca1027, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::49862d27adaa63a6331cf23291318d3a, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 97.56%
     ' 
     '   Blank Lines: 30 (12.66%)
-    '     File Size: 10.45 KB
+    '     File Size: 10.46 KB
 
 
     '     Interface ISerializable

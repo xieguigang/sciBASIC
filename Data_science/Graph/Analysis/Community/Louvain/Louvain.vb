@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ffcc282f13fae69f3103fbb70d8a166, Data_science\Graph\Analysis\Louvain\Louvain.vb"
+﻿#Region "Microsoft.VisualBasic::ff50030cd397167ee215012376b2f071, Data_science\Graph\Analysis\Community\Louvain\Louvain.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 386
-    '    Code Lines: 227 (58.81%)
-    ' Comment Lines: 89 (23.06%)
-    '    - Xml Docs: 79.78%
+    '   Total Lines: 539
+    '    Code Lines: 329 (61.04%)
+    ' Comment Lines: 115 (21.34%)
+    '    - Xml Docs: 69.57%
     ' 
-    '   Blank Lines: 70 (18.13%)
-    '     File Size: 12.38 KB
+    '   Blank Lines: 95 (17.63%)
+    '     File Size: 18.75 KB
 
 
     '     Class LouvainCommunity
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetClusterCount, GetCommunity, SolveClusters, TryMoveNode
+    '         Function: EvaluateBestCluster, GetClusterCount, GetCommunity, SolveClusters, SolveClustersParallel
+    '                   TryMoveNode
     ' 
     '         Sub: addNewEdge, rebuildGraph, setCluster0
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c6a6254eb6c2164b297e7f720b41fc, gr\network-visualization\network_layout\Cola\Layout\layout.vb"
+﻿#Region "Microsoft.VisualBasic::11ebe81be8ed9580704471030421a06a, gr\network-visualization\network_layout\Cola\Layout\layout.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1020
-    '    Code Lines: 647 (63.43%)
-    ' Comment Lines: 237 (23.24%)
-    '    - Xml Docs: 24.47%
+    '   Total Lines: 1023
+    '    Code Lines: 645 (63.05%)
+    ' Comment Lines: 241 (23.56%)
+    '    - Xml Docs: 22.82%
     ' 
-    '   Blank Lines: 136 (13.33%)
-    '     File Size: 45.31 KB
+    '   Blank Lines: 137 (13.39%)
+    '     File Size: 45.51 KB
 
 
     '     Class Layout

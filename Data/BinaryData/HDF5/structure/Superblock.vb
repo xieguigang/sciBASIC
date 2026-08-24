@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bf5c0d23d592dfd3797d8e2fcc079c1, Data\BinaryData\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::72b97e66d7b23143de34ef8b611a19a4, Data\BinaryData\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 264
-    '    Code Lines: 177 (67.05%)
-    ' Comment Lines: 43 (16.29%)
+    '   Total Lines: 266
+    '    Code Lines: 178 (66.92%)
+    ' Comment Lines: 43 (16.17%)
     '    - Xml Docs: 55.81%
     ' 
-    '   Blank Lines: 44 (16.67%)
-    '     File Size: 11.93 KB
+    '   Blank Lines: 45 (16.92%)
+    '     File Size: 12.14 KB
 
 
     '     Class Superblock

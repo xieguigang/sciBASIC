@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4c66540bb4c757815e0625777a6e6d2, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::b030e8fc99d2e89852410db0acca41a7, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.61%
     ' 
     '   Blank Lines: 22 (13.10%)
-    '     File Size: 7.17 KB
+    '     File Size: 7.16 KB
 
 
     '     Class BasicProductMoments

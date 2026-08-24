@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be9f7da235a40062e35af051b1346877, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::5730506c28fcfb442a2720e0444cec07, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 975
-    '    Code Lines: 601 (61.64%)
-    ' Comment Lines: 237 (24.31%)
-    '    - Xml Docs: 89.87%
+    '   Total Lines: 928
+    '    Code Lines: 563 (60.67%)
+    ' Comment Lines: 233 (25.11%)
+    '    - Xml Docs: 91.42%
     ' 
-    '   Blank Lines: 137 (14.05%)
-    '     File Size: 35.44 KB
+    '   Blank Lines: 132 (14.22%)
+    '     File Size: 34.00 KB
 
 
     ' Module WebServiceUtils
@@ -49,22 +49,13 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, DownloadFile
-    '               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
-    '               GetRequestRaw, isFilePath, IsSocketPortOccupied, isURL, IsURLPattern
-    '               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, PostMultipartForm, (+2 Overloads) PostRequest
-    '               PostUrlDataParser, QueryStringParameters, readStreamText, UrlDecode, UrlEncode
-    '               UrlPathEncode
+    '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, DownloadFile, GetDownload
+    '               getIPAddressInternal, GetMyIPAddress, (+2 Overloads) GetRequest, GetRequestRaw, isFilePath
+    '               IsSocketPortOccupied, isURL, IsURLPattern, ParseUrlQueryParameters, (+2 Overloads) POST
+    '               POSTFile, PostMultipartForm, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
+    '               readStreamText, UrlDecode, UrlEncode, UrlPathEncode
     ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    '     Class WebClient
-    ' 
-    '         Properties: timeout
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetWebRequest
-    ' 
-    ' 
+    '     Sub: UrlDecode, UrlEncode
     ' 
     ' /********************************************************************************/
 

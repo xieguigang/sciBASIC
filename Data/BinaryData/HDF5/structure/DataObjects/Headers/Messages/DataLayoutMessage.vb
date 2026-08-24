@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5599e2f32909b32b75bdce0ccc278645, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\DataLayoutMessage.vb"
+﻿#Region "Microsoft.VisualBasic::692eae46dfd852155520f851c60379ab, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\DataLayoutMessage.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 183
-    '    Code Lines: 100 (54.64%)
-    ' Comment Lines: 52 (28.42%)
-    '    - Xml Docs: 73.08%
+    '   Total Lines: 227
+    '    Code Lines: 137 (60.35%)
+    ' Comment Lines: 56 (24.67%)
+    '    - Xml Docs: 67.86%
     ' 
-    '   Blank Lines: 31 (16.94%)
-    '     File Size: 7.49 KB
+    '   Blank Lines: 34 (14.98%)
+    '     File Size: 10.08 KB
 
 
     '     Class DataLayoutMessage

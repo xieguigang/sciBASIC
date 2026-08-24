@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::11c468d61efaf837a588402f169d8d77, Data_science\Mathematica\Math\DataFrame\test\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 109 (71.24%)
+    ' Comment Lines: 11 (7.19%)
+    '    - Xml Docs: 72.73%
+    ' 
+    '   Blank Lines: 33 (21.57%)
+    '     File Size: 6.68 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: CompareMatrices, LocateMatrixMarketDir
+    ' 
+    '     Sub: Main, RunCrossFormatDemo, RunReadDemo, RunWriteRoundTripDemo
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
@@ -151,3 +206,4 @@ Module Program
         Return diffCount = 0
     End Function
 End Module
+

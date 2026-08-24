@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3877e9ed57bc27111e9f0954aa9c6421, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::b1bff432e9219bb291cef9b85275021b, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 376
-    '    Code Lines: 210 (55.85%)
-    ' Comment Lines: 118 (31.38%)
-    '    - Xml Docs: 81.36%
+    '   Total Lines: 492
+    '    Code Lines: 261 (53.05%)
+    ' Comment Lines: 167 (33.94%)
+    '    - Xml Docs: 75.45%
     ' 
-    '   Blank Lines: 48 (12.77%)
-    '     File Size: 14.88 KB
+    '   Blank Lines: 64 (13.01%)
+    '     File Size: 20.49 KB
 
 
     '     Class GSW
@@ -50,10 +50,10 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: BuildMatrix, GetDPMAT, GetMatches, GetTraceback, similarity
-    '                   traceback
+    '         Function: BuildMatrix, GetBestHSP, GetDPMAT, GetMatches, GetTraceback
+    '                   similarity, traceback
     ' 
-    '         Sub: getTrackback, init
+    '         Sub: (+2 Overloads) Dispose, eraseRows, getTrackback, init
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3cce53f6e4378f507ef50581da9a96c, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
+﻿#Region "Microsoft.VisualBasic::7d59ed172242cfe4efe974f145e26051, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 98 (57.65%)
-    ' Comment Lines: 44 (25.88%)
+    '   Total Lines: 149
+    '    Code Lines: 82 (55.03%)
+    ' Comment Lines: 44 (29.53%)
     '    - Xml Docs: 79.55%
     ' 
-    '   Blank Lines: 28 (16.47%)
-    '     File Size: 6.35 KB
+    '   Blank Lines: 23 (15.44%)
+    '     File Size: 5.75 KB
 
 
     '     Class QGramIndex
@@ -50,13 +50,6 @@
     '         Function: FindSimilar, GenerateQGrams, GetIndexStats, PadString
     ' 
     '         Sub: AddString
-    ' 
-    '     Class FindResult
-    ' 
-    '         Properties: index, levenshtein, similarity, text
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

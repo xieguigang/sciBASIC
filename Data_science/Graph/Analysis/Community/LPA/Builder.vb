@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::7a5c2e9f4b1d83067a5c2e9f4b1d8306, Data_science\Graph\Analysis\Community\LPA\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::32aca4861bc10b17b99a06aee75e0bd8, Data_science\Graph\Analysis\Community\LPA\Builder.vb"
 
     ' Author:
     ' 
@@ -26,19 +26,21 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 90 (69.23%)
-    ' Comment Lines: 20 (15.38%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 93
+    '    Code Lines: 54 (58.06%)
+    ' Comment Lines: 25 (26.88%)
+    '    - Xml Docs: 88.00%
     ' 
-    '   Blank Lines: 20 (15.38%)
-    '     File Size: 5.10 KB
+    '   Blank Lines: 14 (15.05%)
+    '     File Size: 3.66 KB
 
 
     '     Class Builder

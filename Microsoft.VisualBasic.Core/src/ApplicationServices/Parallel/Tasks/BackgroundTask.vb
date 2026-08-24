@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b5473ef17970d4763c1bad5a25a7475, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\BackgroundTask.vb"
+﻿#Region "Microsoft.VisualBasic::d2384bd75a0f0707732caaf09083911c, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\BackgroundTask.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 52 (65.82%)
-    ' Comment Lines: 12 (15.19%)
+    '   Total Lines: 81
+    '    Code Lines: 53 (65.43%)
+    ' Comment Lines: 12 (14.81%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (18.99%)
-    '     File Size: 2.34 KB
+    '   Blank Lines: 16 (19.75%)
+    '     File Size: 2.39 KB
 
 
     '     Delegate Function

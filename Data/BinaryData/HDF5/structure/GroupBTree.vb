@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac20f643cb9c255ce46c524fa0015b7a, Data\BinaryData\HDF5\structure\GroupBTree.vb"
+﻿#Region "Microsoft.VisualBasic::967c41b21b3ddb251b6535f9b410e51a, Data\BinaryData\HDF5\structure\GroupBTree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 81 (63.28%)
-    ' Comment Lines: 19 (14.84%)
-    '    - Xml Docs: 10.53%
+    '   Total Lines: 127
+    '    Code Lines: 64 (50.39%)
+    ' Comment Lines: 38 (29.92%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 28 (21.88%)
-    '     File Size: 4.82 KB
+    '   Blank Lines: 25 (19.69%)
+    '     File Size: 4.83 KB
 
 
     '     Class GroupBTree
@@ -48,7 +48,7 @@
     '         Properties: magic, symbolTableEntries
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues, readAllEntries
+    '         Sub: printValues, traverseBTree
     ' 
     ' 
     ' /********************************************************************************/

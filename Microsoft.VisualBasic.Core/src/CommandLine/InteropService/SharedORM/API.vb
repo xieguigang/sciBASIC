@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dc8f2ae695690c348365c02d785831f, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::db9618560a7be899b466588fcae442bd, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 26 (13.27%)
-    '     File Size: 8.07 KB
+    '     File Size: 8.06 KB
 
 
     '     Module API

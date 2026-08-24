@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f713b634324032480eab1dcf4f9d74a7, Data_science\Mathematica\Math\Math\HashMaps\MinHash\LSH.vb"
+﻿#Region "Microsoft.VisualBasic::6a6bcc1f9026fbf9548cd544c8d913cd, Data_science\Mathematica\Math\Math\HashMaps\MinHash\LSH.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 88 (58.67%)
-    ' Comment Lines: 42 (28.00%)
+    '   Total Lines: 153
+    '    Code Lines: 90 (58.82%)
+    ' Comment Lines: 42 (27.45%)
     '    - Xml Docs: 47.62%
     ' 
-    '   Blank Lines: 20 (13.33%)
-    '     File Size: 7.04 KB
+    '   Blank Lines: 21 (13.73%)
+    '     File Size: 7.21 KB
 
 
     '     Structure SimilarityIndex

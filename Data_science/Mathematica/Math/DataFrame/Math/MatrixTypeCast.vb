@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d55d4dbec95d11d7959f9d09de4a94c, Data_science\Mathematica\Math\DataFrame\MatrixTypeCast.vb"
+﻿#Region "Microsoft.VisualBasic::8d55d4dbec95d11d7959f9d09de4a94c, Data_science\Mathematica\Math\DataFrame\Math\MatrixTypeCast.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95586916d8f25225b339b0a5378f6cc3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::f64f87bbad2a3535baf344f56cba023f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 43 (51.19%)
-    ' Comment Lines: 25 (29.76%)
+    '   Total Lines: 85
+    '    Code Lines: 44 (51.76%)
+    ' Comment Lines: 25 (29.41%)
     '    - Xml Docs: 88.00%
     ' 
-    '   Blank Lines: 16 (19.05%)
-    '     File Size: 2.61 KB
+    '   Blank Lines: 16 (18.82%)
+    '     File Size: 2.64 KB
 
 
     '     Interface IShellDevice

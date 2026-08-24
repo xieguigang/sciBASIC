@@ -1,4 +1,65 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::f14a6cb7bea7b7d02a2d0c128c90b9d9, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MatrixFormat.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 75 (63.56%)
+    ' Comment Lines: 22 (18.64%)
+    '    - Xml Docs: 77.27%
+    ' 
+    '   Blank Lines: 21 (17.80%)
+    '     File Size: 4.45 KB
+
+
+    ' Module MatrixFormat
+    ' 
+    ' 
+    '     Enum MatrixCompression
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: ReadData, ReadMatrix, (+2 Overloads) WriteData
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -116,3 +177,4 @@ Public Module MatrixFormat
     End Function
 
 End Module
+

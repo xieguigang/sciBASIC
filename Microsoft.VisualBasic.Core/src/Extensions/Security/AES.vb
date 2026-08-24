@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5cfa890b656e93e3a8988f76e1e286f, Microsoft.VisualBasic.Core\src\Extensions\Security\AES.vb"
+﻿#Region "Microsoft.VisualBasic::7cd439d6a7c439c98922fd4e4bcd45bc, Microsoft.VisualBasic.Core\src\Extensions\Security\AES.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 81.82%
     ' 
     '   Blank Lines: 8 (11.76%)
-    '     File Size: 2.75 KB
+    '     File Size: 3.02 KB
 
 
     '     Class AES

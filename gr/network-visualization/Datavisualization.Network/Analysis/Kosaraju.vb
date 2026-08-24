@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a6f785492189b3f2276162dc8d8bda8, gr\network-visualization\Datavisualization.Network\Analysis\Kosaraju.vb"
+﻿#Region "Microsoft.VisualBasic::d32ea03f0755c0e692167788a6a026f6, gr\network-visualization\Datavisualization.Network\Analysis\Kosaraju.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.78%
     ' 
     '   Blank Lines: 23 (17.56%)
-    '     File Size: 4.71 KB
+    '     File Size: 4.72 KB
 
 
     '     Class Kosaraju

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3500705f3a5a6d26d25e0660d737f70, Data_science\Mathematica\Math\DataFrame\NumericDataSet.vb"
+﻿#Region "Microsoft.VisualBasic::f3500705f3a5a6d26d25e0660d737f70, Data_science\Mathematica\Math\DataFrame\Math\NumericDataSet.vb"
 
     ' Author:
     ' 

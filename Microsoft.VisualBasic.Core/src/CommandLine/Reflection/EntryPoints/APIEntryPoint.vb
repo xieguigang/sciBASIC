@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6113efe3f58fa4c1c0c903a3e292614, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::805ee8acca621ad03dde06c34e466d00, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 326
-    '    Code Lines: 179 (54.91%)
-    ' Comment Lines: 103 (31.60%)
-    '    - Xml Docs: 92.23%
+    '   Total Lines: 327
+    '    Code Lines: 179 (54.74%)
+    ' Comment Lines: 104 (31.80%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 44 (13.50%)
+    '   Blank Lines: 44 (13.46%)
     '     File Size: 13.86 KB
 
 

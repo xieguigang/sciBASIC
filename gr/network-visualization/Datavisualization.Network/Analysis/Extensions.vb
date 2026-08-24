@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a2105d4076304178537746b9a4569a8, gr\network-visualization\Datavisualization.Network\Analysis\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b066c1803505ec9fc4c6abc0f1f4ed05, gr\network-visualization\Datavisualization.Network\Analysis\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.14%
     ' 
     '   Blank Lines: 24 (15.19%)
-    '     File Size: 6.71 KB
+    '     File Size: 6.75 KB
 
 
     '     Module Extensions

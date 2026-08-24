@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54c2886a562e76e67ac9d8782ff8babe, Microsoft.VisualBasic.Core\src\Net\Wget\FtpContext.vb"
+﻿#Region "Microsoft.VisualBasic::34da92ca5189067289438b96e4639053, Microsoft.VisualBasic.Core\src\Net\Wget\FtpContext.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 24 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 35
+    '    Code Lines: 23 (65.71%)
+    ' Comment Lines: 5 (14.29%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (25.00%)
-    '     File Size: 1.11 KB
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.23 KB
 
 
     '     Class FtpContext

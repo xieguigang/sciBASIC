@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45862d0d3494a19a5f60d2ff6788063a, Data\BinaryData\HDF5\test\DiagnosticReport.vb"
+﻿#Region "Microsoft.VisualBasic::7b5680bba3fe10ad98d99efe7ab22c3f, Data\BinaryData\HDF5\test\DiagnosticReport.vb"
 
     ' Author:
     ' 
@@ -165,4 +165,3 @@ Namespace test
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd4e8adf0148a334a36a5ee77e82d2f0, Data_science\Mathematica\Math\ODE\Dynamics\var.vb"
+﻿#Region "Microsoft.VisualBasic::c5b31923506bf19510f6c4926e5d0c5d, Data_science\Mathematica\Math\ODE\Dynamics\var.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 25 (20.66%)
-    '     File Size: 3.69 KB
+    '     File Size: 3.70 KB
 
 
     '     Class var

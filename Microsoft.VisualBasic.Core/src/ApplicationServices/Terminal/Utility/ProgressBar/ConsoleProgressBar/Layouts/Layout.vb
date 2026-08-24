@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f85cb386578879efbc5487c4de0e26c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::0071399c6f6f49c0ea14b7d4a60dcbfd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Layout.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 66 (43.71%)
-    ' Comment Lines: 53 (35.10%)
+    '   Total Lines: 153
+    '    Code Lines: 67 (43.79%)
+    ' Comment Lines: 53 (34.64%)
     '    - Xml Docs: 45.28%
     ' 
-    '   Blank Lines: 32 (21.19%)
-    '     File Size: 9.07 KB
+    '   Blank Lines: 33 (21.57%)
+    '     File Size: 9.11 KB
 
 
     '     Class Layout

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f254ab55e59d9a14fa0d33a4589045f, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::da819a572d69e99022df6c9ff3b89b80, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 19 (29.23%)
-    ' Comment Lines: 41 (63.08%)
+    '   Total Lines: 78
+    '    Code Lines: 26 (33.33%)
+    ' Comment Lines: 41 (52.56%)
     '    - Xml Docs: 95.12%
     ' 
-    '   Blank Lines: 5 (7.69%)
-    '     File Size: 2.67 KB
+    '   Blank Lines: 11 (14.10%)
+    '     File Size: 2.85 KB
 
 
-    '     Class ExportAPIAttribute
+    '     Class ExportApiModel
     ' 
     '         Properties: Example, Info, Name, Usage
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class ExportAPIAttribute
+    ' 
+    '         Properties: Name
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
