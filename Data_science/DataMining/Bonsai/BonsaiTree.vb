@@ -106,8 +106,11 @@ Public Class BonsaiTree
             If maxMerges > 0 AndAlso merges >= maxMerges Then Exit Do
         Loop
 
-        tree.mergeZeroTimeChilds(verbose)
-        If verbose Then Console.WriteLine($"  [diag] leafs after mergeZeroTime = {tree.root.getLeafs().Count}")
+        ' tree.mergeZeroTimeChilds(verbose)
+
+        If verbose Then
+            Console.WriteLine($"  [diag] leafs after mergeZeroTime = {tree.root.getLeafs().Count}")
+        End If
 
         ' Local rearrangement to escape the greedy-merge local optimum (Bonsai paper: NNI then SPR).
         If enableLocalSearch Then
@@ -678,14 +681,19 @@ Public Class BonsaiTree
 
             For Each X In Xcandidates
                 Dim subtree = X.getLeafs().Select(Function(l) l.nodeInd).ToHashSet()
-                ' Ancestors of X (so we never regraft onto an edge that lies on X's own root path, which would
-                ' sever X from the tree).
-                Dim ancestors = New System.Collections.Generic.HashSet(Of Integer)
+                ' Forbidden endpoints: X itself, X's ancestors (root path), and X's descendants. A valid SPR
+                ' regrafts X onto an edge that lies entirely outside X's own subtree and root path; otherwise X
+                ' would be detached (or form a cycle with the freshly created midpoint).
+                Dim forbidden = New System.Collections.Generic.HashSet(Of Integer)
+                forbidden.Add(X.nodeInd)
                 Dim anc = X.par
                 While anc IsNot Nothing
-                    ancestors.Add(anc.nodeInd)
+                    forbidden.Add(anc.nodeInd)
                     anc = anc.par
                 End While
+                For Each lf In subtree
+                    forbidden.Add(lf)
+                Next
                 Dim baseLeafCount = root.getLeafs().Count
                 Dim baseLL = calcLogLComplete()
                 Dim bestGain = 0.000001
@@ -693,11 +701,12 @@ Public Class BonsaiTree
 
                 For Each Epar In allNodes
                     If Epar.isLeafNode() Then Continue For
+                    If forbidden.Contains(Epar.nodeInd) Then Continue For
                     ' Copy the child list: ApplySPR mutates Epar.childs, so we must not enumerate it directly.
                     Dim echildren = New System.Collections.Generic.List(Of BonsaiNode)(Epar.childs)
                     For Each Echild In echildren
                         ' Cannot regraft into X's own subtree or onto X's root path (would detach X).
-                        If subtree.Contains(Echild.nodeInd) OrElse ancestors.Contains(Echild.nodeInd) Then Continue For
+                        If forbidden.Contains(Echild.nodeInd) Then Continue For
                         Dim st = ApplySPR(X, Epar, Echild)
                         Dim ll = calcLogLComplete()
                         If ll - baseLL > bestGain Then
@@ -717,7 +726,7 @@ Public Class BonsaiTree
                     ApplySPR(X, bestEpar, bestEchild)
                     calcLogLComplete()
                     If verbose Then
-                        Console.WriteLine($"  SPR accepted: X{X.nodeInd} Epar{bestEpar.nodeInd} Echild{bestEchild.nodeInd} gain={bestGain:G4} leafs={root.getLeafs().Count} rootChilds={root.childs.Count}")
+                        Console.WriteLine($"  SPR accepted: X{X.nodeInd}(par={If(X.par Is Nothing, -1, X.par.nodeInd)}) Epar{bestEpar.nodeInd} Echild{bestEchild.nodeInd} gain={bestGain:G4} leafs={root.getLeafs().Count} rootChilds={root.childs.Count}")
                     End If
                     optTimes(maxiter, verbose)
                     improved = True

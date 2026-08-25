@@ -1,10 +1,6 @@
-Imports Microsoft.VisualBasic.DataMining.Bonsai
-Imports System.Math
-Imports System
-Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.IO
-Imports System.Linq
+Imports Microsoft.VisualBasic.DataMining.Bonsai
 
 Module Program
 
@@ -13,10 +9,10 @@ Module Program
     ' so we transpose and keep only the top-K highly-variable genes as the D-dimensional feature set
     ' (standard single-cell preprocessing; keeps the run tractable on a 60k-gene matrix).
     Private Const CSV_PATH As String = "K:\hsa\Homo_sapiens_expr_advanced_all_conditions.csv"
-    Private Const TOP_K As Integer = 100          ' number of highly-variable genes kept as features (D)
+    Private Const TOP_K As Integer = 500          ' number of highly-variable genes kept as features (D)
     Private Const MAX_MERGES As Integer = 8       ' cap tree-search rounds so the demo finishes quickly
     Private Const MAX_TIME_ITERS As Integer = 5   ' L-BFGS iterations per optTimes call
-    Private Const MAX_SAMPLES As Integer = 300    ' cap #samples used (O(C^2) tree search is costly on 1888)
+    Private Const MAX_SAMPLES As Integer = 1000    ' cap #samples used (O(C^2) tree search is costly on 1888)
 
     ' simple quadratic objective for optimizer self-test
     Private Function quad(x As Double(), args() As Object) As (f As Double, grad As Double())
