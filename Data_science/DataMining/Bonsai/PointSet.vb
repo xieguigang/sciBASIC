@@ -28,101 +28,99 @@
 Imports Microsoft.VisualBasic.Language
 Imports System.Runtime.CompilerServices
 
-Namespace Microsoft.VisualBasic.DataMining.Bonsai
+''' <summary>
+''' A point set of high-dimensional observations, stripped of all single-cell biology
+''' semantics. Each sample is represented by a mean vector (coords) and a per-dimension
+''' standard deviation (uncertainty). This mirrors the Bonsai ``SCData`` abstraction but
+''' only keeps the pure numeric content required by the tree-reconstruction core.
+''' </summary>
+Public Class PointSet
 
     ''' <summary>
-    ''' A point set of high-dimensional observations, stripped of all single-cell biology
-    ''' semantics. Each sample is represented by a mean vector (coords) and a per-dimension
-    ''' standard deviation (uncertainty). This mirrors the Bonsai ``SCData`` abstraction but
-    ''' only keeps the pure numeric content required by the tree-reconstruction core.
+    ''' N x D matrix of sample means. Row i is the D-dimensional coordinate of sample i.
     ''' </summary>
-    Public Class PointSet
+    Public ReadOnly means As Double()()
 
-        ''' <summary>
-        ''' N x D matrix of sample means. Row i is the D-dimensional coordinate of sample i.
-        ''' </summary>
-        Public ReadOnly means As Double()()
+    ''' <summary>
+    ''' N x D matrix of per-dimension standard deviations. <see cref="stds"/>(i, g) is the
+    ''' uncertainty on <see cref="means"/>(i, g). When nothing is known these default to 1.
+    ''' </summary>
+    Public ReadOnly stds As Double()()
 
-        ''' <summary>
-        ''' N x D matrix of per-dimension standard deviations. <see cref="stds"/>(i, g) is the
-        ''' uncertainty on <see cref="means"/>(i, g). When nothing is known these default to 1.
-        ''' </summary>
-        Public ReadOnly stds As Double()()
+    ''' <summary>
+    ''' N sample labels (optional, used for Newick export and result annotation).
+    ''' </summary>
+    Public ReadOnly names As String()
 
-        ''' <summary>
-        ''' N sample labels (optional, used for Newick export and result annotation).
-        ''' </summary>
-        Public ReadOnly names As String()
+    ''' <summary>
+    ''' Number of samples (rows).
+    ''' </summary>
+    Public ReadOnly nSamples As Integer
 
-        ''' <summary>
-        ''' Number of samples (rows).
-        ''' </summary>
-        Public ReadOnly nSamples As Integer
+    ''' <summary>
+    ''' Number of dimensions per sample (columns).
+    ''' </summary>
+    Public ReadOnly nGenes As Integer
 
-        ''' <summary>
-        ''' Number of dimensions per sample (columns).
-        ''' </summary>
-        Public ReadOnly nGenes As Integer
+    ''' <summary>
+    ''' Per-dimension variances, i.e. <see cref="stds"/> squared. Pre-computed for speed.
+    ''' </summary>
+    Public ReadOnly vars As Double()()
 
-        ''' <summary>
-        ''' Per-dimension variances, i.e. <see cref="stds"/> squared. Pre-computed for speed.
-        ''' </summary>
-        Public ReadOnly vars As Double()()
+    Sub New(means As Double()(), Optional stds As Double()() = Nothing, Optional names As String() = Nothing)
+        Me.means = means
+        Me.nSamples = means.Length
+        Me.nGenes = If(nSamples > 0, means(0).Length, 0)
 
-        Sub New(means As Double()(), Optional stds As Double()() = Nothing, Optional names As String() = Nothing)
-            Me.means = means
-            Me.nSamples = means.Length
-            Me.nGenes = If(nSamples > 0, means(0).Length, 0)
+        If stds Is Nothing Then
+            Me.stds = means.Select(Function(row) row.Select(Function(r) 1.0).ToArray).ToArray
+        Else
+            Me.stds = stds
+        End If
 
-            If stds Is Nothing Then
-                Me.stds = means.Select(Function(row) row.Select(Function(r) 1.0).ToArray).ToArray
-            Else
-                Me.stds = stds
-            End If
+        Me.vars = Me.stds _
+            .Select(Function(row) row.Select(Function(s) s * s).ToArray) _
+            .ToArray
 
-            Me.vars = Me.stds _
-                .Select(Function(row) row.Select(Function(s) s * s).ToArray) _
+        If names Is Nothing Then
+            Me.names = Enumerable.Range(0, nSamples) _
+                .Select(Function(i) "s" & i) _
                 .ToArray
+        Else
+            Me.names = names
+        End If
+    End Sub
 
-            If names Is Nothing Then
-                Me.names = Enumerable.Range(0, nSamples) _
-                    .Select(Function(i) "s" & i) _
-                    .ToArray
-            Else
-                Me.names = names
-            End If
-        End Sub
+    ''' <summary>
+    ''' Build a point set directly from a flat row-major array.
+    ''' </summary>
+    Public Shared Function FromMatrix(data As Double()(), Optional sd As Double()() = Nothing, Optional names As String() = Nothing) As PointSet
+        Return New PointSet(data, sd, names)
+    End Function
 
-        ''' <summary>
-        ''' Build a point set directly from a flat row-major array.
-        ''' </summary>
-        Public Shared Function FromMatrix(data As Double()(), Optional sd As Double()() = Nothing, Optional names As String() = Nothing) As PointSet
-            Return New PointSet(data, sd, names)
-        End Function
+    ''' <summary>
+    ''' Extract the mean vector of a single sample as a D-length array.
+    ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetMean(i As Integer) As Double()
+        Return means(i)
+    End Function
 
-        ''' <summary>
-        ''' Extract the mean vector of a single sample as a D-length array.
-        ''' </summary>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetMean(i As Integer) As Double()
-            Return means(i)
-        End Function
+    ''' <summary>
+    ''' Extract the variance vector of a single sample as a D-length array.
+    ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetVar(i As Integer) As Double()
+        Return vars(i)
+    End Function
 
-        ''' <summary>
-        ''' Extract the variance vector of a single sample as a D-length array.
-        ''' </summary>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetVar(i As Integer) As Double()
-            Return vars(i)
-        End Function
+    ''' <summary>
+    ''' Convenience accessor for the standard deviation matrix.
+    ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetStd(i As Integer) As Double()
+        Return stds(i)
+    End Function
+End Class
 
-        ''' <summary>
-        ''' Convenience accessor for the standard deviation matrix.
-        ''' </summary>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetStd(i As Integer) As Double()
-            Return stds(i)
-        End Function
-    End Class
-End Namespace
 
