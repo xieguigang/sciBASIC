@@ -163,12 +163,25 @@ Public Module NetworkFileIO
         End With
     End Function
 
+    ''' <summary>
+    ''' read large network edge file
+    ''' </summary>
+    ''' <typeparam name="E"></typeparam>
+    ''' <param name="filepath"></param>
+    ''' <returns></returns>
     Public Function ReadEdges(Of E As {New, INetworkEdge})(filepath As String) As IEnumerable(Of E)
         Dim s As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
         Dim net As IEnumerable(Of E) = ReadEdges(Of E)(s, auto_close:=True)
         Return net
     End Function
 
+    ''' <summary>
+    ''' read large network edge file
+    ''' </summary>
+    ''' <typeparam name="E"></typeparam>
+    ''' <param name="file"></param>
+    ''' <param name="auto_close"></param>
+    ''' <returns></returns>
     Public Iterator Function ReadEdges(Of E As {New, INetworkEdge})(file As Stream, Optional auto_close As Boolean = False) As IEnumerable(Of E)
         Dim df As DataFrameResolver = DataFrameResolver.Load(file)
         ' ﻿fromNode,toNode,value,interaction_type,selfLoop,label,guid,color,width
