@@ -55,6 +55,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
@@ -174,6 +175,9 @@ Public Module NetworkFileIO
         Dim u As Integer = df.GetOrdinal("fromNode")
         Dim v As Integer = df.GetOrdinal("toNode")
         Dim w As Integer = df.GetOrdinal("value")
+        Dim n As Integer = df.Nrows
+        Dim tqdm As New ProgressBar
+        Dim i As Integer = 0
 
         Do While df.Read
             Yield New E With {
@@ -181,12 +185,16 @@ Public Module NetworkFileIO
                 .target = df.GetString(v),
                 .value = df.GetDouble(w)
             }
+
+            i += 1
+            tqdm.Progress(i, n)
         Loop
 
         If auto_close Then
             Call file.Dispose()
         End If
 
+        Call tqdm.Finish()
         Call df.Dispose()
     End Function
 End Module
