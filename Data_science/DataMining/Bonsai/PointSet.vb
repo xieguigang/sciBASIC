@@ -1,4 +1,4 @@
-' /********************************************************************************/
+﻿' /********************************************************************************/
 
 '   Author:
 '
@@ -27,7 +27,6 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports System.Runtime.CompilerServices
-Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
@@ -126,3 +125,4 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         End Function
     End Class
 End Namespace
+

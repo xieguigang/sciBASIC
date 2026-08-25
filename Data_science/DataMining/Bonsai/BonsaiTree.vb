@@ -1,4 +1,4 @@
-' /********************************************************************************/
+﻿' /********************************************************************************/
 
 '   Author:
 '
@@ -28,7 +28,6 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports System.Runtime.CompilerServices
-Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
@@ -52,8 +51,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         Public ReadOnly nGenes As Integer
 
         ' Box bounds for the log-time optimisation (mirrors scipy L-BFGS-B bounds in optTimes)
-        Private Shared ReadOnly tLB As Double = Math.Log(0.000001)
-        Private Shared ReadOnly tUB As Double = Math.Log(1000000.0)
+        Private Shared ReadOnly tLB As Double = System.Math.Log(0.000001)
+        Private Shared ReadOnly tUB As Double = System.Math.Log(1000000.0)
 
         Private maxNodeInd As Integer = -1
 
@@ -140,13 +139,13 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         Public Function optTimes(Optional maxiter As Integer = 20, Optional verbose As Boolean = False) As Double
             Dim allNodes = GetAllNodes()
             ' collect non-root nodes (each defines one branch time)
-            Dim branchNodes = allNodes.Where(Function(n) Not n.isRootNode()).ToList
+            Dim branchNodes = allNodes.Where(Function(nd) Not nd.isRootNode()).ToList
             If branchNodes.Count = 0 Then
                 Return calcLogLComplete()
             End If
 
             Dim n = branchNodes.Count
-            Dim x0 = branchNodes.Select(Function(nd) Math.Log(Math.Max(nd.tParent, 0.000001))).ToArray
+            Dim x0 = branchNodes.Select(Function(nd) System.Math.Log(System.Math.Max(nd.tParent, 0.000001))).ToArray
             Dim bounds As New List(Of (lo As Double, hi As Double))
             For i = 0 To n - 1
                 bounds.Add((tLB, tUB))
@@ -155,7 +154,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim res = Optimizer.Minimize(AddressOf logLGradAllTimes, x0, bounds, args:=New Object() {root})
 
             For i = 0 To n - 1
-                branchNodes(i).tParent = Math.Exp(res.x(i))
+                branchNodes(i).tParent = System.Math.Exp(res.x(i))
             Next
 
             ' After updating times, refresh internal node positions
@@ -175,7 +174,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
             ' apply the proposed times
             For i = 0 To n - 1
-                branchNodes(i).tParent = Math.Exp(logt(i))
+                branchNodes(i).tParent = System.Math.Exp(logt(i))
             Next
 
             Dim loglik = Likelihood.calcLogLComplete(root)
@@ -252,8 +251,10 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 ltqsR(g) = (rootMinusFirstLtqs(g) - wbar2(g) * child2.ltqs(g)) / WR_g(g)
             Next
 
-            Dim ltqs_gi = New Double(D - 1)() {child1.ltqs, child2.ltqs, ltqsR}
-            Dim lv_gi = New Double(D - 1)() {vars1, vars2, WR_g.Select(Function(w) 1.0 / w).ToArray}
+            Dim ltqs_gi(D - 1)() As Double
+            ltqs_gi(0) = child1.ltqs : ltqs_gi(1) = child2.ltqs : ltqs_gi(2) = ltqsR
+            Dim lv_gi(D - 1)() As Double
+            lv_gi(0) = vars1 : lv_gi(1) = vars2 : lv_gi(2) = WR_g.Select(Function(w) 1.0 / w).ToArray
             Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
             Dim o3 = Likelihood.optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
             Dim tOpt = o3.tOpt
@@ -436,3 +437,4 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         End Sub
     End Class
 End Namespace
+

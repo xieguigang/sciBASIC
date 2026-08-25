@@ -1,4 +1,4 @@
-' /********************************************************************************/
+﻿' /********************************************************************************/
 
 '   Author:
 '
@@ -28,7 +28,6 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports System.Runtime.CompilerServices
-Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
@@ -72,8 +71,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' <param name="names">Optional N sample labels.</param>
         Public Function Fit(means As Double()(), Optional stds As Double()() = Nothing, Optional names As String() = Nothing) As Bonsai
             Dim data = New PointSet(means, stds, names)
-            Me.Data = data
-            Me.Tree = BonsaiTree.Build(data, maxMerges, maxTimeIters, verbose)
+            Me._Data = data
+            Me._Tree = BonsaiTree.Build(data, maxMerges, maxTimeIters, verbose)
             Return Me
         End Function
 
@@ -81,8 +80,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' Fit directly from a <see cref="PointSet"/>.
         ''' </summary>
         Public Function Fit(data As PointSet) As Bonsai
-            Me.Data = data
-            Me.Tree = BonsaiTree.Build(data, maxMerges, maxTimeIters, verbose)
+            Me._Data = data
+            Me._Tree = BonsaiTree.Build(data, maxMerges, maxTimeIters, verbose)
             Return Me
         End Function
 
@@ -128,3 +127,4 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         End Function
     End Class
 End Namespace
+

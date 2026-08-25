@@ -1,4 +1,4 @@
-' /********************************************************************************/
+﻿' /********************************************************************************/
 
 '   Author:
 '
@@ -27,7 +27,6 @@
 
 Imports Microsoft.VisualBasic.Linq
 Imports System.Runtime.CompilerServices
-Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
@@ -107,7 +106,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 For g = 0 To D - 1
                     Dim wbar = 1.0 / (vars(g) + child.tParent)
                     Dim sq = (xr_g(g) - child.ltqs(g)) ^ 2
-                    loglik += Math.Log(wbar) - wbar * sq
+                    loglik += System.Math.Log(wbar) - wbar * sq
                 Next
             Next
             Return loglik
@@ -131,7 +130,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     Dim wbar = 1.0 / (vars(g) + child.tParent)
                     Dim sq = (xr_g(g) - child.ltqs(g)) ^ 2
                     Dim term = wbar * sq
-                    loglik += Math.Log(wbar) - term
+                    loglik += System.Math.Log(wbar) - term
                     grad(cInd) += wbar * (term - 1.0 + wbar / W_g(g))
                 Next
             Next
@@ -203,7 +202,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' </summary>
         Public Function optimiseT3LeafStar(ltqs_gi As Double()(), ltqsVars_gi As Double()(), t0_i As Double()) As (loglik As Double, tOpt As Double(), success As Boolean)
             Dim nChild = t0_i.Length
-            Dim t0log = t0_i.Select(Function(t) Math.Log(Math.Max(t, 1.0E-4))).ToArray
+            Dim t0log = t0_i.Select(Function(t) System.Math.Log(System.Math.Max(t, 1.0E-4))).ToArray
 
             Dim lb = -16.118, ub = 10.0   ' log(1e-7) .. log(1e~4.5)
             Dim bounds As New List(Of (lo As Double, hi As Double))
@@ -214,7 +213,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim res = Optimizer.Minimize(AddressOf logLGradStarTreeLogT, t0log, bounds,
                                       args:=(ltqsVars_gi, ltqs_gi))
 
-            Dim topt = res.x.Select(Function(lt) Math.Exp(lt)).ToArray
+            Dim topt = res.x.Select(Function(lt) System.Math.Exp(lt)).ToArray
             Return (-res.fun, topt, res.success)
         End Function
 
@@ -229,7 +228,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim ltqs_gi = DirectCast(args(1), Double()())
             Dim nChild = logt_i.Length
             Dim D = ltqs_gi.Length
-            Dim t_i = logt_i.Select(Function(lt) Math.Exp(lt)).ToArray
+            Dim t_i = logt_i.Select(Function(lt) System.Math.Exp(lt)).ToArray
 
             Dim W_g(D - 1) As Double
             Dim xr_g(D - 1) As Double
@@ -252,20 +251,20 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
             Dim loglik = 0.0
             For g = 0 To D - 1
-                loglik += Math.Log(W_g(g))
+                loglik += System.Math.Log(W_g(g))
                 For c = 0 To nChild - 1
-                    loglik -= Math.Log(wbar_gi(c)(g))
+                    loglik -= System.Math.Log(wbar_gi(c)(g))
                 Next
             Next
 
             Dim grad(nChild - 1) As Double
-            For c = 0 To nChild - 1
+            For k = 0 To nChild - 1
                 For g = 0 To D - 1
-                    Dim sq = (xr_g(g) - ltqs_gi(g)(c)) ^ 2
-                    Dim term = wbar_gi(c)(g) * sq
-                    grad(c) += wbar_gi(c)(g) * (term - 1.0 + wbar_gi(c)(g) / W_g(g))
+                    Dim sq = (xr_g(g) - ltqs_gi(g)(k)) ^ 2
+                    Dim term = wbar_gi(k)(g) * sq
+                    grad(k) += wbar_gi(k)(g) * (term - 1.0 + wbar_gi(k)(g) / W_g(g))
                 Next
-                grad(c) *= -t_i(c)
+                grad(k) *= -t_i(k)
             Next
 
             Return (-loglik, grad)
@@ -439,7 +438,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function VectorLog(v As Double()) As Double()
-            Return v.Select(Function(x) Math.Log(x)).ToArray
+            Return v.Select(Function(x) System.Math.Log(x)).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -452,3 +451,4 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         End Function
     End Module
 End Namespace
+

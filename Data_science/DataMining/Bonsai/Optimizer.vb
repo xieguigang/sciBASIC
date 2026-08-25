@@ -1,4 +1,4 @@
-' /********************************************************************************/
+﻿' /********************************************************************************/
 
 '   Author:
 '
@@ -27,7 +27,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
@@ -63,7 +62,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             If fb = 0.0 Then Return b
             If (fa > 0) = (fb > 0) Then
                 ' No sign change: clamp to the side closer to zero
-                Return If(Math.Abs(fa) < Math.Abs(fb), a, b)
+                Return If(System.Math.Abs(fa) < System.Math.Abs(fb), a, b)
             End If
 
             Dim x As Double = a, w As Double = a, v As Double = a
@@ -82,25 +81,25 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 Dim p As Double = 0, q As Double = 0, r As Double = 0
                 Dim delta = If(x >= xm, a - x, b - x)
                 Dim fr = If(x >= xm, fx, fx)  ' placeholder, recomputed below
-                tol1 = 2.0 * EPS * Math.Abs(x) + 0.5 * tol
+                tol1 = 2.0 * EPS * System.Math.Abs(x) + 0.5 * tol
                 Dim xacc = If(x >= xm, a, b) - x
 
-                If Math.Abs(xacc) <= tol1 Then
+                If System.Math.Abs(xacc) <= tol1 Then
                     Exit Do
                 End If
 
-                If Math.Abs(fw - fv) > EPS AndAlso Math.Abs(fv - fx) > EPS AndAlso Math.Abs(fw - fx) > EPS Then
+                If System.Math.Abs(fw - fv) > EPS AndAlso System.Math.Abs(fv - fx) > EPS AndAlso System.Math.Abs(fw - fx) > EPS Then
                     ' Inverse quadratic interpolation
                     q = (x - w) * (fx - fv)
                     r = (x - v) * (fx - fw)
                     p = (x - v) * q - (x - w) * r
                     q = 2.0 * (q - r)
                     If q > 0 Then p = -p
-                    q = Math.Abs(q)
+                    q = System.Math.Abs(q)
                     r = If(x >= xm, a - x, b - x)
                 End If
 
-                If q > 0 AndAlso p > 0 AndAlso Math.Abs(p) < Math.Abs(0.5 * q * r) AndAlso p > q * (a - x) AndAlso p < q * (b - x) Then
+                If q > 0 AndAlso p > 0 AndAlso System.Math.Abs(p) < System.Math.Abs(0.5 * q * r) AndAlso p > q * (a - x) AndAlso p < q * (b - x) Then
                     ' Accept interpolation step
                     delta = p / q
                 Else
@@ -108,7 +107,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     delta = If(x >= xm, a - x, b - x)
                 End If
 
-                Dim stepSize = If(delta >= 0, Math.Max(delta, tol1), Math.Min(delta, -tol1))
+                Dim stepSize = If(delta >= 0, System.Math.Max(delta, tol1), System.Math.Min(delta, -tol1))
                 x = x + stepSize
                 fx = f(x, args)
 
@@ -118,7 +117,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     b = x : fb = fx
                 End If
 
-                If Math.Abs(fa) < Math.Abs(fb) Then
+                If System.Math.Abs(fa) < System.Math.Abs(fb) Then
                     Dim tmp = a : a = b : b = tmp
                     Dim tf = fa : fa = fb : fb = tf
                 End If
@@ -154,7 +153,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
             ' clamp to bounds
             For i = 0 To n - 1
-                x(i) = Math.Min(hi(i), Math.Max(lo(i), x(i)))
+                x(i) = System.Math.Min(hi(i), System.Math.Max(lo(i), x(i)))
             Next
 
             Dim m = 10   ' memory size
@@ -176,7 +175,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 ' Stopping test on projected gradient
                 Dim pgnorm = 0.0
                 For i = 0 To n - 1
-                    pgnorm = Math.Max(pgnorm, Math.Abs(g(i)))
+                    pgnorm = System.Math.Max(pgnorm, System.Math.Abs(g(i)))
                 Next
                 If pgnorm < pgtol Then
                     exited = True
@@ -195,7 +194,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     Dim xt = New Double(n - 1) {}
                     For i = 0 To n - 1
                         xt(i) = x(i) + stepSize * d(i)
-                        xt(i) = Math.Min(hi(i), Math.Max(lo(i), xt(i)))
+                        xt(i) = System.Math.Min(hi(i), System.Math.Max(lo(i), xt(i)))
                     Next
                     Dim ev = obj(xt, args)
                     ' sufficient decrease: f(xt) <= f(x) + 1e-4 * step * grad·d
@@ -315,3 +314,4 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         End Function
     End Module
 End Namespace
+
