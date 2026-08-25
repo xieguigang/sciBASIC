@@ -162,7 +162,13 @@ Public Module NetworkFileIO
         End With
     End Function
 
-    Public Iterator Function ReadEdges(Of E As {New, INetworkEdge})(file As Stream) As IEnumerable(Of E)
+    Public Function ReadEdges(Of E As {New, INetworkEdge})(filepath As String) As IEnumerable(Of E)
+        Dim s As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Dim net As IEnumerable(Of E) = ReadEdges(Of E)(s, auto_close:=True)
+        Return net
+    End Function
+
+    Public Iterator Function ReadEdges(Of E As {New, INetworkEdge})(file As Stream, Optional auto_close As Boolean = False) As IEnumerable(Of E)
         Dim df As DataFrameResolver = DataFrameResolver.Load(file)
         ' ﻿fromNode,toNode,value,interaction_type,selfLoop,label,guid,color,width
         Dim u As Integer = df.GetOrdinal("fromNode")
@@ -176,5 +182,9 @@ Public Module NetworkFileIO
                 .value = df.GetDouble(w)
             }
         Loop
+
+        If auto_close Then
+            Call file.Dispose()
+        End If
     End Function
 End Module
