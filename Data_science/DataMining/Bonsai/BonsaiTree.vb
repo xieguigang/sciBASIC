@@ -445,7 +445,7 @@ Public Class BonsaiTree
             ApplyPair(node, bestI, bestJ, finalMid)
         End While
 
-        For Each child In node.childs.ToArray
+        For Each child In node.childs
             splitZeroTime(child)
         Next
     End Sub
