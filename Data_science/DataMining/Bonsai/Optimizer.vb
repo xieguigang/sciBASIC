@@ -223,8 +223,11 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 Dim xold = New Double(n - 1) {}
                 Dim gold = New Double(n - 1) {}
                 For i = 0 To n - 1
-                    xold(i) = x(i) - step * d(i)
-                    gold(i) = gradAt(xold, obj, args)(i)
+                    xold(i) = x(i) - stepSize * d(i)
+                Next
+                Dim gOldArr = gradAt(xold, obj, args)
+                For i = 0 To n - 1
+                    gold(i) = gOldArr(i)
                 Next
                 Dim s = New Double(n - 1) {}
                 Dim y = New Double(n - 1) {}

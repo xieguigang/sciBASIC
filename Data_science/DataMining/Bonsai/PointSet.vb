@@ -25,9 +25,9 @@
 
 ' /********************************************************************************/
 
-Imports Microsoft.VisualBasic.DataMining.Bonsai.MathExtensions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports System.Runtime.CompilerServices
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
