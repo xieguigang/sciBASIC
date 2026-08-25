@@ -305,7 +305,7 @@ Public Module Likelihood
             ltqsTimesW(g) = xrAsIfRoot_g(g) * WAsIfRoot_g(g)
         Next
 
-        Dim wbarChild_g = child.getLtqsVars().Select(Function(v) 1.0 / child.getTransferVariance(0)).ToArray
+        Dim wbarChild_g(D - 1) As Double
         For g = 0 To D - 1
             wbarChild_g(g) = 1.0 / child.getTransferVariance(g)
         Next

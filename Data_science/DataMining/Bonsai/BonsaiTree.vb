@@ -41,7 +41,7 @@ Public Class BonsaiTree
     ''' <summary>
     ''' Root of the reconstructed tree.
     ''' </summary>
-    Public ReadOnly root As BonsaiNode
+    Public root As BonsaiNode
 
     ''' <summary>
     ''' Dimensionality of the input points.
@@ -501,13 +501,13 @@ Public Class BonsaiTree
         Dim bestC As BonsaiNode = Nothing
         Dim bestState As NNIState = Nothing
 
-        For Each C In A.childs.ToArray
-            Dim st = SaveNNI(A, C, S, P)
-            ApplyNNI(A, C, S, P)
+        For Each cnode In A.childs.ToArray
+            Dim st = SaveNNI(A, cnode, S, P)
+            ApplyNNI(A, cnode, S, P)
             Dim ll = calcLogLComplete()
             If ll - baseLL > bestGain Then
                 bestGain = ll - baseLL
-                bestC = C
+                bestC = cnode
                 ' Keep this state as the candidate; revert for now and re-apply the best afterwards.
                 bestState = st
             End If
@@ -732,30 +732,27 @@ Public Class BonsaiTree
     End Sub
 
     ''' <summary>
-    ''' Re-root the tree at the midpoint of the edge leading into <paramref name="edge"/>, making that edge's
-    ''' child the new root. Purely a pointer/flag re-arrangement.
+    ''' Re-root the tree at the edge leading into <paramref name="edge"/>, making that edge's child the new
+    ''' root. The path from edge up to the old root is reversed (each node becomes the child of the one
+    ''' below it) and the edge is detached from its old parent. Purely a pointer/flag re-arrangement; the
+    ''' Gaussian-integral likelihood is invariant to the root position.
     ''' </summary>
     Private Sub RerootAtEdge(edge As BonsaiNode)
-        ' Collect the path from root down to the parent of edge, then re-hang the tree.
-        Dim newRoot = edge
-        Dim oldRoot = root
-
-        ' Build the new root by reversing the path: walk up from edge to root, flipping parent/child.
+        ' Path from edge up to the current root (path(0) = edge, path(last) = old root).
         Dim path As New List(Of BonsaiNode)
         Dim n = edge
         While n IsNot Nothing
             path.Add(n)
             n = n.par
         End While
-        ' path(0)=edge ... path(last)=oldRoot
 
-        ' Detach edge from its parent.
+        ' Detach the new root from its old parent and mark it as the root.
         edge.par.childs.Remove(edge)
         edge.par = Nothing
         edge.isRoot = True
         edge.tParent = 0.0
 
-        ' Reverse the remaining path so each node becomes the child of the one below it.
+        ' Reverse the rest of the path so every node becomes the child of the one below it.
         For i = 1 To path.Count - 1
             Dim child = path(i - 1)
             Dim parent = path(i)
@@ -765,22 +762,12 @@ Public Class BonsaiTree
             child.childs.Add(parent)
         Next
 
-        ' The old root becomes a regular internal node (or leaf if it had one child).
-        oldRoot.isRoot = False
-        If oldRoot.childs.Count = 1 Then
-            ' collapse the unary root into its single child
-            Dim onlyChild = oldRoot.childs(0)
-            ' reattach oldRoot's parent (now edge, the new root) child list
-            edge.childs.Remove(oldRoot)
-            edge.childs.Add(onlyChild)
-            onlyChild.par = edge
-        ElseIf oldRoot.childs.Count = 0 Then
-            ' oldRoot became a leaf-equivalent with no children; drop it from the new root's children
-            edge.childs.Remove(oldRoot)
+        ' The previous root is now an ordinary internal node (any off-path branches stay attached to it).
+        If path.Count > 0 Then
+            path(path.Count - 1).isRoot = False
         End If
 
-        ' Reset the root marker on the tree.
-        root = newRoot
+        root = edge
     End Sub
 
     ''' <summary>
@@ -801,8 +788,8 @@ Public Class BonsaiTree
         Dim ss = 0.0
         For Each lf In leafs
             For g = 0 To D - 1
-                Dim d = lf.ltqs(g) - mean(g)
-                ss += d * d
+                Dim delta = lf.ltqs(g) - mean(g)
+                ss += delta * delta
             Next
         Next
         Return ss

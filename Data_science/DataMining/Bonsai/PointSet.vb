@@ -186,10 +186,14 @@ Public Class PointSet
             Return Me
         End If
 
-        Dim newMeans(Nothing) As Double()()
-        ReDim newMeans(nSamples - 1)
-        Dim newStds(Nothing) As Double()()
-        ReDim newStds(nSamples - 1)
+        ' If every dimension is rejected, fall back to keeping the original set so the tree can still be
+        ' built (better a noisier tree than an empty one).
+        If keep.Count = 0 Then
+            Return Me
+        End If
+
+        Dim newMeans As Double()() = New Double(nSamples - 1)() {}
+        Dim newStds As Double()() = New Double(nSamples - 1)() {}
         For i = 0 To nSamples - 1
             newMeans(i) = keep.Select(Function(g) means(i)(g)).ToArray
             newStds(i) = keep.Select(Function(g) stds(i)(g)).ToArray
