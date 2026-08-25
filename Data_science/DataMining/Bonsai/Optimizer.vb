@@ -107,8 +107,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     delta = If(x >= xm, a - x, b - x)
                 End If
 
-                Dim step = If(delta >= 0, Math.Max(delta, tol1), Math.Min(delta, -tol1))
-                x = x + step
+                Dim stepSize = If(delta >= 0, Math.Max(delta, tol1), Math.Min(delta, -tol1))
+                x = x + stepSize
                 fx = f(x, args)
 
                 If (fa > 0) = (fx >= 0) Then
@@ -186,13 +186,14 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 Dim d = lbfgsDirection(x, g, sList, yList, rhoList, n, m)
 
                 ' Simple backtracking line search with Armijo condition
-                Dim step = 1.0
-                Dim (fx, gx) = eval
+                Dim stepSize = 1.0
+                Dim fx = eval.f
+                Dim gx = eval.grad
                 Dim found = False
                 For ls = 0 To 30
                     Dim xt = New Double(n - 1) {}
                     For i = 0 To n - 1
-                        xt(i) = x(i) + step * d(i)
+                        xt(i) = x(i) + stepSize * d(i)
                         xt(i) = Math.Min(hi(i), Math.Max(lo(i), xt(i)))
                     Next
                     Dim ev = obj(xt, args)
@@ -201,7 +202,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     For i = 0 To n - 1
                         gd += g(i) * d(i)
                     Next
-                    If ev.f <= f + 1.0E-4 * step * gd OrElse step < 1.0E-12 Then
+                    If ev.f <= f + 1.0E-4 * stepSize * gd OrElse stepSize < 1.0E-12 Then
                         x = xt
                         f = ev.f
                         g = ev.grad
@@ -209,7 +210,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                         found = True
                         Exit For
                     End If
-                    step *= 0.5
+                    stepSize *= 0.5
                 Next
 
                 If Not found Then
