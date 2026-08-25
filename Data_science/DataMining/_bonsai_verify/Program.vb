@@ -21,6 +21,12 @@ Module Program
             names(i) = "c" & i
         Next
 
+        BonsaiTree.enableLocalSearch = False
+        Dim bBase = New Bonsai() With {.verbose = False, .useGlobalVariance = False, .filterLowSNR = True}
+        bBase.Fit(means, stds, names)
+        Console.WriteLine("BASE (no local search): leafs={0}, logL={1:G4}", bBase.Tree.root.getLeafs().Count, bBase.LogLikelihood())
+
+        BonsaiTree.enableLocalSearch = True
         Dim bA = New Bonsai() With {.verbose = True, .useGlobalVariance = False, .filterLowSNR = True}
         bA.Fit(means, stds, names)
         Dim coordsA = bA.Transform()

@@ -55,6 +55,12 @@ Public Class BonsaiTree
     Private maxNodeInd As Integer = -1
 
     ''' <summary>
+    ''' Master switch for the local rearrangement + re-rooting passes added alongside the NNI / SPR search.
+    ''' Set to False to reproduce the pre-local-search build (useful for debugging / comparison).
+    ''' </summary>
+    Public Shared enableLocalSearch As Boolean = True
+
+    ''' <summary>
     ''' Optional per-dimension diffusion scaling (global gene variance prior v_g). When set, every internal
     ''' node carries it so the transition variance becomes vars(g) + v_g(g)*tParent. Null reproduces the
     ''' default measurement-error-only behaviour. Populated from a <see cref="PointSet"/> when
