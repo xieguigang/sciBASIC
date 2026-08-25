@@ -308,7 +308,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 totalVars(g) = child.getLtqsVars()(g) + ltqsWOChild(g)
                 sqDist(g) = (ltqsWOChild(g) - child.ltqs(g)) ^ 2
             Next
-            child.dLoglikdtParent = der2LeafTree(child.tParent, New Object() {ltqsWOChild, sqDist})
+            child.dLoglikdtParent = der2LeafTree(child.tParent, New Object() {totalVars, sqDist})
 
             If Not child.isLeafNode() Then
                 Dim wbarRoot_g = New Double(D - 1) {}

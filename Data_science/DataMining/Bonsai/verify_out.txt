@@ -1,0 +1,30 @@
+﻿OPT_SELFTEST x=2 f=0 ok=True
+=== Bonsai verification ===
+Merged N1 and N2 into N7 (dLogL pair)
+Merged N3 and N7 into N8 (dLogL pair)
+Merged N6 and N8 into N9 (dLogL pair)
+Merged N4 and N9 into N10 (dLogL pair)
+Merged N5 and N10 into N11 (dLogL pair)
+Bonsai: final logL = -46.62, nodes = 12
+DIAG firstChild.tParent=1 dLogL/dt=NaN nChilds=1
+
+LogLikelihood = -46.6238
+Newick       = ((p4:1,(p3:1,(p5:1,(p2:1,(p0:1,p1:1)N7:1)N8:1)N9:1)N10:1)N11:1)ROOT;
+
+Low-dim coords (leaf effective positions):
+  p0 -> 5, 4.93, 4.95
+  p1 -> 5.1, 4.89, 4.9
+  p2 -> 4.9, 5.01, 4.81
+  p3 -> 0.0898, 0.00517, -0.131
+  p4 -> 0.0672, -0.144, -0.15
+  p5 -> 0.00911, -0.133, -0.095
+
+Branch-time (tree depth) per leaf:
+  p0 -> 2
+  p1 -> 3
+  p2 -> 4
+  p3 -> 5
+  p4 -> 6
+  p5 -> 6
+
+=== Done (no crash) ===
