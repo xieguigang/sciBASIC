@@ -251,9 +251,11 @@ Public Class BonsaiTree
         Next
 
         Dim ltqs_gi(D - 1)() As Double
-        ltqs_gi(0) = child1.ltqs : ltqs_gi(1) = child2.ltqs : ltqs_gi(2) = ltqsR
         Dim lv_gi(D - 1)() As Double
-        lv_gi(0) = vars1 : lv_gi(1) = vars2 : lv_gi(2) = WR_g.Select(Function(w) 1.0 / w).ToArray
+        For g = 0 To D - 1
+            ltqs_gi(g) = New Double() {child1.ltqs(g), child2.ltqs(g), ltqsR(g)}
+            lv_gi(g) = New Double() {vars1(g), vars2(g), 1.0 / (WR_g(g) + Likelihood.EPS)}
+        Next
         Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
         Dim o3 = Likelihood.optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
         Dim tOpt = o3.tOpt
