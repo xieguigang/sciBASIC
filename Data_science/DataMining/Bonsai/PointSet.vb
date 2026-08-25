@@ -26,8 +26,8 @@
 ' /********************************************************************************/
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports System.Runtime.CompilerServices
+Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
