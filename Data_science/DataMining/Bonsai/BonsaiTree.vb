@@ -709,6 +709,9 @@ Public Class BonsaiTree
                         If forbidden.Contains(Echild.nodeInd) Then Continue For
                         Dim st = ApplySPR(X, Epar, Echild)
                         Dim ll = calcLogLComplete()
+                        If verbose Then
+                            Console.WriteLine($"    [trial] X{X.nodeInd} Epar{Epar.nodeInd}(par={If(Epar.par Is Nothing, -1, Epar.par.nodeInd)}) Echild{Echild.nodeInd} leafs={root.getLeafs().Count}")
+                        End If
                         If ll - baseLL > bestGain Then
                             bestGain = ll - baseLL
                             bestEpar = Epar
