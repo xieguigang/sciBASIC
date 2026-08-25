@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::8c2166477f0b9b5b68ecc93c4cb540be, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 110
-    '    Code Lines: 71 (64.55%)
-    ' Comment Lines: 25 (22.73%)
-    '    - Xml Docs: 92.00%
-    ' 
-    '   Blank Lines: 14 (12.73%)
-    '     File Size: 5.07 KB
+' Summaries:
 
 
-    ' Module NetworkFileIO
-    ' 
-    '     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, (+2 Overloads) Save
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 110
+'    Code Lines: 71 (64.55%)
+' Comment Lines: 25 (22.73%)
+'    - Xml Docs: 92.00%
+' 
+'   Blank Lines: 14 (12.73%)
+'     File Size: 5.07 KB
+
+
+' Module NetworkFileIO
+' 
+'     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, (+2 Overloads) Save
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Language
@@ -158,5 +160,21 @@ Public Module NetworkFileIO
         With NetworkTables.SearchNetworkTable(directory)
             Return .edges.IsEmptyTable AndAlso .nodes.IsEmptyTable
         End With
+    End Function
+
+    Public Iterator Function ReadEdges(Of E As {New, INetworkEdge})(file As Stream) As IEnumerable(Of E)
+        Dim df As DataFrameResolver = DataFrameResolver.Load(file)
+        ' ﻿fromNode,toNode,value,interaction_type,selfLoop,label,guid,color,width
+        Dim u As Integer = df.GetOrdinal("fromNode")
+        Dim v As Integer = df.GetOrdinal("toNode")
+        Dim w As Integer = df.GetOrdinal("value")
+
+        Do While df.Read
+            Yield New E With {
+                .source = df.GetString(u),
+                .target = df.GetString(v),
+                .value = df.GetDouble(w)
+            }
+        Loop
     End Function
 End Module
