@@ -182,10 +182,6 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                     Exit For
                 End If
 
-                If iter < 2 Then
-                    Console.WriteLine("MINIMIZE iter=" & iter & " f=" & f.ToString("G4") & " pgnorm=" & pgnorm.ToString("G4"))
-                End If
-
                 ' L-BFGS two-loop recursion to get search direction d = -H g
                 Dim d = lbfgsDirection(x, g, sList, yList, rhoList, n, m)
 
