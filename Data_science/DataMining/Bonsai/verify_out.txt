@@ -1,12 +1,56 @@
-﻿OPT_SELFTEST x=2 f=0 ok=True
+﻿MINIMIZE iter=0 f=4 pgnorm=4
+OPT_SELFTEST x=2 f=0 ok=True
 === Bonsai verification ===
+MINIMIZE iter=0 f=114.1 pgnorm=2.083
+MINIMIZE iter=0 f=-3.915 pgnorm=1.804
+MINIMIZE iter=0 f=-3.915 pgnorm=1.806
+MINIMIZE iter=0 f=-3.915 pgnorm=1.802
+MINIMIZE iter=0 f=-3.915 pgnorm=1.806
+MINIMIZE iter=0 f=-3.915 pgnorm=1.797
+MINIMIZE iter=0 f=-3.915 pgnorm=1.807
+MINIMIZE iter=0 f=-3.915 pgnorm=1.803
+MINIMIZE iter=0 f=-3.915 pgnorm=1.807
+MINIMIZE iter=0 f=-3.915 pgnorm=1.8
+MINIMIZE iter=0 f=-3.915 pgnorm=1.806
+MINIMIZE iter=0 f=-3.915 pgnorm=1.809
+MINIMIZE iter=0 f=-3.915 pgnorm=1.8
+MINIMIZE iter=0 f=-3.915 pgnorm=1.805
+MINIMIZE iter=0 f=-3.915 pgnorm=1.797
+MINIMIZE iter=0 f=-3.915 pgnorm=1.801
+MINIMIZE iter=0 f=-3.915 pgnorm=1.804
 Merged N1 and N2 into N7 (dLogL pair)
+MINIMIZE iter=0 f=-4.108 pgnorm=1.757
+MINIMIZE iter=0 f=-4.108 pgnorm=1.761
+MINIMIZE iter=0 f=-4.108 pgnorm=1.752
+MINIMIZE iter=0 f=-4.807 pgnorm=1.573
+MINIMIZE iter=0 f=-4.108 pgnorm=1.756
+MINIMIZE iter=0 f=-4.108 pgnorm=1.749
+MINIMIZE iter=0 f=-4.807 pgnorm=1.568
+MINIMIZE iter=0 f=-4.108 pgnorm=1.754
+MINIMIZE iter=0 f=-4.807 pgnorm=1.572
+MINIMIZE iter=0 f=-4.807 pgnorm=1.564
+MINIMIZE iter=0 f=-4.807 pgnorm=1.573
 Merged N3 and N7 into N8 (dLogL pair)
+MINIMIZE iter=0 f=-4.434 pgnorm=1.683
+MINIMIZE iter=0 f=-4.434 pgnorm=1.678
+MINIMIZE iter=0 f=-5.173 pgnorm=1.486
+MINIMIZE iter=0 f=-4.434 pgnorm=1.683
+MINIMIZE iter=0 f=-5.173 pgnorm=1.491
+MINIMIZE iter=0 f=-5.173 pgnorm=1.484
+MINIMIZE iter=0 f=-5.173 pgnorm=1.484
 Merged N6 and N8 into N9 (dLogL pair)
+MINIMIZE iter=0 f=-5.389 pgnorm=1.53
+MINIMIZE iter=0 f=-5.781 pgnorm=1.37
+MINIMIZE iter=0 f=-5.781 pgnorm=1.373
+MINIMIZE iter=0 f=-5.781 pgnorm=1.37
 Merged N4 and N9 into N10 (dLogL pair)
+MINIMIZE iter=0 f=-77.83 pgnorm=1.047
+MINIMIZE iter=0 f=-77.83 pgnorm=1.047
 Merged N5 and N10 into N11 (dLogL pair)
+MINIMIZE iter=0 f=46.62 pgnorm=9.16
 Bonsai: final logL = -46.62, nodes = 12
 DIAG firstChild.tParent=1 dLogL/dt=-1.834 nChilds=1
+MINIMIZE iter=0 f=46.62 pgnorm=9.16
 OPTTIMES ll0=-46.62 ll1=-46.62 newT=1
 
 LogLikelihood = -46.6238

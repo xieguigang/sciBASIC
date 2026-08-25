@@ -182,7 +182,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
             Dim grad(n - 1) As Double
             For i = 0 To n - 1
-                grad(i) = branchNodes(i).tParent * branchNodes(i).dLoglikdtParent
+                ' Minimise (-loglik): gradient of the objective is -dLoglik/d(logt) = -t * dLoglik/dt.
+                grad(i) = -branchNodes(i).tParent * branchNodes(i).dLoglikdtParent
             Next
             Return (-loglik, grad)
         End Function
