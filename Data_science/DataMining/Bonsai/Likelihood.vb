@@ -146,7 +146,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' mirroring ``der2LeafTree``.
         ''' der = sum_g (sqDists_g / totVar_g - 1) / totVar_g
         ''' </summary>
-        Public Function der2LeafTree(t12 As Double, ParamArray args() As Object) As Double
+        Public Function der2LeafTree(t12 As Double, args() As Object) As Double
             Dim summedLtqsVars = DirectCast(args(0), Double())
             Dim sqDists = DirectCast(args(1), Double())
             Dim D = summedLtqsVars.Length
@@ -187,7 +187,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 ub *= 10
             End While
 
-            Dim root = Optimizer.BrentZero(AddressOf der2LeafTree, lb, ub, summedLtqsVars, sqDists, 1.0E-7)
+            Dim root = Optimizer.BrentZero(AddressOf der2LeafTree, lb, ub, New Object() {summedLtqsVars, sqDists})
             Return (root, True)
         End Function
 
@@ -223,7 +223,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' f = -sum_g [ sum_i log(wbar_i) - log(W_g) - sum_i wbar_i sqDists_i ]
         ''' grad = -t_i * sum_g wbar_i (sqDists_i wbar_i - 1 + wbar_i / W_g)
         ''' </summary>
-        Private Function logLGradStarTreeLogT(logt_i As Double(), ParamArray args() As Object) As (f As Double, grad As Double())
+        Private Function logLGradStarTreeLogT(logt_i As Double(), args() As Object) As (f As Double, grad As Double())
             Dim ltqsVars_gi = DirectCast(args(0), Double()())
             Dim ltqs_gi = DirectCast(args(1), Double()())
             Dim nChild = logt_i.Length

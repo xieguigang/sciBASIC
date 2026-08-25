@@ -151,7 +151,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 bounds.Add((tLB, tUB))
             Next
 
-            Dim res = Optimizer.Minimize(AddressOf logLGradAllTimes, x0, bounds, args:=(root))
+            Dim res = Optimizer.Minimize(AddressOf logLGradAllTimes, x0, bounds, args:=New Object() {root})
 
             For i = 0 To n - 1
                 branchNodes(i).tParent = Math.Exp(res.x(i))
@@ -166,7 +166,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' Objective for <see cref="optTimes"/>: negative complete log-likelihood and its gradient w.r.t. each
         ''' branch time (in log-time space). grad_lt_i = t_i * dLoglik/dt_i.
         ''' </summary>
-        Private Shared Function logLGradAllTimes(logt As Double(), ParamArray args() As Object) As (f As Double, grad As Double())
+        Private Shared Function logLGradAllTimes(logt As Double(), args() As Object) As (f As Double, grad As Double())
             Dim root = DirectCast(args(0), BonsaiNode)
             Dim allNodes = GetAllNodesFlat(root)
             Dim branchNodes = allNodes.Where(Function(n) Not n.isRootNode()).ToList
