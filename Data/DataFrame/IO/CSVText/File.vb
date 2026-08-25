@@ -790,6 +790,8 @@ B21,B22,B23,...
                 Dim buf As String() = path.MapNetFile.ReadAllLines(encoding, verbose:=Not mute)
                 Dim result As List(Of RowObject) = FileLoader.Load(buf, trimBlanks, skipWhile, isTsv)
 
+                Erase buf
+
                 Return result
             Else
                 Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=Not mute)
@@ -805,7 +807,9 @@ B21,B22,B23,...
 
             Using reader As New StreamReader(file, encoding)
                 Dim allLines As String() = reader.IteratesStream.ToArray
-                Dim data = FileLoader.Load(allLines, trimBlanks, skipWhile, isTsv)
+                Dim data As List(Of RowObject) = FileLoader.Load(allLines, trimBlanks, skipWhile, isTsv)
+
+                Erase allLines
 
                 Return data
             End Using
@@ -905,7 +909,7 @@ B21,B22,B23,...
                     Where mrow.value.Contains(row)
                     Select row '
 
-                For Each x In LQuery
+                For Each x As RowObject In LQuery
                     Call innerTable.Remove(x)
                 Next
             Next

@@ -186,5 +186,7 @@ Public Module NetworkFileIO
         If auto_close Then
             Call file.Dispose()
         End If
+
+        Call df.Dispose()
     End Function
 End Module
