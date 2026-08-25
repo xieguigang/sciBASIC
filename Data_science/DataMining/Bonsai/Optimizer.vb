@@ -27,6 +27,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Math = System.Math
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 

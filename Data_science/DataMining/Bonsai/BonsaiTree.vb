@@ -200,8 +200,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' </summary>
         Public Function mergeChildrenUB(Optional verbose As Boolean = False) As Boolean
             Dim childs = root.childs
-            Dim C = childs.Count
-            If C < 2 Then Return False
+            Dim nC = childs.Count
+            If nC < 2 Then Return False
 
             ' Root as-if-root position
             Likelihood.calcLogLComplete(root)
@@ -210,8 +210,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
             Dim bestD = 0.0
             Dim bestI = -1, bestJ = -1
-            For i = 0 To C - 2
-                For j = i + 1 To C - 1
+            For i = 0 To nC - 2
+                For j = i + 1 To nC - 1
                     Dim d = Likelihood.calcSingleDLogL(xrAsIfRoot_g, WAsIfRoot_g, childs(i), childs(j))
                     If d > bestD Then
                         bestD = d
