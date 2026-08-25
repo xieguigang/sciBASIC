@@ -299,14 +299,25 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim ltqsWOChild = New Double(D - 1) {}
             For g = 0 To D - 1
                 WWOChild(g) = WAsIfRoot_g(g) - wbarChild_g(g)
-                ltqsWOChild(g) = (ltqsTimesW(g) - wbarChild_g(g) * child.ltqs(g)) / WWOChild(g)
+                If WWOChild(g) <= 1.0E-12 Then
+                    ' The "rest of the tree" carries no data (empty remainder): its position is
+                    ' unconstrained, so it coincides with the child and contributes zero variance.
+                    ltqsWOChild(g) = child.ltqs(g)
+                Else
+                    ltqsWOChild(g) = (ltqsTimesW(g) - wbarChild_g(g) * child.ltqs(g)) / WWOChild(g)
+                End If
             Next
 
             Dim sqDist = New Double(D - 1) {}
             Dim totalVars = New Double(D - 1) {}
             For g = 0 To D - 1
-                totalVars(g) = child.getLtqsVars()(g) + ltqsWOChild(g)
-                sqDist(g) = (ltqsWOChild(g) - child.ltqs(g)) ^ 2
+                If WWOChild(g) <= 1.0E-12 Then
+                    totalVars(g) = child.getLtqsVars()(g)
+                    sqDist(g) = 0.0
+                Else
+                    totalVars(g) = child.getLtqsVars()(g) + ltqsWOChild(g)
+                    sqDist(g) = (ltqsWOChild(g) - child.ltqs(g)) ^ 2
+                End If
             Next
             child.dLoglikdtParent = der2LeafTree(child.tParent, New Object() {totalVars, sqDist})
 
