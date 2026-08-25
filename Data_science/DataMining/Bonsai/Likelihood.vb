@@ -26,6 +26,7 @@
 ' /********************************************************************************/
 
 Imports Microsoft.VisualBasic.Linq
+Imports System.Runtime.CompilerServices
 
 Namespace Microsoft.VisualBasic.DataMining.Bonsai
 

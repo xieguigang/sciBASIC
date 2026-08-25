@@ -40,12 +40,12 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' <summary>
         ''' Delegate for a scalar objective that also returns its gradient.
         ''' </summary>
-        Public Delegate Function ObjWithGrad(x As Double(), ParamArray args() As Object) As (f As Double, grad As Double())
+        Public Delegate Function ObjWithGrad(x As Double(), args() As Object) As (f As Double, grad As Double())
 
         ''' <summary>
         ''' Delegate for a 1-D scalar function f(t) whose root we want.
         ''' </summary>
-        Public Delegate Function ScalarFunc(t As Double, ParamArray args() As Object) As Double
+        Public Delegate Function ScalarFunc(t As Double, args() As Object) As Double
 
         ' =================================================================================
         ' 1-D Brent root finder (translated from scipy.optimize.brentq)

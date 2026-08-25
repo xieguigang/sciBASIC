@@ -76,7 +76,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Me.nGenes = If(nSamples > 0, means(0).Length, 0)
 
             If stds Is Nothing Then
-                Me.stds = means.Select(Function(row) row.Select(Function(_) 1.0).ToArray).ToArray
+                Me.stds = means.Select(Function(row) row.Select(Function(r) 1.0).ToArray).ToArray
             Else
                 Me.stds = stds
             End If
