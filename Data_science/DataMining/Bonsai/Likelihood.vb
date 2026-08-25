@@ -357,6 +357,73 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             node.prefactor += loglikStarTree(node.childs, xr, W)
         End Sub
 
+        ' =================================================================================
+        ' Candidate-merge scoring (used by the tree search in BonsaiTree)
+        ' =================================================================================
+
+        ''' <summary>
+        ''' dLogL of merging two candidate children child1, child2 under a root described by (xrAsIfRoot_g, WAsIfRoot_g).
+        ''' Mirrors calcSingleDLogL: the pair is modelled as a 3-leaf star (the two candidates plus the rest of
+        ''' the subtree as a single pseudo-leaf), the three times are optimised, and the gain is the difference in
+        ''' star log-likelihood before/after creation of the ancestor. The returned value is 0.5 * dLogL (the
+        ''' factor used by the reference implementation to avoid double counting).
+        ''' </summary>
+        Public Function calcSingleDLogL(xrAsIfRoot_g As Double(), WAsIfRoot_g As Double(), child1 As BonsaiNode, child2 As BonsaiNode) As Double
+            Dim D = xrAsIfRoot_g.Length
+
+            ' Equivalent leaf of the rest of the tree = root minus child1
+            Dim vars1 = child1.getLtqsVars()
+            Dim wbar1 = vars1.Select(Function(v) 1.0 / (v + child1.tParent)).ToArray
+            Dim rootMinusFirstW = New Double(D - 1) {}
+            Dim rootMinusFirstLtqs = New Double(D - 1) {}
+            For g = 0 To D - 1
+                rootMinusFirstW(g) = WAsIfRoot_g(g) - wbar1(g)
+                rootMinusFirstLtqs(g) = xrAsIfRoot_g(g) * WAsIfRoot_g(g) - wbar1(g) * child1.ltqs(g)
+            Next
+
+            ' Then subtract child2 from that remainder -> the "R" pseudo-leaf
+            Dim vars2 = child2.getLtqsVars()
+            Dim wbar2 = vars2.Select(Function(v) 1.0 / (v + child2.tParent)).ToArray
+            Dim WR_g = New Double(D - 1) {}
+            Dim ltqsR = New Double(D - 1) {}
+            For g = 0 To D - 1
+                WR_g(g) = rootMinusFirstW(g) - wbar2(g)
+                ltqsR(g) = (rootMinusFirstLtqs(g) - wbar2(g) * child2.ltqs(g)) / WR_g(g)
+            Next
+
+            ' Old likelihood: star with all three as direct children of root
+            Dim oldLeafs = New List(Of BonsaiNode) From {child1, child2, makePseudoLeaf(ltqsR, WR_g)}
+            Dim (oldLoglik, _) = loglikGradStarTree(oldLeafs, xrAsIfRoot_g, WAsIfRoot_g)
+
+            ' New likelihood: star of (merged ancestor, R) where the ancestor is optimised
+            Dim ltqs_gi = New Double(D - 1)() {child1.ltqs, child2.ltqs, ltqsR}
+            Dim lv_gi = New Double(D - 1)() {vars1, vars2, WR_g.Select(Function(w) 1.0 / w).ToArray}
+            Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
+
+            Dim (newLoglik, _, success) = optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
+            If Not success Then
+                Return 0.0
+            End If
+
+            Dim dLogL = newLoglik - oldLoglik
+            If dLogL < 0 Then
+                dLogL = 0.0
+            End If
+            Return 0.5 * dLogL
+        End Function
+
+        ''' <summary>
+        ''' Build a transient pseudo-leaf node wrapping an effective position/precision (used for scoring only).
+        ''' </summary>
+        Private Function makePseudoLeaf(ltqs As Double(), W As Double()) As BonsaiNode
+            Dim n = New BonsaiNode With {
+                .ltqs = ltqs,
+                .isLeaf = True
+            }
+            n.setLtqsVarsOrW(W_g:=W)
+            Return n
+        End Function
+
         ' ----- small vector helpers -----
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
