@@ -1,0 +1,17 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/" />
+  <Project Path="Bonsai/Bonsai.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>
