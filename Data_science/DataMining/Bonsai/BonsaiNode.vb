@@ -102,6 +102,14 @@ Public Class BonsaiNode
     ''' </summary>
     Public n_ds_nodes As Integer
 
+    ''' <summary>
+    ''' Scratch layout coordinates used only by the GDI+ tree visualization (Plot.PlotTree).
+    ''' x = cumulative branch time from the root; y = leaf slot (or child-average for internals).
+    ''' Never read by the Bonsai algorithm itself.
+    ''' </summary>
+    Public x As Double = 0.0
+    Public y As Double = 0.0
+
     Sub New(Optional nodeInd As Integer = -1,
             Optional childs As List(Of BonsaiNode) = Nothing,
             Optional par As BonsaiNode = Nothing,
