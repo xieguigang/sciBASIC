@@ -4,7 +4,20 @@ Imports System
 Imports System.Linq
 
 Module Program
+    ' simple quadratic objective for optimizer self-test
+    Private Function quad(x As Double(), args() As Object) As (f As Double, grad As Double())
+        Dim f = (x(0) - 2.0) ^ 2
+        Dim g = New Double(0) {2.0 * (x(0) - 2.0)}
+        Return (f, g)
+    End Function
+
     Sub Main()
+        ' optimizer self-test
+        Dim bounds As New List(Of (lo As Double, hi As Double)) From {( -10.0, 10.0)}
+        Dim r = Microsoft.VisualBasic.DataMining.Bonsai.Optimizer.Minimize(AddressOf quad, New Double() {0.0}, bounds)
+        Console.WriteLine("OPT_SELFTEST x=" & r.x(0).ToString("G4") & " f=" & r.fun.ToString("G4") & " ok=" & r.success)
+
+
         ' Small synthetic dataset: 6 points in 3-D, two tight clusters.
         Dim rnd As New Random(42)
         Dim D = 3
