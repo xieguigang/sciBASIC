@@ -397,14 +397,17 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
             ' Old likelihood: star with all three as direct children of root
             Dim oldLeafs = New List(Of BonsaiNode) From {child1, child2, makePseudoLeaf(ltqsR, WR_g)}
-            Dim (oldLoglik, _) = loglikGradStarTree(oldLeafs, xrAsIfRoot_g, WAsIfRoot_g)
+            Dim lg = loglikGradStarTree(oldLeafs, xrAsIfRoot_g, WAsIfRoot_g)
+            Dim oldLoglik = lg.loglik
 
             ' New likelihood: star of (merged ancestor, R) where the ancestor is optimised
             Dim ltqs_gi = New Double(D - 1)() {child1.ltqs, child2.ltqs, ltqsR}
             Dim lv_gi = New Double(D - 1)() {vars1, vars2, WR_g.Select(Function(w) 1.0 / w).ToArray}
             Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
 
-            Dim (newLoglik, _, success) = optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
+            Dim o3 = optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
+            Dim newLoglik = o3.loglik
+            Dim success = o3.success
             If Not success Then
                 Return 0.0
             End If

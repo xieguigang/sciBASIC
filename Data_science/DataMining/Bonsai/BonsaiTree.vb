@@ -253,7 +253,9 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim ltqs_gi = New Double(D - 1)() {child1.ltqs, child2.ltqs, ltqsR}
             Dim lv_gi = New Double(D - 1)() {vars1, vars2, WR_g.Select(Function(w) 1.0 / w).ToArray}
             Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
-            Dim (_, tOpt, success) = Likelihood.optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
+            Dim o3 = Likelihood.optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
+            Dim tOpt = o3.tOpt
+            Dim success = o3.success
             If Not success Then
                 Return
             End If
