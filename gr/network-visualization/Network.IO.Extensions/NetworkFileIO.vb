@@ -77,7 +77,7 @@ Public Module NetworkFileIO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of V As Node, E As NetworkEdge)(network As Network(Of V, E), output$,
+    Public Function Save(Of V As FileStream.Node, E As NetworkEdge)(network As Network(Of V, E), output$,
                                                          Optional encoding As Encoding = Nothing,
                                                          Optional silent As Boolean = True) As Boolean
 
@@ -99,7 +99,7 @@ Public Module NetworkFileIO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of V As Node, E As NetworkEdge)(g As Network(Of V, E), output As IFileSystemEnvironment,
+    Public Function Save(Of V As FileStream.Node, E As NetworkEdge)(g As Network(Of V, E), output As IFileSystemEnvironment,
                                                          Optional encoding As Encoding = Nothing,
                                                          Optional silent As Boolean = True) As Boolean
         Dim args As New Write_csv.Arguments With {
@@ -116,7 +116,7 @@ Public Module NetworkFileIO
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Load(Of V As Node, E As NetworkEdge)(directory As String, Optional silent As Boolean = True) As Network(Of V, E)
+    Public Function Load(Of V As FileStream.Node, E As NetworkEdge)(directory As String, Optional silent As Boolean = True) As Network(Of V, E)
         Return New Network(Of V, E) With {
             .edges = $"{directory}/network-edges.csv".LoadCsv(Of E)(mute:=silent),
             .nodes = $"{directory}/nodes.csv".LoadCsv(Of V)(mute:=silent),
@@ -150,7 +150,7 @@ Public Module NetworkFileIO
         Else
             Return New NetworkTables With {
                 .edges = tables.edges.LoadCsv(Of NetworkEdge)(mute:=Not verbose),
-                .nodes = tables.nodes.LoadCsv(Of Node)(mute:=Not verbose),
+                .nodes = tables.nodes.LoadCsv(Of FileStream.Node)(mute:=Not verbose),
                 .meta = loadMetaJson(localDir.FromLocalFileSystem(dir))
             }
         End If
