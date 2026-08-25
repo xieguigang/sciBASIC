@@ -44,6 +44,12 @@ Module Program
         b.maxTimeIters = 50
         b.Fit(means, stds, names)
 
+        ' diagnostics: gradient of first branch time
+        Dim firstChild = b.Tree.root.childs(0)
+        Console.WriteLine("DIAG firstChild.tParent=" & firstChild.tParent.ToString("G4") &
+                          " dLogL/dt=" & firstChild.dLoglikdtParent.ToString("G4") &
+                          " nChilds=" & b.Tree.root.childs.Count)
+
         Console.WriteLine()
         Console.WriteLine("LogLikelihood = " & b.LogLikelihood().ToString("G6"))
         Console.WriteLine("Newick       = " & b.ToNewick())
