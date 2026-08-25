@@ -131,8 +131,8 @@ Public Class PointSet
             meanG /= N
             Dim ss = 0.0
             For i = 0 To N - 1
-                Dim d = means(i)(g) - meanG
-                ss += d * d
+                Dim delta = means(i)(g) - meanG
+                ss += delta * delta
             Next
             vg(g) = ss / (N - 1)
             If vg(g) <= 0.0 Then vg(g) = 1.0
@@ -195,8 +195,9 @@ Public Class PointSet
         Dim newMeans As Double()() = New Double(nSamples - 1)() {}
         Dim newStds As Double()() = New Double(nSamples - 1)() {}
         For i = 0 To nSamples - 1
-            newMeans(i) = keep.Select(Function(g) means(i)(g)).ToArray
-            newStds(i) = keep.Select(Function(g) stds(i)(g)).ToArray
+            Dim ii = i
+            newMeans(i) = keep.Select(Function(g) means(ii)(g)).ToArray
+            newStds(i) = keep.Select(Function(g) stds(ii)(g)).ToArray
         Next
         Return New PointSet(newMeans, newStds, names)
     End Function
