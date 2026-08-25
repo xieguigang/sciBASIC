@@ -172,13 +172,13 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Next
 
             Dim lb = 0.0
-            If der2LeafTree(lb, summedLtqsVars, sqDists) <= 0 Then
+            If der2LeafTree(lb, New Object() {summedLtqsVars, sqDists}) <= 0 Then
                 Return (0.0, True)
             End If
 
             Dim ub = 1.0
             Dim counter = 0
-            While der2LeafTree(ub, summedLtqsVars, sqDists) >= 0
+            While der2LeafTree(ub, New Object() {summedLtqsVars, sqDists}) >= 0
                 counter += 1
                 If counter > 10 OrElse lb > 1.0E6 Then
                     Return (Nothing, False)
@@ -211,7 +211,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Next
 
             Dim res = Optimizer.Minimize(AddressOf logLGradStarTreeLogT, t0log, bounds,
-                                      args:=(ltqsVars_gi, ltqs_gi))
+                                      ltqsVars_gi, ltqs_gi)
 
             Dim topt = res.x.Select(Function(lt) System.Math.Exp(lt)).ToArray
             Return (-res.fun, topt, res.success)
@@ -233,17 +233,17 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim W_g(D - 1) As Double
             Dim xr_g(D - 1) As Double
             Dim wbar_gi(nChild - 1)() As Double
-            For c = 0 To nChild - 1
-                wbar_gi(c) = New Double(D - 1) {}
+            For k = 0 To nChild - 1
+                wbar_gi(k) = New Double(D - 1) {}
             Next
 
             For g = 0 To D - 1
                 Dim W = 0.0, xr = 0.0
-                For c = 0 To nChild - 1
-                    Dim wbar = 1.0 / (ltqsVars_gi(g)(c) + t_i(c))
-                    wbar_gi(c)(g) = wbar
+                For k = 0 To nChild - 1
+                    Dim wbar = 1.0 / (ltqsVars_gi(g)(k) + t_i(k))
+                    wbar_gi(k)(g) = wbar
                     W += wbar
-                    xr += wbar * ltqs_gi(g)(c)
+                    xr += wbar * ltqs_gi(g)(k)
                 Next
                 W_g(g) = W
                 xr_g(g) = xr / W
@@ -252,8 +252,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim loglik = 0.0
             For g = 0 To D - 1
                 loglik += System.Math.Log(W_g(g))
-                For c = 0 To nChild - 1
-                    loglik -= System.Math.Log(wbar_gi(c)(g))
+                For k = 0 To nChild - 1
+                    loglik -= System.Math.Log(wbar_gi(k)(g))
                 Next
             Next
 

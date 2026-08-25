@@ -169,7 +169,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         Private Shared Function logLGradAllTimes(logt As Double(), args() As Object) As (f As Double, grad As Double())
             Dim root = DirectCast(args(0), BonsaiNode)
             Dim allNodes = GetAllNodesFlat(root)
-            Dim branchNodes = allNodes.Where(Function(n) Not n.isRootNode()).ToList
+            Dim branchNodes = allNodes.Where(Function(ni) Not ni.isRootNode()).ToList
             Dim n = branchNodes.Count
 
             ' apply the proposed times
