@@ -177,8 +177,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             If node.isLeafNode() Then
                 out.Add(node)
             Else
-                For Each c In node.childs
-                    collectLeafs(c, out)
+                For Each child In node.childs
+                    collectLeafs(child, out)
                 Next
             End If
         End Sub
@@ -237,8 +237,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 Return 1
             End If
             Dim n = 0
-            For Each c In childs
-                n += c.countDataLeafs()
+            For Each child In childs
+                n += child.countDataLeafs()
             Next
             Return n
         End Function

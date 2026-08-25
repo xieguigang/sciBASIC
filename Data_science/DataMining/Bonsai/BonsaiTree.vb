@@ -52,8 +52,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         Public ReadOnly nGenes As Integer
 
         ' Box bounds for the log-time optimisation (mirrors scipy L-BFGS-B bounds in optTimes)
-        Private Shared ReadOnly tLB As Double = Math.Log(1.0E-6)
-        Private Shared ReadOnly tUB As Double = Math.Log(1.0E6)
+        Private Shared ReadOnly tLB As Double = Math.Log(0.000001)
+        Private Shared ReadOnly tUB As Double = Math.Log(1000000.0)
 
         Private maxNodeInd As Integer = -1
 
@@ -146,7 +146,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             End If
 
             Dim n = branchNodes.Count
-            Dim x0 = branchNodes.Select(Function(nd) Math.Log(Math.Max(nd.tParent, 1.0E-6))).ToArray
+            Dim x0 = branchNodes.Select(Function(nd) Math.Log(Math.Max(nd.tParent, 0.000001))).ToArray
             Dim bounds As New List(Of (lo As Double, hi As Double))
             For i = 0 To n - 1
                 bounds.Add((tLB, tUB))
@@ -351,8 +351,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 calcLogLComplete()
             End While
 
-            For Each c In node.childs.ToArray
-                splitZeroTime(c)
+            For Each child In node.childs.ToArray
+                splitZeroTime(child)
             Next
         End Sub
 
@@ -430,8 +430,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
 
         Private Shared Sub collect(n As BonsaiNode, out As List(Of BonsaiNode))
             out.Add(n)
-            For Each c In n.childs
-                collect(c, out)
+            For Each child In n.childs
+                collect(child, out)
             Next
         End Sub
     End Class
