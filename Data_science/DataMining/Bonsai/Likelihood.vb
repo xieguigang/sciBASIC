@@ -207,7 +207,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 bounds.Add((lb, ub))
             Next
 
-            Dim res = LBFGSB.Minimize(AddressOf logLGradStarTreeLogT, t0log, bounds,
+            Dim res = Optimizer.Minimize(AddressOf logLGradStarTreeLogT, t0log, bounds,
                                       args:=(ltqsVars_gi, ltqs_gi))
 
             Dim topt = res.x.Select(Function(lt) Math.Exp(lt)).ToArray
@@ -220,7 +220,9 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' f = -sum_g [ sum_i log(wbar_i) - log(W_g) - sum_i wbar_i sqDists_i ]
         ''' grad = -t_i * sum_g wbar_i (sqDists_i wbar_i - 1 + wbar_i / W_g)
         ''' </summary>
-        Private Function logLGradStarTreeLogT(logt_i As Double(), ltqsVars_gi As Double()(), ltqs_gi As Double()()) As (f As Double, grad As Double())
+        Private Function logLGradStarTreeLogT(logt_i As Double(), ParamArray args() As Object) As (f As Double, grad As Double())
+            Dim ltqsVars_gi = DirectCast(args(0), Double()())
+            Dim ltqs_gi = DirectCast(args(1), Double()())
             Dim nChild = logt_i.Length
             Dim D = ltqs_gi.Length
             Dim t_i = logt_i.Select(Function(lt) Math.Exp(lt)).ToArray
