@@ -487,13 +487,14 @@ Public Class BonsaiTree
     ''' down under A. The move is self-inverse, so re-applying it reverts the topology.
     ''' </summary>
     Private Sub ApplyNNI(A As BonsaiNode, C As BonsaiNode, S As BonsaiNode, P As BonsaiNode)
-        ' Move A's child C up to become a child of A's parent P (replacing A's slot at P).
-        P.childs.Remove(A)
+        ' Nearest-neighbour interchange around edge (P, A): the edge itself is NOT broken, A stays a child of
+        ' P. We swap one of A's children (C) up to P with A's sibling S (which moves down under A).
+        '   - C leaves A and becomes a child of P.
+        '   - S leaves P and becomes a child of A.
         P.childs.Add(C)
         C.par = P
         C.tParent = A.tParent
 
-        ' Move A's sibling S down to become a child of A (A now has S instead of C).
         P.childs.Remove(S)
         A.childs.Remove(C)
         A.childs.Add(S)
@@ -676,6 +677,15 @@ Public Class BonsaiTree
 
             For Each X In Xcandidates
                 Dim subtree = X.getLeafs().Select(Function(l) l.nodeInd).ToHashSet()
+                ' Ancestors of X (so we never regraft onto an edge that lies on X's own root path, which would
+                ' sever X from the tree).
+                Dim ancestors = New System.Collections.Generic.HashSet(Of Integer)
+                Dim anc = X.par
+                While anc IsNot Nothing
+                    ancestors.Add(anc.nodeInd)
+                    anc = anc.par
+                End While
+                Dim baseLeafCount = root.getLeafs().Count
                 Dim baseLL = calcLogLComplete()
                 Dim bestGain = 0.000001
                 Dim bestEpar As BonsaiNode = Nothing, bestEchild As BonsaiNode = Nothing, bestSt As SPRState = Nothing
@@ -685,8 +695,8 @@ Public Class BonsaiTree
                     ' Copy the child list: ApplySPR mutates Epar.childs, so we must not enumerate it directly.
                     Dim echildren = New System.Collections.Generic.List(Of BonsaiNode)(Epar.childs)
                     For Each Echild In echildren
-                        ' Cannot regraft into X's own subtree.
-                        If subtree.Contains(Echild.nodeInd) Then Continue For
+                        ' Cannot regraft into X's own subtree or onto X's root path (would detach X).
+                        If subtree.Contains(Echild.nodeInd) OrElse ancestors.Contains(Echild.nodeInd) Then Continue For
                         Dim st = ApplySPR(X, Epar, Echild)
                         Dim ll = calcLogLComplete()
                         If ll - baseLL > bestGain Then
@@ -696,6 +706,9 @@ Public Class BonsaiTree
                             bestSt = st
                         End If
                         RestoreSPR(st)
+                        If verbose AndAlso root.getLeafs().Count <> baseLeafCount Then
+                            Console.WriteLine($"    [diag] SPR RESTORE FAILED: leaves {root.getLeafs().Count} != base {baseLeafCount}")
+                        End If
                     Next
                 Next
 
