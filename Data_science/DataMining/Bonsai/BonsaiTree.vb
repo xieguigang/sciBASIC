@@ -516,6 +516,7 @@ Public Class BonsaiTree
         If A.childs.Count < 1 Then Return False
 
         Dim baseLL = calcLogLComplete()
+        Dim baseLeafCount = root.getLeafs().Count
         Dim bestGain = 0.000001
         Dim bestC As BonsaiNode = Nothing
         Dim bestState As NNIState = Nothing
@@ -531,6 +532,9 @@ Public Class BonsaiTree
                 bestState = st
             End If
             RestoreNNI(st)
+            If verbose AndAlso root.getLeafs().Count <> baseLeafCount Then
+                Console.WriteLine($"    [diag] RESTORE FAILED on A{A.nodeInd}: leaves {root.getLeafs().Count} != base {baseLeafCount}")
+            End If
         Next
 
         If bestC Is Nothing Then Return False
@@ -571,7 +575,12 @@ Public Class BonsaiTree
 
             Dim improved = False
             For Each A In internals
-                If TryNNI(A, maxiter, verbose) Then improved = True
+                If TryNNI(A, maxiter, verbose) Then
+                    improved = True
+                    If verbose Then
+                        Console.WriteLine($"    [diag] after NNI on A{A.nodeInd}: totalNodes={GetAllNodes().Count} leafs={root.getLeafs().Count}")
+                    End If
+                End If
             Next
             If Not improved OrElse rounds >= maxRounds Then Exit Do
         Loop
