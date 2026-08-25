@@ -220,7 +220,7 @@ Module Plot
                     Dim py = (H - pad) - (coords2d(i)(1) - minY) / ry * (H - 2 * pad)
                     Dim tt = (branchTimes(i) - tMin) / tr
                     Using br As New SolidBrush(ColorScale(tt))
-                        g.FillEllipse(br, CSng(px - 3.5), CSng(py - 3.5), 7, 7)
+                        g.FillEllipse(br, New RectangleF(CSng(px - 3.5), CSng(py - 3.5), 7, 7))
                     End Using
                 Next
 
@@ -299,9 +299,9 @@ Module Plot
                 For Each n In nodes
                     Dim px = ToX(n.x), py = ToY(n.y)
                     If n.isLeafNode() Then
-                        g.FillEllipse(Brushes.SteelBlue, px - 3, py - 3, 6, 6)
+                        g.FillEllipse(Brushes.SteelBlue, New RectangleF(px - 3, py - 3, 6, 6))
                     Else
-                        g.FillEllipse(Brushes.Black, px - 3.5, py - 3.5, 7, 7)
+                        g.FillEllipse(Brushes.Black, New RectangleF(px - 3.5, py - 3.5, 7, 7))
                         g.DrawString(n.nodeId, New Font("Consolas", 8), Brushes.Black, px + 4, py - 6)
                     End If
                 Next

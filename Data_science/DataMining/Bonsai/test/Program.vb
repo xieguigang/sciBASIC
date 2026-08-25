@@ -117,7 +117,10 @@ Module Program
             ' top-K gene indices by variance
             Dim order = Enumerable.Range(0, nGenes).OrderByDescending(Function(g) varOfGene(g)).ToArray()
             Dim keep = If(topK < nGenes, topK, nGenes)
-            Dim keepSet = New HashSet(Of Integer)(order.Take(keep))
+            Dim keepSet As New HashSet(Of Integer)
+            For Each gg In order.Take(keep)
+                keepSet.Add(gg)
+            Next
             Dim keepIndex = keepSet.OrderBy(Function(g) g).ToArray()   ' sorted for stable pass-2 lookup
 
             ' ---- pass 2 ----
