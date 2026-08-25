@@ -139,14 +139,19 @@ Public Module Likelihood
     ''' Derivative of the 2-leaf log-likelihood with respect to the combined diffusion time,
     ''' mirroring ``der2LeafTree``.
     ''' der = sum_g (sqDists_g / totVar_g - 1) / totVar_g
+    ''' where totVar_g = t12 + scale_g * summedLtqsVars_g honours the optional v_g diffusion prior
+    ''' (scale_g = 1 by default, reproducing the original behaviour exactly).
+    ''' args = (summedLtqsVars, sqDists, scale?) with scale optional.
     ''' </summary>
     Public Function der2LeafTree(t12 As Double, args() As Object) As Double
         Dim summedLtqsVars = DirectCast(args(0), Double())
         Dim sqDists = DirectCast(args(1), Double())
+        Dim scale = If(args.Length > 2, DirectCast(args(2), Double()), Nothing)
         Dim D = summedLtqsVars.Length
         Dim der = 0.0
         For g = 0 To D - 1
-            Dim totVar = t12 + summedLtqsVars(g)
+            Dim s = If(scale Is Nothing, 1.0, scale(g))
+            Dim totVar = t12 + s * summedLtqsVars(g)
             der += (sqDists(g) / totVar - 1.0) / totVar
         Next
         Return der
@@ -156,7 +161,7 @@ Public Module Likelihood
     ''' Optimal total diffusion time between two leaves (on a star of two), found by bracketing the
     ''' root of <see cref="der2LeafTree"/> with bisection/brentq. Mirrors ``getOptTime2LeafTree``.
     ''' </summary>
-    Public Function getOptTime2LeafTree(ltqs1 As Double(), ltqsVars1 As Double(), ltqs2 As Double(), ltqsVars2 As Double()) As (tOpt As Double, converged As Boolean)
+    Public Function getOptTime2LeafTree(ltqs1 As Double(), ltqsVars1 As Double(), ltqs2 As Double(), ltqsVars2 As Double(), Optional scale As Double() = Nothing) As (tOpt As Double, converged As Boolean)
         Dim D = ltqs1.Length
         Dim summedLtqsVars(D - 1) As Double
         Dim sqDists(D - 1) As Double
@@ -165,14 +170,18 @@ Public Module Likelihood
             sqDists(g) = (ltqs1(g) - ltqs2(g)) ^ 2
         Next
 
+        Dim args = If(scale Is Nothing,
+                      New Object() {summedLtqsVars, sqDists},
+                      New Object() {summedLtqsVars, sqDists, scale})
+
         Dim lb = 0.0
-        If der2LeafTree(lb, New Object() {summedLtqsVars, sqDists}) <= 0 Then
+        If der2LeafTree(lb, args) <= 0 Then
             Return (0.0, True)
         End If
 
         Dim ub = 1.0
         Dim counter = 0
-        While der2LeafTree(ub, New Object() {summedLtqsVars, sqDists}) >= 0
+        While der2LeafTree(ub, args) >= 0
             counter += 1
             If counter > 10 OrElse lb > 1000000.0 Then
                 Return (Nothing, False)
@@ -181,7 +190,7 @@ Public Module Likelihood
             ub *= 10
         End While
 
-        Dim root = Optimizer.BrentZero(AddressOf der2LeafTree, lb, ub, New Object() {summedLtqsVars, sqDists})
+        Dim root = Optimizer.BrentZero(AddressOf der2LeafTree, lb, ub, args)
         Return (root, True)
     End Function
 
@@ -194,7 +203,7 @@ Public Module Likelihood
     ''' the rest of the tree as a third pseudo-child) in log-space with a bounded L-BFGS optimisation.
     ''' Returns the optimised times and the achieved log-likelihood. Mirrors ``optimiseT3LeafStar``.
     ''' </summary>
-    Public Function optimiseT3LeafStar(ltqs_gi As Double()(), ltqsVars_gi As Double()(), t0_i As Double()) As (loglik As Double, tOpt As Double(), success As Boolean)
+    Public Function optimiseT3LeafStar(ltqs_gi As Double()(), ltqsVars_gi As Double()(), t0_i As Double(), Optional scale As Double() = Nothing) As (loglik As Double, tOpt As Double(), success As Boolean)
         Dim nChild = t0_i.Length
         Dim t0log = t0_i.Select(Function(t) System.Math.Log(System.Math.Max(t, 0.0001))).ToArray
 
@@ -204,8 +213,14 @@ Public Module Likelihood
             bounds.Add((lb, ub))
         Next
 
-        Dim res = Optimizer.Minimize(AddressOf logLGradStarTreeLogT, t0log, bounds,
-                                  ltqsVars_gi, ltqs_gi)
+        Dim optArgs As Object()
+        If scale Is Nothing Then
+            optArgs = New Object() {ltqsVars_gi, ltqs_gi}
+        Else
+            optArgs = New Object() {ltqsVars_gi, ltqs_gi, scale}
+        End If
+
+        Dim res = Optimizer.Minimize(AddressOf logLGradStarTreeLogT, t0log, bounds, optArgs)
 
         Dim topt = res.x.Select(Function(lt) System.Math.Exp(lt)).ToArray
         Return (-res.fun, topt, res.success)
@@ -220,6 +235,7 @@ Public Module Likelihood
     Private Function logLGradStarTreeLogT(logt_i As Double(), args() As Object) As (f As Double, grad As Double())
         Dim ltqsVars_gi = DirectCast(args(0), Double()())
         Dim ltqs_gi = DirectCast(args(1), Double()())
+        Dim scale = If(args.Length > 2, DirectCast(args(2), Double()), Nothing)
         Dim nChild = logt_i.Length
         Dim D = ltqs_gi.Length
         Dim t_i = logt_i.Select(Function(lt) System.Math.Exp(lt)).ToArray
@@ -232,9 +248,10 @@ Public Module Likelihood
         Next
 
         For g = 0 To D - 1
+            Dim s = If(scale Is Nothing, 1.0, scale(g))
             Dim W = 0.0, xr = 0.0
             For k = 0 To nChild - 1
-                Dim wbar = 1.0 / (ltqsVars_gi(g)(k) + t_i(k))
+                Dim wbar = 1.0 / (ltqsVars_gi(g)(k) + s * t_i(k))
                 wbar_gi(k)(g) = wbar
                 W += wbar
                 xr += wbar * ltqs_gi(g)(k)
@@ -288,7 +305,10 @@ Public Module Likelihood
             ltqsTimesW(g) = xrAsIfRoot_g(g) * WAsIfRoot_g(g)
         Next
 
-        Dim wbarChild_g = child.getLtqsVars().Select(Function(v) 1.0 / (v + child.tParent)).ToArray
+        Dim wbarChild_g = child.getLtqsVars().Select(Function(v) 1.0 / child.getTransferVariance(0)).ToArray
+        For g = 0 To D - 1
+            wbarChild_g(g) = 1.0 / child.getTransferVariance(g)
+        Next
         Dim WWOChild = New Double(D - 1) {}
         Dim ltqsWOChild = New Double(D - 1) {}
         For g = 0 To D - 1
@@ -306,10 +326,10 @@ Public Module Likelihood
         Dim totalVars = New Double(D - 1) {}
         For g = 0 To D - 1
             If WWOChild(g) <= 0.000000000001 Then
-                totalVars(g) = child.getLtqsVars()(g)
+                totalVars(g) = child.getTransferVariance(g)
                 sqDist(g) = 0.0
             Else
-                totalVars(g) = child.getLtqsVars()(g) + ltqsWOChild(g)
+                totalVars(g) = child.getTransferVariance(g) + ltqsWOChild(g)
                 sqDist(g) = (ltqsWOChild(g) - child.ltqs(g)) ^ 2
             End If
         Next
@@ -319,7 +339,7 @@ Public Module Likelihood
             Dim wbarRoot_g = New Double(D - 1) {}
             For g = 0 To D - 1
                 Dim wbarDenom = If(WWOChild(g) <= 0.000000000001, 0.0, ltqsWOChild(g))
-                wbarRoot_g(g) = 1.0 / (child.tParent + wbarDenom)
+                wbarRoot_g(g) = 1.0 / (child.getTransferVariance(g) + wbarDenom)
             Next
             Dim WChildWithRoot = New Double(D - 1) {}
             Dim ltqsChildWithRoot = New Double(D - 1) {}
@@ -417,7 +437,7 @@ Public Module Likelihood
         Next
         Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
 
-        Dim o3 = optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
+        Dim o3 = optimiseT3LeafStar(ltqs_gi, lv_gi, t0, child1.diffusionScale)
         Dim newLoglik = o3.loglik
         Dim success = o3.success
         If Not success Then
