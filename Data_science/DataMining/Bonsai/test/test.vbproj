@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Bonsai.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- GDI+ drawing for the visualization test demo (net10.0 console needs the NuGet package) -->
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+  </ItemGroup>
+
 </Project>
