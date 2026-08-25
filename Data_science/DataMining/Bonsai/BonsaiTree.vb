@@ -104,18 +104,22 @@ Public Class BonsaiTree
         If verbose Then Console.WriteLine($"  [diag] leafs after mergeZeroTime = {tree.root.getLeafs().Count}")
 
         ' Local rearrangement to escape the greedy-merge local optimum (Bonsai paper: NNI then SPR).
-        tree.PerformNNI(randomPhase:=True, maxRounds:=3, verbose:=verbose)
-        If verbose Then Console.WriteLine($"  [diag] leafs after NNI-rand = {tree.root.getLeafs().Count}")
-        tree.PerformSPR(maxRounds:=2, verbose:=verbose)
-        If verbose Then Console.WriteLine($"  [diag] leafs after SPR = {tree.root.getLeafs().Count}")
-        tree.PerformNNI(randomPhase:=False, maxRounds:=5, verbose:=verbose)
-        If verbose Then Console.WriteLine($"  [diag] leafs after NNI-greedy = {tree.root.getLeafs().Count}")
+        If enableLocalSearch Then
+            tree.PerformNNI(randomPhase:=True, maxRounds:=3, verbose:=verbose)
+            If verbose Then Console.WriteLine($"  [diag] leafs after NNI-rand = {tree.root.getLeafs().Count}")
+            tree.PerformSPR(maxRounds:=2, verbose:=verbose)
+            If verbose Then Console.WriteLine($"  [diag] leafs after SPR = {tree.root.getLeafs().Count}")
+            tree.PerformNNI(randomPhase:=False, maxRounds:=5, verbose:=verbose)
+            If verbose Then Console.WriteLine($"  [diag] leafs after NNI-greedy = {tree.root.getLeafs().Count}")
+        End If
 
         tree.optTimes(maxiter, verbose)
 
         ' Choose a biologically meaningful root via the unsupervised first-split criterion.
-        tree.RerootToMinInternalDist(verbose)
-        If verbose Then Console.WriteLine($"  [diag] leafs after reroot = {tree.root.getLeafs().Count}")
+        If enableLocalSearch Then
+            tree.RerootToMinInternalDist(verbose)
+            If verbose Then Console.WriteLine($"  [diag] leafs after reroot = {tree.root.getLeafs().Count}")
+        End If
 
         If verbose Then
             Console.WriteLine($"Bonsai: final logL = {tree.calcLogLComplete():G4}, nodes = {tree.CountNodes()}")
@@ -477,11 +481,14 @@ Public Class BonsaiTree
     ''' down under A. The move is self-inverse, so re-applying it reverts the topology.
     ''' </summary>
     Private Sub ApplyNNI(A As BonsaiNode, C As BonsaiNode, S As BonsaiNode, P As BonsaiNode)
+        ' Move A's child C up to become a child of A's parent P (replacing A's slot at P).
         P.childs.Remove(A)
         P.childs.Add(C)
         C.par = P
         C.tParent = A.tParent
 
+        ' Move A's sibling S down to become a child of A (A now has S instead of C).
+        P.childs.Remove(S)
         A.childs.Remove(C)
         A.childs.Add(S)
         S.par = A
@@ -631,6 +638,10 @@ Public Class BonsaiTree
         st.Echild.tParent = st.tEchild
         st.X.par = st.Xpar
         st.X.tParent = st.tX
+        ' Reattach X into its original parent's child list (it was removed by ApplySPR).
+        If Not st.Xpar.childs.Contains(st.X) Then
+            st.Xpar.childs.Add(st.X)
+        End If
         maxNodeInd -= 1
     End Sub
 
