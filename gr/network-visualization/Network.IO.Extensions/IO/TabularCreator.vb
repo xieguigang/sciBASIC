@@ -209,7 +209,7 @@ Namespace FileStream
                     n.data = New NodeData
                 End If
 
-                Yield dumpNodeVertex(n, properties, is2Dlayout)
+                Yield DumpNodeVertex(n, properties, is2Dlayout)
             Next
         End Function
 
@@ -219,7 +219,7 @@ Namespace FileStream
             Return g.vertex.ToArray.CreateNodesMetaData(properties, is2Dlayout)
         End Function
 
-        Private Function dumpNodeVertex(n As Graph.Node, properties As String(), is2Dlayout As Boolean) As Node
+        Private Function DumpNodeVertex(n As Graph.Node, properties As String(), is2Dlayout As Boolean) As Node
             Dim data As New Dictionary(Of String, String) From {
                 {"weight", n.data.mass}
             }
