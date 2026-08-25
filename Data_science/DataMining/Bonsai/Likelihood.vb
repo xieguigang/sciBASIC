@@ -402,8 +402,10 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             Dim oldLoglik = lg.loglik
 
             ' New likelihood: star of (merged ancestor, R) where the ancestor is optimised
-            Dim ltqs_gi = New Double(D - 1)() {child1.ltqs, child2.ltqs, ltqsR}
-            Dim lv_gi = New Double(D - 1)() {vars1, vars2, WR_g.Select(Function(w) 1.0 / w).ToArray}
+            Dim ltqs_gi(D - 1)() As Double
+            ltqs_gi(0) = child1.ltqs : ltqs_gi(1) = child2.ltqs : ltqs_gi(2) = ltqsR
+            Dim lv_gi(D - 1)() As Double
+            lv_gi(0) = vars1 : lv_gi(1) = vars2 : lv_gi(2) = WR_g.Select(Function(w) 1.0 / w).ToArray
             Dim t0 = New Double() {child1.tParent, child2.tParent, 1.0}
 
             Dim o3 = optimiseT3LeafStar(ltqs_gi, lv_gi, t0)
