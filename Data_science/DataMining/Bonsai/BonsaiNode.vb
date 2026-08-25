@@ -136,6 +136,14 @@ Public Class BonsaiNode
     Public Function getLtqsVars() As Double()
         If _ltqsVars Is Nothing AndAlso _W_g IsNot Nothing Then
             _ltqsVars = _W_g.Select(Function(w) 1.0 / w).ToArray
+        ElseIf _ltqsVars Is Nothing AndAlso _W_g Is Nothing AndAlso ltqs IsNot Nothing Then
+            ' Unit-variance fallback: a leaf was created without an explicit variance/precision
+            ' (the default used by Bonsai.Fit when stds are omitted). Prevents NullReference in the
+            ' tree-search scoring. Consistent with the algorithm's default stds = 1.
+            _ltqsVars = New Double(ltqs.Length - 1) {}
+            For i = 0 To _ltqsVars.Length - 1
+                _ltqsVars(i) = 1.0
+            Next
         End If
         Return _ltqsVars
     End Function
@@ -143,6 +151,11 @@ Public Class BonsaiNode
     Public Function getW() As Double()
         If _W_g Is Nothing AndAlso _ltqsVars IsNot Nothing Then
             _W_g = _ltqsVars.Select(Function(v) 1.0 / v).ToArray
+        ElseIf _W_g Is Nothing AndAlso _ltqsVars Is Nothing AndAlso ltqs IsNot Nothing Then
+            _W_g = New Double(ltqs.Length - 1) {}
+            For i = 0 To _W_g.Length - 1
+                _W_g(i) = 1.0
+            Next
         End If
         Return _W_g
     End Function

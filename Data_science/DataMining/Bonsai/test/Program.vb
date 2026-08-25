@@ -126,7 +126,7 @@ Module Program
             ' ---- pass 2 ----
             Dim means(N - 1)() As Double
             For i = 0 To N - 1
-                means(i) = New Double(keep)
+                means(i) = New Double(keep - 1) {}
             Next
 
             reader.BaseStream.Seek(0, SeekOrigin.Begin)
