@@ -75,8 +75,7 @@ Public Module NetworkFileIO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of V As Node, E As NetworkEdge)(network As Network(Of V, E),
-                                                         output$,
+    Public Function Save(Of V As Node, E As NetworkEdge)(network As Network(Of V, E), output$,
                                                          Optional encoding As Encoding = Nothing,
                                                          Optional silent As Boolean = True) As Boolean
 
