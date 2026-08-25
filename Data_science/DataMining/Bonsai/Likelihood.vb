@@ -184,7 +184,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 ub *= 10
             End While
 
-            Dim root = Brent.BrentZero(AddressOf der2LeafTree, lb, ub, summedLtqsVars, sqDists, 1.0E-7)
+            Dim root = Optimizer.BrentZero(AddressOf der2LeafTree, lb, ub, summedLtqsVars, sqDists, 1.0E-7)
             Return (root, True)
         End Function
 

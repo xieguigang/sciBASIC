@@ -92,7 +92,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             tree.optTimes(maxiter, verbose)
 
             If verbose Then
-                Call $"Bonsai: final logL = {tree.calcLogLComplete():G4}, nodes = {tree.CountNodes()}".__DEBUG_ECHO
+                Console.WriteLine($"Bonsai: final logL = {tree.calcLogLComplete():G4}, nodes = {tree.CountNodes()}")
             End If
 
             Return tree
@@ -302,7 +302,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             calcLogLComplete()
 
             If verbose Then
-                Call $"Merged N{child1.nodeInd} and N{child2.nodeInd} into N{anc.nodeInd} (dLogL pair)".__DEBUG_ECHO
+                Console.WriteLine($"Merged N{child1.nodeInd} and N{child2.nodeInd} into N{anc.nodeInd} (dLogL pair)")
             End If
         End Sub
 
