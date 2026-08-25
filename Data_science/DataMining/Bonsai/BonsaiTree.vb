@@ -629,6 +629,7 @@ Public Class BonsaiTree
             .diffusionScale = Me.diffusionScale
         }
         Epar.childs.Remove(Echild)
+        Epar.childs.Add(mid)
         Echild.par = mid
         Echild.tParent = 0.0
         mid.childs.Add(Echild)
@@ -718,7 +719,7 @@ Public Class BonsaiTree
                     optTimes(maxiter, verbose)
                     improved = True
                     If verbose Then
-                        Console.WriteLine($"  SPR accepted: gain = {bestGain:G4}, logL = {calcLogLComplete():G4}")
+                        Console.WriteLine($"  SPR accepted: gain = {bestGain:G4}, leafs = {root.getLeafs().Count}")
                     End If
                 End If
             Next
