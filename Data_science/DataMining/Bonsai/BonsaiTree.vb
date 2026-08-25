@@ -84,6 +84,9 @@ Public Class BonsaiTree
             Dim improved = tree.mergeChildrenUB(verbose)
             If Not improved Then Exit Do
             merges += 1
+            If verbose Then
+                Console.WriteLine($"  merge round {merges}: {tree.root.childs.Count} root-children remaining, logL = {tree.calcLogLComplete():G4}")
+            End If
             If maxMerges > 0 AndAlso merges >= maxMerges Then Exit Do
         Loop
 

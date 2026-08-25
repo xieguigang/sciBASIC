@@ -13,9 +13,10 @@ Module Program
     ' so we transpose and keep only the top-K highly-variable genes as the D-dimensional feature set
     ' (standard single-cell preprocessing; keeps the run tractable on a 60k-gene matrix).
     Private Const CSV_PATH As String = "K:\hsa\Homo_sapiens_expr_advanced_all_conditions.csv"
-    Private Const TOP_K As Integer = 200          ' number of highly-variable genes kept as features (D)
-    Private Const MAX_MERGES As Integer = 15      ' cap tree-search rounds so the demo finishes quickly
-    Private Const MAX_TIME_ITERS As Integer = 8   ' L-BFGS iterations per optTimes call
+    Private Const TOP_K As Integer = 100          ' number of highly-variable genes kept as features (D)
+    Private Const MAX_MERGES As Integer = 8       ' cap tree-search rounds so the demo finishes quickly
+    Private Const MAX_TIME_ITERS As Integer = 5   ' L-BFGS iterations per optTimes call
+    Private Const MAX_SAMPLES As Integer = 300    ' cap #samples used (O(C^2) tree search is costly on 1888)
 
     ' simple quadratic objective for optimizer self-test
     Private Function quad(x As Double(), args() As Object) As (f As Double, grad As Double())
@@ -107,12 +108,16 @@ Module Program
                 line = reader.ReadLine()
             End While
 
-            ' per-gene variance: E[x^2] - E[x]^2
+            ' per-gene variance: E[x^2] - E[x]^2  (estimated over ALL samples)
             Dim varOfGene(nGenes - 1) As Double
             For g = 0 To nGenes - 1
                 Dim mean = geneSum(g) / N
                 varOfGene(g) = geneSumSq(g) / N - mean * mean
             Next
+
+            ' cap the number of samples fed to Bonsai (the tree search is O(C^2) per round)
+            Dim useN = If(N > MAX_SAMPLES, MAX_SAMPLES, N)
+            sampleNames = sampleNames.Take(useN).ToArray()
 
             ' top-K gene indices by variance
             Dim order = Enumerable.Range(0, nGenes).OrderByDescending(Function(g) varOfGene(g)).ToArray()
@@ -124,8 +129,8 @@ Module Program
             Dim keepIndex = keepSet.OrderBy(Function(g) g).ToArray()   ' sorted for stable pass-2 lookup
 
             ' ---- pass 2 ----
-            Dim means(N - 1)() As Double
-            For i = 0 To N - 1
+            Dim means(useN - 1)() As Double
+            For i = 0 To useN - 1
                 means(i) = New Double(keep - 1) {}
             Next
 
@@ -139,7 +144,7 @@ Module Program
                 If keepSet.Contains(gi) Then
                     Dim parts = line.Split(sep)
                     Dim col = Array.IndexOf(keepIndex, gi)   ' position within the kept feature set
-                    For i = 0 To N - 1
+                    For i = 0 To useN - 1
                         means(i)(col) = Double.Parse(parts(i + 1), cult)
                     Next
                 End If
