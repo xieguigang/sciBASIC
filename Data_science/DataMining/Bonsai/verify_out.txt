@@ -6,7 +6,8 @@ Merged N6 and N8 into N9 (dLogL pair)
 Merged N4 and N9 into N10 (dLogL pair)
 Merged N5 and N10 into N11 (dLogL pair)
 Bonsai: final logL = -46.62, nodes = 12
-DIAG firstChild.tParent=1 dLogL/dt=NaN nChilds=1
+DIAG firstChild.tParent=1 dLogL/dt=-1.834 nChilds=1
+OPTTIMES ll0=-46.62 ll1=-46.62 newT=1
 
 LogLikelihood = -46.6238
 Newick       = ((p4:1,(p3:1,(p5:1,(p2:1,(p0:1,p1:1)N7:1)N8:1)N9:1)N10:1)N11:1)ROOT;

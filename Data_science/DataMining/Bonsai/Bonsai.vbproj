@@ -85,10 +85,13 @@
 	<ItemGroup>
 	  <Compile Remove="bonsai_py\**" />
 	  <Compile Remove="test\**" />
+	  <Compile Remove="Verify\**" />
 	  <EmbeddedResource Remove="bonsai_py\**" />
 	  <EmbeddedResource Remove="test\**" />
+	  <EmbeddedResource Remove="Verify\**" />
 	  <None Remove="bonsai_py\**" />
 	  <None Remove="test\**" />
+	  <None Remove="Verify\**" />
 	</ItemGroup>
 
 	<ItemGroup>

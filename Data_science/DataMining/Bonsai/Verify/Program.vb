@@ -50,6 +50,12 @@ Module Program
                           " dLogL/dt=" & firstChild.dLoglikdtParent.ToString("G4") &
                           " nChilds=" & b.Tree.root.childs.Count)
 
+        Dim ll0 = b.LogLikelihood()
+        b.Tree.optTimes(50, True)
+        Dim ll1 = b.LogLikelihood()
+        Console.WriteLine("OPTTIMES ll0=" & ll0.ToString("G4") & " ll1=" & ll1.ToString("G4") &
+                          " newT=" & b.Tree.root.childs(0).tParent.ToString("G4"))
+
         Console.WriteLine()
         Console.WriteLine("LogLikelihood = " & b.LogLikelihood().ToString("G6"))
         Console.WriteLine("Newick       = " & b.ToNewick())

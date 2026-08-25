@@ -324,7 +324,8 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
             If Not child.isLeafNode() Then
                 Dim wbarRoot_g = New Double(D - 1) {}
                 For g = 0 To D - 1
-                    wbarRoot_g(g) = 1.0 / (child.tParent + ltqsWOChild(g))
+                    Dim wbarDenom = If(WWOChild(g) <= 1.0E-12, 0.0, ltqsWOChild(g))
+                    wbarRoot_g(g) = 1.0 / (child.tParent + wbarDenom)
                 Next
                 Dim WChildWithRoot = New Double(D - 1) {}
                 Dim ltqsChildWithRoot = New Double(D - 1) {}
