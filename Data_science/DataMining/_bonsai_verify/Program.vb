@@ -33,6 +33,11 @@ Module Program
         Console.WriteLine("A: logL={0:G4}, 2D rows={1} cols={2}", bA.LogLikelihood(), coordsA.Length, coordsA(0).Length)
         Dim hiA = bA.GetHighDimStates()
         Console.WriteLine("A: highDim rows={0} cols={1}", hiA.Length, hiA(0).Length)
+        Dim lvsA = bA.Tree.root.getLeafs()
+        Dim distinctA = lvsA.Select(Function(l) l.nodeInd).Distinct().Count()
+        Dim nonLeafAsLeaf = lvsA.Where(Function(l) Not l.isLeaf).ToList()
+        Console.WriteLine("A: leaf count={0}, distinct={1}, nonLeafCountedAsLeaf={2}", lvsA.Count, distinctA, nonLeafAsLeaf.Count)
+        Console.WriteLine("A: isLeaf-but-has-children nodeInds: " & String.Join(",", nonLeafAsLeaf.Select(Function(leaf) leaf.nodeInd & "(" & leaf.childs.Count & ")")))
 
         Dim bB = New Bonsai() With {.verbose = False, .useGlobalVariance = True, .filterLowSNR = True}
         bB.Fit(means, stds, names)
