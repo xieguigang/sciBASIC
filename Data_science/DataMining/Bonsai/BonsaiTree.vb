@@ -151,7 +151,7 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
                 bounds.Add((tLB, tUB))
             Next
 
-            Dim res = Optimizer.Minimize(AddressOf logLGradAllTimes, x0, bounds, args:=New Object() {root})
+            Dim res = Optimizer.Minimize(AddressOf logLGradAllTimes, x0, bounds, root)
 
             For i = 0 To n - 1
                 branchNodes(i).tParent = System.Math.Exp(res.x(i))
