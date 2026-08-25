@@ -145,7 +145,9 @@ Namespace Microsoft.VisualBasic.DataMining.Bonsai
         ''' mirroring ``der2LeafTree``.
         ''' der = sum_g (sqDists_g / totVar_g - 1) / totVar_g
         ''' </summary>
-        Public Function der2LeafTree(t12 As Double, summedLtqsVars As Double(), sqDists As Double()) As Double
+        Public Function der2LeafTree(t12 As Double, ParamArray args() As Object) As Double
+            Dim summedLtqsVars = DirectCast(args(0), Double())
+            Dim sqDists = DirectCast(args(1), Double())
             Dim D = summedLtqsVars.Length
             Dim der = 0.0
             For g = 0 To D - 1
