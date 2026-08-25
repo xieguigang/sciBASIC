@@ -3,7 +3,6 @@ Imports Microsoft.VisualBasic.DataMining.Bonsai
 
 Module Program
     Sub Main()
-        ' Build a synthetic dataset: two gaussian blobs in 20-D, separable, with a few noisy dims.
         Dim rnd = New Random(42)
         Dim N = 60
         Dim D = 20
@@ -22,28 +21,22 @@ Module Program
             names(i) = "c" & i
         Next
 
-        ' Path A: default behaviour (SNR filtering on, no v_g scaling).
-        Dim bA = New Bonsai() With {.verbose = False, .useGlobalVariance = False, .filterLowSNR = True}
+        Dim bA = New Bonsai() With {.verbose = True, .useGlobalVariance = False, .filterLowSNR = True}
         bA.Fit(means, stds, names)
         Dim coordsA = bA.Transform()
-        Console.WriteLine("A: logL = {0:G4}, 2D rows = {1}, cols = {2}",
-                          bA.LogLikelihood(), coordsA.Length, coordsA(0).Length)
+        Console.WriteLine("A: logL={0:G4}, 2D rows={1} cols={2}", bA.LogLikelihood(), coordsA.Length, coordsA(0).Length)
         Dim hiA = bA.GetHighDimStates()
-        Console.WriteLine("A: highDim rows = {0}, cols = {1}", hiA.Length, hiA(0).Length)
+        Console.WriteLine("A: highDim rows={0} cols={1}", hiA.Length, hiA(0).Length)
 
-        ' Path B: enable the global-variance diffusion prior.
         Dim bB = New Bonsai() With {.verbose = False, .useGlobalVariance = True, .filterLowSNR = True}
         bB.Fit(means, stds, names)
         Dim coordsB = bB.Transform()
-        Console.WriteLine("B: logL = {0:G4}, 2D rows = {1}, cols = {2}",
-                          bB.LogLikelihood(), coordsB.Length, coordsB(0).Length)
+        Console.WriteLine("B: logL={0:G4}, 2D rows={1} cols={2}", bB.LogLikelihood(), coordsB.Length, coordsB(0).Length)
 
-        ' Path C: no SNR filtering, radial layout.
         Dim bC = New Bonsai() With {.verbose = False, .filterLowSNR = False, .layout = "radial"}
         bC.Fit(means, stds, names)
         Dim coordsC = bC.Transform()
-        Console.WriteLine("C: logL = {0:G4}, 2D rows = {1}, cols = {2}, newick len>0 = {3}",
-                          bC.LogLikelihood(), coordsC.Length, coordsC(0).Length, bC.ToNewick().Length > 0)
+        Console.WriteLine("C: logL={0:G4}, 2D rows={1} cols={2}, newick={3}", bC.LogLikelihood(), coordsC.Length, coordsC(0).Length, bC.ToNewick().Length > 0)
 
         Console.WriteLine("ALL PATHS OK")
     End Sub
@@ -52,7 +45,6 @@ End Module
 Public Module RandomExtensions
     <System.Runtime.CompilerServices.Extension()>
     Public Function NextGaussian(rnd As Random) As Double
-        ' Box-Muller
         Dim u1 = rnd.NextDouble()
         Dim u2 = rnd.NextDouble()
         Return System.Math.Sqrt(-2.0 * System.Math.Log(u1)) * System.Math.Cos(2.0 * System.Math.PI * u2)

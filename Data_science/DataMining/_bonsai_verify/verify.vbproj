@@ -6,6 +6,6 @@
     <RootNamespace>bonsai_verify</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bonsai.vbproj" />
+    <ProjectReference Include="..\Bonsai\Bonsai.vbproj" />
   </ItemGroup>
 </Project>

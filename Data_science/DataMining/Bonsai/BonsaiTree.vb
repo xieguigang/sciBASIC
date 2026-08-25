@@ -101,16 +101,21 @@ Public Class BonsaiTree
         Loop
 
         tree.mergeZeroTimeChilds(verbose)
+        If verbose Then Console.WriteLine($"  [diag] leafs after mergeZeroTime = {tree.root.getLeafs().Count}")
 
         ' Local rearrangement to escape the greedy-merge local optimum (Bonsai paper: NNI then SPR).
         tree.PerformNNI(randomPhase:=True, maxRounds:=3, verbose:=verbose)
+        If verbose Then Console.WriteLine($"  [diag] leafs after NNI-rand = {tree.root.getLeafs().Count}")
         tree.PerformSPR(maxRounds:=2, verbose:=verbose)
+        If verbose Then Console.WriteLine($"  [diag] leafs after SPR = {tree.root.getLeafs().Count}")
         tree.PerformNNI(randomPhase:=False, maxRounds:=5, verbose:=verbose)
+        If verbose Then Console.WriteLine($"  [diag] leafs after NNI-greedy = {tree.root.getLeafs().Count}")
 
         tree.optTimes(maxiter, verbose)
 
         ' Choose a biologically meaningful root via the unsupervised first-split criterion.
         tree.RerootToMinInternalDist(verbose)
+        If verbose Then Console.WriteLine($"  [diag] leafs after reroot = {tree.root.getLeafs().Count}")
 
         If verbose Then
             Console.WriteLine($"Bonsai: final logL = {tree.calcLogLComplete():G4}, nodes = {tree.CountNodes()}")
@@ -446,7 +451,7 @@ Public Class BonsaiTree
     Private Structure NNIState
         Public A As BonsaiNode, C As BonsaiNode, S As BonsaiNode, P As BonsaiNode
         Public tA As Double, tC As Double, tS As Double
-        Public Pchilds As List(Of BonsaiNode), Achilds As List(Of BonsaiNode)
+        Public Pchilds As System.Collections.Generic.List(Of BonsaiNode), Achilds As System.Collections.Generic.List(Of BonsaiNode)
         Public Cpar As BonsaiNode, Spar As BonsaiNode, Apar As BonsaiNode
     End Structure
 
@@ -454,7 +459,8 @@ Public Class BonsaiTree
         Return New NNIState With {
             .A = A, .C = C, .S = S, .P = P,
             .tA = A.tParent, .tC = C.tParent, .tS = S.tParent,
-            .Pchilds = P.childs.ToList, .Achilds = A.childs.ToList,
+            .Pchilds = New System.Collections.Generic.List(Of BonsaiNode)(P.childs),
+            .Achilds = New System.Collections.Generic.List(Of BonsaiNode)(A.childs),
             .Cpar = C.par, .Spar = S.par, .Apar = A.par
         }
     End Function
@@ -568,7 +574,7 @@ Public Class BonsaiTree
     Private Structure SPRState
         Public X As BonsaiNode, Epar As BonsaiNode, Echild As BonsaiNode
         Public tX As Double, tEchild As Double
-        Public EparChilds As List(Of BonsaiNode), EchildChilds As List(Of BonsaiNode)
+        Public EparChilds As System.Collections.Generic.List(Of BonsaiNode), EchildChilds As System.Collections.Generic.List(Of BonsaiNode)
         Public Xpar As BonsaiNode, EchildPar As BonsaiNode
         Public newMid As BonsaiNode
     End Structure
@@ -581,8 +587,8 @@ Public Class BonsaiTree
         Dim st As New SPRState With {
             .X = X, .Epar = Epar, .Echild = Echild,
             .tX = X.tParent, .tEchild = Echild.tParent,
-            .EparChilds = Epar.childs.ToList,
-            .EchildChilds = Echild.childs.ToList,
+            .EparChilds = New System.Collections.Generic.List(Of BonsaiNode)(Epar.childs),
+            .EchildChilds = New System.Collections.Generic.List(Of BonsaiNode)(Echild.childs),
             .Xpar = X.par, .EchildPar = Echild.par
         }
 
@@ -650,7 +656,9 @@ Public Class BonsaiTree
 
                 For Each Epar In allNodes
                     If Epar.isLeafNode() Then Continue For
-                    For Each Echild In Epar.childs
+                    ' Copy the child list: ApplySPR mutates Epar.childs, so we must not enumerate it directly.
+                    Dim echildren = New System.Collections.Generic.List(Of BonsaiNode)(Epar.childs)
+                    For Each Echild In echildren
                         ' Cannot regraft into X's own subtree.
                         If subtree.Contains(Echild.nodeInd) Then Continue For
                         Dim st = ApplySPR(X, Epar, Echild)
@@ -774,7 +782,7 @@ Public Class BonsaiTree
     ''' Sum of squared Euclidean distances from each leaf's position to its own side's mean (a proxy for the
     ''' within-cluster internal distance used to pick the re-rooting cut).
     ''' </summary>
-    Private Shared Function WithinSS(leafs As List(Of BonsaiNode), centroid As Double(), D As Integer) As Double
+    Private Shared Function WithinSS(leafs As System.Collections.Generic.List(Of BonsaiNode), centroid As Double(), D As Integer) As Double
         If leafs.Count = 0 Then Return 0.0
         Dim mean(D - 1) As Double
         For Each lf In leafs
