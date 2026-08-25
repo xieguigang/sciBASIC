@@ -103,6 +103,15 @@ Public Class BonsaiNode
     Public n_ds_nodes As Integer
 
     ''' <summary>
+    ''' Per-dimension diffusion scaling v_g (global gene variance prior). When present, the transition
+    ''' variance along an edge becomes ``vars(g) + diffusionScale(g) * tParent`` instead of the default
+    ''' ``vars(g) + tParent`` (Bonsai eq. 4, where diffusion along gene g is proportional to v_g).
+    ''' Null means "no scaling" and reproduces the original behaviour exactly. Set from a <see cref="PointSet"/>
+    ''' via <see cref="BonsaiTree.InitialiseStarTree"/> when <see cref="PointSet.useGlobalVariance"/> is on.
+    ''' </summary>
+    Public diffusionScale As Double() = Nothing
+
+    ''' <summary>
     ''' Scratch layout coordinates used only by the GDI+ tree visualization (Plot.PlotTree).
     ''' x = cumulative branch time from the root; y = leaf slot (or child-average for internals).
     ''' Never read by the Bonsai algorithm itself.
@@ -202,12 +211,43 @@ Public Class BonsaiNode
     End Sub
 
     ''' <summary>
+    ''' Per-dimension diffusion scaling applied to an edge: v_g(g) when present, otherwise 1.0
+    ''' (the default, which keeps the original vars(g) + tParent transition variance).
+    ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function getScale(g As Integer) As Double
+        If diffusionScale Is Nothing Then
+            Return 1.0
+        End If
+        Dim s = diffusionScale(g)
+        If s <= 0.0 Then
+            Return 1.0
+        End If
+        Return s
+    End Function
+
+    ''' <summary>
+    ''' Effective transition variance along the edge to the parent:
+    '''   vars(g) + getScale(g) * tParent
+    ''' Honours the optional v_g diffusion prior.
+    ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function getTransferVariance(g As Integer) As Double
+        Return getLtqsVars()(g) + getScale(g) * tParent
+    End Function
+
+    ''' <summary>
     ''' Gather (tParent, 1/(ltqsVars+tParent), ltqs, ltqsVars, nodeInd) for this node and its children,
-    ''' mirroring python ``getInfo`` / ``getInfoChildren``.
+    ''' mirroring python ``getInfo`` / ``getInfoChildren``. The wbar term now honours the optional
+    ''' diffusion scaling so the prior (vars + v_g*tParent) propagates into the greedy merge scoring.
     ''' </summary>
     Public Function getInfo() As (tParent As Double, wbar As Double(), ltqs As Double(), ltqsVars As Double(), nodeInd As Integer)
         Dim vars = getLtqsVars()
-        Dim wbar = vars.Select(Function(v) 1.0 / (v + tParent)).ToArray
+        Dim D = vars.Length
+        Dim wbar(D - 1) As Double
+        For g = 0 To D - 1
+            wbar(g) = 1.0 / getTransferVariance(g)
+        Next
         Return (tParent, wbar, ltqs, vars, nodeInd)
     End Function
 

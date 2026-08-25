@@ -58,9 +58,8 @@ Public Module Likelihood
         Dim W(D - 1) As Double
 
         For Each child In childs
-            Dim vars = child.getLtqsVars()
             For g = 0 To D - 1
-                Dim wbar = 1.0 / (vars(g) + child.tParent)
+                Dim wbar = 1.0 / child.getTransferVariance(g)
                 W(g) += wbar
                 xr(g) += child.ltqs(g) * wbar
             Next
@@ -78,9 +77,8 @@ Public Module Likelihood
         Dim D = childs(0).ltqs.Length
         Dim W(D - 1) As Double
         For Each child In childs
-            Dim vars = child.getLtqsVars()
             For g = 0 To D - 1
-                W(g) += 1.0 / (vars(g) + child.tParent)
+                W(g) += 1.0 / child.getTransferVariance(g)
             Next
         Next
         Return W
@@ -100,9 +98,8 @@ Public Module Likelihood
         Dim loglik = -VectorSum(VectorLog(W_g))
 
         For Each child In childs
-            Dim vars = child.getLtqsVars()
             For g = 0 To D - 1
-                Dim wbar = 1.0 / (vars(g) + child.tParent)
+                Dim wbar = 1.0 / child.getTransferVariance(g)
                 Dim sq = (xr_g(g) - child.ltqs(g)) ^ 2
                 loglik += System.Math.Log(wbar) - wbar * sq
             Next
@@ -123,9 +120,8 @@ Public Module Likelihood
 
         For cInd = 0 To nC - 1
             Dim child = childs(cInd)
-            Dim vars = child.getLtqsVars()
             For g = 0 To D - 1
-                Dim wbar = 1.0 / (vars(g) + child.tParent)
+                Dim wbar = 1.0 / child.getTransferVariance(g)
                 Dim sq = (xr_g(g) - child.ltqs(g)) ^ 2
                 Dim term = wbar * sq
                 loglik += System.Math.Log(wbar) - term
