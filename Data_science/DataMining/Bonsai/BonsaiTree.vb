@@ -716,11 +716,11 @@ Public Class BonsaiTree
                 If bestEpar IsNot Nothing Then
                     ApplySPR(X, bestEpar, bestEchild)
                     calcLogLComplete()
+                    If verbose Then
+                        Console.WriteLine($"  SPR accepted: X{X.nodeInd} Epar{bestEpar.nodeInd} Echild{bestEchild.nodeInd} gain={bestGain:G4} leafs={root.getLeafs().Count} rootChilds={root.childs.Count}")
+                    End If
                     optTimes(maxiter, verbose)
                     improved = True
-                    If verbose Then
-                        Console.WriteLine($"  SPR accepted: gain = {bestGain:G4}, leafs = {root.getLeafs().Count}")
-                    End If
                 End If
             Next
 
