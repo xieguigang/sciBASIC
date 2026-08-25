@@ -25,7 +25,6 @@
 
 ' /********************************************************************************/
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>

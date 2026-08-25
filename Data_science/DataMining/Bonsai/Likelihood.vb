@@ -25,8 +25,8 @@
 
 ' /********************************************************************************/
 
-Imports Microsoft.VisualBasic.Linq
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Pure numeric core of the Bonsai likelihood model. Everything factorises over dimensions, so the

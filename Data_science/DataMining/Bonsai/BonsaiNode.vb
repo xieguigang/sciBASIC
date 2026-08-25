@@ -25,9 +25,9 @@
 
 ' /********************************************************************************/
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' A node in the Bonsai tree. This is a faithful translation of the python ``TreeNode`` class,

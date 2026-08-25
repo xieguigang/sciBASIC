@@ -25,9 +25,9 @@
 
 ' /********************************************************************************/
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' The Bonsai tree-reconstruction engine. Given a <see cref="PointSet"/> of high-dimensional observations it
