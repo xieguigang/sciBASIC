@@ -681,9 +681,10 @@ Public Class BonsaiTree
 
             For Each X In Xcandidates
                 Dim subtree = X.getLeafs().Select(Function(l) l.nodeInd).ToHashSet()
-                ' Forbidden endpoints: X itself, X's ancestors (root path), and X's descendants. A valid SPR
-                ' regrafts X onto an edge that lies entirely outside X's own subtree and root path; otherwise X
-                ' would be detached (or form a cycle with the freshly created midpoint).
+                ' Forbidden endpoints: X itself, X's ancestors (root path), and every node of X's entire
+                ' subtree (including internal descendants). A valid SPR regrafts X onto an edge that lies
+                ' entirely outside X's own subtree and root path; otherwise X would be detached or form a
+                ' cycle with the freshly created midpoint.
                 Dim forbidden = New System.Collections.Generic.HashSet(Of Integer)
                 forbidden.Add(X.nodeInd)
                 Dim anc = X.par
@@ -691,8 +692,19 @@ Public Class BonsaiTree
                     forbidden.Add(anc.nodeInd)
                     anc = anc.par
                 End While
-                For Each lf In subtree
-                    forbidden.Add(lf)
+                ' Collect every node of X's entire subtree (leaves and internal descendants) so we never regraft
+                ' onto an edge that lies inside X's own subtree.
+                Dim collect As Func(Of BonsaiNode, System.Collections.Generic.List(Of BonsaiNode)) = Nothing
+                collect = Function(n As BonsaiNode)
+                             Dim lst = New System.Collections.Generic.List(Of BonsaiNode)
+                             lst.Add(n)
+                             For Each ch In n.childs
+                                 lst.AddRange(collect(ch))
+                             Next
+                             Return lst
+                         End Function
+                For Each nd In collect(X)
+                    forbidden.Add(nd.nodeInd)
                 Next
                 Dim baseLeafCount = root.getLeafs().Count
                 Dim baseLL = calcLogLComplete()
