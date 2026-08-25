@@ -17,7 +17,8 @@ Module Program
             means(i) = New Double(D - 1) {}
             stds(i) = New Double(D - 1) {}
             names(i) = "p" & i
-            Dim center As Double = If(i < 3, 0.0, 5.0)
+            Dim center As Double
+            If i < 3 Then center = 0.0 Else center = 5.0
             For g = 0 To D - 1
                 means(i)(g) = center + (rnd.NextDouble() - 0.5) * 0.4
                 stds(i)(g) = 0.2
@@ -25,7 +26,9 @@ Module Program
         Next
 
         Console.WriteLine("=== Bonsai verification ===")
-        Dim b As New Bonsai() With {.verbose = True, .maxTimeIters = 50}
+        Dim b As New Microsoft.VisualBasic.DataMining.Bonsai.Bonsai()
+        b.verbose = True
+        b.maxTimeIters = 50
         b.Fit(means, stds, names)
 
         Console.WriteLine()
