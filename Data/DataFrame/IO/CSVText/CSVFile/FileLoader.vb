@@ -149,11 +149,15 @@ Namespace IO.CSVFile
                              Optional isTsv As Boolean = False) As List(Of RowObject)
 
             If buf.IsNullOrEmpty Then
-                Call "the given file content lines is empty!".Warning
+                Call "the given file content lines is empty!".warning
                 ' empty file
                 Return New List(Of RowObject)
+            Else
+                Return ParseInternal(buf, isTsv, trimBlanks, skipWhile)
             End If
+        End Function
 
+        Private Function ParseInternal(buf As String(), isTsv As Boolean, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0), tsv:=isTsv)
             Dim test As Func(Of String, Boolean)
             Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
@@ -166,7 +170,7 @@ Namespace IO.CSVFile
             End If
 
             If headerIndex = -1 AndAlso Not skipWhile.Name.StringEmpty Then
-                Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".Warning
+                Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".warning
             End If
 
             Return first + buf.parallelLoad(headerIndex, isTsv, test, skipWhile).AsList

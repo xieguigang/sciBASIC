@@ -192,6 +192,8 @@ Public Module NetworkFileIO
         Dim tqdm As New ProgressBar
         Dim i As Integer = 0
 
+        Call $"populate {df.Nrows} simple network edges...".debug
+
         Do While df.Read
             Yield New E With {
                 .source = df.GetString(u),
