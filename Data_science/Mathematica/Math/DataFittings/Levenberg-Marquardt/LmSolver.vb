@@ -209,7 +209,7 @@ Namespace LevenbergMarquardt
 
                     While i < modifiedHessian.Length
                         diagonalMax = std.Max(diagonalMax, modifiedHessian(i)(i))
-                        Threading.Interlocked.Increment(i)
+                        i+=1
                     End While
                     lambda = dampingFactorField * diagonalMax
                 End If
@@ -217,7 +217,7 @@ Namespace LevenbergMarquardt
 
                 While i < numOptParams
                     modifiedHessian(i)(i) += lambda
-                    Threading.Interlocked.Increment(i)
+                    i+=1
                 End While
                 Dim modifiedHessianMat As Matrix = New Matrix(modifiedHessian)
 
@@ -250,7 +250,7 @@ Namespace LevenbergMarquardt
 
                     While i < numOptParams
                         optParams(i) = newOptParams(i)
-                        Threading.Interlocked.Increment(i)
+                        i+=1
                     End While
                     errValue = newErrValue
                     penaltyFactor = 2.0

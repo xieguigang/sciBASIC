@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::e752b6862dcde476a620b7c23499a476, Data_science\Mathematica\Math\Math.Statistics\FastICA.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1103
-    '    Code Lines: 581 (52.67%)
-    ' Comment Lines: 243 (22.03%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 279 (25.29%)
-    '     File Size: 29.58 KB
+' Summaries:
 
 
-    ' Class FastICA
-    ' 
-    '     Function: funcSource1, funcSource2, funcSource3, funcSource4, funcSource5
-    '               funcSource6, Main, MatMult, MatTranspose, MatVecMult
-    '               PreprocessingCentering, PreprocessingWhitening, SolveFastICA, VecMatMult, XobsGen
-    ' 
-    '     Sub: EigenDecomposition, ExportingData, FreeMemory, Initialize, ParameterInput
-    '          SetUpSources, setupVars, VectorNormalization
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1103
+'    Code Lines: 581 (52.67%)
+' Comment Lines: 243 (22.03%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 279 (25.29%)
+'     File Size: 29.58 KB
+
+
+' Class FastICA
+' 
+'     Function: funcSource1, funcSource2, funcSource3, funcSource4, funcSource5
+'               funcSource6, Main, MatMult, MatTranspose, MatVecMult
+'               PreprocessingCentering, PreprocessingWhitening, SolveFastICA, VecMatMult, XobsGen
+' 
+'     Sub: EigenDecomposition, ExportingData, FreeMemory, Initialize, ParameterInput
+'          SetUpSources, setupVars, VectorNormalization
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -87,17 +87,17 @@ Public Class FastICA
 
             While j < M
                 meanVector(i) += Xobs(i)(j)
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         i = 0
 
         While i < N
             meanVector(i) /= M
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Centering observation matrix Xobs
@@ -108,10 +108,10 @@ Public Class FastICA
 
             While j < M
                 X(i)(j) = Xobs(i)(j) - meanVector(i)
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return X
@@ -161,13 +161,13 @@ Public Class FastICA
 
                 While k < M
                     ExxT(i)(j) += X(i)(k) * X(j)(k) / (M - 1)
-                    Threading.Interlocked.Increment(k)
+                    k += 1
                 End While
 
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Eigen Decomposition of (N x N real symmetric) covariance matrix ExxT of X
@@ -179,7 +179,7 @@ Public Class FastICA
 
         While i < N
             Dnegroot(i) = 1 / std.Sqrt(EigValues(i))
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         i = 0
@@ -194,10 +194,10 @@ Public Class FastICA
                     Drootmat(i)(j) = 0.0
                 End If
 
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Whitening matrix X. Z = E*1/sqrt(D)*E'*X 
@@ -249,10 +249,10 @@ Public Class FastICA
 
             While j < N
                 W(i)(j) = CDbl(rand.NextNumber()) / RAND_MAX
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' FastICA algorithm
@@ -263,7 +263,7 @@ Public Class FastICA
 
             While i < N
                 wp(i) = CDbl(rand.NextNumber()) / RAND_MAX
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
             VectorNormalization(wp, N)
@@ -278,14 +278,14 @@ Public Class FastICA
 
                 While i < M
                     Gder(i) = 1 - std.Tanh(G(i)) * std.Tanh(G(i))
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 i = 0
 
                 While i < M
                     G(i) = std.Tanh(G(i))
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 ' wp = 1/M*Z*G' - 1/M*Gder*ones(M,1)*wp 
@@ -295,7 +295,7 @@ Public Class FastICA
 
                 While i < N
                     ZGt(i) /= M
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 GderOnes = 0.0
@@ -303,14 +303,14 @@ Public Class FastICA
 
                 While i < M
                     GderOnes += Gder(i) / M
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 i = 0
 
                 While i < N
                     wp(i) = ZGt(i) - GderOnes * wp(i)
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 ' Gram-Schmidt decorrelation
@@ -318,7 +318,7 @@ Public Class FastICA
 
                 While i < N
                     dumsum(i) = 0.0
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 i = 0
@@ -332,25 +332,25 @@ Public Class FastICA
 
                         While k < N
                             f += wp(k) * W(k)(j)
-                            Threading.Interlocked.Increment(k)
+                            k += 1
                         End While
 
                         dumsum(i) += f * W(i)(j)
-                        Threading.Interlocked.Increment(j)
+                        j += 1
                     End While
 
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 i = 0
 
                 While i < N
                     wp(i) -= dumsum(i)
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 VectorNormalization(wp, N)
-                Threading.Interlocked.Increment(it)
+                it += 1
             End While
 
             ' Storing estimated rows of the inverse of the mixing matrix as columns in W
@@ -358,10 +358,10 @@ Public Class FastICA
 
             While i < N
                 W(i)(p) = wp(i)
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
-            Threading.Interlocked.Increment(p)
+            p += 1
         End While
 
         ' Normalizing estimated inverse of mixing matrix A
@@ -372,10 +372,10 @@ Public Class FastICA
 
             While j < N
                 W(i)(j) /= std.Sqrt(2.0)
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return W
@@ -461,10 +461,10 @@ Public Class FastICA
 
             While j < N
                 Amix(i)(j) = CDbl(rand.NextNumber()) / RAND_MAX
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
     End Sub
 
@@ -479,7 +479,7 @@ Public Class FastICA
 
         While i < M
             timeVector(i) = (finalTime - initialTime) / (M - 1) * i
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Source 1
@@ -487,7 +487,7 @@ Public Class FastICA
 
         While i < M
             S(0)(i) = funcSource1(timeVector(i))
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Source 2
@@ -495,7 +495,7 @@ Public Class FastICA
 
         While i < M
             S(1)(i) = funcSource2(timeVector(i))
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Source 3
@@ -503,7 +503,7 @@ Public Class FastICA
 
         While i < M
             S(2)(i) = funcSource3(timeVector(i))
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Source 4
@@ -511,7 +511,7 @@ Public Class FastICA
 
         While i < M
             S(3)(i) = funcSource4(timeVector(i))
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Source 5
@@ -521,7 +521,7 @@ Public Class FastICA
         While i < M
             S(4)(i) = funcSource5(timeVector(i))
             avgsource5 += S(4)(i)
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Averaging Source 5
@@ -530,7 +530,7 @@ Public Class FastICA
 
         While i < M
             S(4)(i) -= avgsource5
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Source 6
@@ -540,7 +540,7 @@ Public Class FastICA
         While i < M
             S(5)(i) = funcSource6(timeVector(i))
             avgsource6 += S(5)(i)
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Averaging Source 6
@@ -549,7 +549,7 @@ Public Class FastICA
 
         While i < M
             S(5)(i) -= avgsource6
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
     End Sub
 
@@ -575,13 +575,13 @@ Public Class FastICA
 
                 While k < N
                     Xobs(i)(j) += Amix(i)(k) * S(k)(j)
-                    Threading.Interlocked.Increment(k)
+                    k += 1
                 End While
 
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return Xobs
@@ -636,13 +636,13 @@ Public Class FastICA
 
                 While k < columns1
                     Sp(i)(j) += A(i)(k) * B(k)(j)
-                    Threading.Interlocked.Increment(k)
+                    k += 1
                 End While
 
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return Sp
@@ -668,10 +668,10 @@ Public Class FastICA
 
             While k < SizeVec
                 Sp(i) += V(k) * B(k)(i)
-                Threading.Interlocked.Increment(k)
+                k += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return Sp
@@ -697,10 +697,10 @@ Public Class FastICA
 
             While k < columns
                 Sp(i) += B(i)(k) * V(k)
-                Threading.Interlocked.Increment(k)
+                k += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return Sp
@@ -723,10 +723,10 @@ Public Class FastICA
 
             While j < rows
                 Sp(i)(j) = A(j)(i)
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return Sp
@@ -746,14 +746,14 @@ Public Class FastICA
 
         While i < sizeVec
             sqrtwpwp += wp(i) * wp(i)
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         i = 0
 
         While i < sizeVec
             wp(i) = wp(i) / std.Sqrt(sqrtwpwp)
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
     End Sub
 
@@ -795,10 +795,10 @@ Public Class FastICA
 
             While j < N
                 EigVals(i)(j) = ExxT(i)(j)
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Initializing Q and E for computation of eigenvectors
@@ -807,7 +807,7 @@ Public Class FastICA
         While i < N
             Q(i)(i) = 1.0
             EigVecs(i)(i) = 1.0
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         ' Eigen decomposition iterations
@@ -822,7 +822,7 @@ Public Class FastICA
 
                 While i < N
                     wp(i) = EigVals(i)(p)
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 VectorNormalization(wp, N)
@@ -831,7 +831,7 @@ Public Class FastICA
 
                 While i < N
                     dumsum(i) = 0.0
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 i = 0
@@ -845,21 +845,21 @@ Public Class FastICA
 
                         While k < N
                             f += wp(k) * Q(k)(j)
-                            Threading.Interlocked.Increment(k)
+                            k += 1
                         End While
 
                         dumsum(i) += f * Q(i)(j)
-                        Threading.Interlocked.Increment(j)
+                        j += 1
                     End While
 
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 i = 0
 
                 While i < N
                     wp(i) -= dumsum(i)
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
                 VectorNormalization(wp, N)
@@ -869,10 +869,10 @@ Public Class FastICA
 
                 While i < N
                     Q(i)(p) = wp(i)
-                    Threading.Interlocked.Increment(i)
+                    i += 1
                 End While
 
-                Threading.Interlocked.Increment(p)
+                p += 1
             End While
 
             QT = MatTranspose(Q, N, N)
@@ -882,7 +882,7 @@ Public Class FastICA
             EigVals = MatMult(R, N, N, Q, N, N)
 
             EigVecs = MatMult(EigVecs, N, N, Q, N, N)
-            Threading.Interlocked.Increment(it)
+            it += 1
         End While
 
         EigVecs = MatMult(EigVecs, N, N, Q, N, N)
@@ -891,7 +891,7 @@ Public Class FastICA
 
         While i < N
             EigValues(i) = EigVals(i)(i)
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         i = 0
@@ -901,10 +901,10 @@ Public Class FastICA
 
             While j < N
                 EigVectors(i)(j) = EigVecs(i)(j)
-                Threading.Interlocked.Increment(j)
+                j += 1
             End While
 
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
     End Sub
 
