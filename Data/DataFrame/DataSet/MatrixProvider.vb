@@ -64,7 +64,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Text
 
-Namespace DATA
+Namespace DataSetExtensions
 
     ''' <summary>
     ''' A numeric data matrix provider

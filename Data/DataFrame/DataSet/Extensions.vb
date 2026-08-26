@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 
-Namespace DATA
+Namespace DataSetExtensions
 
     <HideModuleName>
     Public Module Extensions

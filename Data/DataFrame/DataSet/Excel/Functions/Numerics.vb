@@ -54,7 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Excel
+Namespace DataSetExtensions.Excel
 
     Public Module Numerics
 
