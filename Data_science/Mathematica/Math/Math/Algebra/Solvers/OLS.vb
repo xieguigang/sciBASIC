@@ -1,4 +1,6 @@
-﻿Namespace LinearAlgebra.Solvers
+﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+
+Namespace LinearAlgebra.Solvers
 
     ''' <summary>
     ''' **OLS（普通最小二乘法，Ordinary Least Squares）**的计算原理和用途。
@@ -117,7 +119,7 @@
             Next
 
             ' 求逆
-            Dim invXtX As Double(,) = StructureLearning.BnStructureLearner.MatrixInverse(XtX, nP)
+            Dim invXtX As Double(,) = MatrixOps.Inverse(XtX, strict:=True, throwSingularity:=False)
             If invXtX Is Nothing Then
                 Dim result As Double() = New Double(nP - 1) {}
                 result(0) = y.Average()
