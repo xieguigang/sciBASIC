@@ -84,6 +84,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
@@ -804,12 +805,35 @@ B21,B22,B23,...
                                                trimBlanks As Boolean,
                                                skipWhile As NamedValue(Of Func(Of String, Boolean)),
                                                isTsv As Boolean) As List(Of RowObject)
+            Dim fileSize As Long = 0
+            Dim verboseThres As Long = 500 * ByteSize.MB
+
+            Try
+                fileSize = file.Length
+
+                If fileSize > verboseThres Then
+                    Call $"loads a huge size({StringFormats.Lanudry(fileSize)}) table file...".debug
+                End If
+            Catch ex As Exception
+                Call "target data stream not supports of the file size.".warning
+            End Try
 
             Using reader As New StreamReader(file, encoding)
                 Dim allLines As String() = reader.IteratesStream.ToArray
-                Dim data As List(Of RowObject) = FileLoader.Load(allLines, trimBlanks, skipWhile, isTsv)
+                Dim data As List(Of RowObject)
+
+                If fileSize > verboseThres Then
+                    Call "parse table rows in parallel...".debug
+                End If
+
+                data = FileLoader.Load(allLines, trimBlanks, skipWhile, isTsv)
 
                 Erase allLines
+
+                If fileSize > verboseThres Then
+                    Call "row data load job done, do GC for release memory...".debug
+                    Call FlushMemory()
+                End If
 
                 Return data
             End Using
