@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e752b6862dcde476a620b7c23499a476, Data_science\Mathematica\Math\Math.Statistics\FastICA.vb"
+#Region "Microsoft.VisualBasic::e752b6862dcde476a620b7c23499a476, Data_science\Mathematica\Math\Math.Statistics\FastICA.vb"
 
 ' Author:
 ' 
@@ -60,154 +60,164 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
+''' <summary>
+''' FastICA (Fast Independent Component Analysis) implementation.
+''' This class provides a VB.NET port of the FastICA C reference implementation
+''' for recovering independent components from component mixtures.
+''' For the underlying theory, refer to the paper "ICA: Algorithms and Applications".
+''' </summary>
 Public Class FastICA
-    ' 
-    ' 	 * AlgorithmFunctions.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
 
+    ''' <summary>Number of FastICA fixed-point iterations used in <see cref="SolveFastICA"/>.</summary>
+    Public iterations As Integer
+    ''' <summary>Number of sources (rows of the observation matrix).</summary>
+    Public N As Integer
+    ''' <summary>Number of observations (sample size); should equal <see cref="N"/>.</summary>
+    Public C As Integer
+    ''' <summary>Number of observation samples (columns of the observation matrix).</summary>
+    Public M As Integer
+    ''' <summary>Helper loop index used during source setup.</summary>
+    Public p As Integer
+    ''' <summary>Final simulation time (seconds).</summary>
+    Public finalTime As Single
+    ''' <summary>Initial simulation time (seconds).</summary>
+    Public initialTime As Single
+    ''' <summary>Slope of the zig-zag source (funcSource5).</summary>
+    Public K As Single
+    ''' <summary>Number of zig-zag source periods (amount of peaks).</summary>
+    Public na As Single
+    ''' <summary>Number of alternating step-function periods (funcSource6).</summary>
+    Public ns As Single
+
+    ''' <summary>The mixing matrix A (N x N) used to generate the observation matrix.</summary>
+    Public Amix As Double()()
+    ''' <summary>The estimated inverse of the mixing matrix W (N x N).</summary>
+    Public W As Double()()
+    ''' <summary>Transpose of the estimated inverse mixing matrix W (N x N).</summary>
+    Public WT As Double()()
+    ''' <summary>Time vector used while generating the source signals.</summary>
+    Public timeVector As Double()
+    ''' <summary>The generated source matrix S (M x N).</summary>
+    Public S As Double()()
+    ''' <summary>The estimated source matrix Sest (M x N).</summary>
+    Public Sest As Double()()
+    ''' <summary>The generated observation matrix Xobs (M x N).</summary>
+    Public Xobs As Double()()
+    ''' <summary>The centered observation matrix X (M x N).</summary>
+    Public X As Double()()
+    ''' <summary>The whitened observation matrix Z (M x N).</summary>
+    Public Z As Double()()
+    ''' <summary>Period of the zig-zag source (funcSource5).</summary>
+    Public periodSource5 As Double
+    ''' <summary>Period of the step-function source (funcSource6).</summary>
+    Public periodSource6 As Double
+    ''' <summary>Mean value of the fifth source signal.</summary>
+    Public avgsource5 As Double
+    ''' <summary>Mean value of the sixth source signal.</summary>
+    Public avgsource6 As Double
+    ''' <summary>Elapsed computation time of the algorithm.</summary>
+    Public time_spent As Double
+    ''' <summary>Timestamp recorded at the start of <see cref="Main"/>.</summary>
+    Public begin As Date = Date.Now
+    ''' <summary>Timestamp recorded at the end of <see cref="Main"/>.</summary>
+    Public [end] As Date
+
+    ''' <summary>
+    ''' The maximum value returned by the pseudo-random number generator, used to normalize
+    ''' generated values into the [0, 1) range. Mirrors the C <c>RAND_MAX</c> constant.
+    ''' </summary>
     Const RAND_MAX As Integer = Integer.MaxValue
 
-    Public Function PreprocessingCentering(Xobs As Double()(), N As Integer, M As Integer) As Double()()
-        ' 
-        ' 		 * This function performs the centering operation on a matrix X.
-        ' 		 * For more details refer to the reference literature (ICA: Algorithms and applications).
-        ' 		 
-
-        Dim i As Integer = 0
-        Dim j As Integer
+    ''' <summary>
+    ''' Performs the centering operation on the observation matrix <paramref name="Xobs"/>
+    ''' by subtracting the per-row mean from each observation.
+    ''' </summary>
+    ''' <param name="Xobs">The original observation matrix (N x M).</param>
+    ''' <param name="N">Number of sources (rows).</param>
+    ''' <param name="M">Number of observation samples (columns).</param>
+    ''' <returns>The centered matrix X (M x N).</returns>
+    Public Function PreprocessingCentering(ByVal Xobs As Double()(), ByVal N As Integer, ByVal M As Integer) As Double()()
         Dim meanVector As Double() = New Double(N - 1) {}
         Dim X As Double()() = RectangularArray.Matrix(Of Double)(M, N)
 
         ' Calculating mean vector of observation matrix
-        While i < N
-            j = 0
-
-            While j < M
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To M - 1
                 meanVector(i) += Xobs(i)(j)
-                j += 1
-            End While
+            Next
+        Next
 
-            i += 1
-        End While
-
-        i = 0
-
-        While i < N
+        For i As Integer = 0 To N - 1
             meanVector(i) /= M
-            i += 1
-        End While
+        Next
 
         ' Centering observation matrix Xobs
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < M
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To M - 1
                 X(i)(j) = Xobs(i)(j) - meanVector(i)
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         Return X
     End Function
 
-    Public Function PreprocessingWhitening(X As Double()(), N As Integer, M As Integer) As Double()()
-        ' 
-        ' 		 * This function performs the whitening operation on a matrix X.
-        ' 		 * For more details refer to the reference literature (ICA: Algorithms and applications)
-        ' 		 * Note: the number of iterations for used for eigen decomposition of matrix ExxT is by default 100
-        ' 		 * The default value can be changed by changing iterationsED to desired value.
-        ' 		 
+    ''' <summary>
+    ''' Performs the whitening operation on the centered matrix <paramref name="X"/>.
+    ''' Whitening transforms the data so that its components are uncorrelated and have unit variance,
+    ''' which is a required precondition for the FastICA algorithm.
+    ''' </summary>
+    ''' <param name="X">The centered observation matrix (M x N).</param>
+    ''' <param name="N">Number of sources.</param>
+    ''' <param name="M">Number of observation samples.</param>
+    ''' <returns>The whitened matrix Z (M x N).</returns>
+    ''' <remarks>
+    ''' The eigen decomposition uses 100 iterations by default. This value can be changed by
+    ''' adjusting <c>iterationsED</c> inside this routine.
+    ''' </remarks>
+    Public Function PreprocessingWhitening(ByVal X As Double()(), ByVal N As Integer, ByVal M As Integer) As Double()()
+        Dim EigValues As Double() = New Double(N - 1) {}
+        Dim EigVectors As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim EigVectorsT As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim Dnegroot As Double() = New Double(N - 1) {}
+        Dim ExxT As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim Z As Double()() = RectangularArray.Matrix(Of Double)(M, N)
+        Dim Dummy1 As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim Dummy2 As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim Drootmat As Double()() = RectangularArray.Matrix(Of Double)(N, N)
 
-        Dim i As Integer
-        Dim j As Integer
-        Dim k As Integer
-        Dim EigValues As Double()
-        Dim EigVectors As Double()()
-        Dim EigVectorsT As Double()()
-        Dim Dnegroot As Double()
-        Dim ExxT As Double()()
-        Dim Z As Double()()
-        Dim Dummy1 As Double()()
-        Dim Dummy2 As Double()()
-        Dim Drootmat As Double()()
-
-        Dim iterationsED = 100
-
-        ExxT = RectangularArray.Matrix(Of Double)(N, N)
-        EigValues = New Double(N - 1) {}
-        Dnegroot = New Double(N - 1) {}
-        Drootmat = RectangularArray.Matrix(Of Double)(N, N)
-        Dummy1 = RectangularArray.Matrix(Of Double)(N, N)
-        Dummy2 = RectangularArray.Matrix(Of Double)(N, N)
-        EigVectors = RectangularArray.Matrix(Of Double)(N, N)
-        EigVectorsT = RectangularArray.Matrix(Of Double)(N, N)
-        Z = RectangularArray.Matrix(Of Double)(M, N)
+        Dim iterationsED As Integer = 100
 
         ' Calculating covariance
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < N
-                k = 0
-
-                While k < M
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
+                For k As Integer = 0 To M - 1
                     ExxT(i)(j) += X(i)(k) * X(j)(k) / (M - 1)
-                    k += 1
-                End While
-
-                j += 1
-            End While
-
-            i += 1
-        End While
+                Next
+            Next
+        Next
 
         ' Eigen Decomposition of (N x N real symmetric) covariance matrix ExxT of X
         EigenDecomposition(ExxT, N, EigVectors, EigValues, iterationsED)
 
-        ' Building matrix D^-1/2, containing the negative roots of the eigenvalues of covariance matrix of X,
-        ' 		 * the centered data of Xobs
-        i = 0
-
-        While i < N
+        ' Building matrix D^-1/2, containing the inverse square roots of the eigenvalues
+        For i As Integer = 0 To N - 1
             Dnegroot(i) = 1 / std.Sqrt(EigValues(i))
-            i += 1
-        End While
+        Next
 
-        i = 0
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
+                Drootmat(i)(j) = If(i = j, Dnegroot(i), 0.0)
+            Next
+        Next
 
-        While i < N
-            j = 0
-
-            While j < N
-                If i = j Then
-                    Drootmat(i)(j) = Dnegroot(i)
-                Else
-                    Drootmat(i)(j) = 0.0
-                End If
-
-                j += 1
-            End While
-
-            i += 1
-        End While
-
-        ' Whitening matrix X. Z = E*1/sqrt(D)*E'*X 
-        ' Dummy1 = E*1/sqrt(D)
+        ' Whitening matrix Z = E * 1/sqrt(D) * E' * X
+        ' Dummy1 = E * 1/sqrt(D)
         Dummy1 = MatMult(EigVectors, N, N, Drootmat, N, N)
 
-        ' Tranpose of E
+        ' Transpose of E
         EigVectorsT = MatTranspose(EigVectors, N, N)
 
-        ' Dummy2 = Dummy1*E'
+        ' Dummy2 = Dummy1 * E'
         Dummy2 = MatMult(Dummy1, N, N, EigVectorsT, N, N)
 
         ' Whitened matrix Z
@@ -216,383 +226,231 @@ Public Class FastICA
         Return Z
     End Function
 
-    Public Function SolveFastICA(Z As Double()(), N As Integer, M As Integer, Optional iterations As Integer = 1000) As Double()()
-        ' 
-        ' 		 * This function performs the FastICA algorithm.
-        ' 		 * For more details refer to the reference literature (ICA: Algorithms and applications).
-        ' 		 
-
-        Dim p As Integer
-        Dim i As Integer
-        Dim j As Integer
-        Dim k As Integer
-        Dim it As Integer
-        Dim G As Double()
-        Dim Gder As Double()
+    ''' <summary>
+    ''' Performs the FastICA algorithm to estimate the inverse of the mixing matrix.
+    ''' </summary>
+    ''' <param name="Z">The whitened observation matrix (M x N).</param>
+    ''' <param name="N">Number of sources.</param>
+    ''' <param name="M">Number of observation samples.</param>
+    ''' <param name="iterations">Maximum number of fixed-point iterations per component (default 1000).</param>
+    ''' <returns>The estimated inverse of the mixing matrix W (N x N).</returns>
+    ''' <remarks>
+    ''' Uses the tanh non-linearity and Gram-Schmidt decorrelation between estimated components.
+    ''' For the underlying theory, refer to "ICA: Algorithms and Applications".
+    ''' </remarks>
+    Public Function SolveFastICA(ByVal Z As Double()(), ByVal N As Integer, ByVal M As Integer, Optional ByVal iterations As Integer = 1000) As Double()()
+        Dim G As Double() = New Double(M - 1) {}
+        Dim Gder As Double() = New Double(M - 1) {}
+        Dim dumsum As Double() = New Double(N - 1) {}
+        Dim W As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim wp As Double() = New Double(N - 1) {}
         Dim ZGt As Double()
-        Dim dumsum As Double()
-        Dim W As Double()()
-        Dim wp As Double()
         Dim GderOnes As Double
         Dim f As Double
 
-        G = New Double(M - 1) {}
-        Gder = New Double(M - 1) {}
-        dumsum = New Double(N - 1) {}
-        W = RectangularArray.Matrix(Of Double)(N, N)
-        wp = New Double(N - 1) {}
-
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < N
+        ' Random initialization of W
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
                 W(i)(j) = CDbl(rand.NextNumber()) / RAND_MAX
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         ' FastICA algorithm
-        p = 0
-
-        While p < N
-            i = 0
-
-            While i < N
+        For p As Integer = 0 To N - 1
+            For i As Integer = 0 To N - 1
                 wp(i) = CDbl(rand.NextNumber()) / RAND_MAX
-                i += 1
-            End While
+            Next
 
             VectorNormalization(wp, N)
 
-            ' FastICA iterations
-            it = 0
-
-            While it < iterations
+            ' FastICA fixed-point iterations
+            For it As Integer = 0 To iterations - 1
                 G = VecMatMult(wp, N, Z, M)
 
-                i = 0
-
-                While i < M
+                For i As Integer = 0 To M - 1
                     Gder(i) = 1 - std.Tanh(G(i)) * std.Tanh(G(i))
-                    i += 1
-                End While
+                Next
 
-                i = 0
-
-                While i < M
+                For i As Integer = 0 To M - 1
                     G(i) = std.Tanh(G(i))
-                    i += 1
-                End While
+                Next
 
-                ' wp = 1/M*Z*G' - 1/M*Gder*ones(M,1)*wp 
+                ' wp = 1/M * Z * G' - 1/M * Gder * ones(M,1) * wp
                 ZGt = MatVecMult(Z, N, M, G)
 
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     ZGt(i) /= M
-                    i += 1
-                End While
+                Next
 
                 GderOnes = 0.0
-                i = 0
 
-                While i < M
+                For i As Integer = 0 To M - 1
                     GderOnes += Gder(i) / M
-                    i += 1
-                End While
+                Next
 
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     wp(i) = ZGt(i) - GderOnes * wp(i)
-                    i += 1
-                End While
+                Next
 
                 ' Gram-Schmidt decorrelation
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     dumsum(i) = 0.0
-                    i += 1
-                End While
+                Next
 
-                i = 0
-
-                While i < N
-                    j = 0
-
-                    While j < p
+                For i As Integer = 0 To N - 1
+                    For j As Integer = 0 To p - 1
                         f = 0.0
-                        k = 0
 
-                        While k < N
+                        For k As Integer = 0 To N - 1
                             f += wp(k) * W(k)(j)
-                            k += 1
-                        End While
+                        Next
 
                         dumsum(i) += f * W(i)(j)
-                        j += 1
-                    End While
+                    Next
+                Next
 
-                    i += 1
-                End While
-
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     wp(i) -= dumsum(i)
-                    i += 1
-                End While
+                Next
 
                 VectorNormalization(wp, N)
-                it += 1
-            End While
+            Next
 
             ' Storing estimated rows of the inverse of the mixing matrix as columns in W
-            i = 0
-
-            While i < N
+            For i As Integer = 0 To N - 1
                 W(i)(p) = wp(i)
-                i += 1
-            End While
-
-            p += 1
-        End While
+            Next
+        Next
 
         ' Normalizing estimated inverse of mixing matrix A
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < N
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
                 W(i)(j) /= std.Sqrt(2.0)
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         Return W
     End Function
 
-    ' 
-    ' 	 * ExportingData.c
-    ' 	 *
-    ' 	 *  Created on: 15 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-
+    ''' <summary>
+    ''' Exports the estimated source data obtained from the FastICA algorithm.
+    ''' </summary>
+    ''' <remarks>
+    ''' In the original C implementation this routine wrote the estimated sources
+    ''' <c>Sest</c> and the <c>timeVector</c> to the text file "SourcesEstimation.txt"
+    ''' for visualization in Matlab (ReadingData.m). The VB port is left empty to
+    ''' keep the call chain intact without performing file I/O.
+    ''' </remarks>
     Public Sub ExportingData()
-        ' 
-        ' 		 * This function exports the data obtained from the FastICA algorithm
-        ' 		 * to a textfile 'SourcesEstimation.txt'.
-        ' 		 * The data in the textfile is visualized in Matlab using the Matlab script
-        ' 		 * ReadingData.m
-        ' 		 
-
-        'int i;
-        'int j;
-
-        ' *Exporting data*/
-        'FILE pfile;
-
-        'pfile = fopen("SourcesEstimation.txt", "w");
-        'if (pfile != null)
-        '{
-        '    fprintf(pfile, "%d\n%d\n", N, M);
-        '    for (i = 0; i < M; ++i)
-        '    {
-        '        for (j = 0; j < N; ++j)
-        '        {
-        '            fprintf(pfile, "%.2f\t", Sest[j][i]);
-        '        }
-        '        fprintf(pfile, "\n");
-        '    }
-
-        '    for (i = 0; i < M; ++i)
-        '    {
-        '        fprintf(pfile, "%.2f\n", timeVector[i]);
-        '    }
-
-        '    fclose(pfile);
-        '}
-        'else
-        '{
-        '    Console.Write("Could not open file");
-        '}
-        'Console.Write("\n\n");
     End Sub
 
-    ' 
-    ' 	 * Functions.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-    ' 
-    ' 	 * Functions.h
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
+    ''' <summary>
+    ''' Generates the random mixing matrix <c>Amix</c>, used to build the observation
+    ''' matrix <c>Xobs</c> containing the M observed mixtures of the N sources.
+    ''' </summary>
     Public Sub Initialize()
-        ' 
-        ' 		 * This function generates the mixing matrix Amix, used to
-        ' 		 * generate the observation matrix Xobs, containing the M observed samples of
-        ' 		 * N sources.
-        ' 		 
-
-        Dim i As Integer
-        Dim j As Integer
         ' Generating mixing matrix Amix
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < N
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
                 Amix(i)(j) = CDbl(rand.NextNumber()) / RAND_MAX
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
     End Sub
 
+    ''' <summary>
+    ''' Generates the source matrix <c>S</c>, containing the source signals used to
+    ''' build the observation matrix data.
+    ''' </summary>
+    ''' <remarks>
+    ''' Sources 5 and 6 are subsequently mean-centered (their average is subtracted)
+    ''' to satisfy the zero-mean requirement of ICA.
+    ''' </remarks>
     Public Sub SetUpSources()
-        ' 
-        ' 		 * This function generated the source matrix S, containing the sources used
-        ' 		 * to generate data for the observation matrix.
-        ' 		 
-
-        Dim i As Integer
-        i = 0
-
-        While i < M
+        For i As Integer = 0 To M - 1
             timeVector(i) = (finalTime - initialTime) / (M - 1) * i
-            i += 1
-        End While
+        Next
 
         ' Source 1
-        i = 0
-
-        While i < M
+        For i As Integer = 0 To M - 1
             S(0)(i) = funcSource1(timeVector(i))
-            i += 1
-        End While
+        Next
 
         ' Source 2
-        i = 0
-
-        While i < M
+        For i As Integer = 0 To M - 1
             S(1)(i) = funcSource2(timeVector(i))
-            i += 1
-        End While
+        Next
 
         ' Source 3
-        i = 0
-
-        While i < M
+        For i As Integer = 0 To M - 1
             S(2)(i) = funcSource3(timeVector(i))
-            i += 1
-        End While
+        Next
 
         ' Source 4
-        i = 0
-
-        While i < M
+        For i As Integer = 0 To M - 1
             S(3)(i) = funcSource4(timeVector(i))
-            i += 1
-        End While
+        Next
 
         ' Source 5
         avgsource5 = 0.0
-        i = 0
 
-        While i < M
+        For i As Integer = 0 To M - 1
             S(4)(i) = funcSource5(timeVector(i))
             avgsource5 += S(4)(i)
-            i += 1
-        End While
+        Next
 
         ' Averaging Source 5
         avgsource5 /= M
-        i = 0
 
-        While i < M
+        For i As Integer = 0 To M - 1
             S(4)(i) -= avgsource5
-            i += 1
-        End While
+        Next
 
         ' Source 6
         avgsource6 = 0.0
-        i = 0
 
-        While i < M
+        For i As Integer = 0 To M - 1
             S(5)(i) = funcSource6(timeVector(i))
             avgsource6 += S(5)(i)
-            i += 1
-        End While
+        Next
 
         ' Averaging Source 6
         avgsource6 /= M
-        i = 0
 
-        While i < M
+        For i As Integer = 0 To M - 1
             S(5)(i) -= avgsource6
-            i += 1
-        End While
+        Next
     End Sub
 
-    Public Function XobsGen(Amix As Double()(), S As Double()(), N As Integer, M As Integer) As Double()()
-        ' 
-        ' 		 * This function generates the observation matrix Xobs
-        ' 		 * consisting of M observed mixture samples of size N.
-        ' 		 
-
-        Dim i As Integer
-        Dim j As Integer
-        Dim k As Integer
+    ''' <summary>
+    ''' Generates the observation matrix <see ref="Xobs"/>, consisting of M observed
+    ''' mixture samples of size N, by multiplying the mixing matrix <paramref name="Amix"/>
+    ''' with the source matrix <paramref name="S"/>.
+    ''' </summary>
+    ''' <param name="Amix">The mixing matrix (N x N).</param>
+    ''' <param name="S">The source matrix (M x N).</param>
+    ''' <param name="N">Number of sources.</param>
+    ''' <param name="M">Number of observation samples.</param>
+    ''' <returns>The observation matrix Xobs (M x N).</returns>
+    Public Function XobsGen(ByVal Amix As Double()(), ByVal S As Double()(), ByVal N As Integer, ByVal M As Integer) As Double()()
         Dim Xobs = RectangularArray.Matrix(Of Double)(M, N)
 
         ' Generating observation matrix Xobs
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < M
-                k = 0
-
-                While k < N
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To M - 1
+                For k As Integer = 0 To N - 1
                     Xobs(i)(j) += Amix(i)(k) * S(k)(j)
-                    k += 1
-                End While
-
-                j += 1
-            End While
-
-            i += 1
-        End While
+                Next
+            Next
+        Next
 
         Return Xobs
     End Function
 
+    ''' <summary>
+    ''' Frees the memory allocated for the execution of the algorithm by erasing all
+    ''' working matrices and vectors.
+    ''' </summary>
     Public Sub FreeMemory()
-        ' 
-        ' 		 * This function frees memory allocated for execution of the
-        ' 		 * algorithm.
-        ' 		 
-
         Erase Amix
         Erase W
         Erase WT
@@ -605,275 +463,179 @@ Public Class FastICA
     End Sub
 
 
-    ' 
-    ' 	 * MatrixOps.c
-    ' 	 *
-    ' 	 *  Created on: 15 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
+    ''' <summary>
+    ''' Performs the matrix multiplication of two matrices A and B (A * B).
+    ''' </summary>
+    ''' <param name="A">The left matrix (rows1 x columns1).</param>
+    ''' <param name="rows1">Number of rows of A.</param>
+    ''' <param name="columns1">Number of columns of A (must equal rows of B).</param>
+    ''' <param name="B">The right matrix (rows2 x columns2).</param>
+    ''' <param name="rows2">Number of rows of B.</param>
+    ''' <param name="columns2">Number of columns of B.</param>
+    ''' <returns>The product matrix Sp = A * B (rows1 x columns2).</returns>
+    Public Function MatMult(ByVal A As Double()(), ByVal rows1 As Integer, ByVal columns1 As Integer, ByVal B As Double()(), ByVal rows2 As Integer, ByVal columns2 As Integer) As Double()()
+        Dim Sp As Double()() = RectangularArray.Matrix(Of Double)(columns2, rows1)
 
-    Public Function MatMult(A As Double()(), rows1 As Integer, columns1 As Integer, B As Double()(), rows2 As Integer, columns2 As Integer) As Double()()
-        ' 
-        ' 		 * This function performs matrix multiplication of two matrices A and B (A*B)
-        ' 		 * with at least two rows and columns.
-        ' 		 * The result Sp = A*B is returned by the function.
-        ' 		 
-
-        Dim i As Integer
-        Dim j As Integer
-        Dim k As Integer
-        Dim Sp As Double()()
-
-        Sp = RectangularArray.Matrix(Of Double)(columns2, rows1)
-
-        i = 0
-
-        While i < rows1
-            j = 0
-
-            While j < columns2
-                k = 0
-
-                While k < columns1
+        For i As Integer = 0 To rows1 - 1
+            For j As Integer = 0 To columns2 - 1
+                For k As Integer = 0 To columns1 - 1
                     Sp(i)(j) += A(i)(k) * B(k)(j)
-                    k += 1
-                End While
-
-                j += 1
-            End While
-
-            i += 1
-        End While
+                Next
+            Next
+        Next
 
         Return Sp
     End Function
 
-    Public Function VecMatMult(ByRef V As Double(), SizeVec As Integer, B As Double()(), columns As Integer) As Double()
-        ' 
-        ' 		 * This function performs matrix multiplication of vector V and matrix B (V*B)
-        ' 		 * with the matrix containing at least two rows and columns
-        ' 		 * The result Sp = V*B is returned by the function.
-        ' 		 
+    ''' <summary>
+    ''' Performs the multiplication of a row vector V by a matrix B (V * B).
+    ''' </summary>
+    ''' <param name="V">The row vector (passed ByRef).</param>
+    ''' <param name="SizeVec">Length of the vector V (must equal rows of B).</param>
+    ''' <param name="B">The matrix B (SizeVec x columns).</param>
+    ''' <param name="columns">Number of columns of B.</param>
+    ''' <returns>The result vector Sp = V * B (length columns).</returns>
+    Public Function VecMatMult(ByRef V As Double(), ByVal SizeVec As Integer, ByVal B As Double()(), ByVal columns As Integer) As Double()
+        Dim Sp As Double() = New Double(columns - 1) {}
 
-        Dim i As Integer
-        Dim k As Integer
-        Dim Sp As Double()
-
-        Sp = New Double(columns - 1) {}
-
-        i = 0
-
-        While i < columns
-            k = 0
-
-            While k < SizeVec
+        For i As Integer = 0 To columns - 1
+            For k As Integer = 0 To SizeVec - 1
                 Sp(i) += V(k) * B(k)(i)
-                k += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         Return Sp
     End Function
 
-    Public Function MatVecMult(B As Double()(), rows As Integer, columns As Integer, ByRef V As Double()) As Double()
-        ' 
-        ' 		 * This function performs matrix multiplication of matrix B and vector V (B*V)
-        ' 		 * with the matrix containing at least two rows and columns.
-        ' 		 * The result Sp = B*V is returned by the function.
-        ' 		 
+    ''' <summary>
+    ''' Performs the multiplication of a matrix B by a column vector V (B * V).
+    ''' </summary>
+    ''' <param name="B">The matrix B (rows x columns).</param>
+    ''' <param name="rows">Number of rows of B.</param>
+    ''' <param name="columns">Number of columns of B (must equal length of V).</param>
+    ''' <param name="V">The column vector (passed ByRef).</param>
+    ''' <returns>The result vector Sp = B * V (length rows).</returns>
+    Public Function MatVecMult(ByVal B As Double()(), ByVal rows As Integer, ByVal columns As Integer, ByRef V As Double()) As Double()
+        Dim Sp As Double() = New Double(rows - 1) {}
 
-        Dim i As Integer
-        Dim k As Integer
-        Dim Sp As Double()
-
-        Sp = New Double(rows - 1) {}
-
-        i = 0
-
-        While i < rows
-            k = 0
-
-            While k < columns
+        For i As Integer = 0 To rows - 1
+            For k As Integer = 0 To columns - 1
                 Sp(i) += B(i)(k) * V(k)
-                k += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         Return Sp
     End Function
 
-    Public Function MatTranspose(A As Double()(), rows As Integer, columns As Integer) As Double()()
-        ' 
-        ' 		 * This function computes the transpose of matrix A
-        ' 		 * The tranpose Sp = A' (matlab notation) is returned by the function.
-        ' 		 
-
-        Dim i As Integer
-        Dim j As Integer
+    ''' <summary>
+    ''' Computes the transpose of matrix A. The result Sp = A' (Matlab notation) is returned.
+    ''' </summary>
+    ''' <param name="A">The input matrix (rows x columns).</param>
+    ''' <param name="rows">Number of rows of A.</param>
+    ''' <param name="columns">Number of columns of A.</param>
+    ''' <returns>The transposed matrix Sp (columns x rows).</returns>
+    Public Function MatTranspose(ByVal A As Double()(), ByVal rows As Integer, ByVal columns As Integer) As Double()()
         Dim Sp = RectangularArray.Matrix(Of Double)(rows, columns)
 
-        i = 0
-
-        While i < columns
-            j = 0
-
-            While j < rows
+        For i As Integer = 0 To columns - 1
+            For j As Integer = 0 To rows - 1
                 Sp(i)(j) = A(j)(i)
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         Return Sp
     End Function
 
 
-    Public Sub VectorNormalization(ByRef wp As Double(), sizeVec As Integer)
-        ' 
-        ' 		 * This function normalizes a vector wp and returns
-        ' 		 * the normalized vector wp.
-        ' 		 
+    ''' <summary>
+    ''' Normalizes a vector <paramref name="wp"/> to unit length (L2 norm == 1).
+    ''' </summary>
+    ''' <param name="wp">The vector to normalize (passed ByRef, modified in place).</param>
+    ''' <param name="sizeVec">Length of the vector.</param>
+    Public Sub VectorNormalization(ByRef wp As Double(), ByVal sizeVec As Integer)
+        Dim sqrtwpwp As Double = 0.0
 
-        Dim i As Integer
-        Dim sqrtwpwp = 0.0
-
-        i = 0
-
-        While i < sizeVec
+        For i As Integer = 0 To sizeVec - 1
             sqrtwpwp += wp(i) * wp(i)
-            i += 1
-        End While
+        Next
 
-        i = 0
-
-        While i < sizeVec
+        For i As Integer = 0 To sizeVec - 1
             wp(i) = wp(i) / std.Sqrt(sqrtwpwp)
-            i += 1
-        End While
+        Next
     End Sub
 
-    Public Sub EigenDecomposition(ExxT As Double()(), N As Integer, EigVectors As Double()(), ByRef EigValues As Double(), iterations As Integer)
-        ' 
-        ' 		 * This function computes the eigenvalues and eigenvectors
-        ' 		 * of a real, symmetric, N x N matrix.
-        ' 		 * The eigenvalues are stored in the function argument EigValues and the eigenvectors are
-        ' 		 * stored in the function argument EigVectors.
-        ' 		 
-
-        Dim i As Integer
-        Dim j As Integer
-        Dim k As Integer
-        Dim p As Integer
-        Dim it As Integer
-        Dim EigVecs As Double()()
-        Dim Q As Double()()
-        Dim EigVals As Double()()
-        Dim wp As Double()
-        Dim dumsum As Double()
-        Dim R As Double()()
-        Dim QT As Double()()
+    ''' <summary>
+    ''' Computes the eigenvalues and eigenvectors of a real, symmetric N x N matrix.
+    ''' </summary>
+    ''' <param name="ExxT">The input symmetric matrix (N x N).</param>
+    ''' <param name="N">Matrix dimension.</param>
+    ''' <param name="EigVectors">Output eigenvectors matrix (N x N), modified in place.</param>
+    ''' <param name="EigValues">Output eigenvalues vector (length N), returned ByRef.</param>
+    ''' <param name="iterations">Number of decomposition iterations.</param>
+    ''' <remarks>
+    ''' Uses a Jacobi-like iterative rotation with Gram-Schmidt orthogonalization
+    ''' of the eigenvectors during each iteration.
+    ''' </remarks>
+    Public Sub EigenDecomposition(ByVal ExxT As Double()(), ByVal N As Integer, ByVal EigVectors As Double()(), ByRef EigValues As Double(), ByVal iterations As Integer)
+        Dim EigVecs As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim Q As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim EigVals As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim wp As Double() = New Double(N - 1) {}
+        Dim dumsum As Double() = New Double(N - 1) {}
+        Dim R As Double()() = RectangularArray.Matrix(Of Double)(N, N)
+        Dim QT As Double()() = RectangularArray.Matrix(Of Double)(N, N)
         Dim f As Double
 
-        EigVecs = RectangularArray.Matrix(Of Double)(N, N)
-        Q = RectangularArray.Matrix(Of Double)(N, N)
-        EigVals = RectangularArray.Matrix(Of Double)(N, N)
-        wp = New Double(N - 1) {}
-        dumsum = New Double(N - 1) {}
-        R = RectangularArray.Matrix(Of Double)(N, N)
-        QT = RectangularArray.Matrix(Of Double)(N, N)
-
         ' Initializing Ait, matrix containing eigenvalues as the diagonal
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < N
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
                 EigVals(i)(j) = ExxT(i)(j)
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
 
         ' Initializing Q and E for computation of eigenvectors
-        i = 0
-
-        While i < N
+        For i As Integer = 0 To N - 1
             Q(i)(i) = 1.0
             EigVecs(i)(i) = 1.0
-            i += 1
-        End While
+        Next
 
         ' Eigen decomposition iterations
-        it = 0
-
-        While it < iterations
+        For it As Integer = 0 To iterations - 1
             ' Gram-Schmidt decorrelation
-            p = 0
-
-            While p < N
-                i = 0
-
-                While i < N
+            For p As Integer = 0 To N - 1
+                For i As Integer = 0 To N - 1
                     wp(i) = EigVals(i)(p)
-                    i += 1
-                End While
+                Next
 
                 VectorNormalization(wp, N)
 
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     dumsum(i) = 0.0
-                    i += 1
-                End While
+                Next
 
-                i = 0
-
-                While i < N
-                    j = 0
-
-                    While j < p
+                For i As Integer = 0 To N - 1
+                    For j As Integer = 0 To p - 1
                         f = 0.0
-                        k = 0
 
-                        While k < N
+                        For k As Integer = 0 To N - 1
                             f += wp(k) * Q(k)(j)
-                            k += 1
-                        End While
+                        Next
 
                         dumsum(i) += f * Q(i)(j)
-                        j += 1
-                    End While
+                    Next
+                Next
 
-                    i += 1
-                End While
-
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     wp(i) -= dumsum(i)
-                    i += 1
-                End While
+                Next
 
                 VectorNormalization(wp, N)
 
                 ' Storing estimated rows of the inverse of the mixing matrix as columns in W
-                i = 0
-
-                While i < N
+                For i As Integer = 0 To N - 1
                     Q(i)(p) = wp(i)
-                    i += 1
-                End While
-
-                p += 1
-            End While
+                Next
+            Next
 
             QT = MatTranspose(Q, N, N)
 
@@ -882,56 +644,32 @@ Public Class FastICA
             EigVals = MatMult(R, N, N, Q, N, N)
 
             EigVecs = MatMult(EigVecs, N, N, Q, N, N)
-            it += 1
-        End While
+        Next
 
         EigVecs = MatMult(EigVecs, N, N, Q, N, N)
 
-        i = 0
-
-        While i < N
+        For i As Integer = 0 To N - 1
             EigValues(i) = EigVals(i)(i)
-            i += 1
-        End While
+        Next
 
-        i = 0
-
-        While i < N
-            j = 0
-
-            While j < N
+        For i As Integer = 0 To N - 1
+            For j As Integer = 0 To N - 1
                 EigVectors(i)(j) = EigVecs(i)(j)
-                j += 1
-            End While
-
-            i += 1
-        End While
+            Next
+        Next
     End Sub
 
-    ' 
-    ' 	 * Memory.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
 
 
 
 
-    ' 
-    ' 	 * Setup.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
 
 
 
+    ''' <summary>
+    ''' Sets up the various parameters and allocates the working matrices/vectors used by the algorithm.
+    ''' </summary>
     Public Sub setupVars()
-        ' 
-        ' 		 * This function sets up various parameters used by the algorithm
-        ' 		 
-
         periodSource5 = (finalTime - initialTime) / na
         periodSource6 = (finalTime - initialTime) / ns / 2
 
@@ -950,21 +688,14 @@ Public Class FastICA
         Z = RectangularArray.Matrix(Of Double)(M, N)
     End Sub
 
-    ' 
-    ' 	 * ICAMain.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: Derek W. Harrison
-    ' 	 *
-    ' 	 *  This code is a C implementation of the FastICA method for recovering independent
-    ' 	 *  components in component mixtures
-    ' 	 *
-    ' 	 *  For more information refer to the paper 'ICA: Algorithms and applications' which is found
-    ' 	 *  in the same directory as the source files of this code.
-    ' 	 
 
 
 
+    ''' <summary>
+    ''' Main entry point of the FastICA algorithm. Orchestrates parameter input, data generation,
+    ''' preprocessing, the FastICA core, estimation output and cleanup, and prints the elapsed time.
+    ''' </summary>
+    ''' <returns>0 on completion.</returns>
     Private Function Main() As Integer
         begin = Date.Now
 
@@ -1010,25 +741,19 @@ Public Class FastICA
         Return 0
     End Function
 
-    ' 
-    ' 	 * ParameterInput.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
 
 
 
+    ''' <summary>
+    ''' Sets the user-configurable parameters of the algorithm. This is the only section that the
+    ''' user is expected to modify.
+    ''' </summary>
+    ''' <remarks>
+    ''' Six sources are available by default. To use more sources they must be added in
+    ''' <see cref="SetUpSources"/> and <see cref="funcSource1"/> ... <see cref="funcSource6"/>; to use
+    ''' fewer, remove the excess from <see cref="SetUpSources"/>.
+    ''' </remarks>
     Public Sub ParameterInput()
-        ' 
-        ' 		 * The user parameters are entered here. This is the only section of the code
-        ' 		 * Which should be changed by the user. Note that 6 sources are available. If more sources
-        ' 		 * are required or desired these need to be entered in the corresponding function SetUpSources()
-        ' 		 * in Functions.c. The extra sources need to be added in Sources.c
-        ' 		 * If less are required or desired, the excess sources need to be commented or removed
-        ' 		 * from the SetUpSources() function.
-        ' 		 
-
         N = 6 'The number of sources. (It is preferable not to change this value)
         C = N 'The number of observations (sample size). This value should be equal to N and should not be changed!
         M = 10000 'The number of observation samples
@@ -1043,119 +768,53 @@ Public Class FastICA
         iterations = 100 'Number of FastICA iterations
     End Sub
 
-    ' 
-    ' 	 * Sources.c
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
 
 
 
-    Public Function funcSource1(x As Double) As Double
+    ''' <summary>First source signal: a sine wave with angular frequency 1.1.</summary>
+    ''' <param name="x">The time value.</param>
+    ''' <returns>The value of the source signal.</returns>
+    Public Function funcSource1(ByVal x As Double) As Double
         Return std.Sin(1.1 * x)
     End Function
 
-
-    Public Function funcSource2(x As Double) As Double
+    ''' <summary>Second source signal: a cosine wave with angular frequency 0.25.</summary>
+    ''' <param name="x">The time value.</param>
+    ''' <returns>The value of the source signal.</returns>
+    Public Function funcSource2(ByVal x As Double) As Double
         Return std.Cos(0.25 * x)
     End Function
 
-
-    Public Function funcSource3(x As Double) As Double
+    ''' <summary>Third source signal: a sine wave with angular frequency 0.1.</summary>
+    ''' <param name="x">The time value.</param>
+    ''' <returns>The value of the source signal.</returns>
+    Public Function funcSource3(ByVal x As Double) As Double
         Return std.Sin(0.1 * x)
     End Function
 
-
-    Public Function funcSource4(x As Double) As Double
+    ''' <summary>Fourth source signal: a cosine wave with angular frequency 0.7.</summary>
+    ''' <param name="x">The time value.</param>
+    ''' <returns>The value of the source signal.</returns>
+    Public Function funcSource4(ByVal x As Double) As Double
         Return std.Cos(0.7 * x)
     End Function
 
-
-    Public Function funcSource5(x As Double) As Double
+    ''' <summary>Fifth source signal: a saw-tooth (zig-zag) wave defined by the slope K and period <c>periodSource5</c>.</summary>
+    ''' <param name="x">The time value.</param>
+    ''' <returns>The value of the source signal.</returns>
+    Public Function funcSource5(ByVal x As Double) As Double
         Return K * x - std.Floor(x / periodSource5) * K * periodSource5
     End Function
 
-
-    Public Function funcSource6(x As Double) As Double
+    ''' <summary>Sixth source signal: an alternating step function (+1 / -1) with period <c>periodSource6</c>.</summary>
+    ''' <param name="x">The time value.</param>
+    ''' <returns>The value of the source signal (+1 or -1).</returns>
+    Public Function funcSource6(ByVal x As Double) As Double
         If CInt(std.Floor(x / periodSource6)) Mod 2 = 0 Then
             Return 1
         Else
             Return -1
         End If
     End Function
-
-    ' 
-    ' 	 * AlgoFunctions.h
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-
-
-    ' 
-    ' 	 * MatrixOps.h
-    ' 	 *
-    ' 	 *  Created on: 15 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-
-
-
-    ' 
-    ' 	 * Memory.h
-    ' 	 *
-    ' 	 *  Created on: 15 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-
-
-    ' 
-    ' 	 * Parameter.h
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-
-    ' 
-    ' 	 * ParameterDefinition.h
-    ' 	 *
-    ' 	 *  Created on: 14 apr. 2016
-    ' 	 *      Author: dharrison
-    ' 	 
-
-
-
-    Public iterations As Integer
-    Public N As Integer
-    Public C As Integer
-    Public M As Integer
-    Public p As Integer
-    Public finalTime As Single
-    Public initialTime As Single
-    Public K As Single
-    Public na As Single
-    Public ns As Single
-
-    Public Amix As Double()()
-    Public W As Double()()
-    Public WT As Double()()
-    Public timeVector As Double()
-    Public S As Double()()
-    Public Sest As Double()()
-    Public Xobs As Double()()
-    Public X As Double()()
-    Public Z As Double()()
-    Public periodSource5 As Double
-    Public periodSource6 As Double
-    Public avgsource5 As Double
-    Public avgsource6 As Double
-    Public time_spent As Double
-    Public begin As Date = Date.Now
-    Public [end] As Date
 
 End Class
