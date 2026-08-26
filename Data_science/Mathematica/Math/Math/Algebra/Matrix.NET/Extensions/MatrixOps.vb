@@ -155,7 +155,10 @@ Namespace LinearAlgebra.Matrix
         ''' </summary>
         Public Function Inverse(a As Double(,), strict As Boolean) As Double(,)
             Dim n = a.GetLength(0)
-            If a.GetLength(1) <> n Then Throw New Exception("矩阵必须为方阵才能求逆")
+
+            If a.GetLength(1) <> n Then
+                Throw New InvalidProgramException($"矩阵A必须为方阵才能求逆，当前A维度为：{n}x{a.GetLength(1)}")
+            End If
 
             ' 构造增广矩阵 [a | I]
             Dim aug(n - 1, 2 * n - 1) As Double
@@ -167,7 +170,7 @@ Namespace LinearAlgebra.Matrix
             Next
 
             ' 前向消元（带部分主元选取）
-            For col = 0 To n - 1
+            For col As Integer = 0 To n - 1
                 ' 寻找主元
                 Dim maxRow = col
                 Dim maxVal = stdf.Abs(aug(col, col))
@@ -216,13 +219,13 @@ Namespace LinearAlgebra.Matrix
             Next
 
             ' 提取逆矩阵
-            Dim result(n - 1, n - 1) As Double
+            Dim inv(n - 1, n - 1) As Double
             For i = 0 To n - 1
                 For j = 0 To n - 1
-                    result(i, j) = aug(i, j + n)
+                    inv(i, j) = aug(i, j + n)
                 Next
             Next
-            Return result
+            Return inv
         End Function
 
         ''' <summary>计算行列式（递归展开法，适用于小矩阵）</summary>
