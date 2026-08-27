@@ -404,10 +404,10 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _optimizationState.Dim = [dim]
     End Sub
 
-    Public Function [Step](nEpochs As Integer) As Umap
+    Public Function [Step](nEpochs As Integer, Optional tqdm_wrap As Boolean = True) As Umap
         Dim epochsIndex As IEnumerable(Of Integer)
 
-        If App.EnableTqdm Then
+        If tqdm_wrap AndAlso App.EnableTqdm Then
             epochsIndex = Tqdm.Range(0, nEpochs)
         Else
             epochsIndex = Enumerable.Range(0, nEpochs)
