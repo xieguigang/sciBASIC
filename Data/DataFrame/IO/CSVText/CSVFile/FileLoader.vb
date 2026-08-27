@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
@@ -159,54 +160,107 @@ Namespace IO.CSVFile
 
         Private Function ParseInternal(buf As String(), isTsv As Boolean, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0), tsv:=isTsv)
-            Dim test As Func(Of String, Boolean)
             Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
             Dim delimiter As Char = If(isTsv, ASCII.TAB, ","c)
-
-            If trimBlanks Then
-                test = Function(s) Not Tokenizer.IsEmptyRow(s, delimiter)
-            Else
-                test = Function(s) True
-            End If
 
             If headerIndex = -1 AndAlso Not skipWhile.Name.StringEmpty Then
                 Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".warning
             End If
 
-            Return first + buf.parallelLoad(headerIndex, isTsv, test, skipWhile).AsList
+            Dim table = buf.LoadTableData(headerIndex, isTsv, skipWhile).AsList
+
+            If trimBlanks Then
+                table = RowSetParser.GetNoneBlankRows(table).AsList
+            End If
+
+            Return first + table
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <param name="headerIndex"></param>
+        ''' <param name="isTsv"></param>
+        ''' <param name="skipWhile"></param>
+        ''' <returns>
+        ''' table content data with header has already been removed
+        ''' </returns>
         <Extension>
-        Private Function parallelLoad(buf$(),
-                                      headerIndex%,
-                                      isTsv As Boolean,
-                                      test As Func(Of String, Boolean),
-                                      skipWhile As NamedValue(Of Func(Of String, Boolean))) As IEnumerable(Of RowObject)
+        Private Function LoadTableData(buf$(), headerIndex%, isTsv As Boolean, skipWhile As Func(Of String, Boolean)) As IEnumerable(Of RowObject)
+            Dim loader As New RowSetParser(buf, workers:=App.CPUCoreNumbers - 1)
+            Dim table As IEnumerable(Of RowObject)
 
-            Dim testForSkip = skipWhile.Value
-            Dim loader = From s As SeqValue(Of String)
-                         In buf.Skip(1) _
-                            .SeqIterator _
-                            .AsParallel
-                         Where test(s.value)
-                         Select row = New RowObject(s.value, tsv:=isTsv), i = s.i
-                         Order By i Ascending
+            If buf.Length > 10000 Then
+                ' needs run in parallel on processing large dataset
+                loader.Run()
+                table = loader.GetAllRows
+            Else
+                table = From s As String
+                        In buf
+                        Select New RowObject(s, tsv:=isTsv)
+            End If
 
             If headerIndex = -1 Then
                 ' returns all
-                Return loader.Select(Function(r) r.row)
+                ' skip 1 for skip of the table header
+                Return table.Skip(1)
             Else
-                Return loader _
+                Return table.Skip(1) _
                     .Where(Function(r)
-                               If testForSkip(r.row(headerIndex)) Then
-                                   ' is a row not needed...
+                               If skipWhile(r(headerIndex)) Then
+                                   ' is a row that not needed...
                                    Return False
                                Else
                                    Return True
                                End If
-                           End Function) _
-                    .Select(Function(r) r.row)
+                           End Function)
             End If
         End Function
+
+        Private Class RowSetParser : Inherits VectorTask
+
+            ReadOnly buf As String()
+            ReadOnly rows As RowObject()
+
+            Friend isTsv As Boolean
+            Friend test As Func(Of String, Boolean)
+
+            Public Sub New(buf As String(), Optional verbose As Boolean = False, Optional workers As Integer? = Nothing)
+                MyBase.New(buf.Length, verbose, workers)
+
+                Me.buf = buf
+                Me.rows = New RowObject(buf.Length - 1) {}
+            End Sub
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Function GetAllRows() As IEnumerable(Of RowObject)
+                Return rows
+            End Function
+
+            Public Shared Function GetNoneBlankRows(rows As IEnumerable(Of RowObject)) As IEnumerable(Of RowObject)
+                Return From r As RowObject
+                       In rows
+                       Where Not r.IsNullOrEmpty
+                       Where r.Any(Function(s) s <> "")
+            End Function
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Function GetNoneBlankRows() As IEnumerable(Of RowObject)
+                Return GetNoneBlankRows(rows)
+            End Function
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim list As New List(Of RowObject)
+
+                For i As Integer = start To ends
+                    Call list.Add(New RowObject(buf(i), tsv:=isTsv))
+                Next
+
+                SyncLock rows
+                    Call Array.Copy(list.ToArray, Scan0, rows, start, list.Count)
+                End SyncLock
+            End Sub
+        End Class
     End Module
 End Namespace
