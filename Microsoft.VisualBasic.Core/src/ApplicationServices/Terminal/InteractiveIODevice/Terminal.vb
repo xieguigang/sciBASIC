@@ -152,7 +152,9 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
         Public Sub SetWindowSize(width As Integer, height As Integer)
+#Disable Warning
             Call Console.SetWindowSize(width, height)
+#Enable Warning
         End Sub
 
         ''' <summary>
@@ -899,7 +901,9 @@ Namespace ApplicationServices.Terminal
                 Return Console.WindowHeight
             End Get
             Set(value As Integer)
+#Disable Warning
                 Console.WindowHeight = value
+#Enable Warning
             End Set
         End Property
 
@@ -916,7 +920,9 @@ Namespace ApplicationServices.Terminal
                 Return Console.WindowWidth
             End Get
             Set(value As Integer)
+#Disable Warning
                 Console.WindowWidth = value
+#Enable Warning
             End Set
         End Property
 

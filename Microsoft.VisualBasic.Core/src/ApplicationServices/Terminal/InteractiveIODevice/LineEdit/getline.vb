@@ -1278,12 +1278,15 @@ mismatch:
                     EditLoop()
                 Catch __unusedThreadAbortException1__ As ThreadAbortException
                     searching = 0
+#Disable Warning
                     Call Thread.ResetAbort()
-                    Console.WriteLine()
-                    SetPrompt(prompt)
-                    SetText("")
+#Enable Warning
+                    Call Console.WriteLine()
+                    Call SetPrompt(prompt)
+                    Call SetText("")
                 End Try
             Loop While Not done
+
             Console.WriteLine()
 
             RemoveHandler Console.CancelKeyPress, AddressOf InterruptEdit

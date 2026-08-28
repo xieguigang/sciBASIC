@@ -470,7 +470,9 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
                 Dim location = GetRenderLocation()
                 Dim oldCursorLeft = location.X
                 Dim oldCursorTop = location.Y
+#Disable Warning
                 Dim oldCursorVisible = Console.CursorVisible
+#Enable Warning
                 Dim oldForegroundColor = Console.ForegroundColor
                 Dim oldBackgroundColor = Console.BackgroundColor
 
@@ -537,7 +539,9 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
                 Dim location = GetRenderLocation()
                 Dim oldCursorLeft = location.X
                 Dim oldCursorTop = location.Y
+#Disable Warning
                 Dim oldCursorVisible = Console.CursorVisible
+#Enable Warning
 
                 'Hide Cursor
                 Console.CursorVisible = False
