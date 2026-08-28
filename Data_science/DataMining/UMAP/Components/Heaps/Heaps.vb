@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Math
@@ -76,8 +77,21 @@ Friend Module Heaps
         Return heap
     End Function
 
+    ''' <summary>
+    ''' allocate a nPoints-by-size matrix and then fill it with the given 
+    ''' <paramref name="fillValue"/>
+    ''' </summary>
     Private Function MakeArrays(fillValue As Double, nPoints As Integer, size As Integer) As Double()()
-        Return Utils.Empty(nPoints).Select(Function(any) Utils.Filled(size, fillValue)).ToArray()
+        Dim rows As Double()() = New Double(nPoints - 1)() {}
+
+        For i As Integer = 0 To nPoints - 1
+            Dim row As Double() = New Double(size - 1) {}
+
+            Array.Fill(row, fillValue)
+            rows(i) = row
+        Next
+
+        Return rows
     End Function
 
     ''' <summary>
@@ -165,20 +179,105 @@ Friend Module Heaps
         isNew(i) = flag
 
         Return 1
-    End Function
+        End Function
 
-    ''' <summary>
-    ''' Build a heap of candidate neighbors for nearest neighbor descent. 
-    ''' For each vertex the candidate neighbors are any current neighbors, 
-    ''' and any vertices that have the vertex as one of their nearest 
-    ''' neighbors.
-    ''' </summary>
-    Public Function BuildCandidates(currentGraph As Heap, nVertices As Integer, nNeighbors As Integer, maxCandidates As Integer, random As IProvideRandomValues) As Heap
+        ''' <summary>
+        ''' Push the symmetric neighbours pair (rowA -> rowB) and (rowB -> rowA) 
+        ''' onto the heap in a thread safe manner.
+        ''' </summary>
+        ''' <param name="heap"></param>
+        ''' <param name="locks">
+        ''' a striped lock array which is created via the 
+        ''' <see cref="Utils.NewStripedLocks(Integer)"/> function.
+        ''' </param>
+        ''' <param name="rowA"></param>
+        ''' <param name="rowB"></param>
+        ''' <param name="weight"></param>
+        ''' <param name="flag"></param>
+        ''' <returns>
+        ''' the number of the elements that have been pushed onto the heap: 
+        ''' 0, 1 or 2.
+        ''' </returns>
+        ''' <remarks>
+        ''' the two lock objects are always acquired in the ascending order of 
+        ''' the stripe index, so that the dead lock is impossible.
+        ''' </remarks>
+        Public Function HeapPushPair(heap As Heap, locks As Object(),
+                                     rowA As Integer, rowB As Integer,
+                                     weight As Double, flag As Integer) As Integer
+
+            Dim idxA As Integer = rowA Mod locks.Length
+            Dim idxB As Integer = rowB Mod locks.Length
+
+            If idxA = idxB Then
+                SyncLock locks(idxA)
+                    Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
+                           Heaps.HeapPush(heap, rowB, weight, rowA, flag)
+                End SyncLock
+            ElseIf idxA < idxB Then
+                SyncLock locks(idxA)
+                    SyncLock locks(idxB)
+                        Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
+                               Heaps.HeapPush(heap, rowB, weight, rowA, flag)
+                    End SyncLock
+                End SyncLock
+            Else
+                SyncLock locks(idxB)
+                    SyncLock locks(idxA)
+                        Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
+                               Heaps.HeapPush(heap, rowB, weight, rowA, flag)
+                    End SyncLock
+                End SyncLock
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Build a heap of candidate neighbors for nearest neighbor descent. 
+        ''' For each vertex the candidate neighbors are any current neighbors, 
+        ''' and any vertices that have the vertex as one of their nearest 
+        ''' neighbors.
+        ''' </summary>
+        ''' <param name="parallelism">
+        ''' the parallelism configuration, the candidate heap will be built in 
+        ''' parallel when the size of the graph is large enough.
+        ''' </param>
+        Public Function BuildCandidates(currentGraph As Heap, nVertices As Integer, nNeighbors As Integer,
+                                maxCandidates As Integer, random As IProvideRandomValues,
+                                Optional parallelism As ParallelConfig = Nothing) As Heap
+
         Dim candidateNeighbors = Heaps.MakeHeap(nVertices, maxCandidates)
+        Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+        Dim degree As Integer = If(config.CanParallel(nVertices) AndAlso random.IsThreadSafe, config.MaxDegreeOfParallelism, 1)
 
-        Call VBDebugger.EchoLine("Build candidates...")
+        Call VBDebugger.EchoLine($"Build candidates... [parallel: {degree}]")
 
-        For i As Integer = 0 To nVertices - 1
+        If degree > 1 Then
+        Dim locks As Object() = Utils.NewStripedLocks()
+        Dim options As New ParallelOptions With {.MaxDegreeOfParallelism = degree}
+
+        Call System.Threading.Tasks.Parallel.For(
+            fromInclusive:=0,
+            toExclusive:=nVertices,
+            parallelOptions:=options,
+            body:=Sub(i)
+                      For j As Integer = 0 To nNeighbors - 1
+                          If currentGraph(0)(i)(j) < 0 Then
+                              Continue For
+                          End If
+
+                          Dim idx = CInt(currentGraph(0)(i)(j)) ' TOOD: Should Heap be int values instead of float?
+                          Dim isn = CInt(currentGraph(2)(i)(j)) ' TOOD: Should Heap be int values instead of float?
+                          Dim d = random.NextFloat()
+
+                          Call Heaps.HeapPushPair(candidateNeighbors, locks, i, idx, d, isn)
+
+                          currentGraph(2)(i)(j) = 0
+                      Next
+                  End Sub)
+        Else
+        Dim indicesGroup As IEnumerable(Of Integer) = Enumerable.Range(0, nVertices)
+
+        For Each i As Integer In indicesGroup
             For j As Integer = 0 To nNeighbors - 1
                 If currentGraph(0)(i)(j) < 0 Then
                     Continue For
@@ -194,58 +293,120 @@ Friend Module Heaps
                 currentGraph(2)(i)(j) = 0
             Next
         Next
+        End If
 
         Return candidateNeighbors
-    End Function
+        End Function
 
     ''' <summary>
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heap) As KNNState
+    ''' <param name="parallelism">
+    ''' the parallelism configuration. Each row of the heap is sorted 
+    ''' independently, so this procedure could be done in parallel without 
+    ''' any lock.
+    ''' </param>
+    Public Function DeHeapSort(heap As Heap, Optional parallelism As ParallelConfig = Nothing) As KNNState
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
-        Dim indicesGroup As IEnumerable(Of Integer)
+        Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+        Dim degree As Integer = config.EffectiveDegree(indices.Length)
 
-        If App.EnableTqdm Then
-            indicesGroup = Tqdm.Range(0, indices.Length)
+        Call VBDebugger.EchoLine($"DeHeapSort... [parallel: {degree}]")
+
+        If degree > 1 Then
+            Call VBDebugger.EchoLine("DeHeapSort in parallel...")
+
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=indices.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i) SortHeapRow(indices(i), weights(i)))
         Else
-            indicesGroup = Enumerable.Range(0, indices.Length)
+            Dim indicesGroup As IEnumerable(Of Integer)
+
+            If App.EnableTqdm Then
+                indicesGroup = Tqdm.Range(0, indices.Length)
+            Else
+                indicesGroup = Enumerable.Range(0, indices.Length)
+            End If
+
+            For Each i As Integer In indicesGroup
+                Call SortHeapRow(indices(i), weights(i))
+            Next
         End If
 
-        Call VBDebugger.EchoLine("DeHeapSort...")
-
-        For Each i As Integer In indicesGroup
-            Dim indHeap = indices(i)
-            Dim distHeap = weights(i)
-
-            For j As Integer = 0 To indHeap.Length - 1 - 1
-                Dim indHeapIndex = indHeap.Length - j - 1
-                Dim distHeapIndex = distHeap.Length - j - 1
-
-                Dim temp1 = indHeap(0)
-                indHeap(0) = indHeap(indHeapIndex)
-                indHeap(indHeapIndex) = temp1
-
-                Dim temp2 = distHeap(0)
-                distHeap(0) = distHeap(distHeapIndex)
-                distHeap(distHeapIndex) = temp2
-
-                Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
-            Next
-        Next
-
-        Dim indicesAsInts = indices _
-            .[Select](Function(floatArray)
-                          Return floatArray.[Select](Function(value) CInt(value)).ToArray()
-                      End Function) _
-            .ToArray()
+        Dim indicesAsInts = ToIntMatrix(indices, parallelism)
 
         Return New KNNState With {
             .knnIndices = indicesAsInts,
             .knnDistances = weights
         }
+    End Function
+
+    ''' <summary>
+    ''' unpack one heap row out to a sorted list of indices by increasing 
+    ''' weight (the second half of the heap sort)
+    ''' </summary>
+    ''' <param name="indHeap">
+    ''' the row of the neighbour indices, this row will be modified in place.
+    ''' </param>
+    ''' <param name="distHeap">
+    ''' the row of the neighbour distances, this row will be modified in place.
+    ''' </param>
+    ''' <remarks>
+    ''' this procedure only touches the two given rows, so that it is safe 
+    ''' for run it in parallel for each row of the heap.
+    ''' </remarks>
+    Private Sub SortHeapRow(indHeap As Double(), distHeap As Double())
+        For j As Integer = 0 To indHeap.Length - 1 - 1
+            Dim indHeapIndex = indHeap.Length - j - 1
+            Dim distHeapIndex = distHeap.Length - j - 1
+
+            Dim temp1 = indHeap(0)
+            indHeap(0) = indHeap(indHeapIndex)
+            indHeap(indHeapIndex) = temp1
+
+            Dim temp2 = distHeap(0)
+            distHeap(0) = distHeap(distHeapIndex)
+            distHeap(distHeapIndex) = temp2
+
+            Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' convert the indices matrix of the heap from double to integer
+    ''' </summary>
+    Private Function ToIntMatrix(indices As Double()(), Optional parallelism As ParallelConfig = Nothing) As Integer()()
+        Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+        Dim degree As Integer = config.EffectiveDegree(indices.Length)
+        Dim ints As Integer()() = New Integer(indices.Length - 1)() {}
+
+        If degree > 1 Then
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=indices.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i)
+                          Dim row As Double() = indices(i)
+                          Dim out As Integer() = New Integer(row.Length - 1) {}
+
+                          For j As Integer = 0 To row.Length - 1
+                              out(j) = CInt(row(j))
+                          Next
+
+                          ints(i) = out
+                      End Sub)
+        Else
+            For i As Integer = 0 To indices.Length - 1
+                ints(i) = indices(i).[Select](Function(value) CInt(value)).ToArray()
+            Next
+        End If
+
+        Return ints
     End Function
 
     ''' <summary>

@@ -170,7 +170,7 @@ Public Class GifEncoder : Implements IDisposable
         sourceGif.Position = SourceColorBlockPosition
         ' Locating the image color table
         Dim colorTable = New Byte(SourceColorBlockLength - 1) {}
-        sourceGif.Read(colorTable, 0, colorTable.Length)
+        sourceGif.ReadExactly(colorTable, 0, colorTable.Length)
         _stream.Write(colorTable, 0, colorTable.Length)
     End Sub
 
@@ -178,7 +178,7 @@ Public Class GifEncoder : Implements IDisposable
         sourceGif.Position = SourceGraphicControlExtensionPosition
         ' Locating the source GCE
         Dim blockhead = New Byte(SourceGraphicControlExtensionLength - 1) {}
-        sourceGif.Read(blockhead, 0, blockhead.Length)
+        sourceGif.ReadExactly(blockhead, 0, blockhead.Length)
         ' Reading source GCE
         WriteShort(GraphicControlExtensionBlockIdentifier)
         ' Identifier
@@ -198,7 +198,7 @@ Public Class GifEncoder : Implements IDisposable
         sourceGif.Position = SourceImageBlockPosition
         ' Locating the image block
         Dim header = New Byte(SourceImageBlockHeaderLength - 1) {}
-        sourceGif.Read(header, 0, header.Length)
+        sourceGif.ReadExactly(header, 0, header.Length)
         WriteByte(header(0))
         ' Separator
         WriteShort(x)
@@ -228,7 +228,7 @@ Public Class GifEncoder : Implements IDisposable
         Dim dataLength = sourceGif.ReadByte()
         While dataLength > 0
             Dim imgData = New Byte(dataLength - 1) {}
-            sourceGif.Read(imgData, 0, dataLength)
+            sourceGif.ReadExactly(imgData, 0, dataLength)
 
             _stream.WriteByte(Convert.ToByte(dataLength))
             _stream.Write(imgData, 0, dataLength)

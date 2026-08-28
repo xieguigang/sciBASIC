@@ -125,14 +125,14 @@ Namespace Drawing2D.HeatMap
 
         Public Shared Iterator Function ParseStream(data As Stream) As IEnumerable(Of PixelData)
             Dim bytes As Byte() = New Byte(RawStream.INT32 - 1) {}
-            data.Read(bytes, Scan0, bytes.Length)
+            data.ReadExactly(bytes, Scan0, bytes.Length)
             Dim n As Integer = BitConverter.ToInt32(bytes, Scan0)
             Dim x = New Byte((n * RawStream.INT32) - 1) {}
-            data.Read(x, Scan0, x.Length)
+            data.ReadExactly(x, Scan0, x.Length)
             Dim y = New Byte((n * RawStream.INT32) - 1) {}
-            data.Read(y, Scan0, y.Length)
+            data.ReadExactly(y, Scan0, y.Length)
             bytes = New Byte((n * RawStream.DblFloat) - 1) {}
-            data.Read(bytes, Scan0, bytes.Length)
+            data.ReadExactly(bytes, Scan0, bytes.Length)
             Dim z As Double() = New NetworkByteOrderBuffer().decode(bytes)
             Dim xbytes = New Byte(RawStream.INT32 - 1) {}
             Dim ybytes = New Byte(RawStream.INT32 - 1) {}

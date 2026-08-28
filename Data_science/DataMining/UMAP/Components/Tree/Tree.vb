@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports System.Threading.Tasks
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
 
@@ -259,26 +260,62 @@ Namespace Tree
         ''' Generate an array of sets of candidate nearest neighbors by 
         ''' constructing a random projection forest and taking the leaves
         ''' of all the trees. Any given tree has leaves that are a set 
-        ''' of potential nearest neighbors.Given enough trees the set of
-        ''' all such leaves gives a good likelihood of getting a good set
+        ''' of potential nearest neighbors.Given enough trees the set of 
+        ''' all such leaves gives a good likelihood of getting a good set 
         ''' of nearest neighbors in composite. Since such a random 
         ''' projection forest is inexpensive to compute, this can be a 
         ''' useful means of seeding other nearest neighbor algorithms.
         ''' </summary>
-        Public Function MakeLeafArray(forest As FlatTree()) As Integer()()
-            If forest.Length > 0 Then
-                Dim output = New List(Of Integer())()
-
-                For Each tree In forest
-                    For Each entry In tree.Indices
-                        output.Add(entry)
-                    Next
-                Next
-
-                Return output.ToArray()
-            Else
+        ''' <param name="parallelism">
+        ''' the parallelism configuration, the leaf array is filled in 
+        ''' parallel when the size of the forest is large enough.
+        ''' </param>
+        Public Function MakeLeafArray(forest As FlatTree(), Optional parallelism As ParallelConfig = Nothing) As Integer()()
+            If forest.Length <= 0 Then
                 Return {New Integer() {-1}}
             End If
+
+            ' pre-scan the total number of the leaf nodes so that the output 
+            ' array could be allocated at once and then be filled in parallel
+            Dim offsets As Integer() = New Integer(forest.Length - 1) {}
+            Dim total As Integer = 0
+
+            For i As Integer = 0 To forest.Length - 1
+                offsets(i) = total
+                total += forest(i).Indices.Length
+            Next
+
+            Dim output As Integer()() = New Integer(total - 1)() {}
+            Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+            Dim degree As Integer = config.EffectiveDegree(total)
+
+            If degree > 1 Then
+                Dim opt As New ParallelOptions With {.MaxDegreeOfParallelism = degree}
+
+                Call System.Threading.Tasks.Parallel.For(
+                    fromInclusive:=0,
+                    toExclusive:=forest.Length,
+                    parallelOptions:=opt,
+                    body:=Sub(i)
+                              Dim leaves As Integer()() = forest(i).Indices
+                              Dim offset As Integer = offsets(i)
+
+                              For j As Integer = 0 To leaves.Length - 1
+                                  output(offset + j) = leaves(j)
+                              Next
+                          End Sub)
+            Else
+                For i As Integer = 0 To forest.Length - 1
+                    Dim leaves As Integer()() = forest(i).Indices
+                    Dim offset As Integer = offsets(i)
+
+                    For j As Integer = 0 To leaves.Length - 1
+                        output(offset + j) = leaves(j)
+                    Next
+                Next
+            End If
+
+            Return output
         End Function
 
         ''' <summary>

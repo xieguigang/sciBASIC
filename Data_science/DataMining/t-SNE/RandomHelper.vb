@@ -59,18 +59,35 @@ Friend Class RandomHelper
 
     ReadOnly tSNE As tSNE
 
+    ''' <summary>
+    ''' Marsaglia polar 方法成对产出的第二个正态随机数的缓存
+    ''' </summary>
+    Private mSpare As Double = 0.0
+    Private mHasSpare As Boolean = False
+
     Sub New(tSNE As tSNE)
         Me.tSNE = tSNE
     End Sub
 
     ''' <summary>
-    ''' return 0 mean unit standard deviation random number
+    ''' 返回 0 均值单位标准差随机数
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 这里使用的是 Marsaglia polar 方法，每一次采样会成对地产出两个正态随机数。
+    ''' 
+    ''' 原始的 JS 参考实现把第二个数字缓存在 tSNE 实例之上（mRet 与 mVal 字段），
+    ''' 这在并行初始化的场景下会被多个线程互相覆盖，从而产生静默的数值错误。
+    ''' 此处改为把缓存下沉到 RandomHelper 实例自身的字段之上，
+    ''' 由于 InitSolution 保持串行执行，产出的随机序列与改造前逐位一致。
+    ''' 
+    ''' 底层的 RandomExtensions.NextDouble 基于 ThreadLocal(Of Random) 实现，
+    ''' 本身即为线程安全的。
+    ''' </remarks>
     Private Function GaussRandom() As Double
-        If tSNE.mRet Then
-            tSNE.mRet = False
-            Return tSNE.mVal
+        If mHasSpare Then
+            mHasSpare = False
+            Return mSpare
         End If
 
         Dim u As Double = randf.NextDouble() - 1
@@ -84,8 +101,8 @@ Friend Class RandomHelper
         Dim c = std.Sqrt(-2 * std.Log(r) / r)
 
         ' cache this for next function call for efficiency
-        tSNE.mVal = v * c
-        tSNE.mRet = True
+        mSpare = v * c
+        mHasSpare = True
 
         Return u * c
     End Function
@@ -101,62 +118,45 @@ Friend Class RandomHelper
     End Function
 
     ''' <summary>
-    ''' utility that returns 2d array filled with random numbers
-    ''' or with value s, if provided
+    ''' utility that returns a contiguous row-major 2d buffer filled with
+    ''' random normal numbers (mu = 0, sigma = 1e-4)
     ''' </summary>
     ''' <param name="n"></param>
     ''' <param name="d"></param>
     ''' <returns></returns>
-    Friend Overloads Function randn2d(n As Integer, d As Integer) As Double()()
-        Dim x As New List(Of Double())()
+    ''' <remarks>
+    ''' 返回的是拉平之后的一维数组（行主序，索引为 <c>i * d + j</c>），
+    ''' 相比改造前的锯齿数组版本减少了 n 次小数组分配，缓存局部性更好。
+    ''' </remarks>
+    Friend Function randn2d(n As Integer, d As Integer) As Double()
+        Dim x = New Double(n * d - 1) {}
 
         For i As Integer = 0 To n - 1
-            Dim xhere As New List(Of Double)()
+            Dim offset = i * d
 
             For j As Integer = 0 To d - 1
-                xhere.Add(randn(0.0, 0.0001))
+                x(offset + j) = randn(0.0, 0.0001)
             Next
-
-            x.Add(xhere.ToArray())
         Next
 
-        Dim ret = New Double(x.Count - 1)() {}
-
-        For i = 0 To x.Count - 1
-            ret(i) = x(i)
-        Next
-
-        Return ret
+        Return x
     End Function
 
     ''' <summary>
-    ''' utility that returns 2d array filled with random numbers
-    ''' or with value s, if provided
+    ''' utility that returns a contiguous row-major 2d buffer filled with value s
     ''' </summary>
     ''' <param name="n"></param>
     ''' <param name="d"></param>
     ''' <param name="s"></param>
     ''' <returns></returns>
-    Friend Overloads Shared Function randn2d(n As Integer, d As Integer, s As Double) As Double()()
-        Dim x As New List(Of Double())()
+    Friend Shared Function randn2d(n As Integer, d As Integer, s As Double) As Double()
+        Dim x = New Double(n * d - 1) {}
 
-        For i As Integer = 0 To n - 1
-            Dim xhere As New List(Of Double)()
-
-            For j As Integer = 0 To d - 1
-                xhere.Add(s)
-            Next
-
-            x.Add(xhere.ToArray())
+        For i As Integer = 0 To n * d - 1
+            x(i) = s
         Next
 
-        Dim ret = New Double(x.Count - 1)() {}
-
-        For i = 0 To x.Count - 1
-            ret(i) = x(i)
-        Next
-
-        Return ret
+        Return x
     End Function
 
 End Class

@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34024.191
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12120.119 stable
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "test\test.vbproj", "{A3270174-75AC-4D35-B3B4-41D3B184B40C}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "DynamicProgramming\test\test.vbproj", "{A3270174-75AC-4D35-B3B4-41D3B184B40C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{956CCE17-407B-4E4A-B9CA-6CFB21C07125}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj", "{829EE980-EE82-4287-A72A-7651D9EB0F3B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\Microsoft.VisualBasic.Core\src\Core.vbproj", "{829EE980-EE82-4287-A72A-7651D9EB0F3B}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DynamicProgramming.NET5", "DynamicProgramming.NET5.vbproj", "{ABB0F996-3F45-4B79-8C77-33181F959F99}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DynamicProgramming.NET5", "DynamicProgramming\DynamicProgramming.NET5.vbproj", "{ABB0F996-3F45-4B79-8C77-33181F959F99}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\..\Mathematica\Math\Math\Math.NET5.vbproj", "{B0CBBB46-6F5C-4B94-BB33-A7AA6B323A93}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\Mathematica\Math\Math\Math.NET5.vbproj", "{B0CBBB46-6F5C-4B94-BB33-A7AA6B323A93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

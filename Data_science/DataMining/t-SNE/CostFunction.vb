@@ -60,6 +60,16 @@ Friend Class CostFunction
 
     ReadOnly tSNE As tSNE
 
+    ''' <summary>
+    ''' 未归一化的 Q 分布缓冲区，长度为 N*N，跨迭代复用
+    ''' </summary>
+    Private lQu As Double()
+
+    ''' <summary>
+    ''' 上一次分配缓冲区时所对应的样本数量
+    ''' </summary>
+    Private bufferedN As Integer = -1
+
     Public ReadOnly Property mN As Integer
         Get
             Return tSNE.mN
@@ -73,72 +83,149 @@ Friend Class CostFunction
     ''' <summary>
     ''' return cost and gradient, given an arrangement
     ''' </summary>
-    ''' <param name="Y"></param>
-    Public Sub CostGrad(Y As Double()())
+    ''' <param name="Y">
+    ''' 当前的低维嵌入，行主序的一维数组（长度为 N * dim）
+    ''' </param>
+    ''' <remarks>
+    ''' 这里依据 <see cref="tSNE.UseBarnesHut"/> 在精确路径与 Barnes-Hut 近似路径之间分派。
+    ''' 默认走精确路径，行为与改造前完全一致。
+    ''' </remarks>
+    Public Sub CostGrad(Y As Double())
+        If tSNE.UseBarnesHut Then
+            Call BarnesHutGradient.Evaluate(tSNE, Y)
+        Else
+            Call CostGradExact(Y)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 精确的稠密梯度计算，O(N^2) 时间、O(N^2) 内存
+    ''' </summary>
+    ''' <param name="Y">当前的低维嵌入，行主序一维数组</param>
+    Private Sub CostGradExact(Y As Double())
         Dim N = mN
         Dim [dim] = tSNE.mDim ' dim of output space
         Dim P = tSNE.mP
+        Dim opts = tSNE.opts
         Dim pmul = If(tSNE.mIter < 100, 4, 1) ' trick that helps with local optima
 
-        ' compute current Q distribution, unnormalized first
-        Dim lQu = zeros(N * N)
-        Dim qsum = 0.0
+        Call EnsureBuffers(N, [dim])
 
-        For i = 0 To N - 1
+        ' 注意：不要命名为 Qu，VB 大小写不敏感会与循环内的局部变量 qu 冲突
+        Dim lQuBuf = lQu
+        Dim grad = tSNE.mGrad
+        Dim blockSize As Integer = TaskBlockSize(N)
+        Dim nBlocks As Integer = TaskBlockCount(N, blockSize)
+        Dim qsumParts = New Double(nBlocks - 1) {}
+        Dim costParts = New Double(nBlocks - 1) {}
 
-            For j = i + 1 To N - 1
-                Dim dsum = 0.0
+        ' ---------- pass 1：未归一化的 Q 分布 ----------
+        ' 按外层行 i 分块。第 i 行只写第 i 行与第 i 列（三角对称），
+        ' 不同的 i 之间所写入的单元格集合互不相交，因此无需加锁。
+        ' qsum 每个任务块一份局部累加器，最后串行合并。
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim acc As Double = 0
 
-                For d = 0 To [dim] - 1
-                    Dim dhere = Y(i)(d) - Y(j)(d)
-                    dsum += dhere * dhere
+                For i As Integer = from To upto - 1
+                    Dim iOffset = i * [dim]
+                    Dim rowOffset = i * N
+
+                    For j As Integer = i + 1 To N - 1
+                        Dim jOffset = j * [dim]
+                        Dim dsum = 0.0
+
+                        For d = 0 To [dim] - 1
+                            Dim dhere = Y(iOffset + d) - Y(jOffset + d)
+                            dsum += dhere * dhere
+                        Next
+
+                        ' Student t-distribution
+                        Dim qu = 1.0 / (1.0 + dsum)
+
+                        lQuBuf(rowOffset + j) = qu
+                        lQuBuf(j * N + i) = qu
+
+                        acc += 2 * qu
+                    Next
                 Next
 
-                ' Student t-distribution
-                Dim qu = 1.0 / (1.0 + dsum)
-                lQu(i * N + j) = qu
-                lQu(j * N + i) = qu
-                qsum += 2 * qu
-            Next
-        Next
+                qsumParts(b) = acc
+            End Sub)
 
-        ' normalize Q distribution to sum to 1
-        Dim NN = N * N
-        Dim lQ = zeros(NN)
+        Dim qsum = SumParts(qsumParts)
 
-        For q = 0 To NN - 1
-            lQ(q) = std.Max(lQu(q) / qsum, 1.0E-100)
-        Next
+        If qsum <= 0 OrElse Double.IsNaN(qsum) Then
+            qsum = 1
+        End If
 
-        Dim cost = 0.0
-        Dim grad As List(Of Double()) = New List(Of Double())()
+        ' 归一化系数取倒数，把遍 2 中的 N^2 次除法降为乘法
+        Dim invQsum = 1.0 / qsum
 
-        For i = 0 To N - 1
-            Dim gsum = New Double([dim] - 1) {} ' init grad for point i
+        ' ---------- pass 2：梯度与成本 ----------
+        ' 第 i 行只写 grad 的第 i 行，行与行之间互不相交。
+        ' 归一化之后的 Q 不再物化为一整份 N*N 的数组，而是按索引即时算出，
+        ' 这样既省下 8N^2 字节内存，也省下了一整轮 N^2 的写 + 读内存扫描。
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim acc As Double = 0
 
-            For d = 0 To [dim] - 1
-                gsum(d) = 0.0
-            Next
+                For i As Integer = from To upto - 1
+                    Dim iOffset = i * [dim]
+                    Dim rowOffset = i * N
 
-            For j = 0 To N - 1
-                ' accumulate cost (the non-constant portion at least...)
-                cost += -P(i * N + j) * std.Log(lQ(i * N + j))
-                Dim premult = 4 * (pmul * P(i * N + j) - lQ(i * N + j)) * lQu(i * N + j)
+                    For k = 0 To [dim] - 1
+                        grad(iOffset + k) = 0.0
+                    Next
 
-                For d = 0 To [dim] - 1
-                    gsum(d) += premult * (Y(i)(d) - Y(j)(d))
+                    For j = 0 To N - 1
+                        Dim jOffset = j * [dim]
+                        Dim pij = P(rowOffset + j)
+                        Dim quij = lQuBuf(rowOffset + j)
+                        Dim qij = std.Max(quij * invQsum, 1.0E-100)
+
+                        ' accumulate cost (the non-constant portion at least...)
+                        acc += -pij * std.Log(qij)
+
+                        Dim premult = 4 * (pmul * pij - qij) * quij
+
+                        For k = 0 To [dim] - 1
+                            grad(iOffset + k) += premult * (Y(iOffset + k) - Y(jOffset + k))
+                        Next
+                    Next
                 Next
-            Next
 
-            grad.Add(gsum)
-        Next
+                costParts(b) = acc
+            End Sub)
 
-        tSNE.mCost = cost
-        tSNE.mGrad = New Double(grad.Count - 1)() {}
+        tSNE.mCost = SumParts(costParts)
+    End Sub
 
-        For i = 0 To grad.Count - 1
-            tSNE.mGrad(i) = grad(i)
-        Next
+    ''' <summary>
+    ''' 确保 Q 缓冲区与梯度缓冲区的尺寸与当前样本量匹配，并在尺寸未变时直接复用
+    ''' </summary>
+    ''' <param name="N"></param>
+    ''' <param name="[dim]"></param>
+    Private Sub EnsureBuffers(N As Integer, [dim] As Integer)
+        If bufferedN = N AndAlso lQu IsNot Nothing AndAlso tSNE.mGrad IsNot Nothing Then
+            Return
+        End If
+
+        Dim cells As Long = CLng(N) * N
+
+        If cells > Integer.MaxValue Then
+            Throw New InsufficientMemoryException(
+                $"The dense exact t-SNE path requires {cells * 8 / 1024 / 1024 / 1024} GB for a {N} x {N} matrix. " &
+                $"Please enable the Barnes-Hut approximation (UseBarnesHut = True) for datasets of this size.")
+        End If
+
+        lQu = New Double(CInt(cells) - 1) {}
+        tSNE.mGrad = New Double(N * [dim] - 1) {}
+        bufferedN = N
     End Sub
 
 End Class

@@ -109,8 +109,19 @@ Friend Class RPTree : Inherits VectorTask
 
     ReadOnly leafArray As Integer()()
 
-    Public Sub New(leafArray As Integer()())
-        MyBase.New(leafArray.Length)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="leafArray">
+    ''' the leaf nodes of the random projection forest
+    ''' </param>
+    ''' <param name="workers">
+    ''' the number of the worker threads, the global 
+    ''' <see cref="VectorTask.n_threads"/> value is used when this 
+    ''' parameter value is nothing.
+    ''' </param>
+    Public Sub New(leafArray As Integer()(), Optional workers As Integer? = Nothing)
+        MyBase.New(leafArray.Length, workers:=workers)
         Me.leafArray = leafArray
     End Sub
 

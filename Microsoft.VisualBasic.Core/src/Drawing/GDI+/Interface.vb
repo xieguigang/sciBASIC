@@ -1752,10 +1752,10 @@ Namespace Imaging
         ''' Gets the cumulative graphics context.
         ''' </summary>
         ''' <returns>
-        ''' An System.Object representing the cumulative graphics context.
+        ''' A <see cref="GraphicsContextInfo"/> that describes the cumulative graphics context.
         ''' </returns>
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public MustOverride Function GetContextInfo() As Object
+        Public MustOverride Function GetContextInfo() As GraphicsContextInfo
 
         '
         ' Summary:
