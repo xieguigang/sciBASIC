@@ -143,11 +143,11 @@ Module markdownRenderVerify
               Not R("`**not bold**`").Contains(BOLD))
 
         ' the bold spans must not be greedy
-        Dim bold As String = R("**a** and **b**")
+        Dim boldText As String = R("**a** and **b**")
 
         Check("bold not greedy",
-              bold.Contains(BOLD & "a") AndAlso bold.Contains(BOLD & "b") AndAlso
-              Not bold.Contains(BOLD & "a** and **b"))
+              boldText.Contains(BOLD & "a") AndAlso boldText.Contains(BOLD & "b") AndAlso
+              Not boldText.Contains(BOLD & "a** and **b"))
 
         Check("single star italic",
               R("*emphasis* works").Contains(ITALY & "emphasis"))
@@ -162,10 +162,10 @@ Module markdownRenderVerify
               R("~~gone~~").Contains(STRIKE & "gone"))
 
         ' the link and the image
-        Dim link As String = R("[text](http://x.com)")
+        Dim linkText As String = R("[text](http://x.com)")
 
-        Check("link text", link.Contains(LINK & "text"))
-        Check("link url", link.Contains(URL & " (http://x.com)"))
+        Check("link text", linkText.Contains(LINK & "text"))
+        Check("link url", linkText.Contains(URL & " (http://x.com)"))
         Check("image alt text", R("![alt](img.png)").Contains(URL & "alt"))
 
         Dim titled As String = R("[t](http://x.com ""tip"")")
@@ -206,18 +206,18 @@ Module markdownRenderVerify
 
         ' the fenced code block was parsed as a normal paragraph before, and
         ' the theme.CodeBlock style was never applied
-        Dim code As String = R("```" & vbLf & "a **b** c" & vbLf & "```")
+        Dim codeText As String = R("```" & vbLf & "a **b** c" & vbLf & "```")
 
         Check("fenced code block is not parsed",
-              code.Contains(CODEBLOCK & "a **b** c") AndAlso Not code.Contains(BOLD))
-        Check("fence markers are removed", Not code.Contains("```"))
+              codeText.Contains(CODEBLOCK & "a **b** c") AndAlso Not codeText.Contains(BOLD))
+        Check("fence markers are removed", Not codeText.Contains("```"))
 
         Check("block quote", R("> quote").Contains(QUOTE & "  quote"))
 
-        Dim quote As String = R("> a" & vbLf & ">" & vbLf & "> ``c`` d")
+        Dim quoteText As String = R("> a" & vbLf & ">" & vbLf & "> ``c`` d")
 
         Check("block quote with an empty quote line",
-              quote.Contains(QUOTE & "  a") AndAlso quote.Contains(QUOTE & "  d"))
+              quoteText.Contains(QUOTE & "  a") AndAlso quoteText.Contains(QUOTE & "  d"))
 
         Check("dash list item", R("- item").Contains(MARKER & "- "))
         Check("plus list item", R("+ item").Contains(MARKER & "+ "))
@@ -240,7 +240,7 @@ Module markdownRenderVerify
         Dim wide As String = R("|a|b|c|" & vbLf & "|--|--|--|" & vbLf & "|1|2|3|")
 
         Check("a 3 columns table is wider than a 2 columns one",
-              ColumnsOf(wide.LineTokens(0)) = 3, "columns=" & ColumnsOf(wide.LineTokens(0)))
+              ColumnsOf(wide.LineTokens()(0)) = 3, "columns=" & ColumnsOf(wide.LineTokens()(0)))
 
         ' the table buffer used to be shared between the tables
         Dim two As String = R("|a|b|" & vbLf & "|--|--|" & vbLf & "|1|2|" & vbLf & vbLf & "|x|y|" & vbLf & "|--|--|" & vbLf & "|3|4|")
