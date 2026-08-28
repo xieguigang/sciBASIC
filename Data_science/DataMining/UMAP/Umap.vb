@@ -83,6 +83,12 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
 
     ReadOnly _learningRate As Double = 1.0F
     ReadOnly _minDist As Double = 0.1F
+    ''' <summary>
+    ''' The number of negative samples to select per positive sample in the 
+    ''' optimization process. Increasing this value will result in greater 
+    ''' repulsive force being applied, greater optimization cost, but slightly 
+    ''' more accuracy.
+    ''' </summary>
     ReadOnly _negativeSampleRate As Integer = 5
     ReadOnly _repulsionStrength As Double = 1
     ReadOnly _setOpMixRatio As Double = 1
@@ -91,6 +97,28 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     Friend ReadOnly _random As IProvideRandomValues
     ReadOnly _customNumberOfEpochs As Integer?
     ReadOnly _progressReporter As RunSlavePipeline.SetProgressEventHandler
+
+    ''' <summary>
+    ''' the gradient clipping value of the SGD optimization step
+    ''' </summary>
+    ReadOnly _gradientClipValue As Double = 4.0
+    ''' <summary>
+    ''' the value range [-a, a] of the uniformly distributed random 
+    ''' initialization of the embedding
+    ''' </summary>
+    ReadOnly _initialEmbeddingRange As Double = 10
+    ''' <summary>
+    ''' move the other vertex of the edge while doing the SGD optimization?
+    ''' </summary>
+    ReadOnly _moveOther As Boolean = True
+    ''' <summary>
+    ''' the number-of-epochs heuristic of the SGD optimization
+    ''' </summary>
+    ReadOnly _epochsSchedule As EpochSchedule
+    ''' <summary>
+    ''' the parallelism configuration of the whole UMAP pipeline
+    ''' </summary>
+    Friend ReadOnly _parallelism As ParallelConfig
 
     ''' <summary>
     ''' graph data:
@@ -141,9 +169,66 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' <param name="localConnectivity"></param>
     ''' <param name="KnnIter"></param>
     ''' <param name="bandwidth"></param>
-    ''' <param name="customNumberOfEpochs"></param>
+    ''' <param name="customNumberOfEpochs">
+    ''' a fixed number of the SGD epochs, the <paramref name="epochsSchedule"/> 
+    ''' heuristic is used when this parameter value is not set.
+    ''' </param>
     ''' <param name="customMapCutoff">cutoff value in range ``[0,1]``</param>
     ''' <param name="progressReporter"></param>
+    ''' <param name="negativeSampleRate">
+    ''' The number of negative samples to select per positive sample in the 
+    ''' optimization process (default 5).
+    ''' </param>
+    ''' <param name="epochsSchedule">
+    ''' the number-of-epochs heuristic that is used by the SGD optimization, 
+    ''' the default schedule is: ``n&lt;=2500 -> 500``, ``n&lt;=5000 -> 400``, 
+    ''' ``n&lt;=7500 -> 300`` and ``n&gt;7500 -> 200``.
+    ''' </param>
+    ''' <param name="gradientClipValue">
+    ''' the gradient clipping value of the SGD optimization step (default 4.0)
+    ''' </param>
+    ''' <param name="initialEmbeddingRange">
+    ''' the value range [-a, a] of the uniformly distributed random 
+    ''' initialization of the embedding (default 10).
+    ''' </param>
+    ''' <param name="moveOther">
+    ''' move the other vertex of the edge while doing the SGD optimization? 
+    ''' (default TRUE)
+    ''' </param>
+    ''' <param name="nTrees">
+    ''' the number of the random projection trees of the rp-forest, the 
+    ''' adaptive formula ``5 + round(sqrt(n) / 20)`` is used when this 
+    ''' parameter value is less than or equals to zero.
+    ''' </param>
+    ''' <param name="leafSize">
+    ''' the max size of the leaf node of the random projection tree, the 
+    ''' adaptive formula ``max(10, k)`` is used when this parameter value 
+    ''' is less than or equals to zero.
+    ''' </param>
+    ''' <param name="maxCandidates">
+    ''' the max number of the candidate neighbours of each vertex that is 
+    ''' used by the nearest neighbour descent (default 50).
+    ''' </param>
+    ''' <param name="nnDescentDelta">
+    ''' the early stop threshold of the nearest neighbour descent (default 0.001).
+    ''' </param>
+    ''' <param name="nnDescentRho">
+    ''' the sample rate of the nearest neighbour descent, a lower value means 
+    ''' a faster but more approximate neighbour graph (default 0.5).
+    ''' </param>
+    ''' <param name="rpTreeInit">
+    ''' init the neighbour graph via the random projection forest? (default TRUE)
+    ''' </param>
+    ''' <param name="nnDescentIters">
+    ''' the number of the iterations of the nearest neighbour descent, the 
+    ''' adaptive formula ``max(5, floor(round(log2(n))))`` is used when this 
+    ''' parameter value is less than or equals to zero.
+    ''' </param>
+    ''' <param name="parallelism">
+    ''' the parallelism configuration of the whole UMAP pipeline, the 
+    ''' <see cref="ParallelConfig.Sequential"/> is used when this parameter 
+    ''' value is not set.
+    ''' </param>
     Public Sub New(Optional distance As DistanceCalculation = Nothing,
                    Optional random As IProvideRandomValues = Nothing,
                    Optional dimensions As Integer = 2,
@@ -159,12 +244,43 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                    Optional spread As Double = 1,
                    Optional learningRate As Double = 1.0F,
                    Optional repulsionStrength As Double = 1,
-                   Optional progressReporter As RunSlavePipeline.SetProgressEventHandler = Nothing)
+                   Optional progressReporter As RunSlavePipeline.SetProgressEventHandler = Nothing,
+                   Optional negativeSampleRate As Integer = 5,
+                   Optional epochsSchedule As EpochSchedule = Nothing,
+                   Optional gradientClipValue As Double = 4.0,
+                   Optional initialEmbeddingRange As Double = 10,
+                   Optional moveOther As Boolean = True,
+                   Optional nTrees As Integer = 0,
+                   Optional leafSize As Integer = 0,
+                   Optional maxCandidates As Integer = 50,
+                   Optional nnDescentDelta As Double = 0.001F,
+                   Optional nnDescentRho As Double = 0.5F,
+                   Optional rpTreeInit As Boolean = True,
+                   Optional nnDescentIters As Integer = 0,
+                   Optional parallelism As ParallelConfig = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
             Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
         Else
-            KNNArguments = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
+            KNNArguments = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth,
+                                            nTrees:=nTrees,
+                                            leafSize:=leafSize,
+                                            maxCandidates:=maxCandidates,
+                                            delta:=nnDescentDelta,
+                                            rho:=nnDescentRho,
+                                            rpTreeInit:=rpTreeInit,
+                                            nDescentIters:=nnDescentIters,
+                                            parallelism:=parallelism)
+        End If
+
+        If negativeSampleRate <= 0 Then
+            Throw New ArgumentOutOfRangeException(NameOf(negativeSampleRate), "the negative sample rate must be a positive value")
+        End If
+        If gradientClipValue <= 0 Then
+            Throw New ArgumentOutOfRangeException(NameOf(gradientClipValue), "the gradient clip value must be a positive value")
+        End If
+        If initialEmbeddingRange <= 0 Then
+            Throw New ArgumentOutOfRangeException(NameOf(initialEmbeddingRange), "the initial embedding range must be a positive value")
         End If
 
         _setOpMixRatio = setOpMixRatio
@@ -172,6 +288,12 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _spread = spread
         _repulsionStrength = repulsionStrength
         _learningRate = learningRate
+        _negativeSampleRate = negativeSampleRate
+        _gradientClipValue = gradientClipValue
+        _initialEmbeddingRange = initialEmbeddingRange
+        _moveOther = moveOther
+        _epochsSchedule = If(epochsSchedule, EpochSchedule.Default)
+        _parallelism = If(parallelism, ParallelConfig.Default)
         _kdTreeKNNEngine = kdTreeKNNEngine
         _customMapCutoff = customMapCutoff
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
@@ -202,7 +324,9 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             _knn = KDTreeMetric.GetKNN(_x, k:=KNNArguments.k)
         Else
             ' This part of the process very roughly accounts for 1/3 of the work
-            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(_x)
+            ' the whole KNNArguments is passed into the engine now, so that the 
+            ' rp-forest/nearest neighbour descent arguments are configurable
+            _knn = New KNearestNeighbour(KNNArguments, _distanceFn, _random).NearestNeighbors(_x)
         End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
@@ -247,10 +371,14 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     Public Overrides Function GetEmbedding() As Double()()
         Dim final As Double()() = New Double(_optimizationState.NVertices - 1)() {}
         Dim span As Double() = _embedding
+        Dim dims As Integer = _optimizationState.Dim
 
         For i As Integer = 0 To _optimizationState.NVertices - 1
-            ' slice函数需要进行验证
-            final(i) = span.SpanSlice(i * _optimizationState.Dim, _optimizationState.Dim).ToArray()
+            Dim vector As Double() = New Double(dims - 1) {}
+
+            ' Array.Copy is much faster than the span slice plus ToArray
+            Array.Copy(span, i * dims, vector, Scan0, dims)
+            final(i) = vector
         Next
 
         Return final
@@ -259,6 +387,11 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' <summary>
     ''' Gets the number of epochs for optimizing the projection - NOTE: This heuristic differs from the python version
     ''' </summary>
+    ''' <remarks>
+    ''' the threshold/epoch value pairs are configurable now via the 
+    ''' <see cref="EpochSchedule"/> object, the default schedule is 
+    ''' completely the same as the original hardcoded heuristic.
+    ''' </remarks>
     Private Function GetNEpochs() As Integer
         Dim length = _graph.Dims.rows
 
@@ -266,15 +399,20 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             Return _customNumberOfEpochs.Value
         End If
 
-        If length <= 2500 Then
-            Return 500
-        ElseIf length <= 5000 Then
-            Return 400
-        ElseIf length <= 7500 Then
-            Return 300
-        Else
-            Return 200
-        End If
+        Return _epochsSchedule.GetEpochs(length)
+    End Function
+
+    ''' <summary>
+    ''' Get the underlying embedding vector as a <see cref="Span(Of Double)"/> 
+    ''' view for the SGD optimization.
+    ''' </summary>
+    ''' <returns>
+    ''' a span view which is bound to the shared embedding vector, the write 
+    ''' operation of the span view is directly applied to the embedding 
+    ''' vector.
+    ''' </returns>
+    Friend Function GetEmbeddingSpan() As Span(Of Double)
+        Return New Span(Of Double)(_embedding)
     End Function
 
     ''' <summary>
@@ -288,7 +426,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim knnIndices = If(_knn.knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knn.knnDistances, New Single(-1)() {})
         Dim sigmasRhos = New SmoothKNN(knnDistances, KNNArguments).SmoothKNNDistance()
-        Dim rowsColsVals = SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos)
+        Dim rowsColsVals = SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos, parallelism:=_parallelism)
         Dim sparseMatrix = New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length))
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
@@ -314,7 +452,9 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         ' until we determine a better eigenvalue/eigenvector computation approach
         _embedding = New Double(graph.Dims.rows * _optimizationState.Dim - 1) {}
 
-        Call SIMDint.Uniform(_embedding, 10, _random)
+        ' the value range of the random initialization is configurable now, 
+        ' the default value 10 is the same as the original implementation
+        Call SIMDint.Uniform(_embedding, _initialEmbeddingRange, _random)
 
         ' Get graph data in ordered way...
         Dim weights As New List(Of Double)()
@@ -361,7 +501,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim epochsPerSample = _optimizationState.EpochsPerSample
         Dim nEpochs = GetNEpochs()
         Dim nVertices = _graph.Dims.cols
-        Dim aB As (a!, b!) = Umap.FindABParams(_spread, _minDist)
+        Dim aB = Umap.FindABParams(_spread, _minDist)
 
         _optimizationState.Head = head
         _optimizationState.Tail = tail
@@ -372,15 +512,30 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _optimizationState.NVertices = nVertices
     End Sub
 
-    Friend Shared Function FindABParams(spread As Double, minDist As Double) As (Single, Double)
-        ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might 
-        ' be able to use the LM implementation in Accord.NET but I'll hard code values that 
-        ' relate to the default configuration for now
-        If spread <> 1.0 OrElse minDist <> 0.1F Then
-            Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
-        End If
-
-        Return (1.56947052F, 0.8941996F)
+    ''' <summary>
+    ''' Fit a, b params for the differentiable curve used in lower dimensional 
+    ''' fuzzy simplicial complex construction. We want the smooth curve (from a 
+    ''' pre-defined family with simple gradient) that best matches an offset 
+    ''' exponential decay.
+    ''' </summary>
+    ''' <param name="spread">the effective scale of the embedded points</param>
+    ''' <param name="minDist">
+    ''' the effective minimum distance between the embedded points
+    ''' </param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the Levenberg-Marquardt algorithm that is required by the curve 
+    ''' fitting is implemented inside the <see cref="ABParams"/> module, 
+    ''' so that any combination of the ``spread``/``minDist`` parameters 
+    ''' is supported now (previously an <see cref="ArgumentException"/> 
+    ''' will be thrown for any non-default configuration).
+    ''' 
+    ''' the result of the default configuration (spread = 1, minDist = 0.1) 
+    ''' is still the original hardcoded constant, so that the default 
+    ''' behaviour is not changed at all.
+    ''' </remarks>
+    Friend Shared Function FindABParams(spread As Double, minDist As Double) As (a As Double, b As Double)
+        Return ABParams.FindABParams(spread, minDist)
     End Function
 
     Private Sub PrepareForOptimizationLoop()
@@ -397,7 +552,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _optimizationState.EpochOfNextSample = epochOfNextSample
         _optimizationState.EpochOfNextNegativeSample = epochOfNextNegativeSample
         _optimizationState.EpochsPerNegativeSample = epochsPerNegativeSample
-        _optimizationState.MoveOther = True
+        _optimizationState.MoveOther = _moveOther
         _optimizationState.InitialAlpha = learningRate
         _optimizationState.Alpha = learningRate
         _optimizationState.Gamma = repulsionStrength
@@ -451,25 +606,54 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' coming from negative sampling similar to word2vec).
     ''' </summary>
     Private Sub OptimizeLayoutStep(n As Integer)
+        Dim workLen As Integer = _optimizationState.EpochsPerSample.Length
         ' 在这里可以进行并行化？
-        For i As Integer = 0 To _optimizationState.EpochsPerSample.Length - 1
-            Call RunIterate(i, n)
-        Next
+        ' 
+        ' yes, the SGD optimization of one epoch is a Hogwild style parallel 
+        ' workload now: the vertex may be hit by more than one edge at the 
+        ' same time, which makes the result no longer bit-level reproducible, 
+        ' but the convergence is not affected at all.
+        '
+        ' note about that the negative sampling requires a thread safe random 
+        ' source, so the parallel branch is disabled for a random source 
+        ' with the IsThreadSafe flag equals to FALSE.
+        Dim degree As Integer = If(_parallelism.CanParallel(workLen) AndAlso _random.IsThreadSafe,
+                                   _parallelism.MaxDegreeOfParallelism,
+                                   1)
+
+        If degree > 1 Then
+            Call New SgdEpochTask(workLen, Me, n, _gradientClipValue, workers:=degree).Run()
+        Else
+            Dim embeddingSpan As Span(Of Double) = _embedding
+
+            For i As Integer = 0 To workLen - 1
+                Call RunIterate(i, n, _gradientClipValue, embeddingSpan)
+            Next
+        End If
 
         ' Preparation for future work for interpolating the table before optimizing
         _optimizationState.Alpha = _optimizationState.InitialAlpha * (1.0F - n / _optimizationState.NEpochs)
         _optimizationState.CurrentEpoch += 1
     End Sub
 
-    Private Sub RunIterate(i As Integer, n As Integer)
+    ''' <summary>
+    ''' run the SGD iteration of the i th edge of the epoch <paramref name="n"/>
+    ''' </summary>
+    ''' <param name="i">the index of the edge</param>
+    ''' <param name="n">the current epoch</param>
+    ''' <param name="clipValue">the gradient clipping value</param>
+    ''' <param name="embeddingSpan">
+    ''' the embedding vector of the current worker thread. the 
+    ''' <see cref="Span(Of T)"/> is a ref struct which can not be shared 
+    ''' between the threads, so that it must be created by the caller.
+    ''' </param>
+    Friend Sub RunIterate(i As Integer, n As Integer, clipValue As Double, embeddingSpan As Span(Of Double))
         If Not (_optimizationState.EpochOfNextSample(i) >= n) Then
-            Call Iterate(i, n)
+            Call Iterate(i, n, clipValue, embeddingSpan)
         End If
     End Sub
 
-    Private Sub Iterate(i As Integer, n As Integer)
-        Dim embeddingSpan As Span(Of Double) = _embedding
-
+    Private Sub Iterate(i As Integer, n As Integer, clipValue As Double, embeddingSpan As Span(Of Double))
         Dim j As Integer = _optimizationState.Head(i)
         Dim k As Integer = _optimizationState.Tail(i)
 
@@ -486,8 +670,6 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             gradCoeff = -2 * _optimizationState.A * _optimizationState.B * std.Pow(distSquared, _optimizationState.B - 1)
             gradCoeff /= _optimizationState.A * std.Pow(distSquared, _optimizationState.B) + 1
         End If
-
-        Const clipValue = 4.0F
 
         For d As Integer = 0 To _optimizationState.Dim - 1
             gradD = Math.Clip(gradCoeff * (current(d) - other(d)), clipValue)
@@ -519,7 +701,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             End If
 
             For d As Integer = 0 To _optimizationState.Dim - 1
-                gradD = 4.0F
+                gradD = clipValue
 
                 If (gradCoeff > 0) Then
                     gradD = Math.Clip(gradCoeff * (current(d) - other(d)), clipValue)

@@ -90,7 +90,7 @@ Namespace KNN
             m_distanceFn = If(distanceFn, AddressOf DistanceFunctions.Cosine)
             m_random = If(random, DefaultRandomGenerator.Instance)
             m_args = New KNNArguments(knn)
-            m_parallelism = ParallelConfig.Sequential
+            m_parallelism = ParallelConfig.Default
         End Sub
 
         Sub New(args As KNNArguments, Optional distanceFn As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing)
@@ -98,7 +98,7 @@ Namespace KNN
             m_distanceFn = If(distanceFn, AddressOf DistanceFunctions.Cosine)
             m_random = If(random, DefaultRandomGenerator.Instance)
             m_args = args
-            m_parallelism = If(args.parallelism, ParallelConfig.Sequential)
+            m_parallelism = If(args.parallelism, ParallelConfig.Default)
         End Sub
 
         ''' <summary>

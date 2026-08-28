@@ -71,7 +71,7 @@ Namespace KNN
             Me.target = std.Log(knn.k, 2) * knn.bandwidth
             Me.knn = knn
             Me.distances = distances
-            Me.parallelism = If(knn.parallelism, ParallelConfig.Sequential)
+            Me.parallelism = If(knn.parallelism, ParallelConfig.Default)
             Me.meanDistances = Aggregate d As Double()
                                In distances
                                Let md As Double = d.Average

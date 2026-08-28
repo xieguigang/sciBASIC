@@ -159,7 +159,7 @@ Namespace KNN
             Me.rho = rho
             Me.rpTreeInit = rpTreeInit
             Me.nDescentIters = nDescentIters
-            Me.parallelism = If(parallelism, ParallelConfig.Sequential)
+            Me.parallelism = If(parallelism, ParallelConfig.Default)
         End Sub
 
         ''' <summary>

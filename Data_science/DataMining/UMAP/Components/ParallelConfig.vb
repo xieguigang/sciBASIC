@@ -49,6 +49,18 @@ Public Class ParallelConfig
         }
 
     ''' <summary>
+    ''' the default configuration: run the UMAP pipeline on all of the 
+    ''' available cpu cores.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared ReadOnly Property [Default] As ParallelConfig =
+        New ParallelConfig With {
+            .Enabled = True,
+            .MaxDegreeOfParallelism = App.CPUCoreNumbers,
+            .MinWorkSize = 1024
+        }
+
+    ''' <summary>
     ''' get the effective parallelism degree of a given workload
     ''' </summary>
     ''' <param name="workSize">

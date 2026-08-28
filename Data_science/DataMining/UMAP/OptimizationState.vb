@@ -71,12 +71,25 @@ Friend NotInheritable Class OptimizationState
     Public EpochOfNextSample As Double() = New Double(-1) {}
     Public EpochOfNextNegativeSample As Double() = New Double(-1) {}
     Public EpochsPerNegativeSample As Double() = New Double(-1) {}
+    ''' <summary>
+    ''' move the other vertex of the edge while doing the SGD optimization?
+    ''' </summary>
     Public MoveOther As Boolean = True
     Public InitialAlpha As Double = 1
     Public Alpha As Double = 1
     Public Gamma As Double = 1
-    Public A As Double = 1.57694352F
-    Public B As Double = 0.8950609F
+    ''' <summary>
+    ''' the fitted ``a`` parameter of the low dimensional curve, which is 
+    ''' assigned by the <see cref="Umap.InitializeOptimization"/> via the 
+    ''' spread/minDist parameters.
+    ''' </summary>
+    Public A As Double = ABParams.DefaultAB.a
+    ''' <summary>
+    ''' the fitted ``b`` parameter of the low dimensional curve, which is 
+    ''' assigned by the <see cref="Umap.InitializeOptimization"/> via the 
+    ''' spread/minDist parameters.
+    ''' </summary>
+    Public B As Double = ABParams.DefaultAB.b
 
     ''' <summary>
     ''' the dimension result of the projection operation
