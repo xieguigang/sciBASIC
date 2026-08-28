@@ -40,31 +40,26 @@ Friend Class SparseP
     ''' <summary>
     ''' 样本数量
     ''' </summary>
-    ''' <returns></returns>
     Friend ReadOnly N As Integer
 
     ''' <summary>
     ''' 非零条目总数（双向展开之后的长度）
     ''' </summary>
-    ''' <returns></returns>
     Friend ReadOnly nnz As Integer
 
     ''' <summary>
     ''' 行偏移表，长度为 N + 1；第 i 行的条目位于 <c>[rowPtr(i), rowPtr(i + 1))</c> 区间之内
     ''' </summary>
-    ''' <returns></returns>
     Friend ReadOnly rowPtr As Integer()
 
     ''' <summary>
-    ''' 列索引，长度为 <see cref="nnz"/>
+    ''' 列索引，长度为 nnz
     ''' </summary>
-    ''' <returns></returns>
     Friend ReadOnly colP As Integer()
 
     ''' <summary>
-    ''' 概率值，长度为 <see cref="nnz"/>；已经完成对称化与 1/(2N) 归一化
+    ''' 概率值，长度为 nnz；已经完成对称化与 1/(2N) 归一化
     ''' </summary>
-    ''' <returns></returns>
     Friend ReadOnly valP As Double()
 
     Friend Sub New(N As Integer, rowPtr As Integer(), colP As Integer(), valP As Double())

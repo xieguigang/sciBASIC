@@ -80,8 +80,7 @@ Module Helper
     ''' 的方式，而不是 Parallel.For(Of TLocal) + Interlocked：
     ''' 一是省掉了每个元素一次的委托调用与原子操作开销，
     ''' 二是分块数量远多于线程数，TPL 的动态调度可以自动填平三角循环带来的负载不均。
-    ''' </remarks>
-    ''' <remarks>
+    ''' 
     ''' 命名为 TaskBlockSize 而不是 BlockSize，是为了避免与调用方常见的
     ''' 局部变量名 blockSize 相冲突（VB 是大小写不敏感的）。
     ''' </remarks>
@@ -586,7 +585,7 @@ Module Helper
     ''' <param name="nthreads">并行线程数</param>
     ''' <returns>对称化之后的联合概率矩阵</returns>
     ''' <remarks>
-    ''' 第 i 个任务只写 <paramref name="Pout"/> 的第 i 行，行与行之间互不相交，可安全并行。
+    ''' 第 i 个任务只写输出矩阵的第 i 行，行与行之间互不相交，可安全并行。
     ''' </remarks>
     Private Function Symmetrize(P As Double(), N As Integer, nthreads As Integer) As Double()
         Dim Pout = zeros(N * N)

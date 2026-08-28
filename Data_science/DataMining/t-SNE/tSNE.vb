@@ -213,7 +213,7 @@ Public Class tSNE : Inherits IDataEmbedding
     ''' 创建一个 t-SNE 降维器，并行度取当前主机的 CPU 核心数
     ''' </summary>
     ''' <param name="perplexity">困惑度</param>
-    ''' <param name="[dim">嵌入维度，通常为 2 或 3</param>
+    ''' <param name="dim">嵌入维度，通常为 2 或 3</param>
     ''' <param name="epsilon">学习率</param>
     Public Sub New(perplexity As Double, [dim] As Integer, epsilon As Double)
         Me.New(perplexity, [dim], epsilon, Global.Microsoft.VisualBasic.App.CPUCoreNumbers)
@@ -223,7 +223,7 @@ Public Class tSNE : Inherits IDataEmbedding
     ''' 创建一个 t-SNE 降维器
     ''' </summary>
     ''' <param name="perplexity">困惑度</param>
-    ''' <param name="[dim">嵌入维度，通常为 2 或 3</param>
+    ''' <param name="dim">嵌入维度，通常为 2 或 3</param>
     ''' <param name="epsilon">学习率</param>
     ''' <param name="nthreads">并行线程数，&lt;= 0 时取当前主机的 CPU 核心数</param>
     ''' <param name="useBarnesHut">是否启用 Barnes-Hut 近似，默认关闭（走精确路径）</param>
