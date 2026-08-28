@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Parallel
 
 ''' <summary>
@@ -40,9 +41,9 @@ Friend NotInheritable Class SgdEpochTask : Inherits VectorTask
     End Sub
 
     Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-        ' the Span(Of T) is a ref struct, so that it can not be shared 
-        ' between the worker threads: each worker creates its own span 
-        ' object which points to the shared embedding vector.
+        ' each worker creates its own span view object, all of these views 
+        ' are bound to the same shared embedding vector, so that the write 
+        ' operation of one worker is visible to all of the other workers
         Dim embedding As Span(Of Double) = umap.GetEmbeddingSpan()
 
         For i As Integer = start To ends
