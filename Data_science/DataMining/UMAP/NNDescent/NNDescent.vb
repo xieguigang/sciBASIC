@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Math
@@ -114,34 +115,62 @@ Friend Class NNDescent : Implements NNDescentFn
                                   Optional maxCandidates As Integer = 50,
                                   Optional delta As Double = 0.001F,
                                   Optional rho As Double = 0.5F,
-                                  Optional rpTreeInit As Boolean = True) As KNNState Implements NNDescentFn.NNDescent
+                                  Optional rpTreeInit As Boolean = True,
+                                  Optional parallelism As ParallelConfig = Nothing) As KNNState Implements NNDescentFn.NNDescent
 
         Dim nVertices As Integer = data.Length
         Dim currentGraph As Heap = Heaps.MakeHeap(nVertices, nNeighbors)
         Dim d As Double
         Dim vIndex As IEnumerable(Of Integer)
+        Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+        ' the rejection sampling loop consumes random numbers, so that it 
+        ' could only be parallelized with a thread safe random source
+        Dim degree As Integer = If(config.CanParallel(nVertices) AndAlso random.IsThreadSafe,
+                                   config.MaxDegreeOfParallelism,
+                                   1)
 
-        If App.EnableTqdm Then
+        If App.EnableTqdm AndAlso degree <= 1 Then
             vIndex = Tqdm.Range(0, nVertices)
         Else
             vIndex = Enumerable.Range(0, nVertices)
         End If
 
-        Call VBDebugger.EchoLine("[MakeNNDescent] Start sample rejection loop...")
+        Call VBDebugger.EchoLine($"[MakeNNDescent] Start sample rejection loop... [parallel: {degree}]")
 
-        For Each i As Integer In vIndex
-            Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
+        If degree > 1 Then
+            Dim locks As Object() = Utils.NewStripedLocks()
+            Dim opt As New ParallelOptions With {.MaxDegreeOfParallelism = degree}
 
-            For j As Integer = 0 To indices.Length - 1
-                d = distanceFn(data(i), data(indices(j)))
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=nVertices,
+                parallelOptions:=opt,
+                body:=Sub(i)
+                          Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
 
-                Call Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
-                Call Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
+                          For j As Integer = 0 To indices.Length - 1
+                              Dim dist As Double = distanceFn(data(i), data(indices(j)))
+
+                              ' push the symmetric pair (i, indices(j)) in 
+                              ' a thread safe manner
+                              Call Heaps.HeapPushPair(currentGraph, locks, i, indices(j), dist, 1)
+                          Next
+                      End Sub)
+        Else
+            For Each i As Integer In vIndex
+                Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
+
+                For j As Integer = 0 To indices.Length - 1
+                    d = distanceFn(data(i), data(indices(j)))
+
+                    Call Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
+                    Call Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
+                Next
             Next
-        Next
+        End If
 
         If rpTreeInit Then
-            Dim rpTree As New RPTree(leafArray) With {
+            Dim rpTree As New RPTree(leafArray, workers:=config.MaxDegreeOfParallelism) With {
                 .wrap = Me,
                 .data = data,
                 .currentGraph = currentGraph
@@ -154,7 +183,7 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim candidateNeighbors As Heap
         Dim c As Integer
         Dim dataSize As Integer = data.Length
-        Dim nnDescentLoopPar As New NNDescentLoop(nVertices) With {
+        Dim nnDescentLoopPar As New NNDescentLoop(nVertices, workers:=config.MaxDegreeOfParallelism) With {
             .currentGraph = currentGraph,
             .data = data,
             .maxCandidates = maxCandidates,
@@ -166,7 +195,7 @@ Friend Class NNDescent : Implements NNDescentFn
 
         ' 这里是限速步骤
         For n As Integer = 0 To nIters - 1
-            candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
+            candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random, parallelism:=config)
             nnDescentLoopPar.candidateNeighbors = candidateNeighbors
             nnDescentLoopPar.Reset()
             nnDescentLoopPar.Run()
@@ -182,6 +211,6 @@ Friend Class NNDescent : Implements NNDescentFn
 
         Call VBDebugger.EchoLine($"Nearest Neighbor Descent: {StringFormats.ReadableElapsedTime(span)}")
 
-        Return Heaps.DeHeapSort(currentGraph)
+        Return Heaps.DeHeapSort(currentGraph, parallelism:=config)
     End Function
 End Class
