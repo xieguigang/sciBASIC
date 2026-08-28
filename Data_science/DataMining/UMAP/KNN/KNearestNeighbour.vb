@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.DataMining.UMAP.Tree
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports System.Threading.Tasks
 Imports i32 = Microsoft.VisualBasic.Language.i32
 Imports std = System.Math
 
@@ -77,11 +78,27 @@ Namespace KNN
         ReadOnly m_k As Integer
         ReadOnly m_distanceFn As DistanceCalculation
         ReadOnly m_random As IProvideRandomValues
+        ''' <summary>
+        ''' the extended KNN arguments, the adaptive formula is used when 
+        ''' the corresponding argument value is not configured.
+        ''' </summary>
+        ReadOnly m_args As KNNArguments
+        ReadOnly m_parallelism As ParallelConfig
 
         Sub New(knn As Integer, Optional distanceFn As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing)
             m_k = knn
             m_distanceFn = If(distanceFn, AddressOf DistanceFunctions.Cosine)
             m_random = If(random, DefaultRandomGenerator.Instance)
+            m_args = New KNNArguments(knn)
+            m_parallelism = ParallelConfig.Sequential
+        End Sub
+
+        Sub New(args As KNNArguments, Optional distanceFn As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing)
+            m_k = args.k
+            m_distanceFn = If(distanceFn, AddressOf DistanceFunctions.Cosine)
+            m_random = If(random, DefaultRandomGenerator.Instance)
+            m_args = args
+            m_parallelism = If(args.parallelism, ParallelConfig.Sequential)
         End Sub
 
         ''' <summary>
@@ -92,49 +109,58 @@ Namespace KNN
 
             Call VBDebugger.EchoLine("Create NNDescent")
 
-            Dim nTrees = 5 + Round(std.Sqrt(x.Length) / 20)
-            Dim nIters = std.Max(5, CInt(std.Floor(std.Round(std.Log(x.Length, 2)))))
+            ' the tree count/leaf size/iteration number are all configurable now,
+            ' the adaptive formula is only used as the fallback of the 
+            ' un-configured argument value
+            Dim nTrees As Integer = m_args.GetNumOfTrees(x.Length)
+            Dim nIters As Integer = m_args.GetDescentIters(x.Length)
 
             Call VBDebugger.EchoLine("Set Iteration Parameters")
 
-            Dim leafSize = std.Max(10, m_k)
+            Dim leafSize As Integer = m_args.GetLeafSize()
             Dim i As i32 = Scan0
             Dim rpForest = New FlatTree(nTrees - 1) {}
 
             Call VBDebugger.EchoLine($"make {nTrees} trees...")
 
-            For Each node As (i%, Tree.FlatTree) In Enumerable.Range(0, nTrees) _
-                .AsParallel _
-                .Select(Function(n)
-                            ' x is readonly in make tree
-                            ' progress can be parallel
-                            Return (n, Tree.FlattenTree(Tree.MakeTree(x, leafSize, n, m_random), leafSize))
-                        End Function)
+            ' the rp-tree forest could only be built in parallel when the 
+            ' random source is thread safe, otherwise the hyperplane of 
+            ' each tree will be broken by the data race
+            If m_parallelism.CanParallel(nTrees) AndAlso m_random.IsThreadSafe Then
+                Dim opt As New ParallelOptions With {
+                    .MaxDegreeOfParallelism = m_parallelism.EffectiveDegree(nTrees)
+                }
 
-                rpForest(node.i) = node.Item2
-            Next
+                Call System.Threading.Tasks.Parallel.For(
+                    fromInclusive:=0,
+                    toExclusive:=nTrees,
+                    parallelOptions:=opt,
+                    body:=Sub(n)
+                              ' x is readonly in make tree
+                              ' progress can be parallel
+                              rpForest(n) = Tree.FlattenTree(Tree.MakeTree(x, leafSize, n, m_random), leafSize)
+                          End Sub)
+            Else
+                For n As Integer = 0 To nTrees - 1
+                    ' x is readonly in make tree
+                    ' progress can be parallel
+                    rpForest(n) = Tree.FlattenTree(Tree.MakeTree(x, leafSize, n, m_random), leafSize)
+                Next
+            End If
 
-            Dim leafArray As Integer()() = Tree.MakeLeafArray(rpForest)
+            Dim leafArray As Integer()() = Tree.MakeLeafArray(rpForest, m_parallelism)
 
             ' Handle python3 rounding down from 0.5 discrpancy
             Return metricNNDescent.MakeNNDescent(
                 data:=x,
                 leafArray:=leafArray,
                 nNeighbors:=m_k,
-                nIters:=nIters)
-        End Function
-
-        ''' <summary>
-        ''' Handle python3 rounding down from 0.5 discrpancy
-        ''' </summary>
-        ''' <param name="n"></param>
-        ''' <returns></returns>
-        Private Shared Function Round(n As Double) As Integer
-            If n = 0.5 Then
-                Return 0
-            Else
-                Return std.Floor(std.Round(n))
-            End If
+                nIters:=nIters,
+                maxCandidates:=m_args.maxCandidates,
+                delta:=m_args.delta,
+                rho:=m_args.rho,
+                rpTreeInit:=m_args.rpTreeInit,
+                parallelism:=m_parallelism)
         End Function
 
         ''' <summary>
@@ -147,9 +173,14 @@ Namespace KNN
         ''' </returns>
         Public Shared Function FindNeighbors(data As NumericMatrix, k As Integer,
                                              Optional distanceFn As DistanceCalculation = Nothing,
-                                             Optional random As IProvideRandomValues = Nothing) As KNNState
+                                             Optional random As IProvideRandomValues = Nothing,
+                                             Optional args As KNNArguments = Nothing) As KNNState
 
-            Return New KNearestNeighbour(k, distanceFn, random).NearestNeighbors(data.Array)
+            If args.k <= 0 Then
+                Return New KNearestNeighbour(k, distanceFn, random).NearestNeighbors(data.Array)
+            Else
+                Return New KNearestNeighbour(args, distanceFn, random).NearestNeighbors(data.Array)
+            End If
         End Function
     End Class
 End Namespace

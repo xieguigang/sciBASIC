@@ -55,11 +55,34 @@ Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 
 Public Interface NNDescentFn
 
+    ''' <summary>
+    ''' run the nearest neighbour descent for build the approximated knn graph
+    ''' </summary>
+    ''' <param name="data">the input data matrix</param>
+    ''' <param name="leafArray">
+    ''' the leaf nodes of the random projection forest, which is used for 
+    ''' seed the initial state of the neighbour graph.
+    ''' </param>
+    ''' <param name="nNeighbors">the number of the nearest neighbours</param>
+    ''' <param name="nIters">the max number of the descent iterations</param>
+    ''' <param name="maxCandidates">
+    ''' the max number of the candidate neighbours of each vertex
+    ''' </param>
+    ''' <param name="delta">
+    ''' the early stop threshold of the descent iteration
+    ''' </param>
+    ''' <param name="rho">the sample rate of the descent procedure</param>
+    ''' <param name="rpTreeInit">
+    ''' init the neighbour graph via the random projection forest?
+    ''' </param>
+    ''' <param name="parallelism">the parallelism configuration</param>
+    ''' <returns></returns>
     Function NNDescent(data As Double()(), leafArray As Integer()(), nNeighbors As Integer,
                        Optional nIters As Integer = 10,
                        Optional maxCandidates As Integer = 50,
                        Optional delta As Double = 0.001F,
                        Optional rho As Double = 0.5F,
-                       Optional rpTreeInit As Boolean = True) As KNNState
+                       Optional rpTreeInit As Boolean = True,
+                       Optional parallelism As ParallelConfig = Nothing) As KNNState
 
 End Interface

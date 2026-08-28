@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
@@ -64,11 +65,13 @@ Namespace KNN
         ReadOnly knn As KNNArguments
         ReadOnly meanDistances As Double
         ReadOnly distances As Double()()
+        ReadOnly parallelism As ParallelConfig
 
         Sub New(distances As Double()(), knn As KNNArguments)
             Me.target = std.Log(knn.k, 2) * knn.bandwidth
             Me.knn = knn
             Me.distances = distances
+            Me.parallelism = If(knn.parallelism, ParallelConfig.Sequential)
             Me.meanDistances = Aggregate d As Double()
                                In distances
                                Let md As Double = d.Average
@@ -158,55 +161,94 @@ Namespace KNN
             ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
             Dim rho = New Double(distances.Length - 1) {}
             Dim result = New Double(distances.Length - 1) {}
-            Dim parallelExec = distances _
-                .AsParallel _
-                .Select(Function(ithDistances, i)
-                            Dim moveSmooth = moveKnn(ithDistances, localConnectivity, nIter)
-                            Dim result_i = (i, moveSmooth.rho, moveSmooth.result)
+            Dim n As Integer = distances.Length
+            Dim degree As Integer = parallelism.EffectiveDegree(n)
 
-                            Return result_i
-                        End Function) _
-                .OrderBy(Function(d) d.i) _
-                .ToArray
+            ' note about: the OrderBy call of the previous implementation is 
+            ' a redundant O(n*log(n)) sort, the result of each sample is 
+            ' written into its own slot so that the sort is not required.
+            If degree > 1 Then
+                Call System.Threading.Tasks.Parallel.For(
+                    fromInclusive:=0,
+                    toExclusive:=n,
+                    parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                    body:=Sub(i)
+                              Dim moveSmooth = moveKnn(distances(i), localConnectivity, nIter)
 
-            For i As Integer = 0 To distances.Length - 1
-                result(i) = parallelExec(i).result
-                rho(i) = parallelExec(i).rho
-            Next
+                              result(i) = moveSmooth.result
+                              rho(i) = moveSmooth.rho
+                          End Sub)
+            Else
+                For i As Integer = 0 To n - 1
+                    Dim moveSmooth = moveKnn(distances(i), localConnectivity, nIter)
+
+                    result(i) = moveSmooth.result
+                    rho(i) = moveSmooth.rho
+                Next
+            End If
 
             Return (result, rho)
         End Function
 
-        Friend Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Double()(), sigmas As Double(), rhos As Double()) As IndexVector
+        ''' <summary>
+        ''' Compute the membership strength of each edge of the knn graph
+        ''' </summary>
+        ''' <param name="parallelism">
+        ''' the parallelism configuration. each sample writes its own slot 
+        ''' of the result vector, so that this procedure is a race free 
+        ''' parallel workload.
+        ''' </param>
+        Friend Shared Function ComputeMembershipStrengths(knnIndices As Integer()(),
+                                                          knnDistances As Double()(),
+                                                          sigmas As Double(),
+                                                          rhos As Double(),
+                                                          Optional parallelism As ParallelConfig = Nothing) As IndexVector
+
             Dim nSamples As Integer = knnIndices.Length
             Dim nNeighbors As Integer = knnIndices(0).Length
             Dim rows = New Integer(nSamples * nNeighbors - 1) {}
             Dim cols = New Integer(nSamples * nNeighbors - 1) {}
             Dim vals = New Double(nSamples * nNeighbors - 1) {}
-            Dim val As Double
+            Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+            Dim degree As Integer = config.EffectiveDegree(nSamples)
 
-            Call VBDebugger.EchoLine("ComputeMembershipStrengths...")
+            Call VBDebugger.EchoLine($"ComputeMembershipStrengths... [parallel: {degree}]")
 
-            For i = 0 To nSamples - 1
-                For j = 0 To nNeighbors - 1
-                    If knnIndices(i)(j) = -1 Then
-                        ' We didn't get the full knn for i
-                        Continue For
-                    End If
+            Dim solve As Action(Of Integer) =
+                Sub(i)
+                    For j = 0 To nNeighbors - 1
+                        Dim val As Double
 
-                    If knnIndices(i)(j) = i Then
-                        val = 0
-                    ElseIf knnDistances(i)(j) - rhos(i) <= 0.0 Then
-                        val = 1
-                    Else
-                        val = CSng(std.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
-                    End If
+                        If knnIndices(i)(j) = -1 Then
+                            ' We didn't get the full knn for i
+                            Continue For
+                        End If
 
-                    rows(i * nNeighbors + j) = i
-                    cols(i * nNeighbors + j) = knnIndices(i)(j)
-                    vals(i * nNeighbors + j) = val
+                        If knnIndices(i)(j) = i Then
+                            val = 0
+                        ElseIf knnDistances(i)(j) - rhos(i) <= 0.0 Then
+                            val = 1
+                        Else
+                            val = CSng(std.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
+                        End If
+
+                        rows(i * nNeighbors + j) = i
+                        cols(i * nNeighbors + j) = knnIndices(i)(j)
+                        vals(i * nNeighbors + j) = val
+                    Next
+                End Sub
+
+            If degree > 1 Then
+                Call System.Threading.Tasks.Parallel.For(
+                    fromInclusive:=0,
+                    toExclusive:=nSamples,
+                    parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                    body:=solve)
+            Else
+                For i As Integer = 0 To nSamples - 1
+                    Call solve(i)
                 Next
-            Next
+            End If
 
             Return New IndexVector(rows, cols, vals)
         End Function

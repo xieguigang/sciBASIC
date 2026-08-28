@@ -102,7 +102,11 @@ Friend Class SPTree
     ''' <summary>
     ''' 叶子节点最多容纳的点数；超过则继续细分
     ''' </summary>
-    Friend Const DEFAULT_LEAF_SIZE As Integer = 24
+    ''' <remarks>
+    ''' 取 1 时叶子只装一个点，此时 theta = 0 会退化为精确计算（误差仅来自重合点）。
+    ''' 取值越大树越浅、遍历越快，但叶内的点会被质心所替代，近似误差越大。
+    ''' </remarks>
+    Friend Const DEFAULT_LEAF_SIZE As Integer = 4
 
     Private ReadOnly mDim As Integer
     Private ReadOnly noChildren As Integer
@@ -138,7 +142,7 @@ Friend Class SPTree
         Me.Y = Y
         Me.nPoints = N
         Me.noChildren = 1 << [dim]
-        Me.leafSize = std.Max(4, leafSize)
+        Me.leafSize = std.Max(1, leafSize)
         Me.idx = New Integer(N - 1) {}
 
         For i As Integer = 0 To N - 1

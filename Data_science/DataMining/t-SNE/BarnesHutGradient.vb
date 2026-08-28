@@ -82,7 +82,7 @@ Friend Module BarnesHutGradient
         Call System.Array.Clear(posF, 0, posF.Length)
 
         ' 每轮迭代都需要依据当前的嵌入重新建树，O(N log N)
-        Dim tree As New SPTree([dim], Y, N)
+        Dim tree As New SPTree([dim], Y, N, leafSize:=tSNE.LeafSize)
 
         ' ---------- pass 1：远场斥力 + 配分函数 Z ----------
         ' 每个点只写自己的 negF 行，无写冲突；Z 每个任务块一份局部累加器
