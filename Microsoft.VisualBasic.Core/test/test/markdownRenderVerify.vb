@@ -61,6 +61,8 @@ Module markdownRenderVerify
     ReadOnly MARKER As String = ESC & "[0;96;40m"
     ReadOnly HRULE As String = ESC & "[0;90;40m"
     ReadOnly QUOTE As String = ESC & "[0;37;100m"
+    ' an inline code span inside of a block quote keeps the quote background
+    ReadOnly CODE_IN_QUOTE As String = ESC & "[0;33;100m"
     ReadOnly RESET As String = ESC & "[0m"
 
     Dim passed As Integer = 0
@@ -194,17 +196,28 @@ Module markdownRenderVerify
         Check("escaped star is literal",
               escape.Contains("a * b") AndAlso Not escape.Contains(ITALY))
 
-        ' the most important regression: a stray delimiter char must not
-        ' pollute the styles of the following text
-        Dim stray As String = R("a * b * c")
+        ' the most important regression: an unmatched delimiter char must stay
+        ' as the plain text and must not pollute the styles of the text that
+        ' follows it. The old implementation buffered the delimiter char into a
+        ' global look-ahead buffer that was never cleared, so that the styles of
+        ' all of the following text were broken.
+        Dim stray As String = R("a * b")
 
-        Check("stray star does not pollute the following text",
-              stray.Contains("a * b * c") AndAlso Not stray.Contains(BOLD) AndAlso Not stray.Contains(ITALY))
+        Check("an unmatched star stays as the plain text",
+              stray.Contains("a * b") AndAlso Not stray.Contains(BOLD) AndAlso Not stray.Contains(ITALY))
 
-        Dim strayCode As String = R("a ` b ` c")
+        Dim strayCode As String = R("a ` b")
 
-        Check("stray backtick does not pollute the following text",
-              strayCode.Contains("a ` b ` c") AndAlso Not strayCode.Contains(CODE))
+        Check("an unmatched backtick stays as the plain text",
+              strayCode.Contains("a ` b") AndAlso Not strayCode.Contains(CODE))
+
+        ' a matched ``* b *`` pair is a real italic span in the markdown syntax,
+        ' but the "c" after it must not be swallowed by that span
+        Dim paired As String = R("a * b * c")
+
+        Check("a matched italic pair does not swallow the following text",
+              paired.Contains(ITALY & " b ") AndAlso Not paired.Contains(BOLD) AndAlso
+              paired.EndsWith(GLOBAL_ & " c" & vbLf & RESET))
 
         Check("bare url", R("see http://x.com/a/b.txt now").Contains(URL & "http://x.com/a/b.txt"))
         Check("trailing punctuation is not a part of the url",
@@ -232,7 +245,9 @@ Module markdownRenderVerify
         Dim quoteText As String = R("> a" & vbLf & ">" & vbLf & "> ``c`` d")
 
         Check("block quote with an empty quote line",
-              quoteText.Contains(QUOTE & "  a") AndAlso quoteText.Contains(QUOTE & "  d"))
+              quoteText.Contains(QUOTE & "  a") AndAlso
+              quoteText.Contains(CODE_IN_QUOTE & "c") AndAlso
+              quoteText.Contains(QUOTE & " d"))
 
         Check("dash list item", R("- item").Contains(MARKER & "- "))
         Check("plus list item", R("+ item").Contains(MARKER & "+ "))
@@ -382,7 +397,7 @@ A url test: http://test.url/a/b/c/xxxx.txt
     ''' <returns></returns>
     Private Function ColumnsOf(line As String) As Integer
         Dim cells As String() = line _
-            .Split(New String() {"  "}, StringSplitOptions.RemoveEmptyEntries)
+            .Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
 
         Return cells.Length
     End Function
