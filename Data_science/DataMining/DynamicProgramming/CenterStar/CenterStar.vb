@@ -636,11 +636,11 @@ Public Class CenterStar
     ''' <summary>
     ''' 在并行循环中安全地推进进度条
     ''' </summary>
-    ''' <param name="step">进度条的刷新步长，并行循环下每次完成都刷新会产生大量无意义的重绘</param>
-    Private Shared Sub Tick(bar As ProgressBar, counter As Integer(), total As Integer, Optional step As Integer = 1)
+    ''' <param name="stride">进度条的刷新步长，并行循环下每次完成都刷新会产生大量无意义的重绘</param>
+    Private Shared Sub Tick(bar As ProgressBar, counter As Integer(), total As Integer, Optional stride As Integer = 1)
         Dim done As Integer = Interlocked.Increment(counter(Scan0))
 
-        If done Mod step <> 0 AndAlso done <> total Then
+        If done Mod stride <> 0 AndAlso done <> total Then
             Return
         End If
 
