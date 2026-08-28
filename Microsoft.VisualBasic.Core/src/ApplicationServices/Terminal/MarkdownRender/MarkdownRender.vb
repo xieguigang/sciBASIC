@@ -281,38 +281,42 @@ Namespace ApplicationServices.Terminal
                 Dim parts As String() = text.Split(New Char() {ASCII.LF})
 
                 For i As Integer = 0 To parts.Length - 1
-                    If atLineStart Then
-                        If prefix.Length > 0 Then
-                            sb.Append(prefix)
+                    ' a text that is terminated by a line feed produces a trailing
+                    ' empty part, which must not emit the prefix and the style again
+                    If parts(i).Length > 0 OrElse i = 0 Then
+                        If atLineStart Then
+                            If prefix.Length > 0 Then
+                                sb.Append(prefix)
+                            End If
+
+                            ' re-apply the style at the line begin, as some terminals
+                            ' reset the text attributes on the line wrap
+                            hasActive = False
                         End If
 
-                        ' re-apply the style at the line begin, as some terminals
-                        ' reset the text attributes on the line wrap
-                        hasActive = False
-                    End If
+                        If ansi AndAlso (Not hasActive OrElse Not Equals(active, span.style)) Then
+                            If span.style Is Nothing Then
+                                ' a span without style must reset the terminal first,
+                                ' or it will inherit the color of the previous span.
+                                sb.Append(AnsiEscapeCodes.Reset)
+                            Else
+                                sb.Append(span.style.ToString())
+                            End If
 
-                    If ansi AndAlso (Not hasActive OrElse Not Equals(active, span.style)) Then
-                        If span.style Is Nothing Then
-                            ' a span without style must reset the terminal first,
-                            ' or it will inherit the color of the previous span.
-                            sb.Append(AnsiEscapeCodes.Reset)
-                        Else
-                            sb.Append(span.style.ToString())
+                            active = span.style
+                            hasActive = True
                         End If
 
-                        active = span.style
-                        hasActive = True
+                        sb.Append(parts(i))
                     End If
-
-                    sb.Append(parts(i))
 
                     If i < parts.Length - 1 Then
                         sb.Append(ASCII.LF)
                         atLineStart = True
-                    Else
-                        atLineStart = text.Length > 0 AndAlso text(text.Length - 1) = ASCII.LF
                     End If
                 Next
+
+                atLineStart = text.Length > 0 AndAlso text(text.Length - 1) = ASCII.LF
             Next
 
             If Not atLineStart Then

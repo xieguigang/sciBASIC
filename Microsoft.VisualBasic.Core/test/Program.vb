@@ -66,6 +66,7 @@ Module Program
         '   test.exe --markdown
         If args.Length > 0 AndAlso args(0) = "--markdown" Then
             Call markdownRenderVerify.Run()
+            Call markdownDisplayTest.Main1()
             Return
         End If
 
@@ -86,7 +87,7 @@ Module Program
         Console.WriteLine("Hello World!")
 
         Call markdownRenderVerify.Run()
-        Call markdownDisplayTest.Main1()
+
         Call SIMDTest.Main1()
         Call streamTest.Main1()
     End Sub

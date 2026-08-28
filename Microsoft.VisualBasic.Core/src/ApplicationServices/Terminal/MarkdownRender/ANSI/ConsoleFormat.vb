@@ -221,9 +221,14 @@ Namespace ApplicationServices.Terminal
                 Return child
             End If
 
+            ' the AnsiColor is a structure, so that an unassigned color is a default
+            ' value instead of a null reference: the HasValue property of such a
+            ' default value is True but its ansi code is Nothing. The color codes
+            ' must be tested here, or the parent color will be dropped by the
+            ' unassigned child color.
             Return New ConsoleFormat With {
-                .Foreground = If(child.Foreground.HasValue, child.Foreground, parent.Foreground),
-                .Background = If(child.Background.HasValue, child.Background, parent.Background),
+                .Foreground = If(child.ForegroundCode IsNot Nothing, child.Foreground, parent.Foreground),
+                .Background = If(child.BackgroundCode IsNot Nothing, child.Background, parent.Background),
                 .Bold = parent.Bold OrElse child.Bold,
                 .Underline = parent.Underline OrElse child.Underline,
                 .Inverted = parent.Inverted OrElse child.Inverted,
