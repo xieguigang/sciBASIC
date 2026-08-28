@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Math
