@@ -201,5 +201,34 @@ Namespace ApplicationServices.Terminal
         Public Function Clone() As ConsoleFormat Implements ICloneable(Of ConsoleFormat).Clone
             Return New ConsoleFormat(Foreground, Background, Bold, Underline, Inverted, Strikeout)
         End Function
+
+        ''' <summary>
+        ''' merges the <paramref name="child"/> style on top of the 
+        ''' <paramref name="parent"/> style.
+        ''' </summary>
+        ''' <param name="parent">the base style, e.g. the block quote style.</param>
+        ''' <param name="child">
+        ''' the inline style, e.g. the bold style. Only the fields that are set by 
+        ''' the child style can override the parent ones, so that a bold span inside 
+        ''' of a block quote still keeps the background color of the block quote.
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function Combine(parent As ConsoleFormat, child As ConsoleFormat) As ConsoleFormat
+            If child Is Nothing Then
+                Return parent
+            End If
+            If parent Is Nothing Then
+                Return child
+            End If
+
+            Return New ConsoleFormat With {
+                .Foreground = If(child.Foreground.HasValue, child.Foreground, parent.Foreground),
+                .Background = If(child.Background.HasValue, child.Background, parent.Background),
+                .Bold = parent.Bold OrElse child.Bold,
+                .Underline = parent.Underline OrElse child.Underline,
+                .Inverted = parent.Inverted OrElse child.Inverted,
+                .Strikeout = parent.Strikeout OrElse child.Strikeout
+            }
+        End Function
     End Class
 End Namespace

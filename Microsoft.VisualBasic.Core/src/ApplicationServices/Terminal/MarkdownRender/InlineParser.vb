@@ -178,7 +178,7 @@ Namespace ApplicationServices.Terminal
             End If
 
             Call Flush()
-            Call Emit(line.Substring(pos + fence, closeAt - pos - fence), Merge(style, theme.InlineCodeSpan))
+            Call Emit(line.Substring(pos + fence, closeAt - pos - fence), ConsoleFormat.Combine(style, theme.InlineCodeSpan))
 
             pos = closeAt + fence
 
@@ -212,11 +212,11 @@ Namespace ApplicationServices.Terminal
             Dim emphasis As ConsoleFormat
 
             If run = 1 Then
-                emphasis = Merge(style, theme.Italy)
+                emphasis = ConsoleFormat.Combine(style, theme.Italy)
             ElseIf run = 2 Then
-                emphasis = Merge(style, theme.Bold)
+                emphasis = ConsoleFormat.Combine(style, theme.Bold)
             Else
-                emphasis = Merge(Merge(style, theme.Bold), theme.Italy)
+                emphasis = ConsoleFormat.Combine(ConsoleFormat.Combine(style, theme.Bold), theme.Italy)
             End If
 
             Call Flush()
@@ -245,7 +245,7 @@ Namespace ApplicationServices.Terminal
             End If
 
             Call Flush()
-            Call ParseRange(pos + 2, closeAt, Merge(style, theme.StrikeThrough))
+            Call ParseRange(pos + 2, closeAt, ConsoleFormat.Combine(style, theme.StrikeThrough))
 
             pos = closeAt + 2
 
@@ -293,13 +293,13 @@ Namespace ApplicationServices.Terminal
             If isImage Then
                 ' there is no way to draw the image on the console, so that only
                 ' the alt text is rendered here
-                Call Emit(text, Merge(style, theme.Url))
+                Call Emit(text, ConsoleFormat.Combine(style, theme.Url))
             Else
                 If text.Length > 0 Then
-                    Call Emit(text, Merge(style, If(theme.LinkText, theme.Url)))
+                    Call Emit(text, ConsoleFormat.Combine(style, If(theme.LinkText, theme.Url)))
                 End If
 
-                Call Emit(" (" & url & ")", Merge(style, theme.Url))
+                Call Emit(" (" & url & ")", ConsoleFormat.Combine(style, theme.Url))
             End If
 
             pos = closeParen + 1
@@ -342,7 +342,7 @@ Namespace ApplicationServices.Terminal
             End While
 
             Call Flush()
-            Call Emit(line.Substring(pos, i - pos), Merge(style, theme.Url))
+            Call Emit(line.Substring(pos, i - pos), ConsoleFormat.Combine(style, theme.Url))
 
             pos = i
 
@@ -417,33 +417,6 @@ Namespace ApplicationServices.Terminal
                 Call spans.Add(New TextSpan With {.text = text, .style = textStyle})
             End If
         End Sub
-
-        ''' <summary>
-        ''' merges the child style on top of the parent style: only the style
-        ''' fields that are set by the child can override the parent ones, so
-        ''' that e.g. a bold span inside of a block quote keeps the background
-        ''' color of the block quote.
-        ''' </summary>
-        ''' <param name="parent"></param>
-        ''' <param name="child"></param>
-        ''' <returns></returns>
-        Private Shared Function Merge(parent As ConsoleFormat, child As ConsoleFormat) As ConsoleFormat
-            If child Is Nothing Then
-                Return parent
-            End If
-            If parent Is Nothing Then
-                Return child
-            End If
-
-            Return New ConsoleFormat With {
-                .Foreground = If(child.Foreground.HasValue, child.Foreground, parent.Foreground),
-                .Background = If(child.Background.HasValue, child.Background, parent.Background),
-                .Bold = parent.Bold OrElse child.Bold,
-                .Underline = parent.Underline OrElse child.Underline,
-                .Inverted = parent.Inverted OrElse child.Inverted,
-                .Strikeout = parent.Strikeout OrElse child.Strikeout
-            }
-        End Function
 
         Private Shared ReadOnly urlSchemes As String() = {"https://", "http://", "ftp://"}
         Private Shared ReadOnly urlTrimChars As String = ".,;:!?)]}'""" & ChrW(&H201D) & ChrW(&HFF09)
