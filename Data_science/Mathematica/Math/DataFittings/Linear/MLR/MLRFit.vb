@@ -70,7 +70,7 @@ Namespace Multivariate
     Public Class MLRFit : Implements IFitted
 
         ''' <summary>
-        ''' 
+        ''' 样本数量(观测点的个数)。(The number of samples / observed data points.)
         ''' </summary>
         Public Property N As Integer
         ''' <summary>
@@ -82,9 +82,12 @@ Namespace Multivariate
         ''' </summary>
         Public Property beta As Double()
         ''' <summary>
-        ''' sum of squared
+        ''' 残差平方和 (Sum of Squared Errors, SSE)，即拟合值与实际观测值偏差的平方和。(The sum of squared errors between fitted and observed values.)
         ''' </summary>
         Public Property SSE As Double
+        ''' <summary>
+        ''' 总平方和 (Total Sum of Squares, SST)，即观测值偏离其均值的平方和，用于计算拟合优度 R2。(The total sum of squares of observed values about their mean, used for computing R2.)
+        ''' </summary>
         Public Property SST As Double
 
         Public ReadOnly Property R2 As Double Implements IFitted.R2
@@ -101,8 +104,8 @@ Namespace Multivariate
         ''' f(x) = ax1 + bx2 + cx3 + dx4 + ...
         ''' ```
         ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
+        ''' <param name="x">自变量向量，各元素依次对应各特征维度的系数。(The independent variable vector; each element corresponds to a feature dimension's coefficient.)</param>
+        ''' <returns>回归模型对向量 x 的预测值 y-hat。(The predicted value y-hat of the regression model for vector x.)</returns>
         Public Overridable ReadOnly Property Fx(x As Vector) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -110,6 +113,10 @@ Namespace Multivariate
             End Get
         End Property
 
+        ''' <summary>
+        ''' 由回归系数 beta 构造的多元多项式模型。(The multivariate polynomial model constructed from the regression coefficients beta.)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Polynomial As Formula Implements IFitted.Polynomial
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -117,13 +124,27 @@ Namespace Multivariate
             End Get
         End Property
 
+        ''' <summary>
+        ''' 拟合后的逐点误差测试结果，保存每个样本点的实际值与预测值。(The per-point fit error test results, storing the actual and predicted values for each sample point.)
+        ''' </summary>
         Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
 
+        ''' <summary>
+        ''' 使用给定的自变量值计算多元线性回归的预测值 y-hat。(Computes the predicted value y-hat of the multiple linear regression for the given independent variables.)
+        ''' </summary>
+        ''' <param name="x">自变量值序列，依次对应各特征维度。(The independent variable values, in order of feature dimensions.)</param>
+        ''' <returns>回归模型对 x 的预测值。(The predicted value of the regression model for x.)</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetY(ParamArray x() As Double) As Double Implements IFitted.GetY
             Return Fx(New Vector(x))
         End Function
 
+        ''' <summary>
+        ''' 便捷入口：对给定的自变量矩阵与观测值向量执行多元线性回归拟合。(A convenience entry point that performs multiple linear regression fitting on the given feature matrix and observed values.)
+        ''' </summary>
+        ''' <param name="x">自变量矩阵，每一行是一个样本点。(The feature matrix, each row is a sample point.)</param>
+        ''' <param name="f">与 x 各行对应的观测值向量。(The observed value vector corresponding to each row of x.)</param>
+        ''' <returns>拟合得到的 <see cref="MLRFit"/> 模型。(The fitted multiple linear regression model.)</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LinearFitting(x As NumericMatrix, f As Vector) As MLRFit
             Return x.LinearFitting(f)

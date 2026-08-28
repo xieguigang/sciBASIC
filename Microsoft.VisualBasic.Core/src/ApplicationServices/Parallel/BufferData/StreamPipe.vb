@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e1833b5615f6a8ca407a388223d9fe5, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\StreamPipe.vb"
+﻿#Region "Microsoft.VisualBasic::d631c68b64a6a360ef3c5a79c8834bb5, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\StreamPipe.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 15 (23.08%)
-    '     File Size: 2.15 KB
+    '     File Size: 2.16 KB
 
 
     '     Class StreamPipe

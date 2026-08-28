@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::6f3ce573963011e8da8c0fd06a2ccbf5, Data\BinaryData\HDF5\dataset\filters\filters.vb"
+﻿#Region "Microsoft.VisualBasic::b4dfa24807326010c7f5f64113c6aa15, Data\BinaryData\HDF5\dataset\filters\filters.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 83
-'    Code Lines: 56 (67.47%)
-' Comment Lines: 8 (9.64%)
-'    - Xml Docs: 87.50%
-' 
-'   Blank Lines: 19 (22.89%)
-'     File Size: 2.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DeflatePipelineFilter
-' 
-'         Properties: id, name
-' 
-'         Function: decode
-' 
-'     Class Fletcher32CheckSum
-' 
-'         Properties: id, name
-' 
-'         Function: decode
-' 
-'     Class ShufflePipelineFilter
-' 
-'         Properties: id, name
-' 
-'         Function: decode
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 55 (67.07%)
+    ' Comment Lines: 8 (9.76%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 19 (23.17%)
+    '     File Size: 2.93 KB
+
+
+    '     Class DeflatePipelineFilter
+    ' 
+    '         Properties: id, name
+    ' 
+    '         Function: decode
+    ' 
+    '     Class Fletcher32CheckSum
+    ' 
+    '         Properties: id, name
+    ' 
+    '         Function: decode
+    ' 
+    '     Class ShufflePipelineFilter
+    ' 
+    '         Properties: id, name
+    ' 
+    '         Function: decode
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,60 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::35b016d48388319643c4670362ad92a7, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::74bdadee258d4f1e7893db17a536dec0, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 175
-'    Code Lines: 110 (62.86%)
-' Comment Lines: 40 (22.86%)
-'    - Xml Docs: 57.50%
-' 
-'   Blank Lines: 25 (14.29%)
-'     File Size: 6.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class IniFile
-' 
-'         Properties: comments, FileExists, path, SectionNames
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GenericEnumerator, OpenSection, ReadValue, ToString
-' 
-'         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 215
+    '    Code Lines: 146 (67.91%)
+    ' Comment Lines: 40 (18.60%)
+    '    - Xml Docs: 57.50%
+    ' 
+    '   Blank Lines: 29 (13.49%)
+    '     File Size: 8.06 KB
+
+
+    '     Class IniFile
+    ' 
+    '         Properties: comments, FileExists, path, SectionNames
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GenericEnumerator, OpenSection, ReadBoolean, ReadDouble, ReadInt32
+    '                   ReadString, ReadValue, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

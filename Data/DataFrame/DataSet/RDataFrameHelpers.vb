@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Namespace DATA
+Namespace DataSetExtensions
 
     ''' <summary>
     ''' Helpers function for R dataframe data imports

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::230f3901acc08000c2d05f49fa574a16, Microsoft.VisualBasic.Core\src\Net\Wget\FtpDownloader.vb"
+﻿#Region "Microsoft.VisualBasic::6f5314fbcf4582a48461038666e28be2, Microsoft.VisualBasic.Core\src\Net\Wget\FtpDownloader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 72 (76.60%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 88
+    '    Code Lines: 65 (73.86%)
+    ' Comment Lines: 7 (7.95%)
+    '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 22 (23.40%)
-    '     File Size: 3.48 KB
+    '   Blank Lines: 16 (18.18%)
+    '     File Size: 3.44 KB
 
 
     '     Class FtpDownloader
@@ -48,7 +48,7 @@
     '         Properties: LocalSaveFile
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: DownloadFileAsync, OpenSaveStream
+    '         Function: CreateClient, OpenSaveStream
     ' 
     ' 
     ' /********************************************************************************/

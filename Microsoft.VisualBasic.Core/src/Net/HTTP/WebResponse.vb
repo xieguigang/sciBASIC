@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3a33f49cc4137c8622b8bae9e8f5cc6, Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::20d4088cd7a9687419ce93b087ab8589, Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 113
-    '    Code Lines: 88 (77.88%)
-    ' Comment Lines: 4 (3.54%)
+    '   Total Lines: 133
+    '    Code Lines: 106 (79.70%)
+    ' Comment Lines: 4 (3.01%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (18.58%)
-    '     File Size: 3.98 KB
+    '   Blank Lines: 23 (17.29%)
+    '     File Size: 4.64 KB
 
 
     '     Class WebResponseResult
@@ -53,8 +53,11 @@
     ' 
     '         Properties: contentType, customHeaders, headers, httpCode
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: Header200, Header404NotFound, Header500InternalServerError, HttpRequestError, (+2 Overloads) TryGetValue
+    ' 
+    '         Sub: AddHeader
     ' 
     ' 
     ' /********************************************************************************/

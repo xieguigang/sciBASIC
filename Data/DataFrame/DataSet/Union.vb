@@ -57,7 +57,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO
 
-Namespace DATA
+Namespace DataSetExtensions
 
     ''' <summary>
     ''' An abstract union operation data model

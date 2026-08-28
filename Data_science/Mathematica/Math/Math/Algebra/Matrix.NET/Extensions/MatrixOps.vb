@@ -153,9 +153,15 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>
         ''' 矩阵求逆 - 使用 Gauss-Jordan 消元法带部分主元选取
         ''' </summary>
-        Public Function Inverse(a As Double(,), strict As Boolean) As Double(,)
+        ''' <param name="throwSingularity">
+        ''' this function will returns nothing if this parameter value set to false
+        ''' </param>
+        Public Function Inverse(a As Double(,), strict As Boolean, Optional throwSingularity As Boolean = True) As Double(,)
             Dim n = a.GetLength(0)
-            If a.GetLength(1) <> n Then Throw New Exception("矩阵必须为方阵才能求逆")
+
+            If a.GetLength(1) <> n Then
+                Throw New InvalidProgramException($"矩阵A必须为方阵才能求逆，当前A维度为：{n}x{a.GetLength(1)}")
+            End If
 
             ' 构造增广矩阵 [a | I]
             Dim aug(n - 1, 2 * n - 1) As Double
@@ -167,7 +173,7 @@ Namespace LinearAlgebra.Matrix
             Next
 
             ' 前向消元（带部分主元选取）
-            For col = 0 To n - 1
+            For col As Integer = 0 To n - 1
                 ' 寻找主元
                 Dim maxRow = col
                 Dim maxVal = stdf.Abs(aug(col, col))
@@ -190,11 +196,15 @@ Namespace LinearAlgebra.Matrix
                 ' 主元行归一化
                 Dim pivot = aug(col, col)
 
-                Const eps As Double = 1 ^ -13
+                Const eps As Double = 0.0000000000001
 
                 If stdf.Abs(pivot) < eps Then
                     If strict Then
-                        Throw New Exception("矩阵奇异，无法求逆")
+                        If throwSingularity Then
+                            Throw New Exception("矩阵奇异，无法求逆")
+                        Else
+                            Return Nothing
+                        End If
                     Else
                         pivot = eps
                     End If
@@ -216,13 +226,13 @@ Namespace LinearAlgebra.Matrix
             Next
 
             ' 提取逆矩阵
-            Dim result(n - 1, n - 1) As Double
+            Dim inv(n - 1, n - 1) As Double
             For i = 0 To n - 1
                 For j = 0 To n - 1
-                    result(i, j) = aug(i, j + n)
+                    inv(i, j) = aug(i, j + n)
                 Next
             Next
-            Return result
+            Return inv
         End Function
 
         ''' <summary>计算行列式（递归展开法，适用于小矩阵）</summary>

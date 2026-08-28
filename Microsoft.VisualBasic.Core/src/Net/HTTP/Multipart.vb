@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::677c758bd017f2f842c196eee33b23f3, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
+﻿#Region "Microsoft.VisualBasic::62bfe86dece0db149bc7de2cb1953db3, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
-    '    Code Lines: 100 (62.50%)
-    ' Comment Lines: 36 (22.50%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 155
+    '    Code Lines: 93 (60.00%)
+    ' Comment Lines: 40 (25.81%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 24 (15.00%)
+    '   Blank Lines: 22 (14.19%)
     '     File Size: 6.31 KB
 
 

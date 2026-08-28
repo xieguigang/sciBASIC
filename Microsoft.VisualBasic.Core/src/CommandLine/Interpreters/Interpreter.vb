@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba5d294cab94ceed8e43bf546961c940, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::703ad6fd8f54002c0262ed6769d4a119, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 738
-    '    Code Lines: 423 (57.32%)
-    ' Comment Lines: 221 (29.95%)
+    '   Total Lines: 729
+    '    Code Lines: 414 (56.79%)
+    ' Comment Lines: 221 (30.32%)
     '    - Xml Docs: 82.81%
     ' 
-    '   Blank Lines: 94 (12.74%)
-    '     File Size: 32.17 KB
+    '   Blank Lines: 94 (12.89%)
+    '     File Size: 31.92 KB
 
 
     '     Class Interpreter

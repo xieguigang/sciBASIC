@@ -54,7 +54,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.Framework.Excel
+Imports Microsoft.VisualBasic.Data.Framework.DataSetExtensions.Excel
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl

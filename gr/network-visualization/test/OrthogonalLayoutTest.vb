@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aed579ffc85067bff0926deb034760b8, gr\network-visualization\test\OrthogonalLayoutTest.vb"
+﻿#Region "Microsoft.VisualBasic::2b2fdc85bc1d535c77e636fd2f0689b4, gr\network-visualization\test\OrthogonalLayoutTest.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 154 (75.49%)
-    ' Comment Lines: 15 (7.35%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 415
+    '    Code Lines: 307 (73.98%)
+    ' Comment Lines: 52 (12.53%)
+    '    - Xml Docs: 25.00%
     ' 
-    '   Blank Lines: 35 (17.16%)
-    '     File Size: 8.17 KB
+    '   Blank Lines: 56 (13.49%)
+    '     File Size: 18.31 KB
 
 
     ' Module OrthogonalLayoutTest
     ' 
-    '     Sub: Main, saveEmbedding, savePNG, test1, test2
+    '     Sub: holaComplexTest, holaTest, Main, saveEmbedding, savePNG
+    '          test1, test2
     ' 
     ' /********************************************************************************/
 

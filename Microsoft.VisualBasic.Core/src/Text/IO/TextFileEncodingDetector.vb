@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, Microsoft.VisualBasic.Core\src\Text\IO\TextFileEncodingDetector.vb"
+﻿#Region "Microsoft.VisualBasic::f1affcac40a4da77bce030018c5159dd, Microsoft.VisualBasic.Core\src\Text\IO\TextFileEncodingDetector.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 8.94%
     ' 
     '   Blank Lines: 59 (14.53%)
-    '     File Size: 21.10 KB
+    '     File Size: 21.13 KB
 
 
     '     Module TextFileEncodingDetector

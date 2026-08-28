@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24fe77940a2e97203e4ee57610c1000c, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::165615bc5f9efb6edfa9bd6cde9bfb08, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 68.42%
     ' 
     '   Blank Lines: 9 (13.24%)
-    '     File Size: 2.37 KB
+    '     File Size: 2.36 KB
 
 
     ' Class Evaluation

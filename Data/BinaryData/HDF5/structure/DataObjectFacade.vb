@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::be99f049666b1f41f2b4311d09e9654b, Data\BinaryData\HDF5\structure\DataObjectFacade.vb"
+﻿#Region "Microsoft.VisualBasic::8d4fa8cdb42c476cb3ad954937f80686, Data\BinaryData\HDF5\structure\DataObjectFacade.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 267
-'    Code Lines: 173 (64.79%)
-' Comment Lines: 44 (16.48%)
-'    - Xml Docs: 18.18%
-' 
-'   Blank Lines: 50 (18.73%)
-'     File Size: 11.02 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DataObjectFacade
-' 
-'         Properties: attributes, dataObject, filterMessage, layout, layoutMessage
-'                     linkName, symbolName
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: GetMessage, readDataObject, readObjectLayout, ToString
-' 
-'         Sub: printValues
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 326
+    '    Code Lines: 213 (65.34%)
+    ' Comment Lines: 55 (16.87%)
+    '    - Xml Docs: 34.55%
+    ' 
+    '   Blank Lines: 58 (17.79%)
+    '     File Size: 13.80 KB
+
+
+    '     Class DataObjectFacade
+    ' 
+    '         Properties: attributes, dataObject, filterMessage, layout, layoutMessage
+    '                     linkName, symbolName
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetMessage, readDataObject, readObjectLayout, ToString
+    ' 
+    '         Sub: attachDatasetMetadata, printValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

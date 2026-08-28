@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::9c3a1f8d52e6b74a0fbc5d1e2a84d607, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\TruncatedSVD.vb"
+﻿#Region "Microsoft.VisualBasic::656e99176119584d00c8e1d79d5be9fb, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\TruncatedSVD.vb"
 
     ' Author:
     ' 
@@ -31,24 +31,25 @@
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 430
-    '    Code Lines: 300 (69.77%)
-    ' Comment Lines: 75 (17.44%)
-    '    - Xml Docs: 61.33%
+    '   Total Lines: 428
+    '    Code Lines: 213 (49.77%)
+    ' Comment Lines: 155 (36.21%)
+    '    - Xml Docs: 76.77%
     ' 
-    '   Blank Lines: 55 (12.79%)
-    '     File Size: 16.86 KB
+    '   Blank Lines: 60 (14.02%)
+    '     File Size: 18.25 KB
+
 
     '     Class TruncatedSVD
-
+    ' 
     '         Properties: Components, ReducedMatrix, SingularValues, U, V
-
-    '         Constructor: Sub New
-
-    '         Function: Reduce
-
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ApplyMatrix, ApplyTranspose, CloneMatrix, QrQ, Reduce
+    ' 
     ' 
     ' /********************************************************************************/
 

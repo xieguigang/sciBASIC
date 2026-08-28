@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::9c3e8f1a5b7d20469c3e8f1a5b7d2046, Data_science\Graph\Analysis\Community\LPA\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::cd566feb8ac3be162ebbd10098c93bac, Data_science\Graph\Analysis\Community\LPA\Edge.vb"
 
     ' Author:
     ' 
@@ -26,24 +26,26 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 45 (59.21%)
-    ' Comment Lines: 19 (25.00%)
+    '   Total Lines: 25
+    '    Code Lines: 12 (48.00%)
+    ' Comment Lines: 9 (36.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (15.79%)
-    '     File Size: 2.10 KB
+    '   Blank Lines: 4 (16.00%)
+    '     File Size: 690 B
 
 
     '     Class Edge
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

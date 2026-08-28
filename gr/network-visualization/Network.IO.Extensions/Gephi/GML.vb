@@ -132,33 +132,4 @@ Namespace Gephi
 
     End Class
 
-    Public Class edge
-
-        Public Property id As Integer
-        Public Property source As Integer
-        Public Property target As Integer
-        Public Property value As Double
-        Public Property fill As String
-
-    End Class
-
-    Public Class node
-
-        Public Property id As Integer
-        Public Property label As String
-        Public Property graphics As graphics
-
-    End Class
-
-    Public Class graphics
-
-        Public Property x As Double
-        Public Property y As Double
-        Public Property z As Double
-        Public Property w As Double
-        Public Property h As Double
-        Public Property d As Double
-        Public Property fill As String
-
-    End Class
 End Namespace

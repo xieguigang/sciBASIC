@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ddbd25ce395f3f951d74cf387aade1, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::90dbb82bcabc902a4cd5edc213baf206, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\ManualBuilder.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 388
-    '    Code Lines: 282 (72.68%)
+    '    Code Lines: 284 (73.20%)
     ' Comment Lines: 40 (10.31%)
     '    - Xml Docs: 30.00%
     ' 
-    '   Blank Lines: 66 (17.01%)
-    '     File Size: 15.95 KB
+    '   Blank Lines: 64 (16.49%)
+    '     File Size: 16.17 KB
 
 
     '     Module ManualBuilder

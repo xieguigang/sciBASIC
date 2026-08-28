@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, Microsoft.VisualBasic.Core\src\Extensions\Security\TripleDES.vb"
+﻿#Region "Microsoft.VisualBasic::b08825521f382e6bcdb8257213772494, Microsoft.VisualBasic.Core\src\Extensions\Security\TripleDES.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 16 (17.78%)
-    '     File Size: 3.33 KB
+    '     File Size: 3.40 KB
 
 
     '     Class TripleDES

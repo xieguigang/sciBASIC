@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::697984d9ab2a3d89e21d7d9ba9f70097, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
+﻿#Region "Microsoft.VisualBasic::e052bae44ac3fd5ec5a1346bcc7666df, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 102 (80.31%)
-    ' Comment Lines: 8 (6.30%)
-    '    - Xml Docs: 37.50%
+    '   Total Lines: 145
+    '    Code Lines: 112 (77.24%)
+    ' Comment Lines: 13 (8.97%)
+    '    - Xml Docs: 23.08%
     ' 
-    '   Blank Lines: 17 (13.39%)
-    '     File Size: 5.08 KB
+    '   Blank Lines: 20 (13.79%)
+    '     File Size: 5.99 KB
 
 
     ' Class LabelRendering

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25104f28f1129d36998351f37d7d0a5, Data_science\Mathematica\Math\DataFrame\MathFormula.vb"
+﻿#Region "Microsoft.VisualBasic::b25104f28f1129d36998351f37d7d0a5, Data_science\Mathematica\Math\DataFrame\Math\MathFormula.vb"
 
     ' Author:
     ' 

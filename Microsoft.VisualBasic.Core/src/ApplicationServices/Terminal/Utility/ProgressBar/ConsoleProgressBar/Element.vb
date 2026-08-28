@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad4fb2d3a2adb5a1772aa15e0f6596f6, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Element.vb"
+﻿#Region "Microsoft.VisualBasic::2f63281956756c234fd65cde25592702, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Element.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 55 (36.67%)
-    ' Comment Lines: 80 (53.33%)
+    '   Total Lines: 152
+    '    Code Lines: 56 (36.84%)
+    ' Comment Lines: 80 (52.63%)
     '    - Xml Docs: 91.25%
     ' 
-    '   Blank Lines: 15 (10.00%)
-    '     File Size: 6.19 KB
+    '   Blank Lines: 16 (10.53%)
+    '     File Size: 6.23 KB
 
 
     '     Class Element

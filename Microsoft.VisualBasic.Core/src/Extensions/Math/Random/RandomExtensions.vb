@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03315e8802edd242d52df85f1c326850, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::fd39037faf613bd2b375f3a3e52dafbb, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 481
-    '    Code Lines: 224 (46.57%)
-    ' Comment Lines: 205 (42.62%)
+    '   Total Lines: 491
+    '    Code Lines: 231 (47.05%)
+    ' Comment Lines: 205 (41.75%)
     '    - Xml Docs: 92.68%
     ' 
-    '   Blank Lines: 52 (10.81%)
-    '     File Size: 19.42 KB
+    '   Blank Lines: 55 (11.20%)
+    '     File Size: 19.71 KB
 
 
     '     Delegate Function
@@ -53,9 +53,10 @@
     ' 
     '         Properties: seeds
     ' 
-    '         Function: (+4 Overloads) [Next], ExponentialRandomNumbers, (+2 Overloads) GetNextBetween, GetNextNormalNumber, (+2 Overloads) GetRandomValue
-    '                   (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble, (+2 Overloads) NextGaussian, (+2 Overloads) NextInteger, NextNumber
-    '                   NextTriangular, Permutation, randf, RandomSingle, Seed
+    '         Function: (+4 Overloads) [Next], ExponentialRandomNumbers, GetBytes, (+2 Overloads) GetNextBetween, GetNextNormalNumber
+    '                   (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble, (+2 Overloads) NextGaussian, (+2 Overloads) NextInteger
+    '                   NextNumber, NextTriangular, Permutation, randf, RandomSingle
+    '                   Seed
     ' 
     '         Sub: SetSeed, (+5 Overloads) Shuffle
     ' 

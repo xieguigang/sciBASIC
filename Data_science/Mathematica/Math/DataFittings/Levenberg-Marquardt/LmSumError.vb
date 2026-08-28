@@ -90,7 +90,7 @@ Namespace LevenbergMarquardt
 
             While i < numData
                 sumError += datumErrorField.eval(i, optParams)
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             Return sumError
@@ -112,7 +112,7 @@ Namespace LevenbergMarquardt
 
             While i < numParams
                 jacobianVector(i) = 0.0
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             i = 0
@@ -123,10 +123,10 @@ Namespace LevenbergMarquardt
 
                 While j < numParams
                     jacobianVector(j) += datumJacobian(j)
-                    Threading.Interlocked.Increment(j)
+                    j+=1
                 End While
 
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             Return jacobianVector
@@ -154,10 +154,10 @@ Namespace LevenbergMarquardt
 
                 While j < numParams
                     hessianMat(i)(j) = 0.0
-                    Threading.Interlocked.Increment(j)
+                    j+=1
                 End While
 
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             Dim k = 0
@@ -172,13 +172,13 @@ Namespace LevenbergMarquardt
 
                     While j < numParams
                         hessianMat(i)(j) += datumHessian(i)(j)
-                        Threading.Interlocked.Increment(j)
+                        j+=1
                     End While
 
-                    Threading.Interlocked.Increment(i)
+                    i+=1
                 End While
 
-                Threading.Interlocked.Increment(k)
+                k+=1
             End While
 
             Return hessianMat

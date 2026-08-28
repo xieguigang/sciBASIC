@@ -147,7 +147,7 @@ Namespace ShapleyValue.TreeShape
                         Console.Write("{0}* phi[{1,2:D}] += {2:F} ... w = {3:F}%n", indent, el.featureIndex, contrib, w)
                     End If
                     phi(el.featureIndex) += contrib
-                    Threading.Interlocked.Increment(i)
+                    i+=1
                 End While
             Else
                 ' internal node
@@ -288,7 +288,7 @@ Namespace ShapleyValue.TreeShape
                 el.featureIndex = el1.featureIndex
                 el.zeroFraction = el1.zeroFraction
                 el.oneFraction = el1.oneFraction
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
             If DEBUG Then
                 Console.WriteLine(track(uniquePathPtr, uniqueDepth - 1))

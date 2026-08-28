@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6af4696496cc65cccd0b7e5731dbbe6, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::29310b32a2857e5e6b491d3e9998a46f, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 125 (65.45%)
-    ' Comment Lines: 35 (18.32%)
+    '   Total Lines: 188
+    '    Code Lines: 123 (65.43%)
+    ' Comment Lines: 35 (18.62%)
     '    - Xml Docs: 74.29%
     ' 
-    '   Blank Lines: 31 (16.23%)
-    '     File Size: 7.83 KB
+    '   Blank Lines: 30 (15.96%)
+    '     File Size: 7.79 KB
 
 
     '     Class APIDelegate

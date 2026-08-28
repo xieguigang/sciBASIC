@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c76c7cd6fc27b347c04017d0666efba, gr\network-visualization\network_layout\Cola\Models\Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::1aacb8ca3eb9680f47c29e8209a5d208, gr\network-visualization\network_layout\Cola\Models\Blocks.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 71 (64.55%)
-    ' Comment Lines: 16 (14.55%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 117
+    '    Code Lines: 76 (64.96%)
+    ' Comment Lines: 17 (14.53%)
+    '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 23 (20.91%)
-    '     File Size: 3.28 KB
+    '   Blank Lines: 24 (20.51%)
+    '     File Size: 3.57 KB
 
 
     '     Class Blocks

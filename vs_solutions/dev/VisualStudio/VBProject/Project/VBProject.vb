@@ -248,7 +248,7 @@ Namespace VBProj
         ''' </summary>
         ''' <param name="vbproj"></param>
         ''' <returns></returns>
-        Public Shared Function Load(vbproj As String) As VBProject
+        Public Shared Function Load(vbproj As String, Optional parseDoc As Boolean = True) As VBProject
             Dim proj As VBProject = LoadProjectXml(vbproj)
             Dim projDir As String = DirectCast(proj, IFileReference).FilePath.ParentPath.GetFullPath
             Dim doc As XDocument = XDocument.Load(vbproj)
@@ -259,23 +259,32 @@ Namespace VBProj
             For Each rel As String In files
                 Dim full As String = Path.Combine(projDir, rel)
 
-                If Not File.Exists(full) Then
+                If Not full.FileExists Then
                     Continue For
                 End If
 
-                Dim code As String = Nothing
-                Try
-                    code = File.ReadAllText(full)
-                Catch
-                    Continue For
-                End Try
+                Dim code As String = full.ReadAllText
+                Dim vbdoc As New VBDocument() With {.FileName = rel}
 
-                Dim vbdoc As New VBDocument()
-                vbdoc.FileName = rel
+                If parseDoc Then
+                    Call VBProject.ParseDoc(vbdoc, full, code)
+                End If
+
+                Call docs.Add(vbdoc)
+            Next
+
+            proj.CompileFiles = docs.ToArray()
+
+            Return proj
+        End Function
+
+        Private Shared Sub ParseDoc(vbdoc As VBDocument, full As String, code As String)
+            If Not code.StringEmpty Then
                 vbdoc.Imports = ExtractImports(code)
 
                 Try
                     Dim root As TypeContainerSymbol = VBParser.Parse(code)
+
                     If root.InternalNested IsNot Nothing Then
                         vbdoc.Types = New Dictionary(Of String, LanguageSymbolType)(root.InternalNested)
                     Else
@@ -284,18 +293,13 @@ Namespace VBProj
 
                     ' backfill the absolute file path into every recorded source
                     ' location so that Source.CodeBlock can read the source text.
-                    FillSourceFilePath(root, full)
-                Catch
+                    Call FillSourceFilePath(root, full)
+                Catch ex As Exception
+                    App.LogException(ex)
                     vbdoc.Types = New Dictionary(Of String, LanguageSymbolType)()
                 End Try
-
-                docs.Add(vbdoc)
-            Next
-
-            proj.CompileFiles = docs.ToArray()
-
-            Return proj
-        End Function
+            End If
+        End Sub
 
         ' walk the whole symbol tree and fill the absolute file path into every
         ' recorded source location (the parser only records line ranges). A

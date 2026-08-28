@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Math.Statistics
 Imports std = System.Math
 
 ' i++
-' Math.Min(Threading.Interlocked.Increment(i), i - 1)
+' Math.Min(i+=1, i - 1)
 
 ''' <summary>
 ''' 向量以及统计函数拓展

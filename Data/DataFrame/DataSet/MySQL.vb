@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace DATA
+Namespace DataSetExtensions
 
     ''' <summary>
     ''' MySQL data extensions

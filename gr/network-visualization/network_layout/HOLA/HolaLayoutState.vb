@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::c2cd1d640cad59958aee3898bc927a10, gr\network-visualization\network_layout\HOLA\HolaLayoutState.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 60 (58.82%)
+    ' Comment Lines: 29 (28.43%)
+    '    - Xml Docs: 93.10%
+    ' 
+    '   Blank Lines: 13 (12.75%)
+    '     File Size: 4.14 KB
+
+
+    '     Class HolaLayoutState
+    ' 
+    '         Properties: edges, nodes
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: IndexOfNode, TotalStress
+    ' 
+    '         Sub: WriteBack
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
@@ -100,3 +160,4 @@ Namespace Hola
         End Function
     End Class
 End Namespace
+

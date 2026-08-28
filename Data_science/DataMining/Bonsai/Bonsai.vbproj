@@ -1,0 +1,125 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Microsoft.VisualBasic.DataMining.Bonsai</RootNamespace>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+		<AssemblyName>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyName>
+		<Authors>xie.guigang@live.com</Authors>
+		<Company>sciBASIC.NET</Company>
+		<Version>5.0.1.2389</Version>
+		<Copyright>GPL3</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<PackageIcon>logo-knot.png</PackageIcon>
+		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+		<Platforms>AnyCPU;x64</Platforms>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
+		<Description>Bonsai</Description>
+		<RepositoryType>git</RepositoryType>
+		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Title>Bonsai reconstructs tree representations for distortion-free visualization and exploration of high-dimensional data</Title>
+		<IncludeSymbols>True</IncludeSymbols>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="bonsai_py\**" />
+	  <Compile Remove="test\**" />
+	  <Compile Remove="Verify\**" />
+	  <EmbeddedResource Remove="bonsai_py\**" />
+	  <EmbeddedResource Remove="test\**" />
+	  <EmbeddedResource Remove="Verify\**" />
+	  <None Remove="bonsai_py\**" />
+	  <None Remove="test\**" />
+	  <None Remove="Verify\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Bonsai.md" />
+	  <None Remove="s41587-026-03220-2.pdf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\ANOVA\ANOVA.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj" />
+    <ProjectReference Include="..\DataMining\DataMining.NET5.vbproj" />
+  </ItemGroup>
+
+</Project>

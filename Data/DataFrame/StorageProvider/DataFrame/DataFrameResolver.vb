@@ -912,6 +912,8 @@ Namespace StorageProvider
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
+                    current = Nothing
+                    table = Nothing
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

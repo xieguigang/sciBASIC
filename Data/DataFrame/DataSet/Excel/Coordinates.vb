@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Table = Microsoft.VisualBasic.Data.Framework.IO.File
 
-Namespace Excel
+Namespace DataSetExtensions.Excel
 
     Public Module Coordinates
 

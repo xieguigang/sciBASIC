@@ -96,7 +96,7 @@ Namespace LevenbergMarquardt
             While i < numData
                 Dim [error] = measuredOutputs(i) - modelField.eval(i, optParams)
                 errorSum += [error] * [error]
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             Return 0.5 * errorSum
@@ -119,7 +119,7 @@ Namespace LevenbergMarquardt
 
             While i < numParams
                 jVector(i) = 0.0
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             i = 0
@@ -132,7 +132,7 @@ Namespace LevenbergMarquardt
                     jVector(k) -= modelJacobian(k) * [error]
                 Next
 
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
 
             Return jVector
@@ -159,7 +159,7 @@ Namespace LevenbergMarquardt
 
             While i < numData
                 jVectors(i) = modelField.jacobian(i, optParams)
-                Threading.Interlocked.Increment(i)
+                i+=1
             End While
             Dim jacobianMat As Matrix = New Matrix(jVectors)
             Dim hessianMat As Matrix = CType(jacobianMat.Transpose(), Matrix) * jacobianMat
@@ -171,7 +171,7 @@ Namespace LevenbergMarquardt
                     Dim [error] = measuredOutputs(i) - modelField.eval(i, optParams)
                     Dim modelHessian As Matrix = New Matrix(modelField.hessian(i, optParams))
                     hessianMat -= modelHessian * [error]
-                    Threading.Interlocked.Increment(i)
+                    i+=1
                 End While
             End If
 

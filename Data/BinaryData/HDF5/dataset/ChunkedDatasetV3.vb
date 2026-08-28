@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::132cac51b61397f55eab63ebbb1cf044, Data\BinaryData\HDF5\dataset\ChunkedDatasetV3.vb"
+﻿#Region "Microsoft.VisualBasic::7ba7e162539a505d38455a46b4f97a44, Data\BinaryData\HDF5\dataset\ChunkedDatasetV3.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 303
-    '    Code Lines: 165 (54.46%)
-    ' Comment Lines: 83 (27.39%)
-    '    - Xml Docs: 68.67%
+    '   Total Lines: 339
+    '    Code Lines: 188 (55.46%)
+    ' Comment Lines: 90 (26.55%)
+    '    - Xml Docs: 71.11%
     ' 
-    '   Blank Lines: 55 (18.15%)
-    '     File Size: 12.16 KB
+    '   Blank Lines: 61 (17.99%)
+    '     File Size: 14.04 KB
 
 
     '     Class ChunkedDatasetV3
@@ -48,8 +48,8 @@
     '         Properties: BtreeAddress, byteSize, dimensionality, dimensions, dimensionSize
     '                     diskSize, maxSize, size
     ' 
-    '         Function: decodeChunk, dimensionIndexToLinearIndex, (+2 Overloads) getBuffer, getChunkOffset, getDataBuffer
-    '                   getDecodedChunk, linearIndexToDimensionIndex
+    '         Function: decodeChunk, dimensionIndexToLinearIndex, EnumerateChunkArrays, (+2 Overloads) getBuffer, getChunkOffset
+    '                   getDataBuffer, getDecodedChunk, linearIndexToDimensionIndex
     ' 
     '     Class ChunkLookup
     ' 

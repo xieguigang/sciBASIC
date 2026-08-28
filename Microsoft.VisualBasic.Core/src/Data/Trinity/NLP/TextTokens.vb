@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bddfe8a313bd972c679dbc36d62a87b9, Microsoft.VisualBasic.Core\src\Data\Trinity\NLP\TextTokens.vb"
+﻿#Region "Microsoft.VisualBasic::9c4ce01a886dcf0eb4c0503dbdf7a65a, Microsoft.VisualBasic.Core\src\Data\Trinity\NLP\TextTokens.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 89 (80.91%)
-    ' Comment Lines: 3 (2.73%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 100
+    '    Code Lines: 80 (80.00%)
+    ' Comment Lines: 4 (4.00%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 18 (16.36%)
-    '     File Size: 4.28 KB
+    '   Blank Lines: 16 (16.00%)
+    '     File Size: 4.04 KB
 
 
-    '     Interface ITokenCount
-    ' 
-    '         Properties: Count, Id, Token
-    ' 
-    '     Interface ILink
-    ' 
-    '         Properties: Count, source, target
-    ' 
     '     Module TextTokens
     ' 
     '         Sub: (+2 Overloads) Analysis

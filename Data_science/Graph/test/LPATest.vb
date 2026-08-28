@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::2e8b4d1f7c9a60532e8b4d1f7c9a6053, Data_science\Graph\test\LPATest.vb"
+﻿#Region "Microsoft.VisualBasic::033bd2b84123cb8a2f86d0fdf9ae6121, Data_science\Graph\test\LPATest.vb"
 
     ' Author:
     ' 
@@ -26,25 +26,26 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 140
-    '    Code Lines: 95 (67.86%)
-    ' Comment Lines: 25 (17.86%)
+    '   Total Lines: 82
+    '    Code Lines: 53 (64.63%)
+    ' Comment Lines: 14 (17.07%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 20 (14.29%)
-    '     File Size: 5.20 KB
+    '   Blank Lines: 15 (18.29%)
+    '     File Size: 3.29 KB
 
 
-    '     Module LPATest
+    ' Module LPATest
     ' 
-    '         Sub: testLPA
-    ' 
+    '     Sub: testLPA
     ' 
     ' /********************************************************************************/
 

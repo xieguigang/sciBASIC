@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51912bccf8e45edd957f0da4a5f1c13e, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::e3602b3df07153a05081020112be4096, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 17 (16.67%)
-    '     File Size: 3.84 KB
+    '     File Size: 3.85 KB
 
 
     '     Structure Buffer

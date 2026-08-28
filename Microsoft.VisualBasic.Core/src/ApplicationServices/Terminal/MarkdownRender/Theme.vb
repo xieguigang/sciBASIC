@@ -70,6 +70,27 @@ Namespace ApplicationServices.Terminal
         Public Property Bold As ConsoleFormat
         Public Property Italy As ConsoleFormat
         Public Property HeaderSpan As ConsoleFormat
+        ''' <summary>
+        ''' the ``~~deleted~~`` inline span, the strike-through text decoration
+        ''' is applied via the ``SGR 9`` ansi escape code.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property StrikeThrough As ConsoleFormat
+        ''' <summary>
+        ''' the display text of the ``[text](url)`` link span
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property LinkText As ConsoleFormat
+        ''' <summary>
+        ''' the bullet marker of the list item, e.g. the ``-``, ``+`` or ``*`` symbol
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ListMarker As ConsoleFormat
+        ''' <summary>
+        ''' the ``---``/``***``/``___`` horizontal rule line
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property HorizontalRule As ConsoleFormat
         Public Property Table As ConsoleTableBuilderFormat = ConsoleTableBuilderFormat.Minimal
 
         Public Overrides Function ToString() As String

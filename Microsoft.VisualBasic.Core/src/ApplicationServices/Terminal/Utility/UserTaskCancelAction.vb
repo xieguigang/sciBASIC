@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fc536b56bae9e2c8af5c0b7032c4979, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
+﻿#Region "Microsoft.VisualBasic::0337fb531d200b9691d6dd1daa640338, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 82 (57.75%)
-    ' Comment Lines: 33 (23.24%)
+    '   Total Lines: 141
+    '    Code Lines: 82 (58.16%)
+    ' Comment Lines: 33 (23.40%)
     '    - Xml Docs: 42.42%
     ' 
-    '   Blank Lines: 27 (19.01%)
-    '     File Size: 5.01 KB
+    '   Blank Lines: 26 (18.44%)
+    '     File Size: 5.02 KB
 
 
     '     Class UserTaskCancelAction

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac5a7200ef51c66b2e5f149cbcba2e15, vs_solutions\dev\VisualStudio\test\vsTest.vb"
+﻿#Region "Microsoft.VisualBasic::75342331149b63470f8b0d7a44c34811, vs_solutions\dev\VisualStudio\test\vsTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (21.05%)
-    '     File Size: 739 B
+    '     File Size: 737 B
 
 
     ' Module vsTest
@@ -70,4 +70,3 @@ Module vsTest
         Pause()
     End Sub
 End Module
-

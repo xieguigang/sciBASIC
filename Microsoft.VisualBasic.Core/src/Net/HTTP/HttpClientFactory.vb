@@ -1,15 +1,59 @@
-#Region "Microsoft.VisualBasic::HttpClientFactory, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpClientFactory.vb"
+﻿#Region "Microsoft.VisualBasic::91ea3617eb0369ab1a45cd4ff9184371, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpClientFactory.vb"
 
-' Shared HttpClient infrastructure for migrating away from the
-' obsolete HttpWebRequest / WebRequest API (SYSLIB0014).
-'
-' Provides a single configured HttpClient instance that mirrors the
-' previous behaviour of the WebServiceUtils module:
-'
-'   * ignores SSL certificate errors (was ServicePointManager.ServerCertificateValidationCallback)
-'   * applies gzip / deflate automatic decompression (was manual GZipStream handling)
-'   * honours a configurable proxy (was WebRequest.DefaultWebProxy / WebServiceUtils.Proxy)
-'   * sends a default user-agent header
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 166
+    '    Code Lines: 99 (59.64%)
+    ' Comment Lines: 41 (24.70%)
+    '    - Xml Docs: 97.56%
+    ' 
+    '   Blank Lines: 26 (15.66%)
+    '     File Size: 6.51 KB
+
+
+    '     Module HttpClientFactory
+    ' 
+    '         Properties: Client, Proxy, UserAgent
+    ' 
+    '         Function: CreateClient, DefaultUA, GetStreamSync, GetStringSync, PostBytesSync
+    '                   PostFormSync, (+2 Overloads) SendSync
+    ' 
+    '         Sub: Reset, SetProxy
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

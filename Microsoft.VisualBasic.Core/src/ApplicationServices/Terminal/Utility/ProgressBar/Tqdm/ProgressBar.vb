@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::295c1949a76c6473c2df82d3dd37f735, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::cabe01c39386e96fb9758fa2c7353c75, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 358
-    '    Code Lines: 208 (58.10%)
-    ' Comment Lines: 97 (27.09%)
-    '    - Xml Docs: 61.86%
+    '   Total Lines: 369
+    '    Code Lines: 215 (58.27%)
+    ' Comment Lines: 100 (27.10%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 53 (14.80%)
-    '     File Size: 14.75 KB
+    '   Blank Lines: 54 (14.63%)
+    '     File Size: 15.18 KB
 
 
     '     Class ProgressBar

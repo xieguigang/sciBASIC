@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b04fed9351856c84047f15780c9049c, Data_science\Graph\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::0095d60d34f73603da815074b35c4483, Data_science\Graph\test\Module1.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 36 (64.29%)
-    ' Comment Lines: 11 (19.64%)
+    '   Total Lines: 57
+    '    Code Lines: 37 (64.91%)
+    ' Comment Lines: 11 (19.30%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 9 (16.07%)
-    '     File Size: 2.23 KB
+    '   Blank Lines: 9 (15.79%)
+    '     File Size: 2.26 KB
 
 
     ' Module Program

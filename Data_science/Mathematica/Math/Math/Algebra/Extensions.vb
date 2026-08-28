@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c04d5a52f0c2829e9e74218efb9c2fde, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b6cbdc1747b73b5991671a5b704ab4bb, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 243
-    '    Code Lines: 129 (53.09%)
-    ' Comment Lines: 79 (32.51%)
+    '   Total Lines: 249
+    '    Code Lines: 134 (53.82%)
+    ' Comment Lines: 79 (31.73%)
     '    - Xml Docs: 70.89%
     ' 
-    '   Blank Lines: 35 (14.40%)
-    '     File Size: 9.72 KB
+    '   Blank Lines: 36 (14.46%)
+    '     File Size: 9.83 KB
 
 
     '     Delegate Function
@@ -54,6 +54,10 @@
     ' 
     '             Constructor: (+1 Overloads) Sub New
     '             Sub: Solve
+    ' 
+    ' 
+    ' 
+    '     Enum ApplyOnAxis
     ' 
     ' 
     ' 

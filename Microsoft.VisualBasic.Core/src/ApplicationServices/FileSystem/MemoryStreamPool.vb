@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea9c0f0d6afb12c884c2ba6cd238ee4, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
+﻿#Region "Microsoft.VisualBasic::7035a9ead74762b96549a5179b909e76, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.14%
     ' 
     '   Blank Lines: 30 (16.22%)
-    '     File Size: 6.87 KB
+    '     File Size: 6.89 KB
 
 
     '     Class MemoryStreamPool

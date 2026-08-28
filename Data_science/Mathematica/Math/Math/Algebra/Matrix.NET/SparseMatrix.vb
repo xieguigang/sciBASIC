@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd36c34c0b2da07163727b77405da6f1, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::7d8a266e55b69e1ad07041843a464775, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 345
-    '    Code Lines: 230 (66.67%)
-    ' Comment Lines: 53 (15.36%)
-    '    - Xml Docs: 52.83%
+    '   Total Lines: 405
+    '    Code Lines: 262 (64.69%)
+    ' Comment Lines: 72 (17.78%)
+    '    - Xml Docs: 56.94%
     ' 
-    '   Blank Lines: 62 (17.97%)
-    '     File Size: 13.08 KB
+    '   Blank Lines: 71 (17.53%)
+    '     File Size: 15.77 KB
 
 
     '     Class SparseMatrix
     ' 
-    '         Properties: ColumnDimension, RowDimension
+    '         Properties: ColumnDimension, nnz, RowDimension
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
     '         Function: [Get], ArrayPack, ColumnProject, Dot, Empty
-    '                   GetMatrix, Multiply, Resize, RowVectors, ToString
-    '                   Transpose, UnpackData
+    '                   GetMatrix, Multiply, MultiplyTranspose, Resize, RowVectors
+    '                   ToString, Transpose, UnpackData
     ' 
     '         Sub: [Set]
     ' 

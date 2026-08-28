@@ -97,6 +97,16 @@ Namespace Network
 
     End Interface
 
+    Public Structure IndexGraphEdge : Implements IndexEdge
+
+        Public Property U As Integer Implements IndexEdge.U
+        Public Property V As Integer Implements IndexEdge.V
+
+        Public Overrides Function ToString() As String
+            Return $"[{U} -> {V}]"
+        End Function
+    End Structure
+
     Public Interface IndexGraph(Of T As IndexEdge)
 
         Property Nodes As String()

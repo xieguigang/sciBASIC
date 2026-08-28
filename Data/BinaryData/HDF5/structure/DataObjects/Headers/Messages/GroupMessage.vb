@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88bfa3e4a979c111c1fe9b1db1e8c05c, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
+﻿#Region "Microsoft.VisualBasic::9e561ec1c88ec5b6085e1f3f7308b611, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 43 (49.43%)
-    ' Comment Lines: 28 (32.18%)
-    '    - Xml Docs: 57.14%
+    '   Total Lines: 98
+    '    Code Lines: 55 (56.12%)
+    ' Comment Lines: 27 (27.55%)
+    '    - Xml Docs: 48.15%
     ' 
-    '   Blank Lines: 16 (18.39%)
-    '     File Size: 3.35 KB
+    '   Blank Lines: 16 (16.33%)
+    '     File Size: 4.32 KB
 
 
     '     Class GroupMessage
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: IsContinuation, ToString
+    '         Function: ToString
     ' 
     '         Sub: printValues
     ' 

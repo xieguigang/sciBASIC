@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace DATA
+Namespace DataSetExtensions
 
     ''' <summary>
     ''' 提供了类似于R语言之中的``cbind``操作类似的按照列进行数据框合并的方法

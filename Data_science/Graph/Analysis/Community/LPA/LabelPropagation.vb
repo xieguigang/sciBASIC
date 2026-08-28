@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::4f1b9d7c2e8a63504f1b9d7c2e8a6350, Data_science\Graph\Analysis\Community\LPA\LabelPropagation.vb"
+﻿#Region "Microsoft.VisualBasic::82d8f21b08cdfd454d5126f86a711db8, Data_science\Graph\Analysis\Community\LPA\LabelPropagation.vb"
 
     ' Author:
     ' 
@@ -26,25 +26,26 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 250
-    '   Code Lines: 160 (64.00%)
-    ' Comment Lines: 52 (20.80%)
-    '    - Xml Docs: 92.31%
+    '   Total Lines: 229
+    '    Code Lines: 116 (50.66%)
+    ' Comment Lines: 74 (32.31%)
+    '    - Xml Docs: 79.73%
     ' 
-    '   Blank Lines: 38 (15.20%)
-    '     File Size: 8.90 KB
+    '   Blank Lines: 39 (17.03%)
+    '     File Size: 8.86 KB
 
 
     '     Class LabelPropagation
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    ' 
     '         Function: GetClusterCount, GetClusters, GetCommunity, propagateLabel, SolveClusters
     ' 
     ' 

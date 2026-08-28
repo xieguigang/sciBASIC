@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bd212c6b8ff3ce2d49926a64a961b8a, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::c4075ad45d72f1767f19dbfdc95a7c69, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.84%
     ' 
     '   Blank Lines: 186 (11.47%)
-    '     File Size: 69.47 KB
+    '     File Size: 69.54 KB
 
 
     ' Module App
@@ -61,8 +61,8 @@
     '     Function: __listFiles, (+2 Overloads) Argument, CheckIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
     '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
     '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
-    '               (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
+    '               GetVariable, (+3 Overloads) LogException, NextTempCode, NullDevice, RedirectErrLogging
+    '               RedirectLogging, (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell
     '               TemporaryEnvironment, TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing

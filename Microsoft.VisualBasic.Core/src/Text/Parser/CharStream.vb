@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf5109d4e8b23dd0b855d79e680987f8, Microsoft.VisualBasic.Core\src\Text\Parser\CharStream.vb"
+﻿#Region "Microsoft.VisualBasic::cdc6346afac8a6aaf6f2cafb66b9ade8, Microsoft.VisualBasic.Core\src\Text\Parser\CharStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 20 (23.26%)
-    '     File Size: 2.65 KB
+    '     File Size: 2.66 KB
 
 
     '     Class CharStream

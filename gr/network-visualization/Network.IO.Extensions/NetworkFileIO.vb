@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::8c2166477f0b9b5b68ecc93c4cb540be, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 110
-    '    Code Lines: 71 (64.55%)
-    ' Comment Lines: 25 (22.73%)
-    '    - Xml Docs: 92.00%
-    ' 
-    '   Blank Lines: 14 (12.73%)
-    '     File Size: 5.07 KB
+' Summaries:
 
 
-    ' Module NetworkFileIO
-    ' 
-    '     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, (+2 Overloads) Save
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 110
+'    Code Lines: 71 (64.55%)
+' Comment Lines: 25 (22.73%)
+'    - Xml Docs: 92.00%
+' 
+'   Blank Lines: 14 (12.73%)
+'     File Size: 5.07 KB
+
+
+' Module NetworkFileIO
+' 
+'     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, (+2 Overloads) Save
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,7 +55,10 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Language
@@ -75,8 +78,7 @@ Public Module NetworkFileIO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of V As Node, E As NetworkEdge)(network As Network(Of V, E),
-                                                         output$,
+    Public Function Save(Of V As FileStream.Node, E As NetworkEdge)(network As Network(Of V, E), output$,
                                                          Optional encoding As Encoding = Nothing,
                                                          Optional silent As Boolean = True) As Boolean
 
@@ -98,7 +100,7 @@ Public Module NetworkFileIO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of V As Node, E As NetworkEdge)(g As Network(Of V, E), output As IFileSystemEnvironment,
+    Public Function Save(Of V As FileStream.Node, E As NetworkEdge)(g As Network(Of V, E), output As IFileSystemEnvironment,
                                                          Optional encoding As Encoding = Nothing,
                                                          Optional silent As Boolean = True) As Boolean
         Dim args As New Write_csv.Arguments With {
@@ -115,7 +117,7 @@ Public Module NetworkFileIO
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Load(Of V As Node, E As NetworkEdge)(directory As String, Optional silent As Boolean = True) As Network(Of V, E)
+    Public Function Load(Of V As FileStream.Node, E As NetworkEdge)(directory As String, Optional silent As Boolean = True) As Network(Of V, E)
         Return New Network(Of V, E) With {
             .edges = $"{directory}/network-edges.csv".LoadCsv(Of E)(mute:=silent),
             .nodes = $"{directory}/nodes.csv".LoadCsv(Of V)(mute:=silent),
@@ -149,7 +151,7 @@ Public Module NetworkFileIO
         Else
             Return New NetworkTables With {
                 .edges = tables.edges.LoadCsv(Of NetworkEdge)(mute:=Not verbose),
-                .nodes = tables.nodes.LoadCsv(Of Node)(mute:=Not verbose),
+                .nodes = tables.nodes.LoadCsv(Of FileStream.Node)(mute:=Not verbose),
                 .meta = loadMetaJson(localDir.FromLocalFileSystem(dir))
             }
         End If
@@ -159,5 +161,55 @@ Public Module NetworkFileIO
         With NetworkTables.SearchNetworkTable(directory)
             Return .edges.IsEmptyTable AndAlso .nodes.IsEmptyTable
         End With
+    End Function
+
+    ''' <summary>
+    ''' read large network edge file
+    ''' </summary>
+    ''' <typeparam name="E"></typeparam>
+    ''' <param name="filepath"></param>
+    ''' <returns></returns>
+    Public Function ReadEdges(Of E As {New, INetworkEdge})(filepath As String) As IEnumerable(Of E)
+        Dim s As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Dim net As IEnumerable(Of E) = ReadEdges(Of E)(s, auto_close:=True)
+        Return net
+    End Function
+
+    ''' <summary>
+    ''' read large network edge file
+    ''' </summary>
+    ''' <typeparam name="E"></typeparam>
+    ''' <param name="file"></param>
+    ''' <param name="auto_close"></param>
+    ''' <returns></returns>
+    Public Iterator Function ReadEdges(Of E As {New, INetworkEdge})(file As Stream, Optional auto_close As Boolean = False) As IEnumerable(Of E)
+        Dim df As DataFrameResolver = DataFrameResolver.Load(file)
+        ' ﻿fromNode,toNode,value,interaction_type,selfLoop,label,guid,color,width
+        Dim u As Integer = df.GetOrdinal("fromNode")
+        Dim v As Integer = df.GetOrdinal("toNode")
+        Dim w As Integer = df.GetOrdinal("value")
+        Dim n As Integer = df.Nrows
+        Dim tqdm As New ProgressBar
+        Dim i As Integer = 0
+
+        Call $"populate {df.Nrows} simple network edges...".debug
+
+        Do While df.Read
+            Yield New E With {
+                .source = df.GetString(u),
+                .target = df.GetString(v),
+                .value = df.GetDouble(w)
+            }
+
+            i += 1
+            tqdm.Progress(i, n)
+        Loop
+
+        If auto_close Then
+            Call file.Dispose()
+        End If
+
+        Call tqdm.Finish()
+        Call df.Dispose()
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b029c9bd3cfff6bc8200a19ec493b78c, gr\network-visualization\network_layout\Cola\handledisconnected.vb"
+﻿#Region "Microsoft.VisualBasic::db0b7d4a7890efb89477eb68e2f3f44a, gr\network-visualization\network_layout\Cola\handledisconnected.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 381
-    '    Code Lines: 236 (61.94%)
-    ' Comment Lines: 76 (19.95%)
+    '   Total Lines: 385
+    '    Code Lines: 238 (61.82%)
+    ' Comment Lines: 76 (19.74%)
     '    - Xml Docs: 40.79%
     ' 
-    '   Blank Lines: 69 (18.11%)
-    '     File Size: 14.64 KB
+    '   Blank Lines: 71 (18.44%)
+    '     File Size: 14.83 KB
 
 
     '     Class packingOptions

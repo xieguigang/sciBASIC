@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace DATA
+Namespace DataSetExtensions
 
     ''' <summary>
     ''' file generator for mshtml

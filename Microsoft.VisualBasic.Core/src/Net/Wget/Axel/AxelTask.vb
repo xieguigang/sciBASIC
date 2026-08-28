@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36009939e87b0ab1b350a6f9f92f09ba, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\AxelTask.vb"
+﻿#Region "Microsoft.VisualBasic::5b546acfa101be8cf5ccfd9cb34a420e, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\AxelTask.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 102 (65.81%)
-    ' Comment Lines: 26 (16.77%)
+    '   Total Lines: 156
+    '    Code Lines: 103 (66.03%)
+    ' Comment Lines: 26 (16.67%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 27 (17.42%)
-    '     File Size: 7.25 KB
+    '   Blank Lines: 27 (17.31%)
+    '     File Size: 7.29 KB
 
 
     '     Class AxelTask
