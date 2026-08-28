@@ -54,6 +54,19 @@ Friend Module BarnesHutGradient
         Dim [dim] As Integer = tSNE.mDim
         Dim P As SparseP = tSNE.mSparseP
         Dim opts = tSNE.opts
+
+        If P Is Nothing Then
+            Throw New InvalidOperationException(
+                "Barnes-Hut mode requires a sparse probability matrix. " &
+                "Please set UseBarnesHut = True before calling InitDataRaw/InitDataDist.")
+        End If
+
+        ' 力累加器按需分配，精确路径下完全不占用这部分内存
+        If tSNE.bhNegF Is Nothing OrElse tSNE.bhNegF.Length <> N * [dim] Then
+            tSNE.bhNegF = New Double(N * [dim] - 1) {}
+            tSNE.bhPosF = New Double(N * [dim] - 1) {}
+        End If
+
         Dim grad As Double() = tSNE.mGrad
         Dim negF As Double() = tSNE.bhNegF
         Dim posF As Double() = tSNE.bhPosF
