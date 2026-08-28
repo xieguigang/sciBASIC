@@ -48,11 +48,11 @@ Namespace Imaging
     ''' Describes the cumulative graphics context of an <see cref="IGraphics"/> driver.
     ''' </summary>
     ''' <remarks>
-    ''' The gdi+ <see cref="System.Drawing.Graphics.GetContextInfo()"/> overload that
-    ''' takes no arguments is obsolete, and the recommended replacements return their
-    ''' results through out arguments instead of as an object. This type carries those
-    ''' results together with the driver specific context object, so that every driver
-    ''' can describe its context without depending on an obsolete api.
+    ''' The gdi+ GetContextInfo overload that takes no arguments is obsolete, and the
+    ''' recommended replacements return their results through out arguments instead of
+    ''' as an object. This type carries those results together with the driver specific
+    ''' context object, so that every driver can describe its context without depending
+    ''' on an obsolete api.
     ''' </remarks>
     Public Class GraphicsContextInfo
 
