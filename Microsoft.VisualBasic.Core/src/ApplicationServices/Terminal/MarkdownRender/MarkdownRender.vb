@@ -148,6 +148,18 @@ Namespace ApplicationServices.Terminal
         End Sub
 
         ''' <summary>
+        ''' The error of the last <see cref="Render"/> call, which is not nothing
+        ''' only when the renderer has fallen back to the plain text output.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' The parser never throws to the caller, as an exception must never
+        ''' leave the terminal in an uncontrolled color state. This property makes
+        ''' the failure observable instead of silently swallowing it.
+        ''' </remarks>
+        Public Property LastError As Exception
+
+        ''' <summary>
         ''' Should the ansi escape sequence be emitted into the rendered result?
         ''' </summary>
         ''' <returns></returns>
@@ -184,12 +196,17 @@ Namespace ApplicationServices.Terminal
 
             Try
                 spans = parser.Parse(lines)
+
+                LastError = Nothing
             Catch ex As Exception
                 ' a broken markdown document must never leave the terminal in an
                 ' uncontrolled color state, so that it falls back to the plain
-                ' text rendering here.
+                ' text rendering here. The error is kept in the 
+                ' <see cref="LastError"/> property instead of being swallowed.
                 Call Reset()
                 Call applyGlobal()
+
+                LastError = ex
 
                 spans = New List(Of TextSpan) From {
                     New TextSpan With {.text = If(markdown, ""), .style = globalStyle}

@@ -315,6 +315,12 @@ Namespace ApplicationServices.Terminal
             Dim scheme As String = Nothing
 
             For Each test As String In urlSchemes
+                If pos + test.Length > rangeEnd Then
+                    ' the remaining text is shorter than the scheme, the
+                    ' String.Compare call below throws an out of range error
+                    ' when the compared length runs over the string end.
+                    Continue For
+                End If
                 If String.Compare(line, pos, test, 0, test.Length, StringComparison.OrdinalIgnoreCase) = 0 Then
                     scheme = test
                     Exit For

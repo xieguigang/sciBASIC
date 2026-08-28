@@ -113,8 +113,23 @@ Module markdownRenderVerify
         ' the environment variable or on the stdout redirection
         render.EnableAnsi = True
 
-        Return render.Render(md, indent)
+        Dim out As String = render.Render(md, indent)
+
+        If render.LastError IsNot Nothing Then
+            ' the renderer falls back to the plain text output on error, every
+            ' style assertion below would be meaningless in that case
+            Call ReportError(md, render.LastError)
+        End If
+
+        Return out
     End Function
+
+    Private Sub ReportError(md As String, ex As Exception)
+        failed += 1
+
+        Console.WriteLine($"  [FAIL] the renderer threw on: {md.Replace(vbLf, "\n")}")
+        Console.WriteLine($"         {ex.GetType().Name}: {ex.Message}")
+    End Sub
 
     Private Sub Check(name As String, condition As Boolean, Optional detail As String = "")
         If condition Then
