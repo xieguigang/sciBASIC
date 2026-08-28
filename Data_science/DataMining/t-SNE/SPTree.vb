@@ -158,6 +158,12 @@ Friend Class SPTree
             Return
         End If
 
+        ' 样本量不超过叶子容量时整棵树就是一个叶子，
+        ' 否则下面的遍历会因为 children 为 Nothing 而在递归时报错
+        If nPoints <= leafSize Then
+            root.isLeaf = True
+        End If
+
         nodes.Add(root)
 
         Dim queue As New Queue(Of SPNode)()
@@ -166,7 +172,7 @@ Friend Class SPTree
         While queue.Count > 0
             Dim node = queue.Dequeue()
 
-            If node.Count <= leafSize Then
+            If node.Count <= leafSize OrElse node.isLeaf Then
                 node.isLeaf = True
                 Continue While
             End If

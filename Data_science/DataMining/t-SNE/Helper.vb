@@ -406,22 +406,26 @@ Module Helper
                 ws.prow(i) = Double.NegativeInfinity
                 Call Array.Copy(ws.prow, ws.work, N)
 
-                Dim threshold = QuickSelect(ws.work, N, N - kk)
+                ' QuickSelect 按降序分区，索引 kk - 1 处即第 kk 大的值
+                Dim threshold = QuickSelect(ws.work, N, kk - 1)
                 Dim baseOffset = i * kk
                 Dim t = 0
 
+                ' 严格大于阈值的至多 kk - 1 个
                 For j = 0 To N - 1
                     If t >= kk Then Exit For
+                    If j = i Then Continue For
                     If ws.prow(j) > threshold Then
                         EmitPair(keys, vals, N, baseOffset + t, i, j, ws.prow(j))
                         t += 1
                     End If
                 Next
 
-                ' 补齐与阈值并列的元素
+                ' 用与阈值并列的元素补齐到 kk 个
                 If t < kk Then
                     For j = 0 To N - 1
                         If t >= kk Then Exit For
+                        If j = i Then Continue For
                         If ws.prow(j) = threshold Then
                             EmitPair(keys, vals, N, baseOffset + t, i, j, ws.prow(j))
                             t += 1
