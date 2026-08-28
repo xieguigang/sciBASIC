@@ -31,7 +31,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
-Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Terminal
 
