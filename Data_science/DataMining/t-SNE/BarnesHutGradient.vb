@@ -73,8 +73,8 @@ Friend Module BarnesHutGradient
         Dim theta As Double = tSNE.theta
         ' trick that helps with local optima，仅作用于梯度，不进入成本项
         Dim pmul As Double = If(tSNE.mIter < 100, 4, 1)
-        Dim blockSize As Integer = BlockSize(N, tSNE.mThreads)
-        Dim nBlocks As Integer = BlockCount(N, blockSize)
+        Dim blockSize As Integer = TaskBlockSize(N, tSNE.mThreads)
+        Dim nBlocks As Integer = TaskBlockCount(N, blockSize)
         Dim zParts = New Double(nBlocks - 1) {}
         Dim costParts = New Double(nBlocks - 1) {}
 
@@ -99,7 +99,7 @@ Friend Module BarnesHutGradient
                 zParts(b) = acc
             End Sub)
 
-        Dim Z As Double = Sum(zParts)
+        Dim Z As Double = SumParts(zParts)
 
         If Z <= 0 OrElse Double.IsNaN(Z) Then
             Z = 1
@@ -163,6 +163,6 @@ Friend Module BarnesHutGradient
                 Next
             End Sub)
 
-        tSNE.mCost = Sum(costParts)
+        tSNE.mCost = SumParts(costParts)
     End Sub
 End Module
