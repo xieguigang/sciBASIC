@@ -367,15 +367,16 @@ Friend Class SPTree
         End If
 
         Dim offset As Integer = pointIndex * mDim
-        Dim D As Double = 0
+        ' 注意：不要命名为 D，VB 大小写不敏感会与循环变量 d 冲突
+        Dim d2sum As Double = 0
 
         For d As Integer = 0 To mDim - 1
             Dim tmp As Double = Y(offset + d) - node.com(d)
-            D += tmp * tmp
+            d2sum += tmp * tmp
         Next
 
-        If node.isLeaf OrElse node.maxWidth / std.Sqrt(D) < theta Then
-            Dim Q As Double = 1.0 / (1.0 + D)
+        If node.isLeaf OrElse node.maxWidth / std.Sqrt(d2sum) < theta Then
+            Dim Q As Double = 1.0 / (1.0 + d2sum)
             Dim size As Integer = node.Count
 
             sumQ += size * Q

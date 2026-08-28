@@ -111,45 +111,51 @@ Friend Class CostFunction
 
         Call EnsureBuffers(N, [dim])
 
-        Dim Qu = lQu
+        ' 注意：不要命名为 Qu，VB 大小写不敏感会与循环内的局部变量 qu 冲突
+        Dim lQuBuf = lQu
         Dim grad = tSNE.mGrad
-
-        ' compute current Q distribution, unnormalized first
-        Dim qsum = 0.0
-        Dim cost = 0.0
+        Dim blockSize = BlockSize(N, tSNE.mThreads)
+        Dim nBlocks = BlockCount(N, blockSize)
+        Dim qsumParts = New Double(nBlocks - 1) {}
+        Dim costParts = New Double(nBlocks - 1) {}
 
         ' ---------- pass 1：未归一化的 Q 分布 ----------
-        ' 按外层行 i 分派。第 i 个任务只写第 i 行与第 i 列（三角对称），
+        ' 按外层行 i 分块。第 i 行只写第 i 行与第 i 列（三角对称），
         ' 不同的 i 之间所写入的单元格集合互不相交，因此无需加锁。
-        ' qsum 用线程本地累加器归约，避免 N^2 次原子操作。
-        System.Threading.Tasks.Parallel.For(Of Double)(
-            0, N, opts,
-            Function() 0.0,
-            Function(i, loopState, acc) As Double
-                Dim iOffset = i * [dim]
-                Dim rowOffset = i * N
+        ' qsum 每个任务块一份局部累加器，最后串行合并。
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim acc As Double = 0
 
-                For j As Integer = i + 1 To N - 1
-                    Dim jOffset = j * [dim]
-                    Dim dsum = 0.0
+                For i As Integer = from To upto - 1
+                    Dim iOffset = i * [dim]
+                    Dim rowOffset = i * N
 
-                    For d = 0 To [dim] - 1
-                        Dim dhere = Y(iOffset + d) - Y(jOffset + d)
-                        dsum += dhere * dhere
+                    For j As Integer = i + 1 To N - 1
+                        Dim jOffset = j * [dim]
+                        Dim dsum = 0.0
+
+                        For d = 0 To [dim] - 1
+                            Dim dhere = Y(iOffset + d) - Y(jOffset + d)
+                            dsum += dhere * dhere
+                        Next
+
+                        ' Student t-distribution
+                        Dim qu = 1.0 / (1.0 + dsum)
+
+                        lQuBuf(rowOffset + j) = qu
+                        lQuBuf(j * N + i) = qu
+
+                        acc += 2 * qu
                     Next
-
-                    ' Student t-distribution
-                    Dim qu = 1.0 / (1.0 + dsum)
-
-                    Qu(rowOffset + j) = qu
-                    Qu(j * N + i) = qu
-
-                    acc += 2 * qu
                 Next
 
-                Return acc
-            End Function,
-            Sub(acc) System.Threading.Interlocked.Add(qsum, acc))
+                qsumParts(b) = acc
+            End Sub)
+
+        Dim qsum = Sum(qsumParts)
 
         If qsum <= 0 OrElse Double.IsNaN(qsum) Then
             qsum = 1
@@ -159,41 +165,44 @@ Friend Class CostFunction
         Dim invQsum = 1.0 / qsum
 
         ' ---------- pass 2：梯度与成本 ----------
-        ' 第 i 个任务只写 grad 的第 i 行，行与行之间互不相交。
+        ' 第 i 行只写 grad 的第 i 行，行与行之间互不相交。
         ' 归一化之后的 Q 不再物化为一整份 N*N 的数组，而是按索引即时算出，
         ' 这样既省下 8N^2 字节内存，也省下了一整轮 N^2 的写 + 读内存扫描。
-        System.Threading.Tasks.Parallel.For(Of Double)(
-            0, N, opts,
-            Function() 0.0,
-            Function(i, loopState, acc) As Double
-                Dim iOffset = i * [dim]
-                Dim rowOffset = i * N
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim acc As Double = 0
 
-                For d = 0 To [dim] - 1
-                    grad(iOffset + d) = 0.0
-                Next
+                For i As Integer = from To upto - 1
+                    Dim iOffset = i * [dim]
+                    Dim rowOffset = i * N
 
-                For j = 0 To N - 1
-                    Dim jOffset = j * [dim]
-                    Dim pij = P(rowOffset + j)
-                    Dim quij = Qu(rowOffset + j)
-                    Dim qij = std.Max(quij * invQsum, 1.0E-100)
+                    For k = 0 To [dim] - 1
+                        grad(iOffset + k) = 0.0
+                    Next
 
-                    ' accumulate cost (the non-constant portion at least...)
-                    acc += -pij * std.Log(qij)
+                    For j = 0 To N - 1
+                        Dim jOffset = j * [dim]
+                        Dim pij = P(rowOffset + j)
+                        Dim quij = lQuBuf(rowOffset + j)
+                        Dim qij = std.Max(quij * invQsum, 1.0E-100)
 
-                    Dim premult = 4 * (pmul * pij - qij) * quij
+                        ' accumulate cost (the non-constant portion at least...)
+                        acc += -pij * std.Log(qij)
 
-                    For d = 0 To [dim] - 1
-                        grad(iOffset + d) += premult * (Y(iOffset + d) - Y(jOffset + d))
+                        Dim premult = 4 * (pmul * pij - qij) * quij
+
+                        For k = 0 To [dim] - 1
+                            grad(iOffset + k) += premult * (Y(iOffset + k) - Y(jOffset + k))
+                        Next
                     Next
                 Next
 
-                Return acc
-            End Function,
-            Sub(acc) System.Threading.Interlocked.Add(cost, acc))
+                costParts(b) = acc
+            End Sub)
 
-        tSNE.mCost = cost
+        tSNE.mCost = Sum(costParts)
     End Sub
 
     ''' <summary>

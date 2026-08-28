@@ -69,6 +69,75 @@ Module Helper
     End Function
 
     ''' <summary>
+    ''' 计算任务分块的大小
+    ''' </summary>
+    ''' <param name="total">任务总量</param>
+    ''' <param name="nthreads">并行线程数</param>
+    ''' <param name="minItems">单个任务块的最少元素数量，用于避免把任务切得过碎</param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 归约（qsum / cost / Z / ymean）采用「连续分块 + 每块一个局部累加器 + 串行合并」
+    ''' 的方式，而不是 Parallel.For(Of TLocal) + Interlocked：
+    ''' 一是省掉了每个元素一次的委托调用与原子操作开销，
+    ''' 二是分块数量远多于线程数，TPL 的动态调度可以自动填平三角循环带来的负载不均。
+    ''' </remarks>
+    Friend Function BlockSize(total As Integer, nthreads As Integer, Optional minItems As Integer = 512) As Integer
+        If total <= 0 Then
+            Return 1
+        End If
+
+        Dim blocks As Integer = If(nthreads > 0, nthreads, 8) * 4
+        Dim size As Integer = CInt(std.Ceiling(total / CDbl(blocks)))
+
+        Return std.Max(std.Min(minItems, total), size)
+    End Function
+
+    ''' <summary>
+    ''' 依据分块大小计算任务块的数量
+    ''' </summary>
+    ''' <param name="total"></param>
+    ''' <param name="blockSize"></param>
+    ''' <returns></returns>
+    Friend Function BlockCount(total As Integer, blockSize As Integer) As Integer
+        Return (total + blockSize - 1) \ blockSize
+    End Function
+
+    ''' <summary>
+    ''' 串行合并各个任务块的局部累加值
+    ''' </summary>
+    Friend Function Sum(parts As Double()) As Double
+        Dim acc As Double = 0
+
+        For Each part As Double In parts
+            acc += part
+        Next
+
+        Return acc
+    End Function
+
+    ''' <summary>
+    ''' 串行合并各个任务块的局部向量累加值
+    ''' </summary>
+    ''' <param name="parts"></param>
+    ''' <param name="[dim]"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 放在独立的函数里而不是就地展开，是为了避免 VB 大小写不敏感导致的
+    ''' 循环变量与外层局部变量（例如 d 与 D）重名的编译错误。
+    ''' </remarks>
+    Friend Function SumColumns(parts As Double()(), [dim] As Integer) As Double()
+        Dim acc = New Double([dim] - 1) {}
+
+        For Each part As Double() In parts
+            For d As Integer = 0 To [dim] - 1
+                acc(d) += part(d)
+            Next
+        Next
+
+        Return acc
+    End Function
+
+    ''' <summary>
     ''' utilitity that creates contiguous vector of zeros of size n
     ''' </summary>
     ''' <param name="n"></param>
@@ -413,7 +482,7 @@ Module Helper
     ''' <summary>
     ''' 线程私有缓冲区的释放回调
     ''' </summary>
-    Private Shared Sub ReleaseRowBuffer(prow As Double())
+    Private Sub ReleaseRowBuffer(prow As Double())
         ' 线程本地缓冲区交还给 GC，此处无需任何额外处理
     End Sub
 

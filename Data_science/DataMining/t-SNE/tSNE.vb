@@ -327,26 +327,27 @@ Public Class tSNE : Inherits IDataEmbedding
 
     ' (re)initializes the solution to random
     Private Sub InitSolution()
+        ' 注意：局部变量不要命名为 D，VB 大小写不敏感会与循环变量 d 冲突
         Dim N As Integer = mN
-        Dim D As Integer = mDim
+        Dim dims As Integer = mDim
 
         ' generate random solution to t-SNE
         ' 初始化只占 O(N*dim)，相对 N^2 的热循环可以忽略，
         ' 因此这里保持串行执行，令随机序列可复现
-        mYFlat = random.randn2d(N, D) ' the solution
-        mGains = RandomHelper.randn2d(N, D, 1.0) ' step gains to accelerate progress in unchanging directions
-        mYStep = RandomHelper.randn2d(N, D, 0.0) ' momentum accumulator
+        mYFlat = random.randn2d(N, dims) ' the solution
+        mGains = RandomHelper.randn2d(N, dims, 1.0) ' step gains to accelerate progress in unchanging directions
+        mYStep = RandomHelper.randn2d(N, dims, 0.0) ' momentum accumulator
 
         ' 权威存储仍然保持锯齿数组形态，以维持 GetEmbedding 的引用语义
         mY = New Double(N - 1)() {}
 
         For i As Integer = 0 To N - 1
-            mY(i) = New Double(D - 1) {}
+            mY(i) = New Double(dims - 1) {}
         Next
 
         Call SyncYFromFlat()
 
-        mGrad = New Double(N * D - 1) {}
+        mGrad = New Double(N * dims - 1) {}
         bhNegF = Nothing
         bhPosF = Nothing
         mIter = 0
@@ -357,13 +358,13 @@ Public Class tSNE : Inherits IDataEmbedding
     ''' </summary>
     Private Sub SyncFlatFromY()
         Dim N = mN
-        Dim D = mDim
+        Dim dims = mDim
 
         For i As Integer = 0 To N - 1
             Dim row = mY(i)
-            Dim offset = i * D
+            Dim offset = i * dims
 
-            For d As Integer = 0 To D - 1
+            For d As Integer = 0 To dims - 1
                 mYFlat(offset + d) = row(d)
             Next
         Next
@@ -374,13 +375,13 @@ Public Class tSNE : Inherits IDataEmbedding
     ''' </summary>
     Private Sub SyncYFromFlat()
         Dim N = mN
-        Dim D = mDim
+        Dim dims = mDim
 
         For i As Integer = 0 To N - 1
             Dim row = mY(i)
-            Dim offset = i * D
+            Dim offset = i * dims
 
-            For d As Integer = 0 To D - 1
+            For d As Integer = 0 To dims - 1
                 row(d) = mYFlat(offset + d)
             Next
         Next
@@ -403,64 +404,72 @@ Public Class tSNE : Inherits IDataEmbedding
 
         Me.cost.CostGrad(Y) ' evaluate gradient
 
-        Dim ymean = zeros([dim])
         ' 这两个量在整个循环内为常量，提到循环外以避免 N*dim 次的字段读取与分支判断
         Dim momval = If(mIter < 250, 0.5, 0.8)
         Dim eps = mEpsilon
+        Dim blockSize = BlockSize(N, mThreads)
+        Dim nBlocks = BlockCount(N, blockSize)
+        Dim ymeanParts = New Double(nBlocks - 1)() {}
 
         ' perform gradient step
-        ' 第 i 个任务独占第 i 行（G / S / Y 按行写入），行与行之间无冲突；
-        ' ymean 按维度归约，用线程本地累加器 + 原子合并。
-        System.Threading.Tasks.Parallel.For(Of Double())(
-            0, N, opts,
-            Function() New Double([dim] - 1) {},
-            Function(i, loopState, localMean) As Double()
-                Dim offset = i * [dim]
+        ' 第 i 个点独占自己的第 i 行（G / S / Y 按行写入），行与行之间无冲突；
+        ' ymean 按维度归约，每个任务块维护一份局部累加器，最后串行合并。
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim localMean = New Double([dim] - 1) {}
 
-                For d = 0 To [dim] - 1
-                    Dim gid = grad(offset + d)
-                    Dim sid = S(offset + d)
-                    Dim gainid = G(offset + d)
+                For i As Integer = from To upto - 1
+                    Dim offset = i * [dim]
 
-                    ' compute gain update
-                    Dim newgain = If(std.Sign(gid) = std.Sign(sid), gainid * 0.8, gainid + 0.2)
+                    For d = 0 To [dim] - 1
+                        Dim gid = grad(offset + d)
+                        Dim sid = S(offset + d)
+                        Dim gainid = G(offset + d)
 
-                    If newgain < 0.01 Then
-                        ' clamp
-                        newgain = 0.01
-                    End If
+                        ' compute gain update
+                        Dim newgain = If(std.Sign(gid) = std.Sign(sid), gainid * 0.8, gainid + 0.2)
 
-                    ' store for next turn
-                    G(offset + d) = newgain
-                    ' compute momentum step direction
-                    Dim newsid = momval * sid - eps * newgain * gid
-                    ' remember the step we took
-                    S(offset + d) = newsid
-                    ' step!
-                    Y(offset + d) += newsid
-                    ' accumulate mean so that we can center later
-                    localMean(d) += Y(offset + d)
+                        If newgain < 0.01 Then
+                            ' clamp
+                            newgain = 0.01
+                        End If
+
+                        ' store for next turn
+                        G(offset + d) = newgain
+                        ' compute momentum step direction
+                        Dim newsid = momval * sid - eps * newgain * gid
+                        ' remember the step we took
+                        S(offset + d) = newsid
+                        ' step!
+                        Y(offset + d) += newsid
+                        ' accumulate mean so that we can center later
+                        localMean(d) += Y(offset + d)
+                    Next
                 Next
 
-                Return localMean
-            End Function,
-            Sub(localMean)
-                For d = 0 To [dim] - 1
-                    System.Threading.Interlocked.Add(ymean(d), localMean(d))
-                Next
+                ymeanParts(b) = localMean
             End Sub)
 
+        Dim ymean = SumColumns(ymeanParts, [dim])
+
         ' reproject Y to be zero mean，同时把一维镜像回写到权威的锯齿数组
-        System.Threading.Tasks.Parallel.For(0, N, opts,
-            Sub(i)
-                Dim row = mY(i)
-                Dim offset = i * [dim]
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
 
-                For d = 0 To [dim] - 1
-                    Dim v = Y(offset + d) - ymean(d) / N
+                For i As Integer = from To upto - 1
+                    Dim row = mY(i)
+                    Dim offset = i * [dim]
 
-                    Y(offset + d) = v
-                    row(d) = v
+                    For d = 0 To [dim] - 1
+                        Dim v = Y(offset + d) - ymean(d) / N
+
+                        Y(offset + d) = v
+                        row(d) = v
+                    Next
                 Next
             End Sub)
 
