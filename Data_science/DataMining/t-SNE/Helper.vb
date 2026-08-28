@@ -72,30 +72,33 @@ Module Helper
     ''' 计算任务分块的大小
     ''' </summary>
     ''' <param name="total">任务总量</param>
-    ''' <param name="nthreads">并行线程数</param>
+    ''' <param name="maxBlocks">任务块数量的上界</param>
     ''' <param name="minItems">
     ''' 单个任务块的元素数量下界，用于避免把任务切得过碎导致调度开销反超收益
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' 归约（qsum / cost / Z / ymean）采用「连续分块 + 每块一个局部累加器 + 串行合并」
+    ''' 归约（qsum / cost / Z / ymean）采用「连续分块 + 每块一个局部累加器 + 按块序串行合并」
     ''' 的方式，而不是 Parallel.For(Of TLocal) + Interlocked：
-    ''' 一是省掉了每个元素一次的委托调用与原子操作开销，
-    ''' 二是分块数量远多于线程数，TPL 的动态调度可以自动填平三角循环带来的负载不均。
+    ''' 省掉了每个元素一次的委托调用与原子操作开销。
+    ''' 
+    ''' 分块方案刻意<b>只取决于任务总量而与线程数无关</b>，这带来两个好处：
+    ''' 一是浮点累加的分组方式是固定的，因此同一个数据集在同一台机器上
+    ''' 无论把 nthreads 设成多少，结果都逐位一致（可复现性）；
+    ''' 二是任务块数量远多于线程数，TPL 的动态调度可以自动填平
+    ''' 三角循环（第 i 行的工作量随 i 增大而减小）带来的负载不均。
     ''' 
     ''' 命名为 TaskBlockSize 而不是 BlockSize，是为了避免与调用方常见的
     ''' 局部变量名 blockSize 相冲突（VB 是大小写不敏感的）。
     ''' </remarks>
-    Friend Function TaskBlockSize(total As Integer, nthreads As Integer, Optional minItems As Integer = 16) As Integer
+    Friend Function TaskBlockSize(total As Integer,
+                                  Optional maxBlocks As Integer = 1024,
+                                  Optional minItems As Integer = 16) As Integer
         If total <= 0 Then
             Return 1
         End If
 
-        ' 刻意让任务块的数量远多于线程数：
-        ' 一方面 TPL 的动态调度可以自动填平三角循环（第 i 行的工作量随 i 增大而减小）
-        ' 带来的负载不均，另一方面即使线程数增加也不会退化成只有一个任务块。
-        Dim blocks As Integer = std.Max(1, If(nthreads > 0, nthreads, 8)) * 16
-        Dim size As Integer = CInt(std.Ceiling(total / CDbl(blocks)))
+        Dim size As Integer = CInt(std.Ceiling(total / CDbl(std.Max(1, maxBlocks))))
 
         ' 下界保证任务不被切得过碎，上界保证块的尺寸不超过任务总量
         Return std.Min(std.Max(size, minItems), total)

@@ -421,7 +421,7 @@ Public Class tSNE : Inherits IDataEmbedding
         ' 这两个量在整个循环内为常量，提到循环外以避免 N*dim 次的字段读取与分支判断
         Dim momval = If(mIter < 250, 0.5, 0.8)
         Dim eps = mEpsilon
-        Dim blockSize As Integer = TaskBlockSize(N, mThreads)
+        Dim blockSize As Integer = TaskBlockSize(N)
         Dim nBlocks As Integer = TaskBlockCount(N, blockSize)
         Dim ymeanParts = New Double(nBlocks - 1)() {}
 
