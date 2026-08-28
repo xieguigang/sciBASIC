@@ -76,7 +76,6 @@ Public Class KBandSearch
     ''' the requested one is too small to make the target cell reachable, see 
     ''' <see cref="CalculateEditDistance(String, String)"/>.
     ''' </summary>
-    ''' <returns></returns>
     Friend ReadOnly K As Integer
     ''' <summary>
     ''' The output buffer of the last alignment, slot 0 is the aligned first 

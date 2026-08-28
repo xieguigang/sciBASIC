@@ -63,7 +63,6 @@ Imports System.Linq
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
-Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -113,7 +112,6 @@ Public Class CenterStar
     ''' <summary>
     ''' 中心的挑选退化为采样近似计算的默认序列条数阈值
     ''' </summary>
-    ''' <returns></returns>
     Public Const DefaultExactCenterLimit As Integer = 32
 
     Public ReadOnly Property NameList As String()
@@ -473,9 +471,11 @@ Public Class CenterStar
     ''' </summary>
     Private Sub AlignToCenter(n As Integer, center As String, clen As Integer, gaps As CenterGaps())
         Dim k As Integer = Me.kband.K
-        Dim bar As ProgressBar = TqdmWrapper.Wrap(n, printsPerSecond:=4)
+        ' 中心序列自身不参与比对，进度条的总量为 n - 1
+        Dim total As Integer = n - 1
+        Dim bar As ProgressBar = TqdmWrapper.Wrap(total, printsPerSecond:=4)
         Dim ticks As Integer() = New Integer() {0}
-        Dim reportStep As Integer = std.Max(1, n \ 100)
+        Dim reportStep As Integer = std.Max(1, total \ 100)
 
         ' KBandSearch 持有共享的输出缓冲区，不是线程安全的，
         ' 每个并行分支必须使用各自的实例
@@ -490,7 +490,7 @@ Public Class CenterStar
 
                 gaps(i) = ExtractCenterGaps(kband.globalAlign(0), kband.globalAlign(1), clen, dist)
 
-                Call Tick(bar, ticks, n, reportStep)
+                Call Tick(bar, ticks, total, reportStep)
             End Sub)
 
         Call bar.Finish()
