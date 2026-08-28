@@ -203,32 +203,32 @@ Friend Module Heaps
         ''' the stripe index, so that the dead lock is impossible.
         ''' </remarks>
         Public Function HeapPushPair(heap As Heap, locks As Object(),
-                             rowA As Integer, rowB As Integer,
-                             weight As Double, flag As Integer) As Integer
+                                     rowA As Integer, rowB As Integer,
+                                     weight As Double, flag As Integer) As Integer
 
-        Dim idxA As Integer = rowA Mod locks.Length
-        Dim idxB As Integer = rowB Mod locks.Length
+            Dim idxA As Integer = rowA Mod locks.Length
+            Dim idxB As Integer = rowB Mod locks.Length
 
-        If idxA = idxB Then
-        SyncLock locks(idxA)
-            Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
-                   Heaps.HeapPush(heap, rowB, weight, rowA, flag)
-        End SyncLock
-        ElseIf idxA < idxB Then
-        SyncLock locks(idxA)
-            SyncLock locks(idxB)
-                Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
-                       Heaps.HeapPush(heap, rowB, weight, rowA, flag)
-            End SyncLock
-        End SyncLock
-        Else
-        SyncLock locks(idxB)
-            SyncLock locks(idxA)
-                Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
-                       Heaps.HeapPush(heap, rowB, weight, rowA, flag)
-            End SyncLock
-        End SyncLock
-        End If
+            If idxA = idxB Then
+                SyncLock locks(idxA)
+                    Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
+                           Heaps.HeapPush(heap, rowB, weight, rowA, flag)
+                End SyncLock
+            ElseIf idxA < idxB Then
+                SyncLock locks(idxA)
+                    SyncLock locks(idxB)
+                        Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
+                               Heaps.HeapPush(heap, rowB, weight, rowA, flag)
+                    End SyncLock
+                End SyncLock
+            Else
+                SyncLock locks(idxB)
+                    SyncLock locks(idxA)
+                        Return Heaps.HeapPush(heap, rowA, weight, rowB, flag) +
+                               Heaps.HeapPush(heap, rowB, weight, rowA, flag)
+                    End SyncLock
+                End SyncLock
+            End If
         End Function
 
         ''' <summary>

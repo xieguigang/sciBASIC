@@ -643,9 +643,9 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' <param name="n">the current epoch</param>
     ''' <param name="clipValue">the gradient clipping value</param>
     ''' <param name="embeddingSpan">
-    ''' the embedding vector of the current worker thread. the 
-    ''' <see cref="Span(Of T)"/> is a ref struct which can not be shared 
-    ''' between the threads, so that it must be created by the caller.
+    ''' a span view which is bound to the shared embedding vector, each 
+    ''' worker thread of the parallel SGD creates its own view via 
+    ''' <see cref="Umap.GetEmbeddingSpan"/>.
     ''' </param>
     Friend Sub RunIterate(i As Integer, n As Integer, clipValue As Double, embeddingSpan As Span(Of Double))
         If Not (_optimizationState.EpochOfNextSample(i) >= n) Then
