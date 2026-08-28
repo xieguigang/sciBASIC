@@ -45,11 +45,11 @@
 
     ' Class KBandSearch
     ' 
+    '     Properties: K, globalAlign
+    ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: Backtrace, CalculateEditDistance
-    ' 
-    '     Sub: FillBand
+    '     Function: AlignBanded, Backtrace, CalculateEditDistance
     ' 
     ' /********************************************************************************/
 
@@ -58,16 +58,56 @@
 Imports System.Text
 Imports std = System.Math
 
+''' <summary>
+''' Global alignment (Needleman-Wunsch) with a k-band heuristic.
+''' 
+''' Only cells with |i - j| &lt;= k are evaluated, which turns the O(l1*l2) 
+''' dynamic programming into O(l1*min(l2, 2k)) time.
+''' 
+''' The implementation keeps two rolling row buffers instead of the full 
+''' score matrix, so that the working set is O(k) rather than O(l1*l2).
+''' </summary>
 Public Class KBandSearch
 
     ''' <summary>
-    ''' k-band 带宽
+    ''' The k-band width requested by the caller.
+    ''' 
+    ''' The effective width used internally may be enlarged automatically when 
+    ''' the requested one is too small to make the target cell reachable, see 
+    ''' <see cref="CalculateEditDistance(String, String)"/>.
     ''' </summary>
+    ''' <returns></returns>
     Friend ReadOnly K As Integer
+    ''' <summary>
+    ''' The output buffer of the last alignment, slot 0 is the aligned first 
+    ''' sequence and slot 1 is the aligned second sequence.
+    ''' </summary>
+    ''' <remarks>
+    ''' This buffer is shared by all of the alignments made by this instance, 
+    ''' i.e. the class is NOT thread safe, each worker thread requires its own 
+    ''' instance.
+    ''' </remarks>
     Friend ReadOnly globalAlign As String()
 
+    ''' <summary>
+    ''' A cell that is out of the k-band, or that has not been computed yet.
+    ''' 
+    ''' NOTE: this sentinel must never take part in any arithmetic expression, 
+    ''' adding one to it overflows into <see cref="Integer.MinValue"/> and would 
+    ''' make an unreachable direction look like the cheapest one.
+    ''' </summary>
+    Private Const UNREACHABLE As Integer = Integer.MaxValue
+
+    ''' <summary>
+    ''' open the k-band alignment search engine
+    ''' </summary>
+    ''' <param name="globalAlign">A buffer of at least two slots for receiving 
+    ''' the alignment result of the last <see cref="CalculateEditDistance(String, String)"/> 
+    ''' call.</param>
+    ''' <param name="k">The k-band width, a small value runs faster but may miss 
+    ''' the optimal path when the two sequences are highly divergent.</param>
     Sub New(ByRef globalAlign$(), k As Integer)
-        Me.K = k
+        Me.K = If(k > 0, k, 1)
         Me.globalAlign = globalAlign
     End Sub
 
@@ -81,10 +121,18 @@ Public Class KBandSearch
     ''' </summary>
     ''' <param name="seq1$"></param>
     ''' <param name="seq2$"></param>
-    ''' <returns></returns>
+    ''' <returns>The edit distance between <paramref name="seq1"/> and 
+    ''' <paramref name="seq2"/>, the two aligned strings are written into the 
+    ''' <see cref="globalAlign"/> buffer.</returns>
+    ''' <remarks>
+    ''' A k-band that is narrower than the length difference |l1 - l2| can never 
+    ''' reach the target cell. Instead of throwing, the band is enlarged 
+    ''' automatically here (in the worst case up to the full matrix, i.e. an exact 
+    ''' Needleman-Wunsch alignment).
+    ''' </remarks>
     Public Function CalculateEditDistance(seq1$, seq2$) As Integer
-        Dim l1 = seq1.Length
-        Dim l2 = seq2.Length
+        Dim l1 As Integer = seq1.Length
+        Dim l2 As Integer = seq2.Length
 
         If seq1 = seq2 Then
             globalAlign(0) = seq1
@@ -93,133 +141,190 @@ Public Class KBandSearch
             Return 0
         End If
 
-        ' K-Band 只计算 |i - j| <= K 的区域
-        ' 为了代码简单，我们仍然分配 l1+1 * l2+1 的矩阵，但只更新带内区域
-        ' 如果追求极致空间优化，可以使用偏移量映射的二维数组，但实现较复杂
+        Dim k As Integer = Me.K
+        Dim required As Integer = std.Abs(l1 - l2)
+        Dim limit As Integer = std.Max(l1, l2)
 
-        Dim score(l1, l2) As Integer
-        Dim trace(l1, l2) As Integer
+        ' the band should at least cover the length difference, otherwise
+        ' the cell (l1, l2) is located outside of the band and unreachable
+        If k < required Then
+            k = required
+        End If
+        If k > limit Then
+            k = limit
+        End If
 
-        ' 初始化为最大值，表示不可达
-        For i As Integer = 0 To l1
-            For j As Integer = 0 To l2
-                score(i, j) = Integer.MaxValue
-            Next
-        Next
+        ' k >= |l1 - l2| already guarantees reachability, the retry loop below
+        ' is only a defensive net for pathological inputs
+        Do
+            Dim dist As Integer = AlignBanded(seq1, seq2, l1, l2, k)
 
-        ' 原点
-        score(0, 0) = 0
-
-        ' 初始化边界
-        ' 只有在带内的边界才需要赋值
-        For i As Integer = 1 To l1
-            ' j=0, 必须满足 |i - 0| <= K，即 i <= K
-            If i <= K Then
-                score(i, 0) = i
-                trace(i, 0) = 2 ' Up
+            If dist >= 0 Then
+                Return dist
             End If
-        Next
-
-        For j As Integer = 1 To l2
-            ' i=0, 必须满足 |0 - j| <= K，即 j <= K
-            If j <= K Then
-                score(0, j) = j
-                trace(0, j) = 1 ' Left
+            If k >= limit Then
+                Exit Do
             End If
-        Next
 
-        ' 填充带状区域
-        Call FillBand(seq1, seq2, score, trace)
+            k = std.Min(limit, std.Max(k * 2, k + 1))
+        Loop
 
-        ' 回溯
-        ' 从 (l1, l2) 开始。如果最优路径跑出了带宽，这个单元格可能是 MaxValue。
-        ' 简单处理：如果 (l1,l2) 是 MaxValue，说明 K 太小了。
-        ' 实际应用中可能需要动态增大 K 重算，这里为了简单，如果不可达就抛出异常或回退到最近的可行点（不推荐）。
-        ' 我们假设 K 足够大以至于 (l1, l2) 可达。
+        Return AlignBanded(seq1, seq2, l1, l2, limit)
+    End Function
 
-        If score(l1, l2) = Integer.MaxValue Then
-            Throw New Exception("K-Band width is too small to align these sequences.")
+    ''' <summary>
+    ''' Fill the k-band and backtrace the optimal global alignment.
+    ''' </summary>
+    ''' <returns>
+    ''' The edit distance, or a negative value when the target cell (l1, l2) 
+    ''' turns out to be unreachable inside the band of width <paramref name="k"/>.
+    ''' </returns>
+    ''' 
+    ''' <remarks>
+    ''' Row buffers are addressed by the column window of the current row: row i 
+    ''' covers the columns [jStart, jEnd] and stores cell (i, j) at the slot 
+    ''' (j - jStart) + 1. Slot 0 and slot (w + 1) are permanent sentinels that 
+    ''' always hold <see cref="UNREACHABLE"/>, so that the inner loop needs no 
+    ''' boundary check at all.
+    ''' 
+    ''' As the window of row i-1 is shifted by at most one column against the 
+    ''' window of row i, the neighbouring cells are located at:
+    ''' 
+    '''   diag (i-1, j-1) => prev[cj + delta]
+    '''   up   (i-1, j)   => prev[cj + delta + 1]
+    '''   left (i, j-1)   => cur[cj]
+    '''   
+    ''' in which delta = jStart(i) - jStart(i-1) is either 0 or 1.
+    ''' </remarks>
+    Private Function AlignBanded(seq1$, seq2$, l1 As Integer, l2 As Integer, k As Integer) As Integer
+        Dim maxW As Integer
+
+        If k >= l2 Then
+            ' the band is wider than the whole matrix, no restriction at all
+            maxW = l2 + 1
         Else
-            Return Backtrace(score, trace, l1, l2, seq1, seq2)
+            maxW = std.Min(l2 + 1, 2 * k + 1)
+        End If
+
+        Dim stride As Integer = maxW + 2
+        Dim traceSize As Long = CLng(l1 + 1) * stride
+
+        If traceSize > Integer.MaxValue Then
+            Throw New OutOfMemoryException($"k-band alignment of {l1} x {l2} requires {traceSize} bytes of traceback buffer, which is too large to be allocated.")
+        End If
+
+        Dim prev As Integer() = New Integer(stride - 1) {}
+        Dim cur As Integer() = New Integer(stride - 1) {}
+        Dim trace As Byte() = New Byte(CInt(traceSize) - 1) {}
+
+        For t As Integer = 0 To stride - 1
+            prev(t) = UNREACHABLE
+            cur(t) = UNREACHABLE
+        Next
+
+        ' row 0: jStart is 0 here, so that only the columns j <= k are in band
+        Dim prevJStart As Integer = 0
+        Dim prevW As Integer = std.Min(l2, k) + 1
+
+        For j As Integer = 0 To prevW - 1
+            cur(j + 1) = j
+            trace(j + 1) = 1 ' Left
+        Next
+
+        Dim w As Integer = prevW
+
+        For i As Integer = 1 To l1
+            Dim swap As Integer() = prev
+            prev = cur
+            cur = swap
+
+            Dim jStart As Integer = std.Max(0, i - k)
+            Dim jEnd As Integer = std.Min(l2, i + k)
+            Dim delta As Integer = jStart - prevJStart
+
+            w = jEnd - jStart + 1
+
+            Dim rowBase As Integer = i * stride
+
+            For cj As Integer = 0 To w - 1
+                Dim j As Integer = jStart + cj
+                Dim idx As Integer = cj + 1
+                Dim best As Integer
+                Dim dir As Integer = 0
+
+                ' Diagonal (i-1, j-1)
+                Dim diag As Integer = prev(cj + delta)
+
+                If diag = UNREACHABLE Then
+                    best = UNREACHABLE
+                Else
+                    best = diag + If(seq1(i - 1) = seq2(j - 1), 0, 1)
+                End If
+
+                ' Up (i-1, j): only valid when the source cell is inside the 
+                ' window of the previous row
+                Dim upIdx As Integer = cj + delta + 1
+
+                If upIdx <= prevW Then
+                    Dim up As Integer = prev(upIdx)
+
+                    ' the guard also keeps UNREACHABLE + 1 from overflowing
+                    If up <> UNREACHABLE AndAlso up + 1 < best Then
+                        best = up + 1
+                        dir = 2 ' Up
+                    End If
+                End If
+
+                ' Left (i, j-1)
+                Dim left As Integer = cur(cj)
+
+                If left <> UNREACHABLE AndAlso left + 1 < best Then
+                    best = left + 1
+                    dir = 1 ' Left
+                End If
+
+                cur(idx) = best
+                trace(rowBase + idx) = CByte(dir)
+            Next
+
+            ' the right sentinel: the window shrinks near the end of the matrix, 
+            ' which would leave a stale score of a previous row in that slot
+            cur(w + 1) = UNREACHABLE
+
+            prevJStart = jStart
+            prevW = w
+        Next
+
+        ' cur holds row l1, or row 0 when l1 is zero
+        Dim lastIdx As Integer = (l2 - std.Max(0, l1 - k)) + 1
+
+        If lastIdx > w OrElse cur(lastIdx) = UNREACHABLE Then
+            Return -1
+        Else
+            Return Backtrace(trace, stride, k, l1, l2, seq1, seq2, cur(lastIdx))
         End If
     End Function
 
     ''' <summary>
-    ''' 填充带状区域
+    ''' Walk the traceback buffer back from (l1, l2) to (0, 0) and build the two 
+    ''' aligned strings.
     ''' </summary>
-    ''' <param name="seq1"></param>
-    ''' <param name="seq2"></param>
-    ''' <param name="score"></param>
-    ''' <param name="trace"></param>
-    Private Sub FillBand(seq1$, seq2$, ByRef score As Integer(,), ByRef trace As Integer(,))
-        Dim l1 = seq1.Length
-        Dim l2 = seq2.Length
+    Private Function Backtrace(trace As Byte(), stride As Integer, k As Integer,
+                               l1 As Integer, l2 As Integer,
+                               seq1$, seq2$, dist As Integer) As Integer
 
-        For i As Integer = 1 To l1
-            ' 确定 j 的范围: [max(1, i-K), min(l2, i+K)]
-            Dim jStart As Integer = std.Max(1, i - K)
-            Dim jEnd As Integer = std.Min(l2, i + K)
-
-            For j As Integer = jStart To jEnd
-                Dim matchCost As Integer = If(seq1(i - 1) = seq2(j - 1), 0, 1)
-
-                ' 计算三个方向的代价，如果来源在带外（值为 MaxValue），则忽略该方向
-
-                ' Diagonal (i-1, j-1)
-                ' (i-1) - (j-1) = i - j，所以在带内肯定有效，只要 score 有效
-                Dim diagScore As Integer = score(i - 1, j - 1)
-
-                ' Up (i-1, j)
-                ' 检查 (i-1) - j 是否在带内 => |(i-1) - j| <= K
-                Dim upScore As Integer = Integer.MaxValue
-                If std.Abs((i - 1) - j) <= K Then
-                    upScore = score(i - 1, j)
-                End If
-
-                ' Left (i, j-1)
-                ' 检查 i - (j-1) 是否在带内 => |i - (j-1)| <= K
-                Dim leftScore As Integer = Integer.MaxValue
-
-                If std.Abs(i - (j - 1)) <= K Then
-                    leftScore = score(i, j - 1)
-                End If
-
-                ' 取最小值
-                Dim minScore As Integer = diagScore + matchCost
-                Dim direction As Integer = 0 ' Diagonal
-
-                If upScore + 1 < minScore Then
-                    minScore = upScore + 1
-                    direction = 2 ' Up
-                End If
-                If leftScore + 1 < minScore Then
-                    minScore = leftScore + 1
-                    direction = 1 ' Left
-                End If
-
-                score(i, j) = minScore
-                trace(i, j) = direction
-            Next
-        Next
-    End Sub
-
-    Private Function Backtrace(score As Integer(,), trace As Integer(,), l1 As Integer, l2 As Integer, seq1$, seq2$) As Integer
         Dim i As Integer = l1
         Dim j As Integer = l2
-        Dim len As Integer = l1 + l2 ' 最大可能长度
-        Dim align1(len - 1) As Char
-        Dim align2(len - 1) As Char
+        Dim len As Integer = std.Max(1, l1 + l2)
+        Dim align1 As Char() = New Char(len - 1) {}
+        Dim align2 As Char() = New Char(len - 1) {}
         Dim pos As Integer = 0
 
         While i > 0 OrElse j > 0
-            Dim t As Integer = trace(i, j)
+            Dim jStart As Integer = std.Max(0, i - k)
+            Dim t As Integer = trace(i * stride + (j - jStart) + 1)
 
-            If t = 0 Then ' Diagonal
-                align1(pos) = seq1(i - 1)
-                align2(pos) = seq2(j - 1)
-                i -= 1
-                j -= 1
-            ElseIf t = 1 Then ' Left
+            If t = 1 Then ' Left
                 align1(pos) = CenterStar.GapChar
                 align2(pos) = seq2(j - 1)
                 j -= 1
@@ -227,26 +332,28 @@ Public Class KBandSearch
                 align1(pos) = seq1(i - 1)
                 align2(pos) = CenterStar.GapChar
                 i -= 1
-            Else
-                ' 不应该发生，除非从错误的地方开始回溯
-                Exit While
+            Else ' Diagonal
+                align1(pos) = seq1(i - 1)
+                align2(pos) = seq2(j - 1)
+                i -= 1
+                j -= 1
             End If
 
             pos += 1
         End While
 
         ' 反转字符串
-        Dim sb1 As New StringBuilder()
-        Dim sb2 As New StringBuilder()
+        Dim sb1 As New StringBuilder(len)
+        Dim sb2 As New StringBuilder(len)
 
-        For k As Integer = pos - 1 To 0 Step -1
-            sb1.Append(align1(k))
-            sb2.Append(align2(k))
+        For p As Integer = pos - 1 To 0 Step -1
+            sb1.Append(align1(p))
+            sb2.Append(align2(p))
         Next
 
         globalAlign(0) = sb1.ToString()
         globalAlign(1) = sb2.ToString()
 
-        Return score(l1, l2)
+        Return dist
     End Function
 End Class
