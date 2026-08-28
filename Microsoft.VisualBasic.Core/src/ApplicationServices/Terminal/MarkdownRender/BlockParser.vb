@@ -63,7 +63,7 @@ Namespace ApplicationServices.Terminal
         ReadOnly theme As MarkdownTheme
         ReadOnly inline As InlineParser
         ReadOnly globalStyle As ConsoleFormat
-        ReadOnly out As New List(Of TextSpan)
+        ReadOnly out As New System.Collections.Generic.List(Of TextSpan)
 
         Sub New(theme As MarkdownTheme, globalStyle As ConsoleFormat)
             Me.theme = theme
@@ -76,7 +76,7 @@ Namespace ApplicationServices.Terminal
         ''' </summary>
         ''' <param name="lines">the document lines, without the line feed char</param>
         ''' <returns></returns>
-        Public Function Parse(lines As String()) As List(Of TextSpan)
+        Public Function Parse(lines As String()) As System.Collections.Generic.List(Of TextSpan)
             out.Clear()
 
             If lines Is Nothing Then
@@ -86,7 +86,7 @@ Namespace ApplicationServices.Terminal
             ' the table buffer is a local variable instead of a field of the
             ' renderer, so that the buffer state can never be leaked into the
             ' next table or into the next DoPrint call.
-            Dim table As New List(Of String)
+            Dim table As New System.Collections.Generic.List(Of String)
             Dim i As Integer = 0
 
             While i < lines.Length
@@ -239,7 +239,7 @@ Namespace ApplicationServices.Terminal
         ''' the style of the line feed char, which is required when the line has
         ''' no content at all.
         ''' </param>
-        Private Sub AppendSpans(spans As List(Of TextSpan), fallbackStyle As ConsoleFormat)
+        Private Sub AppendSpans(spans As System.Collections.Generic.List(Of TextSpan), fallbackStyle As ConsoleFormat)
             If spans Is Nothing OrElse spans.Count = 0 Then
                 Call out.Add(New TextSpan With {.text = LF, .style = fallbackStyle})
             Else
@@ -249,7 +249,7 @@ Namespace ApplicationServices.Terminal
             End If
         End Sub
 
-        Private Sub FlushTable(table As List(Of String))
+        Private Sub FlushTable(table As System.Collections.Generic.List(Of String))
             If table.Count = 0 Then
                 Return
             End If

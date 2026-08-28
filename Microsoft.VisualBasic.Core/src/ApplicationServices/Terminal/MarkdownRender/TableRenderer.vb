@@ -50,7 +50,7 @@ Namespace ApplicationServices.Terminal
         ''' </param>
         ''' <param name="theme"></param>
         ''' <returns>the rendered table lines, without the line feed char.</returns>
-        Public Function Render(rows As List(Of String), theme As MarkdownTheme) As String()
+        Public Function Render(rows As System.Collections.Generic.List(Of String), theme As MarkdownTheme) As String()
             If rows Is Nothing OrElse rows.Count = 0 Then
                 ' the empty table buffer must return at here, or the following
                 ' rows(0) statement throws an IndexOutOfRangeException
@@ -58,7 +58,7 @@ Namespace ApplicationServices.Terminal
             End If
 
             Dim header As String() = SplitCells(rows(0))
-            Dim body As New List(Of String())()
+            Dim body As New System.Collections.Generic.List(Of String())()
 
             ' the rows(1) is the ``--|---`` delimiter row, which is not a data row
             For i As Integer = 2 To rows.Count - 1

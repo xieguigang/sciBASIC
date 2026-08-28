@@ -55,7 +55,7 @@ Namespace ApplicationServices.Terminal
     Friend Class InlineParser
 
         ReadOnly theme As MarkdownTheme
-        ReadOnly spans As New List(Of TextSpan)
+        ReadOnly spans As New System.Collections.Generic.List(Of TextSpan)
         ' the System.Text namespace is not imported, as the System.Text.Ascii
         ' conflicts with the Microsoft.VisualBasic.Text.Ascii
         ReadOnly buf As New System.Text.StringBuilder()
@@ -85,7 +85,7 @@ Namespace ApplicationServices.Terminal
         ''' style or the block quote style. The inline styles are merged on top of it.
         ''' </param>
         ''' <returns></returns>
-        Public Function Parse(line As String, baseStyle As ConsoleFormat) As List(Of TextSpan)
+        Public Function Parse(line As String, baseStyle As ConsoleFormat) As System.Collections.Generic.List(Of TextSpan)
             Me.line = If(line, "")
             Me.spans.Clear()
             Me.buf.Clear()
