@@ -273,7 +273,8 @@ Namespace ApplicationServices.Terminal
 
             Dim closeParen As Integer = line.IndexOf(")"c, closeBracket + 2)
 
-            If closeParen < 0 OrElse closeParen > rangeEnd Then
+            If closeParen < 0 OrElse closeParen >= rangeEnd Then
+                ' the closing paren must be located inside of the current range
                 Return False
             End If
 

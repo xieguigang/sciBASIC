@@ -340,6 +340,22 @@ Module markdownRenderVerify
         Dim second As String = reuse.Render("|a|b|" & vbLf & "|--|--|" & vbLf & "|1|2|")
 
         Check("the renderer instance is reusable", first = second)
+
+        ' the robustness of the degenerate inputs
+        Dim empty As New MarkdownRender(TestTheme(), ConsoleColor.Black, ConsoleColor.White)
+
+        empty.EnableAnsi = True
+
+        Check("an empty document does not crash",
+              empty.Render("") = RESET, "[" & empty.Render("").Replace(ESC, "\e") & "]")
+        Check("a null document does not crash", empty.Render(Nothing) = RESET)
+        Check("the empty document has no error", empty.LastError Is Nothing)
+
+        ' the document that is terminated by the windows cr-lf pair
+        Dim crlf As String = R("# a" & vbCrLf & vbCrLf & "**b**")
+
+        Check("the cr-lf line ending is handled",
+              crlf.Contains(HEADER & "a") AndAlso crlf.Contains(BOLD & "b"))
     End Sub
 
     ''' <summary>

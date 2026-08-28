@@ -58,11 +58,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace ApplicationServices.Terminal
 
