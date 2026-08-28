@@ -860,8 +860,8 @@ Namespace PostScript
         ''' get the current postscript canvas context information
         ''' </summary>
         ''' <returns>An object in clr type <see cref="PostScriptBuilder"/>.</returns>
-        Public Overrides Function GetContextInfo() As Object
-            Return painting
+        Public Overrides Function GetContextInfo() As GraphicsContextInfo
+            Return New GraphicsContextInfo With {.Context = painting}
         End Function
 
         Public Overrides Function IsVisible(rect As Rectangle) As Boolean

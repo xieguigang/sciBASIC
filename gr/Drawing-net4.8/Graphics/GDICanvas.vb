@@ -2301,8 +2301,13 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ' Returns:
     '     An System.Object representing the cumulative graphics context.
     <EditorBrowsable(EditorBrowsableState.Never)>
-    Public Overrides Function GetContextInfo() As Object
-        Return Graphics.GetContextInfo
+    Public Overrides Function GetContextInfo() As GraphicsContextInfo
+        ' the parameterless overload is obsolete, use the out argument version instead
+        Dim offset As PointF
+
+        Call Graphics.GetContextInfo(offset)
+
+        Return New GraphicsContextInfo With {.Offset = offset}
     End Function
 
     '

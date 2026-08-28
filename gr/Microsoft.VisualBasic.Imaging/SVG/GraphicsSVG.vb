@@ -694,7 +694,7 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Function GetContextInfo() As Object
+        Public Overrides Function GetContextInfo() As GraphicsContextInfo
             Throw New NotImplementedException()
         End Function
 

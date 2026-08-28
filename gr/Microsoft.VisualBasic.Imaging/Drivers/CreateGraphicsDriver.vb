@@ -87,7 +87,7 @@ Namespace Driver
 
         <Extension>
         Public Function CheckElementWriter(g As IGraphics) As IElementCommentWriter
-            Dim context As Object = g.GetContextInfo
+            Dim context As Object = g.GetContextInfo.Context
 
             If context IsNot Nothing Then
                 If context.GetType.ImplementInterface(Of IElementCommentWriter) Then
@@ -214,7 +214,7 @@ Namespace Driver
             End Function
 
             Public Overrides Function GetData(g As IGraphics, padding() As Integer) As IGraphicsData
-                Return New PostScriptData(g.GetContextInfo, g.Size, New Padding(padding))
+                Return New PostScriptData(g.GetContextInfo.Context, g.Size, New Padding(padding))
             End Function
         End Class
     End Module
