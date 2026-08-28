@@ -203,6 +203,20 @@ Public Class tSNE : Inherits IDataEmbedding
     ''' </remarks>
     Public Property KNN As Integer = 0
 
+    ''' <summary>
+    ''' Barnes-Hut 模式下稀疏概率矩阵的非零条目数量；精确模式下为 0
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 稀疏矩阵的内存占用约为 <c>nnz * 12</c> 字节（4 字节列索引 + 8 字节概率值），
+    ''' 调节 <see cref="KNN"/> 时可以据此权衡精度与内存。
+    ''' </remarks>
+    Public ReadOnly Property SparseNonZeros As Integer
+        Get
+            Return If(mSparseP Is Nothing, 0, mSparseP.nnz)
+        End Get
+    End Property
+
     Public Overrides ReadOnly Property dimension As Integer
         Get
             Return mDim
