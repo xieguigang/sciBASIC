@@ -149,7 +149,7 @@ Module Helper
     ''' <summary>
     ''' 线程私有缓冲区的释放回调（<c>Parallel.For</c> 的 localFinally 需要一个非空委托）
     ''' </summary>
-    Private Shared Sub ReleaseWorkspace(ws As RowWorkspace)
+    Private Sub ReleaseWorkspace(ws As RowWorkspace)
         ' 线程本地缓冲区交还给 GC，此处无需任何额外处理
     End Sub
 

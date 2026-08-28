@@ -202,11 +202,12 @@ Friend Class SPTree
 
         Call ComputeBounds(node.start, node.finish, lo, hi)
 
-        Dim mid = New Double(mDim - 1) {}
+        ' 注意：不能命名为 mid，Mid 是 VB 的保留字
+        Dim splitAt = New Double(mDim - 1) {}
         Dim maxW As Double = 0
 
         For d As Integer = 0 To mDim - 1
-            mid(d) = (lo(d) + hi(d)) / 2
+            splitAt(d) = (lo(d) + hi(d)) / 2
             node.width(d) = hi(d) - lo(d)
 
             If node.width(d) > maxW Then
@@ -231,7 +232,7 @@ Friend Class SPTree
             Dim code As Integer = 0
 
             For d As Integer = 0 To mDim - 1
-                If Y(offset + d) > mid(d) Then
+                If Y(offset + d) > splitAt(d) Then
                     code = code Or (1 << d)
                 End If
             Next
