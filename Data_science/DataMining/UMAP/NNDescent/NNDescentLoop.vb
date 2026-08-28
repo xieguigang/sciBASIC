@@ -71,8 +71,17 @@ Friend Class NNDescentLoop : Inherits VectorTask
     Public candidateNeighbors As Heap
     Public ReadOnly c As Double()
 
-    Public Sub New(nVertices As Integer)
-        MyBase.New(nVertices)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="nVertices">the number of the vertices of the graph</param>
+    ''' <param name="workers">
+    ''' the number of the worker threads, the global 
+    ''' <see cref="VectorTask.n_threads"/> value is used when this 
+    ''' parameter value is nothing.
+    ''' </param>
+    Public Sub New(nVertices As Integer, Optional workers As Integer? = Nothing)
+        MyBase.New(nVertices, workers:=workers)
         c = Allocate(Of Double)(all:=False)
     End Sub
 
