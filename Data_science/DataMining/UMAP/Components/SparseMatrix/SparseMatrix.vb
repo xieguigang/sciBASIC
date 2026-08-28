@@ -60,6 +60,7 @@
 
 #End Region
 
+Imports System.Threading.Tasks
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
@@ -147,38 +148,74 @@ Public NotInheritable Class SparseMatrix
         Next
     End Sub
 
-    Public Function Map(fn As Func(Of Double, Double)) As SparseMatrix
-        Return Map(Function(value, row, col) fn(value))
+    Public Function Map(fn As Func(Of Double, Double), Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
+        Return Map(Function(value, row, col) fn(value), parallelism)
     End Function
 
-    Public Function Map(fn As Func(Of Double, Integer, Integer, Double)) As SparseMatrix
-        Dim parallel As Boolean = True
-        Dim newEntries As New Dictionary(Of RowCol, Double)
+    ''' <summary>
+    ''' apply the given <paramref name="fn"/> on each of the non-zero elements 
+    ''' of this sparse matrix
+    ''' </summary>
+    ''' <param name="fn"></param>
+    ''' <param name="parallelism">
+    ''' the parallelism configuration, the map function will be evaluated in 
+    ''' parallel when the number of the non-zero elements is large enough.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function Map(fn As Func(Of Double, Integer, Integer, Double), Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
+        Dim src As KeyValuePair(Of RowCol, Double)() = EntryArray()
+        Dim newEntries As New Dictionary(Of RowCol, Double)(src.Length)
+        Dim degree As Integer = EffectiveDegree(parallelism, src.Length)
 
-        If parallel Then
-            Dim keyPools = newTaskPool(_entries.AsEnumerable)
-            Dim execParallel = keyPools _
-                .AsParallel _
-                .Select(Iterator Function(task)
-                            For Each kv In task
-                                Yield (kv.Key, fn(kv.Value, kv.Key.Row, kv.Key.Col))
-                            Next
-                        End Function) _
-                .Select(Function(i) i.ToArray) _
-                .ToArray
+        If degree > 1 Then
+            Dim values As Double() = New Double(src.Length - 1) {}
 
-            For Each kv In execParallel.IteratesALL
-                newEntries(kv.Key) = kv.Item2
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=src.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i)
+                          Dim key As RowCol = src(i).Key
+
+                          values(i) = fn(src(i).Value, key.Row, key.Col)
+                      End Sub)
+
+            For i As Integer = 0 To src.Length - 1
+                newEntries(src(i).Key) = values(i)
             Next
         Else
-            newEntries = _entries _
-                .ToDictionary(Function(kv) kv.Key,
-                              Function(kv)
-                                  Return fn(kv.Value, kv.Key.Row, kv.Key.Col)
-                              End Function)
+            For i As Integer = 0 To src.Length - 1
+                Dim key As RowCol = src(i).Key
+
+                newEntries(key) = fn(src(i).Value, key.Row, key.Col)
+            Next
         End If
 
         Return New SparseMatrix(newEntries, Dims)
+    End Function
+
+    ''' <summary>
+    ''' snapshot of the non-zero elements of this matrix into a random 
+    ''' accessible array, so that the entries could be processed in parallel.
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function EntryArray() As KeyValuePair(Of RowCol, Double)()
+        Dim src As KeyValuePair(Of RowCol, Double)() = New KeyValuePair(Of RowCol, Double)(_entries.Count - 1) {}
+        Dim i As Integer = 0
+
+        For Each kv As KeyValuePair(Of RowCol, Double) In _entries
+            src(i) = kv
+            i += 1
+        Next
+
+        Return src
+    End Function
+
+    ''' <summary>
+    ''' the effective parallelism degree of a workload with the given size
+    ''' </summary>
+    Private Shared Function EffectiveDegree(parallelism As ParallelConfig, workSize As Integer) As Integer
+        Return If(parallelism, ParallelConfig.Default).EffectiveDegree(workSize)
     End Function
 
     Public Function ToArray() As Double()()
@@ -198,13 +235,40 @@ Public NotInheritable Class SparseMatrix
         End If
     End Sub
 
-    Public Function Transpose() As SparseMatrix
+    ''' <summary>
+    ''' transpose of this sparse matrix
+    ''' </summary>
+    ''' <param name="parallelism">
+    ''' the parallelism configuration, the transposed key of each element 
+    ''' will be evaluated in parallel when the matrix is large enough.
+    ''' </param>
+    Public Function Transpose(Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
         Dim dims = (Me.Dims.cols, Me.Dims.rows)
-        Dim entries = New Dictionary(Of RowCol, Double)(_entries.Count)
+        Dim src As KeyValuePair(Of RowCol, Double)() = EntryArray()
+        Dim entries = New Dictionary(Of RowCol, Double)(src.Length)
+        Dim degree As Integer = EffectiveDegree(parallelism, src.Length)
 
-        For Each entry In _entries
-            entries(New RowCol(entry.Key.Col, entry.Key.Row)) = entry.Value
-        Next
+        If degree > 1 Then
+            Dim keys As RowCol() = New RowCol(src.Length - 1) {}
+
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=src.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i)
+                          keys(i) = New RowCol(src(i).Key.Col, src(i).Key.Row)
+                      End Sub)
+
+            ' the transposition is a bijection, so that all of the keys are 
+            ' unique and the result could be merged without any conflict
+            For i As Integer = 0 To src.Length - 1
+                entries(keys(i)) = src(i).Value
+            Next
+        Else
+            For Each entry In _entries
+                entries(New RowCol(entry.Key.Col, entry.Key.Row)) = entry.Value
+            Next
+        End If
 
         Return New SparseMatrix(entries, dims)
     End Function
@@ -212,15 +276,47 @@ Public NotInheritable Class SparseMatrix
     ''' <summary>
     ''' Element-wise multiplication of two matrices
     ''' </summary>
-    Public Function PairwiseMultiply(other As SparseMatrix) As SparseMatrix
-        Dim newEntries = New Dictionary(Of RowCol, Double)(_entries.Count)
-        Dim v As Double = Nothing
+    ''' <param name="other"></param>
+    ''' <param name="parallelism">
+    ''' the parallelism configuration, the lookup of the other matrix will 
+    ''' be done in parallel when the matrix is large enough.
+    ''' </param>
+    Public Function PairwiseMultiply(other As SparseMatrix, Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
+        Dim src As KeyValuePair(Of RowCol, Double)() = EntryArray()
+        Dim newEntries = New Dictionary(Of RowCol, Double)(src.Length)
+        Dim degree As Integer = EffectiveDegree(parallelism, src.Length)
 
-        For Each kv In _entries
-            If other._entries.TryGetValue(kv.Key, v) Then
-                newEntries(kv.Key) = kv.Value * v
-            End If
-        Next
+        If degree > 1 Then
+            Dim hits As Boolean() = New Boolean(src.Length - 1) {}
+            Dim values As Double() = New Double(src.Length - 1) {}
+
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=src.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i)
+                          Dim v As Double = 0
+
+                          If other._entries.TryGetValue(src(i).Key, v) Then
+                              values(i) = src(i).Value * v
+                              hits(i) = True
+                          End If
+                      End Sub)
+
+            For i As Integer = 0 To src.Length - 1
+                If hits(i) Then
+                    newEntries(src(i).Key) = values(i)
+                End If
+            Next
+        Else
+            Dim v As Double = Nothing
+
+            For Each kv In _entries
+                If other._entries.TryGetValue(kv.Key, v) Then
+                    newEntries(kv.Key) = kv.Value * v
+                End If
+            Next
+        End If
 
         Return New SparseMatrix(newEntries, Dims)
     End Function
@@ -228,70 +324,85 @@ Public NotInheritable Class SparseMatrix
     ''' <summary>
     ''' Element-wise addition of two matrices
     ''' </summary>
-    Public Function Add(other As SparseMatrix) As SparseMatrix
-        Return Me.ElementWiseWith(other, Function(x, y) x + y)
+    Public Function Add(other As SparseMatrix, Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
+        Return Me.ElementWiseWith(other, Function(x, y) x + y, parallelism)
     End Function
 
     ''' <summary>
     ''' Element-wise subtraction of two matrices
     ''' </summary>
-    Public Function Subtract(other As SparseMatrix) As SparseMatrix
-        Return Me.ElementWiseWith(other, Function(x, y) x - y)
+    Public Function Subtract(other As SparseMatrix, Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
+        Return Me.ElementWiseWith(other, Function(x, y) x - y, parallelism)
     End Function
 
     ''' <summary>
     ''' Scalar multiplication of a matrix
     ''' </summary>
-    Public Function MultiplyScalar(scalar As Double) As SparseMatrix
-        Return Map(Function(value, row, cols) value * scalar)
-    End Function
-
-    Private Shared Function newTaskPool(Of T)(keys As IEnumerable(Of T)) As T()()
-        Dim keyPools = keys.ToArray
-        Dim tasks = keyPools.Split(keyPools.Length / App.CPUCoreNumbers / 8)
-
-        Return tasks
+    Public Function MultiplyScalar(scalar As Double, Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
+        Return Map(Function(value, row, cols) value * scalar, parallelism)
     End Function
 
     ''' <summary>
     ''' Helper function for element-wise operations
     ''' </summary>
-    Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Double, Double, Double)) As SparseMatrix
-        Dim newEntries = New Dictionary(Of RowCol, Double)(_entries.Count)
-        Dim parallel As Boolean = True
+    ''' <remarks>
+    ''' the previous implementation builds an union enumerable of the keys 
+    ''' of the two matrices and then splits it into task pools for run the 
+    ''' operation in parallel, which produces a lot of the intermediate 
+    ''' objects.
+    ''' 
+    ''' this implementation evaluates the operation of the keys of the 
+    ''' current matrix in parallel at first, and then folds the keys that 
+    ''' only exists inside the other matrix.
+    ''' </remarks>
+    Private Function ElementWiseWith(other As SparseMatrix,
+                                     op As Func(Of Double, Double, Double),
+                                     Optional parallelism As ParallelConfig = Nothing) As SparseMatrix
 
-        If parallel Then
-            Dim keyPools = newTaskPool(_entries.Keys.Union(other._entries.Keys))
-            Dim execParallel = keyPools _
-                .AsParallel _
-                .Select(Iterator Function(task)
-                            Dim x As Double = Nothing
-                            Dim y As Double = Nothing
+        Dim src As KeyValuePair(Of RowCol, Double)() = EntryArray()
+        Dim newEntries As New Dictionary(Of RowCol, Double)(src.Length + other._entries.Count)
+        Dim degree As Integer = EffectiveDegree(parallelism, src.Length)
 
-                            For Each k As RowCol In task
-                                Yield (k, op(
-                                    If(_entries.TryGetValue(k, x), x, 0F),
-                                    If(other._entries.TryGetValue(k, y), y, 0F)
-                                ))
-                            Next
-                        End Function) _
-                .Select(Function(i) i.ToArray) _
-                .ToArray
+        If degree > 1 Then
+            Dim values As Double() = New Double(src.Length - 1) {}
 
-            For Each i In execParallel.IteratesALL
-                newEntries(i.k) = i.Item2
+            ' op(x, y) for the common keys and op(x, 0) for the keys that 
+            ' only exists inside the current matrix
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=src.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i)
+                          Dim v As Double = 0
+
+                          If other._entries.TryGetValue(src(i).Key, v) Then
+                              values(i) = op(src(i).Value, v)
+                          Else
+                              values(i) = op(src(i).Value, 0F)
+                          End If
+                      End Sub)
+
+            For i As Integer = 0 To src.Length - 1
+                newEntries(src(i).Key) = values(i)
             Next
         Else
-            Dim x As Double = Nothing
-            Dim y As Double = Nothing
+            Dim v As Double = 0
 
-            For Each k In _entries.Keys.Union(other._entries.Keys)
-                newEntries(k) = op(
-                    If(_entries.TryGetValue(k, x), x, 0F),
-                    If(other._entries.TryGetValue(k, y), y, 0F)
-                )
+            For i As Integer = 0 To src.Length - 1
+                If other._entries.TryGetValue(src(i).Key, v) Then
+                    newEntries(src(i).Key) = op(src(i).Value, v)
+                Else
+                    newEntries(src(i).Key) = op(src(i).Value, 0F)
+                End If
             Next
         End If
+
+        ' op(0, y) for the keys that only exists inside the other matrix
+        For Each kv As KeyValuePair(Of RowCol, Double) In other._entries
+            If Not newEntries.ContainsKey(kv.Key) Then
+                newEntries(kv.Key) = op(0F, kv.Value)
+            End If
+        Next
 
         Return New SparseMatrix(newEntries, Dims)
     End Function

@@ -428,12 +428,12 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim sigmasRhos = New SmoothKNN(knnDistances, KNNArguments).SmoothKNNDistance()
         Dim rowsColsVals = SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos, parallelism:=_parallelism)
         Dim sparseMatrix = New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length))
-        Dim transpose = sparseMatrix.Transpose()
-        Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
-        Dim a = sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix)
-        Dim b = a.MultiplyScalar(setOpMixRatio)
-        Dim c = prodMatrix.MultiplyScalar(1 - setOpMixRatio)
-        Dim result = b.Add(c)
+        Dim transpose = sparseMatrix.Transpose(_parallelism)
+        Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose, _parallelism)
+        Dim a = sparseMatrix.Add(CType(transpose, SparseMatrix), _parallelism).Subtract(prodMatrix, _parallelism)
+        Dim b = a.MultiplyScalar(setOpMixRatio, _parallelism)
+        Dim c = prodMatrix.MultiplyScalar(1 - setOpMixRatio, _parallelism)
+        Dim result = b.Add(c, _parallelism)
 
         Return result
     End Function
@@ -446,7 +446,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim nEpochs As Integer = GetNEpochs()
         Dim graphMax As Double = _graph.GetValues().Max
         Dim cutoff As Double = If(_customMapCutoff Is Nothing, graphMax / nEpochs, graphMax * _customMapCutoff)
-        Dim graph As SparseMatrix = _graph.Map(Function(value) If(value < cutoff, 0, value))
+        Dim graph As SparseMatrix = _graph.Map(Function(value) If(value < cutoff, 0, value), _parallelism)
 
         ' We're not computing the spectral initialization in this implementation 
         ' until we determine a better eigenvalue/eigenvector computation approach
