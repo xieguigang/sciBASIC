@@ -189,7 +189,7 @@ Namespace ApplicationServices.Terminal
         Public Function Render(markdown As String, Optional indent% = 0) As String
             Dim lines As String() = If(markdown, "").LineTokens
             Dim parser As New BlockParser(theme, globalStyle)
-            Dim spans As List(Of TextSpan)
+            Dim spans As System.Collections.Generic.List(Of TextSpan)
 
             Me.Reset()
             Me.applyGlobal()
@@ -208,7 +208,7 @@ Namespace ApplicationServices.Terminal
 
                 LastError = ex
 
-                spans = New List(Of TextSpan) From {
+                spans = New System.Collections.Generic.List(Of TextSpan) From {
                     New TextSpan With {.text = If(markdown, ""), .style = globalStyle}
                 }
             End Try
@@ -266,7 +266,7 @@ Namespace ApplicationServices.Terminal
         '''   escape sequence, which shrinks the output size a lot.
         ''' + the result is always terminated by the color reset sequence.
         ''' </remarks>
-        Private Function WriteSpans(spans As List(Of TextSpan), indent%) As String
+        Private Function WriteSpans(spans As System.Collections.Generic.List(Of TextSpan), indent%) As String
             Dim ansi As Boolean = EnableAnsi
             ' the System.Text namespace is not imported here, as the Ascii class
             ' of the System.Text conflicts with the Microsoft.VisualBasic.Text.Ascii

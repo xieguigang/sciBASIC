@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "test": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--markdown\""
+    }
+  }
+}
