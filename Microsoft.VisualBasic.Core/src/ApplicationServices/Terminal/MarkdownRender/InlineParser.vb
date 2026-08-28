@@ -216,7 +216,12 @@ Namespace ApplicationServices.Terminal
             ElseIf run = 2 Then
                 emphasis = ConsoleFormat.Combine(style, theme.Bold)
             Else
-                emphasis = ConsoleFormat.Combine(ConsoleFormat.Combine(style, theme.Bold), theme.Italy)
+                ' the ``***both***`` is the bold + italic: the colors are merged
+                ' by an override rule, so that the italic color wins here and the
+                ' ansi bold attribute is turned on explicitly to keep the "***"
+                ' span distinguishable from the plain italic one.
+                emphasis = ConsoleFormat.Combine(ConsoleFormat.Combine(style, theme.Bold), theme.Italy).Clone()
+                emphasis.Bold = True
             End If
 
             Call Flush()

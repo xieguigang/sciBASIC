@@ -55,6 +55,8 @@ Module markdownRenderVerify
     ReadOnly CODE As String = ESC & "[0;33;40m"
     ReadOnly URL As String = ESC & "[0;34;40m"
     ReadOnly STRIKE As String = ESC & "[0;35;40;9m"
+    ' the ***both*** span: the italic color plus the ansi bold attribute
+    ReadOnly BOLD_ITALY As String = ESC & "[0;32;40;1m"
     ReadOnly LINK As String = ESC & "[0;36;40m"
     ReadOnly HEADER As String = ESC & "[0;93;40m"
     ReadOnly CODEBLOCK As String = ESC & "[0;92;40m"
@@ -172,8 +174,10 @@ Module markdownRenderVerify
               Not R("my_var_name is fine").Contains(ITALY))
         Check("underscore at boundary is italic",
               R("_emphasis_ works").Contains(ITALY & "emphasis"))
+        ' the ***both*** must be distinguishable from the plain *italic*
         Check("bold + italic",
-              R("***both***").Contains(BOLD) AndAlso R("***both***").Contains(ITALY))
+              R("***both***").Contains(BOLD_ITALY) AndAlso
+              Not R("***both***").Contains(ITALY & "both"))
 
         Check("strike through",
               R("~~gone~~").Contains(STRIKE & "gone"))
