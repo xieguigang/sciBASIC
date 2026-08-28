@@ -34,6 +34,10 @@ Public Module ABParams
     ''' the same as the python implementation.
     ''' </summary>
     Const nSamples As Integer = 300
+    ''' <summary>
+    ''' the tolerance of the parameter comparison of the fast path
+    ''' </summary>
+    Const tolerance As Double = 0.000000001
 
     ''' <summary>
     ''' the pre-calculated result of the default configuration 
@@ -80,7 +84,12 @@ Public Module ABParams
         ' keep the original hardcoded result for the default configuration
         ' so that the default behaviour is bit-level identical to the 
         ' previous version of this implementation
-        If spread = 1.0 AndAlso minDist = 0.1F Then
+        '
+        ' a tolerance is applied at here: the same logical parameter value 
+        ' should always produce the same result, no matter the value comes 
+        ' from the optional default (a Single 0.1F literal) or from an 
+        ' explicit Double 0.1 literal of the caller.
+        If std.Abs(spread - 1.0) < tolerance AndAlso std.Abs(minDist - 0.1) < tolerance Then
             Return DefaultAB
         End If
 
