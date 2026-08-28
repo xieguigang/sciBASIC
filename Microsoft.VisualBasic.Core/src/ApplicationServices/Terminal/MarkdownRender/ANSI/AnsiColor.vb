@@ -150,7 +150,10 @@ Namespace ApplicationServices.Terminal
         End Function
 
         Public Overrides Function GetHashCode() As Integer
-            Return foregroundCode.GetHashCode()
+            ' the default value of this structure has nothing ForegroundCode/BackgroundCode,
+            ' so that we should handle the nothing reference to avoid the null reference
+            ' exception when this structure is used as the dictionary key or the hashset item.
+            Return If(foregroundCode Is Nothing, 0, foregroundCode.GetHashCode())
         End Function
 
         Public Shared Operator =(left As AnsiColor, right As AnsiColor) As Boolean
@@ -170,6 +173,10 @@ Namespace ApplicationServices.Terminal
                 result = White
                 Return True
             End If
+            If input Is Nothing Then
+                result = Nothing
+                Return False
+            End If
 
             Dim r As Byte
             Dim g As Byte
@@ -186,7 +193,15 @@ Namespace ApplicationServices.Terminal
                 Return True
             End If
 #Else
-            Throw New NotImplementedException
+            ' there is no span based Byte.TryParse overload on the .NET Framework,
+            ' fallback to the string based parser
+            If input.Length = 7 AndAlso input(0) = "#"c AndAlso
+                Byte.TryParse(input.Substring(1, 2), NumberStyles.AllowHexSpecifier, Nothing, r) AndAlso
+                Byte.TryParse(input.Substring(3, 2), NumberStyles.AllowHexSpecifier, Nothing, g) AndAlso
+                Byte.TryParse(input.Substring(5, 2), NumberStyles.AllowHexSpecifier, Nothing, b) Then
+                result = Rgb(r, g, b)
+                Return True
+            End If
 #End If
 
             Dim color As AnsiColor = Nothing
@@ -204,11 +219,43 @@ Namespace ApplicationServices.Terminal
             Return FromConsoleColor(color)
         End Operator
 
+        ''' <summary>
+        ''' Maps a <see cref="ConsoleColor"/> to one of the standard 16 ANSI colors.
+        ''' </summary>
+        ''' <param name="color"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' This mapping is the same as the one used by ``System.Console`` on the 
+        ''' unix platform, the dark variants are mapped to the standard 30-37 codes 
+        ''' and the light variants are mapped to the bright 90-97 codes.
+        ''' 
+        ''' Note that the <see cref="Drawing.Color.FromName(String)"/> should not be 
+        ''' used for this mapping: it only knows about the ``System.Drawing.KnownColor``
+        ''' names, so that colors like ``DarkMagenta``, ``DarkYellow``, ``DarkGray`` are 
+        ''' not known and will be mapped to a fully transparent black color, which makes 
+        ''' the text invisible on the terminal.
+        ''' </remarks>
         Public Shared Function FromConsoleColor(color As ConsoleColor) As AnsiColor
-            Dim rgb As Color = Drawing.Color.FromName(color.ToString)
-            Dim ansi As AnsiColor = AnsiColor.Rgb(rgb.R, rgb.G, rgb.B)
-
-            Return ansi
+            Select Case color
+                Case ConsoleColor.Black : Return Black
+                Case ConsoleColor.DarkRed : Return Red
+                Case ConsoleColor.DarkGreen : Return Green
+                Case ConsoleColor.DarkYellow : Return Yellow
+                Case ConsoleColor.DarkBlue : Return Blue
+                Case ConsoleColor.DarkMagenta : Return Magenta
+                Case ConsoleColor.DarkCyan : Return Cyan
+                Case ConsoleColor.Gray : Return White
+                Case ConsoleColor.DarkGray : Return BrightBlack
+                Case ConsoleColor.Red : Return BrightRed
+                Case ConsoleColor.Green : Return BrightGreen
+                Case ConsoleColor.Yellow : Return BrightYellow
+                Case ConsoleColor.Blue : Return BrightBlue
+                Case ConsoleColor.Magenta : Return BrightMagenta
+                Case ConsoleColor.Cyan : Return BrightCyan
+                Case ConsoleColor.White : Return BrightWhite
+                Case Else
+                    Return White
+            End Select
         End Function
 
         Public Enum Type

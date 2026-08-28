@@ -95,6 +95,11 @@ Namespace ApplicationServices.Terminal
         Private Const Bold As Char = "1"c
         Private Const Underline As Char = "4"c
         Private Const Reverse As String = "7"
+        ''' <summary>
+        ''' SGR 9: the strike-through / crossed-out text style, which is required
+        ''' by the markdown ``~~deleted~~`` span rendering.
+        ''' </summary>
+        Private Const Strikeout As Char = "9"c
         Public ReadOnly ClearLine As String = $"{Escape}[0K"
         Public ReadOnly ClearToEndOfScreen As String = $"{Escape}[0J"
         Public ReadOnly ClearEntireScreen As String = $"{Escape}[2J"
@@ -171,8 +176,12 @@ Namespace ApplicationServices.Terminal
             stringBuilder.Append(EscapeChar)
             stringBuilder.Append("["c)
             If formatting.Inverted Then
-                Const ResetAndReverse As String = ResetForegroundColor & ";" & ResetBackgroundColor & ";" & Reverse
-                stringBuilder.Append(ResetAndReverse)
+                ' swaps the foreground and background, so the explicitly assigned
+                ' foreground/background colors should be dropped and the terminal
+                ' default colors are restored at first.
+                stringBuilder.Append(ResetForegroundColor)
+                stringBuilder.Append(";"c)
+                stringBuilder.Append(ResetBackgroundColor)
             Else
                 stringBuilder.Append(ResetChar)
 
@@ -185,17 +194,30 @@ Namespace ApplicationServices.Terminal
                     stringBuilder.Append(";"c)
                     stringBuilder.Append(formatting.BackgroundCode)
                 End If
-
-                If formatting.Bold Then
-                    stringBuilder.Append(";"c)
-                    stringBuilder.Append(Bold)
-                End If
-
-                If formatting.Underline Then
-                    stringBuilder.Append(";"c)
-                    stringBuilder.Append(Underline)
-                End If
             End If
+
+            ' the text decoration switches are independent from the color codes,
+            ' so that they should always be evaluated, even if the style is inverted.
+            If formatting.Inverted Then
+                stringBuilder.Append(";"c)
+                stringBuilder.Append(Reverse)
+            End If
+
+            If formatting.Bold Then
+                stringBuilder.Append(";"c)
+                stringBuilder.Append(Bold)
+            End If
+
+            If formatting.Underline Then
+                stringBuilder.Append(";"c)
+                stringBuilder.Append(Underline)
+            End If
+
+            If formatting.Strikeout Then
+                stringBuilder.Append(";"c)
+                stringBuilder.Append(Strikeout)
+            End If
+
             stringBuilder.Append("m"c)
         End Sub
     End Module
