@@ -70,11 +70,33 @@ Namespace ApplicationServices.Terminal
     ''' A simple markdown render on console
     ''' </summary>
     ''' <remarks>
-    ''' 主要是渲染下面的一些元素:
+    ''' 主要渲染下面的一些元素:
     ''' 
     ''' + code: 红色
     ''' + url: 蓝色
     ''' + blockquote: 灰色背景色
+    ''' 
+    ''' The document is rendered by a two stage pipeline: the <see cref="BlockParser"/>
+    ''' splits the document into the block elements, and then the 
+    ''' <see cref="InlineParser"/> splits each block into the styled text spans.
+    ''' 
+    ''' Supported block elements:
+    ''' 
+    ''' + the ``#`` atx header
+    ''' + the ``` ``` ``` fenced code block
+    ''' + the pipe table
+    ''' + the ``&gt;`` block quote
+    ''' + the ``-``/``+``/``*``/``1.`` list item
+    ''' + the ``---`` horizontal rule
+    ''' 
+    ''' Supported inline elements:
+    ''' 
+    ''' + the ``\`` backslash escape
+    ''' + the ``` `code` ``` inline code span
+    ''' + the ``**bold**`` and the ``*italic*``
+    ''' + the ``~~deleted~~`` strike through
+    ''' + the ``[text](url)`` link and the ``![alt](url)`` image
+    ''' + the bare url text
     ''' </remarks>
     Public Class MarkdownRender
 
@@ -93,11 +115,8 @@ Namespace ApplicationServices.Terminal
             .HorizontalRule = (ConsoleColor.DarkGray, ConsoleColor.Black)
         }
 
-        Dim theme As MarkdownTheme
-        Dim markdown As CharPtr
-        Dim indent As Integer
-
-        Dim initialGlobal As ConsoleFormat
+        ReadOnly theme As MarkdownTheme
+        ReadOnly initialGlobal As ConsoleFormat
 
         Sub New(theme As MarkdownTheme, Optional defaultBack As ConsoleColor? = Nothing, Optional defaultFore As ConsoleColor? = Nothing)
             Me.theme = theme
@@ -160,7 +179,6 @@ Namespace ApplicationServices.Terminal
             Dim parser As New BlockParser(theme, globalStyle)
             Dim spans As List(Of TextSpan)
 
-            Me.indent = indent
             Me.Reset()
             Me.applyGlobal()
 

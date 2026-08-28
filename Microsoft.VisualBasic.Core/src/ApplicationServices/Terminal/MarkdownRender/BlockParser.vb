@@ -355,8 +355,8 @@ Namespace ApplicationServices.Terminal
         ''' <param name="line"></param>
         ''' <param name="marker">the stripped marker text</param>
         ''' <returns>
-        ''' the content of the list item, or <see cref="Nothing"/> if the given
-        ''' line is not a list item at all.
+        ''' the content of the list item, or a null reference if the given line is
+        ''' not a list item at all.
         ''' </returns>
         Private Shared Function StripListItem(line As String, ByRef marker As String) As String
             Dim lead As Integer = IndentOf(line)
