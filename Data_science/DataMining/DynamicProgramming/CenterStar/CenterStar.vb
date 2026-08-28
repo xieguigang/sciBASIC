@@ -621,14 +621,14 @@ Public Class CenterStar
         Dim n As Integer = multipleAlign.Length
         Dim len As Integer = multipleAlign(Scan0).Length
 
-        Debug.Assert(len = expectedLen, $"alignment length {len} is not the expected {expectedLen}")
+        System.Diagnostics.Debug.Assert(len = expectedLen, $"alignment length {len} is not the expected {expectedLen}")
 
         For i As Integer = 0 To n - 1
-            Debug.Assert(multipleAlign(i).Length = len, $"row #{i} length {multipleAlign(i).Length} is not {len}")
+            System.Diagnostics.Debug.Assert(multipleAlign(i).Length = len, $"row #{i} length {multipleAlign(i).Length} is not {len}")
 
             Dim raw As String = New String(multipleAlign(i).Where(Function(c) c <> GapChar).ToArray)
 
-            Debug.Assert(raw = sequence(i), $"row #{i} '{names(i)}' does not restore its input sequence")
+            System.Diagnostics.Debug.Assert(raw = sequence(i), $"row #{i} '{names(i)}' does not restore its input sequence")
         Next
     End Sub
 
