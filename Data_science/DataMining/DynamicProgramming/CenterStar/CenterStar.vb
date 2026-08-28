@@ -475,6 +475,7 @@ Public Class CenterStar
         Dim k As Integer = Me.kband.K
         Dim bar As ProgressBar = TqdmWrapper.Wrap(n, printsPerSecond:=4)
         Dim ticks As Integer() = New Integer() {0}
+        Dim reportStep As Integer = std.Max(1, n \ 100)
 
         ' KBandSearch 持有共享的输出缓冲区，不是线程安全的，
         ' 每个并行分支必须使用各自的实例
@@ -489,7 +490,7 @@ Public Class CenterStar
 
                 gaps(i) = ExtractCenterGaps(kband.globalAlign(0), kband.globalAlign(1), clen, dist)
 
-                Call Tick(bar, ticks, n, names(i))
+                Call Tick(bar, ticks, n, reportStep)
             End Sub)
 
         Call bar.Finish()
@@ -635,11 +636,15 @@ Public Class CenterStar
     ''' <summary>
     ''' 在并行循环中安全地推进进度条
     ''' </summary>
-    Private Shared Sub Tick(bar As ProgressBar, counter As Integer(), total As Integer, label As String)
+    ''' <param name="step">进度条的刷新步长，并行循环下每次完成都刷新会产生大量无意义的重绘</param>
+    Private Shared Sub Tick(bar As ProgressBar, counter As Integer(), total As Integer, Optional step As Integer = 1)
         Dim done As Integer = Interlocked.Increment(counter(Scan0))
 
+        If done Mod step <> 0 AndAlso done <> total Then
+            Return
+        End If
+
         SyncLock bar
-            Call bar.SetLabel(label)
             Call bar.Progress(done, total)
         End SyncLock
     End Sub

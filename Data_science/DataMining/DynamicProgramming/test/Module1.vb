@@ -191,10 +191,47 @@ Module Module1
         End If
     End Sub
 
+    Sub benchmark()
+        Call Console.WriteLine("== CenterStar performance ==")
+
+        Dim score As New SimpleScore()
+        Dim rnd As New Random(99991)
+
+        For Each spec As Integer() In New Integer()() {
+            New Integer() {100, 300},
+            New Integer() {200, 500},
+            New Integer() {400, 1000}
+        }
+            Dim n As Integer = spec(0)
+            Dim l As Integer = spec(1)
+            Dim ancestor As String = RandomSeq(rnd, l)
+            Dim seqs As String() = New String(n - 1) {}
+
+            For i As Integer = 0 To n - 1
+                seqs(i) = Mutate(rnd, ancestor)
+            Next
+
+            Dim align As String() = Nothing
+            Dim edits As Integer() = Nothing
+            Dim watch As Diagnostics.Stopwatch = Diagnostics.Stopwatch.StartNew()
+            Dim cost As Double = New CenterStar(seqs, kband:=32).Compute(score, align, edits)
+
+            watch.Stop()
+
+            Dim err As String = CheckAlignment(seqs, align)
+            Dim ok As String = If(err Is Nothing, "ok", err)
+
+            Call Console.WriteLine($"  n={n}, len~{l}: {watch.ElapsedMilliseconds} ms, columns={align(0).Length}, SP={cost}, {ok}")
+        Next
+
+        Call Console.WriteLine()
+    End Sub
+
     Sub Main()
         Call scoreTest()
         Call kbandTest()
         Call centerStarTest()
+        Call benchmark()
 
         Call Console.WriteLine()
         Call Console.WriteLine(If(failures = 0, "ALL TESTS PASSED", $"{failures} TEST(S) FAILED"))
@@ -209,8 +246,10 @@ Module Module1
         Call Console.WriteLine("== KBandSearch vs. full DP ==")
 
         Dim rnd As New Random(20260829)
-        Dim distMismatch As Integer = 0
         Dim score As New SimpleScore()
+        Dim exactMismatch As Integer = 0
+        Dim boundViolation As Integer = 0
+        Dim restoreMismatch As Integer = 0
 
         For t As Integer = 1 To 300
             Dim a As String = RandomSeq(rnd, rnd.Next(0, 120))
@@ -221,35 +260,45 @@ Module Module1
             End If
 
             Dim expected As Integer = EditDistance(a, b)
+            Dim buf As String() = New String(2) {}
+            Dim machine As New KBandSearch(globalAlign:=buf, 1000)
+            Dim full As Integer = machine.CalculateEditDistance(a, b)
 
-            For Each k As Integer In New Integer() {1, 2, 8, 32, 1000}
-                Dim buf As String() = New String(2) {}
-                Dim machine As New KBandSearch(globalAlign:=buf, k)
-                Dim actual As Integer = machine.CalculateEditDistance(a, b)
+            ' K 不小于序列长度时退化为不带带宽限制的完整 DP，必须与参考实现一致
+            If full <> expected Then
+                exactMismatch += 1
+                Call Console.WriteLine($"  [FAIL] full DP: {full} <> {expected}")
+            End If
 
-                If actual <> expected Then
-                    distMismatch += 1
-                    Call Console.WriteLine($"  [FAIL] k={k}: {actual} <> {expected}")
-                End If
+            ' K 偏小时 k-band 只是启发式，其结果是真实编辑距离的一个上界
+            For Each k As Integer In New Integer() {1, 2, 8, 32}
+                Dim banded As Integer = New KBandSearch(globalAlign:=New String(2) {}, k).CalculateEditDistance(a, b)
 
-                ' globalAlign 是 Friend 成员，这里借助 CenterStar 的两序列比对
-                ' 间接校验回溯结果能够还原输入
-                Dim pair As String() = {a, b}
-                Dim aligned As String() = Nothing
-                Dim edits As Integer() = Nothing
-
-                Call New CenterStar(pair, kband:=k).Compute(score, aligned, edits)
-
-                Dim err As String = CheckAlignment(pair, aligned)
-
-                If err IsNot Nothing Then
-                    distMismatch += 1
-                    Call Console.WriteLine($"  [FAIL] k={k}: {err}")
+                If banded < expected Then
+                    boundViolation += 1
+                    Call Console.WriteLine($"  [FAIL] k={k}: {banded} < {expected}")
                 End If
             Next
+
+            ' globalAlign 是 Friend 成员，这里借助 CenterStar 的两序列比对
+            ' 间接校验回溯结果能够还原输入
+            Dim pair As String() = {a, b}
+            Dim aligned As String() = Nothing
+            Dim edits As Integer() = Nothing
+
+            Call New CenterStar(pair, kband:=32).Compute(score, aligned, edits)
+
+            Dim err As String = CheckAlignment(pair, aligned)
+
+            If err IsNot Nothing Then
+                restoreMismatch += 1
+                Call Console.WriteLine($"  [FAIL] traceback: {err}")
+            End If
         Next
 
-        Call Check(distMismatch = 0, $"edit distance matches the full DP and the traceback restores the inputs ({distMismatch} mismatches)")
+        Call Check(exactMismatch = 0, $"full DP mode matches the reference ({exactMismatch} mismatches)")
+        Call Check(boundViolation = 0, $"k-band result is an upper bound of the edit distance ({boundViolation} violations)")
+        Call Check(restoreMismatch = 0, $"traceback restores the inputs ({restoreMismatch} mismatches)")
         Call Console.WriteLine()
     End Sub
 
