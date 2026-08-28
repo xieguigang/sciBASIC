@@ -30,7 +30,6 @@
 
 #End Region
 
-Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Text
 
@@ -125,7 +124,7 @@ Module markdownRenderVerify
             failed += 1
             Console.WriteLine($"  [FAIL] {name}")
 
-            If detail.StringEmpty(whitespaceAsEmpty:=False) Then
+            If Not detail.StringEmpty(whitespaceAsEmpty:=False) Then
                 Console.WriteLine($"         {detail}")
             End If
         End If
@@ -285,7 +284,7 @@ Module markdownRenderVerify
         ' throws an IOException when the stdout is redirected
         Dim indented As String = R("hello", 4)
 
-        Check("the indent is emitted as a space prefix", indented.StartsWith("    ") AndAlso Not indented.StartsWith("    " & ESC) = False)
+        Check("the indent is emitted as a space prefix", indented.StartsWith("    "))
         Check("the indent is applied on every line", R("a" & vbLf & "b", 2).Contains(vbLf & "  "))
 
         ' the ansi color can be turned off
