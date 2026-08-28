@@ -86,7 +86,11 @@ Namespace ApplicationServices.Terminal
             .Url = (ConsoleColor.Blue, ConsoleColor.Black),
             .Bold = (ConsoleColor.Black, ConsoleColor.Yellow),
             .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray),
-            .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow)
+            .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow),
+            .StrikeThrough = New ConsoleFormat(ConsoleColor.DarkGray, ConsoleColor.Black) With {.Strikeout = True},
+            .LinkText = New ConsoleFormat(ConsoleColor.Cyan, ConsoleColor.Black) With {.Underline = True},
+            .ListMarker = (ConsoleColor.Green, ConsoleColor.Black),
+            .HorizontalRule = (ConsoleColor.DarkGray, ConsoleColor.Black)
         }
 
         Dim theme As MarkdownTheme
@@ -152,120 +156,65 @@ Namespace ApplicationServices.Terminal
         ''' that the rendered result can be verified by the unit test code.
         ''' </remarks>
         Public Function Render(markdown As String, Optional indent% = 0) As String
-            Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
+            Dim lines As String() = If(markdown, "").LineTokens
+            Dim parser As New BlockParser(theme, globalStyle)
+            Dim spans As List(Of TextSpan)
+
             Me.indent = indent
             Me.Reset()
             Me.applyGlobal()
 
-            Dim spans As List(Of TextSpan) = Me.BuildSpans()
+            Try
+                spans = parser.Parse(lines)
+            Catch ex As Exception
+                ' a broken markdown document must never leave the terminal in an
+                ' uncontrolled color state, so that it falls back to the plain
+                ' text rendering here.
+                Call Reset()
+                Call applyGlobal()
+
+                spans = New List(Of TextSpan) From {
+                    New TextSpan With {.text = If(markdown, ""), .style = globalStyle}
+                }
+            End Try
 
             Return WriteSpans(spans, indent)
         End Function
 
         ''' <summary>
-        ''' walk through the markdown text and then pull all of the text spans
+        ''' the style stack of the opened style spans
         ''' </summary>
-        ''' <returns></returns>
-        Private Function BuildSpans() As List(Of TextSpan)
-            spans *= 0
-
-            Do While Not markdown.EndRead
-                Call WalkChar(++markdown)
-            Loop
-
-            If textBuf > 0 Then
-                Call EndSpan(False)
-            End If
-
-            If tableSpan Then
-                ' the table is not closed by a blank line or a new block, which
-                ' means it is the last block of the document, flush it or the
-                ' table will be dropped silently.
-                tableSpan = False
-
-                Call buildTableSimple()
-            End If
-
-            Return spans
-        End Function
-
-        Dim boldSpan As Boolean = False
-        Dim inlineCodespan As Boolean = False
-        Dim blockquote As Boolean = False
-        Dim italySpan As Boolean = False
-        Dim headerSpan As Boolean = False
-        Dim lastNewLine As Boolean = True
-        Dim controlBuf As New List(Of Char)
-        Dim textBuf As New List(Of Char)
-        Dim tableSpan As Boolean = False
-
+        ''' <remarks>
+        ''' This stack is only maintained for the <see cref="ConsoleFormat.PushStyle"/>
+        ''' public API, the block/inline parsers of this module are stateless and do
+        ''' not depend on it anymore, so that it can never grow up out of control.
+        ''' </remarks>
         Friend styleStack As New Stack(Of ConsoleFormat)
         Friend currentStyle As ConsoleFormat
 
-        Dim spans As New List(Of TextSpan)
-
+        ''' <summary>
+        ''' resets the render state
+        ''' </summary>
         Public Sub Reset()
-            blockquote = False
-            boldSpan = False
-            inlineCodespan = False
-            lastNewLine = True
-            italySpan = False
-            headerSpan = False
-            controlBuf *= 0
-            textBuf *= 0
             styleStack.Clear()
-            spans *= 0
+            currentStyle = Nothing
         End Sub
 
         ''' <summary>
-        ''' <see cref="controlBuf"/> is in given string pattern?
+        ''' the base style of the whole document
         ''' </summary>
-        ''' <param name="term"></param>
         ''' <returns></returns>
-        Private Function bufferIs(term As String) As Boolean
-            If controlBuf <> term.Length Then
-                Return False
-            Else
-                Return controlBuf.SequenceEqual(term)
-            End If
-        End Function
+        Private ReadOnly Property globalStyle As ConsoleFormat
+            Get
+                Return If(theme.Global, initialGlobal)
+            End Get
+        End Property
 
         ''' <summary>
-        ''' All of the character value in <see cref="controlBuf"/> is equals to given character <paramref name="c"/>
+        ''' assign the <see cref="globalStyle"/> as the current style.
         ''' </summary>
-        ''' <param name="c"></param>
-        ''' <returns></returns>
-        Private Function bufferAllIs(c As Char) As Boolean
-            If controlBuf = 0 Then
-                Return False
-            Else
-                Return controlBuf.All(Function(b) b = c)
-            End If
-        End Function
-
-        ''' <summary>
-        ''' close the innermost opened style span and then fallback to its parent style
-        ''' </summary>
-        Private Sub restoreStyle()
-            If styleStack.Count > 0 Then
-                Call styleStack.Pop()
-            End If
-
-            If styleStack.Count = 0 Then
-                Call applyGlobal()
-            Else
-                ' only re-apply the parent style here, it must not be pushed again
-                ' or the style stack will grow up on every restore call.
-                Call styleStack.Peek.Apply(Me)
-            End If
-        End Sub
-
         Private Sub applyGlobal()
-            If theme.Global Is Nothing Then
-                Call initialGlobal.PushStyle(Me)
-            Else
-                Call theme.Global.PushStyle(Me)
-            End If
+            Call globalStyle.Apply(Me)
         End Sub
 
         ''' <summary>
@@ -345,183 +294,9 @@ Namespace ApplicationServices.Terminal
             Return sb.ToString()
         End Function
 
-        ''' <summary>
-        ''' create new <see cref="TextSpan"/> and then clear the <see cref="textBuf"/> 
-        ''' for pull next text span object.
-        ''' </summary>
-        ''' <param name="byNewLine"></param>
-        Private Sub EndSpan(byNewLine As Boolean)
-            Dim text As String = textBuf.CharString
-            Dim style As ConsoleFormat = currentStyle.Clone
 
-            If text.StartsWith("((http(s)?)|(ftp))[:]//", RegexICSng) Then
-                style = theme.Url
-            End If
 
-            If styleStack.Count > 0 AndAlso styleStack.Peek.Equals(theme.CodeBlock) Then
-                style.Background = theme.CodeBlock.Background
-            End If
 
-            If text.Length > 0 Then
-                spans += New TextSpan With {
-                    .style = style,
-                    .text = text,
-                    .IsEndByNewLine = byNewLine
-                }
-                textBuf *= 0
-            End If
-        End Sub
-
-        Dim tableBuf As New List(Of String)
-
-        Private Sub buildTableSimple()
-            If tableBuf.Count = 0 Then
-                spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = ""})
-            End If
-
-            Dim header As String() = tableBuf(0).Split("|"c)
-            Dim rows As String()() = tableBuf.Skip(2) _
-                .Where(Function(r) Not Strings.Trim(r).StringEmpty) _
-                .Select(Function(l) l.Split("|"c)) _
-                .ToArray
-            Dim tbl As New ConsoleTableBaseData(header, rows)
-            Dim println As String = ConsoleTableBuilder.From(tbl) _
-                .WithFormat(theme.Table) _
-                .Export _
-                .ToString
-
-            For Each line As String In println.LineTokens
-                Call spans.Add(New TextSpan With {.text = line & vbCrLf, .IsEndByNewLine = True})
-            Next
-
-            spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = vbLf})
-        End Sub
-
-        Private Sub WalkChar(c As Char)
-            If tableSpan Then
-                Select Case c
-                    Case ASCII.LF
-                        lastNewLine = True
-                        tableBuf.Add(New String(textBuf.PopAll))
-
-                        If tableBuf.Last.StringEmpty Then
-                            ' break the table context by empty line
-                            tableSpan = False
-                            buildTableSimple()
-                        End If
-
-                        Return
-                    Case ""
-                        ' is a empty line
-                        ' end of table context
-                        tableSpan = False
-                        tableBuf.Add(New String(textBuf.PopAll))
-                        buildTableSimple()
-                    Case ">"c, "`"c, "#"c
-                        ' end of table context
-                        tableSpan = False
-                        tableBuf.Add(New String(textBuf.PopAll))
-                        buildTableSimple()
-                    Case Else
-                        textBuf += c
-                        Return
-                End Select
-            End If
-
-            Select Case c
-                Case "`"c
-                    controlBuf += c
-                    lastNewLine = False
-                Case "*"c
-                    controlBuf += c
-                    lastNewLine = False
-                Case ASCII.LF
-                    lastNewLine = True
-                    blockquote = False
-                    headerSpan = False
-                    textBuf += ASCII.LF
-                    EndSpan(True)
-                    restoreStyle()
-                Case "|"c
-                    If lastNewLine AndAlso controlBuf = 0 Then
-                        ' is probably a markdown table
-                        tableSpan = True
-                    End If
-
-                    textBuf += c
-                    lastNewLine = False
-                Case ">"c
-                    If lastNewLine AndAlso controlBuf = 0 Then
-                        controlBuf += c
-                    ElseIf lastNewLine AndAlso bufferIs(">") Then
-                        ' 空白的blockquote行
-                    Else
-                        textBuf += c
-                    End If
-                    lastNewLine = False
-                Case " "c
-                    lastNewLine = False
-
-                    If controlBuf = 1 AndAlso controlBuf(Scan0) = ">"c Then
-                        blockquote = True
-                        controlBuf *= 0
-                        theme.BlockQuote.SetConfig(Me)
-                        textBuf += " "c
-                        textBuf += " "c
-                    ElseIf headerSpan AndAlso bufferAllIs("#"c) Then
-                        theme.HeaderSpan.SetConfig(Me)
-                        controlBuf *= 0
-                    Else
-                        EndSpan(False)
-                        textBuf += c
-                        EndSpan(False)
-                    End If
-                Case "#"c
-                    If lastNewLine AndAlso (controlBuf = 0 OrElse controlBuf.All(Function(x) x = "#"c)) Then
-                        controlBuf += c
-                        headerSpan = True
-                    ElseIf headerSpan AndAlso textBuf = 0 Then
-                        controlBuf += c
-                    Else
-                        textBuf += c
-                    End If
-
-                    lastNewLine = False
-                Case Else
-                    lastNewLine = False
-
-                    If bufferIs("``") Then
-                        If inlineCodespan Then
-                            ' 结束栈
-                            EndSpan(False)
-                            inlineCodespan = False
-                            restoreStyle()
-                        Else
-                            EndSpan(False)
-                            inlineCodespan = True
-                            theme.InlineCodeSpan.SetConfig(Me)
-                        End If
-
-                        controlBuf *= 0
-                        textBuf += c
-                    ElseIf bufferIs("**") Then
-                        If boldSpan Then
-                            EndSpan(False)
-                            boldSpan = False
-                            restoreStyle()
-                        Else
-                            EndSpan(False)
-                            boldSpan = True
-                            theme.Bold.SetConfig(Me)
-                        End If
-
-                        controlBuf *= 0
-                        textBuf += c
-                    Else
-                        textBuf += c
-                    End If
-            End Select
-        End Sub
 
         ''' <summary>
         ''' do console writeline with styles
