@@ -407,8 +407,8 @@ Public Class tSNE : Inherits IDataEmbedding
         ' 这两个量在整个循环内为常量，提到循环外以避免 N*dim 次的字段读取与分支判断
         Dim momval = If(mIter < 250, 0.5, 0.8)
         Dim eps = mEpsilon
-        Dim blockSize = BlockSize(N, mThreads)
-        Dim nBlocks = BlockCount(N, blockSize)
+        Dim blockSize As Integer = TaskBlockSize(N, mThreads)
+        Dim nBlocks As Integer = TaskBlockCount(N, blockSize)
         Dim ymeanParts = New Double(nBlocks - 1)() {}
 
         ' perform gradient step
@@ -452,7 +452,7 @@ Public Class tSNE : Inherits IDataEmbedding
                 ymeanParts(b) = localMean
             End Sub)
 
-        Dim ymean = SumColumns(ymeanParts, [dim])
+        Dim ymean = SumColumnParts(ymeanParts, [dim])
 
         ' reproject Y to be zero mean，同时把一维镜像回写到权威的锯齿数组
         System.Threading.Tasks.Parallel.For(0, nBlocks, opts,

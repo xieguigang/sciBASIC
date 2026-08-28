@@ -73,8 +73,10 @@ Friend Module BarnesHutGradient
         Dim theta As Double = tSNE.theta
         ' trick that helps with local optima，仅作用于梯度，不进入成本项
         Dim pmul As Double = If(tSNE.mIter < 100, 4, 1)
-        Dim Z As Double = 0
-        Dim cost As Double = 0
+        Dim blockSize As Integer = BlockSize(N, tSNE.mThreads)
+        Dim nBlocks As Integer = BlockCount(N, blockSize)
+        Dim zParts = New Double(nBlocks - 1) {}
+        Dim costParts = New Double(nBlocks - 1) {}
 
         Call System.Array.Clear(negF, 0, negF.Length)
         Call System.Array.Clear(posF, 0, posF.Length)
@@ -83,14 +85,21 @@ Friend Module BarnesHutGradient
         Dim tree As New SPTree([dim], Y, N)
 
         ' ---------- pass 1：远场斥力 + 配分函数 Z ----------
-        System.Threading.Tasks.Parallel.For(Of Double)(
-            0, N, opts,
-            Function() 0.0,
-            Function(i, loopState, acc) As Double
-                Call tree.ComputeNonEdgeForces(i, theta, negF, acc)
-                Return acc
-            End Function,
-            Sub(acc) System.Threading.Interlocked.Add(Z, acc))
+        ' 每个点只写自己的 negF 行，无写冲突；Z 每个任务块一份局部累加器
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim acc As Double = 0
+
+                For i As Integer = from To upto - 1
+                    Call tree.ComputeNonEdgeForces(i, theta, negF, acc)
+                Next
+
+                zParts(b) = acc
+            End Sub)
+
+        Dim Z As Double = Sum(zParts)
 
         If Z <= 0 OrElse Double.IsNaN(Z) Then
             Z = 1
@@ -99,52 +108,61 @@ Friend Module BarnesHutGradient
         Dim invZ As Double = 1.0 / Z
 
         ' ---------- pass 2：近场引力 + KL 成本 ----------
-        ' CSR 之下第 i 行的条目连续，按行分派即天然无写冲突
-        System.Threading.Tasks.Parallel.For(Of Double)(
-            0, N, opts,
-            Function() 0.0,
-            Function(i, loopState, acc) As Double
-                Dim iOffset As Integer = i * [dim]
-                Dim ends As Integer = P.rowPtr(i + 1)
+        ' CSR 之下第 i 行的条目连续，按行分块即天然无写冲突
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
+                Dim acc As Double = 0
 
-                For t As Integer = P.rowPtr(i) To ends - 1
-                    Dim j As Integer = P.colP(t)
-                    Dim jOffset As Integer = j * [dim]
-                    Dim D As Double = 0
+                For i As Integer = from To upto - 1
+                    Dim iOffset As Integer = i * [dim]
+                    Dim ends As Integer = P.rowPtr(i + 1)
 
-                    For d As Integer = 0 To [dim] - 1
-                        Dim tmp As Double = Y(iOffset + d) - Y(jOffset + d)
-                        D += tmp * tmp
+                    For t As Integer = P.rowPtr(i) To ends - 1
+                        Dim j As Integer = P.colP(t)
+                        Dim jOffset As Integer = j * [dim]
+                        ' 注意：不要命名为 D，VB 大小写不敏感会与循环变量 d 冲突
+                        Dim d2sum As Double = 0
+
+                        For d As Integer = 0 To [dim] - 1
+                            Dim tmp As Double = Y(iOffset + d) - Y(jOffset + d)
+                            d2sum += tmp * tmp
+                        Next
+
+                        Dim qu As Double = 1.0 / (1.0 + d2sum)
+                        Dim v As Double = P.valP(t)
+                        Dim mult As Double = v * pmul * qu
+
+                        For d As Integer = 0 To [dim] - 1
+                            posF(iOffset + d) += mult * (Y(iOffset + d) - Y(jOffset + d))
+                        Next
+
+                        ' q_ij = qu_ij / Z，夹一个下界避免 log(0)
+                        acc += -v * std.Log(std.Max(qu * invZ, 1.0E-100))
                     Next
-
-                    Dim qu As Double = 1.0 / (1.0 + D)
-                    Dim v As Double = P.valP(t)
-                    Dim mult As Double = v * pmul * qu
-
-                    For d As Integer = 0 To [dim] - 1
-                        posF(iOffset + d) += mult * (Y(iOffset + d) - Y(jOffset + d))
-                    Next
-
-                    ' q_ij = qu_ij / Z，夹一个下界避免 log(0)
-                    acc += -v * std.Log(std.Max(qu * invZ, 1.0E-100))
                 Next
 
-                Return acc
-            End Function,
-            Sub(acc) System.Threading.Interlocked.Add(cost, acc))
+                costParts(b) = acc
+            End Sub)
 
         ' ---------- pass 3：合成最终梯度 ----------
-        Dim k As Double = 4 * invZ
+        Dim scale As Double = 4 * invZ
 
-        System.Threading.Tasks.Parallel.For(0, N, opts,
-            Sub(i)
-                Dim offset As Integer = i * [dim]
+        System.Threading.Tasks.Parallel.For(0, nBlocks, opts,
+            Sub(b)
+                Dim from As Integer = b * blockSize
+                Dim upto As Integer = std.Min(from + blockSize, N)
 
-                For d As Integer = 0 To [dim] - 1
-                    grad(offset + d) = 4 * posF(offset + d) - k * negF(offset + d)
+                For i As Integer = from To upto - 1
+                    Dim offset As Integer = i * [dim]
+
+                    For d As Integer = 0 To [dim] - 1
+                        grad(offset + d) = 4 * posF(offset + d) - scale * negF(offset + d)
+                    Next
                 Next
             End Sub)
 
-        tSNE.mCost = cost
+        tSNE.mCost = Sum(costParts)
     End Sub
 End Module

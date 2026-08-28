@@ -81,7 +81,11 @@ Module Helper
     ''' 一是省掉了每个元素一次的委托调用与原子操作开销，
     ''' 二是分块数量远多于线程数，TPL 的动态调度可以自动填平三角循环带来的负载不均。
     ''' </remarks>
-    Friend Function BlockSize(total As Integer, nthreads As Integer, Optional minItems As Integer = 512) As Integer
+    ''' <remarks>
+    ''' 命名为 TaskBlockSize 而不是 BlockSize，是为了避免与调用方常见的
+    ''' 局部变量名 blockSize 相冲突（VB 是大小写不敏感的）。
+    ''' </remarks>
+    Friend Function TaskBlockSize(total As Integer, nthreads As Integer, Optional minItems As Integer = 512) As Integer
         If total <= 0 Then
             Return 1
         End If
@@ -98,14 +102,14 @@ Module Helper
     ''' <param name="total"></param>
     ''' <param name="blockSize"></param>
     ''' <returns></returns>
-    Friend Function BlockCount(total As Integer, blockSize As Integer) As Integer
+    Friend Function TaskBlockCount(total As Integer, blockSize As Integer) As Integer
         Return (total + blockSize - 1) \ blockSize
     End Function
 
     ''' <summary>
     ''' 串行合并各个任务块的局部累加值
     ''' </summary>
-    Friend Function Sum(parts As Double()) As Double
+    Friend Function SumParts(parts As Double()) As Double
         Dim acc As Double = 0
 
         For Each part As Double In parts
@@ -125,7 +129,7 @@ Module Helper
     ''' 放在独立的函数里而不是就地展开，是为了避免 VB 大小写不敏感导致的
     ''' 循环变量与外层局部变量（例如 d 与 D）重名的编译错误。
     ''' </remarks>
-    Friend Function SumColumns(parts As Double()(), [dim] As Integer) As Double()
+    Friend Function SumColumnParts(parts As Double()(), [dim] As Integer) As Double()
         Dim acc = New Double([dim] - 1) {}
 
         For Each part As Double() In parts

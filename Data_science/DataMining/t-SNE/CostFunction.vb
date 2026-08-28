@@ -114,8 +114,8 @@ Friend Class CostFunction
         ' 注意：不要命名为 Qu，VB 大小写不敏感会与循环内的局部变量 qu 冲突
         Dim lQuBuf = lQu
         Dim grad = tSNE.mGrad
-        Dim blockSize = BlockSize(N, tSNE.mThreads)
-        Dim nBlocks = BlockCount(N, blockSize)
+        Dim blockSize As Integer = TaskBlockSize(N, tSNE.mThreads)
+        Dim nBlocks As Integer = TaskBlockCount(N, blockSize)
         Dim qsumParts = New Double(nBlocks - 1) {}
         Dim costParts = New Double(nBlocks - 1) {}
 
@@ -155,7 +155,7 @@ Friend Class CostFunction
                 qsumParts(b) = acc
             End Sub)
 
-        Dim qsum = Sum(qsumParts)
+        Dim qsum = SumParts(qsumParts)
 
         If qsum <= 0 OrElse Double.IsNaN(qsum) Then
             qsum = 1
@@ -202,7 +202,7 @@ Friend Class CostFunction
                 costParts(b) = acc
             End Sub)
 
-        tSNE.mCost = Sum(costParts)
+        tSNE.mCost = SumParts(costParts)
     End Sub
 
     ''' <summary>
