@@ -73,7 +73,9 @@ Module Helper
     ''' </summary>
     ''' <param name="total">任务总量</param>
     ''' <param name="nthreads">并行线程数</param>
-    ''' <param name="minItems">单个任务块的最少元素数量，用于避免把任务切得过碎</param>
+    ''' <param name="minItems">
+    ''' 单个任务块的元素数量下界，用于避免把任务切得过碎导致调度开销反超收益
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 归约（qsum / cost / Z / ymean）采用「连续分块 + 每块一个局部累加器 + 串行合并」
@@ -84,15 +86,19 @@ Module Helper
     ''' 命名为 TaskBlockSize 而不是 BlockSize，是为了避免与调用方常见的
     ''' 局部变量名 blockSize 相冲突（VB 是大小写不敏感的）。
     ''' </remarks>
-    Friend Function TaskBlockSize(total As Integer, nthreads As Integer, Optional minItems As Integer = 512) As Integer
+    Friend Function TaskBlockSize(total As Integer, nthreads As Integer, Optional minItems As Integer = 16) As Integer
         If total <= 0 Then
             Return 1
         End If
 
-        Dim blocks As Integer = If(nthreads > 0, nthreads, 8) * 4
+        ' 刻意让任务块的数量远多于线程数：
+        ' 一方面 TPL 的动态调度可以自动填平三角循环（第 i 行的工作量随 i 增大而减小）
+        ' 带来的负载不均，另一方面即使线程数增加也不会退化成只有一个任务块。
+        Dim blocks As Integer = std.Max(1, If(nthreads > 0, nthreads, 8)) * 16
         Dim size As Integer = CInt(std.Ceiling(total / CDbl(blocks)))
 
-        Return std.Max(std.Min(minItems, total), size)
+        ' 下界保证任务不被切得过碎，上界保证块的尺寸不超过任务总量
+        Return std.Min(std.Max(size, minItems), total)
     End Function
 
     ''' <summary>
