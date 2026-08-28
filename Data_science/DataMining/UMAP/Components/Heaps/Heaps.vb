@@ -301,50 +301,111 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heap) As KNNState
+    ''' <param name="parallelism">
+    ''' the parallelism configuration. Each row of the heap is sorted 
+    ''' independently, so this procedure could be done in parallel without 
+    ''' any lock.
+    ''' </param>
+    Public Function DeHeapSort(heap As Heap, Optional parallelism As ParallelConfig = Nothing) As KNNState
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
-        Dim indicesGroup As IEnumerable(Of Integer)
+        Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+        Dim degree As Integer = config.EffectiveDegree(indices.Length)
 
-        If App.EnableTqdm Then
-            indicesGroup = Tqdm.Range(0, indices.Length)
+        Call VBDebugger.EchoLine($"DeHeapSort... [parallel: {degree}]")
+
+        If degree > 1 Then
+            Call VBDebugger.EchoLine("DeHeapSort in parallel...")
+
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=indices.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i) SortHeapRow(indices(i), weights(i)))
         Else
-            indicesGroup = Enumerable.Range(0, indices.Length)
+            Dim indicesGroup As IEnumerable(Of Integer)
+
+            If App.EnableTqdm Then
+                indicesGroup = Tqdm.Range(0, indices.Length)
+            Else
+                indicesGroup = Enumerable.Range(0, indices.Length)
+            End If
+
+            For Each i As Integer In indicesGroup
+                Call SortHeapRow(indices(i), weights(i))
+            Next
         End If
 
-        Call VBDebugger.EchoLine("DeHeapSort...")
-
-        For Each i As Integer In indicesGroup
-            Dim indHeap = indices(i)
-            Dim distHeap = weights(i)
-
-            For j As Integer = 0 To indHeap.Length - 1 - 1
-                Dim indHeapIndex = indHeap.Length - j - 1
-                Dim distHeapIndex = distHeap.Length - j - 1
-
-                Dim temp1 = indHeap(0)
-                indHeap(0) = indHeap(indHeapIndex)
-                indHeap(indHeapIndex) = temp1
-
-                Dim temp2 = distHeap(0)
-                distHeap(0) = distHeap(distHeapIndex)
-                distHeap(distHeapIndex) = temp2
-
-                Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
-            Next
-        Next
-
-        Dim indicesAsInts = indices _
-            .[Select](Function(floatArray)
-                          Return floatArray.[Select](Function(value) CInt(value)).ToArray()
-                      End Function) _
-            .ToArray()
+        Dim indicesAsInts = ToIntMatrix(indices, parallelism)
 
         Return New KNNState With {
             .knnIndices = indicesAsInts,
             .knnDistances = weights
         }
+    End Function
+
+    ''' <summary>
+    ''' unpack one heap row out to a sorted list of indices by increasing 
+    ''' weight (the second half of the heap sort)
+    ''' </summary>
+    ''' <param name="indHeap">
+    ''' the row of the neighbour indices, this row will be modified in place.
+    ''' </param>
+    ''' <param name="distHeap">
+    ''' the row of the neighbour distances, this row will be modified in place.
+    ''' </param>
+    ''' <remarks>
+    ''' this procedure only touches the two given rows, so that it is safe 
+    ''' for run it in parallel for each row of the heap.
+    ''' </remarks>
+    Private Sub SortHeapRow(indHeap As Double(), distHeap As Double())
+        For j As Integer = 0 To indHeap.Length - 1 - 1
+            Dim indHeapIndex = indHeap.Length - j - 1
+            Dim distHeapIndex = distHeap.Length - j - 1
+
+            Dim temp1 = indHeap(0)
+            indHeap(0) = indHeap(indHeapIndex)
+            indHeap(indHeapIndex) = temp1
+
+            Dim temp2 = distHeap(0)
+            distHeap(0) = distHeap(distHeapIndex)
+            distHeap(distHeapIndex) = temp2
+
+            Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' convert the indices matrix of the heap from double to integer
+    ''' </summary>
+    Private Function ToIntMatrix(indices As Double()(), Optional parallelism As ParallelConfig = Nothing) As Integer()()
+        Dim config As ParallelConfig = If(parallelism, ParallelConfig.Sequential)
+        Dim degree As Integer = config.EffectiveDegree(indices.Length)
+        Dim ints As Integer()() = New Integer(indices.Length - 1)() {}
+
+        If degree > 1 Then
+            Call System.Threading.Tasks.Parallel.For(
+                fromInclusive:=0,
+                toExclusive:=indices.Length,
+                parallelOptions:=New ParallelOptions With {.MaxDegreeOfParallelism = degree},
+                body:=Sub(i)
+                          Dim row As Double() = indices(i)
+                          Dim out As Integer() = New Integer(row.Length - 1) {}
+
+                          For j As Integer = 0 To row.Length - 1
+                              out(j) = CInt(row(j))
+                          Next
+
+                          ints(i) = out
+                      End Sub)
+        Else
+            For i As Integer = 0 To indices.Length - 1
+                ints(i) = indices(i).[Select](Function(value) CInt(value)).ToArray()
+            Next
+        End If
+
+        Return ints
     End Function
 
     ''' <summary>
