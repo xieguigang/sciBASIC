@@ -196,17 +196,22 @@ Module Helper
     End Function
 
     ''' <summary>
-    ''' 逐行现算距离 + 每行仅保留 top-k 近邻，构建稀疏的联合概率矩阵
+    ''' 每行仅保留 top-k 近邻，构建稀疏的联合概率矩阵
     ''' </summary>
-    ''' <param name="X">高维原始数据</param>
     ''' <param name="perplexity">困惑度</param>
     ''' <param name="tol">beta 二分搜索的收敛容差</param>
     ''' <param name="k">每一行保留的近邻数量</param>
     ''' <param name="nthreads">并行线程数</param>
+    ''' <param name="X">高维原始数据；与 <paramref name="D"/> 二者必须恰好提供一个</param>
+    ''' <param name="D">预先计算好的 N×N 距离矩阵；与 <paramref name="X"/> 二者必须恰好提供一个</param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' 这个函数全程不物化 N×N 的距离矩阵与 N×N 的稠密概率矩阵，
-    ''' 是 Barnes-Hut 模式得以突破 O(N²) 内存墙的关键。
+    ''' 这个函数全程不物化 N×N 的稠密概率矩阵，是 Barnes-Hut 模式得以突破
+    ''' O(N²) 内存墙的关键。
+    ''' 
+    ''' 走 <paramref name="X"/> 分支时，连 N×N 的距离矩阵都不需要物化
+    ''' （每一行在用到时才现算，用完即弃，内存占用仅 threads × N）；
+    ''' 走 <paramref name="D"/> 分支时距离矩阵由调用方提供，但概率矩阵依然是稀疏的。
     ''' 
     ''' 对称化采用「双向展开」而非字典合并：对于每一行的第 m 个近邻 j，
     ''' 分别写入 (i, j, p_{j|i}) 与 (j, i, p_{j|i})。
@@ -214,13 +219,18 @@ Module Helper
     ''' p_{i|j}（来自行 j 的近邻表所展开出的反向条目），两者相加恰好等于
     ''' 联合概率定义中的 (p_{j|i} + p_{i|j})，因此无需再做一次 O(nnz) 的合并去重。
     ''' </remarks>
-    Friend Function d2pSparse(X As Double()(),
-                             perplexity As Double,
-                             tol As Double,
-                             k As Integer,
-                             Optional nthreads As Integer = 0) As SparseP
+    Friend Function d2pSparse(perplexity As Double,
+                              tol As Double,
+                              k As Integer,
+                              Optional nthreads As Integer = 0,
+                              Optional X As Double()() = Nothing,
+                              Optional D As Double() = Nothing) As SparseP
 
-        Dim N As Integer = X.Length
+        If (X Is Nothing) = (D Is Nothing) Then
+            Throw New ArgumentException("Exactly one of X (raw data) or D (distance matrix) must be provided.")
+        End If
+
+        Dim N As Integer = If(X IsNot Nothing, X.Length, CInt(std.Floor(std.Sqrt(D.Length))))
         Dim Htarget = std.Log(perplexity) ' target entropy of distribution
         Dim opts = ParallelOptions(nthreads)
         Dim kk As Integer = std.Min(k, N - 1)
@@ -234,14 +244,36 @@ Module Helper
             0, N, opts,
             Function() New RowWorkspace(N),
             Function(i, loopState, ws) As RowWorkspace
-                Dim xi = X(i)
+                Call ProcessRow(X, D, N, i, Htarget, tol, kk, ws, keys, vals)
+                Return ws
+            End Function,
+            AddressOf ReleaseWorkspace)
 
-                ' 现算第 i 行的距离，避免物化 N×N 距离矩阵
-                For j = 0 To N - 1
-                    ws.dist(j) = L2(xi, X(j))
-                Next
+        Return SparseProbability.Build(keys, vals, N)
+    End Function
 
-                Dim betamin = Double.NegativeInfinity
+    ''' <summary>
+    ''' 处理第 i 行：现算（或读取）距离 → beta 二分搜索 → top-k 选择 → 双向展开写入
+    ''' </summary>
+    Private Sub ProcessRow(X As Double()(), D As Double(), N As Integer, i As Integer,
+                           Htarget As Double, tol As Double, kk As Integer,
+                           ws As RowWorkspace, keys As Long(), vals As Double())
+        If X IsNot Nothing Then
+            Dim xi = X(i)
+
+            ' 现算第 i 行的距离，避免物化 N×N 距离矩阵
+            For j = 0 To N - 1
+                ws.dist(j) = L2(xi, X(j))
+            Next
+        Else
+            Dim rowOffset = i * N
+
+            For j = 0 To N - 1
+                ws.dist(j) = D(rowOffset + j)
+            Next
+        End If
+
+        Dim betamin = Double.NegativeInfinity
                 Dim betamax = Double.PositiveInfinity
                 Dim beta As Double = 1 ' initial value of precision
                 Dim done = False
@@ -330,13 +362,7 @@ Module Helper
                     EmitPair(keys, vals, N, baseOffset + t, i, i, 0.0)
                     t += 1
                 End While
-
-                Return ws
-            End Function,
-            AddressOf ReleaseWorkspace)
-
-        Return SparseProbability.Build(keys, vals, N)
-    End Function
+    End Sub
 
     ''' <summary>
     ''' 把 (i, j, v) 双向写入键/值数组，同时完成 (p_{j|i} + p_{i|j}) 的对称化展开
