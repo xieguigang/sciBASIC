@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+
 ''' <summary>
 ''' 优化器基类
 ''' 定义了参数更新的接口

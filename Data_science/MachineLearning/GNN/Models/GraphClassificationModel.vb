@@ -107,8 +107,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports std = System.Math
-
 
 ''' <summary>
 ''' 图分类模型

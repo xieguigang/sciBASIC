@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+
 ''' <summary>
 ''' 随机梯度下降优化器 (SGD)
 ''' 最基础的优化器：θ = θ - lr * ∇θ

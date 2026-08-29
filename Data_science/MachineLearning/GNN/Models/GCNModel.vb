@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+
 ''' <summary>
 ''' GCN模型（图卷积网络）
 ''' 用于节点分类任务

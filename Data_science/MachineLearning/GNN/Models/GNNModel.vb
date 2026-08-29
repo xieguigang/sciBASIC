@@ -1,4 +1,7 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
 ''' <summary>
 ''' GNN模型基类
 ''' 定义了图神经网络模型的基本接口

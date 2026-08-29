@@ -1,5 +1,7 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports std = System.Math
 
 ''' <summary>
 ''' 图分类训练器

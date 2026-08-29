@@ -1,5 +1,5 @@
-﻿
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
 
 ''' <summary>
 ''' 训练器
