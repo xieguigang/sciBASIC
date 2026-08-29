@@ -1,4 +1,58 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::abec236575a23902a7ad2d79b323c752, Data_science\MachineLearning\GNN\Models\GCNModel.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 36 (46.15%)
+    ' Comment Lines: 25 (32.05%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 17 (21.79%)
+    '     File Size: 2.72 KB
+
+
+    ' Class GCNModel
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, ForwardLogits
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 ''' <summary>
@@ -76,3 +130,4 @@ Public Class GCNModel
         Return inputGrad
     End Function
 End Class
+

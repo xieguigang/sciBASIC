@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cfb8056df36e1e8949c94633ba96202, Data_science\MachineLearning\GNN\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::4fce7c04de2eb29c956739c78a61666d, Data_science\MachineLearning\GNN\Graph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 326
-    '    Code Lines: 168 (51.53%)
-    ' Comment Lines: 113 (34.66%)
-    '    - Xml Docs: 95.58%
+    '   Total Lines: 262
+    '    Code Lines: 131 (50.00%)
+    ' Comment Lines: 94 (35.88%)
+    '    - Xml Docs: 94.68%
     ' 
-    '   Blank Lines: 45 (13.80%)
-    '     File Size: 9.97 KB
+    '   Blank Lines: 37 (14.12%)
+    '     File Size: 8.37 KB
 
 
     ' Class Edge
@@ -59,13 +59,6 @@
     '               GetNormalizedAdjacencyMatrix, GetNormalizedLaplacian
     ' 
     '     Sub: AddEdge, AddUndirectedEdge, PrintInfo
-    ' 
-    ' Class GraphDataset
-    ' 
-    '     Properties: Count, Graphs, Labels, NumClasses
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Add
     ' 
     ' /********************************************************************************/
 
@@ -333,4 +326,3 @@ Public Class Graph
         Console.WriteLine($"  平均度: {NumEdges / NumNodes:F2}")
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96425ebcab95df0e8286324d2aa20b13, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::b7e41f68c4176adab2dab955c7ce1d5e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 377
-    '    Code Lines: 287 (76.13%)
-    ' Comment Lines: 45 (11.94%)
-    '    - Xml Docs: 82.22%
+    '   Total Lines: 304
+    '    Code Lines: 138 (45.39%)
+    ' Comment Lines: 127 (41.78%)
+    '    - Xml Docs: 83.46%
     ' 
-    '   Blank Lines: 45 (11.94%)
-    '     File Size: 13.85 KB
+    '   Blank Lines: 39 (12.83%)
+    '     File Size: 13.07 KB
 
 
     '     Class MarkdownRender
     ' 
+    '         Properties: EnableAnsi, globalStyle, LastError
+    ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: bufferAllIs, bufferIs, DefaultStyleRender
+    '         Function: DefaultStyleRender, Render, WriteSpans
     ' 
-    '         Sub: applyGlobal, buildTableSimple, DoParseSpans, DoPrint, EndSpan
-    '              Print, PrintSpans, Reset, restoreStyle, WalkChar
+    '         Sub: applyGlobal, DoPrint, Print, Reset
     ' 
     ' 
     ' /********************************************************************************/

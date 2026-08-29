@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0890285a632e5d592d319fbc95415233, Data_science\Mathematica\Math\DataFittings\Linear\MLR\MLRFit.vb"
+﻿#Region "Microsoft.VisualBasic::18802beaad5693656daf767f529b47b2, Data_science\Mathematica\Math\DataFittings\Linear\MLR\MLRFit.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 39 (52.00%)
-    ' Comment Lines: 27 (36.00%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 96
+    '    Code Lines: 39 (40.62%)
+    ' Comment Lines: 48 (50.00%)
+    '    - Xml Docs: 95.83%
     ' 
-    '   Blank Lines: 9 (12.00%)
-    '     File Size: 2.58 KB
+    '   Blank Lines: 9 (9.38%)
+    '     File Size: 5.01 KB
 
 
     '     Class MLRFit

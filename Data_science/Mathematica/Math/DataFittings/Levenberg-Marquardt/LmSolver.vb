@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c135738ef55c5e80f51ed231ed9bc112, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSolver.vb"
+﻿#Region "Microsoft.VisualBasic::efc5e96f9fdf1297c934d3e23252ebf2, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSolver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.43%
     ' 
     '   Blank Lines: 32 (12.26%)
-    '     File Size: 11.80 KB
+    '     File Size: 11.71 KB
 
 
     '     Class LmSolver

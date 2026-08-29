@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a0ea28a9a642d5ca90acec42537742e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiEscapeCodes.vb"
+﻿#Region "Microsoft.VisualBasic::452ba945d5c79f7acd97fd4d565c827e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiEscapeCodes.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 90 (62.50%)
-    ' Comment Lines: 32 (22.22%)
-    '    - Xml Docs: 90.62%
+    '   Total Lines: 166
+    '    Code Lines: 100 (60.24%)
+    ' Comment Lines: 41 (24.70%)
+    '    - Xml Docs: 80.49%
     ' 
-    '   Blank Lines: 22 (15.28%)
-    '     File Size: 5.95 KB
+    '   Blank Lines: 25 (15.06%)
+    '     File Size: 6.85 KB
 
 
     '     Module AnsiEscapeCodes

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87ab5ced43aac5d1bb21595c4d2b4a11, Data_science\MachineLearning\GNN\Layers.vb"
+﻿#Region "Microsoft.VisualBasic::724fe99971e7518b5970fe8b10a8c74a, Data_science\MachineLearning\GNN\Layers\Layers.vb"
 
     ' Author:
     ' 
@@ -34,63 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 687
-    '    Code Lines: 381 (55.46%)
-    ' Comment Lines: 195 (28.38%)
-    '    - Xml Docs: 76.92%
+    '   Total Lines: 46
+    '    Code Lines: 17 (36.96%)
+    ' Comment Lines: 22 (47.83%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 111 (16.16%)
-    '     File Size: 23.02 KB
+    '   Blank Lines: 7 (15.22%)
+    '     File Size: 1.18 KB
 
 
     ' Class Layer
     ' 
     '     Properties: IsTraining, Name
-    ' 
-    ' Class LinearLayer
-    ' 
-    '     Properties: InFeatures, OutFeatures, UseBias
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Backward, Forward, GetBias, GetGradients, GetParameters
-    '               GetWeights
-    ' 
-    ' Class ActivationLayer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Backward, Forward, GetGradients, GetParameters
-    ' 
-    ' Class DropoutLayer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Backward, Forward, GetGradients, GetParameters
-    ' 
-    ' Class GCNConvLayer
-    ' 
-    '     Properties: InFeatures, OutFeatures
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) Backward, (+3 Overloads) Forward, GetGradients, GetParameters
-    ' 
-    ' Class GATLayer
-    ' 
-    '     Properties: InFeatures, OutFeatures
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Backward, (+2 Overloads) Forward, GetGradients, GetParameters, LeakyReLU
-    ' 
-    ' Class GlobalPoolingLayer
-    ' 
-    ' 
-    '     Enum PoolingType
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Backward, Forward, GetGradients, GetParameters, MaxPooling
     ' 
     ' /********************************************************************************/
 

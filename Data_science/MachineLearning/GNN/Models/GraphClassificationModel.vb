@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f8308f833097308994369e4184ab0f3, Data_science\MachineLearning\GNN\Models.vb"
+﻿#Region "Microsoft.VisualBasic::96ce741a92822a414bc14b7c95665042, Data_science\MachineLearning\GNN\Models\GraphClassificationModel.vb"
 
     ' Author:
     ' 
@@ -34,73 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 697
-    '    Code Lines: 364 (52.22%)
-    ' Comment Lines: 200 (28.69%)
-    '    - Xml Docs: 78.00%
+    '   Total Lines: 82
+    '    Code Lines: 43 (52.44%)
+    ' Comment Lines: 21 (25.61%)
+    '    - Xml Docs: 52.38%
     ' 
-    '   Blank Lines: 133 (19.08%)
-    '     File Size: 22.34 KB
+    '   Blank Lines: 18 (21.95%)
+    '     File Size: 2.77 KB
 
 
-    ' Class Optimizer
-    ' 
-    '     Properties: LearningRate
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: ZeroGrad
-    ' 
-    ' Class SGDOptimizer
-    ' 
-    '     Properties: Momentum
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: [Step]
-    ' 
-    ' Class AdamOptimizer
-    ' 
-    '     Properties: Beta1, Beta2, Epsilon
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: [Step]
-    ' 
-    ' Class GNNModel
-    ' 
-    '     Properties: Name
-    ' 
-    '     Function: GetGradients, GetParameters
-    ' 
-    '     Sub: PrintModelInfo, SetTraining
-    ' 
-    ' Class GCNModel
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Backward, Forward, ForwardLogits
-    ' 
     ' Class GraphClassificationModel
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Backward, Forward
-    ' 
-    ' Class Trainer
-    ' 
-    '     Properties: TrainLossHistory, ValAccuracyHistory
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Evaluate, TrainEpoch
-    ' 
-    '     Sub: Train
-    ' 
-    ' Class GraphClassificationTrainer
-    ' 
-    '     Properties: TrainLossHistory, ValAccuracyHistory
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Evaluate, TrainEpoch
-    ' 
-    '     Sub: Train
     ' 
     ' /********************************************************************************/
 

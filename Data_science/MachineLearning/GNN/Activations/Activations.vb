@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5895cbe2276da2eb731d27e43f502ad3, Data_science\MachineLearning\GNN\Activations.vb"
+﻿#Region "Microsoft.VisualBasic::7c2c05f0409a91e6ee31c0f1d1579da3, Data_science\MachineLearning\GNN\Activations\Activations.vb"
 
     ' Author:
     ' 
@@ -34,46 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
-    '    Code Lines: 162 (53.82%)
-    ' Comment Lines: 103 (34.22%)
-    '    - Xml Docs: 94.17%
+    '   Total Lines: 131
+    '    Code Lines: 63 (48.09%)
+    ' Comment Lines: 50 (38.17%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 36 (11.96%)
-    '     File Size: 10.39 KB
+    '   Blank Lines: 18 (13.74%)
+    '     File Size: 4.01 KB
 
 
     ' Module Activation
     ' 
     '     Function: LeakyReLU, LeakyReLUDerivative, ReLU, ReLUDerivative, Sigmoid
     '               SigmoidDerivative, (+2 Overloads) Softmax, Tanh, TanhDerivative
-    ' 
-    ' Enum ActivationType
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Module ActivationFunctions
-    ' 
-    '     Function: Apply, Derivative
-    ' 
-    ' Module Loss
-    ' 
-    '     Function: BinaryCrossEntropy, CrossEntropy, MeanSquaredError, MeanSquaredErrorGradient, NegativeLogLikelihood
-    '               SoftmaxCrossEntropy
-    ' 
-    ' Enum LossType
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Module LossFunctions
-    ' 
-    '     Function: Compute, Gradient
     ' 
     ' /********************************************************************************/
 
@@ -210,4 +183,3 @@ Public Module Activation
         Return result
     End Function
 End Module
-

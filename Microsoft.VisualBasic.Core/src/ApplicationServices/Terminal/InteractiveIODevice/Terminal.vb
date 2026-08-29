@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd9c39f7f2c72c6d9ca13399e54d4ef5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::edbbc8cca131a9d262d5fe6a0d218d7f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 872
-    '    Code Lines: 289 (33.14%)
-    ' Comment Lines: 505 (57.91%)
+    '   Total Lines: 878
+    '    Code Lines: 295 (33.60%)
+    ' Comment Lines: 505 (57.52%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 78 (8.94%)
-    '     File Size: 46.47 KB
+    '   Blank Lines: 78 (8.88%)
+    '     File Size: 46.58 KB
 
 
     '     Class Terminal

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f02374e201bdff19fead4d9efa7c5450, gr\network-visualization\Network.IO.Extensions\Gephi\GML.vb"
+﻿#Region "Microsoft.VisualBasic::45c8418bbf300687af473df8b31c9b3e, gr\network-visualization\Network.IO.Extensions\Gephi\GML.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 75 (78.95%)
+    '   Total Lines: 66
+    '    Code Lines: 54 (81.82%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 20 (21.05%)
-    '     File Size: 3.39 KB
+    '   Blank Lines: 12 (18.18%)
+    '     File Size: 2.66 KB
 
 
     '     Class GephiML
@@ -48,19 +48,6 @@
     '         Properties: Creator, directed, edge, node
     ' 
     '         Function: (+2 Overloads) BuildGML
-    ' 
-    '     Class edge
-    ' 
-    '         Properties: fill, id, source, target, value
-    ' 
-    '     Class node
-    ' 
-    '         Properties: graphics, id, label
-    ' 
-    '     Class graphics
-    ' 
-    '         Properties: d, fill, h, w, x
-    '                     y, z
     ' 
     ' 
     ' /********************************************************************************/

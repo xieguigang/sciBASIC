@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e582f274f1c318c3224dcb568715bfb7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\TextSpan.vb"
+﻿#Region "Microsoft.VisualBasic::e582f274f1c318c3224dcb568715bfb7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ANSI\TextSpan.vb"
 
     ' Author:
     ' 

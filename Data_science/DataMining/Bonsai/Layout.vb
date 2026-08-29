@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::7e6204e1465c7360459a7ed92ad7e6b2, Data_science\DataMining\Bonsai\Layout.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 65 (52.85%)
+    ' Comment Lines: 35 (28.46%)
+    '    - Xml Docs: 48.57%
+    ' 
+    '   Blank Lines: 23 (18.70%)
+    '     File Size: 4.66 KB
+
+
+    ' Module TreeLayout
+    ' 
+    '     Function: DendrogramLayout, RadialLayout
+    ' 
+    '     Sub: AssignLeafAngle, AssignLeafY, ComputeX
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 
 '   Author:
@@ -121,3 +176,4 @@ Public Module TreeLayout
         node.y = sum / node.childs.Count
     End Sub
 End Module
+

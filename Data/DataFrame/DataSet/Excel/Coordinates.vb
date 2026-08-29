@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8f6f2f6adcc3f6d9b9f348bc69fa958, Data\DataFrame\DataSet\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::eb67beb1bdcb7ce7de7ce43178596eb2, Data\DataFrame\DataSet\Excel\Coordinates.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 20 (15.50%)
-    '     File Size: 4.44 KB
+    '     File Size: 4.46 KB
 
 
     '     Module Coordinates

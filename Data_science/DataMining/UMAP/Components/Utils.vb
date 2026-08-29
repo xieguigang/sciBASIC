@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f47405e935a4d28f0029783133e8715c, Data_science\DataMining\UMAP\Components\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::f097d43a689edef584024353faa0bba4, Data_science\DataMining\UMAP\Components\Utils.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 64 (68.09%)
-    ' Comment Lines: 15 (15.96%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 171
+    '    Code Lines: 95 (55.56%)
+    ' Comment Lines: 48 (28.07%)
+    '    - Xml Docs: 85.42%
     ' 
-    '   Blank Lines: 15 (15.96%)
-    '     File Size: 3.07 KB
+    '   Blank Lines: 28 (16.37%)
+    '     File Size: 5.90 KB
 
 
     ' Module Utils
     ' 
-    '     Function: Empty, Filled, Range, RejectionSample
+    '     Function: Empty, Filled, NewStripedLocks, Range, RejectionSample
     ' 
-    '     Sub: ShuffleTogether
+    '     Sub: ShuffleSample, ShuffleTogether
     ' 
     ' /********************************************************************************/
 

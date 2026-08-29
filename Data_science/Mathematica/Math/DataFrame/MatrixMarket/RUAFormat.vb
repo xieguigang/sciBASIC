@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32f431903e7dcdc2e1b39b1c3ceac2a6, Data_science\Mathematica\Math\DataFrame\MatrixMarket\RUAFormat.vb"
+﻿#Region "Microsoft.VisualBasic::d6b23a60aa1275164a3c12d53ac85814, Data_science\Mathematica\Math\DataFrame\MatrixMarket\RUAFormat.vb"
 
     ' Author:
     ' 
@@ -353,4 +353,3 @@ Namespace MatrixMarket
         End Function
     End Class
 End Namespace
-

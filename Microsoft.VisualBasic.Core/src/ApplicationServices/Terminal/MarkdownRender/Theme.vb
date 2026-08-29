@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::681a2d753f25c84d641c2616f2cd24e7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::763f5659e80a30531a6ed2ec1f10ab32, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\Theme.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 18 (78.26%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 44
+    '    Code Lines: 22 (50.00%)
+    ' Comment Lines: 17 (38.64%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (21.74%)
-    '     File Size: 851 B
+    '   Blank Lines: 5 (11.36%)
+    '     File Size: 1.74 KB
 
 
     '     Class MarkdownTheme
     ' 
     '         Properties: [Global], BlockQuote, Bold, CodeBlock, HeaderSpan
-    '                     InlineCodeSpan, Italy, Table, Url
+    '                     HorizontalRule, InlineCodeSpan, Italy, LinkText, ListMarker
+    '                     StrikeThrough, Table, Url
     ' 
     '         Function: ToString
     ' 

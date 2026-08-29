@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47be4b4f670819497a2825c1ec6d63d1, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::47be4b4f670819497a2825c1ec6d63d1, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Tabular\Edge.vb"
 
     ' Author:
     ' 

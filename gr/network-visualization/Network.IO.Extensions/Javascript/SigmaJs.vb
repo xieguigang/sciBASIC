@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83ef6e9a2f3ad63ef048251adcff0ac9, gr\network-visualization\Network.IO.Extensions\SigmaJs.vb"
+﻿#Region "Microsoft.VisualBasic::83ef6e9a2f3ad63ef048251adcff0ac9, gr\network-visualization\Network.IO.Extensions\Javascript\SigmaJs.vb"
 
     ' Author:
     ' 

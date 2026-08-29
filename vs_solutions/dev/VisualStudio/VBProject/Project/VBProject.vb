@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5280fccfaf1743215e66ad23418c7a10, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
+﻿#Region "Microsoft.VisualBasic::d29a1a39eb185295c790c8f7d28b8b11, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 700
-    '    Code Lines: 548 (78.29%)
-    ' Comment Lines: 72 (10.29%)
+    '   Total Lines: 704
+    '    Code Lines: 550 (78.12%)
+    ' Comment Lines: 72 (10.23%)
     '    - Xml Docs: 69.44%
     ' 
-    '   Blank Lines: 80 (11.43%)
-    '     File Size: 33.65 KB
+    '   Blank Lines: 82 (11.65%)
+    '     File Size: 33.88 KB
 
 
     '     Class VBProject
@@ -54,8 +54,8 @@
     '                   LoadAssembly, LoadProjectXml, ParseConfigCondition, SplitImports, StripGenerics
     '                   ToString
     ' 
-    '         Sub: AddAttrIf, AddIf, FillSourceFilePath, ParseItemGroups, ParseProperties
-    '              Save, SetMetadataProperty, SetNuGetProperty, WalkSymbol
+    '         Sub: AddAttrIf, AddIf, FillSourceFilePath, ParseDoc, ParseItemGroups
+    '              ParseProperties, Save, SetMetadataProperty, SetNuGetProperty, WalkSymbol
     ' 
     ' 
     ' /********************************************************************************/

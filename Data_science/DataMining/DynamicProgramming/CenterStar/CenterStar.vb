@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34285ea8a7eda68ca35e950b25a852bd, Data_science\DataMining\DynamicProgramming\CenterStar\CenterStar.vb"
+﻿#Region "Microsoft.VisualBasic::460d705cdf41b45fe296181cd79f8b4f, Data_science\DataMining\DynamicProgramming\CenterStar\CenterStar.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 267
-    '    Code Lines: 162 (60.67%)
-    ' Comment Lines: 64 (23.97%)
-    '    - Xml Docs: 67.19%
+    '   Total Lines: 688
+    '    Code Lines: 404 (58.72%)
+    ' Comment Lines: 166 (24.13%)
+    '    - Xml Docs: 81.93%
     ' 
-    '   Blank Lines: 41 (15.36%)
-    '     File Size: 9.70 KB
+    '   Blank Lines: 118 (17.15%)
+    '     File Size: 25.97 KB
 
 
     ' Class CenterStar
@@ -49,10 +49,16 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: BuildCenterRow, BuildSequenceRow, CalculateTotalCost, Compute, computeInternal
+    '     Function: BuildCenterRow, BuildSequenceRow, calculateTotalCost, Compute, computeInternal
+    '               ExtractCenterGaps, GetReferenceSet, SumByColumnFrequency, SumByPairs
     ' 
-    '     Sub: AlignToCenter, ExtractCenterGaps, FindStarIndex, FindStarIndexExact, FindStarIndexSampled
-    '          GetReferenceSet, MultipleAlignment, Tick, ValidateAlignment
+    '     Sub: AlignToCenter, FindStarIndex, FindStarIndexExact, FindStarIndexSampled, MultipleAlignment
+    '          Tick, ValidateAlignment
+    '     Structure CenterGaps
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

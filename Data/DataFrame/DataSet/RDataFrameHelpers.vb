@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0e2729a33a0b805b9f7e1b12a394ec8, Data\DataFrame\DataSet\RDataFrameHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::e73438d00245ca3745555de07175d2b0, Data\DataFrame\DataSet\RDataFrameHelpers.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.91%
     ' 
     '   Blank Lines: 12 (17.14%)
-    '     File Size: 2.71 KB
+    '     File Size: 2.73 KB
 
 
     '     Module RDataFrameHelpers

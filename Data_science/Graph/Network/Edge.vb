@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a028d7a4af73b5c5f330dd0f9f72fd0, Data_science\Graph\Network\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::13b0c3ff67f11281d68d0c6fe1a2ea79, Data_science\Graph\Network\Edge.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 43 (58.90%)
-    ' Comment Lines: 15 (20.55%)
+    '   Total Lines: 83
+    '    Code Lines: 50 (60.24%)
+    ' Comment Lines: 15 (18.07%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (20.55%)
-    '     File Size: 2.40 KB
+    '   Blank Lines: 18 (21.69%)
+    '     File Size: 2.73 KB
 
 
     '     Class Edge
@@ -50,6 +50,12 @@
     '     Interface IndexEdge
     ' 
     '         Properties: U, V
+    ' 
+    '     Structure IndexGraphEdge
+    ' 
+    '         Properties: U, V
+    ' 
+    '         Function: ToString
     ' 
     '     Interface IndexGraph
     ' 

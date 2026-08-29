@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7148346980fca295237af199a2de9462, Data_science\DataMining\t-SNE\RandomHelper.vb"
+﻿#Region "Microsoft.VisualBasic::4764b30e08872ff62f2394e48625b7b1, Data_science\DataMining\t-SNE\RandomHelper.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 108
-    '    Code Lines: 57 (52.78%)
-    ' Comment Lines: 26 (24.07%)
-    '    - Xml Docs: 96.15%
+    '    Code Lines: 46 (42.59%)
+    ' Comment Lines: 43 (39.81%)
+    '    - Xml Docs: 93.02%
     ' 
-    '   Blank Lines: 25 (23.15%)
-    '     File Size: 2.85 KB
+    '   Blank Lines: 19 (17.59%)
+    '     File Size: 3.49 KB
 
 
     ' Class RandomHelper

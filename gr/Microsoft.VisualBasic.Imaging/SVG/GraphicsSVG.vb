@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f02d76067ce082e5367b2c5f5f4da6c2, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::94c1afb781ac740be9d151f6ade55719, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 157 (22.49%)
-    '     File Size: 28.21 KB
+    '     File Size: 28.22 KB
 
 
     '     Class GraphicsSVG

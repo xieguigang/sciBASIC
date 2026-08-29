@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c316159f767edb476e5411ddd5e3ce9, Data\DataFrame\DataSet\MatrixProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3f985c13897ea5e0c6d3fb73ad565222, Data\DataFrame\DataSet\MatrixProvider.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 14 (20.90%)
-    '     File Size: 2.14 KB
+    '     File Size: 2.15 KB
 
 
     '     Interface MatrixProvider

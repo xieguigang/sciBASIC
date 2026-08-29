@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd5b1ee2271f877436fcc244f0fe1026, Data_science\DataMining\UMAP\NNDescent\RPTree.vb"
+﻿#Region "Microsoft.VisualBasic::b26790c66e2b02e508df303ad75cd07c, Data_science\DataMining\UMAP\NNDescent\RPTree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 33 (36.67%)
-    ' Comment Lines: 48 (53.33%)
-    '    - Xml Docs: 89.58%
+    '   Total Lines: 101
+    '    Code Lines: 33 (32.67%)
+    ' Comment Lines: 59 (58.42%)
+    '    - Xml Docs: 89.83%
     ' 
-    '   Blank Lines: 9 (10.00%)
-    '     File Size: 4.54 KB
+    '   Blank Lines: 9 (8.91%)
+    '     File Size: 4.97 KB
 
 
     ' Class RPTree

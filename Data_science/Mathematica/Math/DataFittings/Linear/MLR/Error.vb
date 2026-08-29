@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9da8f29acd9f7ff8fc92e8d45e0942b, Data_science\Mathematica\Math\DataFittings\Linear\MLR\Error.vb"
+﻿#Region "Microsoft.VisualBasic::8cea80aaec63a8464d5a9baf6fe04db8, Data_science\Mathematica\Math\DataFittings\Linear\MLR\Error.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 25 (78.12%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 57
+    '    Code Lines: 25 (43.86%)
+    ' Comment Lines: 25 (43.86%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (21.88%)
-    '     File Size: 1.05 KB
+    '   Blank Lines: 7 (12.28%)
+    '     File Size: 2.88 KB
 
 
     '     Structure [Error]

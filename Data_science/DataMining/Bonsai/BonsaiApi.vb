@@ -1,4 +1,62 @@
-﻿' /********************************************************************************/
+﻿#Region "Microsoft.VisualBasic::c613a1b66e646a382e9438b798d6b3a6, Data_science\DataMining\Bonsai\BonsaiApi.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 188
+    '    Code Lines: 61 (32.45%)
+    ' Comment Lines: 99 (52.66%)
+    '    - Xml Docs: 73.74%
+    ' 
+    '   Blank Lines: 28 (14.89%)
+    '     File Size: 7.29 KB
+
+
+    ' Class Bonsai
+    ' 
+    '     Properties: Data, filterLowSNR, layout, maxMerges, maxTimeIters
+    '                 RawData, snrThreshold, Tree, useGlobalVariance, verbose
+    ' 
+    '     Function: BranchTimeCoords, Embed, (+2 Overloads) Fit, FitCore, Get2DLayout
+    '               GetHighDimStates, LogLikelihood, ToNewick, Transform
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' /********************************************************************************/
 
 '   Author:
 '
@@ -185,4 +243,5 @@ Public Class Bonsai
         Return New Bonsai().Fit(means, stds, names).Transform()
     End Function
 End Class
+
 

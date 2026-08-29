@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcdde64fcfdc96310b28cb9b79407973, gr\network-visualization\network_layout\HOLA\HOLA.vb"
+﻿#Region "Microsoft.VisualBasic::dfa687390641e59911c0ca4ece0dccdb, gr\network-visualization\network_layout\HOLA\HOLA.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (13.04%)
-    '     File Size: 971 B
+    '     File Size: 969 B
 
 
     '     Module [HOLA]
@@ -75,4 +75,3 @@ Namespace Hola
         End Function
     End Module
 End Namespace
-

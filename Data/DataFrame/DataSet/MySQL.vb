@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0e7d4c2ff4e5488dc319edd63614288, Data\DataFrame\DataSet\MySQL.vb"
+﻿#Region "Microsoft.VisualBasic::359e1515bdef30cde29a846f7e018e33, Data\DataFrame\DataSet\MySQL.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.36%
     ' 
     '   Blank Lines: 25 (12.32%)
-    '     File Size: 8.08 KB
+    '     File Size: 8.09 KB
 
 
     '     Module MySQL

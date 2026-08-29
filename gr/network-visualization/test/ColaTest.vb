@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eadada839db1dbe285987a077174479, gr\network-visualization\test\ColaTest.vb"
+﻿#Region "Microsoft.VisualBasic::161583967d9e808fb8be7845ff95f26f, gr\network-visualization\test\ColaTest.vb"
 
     ' Author:
     ' 
@@ -339,4 +339,3 @@ Module ColaTest
     End Sub
 
 End Module
-
