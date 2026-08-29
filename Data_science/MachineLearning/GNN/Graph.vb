@@ -114,7 +114,7 @@ Public Class Graph
     ''' <summary>
     ''' 边列表
     ''' </summary>
-    Dim _Edges As System.Collections.Generic.List(Of Edge)
+    Dim _Edges As List(Of Edge)
 
     Public Property NumNodes As Integer
         Get
@@ -346,7 +346,7 @@ Public Class GraphDataset
     ''' <summary>
     ''' 图标签（用于图分类任务）
     ''' </summary>
-    Private _Graphs As System.Collections.Generic.List(Of Graph), _Labels As System.Collections.Generic.List(Of Integer)
+    Private _Graphs As List(Of Graph), _Labels As List(Of Integer)
 
     Public Property Graphs As List(Of Graph)
         Get
