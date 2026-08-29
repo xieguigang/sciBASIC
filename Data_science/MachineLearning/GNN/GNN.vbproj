@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net10.0;net10.0-windows</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>17.13</LangVersion>
@@ -18,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
   </ItemGroup>
