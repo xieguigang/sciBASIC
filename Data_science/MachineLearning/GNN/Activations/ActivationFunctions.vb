@@ -1,4 +1,4 @@
-﻿
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 ''' <summary>
 ''' 激活函数工具类

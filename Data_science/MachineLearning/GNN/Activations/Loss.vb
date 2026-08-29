@@ -1,4 +1,7 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
 ''' <summary>
 ''' 损失函数集合
 ''' 损失函数衡量模型预测与真实值之间的差距
