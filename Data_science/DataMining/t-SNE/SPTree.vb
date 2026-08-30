@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::398d5002e2fa5a620130290881369241, Data_science\DataMining\t-SNE\SPTree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 415
+    '    Code Lines: 221 (53.25%)
+    ' Comment Lines: 117 (28.19%)
+    '    - Xml Docs: 70.09%
+    ' 
+    '   Blank Lines: 77 (18.55%)
+    '     File Size: 13.91 KB
+
+
+    ' Class SPNode
+    ' 
+    '     Properties: Count
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    ' Class SPTree
+    ' 
+    '     Properties: NodeCount
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Build, ComputeBounds, ComputeCenterOfMass, (+2 Overloads) ComputeNonEdgeForces, Subdivide
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' 
 '       asuka (amethyst.asuka@gcmodeller.org)
 '       xie (genetics@smrucc.org)
@@ -413,3 +475,4 @@ Friend Class SPTree
         End Get
     End Property
 End Class
+

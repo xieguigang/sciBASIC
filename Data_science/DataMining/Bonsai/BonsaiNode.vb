@@ -1,4 +1,63 @@
-﻿' /********************************************************************************/
+﻿#Region "Microsoft.VisualBasic::2379dc93eb5a63443d9b50611c11d03f, Data_science\DataMining\Bonsai\BonsaiNode.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 305
+    '    Code Lines: 150 (49.18%)
+    ' Comment Lines: 115 (37.70%)
+    '    - Xml Docs: 73.04%
+    ' 
+    '   Blank Lines: 40 (13.11%)
+    '     File Size: 11.24 KB
+
+
+    ' Class BonsaiNode
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: countDataLeafs, getInfo, getLeafs, getLtqsVars, getScale
+    '               getTransferVariance, getW, isLeafNode, isRootNode, toNewick
+    ' 
+    '     Sub: collectLeafs, getLtqsUponMerge, setLtqsVarsOrW
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' /********************************************************************************/
 
 '   Author:
 '
@@ -301,5 +360,6 @@ Public Class BonsaiNode
         Return n
     End Function
 End Class
+
 
 

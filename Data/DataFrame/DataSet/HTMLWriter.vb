@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b7bdcc50f923f13c89ff34bcef19bf3, Data\DataFrame\DataSet\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e95e21624ac65a846f57238aa837c1a2, Data\DataFrame\DataSet\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.12%
     ' 
     '   Blank Lines: 24 (13.79%)
-    '     File Size: 6.66 KB
+    '     File Size: 6.67 KB
 
 
     '     Class HTMLWriter

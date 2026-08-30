@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::9c1f4a7b2e8d4530a6b7c1d9e0f2a3b4, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GraphicsContextInfo.vb"
+﻿#Region "Microsoft.VisualBasic::a9eb51beb082477e755b01367e7a81f6, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GraphicsContextInfo.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 10 (25.64%)
+    ' Comment Lines: 23 (58.97%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (15.38%)
+    '     File Size: 1.47 KB
+
+
     '     Class GraphicsContextInfo
     ' 
     '         Properties: Context, Offset
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

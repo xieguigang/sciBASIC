@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a26076569320a4f48fbd4380e86c06e1, Data_science\DataMining\UMAP\NNDescent\NNDescentLoop.vb"
+﻿#Region "Microsoft.VisualBasic::48ae86ee35f5d03e5de1b408e68f135a, Data_science\DataMining\UMAP\NNDescent\NNDescentLoop.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 49 (73.13%)
-    ' Comment Lines: 3 (4.48%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 76
+    '    Code Lines: 49 (64.47%)
+    ' Comment Lines: 12 (15.79%)
+    '    - Xml Docs: 91.67%
     ' 
-    '   Blank Lines: 15 (22.39%)
-    '     File Size: 1.89 KB
+    '   Blank Lines: 15 (19.74%)
+    '     File Size: 2.29 KB
 
 
     ' Class NNDescentLoop

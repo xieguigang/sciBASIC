@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::378e5ea80916f734b68fd38a9d3c8290, Data_science\DataMining\t-SNE\tSNE.vb"
+﻿#Region "Microsoft.VisualBasic::b1de1020cf1b8a86a425082c80b68440, Data_science\DataMining\t-SNE\tSNE.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 165
-    '    Code Lines: 97 (58.79%)
-    ' Comment Lines: 41 (24.85%)
-    '    - Xml Docs: 51.22%
+    '   Total Lines: 449
+    '    Code Lines: 204 (45.43%)
+    ' Comment Lines: 169 (37.64%)
+    '    - Xml Docs: 81.66%
     ' 
-    '   Blank Lines: 27 (16.36%)
-    '     File Size: 4.97 KB
+    '   Blank Lines: 76 (16.93%)
+    '     File Size: 15.79 KB
 
 
     ' Class tSNE
     ' 
-    '     Properties: dimension
+    '     Properties: dimension, KNN, LeafSize, nthreads, SparseNonZeros
+    '                 theta, UseBarnesHut
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: [Step], GetEmbedding
+    '     Function: [Step], EffectiveK, GetEmbedding
     ' 
-    '     Sub: InitDataDist, InitDataRaw, InitSolution
+    '     Sub: InitDataDist, InitDataRaw, InitSolution, SyncFlatFromY, SyncYFromFlat
     ' 
     ' /********************************************************************************/
 

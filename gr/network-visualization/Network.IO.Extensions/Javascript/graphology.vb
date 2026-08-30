@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76cd66c0e33777567b88feb548f12386, gr\network-visualization\Network.IO.Extensions\graphology.vb"
+﻿#Region "Microsoft.VisualBasic::76cd66c0e33777567b88feb548f12386, gr\network-visualization\Network.IO.Extensions\Javascript\graphology.vb"
 
     ' Author:
     ' 

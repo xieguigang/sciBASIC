@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e5c09a849f0a85f5cc54c060cfeeea9, Data\DataFrame.Extensions\DataTableStream.vb"
+﻿#Region "Microsoft.VisualBasic::fdec716821e5f7c45b2de42f38a1dc5b, Data\DataFrame.Extensions\DataTableStream.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 134 (64.11%)
-    ' Comment Lines: 54 (25.84%)
+    '   Total Lines: 74
+    '    Code Lines: 52 (70.27%)
+    ' Comment Lines: 14 (18.92%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (10.05%)
-    '     File Size: 9.65 KB
+    '   Blank Lines: 8 (10.81%)
+    '     File Size: 3.39 KB
 
 
     ' Module DataTableStream
-    ' 
-    '     Function: (+2 Overloads) StreamToFrame
     ' 
     '     Sub: StreamTo
     ' 

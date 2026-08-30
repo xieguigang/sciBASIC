@@ -78,6 +78,11 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
 
     Private _disposed As Boolean = False
 
+    ''' <summary>最近一次前向的输出（反向传播时需要用它计算输出激活的导数）</summary>
+    Private _lastOutput As Tensor
+    ''' <summary>最近一次前向的隐藏状态（反向传播时需要用它计算输出层权重梯度）</summary>
+    Private _lastHidden As Tensor
+
 #Region "属性"
 
     ''' <summary>
@@ -130,6 +135,30 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     ''' </summary>
     Public Property DefaultDt As Double = 0.1
 
+    ''' <summary>
+    ''' 液态层的动力学模式（CT_RNN / LTC / CFC）
+    ''' </summary>
+    Public Property Mode As LiquidMode
+        Get
+            Return _LiquidLayer.Mode
+        End Get
+        Set(value As LiquidMode)
+            _LiquidLayer.Mode = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 训练开关。为 True 时液态层会登记前向记录以支持 <see cref="BackwardLiquid"/>。
+    ''' </summary>
+    Public Property Training As Boolean
+        Get
+            Return _LiquidLayer.Training
+        End Get
+        Set(value As Boolean)
+            _LiquidLayer.Training = value
+        End Set
+    End Property
+
 #End Region
 
 #Region "梯度属性"
@@ -165,11 +194,13 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     ''' <param name="activationType">隐藏层激活函数</param>
     ''' <param name="outputActivation">输出层激活函数: "none", "sigmoid", "tanh", "softmax"</param>
     ''' <param name="seed">随机种子</param>
+    ''' <param name="mode">液态层的动力学模式</param>
     Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer,
                    Optional numLiquidLayers As Integer = 1,
                    Optional activationType As String = "tanh",
                    Optional outputActivation As String = "none",
-                   Optional seed As Integer? = Nothing)
+                   Optional seed As Integer? = Nothing,
+                   Optional mode As LiquidMode = LiquidMode.CT_RNN)
         Me.InputSize = inputSize
         Me.HiddenSize = hiddenSize
         Me.OutputSize = outputSize
@@ -177,7 +208,7 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
         Me.OutputActivation = outputActivation
 
         ' 创建液态层
-        _LiquidLayer = New LiquidLayer(inputSize, hiddenSize, numLiquidLayers, activationType, seed)
+        _LiquidLayer = New LiquidLayer(inputSize, hiddenSize, numLiquidLayers, activationType, seed, mode)
 
         ' 初始化输出层权重
         _OutputWeight = Tensor.XavierInit(hiddenSize, outputSize, If(seed, seed + 100))
@@ -193,7 +224,7 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
 #Region "核心方法"
 
     ''' <summary>
-    ''' 前向传播
+    ''' 前向传播一个时间步
     ''' </summary>
     ''' <param name="input">输入张量</param>
     ''' <param name="dt">时间步长（可选，使用默认值）</param>
@@ -201,27 +232,21 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     Public Function Forward(input As Tensor, Optional dt As Double? = Nothing) As Tensor
         Dim actualDt = If(dt, DefaultDt)
 
-        ' 清空历史记录
-        If RecordHistory Then
-            StateHistory.Clear()
-        End If
-
         ' 通过液态层
         Dim hiddenState = _LiquidLayer.Forward(input, actualDt, SolverType)
 
-        ' 记录状态
+        ' 记录状态（注意：历史只在 ResetState/ClearHistory 时清空，
+        ' 旧实现在这里清空会导致整段序列只剩最后一个时间步）
         If RecordHistory Then
             StateHistory.Add(CType(hiddenState.Clone(), Tensor))
         End If
 
         ' 通过输出层
-        Dim output = ComputeOutput(hiddenState)
-
-        Return output
+        Return ComputeOutput(hiddenState)
     End Function
 
     ''' <summary>
-    ''' 处理完整的时间序列
+    ''' 处理完整的时间序列（固定步长）
     ''' </summary>
     ''' <param name="sequence">时间序列输入，形状为 (seqLength, inputSize)</param>
     ''' <param name="dt">时间步长</param>
@@ -230,34 +255,87 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
         Dim actualDt = If(dt, DefaultDt)
         Dim seqLength = sequence.Shape(0)
 
-        ' 重置状态
+        ' 重置状态（同时清空状态历史）
         ResetState()
-
-        ' 清空历史记录
-        If RecordHistory Then
-            StateHistory.Clear()
-        End If
 
         ' 输出序列
         Dim outputs = Tensor.Zeros({seqLength, OutputSize})
 
         For t = 0 To seqLength - 1
-            ' 获取当前时间步的输入
-            Dim currentInput = Tensor.Zeros({InputSize})
-            For i = 0 To InputSize - 1
-                currentInput(i) = sequence(t, i)
-            Next
-
-            ' 前向传播
+            Dim currentInput = RowVector(sequence, t)
             Dim output = Forward(currentInput, actualDt)
 
-            ' 存储输出
             For i = 0 To OutputSize - 1
                 outputs(t, i) = output(i)
             Next
         Next
 
         Return outputs
+    End Function
+
+    ''' <summary>
+    ''' 按真实时间网格推进（支持不规则采样）
+    ''' </summary>
+    ''' <remarks>
+    ''' 约定：times(0) 处的输出直接由初始隐藏状态读出；
+    ''' 之后用 t-1 时刻的输入把状态从 times(t-1) 推到 times(t)。
+    ''' 这符合物理模拟中"由当前状态与驱动外推下一状态"的语义。
+    ''' </remarks>
+    ''' <param name="sequence">驱动输入序列，形状为 (seqLength, inputSize)</param>
+    ''' <param name="times">与序列等长的真实时间戳（单调递增）</param>
+    ''' <returns>输出序列，形状为 (seqLength, outputSize)</returns>
+    Public Function ForwardSequence(sequence As Tensor, times As Double()) As Tensor
+        If sequence.Shape(0) <> times.Length Then
+            Throw New ArgumentException($"序列长度 {sequence.Shape(0)} 与时间戳数量 {times.Length} 不一致")
+        End If
+        If times.Length = 0 Then
+            Return Tensor.Zeros({0, OutputSize})
+        End If
+
+        ResetState()
+
+        Dim outputs = Tensor.Zeros({times.Length, OutputSize})
+        Dim first = ComputeOutput(_LiquidLayer.GetOutputState())
+
+        For i = 0 To OutputSize - 1
+            outputs(0, i) = first(i)
+        Next
+
+        For t = 1 To times.Length - 1
+            Dim dt = times(t) - times(t - 1)
+
+            If dt <= 0 Then
+                Throw New ArgumentException($"时间戳必须严格单调递增，但在索引 {t} 处出现 dt={dt}")
+            End If
+
+            Dim driven = RowVector(sequence, t - 1)
+            Dim hiddenState = _LiquidLayer.Forward(driven, dt, SolverType)
+
+            If RecordHistory Then
+                StateHistory.Add(CType(hiddenState.Clone(), Tensor))
+            End If
+
+            Dim output = ComputeOutput(hiddenState)
+
+            For i = 0 To OutputSize - 1
+                outputs(t, i) = output(i)
+            Next
+        Next
+
+        Return outputs
+    End Function
+
+    ''' <summary>
+    ''' 取出二维张量的第 rowIndex 行，返回一维张量
+    ''' </summary>
+    Private Function RowVector(sequence As Tensor, rowIndex As Integer) As Tensor
+        Dim row = Tensor.Zeros({InputSize})
+
+        For i = 0 To InputSize - 1
+            row(i) = sequence(rowIndex, i)
+        Next
+
+        Return row
     End Function
 
     ''' <summary>
@@ -287,24 +365,134 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
                 ' "none" - 不应用激活函数
         End Select
 
+        _lastHidden = hiddenState
+        _lastOutput = output
+
         Return output
     End Function
 
     ''' <summary>
-    ''' 重置网络状态
+    ''' 重置网络状态并清空状态历史
     ''' </summary>
     Public Sub ResetState()
         _LiquidLayer.ResetState()
+        StateHistory.Clear()
     End Sub
+
+    ''' <summary>
+    ''' 只清空状态历史，不影响神经元状态
+    ''' </summary>
+    Public Sub ClearHistory()
+        StateHistory.Clear()
+    End Sub
+
+    ''' <summary>
+    ''' 丢弃液态层的全部前向记录
+    ''' </summary>
+    Public Sub ClearRecords()
+        _LiquidLayer.ClearRecords()
+    End Sub
+
+#End Region
+
+#Region "反向传播"
+
+    ''' <summary>
+    ''' 回传输出层：累加输出权重/偏置的梯度，并返回对隐藏状态的伴随向量
+    ''' </summary>
+    ''' <param name="outputGradient">对网络输出的梯度 dL/doutput</param>
+    ''' <returns>对隐藏状态 h 的梯度 dL/dh</returns>
+    Public Function BackwardOutput(outputGradient As Tensor) As Tensor
+        If _lastOutput Is Nothing OrElse _lastHidden Is Nothing Then
+            Throw New InvalidOperationException("尚未完成前向传播，无法回传输出层梯度")
+        End If
+
+        Dim H = HiddenSize
+        Dim O = OutputSize
+        Dim dLin = CType(outputGradient.Clone(), Tensor)
+
+        ' 输出激活函数的导数
+        Select Case OutputActivation.ToLower()
+            Case "sigmoid"
+                dLin = LNNMath.Mul(dLin, ActivationFunctions.SigmoidDerivative(_lastOutput))
+            Case "tanh"
+                dLin = LNNMath.Mul(dLin, ActivationFunctions.TanhDerivative(_lastOutput))
+            Case "softmax"
+                ' J = diag(y) - y·y^T  ⇒  dLin = y ⊙ (dOut - (y·dOut))
+                Dim dot As Double = 0.0
+                For i = 0 To O - 1
+                    dot += _lastOutput(i) * dLin(i)
+                Next
+                For i = 0 To O - 1
+                    dLin(i) = _lastOutput(i) * (dLin(i) - dot)
+                Next
+        End Select
+
+        Dim hidden = _lastHidden
+
+        For i = 0 To O - 1
+            _OutputBiasGradient(i) += dLin(i)
+
+            For j = 0 To H - 1
+                _OutputWeightGradient(j, i) += hidden(j) * dLin(i)
+            Next
+        Next
+
+        Dim adjH = New Tensor(H)
+
+        For j = 0 To H - 1
+            Dim acc As Double = 0.0
+
+            For i = 0 To O - 1
+                acc += _OutputWeight(j, i) * dLin(i)
+            Next
+
+            adjH(j) = acc
+        Next
+
+        Return adjH
+    End Function
+
+    ''' <summary>
+    ''' 回传液态层：消费一个时间步的前向记录，返回对步首状态的梯度
+    ''' </summary>
+    ''' <param name="adjHidden">对隐藏状态 h 的梯度（可来自输出层、通量读取头或下一时刻）</param>
+    ''' <returns>对网络外部输入的梯度</returns>
+    Public Function BackwardLiquid(adjHidden As Tensor) As Tensor
+        Return _LiquidLayer.Backward(adjHidden)
+    End Function
+
+#End Region
+
+#Region "参数与梯度管理"
+
+    ''' <summary>
+    ''' 获取 (参数名, 参数, 梯度) 配对列表
+    ''' </summary>
+    Public Function GetParameterPairs() As List(Of ParameterPair)
+        Dim all As New List(Of ParameterPair)()
+
+        For Each pair In _LiquidLayer.GetParameterPairs()
+            all.Add(New ParameterPair($"liquid_{pair.Name}", pair.Value, pair.Gradient))
+        Next
+
+        all.Add(New ParameterPair("output_weight", _OutputWeight, _OutputWeightGradient))
+        all.Add(New ParameterPair("output_bias", _OutputBias, _OutputBiasGradient))
+
+        Return all
+    End Function
 
     ''' <summary>
     ''' 获取所有可训练参数
     ''' </summary>
     Public Function GetParameters() As Dictionary(Of String, Tensor)
-        Dim allParams = _LiquidLayer.GetParameters()
-        allParams.Add("output_weight", _OutputWeight)
-        allParams.Add("output_bias", _OutputBias)
-        Return allParams
+        Dim all As New Dictionary(Of String, Tensor)()
+
+        For Each pair In GetParameterPairs()
+            all.Add(pair.Name, pair.Value)
+        Next
+
+        Return all
     End Function
 
     ''' <summary>
@@ -312,12 +500,26 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     ''' </summary>
     Public Function GetParameterCount() As Integer
         Dim count = 0
-        Dim params = GetParameters()
-        For Each kvp In params
-            count += kvp.Value.Length
+
+        For Each pair In GetParameterPairs()
+            count += pair.Value.Length
         Next
+
         Return count
     End Function
+
+    ''' <summary>
+    ''' 清零全部梯度累加器
+    ''' </summary>
+    Public Sub ZeroGradients()
+        For Each pair In GetParameterPairs()
+            Dim g = pair.Gradient
+
+            For i = 0 To g.Length - 1
+                g(i) = 0
+            Next
+        Next
+    End Sub
 
 #End Region
 

@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::005283277281cf8731c675f195bb7335, Data\BinaryData\msgpack\MsgPackIO.vb"
+﻿#Region "Microsoft.VisualBasic::3248997340408a9f4df9fdbd54479b57, Data\BinaryData\msgpack\MsgPackIO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 815
-'    Code Lines: 700 (85.89%)
-' Comment Lines: 2 (0.25%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 113 (13.87%)
-'     File Size: 35.73 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MsgPackIO
-' 
-'     Function: DeserializeAnyObj, (+2 Overloads) DeserializeCollection, DeserializeRichObj, DeserializeValue, ReadHeader
-'               ReadMsgPackBoolean, ReadMsgPackDouble, ReadMsgPackFloat, ReadMsgPackInt, ReadMsgPackString
-'               ReadMsgPackULong, ReadNumArrayElements, ToDateTime, ToTimeSpan, (+2 Overloads) ToUnixMillis
-' 
-'     Sub: DeserializeArray, SerializeEnumerable, SerializeValue, (+15 Overloads) WriteMsgPack
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 814
+    '    Code Lines: 699 (85.87%)
+    ' Comment Lines: 2 (0.25%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 113 (13.88%)
+    '     File Size: 35.69 KB
+
+
+    ' Module MsgPackIO
+    ' 
+    '     Function: DeserializeAnyObj, (+2 Overloads) DeserializeCollection, DeserializeRichObj, DeserializeValue, ReadHeader
+    '               ReadMsgPackBoolean, ReadMsgPackDouble, ReadMsgPackFloat, ReadMsgPackInt, ReadMsgPackString
+    '               ReadMsgPackULong, ReadNumArrayElements, ToDateTime, ToTimeSpan, (+2 Overloads) ToUnixMillis
+    ' 
+    '     Sub: DeserializeArray, SerializeEnumerable, SerializeValue, (+15 Overloads) WriteMsgPack
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

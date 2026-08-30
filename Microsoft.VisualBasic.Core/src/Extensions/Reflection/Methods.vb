@@ -68,15 +68,19 @@ Public Module MethodsExtension
     ''' <param name="[default]"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function TryInvoke(Of T, TOut)(proc As Func(Of T, TOut), input As T, Optional [default] As TOut = Nothing) As TOut
+    <Extension>
+    Public Function TryInvoke(Of T, TOut)(proc As Func(Of T, TOut), input As T, Optional [default] As TOut = Nothing) As TOut
         Return New Func(Of TOut)(Function() proc(input)).TryInvoke([default])
     End Function
 
-    <Extension> Public Function TryInvoke(Of T)(proc As Func(Of T), Optional [default] As T = Nothing) As T
+    <Extension>
+    Public Function TryInvoke(Of T)(proc As Func(Of T), Optional [default] As T = Nothing) As T
         Try
             Return proc()
         Catch ex As Exception
             Call App.LogException(ex)
+            Call ex.Message.warning
+
             Return [default]
         End Try
     End Function

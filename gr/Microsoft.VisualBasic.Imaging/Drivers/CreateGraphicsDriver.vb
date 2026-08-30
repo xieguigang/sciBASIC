@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbbc63798fe8227fbcfd06732920e69d, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
+﻿#Region "Microsoft.VisualBasic::38c56bef2d18fced5577206bbc6c3f0f, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 28 (18.42%)
-    '     File Size: 6.88 KB
+    '     File Size: 6.90 KB
 
 
     '     Module ImageDriver

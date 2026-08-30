@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, Data\DataFrame\DataSet\Excel\Functions\Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::9aa955516d80b03e9908293a96884750, Data\DataFrame\DataSet\Excel\Functions\Numerics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (23.53%)
-    '     File Size: 495 B
+    '     File Size: 513 B
 
 
     '     Module Numerics

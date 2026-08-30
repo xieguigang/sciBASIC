@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5e31cccddc411f9e173de00bc0f3d7a, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSumError.vb"
+﻿#Region "Microsoft.VisualBasic::47567dc706cdeb1100a3deeff6ea6549, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSumError.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.30%
     ' 
     '   Blank Lines: 30 (22.90%)
-    '     File Size: 4.62 KB
+    '     File Size: 4.35 KB
 
 
     '     Class LmSumError

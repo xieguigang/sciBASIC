@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d1204dd9982bcee553abcdaf7ec5968, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixOps.vb"
+﻿#Region "Microsoft.VisualBasic::67b607d68aa7009861b5f56dc7140af9, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixOps.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 323
-    '    Code Lines: 254 (78.64%)
-    ' Comment Lines: 32 (9.91%)
-    '    - Xml Docs: 62.50%
+    '   Total Lines: 333
+    '    Code Lines: 260 (78.08%)
+    ' Comment Lines: 35 (10.51%)
+    '    - Xml Docs: 65.71%
     ' 
-    '   Blank Lines: 37 (11.46%)
-    '     File Size: 11.44 KB
+    '   Blank Lines: 38 (11.41%)
+    '     File Size: 11.90 KB
 
 
     '     Module MatrixOps

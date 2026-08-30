@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0b8647e0c7a8a81aa327c40b35e874, Data_science\DataMining\DynamicProgramming\KBand\KBandSearch.vb"
+﻿#Region "Microsoft.VisualBasic::6d21202e7247aea32ce0e5ad92121330, Data_science\DataMining\DynamicProgramming\KBand\KBandSearch.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 195
-    '    Code Lines: 114 (58.46%)
-    ' Comment Lines: 47 (24.10%)
-    '    - Xml Docs: 40.43%
+    '   Total Lines: 301
+    '    Code Lines: 151 (50.17%)
+    ' Comment Lines: 102 (33.89%)
+    '    - Xml Docs: 75.49%
     ' 
-    '   Blank Lines: 34 (17.44%)
-    '     File Size: 6.50 KB
+    '   Blank Lines: 48 (15.95%)
+    '     File Size: 10.84 KB
 
 
     ' Class KBandSearch
     ' 
-    '     Properties: K, globalAlign
-    ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
     '     Function: AlignBanded, Backtrace, CalculateEditDistance
     ' 
     ' /********************************************************************************/

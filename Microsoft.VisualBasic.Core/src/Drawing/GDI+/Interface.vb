@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f28e3ca9f7b5fac3c541e5484ec8a88, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::eb94b2bfd1803c419010b76305e9cf84, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 26.49%
     ' 
     '   Blank Lines: 85 (4.55%)
-    '     File Size: 82.47 KB
+    '     File Size: 82.51 KB
 
 
     '     Class IGraphics

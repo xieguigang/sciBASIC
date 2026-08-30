@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8a39ce8088881898502e22a657c7afd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
+﻿#Region "Microsoft.VisualBasic::6e5b2926d7a2054fe52faa56abea861b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 19 (17.43%)
-    '     File Size: 4.12 KB
+    '     File Size: 4.15 KB
 
 
     '     Interface IRasterGrayscaleHeatmap

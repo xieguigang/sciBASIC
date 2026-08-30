@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d821814ff2e01fdfe81dc4cdd03bb8a, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::4d87f60bd0b485bfe9e0a3775aa0326f, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2543
-    '    Code Lines: 722 (28.39%)
-    ' Comment Lines: 1624 (63.86%)
-    '    - Xml Docs: 12.99%
+    '   Total Lines: 2548
+    '    Code Lines: 724 (28.41%)
+    ' Comment Lines: 1625 (63.78%)
+    '    - Xml Docs: 12.98%
     ' 
-    '   Blank Lines: 197 (7.75%)
-    '     File Size: 87.64 KB
+    '   Blank Lines: 199 (7.81%)
+    '     File Size: 87.85 KB
 
 
     ' Class GDICanvas

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\BlockParser.vb"
+﻿#Region "Microsoft.VisualBasic::7293fbfdd65da6d04419399918a80f49, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\BlockParser.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,34 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 390
+    '    Code Lines: 217 (55.64%)
+    ' Comment Lines: 91 (23.33%)
+    '    - Xml Docs: 81.32%
+    ' 
+    '   Blank Lines: 82 (21.03%)
+    '     File Size: 14.05 KB
+
+
+    '     Class BlockParser
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: HeaderLevel, IndentOf, IsBlank, IsBlockQuote, IsFence
+    '                   IsHorizontalRule, IsTableStart, Parse, ParseBlockQuote, ParseFencedCode
+    '                   StripListItem, StripQuoteMarker
+    ' 
+    '         Sub: AppendSpans, EmitLine, EmitListItem, FlushTable
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

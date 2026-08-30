@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f460310c190826f7673a25d702c00a7, gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
+﻿#Region "Microsoft.VisualBasic::e5883a0c71bbb8c01e6d1259630ba714, gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     '     Module TabularCreator
     ' 
-    '         Function: (+2 Overloads) CreateGraphTable, (+2 Overloads) CreateNodesMetaData, dumpNodeVertex, GetUnionProperties, (+3 Overloads) Tabular
+    '         Function: (+2 Overloads) CreateGraphTable, (+2 Overloads) CreateNodesMetaData, DumpNodeVertex, GetUnionProperties, (+3 Overloads) Tabular
     ' 
     ' 
     ' /********************************************************************************/

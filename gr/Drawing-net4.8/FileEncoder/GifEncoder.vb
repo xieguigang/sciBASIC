@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0399b73b1b111eb4b2aec4184a6cba2, gr\Drawing-net4.8\FileEncoder\GifEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::f9d1f2cf41e2dc05c46acbccab68246d, gr\Drawing-net4.8\FileEncoder\GifEncoder.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 40.68%
     ' 
     '   Blank Lines: 24 (11.71%)
-    '     File Size: 8.02 KB
+    '     File Size: 8.04 KB
 
 
     ' Class GifEncoder

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98e35e9543ec9a6048cefd5a3315e31b, Data\DataFrame\DataSet\DataRows.vb"
+﻿#Region "Microsoft.VisualBasic::ca52321413dee59feb03804ff36321af, Data\DataFrame\DataSet\DataRows.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.91%
     ' 
     '   Blank Lines: 22 (11.76%)
-    '     File Size: 7.36 KB
+    '     File Size: 7.37 KB
 
 
     '     Class DataRows

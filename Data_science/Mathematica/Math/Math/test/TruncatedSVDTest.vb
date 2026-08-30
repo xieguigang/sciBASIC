@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b601e4ce6a5bec86414d82269a5c861, Data_science\Mathematica\Math\Math\test\TruncatedSVDTest.vb"
+﻿#Region "Microsoft.VisualBasic::932fb2ee7f90f865e5fc9270811fd1b5, Data_science\Mathematica\Math\Math\test\TruncatedSVDTest.vb"
 
     ' Author:
     ' 
@@ -236,4 +236,3 @@ Module TruncatedSVDTest
         Console.WriteLine("全部测试完成")
     End Sub
 End Module
-

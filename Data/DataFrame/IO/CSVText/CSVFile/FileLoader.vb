@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8a917c7416fd52db577b9ae24c3b5a0, Data\DataFrame\IO\CSVText\CSVFile\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::3c6472b06045a2aec306d38140bf983f, Data\DataFrame\IO\CSVText\CSVFile\FileLoader.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 154
-    '    Code Lines: 111 (72.08%)
-    ' Comment Lines: 23 (14.94%)
-    '    - Xml Docs: 86.96%
+    '   Total Lines: 212
+    '    Code Lines: 145 (68.40%)
+    ' Comment Lines: 35 (16.51%)
+    '    - Xml Docs: 82.86%
     ' 
-    '   Blank Lines: 20 (12.99%)
-    '     File Size: 7.25 KB
+    '   Blank Lines: 32 (15.09%)
+    '     File Size: 9.46 KB
 
 
     '     Module FileLoader
     ' 
-    '         Function: FastLoad, (+2 Overloads) Load, parallelLoad
+    '         Function: FastLoad, (+2 Overloads) Load, LoadTableData, ParseInternal
+    '         Class RowSetParser
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '             Function: GetAllRows, (+2 Overloads) GetNoneBlankRows
+    ' 
+    '             Sub: Solve
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

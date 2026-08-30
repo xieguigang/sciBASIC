@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a870a9180c13a3896e627bb186106fd3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ConsoleFormat.vb"
+﻿#Region "Microsoft.VisualBasic::f754f991bd4497ef00d111d3ffb4db67, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ANSI\ConsoleFormat.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 74 (76.29%)
-    ' Comment Lines: 8 (8.25%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 178
+    '    Code Lines: 105 (58.99%)
+    ' Comment Lines: 52 (29.21%)
+    '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 15 (15.46%)
-    '     File Size: 3.65 KB
+    '   Blank Lines: 21 (11.80%)
+    '     File Size: 7.54 KB
 
 
     '     Class ConsoleFormat
     ' 
     '         Properties: Background, BackgroundCode, Bold, Foreground, ForegroundCode
-    '                     Inverted, IsDefault, None, Underline
+    '                     Inverted, IsDefault, None, Strikeout, Underline
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Clone, Equals, HtmlColorCode, ToString
+    '         Function: Clone, Combine, Equals, HtmlColorCode, PushStyle
+    '                   ToString
     ' 
-    '         Sub: SetConfig
+    '         Sub: Apply, SetConfig
     ' 
     ' 
     ' /********************************************************************************/

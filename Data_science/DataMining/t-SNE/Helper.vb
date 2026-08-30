@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::036d324dfaecf8bfb223698502597b78, Data_science\DataMining\t-SNE\Helper.vb"
+﻿#Region "Microsoft.VisualBasic::d80fd9dae27e642d6315248c9242f063, Data_science\DataMining\t-SNE\Helper.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 164
-    '    Code Lines: 97 (59.15%)
-    ' Comment Lines: 36 (21.95%)
-    '    - Xml Docs: 63.89%
+    '   Total Lines: 566
+    '    Code Lines: 311 (54.95%)
+    ' Comment Lines: 171 (30.21%)
+    '    - Xml Docs: 79.53%
     ' 
-    '   Blank Lines: 31 (18.90%)
-    '     File Size: 5.24 KB
+    '   Blank Lines: 84 (14.84%)
+    '     File Size: 22.17 KB
 
 
     ' Module Helper
     ' 
-    '     Function: d2p, L2, xtod, zeros
+    '     Function: d2p, d2pSparse, L2, ParallelOptions, QuickSelect
+    '               SumColumnParts, SumParts, Symmetrize, TaskBlockCount, TaskBlockSize
+    '               xtod, zeros
+    ' 
+    '     Sub: EmitPair, ProcessRow, ReleaseRowBuffer, ReleaseWorkspace, SearchPrecision
+    '     Class RowWorkspace
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

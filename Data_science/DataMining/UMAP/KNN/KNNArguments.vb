@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc6cf39e51b0a829daa8044b62847971, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
+﻿#Region "Microsoft.VisualBasic::f124980c97a11055556e853c419e82ae, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 21 (65.62%)
-    ' Comment Lines: 4 (12.50%)
+    '   Total Lines: 165
+    '    Code Lines: 74 (44.85%)
+    ' Comment Lines: 79 (47.88%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (21.88%)
-    '     File Size: 888 B
+    '   Blank Lines: 12 (7.27%)
+    '     File Size: 6.08 KB
 
 
     '     Structure KNNArguments
     ' 
-    '         Properties: bandwidth, k, localConnectivity, nIter
+    '         Properties: bandwidth, delta, k, leafSize, localConnectivity
+    '                     maxCandidates, nDescentIters, nIter, nTrees, parallelism
+    '                     rho, rpTreeInit
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: GetDescentIters, GetLeafSize, GetNumOfTrees, Round, ToString
     ' 
     ' 
     ' /********************************************************************************/

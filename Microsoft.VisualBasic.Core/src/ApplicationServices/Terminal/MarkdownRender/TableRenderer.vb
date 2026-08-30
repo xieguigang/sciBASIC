@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\TableRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::699506d14d361ed10ed2329c56940a05, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\TableRenderer.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,28 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 56 (53.33%)
+    ' Comment Lines: 33 (31.43%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 16 (15.24%)
+    '     File Size: 3.96 KB
+
+
+    '     Module TableRenderer
+    ' 
+    '         Function: IsDelimiterRow, Render, SplitCells
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

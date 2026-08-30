@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::8c2166477f0b9b5b68ecc93c4cb540be, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::b71d81a6b38047e7d9a0004c59854862, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 110
-'    Code Lines: 71 (64.55%)
-' Comment Lines: 25 (22.73%)
-'    - Xml Docs: 92.00%
-' 
-'   Blank Lines: 14 (12.73%)
-'     File Size: 5.07 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module NetworkFileIO
-' 
-'     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, (+2 Overloads) Save
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 102 (62.96%)
+    ' Comment Lines: 39 (24.07%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 21 (12.96%)
+    '     File Size: 7.04 KB
+
+
+    ' Module NetworkFileIO
+    ' 
+    '     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, (+2 Overloads) ReadEdges, (+2 Overloads) Save
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

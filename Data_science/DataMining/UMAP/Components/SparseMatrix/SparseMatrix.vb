@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7eaef0f1f9de4ea9225973c396668d29, Data_science\DataMining\UMAP\Components\SparseMatrix\SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::ac4a45e704835637aef6e132acc0c57e, Data_science\DataMining\UMAP\Components\SparseMatrix\SparseMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 275
-    '    Code Lines: 202 (73.45%)
-    ' Comment Lines: 21 (7.64%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 386
+    '    Code Lines: 254 (65.80%)
+    ' Comment Lines: 66 (17.10%)
+    '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 52 (18.91%)
-    '     File Size: 10.35 KB
+    '   Blank Lines: 66 (17.10%)
+    '     File Size: 15.60 KB
 
 
     ' Class SparseMatrix
@@ -49,10 +49,10 @@
     ' 
     '     Constructor: (+3 Overloads) Sub New
     ' 
-    '     Function: [Get], Add, Combine, ElementWiseWith, GetAll
-    '               GetCols, GetCSR, GetRows, GetValues, (+2 Overloads) Map
-    '               MultiplyScalar, newTaskPool, PairwiseMultiply, Subtract, ToArray
-    '               Transpose
+    '     Function: [Get], Add, Combine, EffectiveDegree, ElementWiseWith
+    '               EntryArray, GetAll, GetCols, GetCSR, GetRows
+    '               GetValues, (+2 Overloads) Map, MultiplyScalar, PairwiseMultiply, Subtract
+    '               ToArray, Transpose
     ' 
     '     Sub: [Set], CheckDims, ForEach
     ' 

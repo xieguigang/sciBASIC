@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::253f4c62c195ad2b881b18f94534f39c, Microsoft.VisualBasic.Core\src\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9400cb8195c9e98bbfd8b673be331111, Microsoft.VisualBasic.Core\src\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 21.35%
     ' 
     '   Blank Lines: 16 (8.84%)
-    '     File Size: 8.25 KB
+    '     File Size: 8.24 KB
 
 
     '     Module Resources
@@ -234,4 +234,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

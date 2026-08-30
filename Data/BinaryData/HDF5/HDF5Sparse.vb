@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::919d1d219151befd71ddd5a05ecb608c, Data\BinaryData\HDF5\HDF5Sparse.vb"
+﻿#Region "Microsoft.VisualBasic::bc373b4fb135af13d28d318bd9a28797, Data\BinaryData\HDF5\HDF5Sparse.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 78 (58.21%)
-    ' Comment Lines: 34 (25.37%)
+    '   Total Lines: 131
+    '    Code Lines: 78 (59.54%)
+    ' Comment Lines: 34 (25.95%)
     '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 22 (16.42%)
-    '     File Size: 6.68 KB
+    '   Blank Lines: 19 (14.50%)
+    '     File Size: 6.67 KB
 
 
     ' Module HDF5Sparse
     ' 
     '     Function: EnumerateChunkArrays, GetSparseMatrixFromTriplets, OpenChunkedDataset
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ' 稀疏感知的 HDF5 读取辅助：在基础 HDF5 模块之上提供通用的流式分块读取
 ' 与 COO 三元组 -> SparseMatrix 的封装，供上层（如 STRaid）按 10x 语义组合使用。
@@ -185,5 +182,3 @@ Public Module HDF5Sparse
         Return New SparseMatrix(rows.ToArray, cols.ToArray, vals.ToArray, nrows, ncols)
     End Function
 End Module
-
-

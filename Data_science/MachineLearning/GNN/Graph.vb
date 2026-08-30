@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cfb8056df36e1e8949c94633ba96202, Data_science\MachineLearning\GNN\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::4fce7c04de2eb29c956739c78a61666d, Data_science\MachineLearning\GNN\Graph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 326
-    '    Code Lines: 168 (51.53%)
-    ' Comment Lines: 113 (34.66%)
-    '    - Xml Docs: 95.58%
+    '   Total Lines: 262
+    '    Code Lines: 131 (50.00%)
+    ' Comment Lines: 94 (35.88%)
+    '    - Xml Docs: 94.68%
     ' 
-    '   Blank Lines: 45 (13.80%)
-    '     File Size: 9.97 KB
+    '   Blank Lines: 37 (14.12%)
+    '     File Size: 8.37 KB
 
 
     ' Class Edge
@@ -59,13 +59,6 @@
     '               GetNormalizedAdjacencyMatrix, GetNormalizedLaplacian
     ' 
     '     Sub: AddEdge, AddUndirectedEdge, PrintInfo
-    ' 
-    ' Class GraphDataset
-    ' 
-    '     Properties: Count, Graphs, Labels, NumClasses
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Add
     ' 
     ' /********************************************************************************/
 
@@ -114,7 +107,7 @@ Public Class Graph
     ''' <summary>
     ''' 边列表
     ''' </summary>
-    Dim _Edges As System.Collections.Generic.List(Of Edge)
+    Dim _Edges As List(Of Edge)
 
     Public Property NumNodes As Integer
         Get
@@ -332,68 +325,4 @@ Public Class Graph
         Console.WriteLine($"  特征维度: {NodeFeatures.Shape(1)}")
         Console.WriteLine($"  平均度: {NumEdges / NumNodes:F2}")
     End Sub
-End Class
-
-''' <summary>
-''' 图数据集
-''' 用于存储多个图样本，常用于图分类任务
-''' </summary>
-Public Class GraphDataset
-    ''' <summary>
-    ''' 图样本列表
-    ''' </summary>
-
-    ''' <summary>
-    ''' 图标签（用于图分类任务）
-    ''' </summary>
-    Private _Graphs As System.Collections.Generic.List(Of Graph), _Labels As System.Collections.Generic.List(Of Integer)
-
-    Public Property Graphs As List(Of Graph)
-        Get
-            Return _Graphs
-        End Get
-        Private Set(value As List(Of Graph))
-            _Graphs = value
-        End Set
-    End Property
-
-    Public Property Labels As List(Of Integer)
-        Get
-            Return _Labels
-        End Get
-        Private Set(value As List(Of Integer))
-            _Labels = value
-        End Set
-    End Property
-
-    Public Sub New()
-        Graphs = New List(Of Graph)()
-        Labels = New List(Of Integer)()
-    End Sub
-
-    ''' <summary>
-    ''' 添加图样本
-    ''' </summary>
-    Public Sub Add(graph As Graph, label As Integer)
-        Graphs.Add(graph)
-        Labels.Add(label)
-    End Sub
-
-    ''' <summary>
-    ''' 获取数据集大小
-    ''' </summary>
-    Public ReadOnly Property Count As Integer
-        Get
-            Return Graphs.Count
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' 获取类别数量
-    ''' </summary>
-    Public ReadOnly Property NumClasses As Integer
-        Get
-            Return Labels.Distinct().Count()
-        End Get
-    End Property
 End Class

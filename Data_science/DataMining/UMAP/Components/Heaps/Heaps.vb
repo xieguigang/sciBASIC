@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b6b23e120619c48dd5e9f83689e168d, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
+﻿#Region "Microsoft.VisualBasic::49d4a9a9a42e187460f3e6e5c1da562f, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 172 (68.53%)
-    ' Comment Lines: 33 (13.15%)
-    '    - Xml Docs: 87.88%
+    '   Total Lines: 412
+    '    Code Lines: 263 (63.83%)
+    ' Comment Lines: 84 (20.39%)
+    '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 46 (18.33%)
-    '     File Size: 9.54 KB
+    '   Blank Lines: 65 (15.78%)
+    '     File Size: 16.60 KB
 
 
     ' Module Heaps
     ' 
-    '     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
-    '               SmallestFlagged, UncheckedHeapPush
+    '     Function: BuildCandidates, DeHeapSort, HeapPush, HeapPushPair, MakeArrays
+    '               MakeHeap, SmallestFlagged, ToIntMatrix, UncheckedHeapPush
     ' 
-    '     Sub: SiftDown
+    '     Sub: SiftDown, SortHeapRow
     ' 
     ' /********************************************************************************/
 

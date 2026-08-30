@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a586db191356804d34ac278ffcba2f3, Data_science\DataMining\UMAP\KNN\SmoothKNN.vb"
+﻿#Region "Microsoft.VisualBasic::3f9cb56826d4d21d26ad428b12ff227a, Data_science\DataMining\UMAP\KNN\SmoothKNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
-    '    Code Lines: 125 (78.12%)
-    ' Comment Lines: 4 (2.50%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 202
+    '    Code Lines: 152 (75.25%)
+    ' Comment Lines: 15 (7.43%)
+    '    - Xml Docs: 53.33%
     ' 
-    '   Blank Lines: 31 (19.38%)
-    '     File Size: 6.13 KB
+    '   Blank Lines: 35 (17.33%)
+    '     File Size: 8.24 KB
 
 
     '     Class SmoothKNN

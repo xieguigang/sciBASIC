@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566a1a576568641b87a6b26a6d1c57b2, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Node.vb"
+﻿#Region "Microsoft.VisualBasic::566a1a576568641b87a6b26a6d1c57b2, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Tabular\Node.vb"
 
     ' Author:
     ' 

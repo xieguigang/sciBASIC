@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70208e24d105103ec1367309c66d90bd, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
+﻿#Region "Microsoft.VisualBasic::34436bc0a281625e594569200048e069, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 81.48%
     ' 
     '   Blank Lines: 172 (20.57%)
-    '     File Size: 33.38 KB
+    '     File Size: 33.44 KB
 
 
     '     Class GraphicsPostScript

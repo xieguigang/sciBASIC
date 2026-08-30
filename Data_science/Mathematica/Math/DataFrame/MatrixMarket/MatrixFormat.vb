@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f14a6cb7bea7b7d02a2d0c128c90b9d9, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MatrixFormat.vb"
+﻿#Region "Microsoft.VisualBasic::84ac759f6fe482cc02a39fb00bcbb080, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MatrixFormat.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.27%
     ' 
     '   Blank Lines: 21 (17.80%)
-    '     File Size: 4.45 KB
+    '     File Size: 4.44 KB
 
 
     ' Module MatrixFormat
@@ -177,4 +177,3 @@ Public Module MatrixFormat
     End Function
 
 End Module
-

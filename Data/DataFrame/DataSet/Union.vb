@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ddf331566947d935b363d058d7018ac, Data\DataFrame\DataSet\Union.vb"
+﻿#Region "Microsoft.VisualBasic::53a5177d98dbcf266c2886043851ba71, Data\DataFrame\DataSet\Union.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 11 (21.57%)
-    '     File Size: 1.74 KB
+    '     File Size: 1.75 KB
 
 
     '     Class CbindProvider

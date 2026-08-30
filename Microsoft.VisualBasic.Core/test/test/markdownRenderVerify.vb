@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic, Microsoft.VisualBasic.Core\test\test\markdownRenderVerify.vb"
+﻿#Region "Microsoft.VisualBasic::984953937373aac56f52e40045368bbb, Microsoft.VisualBasic.Core\test\test\markdownRenderVerify.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,30 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 392
+    '    Code Lines: 243 (61.99%)
+    ' Comment Lines: 57 (14.54%)
+    '    - Xml Docs: 43.86%
+    ' 
+    '   Blank Lines: 92 (23.47%)
+    '     File Size: 16.15 KB
+
+
+    ' Module markdownRenderVerify
+    ' 
+    '     Function: ColumnsOf, R, TestTheme
+    ' 
+    '     Sub: Check, CheckBlock, CheckInline, CheckOriginalSample, CheckTable
+    '          CheckTerminalState, ReportError, Run
+    ' 
     ' /********************************************************************************/
 
 #End Region

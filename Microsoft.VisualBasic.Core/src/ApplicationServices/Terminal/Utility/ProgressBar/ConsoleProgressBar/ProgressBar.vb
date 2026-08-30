@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23601b999b7639f87678dd8cbbd220bd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::5aef015903b5ef2058b50ec7cae8223a, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 563
-    '    Code Lines: 333 (59.15%)
-    ' Comment Lines: 161 (28.60%)
+    '   Total Lines: 567
+    '    Code Lines: 337 (59.44%)
+    ' Comment Lines: 161 (28.40%)
     '    - Xml Docs: 78.88%
     ' 
-    '   Blank Lines: 69 (12.26%)
-    '     File Size: 22.50 KB
+    '   Blank Lines: 69 (12.17%)
+    '     File Size: 22.57 KB
 
 
     '     Class ProgressBar

@@ -67,6 +67,14 @@ Imports std = System.Math
 ''' 液态神经网络训练器
 ''' 实现基于时间的反向传播(BPTT)训练算法
 ''' </summary>
+''' <remarks>
+''' 与旧实现的关键区别：
+''' 1. 液态层（τ、W、U、b 以及 LTC/CfC 的门控参数）的梯度由
+'''    <see cref="LiquidCell.Backward"/> 精确计算，不再使用硬编码的伪梯度；
+''' 2. Adam 的动量状态按参数的<strong>全局唯一名</strong>索引，多层堆叠时不再互相覆盖；
+''' 3. 梯度累积与参数更新被拆成 <see cref="Backward"/> 与 <see cref="Step"/>，
+'''    便于外部（如代谢网络训练器）先合并多个损失头的梯度再统一更新。
+''' </remarks>
 Public Class LNNTrainer
 
 #Region "属性"
@@ -82,9 +90,14 @@ Public Class LNNTrainer
     Public Property LearningRate As Double = 0.001
 
     ''' <summary>
-    ''' 优化器类型
+    ''' 优化器类型（"adam" / "sgd"）
     ''' </summary>
     Public Property OptimizerType As String = "adam"
+
+    ''' <summary>
+    ''' 是否在 <see cref="Fit"/> 中打印训练进度
+    ''' </summary>
+    Public Property Verbose As Boolean = True
 
     ''' <summary>
     ''' Adam优化器参数 - 一阶矩估计
@@ -117,7 +130,7 @@ Public Class LNNTrainer
     Public Property AdamEpsilon As Double = 0.00000001
 
     ''' <summary>
-    ''' 梯度裁剪阈值
+    ''' 梯度裁剪阈值（按全部参数梯度的全局 L2 范数裁剪）
     ''' </summary>
     Public Property GradientClipValue As Double = 1.0
 
@@ -142,10 +155,9 @@ Public Class LNNTrainer
         _AdamM = New Dictionary(Of String, Tensor)()
         _AdamV = New Dictionary(Of String, Tensor)()
 
-        Dim params = _Network.GetParameters()
-        For Each kvp In params
-            _AdamM.Add(kvp.Key, Tensor.Zeros(kvp.Value.Shape))
-            _AdamV.Add(kvp.Key, Tensor.Zeros(kvp.Value.Shape))
+        For Each pair In _Network.GetParameterPairs()
+            _AdamM.Add(pair.Name, Tensor.Zeros(pair.Value.Shape))
+            _AdamV.Add(pair.Name, Tensor.Zeros(pair.Value.Shape))
         Next
     End Sub
 
@@ -197,170 +209,78 @@ Public Class LNNTrainer
 
 #End Region
 
-#Region "训练方法"
+#Region "梯度累积与参数更新"
 
     ''' <summary>
-    ''' 训练单个时间步
+    ''' 只累积梯度，不更新参数
     ''' </summary>
-    ''' <param name="input">输入</param>
-    ''' <param name="target">目标输出</param>
-    ''' <param name="dt">时间步长</param>
-    ''' <returns>损失值</returns>
-    Public Function TrainStep(input As Tensor, target As Tensor, Optional dt As Double? = Nothing) As Double
-        ' 前向传播
-        Dim output = _Network.Forward(input, dt)
+    ''' <param name="outputGradient">对网络输出的梯度 dL/doutput</param>
+    ''' <returns>对网络外部输入的梯度（一般可忽略）</returns>
+    Public Function Backward(outputGradient As Tensor) As Tensor
+        Dim adjH = _Network.BackwardOutput(outputGradient)
 
-        ' 计算损失
-        Dim loss = MSE(output, target)
-
-        ' 计算输出层梯度
-        Dim outputGradient = MSEGradient(output, target)
-
-        ' 反向传播（简化版本）
-        Backpropagate(outputGradient)
-
-        ' 更新参数
-        UpdateParameters()
-
-        Return loss
+        Return _Network.BackwardLiquid(adjH)
     End Function
 
     ''' <summary>
-    ''' 训练完整序列
+    ''' 应用优化器更新并清零梯度
     ''' </summary>
-    ''' <param name="inputSequence">输入序列</param>
-    ''' <param name="targetSequence">目标序列</param>
-    ''' <param name="dt">时间步长</param>
-    ''' <returns>平均损失</returns>
-    Public Function TrainSequence(inputSequence As Tensor, targetSequence As Tensor, Optional dt As Double? = Nothing) As Double
-        Dim actualDt = If(dt, _Network.DefaultDt)
-        Dim seqLength = inputSequence.Shape(0)
-        Dim totalLoss As Double = 0
-
-        ' 重置网络状态
-        _Network.ResetState()
-
-        ' 逐时间步训练
-        For t = 0 To seqLength - 1
-            ' 获取当前输入和目标
-            Dim currentInput = Tensor.Zeros({_Network.InputSize})
-            Dim currentTarget = Tensor.Zeros({_Network.OutputSize})
-
-            For i = 0 To _Network.InputSize - 1
-                currentInput(i) = inputSequence(t, i)
-            Next
-
-            For i = 0 To _Network.OutputSize - 1
-                currentTarget(i) = targetSequence(t, i)
-            Next
-
-            ' 训练当前时间步
-            totalLoss += TrainStep(currentInput, currentTarget, actualDt)
-        Next
-
-        Return totalLoss / seqLength
-    End Function
-
-    ''' <summary>
-    ''' 反向传播（简化实现）
-    ''' </summary>
-    Private Sub Backpropagate(outputGradient As Tensor)
-        ' 获取网络参数
-        Dim hiddenSize = _Network.HiddenSize
-        Dim outputSize = _Network.OutputSize
-
-        ' 计算输出层权重梯度
-        ' dL/dW_out = hidden^T @ outputGradient
-        Dim hiddenState = _Network.LiquidLayer.GetOutputState()
-        Dim hiddenReshaped = New Tensor(hiddenState.Data, 1, hiddenSize)
-        Dim gradReshaped = New Tensor(outputGradient.Data, outputSize, 1)
-
-        ' 输出权重梯度
-        For i = 0 To hiddenSize - 1
-            For j = 0 To outputSize - 1
-                _Network.OutputWeightGradient(i, j) += hiddenState(i) * outputGradient(j)
-            Next
-        Next
-
-        ' 输出偏置梯度
-        For i = 0 To outputSize - 1
-            _Network.OutputBiasGradient(i) += outputGradient(i)
-        Next
-
-        ' 传播到隐藏层（简化：使用固定的时间常数导数）
-        Dim hiddenGradient = Tensor.Zeros({hiddenSize})
-        For i = 0 To hiddenSize - 1
-            For j = 0 To outputSize - 1
-                hiddenGradient(i) += outputGradient(j) * _Network.OutputWeight(i, j)
-            Next
-        Next
-
-        ' 梯度裁剪
+    Public Sub [Step]()
         If UseGradientClipping Then
-            Dim norm = hiddenGradient.L2Norm()
-            If norm > GradientClipValue Then
-                Dim scale = GradientClipValue / norm
-                hiddenGradient = hiddenGradient * CSng(scale)
-            End If
+            Call ClipGradients()
         End If
 
-        ' 更新液态层梯度（简化版本）
-        UpdateLiquidLayerGradients(hiddenGradient)
+        Select Case OptimizerType.ToLower()
+            Case "sgd"
+                Call UpdateParametersSGD()
+            Case Else
+                Call UpdateParametersAdam()
+        End Select
+
+        Call ZeroGradients()
     End Sub
 
     ''' <summary>
-    ''' 更新液态层梯度
+    ''' 按全部参数梯度的全局 L2 范数做裁剪
     ''' </summary>
-    Private Sub UpdateLiquidLayerGradients(hiddenGradient As Tensor)
-        ' 获取最后一层的cell
-        Dim lastCell = _Network.LiquidLayer.Cells(_Network.LiquidLayer.Cells.Count - 1)
+    Private Sub ClipGradients()
+        Dim sq As Double = 0.0
 
-        ' 更新循环权重梯度
-        Dim state = lastCell.State
-        For i = 0 To lastCell.HiddenSize - 1
-            For j = 0 To lastCell.HiddenSize - 1
-                lastCell.WeightRecurrentGradient(i, j) += hiddenGradient(i) * state(j) * 0.1
+        For Each pair In _Network.GetParameterPairs()
+            Dim g = pair.Gradient
+            For i = 0 To g.Length - 1
+                sq += g(i) * g(i)
             Next
         Next
 
-        ' 更新偏置梯度
-        For i = 0 To lastCell.HiddenSize - 1
-            lastCell.BiasGradient(i) += hiddenGradient(i) * 0.1
-        Next
-    End Sub
+        Dim norm = std.Sqrt(sq)
 
-    ''' <summary>
-    ''' 更新参数
-    ''' </summary>
-    Private Sub UpdateParameters()
-        Select Case OptimizerType.ToLower()
-            Case "adam"
-                UpdateParametersAdam()
-            Case "sgd"
-                UpdateParametersSGD()
-            Case Else
-                UpdateParametersAdam()
-        End Select
+        If norm <= GradientClipValue OrElse norm = 0.0 Then
+            Return
+        End If
+
+        Dim scale = GradientClipValue / norm
+
+        For Each pair In _Network.GetParameterPairs()
+            Dim g = pair.Gradient
+            For i = 0 To g.Length - 1
+                g(i) = g(i) * scale
+            Next
+        Next
     End Sub
 
     ''' <summary>
     ''' 使用SGD更新参数
     ''' </summary>
     Private Sub UpdateParametersSGD()
-        ' 更新输出层权重
-        For i = 0 To _Network.OutputWeight.Shape(0) - 1
-            For j = 0 To _Network.OutputWeight.Shape(1) - 1
-                _Network.OutputWeight(i, j) -= LearningRate * _Network.OutputWeightGradient(i, j)
+        For Each pair In _Network.GetParameterPairs()
+            Dim p = pair.Value
+            Dim g = pair.Gradient
+
+            For i = 0 To p.Length - 1
+                p(i) -= LearningRate * g(i)
             Next
         Next
-
-        ' 更新输出层偏置
-        For i = 0 To _Network.OutputBias.Length - 1
-            _Network.OutputBias(i) -= LearningRate * _Network.OutputBiasGradient(i)
-        Next
-
-        ' 清零梯度
-        ZeroGradients()
     End Sub
 
     ''' <summary>
@@ -368,83 +288,137 @@ Public Class LNNTrainer
     ''' </summary>
     Private Sub UpdateParametersAdam()
         _AdamT += 1
-        Dim params = _Network.GetParameters()
 
-        ' 更新输出权重
-        UpdateParamAdam(_Network.OutputWeight, _Network.OutputWeightGradient, "output_weight")
+        Dim beta1Pow = std.Pow(AdamBeta1, _AdamT)
+        Dim beta2Pow = std.Pow(AdamBeta2, _AdamT)
 
-        ' 更新输出偏置
-        UpdateParamAdam(_Network.OutputBias, _Network.OutputBiasGradient, "output_bias")
+        For Each pair In _Network.GetParameterPairs()
+            Dim key = pair.Name
 
-        ' 更新液态层参数
-        For Each cell In _Network.LiquidLayer.Cells
-            UpdateParamAdam(cell.Tau, cell.TauGradient, "tau")
-            UpdateParamAdam(cell.WeightInput, cell.WeightInputGradient, "weight_input")
-            UpdateParamAdam(cell.WeightRecurrent, cell.WeightRecurrentGradient, "weight_recurrent")
-            UpdateParamAdam(cell.Bias, cell.BiasGradient, "bias")
-        Next
+            ' 参数集合可能在运行中变化（例如切换到 LTC 模式后新增门控参数）
+            If Not _AdamM.ContainsKey(key) Then
+                _AdamM.Add(key, Tensor.Zeros(pair.Value.Shape))
+                _AdamV.Add(key, Tensor.Zeros(pair.Value.Shape))
+            End If
 
-        ' 清零梯度
-        ZeroGradients()
-    End Sub
+            Dim m = _AdamM(key)
+            Dim v = _AdamV(key)
+            Dim p = pair.Value
+            Dim g = pair.Gradient
 
-    ''' <summary>
-    ''' 使用Adam更新单个参数
-    ''' </summary>
-    Private Sub UpdateParamAdam(param As Tensor, gradient As Tensor, name As String)
-        Dim key = name
-        If Not _AdamM.ContainsKey(key) Then
-            _AdamM.Add(key, Tensor.Zeros(param.Shape))
-            _AdamV.Add(key, Tensor.Zeros(param.Shape))
-        End If
+            For i = 0 To p.Length - 1
+                ' 更新一阶矩估计
+                m(i) = AdamBeta1 * m(i) + (1 - AdamBeta1) * g(i)
 
-        Dim m = _AdamM(key)
-        Dim v = _AdamV(key)
+                ' 更新二阶矩估计
+                v(i) = AdamBeta2 * v(i) + (1 - AdamBeta2) * g(i) * g(i)
 
-        For i = 0 To param.Length - 1
-            ' 更新一阶矩估计
-            m(i) = AdamBeta1 * m(i) + (1 - AdamBeta1) * gradient(i)
+                ' 偏差校正
+                Dim mHat = m(i) / (1 - beta1Pow)
+                Dim vHat = v(i) / (1 - beta2Pow)
 
-            ' 更新二阶矩估计
-            v(i) = AdamBeta2 * v(i) + (1 - AdamBeta2) * gradient(i) * gradient(i)
-
-            ' 偏差校正
-            Dim mHat = m(i) / (1 - std.Pow(AdamBeta1, _AdamT))
-            Dim vHat = v(i) / (1 - std.Pow(AdamBeta2, _AdamT))
-
-            ' 更新参数
-            param(i) -= LearningRate * mHat / (std.Sqrt(vHat) + AdamEpsilon)
+                ' 更新参数
+                p(i) -= LearningRate * mHat / (std.Sqrt(vHat) + AdamEpsilon)
+            Next
         Next
     End Sub
 
     ''' <summary>
     ''' 清零所有梯度
     ''' </summary>
-    Private Sub ZeroGradients()
-        ' 清零输出层梯度
-        For i = 0 To _Network.OutputWeightGradient.Length - 1
-            _Network.OutputWeightGradient(i) = 0
-        Next
-        For i = 0 To _Network.OutputBiasGradient.Length - 1
-            _Network.OutputBiasGradient(i) = 0
+    Public Sub ZeroGradients()
+        _Network.ZeroGradients()
+    End Sub
+
+#End Region
+
+#Region "训练方法"
+
+    ''' <summary>
+    ''' 训练单个时间步（BPTT 截断长度为 1）
+    ''' </summary>
+    ''' <param name="input">输入</param>
+    ''' <param name="target">目标输出</param>
+    ''' <param name="dt">时间步长</param>
+    ''' <returns>损失值</returns>
+    Public Function TrainStep(input As Tensor, target As Tensor, Optional dt As Double? = Nothing) As Double
+        _Network.Training = True
+
+        ' 前向传播
+        Dim output = _Network.Forward(input, dt)
+
+        ' 计算损失
+        Dim loss = MSE(output, target)
+
+        ' 反向传播（精确反向模式 AD）
+        Call Backward(MSEGradient(output, target))
+
+        _Network.Training = False
+
+        ' 更新参数
+        Call [Step]()
+
+        Return loss
+    End Function
+
+    ''' <summary>
+    ''' 在完整序列上做一次 BPTT（前向整段 → 损失 → 逆序回传 → 更新）
+    ''' </summary>
+    ''' <param name="inputSequence">输入序列，形状 (seqLength, inputSize)</param>
+    ''' <param name="targetSequence">目标序列，形状 (seqLength, outputSize)</param>
+    ''' <param name="dt">时间步长</param>
+    ''' <returns>平均损失</returns>
+    Public Function TrainSequence(inputSequence As Tensor, targetSequence As Tensor, Optional dt As Double? = Nothing) As Double
+        Dim actualDt = If(dt, _Network.DefaultDt)
+        Dim seqLength = inputSequence.Shape(0)
+        Dim totalLoss As Double = 0
+
+        ' 重置网络状态并丢弃历史前向记录
+        _Network.ResetState()
+        _Network.Training = True
+
+        ' ---- 前向 ----
+        Dim outputs(seqLength - 1) As Tensor
+
+        For t = 0 To seqLength - 1
+            outputs(t) = _Network.Forward(RowVector(inputSequence, t, _Network.InputSize), actualDt)
+            totalLoss += MSE(outputs(t), RowVector(targetSequence, t, _Network.OutputSize))
         Next
 
-        ' 清零液态层梯度
-        For Each cell In _Network.LiquidLayer.Cells
-            For i = 0 To cell.TauGradient.Length - 1
-                cell.TauGradient(i) = 0
-            Next
-            For i = 0 To cell.WeightInputGradient.Length - 1
-                cell.WeightInputGradient(i) = 0
-            Next
-            For i = 0 To cell.WeightRecurrentGradient.Length - 1
-                cell.WeightRecurrentGradient(i) = 0
-            Next
-            For i = 0 To cell.BiasGradient.Length - 1
-                cell.BiasGradient(i) = 0
-            Next
+        ' ---- 反向（逆时间序，carry 携带来自下一时刻的伴随） ----
+        Dim carry As Tensor = Nothing
+
+        For t = seqLength - 1 To 0 Step -1
+            Dim dOut = MSEGradient(outputs(t), RowVector(targetSequence, t, _Network.OutputSize))
+            Dim adjH = _Network.BackwardOutput(dOut)
+
+            If carry IsNot Nothing Then
+                LNNMath.AddInPlace(adjH, carry)
+            End If
+
+            carry = _Network.BackwardLiquid(adjH)
         Next
-    End Sub
+
+        _Network.Training = False
+
+        ' ---- 更新 ----
+        Call [Step]()
+
+        Return totalLoss / seqLength
+    End Function
+
+    ''' <summary>
+    ''' 取出二维张量的第 rowIndex 行
+    ''' </summary>
+    Private Shared Function RowVector(sequence As Tensor, rowIndex As Integer, width As Integer) As Tensor
+        Dim row = Tensor.Zeros({width})
+
+        For i = 0 To width - 1
+            row(i) = sequence(rowIndex, i)
+        Next
+
+        Return row
+    End Function
 
 #End Region
 
@@ -478,7 +452,7 @@ Public Class LNNTrainer
             losses.Add(epochLoss)
 
             ' 输出训练进度
-            If epoch Mod 10 = 0 OrElse epoch = 1 Then
+            If Verbose AndAlso (epoch Mod 10 = 0 OrElse epoch = 1) Then
                 Console.WriteLine($"Epoch {epoch}/{epochs}, Loss: {epochLoss:F6}")
             End If
         Next

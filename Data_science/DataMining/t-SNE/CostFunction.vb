@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56c30593eb80c0924376c1dfad57b08c, Data_science\DataMining\t-SNE\CostFunction.vb"
+﻿#Region "Microsoft.VisualBasic::fce525b55fff80684d0329cc4ab12bbb, Data_science\DataMining\t-SNE\CostFunction.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 59 (67.05%)
-    ' Comment Lines: 8 (9.09%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 175
+    '    Code Lines: 103 (58.86%)
+    ' Comment Lines: 37 (21.14%)
+    '    - Xml Docs: 67.57%
     ' 
-    '   Blank Lines: 21 (23.86%)
-    '     File Size: 2.36 KB
+    '   Blank Lines: 35 (20.00%)
+    '     File Size: 6.37 KB
 
 
     ' Class CostFunction
@@ -48,7 +48,7 @@
     '     Properties: mN
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Sub: CostGrad
+    '     Sub: CostGrad, CostGradExact, EnsureBuffers
     ' 
     ' /********************************************************************************/
 

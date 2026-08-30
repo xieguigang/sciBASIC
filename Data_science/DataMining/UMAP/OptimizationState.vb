@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97a10524f5b8cef92ed4eb15b9ca6b30, Data_science\DataMining\UMAP\OptimizationState.vb"
+﻿#Region "Microsoft.VisualBasic::bb20bb3005821ee787f27275a5886902, Data_science\DataMining\UMAP\OptimizationState.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 23 (58.97%)
-    ' Comment Lines: 12 (30.77%)
+    '   Total Lines: 52
+    '    Code Lines: 23 (44.23%)
+    ' Comment Lines: 25 (48.08%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (10.26%)
-    '     File Size: 1.36 KB
+    '   Blank Lines: 4 (7.69%)
+    '     File Size: 1.95 KB
 
 
     ' Class OptimizationState

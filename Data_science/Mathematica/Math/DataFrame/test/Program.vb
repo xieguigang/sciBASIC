@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11c468d61efaf837a588402f169d8d77, Data_science\Mathematica\Math\DataFrame\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::59f82bdafcb27226c669ae2a4ade3c4e, Data_science\Mathematica\Math\DataFrame\test\Program.vb"
 
     ' Author:
     ' 
@@ -206,4 +206,3 @@ Module Program
         Return diffCount = 0
     End Function
 End Module
-
