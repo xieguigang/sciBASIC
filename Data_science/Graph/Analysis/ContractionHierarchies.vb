@@ -112,11 +112,11 @@ Namespace Analysis.ContractionHierarchies
             Dim nodeOrdering As Integer() = New Integer(graph.Length - 1) {}
             Dim extractNum As Integer = 0
 
-            While PQImp.Count() > 0
-                Dim vertex As Vertex = PQImp.Poll()
+            While PQImp.count() > 0
+                Dim vertex As Vertex = PQImp.poll()
                 computeImportance(graph, vertex)
 
-                If PQImp.Count() > 0 AndAlso vertex.importance > PQImp.Peek().importance Then
+                If PQImp.count() > 0 AndAlso vertex.importance > PQImp.Peek().importance Then
                     PQImp.push(vertex)
                     Continue While
                 End If
@@ -193,11 +193,11 @@ Namespace Analysis.ContractionHierarchies
             graph(source).distance.contractId = contractId
             graph(source).distance.sourceId = sourceId
 
-            queue.Clear()
+            queue.clear()
             queue.push(graph(source))
 
-            While queue.Count() > 0
-                Dim vertex As Vertex = queue.Poll()
+            While queue.count() > 0
+                Dim vertex As Vertex = queue.poll()
                 If vertex.distance.distance > maxcost Then
                     Return
                 End If
@@ -218,8 +218,8 @@ Namespace Analysis.ContractionHierarchies
                     graph(temp).distance.contractId = contractId
                     graph(temp).distance.sourceId = sourceId
 
-                    queue.Remove(graph(temp))
-                    queue.Add(graph(temp))
+                    queue.remove(graph(temp))
+                    queue.push(graph(temp))
                 End If
             Next
         End Sub
@@ -252,17 +252,17 @@ Namespace Analysis.ContractionHierarchies
             graph(target).distance.revqueryId = queryID
             graph(target).processed.revqueryId = queryID
 
-            forwQ = New PriorityQueue(Of Vertex)(graph.Length, forwComp)
-            revQ = New PriorityQueue(Of Vertex)(graph.Length, revComp)
+            forwQ = New PriorityQueue(Of Vertex)(forwComp)
+            revQ = New PriorityQueue(Of Vertex)(revComp)
 
-            forwQ.Add(graph(source))
-            revQ.Add(graph(target))
+            forwQ.push(graph(source))
+            revQ.push(graph(target))
 
             Dim estimate As Long = Long.MaxValue
 
-            While forwQ.Count() > 0 OrElse revQ.Count() > 0
-                If forwQ.Count() > 0 Then
-                    Dim vertex1 As Vertex = forwQ.Poll()
+            While forwQ.count() > 0 OrElse revQ.count() > 0
+                If forwQ.count() > 0 Then
+                    Dim vertex1 As Vertex = forwQ.poll()
                     If vertex1.distance.queryDist <= estimate Then
                         relaxEdges(graph, vertex1.vertexNum, "f", nodeOrdering, queryID)
                     End If
@@ -273,8 +273,8 @@ Namespace Analysis.ContractionHierarchies
                     End If
                 End If
 
-                If revQ.Count() > 0 Then
-                    Dim vertex2 As Vertex = revQ.Poll()
+                If revQ.count() > 0 Then
+                    Dim vertex2 As Vertex = revQ.poll()
                     If vertex2.distance.revDistance <= estimate Then
                         relaxEdges(graph, vertex2.vertexNum, "r", nodeOrdering, queryID)
                     End If
@@ -305,8 +305,8 @@ Namespace Analysis.ContractionHierarchies
                             graph(temp).distance.forwqueryId = graph(vertex).distance.forwqueryId
                             graph(temp).distance.queryDist = graph(vertex).distance.queryDist + cost
 
-                            forwQ.Remove(graph(temp))
-                            forwQ.Add(graph(temp))
+                            forwQ.remove(graph(temp))
+                            forwQ.push(graph(temp))
                         End If
                     End If
                 Next
@@ -324,8 +324,8 @@ Namespace Analysis.ContractionHierarchies
                             graph(temp).distance.revqueryId = graph(vertex).distance.revqueryId
                             graph(temp).distance.revDistance = graph(vertex).distance.revDistance + cost
 
-                            revQ.Remove(graph(temp))
-                            revQ.Add(graph(temp))
+                            revQ.remove(graph(temp))
+                            revQ.push(graph(temp))
                         End If
                     End If
                 Next

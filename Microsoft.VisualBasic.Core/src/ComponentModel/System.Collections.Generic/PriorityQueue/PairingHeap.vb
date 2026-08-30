@@ -112,6 +112,11 @@ Namespace ComponentModel.Collection
             Me.elem = elem
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="selector">a delegate function for cast target object as string</param>
+        ''' <returns></returns>
         Public Overloads Function ToString(selector As IToString(Of T)) As String
             Dim str = ""
             Dim needComma = False
