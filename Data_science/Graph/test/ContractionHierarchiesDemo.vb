@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory.DistPreprocessSmall
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.ContractionHierarchies
 
 Module ContractionHierarchiesDemo
 

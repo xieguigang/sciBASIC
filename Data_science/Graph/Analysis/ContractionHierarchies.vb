@@ -1,105 +1,6 @@
-﻿Namespace Analysis.ContractionHierarchies
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-    ' ========== 自定义优先队列（支持 Remove） ==========
-    Public Class PriorityQueue(Of T)
-        Private ReadOnly comparer As IComparer(Of T)
-        Private heap As List(Of T)
-
-        Public Sub New(comparer As IComparer(Of T))
-            Me.comparer = comparer
-            heap = New List(Of T)()
-        End Sub
-
-        Public Sub New(capacity As Integer, comparer As IComparer(Of T))
-            Me.comparer = comparer
-            heap = New List(Of T)(capacity)
-        End Sub
-
-        Public Function Count() As Integer
-            Return heap.Count
-        End Function
-
-        Public Sub Add(item As T)
-            heap.Add(item)
-            Dim i As Integer = heap.Count - 1
-            While i > 0
-                Dim parent As Integer = (i - 1) \ 2
-                If comparer.Compare(heap(parent), heap(i)) <= 0 Then Exit While
-                Swap(i, parent)
-                i = parent
-            End While
-        End Sub
-
-        Public Function Poll() As T
-            If heap.Count = 0 Then Return Nothing
-            Dim result As T = heap(0)
-            Dim last As T = heap(heap.Count - 1)
-            heap.RemoveAt(heap.Count - 1)
-            If heap.Count > 0 Then
-                heap(0) = last
-                HeapifyDown(0)
-            End If
-            Return result
-        End Function
-
-        Public Function Peek() As T
-            If heap.Count = 0 Then Return Nothing
-            Return heap(0)
-        End Function
-
-        Public Sub Clear()
-            heap.Clear()
-        End Sub
-
-        ' 线性查找并删除第一个匹配项
-        Public Function Remove(item As T) As Boolean
-            Dim index As Integer = heap.IndexOf(item)
-            If index < 0 Then Return False
-            Dim lastIdx As Integer = heap.Count - 1
-            If index <> lastIdx Then
-                heap(index) = heap(lastIdx)
-                heap.RemoveAt(lastIdx)
-                ' 调整位置（可能上浮或下沉）
-                Dim parent As Integer = (index - 1) \ 2
-                If index > 0 AndAlso comparer.Compare(heap(parent), heap(index)) > 0 Then
-                    HeapifyUp(index)
-                Else
-                    HeapifyDown(index)
-                End If
-            Else
-                heap.RemoveAt(lastIdx)
-            End If
-            Return True
-        End Function
-
-        Private Sub Swap(i As Integer, j As Integer)
-            Dim temp As T = heap(i)
-            heap(i) = heap(j)
-            heap(j) = temp
-        End Sub
-
-        Private Sub HeapifyUp(i As Integer)
-            While i > 0
-                Dim parent As Integer = (i - 1) \ 2
-                If comparer.Compare(heap(parent), heap(i)) <= 0 Then Exit While
-                Swap(i, parent)
-                i = parent
-            End While
-        End Sub
-
-        Private Sub HeapifyDown(i As Integer)
-            While True
-                Dim left As Integer = 2 * i + 1
-                Dim right As Integer = 2 * i + 2
-                Dim smallest As Integer = i
-                If left < heap.Count AndAlso comparer.Compare(heap(left), heap(smallest)) < 0 Then smallest = left
-                If right < heap.Count AndAlso comparer.Compare(heap(right), heap(smallest)) < 0 Then smallest = right
-                If smallest = i Then Exit While
-                Swap(i, smallest)
-                i = smallest
-            End While
-        End Sub
-    End Class
+Namespace Analysis.ContractionHierarchies
 
     ' ========== 辅助数据类 ==========
     Public Class Distance
@@ -192,12 +93,12 @@
         Private queue As PriorityQueue(Of Vertex)
 
         Private Sub computeImportance(graph As Vertex())
-            PQImp = New PriorityQueue(Of Vertex)(graph.Length, comp)
+            PQImp = New PriorityQueue(Of Vertex)(comp)
             For i As Integer = 0 To graph.Length - 1
                 graph(i).edgeDiff = (graph(i).inEdges.Count * graph(i).outEdges.Count) - graph(i).inEdges.Count - graph(i).outEdges.Count
                 graph(i).shortcutCover = graph(i).inEdges.Count + graph(i).outEdges.Count
                 graph(i).importance = graph(i).edgeDiff * 14 + graph(i).shortcutCover * 25 + graph(i).delNeighbors * 10
-                PQImp.Add(graph(i))
+                PQImp.push(graph(i))
             Next
         End Sub
 
@@ -216,7 +117,7 @@
                 computeImportance(graph, vertex)
 
                 If PQImp.Count() > 0 AndAlso vertex.importance > PQImp.Peek().importance Then
-                    PQImp.Add(vertex)
+                    PQImp.push(vertex)
                     Continue While
                 End If
 
@@ -286,14 +187,14 @@
 
         ' 修正后的迪杰斯特拉（移除 i>3 截断）
         Private Sub dijkstra(graph As Vertex(), source As Integer, maxcost As Long, contractId As Integer, sourceId As Integer)
-            queue = New PriorityQueue(Of Vertex)(graph.Length, PQcomp)
+            queue = New PriorityQueue(Of Vertex)(PQcomp)
 
             graph(source).distance.distance = 0
             graph(source).distance.contractId = contractId
             graph(source).distance.sourceId = sourceId
 
             queue.Clear()
-            queue.Add(graph(source))
+            queue.push(graph(source))
 
             While queue.Count() > 0
                 Dim vertex As Vertex = queue.Poll()

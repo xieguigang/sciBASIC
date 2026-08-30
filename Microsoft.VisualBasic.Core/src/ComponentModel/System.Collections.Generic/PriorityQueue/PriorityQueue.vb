@@ -131,6 +131,10 @@ Namespace ComponentModel.Collection
             Me.lessThan = lessThan
         End Sub
 
+        Sub New(compare As IComparer(Of T))
+            Call Me.New(lessThan:=Function(l, r) compare.Compare(l, r) < 0)
+        End Sub
+
         Sub New(source As IEnumerable(Of T), lessThan As Func(Of T, T, Boolean))
             Call Me.New(lessThan)
 
