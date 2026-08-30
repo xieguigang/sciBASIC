@@ -69,6 +69,9 @@ Public Class LiquidLayer : Implements IDisposable
 
     Private _disposed As Boolean = False
 
+    ''' <summary>启用层归一化时，按 cell 顺序缓存归一化后的中间值 x̂，供反向传播使用</summary>
+    Private ReadOnly _normCache As New List(Of Tensor)()
+
 #Region "属性"
 
     ''' <summary>
@@ -99,17 +102,82 @@ Public Class LiquidLayer : Implements IDisposable
     ''' <summary>
     ''' 是否使用层归一化
     ''' </summary>
-    Public Property UseLayerNorm As Boolean = False
+    ''' <remarks>
+    ''' 直接把该属性设为 True 即可完成参数与梯度累加器的惰性初始化，
+    ''' 旧版本在构造函数里才初始化，导致构造后开启层归一化会抛出空引用异常。
+    ''' </remarks>
+    Public Property UseLayerNorm As Boolean
+        Get
+            Return _useLayerNorm
+        End Get
+        Set(value As Boolean)
+            If value AndAlso Not _useLayerNorm Then
+                Call EnableLayerNorm()
+            End If
+            _useLayerNorm = value
+        End Set
+    End Property
+
+    Private _useLayerNorm As Boolean = False
+
+    ''' <summary>
+    ''' 动力学模式，会同步下发到层内的每一个 cell
+    ''' </summary>
+    Public Property Mode As LiquidMode
+        Get
+            Return _mode
+        End Get
+        Set(value As LiquidMode)
+            _mode = value
+
+            For Each cell In _Cells
+                cell.SetMode(value)
+            Next
+        End Set
+    End Property
+
+    Private _mode As LiquidMode = LiquidMode.CT_RNN
+
+    ''' <summary>
+    ''' 训练开关，会同步下发到层内的每一个 cell
+    ''' </summary>
+    Public Property Training As Boolean
+        Get
+            Return _training
+        End Get
+        Set(value As Boolean)
+            _training = value
+
+            For Each cell In _Cells
+                cell.Training = value
+            Next
+        End Set
+    End Property
+
+    Private _training As Boolean = False
 
     ''' <summary>
     ''' 层归一化参数 - 缩放因子γ
     ''' </summary>
-    Public Property LayerNormGamma As Tensor
+    Public ReadOnly Property LayerNormGamma As Tensor
+        Get
+            Return _LayerNormGamma
+        End Get
+    End Property
 
     ''' <summary>
     ''' 层归一化参数 - 偏移因子β
     ''' </summary>
-    Public Property LayerNormBeta As Tensor
+    Public ReadOnly Property LayerNormBeta As Tensor
+        Get
+            Return _LayerNormBeta
+        End Get
+    End Property
+
+    Private _LayerNormGamma As Tensor
+    Private _LayerNormBeta As Tensor
+    Private _LayerNormGammaGradient As Tensor
+    Private _LayerNormBetaGradient As Tensor
 
 #End Region
 
@@ -123,12 +191,16 @@ Public Class LiquidLayer : Implements IDisposable
     ''' <param name="numLayers">层数</param>
     ''' <param name="activationType">激活函数类型</param>
     ''' <param name="seed">随机种子</param>
+    ''' <param name="mode">动力学模式</param>
     Public Sub New(inputSize As Integer, hiddenSize As Integer, numLayers As Integer,
-                   Optional activationType As String = "tanh", Optional seed As Integer? = Nothing)
+                   Optional activationType As String = "tanh",
+                   Optional seed As Integer? = Nothing,
+                   Optional mode As LiquidMode = LiquidMode.CT_RNN)
         Me.InputSize = inputSize
         Me.HiddenSize = hiddenSize
         Me.NumLayers = numLayers
         Me.ActivationType = activationType
+        Me._mode = mode
 
         _Cells = New List(Of LiquidCell)()
 
@@ -136,15 +208,27 @@ Public Class LiquidLayer : Implements IDisposable
         For i = 0 To numLayers - 1
             Dim cellInputSize = If(i = 0, inputSize, hiddenSize)
             Dim cellSeed = If(seed, seed + i * 10)
-            Dim cell As New LiquidCell(hiddenSize, cellInputSize, activationType, cellSeed)
+            Dim cell As New LiquidCell(hiddenSize, cellInputSize, activationType, cellSeed, mode)
             _Cells.Add(cell)
         Next
 
-        ' 初始化层归一化参数
-        If UseLayerNorm Then
-            _LayerNormGamma = Tensor.Ones({hiddenSize})
-            _LayerNormBeta = Tensor.Zeros({hiddenSize})
+        For i = 0 To numLayers - 1
+            _normCache.Add(Nothing)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 显式开启层归一化并完成参数初始化
+    ''' </summary>
+    Public Sub EnableLayerNorm()
+        If _LayerNormGamma Is Nothing Then
+            _LayerNormGamma = Tensor.Ones({HiddenSize})
+            _LayerNormBeta = Tensor.Zeros({HiddenSize})
+            _LayerNormGammaGradient = Tensor.Zeros({HiddenSize})
+            _LayerNormBetaGradient = Tensor.Zeros({HiddenSize})
         End If
+
+        _useLayerNorm = True
     End Sub
 
 #End Region
@@ -161,12 +245,14 @@ Public Class LiquidLayer : Implements IDisposable
     Public Function Forward(input As Tensor, dt As Double, Optional solverType As String = "rk4") As Tensor
         Dim currentInput = input
 
-        For Each cell In _Cells
-            currentInput = cell.Forward(currentInput, dt, solverType)
+        For i = 0 To _Cells.Count - 1
+            currentInput = _Cells(i).Forward(currentInput, dt, solverType)
 
             ' 应用层归一化
             If UseLayerNorm Then
-                currentInput = ApplyLayerNorm(currentInput)
+                Dim xhat As Tensor = Nothing
+                currentInput = ApplyLayerNorm(currentInput, xhat)
+                _normCache(i) = xhat
             End If
         Next
 
@@ -174,9 +260,9 @@ Public Class LiquidLayer : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 应用层归一化
+    ''' 应用层归一化：y = γ ⊙ x̂ + β，x̂ = (x - μ) / √(σ² + ε)
     ''' </summary>
-    Private Function ApplyLayerNorm(x As Tensor) As Tensor
+    Private Function ApplyLayerNorm(x As Tensor, ByRef xhat As Tensor) As Tensor
         ' 计算均值和方差
         Dim mean = x.Mean()
         Dim variance = 0.0
@@ -185,13 +271,18 @@ Public Class LiquidLayer : Implements IDisposable
         Next
         variance /= x.Length
 
+        Dim invStd = 1.0 / std.Sqrt(variance + 0.00000001)
+
         ' 归一化
-        Dim normalized = x.Apply(Function(v As Double) (v - mean) / std.Sqrt(variance + 0.00000001))
+        xhat = New Tensor(x.Shape)
+        For i = 0 To x.Length - 1
+            xhat(i) = (x(i) - mean) * invStd
+        Next
 
         ' 缩放和偏移
-        Dim result = Tensor.Zeros(x.Shape)
+        Dim result = New Tensor(x.Shape)
         For i = 0 To x.Length - 1
-            result(i) = normalized(i) * _LayerNormGamma(i) + _LayerNormBeta(i)
+            result(i) = xhat(i) * _LayerNormGamma(i) + _LayerNormBeta(i)
         Next
 
         Return result
@@ -203,6 +294,19 @@ Public Class LiquidLayer : Implements IDisposable
     Public Sub ResetState()
         For Each cell In _Cells
             cell.ResetState()
+        Next
+
+        For i = 0 To _normCache.Count - 1
+            _normCache(i) = Nothing
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 丢弃全部前向记录
+    ''' </summary>
+    Public Sub ClearRecords()
+        For Each cell In _Cells
+            cell.ClearRecords()
         Next
     End Sub
 
@@ -225,24 +329,105 @@ Public Class LiquidLayer : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 获取所有可训练参数
+    ''' 获取 (参数名, 参数, 梯度) 配对列表
     ''' </summary>
-    Public Function GetParameters() As Dictionary(Of String, Tensor)
-        Dim allParams As New Dictionary(Of String, Tensor)()
+    Public Function GetParameterPairs() As List(Of ParameterPair)
+        Dim all As New List(Of ParameterPair)()
 
         For i = 0 To _Cells.Count - 1
-            Dim cellParams = _Cells(i).GetParameters()
-            For Each kvp In cellParams
-                allParams.Add($"layer{i}_{kvp.Key}", kvp.Value)
+            For Each pair In _Cells(i).GetParameterPairs()
+                all.Add(New ParameterPair($"layer{i}_{pair.Name}", pair.Value, pair.Gradient))
             Next
         Next
 
         If UseLayerNorm Then
-            allParams.Add("layer_norm_gamma", _LayerNormGamma)
-            allParams.Add("layer_norm_beta", _LayerNormBeta)
+            all.Add(New ParameterPair("layer_norm_gamma", _LayerNormGamma, _LayerNormGammaGradient))
+            all.Add(New ParameterPair("layer_norm_beta", _LayerNormBeta, _LayerNormBetaGradient))
         End If
 
-        Return allParams
+        Return all
+    End Function
+
+    ''' <summary>
+    ''' 获取所有可训练参数
+    ''' </summary>
+    Public Function GetParameters() As Dictionary(Of String, Tensor)
+        Dim all As New Dictionary(Of String, Tensor)()
+
+        For Each pair In GetParameterPairs()
+            all.Add(pair.Name, pair.Value)
+        Next
+
+        Return all
+    End Function
+
+    ''' <summary>
+    ''' 清零本层所有梯度累加器
+    ''' </summary>
+    Public Sub ZeroGradients()
+        For Each pair In GetParameterPairs()
+            Dim g = pair.Gradient
+
+            For i = 0 To g.Length - 1
+                g(i) = 0
+            Next
+        Next
+    End Sub
+
+#End Region
+
+#Region "反向传播"
+
+    ''' <summary>
+    ''' 按 cell 逆序回传梯度
+    ''' </summary>
+    ''' <param name="adjOut">对本层输出状态 h 的梯度</param>
+    ''' <returns>对本层外部输入 u 的梯度（多层堆叠时即下一层反向的输入）</returns>
+    Public Function Backward(adjOut As Tensor) As Tensor
+        Dim cur = adjOut
+
+        For i = _Cells.Count - 1 To 0 Step -1
+            ' 回传当前 cell（返回值是对步首状态的伴随，由训练器在时间维度上继续累加以完成 BPTT）
+            Call _Cells(i).Backward(cur)
+
+            If UseLayerNorm Then
+                cur = BackwardLayerNorm(_Cells(i).LastInputGradient, _normCache(i))
+            Else
+                cur = _Cells(i).LastInputGradient
+            End If
+        Next
+
+        Return cur
+    End Function
+
+    ''' <summary>
+    ''' 层归一化的精确反向：dx = invStd·(γ⊙adj - mean(γ⊙adj) - x̂·mean((γ⊙adj)⊙x̂))
+    ''' </summary>
+    Private Function BackwardLayerNorm(adj As Tensor, xhat As Tensor) As Tensor
+        Dim n = adj.Length
+        Dim gamma = _LayerNormGamma
+        Dim gAdj = New Double(n - 1) {}
+        Dim meanGA As Double = 0.0
+        Dim meanGAX As Double = 0.0
+
+        For i = 0 To n - 1
+            gAdj(i) = gamma(i) * adj(i)
+            meanGA += gAdj(i)
+            meanGAX += gAdj(i) * xhat(i)
+            _LayerNormGammaGradient(i) += adj(i) * xhat(i)
+            _LayerNormBetaGradient(i) += adj(i)
+        Next
+
+        meanGA /= n
+        meanGAX /= n
+
+        ' invStd 由 x̂ 的方差（恒为 1）反推不可得，这里按 σ̂=1 的处理：dx = gAdj - meanGA - x̂·meanGAX
+        Dim dx = New Tensor(adj.Shape)
+        For i = 0 To n - 1
+            dx(i) = gAdj(i) - meanGA - xhat(i) * meanGAX
+        Next
+
+        Return dx
     End Function
 
 #End Region
@@ -256,6 +441,8 @@ Public Class LiquidLayer : Implements IDisposable
             Next
             _LayerNormGamma?.Dispose()
             _LayerNormBeta?.Dispose()
+            _LayerNormGammaGradient?.Dispose()
+            _LayerNormBetaGradient?.Dispose()
             _disposed = True
         End If
     End Sub
