@@ -440,14 +440,26 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     Public Function BackwardOutput(outputGradient As Tensor,
                                    Optional hidden As Tensor = Nothing,
                                    Optional output As Tensor = Nothing) As Tensor
-        If _lastOutput Is Nothing OrElse _lastHidden Is Nothing Then
-            Throw New InvalidOperationException("尚未完成前向传播，无法回传输出层梯度")
+        ' BPTT 逆序回放时会显式传入每一时间步的隐藏状态与输出；
+        ' 只有在省略这些参数时才回退到最近一次前向留下的缓存。
+        If hidden Is Nothing Then
+            hidden = _lastHidden
+
+            If hidden Is Nothing Then
+                Throw New InvalidOperationException("尚未完成前向传播，也没有显式传入隐藏状态，无法回传输出层梯度")
+            End If
+        End If
+
+        Dim out = If(output, _lastOutput)
+
+        If out Is Nothing AndAlso OutputActivation.ToLower() <> "none" Then
+            Throw New InvalidOperationException(
+                $"输出激活函数为 '{OutputActivation}'，回传时需要显式传入前向时该步的输出张量")
         End If
 
         Dim H = HiddenSize
         Dim O = OutputSize
         Dim dLin = CType(outputGradient.Clone(), Tensor)
-        Dim out = If(output, _lastOutput)
 
         ' 输出激活函数的导数
         Select Case OutputActivation.ToLower()
