@@ -552,6 +552,40 @@ Public Class LiquidCell : Implements IDisposable
     End Function
 
     ''' <summary>
+    ''' 读出给定 (状态, 输入) 下的系统时间常数 τ^sys = 1 / (1/τ + f(h,u))
+    ''' </summary>
+    ''' <remarks>
+    ''' 这是 LNN 最重要的可解释性输出：τ^sys 小意味着该单元快速响应（对应快反应），
+    ''' τ^sys 大意味着状态缓慢演化（对应慢的代谢重编程）。
+    ''' CT_RNN 模式下门控 f ≡ 0，τ^sys 退化为常量 τ_eff。
+    ''' </remarks>
+    ''' <param name="state">当前状态</param>
+    ''' <param name="input">当前外部输入</param>
+    ''' <returns>长度为 HiddenSize 的系统时间常数向量</returns>
+    Public Function GetSystemTau(state As Tensor, input As Tensor) As Tensor
+        Dim tauEff = EffectiveTau()
+        Dim result = New Tensor(HiddenSize)
+
+        If Mode = LiquidMode.CT_RNN Then
+            For i = 0 To HiddenSize - 1
+                result(i) = tauEff(i)
+            Next
+        Else
+            Dim sRow = ToRow(state, HiddenSize)
+            Dim uRow = ToRow(input, InputSize)
+            Dim zf = LinearForward(sRow, uRow, _WeightGate, _WeightGateInput, _BiasGate)
+            Dim f = ActivationFunctions.Sigmoid(zf)
+
+            For i = 0 To HiddenSize - 1
+                Dim decay As Double = 1.0 / tauEff(i) + f(0, i)
+                result(i) = 1.0 / decay
+            Next
+        End If
+
+        Return result
+    End Function
+
+    ''' <summary>
     ''' 前向传播：使用指定ODE求解器（或 CfC 闭式解）更新状态
     ''' </summary>
     ''' <param name="input">当前时刻输入</param>

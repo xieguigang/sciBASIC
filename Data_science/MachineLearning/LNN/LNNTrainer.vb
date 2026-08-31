@@ -385,18 +385,12 @@ Public Class LNNTrainer
             totalLoss += MSE(outputs(t), RowVector(targetSequence, t, _Network.OutputSize))
         Next
 
-        ' ---- 反向（逆时间序，carry 携带来自下一时刻的伴随） ----
-        Dim carry As Tensor = Nothing
-
+        ' ---- 反向（逆时间序；跨时间步的伴随由 LiquidLayer 内部维护） ----
         For t = seqLength - 1 To 0 Step -1
             Dim dOut = MSEGradient(outputs(t), RowVector(targetSequence, t, _Network.OutputSize))
             Dim adjH = _Network.BackwardOutput(dOut)
 
-            If carry IsNot Nothing Then
-                LNNMath.AddInPlace(adjH, carry)
-            End If
-
-            carry = _Network.BackwardLiquid(adjH)
+            Call _Network.BackwardLiquid(adjH)
         Next
 
         _Network.Training = False
