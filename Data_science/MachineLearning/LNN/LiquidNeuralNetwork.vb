@@ -339,7 +339,35 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 计算输出层
+    ''' 由给定隐藏状态计算输出层结果（纯函数，不写入前向缓存）
+    ''' </summary>
+    ''' <remarks>
+    ''' BPTT 训练器需要在整段序列上逐步取输出，但又不能污染 <c>_lastHidden</c> / <c>_lastOutput</c>，
+    ''' 因此这里提供一个无副作用版本；<see cref="BackwardOutput"/> 支持显式传入隐藏状态与之配套。
+    ''' </remarks>
+    Public Function ComputeOutputFrom(hiddenState As Tensor) As Tensor
+        Dim hiddenReshaped = New Tensor(hiddenState.Data, 1, HiddenSize)
+        Dim linear = hiddenReshaped.MatMul(_OutputWeight)
+        Dim output = New Tensor(OutputSize)
+
+        For i = 0 To OutputSize - 1
+            output(i) = linear(0, i) + _OutputBias(i)
+        Next
+
+        Select Case OutputActivation.ToLower()
+            Case "sigmoid"
+                output = ActivationFunctions.Sigmoid(output)
+            Case "tanh"
+                output = ActivationFunctions.Tanh(output)
+            Case "softmax"
+                output = ActivationFunctions.Softmax(output)
+        End Select
+
+        Return output
+    End Function
+
+    ''' <summary>
+    ''' 计算输出层（并记录前向缓存）
     ''' </summary>
     Private Function ComputeOutput(hiddenState As Tensor) As Tensor
         ' 将隐藏状态reshape为行向量
@@ -401,8 +429,17 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     ''' 回传输出层：累加输出权重/偏置的梯度，并返回对隐藏状态的伴随向量
     ''' </summary>
     ''' <param name="outputGradient">对网络输出的梯度 dL/doutput</param>
+    ''' <param name="hidden">
+    ''' 前向时对应的隐藏状态。BPTT 逆序回放时必须显式传入第 t 步的隐藏状态，
+    ''' 省略则使用最近一次前向的隐藏状态。
+    ''' </param>
+    ''' <param name="output">
+    ''' 前向时对应的网络输出，用于计算输出激活函数的导数；省略则使用最近一次前向的输出。
+    ''' </param>
     ''' <returns>对隐藏状态 h 的梯度 dL/dh</returns>
-    Public Function BackwardOutput(outputGradient As Tensor) As Tensor
+    Public Function BackwardOutput(outputGradient As Tensor,
+                                   Optional hidden As Tensor = Nothing,
+                                   Optional output As Tensor = Nothing) As Tensor
         If _lastOutput Is Nothing OrElse _lastHidden Is Nothing Then
             Throw New InvalidOperationException("尚未完成前向传播，无法回传输出层梯度")
         End If
@@ -410,25 +447,26 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
         Dim H = HiddenSize
         Dim O = OutputSize
         Dim dLin = CType(outputGradient.Clone(), Tensor)
+        Dim out = If(output, _lastOutput)
 
         ' 输出激活函数的导数
         Select Case OutputActivation.ToLower()
             Case "sigmoid"
-                dLin = LNNMath.Mul(dLin, ActivationFunctions.SigmoidDerivative(_lastOutput))
+                dLin = LNNMath.Mul(dLin, ActivationFunctions.SigmoidDerivative(out))
             Case "tanh"
-                dLin = LNNMath.Mul(dLin, ActivationFunctions.TanhDerivative(_lastOutput))
+                dLin = LNNMath.Mul(dLin, ActivationFunctions.TanhDerivative(out))
             Case "softmax"
                 ' J = diag(y) - y·y^T  ⇒  dLin = y ⊙ (dOut - (y·dOut))
                 Dim dot As Double = 0.0
                 For i = 0 To O - 1
-                    dot += _lastOutput(i) * dLin(i)
+                    dot += out(i) * dLin(i)
                 Next
                 For i = 0 To O - 1
-                    dLin(i) = _lastOutput(i) * (dLin(i) - dot)
+                    dLin(i) = out(i) * (dLin(i) - dot)
                 Next
         End Select
 
-        Dim hidden = _lastHidden
+        hidden = If(hidden, _lastHidden)
 
         For i = 0 To O - 1
             _OutputBiasGradient(i) += dLin(i)
