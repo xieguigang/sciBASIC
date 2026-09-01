@@ -87,6 +87,12 @@ Namespace Drawing2D.Colors.Scaler
             End Get
         End Property
 
+        Default Public ReadOnly Property Color(term As String) As Color
+            Get
+                Return GetColor(term)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>
