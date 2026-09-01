@@ -222,7 +222,8 @@ Public Module VBDebugger
     Public Sub debug(msg As String, Optional mute As Boolean = False)
         Static p As Process = Process.GetCurrentProcess
 
-        Call log(msg, $"debug [{StringFormats.Lanudry(p.WorkingSet64)}, {p.Threads.Count} threads]", AnsiColor.Green, MSG_TYPES.DEBUG, mute, "")
+        Call p.Refresh()
+        Call log(msg, $"debug[{StringFormats.Lanudry(p.WorkingSet64)}, {p.Threads.Count} threads]", AnsiColor.Green, MSG_TYPES.DEBUG, mute, "")
     End Sub
 
     <Extension>
