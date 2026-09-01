@@ -191,6 +191,10 @@ Public Module App
     ''' </remarks>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
 
+    ''' <summary>
+    ''' stream open memory loads config inside current runtime environment, default is <see cref="MemoryLoads.Light"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property MemoryLoad As MemoryLoads
         Get
             Return m_memoryLoad
@@ -198,6 +202,18 @@ Public Module App
     End Property
 
     Friend m_memoryLoad As MemoryLoads = MemoryLoads.Light
+
+    ''' <summary>
+    ''' get current application memory usage description string
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MemorySize As String
+        Get
+            Static p As Process = Process.GetCurrentProcess
+            Call p.Refresh()
+            Return StringFormats.Lanudry(p.WorkingSet64)
+        End Get
+    End Property
 
     ''' <summary>
     ''' 判断当前运行的程序是否为Console类型的应用和程序，由于在执行初始化的时候，
