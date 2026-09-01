@@ -1,64 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::348b3217e271d61a70bc6caf221fc180, Data_science\Mathematica\Math\Math\Distributions\PoissonDiskGenerator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 310
-    '    Code Lines: 183 (59.03%)
-    ' Comment Lines: 72 (23.23%)
-    '    - Xml Docs: 63.89%
-    ' 
-    '   Blank Lines: 55 (17.74%)
-    '     File Size: 12.11 KB
+' Summaries:
 
 
-    '     Class PoissonDiskGenerator
-    ' 
-    '         Properties: ResultSet, sampleCount
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: _PositionToGridIndex, _WrapIndex, _WrapRepeatFloat, Generate, IsInputsValid
-    ' 
-    '         Sub: Dispose, getDartR, PullSamples, Sampling
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 310
+'    Code Lines: 183 (59.03%)
+' Comment Lines: 72 (23.23%)
+'    - Xml Docs: 63.89%
+' 
+'   Blank Lines: 55 (17.74%)
+'     File Size: 12.11 KB
+
+
+'     Class PoissonDiskGenerator
+' 
+'         Properties: ResultSet, sampleCount
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: _PositionToGridIndex, _WrapIndex, _WrapRepeatFloat, Generate, IsInputsValid
+' 
+'         Sub: Dispose, getDartR, PullSamples, Sampling
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D

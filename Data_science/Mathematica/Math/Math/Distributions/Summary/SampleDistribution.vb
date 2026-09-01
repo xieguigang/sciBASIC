@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
-Namespace Distributions
+Namespace Distributions.Summary
 
     ''' <summary>
     ''' The data sample model
@@ -79,7 +79,7 @@ Namespace Distributions
         <XmlAttribute> Public Property max As Double
         <XmlAttribute> Public Property average As Double
         <XmlAttribute> Public Property sum As Double
-        <XmlAttribute> Public Property size As Integer
+        <XmlAttribute> Public Property size As Long
 
         ''' <summary>
         ''' variance of the population
