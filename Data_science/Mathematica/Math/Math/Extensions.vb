@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::35f2116b9663baac6d9e081c547ab009, Data_science\Mathematica\Math\Math\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 416
-    '    Code Lines: 232 (55.77%)
-    ' Comment Lines: 133 (31.97%)
-    '    - Xml Docs: 91.73%
-    ' 
-    '   Blank Lines: 51 (12.26%)
-    '     File Size: 15.51 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, BHCorrection, DoubleRange
-    '               (+2 Overloads) FDR, FilterNaN, FirstDecrease, FirstIncrease, FlipCoin
-    '               ImputeNA, IntRange, IsInside, Iterates, (+2 Overloads) Range
-    '               Reach, seq2, Sim, SSM, SSM_SIMD
-    '               Tanimoto, X, Y
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 416
+'    Code Lines: 232 (55.77%)
+' Comment Lines: 133 (31.97%)
+'    - Xml Docs: 91.73%
+' 
+'   Blank Lines: 51 (12.26%)
+'     File Size: 15.51 KB
+
+
+' Module Extensions
+' 
+'     Function: [Shadows], AsSample, (+4 Overloads) AsVector, BHCorrection, DoubleRange
+'               (+2 Overloads) FDR, FilterNaN, FirstDecrease, FirstIncrease, FlipCoin
+'               ImputeNA, IntRange, IsInside, Iterates, (+2 Overloads) Range
+'               Reach, seq2, Sim, SSM, SSM_SIMD
+'               Tanimoto, X, Y
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Statistics

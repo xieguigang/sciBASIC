@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::7ab0c18249fff28c8bfe9e648a4295ca, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NormalizeMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 112
-    '    Code Lines: 70 (62.50%)
-    ' Comment Lines: 29 (25.89%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 13 (11.61%)
-    '     File Size: 5.30 KB
+' Summaries:
 
 
-    '     Class NormalizeMatrix
-    ' 
-    '         Properties: matrix, names
-    ' 
-    '         Function: (+2 Overloads) CreateFromSamples, doNormalInternal, DoNormalize, (+2 Overloads) NormalizeInput
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 112
+'    Code Lines: 70 (62.50%)
+' Comment Lines: 29 (25.89%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 13 (11.61%)
+'     File Size: 5.30 KB
+
+
+'     Class NormalizeMatrix
+' 
+'         Properties: matrix, names
+' 
+'         Function: (+2 Overloads) CreateFromSamples, doNormalInternal, DoNormalize, (+2 Overloads) NormalizeInput
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +59,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.StoreProcedure

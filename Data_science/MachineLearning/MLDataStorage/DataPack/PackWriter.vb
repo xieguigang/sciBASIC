@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::d235ffd096abe0be37a05ae5d5727afd, Data_science\MachineLearning\MLDataStorage\DataPack\PackWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 115
-    '    Code Lines: 82 (71.30%)
-    ' Comment Lines: 11 (9.57%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 22 (19.13%)
-    '     File Size: 4.90 KB
+' Summaries:
 
 
-    '     Class PackWriter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: AddSamples, (+2 Overloads) Dispose, WriteDataSet, WriteEncoder
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 115
+'    Code Lines: 82 (71.30%)
+' Comment Lines: 11 (9.57%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 22 (19.13%)
+'     File Size: 4.90 KB
+
+
+'     Class PackWriter
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: AddSamples, (+2 Overloads) Dispose, WriteDataSet, WriteEncoder
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DataPack
@@ -79,7 +79,7 @@ Namespace DataPack
 
             For Each sample As Sample In samples
                 If sample.ID Like check_duplicates Then
-                    Call $"there is a duplicated sample data: {sample.ID}!".Warning
+                    Call $"there is a duplicated sample data: {sample.ID}!".warning
                     Call stream.Delete($"/samples/{sample.ID}.dat")
                 Else
                     Call check_duplicates.Add(sample.ID)
