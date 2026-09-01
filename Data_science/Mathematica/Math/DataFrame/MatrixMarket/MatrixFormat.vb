@@ -138,12 +138,7 @@ Public Module MatrixFormat
 
     Public Function ReadData(file As Stream) As DataMatrix
         Using rd As New BinaryReader(file)
-            Dim testMagic As String = Encoding.ASCII.GetString(rd.ReadBytes(magic.Length))
-
-            If testMagic = magic Then
-                ' v1 未压缩格式：magic 后紧跟标签 JSON 与矩阵字节
-                Return rd.ReadMatrix
-            End If
+            Dim testMagic As String = Encoding.ASCII.GetString(rd.ReadBytes(magicV2.Length))
 
             If testMagic = magicV2 Then
                 ' v2 格式：magic 后紧跟 1 字节压缩标志，据此决定是否解压
@@ -157,6 +152,13 @@ Public Module MatrixFormat
                     ' 标志为 None：按未压缩方式继续解析剩余流
                     Return rd.ReadMatrix
                 End If
+            Else
+                testMagic = Encoding.ASCII.GetString(rd.ReadBytes(magic.Length))
+            End If
+
+            If testMagic = magic Then
+                ' v1 未压缩格式：magic 后紧跟标签 JSON 与矩阵字节
+                Return rd.ReadMatrix
             End If
 
             Throw New InvalidDataException("Invalid magic header of the target matrix file!")
