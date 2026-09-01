@@ -189,6 +189,38 @@ Namespace Distributions.Summary
             End If
         End Sub
 
+        ''' <summary>
+        ''' Streaming construction from row blocks.
+        ''' 面向数据总点数远超 Int32 数组上限的超大数据集:
+        ''' 每一行 Double() 首尾相接构成完整样本, 全程内存占用恒定.
+        ''' </summary>
+        ''' <remarks>
+        ''' 注意: quantile/median/mode 为近似值(精度由 histogramBins 控制),
+        ''' size/sum/min/max/average/variance/stdErr 为精确值.
+        ''' </remarks>
+        Sub New(blocks As IEnumerable(Of Double()), Optional estimateQuantile As Boolean = True, Optional histogramBins As Integer = 65536)
+            Dim stream As New StreamingSampleDistribution(histogramBins)
+
+            For Each row As Double() In blocks
+                If row IsNot Nothing Then
+                    Call stream.AddRange(row)
+                End If
+            Next
+
+            Call stream.WriteTo(Me, estimateQuantile)
+        End Sub
+
+        ''' <summary>
+        ''' Streaming sample statistics for the huge row-wise dataset.
+        ''' (数据总点数可以远超 Int32 数组上限, 内存占用恒定)
+        ''' </summary>
+        Public Shared Function FromBlocks(blocks As IEnumerable(Of Double()),
+                                          Optional histogramBins As Integer = 65536,
+                                          Optional estimateQuantile As Boolean = True) As SampleDistribution
+
+            Return New SampleDistribution(blocks, estimateQuantile, histogramBins)
+        End Function
+
         Private Shared Sub Evaluate(v As Double(), ByRef sample As SampleDistribution, estimateQuantile As Boolean)
             ' 1. 单次遍历计算 Sum, Min, Max, SumOfSquares (性能优化核心)
             Dim sumVal As Double = 0
