@@ -1,4 +1,7 @@
+Imports System.Diagnostics
 Imports System.IO
+Imports System.Text
+Imports System.Xml
 Imports System.Xml.Linq
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
@@ -154,7 +157,7 @@ Module Program
             End If
 
             If Not opts.DryRun AndAlso (result.Changed OrElse result.RemovedConditions > 0) Then
-                doc.Save(path, SaveOptions.DisableFormatting)
+                Call SaveDocument(doc, path)
             End If
         Catch ex As Exception
             result.Error = ex.Message
@@ -163,6 +166,44 @@ Module Program
         Call ReportProject(result, display)
 
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 将修改后的就地写回 vbproj
+    ''' </summary>
+    ''' <remarks>
+    ''' 框架内的 vbproj 统一是带 BOM 的 UTF-8 且没有 XML 声明，
+    ''' 这里沿用原文件的 BOM 设定并且禁用自动缩进，保证 diff 只落在实际改动的那几行上。
+    ''' </remarks>
+    Private Sub SaveDocument(doc As XDocument, path As String)
+        Dim settings As New XmlWriterSettings With {
+            .Encoding = New UTF8Encoding(HasUtf8Bom(path)),
+            .Indent = False,
+            .OmitXmlDeclaration = doc.Declaration Is Nothing
+        }
+
+        Using writer As XmlWriter = XmlWriter.Create(path, settings)
+            doc.Save(writer)
+        End Using
+    End Sub
+
+    ''' <summary>判断文件开头是否存在 UTF-8 BOM</summary>
+    Private Function HasUtf8Bom(path As String) As Boolean
+        Try
+            Using stream As New FileStream(path, FileMode.Open, FileAccess.Read)
+                If stream.Length < 3 Then
+                    Return False
+                End If
+
+                Dim head(2) As Byte
+
+                stream.Read(head, 0, 3)
+
+                Return head(0) = &HEF AndAlso head(1) = &HBB AndAlso head(2) = &HBF
+            End Using
+        Catch ex As Exception
+            Return False
+        End Try
     End Function
 
     ''' <summary>打印单个工程的处理明细</summary>
