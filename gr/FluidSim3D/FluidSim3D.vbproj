@@ -14,6 +14,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
     <StartupObject>FluidSim3D.FluidSim3D.Program</StartupObject>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -10,6 +10,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.GNN</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.GNN</RootNamespace>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="test\**" />

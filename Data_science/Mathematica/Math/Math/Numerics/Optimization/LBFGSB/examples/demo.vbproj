@@ -8,6 +8,8 @@
     <OutputType>Exe</OutputType>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <UseApplicationFramework>True</UseApplicationFramework>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="examples\**" />

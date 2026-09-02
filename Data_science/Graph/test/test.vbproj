@@ -6,6 +6,8 @@
     <OutputType>Exe</OutputType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <StartupObject>test.ContractionHierarchiesDemo</StartupObject>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />

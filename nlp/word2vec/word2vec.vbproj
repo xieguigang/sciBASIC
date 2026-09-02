@@ -6,9 +6,9 @@
 
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
-		<Version>5.0.1.2389</Version>
+		<Version>5.0.9742.6623</Version>
 
-		<AssemblyVersion>5.33.69.2558</AssemblyVersion>
+		<AssemblyVersion>5.33.9742.6623</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>GPL3</Copyright>

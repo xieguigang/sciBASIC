@@ -6,6 +6,8 @@
     <AssemblyName>Microsoft.VisualBasic.Math.KaplanMeierEstimator</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;gcmodeller_desktop</Configurations>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,6 +6,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <Platforms>AnyCPU;ARM32;x64</Platforms>
     <StartupObject>test.train.Training</StartupObject>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -7,6 +7,8 @@
     <RootNamespace>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.9742.6623</Version>
+    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
