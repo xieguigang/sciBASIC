@@ -197,7 +197,7 @@ Module Program
 
                 Dim head(2) As Byte
 
-                stream.Read(head, 0, 3)
+                stream.ReadExactly(head, 0, 3)
 
                 Return head(0) = &HEF AndAlso head(1) = &HBB AndAlso head(2) = &HBF
             End Using
