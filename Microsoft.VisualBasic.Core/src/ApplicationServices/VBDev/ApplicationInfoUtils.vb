@@ -152,6 +152,37 @@ Namespace ApplicationServices.Development
             End If
         End Function
 
+        ''' <summary>
+        ''' CalculateCompileTime 的逆运算：根据编译时间反推对应的 Version 对象。
+        ''' Build = 距离 2000-01-01 的天数；MinorRevision = 编译时刻距当日 00:00:00 的秒数 / 2（向下取整）。
+        ''' </summary>
+        ''' <param name="compileTime">编译时间（应为本地时间，与正向运算使用的 DateTime 类型一致）。</param>
+        ''' <param name="major">主版本号，默认 1（对应 AssemblyVersion("1.0.*") 模式）。</param>
+        ''' <param name="minor">次版本号，默认 0（对应 AssemblyVersion("1.0.*") 模式）。</param>
+        ''' <returns>还原出的 Version 对象；若 compileTime 为 Nothing 则返回 Nothing。</returns>
+        <Extension>
+        Public Function CalculateVersion(compileTime As Date,
+                                 Optional major As Integer = 1,
+                                 Optional minor As Integer = 0) As Version
+            If compileTime = Nothing Then
+                Return Nothing
+            End If
+
+            Dim baseline As New Date(2000, 1, 1)
+
+            ' Build = 编译日期距离基准日 2000-01-01 的天数
+            ' 注意：compileTime.Date 会截去时分秒，仅保留日期部分
+            Dim build As Integer = CInt((compileTime.Date - baseline).TotalDays)
+
+            ' MinorRevision = 编译时刻距当日 00:00:00 的秒数 / 2（整数除法向下取整）
+            ' 与正向逻辑 AddSeconds(version.MinorRevision * 2) 完全对应
+            Dim secondsSinceMidnight As Integer = CInt(compileTime.TimeOfDay.TotalSeconds)
+            Dim minorRevision As Integer = secondsSinceMidnight \ 2
+
+            Return New Version(major, minor, build, minorRevision)
+        End Function
+
+
         <Extension>
         Public Function FromAssembly(assm As Assembly) As AssemblyInfo
             Return New AssemblyInfo With {
