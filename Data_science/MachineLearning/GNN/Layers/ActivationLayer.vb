@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77ceca9b8e115f571ba30d3d6c2f45f0, Data_science\MachineLearning\GNN\Layers\ActivationLayer.vb"
+﻿#Region "Microsoft.VisualBasic::6585788f01980565f668c6fd3bb84a92, Data_science\MachineLearning\GNN\Layers\ActivationLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 24 (70.59%)
-    ' Comment Lines: 4 (11.76%)
+    '   Total Lines: 33
+    '    Code Lines: 24 (72.73%)
+    ' Comment Lines: 4 (12.12%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (17.65%)
-    '     File Size: 1.12 KB
+    '   Blank Lines: 5 (15.15%)
+    '     File Size: 1.11 KB
 
 
     ' Class ActivationLayer
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 

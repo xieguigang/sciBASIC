@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e84c85dea4dbf01f8365effc80bd10b0, Data_science\Mathematica\Math\Math\Quantile\FastRankQuantile.vb"
+﻿#Region "Microsoft.VisualBasic::0e3656eba25624760f61e6ea178570b5, Data_science\Mathematica\Math\Math\Quantile\FastRankQuantile.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 9 (18.75%)
-    '     File Size: 1.40 KB
+    '     File Size: 1.41 KB
 
 
     '     Class FastRankQuantile
@@ -55,7 +55,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 Namespace Quantile
 

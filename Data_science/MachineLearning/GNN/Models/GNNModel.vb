@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9ca6b555939859116c78c51cbd7648b, Data_science\MachineLearning\GNN\Models\GNNModel.vb"
+﻿#Region "Microsoft.VisualBasic::7af7ac997f526e4718a74179ac53201d, Data_science\MachineLearning\GNN\Models\GNNModel.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 47 (54.02%)
-    ' Comment Lines: 28 (32.18%)
+    '   Total Lines: 86
+    '    Code Lines: 47 (54.65%)
+    ' Comment Lines: 28 (32.56%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (13.79%)
+    '   Blank Lines: 11 (12.79%)
     '     File Size: 2.51 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -142,4 +141,3 @@ Public MustInherit Class GNNModel
         Console.WriteLine($"总参数量: {totalParams}")
     End Sub
 End Class
-

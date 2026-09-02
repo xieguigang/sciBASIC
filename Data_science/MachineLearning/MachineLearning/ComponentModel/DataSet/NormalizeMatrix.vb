@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ab0c18249fff28c8bfe9e648a4295ca, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::87ba6c12bd12e98950514bc144c77939, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (11.61%)
-    '     File Size: 5.30 KB
+    '     File Size: 5.31 KB
 
 
     '     Class NormalizeMatrix
@@ -59,7 +59,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.StoreProcedure

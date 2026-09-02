@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acb731df769fc5b2b617239d4b471997, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
+﻿#Region "Microsoft.VisualBasic::86e5842a7551ad7168d944ebd4c360a2, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (12.31%)
-    '     File Size: 2.68 KB
+    '     File Size: 2.69 KB
 
 
     '     Module Diagnostics
@@ -57,7 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 Namespace ComponentModel.StoreProcedure
 

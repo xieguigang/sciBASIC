@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f86cd9241644046a71fff422b7cf0ba, Data_science\MachineLearning\MLDataStorage\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::393c13f81b6c11bad9af969eeea5ac2b, Data_science\MachineLearning\MLDataStorage\DataImports.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (12.90%)
-    '     File Size: 2.27 KB
+    '     File Size: 2.28 KB
 
 
     ' Module DataImports
@@ -53,7 +53,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Framework
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module DataImports

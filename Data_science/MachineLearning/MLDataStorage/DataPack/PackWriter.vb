@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d235ffd096abe0be37a05ae5d5727afd, Data_science\MachineLearning\MLDataStorage\DataPack\PackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::d3eff613495ed072e5a1036dea8e4bd1, Data_science\MachineLearning\MLDataStorage\DataPack\PackWriter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 22 (19.13%)
-    '     File Size: 4.90 KB
+    '     File Size: 4.91 KB
 
 
     '     Class PackWriter
@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DataPack
@@ -79,7 +79,7 @@ Namespace DataPack
 
             For Each sample As Sample In samples
                 If sample.ID Like check_duplicates Then
-                    Call $"there is a duplicated sample data: {sample.ID}!".Warning
+                    Call $"there is a duplicated sample data: {sample.ID}!".warning
                     Call stream.Delete($"/samples/{sample.ID}.dat")
                 Else
                     Call check_duplicates.Add(sample.ID)

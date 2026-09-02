@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de0a455cfc60021c67d22b660868a74, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::e2b80fd357e56698b6d8e0b49b8933fc, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 101 (51.01%)
-    ' Comment Lines: 74 (37.37%)
+    '   Total Lines: 199
+    '    Code Lines: 102 (51.26%)
+    ' Comment Lines: 74 (37.19%)
     '    - Xml Docs: 82.43%
     ' 
-    '   Blank Lines: 23 (11.62%)
-    '     File Size: 7.91 KB
+    '   Blank Lines: 23 (11.56%)
+    '     File Size: 7.97 KB
 
 
     '     Module CutBins
@@ -56,6 +56,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 Namespace Distributions.BinBox
 
@@ -118,7 +119,7 @@ Namespace Distributions.BinBox
                 Dim err As String = "empty data collection for make evaluation of the data bin box!"
 
                 If allow_empty Then
-                    Call err.Warning
+                    Call err.warning
                     Return {}
                 Else
                     Throw New InvalidDataException(err)

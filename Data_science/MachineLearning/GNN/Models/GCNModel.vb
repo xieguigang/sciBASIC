@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abec236575a23902a7ad2d79b323c752, Data_science\MachineLearning\GNN\Models\GCNModel.vb"
+﻿#Region "Microsoft.VisualBasic::bb0bfdabb103711fe4997397adc9a31f, Data_science\MachineLearning\GNN\Models\GCNModel.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 36 (46.15%)
-    ' Comment Lines: 25 (32.05%)
+    '   Total Lines: 77
+    '    Code Lines: 36 (46.75%)
+    ' Comment Lines: 25 (32.47%)
     '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 17 (21.79%)
+    '   Blank Lines: 16 (20.78%)
     '     File Size: 2.72 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
@@ -130,4 +129,3 @@ Public Class GCNModel
         Return inputGrad
     End Function
 End Class
-

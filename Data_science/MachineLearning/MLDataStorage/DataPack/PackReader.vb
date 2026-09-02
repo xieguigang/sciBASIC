@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eebf8d7f1c9d48b563fe3a2f501deba, Data_science\MachineLearning\MLDataStorage\DataPack\PackReader.vb"
+﻿#Region "Microsoft.VisualBasic::92ef3f71542c5932759dfba055e0dd22, Data_science\MachineLearning\MLDataStorage\DataPack\PackReader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 40.91%
     ' 
     '   Blank Lines: 19 (15.57%)
-    '     File Size: 4.79 KB
+    '     File Size: 4.80 KB
 
 
     '     Class PackReader
@@ -62,7 +62,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 

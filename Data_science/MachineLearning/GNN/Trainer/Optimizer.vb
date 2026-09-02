@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be8ec3add62e335b773f8f69d1cf0b5, Data_science\MachineLearning\GNN\Trainer\Optimizer.vb"
+﻿#Region "Microsoft.VisualBasic::41992bc444618179dd058979bf41faaf, Data_science\MachineLearning\GNN\Trainer\Optimizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 20 (42.55%)
-    ' Comment Lines: 19 (40.43%)
+    '   Total Lines: 46
+    '    Code Lines: 20 (43.48%)
+    ' Comment Lines: 19 (41.30%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (17.02%)
-    '     File Size: 1.27 KB
+    '   Blank Lines: 7 (15.22%)
+    '     File Size: 1.26 KB
 
 
     ' Class Optimizer
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 

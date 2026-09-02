@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::967bb3e4808535d72913e773d1d5004f, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMode.vb"
+﻿#Region "Microsoft.VisualBasic::45cc2916b1f27d6ee086792bfbcbd4e3, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMode.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 65 (80.25%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 127
+    '    Code Lines: 94 (74.02%)
+    ' Comment Lines: 11 (8.66%)
+    '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 16 (19.75%)
-    '     File Size: 2.74 KB
+    '   Blank Lines: 22 (17.32%)
+    '     File Size: 4.43 KB
 
 
     '     Module EnumerableStatsMode
     ' 
-    '         Function: (+4 Overloads) Mode, (+2 Overloads) Modes
+    '         Function: EvaluateMode, (+4 Overloads) Mode, (+2 Overloads) Modes
     ' 
     ' 
     ' /********************************************************************************/
@@ -130,6 +130,52 @@ Namespace Math.Statistics.Linq
         <Extension>
         Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, TMode?)) As TMode
             Return source.[Select](selector).Mode
+        End Function
+
+        ''' <summary>
+        ''' 计算出众数
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function EvaluateMode(data As IReadOnlyCollection(Of Double)) As Double
+            If data Is Nothing OrElse data.Count = 0 Then Return Double.NaN
+            If data.Count = 1 Then Return data(0)
+
+            ' data 必须为已排序数组！
+            Dim modeValue As Double = data(0)
+            Dim modeCount As Integer = 1
+            Dim currValue As Double = data(0)
+            Dim currCount As Integer = 1
+
+            ' Count the amount of repeat And update mode variables
+            For i As Integer = 1 To data.Count - 1
+                If data(i) = currValue Then
+                    currCount += 1
+                Else
+                    ' 修正：使用 > 而不是 >=，确保在多个值频次相同时保留最先出现的那个值
+                    If currCount > modeCount Then
+                        modeCount = currCount
+                        modeValue = currValue
+                    End If
+
+                    currValue = data(i)
+                    currCount = 1
+                End If
+            Next
+
+            ' Check the last count
+            If currCount > modeCount Then
+                modeValue = currValue
+            End If
+
+            ' 如果所有值都只出现一次(没有重复)，众数概念上无意义，这里返回第一个元素
+            If modeCount = 1 Then
+                Return data(0)
+            Else
+                Return modeValue
+            End If
         End Function
     End Module
 End Namespace

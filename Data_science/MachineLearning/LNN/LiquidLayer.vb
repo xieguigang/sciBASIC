@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cb99e2041e26b2178f21267fa35ccf7, Data_science\MachineLearning\LNN\LiquidLayer.vb"
+﻿#Region "Microsoft.VisualBasic::306b2997eb2ceaa4d48217b4df255d6a, Data_science\MachineLearning\LNN\LiquidLayer.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 205
-    '    Code Lines: 102 (49.76%)
-    ' Comment Lines: 64 (31.22%)
-    '    - Xml Docs: 90.62%
+    '   Total Lines: 423
+    '    Code Lines: 238 (56.26%)
+    ' Comment Lines: 111 (26.24%)
+    '    - Xml Docs: 92.79%
     ' 
-    '   Blank Lines: 39 (19.02%)
-    '     File Size: 5.87 KB
+    '   Blank Lines: 74 (17.49%)
+    '     File Size: 12.97 KB
 
 
     ' Class LiquidLayer
     ' 
     '     Properties: ActivationType, Cells, HiddenSize, InputSize, LayerNormBeta
-    '                 LayerNormGamma, NumLayers, UseLayerNorm
+    '                 LayerNormGamma, Mode, NumLayers, Training, UseLayerNorm
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: ApplyLayerNorm, Forward, GetAllStates, GetOutputState, GetParameters
+    '     Function: ApplyLayerNorm, Backward, BackwardLayerNorm, Forward, GetAllStates
+    '               GetOutputState, GetParameterPairs, GetParameters
     ' 
-    '     Sub: Dispose, ResetState
+    '     Sub: ClearRecords, Dispose, EnableLayerNorm, ResetBackwardCarry, ResetState
+    '          ZeroGradients
     ' 
     ' /********************************************************************************/
 
@@ -71,6 +73,12 @@ Public Class LiquidLayer : Implements IDisposable
 
     ''' <summary>启用层归一化时，按 cell 顺序缓存归一化后的中间值 x̂，供反向传播使用</summary>
     Private ReadOnly _normCache As New List(Of Tensor)()
+
+    ''' <summary>
+    ''' 按 cell 顺序保存的跨时间步伴随向量 dL/dh_i(t+1)。
+    ''' BPTT 逆序回放时，每一步的 Backward 会先消费这份 carry、再把它更新为 dL/dh_i(t)。
+    ''' </summary>
+    Private ReadOnly _carry As New List(Of Tensor)()
 
 #Region "属性"
 
@@ -214,6 +222,7 @@ Public Class LiquidLayer : Implements IDisposable
 
         For i = 0 To numLayers - 1
             _normCache.Add(Nothing)
+            _carry.Add(Nothing)
         Next
     End Sub
 
@@ -299,6 +308,17 @@ Public Class LiquidLayer : Implements IDisposable
         For i = 0 To _normCache.Count - 1
             _normCache(i) = Nothing
         Next
+
+        Call ResetBackwardCarry()
+    End Sub
+
+    ''' <summary>
+    ''' 清空跨时间步的伴随向量（在一段序列的反向回放开始前调用）
+    ''' </summary>
+    Public Sub ResetBackwardCarry()
+        For i = 0 To _carry.Count - 1
+            _carry(i) = Nothing
+        Next
     End Sub
 
     ''' <summary>
@@ -308,6 +328,8 @@ Public Class LiquidLayer : Implements IDisposable
         For Each cell In _Cells
             cell.ClearRecords()
         Next
+
+        Call ResetBackwardCarry()
     End Sub
 
     ''' <summary>
@@ -379,16 +401,27 @@ Public Class LiquidLayer : Implements IDisposable
 #Region "反向传播"
 
     ''' <summary>
-    ''' 按 cell 逆序回传梯度
+    ''' 按 cell 逆序回传一个时间步的梯度
     ''' </summary>
+    ''' <remarks>
+    ''' 跨时间步的伴随向量（dL/dh_i(t+1)）由本层内部维护：
+    ''' 每次调用先把它叠加到对应 cell 的输出梯度上，再把 <see cref="LiquidCell.Backward"/> 的
+    ''' 返回值（dL/dh_i(t)）写回，从而在逆序回放中自动完成完整的 BPTT。
+    ''' 调用方只需在序列反向开始前调用一次 <see cref="ResetBackwardCarry"/>。
+    ''' </remarks>
     ''' <param name="adjOut">对本层输出状态 h 的梯度</param>
-    ''' <returns>对本层外部输入 u 的梯度（多层堆叠时即下一层反向的输入）</returns>
+    ''' <returns>对本层外部输入 u 的梯度（一般可忽略）</returns>
     Public Function Backward(adjOut As Tensor) As Tensor
         Dim cur = adjOut
 
         For i = _Cells.Count - 1 To 0 Step -1
-            ' 回传当前 cell（返回值是对步首状态的伴随，由训练器在时间维度上继续累加以完成 BPTT）
-            Call _Cells(i).Backward(cur)
+            ' 叠加来自下一时刻的伴随（多层堆叠时每个 cell 各自维护一份 carry）
+            If _carry(i) IsNot Nothing Then
+                cur = cur + _carry(i)
+            End If
+
+            ' 回传当前 cell，返回值即 dL/dh_i(t)，作为新的 carry 供上一时刻使用
+            _carry(i) = _Cells(i).Backward(cur)
 
             If UseLayerNorm Then
                 cur = BackwardLayerNorm(_Cells(i).LastInputGradient, _normCache(i))

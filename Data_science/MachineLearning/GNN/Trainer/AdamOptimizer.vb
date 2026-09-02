@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::169c1fb1b11fe05dd4cf81dd007e189a, Data_science\MachineLearning\GNN\Trainer\AdamOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::6398418edd33e027f5d9e3efd2daba90, Data_science\MachineLearning\GNN\Trainer\AdamOptimizer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.87%
     ' 
     '   Blank Lines: 16 (18.18%)
-    '     File Size: 2.62 KB
+    '     File Size: 2.61 KB
 
 
     ' Class AdamOptimizer
@@ -142,4 +142,3 @@ Public Class AdamOptimizer
         Next
     End Sub
 End Class
-

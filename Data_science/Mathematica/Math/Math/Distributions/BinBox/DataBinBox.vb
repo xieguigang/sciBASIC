@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d35d6c3317c8dd207189f735aeb7bab8, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::31bb9b9b591282f822e6bb7fc2f85e1d, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
-    '    Code Lines: 89 (72.95%)
-    ' Comment Lines: 15 (12.30%)
+    '   Total Lines: 123
+    '    Code Lines: 90 (73.17%)
+    ' Comment Lines: 15 (12.20%)
     '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 18 (14.75%)
-    '     File Size: 4.46 KB
+    '   Blank Lines: 18 (14.63%)
+    '     File Size: 4.51 KB
 
 
     '     Class DataBinBox
@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Distributions.BinBox

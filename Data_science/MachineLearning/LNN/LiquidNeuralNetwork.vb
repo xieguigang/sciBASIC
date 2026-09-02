@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29d5c22b99e40cd5037f7a0f7be4c212, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::319c00ba4d1d7770b981ffeca2a0521d, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 125 (44.48%)
-    ' Comment Lines: 101 (35.94%)
-    '    - Xml Docs: 80.20%
+    '   Total Lines: 533
+    '    Code Lines: 269 (50.47%)
+    ' Comment Lines: 160 (30.02%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 55 (19.57%)
-    '     File Size: 8.22 KB
+    '   Blank Lines: 104 (19.51%)
+    '     File Size: 17.28 KB
 
 
     ' Class LiquidNeuralNetwork
     ' 
-    '     Properties: DefaultDt, HiddenSize, InputSize, LiquidLayer, NumLiquidLayers
-    '                 OutputActivation, OutputBias, OutputBiasGradient, OutputSize, OutputWeight
-    '                 OutputWeightGradient, RecordHistory, SolverType, StateHistory
+    '     Properties: DefaultDt, HiddenSize, InputSize, LiquidLayer, Mode
+    '                 NumLiquidLayers, OutputActivation, OutputBias, OutputBiasGradient, OutputSize
+    '                 OutputWeight, OutputWeightGradient, RecordHistory, SolverType, StateHistory
+    '                 Training
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: ComputeOutput, Forward, GetParameterCount, GetParameters, ProcessSequence
+    '     Function: BackwardLiquid, BackwardOutput, ComputeOutput, ComputeOutputFrom, Forward
+    '               ForwardSequence, GetParameterCount, GetParameterPairs, GetParameters, ProcessSequence
+    '               RowVector
     ' 
-    '     Sub: Dispose, ResetState
+    '     Sub: ClearHistory, ClearRecords, Dispose, ResetState, ZeroGradients
     ' 
     ' /********************************************************************************/
 
@@ -339,7 +342,35 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 计算输出层
+    ''' 由给定隐藏状态计算输出层结果（纯函数，不写入前向缓存）
+    ''' </summary>
+    ''' <remarks>
+    ''' BPTT 训练器需要在整段序列上逐步取输出，但又不能污染 <c>_lastHidden</c> / <c>_lastOutput</c>，
+    ''' 因此这里提供一个无副作用版本；<see cref="BackwardOutput"/> 支持显式传入隐藏状态与之配套。
+    ''' </remarks>
+    Public Function ComputeOutputFrom(hiddenState As Tensor) As Tensor
+        Dim hiddenReshaped = New Tensor(hiddenState.Data, 1, HiddenSize)
+        Dim linear = hiddenReshaped.MatMul(_OutputWeight)
+        Dim output = New Tensor(OutputSize)
+
+        For i = 0 To OutputSize - 1
+            output(i) = linear(0, i) + _OutputBias(i)
+        Next
+
+        Select Case OutputActivation.ToLower()
+            Case "sigmoid"
+                output = ActivationFunctions.Sigmoid(output)
+            Case "tanh"
+                output = ActivationFunctions.Tanh(output)
+            Case "softmax"
+                output = ActivationFunctions.Softmax(output)
+        End Select
+
+        Return output
+    End Function
+
+    ''' <summary>
+    ''' 计算输出层（并记录前向缓存）
     ''' </summary>
     Private Function ComputeOutput(hiddenState As Tensor) As Tensor
         ' 将隐藏状态reshape为行向量
@@ -401,10 +432,32 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
     ''' 回传输出层：累加输出权重/偏置的梯度，并返回对隐藏状态的伴随向量
     ''' </summary>
     ''' <param name="outputGradient">对网络输出的梯度 dL/doutput</param>
+    ''' <param name="hidden">
+    ''' 前向时对应的隐藏状态。BPTT 逆序回放时必须显式传入第 t 步的隐藏状态，
+    ''' 省略则使用最近一次前向的隐藏状态。
+    ''' </param>
+    ''' <param name="output">
+    ''' 前向时对应的网络输出，用于计算输出激活函数的导数；省略则使用最近一次前向的输出。
+    ''' </param>
     ''' <returns>对隐藏状态 h 的梯度 dL/dh</returns>
-    Public Function BackwardOutput(outputGradient As Tensor) As Tensor
-        If _lastOutput Is Nothing OrElse _lastHidden Is Nothing Then
-            Throw New InvalidOperationException("尚未完成前向传播，无法回传输出层梯度")
+    Public Function BackwardOutput(outputGradient As Tensor,
+                                   Optional hidden As Tensor = Nothing,
+                                   Optional output As Tensor = Nothing) As Tensor
+        ' BPTT 逆序回放时会显式传入每一时间步的隐藏状态与输出；
+        ' 只有在省略这些参数时才回退到最近一次前向留下的缓存。
+        If hidden Is Nothing Then
+            hidden = _lastHidden
+
+            If hidden Is Nothing Then
+                Throw New InvalidOperationException("尚未完成前向传播，也没有显式传入隐藏状态，无法回传输出层梯度")
+            End If
+        End If
+
+        Dim out = If(output, _lastOutput)
+
+        If out Is Nothing AndAlso OutputActivation.ToLower() <> "none" Then
+            Throw New InvalidOperationException(
+                $"输出激活函数为 '{OutputActivation}'，回传时需要显式传入前向时该步的输出张量")
         End If
 
         Dim H = HiddenSize
@@ -414,21 +467,21 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
         ' 输出激活函数的导数
         Select Case OutputActivation.ToLower()
             Case "sigmoid"
-                dLin = LNNMath.Mul(dLin, ActivationFunctions.SigmoidDerivative(_lastOutput))
+                dLin = LNNMath.Mul(dLin, ActivationFunctions.SigmoidDerivative(out))
             Case "tanh"
-                dLin = LNNMath.Mul(dLin, ActivationFunctions.TanhDerivative(_lastOutput))
+                dLin = LNNMath.Mul(dLin, ActivationFunctions.TanhDerivative(out))
             Case "softmax"
                 ' J = diag(y) - y·y^T  ⇒  dLin = y ⊙ (dOut - (y·dOut))
                 Dim dot As Double = 0.0
                 For i = 0 To O - 1
-                    dot += _lastOutput(i) * dLin(i)
+                    dot += out(i) * dLin(i)
                 Next
                 For i = 0 To O - 1
-                    dLin(i) = _lastOutput(i) * (dLin(i) - dot)
+                    dLin(i) = out(i) * (dLin(i) - dot)
                 Next
         End Select
 
-        Dim hidden = _lastHidden
+        hidden = If(hidden, _lastHidden)
 
         For i = 0 To O - 1
             _OutputBiasGradient(i) += dLin(i)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35f2116b9663baac6d9e081c547ab009, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d10830366e27aa92dd630ed96b543a7e, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.73%
     ' 
     '   Blank Lines: 51 (12.26%)
-    '     File Size: 15.51 KB
+    '     File Size: 15.52 KB
 
 
     ' Module Extensions
@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Statistics

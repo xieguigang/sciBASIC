@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea471c810a5cba8a33755fb2df814644, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
+﻿#Region "Microsoft.VisualBasic::1e653e1e33eac95f92ac6993f1b227f7, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 127 (76.51%)
-    ' Comment Lines: 18 (10.84%)
-    '    - Xml Docs: 94.44%
+    '   Total Lines: 380
+    '    Code Lines: 236 (62.11%)
+    ' Comment Lines: 87 (22.89%)
+    '    - Xml Docs: 78.16%
     ' 
-    '   Blank Lines: 21 (12.65%)
-    '     File Size: 6.00 KB
+    '   Blank Lines: 57 (15.00%)
+    '     File Size: 15.10 KB
 
 
     '     Class PairingHeap
     ' 
     '         Properties: count, empty, min
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: contains, decreaseKey, insert, isHeap, merge
-    '                   mergePairs, removeMin, ToString
+    '         Function: contains, decreaseKey, findNode, insert, isHeap
+    '                   merge, mergePairs, removeMin, removeNode, ToString
     ' 
     '         Sub: forEach
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::beca351d81f3261fd59b6263bdf29418, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::dff40165f54c463459fccbfaf105ba1e, Data_science\Mathematica\Math\Math\Distributions\Summary\SampleDistribution.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 250
-    '    Code Lines: 161 (64.40%)
-    ' Comment Lines: 48 (19.20%)
-    '    - Xml Docs: 72.92%
+    '   Total Lines: 260
+    '    Code Lines: 160 (61.54%)
+    ' Comment Lines: 56 (21.54%)
+    '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 41 (16.40%)
-    '     File Size: 9.06 KB
+    '   Blank Lines: 44 (16.92%)
+    '     File Size: 9.78 KB
 
 
     '     Class SampleDistribution
@@ -49,8 +49,11 @@
     '                     min, mode, outlierBoundary, quantile, range
     '                     size, stdErr, sum, variance
     ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: EvaluateMode, GetPercentile, GetRange, ToString
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: FromBlocks, GetPercentile, GetRange, ToString
+    ' 
+    '         Sub: Evaluate
     ' 
     ' 
     ' /********************************************************************************/
@@ -61,10 +64,11 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
-Namespace Distributions
+Namespace Distributions.Summary
 
     ''' <summary>
     ''' The data sample model
@@ -78,7 +82,7 @@ Namespace Distributions
         <XmlAttribute> Public Property max As Double
         <XmlAttribute> Public Property average As Double
         <XmlAttribute> Public Property sum As Double
-        <XmlAttribute> Public Property size As Integer
+        <XmlAttribute> Public Property size As Long
 
         ''' <summary>
         ''' variance of the population
@@ -114,26 +118,34 @@ Namespace Distributions
 
         Public ReadOnly Property CI95Range As Double()
             Get
-                If size <= 1 Then Return {average, average}
-                ' 均值的 95% 置信区间: average ± 1.96 * (SD / sqrt(n))
-                Dim se As Double = stdErr / std.Sqrt(size)
-                Return {
-                    average - 1.96 * se,
-                    average + 1.96 * se
-                }
+                If size <= 1 Then
+                    Return {average, average}
+                Else
+                    ' 均值的 95% 置信区间: average ± 1.96 * (SD / sqrt(n))
+                    Dim se As Double = stdErr / std.Sqrt(size)
+
+                    Return {
+                        average - 1.96 * se,
+                        average + 1.96 * se
+                    }
+                End If
             End Get
         End Property
 
         Public ReadOnly Property outlierBoundary As Double()
             Get
-                If quantile Is Nothing OrElse quantile.Length < 4 Then Return {Double.NaN, Double.NaN}
-                Dim Q1 = quantile(1)
-                Dim Q3 = quantile(3)
-                Dim IQR = Q3 - Q1
-                Return {
-                    Q1 - 1.5 * IQR,
-                    Q3 + 1.5 * IQR
-                }
+                If quantile Is Nothing OrElse quantile.Length < 4 Then
+                    Return {Double.NaN, Double.NaN}
+                Else
+                    Dim Q1 = quantile(1)
+                    Dim Q3 = quantile(3)
+                    Dim IQR = Q3 - Q1
+
+                    Return {
+                        Q1 - 1.5 * IQR,
+                        Q3 + 1.5 * IQR
+                    }
+                End If
             End Get
         End Property
 
@@ -168,72 +180,110 @@ Namespace Distributions
                 CV = Double.NaN
                 range = Double.NaN
                 median = Double.NaN
-                Return
-            End If
-
-            If size = 1 Then
+            ElseIf size = 1 Then
                 min = v(0) : max = v(0) : average = v(0) : sum = v(0)
                 stdErr = 0 : variance = 0 : CV = 0 : range = 0 : median = v(0) : mode = v(0)
+
                 If estimateQuantile Then
                     quantile = {v(0), v(0), v(0), v(0), v(0)}
                 End If
-                Return
+            Else
+                Call Evaluate(v, Me, estimateQuantile)
             End If
+        End Sub
 
+        ''' <summary>
+        ''' Streaming construction from row blocks.
+        ''' 面向数据总点数远超 Int32 数组上限的超大数据集:
+        ''' 每一行 Double() 首尾相接构成完整样本, 全程内存占用恒定.
+        ''' </summary>
+        ''' <remarks>
+        ''' 注意: quantile/median/mode 为近似值(精度由 histogramBins 控制),
+        ''' size/sum/min/max/average/variance/stdErr 为精确值.
+        ''' </remarks>
+        Sub New(blocks As IEnumerable(Of Double()), Optional estimateQuantile As Boolean = True, Optional histogramBins As Integer = 65536)
+            Dim stream As New StreamingSampleDistribution(histogramBins)
+
+            For Each row As Double() In blocks
+                If row IsNot Nothing Then
+                    Call stream.AddRange(row)
+                End If
+            Next
+
+            Call stream.WriteTo(Me, estimateQuantile)
+        End Sub
+
+        ''' <summary>
+        ''' Streaming sample statistics for the huge row-wise dataset.
+        ''' (数据总点数可以远超 Int32 数组上限, 内存占用恒定)
+        ''' </summary>
+        Public Shared Function FromBlocks(blocks As IEnumerable(Of Double()),
+                                          Optional histogramBins As Integer = 65536,
+                                          Optional estimateQuantile As Boolean = True) As SampleDistribution
+
+            Return New SampleDistribution(blocks, estimateQuantile, histogramBins)
+        End Function
+
+        Private Shared Sub Evaluate(v As Double(), ByRef sample As SampleDistribution, estimateQuantile As Boolean)
             ' 1. 单次遍历计算 Sum, Min, Max, SumOfSquares (性能优化核心)
             Dim sumVal As Double = 0
             Dim sumSq As Double = 0
             Dim minVal As Double = v(0)
             Dim maxVal As Double = v(0)
 
-            For i As Integer = 0 To size - 1
+            For i As Integer = 0 To sample.size - 1
                 Dim val As Double = v(i)
                 sumVal += val
                 sumSq += val * val
+
                 If val < minVal Then minVal = val
                 If val > maxVal Then maxVal = val
             Next
 
-            sum = sumVal
-            min = minVal
-            max = maxVal
-            range = maxVal - minVal
-            average = sumVal / size
+            sample.sum = sumVal
+            sample.min = minVal
+            sample.max = maxVal
+            sample.range = maxVal - minVal
+            sample.average = sumVal / sample.size
 
             ' 总体方差: E(X^2) - (E(X))^2
-            variance = (sumSq / size) - (average * average)
+            sample.variance = (sumSq / sample.size) - (sample.average * sample.average)
 
             ' 防止浮点数精度问题导致的微小负数
-            If variance < 0 Then variance = 0
-            stdErr = std.Sqrt(variance)
+            If sample.variance < 0 Then
+                sample.variance = 0
+            End If
 
-            If average <> 0 Then
-                CV = stdErr / average
+            sample.stdErr = std.Sqrt(sample.variance)
+
+            If sample.average <> 0 Then
+                sample.CV = sample.stdErr / sample.average
             Else
-                CV = Double.NaN
+                sample.CV = Double.NaN
             End If
 
             ' 2. 一次性排序，复用于分位数和众数（避免多次排序和分配内存）
             Dim sortedArr As Double() = CType(v.Clone(), Double())
-            Array.Sort(sortedArr)
+
+            Call Array.Sort(sortedArr)
 
             If estimateQuantile Then
                 ' 精确分位数计算（基于线性插值法，与R/numpy默认类型一致）
-                quantile = {
+                sample.quantile = {
                     sortedArr(0),
                     GetPercentile(sortedArr, 0.25),
                     GetPercentile(sortedArr, 0.5),
                     GetPercentile(sortedArr, 0.75),
-                    sortedArr(size - 1)
+                    sortedArr(sample.size - 1)
                 }
-                median = quantile(2)
+                sample.median = sample.quantile(2)
             Else
                 ' 即使不计算分位数，原逻辑也要求计算众数
-                median = GetPercentile(sortedArr, 0.5)
+                sample.median = GetPercentile(sortedArr, 0.5)
             End If
 
             ' 计算众数
-            mode = EvaluateMode(sortedArr)
+            sample.mode = sortedArr.EvaluateMode
         End Sub
 
         ''' <summary>
@@ -253,43 +303,6 @@ Namespace Distributions
 
             Dim frac As Double = idx - lower
             Return sortedData(lower) + (sortedData(upper) - sortedData(lower)) * frac
-        End Function
-
-        Public Shared Function EvaluateMode(data As Double()) As Double
-            If data Is Nothing OrElse data.Length = 0 Then Return Double.NaN
-            If data.Length = 1 Then Return data(0)
-
-            ' data 必须为已排序数组！
-            Dim modeValue As Double = data(0)
-            Dim modeCount As Integer = 1
-            Dim currValue As Double = data(0)
-            Dim currCount As Integer = 1
-
-            ' Count the amount of repeat And update mode variables
-            For i As Integer = 1 To data.Length - 1
-                If data(i) = currValue Then
-                    currCount += 1
-                Else
-                    ' 修正：使用 > 而不是 >=，确保在多个值频次相同时保留最先出现的那个值
-                    If currCount > modeCount Then
-                        modeCount = currCount
-                        modeValue = currValue
-                    End If
-
-                    currValue = data(i)
-                    currCount = 1
-                End If
-            Next
-
-            ' Check the last count
-            If currCount > modeCount Then
-                modeValue = currValue
-            End If
-
-            ' 如果所有值都只出现一次(没有重复)，众数概念上无意义，这里返回第一个元素
-            If modeCount = 1 Then Return data(0)
-
-            Return modeValue
         End Function
 
         ''' <summary>

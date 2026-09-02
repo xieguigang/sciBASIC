@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d429cf59f88aaa6deb52ea46dd73a8d1, Data_science\MachineLearning\GNN\Trainer\SGDOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::50a7c9927d84a1f0889c84801e41c4a8, Data_science\MachineLearning\GNN\Trainer\SGDOptimizer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 29 (49.15%)
-    ' Comment Lines: 22 (37.29%)
+    '   Total Lines: 58
+    '    Code Lines: 29 (50.00%)
+    ' Comment Lines: 22 (37.93%)
     '    - Xml Docs: 77.27%
     ' 
-    '   Blank Lines: 8 (13.56%)
+    '   Blank Lines: 7 (12.07%)
     '     File Size: 1.97 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
@@ -113,4 +112,3 @@ Public Class SGDOptimizer
         Next
     End Sub
 End Class
-

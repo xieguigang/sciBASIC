@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::082e574798b3dcde40f641befc733f56, Data_science\MachineLearning\GNN\Trainer\GraphClassificationTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::d747230db9a9a7e43693c51aa725b108, Data_science\MachineLearning\GNN\Trainer\GraphClassificationTrainer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 135
-    '    Code Lines: 85 (62.96%)
-    ' Comment Lines: 19 (14.07%)
+    '   Total Lines: 134
+    '    Code Lines: 85 (63.43%)
+    ' Comment Lines: 19 (14.18%)
     '    - Xml Docs: 68.42%
     ' 
-    '   Blank Lines: 31 (22.96%)
+    '   Blank Lines: 30 (22.39%)
     '     File Size: 4.45 KB
 
 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -192,4 +191,3 @@ Public Class GraphClassificationTrainer
         Console.WriteLine("训练完成！")
     End Sub
 End Class
-

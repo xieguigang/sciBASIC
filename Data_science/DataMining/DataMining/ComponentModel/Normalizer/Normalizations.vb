@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f5086060351326f7bdc379d3fc22bc6, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::094554ecef33a600bc67d525c78ed196, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 96
-    '    Code Lines: 66 (68.75%)
-    ' Comment Lines: 17 (17.71%)
+    '   Total Lines: 97
+    '    Code Lines: 67 (69.07%)
+    ' Comment Lines: 17 (17.53%)
     '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 13 (13.54%)
-    '     File Size: 3.44 KB
+    '   Blank Lines: 13 (13.40%)
+    '     File Size: 3.50 KB
 
 
     '     Module Normalizations
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 Imports std = System.Math
 
 Namespace ComponentModel.Normalizer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99f56cac3fc5341ec19df03037b5ca25, Data_science\DataMining\Bonsai\Optimizer.vb"
+﻿#Region "Microsoft.VisualBasic::3ae2addf8704cb305a48100c3fd81af0, Data_science\DataMining\Bonsai\Optimizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 314
-    '    Code Lines: 208 (66.24%)
-    ' Comment Lines: 63 (20.06%)
+    '   Total Lines: 312
+    '    Code Lines: 208 (66.67%)
+    ' Comment Lines: 63 (20.19%)
     '    - Xml Docs: 31.75%
     ' 
-    '   Blank Lines: 43 (13.69%)
-    '     File Size: 11.44 KB
+    '   Blank Lines: 41 (13.14%)
+    '     File Size: 11.43 KB
 
 
     ' Module Optimizer
@@ -380,6 +380,3 @@ Public Module Optimizer
         Return d
     End Function
 End Module
-
-
-

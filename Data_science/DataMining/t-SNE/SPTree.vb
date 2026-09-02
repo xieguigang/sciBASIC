@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::398d5002e2fa5a620130290881369241, Data_science\DataMining\t-SNE\SPTree.vb"
+﻿#Region "Microsoft.VisualBasic::b7ac567f7e3aed384e7bafc2a79822dc, Data_science\DataMining\t-SNE\SPTree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 70.09%
     ' 
     '   Blank Lines: 77 (18.55%)
-    '     File Size: 13.91 KB
+    '     File Size: 13.90 KB
 
 
     ' Class SPNode
@@ -475,4 +475,3 @@ Friend Class SPTree
         End Get
     End Property
 End Class
-

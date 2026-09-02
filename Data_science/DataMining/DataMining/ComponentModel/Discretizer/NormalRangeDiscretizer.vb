@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0741548dda86622d3f128c462cd395e1, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
+﻿#Region "Microsoft.VisualBasic::cb995f937c64fda621ffb2f6864fc925, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 12 (16.44%)
-    '     File Size: 2.60 KB
+    '     File Size: 2.61 KB
 
 
     '     Class NormalRangeDiscretizer
@@ -57,7 +57,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 Namespace ComponentModel.Discretion
 

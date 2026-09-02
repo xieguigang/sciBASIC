@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c613a1b66e646a382e9438b798d6b3a6, Data_science\DataMining\Bonsai\BonsaiApi.vb"
+﻿#Region "Microsoft.VisualBasic::865a9f1e1f6035bc15a396cc2fe8febd, Data_science\DataMining\Bonsai\BonsaiApi.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 188
-    '    Code Lines: 61 (32.45%)
-    ' Comment Lines: 99 (52.66%)
+    '   Total Lines: 187
+    '    Code Lines: 61 (32.62%)
+    ' Comment Lines: 99 (52.94%)
     '    - Xml Docs: 73.74%
     ' 
-    '   Blank Lines: 28 (14.89%)
+    '   Blank Lines: 27 (14.44%)
     '     File Size: 7.29 KB
 
 
@@ -50,7 +50,6 @@
     ' 
     '     Function: BranchTimeCoords, Embed, (+2 Overloads) Fit, FitCore, Get2DLayout
     '               GetHighDimStates, LogLikelihood, ToNewick, Transform
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -243,5 +242,3 @@ Public Class Bonsai
         Return New Bonsai().Fit(means, stds, names).Transform()
     End Function
 End Class
-
-
