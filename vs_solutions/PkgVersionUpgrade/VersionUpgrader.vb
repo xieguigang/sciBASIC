@@ -183,6 +183,9 @@ Module VersionUpgrader
 
         If el Is Nothing Then
             If Not allowInsert Then
+                ' 元素不存在并且不允许新建，这种情况下实际上什么都没有改动，
+                ' 把新值清空以免向外误报一次变更
+                change.NewValue = ""
                 Return change
             End If
 
