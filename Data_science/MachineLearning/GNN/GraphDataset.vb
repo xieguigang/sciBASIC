@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc25b94535c355aba1ad36e45d0d9f4a, Data_science\MachineLearning\GNN\GraphDataset.vb"
+﻿#Region "Microsoft.VisualBasic::803c16242ac33e1561c6571775e9fa9a, Data_science\MachineLearning\GNN\GraphDataset.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 37 (57.81%)
-    ' Comment Lines: 19 (29.69%)
+    '   Total Lines: 63
+    '    Code Lines: 37 (58.73%)
+    ' Comment Lines: 19 (30.16%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (12.50%)
+    '   Blank Lines: 7 (11.11%)
     '     File Size: 1.52 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 图数据集

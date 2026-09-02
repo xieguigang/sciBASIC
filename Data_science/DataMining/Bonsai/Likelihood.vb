@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53e1369c99d1075d41688c45a10aa6aa, Data_science\DataMining\Bonsai\Likelihood.vb"
+﻿#Region "Microsoft.VisualBasic::a5ded5a23e9bd7d4d7d4b2ce0a669503, Data_science\DataMining\Bonsai\Likelihood.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 483
-    '    Code Lines: 299 (61.90%)
-    ' Comment Lines: 125 (25.88%)
+    '   Total Lines: 481
+    '    Code Lines: 299 (62.16%)
+    ' Comment Lines: 125 (25.99%)
     '    - Xml Docs: 57.60%
     ' 
-    '   Blank Lines: 59 (12.22%)
-    '     File Size: 20.53 KB
+    '   Blank Lines: 57 (11.85%)
+    '     File Size: 20.52 KB
 
 
     ' Module Likelihood
@@ -50,7 +50,6 @@
     '               optimiseT3LeafStar, VectorLog, VectorSum
     ' 
     '     Sub: completeLtqs, getDerivativesDownstream, propagate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -537,6 +536,3 @@ Public Module Likelihood
         Return s
     End Function
 End Module
-
-
-

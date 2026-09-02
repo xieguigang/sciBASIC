@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd6740262a9bd57ac48daa69a470717b, Data_science\DataMining\Bonsai\test\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::4ecdd26dfeb7f7d8b91761025bc79a7c, Data_science\DataMining\Bonsai\test\Plot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 26.56%
     ' 
     '   Blank Lines: 45 (11.25%)
-    '     File Size: 16.05 KB
+    '     File Size: 16.04 KB
 
 
     ' Module Plot
@@ -455,4 +455,3 @@ Module Plot
     End Sub
 
 End Module
-

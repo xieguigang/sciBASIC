@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::addfe837819231af5c15f2a7449c4bfd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\CategoryColorProfile.vb"
+﻿#Region "Microsoft.VisualBasic::d74317e4737bf7b94ed3fb3e127b0322, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\CategoryColorProfile.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 56 (57.14%)
-    ' Comment Lines: 26 (26.53%)
+    '   Total Lines: 104
+    '    Code Lines: 61 (58.65%)
+    ' Comment Lines: 26 (25.00%)
     '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 16 (16.33%)
-    '     File Size: 3.69 KB
+    '   Blank Lines: 17 (16.35%)
+    '     File Size: 3.87 KB
 
 
     '     Class CategoryColorProfile

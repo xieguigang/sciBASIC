@@ -1,59 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::beca351d81f3261fd59b6263bdf29418, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::dff40165f54c463459fccbfaf105ba1e, Data_science\Mathematica\Math\Math\Distributions\Summary\SampleDistribution.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 250
-'    Code Lines: 161 (64.40%)
-' Comment Lines: 48 (19.20%)
-'    - Xml Docs: 72.92%
-' 
-'   Blank Lines: 41 (16.40%)
-'     File Size: 9.06 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SampleDistribution
-' 
-'         Properties: average, CI95Range, CV, max, median
-'                     min, mode, outlierBoundary, quantile, range
-'                     size, stdErr, sum, variance
-' 
-'         Constructor: (+4 Overloads) Sub New
-'         Function: EvaluateMode, GetPercentile, GetRange, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 260
+    '    Code Lines: 160 (61.54%)
+    ' Comment Lines: 56 (21.54%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 44 (16.92%)
+    '     File Size: 9.78 KB
+
+
+    '     Class SampleDistribution
+    ' 
+    '         Properties: average, CI95Range, CV, max, median
+    '                     min, mode, outlierBoundary, quantile, range
+    '                     size, stdErr, sum, variance
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: FromBlocks, GetPercentile, GetRange, ToString
+    ' 
+    '         Sub: Evaluate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

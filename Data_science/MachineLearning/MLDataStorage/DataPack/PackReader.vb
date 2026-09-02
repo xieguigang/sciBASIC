@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::5eebf8d7f1c9d48b563fe3a2f501deba, Data_science\MachineLearning\MLDataStorage\DataPack\PackReader.vb"
+﻿#Region "Microsoft.VisualBasic::92ef3f71542c5932759dfba055e0dd22, Data_science\MachineLearning\MLDataStorage\DataPack\PackReader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 122
-'    Code Lines: 81 (66.39%)
-' Comment Lines: 22 (18.03%)
-'    - Xml Docs: 40.91%
-' 
-'   Blank Lines: 19 (15.57%)
-'     File Size: 4.79 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PackReader
-' 
-'         Properties: output_labels
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetAllSamples, GetMatrix, LoadFeature, ReadSample
-' 
-'         Sub: (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 81 (66.39%)
+    ' Comment Lines: 22 (18.03%)
+    '    - Xml Docs: 40.91%
+    ' 
+    '   Blank Lines: 19 (15.57%)
+    '     File Size: 4.80 KB
+
+
+    '     Class PackReader
+    ' 
+    '         Properties: output_labels
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetAllSamples, GetMatrix, LoadFeature, ReadSample
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

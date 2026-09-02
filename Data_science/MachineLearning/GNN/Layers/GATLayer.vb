@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4de5333dc925707f63ae1f594f7ce021, Data_science\MachineLearning\GNN\Layers\GATLayer.vb"
+﻿#Region "Microsoft.VisualBasic::fa4b58f0411449f52c68558894d1c3c5, Data_science\MachineLearning\GNN\Layers\GATLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 108 (63.16%)
-    ' Comment Lines: 33 (19.30%)
+    '   Total Lines: 170
+    '    Code Lines: 108 (63.53%)
+    ' Comment Lines: 33 (19.41%)
     '    - Xml Docs: 51.52%
     ' 
-    '   Blank Lines: 30 (17.54%)
-    '     File Size: 6.34 KB
+    '   Blank Lines: 29 (17.06%)
+    '     File Size: 6.33 KB
 
 
     ' Class GATLayer
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -225,4 +224,3 @@ Public Class GATLayer
         }
     End Function
 End Class
-

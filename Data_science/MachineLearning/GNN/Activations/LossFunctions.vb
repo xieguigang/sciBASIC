@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08f024366569c249db19d56f738354f8, Data_science\MachineLearning\GNN\Activations\LossFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::2d8fb0f0b681fa4114bd5ce04eb8c7cc, Data_science\MachineLearning\GNN\Activations\LossFunctions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 24 (60.00%)
-    ' Comment Lines: 12 (30.00%)
+    '   Total Lines: 39
+    '    Code Lines: 24 (61.54%)
+    ' Comment Lines: 12 (30.77%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (10.00%)
-    '     File Size: 1.38 KB
+    '   Blank Lines: 3 (7.69%)
+    '     File Size: 1.37 KB
 
 
     ' Enum LossType
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
@@ -98,4 +97,3 @@ Public Module LossFunctions
         End Select
     End Function
 End Module
-

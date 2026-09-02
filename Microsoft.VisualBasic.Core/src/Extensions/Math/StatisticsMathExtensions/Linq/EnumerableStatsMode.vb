@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::967bb3e4808535d72913e773d1d5004f, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMode.vb"
+﻿#Region "Microsoft.VisualBasic::45cc2916b1f27d6ee086792bfbcbd4e3, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMode.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 65 (80.25%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 127
+    '    Code Lines: 94 (74.02%)
+    ' Comment Lines: 11 (8.66%)
+    '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 16 (19.75%)
-    '     File Size: 2.74 KB
+    '   Blank Lines: 22 (17.32%)
+    '     File Size: 4.43 KB
 
 
     '     Module EnumerableStatsMode
     ' 
-    '         Function: (+4 Overloads) Mode, (+2 Overloads) Modes
+    '         Function: EvaluateMode, (+4 Overloads) Mode, (+2 Overloads) Modes
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::333a1cc041145c6a9edbb7da8d4ec059, Data_science\DataMining\Bonsai\PointSet.vb"
+﻿#Region "Microsoft.VisualBasic::db126736053df3b43ec381a6846b53fd, Data_science\DataMining\Bonsai\PointSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 237
-    '    Code Lines: 117 (49.37%)
-    ' Comment Lines: 90 (37.97%)
+    '   Total Lines: 235
+    '    Code Lines: 117 (49.79%)
+    ' Comment Lines: 90 (38.30%)
     '    - Xml Docs: 71.11%
     ' 
-    '   Blank Lines: 30 (12.66%)
-    '     File Size: 8.81 KB
+    '   Blank Lines: 28 (11.91%)
+    '     File Size: 8.80 KB
 
 
     ' Class PointSet
@@ -50,7 +50,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: EstimateGeneVariance, FilterBySNR, FromMatrix, GetMean, GetSNR
     '               GetStd, GetVar
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -291,6 +290,3 @@ Public Class PointSet
         Return stds(i)
     End Function
 End Class
-
-
-

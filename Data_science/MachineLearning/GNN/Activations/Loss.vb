@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c10e1310d8b083958b674eb812104c62, Data_science\MachineLearning\GNN\Activations\Loss.vb"
+﻿#Region "Microsoft.VisualBasic::e22795e23022eb0626ebadb38209c028, Data_science\MachineLearning\GNN\Activations\Loss.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 45 (52.33%)
-    ' Comment Lines: 28 (32.56%)
+    '   Total Lines: 85
+    '    Code Lines: 45 (52.94%)
+    ' Comment Lines: 28 (32.94%)
     '    - Xml Docs: 96.43%
     ' 
-    '   Blank Lines: 13 (15.12%)
+    '   Blank Lines: 12 (14.12%)
     '     File Size: 3.09 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -138,4 +137,3 @@ Public Module Loss
         Return NegativeLogLikelihood(logits, targetClass)
     End Function
 End Module
-

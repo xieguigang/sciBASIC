@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::acb731df769fc5b2b617239d4b471997, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
+﻿#Region "Microsoft.VisualBasic::86e5842a7551ad7168d944ebd4c360a2, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 65
-'    Code Lines: 55 (84.62%)
-' Comment Lines: 2 (3.08%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 8 (12.31%)
-'     File Size: 2.68 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Diagnostics
-' 
-'         Function: CheckDataSet, ProjectData
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 55 (84.62%)
+    ' Comment Lines: 2 (3.08%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (12.31%)
+    '     File Size: 2.69 KB
+
+
+    '     Module Diagnostics
+    ' 
+    '         Function: CheckDataSet, ProjectData
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

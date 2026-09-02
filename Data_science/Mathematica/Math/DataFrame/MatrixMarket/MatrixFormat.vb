@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ac759f6fe482cc02a39fb00bcbb080, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MatrixFormat.vb"
+﻿#Region "Microsoft.VisualBasic::8187c1e07020e73e6a081efd262d2288, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MatrixFormat.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 75 (63.56%)
-    ' Comment Lines: 22 (18.64%)
+    '   Total Lines: 120
+    '    Code Lines: 77 (64.17%)
+    ' Comment Lines: 22 (18.33%)
     '    - Xml Docs: 77.27%
     ' 
-    '   Blank Lines: 21 (17.80%)
-    '     File Size: 4.44 KB
+    '   Blank Lines: 21 (17.50%)
+    '     File Size: 4.55 KB
 
 
     ' Module MatrixFormat

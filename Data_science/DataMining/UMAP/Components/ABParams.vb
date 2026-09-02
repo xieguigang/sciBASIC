@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85adddf621932c3de623ab7efcc8586a, Data_science\DataMining\UMAP\Components\ABParams.vb"
+﻿#Region "Microsoft.VisualBasic::33d8ac1dfe418648af51cb986ee187ca, Data_science\DataMining\UMAP\Components\ABParams.vb"
 
     ' Author:
     ' 
@@ -329,4 +329,3 @@ Public Module ABParams
     End Function
 
 End Module
-

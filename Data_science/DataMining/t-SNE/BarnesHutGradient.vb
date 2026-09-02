@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb303798f49e233ba9385301ceb8c9df, Data_science\DataMining\t-SNE\BarnesHutGradient.vb"
+﻿#Region "Microsoft.VisualBasic::2938654b3fcfbe39e79a367fc1e32277, Data_science\DataMining\t-SNE\BarnesHutGradient.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Friend Module BarnesHutGradient
         tSNE.mCost = SumParts(costParts)
     End Sub
 End Module
-

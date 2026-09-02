@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2379dc93eb5a63443d9b50611c11d03f, Data_science\DataMining\Bonsai\BonsaiNode.vb"
+﻿#Region "Microsoft.VisualBasic::c7b8c71cde8348a8f71efa7293774f89, Data_science\DataMining\Bonsai\BonsaiNode.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 305
-    '    Code Lines: 150 (49.18%)
-    ' Comment Lines: 115 (37.70%)
+    '   Total Lines: 303
+    '    Code Lines: 150 (49.50%)
+    ' Comment Lines: 115 (37.95%)
     '    - Xml Docs: 73.04%
     ' 
-    '   Blank Lines: 40 (13.11%)
+    '   Blank Lines: 38 (12.54%)
     '     File Size: 11.24 KB
 
 
@@ -51,7 +51,6 @@
     '               getTransferVariance, getW, isLeafNode, isRootNode, toNewick
     ' 
     '     Sub: collectLeafs, getLtqsUponMerge, setLtqsVarsOrW
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -360,6 +359,3 @@ Public Class BonsaiNode
         Return n
     End Function
 End Class
-
-
-

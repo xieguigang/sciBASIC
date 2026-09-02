@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cb99e2041e26b2178f21267fa35ccf7, Data_science\MachineLearning\LNN\LiquidLayer.vb"
+﻿#Region "Microsoft.VisualBasic::306b2997eb2ceaa4d48217b4df255d6a, Data_science\MachineLearning\LNN\LiquidLayer.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 205
-    '    Code Lines: 102 (49.76%)
-    ' Comment Lines: 64 (31.22%)
-    '    - Xml Docs: 90.62%
+    '   Total Lines: 423
+    '    Code Lines: 238 (56.26%)
+    ' Comment Lines: 111 (26.24%)
+    '    - Xml Docs: 92.79%
     ' 
-    '   Blank Lines: 39 (19.02%)
-    '     File Size: 5.87 KB
+    '   Blank Lines: 74 (17.49%)
+    '     File Size: 12.97 KB
 
 
     ' Class LiquidLayer
     ' 
     '     Properties: ActivationType, Cells, HiddenSize, InputSize, LayerNormBeta
-    '                 LayerNormGamma, NumLayers, UseLayerNorm
+    '                 LayerNormGamma, Mode, NumLayers, Training, UseLayerNorm
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: ApplyLayerNorm, Forward, GetAllStates, GetOutputState, GetParameters
+    '     Function: ApplyLayerNorm, Backward, BackwardLayerNorm, Forward, GetAllStates
+    '               GetOutputState, GetParameterPairs, GetParameters
     ' 
-    '     Sub: Dispose, ResetState
+    '     Sub: ClearRecords, Dispose, EnableLayerNorm, ResetBackwardCarry, ResetState
+    '          ZeroGradients
     ' 
     ' /********************************************************************************/
 

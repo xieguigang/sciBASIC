@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29d5c22b99e40cd5037f7a0f7be4c212, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::319c00ba4d1d7770b981ffeca2a0521d, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 125 (44.48%)
-    ' Comment Lines: 101 (35.94%)
-    '    - Xml Docs: 80.20%
+    '   Total Lines: 533
+    '    Code Lines: 269 (50.47%)
+    ' Comment Lines: 160 (30.02%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 55 (19.57%)
-    '     File Size: 8.22 KB
+    '   Blank Lines: 104 (19.51%)
+    '     File Size: 17.28 KB
 
 
     ' Class LiquidNeuralNetwork
     ' 
-    '     Properties: DefaultDt, HiddenSize, InputSize, LiquidLayer, NumLiquidLayers
-    '                 OutputActivation, OutputBias, OutputBiasGradient, OutputSize, OutputWeight
-    '                 OutputWeightGradient, RecordHistory, SolverType, StateHistory
+    '     Properties: DefaultDt, HiddenSize, InputSize, LiquidLayer, Mode
+    '                 NumLiquidLayers, OutputActivation, OutputBias, OutputBiasGradient, OutputSize
+    '                 OutputWeight, OutputWeightGradient, RecordHistory, SolverType, StateHistory
+    '                 Training
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: ComputeOutput, Forward, GetParameterCount, GetParameters, ProcessSequence
+    '     Function: BackwardLiquid, BackwardOutput, ComputeOutput, ComputeOutputFrom, Forward
+    '               ForwardSequence, GetParameterCount, GetParameterPairs, GetParameters, ProcessSequence
+    '               RowVector
     ' 
-    '     Sub: Dispose, ResetState
+    '     Sub: ClearHistory, ClearRecords, Dispose, ResetState, ZeroGradients
     ' 
     ' /********************************************************************************/
 

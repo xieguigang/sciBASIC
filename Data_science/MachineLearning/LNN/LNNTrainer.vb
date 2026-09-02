@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::902b8529ecb4e746d7ba31889ca4a564, Data_science\MachineLearning\LNN\LNNTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::fdaee716c5f7aa3dc4d30aa443c18700, Data_science\MachineLearning\LNN\LNNTrainer.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 429
-    '    Code Lines: 224 (52.21%)
-    ' Comment Lines: 124 (28.90%)
-    '    - Xml Docs: 71.77%
+    '   Total Lines: 397
+    '    Code Lines: 194 (48.87%)
+    ' Comment Lines: 117 (29.47%)
+    '    - Xml Docs: 87.18%
     ' 
-    '   Blank Lines: 81 (18.88%)
-    '     File Size: 13.54 KB
+    '   Blank Lines: 86 (21.66%)
+    '     File Size: 12.24 KB
 
 
     ' Class LNNTrainer
     ' 
     '     Properties: AdamBeta1, AdamBeta2, AdamEpsilon, GradientClipValue, LearningRate
-    '                 Network, OptimizerType, UseGradientClipping
+    '                 Network, OptimizerType, UseGradientClipping, Verbose
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: Fit, MAE, MSE, MSEGradient, TrainSequence
-    '               TrainStep
+    '     Function: Backward, Fit, MAE, MSE, MSEGradient
+    '               RowVector, TrainSequence, TrainStep
     ' 
-    '     Sub: Backpropagate, InitializeAdamState, UpdateLiquidLayerGradients, UpdateParamAdam, UpdateParameters
-    '          UpdateParametersAdam, UpdateParametersSGD, ZeroGradients
+    '     Sub: [Step], ClipGradients, InitializeAdamState, UpdateParametersAdam, UpdateParametersSGD
+    '          ZeroGradients
     ' 
     ' /********************************************************************************/
 

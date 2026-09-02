@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8a43613a97f5b1ff9fcb133adecb59e, Data_science\DataMining\UMAP\Components\EpochSchedule.vb"
+﻿#Region "Microsoft.VisualBasic::7e9d06d0cd8e65f8f4607b2cd5c18516, Data_science\DataMining\UMAP\Components\EpochSchedule.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Public Class EpochSchedule
     End Function
 
 End Class
-

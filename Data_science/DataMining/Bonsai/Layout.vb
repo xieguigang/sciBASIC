@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e6204e1465c7360459a7ed92ad7e6b2, Data_science\DataMining\Bonsai\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::d9893fd0cb82d9a4aa6e78f4fccb1d25, Data_science\DataMining\Bonsai\Layout.vb"
 
     ' Author:
     ' 
@@ -176,4 +176,3 @@ Public Module TreeLayout
         node.y = sum / node.childs.Count
     End Sub
 End Module
-

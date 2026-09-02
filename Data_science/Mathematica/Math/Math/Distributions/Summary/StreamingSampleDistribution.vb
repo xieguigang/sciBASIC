@@ -1,4 +1,70 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::466500b2bbcf58d051401d0d4e1f9467, Data_science\Mathematica\Math\Math\Distributions\Summary\StreamingSampleDistribution.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 399
+    '    Code Lines: 247 (61.90%)
+    ' Comment Lines: 74 (18.55%)
+    '    - Xml Docs: 71.62%
+    ' 
+    '   Blank Lines: 78 (19.55%)
+    '     File Size: 13.83 KB
+
+
+    '     Class StreamingSampleDistribution
+    ' 
+    '         Properties: SkippedNaN, TotalCount
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ComputeQuantile, ExactPercentile, KeyOf, ToSampleDistribution, ValueAtRank
+    ' 
+    '         Sub: Add, AddCore, AddHistogram, AddMode, AddRange
+    '              Compress, InitHistogram, WriteTo
+    '         Structure Bucket
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 Namespace Distributions.Summary

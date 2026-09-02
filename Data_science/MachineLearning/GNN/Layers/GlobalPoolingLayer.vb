@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c5441ec23c70d96e18ac2106504d8c6, Data_science\MachineLearning\GNN\Layers\GlobalPoolingLayer.vb"
+﻿#Region "Microsoft.VisualBasic::c6302f64ba92f1b9c388ed4330abdaf3, Data_science\MachineLearning\GNN\Layers\GlobalPoolingLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 72 (73.47%)
-    ' Comment Lines: 14 (14.29%)
+    '   Total Lines: 97
+    '    Code Lines: 72 (74.23%)
+    ' Comment Lines: 14 (14.43%)
     '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 12 (12.24%)
-    '     File Size: 3.47 KB
+    '   Blank Lines: 11 (11.34%)
+    '     File Size: 3.46 KB
 
 
     ' Class GlobalPoolingLayer
@@ -59,7 +59,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
@@ -158,4 +157,3 @@ Public Class GlobalPoolingLayer
         Return New List(Of Tensor)()
     End Function
 End Class
-

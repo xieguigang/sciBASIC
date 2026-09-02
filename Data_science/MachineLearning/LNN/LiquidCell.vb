@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeeeb742dff3f7d9a57670a1d252ebce, Data_science\MachineLearning\LNN\LiquidCell.vb"
+﻿#Region "Microsoft.VisualBasic::3e4a650020ff1a8250e3a96237f4d17c, Data_science\MachineLearning\LNN\LiquidCell.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,52 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 356
-    '    Code Lines: 170 (47.75%)
-    ' Comment Lines: 126 (35.39%)
-    '    - Xml Docs: 87.30%
+    '   Total Lines: 977
+    '    Code Lines: 546 (55.89%)
+    ' Comment Lines: 264 (27.02%)
+    '    - Xml Docs: 90.15%
     ' 
-    '   Blank Lines: 60 (16.85%)
-    '     File Size: 11.55 KB
+    '   Blank Lines: 167 (17.09%)
+    '     File Size: 34.13 KB
 
 
+    ' Enum LiquidMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class StepRecord
+    ' 
+    '     Properties: dt, p, s1, s2, s3
+    '                 s4, solver, u, x0
+    ' 
+    ' Class ParameterPair
+    ' 
+    '     Properties: Gradient, Name, Value
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
+    ' 
     ' Class LiquidCell
     ' 
-    '     Properties: ActivationType, Bias, BiasGradient, HiddenSize, InputSize
-    '                 State, Tau, TauGradient, TauMax, TauMin
-    '                 UseBoundedTau, WeightInput, WeightInputGradient, WeightRecurrent, WeightRecurrentGradient
+    '     Properties: ActivationType, Bias, BiasGate, BiasGateGradient, BiasGradient
+    '                 HasGate, HiddenSize, InputSize, LastInputGradient, Mode
+    '                 RecordCount, State, Tau, TauGradient, TauMax
+    '                 TauMin, Training, UseBoundedTau, WeightGate, WeightGateGradient
+    '                 WeightGateInput, WeightGateInputGradient, WeightInput, WeightInputGradient, WeightRecurrent
+    '                 WeightRecurrentGradient
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: ApplyActivation, ApplyActivationDerivative, ComputeDerivative, Forward, GetEffectiveTau
-    '               GetGradients, GetParameters
+    '     Function: ApplyActivation, ApplyActivationDerivative, Backward, BackwardCfC, BackwardEuler
+    '               BackwardHeun, BackwardRK4, BackwardThroughF, ComputeDerivative, EffectiveTau
+    '               EffectiveTauDerivative, Forward, ForwardCfC, GetGradients, GetParameterPairs
+    '               GetParameters, GetSystemTau, LinearForward, ToRow
     ' 
-    '     Sub: Dispose, ResetState, SetState
+    '     Sub: AccumulateParamGradients, ClearRecords, Dispose, EnsureGateParameters, PropagateToStateAndInput
+    '          ResetState, SetMode, SetState, ZeroGradients
     ' 
     ' /********************************************************************************/
 

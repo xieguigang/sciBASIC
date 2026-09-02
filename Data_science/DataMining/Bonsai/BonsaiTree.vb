@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5096a58005b7802b46024ba1a5f81576, Data_science\DataMining\Bonsai\BonsaiTree.vb"
+﻿#Region "Microsoft.VisualBasic::6e0ce63abc56fc1d3cff6c04e55b5c43, Data_science\DataMining\Bonsai\BonsaiTree.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 893
-    '    Code Lines: 562 (62.93%)
-    ' Comment Lines: 226 (25.31%)
+    '   Total Lines: 892
+    '    Code Lines: 562 (63.00%)
+    ' Comment Lines: 226 (25.34%)
     '    - Xml Docs: 63.72%
     ' 
-    '   Blank Lines: 105 (11.76%)
+    '   Blank Lines: 104 (11.66%)
     '     File Size: 38.50 KB
 
 
@@ -60,7 +60,6 @@
     ' 
     ' 
     '     Structure SPRState
-    ' 
     ' 
     ' 
     ' 
@@ -962,5 +961,3 @@ Public Class BonsaiTree
         Next
     End Sub
 End Class
-
-

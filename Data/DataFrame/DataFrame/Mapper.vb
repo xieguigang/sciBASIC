@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eaab7f1786ca54da3d3a596d771fe9c8, Data\DataFrame\DataFrame\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::67564dbf61d28a5bbd8f25bf21091f79, Data\DataFrame\DataFrame\Mapper.vb"
 
     ' Author:
     ' 
@@ -193,4 +193,3 @@ Public Module Mapper
         Return df
     End Function
 End Module
-

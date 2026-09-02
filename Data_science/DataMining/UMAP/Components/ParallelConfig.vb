@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbd3924983764638e57b74d81a025c8b, Data_science\DataMining\UMAP\Components\ParallelConfig.vb"
+﻿#Region "Microsoft.VisualBasic::98346f6c57cde8f8a1f9a3a6f9658bb2, Data_science\DataMining\UMAP\Components\ParallelConfig.vb"
 
     ' Author:
     ' 
@@ -166,4 +166,3 @@ Public Class ParallelConfig
     End Function
 
 End Class
-

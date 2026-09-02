@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbba230b3e859f980fa0eda416c45e0a, Data_science\DataMining\UMAP\Components\SgdEpochTask.vb"
+﻿#Region "Microsoft.VisualBasic::1c17c73d50887d405294d9dddf1a3159, Data_science\DataMining\UMAP\Components\SgdEpochTask.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Friend NotInheritable Class SgdEpochTask : Inherits VectorTask
     End Sub
 
 End Class
-

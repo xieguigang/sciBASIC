@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ce13303cba50d1095d28fccad1a3db8, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::c7ef013e1ede11d3791a492e2de705d3, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 107 (61.49%)
-    ' Comment Lines: 43 (24.71%)
+    '   Total Lines: 173
+    '    Code Lines: 106 (61.27%)
+    ' Comment Lines: 43 (24.86%)
     '    - Xml Docs: 90.70%
     ' 
-    '   Blank Lines: 24 (13.79%)
-    '     File Size: 6.48 KB
+    '   Blank Lines: 24 (13.87%)
+    '     File Size: 6.42 KB
 
 
     '     Module Log4VB

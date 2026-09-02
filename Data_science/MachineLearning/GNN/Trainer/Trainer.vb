@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d456c2617f66159a097d722d647ce115, Data_science\MachineLearning\GNN\Trainer\Trainer.vb"
+﻿#Region "Microsoft.VisualBasic::24c6bb121d11a354fca46c4521601035, Data_science\MachineLearning\GNN\Trainer\Trainer.vb"
 
     ' Author:
     ' 
@@ -193,4 +193,3 @@ Public Class Trainer
         Console.WriteLine("训练完成！")
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5871a7af334b6f487a62544d08873f61, Data_science\MachineLearning\GNN\Layers\LinearLayer.vb"
+﻿#Region "Microsoft.VisualBasic::fef3bf50f780a9af8bddef9b3f2f1c0c, Data_science\MachineLearning\GNN\Layers\LinearLayer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 68 (43.59%)
-    ' Comment Lines: 60 (38.46%)
+    '   Total Lines: 154
+    '    Code Lines: 68 (44.16%)
+    ' Comment Lines: 60 (38.96%)
     '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 28 (17.95%)
+    '   Blank Lines: 26 (16.88%)
     '     File Size: 4.57 KB
 
 
@@ -51,11 +51,9 @@
     '     Function: Backward, Forward, GetBias, GetGradients, GetParameters
     '               GetWeights
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
@@ -211,5 +209,3 @@ Public Class LinearLayer
         Return _bias
     End Function
 End Class
-
-

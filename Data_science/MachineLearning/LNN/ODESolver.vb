@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72ad94159a1a4bc1bac04bf993e62d1c, Data_science\MachineLearning\LNN\ODESolver.vb"
+﻿#Region "Microsoft.VisualBasic::e9c245e1cc91f9fd145048d7adce9a03, Data_science\MachineLearning\LNN\ODESolver.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,32 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 53 (42.06%)
-    ' Comment Lines: 50 (39.68%)
-    '    - Xml Docs: 66.00%
+    '   Total Lines: 245
+    '    Code Lines: 116 (47.35%)
+    ' Comment Lines: 84 (34.29%)
+    '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 23 (18.25%)
-    '     File Size: 4.86 KB
+    '   Blank Lines: 45 (18.37%)
+    '     File Size: 9.14 KB
 
 
+    ' Module LNNMath
+    ' 
+    '     Function: Mul, Scale
+    ' 
+    '     Sub: AddInPlace
+    ' 
     ' Module ODESolver
     ' 
     ' 
     '     Delegate Function
     ' 
-    '         Function: AdaptiveRK45Step, EulerStep, HeunStep, RK4Step
+    '         Function: AdaptiveRK45Step, EulerStep, HeunStep, RK4Step, ScaleAdd
+    '     Class ODEStages
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2999a1c1ba69280b4f1ea1faf55b43c, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::df99c929ce6fbf4f01334785c520328b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 457
-    '    Code Lines: 269 (58.86%)
-    ' Comment Lines: 144 (31.51%)
+    '   Total Lines: 460
+    '    Code Lines: 271 (58.91%)
+    ' Comment Lines: 144 (31.30%)
     '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 44 (9.63%)
-    '     File Size: 18.36 KB
+    '   Blank Lines: 45 (9.78%)
+    '     File Size: 18.52 KB
 
 
     ' Module VBDebugger

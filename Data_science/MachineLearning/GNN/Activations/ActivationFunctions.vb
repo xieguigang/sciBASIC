@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a43b073f99db55bdd912d7a607095051, Data_science\MachineLearning\GNN\Activations\ActivationFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::ad3654865aecc4a942c57d0403e66659, Data_science\MachineLearning\GNN\Activations\ActivationFunctions.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Public Module ActivationFunctions
         End Select
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566a5359f103960306dcd8f231de2d24, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::8f3ef377e2e62794c145d223f96368d9, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 42 (55.26%)
-    ' Comment Lines: 26 (34.21%)
+    '   Total Lines: 80
+    '    Code Lines: 45 (56.25%)
+    ' Comment Lines: 26 (32.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (10.53%)
-    '     File Size: 2.83 KB
+    '   Blank Lines: 9 (11.25%)
+    '     File Size: 2.88 KB
 
 
     ' Module MethodsExtension

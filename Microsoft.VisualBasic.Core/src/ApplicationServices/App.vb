@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4075ad45d72f1767f19dbfdc95a7c69, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::d1c446c676a2960914b0b09316c8b47b, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1621
-    '    Code Lines: 788 (48.61%)
-    ' Comment Lines: 647 (39.91%)
-    '    - Xml Docs: 82.84%
+    '   Total Lines: 1637
+    '    Code Lines: 795 (48.56%)
+    ' Comment Lines: 655 (40.01%)
+    '    - Xml Docs: 83.05%
     ' 
-    '   Blank Lines: 186 (11.47%)
-    '     File Size: 69.54 KB
+    '   Blank Lines: 187 (11.42%)
+    '     File Size: 70.11 KB
 
 
     ' Module App
@@ -50,11 +50,11 @@
     '                 EnableAnsiColor, EnableTqdm, ExecutablePath, GetLastError, Github
     '                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
     '                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
-    '                 n_threads, NanoTime, NextTempName, OutFile, PID
-    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
-    '                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
-    '                 SysTemp, UnixTimeStamp, UserHOME, Version
+    '                 MemorySize, n_threads, NanoTime, NextTempName, OutFile
+    '                 PID, Platform, PreviousDirectory, Process, ProductName
+    '                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash
+    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
+    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
