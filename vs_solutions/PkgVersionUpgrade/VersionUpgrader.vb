@@ -134,34 +134,13 @@ Module VersionUpgrader
             Return result.ToArray()
         End If
 
-        Dim group As XElement = MainPropertyGroup(doc, ns)
+        Dim group As XElement = XmlEditor.MainPropertyGroup(doc, ns)
 
         result.Add(SetProperty(group, ns, "Version", nuGetVersion, True))
         result.Add(SetProperty(group, ns, "AssemblyVersion", assemblyVersion, True))
         result.Add(SetProperty(group, ns, "FileVersion", fileVersion, insertFileVersion))
 
         Return result.ToArray()
-    End Function
-
-    ''' <summary>
-    ''' 取出主 PropertyGroup（第一个不带 Condition 属性的 PropertyGroup），
-    ''' 版本相关的属性统一写入到这个分组中。工程里不存在这样的分组时自动新建一个。
-    ''' </summary>
-    Private Function MainPropertyGroup(doc As XDocument, ns As XNamespace) As XElement
-        For Each pg As XElement In doc.Root.Elements(ns + "PropertyGroup")
-            If pg.Attribute("Condition") Is Nothing Then
-                Return pg
-            End If
-        Next
-
-        Dim created As New XElement(ns + "PropertyGroup")
-
-        ' 缩进用的空白文本节点，稍后 AddProperty 会把新元素插入到它前面
-        created.Add(New XText(vbLf & "  "))
-        doc.Root.AddFirst(New XText(vbLf))
-        doc.Root.AddFirst(created)
-
-        Return created
     End Function
 
     ''' <summary>
@@ -179,75 +158,20 @@ Module VersionUpgrader
             .OldValue = "",
             .Inserted = False
         }
-        Dim el As XElement = group.Element(ns + name)
 
-        If el Is Nothing Then
-            If Not allowInsert Then
-                ' 元素不存在并且不允许新建，这种情况下实际上什么都没有改动，
-                ' 把新值清空以免向外误报一次变更
-                change.NewValue = ""
-                Return change
-            End If
-
-            AddProperty(group, ns, name, value)
-            change.Inserted = True
-
+        If Not allowInsert AndAlso group.Element(ns + name) Is Nothing Then
+            ' 元素不存在并且不允许新建，这种情况下实际上什么都没有改动，
+            ' 把新值清空以免向外误报一次变更
+            change.NewValue = ""
             Return change
         End If
 
-        change.OldValue = If(el.Value, "").Trim()
-        change.NewValue = value
+        Dim applied = XmlEditor.SetOrCreateElement(group, ns, name, value, allowInsert)
 
-        If String.Equals(change.OldValue, value, StringComparison.Ordinal) Then
-            ' 值没有发生变化，不需要写回
-            Return change
-        End If
-
-        el.Value = value
+        change.Inserted = applied.Inserted
+        change.OldValue = applied.OldValue
 
         Return change
-    End Function
-
-    ''' <summary>
-    ''' 向 PropertyGroup 末尾追加一个属性元素，并且尽量保持原有的缩进风格
-    ''' </summary>
-    Private Sub AddProperty(group As XElement, ns As XNamespace, name As String, value As String)
-        Dim indent As String = InferChildIndent(group)
-        Dim tail As XNode = Nothing
-
-        ' 分组的最后一个子节点一般是 ``&lt;/PropertyGroup&gt;`` 之前的空白文本，
-        ' 新元素需要插入到这个空白节点之前，否则结束标签会被挤到元素后面去
-        If TypeOf group.LastNode Is XText AndAlso DirectCast(group.LastNode, XText).Value.Trim().Length = 0 Then
-            tail = group.LastNode
-        End If
-
-        Dim el As New XElement(ns + name, value)
-
-        If tail Is Nothing Then
-            group.Add(New XText(indent))
-            group.Add(el)
-        Else
-            tail.AddBeforeSelf(New XText(indent))
-            tail.AddBeforeSelf(el)
-        End If
-    End Sub
-
-    ''' <summary>
-    ''' 推断出容器内部子元素的缩进字符串（换行符 + 缩进），
-    ''' 框架内的 vbproj 混用了 Tab 与空格缩进，这里直接沿用文件里已有的风格。
-    ''' </summary>
-    Private Function InferChildIndent(parent As XElement) As String
-        For Each node As XNode In parent.Nodes()
-            If TypeOf node Is XText Then
-                Dim text As String = DirectCast(node, XText).Value
-
-                If text.Contains(vbLf) Then
-                    Return text.Substring(text.LastIndexOf(vbLf))
-                End If
-            End If
-        Next
-
-        Return vbLf & "  "
     End Function
 
 End Module

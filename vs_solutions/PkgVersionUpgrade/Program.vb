@@ -22,6 +22,11 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBPro
 '''    移除 Condition 中引用了 $(TargetFramework) 但该框架已经不在
 '''    TargetFramework / TargetFrameworks 声明集合中的 PropertyGroup。
 '''
+''' 3. 修正 nuget_release|x64 的产物输出路径（需显式加 --fix-output-path）
+'''    把 RootNamespace 以 Microsoft.VisualBasic 起始的工程的
+'''    nuget_release|x64 编译配置的 &lt;OutputPath&gt; 统一指向框架根下的 .nuget 目录，
+'''    缺失该配置组的工程自动补建，并补齐 Configurations / Platforms 声明。
+'''
 ''' 出于数据安全考虑，写回的时候不使用 <see cref="VBProject.Generate"/> 重建文档，
 ''' 而是对原始 XML 做原地外科手术式修改，完整保留 EmbeddedResource / None / Content
 ''' 等节点以及原有的 XML 注释。
@@ -38,6 +43,8 @@ Module Program
         Public Property DryRun As Boolean
         ''' <summary>只更新版本号，跳过过时编译配置的清理</summary>
         Public Property NoClean As Boolean
+        ''' <summary>是否修正 nuget_release|x64 配置的产物输出路径</summary>
+        Public Property FixOutputPath As Boolean
         ''' <summary>是否请求打印用法说明</summary>
         Public Property ShowHelp As Boolean
         ''' <summary>解析过程中出现的错误描述</summary>
@@ -50,8 +57,16 @@ Module Program
         Public Property Changes As VersionUpgrader.VersionChange()
         Public Property RemovedConditions As Integer
         Public Property Warnings As Integer
+        Public Property OutputPath As OutputPathFixer.OutputPathResult
         Public Property [Error] As String
         Public Property Skipped As Boolean
+
+        ''' <summary>输出路径修正是否产生了改动</summary>
+        Public ReadOnly Property OutputPathChanged As Boolean
+            Get
+                Return OutputPath IsNot Nothing AndAlso OutputPath.Changed
+            End Get
+        End Property
 
         Public ReadOnly Property Changed As Boolean
             Get
@@ -97,6 +112,7 @@ Module Program
 
         ' 整批处理共用同一个时间戳，保证这一批里面所有工程的 build/revision 段完全一致
         Dim timestamp As Date = Now
+        Dim nugetDir As String = Path.Combine(root, ".nuget")
 
         Console.WriteLine("sciBASIC# framework vbproj upgrade tool")
         Console.WriteLine($"framework root : {root}")
@@ -104,6 +120,7 @@ Module Program
         Console.WriteLine($"nuget version  : {If(String.IsNullOrWhiteSpace(opts.Version), "<auto> (major.minor + timestamp)", opts.Version)}")
         Console.WriteLine($"assembly ver   : <auto> (major.minor + timestamp)")
         Console.WriteLine($"clean configs  : {If(opts.NoClean, "disabled", "enabled")}")
+        Console.WriteLine($"output path    : {If(opts.FixOutputPath, nugetDir, "disabled")}")
         Console.WriteLine($"mode           : {If(opts.DryRun, "dry-run (no write)", "write")}")
         Console.WriteLine(New String("-"c, 96))
 
@@ -112,7 +129,7 @@ Module Program
         Dim watch As Stopwatch = Stopwatch.StartNew()
 
         For Each path As String In projects
-            results.Add(ProcessProject(path, root, opts, timestamp))
+            results.Add(ProcessProject(path, root, nugetDir, opts, timestamp))
         Next
 
         watch.Stop()
@@ -123,7 +140,11 @@ Module Program
     ''' <summary>
     ''' 处理单个 vbproj 文件
     ''' </summary>
-    Private Function ProcessProject(path As String, root As String, opts As CliOptions, timestamp As Date) As ProjectResult
+    Private Function ProcessProject(path As String,
+                                     root As String,
+                                     nugetDir As String,
+                                     opts As CliOptions,
+                                     timestamp As Date) As ProjectResult
         Dim result As New ProjectResult With {
             .FilePath = path,
             .Changes = New VersionUpgrader.VersionChange() {}
@@ -156,7 +177,11 @@ Module Program
                 result.Warnings = cleaned.Warnings
             End If
 
-            If Not opts.DryRun AndAlso (result.Changed OrElse result.RemovedConditions > 0) Then
+            If opts.FixOutputPath AndAlso OutputPathFixer.IsTarget(model) Then
+                result.OutputPath = OutputPathFixer.Apply(doc, ns, path, nugetDir)
+            End If
+
+            If Not opts.DryRun AndAlso (result.Changed OrElse result.RemovedConditions > 0 OrElse result.OutputPathChanged) Then
                 Call SaveDocument(doc, path)
             End If
         Catch ex As Exception
@@ -230,6 +255,19 @@ Module Program
         If result.Warnings > 0 Then
             lines.Add($"unresolved conditions kept: {result.Warnings}")
         End If
+        If result.OutputPathChanged Then
+            Dim op = result.OutputPath
+
+            If op.Created > 0 Then
+                lines.Add($"added nuget_release|x64 config group, OutputPath -> {op.OutputPath}")
+            End If
+            If op.Updated > 0 Then
+                lines.Add($"OutputPath -> {op.OutputPath} ({op.Updated} group(s))")
+            End If
+            If op.DeclarationsAdded > 0 Then
+                lines.Add($"Configurations/Platforms declarations added: {op.DeclarationsAdded}")
+            End If
+        End If
 
         If lines.Count = 0 Then
             Return
@@ -250,6 +288,9 @@ Module Program
         Dim changed As Integer = 0
         Dim removed As Integer = 0
         Dim warnings As Integer = 0
+        Dim outputUpdated As Integer = 0
+        Dim outputCreated As Integer = 0
+        Dim declarations As Integer = 0
 
         For Each r As ProjectResult In results
             If Not String.IsNullOrEmpty(r.Error) Then
@@ -260,12 +301,25 @@ Module Program
             If r.Changed Then changed += 1
             removed += r.RemovedConditions
             warnings += r.Warnings
+
+            If r.OutputPath IsNot Nothing Then
+                outputUpdated += r.OutputPath.Updated
+                outputCreated += r.OutputPath.Created
+                declarations += r.OutputPath.DeclarationsAdded
+            End If
         Next
 
         Console.WriteLine(New String("-"c, 96))
         Console.WriteLine($"scanned   : {scanned}")
         Console.WriteLine($"upgraded  : {changed}")
         Console.WriteLine($"cleaned   : {removed} obsolete config group(s) removed")
+
+        If outputCreated + outputUpdated + declarations > 0 Then
+            Console.WriteLine($"outputpath: {outputUpdated} group(s) updated, " &
+                              $"{outputCreated} group(s) created, " &
+                              $"{declarations} declaration(s) added")
+        End If
+
         Console.WriteLine($"skipped   : {skipped} (non Microsoft.NET.Sdk project)")
         Console.WriteLine($"failed    : {failed}")
         Console.WriteLine($"warnings  : {warnings} unresolved condition group(s) kept")
@@ -391,6 +445,8 @@ Module Program
                     opts.DryRun = True
                 Case "--no-clean"
                     opts.NoClean = True
+                Case "--fix-output-path"
+                    opts.FixOutputPath = True
                 Case "-v", "--version", "-r", "--root"
                     If value Is Nothing Then
                         i += 1
@@ -431,17 +487,24 @@ Module Program
         Console.WriteLine("                        包含 Microsoft.VisualBasic.Core 的目录。")
         Console.WriteLine("  -n, --dry-run         只打印将要发生的改动，不写入文件。")
         Console.WriteLine("      --no-clean        只更新版本号，不清理过时的 TargetFramework 条件配置组。")
+        Console.WriteLine("      --fix-output-path 修正 nuget_release|x64 的产物输出路径。将 RootNamespace")
+        Console.WriteLine("                        以 Microsoft.VisualBasic 起始的工程的该配置 <OutputPath>")
+        Console.WriteLine("                        统一设为指向框架根下 .nuget 目录的相对路径；缺配置组的补建，")
+        Console.WriteLine("                        并补齐 <Configurations> 中的 nuget_release 与 <Platforms> 中的 x64。")
         Console.WriteLine("  -h, --help            显示本帮助信息。")
         Console.WriteLine()
         Console.WriteLine("Notes:")
         Console.WriteLine("  * <AssemblyVersion> 与 <FileVersion> 恒由当前时间戳推算，不受 --version 影响；")
         Console.WriteLine("    nuget 版本号与 assembly version 在所有 SDK 工程中确保存在，file version 只更新已有值。")
+        Console.WriteLine("  * --fix-output-path 默认关闭，需要显式指定才执行；带 $(TargetFramework) 的")
+        Console.WriteLine("    nuget_release|net10.0|x64 变体配置组同样会被修正。")
         Console.WriteLine("  * 仅处理 Microsoft.NET.Sdk 风格工程，legacy 工程自动跳过；obj/bin 目录不参与扫描。")
         Console.WriteLine()
         Console.WriteLine("Examples:")
         Console.WriteLine("  PkgVersionUpgrade --dry-run")
         Console.WriteLine("  PkgVersionUpgrade -v 10.5.0.0")
         Console.WriteLine("  PkgVersionUpgrade --root G:\pixelArtist\src\framework -n")
+        Console.WriteLine("  PkgVersionUpgrade --fix-output-path --dry-run")
     End Sub
 
 End Module

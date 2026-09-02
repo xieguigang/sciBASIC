@@ -7,8 +7,13 @@
     <RootNamespace>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.9742.6623</Version>
-    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

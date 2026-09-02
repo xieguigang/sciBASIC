@@ -8,8 +8,8 @@
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;gcmodeller_desktop;nuget_release</Configurations>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <Version>1.1.9742.6623</Version>
-    <FileVersion>1.1.9742.6623</FileVersion>
+    <Version>1.1.9742.7537</Version>
+    <FileVersion>1.1.9742.7537</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
@@ -19,7 +19,7 @@
     <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

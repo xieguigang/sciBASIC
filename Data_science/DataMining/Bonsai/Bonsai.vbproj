@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
-		<Version>5.0.9742.6623</Version>
+		<Version>5.0.9742.7537</Version>
 		<Copyright>GPL3</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
@@ -22,7 +22,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Bonsai reconstructs tree representations for distortion-free visualization and exploration of high-dimensional data</Title>
 		<IncludeSymbols>True</IncludeSymbols>
-		<AssemblyVersion>1.0.9742.6623</AssemblyVersion>
+		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
@@ -81,6 +81,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <OutputPath>../../../.nuget/</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>

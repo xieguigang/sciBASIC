@@ -36,8 +36,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9742.6623</Version>
-    <AssemblyVersion>1.0.9742.6623</AssemblyVersion>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
 
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -345,10 +345,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0-windows|x64'">
     <DefineTrace>True</DefineTrace>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'">
     <DefineTrace>True</DefineTrace>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,8 +6,8 @@
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC#</Company>
-		<Version>10.5.9742.6623</Version>    
-		<AssemblyVersion>5.33.9742.6623</AssemblyVersion>
+		<Version>10.5.9742.7537</Version>    
+		<AssemblyVersion>5.33.9742.7537</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>GPL3</Copyright>
@@ -865,6 +865,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'">
     <DefineTrace>True</DefineTrace>
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x86'">

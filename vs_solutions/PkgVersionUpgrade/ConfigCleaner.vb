@@ -76,53 +76,12 @@ Module ConfigCleaner
     ''' 2. ``'$(TargetFramework)'=='net6.0'``
     '''
     ''' 使用了 ``!=`` 这类否定比较的条件语义不明确，一律当作无法解析处理。
+    '''
+    ''' 具体的解析交由 <see cref="MsBuildCondition"/> 完成，
+    ''' 模板中 ``$(TargetFramework)`` 的位置由占位符下标动态定位，不假设固定顺序。
     ''' </remarks>
     Public Function TryExtractTargetFramework(condition As String) As String
-        If String.IsNullOrWhiteSpace(condition) Then
-            Return Nothing
-        End If
-        If condition.IndexOf(TargetFrameworkToken, StringComparison.OrdinalIgnoreCase) < 0 Then
-            Return Nothing
-        End If
-
-        Dim eqIndex As Integer = condition.IndexOf("==", StringComparison.Ordinal)
-        Dim neIndex As Integer = condition.IndexOf("!=", StringComparison.Ordinal)
-
-        ' 否定比较，或者是根本找不到比较运算符，都无法安全地推断出目标框架
-        If neIndex >= 0 AndAlso (eqIndex < 0 OrElse neIndex < eqIndex) Then
-            Return Nothing
-        End If
-        If eqIndex < 0 Then
-            Return Nothing
-        End If
-
-        Dim template As String = Unquote(condition.Substring(0, eqIndex).Trim())
-        Dim value As String = Unquote(condition.Substring(eqIndex + 2).Trim())
-
-        ' 条件模板按照 | 分段，取出 $(TargetFramework) 所处的分段下标，
-        ' 然后到比较值里面取同样下标的那个分段，就是这一组配置所对应的目标框架
-        Dim segments As String() = template.Split("|"c)
-        Dim values As String() = value.Split("|"c)
-        Dim index As Integer = -1
-
-        For i As Integer = 0 To segments.Length - 1
-            If segments(i).Trim().Equals(TargetFrameworkToken, StringComparison.OrdinalIgnoreCase) Then
-                index = i
-                Exit For
-            End If
-        Next
-
-        If index < 0 OrElse index >= values.Length Then
-            Return Nothing
-        End If
-
-        Dim tf As String = values(index).Trim()
-
-        If tf.Length = 0 Then
-            Return Nothing
-        End If
-
-        Return tf
+        Return MsBuildCondition.TryGetValue(condition, TargetFrameworkToken)
     End Function
 
     ''' <summary>
@@ -166,45 +125,11 @@ Module ConfigCleaner
         Next
 
         For Each pg As XElement In obsolete
-            RemoveWithTrailingWhitespace(pg)
+            Call XmlEditor.RemoveNode(pg)
             removed += 1
         Next
 
         Return (removed, warnings)
-    End Function
-
-    ''' <summary>
-    ''' 移除属性组，并且顺带移除紧跟在它后面的空白文本节点，避免留下成片的空行
-    ''' </summary>
-    Private Sub RemoveWithTrailingWhitespace(element As XElement)
-        Dim next1 As XNode = element.NextNode
-
-        If TypeOf next1 Is XText AndAlso
-            DirectCast(next1, XText).Value.Trim().Length = 0 AndAlso
-            next1.NextNode IsNot Nothing Then
-
-            next1.Remove()
-        End If
-
-        element.Remove()
-    End Sub
-
-    ''' <summary>
-    ''' 去掉 Condition 两侧的单引号或者双引号
-    ''' </summary>
-    Private Function Unquote(text As String) As String
-        If text Is Nothing OrElse text.Length < 2 Then
-            Return text
-        End If
-
-        Dim first As Char = text(0)
-        Dim last As Char = text(text.Length - 1)
-
-        If (first = "'"c OrElse first = """"c) AndAlso last = first Then
-            Return text.Substring(1, text.Length - 2)
-        End If
-
-        Return text
     End Function
 
 End Module

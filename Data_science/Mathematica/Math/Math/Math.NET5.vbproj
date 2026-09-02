@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
-		<Version>5.0.9742.6623</Version>
+		<Version>5.0.9742.7537</Version>
 		<Copyright>GPL3</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
@@ -23,7 +23,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<AssemblyTitle>Math &amp; Linear Algebra Module</AssemblyTitle>
-		<AssemblyVersion>1.0.9742.6623</AssemblyVersion>
+		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -510,6 +510,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>False</DefineDebug>
     <DefineTrace>True</DefineTrace>
+    <OutputPath>../../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x86'">
