@@ -6,10 +6,17 @@
         Public Property name As String
 
         Dim nodeSet As New Dictionary(Of String, Node)
+        Dim createEdgeSet As Func(Of IEnumerable(Of Edge))
 
         Public ReadOnly Property vertex As IEnumerable(Of Node)
             Get
                 Return nodeSet.Values
+            End Get
+        End Property
+
+        Public ReadOnly Property graphEdges As IEnumerable(Of Edge)
+            Get
+                Return createEdgeSet()
             End Get
         End Property
 
@@ -26,6 +33,24 @@
             End If
         End Function
 
+        Public Function SetEdgeStream(stream As Func(Of IEnumerable(Of Edge))) As NetworkGraphStream
+            createEdgeSet = stream
+            Return Me
+        End Function
+
+        Public Function MakeGraph() As NetworkGraph
+            Dim g As New NetworkGraph
+
+            For Each node As Node In vertex
+                Call g.AddNode(node, assignId:=False)
+            Next
+
+            For Each link As Edge In createEdgeSet()
+                Call g.CreateEdge(link.U, link.V, link.weight, link.data)
+            Next
+
+            Return g
+        End Function
 
     End Class
 End Namespace
