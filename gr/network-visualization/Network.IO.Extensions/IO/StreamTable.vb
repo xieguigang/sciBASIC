@@ -12,7 +12,7 @@ Namespace FileStream
 
         <Extension>
         Public Function SaveStream(gs As NetworkGraphStream, outputdir As String, Optional is2Dlayout As Boolean = True) As Boolean
-            Using es As Stream = $"{outputdir}/".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Using es As Stream = $"{outputdir}/network-edges.csv".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Call New MetaData With {.title = gs.name, .keywords = {gs.id}}.GetJson(indent:=True).SaveTo($"{outputdir}/meta.json")
                 Call gs.vertex _
                     .ToArray _
