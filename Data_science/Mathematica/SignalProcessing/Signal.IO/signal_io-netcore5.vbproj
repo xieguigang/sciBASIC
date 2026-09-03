@@ -15,6 +15,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

@@ -1,0 +1,503 @@
+﻿sciBASIC# framework vbproj upgrade tool
+framework root : G:\pixelArtist\src\framework
+timestamp      : 2026-09-03 03:38:03
+nuget version  : <auto> (major.minor + timestamp)
+assembly ver   : <auto> (major.minor + timestamp)
+clean configs  : enabled
+mode           : dry-run (no write)
+------------------------------------------------------------------------------------------------
+  Data\BinaryData\BinaryData\binarydata-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 90
+  Data\BinaryData\DataStorage\datastorage-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 48
+  Data\BinaryData\Feather\FeatherFormat.vbproj
+      Version: 0.6.0 -> 0.6.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 30
+  Data\BinaryData\Feather\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\BinaryData\HDF5\HDF5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\BinaryData\HDF5\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\BinaryData\HDSPack\HDSPack.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 97
+  Data\BinaryData\HDSPack\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\BinaryData\msgpack\msgpack-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\BinaryData\netCDF\netCDF.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\BinaryData\SQLite3\SQLite3.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 35
+  Data\BinaryData\TestRunner\TestRunner.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj
+      Version: 5.0.2323 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\DataFrame\dataframework-netcore5.vbproj
+      Version: 5.0.123 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 57
+  Data\GraphQuery\GraphQuery.NET5.vbproj
+      Version: 5.0.123 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\MyersDiff\MyersDiff.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\MyersDiff\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data\Trinity\Trinity.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\BinaryTree\btree-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 42
+  Data_science\DataMining\BinaryTree\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\Bonsai\Bonsai.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\Bonsai\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\DataMining\DataMining.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\DBNCode\DBNCode.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\DBNCode\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\DensityQuery\DensityQuery.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\DynamicProgramming\DynamicProgramming.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 1
+  Data_science\DataMining\DynamicProgramming\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\FeatureFrame\FeatureFrame.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\hierarchical-clustering\HCTreePlot\HCTreePlot.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\HMM\HMM.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\HMM\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\PaCMAP\PaCMAP.vbproj
+      Version: 1.0.0 -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\t-SNE\t-SNE.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\DataMining\UMAP\UMAP.NET5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Graph\graph-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 189
+  Data_science\Graph\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\Bootstrapping\Bootstrapping.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 12
+  Data_science\MachineLearning\CellularAutomaton\CellularAutomaton.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\CellularAutomaton\GameOfLife.WinForms\GameOfLife.WinForms.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\DeepLearning\DeepLearning.NET6.vbproj
+      Version: 6.0.1.2389 -> 6.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 48
+  Data_science\MachineLearning\DeepLearning\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\DeepLearning\_smoketest\smoketest.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\DeepQNetwork\DeepQNetwork.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\DeepQNetwork\Demo\demo.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\GNN\GNN.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\GNN\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\LNN\LNN.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\MachineLearning.Data.Extensions\MachineLearning.Data.Extensions.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 21
+  Data_science\MachineLearning\MachineLearning\test\test.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\MLDataStorage\MLDataStorage.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\MLDebugger\ML_debugger-netcore5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\RestrictedBoltzmannMachine\RestrictedBoltzmannMachine.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\RestrictedBoltzmannMachine\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\TensorFlow\TensorFlow.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\VAE\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\VAE\VAE.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\XGBoostDataSet\XGBoostDataSet.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\xgboost\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineLearning\xgboost\xgboost.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\GaussianSplatting.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\MachineVision\GaussianSplatting3D\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\data\LP\LP_tool\lppTest.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\ANOVA\ANOVA.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\CVODE_Solver\Sundials.CVODE.vbproj
+      Version: 1.0.0 -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\CVODE_Solver\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\DataFittings\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\DataFrame\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\GeneticProgramming\GeneticProgramming.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\GeneticProgramming\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\Gibbs\Gibbs.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\Gibbs\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\KaplanMeierEstimator\KaplanMeierEstimator.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 6
+  Data_science\Mathematica\Math\MathLambda\symbolic-netcore5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\MathLambda\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\Math\Math.NET5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 285
+  Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\demo.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\Math\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\ODESolver.Extensions\ODESolver.Extensions.NET5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\ODE\test\test5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 30
+  Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 12
+  Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\SignalProcessing\SignalPlotDemo\SignalPlotDemo.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\SignalProcessing\SignalProcessing\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Mathematica\SignalProcessing\wav\wav\waveFile-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Visualization\Canvas3D\Canvas3D.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Visualization\DataPlot\DataPlot.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 42
+  Data_science\Visualization\Plots\plots-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Visualization\test\test5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Data_science\Visualization\Visualization\data_visualize-netcore5.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\avi\AVI.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\Drawing-net4.8\Drawing-net4.8.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 24
+  gr\FluidSim3D\FluidSim3D.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\Landscape\Landscape.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 64
+  gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 120
+  gr\Microsoft.VisualBasic.Imaging\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 60
+  gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\network-visualization\NetworkCanvas\NetworkCanvas.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: 2.33.* -> 2.33.9742.6542
+  gr\network-visualization\NetworkEditor\NetworkEditor.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\network-visualization\network_layout\LayoutSanityCheck\LayoutSanityCheck.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\network-visualization\network_layout\network_layout.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\network-visualization\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\network-visualization\Visualizer\networkVisualizer.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  gr\physics\physics-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 58
+  gr\physics\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  Microsoft.VisualBasic.Core\src\Core.vbproj
+      Version: 10.5.3.8911 -> 10.5.9742.6542
+      AssemblyVersion: 5.33.69.2558 -> 5.33.9742.6542
+      removed obsolete config groups: 511
+  Microsoft.VisualBasic.Core\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%json\JSON-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 26
+  mime\application%json\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%json\test\verify_escape\verify_escape.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%pdf\Pdf.NET5.vbproj
+      Version: 1.1.25.0 -> 1.1.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      FileVersion: 1.1.25.0 -> 1.1.9742.6542
+  mime\application%pdf\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%rdf+xml\rdf_xml-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xlsx-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 102
+  mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLS\BIFF\biff_class_test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\application%xml\xml-netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 54
+  mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\text%html\html_netcore5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\text%markdown\markdown.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 42
+  mime\text%markdown\test\MarkdownRender.Tests\MarkdownRender.Tests.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\text%markdown\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\text%yaml\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  mime\text%yaml\text.yaml.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  nlp\KnowledgeGraph\KnowledgeGraph.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  nlp\KnowledgeGraph\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  nlp\NLP\NLP.NET.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+      removed obsolete config groups: 48
+  nlp\NLP\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  nlp\word2vec\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  nlp\word2vec\word2vec.vbproj
+      Version: 5.0.1.2389 -> 5.0.9742.6542
+      AssemblyVersion: 5.33.69.2558 -> 5.33.9742.6542
+  tutorials\logo\logo.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  tutorials\Marked\Marked.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  tutorials\MESH\MESH.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  tutorials\ModelViewer\ModelViewer.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  vs_solutions\dev\VisualStudio\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  vs_solutions\dev\vs_PDB\test\test.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  vs_solutions\dev\vs_PDB\vs_PDB.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  vs_solutions\PkgVersionUpgrade\PkgVersionUpgrade.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  www\axel\axel.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+  www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj
+      Version: <none> -> 1.0.9742.6542
+      AssemblyVersion: <none> -> 1.0.9742.6542
+------------------------------------------------------------------------------------------------
+scanned   : 195
+upgraded  : 152
+cleaned   : 2154 obsolete config group(s) removed
+skipped   : 43 (non Microsoft.NET.Sdk project)
+failed    : 0
+warnings  : 0 unresolved condition group(s) kept
+elapsed   : 0.12s
+
+dry-run: no file was modified.

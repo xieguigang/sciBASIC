@@ -5,6 +5,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;nuget_release;CellaLAB-Desktop</Configurations>
     <OutputType>Exe</OutputType>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

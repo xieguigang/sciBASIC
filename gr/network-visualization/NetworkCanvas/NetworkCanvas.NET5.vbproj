@@ -7,9 +7,9 @@
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyName>
    
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop;nuget_release</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>2.33.*</AssemblyVersion>
+	  <AssemblyVersion>2.33.9742.7537</AssemblyVersion>
 	  <Deterministic>false</Deterministic>
 	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -22,7 +22,13 @@
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <MyType>WindowsForms</MyType>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <Version>1.0.9742.7537</Version>
 
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
 

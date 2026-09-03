@@ -6,7 +6,7 @@
 		<AssemblyName>test</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
-		<Version>5.0.1.2389</Version>
+		<Version>5.0.9742.7537</Version>
 		<Copyright>GPL3</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
@@ -16,10 +16,11 @@
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<Description>LAPACK (Linear Algebra PACKage)</Description>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;nuget_release</Configurations>
 		<RepositoryType>git</RepositoryType>
 		<OutputType>Exe</OutputType>
 		<StartupObject>Microsoft.VisualBasic.Math.Calculus.Module1</StartupObject>
+		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -102,6 +103,11 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <BaseAddress>4194304</BaseAddress>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+		<PlatformTarget>x64</PlatformTarget>
+		<OutputPath>../../../../../.nuget/</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>

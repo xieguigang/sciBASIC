@@ -6,6 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <UseApplicationFramework>True</UseApplicationFramework>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

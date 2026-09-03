@@ -17,6 +17,8 @@
     <ApplicationIcon>3mf.ico</ApplicationIcon>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

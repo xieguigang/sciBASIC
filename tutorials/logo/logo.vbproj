@@ -6,6 +6,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
+    <Version>1.0.9742.7537</Version>
+    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
