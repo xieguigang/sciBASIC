@@ -20,6 +20,8 @@ Namespace FileStream
                     .SaveTo($"{outputdir}/nodes.csv", silent:=True)
 
                 Using stream As New WriteStream(Of NetworkEdge)(New StreamWriter(es))
+                    Call stream.CacheMetaIndex({})
+
                     For Each edge As Edge In gs.graphEdges
                         Call stream.Flush(New NetworkEdge With {
                             .fromNode = edge.U.label,

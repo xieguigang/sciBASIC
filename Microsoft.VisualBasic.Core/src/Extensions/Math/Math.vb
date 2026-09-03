@@ -282,17 +282,6 @@ Namespace Math
             Return i / j
         End Function
 
-        ''' <summary>
-        ''' ``Math.Log(x, newBase:=2)``
-        ''' </summary>
-        ''' <param name="x#"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Log2(x#) As Double
-            Return std.Log(x, newBase:=2)
-        End Function
-
         <Extension>
         Public Iterator Function CumSum(vector As IEnumerable(Of Double)) As IEnumerable(Of Double)
             Dim sum#

@@ -58,7 +58,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports sys = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.Utility
 
@@ -145,7 +145,7 @@ Namespace ApplicationServices.Terminal.Utility
             preElapsedMilliseconds = sw.ElapsedMilliseconds
             percentage = current / Capacity
 
-            Return $" [{tag}, {dt}ms] * ...... {sys.Round(100 * percentage, 2)}%"
+            Return $" [{tag}, {dt}ms] * ...... {std.Round(100 * percentage, 2)}%"
         End Function
     End Class
 End Namespace
