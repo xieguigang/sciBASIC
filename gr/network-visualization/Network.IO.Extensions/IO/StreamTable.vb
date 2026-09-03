@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -17,9 +19,16 @@ Namespace FileStream
                     .CreateNodesMetaData({"*"}, is2Dlayout) _
                     .SaveTo($"{outputdir}/nodes.csv", silent:=True)
 
-                For Each edge As Edge In gs.graphEdges
-
-                Next
+                Using stream As New WriteStream(Of NetworkEdge)(New StreamWriter(es))
+                    For Each edge As Edge In gs.graphEdges
+                        Call stream.Flush(New NetworkEdge With {
+                            .fromNode = edge.U.label,
+                            .toNode = edge.V.label,
+                            .interaction = edge(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
+                            .value = edge.weight
+                        })
+                    Next
+                End Using
             End Using
 
             Return True
