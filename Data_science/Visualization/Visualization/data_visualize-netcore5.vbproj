@@ -4,12 +4,11 @@
 		<RootNamespace>Microsoft.VisualBasic.Data.visualize</RootNamespace>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Data.visualize</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
@@ -19,6 +18,12 @@
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<Title>Visualization Layer for Networks, Clusters and Embeddings</Title>
+		<Description>Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.</Description>
+		<AssemblyTitle>Microsoft.VisualBasic.Data.visualize</AssemblyTitle>
+		<PackageTags>scibasic;visualization;network-graph;embedding;clustering;umap</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

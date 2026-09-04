@@ -7,16 +7,24 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>HTML/CSS Parser, DOM and GDI+ Rendering Engine</Title>
+    <Description>A professional HTML renderer for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors and property values, lays out boxes, lines and tables, and paints the result onto a GDI+ graphics canvas.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MIME.Html</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;html;css;html-renderer;dom</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -163,6 +171,10 @@
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

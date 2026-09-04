@@ -9,11 +9,20 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Barnes-Hut t-SNE Dimensionality Reduction Embedding</Title>
+    <Description>t-Distributed Stochastic Neighbor Embedding for sciBASIC#: converts pairwise affinities into joint probabilities at a given perplexity and minimises KL divergence, with a Barnes-Hut SPTree approximation for large data.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.t-SNE</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;t-sne;dimensionality-reduction;barnes-hut;visualization</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -95,6 +104,10 @@
   <ItemGroup>
     <PackageReference Include="System.Composition" Version="10.0.11" />
     <PackageReference Include="System.Resources.Extensions" Version="10.0.11" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -7,12 +7,23 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Microsoft.VisualBasic.DataMining.PaCMAP</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.DataMining.PaCMAP</AssemblyName>
-    <Description>PaCMAP (Pairwise Controlled Manifold Approximation Projection) - C# Implementation</Description>
+    <Description>PaCMAP dimensionality reduction for sciBASIC#: preserves local and global structure by optimising neighbour, mid-near and further point pairs with a three-phase loss and an Adagrad optimiser over tensor data.</Description>
     <Version>1.0.9742.7537</Version>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release</Configurations>
+    <Title>PaCMAP Pairwise Controlled Manifold Approximation Embedding</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.DataMining.PaCMAP</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;pacmap;dimensionality-reduction;manifold-learning;visualization</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -42,5 +53,9 @@
     <ProjectReference Include="..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>

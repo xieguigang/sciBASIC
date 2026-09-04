@@ -15,6 +15,18 @@
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release</Configurations>
+    <Title>Bipartite Knowledge Graph with Synonym Disambiguation and Ontology Inference</Title>
+    <Description>Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs permutation tests to merge synonyms, and infers ontology relations.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.NLP.Knowledge</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;knowledge-graph;entity-disambiguation;ontology;similarity</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -31,6 +43,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

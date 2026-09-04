@@ -11,12 +11,20 @@
   
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Signal Data IO: netCDF Reader and Writer for Signals</Title>
+    <Description>Reads and writes time-series signal collections with their metadata, chunk indices and measure units to netCDF files, interoperating with R-based signal analysis pipelines. Part of sciBASIC#.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.Signal.IO</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;signal-io;netcdf;time-series;data-exchange;file-format</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -122,6 +130,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

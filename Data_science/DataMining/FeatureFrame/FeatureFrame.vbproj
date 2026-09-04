@@ -9,17 +9,21 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Title>Feature encoder of the dataframe</Title>
-    <Copyright>I@xieguigang.me</Copyright>
+    <Title>Feature Vector Encoders for Numeric Machine Learning Data</Title>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Description>Encodes raw feature vectors of a data frame into numeric columns for model training: one-hot style encoding for enums and flag bit fields, numeric binning and discretisation, and automatic per-field encoder selection.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DataMining.FeatureFrame</AssemblyTitle>
+    <Company>sciBASIC.NET Foundation</Company>
+    <PackageTags>scibasic;feature-engineering;encoder;dataframe;machine-learning</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

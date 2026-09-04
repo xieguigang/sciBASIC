@@ -9,15 +9,21 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Core Data Mining Toolkit: Clustering, Association Rules and Evaluation</Title>
+    <Description>Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, OPTICS, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DataMining.Framework</AssemblyTitle>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;data-mining;clustering;association-rules;machine-learning</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

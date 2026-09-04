@@ -8,6 +8,18 @@
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release</Configurations>
+    <Title>Liquid Neural Networks with ODE Solvers for Time Series</Title>
+    <Description>Continuous-time liquid neural networks for sciBASIC#, where neuron dynamics follow learnable ODEs solved by Euler, Heun, RK4 or adaptive RK45 steps; includes SGD/Adam training and time-series preprocessing utilities.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.LNN</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;liquid-neural-network;ode;time-series;continuous-time</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -26,6 +38,10 @@
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

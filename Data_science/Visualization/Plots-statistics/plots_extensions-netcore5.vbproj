@@ -9,13 +9,22 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Statistical Chart Extensions: ROC, QQ, Heatmap and PCA Plots</Title>
+    <Description>Adds statistical graphics to the sciBASIC# chart engine: ROC and QQ plots, forest and Z-score plots, correlation heatmaps and triangles, density plots, time trends, PCA scree plots and regression plots.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.ChartPlots.Statistics</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;statistics;roc-curve;heatmap;qq-plot;pca-plot</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -128,6 +137,10 @@
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
     <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

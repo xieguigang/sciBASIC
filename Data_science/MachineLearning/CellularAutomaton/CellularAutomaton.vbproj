@@ -11,11 +11,22 @@
     <OutputType>Library</OutputType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageLicenseExpression>GPL3</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-  </PropertyGroup>
+    <Title>Cellular Automaton Grid Simulator with netCDF Snapshot Debugging</Title>
+    <Description>A generic cellular automaton engine for sciBASIC#: runs tick-and-commit generations over a 2D grid of typed cells with configurable neighbourhood and boundary modes, and exports per-cell state snapshots to netCDF for analysis.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.CellularAutomaton</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;cellular-automaton;simulation;netcdf;grid-model</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
@@ -231,6 +242,10 @@
 	  <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 	  <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+	  <None Include="..\..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
   
 	<!-- WinForms 演示项目位于本目录子文件夹中，需排除其源文件，避免被本类库（net10.0）递归编译 -->

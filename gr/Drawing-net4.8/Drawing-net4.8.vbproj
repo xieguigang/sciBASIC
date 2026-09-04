@@ -9,20 +9,20 @@
     <Platforms>AnyCPU;x64</Platforms>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Microsoft.VisualBasic.Drawing.Windows</PackageId>
-    <Title>System.Drawing Gdi+ Drawing Wrapper For Windows Form Application</Title>
-    <Authors>xieguigang</Authors>
-    <Company>sciBASIC#</Company>
+    <Title>GDI+ Graphics Wrapper And System.Drawing Interop For Windows</Title>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
     <Product>scibasic.net</Product>
     <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
-    <Description>This package provides a gdi+ drawing wrapper on windows platform, for make keeps the compability between then skiasharp and system.drawing.common for .NET 8.0 abd .NET 8.0-windows</Description>
-    <AssemblyTitle>Gdi+ Image Drawing Helper for Windows Form Project</AssemblyTitle>
+    <Description>A Windows-only GDI+ canvas, image filter and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Keeps drawing code compatible across the System.Drawing and SkiaSharp back ends.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Drawing</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
-    <Copyright>xieguigang</Copyright>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>gdi+;windows;</PackageTags>
+    <PackageTags>scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms</PackageTags>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Version>1.0.9742.7537</Version>

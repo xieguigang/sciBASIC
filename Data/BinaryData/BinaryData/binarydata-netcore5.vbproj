@@ -14,12 +14,19 @@
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Low-Level Binary Data Stream Reader and Writer Toolkit</Title>
+    <Description>Extends BinaryReader and BinaryWriter with endianness-aware primitives, length-prefixed strings, BZip2/LZW compression, XDR encoding and a Python pickle codec, for parsing custom binary file formats in sciBASIC#.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.BinaryData</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;binary-data;binary-reader;endianness;compression;pickle</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
@@ -20,6 +20,14 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Tabular Frame Serialization with SAS XPORT and ASN.1 Readers</Title>
+    <Description>Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.Storage</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;data-storage;sas-xport;asn1;dataframe;binary-serialization</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -112,6 +120,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

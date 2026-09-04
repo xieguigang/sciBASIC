@@ -14,6 +14,18 @@
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release</Configurations>
+    <Title>Restricted Boltzmann Machines with Contrastive Divergence Training</Title>
+    <Description>Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;rbm;contrastive-divergence;deep-learning;unsupervised</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
@@ -42,6 +54,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />

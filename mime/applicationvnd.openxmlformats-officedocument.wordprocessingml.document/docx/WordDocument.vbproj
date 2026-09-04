@@ -15,6 +15,18 @@
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release</Configurations>
+    <Title>DOCX Word Document Generator and Text Extractor</Title>
+    <Description>Generates Office Word documents in sciBASIC#: a fluent writer builds headings, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx file, and extracts plain text back out.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.WordDocument</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;docx;word;office-openxml;document-generation</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -26,6 +38,10 @@
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\..\text%markdown\markdown.NET5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

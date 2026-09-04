@@ -15,14 +15,24 @@
 
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
-		<PackageLicenseExpression>GPL</PackageLicenseExpression>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 
 		<UseApplicationFramework>True</UseApplicationFramework>
 
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Version>1.0.9742.7537</Version>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-		
+		<Title>3D Mesh Model Parsers And Voxelization Toolkit</Title>
+		<Description>Loads STL, OBJ, glTF/GLB, COLLADA, 3DS, 3MF and PLY meshes into one unified scene model, then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.</Description>
+		<AssemblyTitle>Microsoft.VisualBasic.Imaging.Landscape</AssemblyTitle>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageTags>scibasic;3d-model;mesh-parser;voxelization;geometry</PackageTags>
+		<PackageIcon>logo-knot.png</PackageIcon>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -116,6 +126,10 @@
 		<Compile Remove="test\**" />
 		<EmbeddedResource Remove="test\**" />
 		<None Remove="test\**" />
+		<None Include="..\..\vs_solutions\logo-knot.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>

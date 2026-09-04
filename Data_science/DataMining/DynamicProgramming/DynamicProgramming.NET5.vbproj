@@ -8,15 +8,22 @@
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Dynamic Programming Sequence Alignment and Knapsack Solvers</Title>
+    <Description>Dynamic programming kernels for sciBASIC#, including Needleman-Wunsch global alignment, Smith-Waterman local alignment with HSP chaining, k-banded search, center star multiple alignment and the 0-1 knapsack solver.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DataMining.DynamicProgramming</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

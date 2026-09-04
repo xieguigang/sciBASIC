@@ -4,21 +4,24 @@
 		<RootNamespace>Microsoft.VisualBasic.Math.Calculus</RootNamespace>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>LAPACK (Linear Algebra PACKage)</Description>
+		<Description>Extension helpers that turn ODE integration output into data frames and CSV files, reload them, and compute Pearson or Spearman correlations between the modelled variables. Part of sciBASIC#.</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;nuget_release</Configurations>
 		<RepositoryType>git</RepositoryType>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<Title>ODE Solver Extensions: Result Export and Correlation Analysis</Title>
+		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyTitle>
+		<PackageTags>scibasic;ode-solver;data-frame;correlation;csv-export;pearson</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

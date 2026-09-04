@@ -6,13 +6,12 @@
     <AssemblyName>Microsoft.VisualBasic.Math.Statistics.ANOVA</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageIconUrl />
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
-    <PackageProjectUrl></PackageProjectUrl>
-    <Copyright>https://github.com/kermitt/ANOVA</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
@@ -20,6 +19,13 @@
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>ANOVA and Multivariate Analysis Toolkit for VB.NET</Title>
+    <Description>One-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with FDR correction, and multivariate methods (PCA, PLS, OPLS-DA) for omics data. Part of the sciBASIC# scientific computing framework.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics.ANOVA</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <PackageTags>scibasic;anova;kruskal-wallis;multivariate-analysis;pca;pls</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

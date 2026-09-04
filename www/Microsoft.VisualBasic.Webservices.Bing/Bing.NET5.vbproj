@@ -8,6 +8,18 @@
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;nuget_release</Configurations>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Microsoft Bing Web, Academic, Translation and Image Services Client</Title>
+    <Description>Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal, look up word translations, and fetch the Bing daily image into a WPF attached property.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.KnowledgeBase.Web</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;bing;search-engine;web-scraping;translation</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -118,6 +130,10 @@
     <Compile Remove="Test\**" />
     <EmbeddedResource Remove="Test\**" />
     <None Remove="Test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

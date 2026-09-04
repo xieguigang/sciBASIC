@@ -11,11 +11,19 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Managed SQLite3 Database File Reader</Title>
+    <Description>A pure managed parser for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.IO.SQLite3</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;sqlite3;database;btree;sql-parser;reader</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -30,6 +38,10 @@
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

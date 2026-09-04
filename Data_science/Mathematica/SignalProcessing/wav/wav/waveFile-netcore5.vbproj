@@ -10,17 +10,24 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
    
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Title>Wav file reader</Title>
+    <Title>WAV Audio File Reader, Writer and Voiceprint Extractor</Title>
     <IncludeSymbols>True</IncludeSymbols>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Description>Parses and writes RIFF/WAVE audio files with FMT and data sub-chunk access, and extracts mel-filterbank voiceprint vectors with delta coefficients, CMVN and L2 normalisation. Part of sciBASIC#.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.Wave</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;wav;audio;voiceprint;mfcc;riff</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -76,6 +83,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <None Include="..\..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

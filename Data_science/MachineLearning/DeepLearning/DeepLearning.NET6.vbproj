@@ -4,12 +4,11 @@
 		<RootNamespace>Microsoft.VisualBasic.MachineLearning</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.DeepLearning</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>6.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
@@ -21,6 +20,12 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<DocumentationFile>Microsoft.VisualBasic.DeepLearning.xml</DocumentationFile>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<Title>Deep Learning Framework: CNN, RNN, Transformer and ANN Models</Title>
+		<Description>Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.</Description>
+		<AssemblyTitle>Microsoft.VisualBasic.DeepLearning</AssemblyTitle>
+		<PackageTags>scibasic;deep-learning;cnn;rnn;transformer</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

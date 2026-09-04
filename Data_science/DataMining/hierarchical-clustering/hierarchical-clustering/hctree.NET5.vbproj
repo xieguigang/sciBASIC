@@ -8,15 +8,22 @@
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Hierarchical Clustering with BIRCH and Linkage Strategies</Title>
+    <Description>Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.DataMining.HierarchicalClustering</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;hierarchical-clustering;birch;linkage;clustering</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

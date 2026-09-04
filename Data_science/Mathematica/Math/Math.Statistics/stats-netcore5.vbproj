@@ -9,11 +9,20 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Statistics Toolkit: Distributions, Hypothesis Tests and More</Title>
+    <Description>Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;statistics;hypothesis-testing;distribution;fastica;shapley-value</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -87,6 +96,10 @@
     <Compile Remove="Example\**" />
     <EmbeddedResource Remove="Example\**" />
     <None Remove="Example\**" />
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

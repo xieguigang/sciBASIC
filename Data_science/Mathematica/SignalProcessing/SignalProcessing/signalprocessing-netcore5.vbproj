@@ -9,14 +9,21 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Signal Processing: FFT, Wavelets, Filters and Peak Detection</Title>
+    <Description>Algorithms for one-dimensional signals in sciBASIC#: FFT and wavelet transforms, Savitzky-Golay filtering, peak detection, baseline removal, resampling, DTW and COW alignment, plus Kalman filtering.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Math.SignalProcessing</AssemblyTitle>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;signal-processing;fft;wavelet;peak-detection;filtering</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -147,6 +154,10 @@
     <None Include="..\..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

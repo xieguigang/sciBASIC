@@ -15,10 +15,10 @@
     <!-- 包信息 -->
     <PackageId>Sundials.CVODE.NET</PackageId>
     <Version>1.0.9742.7537</Version>
-    <Authors>Your Name</Authors>
-    <Description>VB.NET实现的Sundials CVODE常微分方程求解器</Description>
-    <PackageTags>ODE;CVODE;Sundials;Differential-Equations;Numerical-Methods;VB.NET</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Description>A pure managed VB.NET re-implementation of the CVODE solver API with no native P/Invoke, offering variable-step variable-order Adams and BDF integration plus dense and banded linear solvers. Part of sciBASIC#.</Description>
+    <PackageTags>scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>PROJECT_SUMMARY.md</PackageReadmeFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -26,6 +26,14 @@
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release</Configurations>
+    <Title>Managed CVODE Variable-Order ODE Solver in Pure VB.NET</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -37,6 +45,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

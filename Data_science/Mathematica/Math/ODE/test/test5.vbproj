@@ -114,6 +114,10 @@
 	  <Compile Remove="Test\**" />
 	  <EmbeddedResource Remove="Test\**" />
 	  <None Remove="Test\**" />
+	  <None Include="..\..\..\..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
   <ItemGroup>

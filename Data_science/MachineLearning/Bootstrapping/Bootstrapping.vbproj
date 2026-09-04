@@ -10,11 +10,22 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Raw data processing for MachineLearning</Title>
+    <Title>Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)</Title>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Description>Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Bootstrapping</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;graph-embedding;node2vec;knowledge-graph;complex</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -26,5 +37,9 @@
     <ProjectReference Include="..\..\..\nlp\word2vec\word2vec.vbproj" />
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>

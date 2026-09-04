@@ -4,23 +4,26 @@
 		<RootNamespace>Microsoft.VisualBasic.Math.Calculus</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>LAPACK (Linear Algebra PACKage)</Description>
+		<Description>Integrates systems of ordinary differential equations with Euler, RK2, RK4, Gill and trapezoidal solvers over a declarative model of variables, parameters and initial values. Part of sciBASIC#.</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
 		<RepositoryType>git</RepositoryType>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<Title>Ordinary Differential Equation Solver Core for Dynamic Models</Title>
+		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyTitle>
+		<PackageTags>scibasic;ode;runge-kutta;dynamical-system;numerical-integration;simulation</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
