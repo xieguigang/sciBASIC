@@ -58,7 +58,7 @@ Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports sys = System.Math
+Imports std = System.Math
 #End Region
 
 Namespace Language.C
@@ -179,11 +179,11 @@ Namespace Language.C
                     Return Value
 
                 Case TypeCode.[Single]
-                    Return (If(Round, CInt(Truncate(sys.Round(CSng(Value)))), CInt(Truncate(CSng(Value)))))
+                    Return (If(Round, CInt(Truncate(std.Round(CSng(Value)))), CInt(Truncate(CSng(Value)))))
                 Case TypeCode.[Double]
-                    Return (If(Round, CLng(Truncate(sys.Round(CDbl(Value)))), CLng(Truncate(CDbl(Value)))))
+                    Return (If(Round, CLng(Truncate(std.Round(CDbl(Value)))), CLng(Truncate(CDbl(Value)))))
                 Case TypeCode.[Decimal]
-                    Return (If(Round, sys.Round(CDec(Value)), CDec(Value)))
+                    Return (If(Round, std.Round(CDec(Value)), CDec(Value)))
                 Case Else
 
                     Return Nothing
@@ -213,11 +213,11 @@ Namespace Language.C
                     Return CLng(CULng(Value))
 
                 Case TypeCode.[Single]
-                    Return (If(Round, CLng(Truncate(sys.Round(CSng(Value)))), CLng(Truncate(CSng(Value)))))
+                    Return (If(Round, CLng(Truncate(std.Round(CSng(Value)))), CLng(Truncate(CSng(Value)))))
                 Case TypeCode.[Double]
-                    Return (If(Round, CLng(Truncate(sys.Round(CDbl(Value)))), CLng(Truncate(CDbl(Value)))))
+                    Return (If(Round, CLng(Truncate(std.Round(CDbl(Value)))), CLng(Truncate(CDbl(Value)))))
                 Case TypeCode.[Decimal]
-                    Return (If(Round, CLng(Truncate(sys.Round(CDec(Value)))), CLng(Truncate(CDec(Value)))))
+                    Return (If(Round, CLng(Truncate(std.Round(CDec(Value)))), CLng(Truncate(CDec(Value)))))
                 Case Else
 
                     Return 0

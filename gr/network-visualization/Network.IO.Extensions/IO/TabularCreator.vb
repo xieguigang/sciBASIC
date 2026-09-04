@@ -125,7 +125,12 @@ Namespace FileStream
             Return New NetworkTables With {
                 .edges = edges,
                 .nodes = nodes,
-                .meta = If(meta, New MetaData)
+                .meta = If(meta, New MetaData With {
+                    .title = g.name,
+                    .additionals = New Dictionary(Of String, String) From {
+                        {"id", g.id}
+                    }
+                })
             }
         End Function
 

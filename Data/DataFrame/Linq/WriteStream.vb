@@ -175,6 +175,10 @@ Namespace IO.Linq
             Call _fileIO.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Run cache index for <see cref="rowWriter"/>
+        ''' </summary>
+        ''' <param name="meta"></param>
         Public Sub CacheMetaIndex(meta As IEnumerable(Of String))
             rowWriter.__cachedIndex = meta.SafeQuery.ToArray
         End Sub
