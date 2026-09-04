@@ -154,6 +154,7 @@ foreach ($file in $allProjects) {
         existingIconItem = $existingIcon
         hasPackageIcon   = [bool]$props['PackageIcon']
         needsIconFix     = ([bool]$props['PackageIcon']) -and (-not $existingIcon)
+        needsIconAdd     = $isLibrary -and (-not $existingIcon) -and (-not $isLegacy)
         title            = ''
         description      = ''
         packageTags      = ''
@@ -168,9 +169,11 @@ $payload = [ordered]@{
     root           = $Root
     totalVbproj    = $allProjects.Count
     matchedCount   = $matchCount
-    libraryCount   = ($records | Where-Object { $_.isLibrary }).Count
-    excludedCount  = ($records | Where-Object { -not $_.isLibrary }).Count
-    iconFixCount   = ($records | Where-Object { $_.needsIconFix }).Count
+    libraryCount   = @($records | Where-Object { $_.isLibrary }).Count
+    excludedCount  = @($records | Where-Object { -not $_.isLibrary }).Count
+    legacyCount    = @($records | Where-Object { $_.isLegacy }).Count
+    iconFixCount   = @($records | Where-Object { $_.needsIconFix }).Count
+    iconAddCount   = @($records | Where-Object { $_.needsIconAdd }).Count
     projects       = $records
     skipped        = $skipped
 }
@@ -180,5 +183,7 @@ $payload | ConvertTo-Json -Depth 8 | Set-Content -Path $OutFile -Encoding UTF8
 Write-Host "Matched         : $matchCount (RootNamespace starts with Microsoft.VisualBasic)" -ForegroundColor Green
 Write-Host "  library       : $($payload.libraryCount)" -ForegroundColor Green
 Write-Host "  excluded      : $($payload.excludedCount)" -ForegroundColor Yellow
+Write-Host "  legacy        : $($payload.legacyCount)" -ForegroundColor Yellow
 Write-Host "  needsIconFix  : $($payload.iconFixCount)" -ForegroundColor Yellow
+Write-Host "  needsIconAdd  : $($payload.iconAddCount)" -ForegroundColor Yellow
 Write-Host "Inventory       : $OutFile" -ForegroundColor Cyan
