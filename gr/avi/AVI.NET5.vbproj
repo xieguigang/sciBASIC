@@ -23,6 +23,10 @@
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <!-- This project still ships a hand-written "My Project\AssemblyInfo.vb"
+         that declares the assembly attributes, so the SDK must not generate a
+         second copy (BC30663: attribute applied multiple times). -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
