@@ -56,7 +56,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace Net.Protocols.ContentTypes
 
@@ -72,7 +71,7 @@ Namespace Net.Protocols.ContentTypes
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
-        ''' recommended use <see cref="Utils.FileMimeType"/> to get this mime type data
+        ''' recommended use <see cref="FileMimeType"/> to get this mime type data
         ''' </remarks>
         Public ReadOnly Property SuffixTable As IReadOnlyDictionary(Of String, ContentType)
         ''' <summary>
