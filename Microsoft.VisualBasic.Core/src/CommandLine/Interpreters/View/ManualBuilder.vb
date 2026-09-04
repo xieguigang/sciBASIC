@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::90dbb82bcabc902a4cd5edc213baf206, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\ManualBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 388
-    '    Code Lines: 284 (73.20%)
-    ' Comment Lines: 40 (10.31%)
-    '    - Xml Docs: 30.00%
-    ' 
-    '   Blank Lines: 64 (16.49%)
-    '     File Size: 16.17 KB
+' Summaries:
 
 
-    '     Module ManualBuilder
-    ' 
-    '         Function: APIPrototype, ExampleValue, GetFileExtensions, PrintHelp
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 388
+'    Code Lines: 284 (73.20%)
+' Comment Lines: 40 (10.31%)
+'    - Xml Docs: 30.00%
+' 
+'   Blank Lines: 64 (16.49%)
+'     File Size: 16.17 KB
+
+
+'     Module ManualBuilder
+' 
+'         Function: APIPrototype, ExampleValue, GetFileExtensions, PrintHelp
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.ManView
@@ -74,7 +75,8 @@ Namespace CommandLine.ManView
         ''' </summary>
         ''' <param name="api"></param>
         ''' <returns></returns>
-        <Extension> Public Function PrintHelp(api As APIEntryPoint) As Integer
+        <Extension>
+        Public Function PrintHelp(api As APIEntryPoint) As Integer
             ' 因为在编写帮助信息的时候可能会有多行字符串，则在vb源代码里面会出现前导的空格，
             ' 所以在这里需要将每一行的前导空格删除掉， 否则会破坏掉输出的文本对齐格式。
             Dim infoLines As String() = api.Info _
@@ -357,7 +359,7 @@ Namespace CommandLine.ManView
                         .ToArray
                     Dim table$()() = allContentTypes _
                         .Select(Function(content)
-                                    With content.Type
+                                    With content.type
                                         Return {"  " & content.ext & "  ", $"({ .MIMEType})  ", .Name}
                                     End With
                                 End Function) _
