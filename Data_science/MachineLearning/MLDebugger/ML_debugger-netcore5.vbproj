@@ -4,12 +4,11 @@
 		<RootNamespace>Microsoft.VisualBasic.MachineLearning.Debugger</RootNamespace>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.MachineLearning.Debugger</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
@@ -17,6 +16,12 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<Title>Machine Learning Debugger: Error Curves, ROC and Sample Frame Exports</Title>
+		<Description>Diagnostics helpers for sciBASIC# neural network training: builds demo sample sets, converts XML datasets to tabular rows, extracts fitness and neuron value frames from training netCDF logs, and computes ROC validation curves.</Description>
+		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Debugger</AssemblyTitle>
+		<PackageTags>scibasic;machine-learning;debugger;roc;error-curve</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

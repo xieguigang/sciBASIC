@@ -14,7 +14,18 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-   
+    <Title>Gibbs Sampling and Metropolis-Hastings Samplers</Title>
+    <Description>Gibbs sampling for repeated motif discovery in biological sequences, plus a Metropolis-Hastings sampler over Markov bases for contingency table and chi-square analysis. Part of the sciBASIC# statistics stack.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Math.GibbsSampling</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;gibbs-sampling;metropolis-hastings;motif-finding;markov-chain;mcmc</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>False</Optimize>
@@ -46,6 +57,10 @@
     <EmbeddedResource Remove="test\**" />
     <None Remove="imgs\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Remove="data.txt" />

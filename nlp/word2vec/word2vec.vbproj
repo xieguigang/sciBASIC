@@ -4,16 +4,16 @@
 
     <TargetFrameworks>net10.0</TargetFrameworks>
 
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
 
 		<AssemblyVersion>5.33.9742.7537</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
-		<Copyright>GPL3</Copyright>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64;x86</Platforms>
@@ -27,10 +27,16 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <AssemblyName>Microsoft.VisualBasic.Data.NLP.Word2Vec</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.Data.NLP.Word2Vec</RootNamespace>
-    <PackageLicenseExpression>gpl3</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>Word2Vec Embedding Trainer with Skip-Gram and CBOW</Title>
+    <Description>Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.NLP.Word2Vec</AssemblyTitle>
+    <PackageTags>scibasic;word2vec;word-embedding;skip-gram;machine-learning</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <RepositoryType>git</RepositoryType>
 	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -43,6 +49,10 @@
 	  <Compile Remove="test\**" />
 	  <EmbeddedResource Remove="test\**" />
 	  <None Remove="test\**" />
+	  <None Include="..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Data_science\Graph\graph-netcore5.vbproj" />

@@ -17,13 +17,22 @@
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   <UseWindowsForms>true</UseWindowsForms> 
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <Copyright>GPL3</Copyright>
-	  <PackageLicenseExpression>GPL3</PackageLicenseExpression>
+	  <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <MyType>WindowsForms</MyType>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <Version>1.0.9742.7537</Version>
-
+    <Title>Interactive WinForms Network Graph Viewer Control</Title>
+    <Description>A Windows Forms canvas that animates force-directed layouts, supports 2D and 3D rendering, mouse hit-testing, node tooltips and viewport panning, and can record the animation to AVI or SVG for sciBASIC# desktop apps.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <PackageTags>scibasic;network-canvas;winforms;interactive-viewer;data-visualization</PackageTags>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -34,6 +43,10 @@
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 	<ItemGroup>

@@ -17,28 +17,31 @@
 
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 
-    <Title>GDI+ data visualization math core module</Title>
+    <Title>2D And 3D Scientific Graphics Rendering Engine</Title>
 
-    <Copyright>i@xieguigang.me</Copyright>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 
-    <PackageProjectUrl>https://github.com/xieguigang/sciBASIC</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <PackageIcon>logo-knot.png</PackageIcon>
 
-    <RepositoryUrl>https://github.com/xieguigang/sciBASIC.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 
     <RepositoryType>git</RepositoryType>
 
-    <PackageTags>gdi</PackageTags>
+    <PackageTags>scibasic;graphics;imaging;svg;postscript</PackageTags>
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <UseApplicationFramework>True</UseApplicationFramework>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-
+    <Description>A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API. It is the visualization core of sciBASIC#.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Imaging</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

@@ -4,16 +4,15 @@
 		<RootNamespace>Microsoft.VisualBasic</RootNamespace>
 		<TargetFrameworks>net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC#</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>10.5.9742.7537</Version>    
 		<AssemblyVersion>5.33.9742.7537</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageIcon>logo-knot.png</PackageIcon>
-		<PackageProjectUrl>http://scibasic.net</PackageProjectUrl>		
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>		
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 		<Platforms>AnyCPU;x64;x86;ARM64</Platforms>
@@ -21,7 +20,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<Description>sciBASIC#: Microsoft VisualBasic for Scientific Computing</Description>
+		<Description>Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, command line parsing, parallel helpers, application services and logging.</Description>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <UseApplicationFramework>True</UseApplicationFramework>
@@ -34,10 +33,12 @@
     <NoWarn>$(NoWarn);SYSLIB0004</NoWarn>
     <WarningLevel>4</WarningLevel>
     <NoWarn>$(NoWarn);BC42356</NoWarn>
-    <AssemblyTitle>Microsoft VisualBasic Application Common Runtime</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
-    <Title>Microsoft VisualBasic Application Common Runtime</Title>
+    <Title>Visual Basic Runtime Core Library For Scientific Computing</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>scibasic;runtime;linq;reflection;application-services</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

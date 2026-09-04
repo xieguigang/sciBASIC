@@ -7,17 +7,23 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>xieguigang&lt;I@xieguigang.me&gt;</Authors>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Product>sciBASIC#</Product>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Title>Resource Description Framework</Title>
-    <Description>Supports for application/rdf+xml MIME type</Description>
+    <Title>RDF/XML and Turtle Triple Store Serialization Model</Title>
+    <Description>Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <AssemblyTitle>Microsoft.VisualBasic.MIME.application.rdf_xml</AssemblyTitle>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;rdf;semantic-web;turtle;linked-data</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -105,6 +111,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

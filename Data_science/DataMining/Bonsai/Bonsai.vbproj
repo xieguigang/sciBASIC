@@ -4,25 +4,27 @@
 		<RootNamespace>Microsoft.VisualBasic.DataMining.Bonsai</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
-		<Description>Bonsai</Description>
+		<Description>Reconstructs a diffusion tree from high-dimensional observations, optimising every branch length and internal node coordinate against a Felsenstein tree likelihood, then laying the tree out for visualisation in sciBASIC#.</Description>
 		<RepositoryType>git</RepositoryType>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Title>Bonsai reconstructs tree representations for distortion-free visualization and exploration of high-dimensional data</Title>
+		<Title>Bonsai Diffusion Tree Layout for High-Dimensional Data</Title>
 		<IncludeSymbols>True</IncludeSymbols>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<AssemblyTitle>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyTitle>
+		<PackageTags>scibasic;bonsai;dimensionality-reduction;diffusion-tree;visualization</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">

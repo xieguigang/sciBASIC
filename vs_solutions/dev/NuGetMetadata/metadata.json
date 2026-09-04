@@ -1,0 +1,625 @@
+[
+  {
+    "path": "mime/application%json/JSON-netcore5.vbproj",
+    "title": "JSON and BSON Parser, Serializer and JavaScript Object Model",
+    "description": "A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, plus BSON binary encoding and object serialization.",
+    "packageTags": "scibasic;json;bson;serialization;json-parser",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.application.json"
+  },
+  {
+    "path": "mime/application%pdf/Pdf.NET5.vbproj",
+    "title": "PDF Document Reader, Text Extractor and Writer Library",
+    "description": "Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text via ToUnicode CMaps, while a streaming generator lays out text, tables and images.",
+    "packageTags": "scibasic;pdf;pdf-reader;text-extraction;pdf-writer",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.application.pdf"
+  },
+  {
+    "path": "mime/application%rdf+xml/rdf_xml-netcore5.vbproj",
+    "title": "RDF/XML and Turtle Triple Store Serialization Model",
+    "description": "Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.",
+    "packageTags": "scibasic;rdf;semantic-web;turtle;linked-data",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.application.rdf_xml"
+  },
+  {
+    "path": "mime/application%rtf/RTF.vbproj",
+    "title": "Rich Text Format and Office MathML Document Model",
+    "description": "Builds rich text format documents in the sciBASIC# framework: a document object model that tracks styled text regions and fonts and emits RTF markup, plus serializable Office Math Markup Language models for equations.",
+    "packageTags": "scibasic;rtf;omml;mathml;document-model",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.RTF"
+  },
+  {
+    "path": "mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj",
+    "title": "XLSX Workbook Reader, Writer and Legacy BIFF Parser",
+    "description": "XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and parses legacy BIFF files.",
+    "packageTags": "scibasic;xlsx;excel;openxml;spreadsheet",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.Office.Excel"
+  },
+  {
+    "path": "mime/application%xml/xml-netcore5.vbproj",
+    "title": "XML Toolkit with XSD Models, MathML and XPath Queries",
+    "description": "XML helpers for sciBASIC#: an XSD element data model with VB.NET class code generation, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.",
+    "packageTags": "scibasic;xml;xsd;mathml;xpath",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.application.xml"
+  },
+  {
+    "path": "mime/applicationvnd.openxmlformats-officedocument.wordprocessingml.document/docx/WordDocument.vbproj",
+    "title": "DOCX Word Document Generator and Text Extractor",
+    "description": "Generates Office Word documents in sciBASIC#: a fluent writer builds headings, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx file, and extracts plain text back out.",
+    "packageTags": "scibasic;docx;word;office-openxml;document-generation",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.Office.WordDocument"
+  },
+  {
+    "path": "mime/text%html/html_netcore5.vbproj",
+    "title": "HTML/CSS Parser, DOM and GDI+ Rendering Engine",
+    "description": "A professional HTML renderer for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors and property values, lays out boxes, lines and tables, and paints the result onto a GDI+ graphics canvas.",
+    "packageTags": "scibasic;html;css;html-renderer;dom",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.Html"
+  },
+  {
+    "path": "mime/text%markdown/markdown.NET5.vbproj",
+    "title": "Markdown Parser, Block Model and Multi-Format Renderer",
+    "description": "A markdown processor for sciBASIC#: parses CommonMark-style blocks and inline spans into a typed block model or JSON document, renders it to HTML or plain text, and generates nested tables of contents from ATX headers.",
+    "packageTags": "scibasic;markdown;parser;html-renderer;document",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.text.markdown"
+  },
+  {
+    "path": "mime/text%yaml/text.yaml.vbproj",
+    "title": "YAML to JSON Object Model Parser and Front Matter Reader",
+    "description": "Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader.",
+    "packageTags": "scibasic;yaml;parser;json;front-matter",
+    "assemblyTitle": "Microsoft.VisualBasic.MIME.text.yaml"
+  },
+  {
+    "path": "nlp/KnowledgeGraph/KnowledgeGraph.vbproj",
+    "title": "Bipartite Knowledge Graph with Synonym Disambiguation and Ontology Inference",
+    "description": "Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs permutation tests to merge synonyms, and infers ontology relations.",
+    "packageTags": "scibasic;knowledge-graph;entity-disambiguation;ontology;similarity",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.NLP.Knowledge"
+  },
+  {
+    "path": "nlp/NLP/NLP.NET.vbproj",
+    "title": "Natural Language Processing Toolkit: Tokenizers, Stemmer, BM25 and LDA",
+    "description": "NLP toolkit for sciBASIC#: Chinese word segmentation via max-match, HMM and a HuggingFace-compatible BPE/WordPiece/Unigram pipeline, plus a Porter stemmer, TF-IDF, BM25 ranked search and Gibbs-sampled LDA topic modeling.",
+    "packageTags": "scibasic;nlp;tokenizer;topic-model;bm25",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.NLP"
+  },
+  {
+    "path": "nlp/word2vec/word2vec.vbproj",
+    "title": "Word2Vec Embedding Trainer with Skip-Gram and CBOW",
+    "description": "Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.",
+    "packageTags": "scibasic;word2vec;word-embedding;skip-gram;machine-learning",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.NLP.Word2Vec"
+  },
+  {
+    "path": "www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj",
+    "title": "Microsoft Bing Web, Academic, Translation and Image Services Client",
+    "description": "Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal, look up word translations, and fetch the Bing daily image into a WPF attached property.",
+    "packageTags": "scibasic;bing;search-engine;web-scraping;translation",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.KnowledgeBase.Web"
+  },
+  {
+    "path": "gr/avi/AVI.NET5.vbproj",
+    "title": "AVI Video Encoder For Uncompressed RGB Frame Streams",
+    "description": "A dependency-free AVI (RIFF) writer that assembles main/stream headers and appends bitmap frames into a playable video file, ideal for exporting rendered animation frames from the sciBASIC# imaging pipeline.",
+    "packageTags": "scibasic;avi;video-encoder;riff;animation",
+    "assemblyTitle": "Microsoft.VisualBasic.Imaging.AVIMedia"
+  },
+  {
+    "path": "gr/Drawing-net4.8/Drawing-net4.8.vbproj",
+    "title": "GDI+ Graphics Wrapper And System.Drawing Interop For Windows",
+    "description": "A Windows-only GDI+ canvas, image filter and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Keeps drawing code compatible across the System.Drawing and SkiaSharp back ends.",
+    "packageTags": "scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms",
+    "assemblyTitle": "Microsoft.VisualBasic.Drawing"
+  },
+  {
+    "path": "gr/Landscape/Landscape.vbproj",
+    "title": "3D Mesh Model Parsers And Voxelization Toolkit",
+    "description": "Loads STL, OBJ, glTF/GLB, COLLADA, 3DS, 3MF and PLY meshes into one unified scene model, then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.",
+    "packageTags": "scibasic;3d-model;mesh-parser;voxelization;geometry",
+    "assemblyTitle": "Microsoft.VisualBasic.Imaging.Landscape"
+  },
+  {
+    "path": "gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj",
+    "title": "2D And 3D Scientific Graphics Rendering Engine",
+    "description": "A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API. It is the visualization core of sciBASIC#.",
+    "packageTags": "scibasic;graphics;imaging;svg;postscript",
+    "assemblyTitle": "Microsoft.VisualBasic.Imaging"
+  },
+  {
+    "path": "gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj",
+    "title": "Network Graph Data Model And Topology Analysis Library",
+    "description": "Defines the NetworkGraph node and edge model with dynamic graph tables, and supplies community detection, shortest paths, degree and betweenness centrality. The data layer of the sciBASIC# network visualization stack.",
+    "packageTags": "scibasic;network-graph;graph-model;graph-analysis;centrality",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.visualize.Network"
+  },
+  {
+    "path": "gr/network-visualization/Network.IO.Extensions/network_io-netcore5.vbproj",
+    "title": "Network Graph File IO And Third-Party Format Interop",
+    "description": "Reads and writes network graphs as CSV, JSON and VB.NET table sets, and imports or exports Cytoscape, Gephi, GML, Sigma.js and graphology documents. The IO layer of the sciBASIC# network visualization stack.",
+    "packageTags": "scibasic;network-io;cytoscape;gephi;file-format",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.visualize.Network.IO.Extensions"
+  },
+  {
+    "path": "gr/network-visualization/NetworkCanvas/NetworkCanvas.NET5.vbproj",
+    "title": "Interactive WinForms Network Graph Viewer Control",
+    "description": "A Windows Forms canvas that animates force-directed layouts, supports 2D and 3D rendering, mouse hit-testing, node tooltips and viewport panning, and can record the animation to AVI or SVG for sciBASIC# desktop apps.",
+    "packageTags": "scibasic;network-canvas;winforms;interactive-viewer;data-visualization",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.visualize.Network.Canvas"
+  },
+  {
+    "path": "gr/network-visualization/network_layout/network_layout.vbproj",
+    "title": "Graph Layout Algorithms For Network Visualization",
+    "description": "Supplies force-directed, spring-embedder, constrained Cola, orthogonal, radial, circular, HOLA and edge-bundling layouts behind a common IPlanner interface. Computes node coordinates before rendering sciBASIC# networks.",
+    "packageTags": "scibasic;graph-layout;force-directed;orthogonal-routing;edge-bundling",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.visualize.Network.Layouts"
+  },
+  {
+    "path": "gr/network-visualization/Visualizer/networkVisualizer.NET5.vbproj",
+    "title": "Network Graph Rendering Engine With CSS Style Mapping",
+    "description": "Renders a laid-out NetworkGraph into bitmap or vector images, drawing nodes, edges, arrowheads, labels and convex-hull groups through a CSS-like map-expression language for colours, shapes and sizes in sciBASIC#.",
+    "packageTags": "scibasic;network-rendering;data-visualization;style-mapping;convex-hull",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.visualize.Network.Visualizer"
+  },
+  {
+    "path": "gr/physics/physics-netcore5.vbproj",
+    "title": "2D Rigid Body Physics Engine With Particle And Fluid Solvers",
+    "description": "A fixed-step 2D physics world with rigid bodies, broad and narrow phase collision, revolute, prismatic, spring and weld joints, force fields, SPH fluids and boids flocking, plus force-driven label placement for sciBASIC#.",
+    "packageTags": "scibasic;physics-engine;rigid-body;collision-detection;particle-system",
+    "assemblyTitle": "Microsoft.VisualBasic.Imaging.Physics"
+  },
+  {
+    "path": "vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj",
+    "title": "Visual Studio Solution, VBProject And Source Code Analysis Toolkit",
+    "description": "Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by reflection and decodes IL and source maps for sciBASIC# code tooling.",
+    "packageTags": "scibasic;visual-studio;solution-parser;code-analysis;vbnet",
+    "assemblyTitle": "Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio"
+  },
+  {
+    "path": "vs_solutions/dev/vs_PDB/vs_PDB.vbproj",
+    "title": "PDB Debug Symbol File Reader For Classic And Portable Formats",
+    "description": "Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and type records into one uniform model for sciBASIC# tooling.",
+    "packageTags": "scibasic;pdb;debug-symbols;portable-pdb;source-mapping",
+    "assemblyTitle": "Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase"
+  },
+  {
+    "path": "Microsoft.VisualBasic.Core/src/Core.vbproj",
+    "title": "Visual Basic Runtime Core Library For Scientific Computing",
+    "description": "Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, command line parsing, parallel helpers, application services and logging.",
+    "packageTags": "scibasic;runtime;linq;reflection;application-services",
+    "assemblyTitle": "Microsoft.VisualBasic"
+  },
+  {
+    "path": "Data/BinaryData/BinaryData/binarydata-netcore5.vbproj",
+    "title": "Low-Level Binary Data Stream Reader and Writer Toolkit",
+    "description": "Extends BinaryReader and BinaryWriter with endianness-aware primitives, length-prefixed strings, BZip2/LZW compression, XDR encoding and a Python pickle codec, for parsing custom binary file formats in sciBASIC#.",
+    "packageTags": "scibasic;binary-data;binary-reader;endianness;compression;pickle",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.BinaryData"
+  },
+  {
+    "path": "Data/BinaryData/DataStorage/datastorage-netcore5.vbproj",
+    "title": "Tabular Frame Serialization with SAS XPORT and ASN.1 Readers",
+    "description": "Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.",
+    "packageTags": "scibasic;data-storage;sas-xport;asn1;dataframe;binary-serialization",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.Storage"
+  },
+  {
+    "path": "Data/BinaryData/Feather/FeatherFormat.vbproj",
+    "title": "Feather Columnar Data Frame File Format Reader and Writer",
+    "description": "A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime. Reads and writes typed and untyped data frames with row/column access, null handling, and categorical or timestamp metadata.",
+    "packageTags": "scibasic;feather;arrow;columnar;dataframe;flatbuffers",
+    "assemblyTitle": "Microsoft.VisualBasic.DataStorage.FeatherFormat"
+  },
+  {
+    "path": "Data/BinaryData/HDF5/HDF5.vbproj",
+    "title": "Pure Managed HDF5 Scientific Data File Reader",
+    "description": "Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes, and contiguous, chunked or compact datasets to sciBASIC# code.",
+    "packageTags": "scibasic;hdf5;scientific-data;dataset;binary-format;reader",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.IO.HDF5"
+  },
+  {
+    "path": "Data/BinaryData/HDSPack/HDSPack.vbproj",
+    "title": "StreamPack Virtual File System in a Single Binary File",
+    "description": "A packable virtual file system that stores many named streams, folders and attributes inside one binary file. Supports block allocation, buffered read/write, file deletion, metadata trees and read-only mounting for dataset archives.",
+    "packageTags": "scibasic;hdspack;virtual-filesystem;stream-pack;archive;binary-format",
+    "assemblyTitle": "Microsoft.VisualBasic.DataStorage.HDSPack"
+  },
+  {
+    "path": "Data/BinaryData/msgpack/msgpack-netcore5.vbproj",
+    "title": "MessagePack Binary Object Serialization Implementation",
+    "description": "Serializes and deserializes .NET objects to and from the MessagePack binary format, with reflection based member schemas, MessagePackMember attributes, nil implication handling and typed collection support.",
+    "packageTags": "scibasic;msgpack;messagepack;serialization;binary-format;deserialization",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.IO.MessagePack"
+  },
+  {
+    "path": "Data/BinaryData/netCDF/netCDF.vbproj",
+    "title": "netCDF Scientific Array Data File Reader and Writer",
+    "description": "Reads and writes netCDF files for array oriented scientific data, handling dimensions, record dimensions, global and variable attributes, and typed data vectors over byte, short, integer, float and double.",
+    "packageTags": "scibasic;netcdf;scientific-data;array-data;dimensions;variables",
+    "assemblyTitle": "Microsoft.VisualBasic.DataStorage.netCDF"
+  },
+  {
+    "path": "Data/BinaryData/SQLite3/SQLite3.vbproj",
+    "title": "Managed SQLite3 Database File Reader",
+    "description": "A pure managed parser for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.",
+    "packageTags": "scibasic;sqlite3;database;btree;sql-parser;reader",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.IO.SQLite3"
+  },
+  {
+    "path": "Data/DataFrame/dataframework-netcore5.vbproj",
+    "title": "Tabular Data Frame and CSV/ARFF Storage Provider Framework",
+    "description": "Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers/writers, MySQL helpers, and reflection based storage providers that map .NET classes to table rows and columns.",
+    "packageTags": "scibasic;dataframe;csv;arff;storage-provider;tabular-data",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.Framework"
+  },
+  {
+    "path": "Data/DataFrame.Extensions/DataFramework.Extensions-netcore5.vbproj",
+    "title": "Data Framework Extension Methods for Object Serialization",
+    "description": "Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers.",
+    "packageTags": "scibasic;dataframe;extensions;serialization;datatable;outlining",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.Framework.Extensions"
+  },
+  {
+    "path": "Data/GraphQuery/GraphQuery.NET5.vbproj",
+    "title": "Graph Query Language Engine for HTML and XML Documents",
+    "description": "Runs a piped graph query language over HTML/XML documents, combining CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values and emit them as JSON.",
+    "packageTags": "scibasic;graph-query;html;css-selector;xpath;json",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.GraphQuery"
+  },
+  {
+    "path": "Data/MyersDiff/MyersDiff.vbproj",
+    "title": "Myers O(ND) Diff Algorithm for Text Comparison",
+    "description": "Implements the Myers O(ND) difference algorithm to compare text files and string sequences, producing shortest edit scripts, structured diff blocks and unified diff output at both line level and character level.",
+    "packageTags": "scibasic;diff;myers-algorithm;text-comparison;edit-script",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.MyersDiff"
+  },
+  {
+    "path": "Data/Trinity/Trinity.NET5.vbproj",
+    "title": "Trinity TextRank Keyword Extraction and Text Summarization",
+    "description": "NLP module of sciBASIC#: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, Brill part-of-speech tagging, and HTML article body extraction.",
+    "packageTags": "scibasic;nlp;textrank;keyword-extraction;summarization;pos-tagging",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.TrinityNLP"
+  },
+  {
+    "path": "Data_science/DataMining/BinaryTree/btree-netcore5.vbproj",
+    "title": "AVL Binary Tree Clustering with Newick Tree Output",
+    "description": "Clusters vector data by inserting items into an AVL binary tree under a fuzzy similarity comparison, then cutting the tree into partitions. Also offers Newick tree parsing, affinity propagation and KNN graph helpers.",
+    "packageTags": "scibasic;clustering;binary-tree;avl-tree;newick",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.BinaryTreeClustering"
+  },
+  {
+    "path": "Data_science/DataMining/Bonsai/Bonsai.vbproj",
+    "title": "Bonsai Diffusion Tree Layout for High-Dimensional Data",
+    "description": "Reconstructs a diffusion tree from high-dimensional observations, optimising every branch length and internal node coordinate against a Felsenstein tree likelihood, then laying the tree out for visualisation in sciBASIC#.",
+    "packageTags": "scibasic;bonsai;dimensionality-reduction;diffusion-tree;visualization",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.Bonsai"
+  },
+  {
+    "path": "Data_science/DataMining/DataMining/DataMining.NET5.vbproj",
+    "title": "Core Data Mining Toolkit: Clustering, Association Rules and Evaluation",
+    "description": "Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, OPTICS, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.",
+    "packageTags": "scibasic;data-mining;clustering;association-rules;machine-learning",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.Framework"
+  },
+  {
+    "path": "Data_science/DataMining/DBNCode/DBNCode.vbproj",
+    "title": "Dynamic Bayesian Network Structure and Parameter Learning",
+    "description": "Learns dynamic Bayesian networks from observation sequences, combining initial and transition Bayes nets with MDL, log-likelihood and Bayesian scoring functions, optimum branching search and EM parameter fitting.",
+    "packageTags": "scibasic;bayesian-network;dynamic-bayesian-network;structure-learning;data-mining",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork"
+  },
+  {
+    "path": "Data_science/DataMining/DensityQuery/DensityQuery.NET5.vbproj",
+    "title": "Spatial Density Query and SLIC Superpixel Segmentation",
+    "description": "Estimates local point density on 2D grids and KD-tree indexes, and segments images into compact superpixels with the SLIC algorithm. Useful for outlier detection and image region grouping in the sciBASIC# framework.",
+    "packageTags": "scibasic;density;superpixel;slic;kd-tree",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.DensityQuery"
+  },
+  {
+    "path": "Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj",
+    "title": "Dynamic Programming Sequence Alignment and Knapsack Solvers",
+    "description": "Dynamic programming kernels for sciBASIC#, including Needleman-Wunsch global alignment, Smith-Waterman local alignment with HSP chaining, k-banded search, center star multiple alignment and the 0-1 knapsack solver.",
+    "packageTags": "scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.DynamicProgramming"
+  },
+  {
+    "path": "Data_science/DataMining/FeatureFrame/FeatureFrame.vbproj",
+    "title": "Feature Vector Encoders for Numeric Machine Learning Data",
+    "description": "Encodes raw feature vectors of a data frame into numeric columns for model training: one-hot style encoding for enums and flag bit fields, numeric binning and discretisation, and automatic per-field encoder selection.",
+    "packageTags": "scibasic;feature-engineering;encoder;dataframe;machine-learning",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.FeatureFrame"
+  },
+  {
+    "path": "Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj",
+    "title": "Dendrogram and Radial Tree Plotting for Cluster Hierarchies",
+    "description": "Renders hierarchical clustering results as publication-ready graphics: vertical dendrograms, circular and radial layouts, and horizon or right-to-left panels, with class colour legends, leaf labels and rulers.",
+    "packageTags": "scibasic;dendrogram;visualization;hierarchical-clustering;plot",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.HierarchicalClustering.Plot"
+  },
+  {
+    "path": "Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj",
+    "title": "Hierarchical Clustering with BIRCH and Linkage Strategies",
+    "description": "Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.",
+    "packageTags": "scibasic;hierarchical-clustering;birch;linkage;clustering",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.HierarchicalClustering"
+  },
+  {
+    "path": "Data_science/DataMining/HMM/HMM.NET5.vbproj",
+    "title": "Hidden Markov Model Training and Decoding Algorithms",
+    "description": "Implements hidden Markov models and Markov chains with forward, backward, Viterbi, Bayes and Baum-Welch EM algorithms, so you can score, decode and re-estimate state sequences from observation chains in sciBASIC#.",
+    "packageTags": "scibasic;hidden-markov-model;viterbi;baum-welch;markov-chain",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.HiddenMarkovChain"
+  },
+  {
+    "path": "Data_science/DataMining/PaCMAP/PaCMAP.vbproj",
+    "title": "PaCMAP Pairwise Controlled Manifold Approximation Embedding",
+    "description": "PaCMAP dimensionality reduction for sciBASIC#: preserves local and global structure by optimising neighbour, mid-near and further point pairs with a three-phase loss and an Adagrad optimiser over tensor data.",
+    "packageTags": "scibasic;pacmap;dimensionality-reduction;manifold-learning;visualization",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.PaCMAP"
+  },
+  {
+    "path": "Data_science/DataMining/t-SNE/t-SNE.vbproj",
+    "title": "Barnes-Hut t-SNE Dimensionality Reduction Embedding",
+    "description": "t-Distributed Stochastic Neighbor Embedding for sciBASIC#: converts pairwise affinities into joint probabilities at a given perplexity and minimises KL divergence, with a Barnes-Hut SPTree approximation for large data.",
+    "packageTags": "scibasic;t-sne;dimensionality-reduction;barnes-hut;visualization",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.t-SNE"
+  },
+  {
+    "path": "Data_science/DataMining/UMAP/UMAP.NET5.vbproj",
+    "title": "UMAP Uniform Manifold Approximation and Projection",
+    "description": "Uniform Manifold Approximation and Projection for sciBASIC#: builds a fuzzy simplicial set from k-nearest neighbours via NN-descent or KD-trees, then optimises a low-dimensional layout by stochastic gradient descent.",
+    "packageTags": "scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor",
+    "assemblyTitle": "Microsoft.VisualBasic.DataMining.UMAP"
+  },
+  {
+    "path": "Data_science/Graph/graph-netcore5.vbproj",
+    "title": "Graph Theory Algorithms, Network Models and Graph Search",
+    "description": "Algorithm library for sciBASIC# graphs: Dijkstra and A-star shortest paths, contraction hierarchies, Dinic max flow, Louvain, Leiden and label propagation communities, plus MST, Ullmann isomorphism and HNSW search.",
+    "packageTags": "scibasic;graph-theory;graph-algorithm;shortest-path;community-detection",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.GraphTheory"
+  },
+  {
+    "path": "Data_science/MachineVision/GaussianSplatting3D/GaussianSplatting/GaussianSplatting.vbproj",
+    "title": "3D Gaussian Splatting Scene Reconstruction and Rendering",
+    "description": "3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.",
+    "packageTags": "scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineVision.GaussianSplatting3D"
+  },
+  {
+    "path": "Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj",
+    "title": "Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)",
+    "description": "Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.",
+    "packageTags": "scibasic;graph-embedding;node2vec;knowledge-graph;complex",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.Bootstrapping"
+  },
+  {
+    "path": "Data_science/MachineLearning/CellularAutomaton/CellularAutomaton.vbproj",
+    "title": "Cellular Automaton Grid Simulator with netCDF Snapshot Debugging",
+    "description": "A generic cellular automaton engine for sciBASIC#: runs tick-and-commit generations over a 2D grid of typed cells with configurable neighbourhood and boundary modes, and exports per-cell state snapshots to netCDF for analysis.",
+    "packageTags": "scibasic;cellular-automaton;simulation;netcdf;grid-model",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.CellularAutomaton"
+  },
+  {
+    "path": "Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj",
+    "title": "Deep Learning Framework: CNN, RNN, Transformer and ANN Models",
+    "description": "Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.",
+    "packageTags": "scibasic;deep-learning;cnn;rnn;transformer",
+    "assemblyTitle": "Microsoft.VisualBasic.DeepLearning"
+  },
+  {
+    "path": "Data_science/MachineLearning/GNN/GNN.vbproj",
+    "title": "Graph Neural Networks: GCN, GAT and Recurrent Temporal Graph Layers",
+    "description": "Graph neural network library for sciBASIC#, providing GCN and graph-attention layers, GRU and RNN recurrent graph layers, temporal graph snapshots, and graph classification models with SGD and Adam training.",
+    "packageTags": "scibasic;graph-neural-network;gcn;graph-attention;temporal-graph",
+    "assemblyTitle": "Microsoft.VisualBasic.DeepLearning.GNN"
+  },
+  {
+    "path": "Data_science/MachineLearning/LNN/LNN.vbproj",
+    "title": "Liquid Neural Networks with ODE Solvers for Time Series",
+    "description": "Continuous-time liquid neural networks for sciBASIC#, where neuron dynamics follow learnable ODEs solved by Euler, Heun, RK4 or adaptive RK45 steps; includes SGD/Adam training and time-series preprocessing utilities.",
+    "packageTags": "scibasic;liquid-neural-network;ode;time-series;continuous-time",
+    "assemblyTitle": "Microsoft.VisualBasic.DeepLearning.LNN"
+  },
+  {
+    "path": "Data_science/MachineLearning/MachineLearning/machine_learning-netcore5.vbproj",
+    "title": "Classical Machine Learning: Random Forest, SVM, GA and Q-Learning",
+    "description": "Classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port, genetic algorithms and differential evolution, Q-learning tables, activation functions and normalised sample datasets.",
+    "packageTags": "scibasic;machine-learning;random-forest;svm;genetic-algorithm",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning"
+  },
+  {
+    "path": "Data_science/MachineLearning/MachineLearning.Data.Extensions/MachineLearning.Data.Extensions.vbproj",
+    "title": "Q-Learning and Labelled Dataset Serialization Extensions",
+    "description": "Helpers for sciBASIC# machine learning data: export a trained Q-table with state features to netCDF, record Q-value curves per iteration to CSV, and save or load labelled clustering matrices in a compact binary format.",
+    "packageTags": "scibasic;machine-learning;q-learning;dataset;serialization",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.Data.Extensions"
+  },
+  {
+    "path": "Data_science/MachineLearning/MLDataStorage/MLDataStorage.vbproj",
+    "title": "Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import",
+    "description": "Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.",
+    "packageTags": "scibasic;machine-learning;dataset;mnist;data-storage",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure"
+  },
+  {
+    "path": "Data_science/MachineLearning/MLDebugger/ML_debugger-netcore5.vbproj",
+    "title": "Machine Learning Debugger: Error Curves, ROC and Sample Frame Exports",
+    "description": "Diagnostics helpers for sciBASIC# neural network training: builds demo sample sets, converts XML datasets to tabular rows, extracts fitness and neuron value frames from training netCDF logs, and computes ROC validation curves.",
+    "packageTags": "scibasic;machine-learning;debugger;roc;error-curve",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.Debugger"
+  },
+  {
+    "path": "Data_science/MachineLearning/RestrictedBoltzmannMachine/RestrictedBoltzmannMachine.vbproj",
+    "title": "Restricted Boltzmann Machines with Contrastive Divergence Training",
+    "description": "Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.",
+    "packageTags": "scibasic;rbm;contrastive-divergence;deep-learning;unsupervised",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine"
+  },
+  {
+    "path": "Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj",
+    "title": "Pure VB.NET Tensor Library with NumPy API and Autodiff",
+    "description": "Self-contained tensor engine for sciBASIC#, not a Google TensorFlow binding: a managed multi-dimensional Tensor, a NumPy-style API, neural network activations and losses, and reverse-mode automatic differentiation.",
+    "packageTags": "scibasic;tensor;numpy;automatic-differentiation;numerical",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.TensorFlow"
+  },
+  {
+    "path": "Data_science/MachineLearning/VAE/VAE.vbproj",
+    "title": "Variational Autoencoders: Graph VAE, Gaussian Mixture VAE and GMM",
+    "description": "Generative modelling library for sciBASIC#: a graph variational autoencoder with GCN encoder and inner-product decoder, a Gaussian mixture VAE with categorical latents, and an EM-trained Gaussian mixture model.",
+    "packageTags": "scibasic;variational-autoencoder;gmm;generative-model;clustering",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.VAE"
+  },
+  {
+    "path": "Data_science/MachineLearning/xgboost/xgboost.vbproj",
+    "title": "XGBoost Model Predictor and Gradient Boosting Tree Trainer",
+    "description": "Gradient boosting toolkit for sciBASIC#: reads and scores XGBoost model files through GBTree, GBLinear and Dart boosters, and trains ternary gradient boosting trees with categorical and missing value handling.",
+    "packageTags": "scibasic;xgboost;gradient-boosting;decision-tree;predictor",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.XGBoost"
+  },
+  {
+    "path": "Data_science/MachineLearning/XGBoostDataSet/XGBoostDataSet.vbproj",
+    "title": "CSV Tabular Data Loader for XGBoost Training Sets",
+    "description": "Training data preparation for sciBASIC# XGBoost: two-pass CSV readers for test and validation tables, and converters building labelled TrainData with categorical columns and missing value indexes.",
+    "packageTags": "scibasic;xgboost;dataset;csv;data-preprocessing",
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/ANOVA/ANOVA.vbproj",
+    "title": "ANOVA and Multivariate Analysis Toolkit for VB.NET",
+    "description": "One-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with FDR correction, and multivariate methods (PCA, PLS, OPLS-DA) for omics data. Part of the sciBASIC# scientific computing framework.",
+    "packageTags": "scibasic;anova;kruskal-wallis;multivariate-analysis;pca;pls",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Statistics.ANOVA"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/CVODE_Solver/Sundials.CVODE.vbproj",
+    "title": "Managed CVODE Variable-Order ODE Solver in Pure VB.NET",
+    "description": "A pure managed VB.NET re-implementation of the CVODE solver API with no native P/Invoke, offering variable-step variable-order Adams and BDF integration plus dense and banded linear solvers. Part of sciBASIC#.",
+    "packageTags": "scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Sundials.CVODE"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj",
+    "title": "Curve Fitting and Regression Modelling Library",
+    "description": "Linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic, LASSO and Levenberg-Marquardt fitting with Bayesian and Gauss-Newton solvers. Part of sciBASIC#.",
+    "packageTags": "scibasic;curve-fitting;regression;lasso;loess;levenberg-marquardt",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.Bootstrapping.Fittings"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj",
+    "title": "Labelled Data Matrix, Correlation and Distance Utilities",
+    "description": "Labelled numeric matrix model with pairwise correlation and distance matrix builders, missing-value imputation, scaling and centering transforms, and Matrix Market MTX/RUA file IO. Part of sciBASIC#.",
+    "packageTags": "scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Matrix"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/GeneticProgramming/GeneticProgramming.vbproj",
+    "title": "Symbolic Regression via Genetic Programming and GA",
+    "description": "Evolves mathematical expressions and polynomial models with genetic programming and genetic algorithms, using pluggable expression trees and error objectives such as MSE, MAE, SSE and SAE. Part of sciBASIC#.",
+    "packageTags": "scibasic;genetic-programming;symbolic-regression;expression-tree;evolutionary-algorithm",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/Gibbs/Gibbs.vbproj",
+    "title": "Gibbs Sampling and Metropolis-Hastings Samplers",
+    "description": "Gibbs sampling for repeated motif discovery in biological sequences, plus a Metropolis-Hastings sampler over Markov bases for contingency table and chi-square analysis. Part of the sciBASIC# statistics stack.",
+    "packageTags": "scibasic;gibbs-sampling;metropolis-hastings;motif-finding;markov-chain;mcmc",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.GibbsSampling"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/KaplanMeierEstimator/KaplanMeierEstimator.vbproj",
+    "title": "Kaplan-Meier Survival Estimator for Two-Group Studies",
+    "description": "Computes Kaplan-Meier survival curves for two patient cohorts, merges time events, tests group significance and batch-runs gene-expression split strategies in parallel. Part of sciBASIC#.",
+    "packageTags": "scibasic;survival-analysis;kaplan-meier;log-rank;gene-expression;biostatistics",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.KaplanMeierEstimator"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/Math/Math.NET5.vbproj",
+    "title": "Core Mathematics Library: Linear Algebra, Numerics and More",
+    "description": "Core math for sciBASIC#: dense and sparse matrices, SVD and linear solvers, simplex linear programming, BigDecimal arithmetic, splines, quantiles, distributions, fuzzy logic and an expression scripting engine.",
+    "packageTags": "scibasic;mathematics;linear-algebra;numerics;linear-programming;spline",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Core"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj",
+    "title": "Statistics Toolkit: Distributions, Hypothesis Tests and More",
+    "description": "Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.",
+    "packageTags": "scibasic;statistics;hypothesis-testing;distribution;fastica;shapley-value",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Statistics"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/MathLambda/symbolic-netcore5.vbproj",
+    "title": "Symbolic Math Engine: Calculus, Algebra and MathML Compiler",
+    "description": "Immutable expression-tree computer algebra for sciBASIC#: derivatives, integrals, limits, Taylor expansion, polynomial factorisation, simplification, Boolean algebra and a MathML to LINQ expression compiler.",
+    "packageTags": "scibasic;symbolic-math;computer-algebra;calculus;mathml;polynomial",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Lambda"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/ODE/odes-netcore5.vbproj",
+    "title": "Ordinary Differential Equation Solver Core for Dynamic Models",
+    "description": "Integrates systems of ordinary differential equations with Euler, RK2, RK4, Gill and trapezoidal solvers over a declarative model of variables, parameters and initial values. Part of sciBASIC#.",
+    "packageTags": "scibasic;ode;runge-kutta;dynamical-system;numerical-integration;simulation",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.ODEsSolver"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/ODESolver.Extensions/ODESolver.Extensions.NET5.vbproj",
+    "title": "ODE Solver Extensions: Result Export and Correlation Analysis",
+    "description": "Extension helpers that turn ODE integration output into data frames and CSV files, reload them, and compute Pearson or Spearman correlations between the modelled variables. Part of sciBASIC#.",
+    "packageTags": "scibasic;ode-solver;data-frame;correlation;csv-export;pearson",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.ODEsSolver.Extensions"
+  },
+  {
+    "path": "Data_science/Mathematica/Math/Randomizer/randomizer-netcore5.vbproj",
+    "title": "Random Number Generators and Seeded Samplers Library",
+    "description": "Random number generation for sciBASIC#: Mersenne Twister, a fast xorshift-style generator, a thread-safe wrapper and a table-driven RAND randomizer for normal deviates and Monte Carlo simulation.",
+    "packageTags": "scibasic;random;mersenne-twister;monte-carlo;pseudorandom;sampling",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.Randomizer"
+  },
+  {
+    "path": "Data_science/Mathematica/SignalProcessing/MachineVision/MachineVision.vbproj",
+    "title": "Machine Vision Tools: Shape, Blob, OCR and Tracking",
+    "description": "2D curve and shape matching with Procrustes and Frechet distance, connected component labelling, Hough circle detection, text OCR, RANSAC point-set alignment and multi-object tracking. Part of sciBASIC#.",
+    "packageTags": "scibasic;machine-vision;shape-matching;hough-transform;connected-component;tracking",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.MachineVision"
+  },
+  {
+    "path": "Data_science/Mathematica/SignalProcessing/Signal.IO/signal_io-netcore5.vbproj",
+    "title": "Signal Data IO: netCDF Reader and Writer for Signals",
+    "description": "Reads and writes time-series signal collections with their metadata, chunk indices and measure units to netCDF files, interoperating with R-based signal analysis pipelines. Part of sciBASIC#.",
+    "packageTags": "scibasic;signal-io;netcdf;time-series;data-exchange;file-format",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.Signal.IO"
+  },
+  {
+    "path": "Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj",
+    "title": "Signal Processing: FFT, Wavelets, Filters and Peak Detection",
+    "description": "Algorithms for one-dimensional signals in sciBASIC#: FFT and wavelet transforms, Savitzky-Golay filtering, peak detection, baseline removal, resampling, DTW and COW alignment, plus Kalman filtering.",
+    "packageTags": "scibasic;signal-processing;fft;wavelet;peak-detection;filtering",
+    "assemblyTitle": "Microsoft.VisualBasic.Math.SignalProcessing"
+  },
+  {
+    "path": "Data_science/Mathematica/SignalProcessing/wav/wav/waveFile-netcore5.vbproj",
+    "title": "WAV Audio File Reader, Writer and Voiceprint Extractor",
+    "description": "Parses and writes RIFF/WAVE audio files with FMT and data sub-chunk access, and extracts mel-filterbank voiceprint vectors with delta coefficients, CMVN and L2 normalisation. Part of sciBASIC#.",
+    "packageTags": "scibasic;wav;audio;voiceprint;mfcc;riff",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.Wave"
+  },
+  {
+    "path": "Data_science/Visualization/Plots/plots-netcore5.vbproj",
+    "title": "2D and 3D Chart Plotting Library for GDI+ Graphics",
+    "description": "A charting engine for sciBASIC# that renders scatter, line, bar, histogram, box, violin, contour, heatmap, pie, radar, treemap, Venn and 3D plots with configurable axes, legends and themes.",
+    "packageTags": "scibasic;chart;plotting;data-visualization;gdi-plus;graphics",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.ChartPlots"
+  },
+  {
+    "path": "Data_science/Visualization/Plots-statistics/plots_extensions-netcore5.vbproj",
+    "title": "Statistical Chart Extensions: ROC, QQ, Heatmap and PCA Plots",
+    "description": "Adds statistical graphics to the sciBASIC# chart engine: ROC and QQ plots, forest and Z-score plots, correlation heatmaps and triangles, density plots, time trends, PCA scree plots and regression plots.",
+    "packageTags": "scibasic;statistics;roc-curve;heatmap;qq-plot;pca-plot",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.ChartPlots.Statistics"
+  },
+  {
+    "path": "Data_science/Visualization/Visualization/data_visualize-netcore5.vbproj",
+    "title": "Visualization Layer for Networks, Clusters and Embeddings",
+    "description": "Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.",
+    "packageTags": "scibasic;visualization;network-graph;embedding;clustering;umap",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.visualize"
+  }
+]

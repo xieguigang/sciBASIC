@@ -8,11 +8,11 @@
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.Framework</PackageId>
     <Version>5.0.9742.7537</Version>
-    <Description>Data Framework for sciBASIC# runtime, provides the library function for I/O of the csv 2D table, binary data format dataframe object.</Description>
+    <Description>Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers/writers, MySQL helpers, and reflection based storage providers that map .NET classes to table rows and columns.</Description>
     <Product>sciBASIC</Product>
-    <Company>sciBASIC</Company>
-    <Authors>I@xieguigang.me</Authors>
-    <Copyright>Copyright © xie.guigang@live.com 2016</Copyright>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageReleaseNotes>Data Framework for sciBASIC# runtime, provides the library function for I/O of the csv 2D table, binary data format dataframe object.</PackageReleaseNotes>
     <OutputType>Library</OutputType>
     <StartupObject></StartupObject>
@@ -24,12 +24,15 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <PackageIcon>logo-knot.png</PackageIcon>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Tabular Data Frame and CSV/ARFF Storage Provider Framework</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.Framework</AssemblyTitle>
+    <PackageTags>scibasic;dataframe;csv;arff;storage-provider;tabular-data</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

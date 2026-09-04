@@ -4,24 +4,26 @@
 		<RootNamespace>Microsoft.VisualBasic.DataMining.UMAP</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.DataMining.UMAP</AssemblyName>
-		<Authors>xie.guigang@live.com</Authors>
-		<Company>sciBASIC.NET</Company>
+		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+		<Company>sciBASIC.NET Foundation</Company>
 		<Version>5.0.9742.7537</Version>
-		<Copyright>GPL3</Copyright>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
-		<Description>UMap</Description>
+		<Description>Uniform Manifold Approximation and Projection for sciBASIC#: builds a fuzzy simplicial set from k-nearest neighbours via NN-descent or KD-trees, then optimises a low-dimensional layout by stochastic gradient descent.</Description>
 		<RepositoryType>git</RepositoryType>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Title>UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction</Title>
+		<Title>UMAP Uniform Manifold Approximation and Projection</Title>
 		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<AssemblyTitle>Microsoft.VisualBasic.DataMining.UMAP</AssemblyTitle>
+		<PackageTags>scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

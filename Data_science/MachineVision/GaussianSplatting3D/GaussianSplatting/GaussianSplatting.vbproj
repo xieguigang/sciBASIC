@@ -13,10 +13,21 @@
     <Nullable>Disable</Nullable>
     <UseSystemDrawing>true</UseSystemDrawing>
     <Platforms>AnyCPU;x64</Platforms>
-    <AssemblyTitle>3D Gaussian Splatting</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</AssemblyTitle>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Configurations>nuget_release</Configurations>
+    <Title>3D Gaussian Splatting Scene Reconstruction and Rendering</Title>
+    <Description>3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.</Description>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -26,6 +37,10 @@
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="10.0.10" />
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

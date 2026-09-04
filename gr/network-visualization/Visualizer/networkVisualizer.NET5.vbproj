@@ -8,22 +8,25 @@
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Network graph data render engine</Title>
-    <Company>xieguigang</Company>
-    <Authors>xie.guigang@live.com</Authors>
+    <Title>Network Graph Rendering Engine With CSS Style Mapping</Title>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Product>sciBASIC#</Product>
-    <Description>Network graph data render engine</Description>
+    <Description>Renders a laid-out NetworkGraph into bitmap or vector images, drawing nodes, edges, arrowheads, labels and convex-hull groups through a CSS-like map-expression language for colours, shapes and sizes in sciBASIC#.</Description>
     <IncludeSymbols>True</IncludeSymbols>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression>gpl</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyTitle>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageTags>scibasic;network-rendering;data-visualization;style-mapping;convex-hull</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>

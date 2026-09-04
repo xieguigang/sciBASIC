@@ -8,24 +8,27 @@
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <PackageId></PackageId>
     <Version>5.0.9742.7537</Version>
-    <Description>GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.</Description>
+    <Description>Runs a piped graph query language over HTML/XML documents, combining CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values and emit them as JSON.</Description>
     <Product>sciBASIC</Product>
-    <Company>sciBASIC</Company>
-    <Authors>I@xieguigang.me</Authors>
-    <Copyright>Copyright © xie.guigang@live.com 2016</Copyright>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageReleaseNotes>GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.</PackageReleaseNotes>
     <OutputType>Library</OutputType>
     <StartupObject></StartupObject>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>logo-knot.png</PackageIcon>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Title>Graph Query Language Engine for HTML and XML Documents</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.GraphQuery</AssemblyTitle>
+    <PackageTags>scibasic;graph-query;html;css-selector;xpath;json</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
