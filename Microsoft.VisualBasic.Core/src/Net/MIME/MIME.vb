@@ -56,7 +56,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace Net.Protocols.ContentTypes
 
@@ -72,7 +71,7 @@ Namespace Net.Protocols.ContentTypes
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
-        ''' recommended use <see cref="Utils.FileMimeType"/> to get this mime type data
+        ''' recommended use <see cref="FileMimeType"/> to get this mime type data
         ''' </remarks>
         Public ReadOnly Property SuffixTable As IReadOnlyDictionary(Of String, ContentType)
         ''' <summary>
@@ -121,6 +120,35 @@ Namespace Net.Protocols.ContentTypes
                                   Return x.First
                               End Function)
         End Sub
+
+        ''' <summary>
+        ''' ``*.txt -> text``，这个函数是作用于文件的拓展名之上的
+        ''' </summary>
+        ''' <param name="ext"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetMIMEDescrib(ext$, Optional defaultUnknown As Boolean = True) As ContentType
+            Dim key$ = LCase(ext).Trim("*"c)
+
+            If MIME.SuffixTable.ContainsKey(key) Then
+                Return MIME.SuffixTable(key)
+            ElseIf defaultUnknown Then
+                Return MIME.UnknownType
+            Else
+                Return Nothing
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 与<see cref="GetMIMEDescrib(String,Boolean)"/>所不同的是，这个函数是直接作用于文件路径之上的。
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FileMimeType(path As String, Optional defaultUnknown As Boolean = True) As ContentType
+            Return ("*." & path.ExtensionSuffix).GetMIMEDescrib(defaultUnknown)
+        End Function
 
         Private Iterator Function FetchUniqueMimeContents() As IEnumerable(Of ContentType)
             ' add exteneded content types

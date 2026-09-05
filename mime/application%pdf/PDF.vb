@@ -55,6 +55,13 @@ Imports System.IO
 
 Public Module PDF
 
+    ''' <summary>
+    ''' get raw text from the pdf file stream
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns>
+    ''' returns the text content in page by page order
+    ''' </returns>
     Public Iterator Function GetText(file As Stream) As IEnumerable(Of String)
         Using reader As New PdfReader(file)
             Dim extractor As New TextExtractor(reader)

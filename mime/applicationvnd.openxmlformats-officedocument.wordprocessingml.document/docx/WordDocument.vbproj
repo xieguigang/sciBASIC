@@ -14,7 +14,10 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Configurations>Debug;nuget_release</Configurations>
+
+  
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
+
     <Title>DOCX Word Document Generator and Text Extractor</Title>
     <Description>Generates Office Word documents in sciBASIC#: a fluent writer builds headings, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx file, and extracts plain text back out.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.WordDocument</AssemblyTitle>

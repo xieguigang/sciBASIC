@@ -275,35 +275,6 @@ Namespace ApplicationServices
             Return token
         End Function
 
-        ''' <summary>
-        ''' ``*.txt -> text``，这个函数是作用于文件的拓展名之上的
-        ''' </summary>
-        ''' <param name="ext"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function GetMIMEDescrib(ext$, Optional defaultUnknown As Boolean = True) As ContentType
-            Dim key$ = LCase(ext).Trim("*"c)
-
-            If MIME.SuffixTable.ContainsKey(key) Then
-                Return MIME.SuffixTable(key)
-            ElseIf defaultUnknown Then
-                Return MIME.UnknownType
-            Else
-                Return Nothing
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 与<see cref="GetMIMEDescrib(String,Boolean)"/>所不同的是，这个函数是直接作用于文件路径之上的。
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function FileMimeType(path As String, Optional defaultUnknown As Boolean = True) As ContentType
-            Return ("*." & path.ExtensionSuffix).GetMIMEDescrib(defaultUnknown)
-        End Function
-
         <Extension>
         Public Sub printf(dev As TextWriter, format$, ParamArray args As Object())
             Call dev.Write(sprintf(format, args))

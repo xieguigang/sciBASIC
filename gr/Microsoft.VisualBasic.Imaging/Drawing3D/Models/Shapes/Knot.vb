@@ -54,6 +54,9 @@
 
 Namespace Drawing3D.Models.Isometric.Shapes
 
+    ''' <summary>
+    ''' 彭罗斯三角三维模型
+    ''' </summary>
     Public Class Knot : Inherits Shape3D
 
         ''' <summary>
