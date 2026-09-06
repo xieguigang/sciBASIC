@@ -104,19 +104,32 @@ Namespace IL
             Dim c = ins.Code
 
             If c = OpCodes.Ldc_I4_M1 Then
-                value = -1 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_0 Then value = 0 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_1 Then value = 1 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_2 Then value = 2 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_3 Then value = 3 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_4 Then value = 4 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_5 Then value = 5 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_6 Then value = 6 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_7 Then value = 7 : valueType = GetType(Integer)
-            ElseIf c = OpCodes.Ldc_I4_8 Then value = 8 : valueType = GetType(Integer)
+                value = -1
+                valueType = GetType(Integer)
+
+            ElseIf c = OpCodes.Ldc_I4_0 Then
+                value = 0 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_1 Then
+                value = 1 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_2 Then
+                value = 2 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_3 Then
+                value = 3 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_4 Then
+                value = 4 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_5 Then
+                value = 5 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_6 Then
+                value = 6 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_7 Then
+                value = 7 : valueType = GetType(Integer)
+            ElseIf c = OpCodes.Ldc_I4_8 Then
+                value = 8 : valueType = GetType(Integer)
+
             ElseIf c = OpCodes.Ldc_I4_S OrElse c = OpCodes.Ldc_I4 Then
                 If Not TypeOf ins.Operand Is Integer Then Return False
                 value = CInt(ins.Operand) : valueType = GetType(Integer)
+
             ElseIf c = OpCodes.Ldc_I8 Then
                 value = CLng(ins.Operand) : valueType = GetType(Long)
             ElseIf c = OpCodes.Ldc_R4 Then
