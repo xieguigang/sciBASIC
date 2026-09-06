@@ -75,6 +75,16 @@ Namespace IL
         ReadOnly il As Stream
         ReadOnly mi As MethodInfo = Nothing
 
+        ''' <summary>方法的原始 IL 字节（用于回填 <see cref="ILInstruction.OperandData"/>）</summary>
+        ReadOnly ilBytes As Byte()
+        ''' <summary>局部变量表，下标即 ldloc / stloc 的操作数</summary>
+        ReadOnly locals As LocalVariableInfo()
+        ''' <summary>异常处理子句（切分基本块时不能跨越 try/handler 边界）</summary>
+        ReadOnly exceptionClauses As ExceptionHandlingClause()
+        ''' <summary>IL 偏移 -> 指令下标</summary>
+        ReadOnly offsetIndex As Dictionary(Of Integer, Integer)
+        ReadOnly maxStackSize As Integer
+
         Private disposedValue As Boolean
 
         ''' <summary>
@@ -85,12 +95,75 @@ Namespace IL
         ''' </param>
         Public Sub New(mi As MethodInfo)
             Me.mi = mi
+            Me.offsetIndex = New Dictionary(Of Integer, Integer)()
+            Me.locals = New LocalVariableInfo() {}
+            Me.exceptionClauses = New ExceptionHandlingClause() {}
+            Me.ilBytes = New Byte() {}
 
-            If mi.GetMethodBody() IsNot Nothing Then
-                il = New MemoryStream(mi.GetMethodBody().GetILAsByteArray())
+            Dim body = If(mi Is Nothing, Nothing, mi.GetMethodBody())
+
+            If body IsNot Nothing Then
+                Me.ilBytes = If(body.GetILAsByteArray(), New Byte() {})
+                Me.maxStackSize = body.MaxStackSize
+                Me.locals = body.LocalVariables.ToArray()
+                Me.exceptionClauses = body.ExceptionHandlingClauses.ToArray()
+                Me.il = New MemoryStream(Me.ilBytes)
+
                 ConstructInstructions(mi.Module)
+
+                For i As Integer = 0 To instructions.Count - 1
+                    offsetIndex(instructions(i).Offset) = i
+                Next
             End If
         End Sub
+
+        ''' <summary>解析得到的指令序列（按 IL 偏移升序）</summary>
+        Public ReadOnly Property Instructions As IReadOnlyList(Of ILInstruction)
+            Get
+                Return instructions
+            End Get
+        End Property
+
+        ''' <summary>方法的最大求值栈深度</summary>
+        Public ReadOnly Property MaxStackSize As Integer
+            Get
+                Return maxStackSize
+            End Get
+        End Property
+
+        ''' <summary>局部变量表（下标即 ldloc / stloc 的操作数）</summary>
+        Public ReadOnly Property Locals As IReadOnlyList(Of LocalVariableInfo)
+            Get
+                Return locals
+            End Get
+        End Property
+
+        ''' <summary>异常处理子句</summary>
+        Public ReadOnly Property ExceptionClauses As IReadOnlyList(Of ExceptionHandlingClause)
+            Get
+                Return exceptionClauses
+            End Get
+        End Property
+
+        ''' <summary>按 IL 偏移查指令下标；不存在返回 -1</summary>
+        Public Function IndexByOffset(offset As Integer) As Integer
+            Dim index As Integer = -1
+            If offsetIndex.TryGetValue(offset, index) Then Return index
+            Return -1
+        End Function
+
+        ''' <summary>按 IL 偏移取指令；不存在返回 Nothing</summary>
+        Public Function InstructionAt(offset As Integer) As ILInstruction
+            Dim index = IndexByOffset(offset)
+            Return If(index >= 0, instructions(index), Nothing)
+        End Function
+
+        ''' <summary>该方法是否含有 try / catch / finally 等异常结构</summary>
+        Public ReadOnly Property HasExceptionHandlers As Boolean
+            Get
+                Return exceptionClauses IsNot Nothing AndAlso exceptionClauses.Length > 0
+            End Get
+        End Property
 
         ''' <summary>
         ''' Constructs the array of ILInstructions according to the IL byte code.
