@@ -177,7 +177,7 @@ Namespace IL
         Public Property IsStaticCall As Boolean
 
         Public Sub New()
-            MyBase.New(SyntaxKind.Call)
+            MyBase.New(SyntaxKind.Invoke)
         End Sub
 
         ''' <summary>形如 System.Math.Sqrt 的完全限定名，供发射器查表</summary>

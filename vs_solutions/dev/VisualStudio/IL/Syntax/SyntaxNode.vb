@@ -21,7 +21,8 @@ Namespace IL
         Binary
         Unary
         Convert
-        [Call]
+        ''' <summary>方法调用</summary>
+        Invoke
         ArrayIndex
         ArrayLength
         Ternary
@@ -31,12 +32,12 @@ Namespace IL
         VariableDeclaration
         Assignment
         ExpressionStatement
-        [Return]
-        [If]
-        [While]
-        [For]
-        Break
-        [Continue]
+        ReturnStmt
+        IfStmt
+        WhileStmt
+        ForStmt
+        BreakStmt
+        ContinueStmt
         Nop
     End Enum
 

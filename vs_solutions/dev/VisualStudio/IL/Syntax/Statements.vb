@@ -104,11 +104,11 @@ Namespace IL
         Public Property Value As Expression
 
         Public Sub New()
-            MyBase.New(SyntaxKind.Return)
+            MyBase.New(SyntaxKind.ReturnStmt)
         End Sub
 
         Public Sub New(value As Expression)
-            MyBase.New(SyntaxKind.Return)
+            MyBase.New(SyntaxKind.ReturnStmt)
             Me.Value = value
         End Sub
 
@@ -126,12 +126,12 @@ Namespace IL
         Public Property ElseBody As BlockStatement
 
         Public Sub New()
-            MyBase.New(SyntaxKind.If)
+            MyBase.New(SyntaxKind.IfStmt)
             Me.ThenBody = New BlockStatement()
         End Sub
 
         Public Sub New(condition As Expression, thenBody As BlockStatement, Optional elseBody As BlockStatement = Nothing)
-            MyBase.New(SyntaxKind.If)
+            MyBase.New(SyntaxKind.IfStmt)
             Me.Condition = condition
             Me.ThenBody = If(thenBody, New BlockStatement())
             Me.ElseBody = elseBody
