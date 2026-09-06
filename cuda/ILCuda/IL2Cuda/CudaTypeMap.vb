@@ -10,7 +10,7 @@
 ' NVRTC 内置了 cuda_device_runtime_api 与数学函数，不需要 #include。
 ' ---------------------------------------------------------------------------
 
-Imports IL
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL
 Imports System.Globalization
 
 Namespace IL2Cuda

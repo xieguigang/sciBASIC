@@ -7,7 +7,7 @@
 '   3) 遇到困难节点（数组长度、非数学调用）直接抛异常 —— 生成错代码不如明确失败。
 ' ---------------------------------------------------------------------------
 
-Imports IL
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL
 Imports System.Text
 
 Namespace IL2Cuda
