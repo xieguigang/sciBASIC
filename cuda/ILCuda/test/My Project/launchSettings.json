@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "ILCuda.Demo": {
+      "commandName": "Project",
+      "commandLineArgs": "demo --rows 2048 --cols 2048"
+    },
+    "ILCuda.Demo (async)": {
+      "commandName": "Project",
+      "commandLineArgs": "demo --async --rows 2048 --cols 2048"
+    },
+    "ILCuda.Demo (cpu only)": {
+      "commandName": "Project",
+      "commandLineArgs": "demo --cpu-only --rows 512 --cols 256"
+    },
+    "ILCuda.Demo (selftest)": {
+      "commandName": "Project",
+      "commandLineArgs": "selftest"
+    }
+  }
+}

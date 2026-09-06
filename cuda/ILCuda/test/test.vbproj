@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ILCudaDemo</RootNamespace>
+    <AssemblyName>ILCuda.Demo</AssemblyName>
+    <TargetFramework>net10.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <Nullable>disable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+    <StartupObject>ILCudaDemo.Program</StartupObject>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      demo 自己的内核：皮尔逊相关系数 / 欧氏距离专用的 rowStats / gram / finalize。
+      作为本工程的内嵌资源，运行时通过 KernelSources.Register(...) 注入 ILCuda 框架
+      一起参与 NVRTC 编译。
+    -->
+    <EmbeddedResource Include="Kernels\metrics.cu" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ILCuda.vbproj" />
+  </ItemGroup>
+
+</Project>
