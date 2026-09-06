@@ -92,6 +92,15 @@ Namespace IL
             Return "l" & index
         End Function
 
+        ''' <summary>
+        ''' 形参在 AST 里使用的名字。
+        ''' 加 p_ 前缀是为了避免与局部变量（V_n）撞名，下游（CUDA 发射器）依赖这个约定。
+        ''' </summary>
+        Public Shared Function ParameterBaseName(parameterName As String) As String
+            If String.IsNullOrEmpty(parameterName) Then Return "p_arg"
+            Return "p_" & parameterName
+        End Function
+
         ''' <summary>取槽的静态类型；未知时返回 Nothing</summary>
         Public Function TypeOfSlot(key As String) As System.Type
             Dim t As System.Type = Nothing
@@ -127,7 +136,7 @@ Namespace IL
                 If String.IsNullOrEmpty(name) Then name = "arg" & i
 
                 ' 参数名可能与局部变量重名，统一加 p_ 前缀避免冲突
-                BaseNames(key) = "p_" & name
+                BaseNames(key) = ParameterBaseName(name)
                 SlotTypes(key) = parameters(i).ParameterType
                 _counters(key) = 0
             Next
