@@ -412,8 +412,8 @@ Namespace IL
             Else
                 Dim binary As BinaryOperator = Nothing
 
-                If Not IlOpcodeInfo.TryGetBinaryOperator(code, binary) OrElse
-                   Not IlOpcodeInfo.IsComparison(code) Then
+                If Not IlOpcodeInfo.TryGetBinaryOperator(code.Name, binary) OrElse
+                   Not IlOpcodeInfo.IsComparison(code.Name) Then
                     Throw New DecompileException(
                         $"IL_{ins.Offset.ToString("X4")}: 不支持的条件分支 {code.Name}")
                 End If
