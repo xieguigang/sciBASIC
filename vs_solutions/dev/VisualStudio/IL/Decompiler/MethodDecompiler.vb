@@ -119,9 +119,6 @@ Namespace IL
                 Dim recovery As New StructureRecovery(cfg, diag)
                 Dim body = recovery.Build()
 
-                ' 5) 把 phi 变量与栈合并变量的声明提升到函数体最前面
-                body = HoistDeclarations(body, ssa, simulator)
-
                 Dim syntax As New MethodSyntax With {
                     .Name = method.Name,
                     .Method = method,
@@ -144,6 +141,9 @@ Namespace IL
                         i, "V_" & i, reader.Locals(i).LocalType))
                 Next
 
+                ' 5) 把局部槽位、phi 变量与栈合并变量的声明提升到函数体最前面
+                syntax.Body = HoistDeclarations(syntax, ssa, simulator)
+
                 Return syntax
             End Using
         End Function
@@ -152,16 +152,17 @@ Namespace IL
         ''' SSA 的 phi 变量与栈合并变量在所有路径上被赋值、在汇聚点之后被读取，
         ''' 因此它们的声明必须出现在所有赋值之前。统一提到函数体最前最简单也最安全。
         ''' </summary>
-        Private Function HoistDeclarations(body As BlockStatement,
+        Private Function HoistDeclarations(syntax As MethodSyntax,
                                            ssa As SsaBuilder,
                                            simulator As StackSimulator) As BlockStatement
             Dim hoisted As New BlockStatement()
+            Dim body = If(syntax.Body, New BlockStatement())
 
             ' VB 的局部变量由 CLR 保证零初始化，且在赋值前就被读取是合法的
             ' （例如循环里的 "Dim v As Single" 在循环头上会参与 phi，入边就是未赋值的初值）。
             ' C 里读未初始化变量是未定义行为，因此这里把每个局部槽位都显式声明并置零，
             ' 语义与 CLR 一致，也避免生成引用了不存在变量的赋值。
-            For Each local In If(syntax_Locals, New List(Of LocalDeclaration)())
+            For Each local In If(syntax.Locals, New List(Of LocalDeclaration)())
                 If local.LocalType Is Nothing Then Continue For
 
                 Dim zeroType = local.LocalType
