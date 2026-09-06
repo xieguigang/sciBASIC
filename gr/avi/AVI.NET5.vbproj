@@ -27,6 +27,7 @@
          that declares the assembly attributes, so the SDK must not generate a
          second copy (BC30663: attribute applied multiple times). -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
 
