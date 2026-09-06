@@ -131,7 +131,16 @@ Namespace IL2Cuda
                 If Single.IsNegativeInfinity(s) Then Return "-INFINITY"
 
                 ' 用 "R"（最短可往返）而不是定点格式，否则 1e-12f 会被格式化成 "0.0f"
-                Return s.ToString("R", CultureInfo.InvariantCulture) & "f"
+                Dim text = s.ToString("R", CultureInfo.InvariantCulture)
+
+                ' C 里 "0f" 会被当成用户自定义字面量，必须写成 "0.0f"
+                If text.IndexOf("."c) < 0 AndAlso
+                   text.IndexOf("E"c) < 0 AndAlso
+                   text.IndexOf("e"c) < 0 Then
+                    text &= ".0"
+                End If
+
+                Return text & "f"
             End If
 
             If TypeOf value Is Double Then

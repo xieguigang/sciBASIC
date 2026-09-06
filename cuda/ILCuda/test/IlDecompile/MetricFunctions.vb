@@ -27,7 +27,7 @@ Namespace IlDecompile
         ' ------------------------------------------------------------------
 
         ''' <summary>第 i 行的元素和：Σ x(i, k)</summary>
-        Public FunctionRowSum(x As Single(), cols As Integer, i As Integer) As Single
+        Public Function RowSum(x As Single(), cols As Integer, i As Integer) As Single
             Dim sum As Single = 0.0F
 
             For k As Integer = 0 To cols - 1
@@ -42,7 +42,7 @@ Namespace IlDecompile
         ' ------------------------------------------------------------------
 
         ''' <summary>第 i 行的平方和：Σ x(i, k)^2</summary>
-        Public FunctionRowSumSq(x As Single(), cols As Integer, i As Integer) As Single
+        Public Function RowSumSq(x As Single(), cols As Integer, i As Integer) As Single
             Dim sumSq As Single = 0.0F
 
             For k As Integer = 0 To cols - 1
@@ -58,7 +58,7 @@ Namespace IlDecompile
         ' ------------------------------------------------------------------
 
         ''' <summary>第 i 行与第 j 行的点积：Σ x(i, k) * x(j, k)</summary>
-        Public FunctionGramDot(x As Single(), cols As Integer, i As Integer, j As Integer) As Single
+        Public Function GramDot(x As Single(), cols As Integer, i As Integer, j As Integer) As Single
             Dim acc As Single = 0.0F
 
             For k As Integer = 0 To cols - 1
@@ -76,7 +76,7 @@ Namespace IlDecompile
         ''' 由行统计量与点积还原皮尔逊相关系数。
         ''' 与 metrics.cu 的 finalizeKernel 公式逐项一致（含对角线直接返回 1）。
         ''' </summary>
-        Public FunctionCorrelationCell(dot As Single(), rowSum As Single(), rowSumSq As Single(),
+        Public Function CorrelationCell(dot As Single(), rowSum As Single(), rowSumSq As Single(),
                                                rows As Integer, cols As Integer,
                                                i As Integer, j As Integer) As Single
             ' guard clause：对角线在数学上恒为 1，
@@ -111,7 +111,7 @@ Namespace IlDecompile
         ''' <summary>
         ''' 由行平方和与点积还原欧氏距离：sqrt(sumSq_i + sumSq_j - 2 * dot_ij)
         ''' </summary>
-        Public FunctionDistanceCell(dot As Single(), rowSumSq As Single(),
+        Public Function DistanceCell(dot As Single(), rowSumSq As Single(),
                                             rows As Integer, i As Integer, j As Integer) As Single
             If i = j Then
                 Return 0.0F
@@ -128,7 +128,7 @@ Namespace IlDecompile
         ' ------------------------------------------------------------------
 
         ''' <summary>协方差 / 分母 -> 截断到 [-1, 1] 的相关系数</summary>
-        Public FunctionPearsonClamp(cov As Single, denom As Single) As Single
+        Public Function PearsonClamp(cov As Single, denom As Single) As Single
             Dim c As Single
 
             If denom > 1.0E-12F Then

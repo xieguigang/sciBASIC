@@ -211,20 +211,29 @@ Namespace IL
     Public Class ParameterDeclaration
 
         Public Property Index As Integer
+        ''' <summary>形参在源码里的名字（来自 MethodInfo）</summary>
         Public Property Name As String
+        ''' <summary>
+        ''' 形参在 AST 里实际使用的名字（SSA 基础名，形如 p_x）。
+        ''' AST 中的 <see cref="ParameterExpression"/> 用的是这个名字，
+        ''' 解释器与 CUDA 发射器都必须用它，不能混用 <see cref="Name"/>。
+        ''' </summary>
+        Public Property SsaName As String
         Public Property ParameterType As System.Type
 
         Public Sub New()
         End Sub
 
-        Public Sub New(index As Integer, name As String, parameterType As System.Type)
+        Public Sub New(index As Integer, name As String, parameterType As System.Type,
+                       Optional ssaName As String = Nothing)
             Me.Index = index
             Me.Name = name
+            Me.SsaName = If(ssaName, name)
             Me.ParameterType = parameterType
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{Name} As {If(ParameterType Is Nothing, "?", ParameterType.Name)}"
+            Return $"{SsaName} As {If(ParameterType Is Nothing, "?", ParameterType.Name)}"
         End Function
     End Class
 

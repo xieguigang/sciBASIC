@@ -19,8 +19,9 @@ Namespace IL
             If syntax Is Nothing Then Return String.Empty
 
             Dim code As New StringBuilder()
+            ' 形参在 AST 里用的是 SSA 名（p_xxx），签名必须和函数体保持一致
             Dim parameters = String.Join(", ",
-                syntax.Parameters.Select(Function(p) $"{p.Name} As {TypeName(p.ParameterType)}"))
+                syntax.Parameters.Select(Function(p) $"{If(p.SsaName, p.Name)} As {TypeName(p.ParameterType)}"))
 
             code.AppendLine($"{(If(syntax.IsStatic, "Shared ", ""))}Function {syntax.Name}({parameters}) As {TypeName(syntax.ReturnType)}")
             WriteBlock(code, syntax.Body, 1)
@@ -125,10 +126,10 @@ Namespace IL
 
                     If lit.Value Is Nothing Then Return "Nothing"
                     If TypeOf lit.Value Is Single Then
-                        Return CSng(lit.Value).ToString("0.0######", System.Globalization.CultureInfo.InvariantCulture) & "F"
+                        Return CSng(lit.Value).ToString("R", System.Globalization.CultureInfo.InvariantCulture) & "F"
                     End If
                     If TypeOf lit.Value Is Double Then
-                        Return CDbl(lit.Value).ToString("0.0######", System.Globalization.CultureInfo.InvariantCulture)
+                        Return CDbl(lit.Value).ToString("R", System.Globalization.CultureInfo.InvariantCulture)
                     End If
 
                     Return System.Convert.ToString(lit.Value, System.Globalization.CultureInfo.InvariantCulture)

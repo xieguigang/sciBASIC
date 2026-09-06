@@ -39,7 +39,9 @@ Namespace IL
 
             For i As Integer = 0 To _syntax.Parameters.Count - 1
                 Dim p = _syntax.Parameters(i)
-                _env(p.Name) = If(i < args.Length, args(i), Nothing)
+
+                ' AST 里 ParameterExpression 用的是 SSA 名（p_xxx），环境也必须用同一个键
+                _env(p.SsaName) = If(i < args.Length, args(i), Nothing)
             Next
 
             ExecuteBlock(_syntax.Body)

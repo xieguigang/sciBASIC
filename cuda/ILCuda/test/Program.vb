@@ -51,6 +51,8 @@ Module Program
         Public Property ShowAst As Boolean = True
         ''' <summary>il 命令是否打印生成的 CUDA 源码</summary>
         Public Property ShowSource As Boolean = True
+        ''' <summary>il 命令是否打印原始 IL 与基本块结构</summary>
+        Public Property DumpIl As Boolean = False
     End Class
 
     Function Main(args As String()) As Integer
@@ -220,7 +222,8 @@ Module Program
             .Cols = options.Cols,
             .Seed = options.Seed,
             .ShowAst = options.ShowAst,
-            .ShowSource = options.ShowSource
+            .ShowSource = options.ShowSource,
+            .DumpIl = options.DumpIl
         }
 
         Return If(IlCudaComparison.RunDecompileReport(testOptions), 0, 1)
@@ -456,6 +459,8 @@ Module Program
                     options.ShowAst = False
                 Case "no-source"
                     options.ShowSource = False
+                Case "dump-il"
+                    options.DumpIl = True
                 Case "force-image"
                     options.ForceImage = True
                 Case "async"

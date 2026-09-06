@@ -248,9 +248,17 @@ Namespace IL2Cuda
                     $"方法 {syntax.Name} 的返回类型 {syntax.ReturnType.FullName} 无法映射为 CUDA 类型")
             End If
 
+            ' 数组参数一律写成 const T* __restrict__：内核侧传进来的就是只读指针，
+            ' 不加 const 会在调用处报 "const float* 无法转成 float*"
             Dim signature = syntax.Parameters.Select(
-                Function(p) $"{CudaTypeMap.ParameterCudaType(p.ParameterType, p.ParameterType.IsArray)} " &
-                            $"{CudaTypeMap.SafeName(ParameterNameOf(p))}")
+                Function(p)
+                    If p.ParameterType.IsArray Then
+                        Dim element = CudaTypeMap.CudaType(CudaTypeMap.ElementType(p.ParameterType))
+                        Return $"const {element}* __restrict__ {CudaTypeMap.SafeName(ParameterNameOf(p))}"
+                    End If
+
+                    Return $"{CudaTypeMap.CudaType(p.ParameterType)} {CudaTypeMap.SafeName(ParameterNameOf(p))}"
+                End Function)
 
             code.AppendLine($"__device__ {If(returnType, "void")} {deviceName}({String.Join(", ", signature)}) {{")
 
@@ -343,7 +351,9 @@ Namespace IL2Cuda
 
         ''' <summary>形参在 AST / 生成代码里的名字（与 SSA 的命名规则保持一致）</summary>
         Private Function ParameterNameOf(p As ParameterDeclaration) As String
-            Return SsaBuilder.ParameterBaseName(p.Name)
+            Return If(String.IsNullOrEmpty(p.SsaName),
+                      SsaBuilder.ParameterBaseName(p.Name),
+                      p.SsaName)
         End Function
 
         ''' <summary>

@@ -234,18 +234,19 @@ Namespace IL
                                      parentStatements As List(Of Statement)) As ForStatement
             If body.Statements.Count < 2 Then Return Nothing
 
-            Dim n = body.Statements.Count
-            Dim phiWrite = TryCast(body.Statements(n - 1), AssignmentStatement)
-            Dim increment = TryCast(body.Statements(n - 2), VariableDeclarationStatement)
+            ' 循环体末尾是清一色的 phi 回写（"V_x = V_y"），真正属于循环体的语句在它们之前。
+            ' 从后往前找到第一条不是 phi 回写的语句，它应该就是归纳变量的步进。
+            Dim phiStart = body.Statements.Count
 
-            If phiWrite Is Nothing OrElse increment Is Nothing Then Return Nothing
-            If increment.Initializer Is Nothing Then Return Nothing
+            While phiStart > 0 AndAlso IsPhiWriteBack(body.Statements(phiStart - 1))
+                phiStart -= 1
+            End While
 
-            Dim loopVar = TryCast(phiWrite.Target, LocalExpression)
-            Dim writtenBack = TryCast(phiWrite.Value, LocalExpression)
+            If phiStart = 0 OrElse phiStart = body.Statements.Count Then Return Nothing
 
-            If loopVar Is Nothing OrElse writtenBack Is Nothing Then Return Nothing
-            If writtenBack.Name <> increment.Name Then Return Nothing
+            Dim increment = TryCast(body.Statements(phiStart - 1), VariableDeclarationStatement)
+
+            If increment Is Nothing OrElse increment.Initializer Is Nothing Then Return Nothing
 
             Dim step1 = TryCast(increment.Initializer, BinaryExpression)
 
@@ -256,32 +257,71 @@ Namespace IL
             Dim readVar = TryCast(step1.Left, LocalExpression)
 
             If readVar Is Nothing Then Return Nothing
-            If readVar.Name <> loopVar.Name Then Return Nothing
+
+            ' 在 phi 回写区里找 "readVar = increment.Name"——即把步进结果写回循环变量
+            Dim phiIndex As Integer = -1
+
+            For i As Integer = phiStart To body.Statements.Count - 1
+                Dim write = TryCast(body.Statements(i), AssignmentStatement)
+
+                If write Is Nothing Then Continue For
+
+                Dim target = TryCast(write.Target, LocalExpression)
+                Dim value = TryCast(write.Value, LocalExpression)
+
+                If target Is Nothing OrElse value Is Nothing Then Continue For
+                If target.Name = readVar.Name AndAlso value.Name = increment.Name Then
+                    phiIndex = i
+                    Exit For
+                End If
+            Next
+
+            If phiIndex < 0 Then Return Nothing
 
             ' 循环条件必须真的用到这个变量
-            If Not ReferencesLocal(header.Condition, loopVar.Name) Then Return Nothing
+            If Not ReferencesLocal(header.Condition, readVar.Name) Then Return Nothing
 
-            ' 初值：前置块末尾对同一个变量名的赋值
-            If parentStatements.Count = 0 Then Return Nothing
+            ' 初值：前置块末尾（同样是 phi 回写区）里对同一个变量名的赋值。
+            ' phi 的插入顺序不稳定，因此这里从后往前搜，而不是只看最后一条。
+            Dim initIndex As Integer = -1
 
-            Dim init = TryCast(parentStatements(parentStatements.Count - 1), AssignmentStatement)
+            For i As Integer = parentStatements.Count - 1 To 0 Step -1
+                Dim init = TryCast(parentStatements(i), AssignmentStatement)
 
-            If init Is Nothing Then Return Nothing
+                If init Is Nothing Then Continue For
 
-            Dim initTarget = TryCast(init.Target, LocalExpression)
+                Dim initTarget = TryCast(init.Target, LocalExpression)
 
-            If initTarget Is Nothing OrElse initTarget.Name <> loopVar.Name Then Return Nothing
+                If initTarget IsNot Nothing AndAlso initTarget.Name = readVar.Name Then
+                    initIndex = i
+                    Exit For
+                End If
+            Next
 
-            parentStatements.RemoveAt(parentStatements.Count - 1)
-            body.Statements.RemoveRange(n - 2, 2)
+            If initIndex < 0 Then Return Nothing
+
+            Dim initializer = DirectCast(parentStatements(initIndex), AssignmentStatement).Value
+
+            parentStatements.RemoveAt(initIndex)
+            body.Statements.RemoveAt(phiIndex)
+            body.Statements.RemoveAt(phiStart - 1)
 
             Return New ForStatement With {
-                .VariableName = loopVar.Name,
-                .Initializer = init.Value,
+                .VariableName = readVar.Name,
+                .Initializer = initializer,
                 .Condition = header.Condition,
                 .Increment = step1,
                 .Body = body
             }
+        End Function
+
+        ''' <summary>是否为"V_a = V_b"这种把值直接搬给 phi 变量的回写</summary>
+        Private Shared Function IsPhiWriteBack(stmt As Statement) As Boolean
+            Dim write = TryCast(stmt, AssignmentStatement)
+            If write Is Nothing Then Return False
+
+            Return TypeOf write.Target Is LocalExpression AndAlso
+                   TypeOf write.Value Is LocalExpression
         End Function
 
         ''' <summary>表达式树里是否引用了名为 name 的局部变量</summary>

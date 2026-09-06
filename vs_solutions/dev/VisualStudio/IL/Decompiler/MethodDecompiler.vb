@@ -135,7 +135,8 @@ Namespace IL
 
                 For i As Integer = 0 To parameters.Length - 1
                     syntax.Parameters.Add(New ParameterDeclaration(
-                        i, parameters(i).Name, parameters(i).ParameterType))
+                        i, parameters(i).Name, parameters(i).ParameterType,
+                        SsaBuilder.ParameterBaseName(parameters(i).Name)))
                 Next
 
                 For i As Integer = 0 To reader.Locals.Count - 1
@@ -156,6 +157,35 @@ Namespace IL
                                            simulator As StackSimulator) As BlockStatement
             Dim hoisted As New BlockStatement()
 
+            ' VB 的局部变量由 CLR 保证零初始化，且在赋值前就被读取是合法的
+            ' （例如循环里的 "Dim v As Single" 在循环头上会参与 phi，入边就是未赋值的初值）。
+            ' C 里读未初始化变量是未定义行为，因此这里把每个局部槽位都显式声明并置零，
+            ' 语义与 CLR 一致，也避免生成引用了不存在变量的赋值。
+            For Each local In If(syntax_Locals, New List(Of LocalDeclaration)())
+                If local.LocalType Is Nothing Then Continue For
+
+                Dim zeroType = local.LocalType
+                Dim zero As Object = Nothing
+
+                If zeroType = GetType(Single) Then
+                    zero = 0.0F
+                ElseIf zeroType = GetType(Double) Then
+                    zero = 0.0R
+                ElseIf zeroType = GetType(Integer) Then
+                    zero = 0
+                ElseIf zeroType = GetType(Long) Then
+                    zero = 0L
+                ElseIf zeroType = GetType(Boolean) Then
+                    zero = False
+                End If
+
+                hoisted.Statements.Add(New VariableDeclarationStatement(
+                    local.Name,
+                    zeroType,
+                    New LiteralExpression(zero, zeroType),
+                    local.Index))
+            Next
+
             For Each pair In ssa.Phis
                 For Each phi As SsaBuilder.PhiInfo In pair.Value
                     hoisted.Statements.Add(New VariableDeclarationStatement(phi.Name, phi.VarType))
@@ -166,6 +196,65 @@ Namespace IL
             hoisted.Statements.AddRange(body.Statements)
 
             Return hoisted
+        End Function
+
+        ' ==================================================================
+        ' 诊断
+        ' ==================================================================
+
+        ''' <summary>
+        ''' 诊断用：把 IL 指令流与基本块 / 支配 / 循环结构打印成文本。
+        ''' 反编译失败（尤其是"某个控制流形状归约不出来"）时，先看这份转储再改代码。
+        ''' </summary>
+        Public Function DumpStructure(method As MethodInfo) As String
+            If method Is Nothing Then Throw New ArgumentNullException(NameOf(method))
+
+            Dim text As New System.Text.StringBuilder()
+
+            Using reader As New MethodBodyReader(method)
+                text.AppendLine("IL 指令流：")
+                text.AppendLine(reader.GetBodyCode())
+
+                Dim cfg = ControlFlowGraph.Build(reader)
+
+                cfg.ComputeDominators()
+                cfg.ComputePostDominators()
+                cfg.ComputeNaturalLoops()
+
+                text.AppendLine()
+                text.AppendLine("基本块：")
+
+                For Each b As BasicBlock In cfg.Blocks
+                    Dim preds = String.Join(",", b.Predecessors.Select(Function(x) "bb" & x))
+                    Dim succs = String.Join(",", b.Successors.Select(Function(x) "bb" & x))
+                    Dim ipdom = If(b.ImmediatePostDominator < 0, "exit", "bb" & b.ImmediatePostDominator)
+
+                    text.AppendLine($"  {b}  pred=[{preds}] succ=[{succs}] " &
+                                    $"idom=bb{b.ImmediateDominator} ipdom={ipdom} " &
+                                    $"loop={b.IsLoopHeader} latch=bb{b.LoopLatch} follow=bb{b.LoopFollow} " &
+                                    $"T=bb{b.TrueSuccessor} F=bb{b.FalseSuccessor}")
+
+                    If b.Condition IsNot Nothing Then
+                        text.AppendLine($"       cond = {SyntaxWriter.WriteExpression(b.Condition)}")
+                    End If
+
+                    For Each stmt As Statement In b.Statements
+                        text.AppendLine("       " & DescribeStatement(stmt))
+                    Next
+                Next
+            End Using
+
+            Return text.ToString()
+        End Function
+
+        Private Function DescribeStatement(stmt As Statement) As String
+            Select Case stmt.Kind
+                Case SyntaxKind.VariableDeclaration : Return DirectCast(stmt, VariableDeclarationStatement).ToString()
+                Case SyntaxKind.Assignment : Return DirectCast(stmt, AssignmentStatement).ToString()
+                Case SyntaxKind.ReturnStmt : Return DirectCast(stmt, ReturnStatement).ToString()
+                Case SyntaxKind.ExpressionStatement : Return DirectCast(stmt, ExpressionStatement).ToString()
+                Case Else : Return stmt.Kind.ToString()
+            End Select
         End Function
     End Module
 End Namespace

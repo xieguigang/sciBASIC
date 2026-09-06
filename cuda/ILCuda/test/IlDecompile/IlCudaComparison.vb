@@ -34,6 +34,8 @@ Namespace IlDecompile
         Public Property ImagePath As String
         Public Property ShowAst As Boolean = True
         Public Property ShowSource As Boolean = True
+        ''' <summary>打印原始 IL 指令流与基本块 / 支配 / 循环结构（定位反编译失败用）</summary>
+        Public Property DumpIl As Boolean = False
         Public Property CpuOnly As Boolean = False
     End Class
 
@@ -66,6 +68,11 @@ Namespace IlDecompile
             For Each method As MethodInfo In TargetMethods()
                 Console.WriteLine()
                 Console.WriteLine($"---- {method.Name} ----")
+
+                If options.DumpIl Then
+                    Console.WriteLine()
+                    Console.WriteLine(MethodDecompiler.DumpStructure(method))
+                End If
 
                 Dim kernel As IlCudaKernel
 

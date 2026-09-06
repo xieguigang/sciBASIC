@@ -257,6 +257,38 @@ Namespace IL
 
             If IlOpcodeInfo.IsSkip(name) Then Return
 
+            ' ---- 控制流 ----
+            ' 必须排在二元运算之前：beq / bne / bgt / bge / blt / ble 既是比较又是跳转，
+            ' 若先走二元运算，条件就会被当成一个普通布尔表达式推进栈，
+            ' 循环头 / if 头就拿不到 Condition，结构化还原必然失败。
+            If ins.IsConditionalBranch Then
+                ReduceConditionalBranch(b, ins, stack)
+                Return
+            End If
+
+            If ins.IsUnconditionalBranch Then
+                ' 纯跳转，不产生语句
+                Return
+            End If
+
+            If ins.IsSwitch Then
+                Throw New DecompileException(
+                    $"IL_{ins.Offset.ToString("X4")}: 暂不支持 switch 结构")
+            End If
+
+            If ins.IsReturn Then
+                Dim result As Expression = Nothing
+
+                If stack.Count > 0 Then result = Pop(stack, ins)
+
+                If stack.Count > 0 Then
+                    _diagnostics.Warn(ins.Offset, $"ret 处求值栈仍有 {stack.Count} 个残留项，已忽略")
+                End If
+
+                b.Statements.Add(New ReturnStatement(result))
+                Return
+            End If
+
             ' ---- 一元运算 ----
             Dim unary As UnaryOperator = Nothing
 
@@ -319,35 +351,6 @@ Namespace IL
             ' ---- 调用 ----
             If code = OpCodes.Call OrElse code = OpCodes.Callvirt Then
                 ReduceCall(b, ins, stack, code)
-                Return
-            End If
-
-            ' ---- 控制流 ----
-            If ins.IsConditionalBranch Then
-                ReduceConditionalBranch(b, ins, stack)
-                Return
-            End If
-
-            If ins.IsUnconditionalBranch Then
-                ' 纯跳转，不产生语句
-                Return
-            End If
-
-            If ins.IsSwitch Then
-                Throw New DecompileException(
-                    $"IL_{ins.Offset.ToString("X4")}: 暂不支持 switch 结构")
-            End If
-
-            If ins.IsReturn Then
-                Dim value As Expression = Nothing
-
-                If stack.Count > 0 Then value = Pop(stack, ins)
-
-                If stack.Count > 0 Then
-                    _diagnostics.Warn(ins.Offset, $"ret 处求值栈仍有 {stack.Count} 个残留项，已忽略")
-                End If
-
-                b.Statements.Add(New ReturnStatement(value))
                 Return
             End If
 

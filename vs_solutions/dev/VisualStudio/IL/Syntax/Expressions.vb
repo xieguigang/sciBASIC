@@ -25,8 +25,8 @@ Namespace IL
 
         Public Overrides Function ToString() As String
             If Value Is Nothing Then Return "null"
-            If TypeOf Value Is Single Then Return CSng(Value).ToString("0.0######", System.Globalization.CultureInfo.InvariantCulture) & "F"
-            If TypeOf Value Is Double Then Return CDbl(Value).ToString("0.0######", System.Globalization.CultureInfo.InvariantCulture)
+            If TypeOf Value Is Single Then Return CSng(Value).ToString("R", System.Globalization.CultureInfo.InvariantCulture) & "F"
+            If TypeOf Value Is Double Then Return CDbl(Value).ToString("R", System.Globalization.CultureInfo.InvariantCulture)
             Return Value.ToString()
         End Function
     End Class
