@@ -177,9 +177,14 @@ Namespace IL
             End While
         End Sub
 
-        Private Shared Function ParseIL(il As BinaryReader, [module] As [Module], mi As MethodInfo) As ILInstruction
+        Private Function ParseIL(il As BinaryReader, [module] As [Module], mi As MethodInfo) As ILInstruction
             Dim instruction As New ILInstruction()
             Dim metadataToken As Integer = 0
+
+            ' 指令起始偏移：必须在读操作码之前记录。
+            ' 原实现用 "读完之后的位置 - 1"，对 0xFE 开头的双字节操作码会算成 start+1。
+            Dim startOffset As Integer = CInt(il.BaseStream.Position)
+
             ' get the operation code of the current instruction
             Dim code As OpCode = OpCodes.Nop
             Dim value As UShort = il.ReadByte
@@ -193,45 +198,42 @@ Namespace IL
             End If
 
             instruction.Code = code
-            instruction.Offset = il.BaseStream.Position - 1
+            instruction.Offset = startOffset
+
+            Dim operandStart As Integer = CInt(il.BaseStream.Position)
 
             ' get the operand of the current operation
             Select Case code.OperandType
                 Case OperandType.InlineBrTarget
                     metadataToken = il.ReadInt32
-                    metadataToken += il.BaseStream.Position
+                    metadataToken += CInt(il.BaseStream.Position)
                     instruction.Operand = metadataToken
+
                 Case OperandType.InlineField
                     metadataToken = il.ReadInt32
-                    instruction.Operand = [module].ResolveField(metadataToken)
+                    instruction.Operand = ResolveOrToken([module], metadataToken, TokenKind.Field)
+
                 Case OperandType.InlineMethod
                     metadataToken = il.ReadInt32
-
-                    Try
-                        instruction.Operand = [module].ResolveMethod(metadataToken)
-                    Catch
-                        instruction.Operand = [module].ResolveMember(metadataToken)
-                    End Try
+                    instruction.Operand = ResolveOrToken([module], metadataToken, TokenKind.Method)
 
                 Case OperandType.InlineSig
                     metadataToken = il.ReadInt32
-                    instruction.Operand = [module].ResolveSignature(metadataToken)
-                Case OperandType.InlineTok
-                    metadataToken = il.ReadInt32
 
                     Try
-                        instruction.Operand = [module].ResolveType(metadataToken)
+                        instruction.Operand = [module].ResolveSignature(metadataToken)
                     Catch
-                        ' SSS : see what to do here
+                        instruction.Operand = metadataToken
                     End Try
+
+                Case OperandType.InlineTok
+                    metadataToken = il.ReadInt32
+                    instruction.Operand = ResolveOrToken([module], metadataToken, TokenKind.Tok)
 
                 Case OperandType.InlineType
                     metadataToken = il.ReadInt32
-                    ' now we call the ResolveType always using the generic attributes type in order
-                    ' to support decompilation of generic methods and classes
+                    instruction.Operand = ResolveOrToken([module], metadataToken, TokenKind.Type, mi)
 
-                    ' thanks to the guys from code project who commented on this missing feature
-                    instruction.Operand = [module].ResolveType(metadataToken, mi.DeclaringType.GetGenericArguments(), mi.GetGenericArguments())
                 Case OperandType.InlineI
                     instruction.Operand = il.ReadInt32
 
@@ -246,7 +248,12 @@ Namespace IL
 
                 Case OperandType.InlineString
                     metadataToken = il.ReadInt32
-                    instruction.Operand = [module].ResolveString(metadataToken)
+
+                    Try
+                        instruction.Operand = [module].ResolveString(metadataToken)
+                    Catch
+                        instruction.Operand = metadataToken
+                    End Try
 
                 Case OperandType.InlineSwitch
                     Dim count = il.ReadInt32
@@ -256,32 +263,95 @@ Namespace IL
                         casesAddresses(i) = il.ReadInt32
                     Next
 
-                    Dim cases = New Integer(count - 1) {}
-                    Dim position_i As Integer = il.BaseStream.Position
+                    Dim baseOffset As Integer = CInt(il.BaseStream.Position)
+                    Dim targets = New Integer(count - 1) {}
 
                     For i = 0 To count - 1
-                        cases(i) = position_i + casesAddresses(i)
+                        targets(i) = baseOffset + casesAddresses(i)
                     Next
+
+                    ' 原实现算出了 targets 却从未写回 instruction，导致 switch 的操作数丢失
+                    instruction.Operand = targets
+
                 Case OperandType.InlineVar
-                    instruction.Operand = il.ReadUInt16
+                    ' 统一成 Integer，避免后面做 ldloc/stloc 下标运算时混用 UInt16 / Byte
+                    instruction.Operand = CInt(il.ReadUInt16)
 
                 Case OperandType.ShortInlineBrTarget
-                    instruction.Operand = il.ReadSByte + il.BaseStream.Position
+                    instruction.Operand = CInt(il.ReadSByte) + CInt(il.BaseStream.Position)
 
                 Case OperandType.ShortInlineI
-                    instruction.Operand = il.ReadSByte
+                    instruction.Operand = CInt(il.ReadSByte)
 
                 Case OperandType.ShortInlineR
                     instruction.Operand = il.ReadSingle
 
                 Case OperandType.ShortInlineVar
-                    instruction.Operand = il.ReadByte
+                    instruction.Operand = CInt(il.ReadByte)
 
                 Case Else
                     Throw New Exception("Unknown operand type.")
             End Select
 
+            instruction.Size = CInt(il.BaseStream.Position) - startOffset
+            instruction.OperandData = Slice(operandStart, CInt(il.BaseStream.Position))
+
             Return instruction
+        End Function
+
+        Private Enum TokenKind
+            Field
+            Method
+            Type
+            Tok
+        End Enum
+
+        ''' <summary>
+        ''' 解析元数据令牌；解析失败时退回令牌本身（而不是让整段 IL 解析崩掉），
+        ''' 上层遇到 Integer 类型的操作数即可判定"该指令不受支持"。
+        ''' </summary>
+        Private Shared Function ResolveOrToken([module] As [Module], token As Integer,
+                                               kind As TokenKind,
+                                               Optional mi As MethodInfo = Nothing) As Object
+            Try
+                Select Case kind
+                    Case TokenKind.Field
+                        Return [module].ResolveField(token)
+                    Case TokenKind.Method
+                        Return [module].ResolveMethod(token)
+                    Case TokenKind.Type
+                        If mi IsNot Nothing Then
+                            Return [module].ResolveType(token,
+                                                        mi.DeclaringType.GetGenericArguments(),
+                                                        mi.GetGenericArguments())
+                        End If
+
+                        Return [module].ResolveType(token)
+                    Case Else
+                        Try
+                            Return [module].ResolveType(token)
+                        Catch
+                            Return [module].ResolveMember(token)
+                        End Try
+                End Select
+            Catch
+                Return token
+            End Try
+        End Function
+
+        ''' <summary>从原始 IL 字节里切出 [startIndex, endIndex) 段</summary>
+        Private Function Slice(startIndex As Integer, endIndex As Integer) As Byte()
+            If ilBytes Is Nothing Then Return New Byte() {}
+            If startIndex < 0 Then startIndex = 0
+            If endIndex > ilBytes.Length Then endIndex = ilBytes.Length
+
+            Dim length = endIndex - startIndex
+            If length <= 0 Then Return New Byte() {}
+
+            Dim buffer(length - 1) As Byte
+            Array.Copy(ilBytes, startIndex, buffer, 0, length)
+
+            Return buffer
         End Function
 
         Public Function GetRefferencedOperand([module] As [Module], metadataToken As Integer) As Object
@@ -322,9 +392,9 @@ Namespace IL
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    ' TODO: 释放托管状态(托管对象)
-                    Call il.Dispose()
-                    Call instructions.Clear()
+                    ' 只释放流，不清空 instructions：
+                    ' 调用方常在 Using 块外继续读取已解析好的指令列表。
+                    If il IsNot Nothing Then Call il.Dispose()
                 End If
 
                 ' TODO: 释放未托管的资源(未托管的对象)并替代终结器
@@ -352,8 +422,8 @@ Namespace IL
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
+        Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Return GetEnumerator()
         End Function
     End Class
 End Namespace

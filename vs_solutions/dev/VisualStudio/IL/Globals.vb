@@ -240,6 +240,50 @@ Namespace IL
             Return result
         End Function
 
+        ''' <summary>
+        ''' 由 <see cref="OpCode.StackBehaviourPop"/> 推导出该指令"固定"弹出的求值栈槽位数。
+        ''' </summary>
+        ''' <returns>
+        ''' 0 / 1 / 2 / 3；<see cref="StackBehaviour.Varpop"/>（call / callvirt / ret 等
+        ''' 弹栈数量取决于签名）返回 -1，由调用方另行处理。
+        ''' </returns>
+        Public Function FixedPopCount(code As OpCode) As Integer
+            Select Case code.StackBehaviourPop
+                Case StackBehaviour.Pop0
+                    Return 0
+                Case StackBehaviour.Pop1, StackBehaviour.Popi, StackBehaviour.Popref
+                    Return 1
+                Case StackBehaviour.Pop1_pop1, StackBehaviour.Popi_pop1, StackBehaviour.Popi_popi,
+                     StackBehaviour.Popi_popi8, StackBehaviour.Popi_popr4, StackBehaviour.Popi_popr8,
+                     StackBehaviour.Popref_pop1, StackBehaviour.Popref_popi
+                    Return 2
+                Case StackBehaviour.Popi_popi_popi, StackBehaviour.Popref_popi_popi,
+                     StackBehaviour.Popref_popi_popi8, StackBehaviour.Popref_popi_popr4,
+                     StackBehaviour.Popref_popi_popr8, StackBehaviour.Popref_popi_popref
+                    Return 3
+                Case Else
+                    Return -1
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 由 <see cref="OpCode.StackBehaviourPush"/> 推导出该指令"固定"压入的求值栈槽位数。
+        ''' </summary>
+        ''' <returns>0 / 1 / 2；<see cref="StackBehaviour.Varpush"/> 返回 -1。</returns>
+        Public Function FixedPushCount(code As OpCode) As Integer
+            Select Case code.StackBehaviourPush
+                Case StackBehaviour.Push0
+                    Return 0
+                Case StackBehaviour.Push1, StackBehaviour.Pushi, StackBehaviour.Pushi8,
+                     StackBehaviour.Pushr4, StackBehaviour.Pushr8, StackBehaviour.Pushref
+                    Return 1
+                Case StackBehaviour.Push1_push1
+                    Return 2
+                Case Else
+                    Return -1
+            End Select
+        End Function
+
         'public static string SpaceGenerator(int count)
         '{
         '    string result = "";
