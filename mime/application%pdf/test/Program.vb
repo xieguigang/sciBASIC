@@ -118,8 +118,8 @@ Public Class Program
     Private Shared Function Run(inputPath As String, outputPath As String) As Boolean
         Dim sw = Diagnostics.Stopwatch.StartNew()
 
-        Using file As Stream = File.OpenRead(inputPath)
-            Dim pages = Global.Microsoft.VisualBasic.MIME.application.pdf.PDF.GetText(file).ToArray()
+        Using pdfStream As Stream = File.OpenRead(inputPath)
+            Dim pages = Global.Microsoft.VisualBasic.MIME.application.pdf.PDF.GetText(pdfStream).ToArray()
             sw.Stop()
 
             Dim totalChars = pages.Sum(Function(s) If(s Is Nothing, 0, s.Length))
