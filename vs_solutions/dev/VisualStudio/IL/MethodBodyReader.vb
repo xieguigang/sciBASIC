@@ -71,19 +71,19 @@ Namespace IL
     Public Class MethodBodyReader : Implements IEnumerable(Of ILInstruction)
         Implements IDisposable
 
-        ReadOnly instructions As New List(Of ILInstruction)
+        ReadOnly _instructions As New List(Of ILInstruction)
         ReadOnly il As Stream
         ReadOnly mi As MethodInfo = Nothing
 
         ''' <summary>方法的原始 IL 字节（用于回填 <see cref="ILInstruction.OperandData"/>）</summary>
         ReadOnly ilBytes As Byte()
         ''' <summary>局部变量表，下标即 ldloc / stloc 的操作数</summary>
-        ReadOnly locals As LocalVariableInfo()
+        ReadOnly _locals As LocalVariableInfo()
         ''' <summary>异常处理子句（切分基本块时不能跨越 try/handler 边界）</summary>
-        ReadOnly exceptionClauses As ExceptionHandlingClause()
+        ReadOnly _exceptionClauses As ExceptionHandlingClause()
         ''' <summary>IL 偏移 -> 指令下标</summary>
         ReadOnly offsetIndex As Dictionary(Of Integer, Integer)
-        ReadOnly maxStackSize As Integer
+        ReadOnly _maxStackSize As Integer
 
         Private disposedValue As Boolean
 
@@ -96,23 +96,23 @@ Namespace IL
         Public Sub New(mi As MethodInfo)
             Me.mi = mi
             Me.offsetIndex = New Dictionary(Of Integer, Integer)()
-            Me.locals = New LocalVariableInfo() {}
-            Me.exceptionClauses = New ExceptionHandlingClause() {}
+            Me._locals = New LocalVariableInfo() {}
+            Me._exceptionClauses = New ExceptionHandlingClause() {}
             Me.ilBytes = New Byte() {}
 
             Dim body = If(mi Is Nothing, Nothing, mi.GetMethodBody())
 
             If body IsNot Nothing Then
                 Me.ilBytes = If(body.GetILAsByteArray(), New Byte() {})
-                Me.maxStackSize = body.MaxStackSize
-                Me.locals = body.LocalVariables.ToArray()
-                Me.exceptionClauses = body.ExceptionHandlingClauses.ToArray()
+                Me._maxStackSize = body.MaxStackSize
+                Me._locals = body.LocalVariables.ToArray()
+                Me._exceptionClauses = body.ExceptionHandlingClauses.ToArray()
                 Me.il = New MemoryStream(Me.ilBytes)
 
                 ConstructInstructions(mi.Module)
 
-                For i As Integer = 0 To instructions.Count - 1
-                    offsetIndex(instructions(i).Offset) = i
+                For i As Integer = 0 To _instructions.Count - 1
+                    offsetIndex(_instructions(i).Offset) = i
                 Next
             End If
         End Sub
@@ -120,28 +120,28 @@ Namespace IL
         ''' <summary>解析得到的指令序列（按 IL 偏移升序）</summary>
         Public ReadOnly Property Instructions As IReadOnlyList(Of ILInstruction)
             Get
-                Return instructions
+                Return _instructions
             End Get
         End Property
 
         ''' <summary>方法的最大求值栈深度</summary>
         Public ReadOnly Property MaxStackSize As Integer
             Get
-                Return maxStackSize
+                Return _maxStackSize
             End Get
         End Property
 
         ''' <summary>局部变量表（下标即 ldloc / stloc 的操作数）</summary>
         Public ReadOnly Property Locals As IReadOnlyList(Of LocalVariableInfo)
             Get
-                Return locals
+                Return _locals
             End Get
         End Property
 
         ''' <summary>异常处理子句</summary>
         Public ReadOnly Property ExceptionClauses As IReadOnlyList(Of ExceptionHandlingClause)
             Get
-                Return exceptionClauses
+                Return _exceptionClauses
             End Get
         End Property
 
@@ -155,13 +155,13 @@ Namespace IL
         ''' <summary>按 IL 偏移取指令；不存在返回 Nothing</summary>
         Public Function InstructionAt(offset As Integer) As ILInstruction
             Dim index = IndexByOffset(offset)
-            Return If(index >= 0, instructions(index), Nothing)
+            Return If(index >= 0, _instructions(index), Nothing)
         End Function
 
         ''' <summary>该方法是否含有 try / catch / finally 等异常结构</summary>
         Public ReadOnly Property HasExceptionHandlers As Boolean
             Get
-                Return exceptionClauses IsNot Nothing AndAlso exceptionClauses.Length > 0
+                Return _exceptionClauses IsNot Nothing AndAlso _exceptionClauses.Length > 0
             End Get
         End Property
 
@@ -173,7 +173,7 @@ Namespace IL
             Dim il As New BinaryReader(Me.il)
 
             While il.BaseStream.Position < il.BaseStream.Length
-                instructions.Add(ParseIL(il, [module], mi))
+                _instructions.Add(ParseIL(il, [module], mi))
             End While
         End Sub
 
@@ -380,9 +380,9 @@ Namespace IL
         Public Function GetBodyCode() As String
             Dim result = ""
 
-            If instructions IsNot Nothing Then
-                For i As Integer = 0 To instructions.Count - 1
-                    result += instructions(i).GetCode() & vbLf
+            If _instructions IsNot Nothing Then
+                For i As Integer = 0 To _instructions.Count - 1
+                    result += _instructions(i).GetCode() & vbLf
                 Next
             End If
 
@@ -392,7 +392,7 @@ Namespace IL
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    ' 只释放流，不清空 instructions：
+                    ' 只释放流，不清空 _instructions：
                     ' 调用方常在 Using 块外继续读取已解析好的指令列表。
                     If il IsNot Nothing Then Call il.Dispose()
                 End If
@@ -417,7 +417,7 @@ Namespace IL
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of ILInstruction) Implements IEnumerable(Of ILInstruction).GetEnumerator
-            For Each il As ILInstruction In instructions
+            For Each il As ILInstruction In _instructions
                 Yield il
             Next
         End Function
