@@ -24,6 +24,7 @@
 
 Imports System.IO
 Imports ILCudaDemo.Diagnostics
+Imports ILCudaDemo.IlDecompile
 Imports ILCudaDemo.Metrics
 Imports Microsoft.VisualBasic.Computing.ILCuda.Kernels
 Imports Microsoft.VisualBasic.Computing.ILCuda.Math
@@ -46,6 +47,10 @@ Module Program
         Public Property Elements As Integer = 1 << 20
         Public Property Preview As Integer = 6
         Public Property ShowHelp As Boolean = False
+        ''' <summary>il 命令是否打印还原出的伪代码</summary>
+        Public Property ShowAst As Boolean = True
+        ''' <summary>il 命令是否打印生成的 CUDA 源码</summary>
+        Public Property ShowSource As Boolean = True
     End Class
 
     Function Main(args As String()) As Integer
@@ -78,6 +83,10 @@ Module Program
                 Return RunSelfTest(options)
             Case "kernels"
                 Return RunListKernels()
+            Case "il"
+                Return RunIlDecompile(options)
+            Case "il-compare"
+                Return RunIlCompare(options)
             Case "demo"
                 Return RunDemo(options)
             Case Else
@@ -199,6 +208,42 @@ Module Program
         Console.WriteLine(If(ok, "自检全部通过。", "自检未通过，请检查内核实现。"))
 
         Return If(ok, 0, 1)
+    End Function
+
+    ''' <summary>
+    ''' il 命令：把 IlDecompile\MetricFunctions.vb 里的方法反编译成 AST，
+    ''' 打印伪代码与生成的 .cu，并用 AST 解释器验证反编译语义（不需要 GPU）。
+    ''' </summary>
+    Private Function RunIlDecompile(options As CliOptions) As Integer
+        Dim testOptions As New IlCudaTestOptions With {
+            .Rows = options.Rows,
+            .Cols = options.Cols,
+            .Seed = options.Seed,
+            .ShowAst = options.ShowAst,
+            .ShowSource = options.ShowSource
+        }
+
+        Return If(IlCudaComparison.RunDecompileReport(testOptions), 0, 1)
+    End Function
+
+    ''' <summary>
+    ''' il-compare 命令：把 IL 生成的 .cu 注入内核注册表后创建引擎，
+    ''' 在 GPU 上同时跑手写 metrics.cu 与 IL 生成内核，逐元素比较最大绝对误差。
+    ''' </summary>
+    Private Function RunIlCompare(options As CliOptions) As Integer
+        Dim testOptions As New IlCudaTestOptions With {
+            .Rows = options.Rows,
+            .Cols = options.Cols,
+            .Seed = options.Seed,
+            .DeviceOrdinal = options.DeviceOrdinal,
+            .NvrtcPath = options.NvrtcPath,
+            .ImagePath = options.ImagePath,
+            .CpuOnly = options.CpuOnly,
+            .ShowAst = False,
+            .ShowSource = False
+        }
+
+        Return If(IlCudaComparison.RunGpuComparison(testOptions), 0, 1)
     End Function
 
     Private Function RunDemo(options As CliOptions) As Integer
@@ -407,6 +452,10 @@ Module Program
                     options.Preview = Integer.Parse(value)
                 Case "cpu-only"
                     options.CpuOnly = True
+                Case "no-ast"
+                    options.ShowAst = False
+                Case "no-source"
+                    options.ShowSource = False
                 Case "force-image"
                     options.ForceImage = True
                 Case "async"
