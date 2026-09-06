@@ -3,7 +3,14 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
-  <Folder Name="/framework/" />
+  <Folder Name="/framework/">
+    <Project Path="../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
   <Folder Name="/demo/">
     <Project Path="ILCuda/test/test.vbproj" Id="2c38bbd3-7e26-4278-8128-1dc6a66b9059">
       <Platform Solution="Debug|x64" Project="x64" />

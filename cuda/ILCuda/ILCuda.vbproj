@@ -34,4 +34,9 @@
     <EmbeddedResource Include="Kernels\blas.cu" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+  </ItemGroup>
+
 </Project>
