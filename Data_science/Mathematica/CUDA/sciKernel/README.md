@@ -1,1 +1,0 @@
-Math function write in rust language for sciBASIC.NET Framework
