@@ -99,10 +99,10 @@ Public Class TextExtractor
         _currentFont = ""
         _lastY = Double.NaN
 
-        ' 加载字体（Resources 可能继承自父节点）
-        Dim resources = TryCast(page.Get("Resources"), PdfDictionary)
+        ' 加载字体（Resources 可能继承自父节点，也可能是间接引用）
+        Dim resources = ResolveAs(Of PdfDictionary)(page.Get("Resources"))
         If resources Is Nothing Then
-            resources = TryCast(GetInheritedResource(page, "Resources"), PdfDictionary)
+            resources = ResolveAs(Of PdfDictionary)(GetInheritedResource(page, "Resources"))
         End If
         If resources IsNot Nothing Then
             LoadFonts(resources)
@@ -166,13 +166,23 @@ Public Class TextExtractor
 
     ' ---------------- 字体加载 ----------------
 
+    ''' <summary>
+    ''' 取字典值并在必要时解引用：若对象是 PdfReference 则先 Resolve，再按目标类型 TryCast。
+    ''' 页面 /Resources、资源 /Font、字体 /Encoding 都可能是间接引用（N 0 R）。
+    ''' </summary>
+    Private Function ResolveAs(Of T As Class)(obj As PdfObject) As T
+        If obj Is Nothing Then Return Nothing
+        If TypeOf obj Is PdfReference Then
+            obj = _reader.Resolve(DirectCast(obj, PdfReference))
+        End If
+        Return TryCast(obj, T)
+    End Function
+
     Private Sub LoadFonts(resources As PdfDictionary)
-        Dim fontDict = TryCast(resources.Get("Font"), PdfDictionary)
+        Dim fontDict = ResolveAs(Of PdfDictionary)(resources.Get("Font"))
         If fontDict Is Nothing Then Return
         For Each name In fontDict.Names
-            Dim fontRef = TryCast(fontDict.Get(name), PdfReference)
-            If fontRef Is Nothing Then Continue For
-            Dim fontObj = TryCast(_reader.Resolve(fontRef), PdfDictionary)
+            Dim fontObj = ResolveAs(Of PdfDictionary)(fontDict.Get(name))
             If fontObj Is Nothing Then Continue For
             Dim info As New FontInfo()
             Dim subtype = TryCast(fontObj.Get("Subtype"), PdfName)
@@ -196,10 +206,15 @@ Public Class TextExtractor
 
             ' Encoding
             Dim encObj = fontObj.Get("Encoding")
+            If TypeOf encObj Is PdfReference Then
+                encObj = _reader.Resolve(DirectCast(encObj, PdfReference))
+            End If
             If TypeOf encObj Is PdfName Then
                 info.Encoding = DirectCast(encObj, PdfName).Value
             ElseIf TypeOf encObj Is PdfDictionary Then
                 info.EncodingDict = DirectCast(encObj, PdfDictionary)
+                Dim baseEnc = ResolveAs(Of PdfName)(info.EncodingDict.Get("BaseEncoding"))
+                If baseEnc IsNot Nothing Then info.Encoding = baseEnc.Value
             End If
 
             _fonts(name) = info

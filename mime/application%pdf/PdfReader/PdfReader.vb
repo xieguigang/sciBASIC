@@ -102,6 +102,7 @@ Public Class PdfReader : Implements IDisposable
     Private _lexer As PdfLexer
     Private ReadOnly _xrefEntries As New Dictionary(Of Integer, XRefEntry)()
     Private _objectStreamsParsed As New HashSet(Of Integer)()
+    Private _rebuildTried As Boolean = False
 
     ' ---------------- 属性 ----------------
 
@@ -448,6 +449,19 @@ Public Class PdfReader : Implements IDisposable
     ' ---------------- 页面树遍历 ----------------
 
     Public Function GetPages() As List(Of PdfDictionary)
+        Dim pages = TryGetPages()
+
+        ' 交叉引用不完整导致拿不到页面时，扫描全文重建对象表后再试一次
+        If pages.Count = 0 AndAlso Not _rebuildTried Then
+            _rebuildTried = True
+            RebuildXRefByScan()
+            pages = TryGetPages()
+        End If
+
+        Return pages
+    End Function
+
+    Private Function TryGetPages() As List(Of PdfDictionary)
         Dim pages As New List(Of PdfDictionary)()
         If _rootRef Is Nothing Then Return pages
         Dim catalog = TryCast(Resolve(_rootRef), PdfDictionary)
@@ -460,6 +474,38 @@ Public Class PdfReader : Implements IDisposable
         Return pages
     End Function
 
+    ''' <summary>
+    ''' 兜底：当 startxref / 交叉引用损坏或缺失时，扫描全文的 "N G obj" 重建对象表，
+    ''' 并通过 /Type /Catalog 定位文档根节点。任何失败都不抛出，退回原有行为。
+    ''' </summary>
+    Private Sub RebuildXRefByScan()
+        Try
+            Dim text = Encoding.ASCII.GetString(_data)
+
+            For Each m As Match In Regex.Matches(text, "(?<num>[0-9]+)\s+(?<gen>[0-9]+)\s+obj")
+                Dim objNum = Integer.Parse(m.Groups("num").Value, Globalization.CultureInfo.InvariantCulture)
+                If _objects.ContainsKey(objNum) Then Continue For
+                ParseIndirectObjectAt(objNum, CLng(m.Index))
+            Next
+
+            If _rootRef IsNot Nothing Then Return
+
+            For Each kvp In _objects.ToArray()
+                Dim dict = TryCast(kvp.Value.Content, PdfDictionary)
+                If dict Is Nothing Then Continue For
+                Dim t = TryCast(dict.Get("Type"), PdfName)
+                If t Is Nothing OrElse t.Value <> "Catalog" Then Continue For
+
+                _rootRef = New PdfReference(kvp.Key, 0)
+                If _trailer Is Nothing Then _trailer = New PdfDictionary()
+                _trailer.Add("Root", _rootRef)
+                Exit For
+            Next
+        Catch
+            ' 兜底失败不改变原有行为
+        End Try
+    End Sub
+
     Private Sub TraversePageTree(node As PdfDictionary, pages As List(Of PdfDictionary))
         If node Is Nothing Then Return
         Dim typeObj = TryCast(node.Get("Type"), PdfName)
@@ -468,13 +514,20 @@ Public Class PdfReader : Implements IDisposable
             Return
         End If
         Dim kids = TryCast(node.Get("Kids"), PdfArray)
-        If kids Is Nothing Then Return
+        If kids Is Nothing Then
+            ' 部分生成器会省略 /Type /Page：没有子节点但有内容流即视为页面
+            If node.Get("Contents") IsNot Nothing Then pages.Add(node)
+            Return
+        End If
         For Each kid In kids.Items
-            Dim kidRef = TryCast(kid, PdfReference)
-            If kidRef IsNot Nothing Then
-                Dim kidDict = TryCast(Resolve(kidRef), PdfDictionary)
-                TraversePageTree(kidDict, pages)
+            Dim kidDict = TryCast(kid, PdfDictionary)
+            If kidDict Is Nothing Then
+                Dim kidRef = TryCast(kid, PdfReference)
+                If kidRef IsNot Nothing Then
+                    kidDict = TryCast(Resolve(kidRef), PdfDictionary)
+                End If
             End If
+            TraversePageTree(kidDict, pages)
         Next
     End Sub
 

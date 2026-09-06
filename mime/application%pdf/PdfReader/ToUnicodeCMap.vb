@@ -246,9 +246,9 @@ Public Class ToUnicodeCMap
         If bytes.Length Mod 2 = 0 Then
             Return Encoding.BigEndianUnicode.GetString(bytes)
         End If
-        ' 奇数字节补零
+        ' 奇数字节左补零：<20> 应解释为 U+0020 而不是 U+2000
         Dim padded(bytes.Length) As Byte
-        Array.Copy(bytes, padded, bytes.Length)
+        Array.Copy(bytes, 0, padded, 1, bytes.Length)
         Return Encoding.BigEndianUnicode.GetString(padded)
     End Function
 
