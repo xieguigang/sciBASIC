@@ -130,7 +130,8 @@ Namespace IL2Cuda
                 If Single.IsPositiveInfinity(s) Then Return "INFINITY"
                 If Single.IsNegativeInfinity(s) Then Return "-INFINITY"
 
-                Return s.ToString("0.0########", CultureInfo.InvariantCulture) & "f"
+                ' 用 "R"（最短可往返）而不是定点格式，否则 1e-12f 会被格式化成 "0.0f"
+                Return s.ToString("R", CultureInfo.InvariantCulture) & "f"
             End If
 
             If TypeOf value Is Double Then
@@ -140,7 +141,7 @@ Namespace IL2Cuda
                 If Double.IsPositiveInfinity(d) Then Return "INFINITY"
                 If Double.IsNegativeInfinity(d) Then Return "-INFINITY"
 
-                Return d.ToString("0.0#############", CultureInfo.InvariantCulture)
+                Return d.ToString("R", CultureInfo.InvariantCulture)
             End If
 
             If TypeOf value Is Boolean Then Return If(CBool(value), "1", "0")
