@@ -147,12 +147,12 @@ Namespace IL
         Public Property IsPostCondition As Boolean
 
         Public Sub New()
-            MyBase.New(SyntaxKind.While)
+            MyBase.New(SyntaxKind.WhileStmt)
             Me.Body = New BlockStatement()
         End Sub
 
         Public Sub New(condition As Expression, body As BlockStatement, Optional isPostCondition As Boolean = False)
-            MyBase.New(SyntaxKind.While)
+            MyBase.New(SyntaxKind.WhileStmt)
             Me.Condition = condition
             Me.Body = If(body, New BlockStatement())
             Me.IsPostCondition = isPostCondition
@@ -171,14 +171,14 @@ Namespace IL
         Public Property Body As BlockStatement
 
         Public Sub New()
-            MyBase.New(SyntaxKind.For)
+            MyBase.New(SyntaxKind.ForStmt)
             Me.Body = New BlockStatement()
         End Sub
     End Class
 
     Public Class BreakStatement : Inherits Statement
         Public Sub New()
-            MyBase.New(SyntaxKind.Break)
+            MyBase.New(SyntaxKind.BreakStmt)
         End Sub
 
         Public Overrides Function ToString() As String
