@@ -188,7 +188,7 @@ Namespace IL
 
     Public Class ContinueStatement : Inherits Statement
         Public Sub New()
-            MyBase.New(SyntaxKind.Continue)
+            MyBase.New(SyntaxKind.ContinueStmt)
         End Sub
 
         Public Overrides Function ToString() As String
