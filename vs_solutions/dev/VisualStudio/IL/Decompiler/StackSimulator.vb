@@ -192,6 +192,7 @@ Namespace IL
 
         Private Sub Reduce(b As BasicBlock, ins As ILInstruction, stack As List(Of Expression))
             Dim code = ins.Code
+            Dim name = code.Name
 
             ' ---- 常量 ----
             Dim constValue As Object = Nothing
@@ -351,7 +352,7 @@ Namespace IL
             End If
 
             Throw New DecompileException(
-                $"IL_{ins.Offset.ToString("X4")}: 不支持的指令 {code.Name}")
+                $"IL_{ins.Offset.ToString("X4")}: 不支持的指令 {name}")
         End Sub
 
         Private Sub ReduceCall(b As BasicBlock, ins As ILInstruction,
