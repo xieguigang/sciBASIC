@@ -90,6 +90,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.FileIO
 
 Public Class PdfReader : Implements IDisposable
@@ -160,9 +161,56 @@ Public Class PdfReader : Implements IDisposable
         If tok.Type <> PdfTokenType.Number Then Throw New Exception("startxref 后缺少偏移量")
         Dim xrefOffset = CLng(tok.NumberValue)
 
-        _lexer.Position = CInt(xrefOffset)
+        ' 线性化 / 增量更新的 PDF 会把交叉引用拆成多段，靠 trailer 的 /Prev 串联，
+        ' 必须整条链都解析完才能得到完整的对象表。
+        ParseXRefChain(xrefOffset)
+
+        ' 获取 /Root（_trailer 固定为最新的一段 trailer）
+        If _trailer IsNot Nothing Then
+            Dim rootObj = _trailer.Get("Root")
+            If TypeOf rootObj Is PdfReference Then
+                _rootRef = DirectCast(rootObj, PdfReference)
+            End If
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 从最新的一段 xref 出发，沿 trailer 的 /Prev 逐段回溯解析，直到没有 /Prev、
+    ''' 偏移非法或出现环为止。任意一段解析失败即终止链（不抛出，交由兜底路径处理）。
+    ''' </summary>
+    Private Sub ParseXRefChain(firstOffset As Long)
+        Dim visited As New HashSet(Of Long)()
+        Dim offset = firstOffset
+
+        Do While offset > 0 AndAlso offset < _data.Length AndAlso visited.Add(offset)
+            Dim trailer As PdfDictionary
+
+            Try
+                trailer = ParseXRefSectionAt(offset)
+            Catch
+                Exit Do
+            End Try
+
+            If trailer Is Nothing Then Exit Do
+
+            ' 只保留最新一段 trailer：部分文件（如线性化 PDF）的末段 trailer 不含 /Root
+            If _trailer Is Nothing Then _trailer = trailer
+
+            Dim prev = trailer.Get("Prev")
+            If TypeOf prev IsNot PdfNumber Then Exit Do
+            offset = CLng(DirectCast(prev, PdfNumber).Value)
+        Loop
+    End Sub
+
+    ''' <summary>
+    ''' 解析 offset 处的单段交叉引用（传统 xref 表或 xref 流），返回该段的 trailer 字典。
+    ''' </summary>
+    Private Function ParseXRefSectionAt(offset As Long) As PdfDictionary
+        If offset <= 0 OrElse offset >= _data.Length Then Return Nothing
+
+        _lexer.Position = CInt(offset)
         Dim peekPos = _lexer.Position
-        tok = _lexer.NextToken()
+        Dim tok = _lexer.NextToken()
 
         If tok.Type = PdfTokenType.XRef Then
             ' 传统 xref 表（回退到 xref 关键字位置，由 ParseXRefTable 统一消费）
@@ -170,20 +218,20 @@ Public Class PdfReader : Implements IDisposable
             ParseXRefTable()
             ' ParseXRefTable 已消费 'trailer' 关键字，此处直接解析字典
             Dim parser As New PdfObjectParser(_lexer)
-            _trailer = DirectCast(parser.ParseObject(), PdfDictionary)
+            Return TryCast(parser.ParseObject(), PdfDictionary)
         Else
             ' xref 流（PDF 1.5+）
             _lexer.Position = peekPos
-            ParseXRefStream()
+            Return ParseXRefStream()
         End If
+    End Function
 
-        ' 获取 /Root
-        If _trailer IsNot Nothing Then
-            Dim rootObj = _trailer.Get("Root")
-            If TypeOf rootObj Is PdfReference Then
-                _rootRef = DirectCast(rootObj, PdfReference)
-            End If
-        End If
+    ''' <summary>
+    ''' 合并交叉引用条目：新段优先，已存在的条目不会被更旧的段覆盖。
+    ''' </summary>
+    Private Sub MergeXRefEntry(objNum As Integer, entry As XRefEntry)
+        If _xrefEntries.ContainsKey(objNum) Then Return
+        _xrefEntries(objNum) = entry
     End Sub
 
     Private Function FindLastOccurrence(pattern As Byte()) As Integer
@@ -227,12 +275,12 @@ Public Class PdfReader : Implements IDisposable
                 Dim entry As New XRefEntry()
                 entry.Type = If(inUse, XRefEntry.EntryType.InUse, XRefEntry.EntryType.Free)
                 entry.Offset = offset
-                _xrefEntries(firstObj + i) = entry
+                MergeXRefEntry(firstObj + i, entry)
             Next
         Loop
     End Sub
 
-    Private Sub ParseXRefStream()
+    Private Function ParseXRefStream() As PdfDictionary
         ' 解析为间接对象
         Dim tok = _lexer.NextToken() ' 对象号
         Dim objNum = CInt(tok.NumberValue)
@@ -241,14 +289,13 @@ Public Class PdfReader : Implements IDisposable
         Dim parser As New PdfObjectParser(_lexer)
         Dim streamObj = parser.ParseObject()
         Dim xrefStream = TryCast(streamObj, PdfStream)
-        If xrefStream Is Nothing Then Return
-        _trailer = xrefStream.Dictionary
+        If xrefStream Is Nothing Then Return Nothing
 
         Dim data = DecodeStream(xrefStream)
 
         ' W 数组：[w1 w2 w3] 各字段字节数
         Dim w = TryCast(xrefStream.Dictionary.Get("W"), PdfArray)
-        If w Is Nothing OrElse w.Count < 3 Then Return
+        If w Is Nothing OrElse w.Count < 3 Then Return xrefStream.Dictionary
         Dim w1 = CInt(DirectCast(w(0), PdfNumber).Value)
         Dim w2 = CInt(DirectCast(w(1), PdfNumber).Value)
         Dim w3 = CInt(DirectCast(w(2), PdfNumber).Value)
@@ -272,7 +319,7 @@ Public Class PdfReader : Implements IDisposable
         End If
 
         Dim entrySize = w1 + w2 + w3
-        If entrySize = 0 Then Return
+        If entrySize = 0 Then Return xrefStream.Dictionary
         Dim pos = 0
         For Each sec In sections
             For i = 0 To sec.Item2 - 1
@@ -294,10 +341,12 @@ Public Class PdfReader : Implements IDisposable
                         entry.ObjectStreamNum = CInt(field2)
                         entry.IndexInStream = CInt(field3)
                 End Select
-                _xrefEntries(sec.Item1 + i) = entry
+                MergeXRefEntry(sec.Item1 + i, entry)
             Next
         Next
-    End Sub
+
+        Return xrefStream.Dictionary
+    End Function
 
     Private Function ReadW(data As Byte(), offset As Integer, width As Integer) As Long
         If width = 0 Then Return 0
