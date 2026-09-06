@@ -8,7 +8,7 @@
 ' 用 LaunchPlanner 推导分块形状，然后按顺序启动内核。
 ' ------------------------------------------------------------------------
 
-Imports Enigma.ILCuda.Runtime
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Namespace Metrics
 

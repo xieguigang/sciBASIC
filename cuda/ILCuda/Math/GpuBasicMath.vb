@@ -5,7 +5,7 @@
 ' 同时被 test 工程当作"GPU 是否真的能算对"的快速自检。
 ' ------------------------------------------------------------------------
 
-Imports Enigma.ILCuda.Runtime
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Namespace Math
 

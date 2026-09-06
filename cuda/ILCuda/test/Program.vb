@@ -23,12 +23,11 @@
 ' ------------------------------------------------------------------------
 
 Imports System.IO
-Imports Enigma.ILCuda
-Imports Enigma.ILCuda.Kernels
-Imports Enigma.ILCuda.Math
-Imports Enigma.ILCuda.Runtime
 Imports ILCudaDemo.Diagnostics
 Imports ILCudaDemo.Metrics
+Imports Microsoft.VisualBasic.Computing.ILCuda.Kernels
+Imports Microsoft.VisualBasic.Computing.ILCuda.Math
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Module Program
 
@@ -174,7 +173,7 @@ Module Program
     Private Function RunListKernels() As Integer
         ConsoleReporter.PrintTitle("内核注册表（框架内置 + demo 注册）")
 
-        For Each info In KernelCatalog.All()
+        For Each info As KernelInfo In KernelCatalog.All()
             Console.WriteLine($"  {info}")
         Next
 

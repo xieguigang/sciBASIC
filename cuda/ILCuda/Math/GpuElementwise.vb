@@ -6,7 +6,7 @@
 '   * 主机版：<c>Add(engine, a(), b())</c>            —— 内部完成上传/回读，用起来最省事
 ' ------------------------------------------------------------------------
 
-Imports Enigma.ILCuda.Runtime
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Namespace Math
 

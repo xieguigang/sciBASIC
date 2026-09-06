@@ -170,7 +170,7 @@ Namespace Kernels
 
             Directory.CreateDirectory(folder)
 
-            For Each source In All()
+            For Each source As KernelSourceFile In All()
                 Dim fileName = source.FileName
 
                 ' 不同来源可能出现同名文件，冲突时加上来源前缀

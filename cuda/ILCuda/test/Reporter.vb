@@ -5,8 +5,8 @@
 ' EnvironmentReport、FixSuggestion；怎么排版、往哪儿输出，由这里决定。
 ' ------------------------------------------------------------------------
 
-Imports Enigma.ILCuda.Runtime
 Imports ILCudaDemo.Metrics
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Namespace Diagnostics
 
@@ -64,8 +64,8 @@ Namespace Diagnostics
             Console.WriteLine()
             Console.WriteLine($"  参与编译的内核源码（内置 + 已注册，共 {report.KernelSources.Count} 个）：")
 
-            For Each source In report.KernelSources
-                Console.WriteLine($"    {source}")
+            For Each Source As String In report.KernelSources
+                Console.WriteLine($"    {Source}")
             Next
         End Sub
 

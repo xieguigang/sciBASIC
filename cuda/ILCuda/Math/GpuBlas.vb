@@ -7,7 +7,7 @@
 ' 内核用 16x16 分块 + 共享内存，越界位置补 0，因此任意尺寸都能直接算。
 ' ------------------------------------------------------------------------
 
-Imports Enigma.ILCuda.Runtime
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Namespace Math
 

@@ -1,4 +1,4 @@
-Imports Enigma.ILCuda.Kernels
+Imports Microsoft.VisualBasic.Computing.ILCuda.Kernels
 
 Namespace Runtime
 

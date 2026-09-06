@@ -6,7 +6,7 @@
 '   阶段二：1 个 block 把部分结果汇总。
 ' ------------------------------------------------------------------------
 
-Imports Enigma.ILCuda.Runtime
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Namespace Math
 

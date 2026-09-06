@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Enigma.ILCuda</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Computing.ILCuda</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
     <Nullable>disable</Nullable>
-    <AssemblyName>Enigma.ILCuda</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Computing.ILCuda</AssemblyName>
     <InvariantGlobalization>true</InvariantGlobalization>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
