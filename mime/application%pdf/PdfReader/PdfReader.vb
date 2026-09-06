@@ -389,7 +389,11 @@ Public Class PdfReader : Implements IDisposable
             End If
         Next
         For Each n In objStmNums
-            ParseObjectStream(n)
+            Try
+                ParseObjectStream(n)
+            Catch
+                ' 单个对象流损坏不影响其余对象
+            End Try
         Next
     End Sub
 

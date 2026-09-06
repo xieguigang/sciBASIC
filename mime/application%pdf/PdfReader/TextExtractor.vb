@@ -113,7 +113,7 @@ Public Class TextExtractor
         Dim contentData As Byte() = Nothing
         If TypeOf contents Is PdfReference Then
             Dim stream = TryCast(_reader.Resolve(DirectCast(contents, PdfReference)), PdfStream)
-            If stream IsNot Nothing Then contentData = _reader.DecodeStream(stream)
+            If stream IsNot Nothing Then contentData = TryDecodeStream(stream)
         ElseIf TypeOf contents Is PdfArray Then
             Using ms As New MemoryStream()
                 For Each item In DirectCast(contents, PdfArray).Items
@@ -121,7 +121,7 @@ Public Class TextExtractor
                     If ref IsNot Nothing Then
                         Dim stream = TryCast(_reader.Resolve(ref), PdfStream)
                         If stream IsNot Nothing Then
-                            Dim d = _reader.DecodeStream(stream)
+                            Dim d = TryDecodeStream(stream)
                             If d IsNot Nothing AndAlso d.Length > 0 Then
                                 ms.Write(d, 0, d.Length)
                                 ' 流之间补一个空白分隔符，避免操作符粘连
@@ -167,6 +167,17 @@ Public Class TextExtractor
     ' ---------------- 字体加载 ----------------
 
     ''' <summary>
+    ''' 解码内容流；单个流损坏（滤镜不支持、数据截断等）时返回空，避免一页坏数据中断整篇提取。
+    ''' </summary>
+    Private Function TryDecodeStream(stream As PdfStream) As Byte()
+        Try
+            Return _reader.DecodeStream(stream)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
     ''' 取字典值并在必要时解引用：若对象是 PdfReference 则先 Resolve，再按目标类型 TryCast。
     ''' 页面 /Resources、资源 /Font、字体 /Encoding 都可能是间接引用（N 0 R）。
     ''' </summary>
@@ -194,11 +205,10 @@ Public Class TextExtractor
             If info.Subtype = "Type0" Then info.IsTwoByte = True
 
             ' ToUnicode CMap
-            Dim tuRef = TryCast(fontObj.Get("ToUnicode"), PdfReference)
-            If tuRef IsNot Nothing Then
-                Dim tuStream = TryCast(_reader.Resolve(tuRef), PdfStream)
-                If tuStream IsNot Nothing Then
-                    Dim tuData = _reader.DecodeStream(tuStream)
+            Dim tuStream = ResolveAs(Of PdfStream)(fontObj.Get("ToUnicode"))
+            If tuStream IsNot Nothing Then
+                Dim tuData = TryDecodeStream(tuStream)
+                If tuData IsNot Nothing AndAlso tuData.Length > 0 Then
                     info.ToUnicode = New ToUnicodeCMap()
                     info.ToUnicode.Parse(tuData)
                 End If
