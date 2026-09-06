@@ -62,48 +62,118 @@
 ' ============================================================================
 
 Imports System.IO
+Imports System.Linq
+Imports System.Diagnostics
 
 Public Class Program
+    ''' <summary>不传参数时默认回归的测试样本。</summary>
+    Private Shared ReadOnly DefaultSamples As String() = {
+        "Z:\pdf_test\FSN3-8-1904.pdf",
+        "Z:\pdf_test\P020210610394569640881.pdf"
+    }
+
     Public Shared Function Main(args As String()) As Integer
         Console.OutputEncoding = System.Text.Encoding.UTF8
         ' 注册 Windows 等代码页编码（.NET Core/5+ 默认不含）
         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance)
 
+        Dim inputs As New List(Of String)()
+
         If args.Length = 0 Then
+            inputs.AddRange(DefaultSamples)
+        ElseIf args.Length = 1 AndAlso (args(0) = "-h" OrElse args(0) = "--help") Then
             PrintUsage()
-            Return 1
-        End If
-
-        Dim inputPath = args(0)
-        Dim outputPath = If(args.Length > 1, args(1), Path.ChangeExtension(inputPath, ".txt"))
-
-        If Not File.Exists(inputPath) Then
-            Console.Error.WriteLine($"错误：找不到输入文件 {inputPath}")
-            Return 2
-        End If
-
-        Try
-
             Return 0
-        Catch ex As Exception
-            Console.Error.WriteLine($"解析失败: {ex.Message}")
-            Console.Error.WriteLine(ex.StackTrace)
-            Return 3
-        End Try
+        Else
+            inputs.AddRange(args)
+        End If
+
+        Dim exitCode = 0
+
+        For Each inputPath In inputs
+            Dim outputPath = Path.ChangeExtension(inputPath, ".txt")
+
+            If Not File.Exists(inputPath) Then
+                Console.Error.WriteLine($"错误：找不到输入文件 {inputPath}")
+                exitCode = 2
+                Continue For
+            End If
+
+            Try
+                If Not Run(inputPath, outputPath) Then
+                    exitCode = 3
+                End If
+            Catch ex As Exception
+                Console.Error.WriteLine($"解析失败: {inputPath}")
+                Console.Error.WriteLine($"  {ex.Message}")
+                Console.Error.WriteLine(ex.StackTrace)
+                exitCode = 3
+            End Try
+        Next
+
+        Return exitCode
+    End Function
+
+    ''' <summary>提取单个 PDF 并写出文本；提取结果有效时返回 True。</summary>
+    Private Shared Function Run(inputPath As String, outputPath As String) As Boolean
+        Dim sw = Diagnostics.Stopwatch.StartNew()
+
+        Using file As Stream = File.OpenRead(inputPath)
+            Dim pages = Global.Microsoft.VisualBasic.MIME.application.pdf.PDF.GetText(file).ToArray()
+            sw.Stop()
+
+            Dim totalChars = pages.Sum(Function(s) If(s Is Nothing, 0, s.Length))
+            Dim nonEmptyPages = pages.Count(Function(s) s IsNot Nothing AndAlso s.Trim().Length > 0)
+
+            Console.WriteLine("================================================================")
+            Console.WriteLine($"文件: {inputPath}")
+            Console.WriteLine($"大小: {New FileInfo(inputPath).Length:N0} 字节    耗时: {sw.ElapsedMilliseconds} ms")
+            Console.WriteLine($"页数: {pages.Length}    非空页: {nonEmptyPages}    总字符数: {totalChars}")
+
+            For i = 0 To pages.Length - 1
+                Dim text = If(pages(i), "")
+                Console.WriteLine($"  [第 {i + 1} 页] {text.Length} 字符")
+            Next
+
+            If totalChars > 0 Then
+                Dim preview = String.Join(Environment.NewLine, pages)
+                preview = preview.Trim().Replace(Environment.NewLine, " ")
+                If preview.Length > 200 Then preview = preview.Substring(0, 200)
+                Console.WriteLine($"预览: {preview}")
+            End If
+
+            File.WriteAllLines(outputPath, pages, System.Text.Encoding.UTF8)
+            Console.WriteLine($"输出: {outputPath}")
+
+            If pages.Length = 0 Then
+                Console.Error.WriteLine("失败：未解析出任何页面")
+                Return False
+            End If
+            If totalChars = 0 Then
+                Console.Error.WriteLine("失败：提取到的文本长度为 0")
+                Return False
+            End If
+
+            Return True
+        End Using
     End Function
 
     Private Shared Sub PrintUsage()
         Console.WriteLine("VBNetPdfParser - 从头实现的 PDF 文本解析器")
         Console.WriteLine()
         Console.WriteLine("用法:")
-        Console.WriteLine("  VBNetPdfParser <input.pdf> [output.txt]")
+        Console.WriteLine("  VBNetPdfParser [<input.pdf> ...]")
         Console.WriteLine()
         Console.WriteLine("参数:")
-        Console.WriteLine("  input.pdf    要解析的 PDF 文件路径")
-        Console.WriteLine("  output.txt   输出文本文件路径（可选，默认与输入同名 .txt）")
+        Console.WriteLine("  input.pdf    要解析的 PDF 文件路径，可传入多个")
+        Console.WriteLine("               输出文本固定写到与输入同名的 .txt 文件")
+        Console.WriteLine("               不传参数时，默认回归以下测试样本：")
+        For Each s In DefaultSamples
+            Console.WriteLine($"                 {s}")
+        Next
         Console.WriteLine()
         Console.WriteLine("示例:")
+        Console.WriteLine("  VBNetPdfParser")
         Console.WriteLine("  VBNetPdfParser paper.pdf")
-        Console.WriteLine("  VBNetPdfParser paper.pdf paper_text.txt")
     End Sub
 End Class
