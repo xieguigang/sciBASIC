@@ -208,20 +208,20 @@ Namespace IL
 
             If IlOpcodeInfo.IsLoadLocal(ins, index) Then
                 Dim key = SsaBuilder.LocalKey(index)
-                Dim name = NameOfUse(ins)
+                Dim localName = NameOfUse(ins)
                 Dim localType = _ssa.TypeOfSlot(key)
 
-                stack.Add(New LocalExpression(index, name, localType))
+                stack.Add(New LocalExpression(index, localName, localType))
                 Return
             End If
 
             If IlOpcodeInfo.IsStoreLocal(ins, index) Then
                 Dim value = Pop(stack, ins)
                 Dim key = SsaBuilder.LocalKey(index)
-                Dim name = NameOfDef(ins)
+                Dim localName = NameOfDef(ins)
 
                 ' SSA 保证每个名字只被定义一次，因此"声明 + 初值"永远不会重复声明
-                b.Statements.Add(New VariableDeclarationStatement(name, _ssa.TypeOfSlot(key), value, index))
+                b.Statements.Add(New VariableDeclarationStatement(localName, _ssa.TypeOfSlot(key), value, index))
                 Return
             End If
 
@@ -432,14 +432,14 @@ Namespace IL
         ' ==================================================================
 
         Private Function NameOfUse(ins As ILInstruction) As String
-            Dim name As String = Nothing
-            If _ssa.UseNames.TryGetValue(ins.Offset, name) Then Return name
+            Dim found As String = Nothing
+            If _ssa.UseNames.TryGetValue(ins.Offset, found) Then Return found
             Return "undef_" & ins.Offset.ToString("X4")
         End Function
 
         Private Function NameOfDef(ins As ILInstruction) As String
-            Dim name As String = Nothing
-            If _ssa.DefNames.TryGetValue(ins.Offset, name) Then Return name
+            Dim found As String = Nothing
+            If _ssa.DefNames.TryGetValue(ins.Offset, found) Then Return found
             Return "undef_" & ins.Offset.ToString("X4")
         End Function
 

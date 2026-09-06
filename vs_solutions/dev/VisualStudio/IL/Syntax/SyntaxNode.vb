@@ -21,7 +21,7 @@ Namespace IL
         Binary
         Unary
         Convert
-        ''' <summary>方法调用</summary>
+        ' 方法调用（C# 里的 Call 是关键字，这里改名 Invoke）
         Invoke
         ArrayIndex
         ArrayLength
@@ -59,10 +59,10 @@ Namespace IL
         LessThanOrEqual
         GreaterThan
         GreaterThanOrEqual
-        ''' <summary>短路与（由 brfalse 菱形折叠而来）</summary>
-        AndAlso
-        ''' <summary>短路或（由 brtrue 菱形折叠而来）</summary>
-        OrElse
+        ' 短路与（由 brfalse 菱形折叠而来；AndAlso 是 VB 保留字，故改名）
+        ShortCircuitAnd
+        ' 短路或（由 brtrue 菱形折叠而来；OrElse 是 VB 保留字，故改名）
+        ShortCircuitOr
     End Enum
 
     ''' <summary>一元运算符</summary>
@@ -119,9 +119,9 @@ Namespace IL
 
         Public Function OfBinary(op As BinaryOperator) As Integer
             Select Case op
-                Case BinaryOperator.OrElse
+                Case BinaryOperator.ShortCircuitOr
                     Return 1
-                Case BinaryOperator.AndAlso
+                Case BinaryOperator.ShortCircuitAnd
                     Return 2
                 Case BinaryOperator.BitwiseOr
                     Return 3

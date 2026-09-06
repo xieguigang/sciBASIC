@@ -37,8 +37,8 @@ Namespace IL
             Public Property Args As New Dictionary(Of Integer, String)
 
             Public Overrides Function ToString() As String
-                Dim args = String.Join(", ", Args.Select(Function(kv) $"bb{kv.Key}:{kv.Value}"))
-                Return $"{Name} = phi({args})"
+                Dim text = String.Join(", ", Args.Select(Function(kv) $"bb{kv.Key}:{kv.Value}"))
+                Return $"{Name} = phi({text})"
             End Function
         End Class
 
