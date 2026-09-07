@@ -755,10 +755,16 @@ Namespace LinearAlgebra.LinearProgramming
                 ' the tie is broken with the pivot magnitude at first (for the
                 ' numerical stability) and then with the row sparsity (for 
                 ' reducing the fill-in of the sparse tableau).
+                ' the Harris ratio test: the leaving row is selected from the
+                ' rows of which the ratio is inside of a small tolerance of the
+                ' minimal ratio, and the largest pivot element is preferred for
+                ' keeping the numerical stability of the tableau. the step size
+                ' is still the minimal ratio, so that no basic variable steps
+                ' out of its bound by this tolerance.
                 ' only the exact ratio tie is accepted: a loose tolerance here
-                ' makes the selected row step out of the minimal ratio, and
-                ' the extra step will be dropped by the simplex, which breaks
-                ' the primal feasibility of the result solution.
+                ' makes the selected row step out of the minimal ratio, and the
+                ' extra step will be dropped by the simplex, which breaks the
+                ' primal feasibility of the result solution.
                 Dim tieEps As Double = 0.0
                 Dim tieMax As Double = 0.0
 
@@ -772,42 +778,43 @@ Namespace LinearAlgebra.LinearProgramming
                     End If
                 Next
 
-                Dim minAbsA As Double = 0.1 * tieMax
+                ' the pivot element should be large enough for keeping the
+                ' numerical stability: a tiny pivot element amplifies the
+                ' round-off error of the tableau on every iteration.
+                Dim minAbsA As Double = 0.3 * tieMax
                 Dim leaveRow As Integer = -1
                 Dim leaveUpper As Boolean = False
                 Dim leaveNnz As Integer = Integer.MaxValue
+                Dim bestAbsA As Double = 0.0
+                Dim fallbackRow As Integer = -1
+                Dim fallbackUpper As Boolean = False
 
                 For r As Integer = 0 To m - 1
                     If ratioBuf(r) < 0.0 OrElse ratioBuf(r) > t + tieEps Then
                         Continue For
                     End If
-                    If std.Abs(alpha(r)) < minAbsA Then
-                        Continue For
-                    End If
-                    If tableau(r).Count < leaveNnz Then
-                        leaveNnz = tableau(r).Count
-                        leaveRow = r
-                        leaveUpper = (kindBuf(r) = 2)
-                    End If
-                Next
 
-                If leaveRow < 0 AndAlso tieMax > 0.0 Then
-                    ' fall back to the largest pivot element in the tie set
-                    Dim bestAbsA As Double = 0.0
+                    Dim absA As Double = std.Abs(alpha(r))
+                    Dim nnz As Integer = tableau(r).Count
 
-                    For r As Integer = 0 To m - 1
-                        If ratioBuf(r) < 0.0 OrElse ratioBuf(r) > t + tieEps Then
-                            Continue For
-                        End If
-
-                        Dim absA As Double = std.Abs(alpha(r))
-
-                        If absA > bestAbsA Then
-                            bestAbsA = absA
+                    If absA >= minAbsA Then
+                        If nnz < leaveNnz Then
+                            leaveNnz = nnz
                             leaveRow = r
                             leaveUpper = (kindBuf(r) = 2)
                         End If
-                    Next
+                    ElseIf absA > bestAbsA Then
+                        ' the fallback candidate: the largest pivot element
+                        ' of the rows in the tie set
+                        bestAbsA = absA
+                        fallbackRow = r
+                        fallbackUpper = (kindBuf(r) = 2)
+                    End If
+                Next
+
+                If leaveRow < 0 Then
+                    leaveRow = fallbackRow
+                    leaveUpper = fallbackUpper
                 End If
 
                 If leaveRow >= 0 Then
@@ -926,7 +933,12 @@ Namespace LinearAlgebra.LinearProgramming
                 Else
                     degenerate += 1
 
-                    If degenerate > std.Max(256, m \ 4) Then
+                    ' a degenerated pivot still makes a progress: it drives
+                    ' the artificial variable out of the basis, so that the
+                    ' Bland rule should only be applied when there is a very
+                    ' long degeneracy streak, otherwise it will slow down the
+                    ' convergence of the simplex iteration.
+                    If degenerate > std.Max(4096, m) Then
                         useBland = True
                     End If
                 End If
