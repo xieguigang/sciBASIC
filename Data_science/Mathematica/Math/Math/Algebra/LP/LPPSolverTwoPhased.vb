@@ -1,512 +1,1040 @@
-﻿#Region "Microsoft.VisualBasic::eab4956987e1b8a632183df2eb61ae8b, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolverTwoPhased.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 452
-    '    Code Lines: 291 (64.38%)
-    ' Comment Lines: 92 (20.35%)
-    '    - Xml Docs: 54.35%
-    ' 
-    '   Blank Lines: 69 (15.27%)
-    '     File Size: 18.93 KB
-
-
-    '     Class LPPSolverTwoPhased
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ChooseEnteringVariable, ChooseLeavingConstraint, ExtractSolution, GetArtificialVariablesList, GetCurrentBasicVariables
-    '                   InitializePhase1BasicVariables, IsArtificialVariable, IsPotentialBasicVariable, IsUnitVector, Phase1
-    '                   Phase2, RunSimplexIteration, Solve
-    ' 
-    '         Sub: Pivot, RemoveArtificialVariables, RestoreOriginalObjective
-    ' 
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
+﻿Imports System.Collections.Concurrent
 Imports System.Text
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
+' the root namespace of this project has its own Parallel type, so that the
+' TPL Parallel type should be referenced via an alias to avoid the conflict.
+Imports ParallelTask = System.Threading.Tasks.Parallel
 
 Namespace LinearAlgebra.LinearProgramming
 
     ''' <summary>
-    ''' 使用两阶段法改进的单纯形法求解器
+    ''' A two-phased simplex solver which is implemented in the sparse matrix
+    ''' format with the bounded variable support.
     ''' </summary>
+    ''' <remarks>
+    ''' ###### why this solver is re-written
+    '''
+    ''' the previous implementation of this solver class have some critical
+    ''' bugs and performance problems:
+    '''
+    ''' 1. the basic variables was re-calculated from the tableau via a
+    '''    "unit vector" scanning helper, which costs O(m^2 * n) and will
+    '''    fail on the numerical noise, result in a full zero solution.
+    ''' 2. the phase 1 objective includes the slack variables, and the
+    '''    reduced cost row is never priced out against the initial basis.
+    ''' 3. the tableau was stored in a dense format, which runs out of the
+    '''    memory on the genome scale metabolic network problem.
+    '''
+    ''' this implementation maintains the basic variable list explicitly,
+    ''' handles the variable bounds in the ratio test (bounded simplex), and
+    ''' runs the pivot elimination in parallel.
+    ''' </remarks>
     Public Class LPPSolverTwoPhased
+
+        Const INF As Double = Double.PositiveInfinity
 
         ReadOnly lpp As LPP
         ReadOnly strict As Boolean
 
-        Const EPSILON As Double = 0.0000000001
+        ' ---------------------------------------------
+        ' the working problem
+        ' ---------------------------------------------
+        Dim m As Integer
+        Dim nStruct As Integer
+        Dim nSlack As Integer
+        Dim nArt As Integer
+        Dim nWork As Integer
+
+        Dim tableau() As SparseTableauRow
+        ''' <summary>the current value of each basic variable, index by row</summary>
+        Dim b() As Double
+        ''' <summary>the upper bound of each variable, INF means no upper bound</summary>
+        Dim hi() As Double
+        ''' <summary>the objective coefficient of the current phase</summary>
+        Dim c() As Double
+        ''' <summary>the reduced cost of each variable, always in a dense format</summary>
+        Dim d() As Double
+        ''' <summary>basis(row) = the column index of the basic variable</summary>
+        Dim basis() As Integer
+        ''' <summary>0 = at lower bound(zero), 1 = basic, 2 = at upper bound</summary>
+        Dim status() As Byte
+        Dim isArt() As Boolean
+        ''' <summary>false when the constraint row is a redundant row</summary>
+        Dim rowActive() As Boolean
+        ''' <summary>the cached pivot column</summary>
+        Dim alpha() As Double
+        Dim touched() As Integer
+        Dim nTouched As Integer
+        Dim maxAbsAlpha As Double
+        ''' <summary>the ratio test buffer, a negative value means not a candidate</summary>
+        Dim ratioBuf() As Double
+        ''' <summary>1 = blocked by the lower bound, 2 = blocked by the upper bound</summary>
+        Dim kindBuf() As Byte
+
+        Dim objValue As Double
+        Dim minSign As Double
+
+        ' ---------------------------------------------
+        ' mapping back to the original variables
+        ' ---------------------------------------------
+        Dim mapA() As Integer
+        Dim mapB() As Integer
+        Dim mapOffset() As Double
+        Dim structC() As Double
+        Dim objConst As Double
+
+        Dim slackCol() As Integer
+        Dim artCol() As Integer
+
+        Dim nOrig As Integer
+        Dim origTypes() As String
+        Dim origRhs() As Double
+        Dim origA As LpSparseMatrix
+
+        ' numeric tolerances
+        Dim dropTol As Double = 0.000000000001
+        Dim pivotTol As Double = 0.000000001
+        Dim zeroTol As Double = 0.000000001
+        Dim pricingTol As Double = 0.000000001
+        Dim feasTol As Double = 0.0000001
 
         Sub New(problem As LPP, strict As Boolean)
             Me.lpp = problem
             Me.strict = strict
         End Sub
 
+        ''' <summary>
+        ''' solve the linear programming problem
+        ''' </summary>
         Public Function Solve(Optional showProgress As Boolean = True) As LPPSolution
             Dim solutionLog As New StringBuilder
             Dim startTime As Long = App.ElapsedMilliseconds
+            Dim buildError As String = Nothing
 
-            ' 标准化问题
-            Call lpp.makeStandardForm()
-            solutionLog.AppendLine("Converted to standard form")
+            Try
+                Call Build(solutionLog, showProgress)
+            Catch ex As Exception
+                buildError = ex.Message
+            End Try
 
-            ' 添加人工变量
-            Dim artificialVars = lpp.ArtificialVariableAssignments()
-            Call lpp.addArtificialVariables(artificialVars)
-            solutionLog.AppendLine($"Added {artificialVars.AsEnumerable.Count(Function(v) v <> -1)} artificial variables")
-
-            ' 第一阶段：寻找初始可行解
-            Dim phase1Result = Phase1(showProgress, solutionLog)
-            If phase1Result IsNot Nothing Then
-                Return phase1Result
+            If Not buildError.StringEmpty Then
+                Return New LPPSolution("Invalid LPP model: " & buildError, solutionLog.ToString, 0)
             End If
 
-            ' 移除人工变量
-            RemoveArtificialVariables(artificialVars)
-            solutionLog.AppendLine("Removed artificial variables")
+            Dim feasibleSolutionTime As Long = 0
 
-            ' 第二阶段：求解原问题
-            Dim phase2Result = Phase2(showProgress, solutionLog)
-            If phase2Result IsNot Nothing Then
-                Return phase2Result
+            ' the phase 1 is only required when the initial basis is not a
+            ' feasible solution of the original problem: if all of the
+            ' artificial variables are zero, then the start point (all of the
+            ' structural variables at their lower bound) is already feasible,
+            ' which is the common case of the FBA problem (the right hand side
+            ' of the mass balance constraint is always zero).
+            If nArt > 0 AndAlso NeedsPhase1() Then
+                Dim phase1Error As LPPSolution = Phase1(solutionLog, showProgress)
+
+                feasibleSolutionTime = App.ElapsedMilliseconds - startTime
+
+                If phase1Error IsNot Nothing Then
+                    Return phase1Error
+                End If
             End If
 
-            ' 提取解信息
-            Dim solution = ExtractSolution()
+            Dim phase2Error As LPPSolution = Phase2(solutionLog, showProgress)
+
+            If phase2Error IsNot Nothing Then
+                Return phase2Error
+            End If
+
+            Dim result As (values As Double(), slack As Double(), shadow As Double(), reduced As Double()) = ExtractSolution()
+            Dim objective As Double = minSign * objValue + objConst
+
             Return New LPPSolution(
-                solution.optimalValues,
-                lpp.objectiveFunctionValue,
-                lpp.variableNames.Take(lpp.originalVariableCount).ToArray,
+                result.values,
+                objective,
+                lpp.variableNames.Take(nOrig).ToArray,
                 lpp.constraintTypes,
-                solution.slack,
-                solution.shadowPrice,
-                solution.reducedCost,
+                result.slack,
+                result.shadow,
+                result.reduced,
                 App.ElapsedMilliseconds - startTime,
-                0, ' 可行解时间在Phase1中计算
+                feasibleSolutionTime,
                 solutionLog.ToString,
                 LPP.DecimalFormat
             )
         End Function
 
         ''' <summary>
-        ''' 第一阶段：最小化人工变量之和（完整修正版本）
+        ''' normalize the constraint type symbol
         ''' </summary>
-        Private Function Phase1(showProgress As Boolean, log As StringBuilder) As LPPSolution
-            ' 保存原始目标函数
-            Dim originalObj = lpp.objectiveFunctionCoefficients.ToArray()
-            Dim originalValue = lpp.objectiveFunctionValue
-
-            ' 设置第一阶段目标：最小化人工变量之和
-            For i = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                ' 只对人工变量设置系数为1，其他为0
-                lpp.objectiveFunctionCoefficients(i) = If(IsArtificialVariable(i), 1, 0)
-            Next
-            lpp.objectiveFunctionValue = 0
-
-            ' 初始化第一阶段基变量
-            Dim basicVars = InitializePhase1BasicVariables()
-            Dim artificialVarsList = GetArtificialVariablesList()
-
-            log.AppendLine($"Phase 1: Initialized {basicVars.Count} basic variables")
-            log.AppendLine($"Phase 1: Found {artificialVarsList.Count} artificial variables")
-
-            ' 执行单纯形迭代
-            Dim result = RunSimplexIteration(basicVars, artificialVarsList, log, showProgress)
-
-            If result IsNot Nothing Then
-                ' 恢复原始目标函数后再返回
-                RestoreOriginalObjective(originalObj, originalValue)
-                Return result
+        Private Shared Function normType(type As String) As String
+            If type Is Nothing Then
+                Return "="
             End If
 
-            ' 检查可行性
-            If std.Abs(lpp.objectiveFunctionValue) > EPSILON Then
-                RestoreOriginalObjective(originalObj, originalValue)
-                Return New LPPSolution("No feasible solution (phase 1 optimal value > 0)", log.ToString, 0)
-            End If
-
-            ' 恢复原始目标函数
-            RestoreOriginalObjective(originalObj, originalValue)
-            log.AppendLine("Phase 1 completed successfully")
-
-            Return Nothing
+            Select Case type.Trim
+                Case "<=", "≤", "=<", "less", "le"
+                    Return "<="
+                Case ">=", "≥", "=>", "greater", "ge"
+                    Return ">="
+                Case Else
+                    Return "="
+            End Select
         End Function
 
         ''' <summary>
-        ''' 初始化第一阶段基变量
-        ''' 在第一阶段，人工变量作为初始基变量
+        ''' build the working tableau of the simplex method
         ''' </summary>
-        Private Function InitializePhase1BasicVariables() As List(Of Integer)
-            Dim basicVars As New List(Of Integer)
-            Dim variableCount = lpp.objectiveFunctionCoefficients.Count
-            Dim constraintCount = lpp.constraintRightHandSides.Length
+        Private Sub Build(log As StringBuilder, showProgress As Boolean)
+            nOrig = lpp.originalVariableCount
+            origTypes = lpp.constraintTypes.ToArray
+            origRhs = lpp.constraintRightHandSides.ToArray
 
-            ' 为每个约束行分配一个基变量
-            For rowIndex = 0 To constraintCount - 1
-                Dim foundBasicVar = False
+            If lpp.sparseConstraints IsNot Nothing Then
+                origA = lpp.sparseConstraints
+            Else
+                Dim dense As Double()() = New Double(lpp.constraintCoefficients.Length - 1)() {}
 
-                ' 首先尝试找到已经存在的单位向量列（松弛变量）
-                For varIndex = lpp.originalVariableCount To variableCount - 1
-                    If IsUnitVector(varIndex, rowIndex) Then
-                        basicVars.Add(varIndex)
-                        foundBasicVar = True
-                        Exit For
-                    End If
+                For i As Integer = 0 To dense.Length - 1
+                    dense(i) = lpp.constraintCoefficients(i).ToArray
                 Next
 
-                ' 如果没有找到合适的松弛变量，则使用人工变量
-                If Not foundBasicVar Then
-                    ' 添加新的人工变量
-                    Dim artificialVarIndex = lpp.addArtificialVariable(rowIndex)
-                    basicVars.Add(artificialVarIndex)
-                End If
-            Next
-
-            Return basicVars
-        End Function
-
-        ''' <summary>
-        ''' 检查变量是否构成单位向量（在指定行系数为1，其他行为0）
-        ''' </summary>
-        Private Function IsUnitVector(varIndex As Integer, targetRow As Integer) As Boolean
-            ' 检查目标行的系数是否为1
-            If std.Abs(lpp.constraintCoefficients(targetRow)(varIndex) - 1.0) > EPSILON Then
-                Return False
+                origA = LpSparseMatrix.FromJagged(dense)
             End If
 
-            ' 检查其他行的系数是否为0
-            For rowIndex = 0 To lpp.constraintCoefficients.Length - 1
-                If rowIndex <> targetRow Then
-                    If std.Abs(lpp.constraintCoefficients(rowIndex)(varIndex)) > EPSILON Then
-                        Return False
-                    End If
-                End If
-            Next
+            m = origA.Rows
 
-            Return True
-        End Function
+            If m <> origTypes.Length OrElse m <> origRhs.Length Then
+                Throw New Exception("the constraint matrix size is not matched with the constraint type list")
+            End If
+            If origA.Columns <> nOrig Then
+                Throw New Exception($"the constraint matrix column size ({origA.Columns}) is not matched with the variable size ({nOrig})")
+            End If
 
-        ''' <summary>
-        ''' 恢复原始目标函数
-        ''' </summary>
-        Private Sub RestoreOriginalObjective(originalObj As Double(), originalValue As Double)
-            lpp.objectiveFunctionCoefficients.Clear()
-            lpp.objectiveFunctionCoefficients.AddRange(originalObj)
-            lpp.objectiveFunctionValue = originalValue
+            minSign = If(lpp.objectiveFunctionType = OptimizationType.MAX, -1.0, 1.0)
+
+            Call BuildVariableMapping()
+            Call BuildTableau(log)
         End Sub
 
         ''' <summary>
-        ''' 获取人工变量列表
-        ''' 识别所有以'a'开头或索引大于原始变量数的变量
+        ''' the variables with a negative lower bound will be splitted into
+        ''' two non-negative variables, and the variables with a positive
+        ''' lower bound will be shifted, so that all of the working variables
+        ''' have a zero lower bound.
         ''' </summary>
-        Private Function GetArtificialVariablesList() As List(Of Integer)
-            Dim artificialVars As New List(Of Integer)
-            Dim variableCount = lpp.objectiveFunctionCoefficients.Count
+        Private Sub BuildVariableMapping()
+            Dim lo As Double() = lpp.lowerBounds
+            Dim ub As Double() = lpp.upperBounds
+            Dim cOrig As Double() = lpp.objectiveFunctionCoefficients.ToArray
 
-            For varIndex = 0 To variableCount - 1
-                If IsArtificialVariable(varIndex) Then
-                    artificialVars.Add(varIndex)
+            mapA = New Integer(nOrig - 1) {}
+            mapB = New Integer(nOrig - 1) {}
+            mapOffset = New Double(nOrig - 1) {}
+            objConst = 0.0
+            nStruct = 0
+
+            Dim lj, uj As Double
+
+            For j As Integer = 0 To nOrig - 1
+                lj = If(lo Is Nothing OrElse j >= lo.Length, 0.0, lo(j))
+                uj = If(ub Is Nothing OrElse j >= ub.Length, INF, ub(j))
+
+                If lj < 0 AndAlso uj > 0 Then
+                    ' v = x(+) - x(-), x(+) in [0, ub], x(-) in [0, -lb]
+                    mapA(j) = nStruct
+                    mapB(j) = nStruct + 1
+                    mapOffset(j) = 0.0
+                    nStruct += 2
+                Else
+                    ' v = w + lb, w in [0, ub - lb]
+                    mapA(j) = nStruct
+                    mapB(j) = -1
+                    mapOffset(j) = lj
+                    nStruct += 1
                 End If
             Next
 
-            Return artificialVars
-        End Function
+            structC = New Double(nStruct - 1) {}
+
+            For j As Integer = 0 To nOrig - 1
+                lj = If(lo Is Nothing OrElse j >= lo.Length, 0.0, lo(j))
+                uj = If(ub Is Nothing OrElse j >= ub.Length, INF, ub(j))
+                cOrig(j) = lpp.objectiveFunctionCoefficients(j)
+
+                If mapB(j) >= 0 Then
+                    structC(mapA(j)) = cOrig(j)
+                    structC(mapB(j)) = -cOrig(j)
+                Else
+                    structC(mapA(j)) = cOrig(j)
+                    objConst += cOrig(j) * lj
+                End If
+            Next
+        End Sub
 
         ''' <summary>
-        ''' 判断是否为人工变量
+        ''' build the sparse simplex tableau in the standard form
         ''' </summary>
-        Private Function IsArtificialVariable(varIndex As Integer) As Boolean
-            ' 根据变量命名或位置判断是否为人工变量
-            Return varIndex >= lpp.originalVariableCount AndAlso
-                lpp.variableNames(varIndex) Like lpp.artificialVariable
-        End Function
+        Private Sub BuildTableau(log As StringBuilder)
+            Dim rhsW As Double() = New Double(m - 1) {}
+            Dim flip As Double() = New Double(m - 1) {}
+            Dim types As String() = New String(m - 1) {}
 
-        ''' <summary>
-        ''' 第二阶段：求解原问题
-        ''' </summary>
-        Private Function Phase2(showProgress As Boolean, log As StringBuilder) As LPPSolution
-            ' 重新计算目标函数行
-            Dim basicVars = GetCurrentBasicVariables()
-            For Each row In basicVars.Select(Function(v, i) New With {.var = v, .row = i})
-                If row.var >= 0 Then
-                    Pivot(row.var, row.row)
+            Array.Copy(origRhs, rhsW, m)
+
+            ' the shift of the variables with a non-zero lower bound
+            For i As Integer = 0 To m - 1
+                For p As Integer = origA.RowPtr(i) To origA.RowPtr(i + 1) - 1
+                    Dim j As Integer = origA.ColIdx(p)
+
+                    If j < nOrig AndAlso mapB(j) < 0 AndAlso mapOffset(j) <> 0.0 Then
+                        rhsW(i) -= origA.Values(p) * mapOffset(j)
+                    End If
+                Next
+            Next
+
+            nSlack = 0
+            nArt = 0
+
+            For i As Integer = 0 To m - 1
+                Dim ty As String = normType(origTypes(i))
+
+                If rhsW(i) < 0 Then
+                    rhsW(i) = -rhsW(i)
+                    flip(i) = -1.0
+
+                    If ty = "<=" Then
+                        ty = ">="
+                    ElseIf ty = ">=" Then
+                        ty = "<="
+                    End If
+                Else
+                    flip(i) = 1.0
+                End If
+
+                types(i) = ty
+
+                If ty <> "=" Then nSlack += 1
+                If ty <> "<=" Then nArt += 1
+            Next
+
+            Dim slackBase As Integer = nStruct
+            Dim artBase As Integer = nStruct + nSlack
+
+            nWork = nStruct + nSlack + nArt
+            slackCol = New Integer(m - 1) {}
+            artCol = New Integer(m - 1) {}
+
+            Dim si As Integer = 0
+            Dim ai As Integer = 0
+
+            For i As Integer = 0 To m - 1
+                If types(i) <> "=" Then
+                    slackCol(i) = slackBase + si
+                    si += 1
+                Else
+                    slackCol(i) = -1
+                End If
+
+                If types(i) <> "<=" Then
+                    artCol(i) = artBase + ai
+                    ai += 1
+                Else
+                    artCol(i) = -1
                 End If
             Next
 
-            ' 执行单纯形迭代
-            Return RunSimplexIteration(basicVars, New List(Of Integer), log, showProgress)
+            ' collect the triplets of the working matrix
+            Dim nnz As Integer = origA.NonZeros
+            Dim tRow As New List(Of Integer)(nnz + m)
+            Dim tCol As New List(Of Integer)(nnz + m)
+            Dim tVal As New List(Of Double)(nnz + m)
+
+            For i As Integer = 0 To m - 1
+                For p As Integer = origA.RowPtr(i) To origA.RowPtr(i + 1) - 1
+                    Dim j As Integer = origA.ColIdx(p)
+                    Dim v As Double = origA.Values(p) * flip(i)
+
+                    If j >= nOrig Then
+                        Continue For
+                    End If
+
+                    tRow.Add(i)
+                    tCol.Add(mapA(j))
+                    tVal.Add(v)
+
+                    If mapB(j) >= 0 Then
+                        tRow.Add(i)
+                        tCol.Add(mapB(j))
+                        tVal.Add(-v)
+                    End If
+                Next
+
+                If slackCol(i) >= 0 Then
+                    tRow.Add(i)
+                    tCol.Add(slackCol(i))
+                    tVal.Add(If(types(i) = "<=", 1.0, -1.0))
+                End If
+                If artCol(i) >= 0 Then
+                    tRow.Add(i)
+                    tCol.Add(artCol(i))
+                    tVal.Add(1.0)
+                End If
+            Next
+
+            Dim work As LpSparseMatrix = LpSparseMatrix.FromTriplets(
+                rows:=m, columns:=nWork,
+                rowIdx:=tRow.ToArray, colIdx:=tCol.ToArray, vals:=tVal.ToArray
+            )
+
+            ' allocate the working buffer
+            tableau = New SparseTableauRow(m - 1) {}
+            b = New Double(m - 1) {}
+            hi = New Double(nWork - 1) {}
+            c = New Double(nWork - 1) {}
+            d = New Double(nWork - 1) {}
+            basis = New Integer(m - 1) {}
+            status = New Byte(nWork - 1) {}
+            isArt = New Boolean(nWork - 1) {}
+            rowActive = New Boolean(m - 1) {}
+            alpha = New Double(m - 1) {}
+            touched = New Integer(m - 1) {}
+            ratioBuf = New Double(m - 1) {}
+            kindBuf = New Byte(m - 1) {}
+
+            Array.Copy(rhsW, b, m)
+
+            For i As Integer = 0 To m - 1
+                Dim row As New SparseTableauRow(work.RowPtr(i + 1) - work.RowPtr(i) + 1)
+
+                For p As Integer = work.RowPtr(i) To work.RowPtr(i + 1) - 1
+                    row.Add(work.ColIdx(p), work.Values(p))
+                Next
+
+                tableau(i) = row
+                rowActive(i) = True
+
+                If types(i) = "<=" Then
+                    basis(i) = slackCol(i)
+                Else
+                    basis(i) = artCol(i)
+                End If
+
+                status(basis(i)) = 1
+                hi(basis(i)) = INF
+
+                If artCol(i) >= 0 Then
+                    isArt(artCol(i)) = True
+                End If
+            Next
+
+            ' the upper bound of the structural variables
+            Dim lo As Double() = lpp.lowerBounds
+            Dim ub As Double() = lpp.upperBounds
+
+            For j As Integer = 0 To nOrig - 1
+                Dim lj As Double = If(lo Is Nothing OrElse j >= lo.Length, 0.0, lo(j))
+                Dim uj As Double = If(ub Is Nothing OrElse j >= ub.Length, INF, ub(j))
+
+                If mapB(j) >= 0 Then
+                    hi(mapA(j)) = uj
+                    hi(mapB(j)) = -lj
+                Else
+                    hi(mapA(j)) = If(uj >= INF, INF, uj - lj)
+                End If
+            Next
+
+            ' the slack and the artificial variables have no upper bound in
+            ' the phase 1, the artificial variables will be fixed at zero
+            ' when the phase 1 is finished.
+            For j As Integer = nStruct To nWork - 1
+                If hi(j) = 0.0 Then
+                    hi(j) = INF
+                End If
+            Next
+
+            ' the numeric tolerance is scaled by the problem magnitude
+            Dim maxAbs As Double = 1.0
+
+            For i As Integer = 0 To m - 1
+                If std.Abs(origRhs(i)) > maxAbs Then maxAbs = std.Abs(origRhs(i))
+            Next
+            For j As Integer = 0 To nStruct - 1
+                If structC(j) <> 0 AndAlso std.Abs(structC(j)) > maxAbs Then maxAbs = std.Abs(structC(j))
+            Next
+
+            pricingTol = 0.000000001 * maxAbs
+            feasTol = 0.0000001 * maxAbs
+
+            log.AppendLine($"Build simplex tableau: {m} rows, {nStruct} structural variables, {nSlack} slack variables, {nArt} artificial variables")
+        End Sub
+
+        ''' <summary>
+        ''' d(j) = c(j) - cB * B^-1 * A(j), the reduced cost row is priced out
+        ''' against the current basis.
+        ''' </summary>
+        Private Sub PriceOut()
+            Array.Copy(c, d, nWork)
+
+            For r As Integer = 0 To m - 1
+                Dim cb As Double = c(basis(r))
+
+                If cb = 0.0 Then
+                    Continue For
+                End If
+
+                Dim row As SparseTableauRow = tableau(r)
+
+                For p As Integer = 0 To row.Count - 1
+                    d(row.Idx(p)) -= cb * row.Val(p)
+                Next
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' re-calculate the objective function value from the scratch
+        ''' </summary>
+        Private Sub ResetObjective()
+            objValue = 0.0
+
+            For r As Integer = 0 To m - 1
+                objValue += c(basis(r)) * b(r)
+            Next
+            For j As Integer = 0 To nWork - 1
+                If status(j) = 2 Then
+                    objValue += c(j) * hi(j)
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' choose the entering variable via the Dantzig rule, the Bland rule
+        ''' is applied when the degenerate iteration is detected.
+        ''' </summary>
+        Private Function ChooseEntering(useBland As Boolean) As Integer
+            Dim best As Integer = -1
+            Dim bestRate As Double = 0.0
+
+            For j As Integer = 0 To nWork - 1
+                Dim st As Byte = status(j)
+
+                If st = 1 Then
+                    Continue For
+                End If
+                If isArt(j) Then
+                    Continue For
+                End If
+                If hi(j) = 0.0 Then
+                    ' the variable is fixed at zero
+                    Continue For
+                End If
+
+                ' at the lower bound the variable can be increased only, and
+                ' at the upper bound the variable can be decreased only.
+                Dim rate As Double = If(st = 2, -d(j), d(j))
+
+                If rate < -pricingTol Then
+                    If useBland Then
+                        Return j
+                    End If
+                    If rate < bestRate Then
+                        bestRate = rate
+                        best = j
+                    End If
+                End If
+            Next
+
+            Return best
         End Function
 
         ''' <summary>
-        ''' 核心单纯形迭代逻辑
+        ''' extract the pivot column from the sparse tableau
         ''' </summary>
-        Private Function RunSimplexIteration(basicVars As List(Of Integer),
-                                            artificialVars As List(Of Integer),
-                                            log As StringBuilder,
-                                            showProgress As Boolean) As LPPSolution
-            Dim iteration = 0
-            Do While iteration < LPP.PIVOT_ITERATION_LIMIT
-                ' 选择入基变量
-                Dim enterVar = ChooseEnteringVariable(artificialVars)
-                If enterVar = -1 Then Exit Do ' 最优解
+        Private Sub ExtractColumn(q As Integer)
+            If m >= 128 Then
+                ' the range partitioner reduces the scheduling cost of the
+                ' TPL task on a large amount of the rows
+                ParallelTask.ForEach(Partitioner.Create(0, m),
+                    Sub(range)
+                        For r As Integer = range.Item1 To range.Item2 - 1
+                            If rowActive(r) Then
+                                alpha(r) = tableau(r).Item(q)
+                            Else
+                                alpha(r) = 0.0
+                            End If
+                        Next
+                    End Sub)
+            Else
+                For r As Integer = 0 To m - 1
+                    If rowActive(r) Then
+                        alpha(r) = tableau(r).Item(q)
+                    Else
+                        alpha(r) = 0.0
+                    End If
+                Next
+            End If
 
-                ' 选择出基约束
-                Dim leaveRow = ChooseLeavingConstraint(enterVar)
-                If leaveRow = -1 Then
-                    Return New LPPSolution("Unbounded solution detected", log.ToString, 0)
+            nTouched = 0
+            maxAbsAlpha = 0.0
+
+            For r As Integer = 0 To m - 1
+                Dim v As Double = std.Abs(alpha(r))
+
+                If v > maxAbsAlpha Then
+                    maxAbsAlpha = v
+                End If
+                If v <> 0.0 Then
+                    touched(nTouched) = r
+                    nTouched += 1
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' do the pivot operation at tableau(r, q), note that the value of
+        ''' the basic variables is updated by the caller.
+        ''' </summary>
+        Private Sub Pivot(r As Integer, q As Integer)
+            Dim piv As Double = alpha(r)
+            Dim row As SparseTableauRow = tableau(r)
+
+            Call row.Scale(1.0 / piv, dropTol)
+
+            If nTouched >= 16 Then
+                ParallelTask.ForEach(Partitioner.Create(0, nTouched),
+                    Sub(range)
+                        For k As Integer = range.Item1 To range.Item2 - 1
+                            Dim i As Integer = touched(k)
+
+                            If i <> r Then
+                                tableau(i).Axpy(row, alpha(i), dropTol)
+                            End If
+                        Next
+                    End Sub)
+            Else
+                For k As Integer = 0 To nTouched - 1
+                    Dim i As Integer = touched(k)
+
+                    If i <> r Then
+                        tableau(i).Axpy(row, alpha(i), dropTol)
+                    End If
+                Next
+            End If
+
+            ' update the reduced cost row
+            Dim dq As Double = d(q)
+
+            For p As Integer = 0 To row.Count - 1
+                d(row.Idx(p)) -= dq * row.Val(p)
+            Next
+
+            d(q) = 0.0
+            basis(r) = q
+        End Sub
+
+        ''' <summary>
+        ''' run the bounded simplex iteration until the optimal solution is
+        ''' reached.
+        ''' </summary>
+        ''' <returns>the error message, nothing when the iteration is converged</returns>
+        Private Function RunSimplex(limit As Integer, log As StringBuilder,
+                                    showProgress As Boolean, phaseName As String) As String
+
+            Dim iteration As Integer = 0
+            Dim degenerate As Integer = 0
+            Dim useBland As Boolean = False
+            Dim pivotFailure As Integer = 0
+            Dim nextTick As Integer = 2000
+
+            Do While iteration < limit
+                Dim q As Integer = ChooseEntering(useBland)
+
+                If q < 0 Then
+                    Exit Do
                 End If
 
-                ' 执行旋转
-                Pivot(enterVar, leaveRow)
-                basicVars(leaveRow) = enterVar
-                log.AppendLine($"Pivot: x{enterVar + 1} in, row {leaveRow + 1} out")
+                Call ExtractColumn(q)
+
+                Dim dir As Integer = If(status(q) = 2, -1, 1)
+                Dim t As Double = If(hi(q) >= INF, INF, hi(q))
+
+                ' pass 1: the ratio test, both of the lower bound and the upper
+                ' bound of the basic variables are checked here.
+                For r As Integer = 0 To m - 1
+                    ratioBuf(r) = -1.0
+
+                    If Not rowActive(r) Then
+                        Continue For
+                    End If
+
+                    Dim a As Double = alpha(r) * dir
+
+                    If a > zeroTol Then
+                        ratioBuf(r) = b(r) / a
+                        kindBuf(r) = 1
+                    ElseIf a < -zeroTol Then
+                        Dim hb As Double = hi(basis(r))
+
+                        If hb < INF Then
+                            ratioBuf(r) = (hb - b(r)) / (-a)
+                            kindBuf(r) = 2
+                        End If
+                    End If
+
+                    If ratioBuf(r) >= 0.0 AndAlso ratioBuf(r) < t Then
+                        t = ratioBuf(r)
+                    End If
+                Next
+
+                ' the degenerated iteration produces a lot of the ratio ties,
+                ' the tie is broken with the pivot magnitude at first (for the
+                ' numerical stability) and then with the row sparsity (for 
+                ' reducing the fill-in of the sparse tableau).
+                Dim tieEps As Double = zeroTol
+                Dim tieMax As Double = 0.0
+
+                For r As Integer = 0 To m - 1
+                    If ratioBuf(r) >= 0.0 AndAlso ratioBuf(r) <= t + tieEps Then
+                        Dim absA As Double = std.Abs(alpha(r))
+
+                        If absA > tieMax Then
+                            tieMax = absA
+                        End If
+                    End If
+                Next
+
+                Dim minAbsA As Double = 0.1 * tieMax
+                Dim leaveRow As Integer = -1
+                Dim leaveUpper As Boolean = False
+                Dim leaveNnz As Integer = Integer.MaxValue
+
+                For r As Integer = 0 To m - 1
+                    If ratioBuf(r) < 0.0 OrElse ratioBuf(r) > t + tieEps Then
+                        Continue For
+                    End If
+                    If std.Abs(alpha(r)) < minAbsA Then
+                        Continue For
+                    End If
+                    If tableau(r).Count < leaveNnz Then
+                        leaveNnz = tableau(r).Count
+                        leaveRow = r
+                        leaveUpper = (kindBuf(r) = 2)
+                    End If
+                Next
+
+                If leaveRow < 0 AndAlso tieMax > 0.0 Then
+                    ' fall back to the largest pivot element in the tie set
+                    Dim bestAbsA As Double = 0.0
+
+                    For r As Integer = 0 To m - 1
+                        If ratioBuf(r) < 0.0 OrElse ratioBuf(r) > t + tieEps Then
+                            Continue For
+                        End If
+
+                        Dim absA As Double = std.Abs(alpha(r))
+
+                        If absA > bestAbsA Then
+                            bestAbsA = absA
+                            leaveRow = r
+                            leaveUpper = (kindBuf(r) = 2)
+                        End If
+                    Next
+                End If
+
+                If leaveRow >= 0 Then
+                    t = ratioBuf(leaveRow)
+                End If
+
+                If t >= INF Then
+                    Return "The given LPP is unbounded."
+                End If
+                If t < 0.0 Then
+                    t = 0.0
+                End If
+
+                objValue += d(q) * dir * t
+
+                If t > 0.0 Then
+                    Dim step_ As Double = dir * t
+
+                    If m >= 128 Then
+                        ParallelTask.ForEach(Partitioner.Create(0, m),
+                            Sub(range)
+                                For r As Integer = range.Item1 To range.Item2 - 1
+                                    b(r) -= alpha(r) * step_
+                                Next
+                            End Sub)
+                    Else
+                        For r As Integer = 0 To m - 1
+                            b(r) -= alpha(r) * step_
+                        Next
+                    End If
+                End If
+
+                If leaveRow < 0 Then
+                    ' the entering variable hits its own upper bound, just
+                    ' flip the variable to the other bound, no basis change
+                    ' is required by this operation.
+                    status(q) = If(status(q) = 2, CByte(0), CByte(2))
+                ElseIf std.Abs(alpha(leaveRow)) < std.Max(pivotTol, 0.001 * tieMax) Then
+                    pivotFailure += 1
+                    useBland = True
+
+                    If pivotFailure = 1 Then
+                        Call $"[{phaseName}] pivot too small: q = {q}, |pivot| = {std.Abs(alpha(leaveRow)).ToString("G4")}, tie max = {tieMax.ToString("G4")}, non-zeros = {nTouched}, t = {t.ToString("G4")}".warning
+                    End If
+
+                    If pivotFailure > 32 Then
+                        Return $"Numerical failure in the {phaseName}: the pivot element is too small."
+                    End If
+                Else
+                    Dim leaving As Integer = basis(leaveRow)
+                    Dim xq As Double = If(status(q) = 2, hi(q) - t, t)
+
+                    Call Pivot(leaveRow, q)
+
+                    status(q) = 1
+                    status(leaving) = If(leaveUpper, CByte(2), CByte(0))
+                    b(leaveRow) = xq
+                    pivotFailure = 0
+                End If
+
+                If t > 0.0 Then
+                    degenerate = 0
+                    useBland = False
+                Else
+                    degenerate += 1
+
+                    If degenerate > std.Max(256, m \ 4) Then
+                        useBland = True
+                    End If
+                End If
+
                 iteration += 1
+
+                If showProgress AndAlso iteration >= nextTick Then
+                    Dim fillIn As Integer = 0
+
+                    For r As Integer = 0 To m - 1
+                        fillIn += tableau(r).Count
+                    Next
+
+                    nextTick = iteration + 2000
+                    Call $"[{phaseName}] {iteration} iterations, objective = {objValue.ToString("G6")}, fill-in = {fillIn / std.Max(m, 1)} non-zeros/row".info
+                End If
             Loop
 
-            If iteration = LPP.PIVOT_ITERATION_LIMIT Then
-                Dim msg As String = $"Iteration limit exceeded upper bound {LPP.PIVOT_ITERATION_LIMIT}"
+            If iteration >= limit Then
+                Dim msg As String = $"Iteration limit exceeded upper bound {limit} in the {phaseName}"
 
                 If strict Then
-                    Return New LPPSolution(msg, log.ToString, 0)
+                    Return msg
                 Else
                     Call ("[LPP_SOLVER] " & msg).warning
                 End If
             End If
 
+            log.AppendLine($"{phaseName}: {iteration} iterations, objective = {objValue}")
+
             Return Nothing
         End Function
 
         ''' <summary>
-        ''' 改进的旋转操作（增加数值稳定性检查）
+        ''' the iteration upper bound is scaled by the problem size
         ''' </summary>
-        Public Sub Pivot(varIndex As Integer, constIndex As Integer)
-            Dim pivotRow = lpp.constraintCoefficients(constIndex)
-            Dim pivotElem = pivotRow(varIndex)
+        Private ReadOnly Property iterationLimit As Integer
+            Get
+                Return std.Max(LPP.PIVOT_ITERATION_LIMIT, 4 * (m + nWork) + 1000)
+            End Get
+        End Property
 
-            ' 增强主元有效性检查
-            If std.Abs(pivotElem) < EPSILON Then
-                Throw New InvalidOperationException($"Pivot element too small ({pivotElem}) for numerical stability at variable {varIndex}, constraint {constIndex}")
-            End If
-
-            ' 使用更稳定的缩放因子计算
-            Dim scale = 1.0 / pivotElem
-
-            ' 应用缩放时避免累积误差
-            For i = 0 To pivotRow.Count - 1
-                pivotRow(i) = pivotRow(i) * scale
-            Next
-            lpp.constraintRightHandSides(constIndex) = lpp.constraintRightHandSides(constIndex) * scale
-
-            ' 改进的消去过程，减少数值误差
-            For j = 0 To lpp.constraintCoefficients.Length - 1
-                If j <> constIndex Then
-                    Dim row = lpp.constraintCoefficients(j)
-                    Dim factor = row(varIndex)
-                    If std.Abs(factor) > EPSILON Then
-                        For i = 0 To row.Count - 1
-                            row(i) = row(i) - factor * pivotRow(i)
-                        Next
-                        lpp.constraintRightHandSides(j) = lpp.constraintRightHandSides(j) - factor * lpp.constraintRightHandSides(constIndex)
-                    End If
+        ''' <summary>
+        ''' checks whether the initial basis is already a feasible solution of
+        ''' the original problem: all of the artificial variables are zero.
+        ''' </summary>
+        Private Function NeedsPhase1() As Boolean
+            For r As Integer = 0 To m - 1
+                If isArt(basis(r)) AndAlso b(r) > feasTol Then
+                    Return True
                 End If
             Next
 
-            ' 更新目标函数系数
-            Dim objCoeff = lpp.objectiveFunctionCoefficients(varIndex)
-            If std.Abs(objCoeff) > EPSILON Then
-                For i = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                    lpp.objectiveFunctionCoefficients(i) = lpp.objectiveFunctionCoefficients(i) - objCoeff * pivotRow(i)
-                Next
-                lpp.objectiveFunctionValue = lpp.objectiveFunctionValue + objCoeff * lpp.constraintRightHandSides(constIndex)
+            Return False
+        End Function
+
+        ''' <summary>
+        ''' phase 1: minimize the sum of the artificial variables for seeking
+        ''' an initial basic feasible solution.
+        ''' </summary>
+        Private Function Phase1(log As StringBuilder, showProgress As Boolean) As LPPSolution
+            For j As Integer = 0 To nWork - 1
+                c(j) = If(isArt(j), 1.0, 0.0)
+            Next
+
+            Call PriceOut()
+            Call ResetObjective()
+
+            Dim msg As String = RunSimplex(iterationLimit, log, showProgress, "phase 1")
+
+            If msg IsNot Nothing Then
+                Return New LPPSolution(msg, log.ToString, 0)
             End If
-            lpp.objectiveFunctionCoefficients(varIndex) = 0
+
+            If objValue > feasTol Then
+                Return New LPPSolution(
+                    $"Could not find a Basic Feasible Solution (phase 1 objective = {objValue.ToString("G6")}).",
+                    log.ToString, 0)
+            End If
+
+            Call DriveArtificialsOut()
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' phase 2: optimize the original objective function
+        ''' </summary>
+        Private Function Phase2(log As StringBuilder, showProgress As Boolean) As LPPSolution
+            For j As Integer = 0 To nWork - 1
+                If j < nStruct Then
+                    c(j) = minSign * structC(j)
+                Else
+                    c(j) = 0.0
+                End If
+            Next
+
+            ' the artificial variables are fixed at zero from now on
+            For j As Integer = 0 To nWork - 1
+                If isArt(j) Then
+                    hi(j) = 0.0
+                End If
+            Next
+
+            Call PriceOut()
+            Call ResetObjective()
+
+            Dim msg As String = RunSimplex(iterationLimit, log, showProgress, "phase 2")
+
+            If msg IsNot Nothing Then
+                Return New LPPSolution(msg, log.ToString, 0)
+            End If
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' drive the artificial variables out of the basis, the constraint
+        ''' row will be marked as a redundant row when the artificial variable
+        ''' can not be pivoted out.
+        ''' </summary>
+        Private Sub DriveArtificialsOut()
+            For r As Integer = 0 To m - 1
+                If Not rowActive(r) OrElse Not isArt(basis(r)) Then
+                    Continue For
+                End If
+
+                Dim best As Integer = -1
+                Dim bestVal As Double = 0.0
+                Dim row As SparseTableauRow = tableau(r)
+
+                For p As Integer = 0 To row.Count - 1
+                    Dim j As Integer = row.Idx(p)
+
+                    If isArt(j) OrElse status(j) = 1 Then
+                        Continue For
+                    End If
+
+                    Dim av As Double = std.Abs(row.Val(p))
+
+                    If av > bestVal Then
+                        bestVal = av
+                        best = j
+                    End If
+                Next
+
+                If best >= 0 AndAlso bestVal > pivotTol Then
+                    Dim leaving As Integer = basis(r)
+                    Dim xq As Double = If(status(best) = 2, hi(best), 0.0)
+
+                    Call ExtractColumn(best)
+
+                    If std.Abs(alpha(r)) > pivotTol Then
+                        Call Pivot(r, best)
+
+                        status(best) = 1
+                        status(leaving) = 0
+                        b(r) = xq
+                    End If
+                Else
+                    ' this constraint is a redundant constraint
+                    rowActive(r) = False
+                End If
+            Next
         End Sub
 
         ''' <summary>
-        ''' 获取当前基变量（改进的数值稳定性版本）
+        ''' collect the solution of the original variables from the working
+        ''' tableau.
         ''' </summary>
-        Private Function GetCurrentBasicVariables() As List(Of Integer)
-            Dim basicVars As New List(Of Integer)
-            Dim variableCount = lpp.objectiveFunctionCoefficients.Count
+        Private Function ExtractSolution() As (values As Double(), slack As Double(), shadow As Double(), reduced As Double())
+            Dim x As Double() = New Double(nWork - 1) {}
 
-            ' 为每个约束行找到基变量
-            For rowIndex = 0 To lpp.constraintCoefficients.Length - 1
-                Dim row = lpp.constraintCoefficients(rowIndex)
-                Dim candidateVar = -1
-                Dim maxCoeff = 0.0
+            For r As Integer = 0 To m - 1
+                If rowActive(r) Then
+                    x(basis(r)) = b(r)
+                End If
+            Next
+            For j As Integer = 0 To nWork - 1
+                If status(j) = 2 Then
+                    x(j) = hi(j)
+                End If
+            Next
 
-                ' 寻找该行中系数最大的变量（更稳定的识别方法）
-                For varIndex = 0 To variableCount - 1
-                    Dim coeff = std.Abs(row(varIndex))
-                    If coeff > EPSILON AndAlso coeff > maxCoeff Then
-                        ' 检查该变量是否可能成为基变量
-                        If IsPotentialBasicVariable(varIndex, rowIndex) Then
-                            candidateVar = varIndex
-                            maxCoeff = coeff
-                        End If
+            Dim values As Double() = New Double(nOrig - 1) {}
+
+            For j As Integer = 0 To nOrig - 1
+                If mapB(j) >= 0 Then
+                    values(j) = x(mapA(j)) - x(mapB(j))
+                Else
+                    values(j) = x(mapA(j)) + mapOffset(j)
+                End If
+            Next
+
+            Dim slack As Double() = New Double(m - 1) {}
+            Dim shadow As Double() = New Double(m - 1) {}
+
+            For i As Integer = 0 To m - 1
+                Dim s As Double = origRhs(i)
+
+                For p As Integer = origA.RowPtr(i) To origA.RowPtr(i + 1) - 1
+                    Dim j As Integer = origA.ColIdx(p)
+
+                    If j < nOrig Then
+                        s -= origA.Values(p) * values(j)
                     End If
                 Next
 
-                basicVars.Add(candidateVar)
-            Next
+                slack(i) = s
 
-            Return basicVars
-        End Function
-
-        ''' <summary>
-        ''' 检查变量是否可能成为基变量
-        ''' </summary>
-        Private Function IsPotentialBasicVariable(varIndex As Integer, currentRow As Integer) As Boolean
-            ' 检查该变量在其他行中的系数是否足够小
-            For rowIndex = 0 To lpp.constraintCoefficients.Length - 1
-                If rowIndex <> currentRow Then
-                    Dim coeff = std.Abs(lpp.constraintCoefficients(rowIndex)(varIndex))
-                    If coeff > EPSILON Then
-                        Return False
-                    End If
+                If slackCol(i) >= 0 Then
+                    shadow(i) = -d(slackCol(i)) * minSign
+                ElseIf artCol(i) >= 0 Then
+                    shadow(i) = -d(artCol(i)) * minSign
+                Else
+                    shadow(i) = 0.0
                 End If
             Next
 
-            ' 检查在当前行中的系数不为零
-            Return std.Abs(lpp.constraintCoefficients(currentRow)(varIndex)) > EPSILON
+            Dim reduced As Double() = New Double(nOrig - 1) {}
+
+            For j As Integer = 0 To nOrig - 1
+                reduced(j) = d(mapA(j)) * minSign
+            Next
+
+            Return (values, slack, shadow, reduced)
         End Function
 
-        ''' <summary>
-        ''' 移除人工变量
-        ''' </summary>
-        Private Sub RemoveArtificialVariables(artificialVars As List(Of Integer))
-            Dim sortedVars = artificialVars.Where(Function(v) v >= 0).OrderByDescending(Function(v) v)
-            For Each var In sortedVars
-                lpp.variableNames.RemoveAt(var)
-                lpp.objectiveFunctionCoefficients.RemoveAt(var)
-                For j = 0 To lpp.constraintCoefficients.Length - 1
-                    lpp.constraintCoefficients(j).RemoveAt(var)
-                Next
-            Next
-        End Sub
-
-        ''' <summary>
-        ''' 提取解信息（修正版本）
-        ''' </summary>
-        Private Function ExtractSolution() As (optimalValues As Double(), slack As Double(), shadowPrice As Double(), reducedCost As Double())
-            Dim n = lpp.originalVariableCount
-            Dim m = lpp.constraintTypes.Length
-            Dim optimalValues(n - 1) As Double
-            Dim reducedCost(n - 1) As Double
-            Dim slack(m - 1) As Double
-            Dim shadowPrice(m - 1) As Double
-
-            ' 初始化所有变量值为0
-            For i = 0 To n - 1
-                optimalValues(i) = 0
-                reducedCost(i) = lpp.objectiveFunctionCoefficients(i)
-            Next
-
-            ' 获取基变量及其值
-            Dim basicVars = GetCurrentBasicVariables()
-            For rowIndex = 0 To basicVars.Count - 1
-                Dim varIndex = basicVars(rowIndex)
-                If varIndex >= 0 AndAlso varIndex < n Then ' 只处理原始变量
-                    optimalValues(varIndex) = lpp.constraintRightHandSides(rowIndex)
-                End If
-            Next
-
-            ' 计算松弛变量和影子价格（修正逻辑）
-            Dim slackIndex = 0
-            For j = 0 To m - 1
-                ' 计算当前约束的松弛量
-                Dim constraintValue = 0.0
-                For i = 0 To n - 1
-                    constraintValue += optimalValues(i) * lpp.constraintCoefficients(j)(i)
-                Next
-
-                slack(j) = lpp.constraintRightHandSides(j) - constraintValue
-
-                ' 影子价格为目标函数对约束右端项的敏感度
-                ' 这里简化处理，实际应该从对偶变量获取
-                shadowPrice(j) = 0 ' 需要更复杂的计算逻辑
-            Next
-
-            Return (optimalValues, slack, shadowPrice, reducedCost)
-        End Function
-
-        ''' <summary>
-        ''' 选择入基变量（改进检验数计算）
-        ''' </summary>
-        Private Function ChooseEnteringVariable(artificialVars As List(Of Integer)) As Integer
-            Dim direction = If(lpp.objectiveFunctionType = OptimizationType.MAX, -1, 1)
-            Dim bestVar = -1
-            Dim bestValue = 0.0
-
-            For i = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                If Not artificialVars.Contains(i) Then
-                    Dim rc = direction * lpp.objectiveFunctionCoefficients(i)
-                    If rc < bestValue - EPSILON Then
-                        bestValue = rc
-                        bestVar = i
-                    End If
-                End If
-            Next
-
-            Return bestVar
-        End Function
-
-        ''' <summary>
-        ''' 选择出基约束（改进最小比值规则）
-        ''' </summary>
-        Private Function ChooseLeavingConstraint(enterVar As Integer) As Integer
-            Dim minRatio = Double.PositiveInfinity
-            Dim minRow = -1
-
-            For j = 0 To lpp.constraintRightHandSides.Length - 1
-                Dim coeff = lpp.constraintCoefficients(j)(enterVar)
-                If coeff > EPSILON Then
-                    Dim ratio = lpp.constraintRightHandSides(j) / coeff
-                    If ratio < minRatio - EPSILON OrElse (std.Abs(ratio - minRatio) < EPSILON AndAlso j < minRow) Then
-                        minRatio = ratio
-                        minRow = j
-                    End If
-                End If
-            Next
-
-            Return minRow
-        End Function
     End Class
+
 End Namespace

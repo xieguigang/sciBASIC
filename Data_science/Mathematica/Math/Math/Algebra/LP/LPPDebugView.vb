@@ -62,6 +62,11 @@ Namespace LinearAlgebra.LinearProgramming
             output = output & "  " & displayEqLine(lpp.objectiveFunctionCoefficients.ToArray, lpp.variableNames)
             output = output & ControlChars.Lf & "subject to the constraints:" & ControlChars.Lf
 
+            If lpp.constraintCoefficients Is Nothing Then
+                ' 稀疏矩阵模式下不物化稠密矩阵，这里只输出问题的规模信息
+                Return output & $"  [{lpp.sparseConstraints.Rows} x {lpp.sparseConstraints.Columns}] sparse constraints" & ControlChars.Lf
+            End If
+
             For j As Integer = 0 To lpp.constraintRightHandSides.Length - 1
                 Dim constraint() As Double = lpp.constraintCoefficients(j).ToArray
                 output += displayEqLine(constraint, lpp.variableNames)
