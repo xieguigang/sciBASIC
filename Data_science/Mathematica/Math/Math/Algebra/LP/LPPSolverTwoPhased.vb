@@ -646,15 +646,25 @@ Namespace LinearAlgebra.LinearProgramming
             Dim useBland As Boolean = False
             Dim pivotFailure As Integer = 0
             Dim nextTick As Integer = 2000
+            Dim clock As Stopwatch = Stopwatch.StartNew
+            Dim costPrice As Long = 0, costColumn As Long = 0
+            Dim costRatio As Long = 0, costPivot As Long = 0, costUpdate As Long = 0
+            Dim mark As Long = clock.ElapsedTicks
 
             Do While iteration < limit
                 Dim q As Integer = ChooseEntering(useBland)
+
+                costPrice += clock.ElapsedTicks - mark
+                mark = clock.ElapsedTicks
 
                 If q < 0 Then
                     Exit Do
                 End If
 
                 Call ExtractColumn(q)
+
+                costColumn += clock.ElapsedTicks - mark
+                mark = clock.ElapsedTicks
 
                 Dim dir As Integer = If(status(q) = 2, -1, 1)
                 Dim t As Double = If(hi(q) >= INF, INF, hi(q))
@@ -746,6 +756,9 @@ Namespace LinearAlgebra.LinearProgramming
                     t = ratioBuf(leaveRow)
                 End If
 
+                costRatio += clock.ElapsedTicks - mark
+                mark = clock.ElapsedTicks
+
                 If t >= INF Then
                     Return "The given LPP is unbounded."
                 End If
@@ -754,6 +767,9 @@ Namespace LinearAlgebra.LinearProgramming
                 End If
 
                 objValue += d(q) * dir * t
+
+                costUpdate += clock.ElapsedTicks - mark
+                mark = clock.ElapsedTicks
 
                 If t > 0.0 Then
                     Dim step_ As Double = dir * t
@@ -799,6 +815,9 @@ Namespace LinearAlgebra.LinearProgramming
                     b(leaveRow) = xq
                     pivotFailure = 0
                 End If
+
+                costPivot += clock.ElapsedTicks - mark
+                mark = clock.ElapsedTicks
 
                 If t > 0.0 Then
                     degenerate = 0
