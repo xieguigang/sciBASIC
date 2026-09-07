@@ -88,8 +88,13 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         Public MatOrig As ILpMatrix
         Public BOrig As Double()
         Public COrig As Double()
-        ''' <summary>下界平移量：v = LbShift + x</summary>
+        ''' <summary>下界平移量：v = LbShift + ColScale∘x</summary>
         Public LbShift As Double()
+        ''' <summary>
+        ''' 列缩放：x（工作变量）→ 问题空间时乘的因子，默认全 1。
+        ''' 稀疏入口用它把变量盒归一化到 [0,1]，避免 Θ = x/s 跨越多达 1e7 的量级。
+        ''' </summary>
+        Public ColScale As Double()
         ''' <summary>平移引入的目标常数 cᵀlb</summary>
         Public ObjOffset As Double
 
@@ -351,6 +356,30 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Else
                     sf.FlipSign(i) = 1.0
                 End If
+            Next
+
+            ' ---------- 行均衡 ----------
+            ' 化学计量矩阵各行的量级可能相差 2~3 个数量级（本 GEM 的行 ‖A_i‖² ∈ [0.25, 5e3]），
+            ' 未做均衡时正规方程 A·Θ·Aᵀ 条件数可达 1e12+，解出的 Δy 量级 1e8~1e11，
+            ' fraction-to-boundary 步长退化到 1e-8，内点法完全走不动。
+            ' 行缩放 Ã = R·A、b̃ = R·b（R 对角且正定）不改变可行域与最优解，
+            ' 只改变收敛性质，且报告量仍用未缩放的 MatOrig/BOrig 计算。
+            For i As Int32 = 0 To rowsN - 1
+                Dim norm2 As Double = 0.0
+
+                For p As Int32 = work.RowPtr(i) To work.RowPtr(i + 1) - 1
+                    Dim a As Double = work.Values(p)
+
+                    norm2 += a * a
+                Next
+
+                Dim r As Double = If(norm2 > 0.0, 1.0 / std.Sqrt(norm2), 1.0)
+
+                For p As Int32 = work.RowPtr(i) To work.RowPtr(i + 1) - 1
+                    work.Values(p) *= r
+                Next
+
+                sf.b(i) *= r
             Next
 
             ' ---------- 内部目标 ----------
