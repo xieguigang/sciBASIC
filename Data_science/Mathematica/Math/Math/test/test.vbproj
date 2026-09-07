@@ -12,4 +12,7 @@
     <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\Math.NET5.vbproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lpp\" />
+  </ItemGroup>
   </Project>
