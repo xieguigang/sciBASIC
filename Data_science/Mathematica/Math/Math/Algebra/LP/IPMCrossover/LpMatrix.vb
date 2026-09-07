@@ -434,7 +434,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Return cacheM
             End If
 
-            cacheM = SparseNormal.Assemble(cp, ri, rv, m, n, theta)
+            cacheM = SparseNormal.Assemble(rp, ci, vx, cp, ri, rv, m, n, theta)
             cacheTheta = theta
 
             Return cacheM

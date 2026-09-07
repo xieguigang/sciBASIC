@@ -121,13 +121,22 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         ''' <summary>
         ''' 稀疏装配 A·Θ·Aᵀ（对称 CSR）
         ''' </summary>
+        ''' <param name="rp">A 的 CSR 行指针（长度 m+1）</param>
+        ''' <param name="ci">A 的 CSR 列索引</param>
+        ''' <param name="vx">A 的 CSR 值</param>
         ''' <param name="cp">A 的 CSC 列指针（长度 n+1）</param>
         ''' <param name="ri">A 的 CSC 行索引</param>
         ''' <param name="rv">A 的 CSC 值</param>
         ''' <param name="m">A 的行数</param>
         ''' <param name="n">A 的列数</param>
         ''' <param name="theta">对角缩放（长度 n）</param>
-        Public Function Assemble(cp As Int32(), ri As Int32(), rv As Double(),
+        ''' <remarks>
+        ''' 按行做外层循环：第 i 行的模式 = ∪_{j: A(i,j)≠0} {k : A(k,j)≠0}。
+        ''' marker 的戳必须用**行号**（而不是列号）——同一列 j 会同时贡献给多个行 i，
+        ''' 用列号做戳会让第 i2 行误判"该列位置已存在"，把值写进第 i1 行的槽位。
+        ''' </remarks>
+        Public Function Assemble(rp As Int32(), ci As Int32(), vx As Double(),
+                                 cp As Int32(), ri As Int32(), rv As Double(),
                                  m As Int32, n As Int32, theta As Double()) As SymCsr
             If m <= 0 Then
                 Return New SymCsr(0, New Int32(m + 1) {}, New Int32() {}, New Double() {})
@@ -137,23 +146,18 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim mpos(m - 1) As Int32
             Dim cnt(m - 1) As Int32
 
-            For i As Int32 = 0 To m - 1
-                marker(i) = -1
-            Next
-
             ' ---- pass 1：数模式 ----
-            For j As Int32 = 0 To n - 1
-                Dim a0 As Int32 = cp(j)
-                Dim a1 As Int32 = cp(j + 1) - 1
+            For i As Int32 = 0 To m - 1
+                Dim stamp As Int32 = i + 1
 
-                For a As Int32 = a0 To a1
-                    Dim i As Int32 = ri(a)
+                For p As Int32 = rp(i) To rp(i + 1) - 1
+                    Dim j As Int32 = ci(p)
 
-                    For b As Int32 = a0 To a1
-                        Dim k As Int32 = ri(b)
+                    For q As Int32 = cp(j) To cp(j + 1) - 1
+                        Dim k As Int32 = ri(q)
 
-                        If marker(k) <> j Then
-                            marker(k) = j
+                        If marker(k) <> stamp Then
+                            marker(k) = stamp
                             cnt(i) += 1
                         End If
                     Next
@@ -165,46 +169,46 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 If cnt(i) = 0 Then cnt(i) = 1
             Next
 
-            Dim rp(m) As Int32
+            Dim mr(m) As Int32
 
             For i As Int32 = 0 To m - 1
-                rp(i + 1) = rp(i) + cnt(i)
+                mr(i + 1) = mr(i) + cnt(i)
             Next
 
-            Dim nnz As Int32 = rp(m)
-            Dim ci(nnz - 1) As Int32
-            Dim vx(nnz - 1) As Double
+            Dim nnz As Int32 = mr(m)
+            Dim outIdx(nnz - 1) As Int32
+            Dim outVal(nnz - 1) As Double
             Dim fill(m - 1) As Int32
 
             For i As Int32 = 0 To m - 1
-                marker(i) = -1
+                marker(i) = 0
             Next
 
             ' ---- pass 2：填值 ----
-            For j As Int32 = 0 To n - 1
-                Dim a0 As Int32 = cp(j)
-                Dim a1 As Int32 = cp(j + 1) - 1
+            For i As Int32 = 0 To m - 1
+                Dim stamp As Int32 = i + 1
 
-                For a As Int32 = a0 To a1
-                    Dim i As Int32 = ri(a)
-                    Dim scaled As Double = rv(a) * theta(j)
+                For p As Int32 = rp(i) To rp(i + 1) - 1
+                    Dim j As Int32 = ci(p)
+                    Dim aij As Double = vx(p)
+                    Dim scaled As Double = aij * theta(j)
 
-                    For b As Int32 = a0 To a1
-                        Dim k As Int32 = ri(b)
-                        Dim p As Int32
+                    For q As Int32 = cp(j) To cp(j + 1) - 1
+                        Dim k As Int32 = ri(q)
+                        Dim pos As Int32
 
-                        If marker(k) <> j Then
-                            marker(k) = j
-                            p = rp(i) + fill(i)
-                            ci(p) = k
-                            vx(p) = 0.0
-                            mpos(k) = p
+                        If marker(k) <> stamp Then
+                            marker(k) = stamp
+                            pos = mr(i) + fill(i)
+                            outIdx(pos) = k
+                            outVal(pos) = 0.0
+                            mpos(k) = pos
                             fill(i) += 1
                         Else
-                            p = mpos(k)
+                            pos = mpos(k)
                         End If
 
-                        vx(p) += scaled * rv(b)
+                        outVal(pos) += scaled * rv(q)
                     Next
                 Next
             Next
@@ -212,15 +216,15 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             ' 空行补对角（值为 0，随后 AddDiagonal 会加上 reg）
             For i As Int32 = 0 To m - 1
                 If fill(i) < cnt(i) Then
-                    Dim p As Int32 = rp(i) + fill(i)
+                    Dim pos As Int32 = mr(i) + fill(i)
 
-                    ci(p) = i
-                    vx(p) = 0.0
+                    outIdx(pos) = i
+                    outVal(pos) = 0.0
                     fill(i) += 1
                 End If
             Next
 
-            Return New SymCsr(m, rp, ci, vx)
+            Return New SymCsr(m, mr, outIdx, outVal)
         End Function
 
     End Module

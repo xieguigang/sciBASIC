@@ -219,7 +219,23 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 ones(j) = 1.0
             Next
 
-            Dim fac As INormalFactor = Mat.FactorNormal(ones, 0.000000000001)
+            ' 起始点的最小二乘求解必须用"规模化"的正则化：
+            ' 绝对量级 1e-12 在病态/秩亏损的正规方程上会得到放大到 1e12 的解，
+            ' 使 d̂（从而 s、z）完全失真。有界（含稀疏）路径按矩阵规模取 reg。
+            Dim reg0 As Double = 0.000000000001
+
+            If anyBound Then
+                Dim ndiag0 As Double() = Mat.NormalDiag(ones)
+                Dim sc As Double = 1.0
+
+                For i As Int32 = 0 To m - 1
+                    If ndiag0(i) > sc Then sc = ndiag0(i)
+                Next
+
+                reg0 = 0.000000001 * sc
+            End If
+
+            Dim fac As INormalFactor = Mat.FactorNormal(ones, reg0)
 
             If fac IsNot Nothing Then
                 Dim y1 As Double() = fac.Solve(b)
@@ -277,44 +293,32 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             End If
 
             ' ---------------- 有上界 ----------------
-            ' 1) 盒子中心
-            Dim c0(n - 1) As Double
+            ' 1) 以最小范数解 x̂ = Aᵀ(AAᵀ+reg·I)⁻¹b 为基准（它天然尽量满足 A·x = b），
+            '    而不是盒子中心——盒子中心对 FBA 而言原始残差高达 1e5 量级，
+            '    夹回盒子后可行性彻底丢失，内点法会直接卡死。
+            Dim minXb As Double = Double.MaxValue
 
             For j As Int32 = 0 To n - 1
-                c0(j) = If(ubFin(j), 0.5 * u(j), 1.0)
+                If xhat(j) < minXb Then minXb = xhat(j)
             Next
 
-            ' 2) 最小范数修正到 A·x = b
-            If fac IsNot Nothing Then
-                Dim r0 As Double() = Mat.Mv(c0)
+            Dim shift As Double = std.Max(0.0, -1.5 * minXb)
 
-                For i As Int32 = 0 To m - 1
-                    r0(i) -= b(i)
-                Next
-
-                Dim dz As Double() = fac.Solve(r0)
-
-                If dz IsNot Nothing Then
-                    Dim corr As Double() = Mat.Mtv(dz)
-
-                    For j As Int32 = 0 To n - 1
-                        c0(j) -= corr(j)
-                    Next
-                End If
-            End If
-
-            ' 3) 夹回严格内部
+            ' 2) 夹回 [0.1%·u, 99.9%·u] 的严格内部（0.1% 的余量把破坏的可行性控制在 ~1e-3 相对量级）
             For j As Int32 = 0 To n - 1
+                Dim xv As Double = xhat(j) + shift
+
                 If ubFin(j) Then
                     Dim uj As Double = u(j)
+                    Dim margin As Double = 0.001 * uj
 
-                    x(j) = std.Min(std.Max(c0(j), 0.01 * uj), 0.99 * uj)
+                    x(j) = std.Min(std.Max(xv, margin), uj - margin)
                 Else
-                    x(j) = std.Max(c0(j), 0.0001)
+                    x(j) = std.Max(xv, 0.0001)
                 End If
             Next
 
-            ' 4) 对偶拆分（s − z = d，s,z ≥ λ）
+            ' 3) 对偶拆分（s − z = d，s,z ≥ λ）
             Dim maxD As Double = 1.0
 
             For j As Int32 = 0 To n - 1
@@ -355,6 +359,9 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim rd(n - 1) As Double
             Dim rhs(m - 1) As Double
             Dim res(m - 1) As Double
+            Dim lastAP As Double = 0.0
+            Dim lastAD As Double = 0.0
+            Dim lastReg As Double = 0.0
             Dim theta(n - 1) As Double
             Dim xl(n - 1) As Double
             Dim wu(n - 1) As Double
@@ -388,7 +395,18 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Dim ngap = mu / (1.0 + std.Abs(obj))
 
                 If log IsNot Nothing Then
-                    log.Add($"  IPM {it,3}: rp={nrp:E2} rd={nrd:E2} mu={mu:E2} obj={obj:G10}")
+                    Dim dyNorm As Double = If(dy Is Nothing, 0.0, LinAlg.Norm2(dy))
+                    Dim maxRel As Double = 0.0
+
+                    For j As Int32 = 0 To n - 1
+                        Dim uj As Double = If(ubFin(j), u(j), std.Max(1.0, std.Abs(x(j))))
+                        Dim rel As Double = std.Abs(dx(j)) / std.Max(1.0, uj)
+
+                        If rel > maxRel Then maxRel = rel
+                    Next
+
+                    log.Add($"  IPM {it,3}: rp={nrp:E2} rd={nrd:E2} mu={mu:E2} obj={obj:G10} " &
+                            $"aP={lastAP:E2} aD={lastAD:E2} reg={lastReg:E1} |dy|={dyNorm:E2} dx/u={maxRel:E2}")
                 End If
 
                 If nrp <= tol AndAlso nrd <= tol AndAlso ngap <= tol Then
@@ -539,6 +557,9 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
                     aP = std.Min(1.0, 0.99 * MaxStepX(x, dx))
                     aD = std.Min(1.0, 0.99 * MaxStepDual(s, ds, z, dz))
+                    lastAP = aP
+                    lastAD = aD
+                    lastReg = reg
 
                     ' 迭代法（PCG）未收敛：提升正则化档位重试，最后一档才接受
                     If Not fac.Converged AndAlso regMult <> RegLadder(RegLadder.Length - 1) Then
