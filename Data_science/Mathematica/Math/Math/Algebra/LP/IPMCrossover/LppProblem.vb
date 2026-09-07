@@ -263,7 +263,8 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                                           ub As Double(),
                                           varNames As String(),
                                           sense As String,
-                                          Optional constraintTypes As String() = Nothing) As StandardForm
+                                          Optional constraintTypes As String() = Nothing,
+                                          Optional forceDense As Boolean = False) As StandardForm
             If csr Is Nothing Then Throw New ArgumentNullException(NameOf(csr))
 
             ' 注意：局部名不能与 StandardForm 的 M / N 字段同音（VB 标识符大小写不敏感）
@@ -358,9 +359,27 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 sf.c(j) = sf.Sigma * sf.COrig(j)
             Next
 
-            sf.Mat = New SparseLpMatrix(work)
+            If forceDense Then
+                ' 稠密回退：仅用于中小规模的诊断/对比（基因组规模会 OOM）
+                sf.A = ToDense(work)
+                sf.Mat = New DenseLpMatrix(sf.A)
+            Else
+                sf.Mat = New SparseLpMatrix(work)
+            End If
 
             Return sf
+        End Function
+
+        Private Shared Function ToDense(csr As LpSparseMatrix) As Double(,)
+            Dim A(csr.Rows - 1, csr.Columns - 1) As Double
+
+            For i As Int32 = 0 To csr.Rows - 1
+                For p As Int32 = csr.RowPtr(i) To csr.RowPtr(i + 1) - 1
+                    A(i, csr.ColIdx(p)) = csr.Values(p)
+                Next
+            Next
+
+            Return A
         End Function
 
         Private Shared Function Clone(csr As LpSparseMatrix) As LpSparseMatrix

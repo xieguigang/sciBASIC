@@ -38,7 +38,9 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         ''' <summary>
         ''' 标准形入口：FBA 等大规模问题直接构造好 StandardForm 后走这里
         ''' </summary>
-        Public Function SolveStandard(sf As StandardForm, Optional decimalFormat As String = "G5") As LPPSolution
+        Public Function SolveStandard(sf As StandardForm,
+                                      Optional decimalFormat As String = "G5",
+                                      Optional maxIter As Int32 = 200) As LPPSolution
             Dim sw = Stopwatch.StartNew()
             Dim feasMs As Long = -1
             Dim log As New List(Of String)()
@@ -69,7 +71,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
             ' ---- 内点法 ----
             Dim ipmLog As New List(Of String)()
-            Dim ipm As New InteriorPointSolver(sf.Mat, sf.b, sf.c, If(anyBound, sf.U, Nothing), 0.00000001, 200, ipmLog)
+            Dim ipm As New InteriorPointSolver(sf.Mat, sf.b, sf.c, If(anyBound, sf.U, Nothing), 0.00000001, maxIter, ipmLog)
             Dim r = ipm.Solve()
 
             log.AddRange(ipmLog)
