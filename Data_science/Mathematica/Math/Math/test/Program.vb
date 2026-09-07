@@ -57,12 +57,12 @@
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 
-Module ProgramLpp
+Module Program
 
     Dim pass As Integer = 0
     Dim fail As Integer = 0
 
-    Sub Main()
+    Sub Main2()
         Console.WriteLine("=== Scripting 表达式解析器修复验证测试 ===")
         Console.WriteLine()
 

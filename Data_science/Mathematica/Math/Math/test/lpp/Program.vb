@@ -9,7 +9,7 @@
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
 
-Public Module Program
+Public Module ProgramLpp
 
     Public Function Main(args As String()) As Integer
         If args.Length > 0 AndAlso args(0) = "selftest" Then
