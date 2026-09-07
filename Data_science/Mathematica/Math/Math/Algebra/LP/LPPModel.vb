@@ -77,6 +77,21 @@ Namespace LinearAlgebra.LinearProgramming
         <XmlAttribute> Public Property symbol As String
         <XmlAttribute> Public Property coefficient As Double
 
+        ''' <summary>
+        ''' 变量下界，默认 0（标准形要求 x ≥ 0）
+        ''' </summary>
+        ''' <remarks>
+        ''' 有限的下界 lb 会在构造标准形时用平移 v = lb + x 消掉，
+        ''' 因此不会增加问题规模。
+        ''' </remarks>
+        <XmlIgnore> Public Property LowerBound As Double = 0
+
+        ''' <summary>
+        ''' 变量上界，默认 +∞（无上界）。有限上界由内点法原生支持
+        ''' （引入 w = u − x 与对偶 z，Θ = 1/(s/x + z/w)），不会增加约束行数。
+        ''' </summary>
+        <XmlIgnore> Public Property UpperBound As Double = Double.PositiveInfinity
+
         Sub New()
         End Sub
 
