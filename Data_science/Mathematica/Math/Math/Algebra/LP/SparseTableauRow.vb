@@ -146,102 +146,111 @@ Namespace LinearAlgebra.LinearProgramming
                 Return
             End If
 
-            ' counts the size of the merged row at first: reserving the buffer
-            ' with (n1 + n2) will make the row buffer grow on every single
-            ' merge operation, which costs a lot of time on the array copy.
-            Dim merged As Integer = 0
-            Dim c1 As Integer = 0
-            Dim c2 As Integer = 0
+            ' a backward merge does not require any additional memory buffer,
+            ' it writes the merge result from the tail of the row buffer, so
+            ' that the source data will never be overwritten before it is
+            ' read by this operation.
+            Dim need As Integer = n1 + n2
+            Dim inPlace As Boolean = Idx.Length >= need
 
-            While c1 < n1 OrElse c2 < n2
-                If c2 >= n2 Then
-                    merged += 1
-                    c1 += 1
-                ElseIf c1 >= n1 Then
-                    If std.Abs(factor * other.Val(c2)) > dropTol Then
-                        merged += 1
-                    End If
+            If Not inPlace Then
+                ' the row buffer is too small, merges into the spare buffer
+                ' and then swaps them, so that no array copy is required.
+                Call EnsureSpare(need)
+            End If
 
-                    c2 += 1
-                ElseIf Idx(c1) > other.Idx(c2) Then
-                    merged += 1
-                    c1 += 1
-                ElseIf Idx(c1) = other.Idx(c2) Then
-                    If std.Abs(Val(c1) - factor * other.Val(c2)) > dropTol Then
-                        merged += 1
-                    End If
+            Dim outIdx As Integer() = If(inPlace, Idx, idxB)
+            Dim outVal As Double() = If(inPlace, Val, valB)
+            Dim i As Integer = n1 - 1
+            Dim j As Integer = n2 - 1
+            Dim k As Integer = need - 1
+            Dim last As Integer = need - 1
 
-                    c1 += 1
-                    c2 += 1
-                Else
-                    If std.Abs(factor * other.Val(c2)) > dropTol Then
-                        merged += 1
-                    End If
-
-                    c2 += 1
-                End If
-            End While
-
-            Call EnsureSpare(merged)
-
-            Dim i As Integer = 0
-            Dim j As Integer = 0
-            Dim w As Integer = 0
-
-            While i < n1 OrElse j < n2
-                If j >= n2 Then
-                    idxB(w) = Idx(i)
-                    valB(w) = Val(i)
-                    i += 1
-                    w += 1
-                ElseIf i >= n1 Then
-                    Dim v As Double = -factor * other.Val(j)
-
-                    If std.Abs(v) > dropTol Then
-                        idxB(w) = other.Idx(j)
-                        valB(w) = v
-                        w += 1
-                    End If
-
-                    j += 1
-                ElseIf Idx(i) > other.Idx(j) Then
-                    idxB(w) = Idx(i)
-                    valB(w) = Val(i)
-                    i += 1
-                    w += 1
-                ElseIf Idx(i) = other.Idx(j) Then
+            While j >= 0
+                If i >= 0 AndAlso Idx(i) > other.Idx(j) Then
+                    outIdx(k) = Idx(i)
+                    outVal(k) = Val(i)
+                    i -= 1
+                    k -= 1
+                ElseIf i >= 0 AndAlso Idx(i) = other.Idx(j) Then
                     Dim v As Double = Val(i) - factor * other.Val(j)
 
                     If std.Abs(v) > dropTol Then
-                        idxB(w) = Idx(i)
-                        valB(w) = v
-                        w += 1
+                        outIdx(k) = Idx(i)
+                        outVal(k) = v
+                        k -= 1
                     End If
 
-                    i += 1
-                    j += 1
+                    i -= 1
+                    j -= 1
                 Else
                     Dim v As Double = -factor * other.Val(j)
 
                     If std.Abs(v) > dropTol Then
-                        idxB(w) = other.Idx(j)
-                        valB(w) = v
-                        w += 1
+                        outIdx(k) = other.Idx(j)
+                        outVal(k) = v
+                        k -= 1
                     End If
 
-                    j += 1
+                    j -= 1
                 End If
             End While
 
-            Dim swapIdx As Integer() = Idx
-            Dim swapVal As Double() = Val
+            While i >= 0
+                outIdx(k) = Idx(i)
+                outVal(k) = Val(i)
+                i -= 1
+                k -= 1
+            End While
 
-            Idx = idxB
-            Val = valB
-            idxB = swapIdx
-            valB = swapVal
-            Count = w
+            Dim merged As Integer = last - k
+
+            If merged > 0 AndAlso k >= 0 Then
+                Array.Copy(outIdx, k + 1, outIdx, 0, merged)
+                Array.Copy(outVal, k + 1, outVal, 0, merged)
+            End If
+
+            If Not inPlace Then
+                Dim swapIdx As Integer() = Idx
+                Dim swapVal As Double() = Val
+
+                Idx = idxB
+                Val = valB
+                idxB = swapIdx
+                valB = swapVal
+            End If
+
+            Count = merged
         End Sub
+
+        ''' <summary>
+        ''' removes all of the columns which index is greater than or equals 
+        ''' to the given <paramref name="minCol"/> from this row.
+        ''' </summary>
+        ''' <param name="minCol"></param>
+        ''' <returns>the number of the removed elements</returns>
+        Public Function RemoveFrom(minCol As Integer) As Integer
+            Dim lo As Integer = 0
+            Dim hi As Integer = Count - 1
+            Dim hit As Integer = Count
+
+            While lo <= hi
+                Dim mid As Integer = (lo + hi) \ 2
+
+                If Idx(mid) >= minCol Then
+                    hit = mid
+                    hi = mid - 1
+                Else
+                    lo = mid + 1
+                End If
+            End While
+
+            Dim removed As Integer = Count - hit
+
+            Count = hit
+
+            Return removed
+        End Function
 
         ''' <summary>
         ''' remove all of the tiny value in this row

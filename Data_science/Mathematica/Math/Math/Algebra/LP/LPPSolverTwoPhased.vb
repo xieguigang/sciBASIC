@@ -72,6 +72,7 @@ Namespace LinearAlgebra.LinearProgramming
         Dim ratioBuf() As Double
         ''' <summary>1 = blocked by the lower bound, 2 = blocked by the upper bound</summary>
         Dim kindBuf() As Byte
+        Dim statTouched As Long
 
         Dim objValue As Double
         Dim minSign As Double
@@ -87,6 +88,11 @@ Namespace LinearAlgebra.LinearProgramming
 
         Dim slackCol() As Integer
         Dim artCol() As Integer
+        ''' <summary>
+        ''' the first column index of the artificial variables, all of the
+        ''' columns after this index can be removed from the tableau.
+        ''' </summary>
+        Dim artBase As Integer
 
         Dim nOrig As Integer
         Dim origTypes() As String
@@ -320,8 +326,8 @@ Namespace LinearAlgebra.LinearProgramming
             Next
 
             Dim slackBase As Integer = nStruct
-            Dim artBase As Integer = nStruct + nSlack
 
+            artBase = nStruct + nSlack
             nWork = nStruct + nSlack + nArt
             slackCol = New Integer(m - 1) {}
             artCol = New Integer(m - 1) {}
@@ -467,7 +473,36 @@ Namespace LinearAlgebra.LinearProgramming
             pricingTol = 0.000000001 * maxAbs
             feasTol = 0.0000001 * maxAbs
 
+            If nArt > 0 Then
+                Call PurgeArtificialColumns()
+            End If
+
             log.AppendLine($"Build simplex tableau: {m} rows, {nStruct} structural variables, {nSlack} slack variables, {nArt} artificial variables")
+        End Sub
+
+        ''' <summary>
+        ''' the artificial variables are excluded from the entering variable
+        ''' candidate list forever, so that the tableau columns of the
+        ''' artificial variables are never be used by the simplex iteration:
+        ''' keeping these columns in the tableau will produce a huge amount
+        ''' of the fill-in (the column of an artificial variable is a column
+        ''' of the B^-1, which is a dense vector in general).
+        ''' </summary>
+        Private Sub PurgeArtificialColumns()
+            Dim removed As Integer = 0
+
+            If m >= 128 Then
+                ParallelTask.ForEach(Partitioner.Create(0, m),
+                    Sub(range)
+                        For r As Integer = range.Item1 To range.Item2 - 1
+                            tableau(r).RemoveFrom(artBase)
+                        Next
+                    End Sub)
+            Else
+                For r As Integer = 0 To m - 1
+                    removed += tableau(r).RemoveFrom(artBase)
+                Next
+            End If
         End Sub
 
         ''' <summary>
@@ -598,6 +633,8 @@ Namespace LinearAlgebra.LinearProgramming
         Private Sub Pivot(r As Integer, q As Integer)
             Dim piv As Double = alpha(r)
             Dim row As SparseTableauRow = tableau(r)
+
+            statTouched += nTouched
 
             Call row.Scale(1.0 / piv, dropTol)
 
@@ -841,7 +878,7 @@ Namespace LinearAlgebra.LinearProgramming
 
                     nextTick = iteration + 2000
                     Call $"[{phaseName}] {iteration} iterations, objective = {objValue.ToString("G6")}, fill-in = {fillIn / std.Max(m, 1)} non-zeros/row".info
-                    Call $"    cost: price = {costPrice * 1000.0 / Stopwatch.Frequency}ms, column = {costColumn * 1000.0 / Stopwatch.Frequency}ms, ratio = {costRatio * 1000.0 / Stopwatch.Frequency}ms, update = {costUpdate * 1000.0 / Stopwatch.Frequency}ms, pivot = {costPivot * 1000.0 / Stopwatch.Frequency}ms".info
+                    Call $"    cost: price = {costPrice * 1000.0 / Stopwatch.Frequency}ms, column = {costColumn * 1000.0 / Stopwatch.Frequency}ms, ratio = {costRatio * 1000.0 / Stopwatch.Frequency}ms, update = {costUpdate * 1000.0 / Stopwatch.Frequency}ms, pivot = {costPivot * 1000.0 / Stopwatch.Frequency}ms, touched/pivot = {statTouched / std.Max(iteration, 1)}".info
                 End If
             Loop
 
