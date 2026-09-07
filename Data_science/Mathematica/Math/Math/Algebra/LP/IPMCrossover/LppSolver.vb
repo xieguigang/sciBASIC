@@ -17,7 +17,7 @@ Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports System.Linq
 
-Namespace LPP
+Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
     Public Module LppSolver
 
@@ -37,7 +37,7 @@ Namespace LPP
             ' ---- 平凡情形：无约束 ----
             If m = 0 Then
                 For j = 0 To n - 1
-                    If sf.c(j) < -1e-12 Then
+                    If sf.c(j) < -0.000000000001 Then
                         log.Add("无约束且存在负成本方向 → 无界")
                         Return Fail("LP 目标无界（无约束且存在可无限增大的下降方向）", log, sw.ElapsedMilliseconds)
                     End If
@@ -50,7 +50,7 @@ Namespace LPP
 
             ' ---- 内点法 ----
             Dim ipmLog As New List(Of String)()
-            Dim ipm As New InteriorPointSolver(sf.A, sf.b, sf.c, 1e-8, 200, ipmLog)
+            Dim ipm As New InteriorPointSolver(sf.A, sf.b, sf.c, 0.00000001, 200, ipmLog)
             Dim r = ipm.Solve()
             log.AddRange(ipmLog)
             log.Add($"  IPM 状态: {r.Status}（{r.Iters} 次迭代）")
@@ -154,7 +154,7 @@ Namespace LPP
                     lhs += sf.AOriginal(i, j) * xOrig(j)
                 Next
                 slackArr(i) = sf.BOriginal(i) - lhs
-                If Math.Abs(slackArr(i)) < 1e-9 * (1.0 + Math.Abs(sf.BOriginal(i))) Then slackArr(i) = 0.0
+                If Math.Abs(slackArr(i)) < 0.000000001 * (1.0 + Math.Abs(sf.BOriginal(i))) Then slackArr(i) = 0.0
             Next
             Dim reduced(n - 1) As Double
             For j = 0 To n - 1
@@ -163,7 +163,7 @@ Namespace LPP
                     s -= sf.AOriginal(i, j) * shadow(i)
                 Next
                 reduced(j) = s
-                If Math.Abs(reduced(j)) < 1e-9 * (1.0 + Math.Abs(sf.COriginal(j))) Then reduced(j) = 0.0
+                If Math.Abs(reduced(j)) < 0.000000001 * (1.0 + Math.Abs(sf.COriginal(j))) Then reduced(j) = 0.0
             Next
             Dim summary = If(pivots >= 0, $"IPM + crossover(主元 {pivots} 次)", "纯单纯形兜底")
             log.Add($"  完成: {summary}，目标值 = {objVal:G10}")

@@ -13,7 +13,7 @@
 Imports System
 Imports System.Linq
 
-Namespace LPP
+Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
     ''' <summary>LU 分解结果：P·A = L·U；LU 原地合并（|L| 对角=1），Piv(k)=位置k处的原始行号</summary>
     Public Class LuFactorization
@@ -136,7 +136,7 @@ Namespace LPP
                         p = i
                     End If
                 Next
-                If best < 1e-13 Then Return Nothing
+                If best < 0.0000000000001 Then Return Nothing
                 If p <> k Then
                     For j = 0 To n - 1
                         Dim t = LU(k, j) : LU(k, j) = LU(p, j) : LU(p, j) = t
@@ -211,7 +211,7 @@ Namespace LPP
         End Function
 
         ''' <summary>阶梯消元秩（支持非方阵）——crossover 基构造的线性无关检测</summary>
-        Public Function EchelonRank(A As Double(,), Optional tol As Double = 1e-10) As Int32
+        Public Function EchelonRank(A As Double(,), Optional tol As Double = 0.0000000001) As Int32
             Dim mi As Int32 = A.GetLength(0)
             Dim n As Int32 = A.GetLength(1)
             Dim M(mi - 1, n - 1) As Double

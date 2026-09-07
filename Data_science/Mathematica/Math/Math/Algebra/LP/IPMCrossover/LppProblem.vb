@@ -14,7 +14,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace LPP
+Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
     Public Class LppVariable
 

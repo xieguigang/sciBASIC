@@ -19,7 +19,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace LPP
+Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
     Public Class IpResult
 
@@ -43,10 +43,10 @@ Namespace LPP
         Private ReadOnly log As List(Of String)
 
         ' 自适应正则化阶梯 [readme §2.2 的工程扩展]
-        Private Shared ReadOnly RegLadder() As Double = {1e-11, 1e-8, 1e-5, 1e-2}
+        Private Shared ReadOnly RegLadder() As Double = {0.00000000001, 0.00000001, 0.00001, 0.01}
 
         Public Sub New(A As Double(,), b As Double(), c As Double(),
-                       Optional tol As Double = 1e-8, Optional maxIter As Int32 = 200,
+                       Optional tol As Double = 0.00000001, Optional maxIter As Int32 = 200,
                        Optional log As List(Of String) = Nothing)
             Me.A = A
             Me.b = b
@@ -69,7 +69,7 @@ Namespace LPP
                     Next
                     M0(i, j) = sum
                 Next
-                M0(i, i) += 1e-12
+                M0(i, i) += 0.000000000001
             Next
             Dim L = LinAlg.Cholesky(M0)
             If L Is Nothing Then
@@ -123,11 +123,11 @@ Namespace LPP
             Dim dot As Double = LinAlg.Dot(x, s)
             Dim sumS As Double = s.Sum()
             Dim sumX As Double = x.Sum()
-            Dim dx2 As Double = 0.5 * dot / Math.Max(1e-12, sumS)
-            Dim ds2 As Double = 0.5 * dot / Math.Max(1e-12, sumX)
+            Dim dx2 As Double = 0.5 * dot / Math.Max(0.000000000001, sumS)
+            Dim ds2 As Double = 0.5 * dot / Math.Max(0.000000000001, sumX)
             For j = 0 To n - 1
-                x(j) = Math.Max(1e-4, x(j) + dx2)
-                s(j) = Math.Max(1e-4, s(j) + ds2)
+                x(j) = Math.Max(0.0001, x(j) + dx2)
+                s(j) = Math.Max(0.0001, s(j) + ds2)
             Next
             y = CType(y2.Clone(), Double())
         End Sub
@@ -135,7 +135,7 @@ Namespace LPP
         Private Function MaxStep(v As Double(), dv As Double()) As Double
             Dim alpha As Double = 1.0
             For i = 0 To n - 1
-                If dv(i) < -1e-14 Then
+                If dv(i) < -0.00000000000001 Then
                     alpha = Math.Min(alpha, -v(i) / dv(i))
                 End If
             Next
@@ -238,7 +238,7 @@ Namespace LPP
                 End If
                 ' 停滞检测
                 Dim metric = nrp + nrd + ngap
-                If metric > prevMetric * (1.0 - 1e-12) Then
+                If metric > prevMetric * (1.0 - 0.000000000001) Then
                     stallCount += 1
                     If stallCount >= 8 Then
                         status = "stalled"
@@ -251,7 +251,7 @@ Namespace LPP
                 ' D² 与 AD²r_d（本迭代常量）
                 Dim d2(n - 1) As Double
                 For j = 0 To n - 1
-                    d2(j) = Math.Min(1e10, Math.Max(1e-12, x(j) / s(j)))
+                    d2(j) = Math.Min(10000000000.0, Math.Max(0.000000000001, x(j) / s(j)))
                 Next
                 Dim ADrD(mi - 1) As Double
                 For i = 0 To mi - 1
@@ -311,7 +311,7 @@ Namespace LPP
                     dx = triple(0) : dy = triple(1) : ds = triple(2)
                     aP = Math.Min(1.0, 0.99 * MaxStep(x, dx))
                     aD = Math.Min(1.0, 0.99 * MaxStep(s, ds))
-                    If aP > 1e-9 OrElse aD > 1e-9 Then
+                    If aP > 0.000000001 OrElse aD > 0.000000001 Then
                         ok = True
                         Exit For        ' 当前档位可用
                     End If
@@ -333,7 +333,7 @@ Namespace LPP
                     big = Math.Max(big, Math.Abs(x(j)))
                     big = Math.Max(big, Math.Abs(s(j)))
                 Next
-                If big > 1e14 Then
+                If big > 100000000000000.0 Then
                     status = "diverged"
                     Exit For
                 End If
@@ -359,9 +359,9 @@ Namespace LPP
                 Next
                 Dim nrp = LinAlg.Norm2(rp) / normB
                 Dim nrd = LinAlg.Norm2(rd) / normC
-                If nrp > 1e-4 AndAlso nrd < 1e-6 Then
+                If nrp > 0.0001 AndAlso nrd < 0.000001 Then
                     status = "primal_infeasible"
-                ElseIf nrd > 1e-4 AndAlso nrp < 1e-6 Then
+                ElseIf nrd > 0.0001 AndAlso nrp < 0.000001 Then
                     status = "dual_infeasible"
                 End If
             End If

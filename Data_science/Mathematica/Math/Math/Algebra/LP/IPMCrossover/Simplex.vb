@@ -15,7 +15,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace LPP
+Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
     Public Class SimplexResult
 
@@ -110,7 +110,7 @@ Namespace LPP
                                 For i = 0 To rowsAlive.Count - 1
                                     dot += rho(i) * A1(rowsAlive(i), j)
                                 Next
-                                If Math.Abs(dot) > 1e-9 Then
+                                If Math.Abs(dot) > 0.000000001 Then
                                     pivCol = j
                                     Exit For
                                 End If
@@ -189,19 +189,19 @@ Namespace LPP
                 Dim facB = LinAlg.LuFactor(Bm)
                 If facB Is Nothing Then Return Tuple.Create("numeric_fail", basis, CType(Nothing, Double()), iters)
                 Dim xB = LinAlg.LuSolve(facB, b)
-                If xB.Min() < -1e-7 * bNorm Then
+                If xB.Min() < -0.0000001 * bNorm Then
                     Return Tuple.Create("infeasible", basis, xB, iters)
                 End If
                 Dim y = LinAlg.LuSolveT(facB, ColPick(c1, basis))
                 Dim d = ReducedCosts(A1, c1, y)
-                Dim enter = Price(d, basis, barred, bland, c1, 1e-9)
+                Dim enter = Price(d, basis, barred, bland, c1, 0.000000001)
                 If enter < 0 Then
                     ' Phase 1 目标 = 残留人造变量之和
                     Dim obj1 As Double = 0
                     For i = 0 To basis.Count - 1
                         If basis(i) >= n Then obj1 += Math.Max(0.0, xB(i))
                     Next
-                    Dim status = If(obj1 <= 1e-7 * bNorm, "optimal", "infeasible")
+                    Dim status = If(obj1 <= 0.0000001 * bNorm, "optimal", "infeasible")
                     Return Tuple.Create(status, basis, xB, iters)
                 End If
                 Dim alpha = LinAlg.LuSolve(facB, ColGet(A1, enter))
@@ -212,7 +212,7 @@ Namespace LPP
                 For i = 0 To basis.Count - 1
                     obj += c1(basis(i)) * xB(i)
                 Next
-                If prevObj.HasValue AndAlso Math.Abs(prevObj.Value - obj) < 1e-14 Then
+                If prevObj.HasValue AndAlso Math.Abs(prevObj.Value - obj) < 0.00000000000001 Then
                     stall += 1
                     If stall >= 20 Then bland = True
                 Else
@@ -247,7 +247,7 @@ Namespace LPP
                 Dim facB = LinAlg.LuFactor(Bm)
                 If facB Is Nothing Then Return Tuple.Create("numeric_fail", basis, CType(Nothing, Double()), iters)
                 Dim xB = LinAlg.LuSolve(facB, bAlive)
-                If xB.Min() < -1e-7 * bNorm Then
+                If xB.Min() < -0.0000001 * bNorm Then
                     Return Tuple.Create("infeasible", basis, xB, iters)
                 End If
                 Dim y = LinAlg.LuSolveT(facB, ColPick(c, basis))
@@ -260,7 +260,7 @@ Namespace LPP
                     Next
                     d(j) = sum
                 Next
-                Dim enter = Price(d, basis, New HashSet(Of Int32)(), bland, c, 1e-9)
+                Dim enter = Price(d, basis, New HashSet(Of Int32)(), bland, c, 0.000000001)
                 If enter < 0 Then
                     Return Tuple.Create("optimal", basis, xB, iters)
                 End If
@@ -272,7 +272,7 @@ Namespace LPP
                 For i = 0 To basis.Count - 1
                     obj += c(basis(i)) * xB(i)
                 Next
-                If prevObj.HasValue AndAlso Math.Abs(prevObj.Value - obj) < 1e-14 Then
+                If prevObj.HasValue AndAlso Math.Abs(prevObj.Value - obj) < 0.00000000000001 Then
                     stall += 1
                     If stall >= 20 Then bland = True
                 Else
@@ -315,9 +315,9 @@ Namespace LPP
             Dim leave As Int32 = -1
             Dim ratio As Double = Double.PositiveInfinity
             For i = 0 To xB.Length - 1
-                If alpha(i) > 1e-9 Then
+                If alpha(i) > 0.000000001 Then
                     Dim r = Math.Max(0.0, xB(i)) / alpha(i)
-                    If r < ratio - 1e-12 OrElse (Math.Abs(r - ratio) <= 1e-12 AndAlso
+                    If r < ratio - 0.000000000001 OrElse (Math.Abs(r - ratio) <= 0.000000000001 AndAlso
                        leave >= 0 AndAlso Math.Abs(alpha(i)) > Math.Abs(alpha(leave))) Then
                         ratio = r
                         leave = i

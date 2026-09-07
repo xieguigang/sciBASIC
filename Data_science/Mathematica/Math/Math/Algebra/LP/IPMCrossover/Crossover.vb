@@ -17,7 +17,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace LPP
+Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
     Public Class CrossoverResult
 
@@ -54,7 +54,7 @@ Namespace LPP
             For j = 0 To n - 1
                 xMax = Math.Max(xMax, Math.Abs(xIpm(j)))
             Next
-            Dim kappa = 1e-8 * xMax
+            Dim kappa = 0.00000001 * xMax
             Dim basicCand As New List(Of Int32)()
             Dim nonbasic As New HashSet(Of Int32)()
             For j = 0 To n - 1
@@ -139,7 +139,7 @@ Namespace LPP
                 Dim dmax As Double = Double.PositiveInfinity
                 Dim leave As Int32 = -1
                 For i = 0 To m - 1
-                    If alpha(i) < -1e-12 Then
+                    If alpha(i) < -0.000000000001 Then
                         Dim r = Math.Max(0.0, xB(i)) / (-alpha(i))
                         If r < dmax Then
                             dmax = r
@@ -148,7 +148,7 @@ Namespace LPP
                     End If
                 Next
                 If Double.IsPositiveInfinity(dmax) Then dmax = Double.MaxValue
-                If dmax >= xj - 1e-12 Then
+                If dmax >= xj - 0.000000000001 Then
                     ' 直接到界
                     superVal.Remove(j)
                     nonbasic.Add(j)
@@ -182,7 +182,7 @@ Namespace LPP
                     For i = 0 To m - 1
                         d -= A(i, j) * y(i)
                     Next
-                    If d < -1e-7 * (1.0 + Math.Abs(c(j))) Then
+                    If d < -0.0000001 * (1.0 + Math.Abs(c(j))) Then
                         dualOk = False
                         Exit For
                     End If
