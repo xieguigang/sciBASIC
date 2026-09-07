@@ -953,7 +953,7 @@ Namespace LinearAlgebra.LinearProgramming
                     Next
 
                     nextTick = iteration + 2000
-                    Call $"[{phaseName}] {iteration} iterations, objective = {objValue.ToString("G6")}, fill-in = {fillIn / std.Max(m, 1)} non-zeros/row".info
+                    Call $"[{phaseName}] {iteration}/{limit} iterations, objective = {objValue.ToString("G6")}, fill-in = {fillIn / std.Max(m, 1)} non-zeros/row".info
                     Call $"    clamp: lo = {clampLo}, hi = {clampHi}, error = {clampErr.ToString("G4")}, blocked = {blockedList.Count}".info
                     Call $"    cost: price = {costPrice * 1000.0 / Stopwatch.Frequency}ms, column = {costColumn * 1000.0 / Stopwatch.Frequency}ms, ratio = {costRatio * 1000.0 / Stopwatch.Frequency}ms, update = {costUpdate * 1000.0 / Stopwatch.Frequency}ms, pivot = {costPivot * 1000.0 / Stopwatch.Frequency}ms, touched/pivot = {statTouched / std.Max(iteration, 1)}".info
                 End If
