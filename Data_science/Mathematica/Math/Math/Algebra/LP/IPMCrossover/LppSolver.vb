@@ -12,7 +12,7 @@
 '   reducedCost_j = c_j − Σ_i A_ij·shadowPrice_i。
 ' ============================================================================
 
-Imports System
+Imports std = System.Math
 Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports System.Linq
@@ -154,7 +154,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     lhs += sf.AOriginal(i, j) * xOrig(j)
                 Next
                 slackArr(i) = sf.BOriginal(i) - lhs
-                If Math.Abs(slackArr(i)) < 0.000000001 * (1.0 + Math.Abs(sf.BOriginal(i))) Then slackArr(i) = 0.0
+                If std.Abs(slackArr(i)) < 0.000000001 * (1.0 + std.Abs(sf.BOriginal(i))) Then slackArr(i) = 0.0
             Next
             Dim reduced(n - 1) As Double
             For j = 0 To n - 1
@@ -163,7 +163,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     s -= sf.AOriginal(i, j) * shadow(i)
                 Next
                 reduced(j) = s
-                If Math.Abs(reduced(j)) < 0.000000001 * (1.0 + Math.Abs(sf.COriginal(j))) Then reduced(j) = 0.0
+                If std.Abs(reduced(j)) < 0.000000001 * (1.0 + std.Abs(sf.COriginal(j))) Then reduced(j) = 0.0
             Next
             Dim summary = If(pivots >= 0, $"IPM + crossover(主元 {pivots} 次)", "纯单纯形兜底")
             log.Add($"  完成: {summary}，目标值 = {objVal:G10}")

@@ -6,11 +6,8 @@
 ' 附加：LPPSolution 接口行为（SolverError/GetSolution/打印分档）
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports Lpp.LPP
-Imports Lpp
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
 
 Public Module SelfTest
 
@@ -60,7 +57,7 @@ Public Module SelfTest
                          {(New Dictionary(Of String, Double) From {{"x1", 1.0}}, "<=", 4.0),
                               (New Dictionary(Of String, Double) From {{"x2", 2.0}}, "<=", 12.0),
                               (New Dictionary(Of String, Double) From {{"x1", 3.0}, {"x2", 2.0}}, "<=", 18.0)})
-        Dim s = LppSolver.Solve(p)
+        Dim s As LPPSolution = LppSolver.Solve(p)
         Check(Not s.SolverError, "求解成功")
         Check(Math.Abs(s.ObjectiveFunctionValue - 36.0) < 0.000001, "目标 = 36", $"obj={s.ObjectiveFunctionValue:G10}")
         Check(Math.Abs(s.GetSolution("x1") - 2.0) < 0.00001 AndAlso Math.Abs(s.GetSolution("x2") - 6.0) < 0.00001,

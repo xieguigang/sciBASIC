@@ -77,6 +77,14 @@ Namespace LinearAlgebra.LinearProgramming
         <XmlAttribute> Public Property symbol As String
         <XmlAttribute> Public Property coefficient As Double
 
+        Sub New()
+        End Sub
+
+        Sub New(name As String, objective As Double)
+            symbol = name
+            coefficient = objective
+        End Sub
+
     End Class
 
     Public Class LppEquation

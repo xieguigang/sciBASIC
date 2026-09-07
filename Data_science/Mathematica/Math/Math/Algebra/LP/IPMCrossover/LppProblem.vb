@@ -16,23 +16,11 @@ Imports System.Linq
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
-    Public Class LppVariable
-
-        Public Name As String
-        Public Objective As Double
-
-        Public Sub New(name As String, objective As Double)
-            Me.Name = name
-            Me.Objective = objective
-        End Sub
-
-    End Class
-
     Public Class LppConstraint
 
         ''' <summary>变量名 → 系数（缺省为 0）</summary>
         Public Coefficients As Dictionary(Of String, Double)
-        ''' <summary>"<=" / ">=" / "="</summary>
+        ''' <summary>"&lt;=" / ">=" / "="</summary>
         Public Op As String
         Public Rhs As Double
 
@@ -52,7 +40,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         Public Constraints As New List(Of LppConstraint)()
 
         Public Function VariableNames() As String()
-            Return Variables.Select(Function(v) v.Name).ToArray()
+            Return Variables.Select(Function(v) v.symbol).ToArray()
         End Function
 
         Public Function ConstraintTypes() As String()
@@ -148,7 +136,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Next
             ' 内部目标：σ·c_orig（松弛列成本 0）
             For j = 0 To sf.N - 1
-                sf.c(j) = sf.Sigma * prob.Variables(j).Objective
+                sf.c(j) = sf.Sigma * prob.Variables(j).coefficient
             Next
             ' 保留原始空间数据
             sf.AOriginal = New Double(sf.M - 1, sf.N - 1) {}
@@ -163,7 +151,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Next
             sf.COriginal = New Double(sf.N - 1) {}
             For j = 0 To sf.N - 1
-                sf.COriginal(j) = prob.Variables(j).Objective
+                sf.COriginal(j) = prob.Variables(j).coefficient
             Next
             Return sf
         End Function

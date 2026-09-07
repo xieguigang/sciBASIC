@@ -6,10 +6,8 @@
 '   LppSolver selftest    内置自检（8 组，对应 Python 镜像测试）
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports Lpp.LPP
-Imports Lpp
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
 
 Public Module Program
 

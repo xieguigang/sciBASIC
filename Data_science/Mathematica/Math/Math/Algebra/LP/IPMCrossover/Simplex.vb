@@ -13,7 +13,7 @@
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Linq
+Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
@@ -74,7 +74,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             For j = n To n + m - 1
                 barred.Add(j)               ' 人造列离基后禁止再入
             Next
-            Dim st = LoopPhase1(A1, c1, basis, barred, 40 * Math.Max(1, m))
+            Dim st = LoopPhase1(A1, c1, basis, barred, 40 * std.Max(1, m))
             If st.Item1 <> "optimal" Then
                 Return New SimplexResult With {.Status = st.Item1, .Iters = st.Item4,
                                                .DropRows = New List(Of Int32)()}
@@ -110,7 +110,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                                 For i = 0 To rowsAlive.Count - 1
                                     dot += rho(i) * A1(rowsAlive(i), j)
                                 Next
-                                If Math.Abs(dot) > 0.000000001 Then
+                                If std.Abs(dot) > 0.000000001 Then
                                     pivCol = j
                                     Exit For
                                 End If
@@ -141,7 +141,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                                                .Y = New Double(-1) {}, .Basis = New List(Of Int32)(),
                                                .Iters = iters, .DropRows = dropRows}
             End If
-            st2 = LoopPhase2(keep, basis, 40 * Math.Max(1, keep.Count))
+            st2 = LoopPhase2(keep, basis, 40 * std.Max(1, keep.Count))
             iters += st2.Item4
             If st2.Item1 <> "optimal" Then
                 Return New SimplexResult With {.Status = st2.Item1, .Iters = iters, .DropRows = dropRows}
@@ -199,7 +199,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     ' Phase 1 目标 = 残留人造变量之和
                     Dim obj1 As Double = 0
                     For i = 0 To basis.Count - 1
-                        If basis(i) >= n Then obj1 += Math.Max(0.0, xB(i))
+                        If basis(i) >= n Then obj1 += std.Max(0.0, xB(i))
                     Next
                     Dim status = If(obj1 <= 0.0000001 * bNorm, "optimal", "infeasible")
                     Return Tuple.Create(status, basis, xB, iters)
@@ -212,7 +212,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 For i = 0 To basis.Count - 1
                     obj += c1(basis(i)) * xB(i)
                 Next
-                If prevObj.HasValue AndAlso Math.Abs(prevObj.Value - obj) < 0.00000000000001 Then
+                If prevObj.HasValue AndAlso std.Abs(prevObj.Value - obj) < 0.00000000000001 Then
                     stall += 1
                     If stall >= 20 Then bland = True
                 Else
@@ -272,7 +272,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 For i = 0 To basis.Count - 1
                     obj += c(basis(i)) * xB(i)
                 Next
-                If prevObj.HasValue AndAlso Math.Abs(prevObj.Value - obj) < 0.00000000000001 Then
+                If prevObj.HasValue AndAlso std.Abs(prevObj.Value - obj) < 0.00000000000001 Then
                     stall += 1
                     If stall >= 20 Then bland = True
                 Else
@@ -295,7 +295,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             If bland Then
                 For j = 0 To n - 1
                     If Not inB.Contains(j) AndAlso Not barred.Contains(j) AndAlso
-                       d(j) < -tol * (1.0 + Math.Abs(cc(j))) Then Return j
+                       d(j) < -tol * (1.0 + std.Abs(cc(j))) Then Return j
                 Next
                 Return -1
             End If
@@ -316,9 +316,9 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim ratio As Double = Double.PositiveInfinity
             For i = 0 To xB.Length - 1
                 If alpha(i) > 0.000000001 Then
-                    Dim r = Math.Max(0.0, xB(i)) / alpha(i)
-                    If r < ratio - 0.000000000001 OrElse (Math.Abs(r - ratio) <= 0.000000000001 AndAlso
-                       leave >= 0 AndAlso Math.Abs(alpha(i)) > Math.Abs(alpha(leave))) Then
+                    Dim r = std.Max(0.0, xB(i)) / alpha(i)
+                    If r < ratio - 0.000000000001 OrElse (std.Abs(r - ratio) <= 0.000000000001 AndAlso
+                       leave >= 0 AndAlso std.Abs(alpha(i)) > std.Abs(alpha(leave))) Then
                         ratio = r
                         leave = i
                     End If

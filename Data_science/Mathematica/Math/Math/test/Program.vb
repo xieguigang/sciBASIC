@@ -56,10 +56,8 @@
 
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
-Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
-Imports Microsoft.VisualBasic.Linq
 
-Module Program
+Module ProgramLpp
 
     Dim pass As Integer = 0
     Dim fail As Integer = 0

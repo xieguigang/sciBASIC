@@ -11,7 +11,7 @@
 ' ============================================================================
 
 Imports System
-Imports System.Linq
+Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
@@ -42,7 +42,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     d -= L(j, k) * L(j, k)
                 Next
                 If d <= 0 Then Return Nothing
-                L(j, j) = Math.Sqrt(d)
+                L(j, j) = std.Sqrt(d)
                 For i = j + 1 To n - 1
                     Dim s As Double = A(i, j)
                     For k = 0 To j - 1
@@ -116,7 +116,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Return z
         End Function
 
-        ''' <summary>部分主元 LU 分解；矩阵奇异（主元 < 1e-13）返回 Nothing</summary>
+        ''' <summary>部分主元 LU 分解；矩阵奇异（主元 &lt; 1e-13）返回 Nothing</summary>
         Public Function LuFactor(A As Double(,)) As LuFactorization
             Dim n As Int32 = A.GetLength(0)
             If A.GetLength(1) <> n Then Throw New ArgumentException("LuFactor 需要方阵")
@@ -129,10 +129,10 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             For k = 0 To n - 1
                 ' 选主元
                 Dim p As Int32 = k
-                Dim best As Double = Math.Abs(LU(k, k))
+                Dim best As Double = std.Abs(LU(k, k))
                 For i = k + 1 To n - 1
-                    If Math.Abs(LU(i, k)) > best Then
-                        best = Math.Abs(LU(i, k))
+                    If std.Abs(LU(i, k)) > best Then
+                        best = std.Abs(LU(i, k))
                         p = i
                     End If
                 Next
@@ -219,7 +219,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim scale As Double = 1.0
             For i = 0 To mi - 1
                 For j = 0 To n - 1
-                    scale = Math.Max(scale, Math.Abs(M(i, j)))
+                    scale = std.Max(scale, std.Abs(M(i, j)))
                 Next
             Next
             Dim rank As Int32 = 0
@@ -228,10 +228,10 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 If row >= mi Then Exit For
                 ' 选列主元
                 Dim p As Int32 = row
-                Dim best As Double = Math.Abs(M(row, col))
+                Dim best As Double = std.Abs(M(row, col))
                 For i = row + 1 To mi - 1
-                    If Math.Abs(M(i, col)) > best Then
-                        best = Math.Abs(M(i, col))
+                    If std.Abs(M(i, col)) > best Then
+                        best = std.Abs(M(i, col))
                         p = i
                     End If
                 Next
@@ -288,7 +288,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         End Function
 
         Public Function Norm2(a As Double()) As Double
-            Return Math.Sqrt(Dot(a, a))
+            Return std.Sqrt(Dot(a, a))
         End Function
 
     End Module

@@ -15,7 +15,7 @@
 ' 起始点：Mehrotra (1992) 启发式——最小范数 x̂/ŝ + 偏移平衡。
 ' ============================================================================
 
-Imports System
+Imports std = System.Math
 Imports System.Collections.Generic
 Imports System.Linq
 
@@ -108,11 +108,11 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             ' 偏移
             Dim minX = Double.MaxValue : Dim minS = Double.MaxValue
             For j = 0 To n - 1
-                minX = Math.Min(minX, xhat(j))
-                minS = Math.Min(minS, shat(j))
+                minX = std.Min(minX, xhat(j))
+                minS = std.Min(minS, shat(j))
             Next
-            Dim dx As Double = Math.Max(0.0, -1.5 * minX)
-            Dim ds As Double = Math.Max(0.0, -1.5 * minS)
+            Dim dx As Double = std.Max(0.0, -1.5 * minX)
+            Dim ds As Double = std.Max(0.0, -1.5 * minS)
             x = New Double(n - 1) {}
             s = New Double(n - 1) {}
             For j = 0 To n - 1
@@ -123,11 +123,11 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim dot As Double = LinAlg.Dot(x, s)
             Dim sumS As Double = s.Sum()
             Dim sumX As Double = x.Sum()
-            Dim dx2 As Double = 0.5 * dot / Math.Max(0.000000000001, sumS)
-            Dim ds2 As Double = 0.5 * dot / Math.Max(0.000000000001, sumX)
+            Dim dx2 As Double = 0.5 * dot / std.Max(0.000000000001, sumS)
+            Dim ds2 As Double = 0.5 * dot / std.Max(0.000000000001, sumX)
             For j = 0 To n - 1
-                x(j) = Math.Max(0.0001, x(j) + dx2)
-                s(j) = Math.Max(0.0001, s(j) + ds2)
+                x(j) = std.Max(0.0001, x(j) + dx2)
+                s(j) = std.Max(0.0001, s(j) + ds2)
             Next
             y = CType(y2.Clone(), Double())
         End Sub
@@ -136,7 +136,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim alpha As Double = 1.0
             For i = 0 To n - 1
                 If dv(i) < -0.00000000000001 Then
-                    alpha = Math.Min(alpha, -v(i) / dv(i))
+                    alpha = std.Min(alpha, -v(i) / dv(i))
                 End If
             Next
             Return alpha
@@ -228,7 +228,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Dim nrp = LinAlg.Norm2(rp) / normB
                 Dim nrd = LinAlg.Norm2(rd) / normC
                 Dim obj = LinAlg.Dot(c, x)
-                Dim ngap = mu / (1.0 + Math.Abs(obj))
+                Dim ngap = mu / (1.0 + std.Abs(obj))
                 If log IsNot Nothing Then
                     log.Add($"  IPM {it,3}: rp={nrp:E2} rd={nrd:E2} mu={mu:E2} obj={obj:G10}")
                 End If
@@ -251,7 +251,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 ' D² 与 AD²r_d（本迭代常量）
                 Dim d2(n - 1) As Double
                 For j = 0 To n - 1
-                    d2(j) = Math.Min(10000000000.0, Math.Max(0.000000000001, x(j) / s(j)))
+                    d2(j) = std.Min(10000000000.0, std.Max(0.000000000001, x(j) / s(j)))
                 Next
                 Dim ADrD(mi - 1) As Double
                 For i = 0 To mi - 1
@@ -276,7 +276,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Dim mScale = 1.0
                 For i = 0 To mi - 1
                     For k = 0 To mi - 1
-                        mScale = Math.Max(mScale, Math.Abs(M(i, k)))
+                        mScale = std.Max(mScale, std.Abs(M(i, k)))
                     Next
                 Next
 
@@ -293,13 +293,13 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     Dim tripleA = NewtonDir(M, L, reg, x, s, rp, rd, d2, ADrD, zero, zero)
                     dxA = tripleA(0) : dyA = tripleA(1) : dsA = tripleA(2)
                     ' 预测步 μ_aff 与 σ
-                    Dim aAff = Math.Min(1.0, Math.Min(MaxStep(x, dxA), MaxStep(s, dsA)))
+                    Dim aAff = std.Min(1.0, std.Min(MaxStep(x, dxA), MaxStep(s, dsA)))
                     Dim muAff As Double = 0
                     For j = 0 To n - 1
                         muAff += (x(j) + aAff * dxA(j)) * (s(j) + aAff * dsA(j))
                     Next
                     muAff /= n
-                    Dim sigma = Math.Min(1.0, Math.Max(0.0, (muAff / mu) ^ 3))
+                    Dim sigma = std.Min(1.0, std.Max(0.0, (muAff / mu) ^ 3))
                     ' 校正步
                     Dim corrV(n - 1) As Double
                     Dim sigMuV(n - 1) As Double
@@ -309,8 +309,8 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     Next
                     Dim triple = NewtonDir(M, L, reg, x, s, rp, rd, d2, ADrD, sigMuV, corrV)
                     dx = triple(0) : dy = triple(1) : ds = triple(2)
-                    aP = Math.Min(1.0, 0.99 * MaxStep(x, dx))
-                    aD = Math.Min(1.0, 0.99 * MaxStep(s, ds))
+                    aP = std.Min(1.0, 0.99 * MaxStep(x, dx))
+                    aD = std.Min(1.0, 0.99 * MaxStep(s, ds))
                     If aP > 0.000000001 OrElse aD > 0.000000001 Then
                         ok = True
                         Exit For        ' 当前档位可用
@@ -330,8 +330,8 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Next
                 Dim big As Double = 0
                 For j = 0 To n - 1
-                    big = Math.Max(big, Math.Abs(x(j)))
-                    big = Math.Max(big, Math.Abs(s(j)))
+                    big = std.Max(big, std.Abs(x(j)))
+                    big = std.Max(big, std.Abs(s(j)))
                 Next
                 If big > 100000000000000.0 Then
                     status = "diverged"

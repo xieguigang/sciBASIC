@@ -15,7 +15,7 @@
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Linq
+Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
@@ -52,7 +52,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             ' ---- 阶段 0：划分 ----
             Dim xMax = 1.0
             For j = 0 To n - 1
-                xMax = Math.Max(xMax, Math.Abs(xIpm(j)))
+                xMax = std.Max(xMax, std.Abs(xIpm(j)))
             Next
             Dim kappa = 0.00000001 * xMax
             Dim basicCand As New List(Of Int32)()
@@ -140,7 +140,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Dim leave As Int32 = -1
                 For i = 0 To m - 1
                     If alpha(i) < -0.000000000001 Then
-                        Dim r = Math.Max(0.0, xB(i)) / (-alpha(i))
+                        Dim r = std.Max(0.0, xB(i)) / (-alpha(i))
                         If r < dmax Then
                             dmax = r
                             leave = i
@@ -156,7 +156,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Else
                     ' 主元：j 入基（值 xj − δmax），出基变量到下界 0（非基）
                     Dim delta = dmax
-                    Dim enterVal = Math.Max(0.0, xj - delta)
+                    Dim enterVal = std.Max(0.0, xj - delta)
                     superVal.Remove(j)
                     Dim leaving = basis(leave)
                     basis(leave) = j
@@ -182,7 +182,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     For i = 0 To m - 1
                         d -= A(i, j) * y(i)
                     Next
-                    If d < -0.0000001 * (1.0 + Math.Abs(c(j))) Then
+                    If d < -0.0000001 * (1.0 + std.Abs(c(j))) Then
                         dualOk = False
                         Exit For
                     End If
@@ -197,7 +197,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 For i = 0 To m - 1
                     keep.Add(i)
                 Next
-                Dim res = sx.LoopPhase2(keep, basis, 40 * Math.Max(1, m))
+                Dim res = sx.LoopPhase2(keep, basis, 40 * std.Max(1, m))
                 If res.Item1 <> "optimal" Then
                     Return New CrossoverResult With {.Status = res.Item1}
                 End If
@@ -219,7 +219,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         Private Function ColNnz(j As Int32) As Int32
             Dim cnt As Int32 = 0
             For i = 0 To m - 1
-                If Math.Abs(A(i, j)) > 0 Then cnt += 1
+                If std.Abs(A(i, j)) > 0 Then cnt += 1
             Next
             Return cnt
         End Function
