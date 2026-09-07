@@ -73,6 +73,13 @@ Namespace LinearAlgebra.LinearProgramming
         ''' <summary>1 = blocked by the lower bound, 2 = blocked by the upper bound</summary>
         Dim kindBuf() As Byte
         Dim statTouched As Long
+        ''' <summary>
+        ''' the entering variable candidate which is rejected by the pivot
+        ''' element threshold check
+        ''' </summary>
+        Dim blocked() As Boolean
+        Dim blockedList As New List(Of Integer)
+        Dim clampLo As Long, clampHi As Long, clampErr As Double
 
         Dim objValue As Double
         Dim minSign As Double
@@ -408,6 +415,7 @@ Namespace LinearAlgebra.LinearProgramming
             touched = New Integer(m - 1) {}
             ratioBuf = New Double(m - 1) {}
             kindBuf = New Byte(m - 1) {}
+            blocked = New Boolean(nWork - 1) {}
 
             Array.Copy(rhsW, b, m)
 
@@ -560,6 +568,9 @@ Namespace LinearAlgebra.LinearProgramming
                 If isArt(j) Then
                     Continue For
                 End If
+                If blocked(j) Then
+                    Continue For
+                End If
                 If hi(j) = 0.0 Then
                     ' the variable is fixed at zero
                     Continue For
@@ -705,6 +716,7 @@ Namespace LinearAlgebra.LinearProgramming
 
                 Dim dir As Integer = If(status(q) = 2, -1, 1)
                 Dim t As Double = If(hi(q) >= INF, INF, hi(q))
+                Dim tMin As Double = t
 
                 ' pass 1: the ratio test, both of the lower bound and the upper
                 ' bound of the basic variables are checked here.
@@ -718,19 +730,24 @@ Namespace LinearAlgebra.LinearProgramming
                     Dim a As Double = alpha(r) * dir
 
                     If a > zeroTol Then
-                        ratioBuf(r) = b(r) / a
+                        ' a negative ratio means that the basic variable is
+                        ' already out of its bound by the round-off error, it
+                        ' blocks the step at zero instead of being ignored:
+                        ' ignoring it will make the value run away.
+                        ratioBuf(r) = std.Max(0.0, b(r) / a)
                         kindBuf(r) = 1
                     ElseIf a < -zeroTol Then
                         Dim hb As Double = hi(basis(r))
 
                         If hb < INF Then
-                            ratioBuf(r) = (hb - b(r)) / (-a)
+                            ratioBuf(r) = std.Max(0.0, (hb - b(r)) / (-a))
                             kindBuf(r) = 2
                         End If
                     End If
 
-                    If ratioBuf(r) >= 0.0 AndAlso ratioBuf(r) < t Then
-                        t = ratioBuf(r)
+                    If ratioBuf(r) >= 0.0 AndAlso ratioBuf(r) < tMin Then
+                        tMin = ratioBuf(r)
+                        t = tMin
                     End If
                 Next
 
@@ -738,7 +755,11 @@ Namespace LinearAlgebra.LinearProgramming
                 ' the tie is broken with the pivot magnitude at first (for the
                 ' numerical stability) and then with the row sparsity (for 
                 ' reducing the fill-in of the sparse tableau).
-                Dim tieEps As Double = zeroTol
+                ' only the exact ratio tie is accepted: a loose tolerance here
+                ' makes the selected row step out of the minimal ratio, and
+                ' the extra step will be dropped by the simplex, which breaks
+                ' the primal feasibility of the result solution.
+                Dim tieEps As Double = 0.0
                 Dim tieMax As Double = 0.0
 
                 For r As Integer = 0 To m - 1
@@ -790,7 +811,12 @@ Namespace LinearAlgebra.LinearProgramming
                 End If
 
                 If leaveRow >= 0 Then
-                    t = ratioBuf(leaveRow)
+                    ' the step size is the minimal ratio, not the ratio of the
+                    ' selected row: the selected row is picked up from the tie
+                    ' set which is expanded by a tolerance, using its ratio as
+                    ' the step size will push the other basic variables out of
+                    ' their bounds.
+                    t = tMin
                 End If
 
                 costRatio += clock.ElapsedTicks - mark
@@ -803,7 +829,38 @@ Namespace LinearAlgebra.LinearProgramming
                     t = 0.0
                 End If
 
+                If leaveRow >= 0 AndAlso std.Abs(alpha(leaveRow)) < std.Max(pivotTol, 0.001 * tieMax) Then
+                    ' the pivot element is too small for keeping the numerical
+                    ' stability of the tableau, rejects this entering variable
+                    ' and tries the next candidate in the next iteration. note
+                    ' that no step should be applied here, otherwise the basic
+                    ' variable value will be out of sync with the basis.
+                    blocked(q) = True
+                    blockedList.Add(q)
+                    pivotFailure += 1
+                    useBland = True
+
+                    If pivotFailure > std.Max(256, nWork \ 8) Then
+                        Return $"Numerical failure in the {phaseName}: the pivot element is too small."
+                    End If
+
+                    iteration += 1
+
+                    Continue Do
+                End If
+
                 objValue += d(q) * dir * t
+
+                ' this iteration makes a progress, so that all of the rejected
+                ' entering variable candidate can be restored
+                If blockedList.Count > 0 Then
+                    For Each j As Integer In blockedList
+                        blocked(j) = False
+                    Next
+
+                    blockedList.Clear()
+                End If
+                pivotFailure = 0
 
                 costUpdate += clock.ElapsedTicks - mark
                 mark = clock.ElapsedTicks
@@ -823,6 +880,25 @@ Namespace LinearAlgebra.LinearProgramming
                             b(r) -= alpha(r) * step_
                         Next
                     End If
+
+                    ' keeps the basic variables inside of their bounds: the
+                    ' ratio test breaks the tie with a tolerance, so that a
+                    ' basic variable may step out of its bound by a tiny
+                    ' value, the round-off error will run away if it is not
+                    ' corrected here.
+                    For r As Integer = 0 To m - 1
+                        Dim hb As Double = hi(basis(r))
+
+                        If b(r) < 0.0 Then
+                            clampLo += 1
+                            clampErr += -b(r)
+                            b(r) = 0.0
+                        ElseIf hb < INF AndAlso b(r) > hb Then
+                            clampHi += 1
+                            clampErr += b(r) - hb
+                            b(r) = hb
+                        End If
+                    Next
                 End If
 
                 If leaveRow < 0 Then
@@ -830,17 +906,6 @@ Namespace LinearAlgebra.LinearProgramming
                     ' flip the variable to the other bound, no basis change
                     ' is required by this operation.
                     status(q) = If(status(q) = 2, CByte(0), CByte(2))
-                ElseIf std.Abs(alpha(leaveRow)) < std.Max(pivotTol, 0.001 * tieMax) Then
-                    pivotFailure += 1
-                    useBland = True
-
-                    If pivotFailure = 1 Then
-                        Call $"[{phaseName}] pivot too small: q = {q}, |pivot| = {std.Abs(alpha(leaveRow)).ToString("G4")}, tie max = {tieMax.ToString("G4")}, non-zeros = {nTouched}, t = {t.ToString("G4")}".warning
-                    End If
-
-                    If pivotFailure > 32 Then
-                        Return $"Numerical failure in the {phaseName}: the pivot element is too small."
-                    End If
                 Else
                     Dim leaving As Integer = basis(leaveRow)
                     Dim xq As Double = If(status(q) = 2, hi(q) - t, t)
@@ -850,7 +915,6 @@ Namespace LinearAlgebra.LinearProgramming
                     status(q) = 1
                     status(leaving) = If(leaveUpper, CByte(2), CByte(0))
                     b(leaveRow) = xq
-                    pivotFailure = 0
                 End If
 
                 costPivot += clock.ElapsedTicks - mark
@@ -878,6 +942,7 @@ Namespace LinearAlgebra.LinearProgramming
 
                     nextTick = iteration + 2000
                     Call $"[{phaseName}] {iteration} iterations, objective = {objValue.ToString("G6")}, fill-in = {fillIn / std.Max(m, 1)} non-zeros/row".info
+                    Call $"    clamp: lo = {clampLo}, hi = {clampHi}, error = {clampErr.ToString("G4")}, blocked = {blockedList.Count}".info
                     Call $"    cost: price = {costPrice * 1000.0 / Stopwatch.Frequency}ms, column = {costColumn * 1000.0 / Stopwatch.Frequency}ms, ratio = {costRatio * 1000.0 / Stopwatch.Frequency}ms, update = {costUpdate * 1000.0 / Stopwatch.Frequency}ms, pivot = {costPivot * 1000.0 / Stopwatch.Frequency}ms, touched/pivot = {statTouched / std.Max(iteration, 1)}".info
                 End If
             Loop
