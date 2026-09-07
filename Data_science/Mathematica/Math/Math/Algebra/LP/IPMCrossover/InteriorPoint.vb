@@ -189,7 +189,19 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Return alpha
         End Function
 
-        ''' <summary>Mehrotra 起始点：最小范数 x̂/ŝ + 偏移平衡（并夹到上界内部）</summary>
+        ''' <summary>
+        ''' Mehrotra 起始点
+        ''' 
+        ''' 无上界（x ≥ 0）：沿用已验证的 Mehrotra(1992) 启发式——最小范数 x̂/ŝ + 偏移平衡。
+        ''' 有上界（0 ≤ x ≤ u）：改为
+        '''   1) 取盒子中心 x⁰ = u/2（无上界变量取 1），
+        '''   2) 用同一因子做最小范数修正 x⁰ ← x⁰ − Aᵀ(AAᵀ)⁻¹(Ax⁰ − b)，使 A·x⁰ = b，
+        '''   3) 夹回 [1%·u, 99%·u] 严格内部，
+        '''   4) 对偶按 d = c − Aᵀŷ 的正/负部分拆分：s = max(d,0)+λ、z = max(−d,0)+λ
+        '''      （保证 s − z = d，即初始对偶残差为 0，且 s,z ≥ λ > 0）。
+        ''' 说明：不能把无上界的"平衡偏移"直接套用到有界情形——w·z 项会让 δ 爆炸，
+        '''       把 x 整体推到界上（实测会让原始残差发散）。
+        ''' </summary>
         Private Sub MehrotraStart(ByRef x As Double(), ByRef y As Double(),
                                   ByRef s As Double(), ByRef z As Double())
             x = New Double(n - 1) {}
@@ -199,15 +211,11 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim xhat(n - 1) As Double
             Dim dhat(n - 1) As Double
             Dim y0(m - 1) As Double
+            Dim ones(n - 1) As Double
 
             For j As Int32 = 0 To n - 1
                 xhat(j) = 1.0
                 dhat(j) = c(j)
-            Next
-
-            Dim ones(n - 1) As Double
-
-            For j As Int32 = 0 To n - 1
                 ones(j) = 1.0
             Next
 
@@ -234,76 +242,90 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 End If
             End If
 
-            ' 偏移到严格内部
-            Dim minX As Double = Double.MaxValue
-            Dim minS As Double = Double.MaxValue
-            Dim minZ As Double = Double.MaxValue
+            If Not anyBound Then
+                ' ---------------- 无上界：原实现（保持 T1-T9 行为不变）----------------
+                Dim minX As Double = Double.MaxValue
+                Dim minS As Double = Double.MaxValue
 
-            For j As Int32 = 0 To n - 1
-                If xhat(j) < minX Then minX = xhat(j)
-                If dhat(j) < minS Then minS = dhat(j)
-                If ubFin(j) AndAlso -dhat(j) < minZ Then minZ = -dhat(j)
-            Next
+                For j As Int32 = 0 To n - 1
+                    If xhat(j) < minX Then minX = xhat(j)
+                    If dhat(j) < minS Then minS = dhat(j)
+                Next
 
-            Dim dx0 As Double = std.Max(0.0, -1.5 * minX)
-            Dim ds0 As Double = std.Max(0.0, -1.5 * minS)
-            Dim dz0 As Double = std.Max(0.0, -1.5 * minZ)
+                Dim dx0 As Double = std.Max(0.0, -1.5 * minX)
+                Dim ds0 As Double = std.Max(0.0, -1.5 * minS)
 
-            For j As Int32 = 0 To n - 1
-                x(j) = xhat(j) + dx0
-                s(j) = dhat(j) + ds0
-                z(j) = If(ubFin(j), -dhat(j) + dz0, 0.0)
-            Next
+                For j As Int32 = 0 To n - 1
+                    x(j) = xhat(j) + dx0
+                    s(j) = dhat(j) + ds0
+                Next
 
-            ' 夹进 (0, u) 内部
-            For j As Int32 = 0 To n - 1
-                If ubFin(j) Then
-                    Dim room As Double = u(j)
-                    Dim lo As Double = std.Min(0.0001, 0.001 * room)
-                    Dim hi As Double = 0.5 * room
+                Dim dot As Double = LinAlg.Dot(x, s)
+                Dim sumS As Double = s.Sum()
+                Dim sumX As Double = x.Sum()
+                Dim dx2 As Double = 0.5 * dot / std.Max(0.000000000001, sumS)
+                Dim ds2 As Double = 0.5 * dot / std.Max(0.000000000001, sumX)
 
-                    x(j) = std.Min(std.Max(x(j), lo), hi)
-                Else
-                    x(j) = std.Max(x(j), 0.0001)
-                End If
-
-                s(j) = std.Max(s(j), 0.0001)
-                z(j) = If(ubFin(j), std.Max(z(j), 0.0001), 0.0)
-            Next
-
-            ' 平衡偏移：δ̂ = 0.5·(xᵀs + wᵀz)/Σ(·)
-            Dim w(n - 1) As Double
-
-            UpdateUpperSlack(x, w)
-
-            Dim dot As Double = LinAlg.Dot(x, s)
-            Dim sumD As Double = 0.0
-            Dim sumX As Double = 0.0
-
-            For j As Int32 = 0 To n - 1
-                sumD += s(j)
-                sumX += x(j)
-
-                If ubFin(j) Then
-                    dot += w(j) * z(j)
-                    sumD += z(j)
-                    sumX += w(j)
-                End If
-            Next
-
-            Dim dx2 As Double = 0.5 * dot / std.Max(0.000000000001, sumD)
-            Dim dd2 As Double = 0.5 * dot / std.Max(0.000000000001, sumX)
-
-            For j As Int32 = 0 To n - 1
-                If ubFin(j) Then
-                    x(j) = std.Min(x(j) + dx2, 0.5 * u(j))
-                    x(j) = std.Max(x(j), std.Min(0.0001, 0.001 * u(j)))
-                    z(j) = std.Max(0.0001, z(j) + dd2)
-                Else
+                For j As Int32 = 0 To n - 1
                     x(j) = std.Max(0.0001, x(j) + dx2)
-                End If
+                    s(j) = std.Max(0.0001, s(j) + ds2)
+                Next
 
-                s(j) = std.Max(0.0001, s(j) + dd2)
+                y = y0
+
+                Return
+            End If
+
+            ' ---------------- 有上界 ----------------
+            ' 1) 盒子中心
+            Dim c0(n - 1) As Double
+
+            For j As Int32 = 0 To n - 1
+                c0(j) = If(ubFin(j), 0.5 * u(j), 1.0)
+            Next
+
+            ' 2) 最小范数修正到 A·x = b
+            If fac IsNot Nothing Then
+                Dim r0 As Double() = Mat.Mv(c0)
+
+                For i As Int32 = 0 To m - 1
+                    r0(i) -= b(i)
+                Next
+
+                Dim dz As Double() = fac.Solve(r0)
+
+                If dz IsNot Nothing Then
+                    Dim corr As Double() = Mat.Mtv(dz)
+
+                    For j As Int32 = 0 To n - 1
+                        c0(j) -= corr(j)
+                    Next
+                End If
+            End If
+
+            ' 3) 夹回严格内部
+            For j As Int32 = 0 To n - 1
+                If ubFin(j) Then
+                    Dim uj As Double = u(j)
+
+                    x(j) = std.Min(std.Max(c0(j), 0.01 * uj), 0.99 * uj)
+                Else
+                    x(j) = std.Max(c0(j), 0.0001)
+                End If
+            Next
+
+            ' 4) 对偶拆分（s − z = d，s,z ≥ λ）
+            Dim maxD As Double = 1.0
+
+            For j As Int32 = 0 To n - 1
+                If std.Abs(dhat(j)) > maxD Then maxD = std.Abs(dhat(j))
+            Next
+
+            Dim lambda As Double = std.Max(1.0, 0.01 * maxD)
+
+            For j As Int32 = 0 To n - 1
+                s(j) = std.Max(dhat(j), 0.0) + lambda
+                z(j) = If(ubFin(j), std.Max(-dhat(j), 0.0) + lambda, 0.0)
             Next
 
             y = y0
