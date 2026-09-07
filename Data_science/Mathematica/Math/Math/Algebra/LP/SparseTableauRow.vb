@@ -10,8 +10,10 @@ Namespace LinearAlgebra.LinearProgramming
     ''' order, so that:
     '''
     ''' 1. the element lookup can be done via the binary search method
-    ''' 2. the row merge operation (AXPY) can be done via a backward merge,
-    '''    which does not require any additional memory buffer.
+    ''' 2. the row merge operation (AXPY) can be done via a forward merge
+    '''    into a spare buffer, and then the buffers are swapped: there is
+    '''    no array copy and no extra allocation is required by this 
+    '''    operation (the ping-pong buffer).
     ''' </remarks>
     Public Class SparseTableauRow
 
@@ -21,6 +23,11 @@ Namespace LinearAlgebra.LinearProgramming
         Public Val As Double()
         ''' <summary>the number of the non-zero elements in this row</summary>
         Public Count As Integer
+
+        ''' <summary>the spare buffer of <see cref="Idx"/></summary>
+        Dim idxB As Integer()
+        ''' <summary>the spare buffer of <see cref="Val"/></summary>
+        Dim valB As Double()
 
         Sub New(capacity As Integer)
             capacity = std.Max(capacity, 4)
@@ -42,6 +49,21 @@ Namespace LinearAlgebra.LinearProgramming
 
             ReDim Preserve Idx(size - 1)
             ReDim Preserve Val(size - 1)
+        End Sub
+
+        Private Sub EnsureSpare(capacity As Integer)
+            If idxB IsNot Nothing AndAlso idxB.Length >= capacity Then
+                Return
+            End If
+
+            Dim size As Integer = If(idxB Is Nothing, 4, idxB.Length)
+
+            While size < capacity
+                size *= 2
+            End While
+
+            idxB = New Integer(size - 1) {}
+            valB = New Double(size - 1) {}
         End Sub
 
         ''' <summary>
@@ -112,8 +134,9 @@ Namespace LinearAlgebra.LinearProgramming
         ''' <param name="factor"></param>
         ''' <param name="dropTol"></param>
         ''' <remarks>
-        ''' a backward merge is applied on this operation, so that there is no
-        ''' additional memory buffer required by the merge result.
+        ''' a forward merge into the spare buffer is applied by this operation,
+        ''' then the spare buffer is swapped with the row buffer, so that there
+        ''' is no array copy cost on this operation.
         ''' </remarks>
         Public Sub Axpy(other As SparseTableauRow, factor As Double, dropTol As Double)
             Dim n1 As Integer = Count
@@ -123,58 +146,101 @@ Namespace LinearAlgebra.LinearProgramming
                 Return
             End If
 
-            EnsureCapacity(n1 + n2)
+            ' counts the size of the merged row at first: reserving the buffer
+            ' with (n1 + n2) will make the row buffer grow on every single
+            ' merge operation, which costs a lot of time on the array copy.
+            Dim merged As Integer = 0
+            Dim c1 As Integer = 0
+            Dim c2 As Integer = 0
 
-            Dim i As Integer = n1 - 1
-            Dim j As Integer = n2 - 1
-            Dim k As Integer = n1 + n2 - 1
-            Dim last As Integer = n1 + n2 - 1
+            While c1 < n1 OrElse c2 < n2
+                If c2 >= n2 Then
+                    merged += 1
+                    c1 += 1
+                ElseIf c1 >= n1 Then
+                    If std.Abs(factor * other.Val(c2)) > dropTol Then
+                        merged += 1
+                    End If
 
-            While j >= 0
-                If i >= 0 AndAlso Idx(i) > other.Idx(j) Then
-                    Idx(k) = Idx(i)
-                    Val(k) = Val(i)
-                    i -= 1
-                    k -= 1
-                ElseIf i >= 0 AndAlso Idx(i) = other.Idx(j) Then
+                    c2 += 1
+                ElseIf Idx(c1) > other.Idx(c2) Then
+                    merged += 1
+                    c1 += 1
+                ElseIf Idx(c1) = other.Idx(c2) Then
+                    If std.Abs(Val(c1) - factor * other.Val(c2)) > dropTol Then
+                        merged += 1
+                    End If
+
+                    c1 += 1
+                    c2 += 1
+                Else
+                    If std.Abs(factor * other.Val(c2)) > dropTol Then
+                        merged += 1
+                    End If
+
+                    c2 += 1
+                End If
+            End While
+
+            Call EnsureSpare(merged)
+
+            Dim i As Integer = 0
+            Dim j As Integer = 0
+            Dim w As Integer = 0
+
+            While i < n1 OrElse j < n2
+                If j >= n2 Then
+                    idxB(w) = Idx(i)
+                    valB(w) = Val(i)
+                    i += 1
+                    w += 1
+                ElseIf i >= n1 Then
+                    Dim v As Double = -factor * other.Val(j)
+
+                    If std.Abs(v) > dropTol Then
+                        idxB(w) = other.Idx(j)
+                        valB(w) = v
+                        w += 1
+                    End If
+
+                    j += 1
+                ElseIf Idx(i) > other.Idx(j) Then
+                    idxB(w) = Idx(i)
+                    valB(w) = Val(i)
+                    i += 1
+                    w += 1
+                ElseIf Idx(i) = other.Idx(j) Then
                     Dim v As Double = Val(i) - factor * other.Val(j)
 
                     If std.Abs(v) > dropTol Then
-                        Idx(k) = Idx(i)
-                        Val(k) = v
-                        k -= 1
+                        idxB(w) = Idx(i)
+                        valB(w) = v
+                        w += 1
                     End If
 
-                    i -= 1
-                    j -= 1
+                    i += 1
+                    j += 1
                 Else
                     Dim v As Double = -factor * other.Val(j)
 
                     If std.Abs(v) > dropTol Then
-                        Idx(k) = other.Idx(j)
-                        Val(k) = v
-                        k -= 1
+                        idxB(w) = other.Idx(j)
+                        valB(w) = v
+                        w += 1
                     End If
 
-                    j -= 1
+                    j += 1
                 End If
             End While
 
-            While i >= 0
-                Idx(k) = Idx(i)
-                Val(k) = Val(i)
-                i -= 1
-                k -= 1
-            End While
+            Dim swapIdx As Integer() = Idx
+            Dim swapVal As Double() = Val
 
-            Dim newCount As Integer = last - k
-
-            If newCount > 0 AndAlso k >= 0 Then
-                Array.Copy(Idx, k + 1, Idx, 0, newCount)
-                Array.Copy(Val, k + 1, Val, 0, newCount)
-            End If
-
-            Count = newCount
+            Idx = idxB
+            Val = valB
+            idxB = swapIdx
+            valB = swapVal
+            Count = w
         End Sub
 
         ''' <summary>

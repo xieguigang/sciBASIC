@@ -841,6 +841,7 @@ Namespace LinearAlgebra.LinearProgramming
 
                     nextTick = iteration + 2000
                     Call $"[{phaseName}] {iteration} iterations, objective = {objValue.ToString("G6")}, fill-in = {fillIn / std.Max(m, 1)} non-zeros/row".info
+                    Call $"    cost: price = {costPrice * 1000.0 / Stopwatch.Frequency}ms, column = {costColumn * 1000.0 / Stopwatch.Frequency}ms, ratio = {costRatio * 1000.0 / Stopwatch.Frequency}ms, update = {costUpdate * 1000.0 / Stopwatch.Frequency}ms, pivot = {costPivot * 1000.0 / Stopwatch.Frequency}ms".info
                 End If
             Loop
 
