@@ -66,12 +66,12 @@ Namespace LinearAlgebra.LinearProgramming
 
     Public Class LPPSolution
 
-        Dim solution() As Double
-        Dim variableNames() As String
+        Public ReadOnly Property solution As Double()
+        Public ReadOnly Property variableNames As String()
 
-        Friend slack() As Double
-        Friend shadowPrice() As Double
-        Friend reducedCost() As Double
+        Public ReadOnly Property slack As Double()
+        Public ReadOnly Property shadowPrice As Double()
+        Public ReadOnly Property reducedCost As Double()
 
         Public ReadOnly Property failureMessage As String
 
