@@ -66,6 +66,83 @@ Namespace IL
         Public Property OperandData As Byte()
         Public Property Offset As Integer
 
+        ''' <summary>
+        ''' 该指令的总字节长度（操作码 + 操作数）。由 <see cref="MethodBodyReader"/> 在解析时回填。
+        ''' </summary>
+        Public Property Size As Integer
+
+        ''' <summary>下一条指令的 IL 偏移（顺序执行时的落点）</summary>
+        Public ReadOnly Property NextOffset As Integer
+            Get
+                Return Offset + Size
+            End Get
+        End Property
+
+        ''' <summary>无条件跳转（br / br.s / leave / leave.s）</summary>
+        Public ReadOnly Property IsUnconditionalBranch As Boolean
+            Get
+                Return Code.FlowControl = FlowControl.Branch OrElse Code.FlowControl = FlowControl.Throw
+            End Get
+        End Property
+
+        ''' <summary>条件跳转（brtrue / brfalse / 各类 beq bne bgt blt ...）</summary>
+        Public ReadOnly Property IsConditionalBranch As Boolean
+            Get
+                Return Code.FlowControl = FlowControl.Cond_Branch AndAlso
+                       Code.OperandType <> OperandType.InlineSwitch
+            End Get
+        End Property
+
+        ''' <summary>多分支跳转（switch）</summary>
+        Public ReadOnly Property IsSwitch As Boolean
+            Get
+                Return Code.OperandType = OperandType.InlineSwitch
+            End Get
+        End Property
+
+        ''' <summary>是否为任何一种跳转指令</summary>
+        Public ReadOnly Property IsBranch As Boolean
+            Get
+                Return IsUnconditionalBranch OrElse IsConditionalBranch OrElse IsSwitch
+            End Get
+        End Property
+
+        ''' <summary>ret</summary>
+        Public ReadOnly Property IsReturn As Boolean
+            Get
+                Return Code.FlowControl = FlowControl.Return
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 该指令的全部跳转目标（绝对 IL 偏移）。
+        ''' 条件/无条件跳转返回单元素数组，switch 返回全部 case 目标，其余返回空数组。
+        ''' </summary>
+        Public ReadOnly Property BranchTargets As Integer()
+            Get
+                If Code.OperandType = OperandType.InlineSwitch Then
+                    Dim targets = TryCast(Operand, Integer())
+                    Return If(targets, New Integer() {})
+                End If
+
+                If IsBranch Then
+                    If TypeOf Operand Is Integer Then Return New Integer() {CInt(Operand)}
+                    Return New Integer() {}
+                End If
+
+                Return New Integer() {}
+            End Get
+        End Property
+
+        ''' <summary>该指令是否会把控制流交给后面的指令（用于基本块切分）</summary>
+        Public ReadOnly Property CanFallThrough As Boolean
+            Get
+                Return Not (Code.FlowControl = FlowControl.Branch OrElse
+                            Code.FlowControl = FlowControl.Return OrElse
+                            Code.FlowControl = FlowControl.Throw)
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return GetCode()
         End Function
@@ -143,6 +220,9 @@ Namespace IL
                     Else
                         Return "not supported"
                     End If
+
+                Case OperandType.InlineSwitch
+                    Return " (" & String.Join(", ", BranchTargets.Select(Function(t) GetExpandedOffset(t))) & ")"
 
                 Case Else
                     Return "not supported"

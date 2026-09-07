@@ -88,6 +88,19 @@ Namespace LinearAlgebra.LinearProgramming
         ''' 添加字段保存原始约束类型
         ''' </summary>
         Friend originalConstraintTypes As String()
+        ''' <summary>
+        ''' 大规模的线性规划问题（例如基因组规模的代谢网络FBA问题）的系数矩阵
+        ''' 以CSR稀疏矩阵的格式进行存储，以避免稠密矩阵所带来的内存溢出问题
+        ''' </summary>
+        Friend sparseConstraints As LpSparseMatrix
+        ''' <summary>
+        ''' 变量的下界，默认为零
+        ''' </summary>
+        Friend lowerBounds As Double()
+        ''' <summary>
+        ''' 变量的上界，默认为<see cref="Double.PositiveInfinity"/>
+        ''' </summary>
+        Friend upperBounds As Double()
 
         Public Shared Property PIVOT_ITERATION_LIMIT As Integer = 3000
         Public Shared Property USE_SUBSCRIPT_UNICODE As Boolean = False
@@ -154,7 +167,9 @@ Namespace LinearAlgebra.LinearProgramming
                        constraintCoefficients()() As Double,
                        constraintTypes() As String,
                        constraintRightHandSides() As Double,
-                       objectiveFunctionValue As Double)
+                       objectiveFunctionValue As Double,
+                       Optional lowerBounds() As Double = Nothing,
+                       Optional upperBounds() As Double = Nothing)
 
             ' Create default variable name array
             If variableNames Is Nothing OrElse variableNames.Length = 0 Then
@@ -190,6 +205,71 @@ Namespace LinearAlgebra.LinearProgramming
             Me.constraintTypes = constraintTypes
             Me.constraintRightHandSides = constraintRightHandSides
             Me.objectiveFunctionValue = objectiveFunctionValue
+            Me.lowerBounds = lowerBounds
+            Me.upperBounds = upperBounds
+        End Sub
+
+        ''' <summary>
+        ''' 使用CSR稀疏矩阵的格式构建大规模的线性规划问题
+        ''' </summary>
+        ''' <param name="objectiveFunctionType">目标函数的类型，是求取极大值还是极小值</param>
+        ''' <param name="variableNames">方程之中的未知变量的名称</param>
+        ''' <param name="objectiveFunctionCoefficients">目标函数之中每一个未知变量所对应的系数</param>
+        ''' <param name="constraintCoefficients">
+        ''' 方程组的左边的系数矩阵，这个矩阵以CSR稀疏矩阵的格式进行存储，用于
+        ''' 大规模的线性规划问题的求解，例如基因组规模的代谢网络的FBA问题
+        ''' </param>
+        ''' <param name="constraintTypes">方程组之中的函数类型：大于，小于，等于</param>
+        ''' <param name="constraintRightHandSides">方程组的右边：方程组之中每一个方程的结果值</param>
+        ''' <param name="objectiveFunctionValue">目标方程的目标结果值</param>
+        ''' <param name="lowerBounds">变量的下界，默认为零</param>
+        ''' <param name="upperBounds">变量的上界，默认为正无穷</param>
+        Public Sub New(objectiveFunctionType$,
+                       variableNames() As String,
+                       objectiveFunctionCoefficients() As Double,
+                       constraintCoefficients As LpSparseMatrix,
+                       constraintTypes() As String,
+                       constraintRightHandSides() As Double,
+                       objectiveFunctionValue As Double,
+                       Optional lowerBounds() As Double = Nothing,
+                       Optional upperBounds() As Double = Nothing)
+
+            If variableNames Is Nothing OrElse variableNames.Length = 0 Then
+                variableNames = New String(objectiveFunctionCoefficients.Length - 1) {}
+
+                For i As Integer = 0 To variableNames.Length - 1
+                    variableNames(i) = "x" & subscriptN(i)
+                Next
+            End If
+
+            If constraintCoefficients Is Nothing Then
+                Throw New Exception("LPP sparse constraint matrix can not be nothing.")
+            End If
+            If constraintTypes.Length <> constraintRightHandSides.Length OrElse
+                constraintRightHandSides.Length <> constraintCoefficients.Rows Then
+
+                Throw New Exception("LPP constraints do not appear well-formed.")
+            End If
+            If variableNames.Length <> objectiveFunctionCoefficients.Length Then
+                Throw New Exception("LPP objective function does not appear well-formed.")
+            End If
+            If constraintCoefficients.Columns <> objectiveFunctionCoefficients.Length Then
+                Throw New Exception("LPP sparse constraint matrix is not of the same size length as the objective function.")
+            End If
+
+            Me.originalConstraintTypes = constraintTypes.ToArray()
+            Me.originalVariableCount = objectiveFunctionCoefficients.Length
+            Me.objectiveFunctionType = objectiveFunctionType.ParseType
+            Me.variableNames = variableNames.ToList
+            Me.objectiveFunctionCoefficients = objectiveFunctionCoefficients.ToList
+            Me.sparseConstraints = constraintCoefficients
+            ' 稀疏矩阵模式下不物化稠密矩阵，避免大规模问题的内存溢出
+            Me.constraintCoefficients = Nothing
+            Me.constraintTypes = constraintTypes
+            Me.constraintRightHandSides = constraintRightHandSides
+            Me.objectiveFunctionValue = objectiveFunctionValue
+            Me.lowerBounds = lowerBounds
+            Me.upperBounds = upperBounds
         End Sub
 
         Public Overrides Function ToString() As String
