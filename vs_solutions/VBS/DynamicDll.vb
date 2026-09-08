@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.CodeAnalysis
 Imports Microsoft.CodeAnalysis.Emit
 Imports Microsoft.CodeAnalysis.VisualBasic
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Linq
 
 Module DynamicDll
@@ -25,53 +26,104 @@ Module DynamicDll
     ''' <summary>脚本入口函数的固定名称</summary>
     Public Const MainName As String = "Main"
 
-    Public Function Compile(vbs As String, referenceDlls As IEnumerable(Of String)) As Assembly
-        ' 2. 解析代码为语法树
-        Dim syntaxTree As SyntaxTree = VisualBasicSyntaxTree.ParseText(vbs)
+    ' =========================================================================
+    ' 函数2: 脚本代码内存编译
+    ' =========================================================================
 
-        ' 3. 收集依赖项引用
-        ' 注意：在现代 .NET 中，收集引用是一个关键点。我们遍历当前已加载的程序集。
-        Dim references As New List(Of MetadataReference)()
-        For Each asm As Assembly In AppDomain.CurrentDomain.GetAssemblies()
-            If Not String.IsNullOrEmpty(asm.Location) Then
-                references.Add(MetadataReference.CreateFromFile(asm.Location))
+    ''' <summary>
+    ''' 将解析后的脚本代码基于Roslyn在内存中编译为assembly(全程不落盘)
+    ''' </summary>
+    ''' <param name="script">ParseScript函数的返回结果</param>
+    ''' <param name="asmName">目标assembly名称(默认取脚本文件名)</param>
+    ''' <param name="extraRefs">额外的引用程序集路径</param>
+    ''' <param name="debug">是否以debug模式编译</param>
+    Public Function CompileScript(script As ScriptParseResult,
+                                  Optional asmName As String = Nothing,
+                                  Optional extraRefs As IEnumerable(Of String) = Nothing,
+                                  Optional debug As Boolean = False) As Assembly
+
+        ' ---- Step1: 生成语法树 ----
+        Dim parseOptions As New VisualBasicParseOptions(LanguageVersion.Latest)
+        Dim trees As New List(Of SyntaxTree)
+
+        ' 引擎位于特定命名空间时, 自动添加导入语句保证脚本可以访问CommandLine类型
+        Dim engineNs As String = GetType(DynamicDll).Namespace
+
+        If Not String.IsNullOrEmpty(engineNs) Then
+            Call trees.Add(VisualBasicSyntaxTree.ParseText(
+                $"Imports {engineNs}.{NameOf(DynamicDll)}", parseOptions))
+        End If
+
+        Call trees.Add(VisualBasicSyntaxTree.ParseText(script.GeneratedCode, parseOptions))
+
+        ' ---- Step2: 收集编译引用(去重) ----
+        Dim references As New List(Of MetadataReference)
+        Dim added As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+        Dim AddRef = Sub(path As String)
+                         If Not String.IsNullOrEmpty(path) AndAlso
+                             File.Exists(path) AndAlso
+                             added.Add(path) Then
+
+                             Call references.Add(MetadataReference.CreateFromFile(path))
+                         End If
+                     End Sub
+
+        ' 2.1 #imports 所引用的外部程序集
+        For Each dll As String In script.Imports
+            If Not File.Exists(dll) Then
+                Throw New FileNotFoundException($"#imports所引用的程序集不存在: {dll}", dll)
             End If
+            Call AddRef(dll)
         Next
 
-        For Each dll As String In referenceDlls.SafeQuery
-            ' 如果有缺失的引用，可以手动添加，例如：
-            Call references.Add(MetadataReference.CreateFromFile(dll.GetFullPath))
+        ' 2.2 引擎自身assembly(提供CommandLine类型定义)
+        Call AddRef(GetType(DynamicDll).Assembly.Location)
+        Call AddRef(GetType(CommandLine).Assembly.Location)
+        ' 2.3 VB运行时(支持脚本使用VB内置函数)
+        Call AddRef(GetType(Microsoft.VisualBasic.Strings).Assembly.Location)
+
+        ' 2.4 额外引用
+        If Not extraRefs Is Nothing Then
+            For Each dll As String In extraRefs
+                Call AddRef(dll)
+            Next
+        End If
+
+        ' 2.5 当前AppDomain中所有已加载的BCL程序集
+        For Each asm As Assembly In AppDomain.CurrentDomain.GetAssemblies()
+            Call AddRef(asm.Location)
         Next
 
-        ' 4. 配置编译选项 (生成 DLL，且开启优化)
-        Dim options As New VisualBasicCompilationOptions(OutputKind.DynamicallyLinkedLibrary _
-            , optimizationLevel:=OptimizationLevel.Release)
+        ' ---- Step3: 编译选项 ----
+        Dim options As New VisualBasicCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+        options = options.WithOptimizationLevel(
+            If(debug, OptimizationLevel.Debug, OptimizationLevel.Release))
 
-        ' 5. 创建编译对象
+        ' ---- Step4: 执行编译 ----
         Dim compilation As VisualBasicCompilation = VisualBasicCompilation.Create(
-            assemblyName:=NameOf(DynamicDll),
-            syntaxTrees:={syntaxTree},
+            assemblyName:=If(String.IsNullOrEmpty(asmName),
+                Path.GetFileNameWithoutExtension(script.ScriptFile), asmName),
+            syntaxTrees:=trees,
             references:=references,
             options:=options)
 
-        ' 6. 编译并输出到内存流
-        Using ms As New MemoryStream()
-            Dim emitResult As EmitResult = compilation.Emit(ms)
+        ' ---- Step5: 发射IL到内存流并加载 ----
+        Using ms As New MemoryStream(), pdb As New MemoryStream()
+            Dim result As EmitResult = compilation.Emit(ms, pdb)
 
-            If Not emitResult.Success Then
-                ' 处理编译错误
-                For Each diag As Diagnostic In emitResult.Diagnostics
-                    Console.WriteLine($"{diag.Severity}: {diag.GetMessage()}")
-                Next
-                Return Nothing
+            If Not result.Success Then
+                Dim errors As String() = result.Diagnostics _
+                    .Where(Function(d) d.Severity = DiagnosticSeverity.Error) _
+                    .Select(Function(d) d.ToString()) _
+                    .ToArray()
+
+                Throw New InvalidOperationException(
+                    "脚本代码编译失败!" & vbCrLf & String.Join(vbCrLf, errors))
             End If
 
-            ' 7. 将流指针重置，并加载到内存中
-            ms.Seek(0, SeekOrigin.Begin)
-            Dim asmBytes As Byte() = ms.ToArray()
-
-            ' 注意：在现代 .NET 中，Assembly.Load 接受 byte[]
-            Return Assembly.Load(asmBytes)
+            Call ms.Seek(0, SeekOrigin.Begin)
+            Return Assembly.Load(ms.ToArray())
         End Using
     End Function
 
@@ -82,14 +134,14 @@ Module DynamicDll
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function Run(dynamicAsm As Assembly) As Integer
+    Public Function Run(dynamicAsm As Assembly, args As CommandLine) As Integer
         ' 8. 通过反射获取目标类型和方法
         Dim targetType As Type = dynamicAsm.GetType($"{NameOf(DynamicDll)}.Program")
-        Dim instance As Object = Activator.CreateInstance(targetType)
-        Dim methodInfo As MethodInfo = targetType.GetMethod("Main", BindingFlags.Public Or BindingFlags.Instance)
+        Dim instance As Object = Nothing
+        Dim methodInfo As MethodInfo = targetType.GetMethod("Main", BindingFlags.Public Or BindingFlags.Static)
 
         ' --- 调用方式 A：传统反射调用 ---
-        Dim result As Object = methodInfo.Invoke(instance, New Object() {App.CommandLine})
+        Dim result As Object = methodInfo.Invoke(instance, New Object() {args})
         Dim i32 As Integer = CInt(result)
 
         Return i32
