@@ -85,7 +85,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Threads
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace train
 
@@ -139,7 +139,7 @@ Namespace train
             End If
 
             'to avoid divide zero
-            Me.lambda = stdNum.Max(Me.lambda, 0.00001)
+            Me.lambda = std.Max(Me.lambda, 0.00001)
         End Sub
 
         Private Function calculate_leaf_score(G As Double, H As Double) As Double
@@ -155,18 +155,18 @@ Namespace train
             Dim H_right = H_total - H_left - H_nan
 
             'if we let those with missing value go to a nan child
-            Dim gain_1 = 0.5 * (stdNum.Pow(G_left, 2) / (H_left + lambda) + stdNum.Pow(G_right, 2) / (H_right + lambda) + stdNum.Pow(G_nan, 2) / (H_nan + lambda) - stdNum.Pow(G_total, 2) / (H_total + lambda)) - gamma
+            Dim gain_1 = 0.5 * (std.Pow(G_left, 2) / (H_left + lambda) + std.Pow(G_right, 2) / (H_right + lambda) + std.Pow(G_nan, 2) / (H_nan + lambda) - std.Pow(G_total, 2) / (H_total + lambda)) - gamma
 
             'uncomment this line, then we use xgboost's method to deal with missing value
             'gain_1 = -Double.MAX_VALUE;
 
             'if we let those with missing value go to left child
-            Dim gain_2 = 0.5 * (stdNum.Pow(G_left + G_nan, 2) / (H_left + H_nan + lambda) + stdNum.Pow(G_right, 2) / (H_right + lambda) - stdNum.Pow(G_total, 2) / (H_total + lambda)) - gamma
+            Dim gain_2 = 0.5 * (std.Pow(G_left + G_nan, 2) / (H_left + H_nan + lambda) + std.Pow(G_right, 2) / (H_right + lambda) - std.Pow(G_total, 2) / (H_total + lambda)) - gamma
 
             'if we let those with missing value go to right child
-            Dim gain_3 = 0.5 * (stdNum.Pow(G_left, 2) / (H_left + lambda) + stdNum.Pow(G_right + G_nan, 2) / (H_right + H_nan + lambda) - stdNum.Pow(G_total, 2) / (H_total + lambda)) - gamma
+            Dim gain_3 = 0.5 * (std.Pow(G_left, 2) / (H_left + lambda) + std.Pow(G_right + G_nan, 2) / (H_right + H_nan + lambda) - std.Pow(G_total, 2) / (H_total + lambda)) - gamma
             Dim nan_go_to As Double
-            Dim gain = stdNum.Max(gain_1, stdNum.Max(gain_2, gain_3))
+            Dim gain = std.Max(gain_1, std.Max(gain_2, gain_3))
 
             If gain_1 = gain Then
                 nan_go_to = 0 'nan child

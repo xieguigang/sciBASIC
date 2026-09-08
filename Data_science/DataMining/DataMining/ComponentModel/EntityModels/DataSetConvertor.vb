@@ -65,10 +65,10 @@ Namespace ComponentModel.EntityModels
 
         Sub New(rawInput As EntityClusterModel())
             maps = rawInput _
-            .Select(Function(a) a.Properties.Keys) _
-            .IteratesALL _
-            .Distinct _
-            .ToArray
+                .Select(Function(a) a.Properties.Keys) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
         End Sub
 
         Public Iterator Function GetPoints(rawInput As EntityClusterModel()) As IEnumerable(Of Lloyds.Point)

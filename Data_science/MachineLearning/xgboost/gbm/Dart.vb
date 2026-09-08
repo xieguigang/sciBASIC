@@ -57,7 +57,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace gbm
 
@@ -84,7 +84,7 @@ Namespace gbm
 
         Friend Overrides Function pred(feat As FVec, bst_group As Integer, root_index As Integer, ntree_limit As Integer) As Double
             Dim trees = _groupTrees(bst_group)
-            Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
+            Dim treeleft = If(ntree_limit = 0, trees.Length, std.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
 
             For i = 0 To treeleft - 1
