@@ -8,6 +8,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyName>vbs</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

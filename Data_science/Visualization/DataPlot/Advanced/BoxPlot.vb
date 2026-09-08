@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::2ac28dc7fd8f4306a1d658eee7356070, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 142
-    '    Code Lines: 122 (85.92%)
-    ' Comment Lines: 9 (6.34%)
-    '    - Xml Docs: 11.11%
-    ' 
-    '   Blank Lines: 11 (7.75%)
-    '     File Size: 6.66 KB
+' Summaries:
 
 
-    ' Class BoxPlot
-    ' 
-    '     Properties: Groups, Horizontal, ShowMean, ShowOutliers
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Quantile
-    ' 
-    '     Sub: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 142
+'    Code Lines: 122 (85.92%)
+' Comment Lines: 9 (6.34%)
+'    - Xml Docs: 11.11%
+' 
+'   Blank Lines: 11 (7.75%)
+'     File Size: 6.66 KB
+
+
+' Class BoxPlot
+' 
+'     Properties: Groups, Horizontal, ShowMean, ShowOutliers
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: Quantile
+' 
+'     Sub: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>盒须图（Box Plot / Box-and-Whisker）</summary>
@@ -99,7 +100,7 @@ Public Class BoxPlot
 
         For i = 0 To nGrp - 1
             Dim g = Groups(i)
-            Dim color = If(g.Color, Theme.Palette(i Mod Theme.Palette.Length))
+            Dim color As Color = If(g.Color, Theme.Palette(i Mod Theme.Palette.Length))
             Dim sorted = g.Data.OrderBy(Function(v) v).ToArray()
             Dim q1 = Quantile(sorted, 0.25)
             Dim q2 = Quantile(sorted, 0.5)
@@ -125,7 +126,7 @@ Public Class BoxPlot
                 Dim by0 As Single = center - boxWidth / 2
                 Dim by1 As Single = center + boxWidth / 2
                 ' 盒子
-                Using br As New SolidBrush(color.FromArgb(180, color)),
+                Using br As New SolidBrush(Color.FromArgb(180, color)),
                       pen As New Pen(color, Theme.LineWidth)
                     _g.FillRectangle(br, pxQ1, by0, pxQ3 - pxQ1, by1 - by0)
                     _g.DrawRectangle(pen, pxQ1, by0, pxQ3 - pxQ1, by1 - by0)
@@ -162,7 +163,7 @@ Public Class BoxPlot
                 Dim pyWHi = ToPixelY(whiskerHi, ymin, ymax)
                 Dim bx0 = center - boxWidth / 2
                 Dim bx1 = center + boxWidth / 2
-                Using br As New SolidBrush(color.FromArgb(180, color)),
+                Using br As New SolidBrush(Color.FromArgb(180, color)),
                       pen As New Pen(color, Theme.LineWidth)
                     _g.FillRectangle(br, CSng(bx0), pyQ3, CSng(bx1 - bx0), pyQ1 - pyQ3)
                     _g.DrawRectangle(pen, CSng(bx0), pyQ3, CSng(bx1 - bx0), pyQ1 - pyQ3)
