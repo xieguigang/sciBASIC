@@ -49,15 +49,23 @@ ILCuda\
 │   ├── GpuReduce.vb            # GpuReduce.Sum/Max/Min
 │   ├── GpuElementwise.vb       # GpuElementwise 算子族（显存版 + 主机数组版）
 │   └── GpuBlas.vb              # GpuBlas.Gemm / Gemv
+├── IL2Cuda\                    # IL -> AST -> CUDA 流水线（详见下文）
+│   ├── CudaAttributes.vb       # <CudaKernel> / <CudaIndex> / <CudaInput> / <CudaOutput>
+│   ├── CudaTypeMap.vb          # .NET 类型 / Math 函数 / 字面量 -> CUDA C
+│   ├── CudaEmitter.vb          # 表达式与语句 -> CUDA C 文本
+│   └── IlCudaKernel.vb         # 端到端翻译 + 内核注册与启动
 └── test\
     ├── test.vbproj             # demo 工程（Exe），ProjectReference 引用 ILCuda
-    ├── Program.vb              # CLI：info / demo / selftest / kernels / emit-kernels
+    ├── Program.vb              # CLI：info / demo / selftest / kernels / emit-kernels / il / il-compare
     ├── Reporter.vb             # 控制台输出层（消费框架的结构化诊断对象）
     ├── Metrics\
     │   ├── MatrixData.vb       # 矩阵容器与结果类型（demo 领域模型）
     │   ├── GpuMetrics.vb       # 同步 / 异步 GPU 流水线 + 内核名与元数据注册
     │   ├── CpuMetrics.vb       # CPU 两遍算法参考实现 + 误差比较
     │   └── KernelEmulator.vb   # 内核索引/公式的 CPU 精确模拟自检
+    ├── IlDecompile\
+    │   ├── MetricFunctions.vb  # 待反编译的 VB.NET 度量函数（对应 metrics.cu 三个内核）
+    │   └── IlCudaComparison.vb # 反编译自检 + IL 内核与手写内核的 GPU 结果对比
     └── Kernels\metrics.cu      # demo 专用内核（内嵌资源，运行时注册进框架）
 ```
 
@@ -74,6 +82,9 @@ dotnet ILCuda.Demo.dll kernels         :: 列出内核注册表（框架内置 +
 dotnet ILCuda.Demo.dll emit-kernels kernels
 ```
 
+| `ILCuda.Demo il` | IL 反编译：打印 AST 伪代码、生成的 `.cu` 与解释求值自检（**不需要 GPU**） |
+| `ILCuda.Demo il-compare` | GPU 上对比「IL 生成内核」与手写 `metrics.cu` 的计算结果 |
+
 常用参数：
 
 | 参数 | 说明 |
@@ -89,6 +100,9 @@ dotnet ILCuda.Demo.dll emit-kernels kernels
 | `--cpu-only` | 只跑 CPU 参考实现 |
 | `--async` | 用页锁定内存 + 独立流跑异步流水线 |
 | `--force-image` | 跳过镜像/驱动版本兼容性预检（仅供调试，可能让驱动崩溃） |
+| `--no-ast` | `il` 命令不打印还原出的伪代码 |
+| `--no-source` | `il` 命令不打印生成的 CUDA 源码 |
+| `--dump-il` | `il` 命令额外打印原始 IL 与基本块 / 支配 / 循环结构（排查反编译失败用） |
 
 ## 框架能力
 
@@ -202,6 +216,102 @@ var_i  = sumSq_i - n·mean_i²           (= Σ(x_ik - mean_i)²)
 | 700 × 300（`--async`） | 0.41 ms | 0.84 ms | 1.26 ms | 466 ms | ~370 x |
 
 单精度下与 CPU 双精度两遍算法的偏差：相关系数 ~2e-7，欧氏距离 ~4e-6。
+
+## IL -> CUDA：由 VB.NET 方法自动生成内核
+
+手写 `.cu` 的问题是"算法改一处、CUDA 源码跟着改一处"。`IL2Cuda\` 提供另一条路：
+把**已经编译进 DLL 的普通 VB.NET 方法**在运行时反编译成表达式树，再发射成 CUDA C，
+交给 NVRTC 与手写内核一起编译进同一个模块。
+
+### 管道
+
+```
+MethodInfo
+  -> MethodBodyReader       读 CIL 字节流 -> ILInstruction[]（含局部变量表 / 异常子句 / 偏移索引）
+  -> ControlFlowGraph       扫描跳转目标切基本块；迭代支配树 + 支配边界 + 后支配 + 自然循环
+  -> SsaBuilder             迭代支配边界上插 phi；沿支配树做变量重命名
+  -> StackSimulator         栈模拟归约：压栈类压节点，运算类弹栈构造二元/一元/调用节点，
+                            stloc 出声明、ret 出 return、条件分支出 Condition
+  -> StructureRecovery      菱形 -> If / If-Else，自然循环 -> While，归纳变量 -> For
+  -> MethodSyntax (AST)     自定义表达式 / 语句节点模型
+  -> CudaEmitter            AST -> CUDA C（__device__ 标量函数 + __global__ 内核骨架）
+  -> KernelSources          注入编译单元 -> NVRTC -> CudaEngine
+```
+
+反编译器与 CUDA 发射器之间只通过 AST 耦合：反编译器不知道 CUDA，
+发射器不知道 IL。AST 同时被 `AstInterpreter`（CPU 解释求值自检）消费，
+因此"反编译对不对"与"CUDA 发射对不对"两个问题可以分开定位。
+
+### 内核映射约定
+
+优先读标注，没有标注时按约定推断：
+
+```vbnet
+<CudaKernel("ilMyKernel", CudaIndexMode.Grid2D)>
+Public Shared Function MyCell(x As Single(), rows As Integer,
+                              <CudaIndex(CudaIndexKind.Row)> i As Integer,
+                              <CudaIndex(CudaIndexKind.Col)> j As Integer) As Single
+    ...
+End Function
+```
+
+| 约定 | 行为 |
+| --- | --- |
+| 存在名为 `i`（或 `row`）的整型参数 | 一维内核：`i = blockIdx.x * blockDim.x + threadIdx.x` |
+| 同时存在 `i` 与 `j`（或 `row` / `col`） | 二维内核：`i` 取行（`blockIdx.y`）、`j` 取列（`blockIdx.x`） |
+| 方法体里完全没有数组取元素（纯标量） | 逐元素包裹：每个标量参数都变成"按线程下标读取的数组" |
+| 都不满足 | 只生成 `__device__` 标量函数，不生成内核 |
+
+内核参数 = 方法参数（去掉线程索引参数）+ 输出数组 + 元素个数；
+生成的所有符号统一带 `il_` 前缀，避免与 `metrics.cu`、框架自带 `.cu` 撞名。
+
+### 用法
+
+```bat
+ILCuda.Demo il                 :: 打印 AST 伪代码 + 生成的 .cu + 解释求值自检（不需要 GPU）
+ILCuda.Demo il --no-source     :: 只看伪代码与自检
+ILCuda.Demo il --dump-il       :: 额外打印 IL 指令流与基本块结构
+ILCuda.Demo il-compare         :: GPU 上对比 IL 生成内核与手写 metrics.cu
+ILCuda.Demo il-compare --rows 128 --cols 64
+```
+
+`il-compare` 的中间量（`rowSum` / `rowSumSq` / `dot`）直接复用基准内核写回的显存缓冲，
+因此相关与距离两项比较的是"完全相同的输入 + 完全相同的公式"。
+
+### 实测（RTX A4000 / sm_86，128 x 64）
+
+| 对比项 | 最大绝对误差 | 参考量级 |
+| --- | --- | --- |
+| `RowSum`（vs CPU 参考） | 4.8e-6 | 2.8e+1 |
+| `RowSum`（vs `rowStatsKernel`） | 4.8e-6 | 2.8e+1 |
+| `RowSumSq`（vs `rowStatsKernel`） | 3.1e-5 | 1.0e+2 |
+| `GramDot`（vs `gramKernel`） | 0.0 | 1.0e+2 |
+| `CorrelationCell`（vs `finalizeKernel` 的 corr） | 6.0e-8 | 1.0e+0 |
+| `DistanceCell`（vs `finalizeKernel` 的 dist） | 0.0 | 1.5e+1 |
+| `PearsonClamp`（逐元素自动包裹） | 0.0 | 1.0e+0 |
+
+`RowSum` / `RowSumSq` 的误差来自归约顺序：手写内核用共享内存树形归约，
+IL 生成的是顺序累加，单精度下自然有 `1e-5` 量级差异；其余各项公式与输入完全一致，误差为 0。
+
+### 当前边界
+
+支持：数值字面量 / 参数 / 局部 / 一元 / 二元 / 转换 / `Math`·`MathF` 调用 / 数组取元素 /
+赋值 / `If` / `While` / `For` / `Return`。
+
+不支持（会抛 `DecompileException` 并带上 IL 偏移，绝不生成语义不明的代码）：
+实例方法（`this`）、`starg`、`stelem`、`switch`、`newobj`、字段访问、装箱、异常、
+不可归约的控制流形状、`goto`。
+
+### 顺带修掉的既有缺陷
+
+`vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb`：
+
+- `Offset` 对 `0xFE` 开头的双字节操作码算错 1 字节（原实现用"读完后的位置 - 1"）；
+- `switch` 指令算出了跳转表却从未写回 `Operand`；
+- `InlineVar` / `ShortInlineVar` 的操作数类型不统一（`UInt16` / `Byte` 混用）；
+- `OperandData` 从未填充；
+- 未暴露局部变量表、最大栈深、异常子句与按偏移的指令索引；
+- `Dispose` 在没有 IL 体时会对 `Nothing` 调用 Dispose，且会清空已解析好的指令列表。
 
 ## 环境要求（重要）
 
