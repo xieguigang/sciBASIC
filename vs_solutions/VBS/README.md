@@ -1,11 +1,11 @@
 ## 实现原理
 
-脚本引擎会通过脚本文件中的元数据解析，动态编译生成assembly，具体过程为：引擎会首先从脚本中解析出``#imports``元数据，得到引用的程序集。然后通过正则表达式提取出类型定义（class，structure，interface，enum）代码块，处理顶层函数为匿名函数，最后将得到的代码生成下面的固定命名空间以及类型的完整代码：
+脚本引擎会通过脚本文件中的元数据解析，动态编译生成assembly，具体过程为：引擎会首先从脚本中解析出``#include``元数据，得到引用的程序集。然后通过正则表达式提取出类型定义（class，structure，interface，enum）代码块，处理顶层函数为匿名函数，最后将得到的代码生成下面的固定命名空间以及类型的完整代码：
 
 例如，从输入的脚本代码：
 
 ```vbnet
-#imports "abc.dll"
+#include "abc.dll"
 
 ' vbs ./run.vb --a=123 --flag
 Dim A As Integer = ?"--a"
@@ -82,10 +82,10 @@ Dim B As Boolean = ?"--flag"
 
 #### 2. 引用外部.NET CLR DLL程序集文件
 
-可以使用下面的语法来引用dll文件(采用``#imports``预编译命令)：
+可以使用下面的语法来引用dll文件(采用``#include``预编译命令)：
 
 ```vbnet
-#imports "/path/to/assembly.dll"
+#include "/path/to/assembly.dll"
 ```
 
 所导入的外部dll程序集的路径可以为绝对路径，或者相对于脚本文件的相对路径。在脚本引擎中会将这里引用的dll路径统一解析为绝对路径

@@ -11,7 +11,7 @@ Public Class ScriptParseResult
     ''' <summary>解析得到的虚拟命令行参数对象</summary>
     Public Property CommandLine As CommandLine
 
-    ''' <summary>#imports所引用的外部程序集路径列表(统一为绝对路径)</summary>
+    ''' <summary>#include所引用的外部程序集路径列表(统一为绝对路径)</summary>
     Public Property [Imports] As List(Of String)
 
     ''' <summary>重构之后的可以直接被Roslyn编译的完整VB.NET源代码</summary>

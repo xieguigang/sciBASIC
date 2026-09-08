@@ -63,10 +63,10 @@ Module DynamicDll
                          End If
                      End Sub
 
-        ' 2.1 #imports 所引用的外部程序集
+        ' 2.1 #include 所引用的外部程序集
         For Each dll As String In script.Imports
             If Not File.Exists(dll) Then
-                Throw New FileNotFoundException($"#imports所引用的程序集不存在: {dll}", dll)
+                Throw New FileNotFoundException($"#include所引用的程序集不存在: {dll}", dll)
             End If
             Call AddRef(dll)
         Next

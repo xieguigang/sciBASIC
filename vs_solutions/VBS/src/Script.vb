@@ -21,10 +21,10 @@ Module Script
         Dim source As String = scriptFile.ReadAllText
         Dim baseDir As String = Path.GetDirectoryName(Path.GetFullPath(scriptFile))
 
-        ' ---- Step1: 解析 #imports 元数据, 得到引用的外部程序集文件路径 ----
+        ' ---- Step1: 解析 #include 元数据, 得到引用的外部程序集文件路径 ----
         Dim [imports] As New List(Of String)
 
-        For Each m As Match In Regex.Matches(source, "#imports\s+""(?<dll>[^""]+)""", RegexOptions.IgnoreCase)
+        For Each m As Match In Regex.Matches(source, "#include\s+""(?<dll>[^""]+)""", RegexOptions.IgnoreCase)
             Dim dll As String = m.Groups("dll").Value
 
             ' 相对路径统一解析为相对于脚本文件所在文件夹的绝对路径
@@ -53,7 +53,7 @@ Module Script
 
     ''' <summary>
     ''' 对脚本源代码进行重构处理, 生成最终的完整可编译代码:
-    '''   1. 移除#imports元数据行
+    '''   1. 移除#include元数据行
     '''   2. 将 ?"--a" 替换为 args("--a") 字典访问
     '''   3. 提取类型定义块 / 顶层函数 / 顶层控制流块 / 顶层语句
     '''   4. 顶层函数重构为匿名函数
@@ -62,7 +62,7 @@ Module Script
     Private Function RefactorScript(source As String) As String
         ' ---- 文本级预处理 ----
         Dim code As String = Regex.Replace(
-            source, "^\s*#imports\s+""[^""]*""\s*$", "",
+            source, "^\s*#include\s+""[^""]*""\s*$", "",
             RegexOptions.IgnoreCase Or RegexOptions.Multiline)
 
         ' ?"--a" => args("--a")
@@ -164,6 +164,14 @@ Module Script
         End If
 
         Call sb.AppendLine($"Imports {GetType(CommandLine).Namespace}")
+        Call sb.AppendLine($"Imports System.Linq")
+        Call sb.AppendLine($"Imports System")
+        Call sb.AppendLine($"Imports System.Collections")
+        Call sb.AppendLine($"Imports System.Collections.Generic")
+        Call sb.AppendLine($"Imports System.Data")
+        Call sb.AppendLine($"Imports System.Diagnostics")
+        Call sb.AppendLine($"Imports System.Threading.Tasks")
+        Call sb.AppendLine($"Imports System.Xml.Linq")
 
         Call sb.AppendLine($"Namespace {NamespaceName}")
         Call sb.AppendLine($"    Module {ModuleName}")
