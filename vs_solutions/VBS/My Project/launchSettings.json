@@ -2,7 +2,7 @@
   "profiles": {
     "VBS": {
       "commandName": "Project",
-      "commandLineArgs": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\tutorials\\VBS\\kmeans.vb"
+      "commandLineArgs": "G:\\GCModeller\\src\\runtime\\sciBASIC#\\tutorials\\VBS\\cuda.vb"
     }
   }
 }
