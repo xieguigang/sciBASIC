@@ -3,7 +3,8 @@
 imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Public Function RunListKernels() As Integer
-    ConsoleReporter.PrintTitle("内核注册表（框架内置 + demo 注册）")
+    Console.WriteLine("内核注册表（框架内置内核）")
+    Console.WriteLine()
 
     For Each info As KernelInfo In KernelCatalog.All()
         Console.WriteLine($"  {info}")

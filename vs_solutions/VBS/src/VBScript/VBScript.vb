@@ -143,12 +143,7 @@ Namespace Script
                         If stack.Count = 0 Then
                             Dim blockCode As String = String.Join(vbLf, buffer)
                             Call buffer.Clear()
-
-                            Select Case bufferKind
-                                Case "type" : Call typeBlocks.Add(blockCode)
-                                Case "func" : Call funcBlocks.Add(blockCode)
-                                Case Else : Call mainBody.AddRange(blockCode.Split(vbLf))
-                            End Select
+                            Call EmitBlock(bufferKind, blockCode, typeBlocks, funcBlocks, mainBody)
 
                             bufferKind = Nothing
                         End If
@@ -157,6 +152,16 @@ Namespace Script
                     End If
                 End If
             Next
+
+            ' ---- 兜底处理: 存在没有正常闭合的代码块时, 将残留的块内容一并导出,
+            '      避免因为块不配对(例如缺少Next/End Function)而静默丢失脚本代码 ----
+            If buffer.Count > 0 Then
+                Dim blockCode As String = String.Join(vbLf, buffer)
+                Call buffer.Clear()
+                Call EmitBlock(bufferKind, blockCode, typeBlocks, funcBlocks, mainBody)
+
+                bufferKind = Nothing
+            End If
 
             ' ---- 组装最终的完整代码 ----
             Dim sb As New StringBuilder()
@@ -219,6 +224,22 @@ Namespace Script
 
             Return sb.ToString()
         End Function
+
+        ''' <summary>
+        ''' 将缓冲收集到的一个完整代码块, 按照其块类型派发到对应的结果集合之中
+        ''' </summary>
+        ''' <param name="bufferKind">块类型: type/func/stmt</param>
+        Private Sub EmitBlock(bufferKind As String, blockCode As String,
+                              typeBlocks As List(Of String),
+                              funcBlocks As List(Of String),
+                              mainBody As List(Of String))
+
+            Select Case bufferKind
+                Case "type" : Call typeBlocks.Add(blockCode)
+                Case "func" : Call funcBlocks.Add(blockCode)
+                Case Else : Call mainBody.AddRange(blockCode.Split(vbLf))
+            End Select
+        End Sub
 
         ''' <summary>剥离行尾注释(用于块结构检测)</summary>
         Private Function StripComment(line As String) As String
