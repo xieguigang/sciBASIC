@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::eebccc4ba090d822c53aa53aadf2f32b, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 153
-    '    Code Lines: 109 (71.24%)
-    ' Comment Lines: 22 (14.38%)
-    '    - Xml Docs: 50.00%
-    ' 
-    '   Blank Lines: 22 (14.38%)
-    '     File Size: 6.95 KB
+' Summaries:
 
 
-    '     Module NodeTrees
-    ' 
-    '         Function: __cutTrees, BuildTree, CutTrees, PartionTable
-    ' 
-    '         Sub: __appendChilds
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 153
+'    Code Lines: 109 (71.24%)
+' Comment Lines: 22 (14.38%)
+'    - Xml Docs: 50.00%
+' 
+'   Blank Lines: 22 (14.38%)
+'     File Size: 6.95 KB
+
+
+'     Module NodeTrees
+' 
+'         Function: __cutTrees, BuildTree, CutTrees, PartionTable
+' 
+'         Sub: __appendChilds
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
@@ -74,11 +74,11 @@ Namespace KMeans
         ''' <remarks>请注意：在这里面边是具有方向的，from到to</remarks>
         <Extension> Public Function BuildTree(net As NetworkTables) As EntityNode
             Dim nodesTable As Dictionary(Of String, NetworkEdge()) =
-                net.Edges _
-                .GroupBy(Function(edge) edge.FromNode) _
+                net.edges _
+                .GroupBy(Function(edge) edge.fromNode) _
                 .ToDictionary(Function(k) k.Key,
                               Function(c) c.ToArray)
-            Dim nodeTypes As Dictionary(Of String, String) = net.Nodes _
+            Dim nodeTypes As Dictionary(Of String, String) = net.nodes _
                 .ToDictionary(Function(n) n.ID,
                               Function(n) n.NodeType)
             ' 从ROOT开始构建
@@ -102,7 +102,7 @@ Namespace KMeans
 
             ' 遍历下一个连接的节点，并且进行递归构建出整个树
             For Each branch As NetworkEdge In childs
-                With New EntityNode(branch.ToNode, nodeTypes(branch.ToNode))
+                With New EntityNode(branch.toNode, nodeTypes(branch.toNode))
                     Call .MySelf.__appendChilds(nodesTable, nodeTypes)
                     Call parent.AddChild(.MySelf)
                 End With
