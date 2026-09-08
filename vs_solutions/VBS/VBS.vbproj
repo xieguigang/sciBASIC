@@ -31,6 +31,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="5.9.0" />
+    <PackageReference Include="SkiaSharp" Version="4.151.2" />
+    <PackageReference Include="SkiaSharp.Extended" Version="3.0.0" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.151.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.151.2" />
+    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
   </ItemGroup>
 
   <ItemGroup>
