@@ -89,7 +89,7 @@ Namespace Script
             Dim buffer As New List(Of String)
             Dim bufferKind As String = Nothing      ' "type" / "func" / "stmt"
 
-            For Each raw As String In code.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split(vbLf)
+            For Each raw As String In code.LineTokens
                 Dim line As String = raw.TrimEnd()
                 Dim t As String = StripComment(line).Trim()
 
