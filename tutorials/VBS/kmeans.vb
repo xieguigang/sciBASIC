@@ -13,6 +13,8 @@ dim k = 3
 
 dim dataset = DataFrameResolver.LoadDataSet(file, cols := {"D1","D2","D3","D4"}).ToKMeansModels
 dim result = dataset.kmeans( expected := k).toarray
-dim pca = result.CommonDataSet
+dim pca = result.CommonDataSet.PrincipalComponentAnalysis(maxPC := 2).GetPCAScore
+dim x = pca!PC1
+dim y = pca!PC2
 
 call result.saveto("Z:/test.csv")

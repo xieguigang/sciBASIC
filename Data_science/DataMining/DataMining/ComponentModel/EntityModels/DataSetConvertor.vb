@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace KMeans
+Namespace ComponentModel.EntityModels
 
     Public Class DataSetConvertor
 

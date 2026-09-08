@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
-Namespace KMeans
+Namespace ComponentModel.EntityModels
 
     ''' <summary>
     ''' 存储在Csv文件里面的数据模型，近似等价于csv DataSet对象，
