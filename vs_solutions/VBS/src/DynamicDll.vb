@@ -48,14 +48,6 @@ Module DynamicDll
         Dim parseOptions As New VisualBasicParseOptions(LanguageVersion.Latest)
         Dim trees As New List(Of SyntaxTree)
 
-        ' 引擎位于特定命名空间时, 自动添加导入语句保证脚本可以访问CommandLine类型
-        Dim engineNs As String = GetType(DynamicDll).Namespace
-
-        If Not String.IsNullOrEmpty(engineNs) Then
-            Call trees.Add(VisualBasicSyntaxTree.ParseText(
-                $"Imports {engineNs}.{NameOf(DynamicDll)}", parseOptions))
-        End If
-
         Call trees.Add(VisualBasicSyntaxTree.ParseText(script.GeneratedCode, parseOptions))
 
         ' ---- Step2: 收集编译引用(去重) ----

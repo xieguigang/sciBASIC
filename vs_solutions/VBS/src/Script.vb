@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine
 
 Module Script
 
@@ -161,6 +162,8 @@ Module Script
         If headerLines.Count > 0 Then
             Call sb.AppendLine()
         End If
+
+        Call sb.AppendLine($"Imports {GetType(CommandLine).Namespace}")
 
         Call sb.AppendLine($"Namespace {NamespaceName}")
         Call sb.AppendLine($"    Module {ModuleName}")
