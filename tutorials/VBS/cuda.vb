@@ -352,8 +352,8 @@ End Class
 '  第 3 节: 主流程
 ' ---------------------------------------------------------------------------
 
-dim rows As Integer = 128
-dim cols As Integer = 64
+dim rows As Integer = 1024
+dim cols As Integer = 1024
 dim seed As Integer = 42
 dim preview As Integer = 6
 dim allOk As Boolean = True
