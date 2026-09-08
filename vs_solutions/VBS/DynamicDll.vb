@@ -16,6 +16,15 @@ Module DynamicDll
     '    End Module
     ' End Namespace
 
+    ''' <summary>脚本代码的固定顶层命名空间</summary>
+    Public Const NamespaceName As String = "DynamicDll"
+
+    ''' <summary>脚本代码的固定容器类型(Module)名称</summary>
+    Public Const ModuleName As String = "Program"
+
+    ''' <summary>脚本入口函数的固定名称</summary>
+    Public Const MainName As String = "Main"
+
     Public Function Compile(vbs As String, referenceDlls As IEnumerable(Of String)) As Assembly
         ' 2. 解析代码为语法树
         Dim syntaxTree As SyntaxTree = VisualBasicSyntaxTree.ParseText(vbs)
