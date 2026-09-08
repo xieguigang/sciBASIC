@@ -7,6 +7,7 @@
 ```vbnet
 #imports "abc.dll"
 
+' vbs ./run.vb --a=123 --flag
 Dim A As Integer = ?"--a"
 Dim B As Boolean = ?"--flag"
 
@@ -14,8 +15,8 @@ Public Class Test
     Public A As Integer
 
     Public Function ToString() As String
-       ' imported from "abc.dll"
-       Return ABC.Seed(A) 
+       ' 从外部dll模块 "abc.dll" 文件中导入
+       Return ABC.Internal.Seed(A) 
     End Function
 End Class
 
