@@ -43,7 +43,7 @@ Module DynamicDll
     Public Function CompileScript(script As ScriptParseResult,
                                   Optional asmName As String = Nothing,
                                   Optional extraRefs As IEnumerable(Of String) = Nothing,
-                                  Optional debug As Boolean = False) As (ctx As ScriptLoadContext, asm As Assembly)
+                                  Optional debug As Boolean = False) As ScriptRuntime
 
         ' ---- Step1: 生成语法树 ----
         Dim parseOptions As New VisualBasicParseOptions(LanguageVersion.Latest)
@@ -121,7 +121,7 @@ Module DynamicDll
 
             Dim ctx As New ScriptLoadContext("script-" & Guid.NewGuid().ToString("N"), script.Imports)
 
-            Return (ctx, ctx.LoadFromStream(ms))
+            Return New ScriptRuntime(ctx, ctx.LoadFromStream(ms))
         End Using
     End Function
 
@@ -132,7 +132,7 @@ Module DynamicDll
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function Run(dynamicAsm As Assembly, args As CommandLine) As Integer
+    Public Function Run(dynamicAsm As Assembly, args As Object) As Integer
         ' 8. 通过反射获取目标类型和方法
         Dim targetType As Type = dynamicAsm.GetType($"{NameOf(DynamicDll)}.Program")
         Dim instance As Object = Nothing

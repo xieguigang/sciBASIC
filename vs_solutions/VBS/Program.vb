@@ -7,14 +7,11 @@ Module Program
     ''' </summary>
     ''' <param name="args"></param>
     Public Function Main(args As String()) As Integer
-        Dim cmdl As CommandLine = CommandLine.BuildFromArguments(args, NoSubCommand:=False)
-        Dim scriptFile As String = cmdl.Name
+        Dim scriptFile As String = args(0)
         Dim vbs As ScriptParseResult = VBScriptHost.Script.ParseScript(scriptFile)
-        Dim script = vbs.CompileScript
-        Dim exitCode As Integer = script.asm.Run(cmdl)
 
-        Call script.ctx.Unload()
-
-        Return exitCode
+        Using script As ScriptRuntime = vbs.CompileScript
+            Return script.Run(args)
+        End Using
     End Function
 End Module
