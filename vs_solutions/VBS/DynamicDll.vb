@@ -37,6 +37,8 @@ Module DynamicDll
     ''' <param name="asmName">目标assembly名称(默认取脚本文件名)</param>
     ''' <param name="extraRefs">额外的引用程序集路径</param>
     ''' <param name="debug">是否以debug模式编译</param>
+    ''' 
+    <Extension>
     Public Function CompileScript(script As ScriptParseResult,
                                   Optional asmName As String = Nothing,
                                   Optional extraRefs As IEnumerable(Of String) = Nothing,
