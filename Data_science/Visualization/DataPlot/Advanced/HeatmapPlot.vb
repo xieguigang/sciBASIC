@@ -209,7 +209,7 @@ Public Class HeatmapPlot
 
     Private Function GetColor(v As Double, vmin As Double, vmax As Double, cmap As ColorMapType) As Color
         Dim t = (v - vmin) / (vmax - vmin)
-        t = Math.Max(0, Math.Min(1, t))
+        t = stdf.Max(0, stdf.Min(1, t))
         Select Case cmap
             Case ColorMapType.Viridis
                 Return LerpPalette(t, {
@@ -245,7 +245,7 @@ Public Class HeatmapPlot
     Private Function LerpPalette(t As Double, colors As Color()) As Color
         Dim n = colors.Length - 1
         Dim pos = t * n
-        Dim i = CInt(Math.Floor(pos))
+        Dim i = CInt(stdf.Floor(pos))
         If i < 0 Then i = 0
         If i >= n Then i = n - 1
         Dim f = pos - i

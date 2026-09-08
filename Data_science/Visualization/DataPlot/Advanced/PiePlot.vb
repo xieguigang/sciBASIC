@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>饼图</summary>
 Public Class PiePlot
@@ -86,7 +87,7 @@ Public Class PiePlot
         ' 饼图区域
         Dim cx = _width / 2.0F
         Dim cy = (_height + Theme.MarginTop) / 2.0F
-        Dim radius = Math.Min(_width, _height) * 0.32F
+        Dim radius = std.Min(_width, _height) * 0.32F
 
         Dim startA = StartAngle
         For i = 0 To n - 1
@@ -94,9 +95,9 @@ Public Class PiePlot
             Dim color = palette(i Mod palette.Length)
             Dim offsetX = 0.0F, offsetY = 0.0F
             If i = ExplodeIndex Then
-                Dim midA = (startA + sweep / 2) * Math.PI / 180
-                offsetX = CSng(Math.Cos(midA)) * 10
-                offsetY = CSng(Math.Sin(midA)) * 10
+                Dim midA = (startA + sweep / 2) * std.PI / 180
+                offsetX = CSng(std.Cos(midA)) * 10
+                offsetY = CSng(std.Sin(midA)) * 10
             End If
             Using br As New SolidBrush(color),
                   pen As New Pen(Theme.BackgroundColor, 2)
@@ -120,10 +121,10 @@ Public Class PiePlot
         startA = StartAngle
         For i = 0 To n - 1
             Dim sweep = CSng(Values(i) / total * 360)
-            Dim midA = (startA + sweep / 2) * Math.PI / 180
+            Dim midA = (startA + sweep / 2) * std.PI / 180
             Dim labelR = radius * 1.15F
-            Dim lx = cx + CSng(Math.Cos(midA)) * labelR
-            Dim ly = cy + CSng(Math.Sin(midA)) * labelR
+            Dim lx = cx + CSng(std.Cos(midA)) * labelR
+            Dim ly = cy + CSng(std.Sin(midA)) * labelR
             Dim label = Labels(i)
             If ShowPercentage Then
                 label &= String.Format(" ({0:P1})", Values(i) / total)

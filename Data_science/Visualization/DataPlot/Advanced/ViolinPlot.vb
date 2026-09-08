@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>小提琴图（Violin Plot）</summary>
 Public Class ViolinPlot
@@ -99,14 +100,14 @@ Public Class ViolinPlot
             If sorted.Length < 2 Then Continue For
 
             ' KDE：用直方图密度估计
-            Dim nBins = Math.Min(40, Math.Max(10, sorted.Length \ 5))
+            Dim nBins = std.Min(40, std.Max(10, sorted.Length \ 5))
             Dim dmin = sorted.Min()
             Dim dmax = sorted.Max()
             If dmax <= dmin Then dmax = dmin + 1
             Dim binW = (dmax - dmin) / nBins
             Dim counts = New Integer(nBins - 1) {}
             For Each v In sorted
-                Dim idx = CInt(Math.Floor((v - dmin) / binW))
+                Dim idx = CInt(std.Floor((v - dmin) / binW))
                 If idx >= nBins Then idx = nBins - 1
                 If idx < 0 Then idx = 0
                 counts(idx) += 1
@@ -160,8 +161,8 @@ Public Class ViolinPlot
 
     Private Shared Function Quantile(sorted As Double(), q As Double) As Double
         Dim pos = (sorted.Length - 1) * q
-        Dim lo = CInt(Math.Floor(pos))
-        Dim hi = CInt(Math.Ceiling(pos))
+        Dim lo = CInt(std.Floor(pos))
+        Dim hi = CInt(std.Ceiling(pos))
         If lo = hi Then Return sorted(lo)
         Return sorted(lo) + (sorted(hi) - sorted(lo)) * (pos - lo)
     End Function

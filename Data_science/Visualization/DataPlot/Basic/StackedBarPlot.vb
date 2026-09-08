@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>堆叠柱状图（多系列沿 Y 轴累加堆叠）</summary>
 Public Class StackedBarPlot
@@ -140,8 +141,8 @@ Public Class StackedBarPlot
                     End If
                     Dim bx0 = ToPixelX(bx0Base, vmin, vmax)
                     Dim bx1 = ToPixelX(bx1Base, vmin, vmax)
-                    Dim rect = New RectangleF(Math.Min(bx0, bx1), cy - barWidth * 0.45,
-                                              Math.Abs(bx1 - bx0), barWidth * 0.9)
+                    Dim rect = New RectangleF(std.Min(bx0, bx1), cy - barWidth * 0.45,
+                                              std.Abs(bx1 - bx0), barWidth * 0.9)
                     Using br As New SolidBrush(color)
                         _g.FillRectangle(br, rect)
                     End Using
@@ -170,8 +171,8 @@ Public Class StackedBarPlot
                     Dim by0 = ToPixelY(by0Base, vmin, vmax)
                     Dim by1 = ToPixelY(by1Base, vmin, vmax)
                     Dim bx = cx - barWidth / 2
-                    Dim rect = New RectangleF(bx, Math.Min(by0, by1),
-                                              barWidth, Math.Abs(by1 - by0))
+                    Dim rect = New RectangleF(bx, std.Min(by0, by1),
+                                              barWidth, std.Abs(by1 - by0))
                     Using br As New SolidBrush(color)
                         _g.FillRectangle(br, rect)
                     End Using

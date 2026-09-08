@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>盒须图（Box Plot / Box-and-Whisker）</summary>
 Public Class BoxPlot
@@ -194,8 +195,8 @@ Public Class BoxPlot
     Private Shared Function Quantile(sorted As Double(), q As Double) As Double
         If sorted.Length = 0 Then Return 0
         Dim pos = (sorted.Length - 1) * q
-        Dim lo = CInt(Math.Floor(pos))
-        Dim hi = CInt(Math.Ceiling(pos))
+        Dim lo = CInt(std.Floor(pos))
+        Dim hi = CInt(std.Ceiling(pos))
         If lo = hi Then Return sorted(lo)
         Return sorted(lo) + (sorted(hi) - sorted(lo)) * (pos - lo)
     End Function

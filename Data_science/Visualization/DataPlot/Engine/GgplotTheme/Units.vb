@@ -92,7 +92,7 @@
 
 Imports System
 Imports System.Globalization
-Imports System.Text
+Imports std = System.Math
 
 Namespace GgplotTheme
 
@@ -657,7 +657,7 @@ Namespace GgplotTheme
                     Return unit.Value * _canvas.Ppi / PtPerInch
                 Case UnitType.Npc
                     ' NPC is relative to parent viewport. Use max dimension as default.
-                    Return unit.Value * Math.Max(pw, ph)
+                    Return unit.Value * std.Max(pw, ph)
                 Case UnitType.Lines
                     ' 1 line = font size (in points) * line height, converted to pixels
                     Dim lineSizePx As Double = fs * _canvas.Ppi / PtPerInch

@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>堆叠面积图</summary>
 Public Class StackedAreaPlot
@@ -106,7 +107,7 @@ Public Class StackedAreaPlot
         Dim vmin = 0.0
 
         ' ---- X 范围（类别索引 0..nCat-1，加少量边距）----
-        Dim xmin = 0.0, xmax = CDbl(Math.Max(1, nCat - 1))
+        Dim xmin = 0.0, xmax = CDbl(std.Max(1, nCat - 1))
         Dim xpad = (xmax - xmin) * 0.02
         If xpad = 0 Then xpad = 0.5
         xmin -= xpad : xmax += xpad

@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>直方图</summary>
 Public Class HistogramPlot
@@ -83,7 +84,7 @@ Public Class HistogramPlot
         Dim binW = (dmax - dmin) / Bins
         Dim counts = New Integer(Bins - 1) {}
         For Each v In Data
-            Dim idx = CInt(Math.Floor((v - dmin) / binW))
+            Dim idx = CInt(std.Floor((v - dmin) / binW))
             If idx >= Bins Then idx = Bins - 1
             If idx < 0 Then idx = 0
             counts(idx) += 1

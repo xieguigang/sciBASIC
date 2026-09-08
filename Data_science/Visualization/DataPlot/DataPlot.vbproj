@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>DataPlot</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.Plots</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <AssemblyName>Microsoft.VisualBasic.Data.DataPlot</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

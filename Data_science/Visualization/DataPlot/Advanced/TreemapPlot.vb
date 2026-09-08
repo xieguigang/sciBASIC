@@ -64,6 +64,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>矩形树图节点</summary>
 Public Class TreemapNode
@@ -102,7 +103,7 @@ Public Class TreemapPlot
 
         If Nodes.Count = 0 Then Return
 
-        Dim total = Nodes.Sum(Function(n) Math.Abs(n.Value))
+        Dim total = Nodes.Sum(Function(n) std.Abs(n.Value))
         If total <= 0 Then Return
 
         AssignColors()
@@ -112,13 +113,13 @@ Public Class TreemapPlot
                                    _height - Theme.MarginTop - Theme.MarginBottom)
 
         ' 按值降序排序（Squarified 算法要求）
-        Dim sorted = Nodes.OrderByDescending(Function(n) Math.Abs(n.Value)).ToList()
+        Dim sorted = Nodes.OrderByDescending(Function(n) std.Abs(n.Value)).ToList()
 
         ' 将节点归一化为面积元组列表
         Dim areaTotal = CSng(_plotArea.Width * _plotArea.Height)
         Dim items As New List(Of Tuple(Of TreemapNode, Single))()
         For Each n In sorted
-            items.Add(Tuple.Create(n, CSng(Math.Abs(n.Value) / total * areaTotal)))
+            items.Add(Tuple.Create(n, CSng(std.Abs(n.Value) / total * areaTotal)))
         Next
 
         ' 执行 Squarified 布局
@@ -202,11 +203,11 @@ Public Class TreemapPlot
         Dim minArea = row.Min(Function(r) r.Item2)
         Dim s2 = side * side
         Dim sum2 = sum * sum
-        Return Math.Max(s2 * maxArea / sum2, sum2 / (s2 * Math.Max(minArea, 0.000001)))
+        Return std.Max(s2 * maxArea / sum2, sum2 / (s2 * std.Max(minArea, 0.000001)))
     End Function
 
     Private Function ShortestSide(area As RectangleF) As Single
-        Return Math.Min(area.Width, area.Height)
+        Return std.Min(area.Width, area.Height)
     End Function
 
     ''' <summary>布局一行（沿当前最短边排列），并从 area 中扣除已用部分</summary>
@@ -246,9 +247,9 @@ Public Class TreemapPlot
         End If
 
         Dim font = Theme.TickLabelFont
-        Dim minDim = Math.Min(n.Rect.Width, n.Rect.Height)
+        Dim minDim = std.Min(n.Rect.Width, n.Rect.Height)
         If AutoFontSize AndAlso minDim < 50 Then
-            Dim size = Math.Max(6, CSng(minDim / 8))
+            Dim size = std.Max(6, CSng(minDim / 8))
             font = New Font("Microsoft YaHei", size, FontStyle.Regular)
         End If
 

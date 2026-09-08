@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>柱状图（分类数据）</summary>
 Public Class BarPlot
@@ -123,8 +124,8 @@ Public Class BarPlot
                     Dim bx0 = ToPixelX(0, vmin, vmax)
                     Dim bx1 = ToPixelX(val, vmin, vmax)
                     Dim by = cy - (nSer * barWidth) / 2 + i * barWidth + barWidth * 0.1
-                    Dim rect = New RectangleF(Math.Min(bx0, bx1), by - barWidth * 0.45,
-                                              Math.Abs(bx1 - bx0), barWidth * 0.9)
+                    Dim rect = New RectangleF(std.Min(bx0, bx1), by - barWidth * 0.45,
+                                              std.Abs(bx1 - bx0), barWidth * 0.9)
                     Using br As New SolidBrush(color)
                         _g.FillRectangle(br, rect)
                     End Using
@@ -145,8 +146,8 @@ Public Class BarPlot
                     Dim by0 = ToPixelY(0, vmin, vmax)
                     Dim by1 = ToPixelY(val, vmin, vmax)
                     Dim bx = cx - (nSer * barWidth) / 2 + i * barWidth + barWidth * 0.1
-                    Dim rect = New RectangleF(bx, Math.Min(by0, by1),
-                                              barWidth * 0.9, Math.Abs(by1 - by0))
+                    Dim rect = New RectangleF(bx, std.Min(by0, by1),
+                                              barWidth * 0.9, std.Abs(by1 - by0))
                     Using br As New SolidBrush(color)
                         _g.FillRectangle(br, rect)
                     End Using
