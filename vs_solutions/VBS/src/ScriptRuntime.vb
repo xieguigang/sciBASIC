@@ -19,7 +19,7 @@ Public Class ScriptRuntime : Implements IDisposable
 
     Private Function CommandArgs(args As String()) As Object
         Dim type As Type = ctx.GetType(asm, GetType(CommandLine).FullName)
-        Dim ctor As MethodInfo = type.GetMethod(NameOf(CommandLine.BuildFromArguments))
+        Dim ctor As MethodInfo = type.GetMethod(NameOf(CommandLine.BuildFromArguments), {GetType(String()), GetType(Boolean)})
         Dim cmdl As Object = ctor.Invoke(Nothing, {args, False})
 
         Return cmdl
