@@ -114,13 +114,20 @@ Namespace Scripting.Runtime
         ''' 此时不应将此类型的实例传回宿主的强类型API
         ''' </summary>
         Public Overloads Function [GetType](mainAsm As Assembly, typeFullName As String) As Type
-
             ' 1. 优先查主脚本assembly(脚本自定义类型都在这里)
             If Not mainAsm Is Nothing Then
                 Dim t As Type = mainAsm.GetType(typeFullName)
                 If Not t Is Nothing Then
                     Return t
                 End If
+
+                For Each asmName In mainAsm.GetReferencedAssemblies
+                    Dim asm = Load(asmName)
+                    t = asm.GetType(typeFullName)
+                    If Not t Is Nothing Then
+                        Return t
+                    End If
+                Next
             End If
 
             ' 2. 遍历本ALC已加载的所有assembly(含#imports加载的依赖)
