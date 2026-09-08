@@ -7,6 +7,9 @@
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <AssemblyName>Microsoft.VisualBasic.Data.DataPlot</AssemblyName>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <OutputPath>../../../.nuget</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

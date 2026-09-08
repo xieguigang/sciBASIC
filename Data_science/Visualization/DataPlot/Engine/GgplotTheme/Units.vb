@@ -631,9 +631,9 @@ Namespace GgplotTheme
         ''' Use ToPixelsX or ToPixelsY for axis-specific NPC conversion.
         ''' </summary>
         ''' <param name="unit">The unit to convert. If Nothing or Null, returns 0.</param>
-        ''' <param name="fontSizePt">Font size in points for 'lines'/'char' conversion. If <= 0, uses canvas base font size.</param>
-        ''' <param name="parentWidthPx">Parent width in pixels for NPC. If <= 0, uses canvas width.</param>
-        ''' <param name="parentHeightPx">Parent height in pixels for NPC. If <= 0, uses canvas height.</param>
+        ''' <param name="fontSizePt">Font size in points for 'lines'/'char' conversion. If &lt;= 0, uses canvas base font size.</param>
+        ''' <param name="parentWidthPx">Parent width in pixels for NPC. If &lt;= 0, uses canvas width.</param>
+        ''' <param name="parentHeightPx">Parent height in pixels for NPC. If &lt;= 0, uses canvas height.</param>
         Public Function ToPixels(unit As Unit,
                                  Optional fontSizePt As Double = -1,
                                  Optional parentWidthPx As Double = -1,

@@ -1,5 +1,6 @@
 #include "Microsoft.VisualBasic.DataMining.Framework.dll"
 #include "Microsoft.VisualBasic.Data.Framework.dll"
+#include "Microsoft.VisualBasic.Data.DataPlot.dll"
 
 imports microsoft.visualbasic.data.framework.storageprovider
 imports microsoft.visualbasic.datamining.kmeans
