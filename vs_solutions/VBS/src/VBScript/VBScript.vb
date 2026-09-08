@@ -336,12 +336,21 @@ Namespace Script
             Return IsControlBlockStart(line, blockType)
         End Function
 
-        ''' <summary>判断代码行是否为指定类型块的结束标记</summary>
+        ''' <summary>
+        ''' 判断代码行是否为指定类型块的结束标记
+        ''' </summary>
+        ''' <remarks>
+        ''' 栈中所保存的块类型名称统一为小写形式(全部经由``bt.ToLower``入栈),
+        ''' 而VB的Select Case在默认的``Option Compare Binary``之下是区分大小写的,
+        ''' 所以这里必须先统一大小写之后再进行块类型判定, 否则``For``/``Do``块
+        ''' 将永远无法被``Next``/``Loop``所闭合。
+        ''' </remarks>
         Private Function IsBlockEnd(line As String, blockType As String) As Boolean
-            Select Case blockType
-                Case "For" : Return Regex.IsMatch(line, "^next\b", RegexOptions.IgnoreCase)
-                Case "Do" : Return Regex.IsMatch(line, "^loop\b", RegexOptions.IgnoreCase)
-                Case Else : Return Regex.IsMatch(line, "^end\s+" & blockType & "\b", RegexOptions.IgnoreCase)
+            Select Case blockType.ToLower()
+                Case "for" : Return Regex.IsMatch(line, "^next\b", RegexOptions.IgnoreCase)
+                Case "do" : Return Regex.IsMatch(line, "^loop\b", RegexOptions.IgnoreCase)
+                Case Else
+                    Return Regex.IsMatch(line, "^end\s+" & Regex.Escape(blockType) & "\b", RegexOptions.IgnoreCase)
             End Select
         End Function
 
