@@ -376,7 +376,7 @@ for each m As MethodInfo In TutorialKit.Targets()
     try
         kernel = IlCudaTranslator.Translate(m)
     catch ex As Exception
-        errMsg = ex.Message
+        errMsg = ex.GetBaseException().Message
     end try
 
     if errMsg IsNot Nothing Then
@@ -398,9 +398,9 @@ for each m As MethodInfo In TutorialKit.Targets()
         call TutorialKit.PrintBlock(kernel.Source, "    ")
 
         ' 解释求值自检: 把同一棵 AST 交给 CPU 解释器执行, 与直接调用原方法比对
-        dim args As Object() = TutorialKit.SampleArgs(m)
-        dim expected As Object = m.Invoke(Nothing, args)
-        dim actual As Object = New AstInterpreter(kernel.Syntax).Invoke(args)
+        dim sampleArgs As Object() = TutorialKit.SampleArgs(m)
+        dim expected As Object = m.Invoke(Nothing, sampleArgs)
+        dim actual As Object = New AstInterpreter(kernel.Syntax).Invoke(sampleArgs)
         dim diff As Double = System.Math.Abs(System.Convert.ToDouble(expected) - System.Convert.ToDouble(actual))
         dim tol As Double = 1.0E-5 * System.Math.Max(1.0, System.Math.Abs(System.Convert.ToDouble(expected)))
         dim pass As Boolean = diff <= tol
