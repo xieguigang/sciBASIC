@@ -9,6 +9,7 @@
     <AssemblyName>vbs</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <OutputPath>../../.nuget/</OutputPath>
+    <LangVersion>15</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

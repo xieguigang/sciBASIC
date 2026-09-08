@@ -77,6 +77,7 @@ Namespace Script
 
             ' ?"--a" => args("--a")
             code = Regex.Replace(code, "\?""(?<name>[^""]+)""", "args(""${name}"")")
+            code = TupleDestructuring.Expand(code)
 
             ' ---- 按行扫描分离代码块 ----
             Dim mainBody As New List(Of String)     ' 顶层语句 => Main方法体
