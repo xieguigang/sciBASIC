@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class ScriptRuntime : Implements IDisposable
@@ -17,7 +18,11 @@ Public Class ScriptRuntime : Implements IDisposable
     End Function
 
     Private Function CommandArgs(args As String()) As Object
+        Dim type As Type = ctx.GetType(asm, GetType(CommandLine).FullName)
+        Dim ctor As MethodInfo = type.GetMethod(NameOf(CommandLine.BuildFromArguments))
+        Dim cmdl As Object = ctor.Invoke(Nothing, {args, False})
 
+        Return cmdl
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
