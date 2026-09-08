@@ -24,11 +24,11 @@ SkiaDriver.Register()
 
 Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.Title = "PCA group of bezdek-Iris"
-    plt.SubTitle = "Two groups with linear trend"
+    plt.SubTitle = "PCA score scatter with 3 iris species colors"
     plt.XLabel = "PC1"
     plt.YLabel = "PC2"
     plt.Plot(DataSerials(x:=pca!PC1,y:=pca!PC2, class_id).tolist())
     plt.SavePng("Z:/bezdekIris-pca-groups.png", 300)
 End Using
 
-call result.saveto("Z:/test.csv")
+call result.saveto("Z:/bezdekIris-pca-groups.csv")
