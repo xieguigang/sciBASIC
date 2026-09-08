@@ -6,6 +6,7 @@ Imports Microsoft.CodeAnalysis.Emit
 Imports Microsoft.CodeAnalysis.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Module DynamicDll
 
@@ -42,7 +43,7 @@ Module DynamicDll
     Public Function CompileScript(script As ScriptParseResult,
                                   Optional asmName As String = Nothing,
                                   Optional extraRefs As IEnumerable(Of String) = Nothing,
-                                  Optional debug As Boolean = False) As Assembly
+                                  Optional debug As Boolean = False) As (ctx As ScriptLoadContext, asm As Assembly)
 
         ' ---- Step1: 生成语法树 ----
         Dim parseOptions As New VisualBasicParseOptions(LanguageVersion.Latest)
@@ -117,7 +118,10 @@ Module DynamicDll
             End If
 
             Call ms.Seek(0, SeekOrigin.Begin)
-            Return Assembly.Load(ms.ToArray())
+
+            Dim ctx As New ScriptLoadContext("script-" & Guid.NewGuid().ToString("N"), script.Imports)
+
+            Return (ctx, ctx.LoadFromStream(ms))
         End Using
     End Function
 

@@ -1,4 +1,3 @@
-Imports System.Reflection
 Imports Microsoft.VisualBasic.CommandLine
 
 Module Program
@@ -10,9 +9,11 @@ Module Program
     Public Function Main(args As String()) As Integer
         Dim cmdl As CommandLine = CommandLine.BuildFromArguments(args, NoSubCommand:=False)
         Dim scriptFile As String = cmdl.Name
-        Dim vbs As ScriptParseResult = Script.ParseScript(scriptFile)
-        Dim asm As Assembly = vbs.CompileScript
-        Dim exitCode As Integer = asm.Run(cmdl)
+        Dim vbs As ScriptParseResult = VBScriptHost.Script.ParseScript(scriptFile)
+        Dim script = vbs.CompileScript
+        Dim exitCode As Integer = script.asm.Run(cmdl)
+
+        Call script.ctx.Unload()
 
         Return exitCode
     End Function
