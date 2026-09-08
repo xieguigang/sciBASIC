@@ -126,4 +126,11 @@ Public Module ValueMapping
             }
         Next
     End Function
+
+    <Extension>
+    Public Iterator Function ClassId(a As IEnumerable(Of EntityClusterModel)) As IEnumerable(Of String)
+        For Each xi As EntityClusterModel In a
+            Yield xi.Cluster
+        Next
+    End Function
 End Module
