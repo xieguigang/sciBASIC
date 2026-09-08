@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VBS</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyTitle>VisualBasic.NET Scripting Host</AssemblyTitle>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+  </ItemGroup>
+
+</Project>
