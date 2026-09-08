@@ -12,7 +12,6 @@ Module Script
     ''' 对VB.NET脚本源代码文件进行解析处理
     ''' </summary>
     ''' <param name="scriptFile">.vb脚本源代码文件路径</param>
-    ''' <param name="args">外部传入的命令行参数(未提供时使用脚本注释'vbs中的默认参数)</param>
     Public Function ParseScript(scriptFile As String, Optional verbose As Boolean = False) As ScriptParseResult
         If Not File.Exists(scriptFile) Then
             Throw New FileNotFoundException("脚本源文件不存在: " & scriptFile, scriptFile)
