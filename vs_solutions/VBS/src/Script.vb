@@ -23,6 +23,8 @@ Module Script
 
         ' ---- Step1: 解析 #include 元数据, 得到引用的外部程序集文件路径 ----
         Dim [imports] As New List(Of String)
+        Dim root0 As String = App.HOME
+        Dim root1 As String = App.HOME & "/libs"
 
         For Each m As Match In Regex.Matches(source, "#include\s+""(?<dll>[^""]+)""", RegexOptions.IgnoreCase)
             Dim dll As String = m.Groups("dll").Value
@@ -31,7 +33,14 @@ Module Script
             If Path.IsPathRooted(dll) Then
                 Call [imports].Add(dll)
             Else
-                Call [imports].Add(Path.GetFullPath(Path.Combine(baseDir, dll)))
+                For Each dir As String In {baseDir, root0, root1}
+                    Dim dllfile As String = Path.GetFullPath(Path.Combine(dir, dll))
+
+                    If dllfile.FileExists Then
+                        Call [imports].Add(dllfile)
+                        Exit For
+                    End If
+                Next
             End If
         Next
 
