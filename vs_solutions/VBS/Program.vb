@@ -1,3 +1,5 @@
+Imports VBScriptHost.Script
+
 Module Program
 
     ''' <summary>

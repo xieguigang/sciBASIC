@@ -7,6 +7,7 @@ Imports Microsoft.CodeAnalysis.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports VBScriptHost.Script
 
 Module DynamicDll
 
@@ -113,8 +114,7 @@ Module DynamicDll
                     .Select(Function(d) d.ToString()) _
                     .ToArray()
 
-                Throw New InvalidOperationException(
-                    "脚本代码编译失败!" & vbCrLf & String.Join(vbCrLf, errors))
+                Throw New InvalidOperationException("脚本代码编译失败!" & vbCrLf & String.Join(vbCrLf, errors))
             End If
 
             Call ms.Seek(0, SeekOrigin.Begin)

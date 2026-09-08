@@ -26,7 +26,8 @@ Namespace Script
             ' ---- Step1: 解析 #include 元数据, 得到引用的外部程序集文件路径 ----
             Dim [imports] As New List(Of String)
             Dim root0 As String = App.HOME
-            Dim root1 As String = App.HOME & "/libs"
+            Dim root1 As String = App.HOME & "/libs"             ' bin/libs/
+            Dim root2 As String = App.HOME.ParentPath & "/libs"  ' ./bin/ ./libs/
 
             For Each m As Match In Regex.Matches(source, "#include\s+""(?<dll>[^""]+)""", RegexOptions.IgnoreCase)
                 Dim dll As String = m.Groups("dll").Value
@@ -35,7 +36,7 @@ Namespace Script
                 If Path.IsPathRooted(dll) Then
                     Call [imports].Add(dll)
                 Else
-                    For Each dir As String In {baseDir, root0, root1}
+                    For Each dir As String In {baseDir, root0, root1, root2}
                         Dim dllfile As String = Path.GetFullPath(Path.Combine(dir, dll))
 
                         If dllfile.FileExists Then
