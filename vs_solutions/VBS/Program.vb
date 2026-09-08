@@ -1,5 +1,3 @@
-Imports Microsoft.VisualBasic.CommandLine
-
 Module Program
 
     ''' <summary>
@@ -8,7 +6,7 @@ Module Program
     ''' <param name="args"></param>
     Public Function Main(args As String()) As Integer
         Dim scriptFile As String = args(0)
-        Dim vbs As ScriptParseResult = VBScriptHost.Script.ParseScript(scriptFile)
+        Dim vbs As ScriptParseResult = VBScript.ParseScript(scriptFile)
 
         Using script As ScriptRuntime = vbs.CompileScript
             Return script.Run(args)

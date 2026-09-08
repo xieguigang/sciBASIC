@@ -3,7 +3,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
 
-Module Script
+Module VBScript
 
     ' =========================================================================
     ' 函数1: 脚本源代码文件解析
@@ -53,9 +53,9 @@ Module Script
         End If
 
         Return New ScriptParseResult With {
-            .ScriptFile = scriptFile,
+            .scriptFile = scriptFile,
             .CommandLine = Nothing,
-            .Imports = [imports],
+            .imports = [imports],
             .GeneratedCode = code
         }
     End Function
