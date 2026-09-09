@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -155,6 +156,16 @@ Public Module ValueMapping
     Public Iterator Function Feature(Of T As IVector)(vec As IEnumerable(Of T), offset As Integer) As IEnumerable(Of Double)
         For Each row As T In vec
             Yield row.Data(offset)
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function AsDataSet(manifold As IDataEmbedding, labels As IEnumerable(Of String)) As IEnumerable(Of ClusterEntity)
+        Dim i As i32 = 0
+        Dim mat As Double()() = manifold.GetEmbedding
+
+        For Each id As String In labels
+            Yield New ClusterEntity With {.uid = id, .entityVector = mat(++i)}
         Next
     End Function
 End Module

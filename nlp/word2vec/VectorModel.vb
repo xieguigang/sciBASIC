@@ -87,6 +87,12 @@ Public Class VectorModel : Implements Enumeration(Of NamedCollection(Of Single))
         End Get
     End Property
 
+    Public ReadOnly Property tokens As String()
+        Get
+            Return wordMap.Keys.ToArray
+        End Get
+    End Property
+
     ''' <summary>
     ''' 私有构造函数 </summary>
     ''' <param name="wordMap"> 词向量哈希表 </param>

@@ -52,9 +52,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports TableSchema = Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels.SchemaProvider
 
@@ -64,6 +67,26 @@ Public Module Mapper
         For i As Integer = 1 To n
             Yield prefix & sep & i
         Next
+    End Function
+
+    <Extension>
+    Public Function as_dataframe(Of T As {INamedValue, IVector})(ds As IEnumerable(Of T), Optional colnames As String() = Nothing) As DataFrame
+        Dim totalDs As T() = ds.ToArray
+        Dim dataframe As New DataFrame With {.rownames = totalDs.Keys}
+        Dim w As Integer = totalDs(0).Data.Length
+
+        If colnames.IsNullOrEmpty Then
+            colnames = FieldName("v", w, "_").ToArray
+        End If
+
+        Dim offset As Integer = 0
+
+        For i As Integer = 0 To w - 1
+            offset = i
+            dataframe.add(colnames(i), From row As T In totalDs Select row.Data(offset))
+        Next
+
+        Return dataframe
     End Function
 
     ''' <summary>
