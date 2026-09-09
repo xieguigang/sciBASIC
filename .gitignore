@@ -694,3 +694,7 @@ Data/BinaryData/Feather/test/_diff_writer.txt
 mime/application%json/test/test_error_json.json
 mime/application%pdf/PdfWriter.Test/test_report.pdf
 Data_science/Mathematica/Math/DataFrame/MatrixMarket/west0655.out.mtx
+vs_solutions/package-install-cache/cacheIndex.txt
+vs_solutions/package-install-cache/part1/disk1.cab
+vs_solutions/package-install-cache/part1/output-info.ini
+*.msi
