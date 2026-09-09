@@ -52,7 +52,9 @@
 #End Region
 
 Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.NLP
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Correlations
 
 Module Module1
@@ -62,31 +64,43 @@ Module Module1
     End Sub
 
     Sub testtfidf()
-        Dim docs = New String() {"knowledge building needs innovative environments are better at helping their inhabitants explore the adjacent possible",
+        Dim docs = New String() {
+            "knowledge building needs innovative environments are better at helping their inhabitants explore the adjacent possible",
             "As a basis for evaluating explanations, creative knowledge building weight of evidence is a poor substitute for the first two criteria listed above.",
             "A public idea database makes every passing idea visible to everyone else in the organization and do creative work.",
             "questioning and various disturbances initiate cycles of innovation and creative organization knowledge.",
-            "We need some way to ensure knowledge to spread among environments that any notes that are dropped are dropped."}
+            "We need some way to ensure knowledge to spread among environments that any notes that are dropped are dropped."
+        }
 
-        Dim tfIdf As TFIDF = New TFIDF
-        Dim i As Integer
+        Dim tfIdf As New TFIDF
+        Dim i As i32 = 1
 
-        For Each seq In docs
-            Call tfIdf.Add(i, seq.StringSplit("\s+"))
-            i += 1
+        For Each seq As String In docs
+            Call tfIdf.Add(++i, seq.StringSplit("\s+"))
         Next
 
-        For i = 0 To tfIdf.N - 1
-            Console.Write(i + 1.ToString() & vbTab)
-            Dim v = tfIdf.TfidfVectorizer(i.ToString)
+        Dim N As Integer = docs.Length
+        Dim dist As Double()() = RectangularArray.Matrix(Of Double)(N, N)
 
-            For j = 0 To tfIdf.N - 1
-                Dim u = tfIdf.TfidfVectorizer(j.ToString)
+        For id As Integer = 1 To tfIdf.N
+            Dim v = tfIdf.TfidfVectorizer(id.ToString)
+            Dim rd As Double() = New Double(N - 1) {}
 
-                Console.Write(v.SquareDistance(u) & vbTab)
+            Console.Write(id.ToString() & vbTab)
+
+            For j As Integer = 1 To tfIdf.N
+                Dim d = v.SquareDistance(tfIdf.TfidfVectorizer(j.ToString))
+
+                rd(N - 1) = d
+                Call Console.Write(d.ToString("F4").PadLeft(8, "0"c) & vbTab)
             Next
-            Console.WriteLine()
+
+            dist(id - 1) = rd.ToArray
+
+            Call Console.WriteLine()
         Next
+
+
     End Sub
 
     ''' <summary>
@@ -118,7 +132,7 @@ Module Module1
                                 ch = 0 ' @in.Read();
                                 If Not Char.IsLetter(Microsoft.VisualBasic.ChrW(ch)) Then
                                     ' to test add(char ch) 
-                                    For c = 0 To j - 1
+                                    For c As Integer = 0 To j - 1
                                         s.add(w(c))
                                     Next
 
