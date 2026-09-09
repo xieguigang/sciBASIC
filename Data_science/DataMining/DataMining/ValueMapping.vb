@@ -150,4 +150,11 @@ Public Module ValueMapping
             Yield New ClusterEntity With {.entityVector = row.AsDouble, .uid = row.name}
         Next
     End Function
+
+    <Extension>
+    Public Iterator Function Feature(Of T As IVector)(vec As IEnumerable(Of T), offset As Integer) As IEnumerable(Of Double)
+        For Each row As T In vec
+            Yield row.Data(offset)
+        Next
+    End Function
 End Module
