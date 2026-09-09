@@ -7,6 +7,9 @@
     <Project Path="../Data_science/Graph/graph-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
