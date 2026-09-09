@@ -61,7 +61,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
@@ -75,8 +75,14 @@ Public Class MNIST : Implements IDisposable
     Dim labelReader As BinaryReader
     Dim count As Integer
     Dim rows, columns As Integer
-    Dim rect As Rectangle
 
+    Dim image0 As Long
+    Dim label0 As Long
+
+    ''' <summary>
+    ''' get column and rows
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property ImageSize As Size
         Get
             Return New Size(width:=columns, height:=rows)
@@ -102,7 +108,13 @@ Public Class MNIST : Implements IDisposable
 
         rows = ReadInt(imageReader)
         columns = ReadInt(imageReader)
-        rect = New Rectangle(0, 0, columns, rows)
+        image0 = imageReader.BaseStream.Position
+        label0 = labelReader.BaseStream.Position
+    End Sub
+
+    Public Sub Reset()
+        Call imageReader.BaseStream.Seek(image0, SeekOrigin.Begin)
+        Call labelReader.BaseStream.Seek(label0, SeekOrigin.Begin)
     End Sub
 
     Public Shared Function GetImageSize(imagesfile As String) As Size
@@ -138,6 +150,12 @@ Public Class MNIST : Implements IDisposable
     Public Iterator Function ExtractVectors() As IEnumerable(Of NamedCollection(Of Byte))
         For i As Integer = 0 To count - 1
             Yield ExtractRaw()
+        Next
+    End Function
+
+    Public Iterator Function ExtractDataSet(Of T As {INamedValue, DynamicPropertyBase(Of Double), New})() As IEnumerable(Of T)
+        For i As Integer = 0 To count - 1
+
         Next
     End Function
 
