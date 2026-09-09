@@ -1,98 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::b82143e812313438635d2a887cbea946, Data_science\MachineLearning\MLDataStorage\MNIST.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 197
-    '    Code Lines: 139 (70.56%)
-    ' Comment Lines: 26 (13.20%)
-    '    - Xml Docs: 57.69%
-    ' 
-    '   Blank Lines: 32 (16.24%)
-    '     File Size: 7.01 KB
+' Summaries:
 
 
-    ' Class MNIST
-    ' 
-    '     Properties: ImageSize
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: ConvertImage, ExtractImage, ExtractImages, ExtractRaw, ExtractVectors
-    '               GetImageSize, ReadInt
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 197
+'    Code Lines: 139 (70.56%)
+' Comment Lines: 26 (13.20%)
+'    - Xml Docs: 57.69%
+' 
+'   Blank Lines: 32 (16.24%)
+'     File Size: 7.01 KB
+
+
+' Class MNIST
+' 
+'     Properties: ImageSize
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: ConvertImage, ExtractImage, ExtractImages, ExtractRaw, ExtractVectors
+'               GetImageSize, ReadInt
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports std = System.Math
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
-
-
-#If NET48 Then
-Imports Pen = System.Drawing.Pen
-Imports Pens = System.Drawing.Pens
-Imports Brush = System.Drawing.Brush
-Imports Font = System.Drawing.Font
-Imports Brushes = System.Drawing.Brushes
-Imports SolidBrush = System.Drawing.SolidBrush
-Imports DashStyle = System.Drawing.Drawing2D.DashStyle
-Imports Image = System.Drawing.Image
-Imports Bitmap = System.Drawing.Bitmap
-Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
-Imports FontStyle = System.Drawing.FontStyle
-#Else
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports Pens = Microsoft.VisualBasic.Imaging.Pens
-Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
-#End If
+Imports std = System.Math
 
 Public Class MNIST : Implements IDisposable
 
