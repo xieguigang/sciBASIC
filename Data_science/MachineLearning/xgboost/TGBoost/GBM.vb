@@ -122,7 +122,7 @@ Namespace train
         Public Overridable ReadOnly Property trees As New List(Of Tree)
 
         Shared Sub New()
-            logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.cat($"{header}({level}): {msg}", vbCrLf))
+            logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.WriteLine($"{header}({level}): {msg}"))
 
             ' save log file on application exit
             Call App.AddExitCleanHook(AddressOf logger.Save)
@@ -377,6 +377,10 @@ Namespace train
             End If
 
             Return True
+        End Function
+
+        Public Function predict(data As TestData) As Double()
+            Return predict(data.origin_feature)
         End Function
 
         Public Overridable Function predict(features As Single()()) As Double()
