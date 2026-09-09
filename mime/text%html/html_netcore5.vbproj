@@ -187,7 +187,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.11" />
+	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.12" />
   </ItemGroup>
 
 </Project>
