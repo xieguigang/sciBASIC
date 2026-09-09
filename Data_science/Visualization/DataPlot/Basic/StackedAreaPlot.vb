@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46b6dca3b2432ee59a63298804ec937c, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
+﻿#Region "Microsoft.VisualBasic::37e6cefc043dfa74bcde785947cc4075, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 112 (79.43%)
-    ' Comment Lines: 12 (8.51%)
+    '   Total Lines: 142
+    '    Code Lines: 113 (79.58%)
+    ' Comment Lines: 12 (8.45%)
     '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 17 (12.06%)
-    '     File Size: 5.82 KB
+    '   Blank Lines: 17 (11.97%)
+    '     File Size: 5.84 KB
 
 
     ' Class StackedAreaPlot

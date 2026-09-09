@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00440d4f7706e4bc0f20dd433ca5f2f, vs_solutions\dev\VisualStudio\IL\ILInstruction.vb"
+﻿#Region "Microsoft.VisualBasic::c23d094d329fa053c255ca68fec95226, vs_solutions\dev\VisualStudio\IL\ILInstruction.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 81 (69.83%)
-    ' Comment Lines: 12 (10.34%)
+    '   Total Lines: 196
+    '    Code Lines: 135 (68.88%)
+    ' Comment Lines: 26 (13.27%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 23 (19.83%)
-    '     File Size: 4.12 KB
+    '   Blank Lines: 35 (17.86%)
+    '     File Size: 7.42 KB
 
 
     '     Class ILInstruction
     ' 
-    '         Properties: Code, Offset, Operand, OperandData
+    '         Properties: BranchTargets, CanFallThrough, Code, IsBranch, IsConditionalBranch
+    '                     IsReturn, IsSwitch, IsUnconditionalBranch, NextOffset, Offset
+    '                     Operand, OperandData, Size
     ' 
     '         Function: buildInlineMethodCode, GetCode, GetExpandedOffset, GetOperandCode, ToString
     ' 

@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::36cda9d966282aa9ed688b5de426cfcc, Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::c3e20350fff24fc8b37298a2c071cd64, Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 212
-'    Code Lines: 158 (74.53%)
-' Comment Lines: 21 (9.91%)
-'    - Xml Docs: 95.24%
-' 
-'   Blank Lines: 33 (15.57%)
-'     File Size: 8.09 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Tree
-' 
-'         Function: __buildNET, bTreeNET, Partitioning
-'         Structure __edgePath
-' 
-'             Function: ToString
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 158 (74.53%)
+    ' Comment Lines: 21 (9.91%)
+    '    - Xml Docs: 95.24%
+    ' 
+    '   Blank Lines: 33 (15.57%)
+    '     File Size: 8.16 KB
+
+
+    '     Module Tree
+    ' 
+    '         Function: __buildNET, bTreeNET, Partitioning
+    '         Structure __edgePath
+    ' 
+    '             Function: ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

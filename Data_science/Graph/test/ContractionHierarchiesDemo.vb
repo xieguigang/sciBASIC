@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07d49c2ad9eb46373487c1b6d47a2467, Data_science\Graph\test\ContractionHierarchiesDemo.vb"
+﻿#Region "Microsoft.VisualBasic::c61b77036fd59bd147e11192de979368, Data_science\Graph\test\ContractionHierarchiesDemo.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Module ContractionHierarchiesDemo
         Next
     End Sub
 End Module
-

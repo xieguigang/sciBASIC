@@ -1,3 +1,66 @@
+﻿#Region "Microsoft.VisualBasic::cbdb602f898540e406bc7467b2cb8858, cuda\ILCuda\test\IlDecompile\IlCudaComparison.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 540
+    '    Code Lines: 374 (69.26%)
+    ' Comment Lines: 48 (8.89%)
+    '    - Xml Docs: 20.83%
+    ' 
+    '   Blank Lines: 118 (21.85%)
+    '     File Size: 24.31 KB
+
+
+    '     Class IlCudaTestOptions
+    ' 
+    '         Properties: Cols, CpuOnly, DeviceOrdinal, DumpIl, ImagePath
+    '                     NvrtcPath, Rows, Seed, ShowAst, ShowSource
+    ' 
+    '     Module IlCudaComparison
+    ' 
+    '         Function: CheckAgainstInterpreter, CompareClamp, CompareCorrelation, CompareDistance, CompareGram
+    '                   CompareRowStats, CountInstructions, CpuRowSum, CpuRowSumSq, Report
+    '                   RunDecompileReport, RunGpuComparison, SampleArgs, TargetMethods
+    ' 
+    '         Sub: RunMetricsBaseline
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' IL -> CUDA 流水线的测试与对比驱动
 '
@@ -538,3 +601,4 @@ Namespace IlDecompile
         End Function
     End Module
 End Namespace
+

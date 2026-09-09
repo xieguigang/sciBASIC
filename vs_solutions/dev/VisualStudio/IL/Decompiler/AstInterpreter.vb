@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::324fa5cb9eeb241e4cfeba488ea3b049, vs_solutions\dev\VisualStudio\IL\Decompiler\AstInterpreter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 431
+    '    Code Lines: 319 (74.01%)
+    ' Comment Lines: 30 (6.96%)
+    '    - Xml Docs: 13.33%
+    ' 
+    '   Blank Lines: 82 (19.03%)
+    '     File Size: 19.34 KB
+
+
+    '     Class AstInterpreter
+    ' 
+    '         Properties: StepLimit
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ArithUnary, DefaultOf, Evaluate, EvaluateBinary, EvaluateCall
+    '                   Invoke, Lookup, Num, Num2, Truth
+    ' 
+    '         Sub: AssignValue, ExecuteBlock, ExecuteStatement
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' AST 的 CPU 解释求值
 '
@@ -429,3 +490,4 @@ Namespace IL
         End Function
     End Class
 End Namespace
+

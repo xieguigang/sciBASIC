@@ -1,4 +1,59 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::f7d5495f4d26223eb2bd9b01628416fc, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\ScriptLoadContext.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 105 (60.34%)
+    ' Comment Lines: 40 (22.99%)
+    '    - Xml Docs: 67.50%
+    ' 
+    '   Blank Lines: 29 (16.67%)
+    '     File Size: 7.37 KB
+
+
+    '     Class ScriptLoadContext
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: [GetType], CreateInstance, Load, LoadFromFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.Loader
 

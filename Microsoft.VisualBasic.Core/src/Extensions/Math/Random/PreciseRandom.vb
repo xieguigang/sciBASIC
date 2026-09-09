@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccad36780681f41eafaab177d6e947fd, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\PreciseRandom.vb"
+﻿#Region "Microsoft.VisualBasic::279e17c731796fa91ecd622372c4d3bc, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\PreciseRandom.vb"
 
     ' Author:
     ' 

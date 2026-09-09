@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a9603b09d4a30ecac86617b50f5b48b, Data_science\Visualization\DataPlot\Engine\GgplotTheme\Units.vb"
+﻿#Region "Microsoft.VisualBasic::0cc693e13ddf44635642d87fb1e6badd, Data_science\Visualization\DataPlot\Engine\GgplotTheme\Units.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.73%
     ' 
     '   Blank Lines: 77 (11.99%)
-    '     File Size: 26.53 KB
+    '     File Size: 26.55 KB
 
 
     '     Enum UnitType

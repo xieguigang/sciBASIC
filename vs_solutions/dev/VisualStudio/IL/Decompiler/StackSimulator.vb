@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::4f85ed77ef19376c60341f44fafdf21e, vs_solutions\dev\VisualStudio\IL\Decompiler\StackSimulator.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 486
+    '    Code Lines: 315 (64.81%)
+    ' Comment Lines: 64 (13.17%)
+    '    - Xml Docs: 20.31%
+    ' 
+    '   Blank Lines: 107 (22.02%)
+    '     File Size: 20.35 KB
+
+
+    '     Class StackSimulator
+    ' 
+    '         Properties: MergeDeclarations
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: BuildEntryStack, CreateStackMerge, NameOfDef, NameOfUse, NumericRank
+    '                   Pop, StackUnderflow, WiderType
+    ' 
+    '         Sub: AppendPhiAssignments, Reduce, ReduceCall, ReduceConditionalBranch, Run
+    '              SimulateBlock
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' 栈模拟归约器（IL -> 表达式树 的核心算法）
 '
@@ -484,3 +546,4 @@ Namespace IL
         End Function
     End Class
 End Namespace
+

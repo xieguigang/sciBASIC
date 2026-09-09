@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a37433b61968a91f4df29bee486df9a5, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Knot.vb"
+﻿#Region "Microsoft.VisualBasic::dae9cf562c83f5cca7a099e74aae48d0, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Knot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 21
-    '    Code Lines: 14 (66.67%)
-    ' Comment Lines: 5 (23.81%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 24
+    '    Code Lines: 14 (58.33%)
+    ' Comment Lines: 8 (33.33%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 2 (9.52%)
-    '     File Size: 1009 B
+    '   Blank Lines: 2 (8.33%)
+    '     File Size: 1.08 KB
 
 
     '     Class Knot

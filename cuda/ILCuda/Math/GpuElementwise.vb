@@ -1,3 +1,70 @@
+﻿#Region "Microsoft.VisualBasic::369595be5740a50bcf67c5619f73a9e7, cuda\ILCuda\Math\GpuElementwise.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 238
+    '    Code Lines: 146 (61.34%)
+    ' Comment Lines: 41 (17.23%)
+    '    - Xml Docs: 46.34%
+    ' 
+    '   Blank Lines: 51 (21.43%)
+    '     File Size: 11.08 KB
+
+
+    '     Module GpuElementwise
+    ' 
+    '         Function: Add, Apply, Divide, KernelOf, Multiply
+    '                   Run, Subtract
+    ' 
+    '         Sub: Abs, Add, Axpy, Binary, Divide
+    '              Exp, Log, Multiply, Relu, RequireSameLength
+    '              Scale, Sqrt, Subtract, Unary, ValidateEngine
+    ' 
+    '     Enum UnaryOp
+    ' 
+    '         Abs, Exp, Log, Relu, Sqrt
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' 逐元素（elementwise）算子
 '
@@ -236,3 +303,4 @@ Namespace Math
         Abs
     End Enum
 End Namespace
+

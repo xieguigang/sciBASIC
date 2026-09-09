@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0863ef26b3668122636e6c307f009f7d, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::0dcc4027b74578a0c85d7793baa2e777, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 355
-    '    Code Lines: 242 (68.17%)
-    ' Comment Lines: 80 (22.54%)
-    '    - Xml Docs: 88.75%
+    '   Total Lines: 386
+    '    Code Lines: 255 (66.06%)
+    ' Comment Lines: 92 (23.83%)
+    '    - Xml Docs: 85.87%
     ' 
-    '   Blank Lines: 33 (9.30%)
-    '     File Size: 15.12 KB
+    '   Blank Lines: 39 (10.10%)
+    '     File Size: 16.93 KB
 
 
     '     Module ApplicationInfoUtils
     ' 
-    '         Function: CalculateCompileTime, CurrentExe, FromAssembly, FromTypeModule, GetCompanyName
-    '                   GetCopyRightsDetail, GetGuid, GetInformationalVersion, GetProductDescription, GetProductName
-    '                   GetProductTitle, GetProductVersion, GetTargetFramework, GetTrademark, RetrieveLinkerTimestamp
-    '                   tryGetVersion, VBCore
+    '         Function: CalculateCompileTime, CalculateVersion, CurrentExe, FromAssembly, FromTypeModule
+    '                   GetCompanyName, GetCopyRightsDetail, GetGuid, GetInformationalVersion, GetProductDescription
+    '                   GetProductName, GetProductTitle, GetProductVersion, GetTargetFramework, GetTrademark
+    '                   RetrieveLinkerTimestamp, tryGetVersion, VBCore
     ' 
     ' 
     ' /********************************************************************************/

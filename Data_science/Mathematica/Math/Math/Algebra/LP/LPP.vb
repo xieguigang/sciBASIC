@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f31fd3c470dde253c1583e30fe8a46c2, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::b1e2ebee144a1a4fd578cca8f480a974, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 237
-    '    Code Lines: 150 (63.29%)
-    ' Comment Lines: 60 (25.32%)
-    '    - Xml Docs: 85.00%
+    '   Total Lines: 317
+    '    Code Lines: 198 (62.46%)
+    ' Comment Lines: 86 (27.13%)
+    '    - Xml Docs: 88.37%
     ' 
-    '   Blank Lines: 27 (11.39%)
-    '     File Size: 11.51 KB
+    '   Blank Lines: 33 (10.41%)
+    '     File Size: 16.16 KB
 
 
     '     Class LPP
     ' 
     '         Properties: DecimalFormat, ObjectFunctionVariables, PIVOT_ITERATION_LIMIT, USE_SUBSCRIPT_UNICODE
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
     '         Function: addArtificialVariable, ArtificialVariableAssignments, increaseArtificialVariableIndices, solve, ToString
     ' 

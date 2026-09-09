@@ -1,3 +1,56 @@
+﻿#Region "Microsoft.VisualBasic::85a348885c7f86af8c896690d1a4b5b2, vs_solutions\PkgVersionUpgrade\ConfigCleaner.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 56 (41.48%)
+    ' Comment Lines: 59 (43.70%)
+    '    - Xml Docs: 86.44%
+    ' 
+    '   Blank Lines: 20 (14.81%)
+    '     File Size: 5.53 KB
+
+
+    ' Module ConfigCleaner
+    ' 
+    '     Function: Clean, GetTargetFrameworkSet, TryExtractTargetFramework
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Xml.Linq
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 
@@ -133,3 +186,4 @@ Module ConfigCleaner
     End Function
 
 End Module
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd2ea5a742a3cee71753b28a5b7c8bad, nlp\NLP\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ed9f560d7c0526373b4f85027b6efdae, nlp\NLP\test\Module1.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 71 (72.45%)
-    ' Comment Lines: 13 (13.27%)
+    '   Total Lines: 120
+    '    Code Lines: 86 (71.67%)
+    ' Comment Lines: 13 (10.83%)
     '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 14 (14.29%)
-    '     File Size: 4.49 KB
+    '   Blank Lines: 21 (17.50%)
+    '     File Size: 5.02 KB
 
 
     ' Module Module1
     ' 
-    '     Sub: Main111, testtfidf
+    '     Sub: Main, Main111, testtfidf
     ' 
     ' /********************************************************************************/
 

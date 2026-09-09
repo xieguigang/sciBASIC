@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36584906b022f219472c2e198801a55c, mime\application%pdf\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::34dbaa11b1350b30c78a35ef91821a52, mime\application%pdf\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 38 (70.37%)
-    ' Comment Lines: 8 (14.81%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 124
+    '    Code Lines: 94 (75.81%)
+    ' Comment Lines: 10 (8.06%)
+    '    - Xml Docs: 20.00%
     ' 
-    '   Blank Lines: 8 (14.81%)
-    '     File Size: 2.13 KB
+    '   Blank Lines: 20 (16.13%)
+    '     File Size: 5.18 KB
 
 
     ' Class Program
     ' 
-    '     Function: Main
+    '     Function: Main, Run
     ' 
     '     Sub: PrintUsage
     ' 

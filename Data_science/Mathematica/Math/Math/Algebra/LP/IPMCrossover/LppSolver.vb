@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::97a2d9f9d97b2cc2fa0598d559784967, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppSolver.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 321
+    '    Code Lines: 215 (66.98%)
+    ' Comment Lines: 40 (12.46%)
+    '    - Xml Docs: 22.50%
+    ' 
+    '   Blank Lines: 66 (20.56%)
+    '     File Size: 13.28 KB
+
+
+    '     Module LppSolver
+    ' 
+    '         Function: AppendBoundRows, Fail, HasFiniteUpper, ObjOrig, Ok
+    '                   SnapToBounds, Solve, SolveStandard
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' LppSolver.vb — 完整流水线组装 → LPPSolution [readme §六 流水线图]
 ' ----------------------------------------------------------------------------
@@ -319,3 +374,4 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Module
 
 End Namespace
+

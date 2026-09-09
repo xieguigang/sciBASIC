@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7124bd310c53cb49e2cd10c00ad3f3b7, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\ClusterEntity.vb"
+﻿#Region "Microsoft.VisualBasic::4c7674d3def8204e9773584bd7159a40, Data_science\DataMining\DataMining\ComponentModel\EntityModels\ClusterEntity.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 84 (53.16%)
-    ' Comment Lines: 57 (36.08%)
+    '   Total Lines: 157
+    '    Code Lines: 83 (52.87%)
+    ' Comment Lines: 57 (36.31%)
     '    - Xml Docs: 92.98%
     ' 
-    '   Blank Lines: 17 (10.76%)
-    '     File Size: 5.65 KB
+    '   Blank Lines: 17 (10.83%)
+    '     File Size: 5.61 KB
 
 
     '     Class ClusterEntity

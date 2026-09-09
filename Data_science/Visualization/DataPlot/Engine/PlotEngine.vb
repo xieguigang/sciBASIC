@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55eff919dfe645388da98eb194e09fde, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
+﻿#Region "Microsoft.VisualBasic::019ce8f7cdde6677e83efbbf4fd95798, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 462
-    '    Code Lines: 355 (76.84%)
-    ' Comment Lines: 62 (13.42%)
+    '   Total Lines: 461
+    '    Code Lines: 354 (76.79%)
+    ' Comment Lines: 62 (13.45%)
     '    - Xml Docs: 25.81%
     ' 
-    '   Blank Lines: 45 (9.74%)
-    '     File Size: 20.01 KB
+    '   Blank Lines: 45 (9.76%)
+    '     File Size: 19.89 KB
 
 
     ' Class SeriesPlotEngine

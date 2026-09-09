@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55649f61e2394134b968349a0730de90, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::f778b1539ea0b6b47170555bd3bd1356, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 148 (79.14%)
-    ' Comment Lines: 15 (8.02%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 198
+    '    Code Lines: 153 (77.27%)
+    ' Comment Lines: 20 (10.10%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 24 (12.83%)
-    '     File Size: 7.03 KB
+    '   Blank Lines: 25 (12.63%)
+    '     File Size: 7.42 KB
 
 
     '     Module NumberConversionRoutines
     ' 
-    '         Function: (+2 Overloads) AsInteger, CDblSafe, (+2 Overloads) CIntSafe, (+2 Overloads) CShortSafe, CStrInternal
-    '                   CStrSafe, IsNumber
+    '         Function: (+2 Overloads) AsInteger, AsNumeric, CDblSafe, (+2 Overloads) CIntSafe, (+2 Overloads) CShortSafe
+    '                   CStrInternal, CStrSafe, IsNumber
     ' 
     ' 
     ' /********************************************************************************/

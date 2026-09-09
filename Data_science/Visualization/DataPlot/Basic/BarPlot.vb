@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cbe034182385627237f304716ed7335, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7726e8eb9049778c5c322c497cabf882, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 109 (87.20%)
-    ' Comment Lines: 7 (5.60%)
+    '   Total Lines: 126
+    '    Code Lines: 110 (87.30%)
+    ' Comment Lines: 7 (5.56%)
     '    - Xml Docs: 28.57%
     ' 
-    '   Blank Lines: 9 (7.20%)
-    '     File Size: 5.83 KB
+    '   Blank Lines: 9 (7.14%)
+    '     File Size: 5.85 KB
 
 
     ' Class BarPlot

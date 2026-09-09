@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::1acd998c8f3772a6d68efa1ff10449f5, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LinAlg.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 296
+    '    Code Lines: 244 (82.43%)
+    ' Comment Lines: 31 (10.47%)
+    '    - Xml Docs: 35.48%
+    ' 
+    '   Blank Lines: 21 (7.09%)
+    '     File Size: 11.46 KB
+
+
+    '     Class LuFactorization
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Module LinAlg
+    ' 
+    '         Function: AppendCol, (+2 Overloads) Cholesky, CholSolve, Dot, EchelonRank
+    '                   LuFactor, LuSolve, LuSolveT, Norm2, SolveSpd
+    '                   TakeCols
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' LinAlg.vb — 稠密线性代数核心（纯 BCL，行主序 Double(,)）
 ' ----------------------------------------------------------------------------
@@ -294,3 +354,4 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Module
 
 End Namespace
+

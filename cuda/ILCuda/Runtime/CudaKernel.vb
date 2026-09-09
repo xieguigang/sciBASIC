@@ -1,4 +1,64 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::fd3cb468250dc1bcafba549f8d998fd9, cuda\ILCuda\Runtime\CudaKernel.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 109 (71.24%)
+    ' Comment Lines: 15 (9.80%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 29 (18.95%)
+    '     File Size: 7.00 KB
+
+
+    '     Class CudaKernel
+    ' 
+    '         Properties: Handle, Name
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: StreamHandle, ToString
+    ' 
+    '         Sub: (+4 Overloads) Launch, (+2 Overloads) Launch1D, LaunchCore, WriteArgument
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 
 Namespace Runtime
 
@@ -151,3 +211,4 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
+

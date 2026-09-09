@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67564dbf61d28a5bbd8f25bf21091f79, Data\DataFrame\DataFrame\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::e92bcef56590f8aeae8a89eaf142bd06, Data\DataFrame\DataFrame\Mapper.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 88 (61.97%)
-    ' Comment Lines: 40 (28.17%)
+    '   Total Lines: 171
+    '    Code Lines: 111 (64.91%)
+    ' Comment Lines: 40 (23.39%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (9.86%)
-    '     File Size: 6.54 KB
+    '   Blank Lines: 20 (11.70%)
+    '     File Size: 7.62 KB
 
 
     ' Module Mapper
     ' 
-    '     Function: as_dataframe, StreamToFrame
+    '     Function: (+2 Overloads) as_dataframe, FieldName, StreamToFrame
     ' 
     ' /********************************************************************************/
 

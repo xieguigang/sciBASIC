@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e66d55fd732345001f5701d3735e0fb5, Data_science\Mathematica\Math\Math\Algebra\LP\LPPDebugView.vb"
+﻿#Region "Microsoft.VisualBasic::070a2247cafabf447664b944071f0c41, Data_science\Mathematica\Math\Math\Algebra\LP\LPPDebugView.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 41 (80.39%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 56
+    '    Code Lines: 44 (78.57%)
+    ' Comment Lines: 1 (1.79%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (19.61%)
-    '     File Size: 2.06 KB
+    '   Blank Lines: 11 (19.64%)
+    '     File Size: 2.39 KB
 
 
     '     Module LPPDebugView

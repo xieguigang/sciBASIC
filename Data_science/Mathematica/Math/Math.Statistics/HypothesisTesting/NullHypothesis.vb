@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5528b1d192e95210e06eee429d07194c, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\NullHypothesis.vb"
+﻿#Region "Microsoft.VisualBasic::fbfd692aedd577906733b8917c5d17f5, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\NullHypothesis.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.00%
     ' 
     '   Blank Lines: 9 (14.75%)
-    '     File Size: 2.39 KB
+    '     File Size: 2.44 KB
 
 
     '     Class NullHypothesis

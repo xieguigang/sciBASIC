@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229f3266d4435676954852ad18b0a207, Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
+﻿#Region "Microsoft.VisualBasic::db0b1bc83ff80edfa0e68209b0feb6a9, Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 29 (25.66%)
-    '     File Size: 3.40 KB
+    '     File Size: 3.39 KB
 
 
     '     Class Loss

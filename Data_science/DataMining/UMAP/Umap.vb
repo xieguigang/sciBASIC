@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::862fde839fc1e97066df822b09ad00f4, Data_science\DataMining\UMAP\Umap.vb"
+﻿#Region "Microsoft.VisualBasic::09d0a5716fa19919d10b943b10996908, Data_science\DataMining\UMAP\Umap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 659
-    '    Code Lines: 340 (51.59%)
-    ' Comment Lines: 241 (36.57%)
+    '   Total Lines: 663
+    '    Code Lines: 343 (51.73%)
+    ' Comment Lines: 241 (36.35%)
     '    - Xml Docs: 80.08%
     ' 
-    '   Blank Lines: 78 (11.84%)
-    '     File Size: 29.80 KB
+    '   Blank Lines: 79 (11.92%)
+    '     File Size: 30.00 KB
 
 
     ' Class Umap
@@ -50,7 +50,7 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: (+2 Overloads) [Step], FindABParams, FuzzySimplicialSet, GetEmbedding, GetEmbeddingSpan
-    '               GetGraph, GetNEpochs, InitializeFit, InitializeFitImpl, InitializeSimplicialSetEmbedding
+    '               GetGraph, GetNEpochs, (+2 Overloads) InitializeFit, InitializeFitImpl, InitializeSimplicialSetEmbedding
     '               MakeEpochsPerSample
     ' 
     '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::508d661bbc74992a8c0509e539d7b75b, Data_science\Visualization\DataPlot\Advanced\RosePlot.vb"
+﻿#Region "Microsoft.VisualBasic::e055d8b3b5cec5062267667d4f0ca819, Data_science\Visualization\DataPlot\Advanced\RosePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 87 (79.82%)
-    ' Comment Lines: 11 (10.09%)
+    '   Total Lines: 110
+    '    Code Lines: 88 (80.00%)
+    ' Comment Lines: 11 (10.00%)
     '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 11 (10.09%)
-    '     File Size: 4.34 KB
+    '   Blank Lines: 11 (10.00%)
+    '     File Size: 4.36 KB
 
 
     ' Class RosePlot

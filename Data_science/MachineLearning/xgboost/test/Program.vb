@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::4cf37c3d73b6310aaeeccd2f94a24c0e, Data_science\MachineLearning\xgboost\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f3308cdd32c5bbe290daeee48c4e3dc6, Data_science\MachineLearning\xgboost\test\Program.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 74
-'    Code Lines: 47 (63.51%)
-' Comment Lines: 14 (18.92%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 13 (17.57%)
-'     File Size: 3.04 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Program
-' 
-'     Function: loadData
-' 
-'     Sub: Main, predictAndLogLoss, predictLeafIndex
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 46 (63.01%)
+    ' Comment Lines: 14 (19.18%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (17.81%)
+    '     File Size: 3.03 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: loadData
+    ' 
+    '     Sub: Main, predictAndLogLoss, predictLeafIndex
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

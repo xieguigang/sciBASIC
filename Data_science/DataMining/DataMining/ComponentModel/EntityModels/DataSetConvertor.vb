@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30fc0ee17185fcd084961756a203b87b, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\DataSetConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::042e05ebdd4baf5722b347399d4773fe, Data_science\DataMining\DataMining\ComponentModel\EntityModels\DataSetConvertor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 12 (21.43%)
-    '     File Size: 1.99 KB
+    '     File Size: 2.02 KB
 
 
     '     Class DataSetConvertor

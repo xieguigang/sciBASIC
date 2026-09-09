@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::453e093b2ec0cc369e5e17f6f49ac3a3, Data_science\Mathematica\Math\ODE\ECDF.vb"
+﻿#Region "Microsoft.VisualBasic::2cb204fbaae8392e9aa4b2ec32ee4fd5, Data_science\Mathematica\Math\ODE\ECDF.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (23.68%)
-    '     File Size: 1.30 KB
+    '     File Size: 1.29 KB
 
 
     ' Class ECDF

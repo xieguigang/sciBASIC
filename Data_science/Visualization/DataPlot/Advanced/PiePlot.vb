@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5b08197728759a96b271cdff274de43, Data_science\Visualization\DataPlot\Advanced\PiePlot.vb"
+﻿#Region "Microsoft.VisualBasic::e488f6f1ae1b76296c5cba339f6a53a7, Data_science\Visualization\DataPlot\Advanced\PiePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 79 (84.04%)
-    ' Comment Lines: 5 (5.32%)
+    '   Total Lines: 95
+    '    Code Lines: 80 (84.21%)
+    ' Comment Lines: 5 (5.26%)
     '    - Xml Docs: 20.00%
     ' 
-    '   Blank Lines: 10 (10.64%)
-    '     File Size: 3.63 KB
+    '   Blank Lines: 10 (10.53%)
+    '     File Size: 3.65 KB
 
 
     ' Class PiePlot

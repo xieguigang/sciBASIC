@@ -1,3 +1,87 @@
+﻿#Region "Microsoft.VisualBasic::1fe3a641659c3956976522c4c848fbdc, cuda\ILCuda\IL2Cuda\CudaAttributes.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 40 (48.78%)
+    ' Comment Lines: 29 (35.37%)
+    '    - Xml Docs: 48.28%
+    ' 
+    '   Blank Lines: 13 (15.85%)
+    '     File Size: 3.61 KB
+
+
+    '     Enum CudaIndexMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum CudaIndexKind
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class CudaKernelAttribute
+    ' 
+    '         Properties: Mode, Name
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class CudaIndexAttribute
+    ' 
+    '         Properties: Kind
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class CudaInputAttribute
+    ' 
+    ' 
+    ' 
+    '     Class CudaOutputAttribute
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' IL -> CUDA 的内核映射标注
 '
@@ -80,3 +164,4 @@ Namespace IL2Cuda
     Public Class CudaOutputAttribute : Inherits Attribute
     End Class
 End Namespace
+

@@ -1,3 +1,59 @@
+﻿#Region "Microsoft.VisualBasic::63aad3b8d64fdd19fc5b12194d961c73, Data_science\Mathematica\Math\Math\test\lpp\SelfTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 213 (86.94%)
+    ' Comment Lines: 16 (6.53%)
+    '    - Xml Docs: 6.25%
+    ' 
+    '   Blank Lines: 16 (6.53%)
+    '     File Size: 12.42 KB
+
+
+    ' Module SelfTest
+    ' 
+    '     Function: MakeProb, RunAll
+    ' 
+    '     Sub: Check, T1, T2, T3, T4
+    '          T5, T6, T7, T8, T9
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' SelfTest.vb — 内置自检（对应 Python 镜像 validate_lpp.py 的 8 组测试）
 ' ----------------------------------------------------------------------------
@@ -243,3 +299,4 @@ Public Module SelfTest
     End Sub
 
 End Module
+

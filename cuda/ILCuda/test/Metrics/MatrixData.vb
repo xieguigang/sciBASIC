@@ -1,3 +1,70 @@
+﻿#Region "Microsoft.VisualBasic::fe54c4591078489bfbded418009f45e0, cuda\ILCuda\test\Metrics\MatrixData.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 143 (71.14%)
+    ' Comment Lines: 21 (10.45%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 37 (18.41%)
+    '     File Size: 7.56 KB
+
+
+    '     Class MatrixData
+    ' 
+    '         Properties: Cols, Data, RowNames, Rows, Source
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CreateRandom, DetectSeparator, FromCsv
+    ' 
+    '     Class MetricResult
+    ' 
+    '         Properties: Data, Size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class MatrixMetricsResult
+    ' 
+    '         Properties: CopyMs, Correlation, Distance, KernelMs, TotalMs
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' 矩阵数据容器：随机合成矩阵 / CSV 载入，以及度量结果的封装
 '
@@ -199,3 +266,4 @@ Namespace Metrics
         End Property
     End Class
 End Namespace
+

@@ -1,3 +1,69 @@
+﻿#Region "Microsoft.VisualBasic::d4fe9f9026c3d84424a3a5fd75dcc8aa, cuda\ILCuda\Runtime\Diagnostics\EnvironmentReport.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 146 (73.37%)
+    ' Comment Lines: 26 (13.07%)
+    '    - Xml Docs: 88.46%
+    ' 
+    '   Blank Lines: 27 (13.57%)
+    '     File Size: 9.96 KB
+
+
+    '     Class NvrtcCandidate
+    ' 
+    '         Properties: FilePath, FitsDriver, VersionKey, VersionText
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class EnvironmentReport
+    ' 
+    '         Properties: AllNvrtcNewerThanDriver, DeviceCount, Devices, DriverVersionKey, DriverVersionText
+    '                     ErrorMessage, HasDevice, HasError, HasKernelSource, HasNvrtc
+    '                     KernelSources, NvrtcCandidates
+    ' 
+    '     Module CudaEnvironment
+    ' 
+    '         Function: Probe, Suggest
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Computing.ILCuda.Kernels
 
 Namespace Runtime
@@ -197,3 +263,4 @@ Namespace Runtime
         End Function
     End Module
 End Namespace
+

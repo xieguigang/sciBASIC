@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28be3dfc20f65943f45b057bc1caab64, mime\application%pdf\PdfReader\TextExtractor.vb"
+﻿#Region "Microsoft.VisualBasic::97815144099059e3481d0bcbe904b48d, mime\application%pdf\PdfReader\TextExtractor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 400
-    '    Code Lines: 309 (77.25%)
-    ' Comment Lines: 47 (11.75%)
-    '    - Xml Docs: 6.38%
+    '   Total Lines: 425
+    '    Code Lines: 325 (76.47%)
+    ' Comment Lines: 54 (12.71%)
+    '    - Xml Docs: 18.52%
     ' 
-    '   Blank Lines: 44 (11.00%)
-    '     File Size: 15.89 KB
+    '   Blank Lines: 46 (10.82%)
+    '     File Size: 17.01 KB
 
 
     ' Class TextExtractor
@@ -48,7 +48,7 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: DecodeText, ExtractAll, ExtractFromPage, GetInheritedResource, ParseInlineArray
-    '               PopNumber
+    '               PopNumber, ResolveAs, TryDecodeStream
     ' 
     '     Sub: LoadFonts, ParseContentStream, ProcessOperator, ShowText, ShowTextArray
     '          SkipInlineDict, SkipInlineImage

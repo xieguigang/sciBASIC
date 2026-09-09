@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::3ba6797fe956282071ff92ede50288a8, cuda\ILCuda\Runtime\PinnedHostBuffer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 117 (65.00%)
+    ' Comment Lines: 31 (17.22%)
+    '    - Xml Docs: 25.81%
+    ' 
+    '   Blank Lines: 32 (17.78%)
+    '     File Size: 7.39 KB
+
+
+    '     Class PinnedHostBuffer
+    ' 
+    '         Properties: ByteSize, Count, Pointer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Read, ToString
+    ' 
+    '         Sub: Clear, CopyFrom, CopyTo, Dispose, ReadInto
+    '              ThrowIfDisposed, Write
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' 页锁定（pinned / page-locked）主机内存
 '
@@ -178,3 +239,4 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
+

@@ -1,4 +1,60 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::846a8683437f7577f399ea03187ab436, vs_solutions\VBS\src\VBScript\TupleDestructuring.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 147
+    '    Code Lines: 97 (65.99%)
+    ' Comment Lines: 22 (14.97%)
+    '    - Xml Docs: 68.18%
+    ' 
+    '   Blank Lines: 28 (19.05%)
+    '     File Size: 5.59 KB
+
+
+    '     Module TupleDestructuring
+    ' 
+    '         Function: Expand, FindTopLevelAs, IndexOfComment, SplitTopLevel
+    ' 
+    '         Sub: ExpandNames
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 

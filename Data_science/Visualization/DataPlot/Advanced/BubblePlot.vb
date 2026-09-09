@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::103023f789e44e493262d28faf30c3e4, Data_science\Visualization\DataPlot\Advanced\BubblePlot.vb"
+﻿#Region "Microsoft.VisualBasic::183561ec5d88c677c66346173913dc83, Data_science\Visualization\DataPlot\Advanced\BubblePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 98 (76.56%)
-    ' Comment Lines: 15 (11.72%)
+    '   Total Lines: 129
+    '    Code Lines: 99 (76.74%)
+    ' Comment Lines: 15 (11.63%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 15 (11.72%)
-    '     File Size: 5.53 KB
+    '   Blank Lines: 15 (11.63%)
+    '     File Size: 5.55 KB
 
 
     ' Class BubbleSeries

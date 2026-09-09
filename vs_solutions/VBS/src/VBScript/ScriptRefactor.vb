@@ -1,3 +1,71 @@
+﻿#Region "Microsoft.VisualBasic::3cc6ced3a1bf472f05557306caa00ccb, vs_solutions\VBS\src\VBScript\ScriptRefactor.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 621
+    '    Code Lines: 389 (62.64%)
+    ' Comment Lines: 120 (19.32%)
+    '    - Xml Docs: 64.17%
+    ' 
+    '   Blank Lines: 112 (18.04%)
+    '     File Size: 26.64 KB
+
+
+    '     Class ScriptRefactor
+    ' 
+    '         Function: BuildCode, DeclaredNamesOf, FunctionNameOf, IsBlockEnd, IsControlBlockStart
+    '                   IsFunctionBlockStart, IsLambdaBlockStart, IsNestedBlockStart, IsTypeBlockStart, PreprocessText
+    '                   Refactor, ResolveSlot, SplitTopLevel, StripComment, ToLambdaSignature
+    ' 
+    '         Sub: AddFunction, AddStatement, AddStatementBlock, AppendFunctions, FlushBuffer
+    '              HandleInsideBlock, HandleTopLevel, PlaceFunctions, ScanLines
+    '         Class BodySlot
+    ' 
+    ' 
+    ' 
+    '         Class FuncBlock
+    ' 
+    '             Properties: Name, Slot, Text
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System
 Imports System.Collections.Generic
 Imports System.Text
@@ -619,3 +687,4 @@ Namespace Script
         End Function
     End Class
 End Namespace
+

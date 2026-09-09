@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3002503ff49cdbbf7d47832bad212cb4, nlp\word2vec\Word2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::336e06c19d2174235292502bf41ba3fa, nlp\word2vec\Word2Vec.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 377
-    '    Code Lines: 226 (59.95%)
-    ' Comment Lines: 84 (22.28%)
+    '   Total Lines: 383
+    '    Code Lines: 231 (60.31%)
+    ' Comment Lines: 84 (21.93%)
     '    - Xml Docs: 54.76%
     ' 
-    '   Blank Lines: 67 (17.77%)
-    '     File Size: 12.80 KB
+    '   Blank Lines: 68 (17.75%)
+    '     File Size: 12.94 KB
 
 
     ' Class Word2Vec
+    ' 
+    '     Properties: wordSize
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
