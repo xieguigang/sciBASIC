@@ -63,8 +63,11 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
 Public Class MNIST : Implements IDisposable
@@ -153,9 +156,16 @@ Public Class MNIST : Implements IDisposable
         Next
     End Function
 
-    Public Iterator Function ExtractDataSet(Of T As {INamedValue, DynamicPropertyBase(Of Double), New})() As IEnumerable(Of T)
+    Public Iterator Function ExtractDataSet(Of T As {INamedValue, IVector, IClusterPoint, New, Class})() As IEnumerable(Of T)
         For i As Integer = 0 To count - 1
+            Dim raw = ExtractRaw()
+            Dim data As New T With {
+                .Key = raw.name,
+                .Cluster = CInt(raw.description),
+                .Data = raw.AsNumeric
+            }
 
+            Yield data
         Next
     End Function
 

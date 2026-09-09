@@ -63,10 +63,10 @@
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN.KDTreeMethod
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
@@ -347,6 +347,10 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _isInitialized = True
 
         Return GetNEpochs()
+    End Function
+
+    Public Function InitializeFit(x As IEnumerable(Of ClusterEntity)) As Integer
+        Return InitializeFit(x.Select(Function(v) v.entityVector).ToArray)
     End Function
 
     ''' <summary>

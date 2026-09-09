@@ -52,6 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Linq
@@ -130,6 +131,13 @@ Public Module ValueMapping
     <Extension>
     Public Iterator Function ClassId(a As IEnumerable(Of EntityClusterModel)) As IEnumerable(Of String)
         For Each xi As EntityClusterModel In a
+            Yield xi.Cluster
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function ClassId(Of T As IClusterPoint)(a As IEnumerable(Of T)) As IEnumerable(Of Integer)
+        For Each xi As T In a
             Yield xi.Cluster
         Next
     End Function
