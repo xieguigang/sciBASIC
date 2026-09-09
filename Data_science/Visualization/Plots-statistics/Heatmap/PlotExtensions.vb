@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::62b4bb435d26f696fe92e1e93694f1f6, Data_science\Visualization\Plots-statistics\HeatMap\PlotExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 120
-    '    Code Lines: 90 (75.00%)
-    ' Comment Lines: 13 (10.83%)
-    '    - Xml Docs: 92.31%
-    ' 
-    '   Blank Lines: 17 (14.17%)
-    '     File Size: 5.07 KB
+' Summaries:
 
 
-    '     Module PlotExtensions
-    ' 
-    '         Function: KmeansReorder, LoadDataSet
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 120
+'    Code Lines: 90 (75.00%)
+' Comment Lines: 13 (10.83%)
+'    - Xml Docs: 92.31%
+' 
+'   Blank Lines: 17 (14.17%)
+'     File Size: 5.07 KB
+
+
+'     Module PlotExtensions
+' 
+'         Function: KmeansReorder, LoadDataSet
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -92,7 +93,7 @@ Namespace Heatmap
                 Return ds.CorrelatesNormalized(correlation).ToArray
             Else
                 Return LinqAPI.Exec(Of NamedValue(Of Dictionary(Of String, Double))) _
- _
+                                                                                     _
                     () <= From x As DataSet
                           In ds
                           Select New NamedValue(Of Dictionary(Of String, Double)) With {
@@ -106,7 +107,7 @@ Namespace Heatmap
         Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))(), Optional n% = 5) As NamedValue(Of Dictionary(Of String, Double))()
             Dim keys$() = data(Scan0%).Value.Keys.ToArray
             Dim entityList As ClusterEntity() = LinqAPI.Exec(Of ClusterEntity) _
- _
+                                                                               _
                 () <= From x As NamedValue(Of Dictionary(Of String, Double))
                       In data
                       Select New ClusterEntity With {

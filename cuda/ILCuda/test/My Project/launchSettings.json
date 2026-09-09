@@ -2,7 +2,7 @@
   "profiles": {
     "ILCuda.Demo": {
       "commandName": "Project",
-      "commandLineArgs": "demo --rows 2048 --cols 2048"
+      "commandLineArgs": "selftest"
     },
     "ILCuda.Demo (async)": {
       "commandName": "Project",

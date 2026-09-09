@@ -14,6 +14,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Description>纯 Interop 的 VB.NET CUDA 计算框架：设备/上下文/流/显存管理、NVRTC 多通道内核编译、通用归约与线性代数内核。零 NuGet 依赖。</Description>
+    <OutputPath>../../.nuget/</OutputPath>
+    <Configurations>Debug;Release;nuget_release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

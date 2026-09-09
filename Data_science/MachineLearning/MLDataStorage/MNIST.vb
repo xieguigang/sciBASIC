@@ -1,98 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::b82143e812313438635d2a887cbea946, Data_science\MachineLearning\MLDataStorage\MNIST.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 197
-    '    Code Lines: 139 (70.56%)
-    ' Comment Lines: 26 (13.20%)
-    '    - Xml Docs: 57.69%
-    ' 
-    '   Blank Lines: 32 (16.24%)
-    '     File Size: 7.01 KB
+' Summaries:
 
 
-    ' Class MNIST
-    ' 
-    '     Properties: ImageSize
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: ConvertImage, ExtractImage, ExtractImages, ExtractRaw, ExtractVectors
-    '               GetImageSize, ReadInt
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 197
+'    Code Lines: 139 (70.56%)
+' Comment Lines: 26 (13.20%)
+'    - Xml Docs: 57.69%
+' 
+'   Blank Lines: 32 (16.24%)
+'     File Size: 7.01 KB
+
+
+' Class MNIST
+' 
+'     Properties: ImageSize
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: ConvertImage, ExtractImage, ExtractImages, ExtractRaw, ExtractVectors
+'               GetImageSize, ReadInt
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports std = System.Math
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
-
-
-#If NET48 Then
-Imports Pen = System.Drawing.Pen
-Imports Pens = System.Drawing.Pens
-Imports Brush = System.Drawing.Brush
-Imports Font = System.Drawing.Font
-Imports Brushes = System.Drawing.Brushes
-Imports SolidBrush = System.Drawing.SolidBrush
-Imports DashStyle = System.Drawing.Drawing2D.DashStyle
-Imports Image = System.Drawing.Image
-Imports Bitmap = System.Drawing.Bitmap
-Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
-Imports FontStyle = System.Drawing.FontStyle
-#Else
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports Pens = Microsoft.VisualBasic.Imaging.Pens
-Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
-#End If
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports std = System.Math
 
 Public Class MNIST : Implements IDisposable
 
@@ -102,8 +78,14 @@ Public Class MNIST : Implements IDisposable
     Dim labelReader As BinaryReader
     Dim count As Integer
     Dim rows, columns As Integer
-    Dim rect As Rectangle
 
+    Dim image0 As Long
+    Dim label0 As Long
+
+    ''' <summary>
+    ''' get column and rows
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property ImageSize As Size
         Get
             Return New Size(width:=columns, height:=rows)
@@ -129,7 +111,13 @@ Public Class MNIST : Implements IDisposable
 
         rows = ReadInt(imageReader)
         columns = ReadInt(imageReader)
-        rect = New Rectangle(0, 0, columns, rows)
+        image0 = imageReader.BaseStream.Position
+        label0 = labelReader.BaseStream.Position
+    End Sub
+
+    Public Sub Reset()
+        Call imageReader.BaseStream.Seek(image0, SeekOrigin.Begin)
+        Call labelReader.BaseStream.Seek(label0, SeekOrigin.Begin)
     End Sub
 
     Public Shared Function GetImageSize(imagesfile As String) As Size
@@ -168,15 +156,26 @@ Public Class MNIST : Implements IDisposable
         Next
     End Function
 
+    Public Iterator Function ExtractDataSet(Of T As {INamedValue, IVector, IClusterPoint, New, Class})() As IEnumerable(Of T)
+        For i As Integer = 0 To count - 1
+            Dim raw = ExtractRaw()
+            Dim data As New T With {
+                .Key = raw.name,
+                .Cluster = CInt(raw.description),
+                .Data = raw.AsNumeric
+            }
+
+            Yield data
+        Next
+    End Function
+
     Public Function ConvertImage(raw As NamedCollection(Of Byte)) As NamedValue(Of Image)
-        Dim image As Bitmap = New Bitmap(columns, rows)
+        Dim image As New Bitmap(columns, rows)
         Dim data As BitmapBuffer = BitmapBuffer.FromBitmap(image)
         Dim ptr As IntPtr = data.Scan0
         Dim bytes = std.Abs(data.Stride) * image.Height
-        Dim rgbValues = New Byte(bytes - 1) {}
+        Dim rgbValues As Byte() = data.RawBuffer
         Dim bit As Byte
-
-        Marshal.Copy(ptr, rgbValues, 0, bytes)
 
         For j As Integer = 0 To rows * columns - 1
             bit = raw(j)
@@ -185,8 +184,8 @@ Public Class MNIST : Implements IDisposable
             rgbValues(j * 3 + 2) = bit
         Next
 
-        Marshal.Copy(rgbValues, 0, ptr, bytes)
-        data.Dispose()
+        ' write data and release memory pointer
+        Call data.Dispose()
 
         Return New NamedValue(Of Image) With {
             .Name = raw.Last,

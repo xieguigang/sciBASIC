@@ -78,8 +78,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
-Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
+Imports std = System.Math
 
 ' ============================================================================
 '  PlotEngine.vb - 核心绘图引擎
@@ -221,7 +220,7 @@ Public Class PlotEngine : Implements IDisposable
     Protected Shared Function NiceStep(range As Double, tickCount As Integer) As Double
         If range <= 0 Then Return 1
         Dim rough = range / tickCount
-        Dim pow = Math.Pow(10, Math.Floor(Math.Log10(rough)))
+        Dim pow = std.Pow(10, std.Floor(std.Log10(rough)))
         Dim norm = rough / pow
         Dim [step] As Double
         If norm < 1.5 Then
@@ -241,10 +240,10 @@ Public Class PlotEngine : Implements IDisposable
         Dim list As New List(Of Double)
         If max <= min Then Return {min}
         Dim [step] = NiceStep(max - min, tickCount)
-        Dim start = Math.Ceiling(min / [step]) * [step]
+        Dim start = std.Ceiling(min / [step]) * [step]
         Dim v = start
         Do While v <= max + [step] * 0.001
-            list.Add(Math.Round(v, 8))
+            list.Add(std.Round(v, 8))
             v += [step]
         Loop
         Return list.ToArray()
@@ -257,7 +256,7 @@ Public Class PlotEngine : Implements IDisposable
         End If
         min = data.Min()
         max = data.Max()
-        If Math.Abs(max - min) < 0.000000000001 Then
+        If std.Abs(max - min) < 0.000000000001 Then
             min -= 1 : max += 1
         End If
         Dim pad_ = (max - min) * pad
@@ -407,7 +406,7 @@ Public Class PlotEngine : Implements IDisposable
     End Sub
 
     Protected Function FormatNumber(v As Double) As String
-        Dim a = Math.Abs(v)
+        Dim a = std.Abs(v)
         If a = 0 Then Return "0"
         If a >= 10000 OrElse a < 0.01 Then
             Return v.ToString("0.#E+0")

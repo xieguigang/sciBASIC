@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>南丁格尔玫瑰图（等角度扇区，半径与数值成比例）</summary>
 Public Class RosePlot
@@ -92,7 +93,7 @@ Public Class RosePlot
         ' 圆心与最大半径
         Dim cx = _width / 2.0F
         Dim cy = (_height + Theme.MarginTop) / 2.0F
-        Dim maxR = Math.Min(_width - Theme.MarginLeft - Theme.MarginRight,
+        Dim maxR = std.Min(_width - Theme.MarginLeft - Theme.MarginRight,
                             _height - Theme.MarginTop - Theme.MarginBottom) * 0.42F
 
         ' 同心参考圆（网格）
@@ -106,10 +107,10 @@ Public Class RosePlot
         End If
 
         ' 等角度扇区
-        Dim sweep = 360.0F / Math.Max(1, n)
+        Dim sweep = 360.0F / std.Max(1, n)
         Dim startA = StartAngle
         For i = 0 To n - 1
-            Dim ri = CSng(Math.Abs(Values(i)) / vmax * maxR)
+            Dim ri = CSng(std.Abs(Values(i)) / vmax * maxR)
             If ri < 1 Then ri = 1
             Dim color = palette(i Mod palette.Length)
             Using br As New SolidBrush(color),
@@ -131,10 +132,10 @@ Public Class RosePlot
         ' 标签
         startA = StartAngle
         For i = 0 To n - 1
-            Dim midA = (startA + sweep / 2) * Math.PI / 180
+            Dim midA = (startA + sweep / 2) * std.PI / 180
             Dim labelR = maxR * 1.12F
-            Dim lx = cx + CSng(Math.Cos(midA)) * labelR
-            Dim ly = cy + CSng(Math.Sin(midA)) * labelR
+            Dim lx = cx + CSng(std.Cos(midA)) * labelR
+            Dim ly = cy + CSng(std.Sin(midA)) * labelR
             Dim label = If(i < Labels.Length, Labels(i), "")
             If ShowPercentage AndAlso total > 0 Then
                 label &= String.Format(" ({0:P1})", Values(i) / total)

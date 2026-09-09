@@ -1,77 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::33fb17a6646b7fd50d4d06f503949227, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 79
-    '    Code Lines: 61 (77.22%)
-    ' Comment Lines: 9 (11.39%)
-    '    - Xml Docs: 22.22%
-    ' 
-    '   Blank Lines: 9 (11.39%)
-    '     File Size: 3.08 KB
+' Summaries:
 
 
-    ' Class ScatterPlot
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Sub: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 79
+'    Code Lines: 61 (77.22%)
+' Comment Lines: 9 (11.39%)
+'    - Xml Docs: 22.22%
+' 
+'   Blank Lines: 9 (11.39%)
+'     File Size: 3.08 KB
+
+
+' Class ScatterPlot
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Sub: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Microsoft.VisualBasic.Imaging
 
 ' ============================================================================
 '  ChartsBasic.vb - 基础图表：散点图 / 折线图 / 柱状图 / 直方图
 ' ============================================================================
 
 ''' <summary>散点图</summary>
-Public Class ScatterPlot
-    Inherits SeriesPlotEngine
+Public Class ScatterPlot : Inherits SeriesPlotEngine
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)
     End Sub
 
     ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>
-    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
+    Public Sub New(bmp As Bitmap)
         MyBase.New(bmp)
     End Sub
 

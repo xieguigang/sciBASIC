@@ -202,7 +202,11 @@ Namespace IL
                 End If
 
                 Dim code1 As OpCode = info1.GetValue(Nothing)
-                Dim num2 As UShort = code1.Value
+                ' OpCode.Value 是有符号的 Short: 两字节操作码(0xFExx)在这里表现为负数,
+                ' 必须先按位与成无符号再转 UShort, 否则在开启了整数溢出检查的
+                ' 编译配置(RemoveIntegerChecks=false, 例如 Release|AnyCPU)下会抛
+                ' OverflowException, 导致本模块的静态构造函数失败。
+                Dim num2 As UShort = CUShort(CInt(code1.Value) And &HFFFF)
 
                 If num2 < &H100 Then
                     singleByteOpCodes(num2) = code1

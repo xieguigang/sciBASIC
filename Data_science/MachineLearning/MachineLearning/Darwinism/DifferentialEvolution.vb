@@ -313,7 +313,7 @@ Namespace Darwinism
                     ' 所以需要在这里添加一个随机数来解决这个问题
                     ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
                     'Dim raw = individual1.Yield(R)
-                    'Dim mutate# = stdNum.Log10(std.Abs(raw)) + F * (Math.Log10(std.Abs(individual2.Yield(R))) - stdNum.Log10(std.Abs(individual3.Yield(R))))
+                    'Dim mutate# = std.Log10(std.Abs(raw)) + F * (Math.Log10(std.Abs(individual2.Yield(R))) - std.Log10(std.Abs(individual3.Yield(R))))
                     'mutate = raw + If(random.NextBoolean, 1, -1) * 10 ^ mutate
                     Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
                     mutate *= random.NextDouble

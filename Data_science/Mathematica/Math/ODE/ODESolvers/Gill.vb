@@ -52,14 +52,14 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Partial Module ODESolver
 
     ''' <summary>
     ''' 把根号2算出来，不在循环体内反复执行根号2，减少计算负担
     ''' </summary>
-    ReadOnly sqr2# = stdNum.Sqrt(2.0)
+    ReadOnly sqr2# = std.Sqrt(2.0)
 
     <Extension>
     Public Function Gill(ByRef ode As ODE, N As Integer, t0 As Double, tt As Double) As ODEOutput

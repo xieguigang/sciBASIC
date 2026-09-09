@@ -64,7 +64,7 @@
 
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.tree
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace gbm
 
@@ -118,7 +118,7 @@ Namespace gbm
                 For j = 0 To tree_info.Length - 1
 
                     If tree_info(j) = i Then
-                        _groupTrees(i)(stdNum.Min(Threading.Interlocked.Increment(treeCount), treeCount - 1)) = trees(j)
+                        _groupTrees(i)(std.Min(Threading.Interlocked.Increment(treeCount), treeCount - 1)) = trees(j)
                     End If
                 Next
             Next
@@ -144,7 +144,7 @@ Namespace gbm
 
         Friend Overridable Function pred(feat As FVec, bst_group As Integer, root_index As Integer, ntree_limit As Integer) As Double
             Dim trees = _groupTrees(bst_group)
-            Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
+            Dim treeleft = If(ntree_limit = 0, trees.Length, std.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
 
             For i = 0 To treeleft - 1
@@ -159,7 +159,7 @@ Namespace gbm
         End Function
 
         Friend Overridable Function predPath(feat As FVec, root_index As Integer, ntree_limit As Integer) As Integer()
-            Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
+            Dim treeleft = If(ntree_limit = 0, trees.Length, std.Min(ntree_limit, trees.Length))
             Dim leafIndex = New Integer(treeleft - 1) {}
 
             For i = 0 To treeleft - 1

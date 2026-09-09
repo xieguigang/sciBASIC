@@ -543,8 +543,8 @@ Namespace GgplotTheme
         ''' Computes the full plot layout, including canvas rect, plot area
         ''' (inside margins), and panel area. All values are in pixels.
         ''' </summary>
-        ''' <param name="canvasWidth">Canvas width in pixels. If <= 0, uses canvas context width.</param>
-        ''' <param name="canvasHeight">Canvas height in pixels. If <= 0, uses canvas context height.</param>
+        ''' <param name="canvasWidth">Canvas width in pixels. If &lt;= 0, uses canvas context width.</param>
+        ''' <param name="canvasHeight">Canvas height in pixels. If &lt;= 0, uses canvas context height.</param>
         Public Function ComputePlotLayout(Optional canvasWidth As Double = -1,
                                           Optional canvasHeight As Double = -1) As PlotLayout
             Dim layout As New PlotLayout()

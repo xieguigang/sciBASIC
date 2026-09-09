@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>基础面积图（曲线下面积填充）</summary>
 Public Class AreaPlot
@@ -88,8 +89,8 @@ Public Class AreaPlot
         Dim allY = seriesList.SelectMany(Function(s) s.Y).ToArray()
         Dim xmin = If(Me.XMin, allX.Min())
         Dim xmax = If(Me.XMax, allX.Max())
-        Dim yLo = Math.Min(allY.Min(), Baseline)
-        Dim yHi = Math.Max(allY.Max(), Baseline)
+        Dim yLo = std.Min(allY.Min(), Baseline)
+        Dim yHi = std.Max(allY.Max(), Baseline)
         Dim ymin = If(Me.YMin, yLo)
         Dim ymax = If(Me.YMax, yHi)
         If Me.XMin Is Nothing AndAlso Me.XMax Is Nothing Then

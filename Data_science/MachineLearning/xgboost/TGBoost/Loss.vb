@@ -65,7 +65,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language.Java
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace train
 
@@ -93,7 +93,7 @@ Namespace train
                 If x < 1 Then
                     x = 1
                 Else
-                    x = stdNum.Log(x)
+                    x = std.Log(x)
                 End If
 
                 ret(i) = 1 / x
@@ -148,7 +148,7 @@ Namespace train
             Dim ret = New Double(pred.Length - 1) {}
 
             For i = 0 To ret.Length - 1
-                ret(i) = clip(1.0 / (1.0 + stdNum.Exp(-pred(i))))
+                ret(i) = clip(1.0 / (1.0 + std.Exp(-pred(i))))
             Next
 
             Return ret

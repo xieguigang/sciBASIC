@@ -56,7 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.Correlations
 
-Namespace KMeans
+Namespace ComponentModel.EntityModels
 
     Public Class Metric
 

@@ -1,18 +1,30 @@
 ' ============================================================================
 ' LppProblem.vb — LP 输入模型 + 标准形转换
 ' ----------------------------------------------------------------------------
-' 输入（原始空间）：min/max cᵀx，约束 A_i·x {<=,>=,=} b_i（变量默认 x ≥ 0）。
-' 标准形 [readme §一]：min c̃ᵀx̃，Ãx̃ = b̃，x̃ ≥ 0：
-'   max → min：c̃ = −c_orig（σ = −1），报告量乘 σ 映回原始方向；
-'   ≤ 行加 +松弛；≥ 行加 −松弛；= 行不加；
-'   b_i < 0 的行整体翻转（flipSign = −1，保证 b̃ ≥ 0 供 Phase-1 人造基使用）。
-' 映射回原始空间（LppSolver 提取时使用）：
-'   shadowPrice_i = σ·flipSign_i·y_i；slack_i = b_i − A_i·x（原始数据直算）。
+' 输入（问题空间）：min/max cᵀv，约束 A_i·v {<=,>=,=} b_i，lb ≤ v ≤ ub
+'
+' 标准形（IPM 的工作对象）[readme §一]：
+'   min c̃ᵀx̃，Ãx̃ = b̃，**0 ≤ x̃ ≤ ũ**，x̃ 含松弛列
+'   · max → min：c̃ = −c_orig（σ = −1），报告量乘 σ 映回原始方向；
+'   · ≤ 行加 +松弛、≥ 行加 −松弛、= 行不加（松弛列 ub = +∞）；
+'   · b̃_i < 0 的行整体翻转（flipSign = −1，保证 b̃ ≥ 0）；
+'   · **有限下界用平移 v = lb + x 消掉**（b̃ ← b − A·lb，ũ = ub − lb，
+'     ObjOffset = cᵀlb），因此支持 lb/ub 不增加任何约束行或列 —— 这是
+'     FBA（可逆反应 lb = −1000）能够保持规模的前提。
+'
+' 两个构造入口：
+'   FromProblem  —— 稠密路径（中小规模，LppProblem 字典式输入）
+'   FromSparse   —— 稀疏路径（基因组规模，CSR + 整数索引直接构造，
+'                   绕开 Array.IndexOf 变量名的 O(nnz·n) 匹配）
+'
+' 映射回问题空间：v = lb + x；slack_i = b_i − A_i·v；
+'                 shadowPrice_i = σ·flipSign_i·y_i = ∂(原始目标)/∂b_i
 ' ============================================================================
 
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
@@ -52,22 +64,67 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     ''' <summary>标准形（IPM/单纯形的工作对象）</summary>
     Public Class StandardForm
 
-        Public A As Double(,)          ' m×(n+mSlack)
-        Public b As Double()           ' m（已保证 ≥ 0）
-        Public c As Double()           ' n+mSlack（内部 min 方向）
-        Public M As Int32              ' 行数
-        Public N As Int32              ' 原始变量数
-        Public NSlack As Int32         ' 松弛/剩余变量数
+        ' ---------- 工作空间 ----------
+        ''' <summary>稠密工作矩阵（含松弛列、已翻转）；稀疏路径为 Nothing</summary>
+        Public A As Double(,)
+        ''' <summary>矩阵抽象：IPM 只通过该接口访问 A（稠密或稀疏）</summary>
+        Public Mat As ILpMatrix
+        ''' <summary>m（已保证 ≥ 0）</summary>
+        Public b As Double()
+        ''' <summary>n + nSlack（内部 min 方向）</summary>
+        Public c As Double()
+        ''' <summary>工作变量上界，+∞ 表示无上界</summary>
+        Public U As Double()
+        Public M As Int32
+        Public N As Int32
+        Public NSlack As Int32
         Public Sigma As Int32          ' +1: 原为 min；−1: 原为 max（c̃ = σ·c_orig）
         Public FlipSign As Double()    ' 每行翻转符号（±1）
         Public VarNames As String()
         Public ConstraintTypeList As String()
-        ' 原始空间数据（slack/reduced cost 直算用；翻转与松弛加列之前）
-        Public AOriginal As Double(,)
-        Public BOriginal As Double()
-        Public COriginal As Double()
 
-        ''' <summary>由 LppProblem 构造标准形</summary>
+        ' ---------- 原始空间（slack / reduced cost 报告用）----------
+        ''' <summary>原始 A（未平移、未翻转、不含松弛列）</summary>
+        Public MatOrig As ILpMatrix
+        Public BOrig As Double()
+        Public COrig As Double()
+        ''' <summary>下界平移量：v = LbShift + ColScale∘x</summary>
+        Public LbShift As Double()
+        ''' <summary>
+        ''' 列缩放：x（工作变量）→ 问题空间时乘的因子，默认全 1。
+        ''' 稀疏入口用它把变量盒归一化到 [0,1]，避免 Θ = x/s 跨越多达 1e7 的量级。
+        ''' </summary>
+        Public ColScale As Double()
+        ''' <summary>平移引入的目标常数 cᵀlb</summary>
+        Public ObjOffset As Double
+
+        ''' <summary>稀疏路径（无稠密矩阵，跳过 crossover / 单纯形收尾）</summary>
+        Public ReadOnly Property IsSparse As Boolean
+            Get
+                Return A Is Nothing
+            End Get
+        End Property
+
+        ''' <summary>把标准形解映射回问题空间：v = lb + x</summary>
+        Public Function ToOriginal(xStd As Double()) As Double()
+            Dim v(N - 1) As Double
+
+            For j As Int32 = 0 To N - 1
+                v(j) = LbShift(j) + xStd(j)
+            Next
+
+            Return v
+        End Function
+
+        ''' <summary>影子价映射回原始方向：σ·flipSign_i·y_i = ∂(原始目标)/∂b_i</summary>
+        Public Function MapShadowPrice(i As Int32, y As Double()) As Double
+            Return Sigma * FlipSign(i) * y(i)
+        End Function
+
+        ' ====================================================================
+        ' 稠密入口
+        ' ====================================================================
+        ''' <summary>由 LppProblem 构造标准形（中小规模）</summary>
         Public Shared Function FromProblem(prob As LppProblem) As StandardForm
             Dim sf As New StandardForm()
             sf.N = prob.Variables.Count
@@ -88,7 +145,6 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     sf.NSlack += 1
                 ElseIf op = "=" Then
                     slackOfRow(i) = -1
-                    ' 占位（下面统一计数后再分配）
                 Else
                     Throw New ArgumentException($"未知约束类型: {op}")
                 End If
@@ -122,6 +178,50 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     slackPtr += 1
                 End If
             Next
+
+            ' ---------- 原始空间数据（平移/翻转之前）----------
+            sf.BOrig = New Double(sf.M - 1) {}
+            For i = 0 To sf.M - 1
+                sf.BOrig(i) = prob.Constraints(i).Rhs
+            Next
+            sf.COrig = New Double(sf.N - 1) {}
+            sf.LbShift = New Double(sf.N - 1) {}
+            Dim AOrig(sf.M - 1, sf.N - 1) As Double
+            For i = 0 To sf.M - 1
+                For j = 0 To sf.N - 1
+                    AOrig(i, j) = sf.A(i, j)
+                Next
+            Next
+            For j = 0 To sf.N - 1
+                sf.COrig(j) = prob.Variables(j).coefficient
+                sf.LbShift(j) = prob.Variables(j).LowerBound
+            Next
+
+            ' ---------- 下界平移：v = lb + x ----------
+            sf.U = New Double(ncols - 1) {}
+            For j = 0 To sf.N - 1
+                Dim v = prob.Variables(j)
+                Dim lb As Double = v.LowerBound
+                Dim ub As Double = v.UpperBound
+
+                If ub < lb Then
+                    Throw New ArgumentException($"变量 {v.symbol} 的上下界矛盾: [{lb}, {ub}]")
+                End If
+
+                sf.U(j) = std.Max(ub - lb, 0.000000001)
+
+                If lb <> 0.0 Then
+                    For i = 0 To sf.M - 1
+                        sf.b(i) -= sf.A(i, j) * lb
+                    Next
+                    sf.ObjOffset += v.coefficient * lb
+                End If
+            Next
+            ' 松弛列无上界
+            For j = sf.N To ncols - 1
+                sf.U(j) = Double.PositiveInfinity
+            Next
+
             ' 行翻转（b ≥ 0）
             For i = 0 To sf.M - 1
                 If sf.b(i) < 0 Then
@@ -138,27 +238,202 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             For j = 0 To sf.N - 1
                 sf.c(j) = sf.Sigma * prob.Variables(j).coefficient
             Next
-            ' 保留原始空间数据
-            sf.AOriginal = New Double(sf.M - 1, sf.N - 1) {}
-            For i = 0 To sf.M - 1
-                For j = 0 To sf.N - 1
-                    sf.AOriginal(i, j) = sf.A(i, j)
-                Next
-            Next
-            sf.BOriginal = New Double(sf.M - 1) {}
-            For i = 0 To sf.M - 1
-                sf.BOriginal(i) = prob.Constraints(i).Rhs
-            Next
-            sf.COriginal = New Double(sf.N - 1) {}
-            For j = 0 To sf.N - 1
-                sf.COriginal(j) = prob.Variables(j).coefficient
-            Next
+
+            sf.Mat = New DenseLpMatrix(sf.A)
+            sf.MatOrig = New DenseLpMatrix(AOrig)
+
             Return sf
         End Function
 
-        ''' <summary>影子价映射回原始方向：σ·flipSign_i·y_i = ∂(原始目标)/∂b_i</summary>
-        Public Function MapShadowPrice(i As Int32, y As Double()) As Double
-            Return Sigma * FlipSign(i) * y(i)
+        ' ====================================================================
+        ' 稀疏入口（基因组规模）
+        ' ====================================================================
+        ''' <summary>
+        ''' 由 CSR 化学计量矩阵直接构造标准形（不做任何变量名匹配、不物化稠密矩阵）
+        ''' </summary>
+        ''' <param name="csr">约束矩阵（m 行 × n 列）</param>
+        ''' <param name="rhs">约束右端项（FBA 的稳态方程右端为 0）</param>
+        ''' <param name="obj">目标系数（原始方向）</param>
+        ''' <param name="lb">变量下界（Nothing 视为全 0）</param>
+        ''' <param name="ub">变量上界（Nothing 视为全 +∞）</param>
+        ''' <param name="sense">"min" / "max"</param>
+        ''' <remarks>
+        ''' 目前只支持全 "=" 约束（FBA 的质量平衡约束即为此形式）；
+        ''' 混合 &lt;= / &gt;= 的问题请走 <see cref="FromProblem"/>。
+        ''' </remarks>
+        Public Shared Function FromSparse(csr As LpSparseMatrix,
+                                          rhs As Double(),
+                                          obj As Double(),
+                                          lb As Double(),
+                                          ub As Double(),
+                                          varNames As String(),
+                                          sense As String,
+                                          Optional constraintTypes As String() = Nothing,
+                                          Optional forceDense As Boolean = False) As StandardForm
+            If csr Is Nothing Then Throw New ArgumentNullException(NameOf(csr))
+
+            ' 注意：局部名不能与 StandardForm 的 M / N 字段同音（VB 标识符大小写不敏感）
+            Dim rowsN As Int32 = csr.Rows
+            Dim colsN As Int32 = csr.Columns
+
+            If varNames Is Nothing OrElse varNames.Length <> colsN Then
+                Throw New ArgumentException("变量名称数量必须与矩阵列数一致")
+            End If
+
+            Dim sf As New StandardForm()
+
+            sf.M = rowsN
+            sf.N = colsN
+            sf.NSlack = 0
+            sf.Sigma = If(sense.ToLowerInvariant().StartsWith("max"), -1, 1)
+            sf.VarNames = varNames
+            sf.ConstraintTypeList = New String(rowsN - 1) {}
+
+            If constraintTypes Is Nothing OrElse constraintTypes.Length <> rowsN Then
+                For i = 0 To rowsN - 1
+                    sf.ConstraintTypeList(i) = "="
+                Next
+            Else
+                Array.Copy(constraintTypes, sf.ConstraintTypeList, rowsN)
+            End If
+
+            sf.FlipSign = New Double(rowsN - 1) {}
+            sf.A = Nothing
+
+            For i = 0 To rowsN - 1
+                If sf.ConstraintTypeList(i) <> "=" Then
+                    Throw New ArgumentException("稀疏入口当前仅支持全 '=' 约束（FBA 形式）")
+                End If
+            Next
+
+            ' ---------- 原始空间 ----------
+            sf.BOrig = New Double(rowsN - 1) {}
+            If rhs IsNot Nothing Then Array.Copy(rhs, sf.BOrig, std.Min(rhs.Length, rowsN))
+            sf.COrig = New Double(colsN - 1) {}
+            If obj IsNot Nothing Then Array.Copy(obj, sf.COrig, std.Min(obj.Length, colsN))
+            sf.LbShift = New Double(colsN - 1) {}
+            If lb IsNot Nothing Then Array.Copy(lb, sf.LbShift, std.Min(lb.Length, colsN))
+            sf.MatOrig = New SparseLpMatrix(csr)
+
+            ' ---------- 工作矩阵（先复制一份，随后就地翻转行）----------
+            Dim work As LpSparseMatrix = Clone(csr)
+
+            ' ---------- 下界平移 ----------
+            sf.b = New Double(rowsN - 1) {}
+            Array.Copy(sf.BOrig, sf.b, rowsN)
+            sf.U = New Double(colsN - 1) {}
+
+            For j = 0 To colsN - 1
+                Dim lbj As Double = sf.LbShift(j)
+                Dim ubj As Double = If(ub Is Nothing OrElse j >= ub.Length, Double.PositiveInfinity, ub(j))
+
+                If ubj < lbj Then
+                    Throw New ArgumentException($"变量 {varNames(j)} 的上下界矛盾: [{lbj}, {ubj}]")
+                End If
+
+                sf.U(j) = std.Max(ubj - lbj, 0.000000001)
+
+                If lbj <> 0.0 Then
+                    sf.ObjOffset += sf.COrig(j) * lbj
+                End If
+            Next
+
+            ' b ← b − A·lb
+            If HasNonZero(sf.LbShift) Then
+                Dim Alb As Double() = sf.MatOrig.Mv(sf.LbShift)
+
+                For i = 0 To rowsN - 1
+                    sf.b(i) -= Alb(i)
+                Next
+            End If
+
+            ' ---------- 行翻转（b ≥ 0）----------
+            For i = 0 To rowsN - 1
+                If sf.b(i) < 0 Then
+                    sf.FlipSign(i) = -1.0
+                    sf.b(i) = -sf.b(i)
+                    NegateRow(work, i)
+                Else
+                    sf.FlipSign(i) = 1.0
+                End If
+            Next
+
+            ' ---------- 行均衡 ----------
+            ' 化学计量矩阵各行的量级可能相差 2~3 个数量级（本 GEM 的行 ‖A_i‖² ∈ [0.25, 5e3]），
+            ' 未做均衡时正规方程 A·Θ·Aᵀ 条件数可达 1e12+，解出的 Δy 量级 1e8~1e11，
+            ' fraction-to-boundary 步长退化到 1e-8，内点法完全走不动。
+            ' 行缩放 Ã = R·A、b̃ = R·b（R 对角且正定）不改变可行域与最优解，
+            ' 只改变收敛性质，且报告量仍用未缩放的 MatOrig/BOrig 计算。
+            For i As Int32 = 0 To rowsN - 1
+                Dim norm2 As Double = 0.0
+
+                For p As Int32 = work.RowPtr(i) To work.RowPtr(i + 1) - 1
+                    Dim a As Double = work.Values(p)
+
+                    norm2 += a * a
+                Next
+
+                Dim r As Double = If(norm2 > 0.0, 1.0 / std.Sqrt(norm2), 1.0)
+
+                For p As Int32 = work.RowPtr(i) To work.RowPtr(i + 1) - 1
+                    work.Values(p) *= r
+                Next
+
+                sf.b(i) *= r
+            Next
+
+            ' ---------- 内部目标 ----------
+            sf.c = New Double(colsN - 1) {}
+            For j = 0 To colsN - 1
+                sf.c(j) = sf.Sigma * sf.COrig(j)
+            Next
+
+            If forceDense Then
+                ' 稠密回退：仅用于中小规模的诊断/对比（基因组规模会 OOM）
+                sf.A = ToDense(work)
+                sf.Mat = New DenseLpMatrix(sf.A)
+            Else
+                sf.Mat = New SparseLpMatrix(work)
+            End If
+
+            Return sf
+        End Function
+
+        Private Shared Function ToDense(csr As LpSparseMatrix) As Double(,)
+            Dim A(csr.Rows - 1, csr.Columns - 1) As Double
+
+            For i As Int32 = 0 To csr.Rows - 1
+                For p As Int32 = csr.RowPtr(i) To csr.RowPtr(i + 1) - 1
+                    A(i, csr.ColIdx(p)) = csr.Values(p)
+                Next
+            Next
+
+            Return A
+        End Function
+
+        Private Shared Function Clone(csr As LpSparseMatrix) As LpSparseMatrix
+            Dim rp As Int32() = New Int32(csr.RowPtr.Length - 1) {}
+            Dim ci As Int32() = New Int32(std.Max(csr.ColIdx.Length, 1) - 1) {}
+            Dim vx As Double() = New Double(std.Max(csr.Values.Length, 1) - 1) {}
+
+            Array.Copy(csr.RowPtr, rp, csr.RowPtr.Length)
+            If csr.ColIdx.Length > 0 Then Array.Copy(csr.ColIdx, ci, csr.ColIdx.Length)
+            If csr.Values.Length > 0 Then Array.Copy(csr.Values, vx, csr.Values.Length)
+
+            Return New LpSparseMatrix(csr.Rows, csr.Columns, rp, ci, vx)
+        End Function
+
+        Private Shared Sub NegateRow(csr As LpSparseMatrix, i As Int32)
+            For p As Int32 = csr.RowPtr(i) To csr.RowPtr(i + 1) - 1
+                csr.Values(p) = -csr.Values(p)
+            Next
+        End Sub
+
+        Private Shared Function HasNonZero(v As Double()) As Boolean
+            For i As Int32 = 0 To v.Length - 1
+                If v(i) <> 0.0 Then Return True
+            Next
+            Return False
         End Function
 
     End Class

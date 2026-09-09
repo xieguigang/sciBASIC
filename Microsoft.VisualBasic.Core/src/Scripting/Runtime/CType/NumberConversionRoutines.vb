@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -237,6 +238,16 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsInteger(source As IEnumerable(Of Double)) As Integer()
             Return source.Select(Function(d) CInt(d)).ToArray
+        End Function
+
+        ''' <summary>
+        ''' CType each byte as double 
+        ''' </summary>
+        ''' <param name="bytes"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function AsNumeric(bytes As IEnumerable(Of Byte)) As Double()
+            Return bytes.SafeQuery.Select(Function(b) CDbl(b)).ToArray
         End Function
     End Module
 End Namespace

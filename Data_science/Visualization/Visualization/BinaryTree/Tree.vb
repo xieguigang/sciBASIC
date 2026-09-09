@@ -1,70 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::36cda9d966282aa9ed688b5de426cfcc, Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 212
-    '    Code Lines: 158 (74.53%)
-    ' Comment Lines: 21 (9.91%)
-    '    - Xml Docs: 95.24%
-    ' 
-    '   Blank Lines: 33 (15.57%)
-    '     File Size: 8.09 KB
+' Summaries:
 
 
-    '     Module Tree
-    ' 
-    '         Function: __buildNET, bTreeNET, Partitioning
-    '         Structure __edgePath
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 212
+'    Code Lines: 158 (74.53%)
+' Comment Lines: 21 (9.91%)
+'    - Xml Docs: 95.24%
+' 
+'   Blank Lines: 33 (15.57%)
+'     File Size: 8.09 KB
+
+
+'     Module Tree
+' 
+'         Function: __buildNET, bTreeNET, Partitioning
+'         Structure __edgePath
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace KMeans
 
@@ -115,7 +115,7 @@ Namespace KMeans
             For Each tag As String In clusters
                 Dim LQuery As EntityClusterModel() =
                     LinqAPI.Exec(Of EntityClusterModel) <=
- _
+                                                          _
                     From x As EntityClusterModel
                     In list.AsParallel
                     Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
@@ -182,7 +182,7 @@ Namespace KMeans
                             .Properties _
                             .ToDictionary(Function(xx) xx.Key,
                                           Function(xx)
-                                              Return CStr(stdNum.Round(xx.Value, 4))
+                                              Return CStr(std.Round(xx.Value, 4))
                                           End Function)
                     End If
 
@@ -229,9 +229,9 @@ Namespace KMeans
 
                 Return array.Select(
                     Function(x) New NetworkEdge With {
-                        .FromNode = parent.ID,
-                        .ToNode = x.node.ID,
-                        .Interaction = "Leaf-X"
+                        .fromNode = parent.ID,
+                        .toNode = x.node.ID,
+                        .interaction = "Leaf-X"
                     }).ToArray
             End If
 
@@ -249,9 +249,9 @@ Namespace KMeans
                     Dim leaf As __edgePath = parts.First
 
                     edges += New NetworkEdge With {
-                        .FromNode = parent.ID,
-                        .ToNode = leaf.node.ID,
-                        .Interaction = "Leaf"
+                        .fromNode = parent.ID,
+                        .toNode = leaf.node.ID,
+                        .interaction = "Leaf"
                     }
                 Else     ' 继续递归
                     Dim uid As String = $"[{part.cur}]" & parts.First.path.Take(depth).JoinBy(".")
@@ -260,7 +260,7 @@ Namespace KMeans
                         .NodeType = "Virtual"
                     }
                     Call nodes.Add(virtual)
-                    Call edges.Add(New NetworkEdge With {.FromNode = parent.ID, .ToNode = uid, .Interaction = "Path"})
+                    Call edges.Add(New NetworkEdge With {.fromNode = parent.ID, .toNode = uid, .interaction = "Path"})
                     Call edges.Add(__buildNET(parts, virtual, [next], nodes))
                 End If
             Next

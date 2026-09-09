@@ -63,6 +63,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>气泡图数据系列（X/Y 定位，Sizes 映射第三维）</summary>
 Public Class BubbleSeries
@@ -152,9 +153,9 @@ Public Class BubblePlot
     ''' <summary>数值映射为气泡半径</summary>
     Private Function SizeToRadius(v As Double, sMin As Double, sMax As Double) As Single
         Dim t = (v - sMin) / (sMax - sMin)
-        t = Math.Max(0, Math.Min(1, t))
+        t = std.Max(0, std.Min(1, t))
         ' 平方根映射，使面积（而非半径）与数值成比例
-        Return CSng(MinBubbleSize + (MaxBubbleSize - MinBubbleSize) * Math.Sqrt(t))
+        Return CSng(MinBubbleSize + (MaxBubbleSize - MinBubbleSize) * std.Sqrt(t))
     End Function
 
     ''' <summary>右下角绘制大小图例（同心圆示例）</summary>

@@ -1,67 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::630da35745746c6c0f222188056346d5, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 130
-    '    Code Lines: 104 (80.00%)
-    ' Comment Lines: 11 (8.46%)
-    '    - Xml Docs: 9.09%
-    ' 
-    '   Blank Lines: 15 (11.54%)
-    '     File Size: 5.62 KB
+' Summaries:
 
 
-    ' Class SankeyPlot
-    ' 
-    '     Properties: Links, Nodes
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 130
+'    Code Lines: 104 (80.00%)
+' Comment Lines: 11 (8.46%)
+'    - Xml Docs: 9.09%
+' 
+'   Blank Lines: 15 (11.54%)
+'     File Size: 5.62 KB
+
+
+' Class SankeyPlot
+' 
+'     Properties: Links, Nodes
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
-Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
+Imports Microsoft.VisualBasic.Imaging
 Imports stdf = System.Math
 
 ' ============================================================================
@@ -94,13 +88,13 @@ Public Class SankeyPlot
             If dst IsNot Nothing Then dst.InFlow += l.Value
         Next
         For Each n In Nodes
-            n.Total = Math.Max(n.InFlow, n.OutFlow)
+            n.Total = stdf.Max(n.InFlow, n.OutFlow)
         Next
 
         ' 简单布局：按 Layer 分列
         Dim maxLayer = If(Nodes.Count > 0, Nodes.Max(Function(n) n.Layer), 0)
         Dim nLayer = maxLayer + 1
-        Dim colW = (_width - Theme.MarginLeft - Theme.MarginRight) / Math.Max(1, nLayer - 1)
+        Dim colW = (_width - Theme.MarginLeft - Theme.MarginRight) / stdf.Max(1, nLayer - 1)
         Dim nodeW = 14.0F
         Dim totalValue = Nodes.Sum(Function(n) n.Total)
         Dim availH = _height - Theme.MarginTop - Theme.MarginBottom - 20
@@ -134,8 +128,8 @@ Public Class SankeyPlot
             If Not dst.InOffsets.ContainsKey(l.Source) Then dst.InOffsets(l.Source) = 0
             Dim srcY = src.Y + src.OutOffsets(l.Target)
             Dim dstY = dst.Y + dst.InOffsets(l.Source)
-            Dim linkH = CSng(l.Value / Math.Max(src.Total, 1) * src.Height)
-            Dim linkH2 = CSng(l.Value / Math.Max(dst.Total, 1) * dst.Height)
+            Dim linkH = CSng(l.Value / stdf.Max(src.Total, 1) * src.Height)
+            Dim linkH2 = CSng(l.Value / stdf.Max(dst.Total, 1) * dst.Height)
             src.OutOffsets(l.Target) += linkH
             dst.InOffsets(l.Source) += linkH2
 

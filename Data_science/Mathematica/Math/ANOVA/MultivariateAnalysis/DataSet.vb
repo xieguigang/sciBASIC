@@ -96,6 +96,15 @@ Public Module DataSetHelper
     End Function
 
     <Extension>
+    Public Function CommonDataSet(Of Row As {INamedValue, DynamicPropertyBase(Of Double)})(mat As IEnumerable(Of Row), Optional labels As Array = Nothing) As StatisticsObject
+        Dim matAll As Row() = mat.ToArray
+        Dim colnames As String() = matAll.PropertyNames
+        Return matAll _
+            .Select(Function(r) New NamedCollection(Of Double)(r.Key, r(colnames))) _
+            .CommonDataSet(colnames, labels)
+    End Function
+
+    <Extension>
     Public Function CommonDataSet(mat As IEnumerable(Of NamedCollection(Of Double)), colnames As String(), Optional labels As Array = Nothing) As StatisticsObject
         Dim pool As NamedCollection(Of Double)() = mat.SafeQuery.ToArray
         Dim xm As Double()() = pool.Select(Function(v) v.value).ToArray

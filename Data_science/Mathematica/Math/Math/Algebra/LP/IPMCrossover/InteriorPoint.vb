@@ -1,18 +1,28 @@
 ' ============================================================================
-' InteriorPoint.vb — 原始-对偶内点法（Mehrotra 预测-校正）[readme §二/§三]
+' InteriorPoint.vb — 有界变量原始-对偶内点法（Mehrotra 预测-校正）[readme §二/§三]
 ' ----------------------------------------------------------------------------
-' KKT 松弛：x_i·s_i = μ（μ→0）[readme §2.1]；牛顿方程经正规方程消元：
-'   A D² Aᵀ Δy = rhs，D² = diag(x_i/s_i) [readme §2.2/§三]
-'   rhs = −r_p − A·S⁻¹γ − A·D²·r_d，S⁻¹γ = −x + σμ/s + corr/s
-'   （注意：+Ax 项已经含在 −A·(−x) 之中，切勿重复累加——镜像验证抓到的关键 bug）
-'   Δx = D²AᵀΔy + S⁻¹γ + D²·r_d；Δs = −r_d − AᵀΔy
-' 可行情形（r_p=r_d=0）时 rhs 退化为 readme 方框公式 b − σμ·A·S⁻¹e ✓
-' 预测步（σ=0, corr=0）→ μ_aff → σ = (μ_aff/μ)³ → 校正步（含 ΔX_aff·ΔS_aff·e 补偿）
-' 步长：fraction-to-boundary γ=0.99，原始/对偶分离取步 [readme §三]
-' 数值手段：静态正则化（reg·I）+ 一次迭代精化共享同一 Cholesky 因子
-'   [readme §2.2]；步长停滞 → 正则化 ×1000 重试 ≤4 档（自适应）；
-'   连续 8 轮综合指标无改善 → 提前退出，交 simplex 兜底。
-' 起始点：Mehrotra (1992) 启发式——最小范数 x̂/ŝ + 偏移平衡。
+' 问题形式：min cᵀx, Ax = b, **0 ≤ x ≤ u**（u 可为 +∞；有限下界已由标准形平移消掉）
+'
+' KKT：  Ax = b；  Aᵀy + s − z = c；  x∘s = μ；  w∘z = μ（w = u − x）；  s,z ≥ 0
+'
+' 牛顿系统：
+'   A·Δx = −r_p                                   (1)
+'   Aᵀ·Δy + Δs − Δz = −r_d                        (2)
+'   S·Δx + X·Δs = γ_L = −XSe + σμe + corr_L       (3)
+'   W·Δz − Z·Δx = γ_U = −WZe + σμe + corr_U       (4)   （Δw = −Δx）
+'
+' (2)→ Δz = Δs + r_d + AᵀΔy；与 (3)(4) 联立消元：
+'   Δx = Θ·(AᵀΔy + r_d + X⁻¹γ_L − W⁻¹γ_U)，  Θ = (S/X + Z/W)⁻¹
+'   Δs = X⁻¹γ_L − (s/x)·Δx
+'   Δz = W⁻¹γ_U + (z/w)·Δx
+'   正规方程：A·Θ·Aᵀ·Δy = −r_p − A·Θ·(r_d + X⁻¹γ_L − W⁻¹γ_U)   ★
+'
+' u = +∞ 时 z = 0、Z/W = 0、W⁻¹γ_U = 0，Θ 退化为 X/S，
+' ★ 退化为 readme 方框公式 b − σμ·A·S⁻¹e，与原无上界实现**完全等价**（T1-T9 不变）。
+'
+' 步长：双侧 fraction-to-boundary（x 同时看 x→0 与 x→u），原始/对偶分离取步。
+' 数值：静态正则化阶梯 + 一次迭代精化；步长停滞 → 提升正则化档位重试 ≤4 档。
+' 矩阵：全部经 ILpMatrix 访问（稠密或稀疏），本文件不得出现 A(i,j) 直接下标。
 ' ============================================================================
 
 Imports std = System.Math
@@ -27,176 +37,317 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         Public X As Double()
         Public Y As Double()
         Public S As Double()
+        ''' <summary>上界对偶变量（无上界变量恒为 0）</summary>
+        Public Z As Double()
         Public Iters As Int32
 
     End Class
 
     Public Class InteriorPointSolver
 
-        Private ReadOnly A As Double(,)
+        Private ReadOnly Mat As ILpMatrix
         Private ReadOnly b As Double()
         Private ReadOnly c As Double()
+        ''' <summary>上界（+∞ = 无上界）</summary>
+        Private ReadOnly u As Double()
+        Private ReadOnly ubFin As Boolean()
         Private ReadOnly m As Int32
         Private ReadOnly n As Int32
         Private ReadOnly tol As Double
         Private ReadOnly maxIter As Int32
         Private ReadOnly log As List(Of String)
+        Private ReadOnly anyBound As Boolean
+        Private ReadOnly muDen As Double
 
         ' 自适应正则化阶梯 [readme §2.2 的工程扩展]
         Private Shared ReadOnly RegLadder() As Double = {0.00000000001, 0.00000001, 0.00001, 0.01}
 
+        ''' <summary>向后兼容构造：稠密矩阵 + 无上界（x ≥ 0）</summary>
         Public Sub New(A As Double(,), b As Double(), c As Double(),
                        Optional tol As Double = 0.00000001, Optional maxIter As Int32 = 200,
                        Optional log As List(Of String) = Nothing)
-            Me.A = A
+            Me.New(New DenseLpMatrix(A), b, c, Nothing, tol, maxIter, log)
+        End Sub
+
+        ''' <summary>
+        ''' 通用构造：矩阵抽象 + 可选上界
+        ''' </summary>
+        ''' <param name="u">上界数组（长度 = 列数）；Nothing 或元素为 +∞ 表示该变量无上界</param>
+        Public Sub New(mat As ILpMatrix, b As Double(), c As Double(), u As Double(),
+                       Optional tol As Double = 0.00000001, Optional maxIter As Int32 = 200,
+                       Optional log As List(Of String) = Nothing)
+            Me.Mat = mat
             Me.b = b
             Me.c = c
-            Me.m = A.GetLength(0)
-            Me.n = A.GetLength(1)
+            Me.m = mat.Rows
+            Me.n = mat.Columns
             Me.tol = tol
             Me.maxIter = maxIter
             Me.log = log
-        End Sub
 
-        ''' <summary>Mehrotra 起始点：x̂/ŝ 最小范数解 + 偏移平衡</summary>
-        Private Sub MehrotraStart(ByRef x As Double(), ByRef y As Double(), ByRef s As Double())
-            Dim M0(m - 1, m - 1) As Double
-            For i = 0 To m - 1
-                For j = 0 To m - 1
-                    Dim sum As Double = 0
-                    For k = 0 To n - 1
-                        sum += A(i, k) * A(j, k)
-                    Next
-                    M0(i, j) = sum
-                Next
-                M0(i, i) += 0.000000000001
-            Next
-            Dim L = LinAlg.Cholesky(M0)
-            If L Is Nothing Then
-                x = New Double(n - 1) {} : y = New Double(m - 1) {} : s = New Double(n - 1) {}
-                For j = 0 To n - 1
-                    x(j) = 1.0 : s(j) = 1.0
-                Next
-                Return
-            End If
-            Dim y1 = LinAlg.CholSolve(L, b)
-            Dim xhat(n - 1) As Double
-            For j = 0 To n - 1
-                Dim sum As Double = 0
-                For i = 0 To m - 1
-                    sum += A(i, j) * y1(i)
-                Next
-                xhat(j) = sum
-            Next
-            Dim Ac(m - 1) As Double
-            For i = 0 To m - 1
-                Dim sum As Double = 0
-                For k = 0 To n - 1
-                    sum += A(i, k) * c(k)
-                Next
-                Ac(i) = sum
-            Next
-            Dim y2 = LinAlg.CholSolve(L, Ac)
-            Dim shat(n - 1) As Double
-            For j = 0 To n - 1
-                Dim sum As Double = c(j)
-                For i = 0 To m - 1
-                    sum -= A(i, j) * y2(i)
-                Next
-                shat(j) = sum
-            Next
-            ' 偏移
-            Dim minX = Double.MaxValue : Dim minS = Double.MaxValue
-            For j = 0 To n - 1
-                minX = std.Min(minX, xhat(j))
-                minS = std.Min(minS, shat(j))
-            Next
-            Dim dx As Double = std.Max(0.0, -1.5 * minX)
-            Dim ds As Double = std.Max(0.0, -1.5 * minS)
-            x = New Double(n - 1) {}
-            s = New Double(n - 1) {}
-            For j = 0 To n - 1
-                x(j) = xhat(j) + dx
-                s(j) = shat(j) + ds
-            Next
-            ' 平衡偏移：δ̂ = 0.5·(xᵀs)/Σ(·)
-            Dim dot As Double = LinAlg.Dot(x, s)
-            Dim sumS As Double = s.Sum()
-            Dim sumX As Double = x.Sum()
-            Dim dx2 As Double = 0.5 * dot / std.Max(0.000000000001, sumS)
-            Dim ds2 As Double = 0.5 * dot / std.Max(0.000000000001, sumX)
-            For j = 0 To n - 1
-                x(j) = std.Max(0.0001, x(j) + dx2)
-                s(j) = std.Max(0.0001, s(j) + ds2)
-            Next
-            y = CType(y2.Clone(), Double())
-        End Sub
+            Me.u = New Double(Me.n - 1) {}
+            Me.ubFin = New Boolean(Me.n - 1) {}
 
-        Private Function MaxStep(v As Double(), dv As Double()) As Double
-            Dim alpha As Double = 1.0
-            For i = 0 To n - 1
-                If dv(i) < -0.00000000000001 Then
-                    alpha = std.Min(alpha, -v(i) / dv(i))
+            Dim nFin As Int32 = 0
+
+            For j As Int32 = 0 To Me.n - 1
+                Dim uj As Double = If(u Is Nothing OrElse j >= u.Length, Double.PositiveInfinity, u(j))
+
+                If Double.IsNaN(uj) Then uj = Double.PositiveInfinity
+
+                Me.u(j) = uj
+
+                If Double.IsInfinity(uj) Then
+                    Me.ubFin(j) = False
+                Else
+                    Me.ubFin(j) = True
+                    nFin += 1
                 End If
             Next
+
+            Me.anyBound = (nFin > 0)
+            Me.muDen = Me.n + nFin
+        End Sub
+
+        ''' <summary>w = u − x（带数值下限，避免除零）</summary>
+        Private Sub UpdateUpperSlack(x As Double(), w As Double())
+            If Not anyBound Then Return
+
+            For j As Int32 = 0 To n - 1
+                If ubFin(j) Then
+                    w(j) = std.Max(u(j) - x(j), 0.0000000001 * std.Max(1.0, u(j)))
+                End If
+            Next
+        End Sub
+
+        ''' <summary>平均互补间隙 μ = (xᵀs + wᵀz) / (n + n_finite)</summary>
+        Private Function Complementarity(x As Double(), s As Double(), w As Double(), z As Double()) As Double
+            Dim acc As Double = LinAlg.Dot(x, s)
+
+            If anyBound Then
+                For j As Int32 = 0 To n - 1
+                    If ubFin(j) Then acc += w(j) * z(j)
+                Next
+            End If
+
+            Return acc / muDen
+        End Function
+
+        ''' <summary>沿方向走 α 之后的平均互补间隙（Mehrotra σ 用）</summary>
+        Private Function ComplementarityAt(x As Double(), dx As Double(),
+                                           s As Double(), ds As Double(),
+                                           w As Double(), z As Double(), dz As Double(),
+                                           alpha As Double) As Double
+            Dim acc As Double = 0.0
+
+            For j As Int32 = 0 To n - 1
+                acc += (x(j) + alpha * dx(j)) * (s(j) + alpha * ds(j))
+
+                If ubFin(j) Then
+                    acc += (w(j) - alpha * dx(j)) * (z(j) + alpha * dz(j))
+                End If
+            Next
+
+            Return acc / muDen
+        End Function
+
+        ''' <summary>原始步长上界：0 ≤ x + αΔx ≤ u（双侧）</summary>
+        Private Function MaxStepX(x As Double(), dx As Double()) As Double
+            Dim alpha As Double = 1.0
+
+            For j As Int32 = 0 To n - 1
+                If dx(j) < -0.00000000000001 Then
+                    alpha = std.Min(alpha, -x(j) / dx(j))
+                ElseIf dx(j) > 0.00000000000001 AndAlso ubFin(j) Then
+                    Dim room As Double = u(j) - x(j)
+
+                    If room <= 0.0 Then
+                        Return 0.0
+                    End If
+
+                    alpha = std.Min(alpha, room / dx(j))
+                End If
+            Next
+
+            Return alpha
+        End Function
+
+        ''' <summary>对偶步长上界：s + αΔs ≥ 0，z + αΔz ≥ 0</summary>
+        Private Function MaxStepDual(s As Double(), ds As Double(), z As Double(), dz As Double()) As Double
+            Dim alpha As Double = 1.0
+
+            For j As Int32 = 0 To n - 1
+                If ds(j) < -0.00000000000001 Then
+                    alpha = std.Min(alpha, -s(j) / ds(j))
+                End If
+
+                If ubFin(j) AndAlso dz(j) < -0.00000000000001 Then
+                    alpha = std.Min(alpha, -z(j) / dz(j))
+                End If
+            Next
+
             Return alpha
         End Function
 
         ''' <summary>
-        ''' 牛顿方向求解（共享 Cholesky 因子 + 一次迭代精化）。
-        ''' S⁻¹γ = −x + σμ/s + corr/s；rhs = −r_p − A·S⁻¹γ − A·D²·r_d
-        ''' （+Ax 已含在 −A·(−x) 内，勿重复累加——镜像对拍抓到的关键点）
+        ''' Mehrotra 起始点
+        ''' 
+        ''' 无上界（x ≥ 0）：沿用已验证的 Mehrotra(1992) 启发式——最小范数 x̂/ŝ + 偏移平衡。
+        ''' 有上界（0 ≤ x ≤ u）：改为
+        '''   1) 取盒子中心 x⁰ = u/2（无上界变量取 1），
+        '''   2) 用同一因子做最小范数修正 x⁰ ← x⁰ − Aᵀ(AAᵀ)⁻¹(Ax⁰ − b)，使 A·x⁰ = b，
+        '''   3) 夹回 [1%·u, 99%·u] 严格内部，
+        '''   4) 对偶按 d = c − Aᵀŷ 的正/负部分拆分：s = max(d,0)+λ、z = max(−d,0)+λ
+        '''      （保证 s − z = d，即初始对偶残差为 0，且 s,z ≥ λ > 0）。
+        ''' 说明：不能把无上界的"平衡偏移"直接套用到有界情形——w·z 项会让 δ 爆炸，
+        '''       把 x 整体推到界上（实测会让原始残差发散）。
         ''' </summary>
-        Private Function NewtonDir(M As Double(,), L As Double(,), reg As Double,
-                                   x As Double(), s As Double(), rp As Double(), rd As Double(),
-                                   d2 As Double(), ADrD As Double(),
-                                   sigmaMu As Double(), corr As Double()) As Double()()
-            Dim Sinv(n - 1) As Double
-            For j = 0 To n - 1
-                Sinv(j) = -x(j) + sigmaMu(j) / s(j) + corr(j) / s(j)
+        Private Sub MehrotraStart(ByRef x As Double(), ByRef y As Double(),
+                                  ByRef s As Double(), ByRef z As Double())
+            x = New Double(n - 1) {}
+            s = New Double(n - 1) {}
+            z = New Double(n - 1) {}
+
+            Dim xhat(n - 1) As Double
+            Dim dhat(n - 1) As Double
+            Dim y0(m - 1) As Double
+            Dim ones(n - 1) As Double
+
+            For j As Int32 = 0 To n - 1
+                xhat(j) = 1.0
+                dhat(j) = c(j)
+                ones(j) = 1.0
             Next
-            Dim mi As Integer = Me.m
-            Dim rhs(mi - 1) As Double
-            For i = 0 To mi - 1
-                Dim sum As Double = -rp(i)
-                For j = 0 To n - 1
-                    sum -= A(i, j) * Sinv(j)
+
+            ' 起始点的最小二乘求解必须用"规模化"的正则化：
+            ' 绝对量级 1e-12 在病态/秩亏损的正规方程上会得到放大到 1e12 的解，
+            ' 使 d̂（从而 s、z）完全失真。有界（含稀疏）路径按矩阵规模取 reg。
+            Dim reg0 As Double = 0.000000000001
+
+            If anyBound Then
+                Dim ndiag0 As Double() = Mat.NormalDiag(ones)
+                Dim sc As Double = 1.0
+
+                For i As Int32 = 0 To m - 1
+                    If ndiag0(i) > sc Then sc = ndiag0(i)
                 Next
-                rhs(i) = sum - ADrD(i)
-            Next
-            Dim dy = LinAlg.CholSolve(L, rhs)
-            ' 迭代精化：res = rhs − (M+reg·I)·dy；dy += L⁻¹·res
-            Dim res(mi - 1) As Double
-            For i = 0 To mi - 1
-                Dim sum As Double = rhs(i)
-                For k = 0 To mi - 1
-                    sum -= M(i, k) * dy(k)
+
+                reg0 = 0.000000001 * sc
+            End If
+
+            Dim fac As INormalFactor = Mat.FactorNormal(ones, reg0)
+
+            If fac IsNot Nothing Then
+                Dim y1 As Double() = fac.Solve(b)
+
+                If y1 IsNot Nothing Then
+                    xhat = Mat.Mtv(y1)
+                End If
+
+                Dim Ac As Double() = Mat.Mv(c)
+                Dim y2 As Double() = fac.Solve(Ac)
+
+                If y2 IsNot Nothing Then
+                    Dim aty As Double() = Mat.Mtv(y2)
+
+                    For j As Int32 = 0 To n - 1
+                        dhat(j) = c(j) - aty(j)
+                    Next
+
+                    Array.Copy(y2, y0, std.Min(y2.Length, m))
+                End If
+            End If
+
+            If Not anyBound Then
+                ' ---------------- 无上界：原实现（保持 T1-T9 行为不变）----------------
+                Dim minX As Double = Double.MaxValue
+                Dim minS As Double = Double.MaxValue
+
+                For j As Int32 = 0 To n - 1
+                    If xhat(j) < minX Then minX = xhat(j)
+                    If dhat(j) < minS Then minS = dhat(j)
                 Next
-                res(i) = sum - reg * dy(i)
-            Next
-            Dim dyr = LinAlg.CholSolve(L, res)
-            For i = 0 To mi - 1
-                dy(i) += dyr(i)
-            Next
-            Dim dx(n - 1) As Double
-            Dim ds(n - 1) As Double
-            For j = 0 To n - 1
-                Dim aty As Double = 0
-                For i = 0 To mi - 1
-                    aty += A(i, j) * dy(i)
+
+                Dim dx0 As Double = std.Max(0.0, -1.5 * minX)
+                Dim ds0 As Double = std.Max(0.0, -1.5 * minS)
+
+                For j As Int32 = 0 To n - 1
+                    x(j) = xhat(j) + dx0
+                    s(j) = dhat(j) + ds0
                 Next
-                dx(j) = d2(j) * aty - x(j) + sigmaMu(j) / s(j) + corr(j) / s(j) + d2(j) * rd(j)
-                ds(j) = -rd(j) - aty
+
+                Dim dot As Double = LinAlg.Dot(x, s)
+                Dim sumS As Double = s.Sum()
+                Dim sumX As Double = x.Sum()
+                Dim dx2 As Double = 0.5 * dot / std.Max(0.000000000001, sumS)
+                Dim ds2 As Double = 0.5 * dot / std.Max(0.000000000001, sumX)
+
+                For j As Int32 = 0 To n - 1
+                    x(j) = std.Max(0.0001, x(j) + dx2)
+                    s(j) = std.Max(0.0001, s(j) + ds2)
+                Next
+
+                y = y0
+
+                Return
+            End If
+
+            ' ---------------- 有上界 ----------------
+            ' 1) 以最小范数解 x̂ = Aᵀ(AAᵀ+reg·I)⁻¹b 为基准（它天然尽量满足 A·x = b），
+            '    而不是盒子中心——盒子中心对 FBA 而言原始残差高达 1e5 量级，
+            '    夹回盒子后可行性彻底丢失，内点法会直接卡死。
+            Dim minXb As Double = Double.MaxValue
+
+            For j As Int32 = 0 To n - 1
+                If xhat(j) < minXb Then minXb = xhat(j)
             Next
-            Return New Double()() {dx, dy, ds}
-        End Function
+
+            Dim shift As Double = std.Max(0.0, -1.5 * minXb)
+
+            ' 2) 夹回 [0.1%·u, 99.9%·u] 的严格内部（0.1% 的余量把破坏的可行性控制在 ~1e-3 相对量级）
+            For j As Int32 = 0 To n - 1
+                Dim xv As Double = xhat(j) + shift
+
+                If ubFin(j) Then
+                    Dim uj As Double = u(j)
+                    Dim margin As Double = 0.001 * uj
+
+                    x(j) = std.Min(std.Max(xv, margin), uj - margin)
+                Else
+                    x(j) = std.Max(xv, 0.0001)
+                End If
+            Next
+
+            ' 3) 对偶拆分（s − z = d，s,z ≥ λ）
+            Dim maxD As Double = 1.0
+
+            For j As Int32 = 0 To n - 1
+                If std.Abs(dhat(j)) > maxD Then maxD = std.Abs(dhat(j))
+            Next
+
+            Dim lambda As Double = std.Max(1.0, 0.01 * maxD)
+
+            For j As Int32 = 0 To n - 1
+                s(j) = std.Max(dhat(j), 0.0) + lambda
+                z(j) = If(ubFin(j), std.Max(-dhat(j), 0.0) + lambda, 0.0)
+            Next
+
+            y = y0
+        End Sub
 
         ''' <summary>主入口</summary>
         Public Function Solve() As IpResult
             Dim x As Double() = Nothing
             Dim y As Double() = Nothing
             Dim s As Double() = Nothing
-            MehrotraStart(x, y, s)
+            Dim z As Double() = Nothing
+
+            MehrotraStart(x, y, s, z)
+
+            Dim w(n - 1) As Double
+
+            UpdateUpperSlack(x, w)
+
             Dim normB = 1.0 + LinAlg.Norm2(b)
             Dim normC = 1.0 + LinAlg.Norm2(c)
             Dim status As String = "max_iter"
@@ -204,40 +355,68 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim stallCount As Int32 = 0
             Dim prevMetric As Double = Double.PositiveInfinity
 
+            Dim rp(m - 1) As Double
+            Dim rd(n - 1) As Double
+            Dim rhs(m - 1) As Double
+            Dim res(m - 1) As Double
+            Dim lastAP As Double = 0.0
+            Dim lastAD As Double = 0.0
+            Dim lastReg As Double = 0.0
+            Dim theta(n - 1) As Double
+            Dim xl(n - 1) As Double
+            Dim wu(n - 1) As Double
+            Dim g(n - 1) As Double
+            Dim tg(n - 1) As Double
+            Dim sigMuV(n - 1) As Double
+            Dim dxA(n - 1) As Double, dsA(n - 1) As Double, dzA(n - 1) As Double
+            Dim dx(n - 1) As Double, ds(n - 1) As Double, dz(n - 1) As Double
+            Dim dy As Double() = Nothing
+
             For it = 0 To maxIter - 1
                 iters = it + 1
-                ' 残差
-                Dim mi As Integer = Me.m
-                Dim rp(mi - 1) As Double
-                Dim rd(n - 1) As Double
-                For i = 0 To mi - 1
-                    Dim sum As Double = 0
-                    For j = 0 To n - 1
-                        sum += A(i, j) * x(j)
-                    Next
-                    rp(i) = sum - b(i)
+
+                ' ---- 残差 ----
+                Dim ax As Double() = Mat.Mv(x)
+
+                For i As Int32 = 0 To m - 1
+                    rp(i) = ax(i) - b(i)
                 Next
-                For j = 0 To n - 1
-                    Dim sum As Double = s(j) - c(j)
-                    For i = 0 To mi - 1
-                        sum += A(i, j) * y(i)
-                    Next
-                    rd(j) = sum
+
+                Dim aty0 As Double() = Mat.Mtv(y)
+
+                For j As Int32 = 0 To n - 1
+                    rd(j) = s(j) - z(j) - c(j) + aty0(j)
                 Next
-                Dim mu As Double = LinAlg.Dot(x, s) / n
+
+                Dim mu As Double = Complementarity(x, s, w, z)
                 Dim nrp = LinAlg.Norm2(rp) / normB
                 Dim nrd = LinAlg.Norm2(rd) / normC
                 Dim obj = LinAlg.Dot(c, x)
                 Dim ngap = mu / (1.0 + std.Abs(obj))
+
                 If log IsNot Nothing Then
-                    log.Add($"  IPM {it,3}: rp={nrp:E2} rd={nrd:E2} mu={mu:E2} obj={obj:G10}")
+                    Dim dyNorm As Double = If(dy Is Nothing, 0.0, LinAlg.Norm2(dy))
+                    Dim maxRel As Double = 0.0
+
+                    For j As Int32 = 0 To n - 1
+                        Dim uj As Double = If(ubFin(j), u(j), std.Max(1.0, std.Abs(x(j))))
+                        Dim rel As Double = std.Abs(dx(j)) / std.Max(1.0, uj)
+
+                        If rel > maxRel Then maxRel = rel
+                    Next
+
+                    log.Add($"  IPM {it,3}: rp={nrp:E2} rd={nrd:E2} mu={mu:E2} obj={obj:G10} " &
+                            $"aP={lastAP:E2} aD={lastAD:E2} reg={lastReg:E1} |dy|={dyNorm:E2} dx/u={maxRel:E2}")
                 End If
+
                 If nrp <= tol AndAlso nrd <= tol AndAlso ngap <= tol Then
                     status = "optimal"
                     Exit For
                 End If
+
                 ' 停滞检测
                 Dim metric = nrp + nrd + ngap
+
                 If metric > prevMetric * (1.0 - 0.000000000001) Then
                     stallCount += 1
                     If stallCount >= 8 Then
@@ -247,92 +426,178 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 Else
                     stallCount = 0
                 End If
+
                 prevMetric = metric
-                ' D² 与 AD²r_d（本迭代常量）
-                Dim d2(n - 1) As Double
-                For j = 0 To n - 1
-                    d2(j) = std.Min(10000000000.0, std.Max(0.000000000001, x(j) / s(j)))
-                Next
-                Dim ADrD(mi - 1) As Double
-                For i = 0 To mi - 1
-                    Dim sum As Double = 0
-                    For j = 0 To n - 1
-                        sum += A(i, j) * d2(j) * rd(j)
-                    Next
-                    ADrD(i) = sum
+
+                ' ---- Θ = (S/X + Z/W)⁻¹ ----
+                For j As Int32 = 0 To n - 1
+                    Dim sr As Double = s(j) / x(j)
+
+                    If ubFin(j) Then
+                        theta(j) = 1.0 / (sr + z(j) / w(j))
+                    Else
+                        theta(j) = 1.0 / sr
+                    End If
+
+                    theta(j) = std.Min(10000000000.0, std.Max(0.000000000001, theta(j)))
                 Next
 
-                ' 正规方程因子（每个正则化档位一次；预测/校正共享）
-                Dim M(mi - 1, mi - 1) As Double
-                For i = 0 To mi - 1
-                    For k = 0 To mi - 1
-                        Dim sum As Double = 0
-                        For j = 0 To n - 1
-                            sum += A(i, j) * d2(j) * A(k, j)
-                        Next
-                        M(i, k) = sum
-                    Next
-                Next
-                Dim mScale = 1.0
-                For i = 0 To mi - 1
-                    For k = 0 To mi - 1
-                        mScale = std.Max(mScale, std.Abs(M(i, k)))
-                    Next
+                ' ---- 正规方程规模（正则化量级基准）----
+                Dim mScale As Double = 1.0
+                Dim ndiag As Double() = Mat.NormalDiag(theta)
+
+                For i As Int32 = 0 To m - 1
+                    If ndiag(i) > mScale Then mScale = ndiag(i)
                 Next
 
-                Dim dxA As Double() = Nothing, dyA As Double() = Nothing, dsA As Double() = Nothing
-                Dim dx As Double() = Nothing, dy As Double() = Nothing, ds As Double() = Nothing
                 Dim aP As Double = 0, aD As Double = 0
                 Dim ok As Boolean = False
 
                 For Each regMult In RegLadder
-                    Dim reg = regMult * mScale
-                    Dim L = LinAlg.Cholesky(M, reg)
-                    If L Is Nothing Then Continue For
-                    Dim zero = New Double(n - 1) {}
-                    Dim tripleA = NewtonDir(M, L, reg, x, s, rp, rd, d2, ADrD, zero, zero)
-                    dxA = tripleA(0) : dyA = tripleA(1) : dsA = tripleA(2)
-                    ' 预测步 μ_aff 与 σ
-                    Dim aAff = std.Min(1.0, std.Min(MaxStep(x, dxA), MaxStep(s, dsA)))
-                    Dim muAff As Double = 0
-                    For j = 0 To n - 1
-                        muAff += (x(j) + aAff * dxA(j)) * (s(j) + aAff * dsA(j))
+                    Dim reg As Double = regMult * mScale
+                    Dim fac As INormalFactor = Mat.FactorNormal(theta, reg)
+
+                    If fac Is Nothing Then Continue For
+
+                    ' ========== 预测步（σ = 0，无校正项）==========
+                    For j As Int32 = 0 To n - 1
+                        xl(j) = -s(j)
+                        wu(j) = If(ubFin(j), -z(j), 0.0)
+                        g(j) = xl(j) - wu(j) + rd(j)
+                        tg(j) = theta(j) * g(j)
                     Next
-                    muAff /= n
-                    Dim sigma = std.Min(1.0, std.Max(0.0, (muAff / mu) ^ 3))
-                    ' 校正步
-                    Dim corrV(n - 1) As Double
-                    Dim sigMuV(n - 1) As Double
-                    For j = 0 To n - 1
-                        corrV(j) = dxA(j) * dsA(j)
+
+                    Dim atg As Double() = Mat.Mv(tg)
+
+                    For i As Int32 = 0 To m - 1
+                        rhs(i) = -rp(i) - atg(i)
+                    Next
+
+                    Dim dyA As Double() = fac.Solve(rhs)
+
+                    If dyA Is Nothing Then Continue For
+
+                    If fac.IsExact Then
+                        ' 迭代精化：res = rhs − (M+reg·I)·dy
+                        Dim mvy As Double() = fac.Mv(dyA)
+
+                        For i As Int32 = 0 To m - 1
+                            res(i) = rhs(i) - mvy(i)
+                        Next
+
+                        Dim dyr As Double() = fac.Solve(res)
+
+                        If dyr IsNot Nothing Then
+                            For i As Int32 = 0 To m - 1
+                                dyA(i) += dyr(i)
+                            Next
+                        End If
+                    End If
+
+                    Dim atyA As Double() = Mat.Mtv(dyA)
+
+                    For j As Int32 = 0 To n - 1
+                        dxA(j) = theta(j) * (atyA(j) + g(j))
+                        dsA(j) = xl(j) - (s(j) / x(j)) * dxA(j)
+                        dzA(j) = If(ubFin(j), wu(j) + (z(j) / w(j)) * dxA(j), 0.0)
+                    Next
+
+                    Dim aAff As Double = std.Min(1.0, std.Min(MaxStepX(x, dxA), MaxStepDual(s, dsA, z, dzA)))
+                    Dim muAff As Double = ComplementarityAt(x, dxA, s, dsA, w, z, dzA, aAff)
+                    Dim sigma As Double = std.Min(1.0, std.Max(0.0, (muAff / mu) ^ 3))
+
+                    ' ========== 校正步 ==========
+                    For j As Int32 = 0 To n - 1
                         sigMuV(j) = sigma * mu
+                        xl(j) = -s(j) + sigMuV(j) / x(j) + (dxA(j) * dsA(j)) / x(j)
+
+                        If ubFin(j) Then
+                            wu(j) = -z(j) + sigMuV(j) / w(j) + (dxA(j) * dzA(j)) / w(j)
+                        Else
+                            wu(j) = 0.0
+                        End If
+
+                        g(j) = xl(j) - wu(j) + rd(j)
+                        tg(j) = theta(j) * g(j)
                     Next
-                    Dim triple = NewtonDir(M, L, reg, x, s, rp, rd, d2, ADrD, sigMuV, corrV)
-                    dx = triple(0) : dy = triple(1) : ds = triple(2)
-                    aP = std.Min(1.0, 0.99 * MaxStep(x, dx))
-                    aD = std.Min(1.0, 0.99 * MaxStep(s, ds))
+
+                    atg = Mat.Mv(tg)
+
+                    For i As Int32 = 0 To m - 1
+                        rhs(i) = -rp(i) - atg(i)
+                    Next
+
+                    dy = fac.Solve(rhs)
+
+                    If dy Is Nothing Then Continue For
+
+                    If fac.IsExact Then
+                        Dim mvy As Double() = fac.Mv(dy)
+
+                        For i As Int32 = 0 To m - 1
+                            res(i) = rhs(i) - mvy(i)
+                        Next
+
+                        Dim dyr As Double() = fac.Solve(res)
+
+                        If dyr IsNot Nothing Then
+                            For i As Int32 = 0 To m - 1
+                                dy(i) += dyr(i)
+                            Next
+                        End If
+                    End If
+
+                    Dim atyC As Double() = Mat.Mtv(dy)
+
+                    For j As Int32 = 0 To n - 1
+                        dx(j) = theta(j) * (atyC(j) + g(j))
+                        ds(j) = xl(j) - (s(j) / x(j)) * dx(j)
+                        dz(j) = If(ubFin(j), wu(j) + (z(j) / w(j)) * dx(j), 0.0)
+                    Next
+
+                    aP = std.Min(1.0, 0.99 * MaxStepX(x, dx))
+                    aD = std.Min(1.0, 0.99 * MaxStepDual(s, ds, z, dz))
+                    lastAP = aP
+                    lastAD = aD
+                    lastReg = reg
+
+                    ' 迭代法（PCG）未收敛：提升正则化档位重试，最后一档才接受
+                    If Not fac.Converged AndAlso regMult <> RegLadder(RegLadder.Length - 1) Then
+                        Continue For
+                    End If
+
                     If aP > 0.000000001 OrElse aD > 0.000000001 Then
                         ok = True
                         Exit For        ' 当前档位可用
                     End If
                     ' 停滞 → 提升正则化档位重试
                 Next
+
                 If Not ok Then
                     status = "numeric_fail"
                     Exit For
                 End If
-                For j = 0 To n - 1
+
+                For j As Int32 = 0 To n - 1
                     x(j) += aP * dx(j)
                     s(j) += aD * ds(j)
+
+                    If ubFin(j) Then z(j) += aD * dz(j)
                 Next
-                For i = 0 To mi - 1
+
+                For i As Int32 = 0 To m - 1
                     y(i) += aD * dy(i)
                 Next
+
+                UpdateUpperSlack(x, w)
+
                 Dim big As Double = 0
-                For j = 0 To n - 1
+
+                For j As Int32 = 0 To n - 1
                     big = std.Max(big, std.Abs(x(j)))
                     big = std.Max(big, std.Abs(s(j)))
                 Next
+
                 If big > 100000000000000.0 Then
                     status = "diverged"
                     Exit For
@@ -341,31 +606,29 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
             ' 非最优时按残差分类（供上层决定兜底策略）
             If status <> "optimal" Then
-                Dim rp(m - 1) As Double
-                Dim rd(n - 1) As Double
-                For i = 0 To m - 1
-                    Dim sum As Double = 0
-                    For j = 0 To n - 1
-                        sum += A(i, j) * x(j)
-                    Next
-                    rp(i) = sum - b(i)
+                Dim ax As Double() = Mat.Mv(x)
+
+                For i As Int32 = 0 To m - 1
+                    rp(i) = ax(i) - b(i)
                 Next
-                For j = 0 To n - 1
-                    Dim sum As Double = s(j) - c(j)
-                    For i = 0 To m - 1
-                        sum += A(i, j) * y(i)
-                    Next
-                    rd(j) = sum
+
+                Dim atyE As Double() = Mat.Mtv(y)
+
+                For j As Int32 = 0 To n - 1
+                    rd(j) = s(j) - z(j) - c(j) + atyE(j)
                 Next
+
                 Dim nrp = LinAlg.Norm2(rp) / normB
                 Dim nrd = LinAlg.Norm2(rd) / normC
+
                 If nrp > 0.0001 AndAlso nrd < 0.000001 Then
                     status = "primal_infeasible"
                 ElseIf nrd > 0.0001 AndAlso nrp < 0.000001 Then
                     status = "dual_infeasible"
                 End If
             End If
-            Return New IpResult With {.Status = status, .X = x, .Y = y, .S = s, .Iters = iters}
+
+            Return New IpResult With {.Status = status, .X = x, .Y = y, .S = s, .Z = z, .Iters = iters}
         End Function
 
     End Class

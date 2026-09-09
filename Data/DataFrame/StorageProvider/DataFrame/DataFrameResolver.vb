@@ -75,6 +75,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Framework.IO
@@ -458,8 +459,20 @@ Namespace StorageProvider
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function LoadDataSet(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
-            Return DataSet.LoadDataSet(path, encoding:=encoding)
+        Public Shared Function LoadDataSet(path$, Optional cols As IEnumerable(Of String) = Nothing, Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
+            Dim stream = DataSet.LoadDataSet(path, encoding:=encoding)
+
+            If cols Is Nothing Then
+                Return stream
+            Else
+                Dim colnames As String() = cols.ToArray
+
+                Return stream _
+                    .Select(Function(d)
+                                d.Properties = d.Properties.Subset(colnames)
+                                Return d
+                            End Function)
+            End If
         End Function
 
         ''' <summary>

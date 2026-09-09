@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>雷达图（蛛网图，多维度多系列叠加）</summary>
 Public Class RadarPlot
@@ -102,13 +103,13 @@ Public Class RadarPlot
         ' 圆心与半径
         Dim cx = _width / 2.0F
         Dim cy = (_height + Theme.MarginTop) / 2.0F
-        Dim R = Math.Min(_width - Theme.MarginLeft - Theme.MarginRight,
+        Dim R = std.Min(_width - Theme.MarginLeft - Theme.MarginRight,
                          _height - Theme.MarginTop - Theme.MarginBottom) * 0.38F
 
         ' 各维度角度（从顶部 12 点方向开始顺时针）
         Dim angles(nCat - 1) As Double
         For j = 0 To nCat - 1
-            angles(j) = (-90 + j * 360.0 / nCat) * Math.PI / 180
+            angles(j) = (-90 + j * 360.0 / nCat) * std.PI / 180
         Next
 
         ' ---- 同心多边形网格 ----
@@ -118,8 +119,8 @@ Public Class RadarPlot
                     Dim rr = R * g / GridLevels
                     Dim pts = New PointF(nCat - 1) {}
                     For j = 0 To nCat - 1
-                        pts(j) = New PointF(cx + CSng(Math.Cos(angles(j))) * rr,
-                                            cy + CSng(Math.Sin(angles(j))) * rr)
+                        pts(j) = New PointF(cx + CSng(std.Cos(angles(j))) * rr,
+                                            cy + CSng(std.Sin(angles(j))) * rr)
                     Next
                     _g.DrawPolygon(pen, pts)
                 Next
@@ -130,8 +131,8 @@ Public Class RadarPlot
         Using pen As New Pen(Theme.GridColor, Theme.GridLineWidth)
             For j = 0 To nCat - 1
                 _g.DrawLine(pen, cx, cy,
-                            cx + CSng(Math.Cos(angles(j))) * R,
-                            cy + CSng(Math.Sin(angles(j))) * R)
+                            cx + CSng(std.Cos(angles(j))) * R,
+                            cy + CSng(std.Sin(angles(j))) * R)
             Next
         End Using
 
@@ -156,8 +157,8 @@ Public Class RadarPlot
             sf.LineAlignment = StringAlignment.Center
             For j = 0 To nCat - 1
                 Dim labelR = R * 1.15F
-                Dim lx = cx + CSng(Math.Cos(angles(j))) * labelR
-                Dim ly = cy + CSng(Math.Sin(angles(j))) * labelR
+                Dim lx = cx + CSng(std.Cos(angles(j))) * labelR
+                Dim ly = cy + CSng(std.Sin(angles(j))) * labelR
                 _g.DrawString(If(j < Categories.Length, Categories(j), ""), Theme.TickLabelFont, br, lx, ly)
             Next
         End Using
@@ -168,8 +169,8 @@ Public Class RadarPlot
             Dim pts(nCat - 1) As PointF
             For j = 0 To nCat - 1
                 Dim rr = CSng(MultiValues(i, j) / vmax * R)
-                pts(j) = New PointF(cx + CSng(Math.Cos(angles(j))) * rr,
-                                    cy + CSng(Math.Sin(angles(j))) * rr)
+                pts(j) = New PointF(cx + CSng(std.Cos(angles(j))) * rr,
+                                    cy + CSng(std.Sin(angles(j))) * rr)
             Next
             Using br As New SolidBrush(Color.FromArgb(FillAlpha, color))
                 _g.FillPolygon(br, pts)

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure</RootNamespace>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
-    <AssemblyName>Microsoft.VisualBasic.MachineLearning.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.DataStorage</RootNamespace>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.DataStorage</AssemblyName>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
@@ -13,7 +13,7 @@
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Title>Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import</Title>
     <Description>Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.</Description>
-    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure</AssemblyTitle>
+    <AssemblyTitle>Common Machine Learning DataSet Provider</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

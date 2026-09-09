@@ -60,13 +60,8 @@
 #End Region
 
 Imports System.Drawing
-
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
-Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>和弦图连接（可选辅助结构，用于显式指定连接而非矩阵）</summary>
 Public Class ChordLink
@@ -129,8 +124,8 @@ Public Class ChordPlot
         If Symmetric Then
             Dim merged As New Dictionary(Of Long, ChordLink)()
             For Each l In allLinks
-                Dim a = Math.Min(l.Source, l.Target)
-                Dim b = Math.Max(l.Source, l.Target)
+                Dim a = std.Min(l.Source, l.Target)
+                Dim b = std.Max(l.Source, l.Target)
                 Dim key = CLng(a) * n + b
                 If merged.ContainsKey(key) Then
                     merged(key).Value += l.Value
@@ -144,7 +139,7 @@ Public Class ChordPlot
         Dim palette = If(NodeColors, Theme.Palette)
         Dim cx = _width / 2.0F
         Dim cy = (_height + Theme.MarginTop) / 2.0F
-        Dim R = Math.Min(_width - Theme.MarginLeft - Theme.MarginRight,
+        Dim R = std.Min(_width - Theme.MarginLeft - Theme.MarginRight,
                          _height - Theme.MarginTop - Theme.MarginBottom) * 0.38F
 
         ' ---- 计算每个节点总流量与弧段占比 ----
@@ -180,7 +175,7 @@ Public Class ChordPlot
         Next
 
         ' ---- 绘制节点弧段（色带）----
-        Dim bandWidth = Math.Max(8.0F, R * 0.08F)
+        Dim bandWidth = std.Max(8.0F, R * 0.08F)
         For i = 0 To n - 1
             If nodeSweep(i) <= 0 Then Continue For
             Dim color = palette(i Mod palette.Length)
@@ -193,11 +188,11 @@ Public Class ChordPlot
             If l.Value <= 0 Then Continue For
 
             ' 源端与目标端在各自弧段中点的角度
-            Dim srcA = (nodeStart(l.Source) + nodeSweep(l.Source) / 2) * Math.PI / 180
-            Dim tgtA = (nodeStart(l.Target) + nodeSweep(l.Target) / 2) * Math.PI / 180
+            Dim srcA = (nodeStart(l.Source) + nodeSweep(l.Source) / 2) * std.PI / 180
+            Dim tgtA = (nodeStart(l.Target) + nodeSweep(l.Target) / 2) * std.PI / 180
 
-            Dim p1 = New PointF(cx + CSng(Math.Cos(srcA)) * R, cy + CSng(Math.Sin(srcA)) * R)
-            Dim p2 = New PointF(cx + CSng(Math.Cos(tgtA)) * R, cy + CSng(Math.Sin(tgtA)) * R)
+            Dim p1 = New PointF(cx + CSng(std.Cos(srcA)) * R, cy + CSng(std.Sin(srcA)) * R)
+            Dim p2 = New PointF(cx + CSng(std.Cos(tgtA)) * R, cy + CSng(std.Sin(tgtA)) * R)
 
             ' 控制点在圆心附近，使曲线弯曲穿过中心区域
             Dim ctrl1 = New PointF(cx + (p1.X - cx) * 0.25F, cy + (p1.Y - cy) * 0.25F)
@@ -218,10 +213,10 @@ Public Class ChordPlot
             sf.LineAlignment = StringAlignment.Center
             For i = 0 To n - 1
                 If nodeSweep(i) <= 0 Then Continue For
-                Dim midA = (nodeStart(i) + nodeSweep(i) / 2) * Math.PI / 180
+                Dim midA = (nodeStart(i) + nodeSweep(i) / 2) * std.PI / 180
                 Dim labelR = R + bandWidth + 16
-                Dim lx = cx + CSng(Math.Cos(midA)) * labelR
-                Dim ly = cy + CSng(Math.Sin(midA)) * labelR
+                Dim lx = cx + CSng(std.Cos(midA)) * labelR
+                Dim ly = cy + CSng(std.Sin(midA)) * labelR
                 _g.DrawString(NodeLabels(i), Theme.TickLabelFont, br, lx, ly)
             Next
         End Using

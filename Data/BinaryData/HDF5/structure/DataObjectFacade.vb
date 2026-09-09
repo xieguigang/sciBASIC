@@ -350,7 +350,7 @@ Namespace struct
 
                         readLayout.dimensionLength = dimensionLength
 
-                        'int ndims = stdNum.min(dimensionLength.length, maxDimensionLength.length);
+                        'int ndims = std.min(dimensionLength.length, maxDimensionLength.length);
                         'layout.setNumberOfDimensions(ndims);
                         readLayout.maxDimensionLength = maxDimensionLength
                     End If

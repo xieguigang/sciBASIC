@@ -53,7 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class ECDF
 
@@ -73,7 +73,7 @@ Public Class ECDF
             Dim xmax As Double = x(i)
             Dim ymin As Double = y(i - 1)
             Dim ymax As Double = y(i)
-            Dim sign As Integer = stdNum.Sign(ymax - ymin)
+            Dim sign As Integer = std.Sign(ymax - ymin)
 
             Yield (New DoubleRange(xmin, xmax), New DoubleRange(ymin, ymax), sign)
         Next
