@@ -14,7 +14,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Configurations>nuget_release;Rsharp_app_release</Configurations>
+    <Configurations>nuget_release;Rsharp_app_release;Debug</Configurations>
     <Title>Bipartite Knowledge Graph with Synonym Disambiguation and Ontology Inference</Title>
     <Description>Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs permutation tests to merge synonyms, and infers ontology relations.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.NLP.Knowledge</AssemblyTitle>
