@@ -57,8 +57,16 @@ Imports Microsoft.VisualBasic.Math.Correlations
 
 Module Module1
 
+    Sub Main()
+        Call testtfidf()
+    End Sub
+
     Sub testtfidf()
-        Dim docs = New String() {"knowledge building needs innovative environments are better at helping their inhabitants explore the adjacent possible", "As a basis for evaluating explanations, creative knowledge building weight of evidence is a poor substitute for the first two criteria listed above.", "A public idea database makes every passing idea visible to everyone else in the organization and do creative work.", "questioning and various disturbances initiate cycles of innovation and creative organization knowledge.", "We need some way to ensure knowledge to spread among environments that any notes that are dropped are dropped."}
+        Dim docs = New String() {"knowledge building needs innovative environments are better at helping their inhabitants explore the adjacent possible",
+            "As a basis for evaluating explanations, creative knowledge building weight of evidence is a poor substitute for the first two criteria listed above.",
+            "A public idea database makes every passing idea visible to everyone else in the organization and do creative work.",
+            "questioning and various disturbances initiate cycles of innovation and creative organization knowledge.",
+            "We need some way to ensure knowledge to spread among environments that any notes that are dropped are dropped."}
 
         Dim tfIdf As TFIDF = New TFIDF
         Dim i As Integer
