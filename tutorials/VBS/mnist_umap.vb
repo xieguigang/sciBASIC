@@ -3,6 +3,7 @@
 #include "Microsoft.VisualBasic.DataMining.Framework.dll"
 #include "Microsoft.VisualBasic.Drawing.dll"
 #include "Microsoft.VisualBasic.Data.DataPlot.dll"
+#include "Microsoft.VisualBasic.Math.Randomizer.dll"
 
 imports Microsoft.VisualBasic.MachineLearning.DataStorage
 imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
