@@ -2,6 +2,8 @@
 #include "Microsoft.VisualBasic.Data.visualize.Network.Layouts.dll"
 #include "Microsoft.VisualBasic.Data.visualize.Network.dll"
 #include "Microsoft.VisualBasic.Drawing.dll"
+#include "Microsoft.VisualBasic.Data.GraphTheory.dll"
+#include "Microsoft.VisualBasic.Imaging.dll"
 
 imports microsoft.visualbasic.drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network
@@ -9,6 +11,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Hola
+Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 Dim g As New NetworkGraph
 Dim rnd As New Random(12345)
@@ -104,6 +107,7 @@ Next
 console.WriteLine($"=== HOLA complex network: {nodeCount} nodes, {totalEdges} edges, {bendCount} edges with bends ===")
 
 ' 渲染为 PNG（放大画布以容纳更多节点；启用 drawEdgeBends 显示正交折点）
+Call SkiaDriver.Register()
 Call NetworkVisualizer.DrawImage(g, "1400,1400",
                                  displayId:=False,
                                  drawEdgeBends:=True,
