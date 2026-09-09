@@ -19,7 +19,12 @@ imports Microsoft.VisualBasic.scripting.runtime
 imports Microsoft.VisualBasic.DataMining.UMAP
 
 dim textfile = "G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Rapunzel.txt"
-dim wv As Word2Vec = BuildWord2VecFactory().setVectorSize(30).setMethod(TrainMethod.CBow).setNumOfThread(1).setFreqThresold(1).build()
+dim wv As Word2Vec = BuildWord2VecFactory() _
+    .setVectorSize(30) _
+    .setMethod(TrainMethod.CBow) _
+    .setNumOfThread(1) _
+    .setFreqThresold(1) _
+    .build()
 Dim data As Paragraph() = Paragraph.Segmentation(textFile.ReadAllText).ToArray
 
 For Each p As Paragraph In data
