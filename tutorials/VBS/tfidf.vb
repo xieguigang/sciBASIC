@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Correlations
 imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
+imports Microsoft.VisualBasic.Data.Framework
 
 Dim docs = New String() {
     "knowledge building needs innovative environments are better at helping their inhabitants explore the adjacent possible",
@@ -38,7 +39,7 @@ For id As Integer = 1 To tfIdf.N
     For j As Integer = 1 To tfIdf.N
         Dim d = v.SquareDistance(tfIdf.TfidfVectorizer(j.ToString))
 
-        rd(N - 1) = d
+        rd(j - 1) = d
         Call Console.Write(d.ToString("F4").PadLeft(8, "0"c) & vbTab)
     Next
 
@@ -49,3 +50,13 @@ Next
 
 call SkiaDriver.Register()
 
+Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
+    plt.Title = "TF-IDF Document Distance Heatmap"
+    plt.Matrix = dist.ToMatrix()
+    plt.RowLabels = fieldName("doc", dist.length, sep := "_").toarray()
+    plt.ColLabels = fieldName("doc", dist.length, sep := "_").ToArray()
+    plt.ColorMap = HeatmapPlot.ColorMapType.Plasma
+    plt.ShowValues = False
+    plt.Plot()
+    plt.SavePng("Z:/tfidf-heatmap.png", 300)
+End Using

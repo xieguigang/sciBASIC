@@ -57,6 +57,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Plots
 Imports stdf = System.Math
 
@@ -229,6 +230,7 @@ Public Class Examples
                 mat(i, j) = stdf.Sin(i * 0.5) * stdf.Cos(j * 0.4) + rnd.NextDouble() * 0.3
             Next
         Next
+
         Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
             plt.Title = "Heatmap Demo"
             plt.Matrix = mat
