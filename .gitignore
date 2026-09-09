@@ -698,3 +698,5 @@ vs_solutions/package-install-cache/cacheIndex.txt
 vs_solutions/package-install-cache/part1/disk1.cab
 vs_solutions/package-install-cache/part1/output-info.ini
 *.msi
+*.cab
+vs_solutions/package-install-cache/part2/output-info.ini
