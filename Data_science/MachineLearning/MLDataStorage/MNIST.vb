@@ -142,14 +142,12 @@ Public Class MNIST : Implements IDisposable
     End Function
 
     Public Function ConvertImage(raw As NamedCollection(Of Byte)) As NamedValue(Of Image)
-        Dim image As Bitmap = New Bitmap(columns, rows)
+        Dim image As New Bitmap(columns, rows)
         Dim data As BitmapBuffer = BitmapBuffer.FromBitmap(image)
         Dim ptr As IntPtr = data.Scan0
         Dim bytes = std.Abs(data.Stride) * image.Height
-        Dim rgbValues = New Byte(bytes - 1) {}
+        Dim rgbValues As Byte() = data.RawBuffer
         Dim bit As Byte
-
-        Marshal.Copy(ptr, rgbValues, 0, bytes)
 
         For j As Integer = 0 To rows * columns - 1
             bit = raw(j)
@@ -158,8 +156,8 @@ Public Class MNIST : Implements IDisposable
             rgbValues(j * 3 + 2) = bit
         Next
 
-        Marshal.Copy(rgbValues, 0, ptr, bytes)
-        data.Dispose()
+        ' write data and release memory pointer
+        Call data.Dispose()
 
         Return New NamedValue(Of Image) With {
             .Name = raw.Last,
