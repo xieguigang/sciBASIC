@@ -52,6 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
@@ -59,6 +60,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module ValueMapping
 
@@ -139,6 +141,20 @@ Public Module ValueMapping
     Public Iterator Function ClassId(Of T As IClusterPoint)(a As IEnumerable(Of T)) As IEnumerable(Of Integer)
         For Each xi As T In a
             Yield xi.Cluster
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function AsDataSet(vec As IEnumerable(Of NamedCollection(Of Single))) As IEnumerable(Of ClusterEntity)
+        For Each row As NamedCollection(Of Single) In vec
+            Yield New ClusterEntity With {.entityVector = row.AsDouble, .uid = row.name}
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function Feature(Of T As IVector)(vec As IEnumerable(Of T), offset As Integer) As IEnumerable(Of Double)
+        For Each row As T In vec
+            Yield row.Data(offset)
         Next
     End Function
 End Module

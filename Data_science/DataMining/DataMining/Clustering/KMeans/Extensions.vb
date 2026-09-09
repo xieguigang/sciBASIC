@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace KMeans
 
@@ -116,10 +117,37 @@ Namespace KMeans
             Dim kmeansCore As New KMeansAlgorithm(Of ClusterEntity)(debug, n_threads:=n_threads)
             Dim clusters As ClusterCollection(Of ClusterEntity) = kmeansCore.ClusterDataSet(
                 k:=expected,
-                source:=maps.GetVectors(rawInput).ToArray
+                source:=maps.GetVectors(rawInput)
             )
 
             Return clusters.PopulateObjects(maps)
+        End Function
+
+        <Extension>
+        Public Iterator Function Kmeans(source As IEnumerable(Of ClusterEntity), k As Integer, Optional debug As Boolean = True, Optional n_threads As Integer = 16) As IEnumerable(Of ClusterEntity)
+            Dim kmeansCore As New KMeansAlgorithm(Of ClusterEntity)(debug, n_threads:=n_threads)
+            Dim clusters As ClusterCollection(Of ClusterEntity) = kmeansCore.ClusterDataSet(
+                k:=k,
+                source:=source
+            )
+            Dim class_id As Integer = 1
+
+            For Each cluster As KMeansCluster(Of ClusterEntity) In clusters
+                For Each vec As ClusterEntity In cluster.AsEnumerable
+                    vec.cluster = class_id
+                    Yield vec
+                Next
+
+                class_id += 1
+            Next
+        End Function
+
+        <Extension>
+        Public Function Kmeans(Of T As {INumericMatrix, ILabeledMatrix})(df As T, k As Integer, Optional debug As Boolean = True, Optional n_threads As Integer = 16) As IEnumerable(Of ClusterEntity)
+            Dim labels As String() = df.GetLabels.ToArray
+            Dim mat As Double()() = df.ArrayPack
+
+            Return labels.Select(Function(id, i) New ClusterEntity(id, mat(i))).Kmeans(k, debug, n_threads)
         End Function
 
         ''' <summary>

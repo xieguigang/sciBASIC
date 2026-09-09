@@ -119,6 +119,12 @@ Public Class Word2Vec
     ''' </summary>
     Friend trainBlockSize As Integer = 500
 
+    Public ReadOnly Property wordSize As Integer
+        Get
+            Return neuronMap.Count
+        End Get
+    End Property
+
     Friend Sub New(factory As Word2VecFactory)
         vectorSize = factory.vectorSize
         windowSize = factory.windowSize
