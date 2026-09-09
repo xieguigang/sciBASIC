@@ -180,6 +180,7 @@ Namespace Script
             End If
 
             Call sb.AppendLine($"Imports {GetType(CommandLine).Namespace}")
+            Call sb.AppendLine($"Imports Microsoft.VisualBasic")
             Call sb.AppendLine($"Imports System.Linq")
             Call sb.AppendLine($"Imports System")
             Call sb.AppendLine($"Imports System.Collections")

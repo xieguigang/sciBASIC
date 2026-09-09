@@ -60,6 +60,12 @@ Imports TableSchema = Microsoft.VisualBasic.Data.Framework.StorageProvider.Compo
 
 Public Module Mapper
 
+    Public Iterator Function FieldName(prefix As String, n As Integer, Optional sep As String = "_") As IEnumerable(Of String)
+        For i As Integer = 1 To n
+            Yield prefix & sep & i
+        Next
+    End Function
+
     ''' <summary>
     ''' cast the clr object collection as the dataframe
     ''' </summary>
