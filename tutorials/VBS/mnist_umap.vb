@@ -17,7 +17,7 @@ dim mnist as new MNIST(
     "G:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-images-idx3-ubyte", 
     "G:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-labels-idx1-ubyte")
 dim dataset = mnist.ExtractDataSet(of ClusterEntity)().toarray()
-dim umap as new umap(dimensions := 2,numberOfNeighbors := 32 )
+dim umap as new umap(dimensions := 2,numberOfNeighbors := 128 )
 dim n_epochs As Integer = umap.InitializeFit(dataset)
 dim number = dataset.ClassId().ascharacter().toarray()
 
