@@ -18,6 +18,9 @@
        Membership is decided on *resolved absolute paths*, so the different
        spellings already present in the file ("cuda/ILCuda/ILCuda.vbproj",
        "../../../../Microsoft.VisualBasic.Drawing/...") never cause duplicates.
+       Immediately before a project is registered its <RootNamespace> is read
+       again from disk and must still start with "Microsoft.VisualBasic";
+       otherwise the project is reported as skipped and never added.
 
     2. Configuration declaration
        <Configurations> gains "nuget_release" and <Platforms> gains "x64" when
@@ -118,6 +121,10 @@ $TargetCondition     = "'" + '$(Configuration)|$(Platform)' + "'=='" + `
 # Defaults used when a project declares no <Configurations> / <Platforms> at all.
 $DefaultConfigurations = 'Debug;Release'
 $DefaultPlatforms      = 'AnyCPU'
+
+# Only projects whose <RootNamespace> starts with this prefix are picked up, and
+# only such projects are ever registered in the solution.
+$NamespacePrefix = 'Microsoft.VisualBasic'
 
 # ---------------------------------------------------------------------------
 # Generic XML helpers (kept in sync with dev/NuGetMetadata/Apply-NuGetMetadata.ps1)
@@ -293,6 +300,24 @@ function Get-RootNamespace($doc) {
         if ($v) { return $v }
     }
     return $null
+}
+
+function Read-RootNamespaceFromDisk([string]$path) {
+    # Independent re-read straight from disk. Used as a second line of defence
+    # right before a project is registered in the solution, so a future change
+    # to the filtering logic can never leak a foreign project into nuget.slnx.
+    # $null is returned for anything unreadable -- the caller then declines.
+    $probe = New-Object System.Xml.XmlDocument
+    $probe.PreserveWhitespace = $true
+    try { $probe.Load($path) }
+    catch { return $null }
+    if ([string]::IsNullOrEmpty($probe.DocumentElement.GetAttribute('Sdk'))) { return $null }
+    return (Get-RootNamespace $probe)
+}
+
+function Test-RootNamespaceAllowed([string]$rootNs) {
+    if (-not $rootNs) { return $false }
+    return $rootNs.StartsWith($NamespacePrefix, [System.StringComparison]::OrdinalIgnoreCase)
 }
 
 function Find-PropertyOwnerGroup($doc, [string]$name) {
@@ -522,6 +547,7 @@ $stats = @{
     matched               = 0
     skippedLegacy         = 0
     skippedRootNamespace  = 0
+    skippedByGuard        = 0
     failed                = 0
     slnxAdded             = 0
     projectsChanged       = 0
@@ -567,7 +593,7 @@ foreach ($file in $allProjects) {
         $stats.skippedRootNamespace++
         continue
     }
-    if (-not $rootNs.StartsWith('Microsoft.VisualBasic')) {
+    if (-not (Test-RootNamespaceAllowed $rootNs)) {
         Write-Verbose "skip (RootNamespace=$rootNs): $relUnix"
         $stats.skippedRootNamespace++
         continue
@@ -580,20 +606,34 @@ foreach ($file in $allProjects) {
     $slnxOp  = 'present'
     $absKey  = $file.FullName.TrimEnd('\').ToLowerInvariant()
     if (-not $registered.ContainsKey($absKey)) {
-        $slnxRel = Get-RelativePathUnix $solutionDir $file.FullName
-        if ($null -eq $targetFolder) {
-            $targetFolder = Find-SolutionFolder $slnx $SolutionFolder
-            if ($null -eq $targetFolder) {
-                $targetFolder  = New-SolutionFolder $slnx $SolutionFolder
-                $newFolderMade = $true
-            }
+        # Second line of defence: re-read <RootNamespace> straight from disk and
+        # refuse to register the project unless it really starts with the
+        # required prefix. Anything unreadable is declined as well.
+        $guardNs = Read-RootNamespaceFromDisk $file.FullName
+        if (-not (Test-RootNamespaceAllowed $guardNs)) {
+            Write-Host ("  {0}" -f $relUnix) -ForegroundColor Yellow
+            Write-Host ("      slnx:NOT added -- RootNamespace " +
+                        $(if ($guardNs) { "'$guardNs' does" } else { "is missing or unreadable and" }) +
+                        " not start with '$NamespacePrefix' (skipped)") -ForegroundColor DarkYellow
+            $stats.skippedByGuard++
+            $slnxOp = 'skipped(namespace guard)'
         }
-        Add-SolutionProject $slnx $targetFolder $slnxRel
-        $registered[$absKey] = $slnxRel
-        $slnxDirty = $true
-        $stats.slnxAdded++
-        $slnxOp = 'added'
-        $ops += "slnx:added($slnxRel)"
+        else {
+            $slnxRel = Get-RelativePathUnix $solutionDir $file.FullName
+            if ($null -eq $targetFolder) {
+                $targetFolder = Find-SolutionFolder $slnx $SolutionFolder
+                if ($null -eq $targetFolder) {
+                    $targetFolder  = New-SolutionFolder $slnx $SolutionFolder
+                    $newFolderMade = $true
+                }
+            }
+            Add-SolutionProject $slnx $targetFolder $slnxRel
+            $registered[$absKey] = $slnxRel
+            $slnxDirty = $true
+            $stats.slnxAdded++
+            $slnxOp = 'added'
+            $ops += "slnx:added($slnxRel)"
+        }
     }
 
     # ---- 2. configuration declarations ------------------------------------
@@ -717,6 +757,7 @@ Write-Host ("  OutputPath added      : {0}" -f $stats.outputPathAdded)
 Write-Host ("  OutputPath rewritten  : {0}" -f $stats.outputPathUpdated)
 Write-Host ("skipped (non SDK style) : {0}" -f $stats.skippedLegacy)      -ForegroundColor DarkGray
 Write-Host ("skipped (RootNamespace) : {0}" -f $stats.skippedRootNamespace) -ForegroundColor DarkGray
+Write-Host ("blocked by ns guard     : {0}" -f $stats.skippedByGuard)     -ForegroundColor $(if ($stats.skippedByGuard) { 'Yellow' } else { 'DarkGray' })
 Write-Host ("failed                  : {0}" -f $stats.failed)             -ForegroundColor $(if ($stats.failed) { 'Red' } else { 'DarkGray' })
 if ($WhatIf) {
     Write-Host ""
