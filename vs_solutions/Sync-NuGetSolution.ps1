@@ -361,6 +361,26 @@ function Find-PropertyOwnerGroup($doc, [string]$name) {
     return $null
 }
 
+function Remove-DuplicateProperty($group, [string]$name) {
+    # MSBuild honours the *last* declaration of a property, so a file carrying
+    # two copies of e.g. PackageRequireLicenseAcceptance keeps the trailing one.
+    # Drop every earlier copy so the value that is actually in effect is also the
+    # only one a reader sees.
+    $copies = @()
+    foreach ($c in $group.ChildNodes) {
+        if ($c.NodeType -eq 'Element' -and $c.LocalName -eq $name) { $copies += $c }
+    }
+    if ($copies.Count -le 1) { return 0 }
+
+    for ($i = 0; $i -lt $copies.Count - 1; $i++) {
+        $node = $copies[$i]
+        $prev = $node.PreviousSibling
+        [void]$group.RemoveChild($node)
+        if (Test-WhitespaceNode $prev) { [void]$group.RemoveChild($prev) }
+    }
+    return ($copies.Count - 1)
+}
+
 function Test-ShouldPatchPackagingProp($doc, [string]$name, [string]$value) {
     # Only an *unconditional* definition counts as "already declared": a value
     # that merely exists inside a conditional PropertyGroup (for instance the
@@ -604,6 +624,7 @@ $stats = @{
     outputPathUpdated     = 0
     packagingAdded        = 0
     packagingUpdated      = 0
+    packagingDupesRemoved = 0
 }
 $report        = New-Object System.Collections.Generic.List[object]
 $slnxDirty     = $false
@@ -707,16 +728,19 @@ foreach ($file in $allProjects) {
     # Without GeneratePackageOnBuild the build silently produces no .nupkg, so
     # these belong to the same "make this project packable" check as step 4.
     $packIndents = Get-Indents $mainGroup
-    foreach ($name in $PackagingProps.Keys) {
-        $value = $PackagingProps[$name]
-        $op    = $null
-        if (-not $SkipPackagingProps -and (Test-ShouldPatchPackagingProp $doc $name $value)) {
-            $op = Set-Property $doc $mainGroup $name $value $packIndents
-        }
-        elseif (-not $SkipPackagingProps) {
-            $op = 'present'
-        }
-        if (-not $SkipPackagingProps) {
+    if (-not $SkipPackagingProps) {
+        foreach ($name in $PackagingProps.Keys) {
+            $value = $PackagingProps[$name]
+            $op    = 'present'
+            if (Test-ShouldPatchPackagingProp $doc $name $value) {
+                # Collapse repeated declarations first: the surviving (last) copy
+                # is then compared and patched, leaving exactly one entry.
+                if ((Remove-DuplicateProperty $mainGroup $name) -gt 0) {
+                    $stats.packagingDupesRemoved++
+                    $ops += "$name`:de-duplicated"
+                }
+                $op = Set-Property $doc $mainGroup $name $value $packIndents
+            }
             if ($op -eq 'added')   { $stats.packagingAdded++ }
             if ($op -eq 'updated') { $stats.packagingUpdated++ }
             if ($op -ne 'present' -and $op -ne 'unchanged') { $ops += "$name`:$op" }
@@ -824,6 +848,7 @@ Write-Host ("  OutputPath added      : {0}" -f $stats.outputPathAdded)
 Write-Host ("  OutputPath rewritten  : {0}" -f $stats.outputPathUpdated)
 Write-Host ("  Packaging props added : {0}" -f $stats.packagingAdded)
 Write-Host ("  Packaging props fixed : {0}" -f $stats.packagingUpdated)
+Write-Host ("  Packaging dupes merged: {0}" -f $stats.packagingDupesRemoved)
 Write-Host ("skipped (non SDK style) : {0}" -f $stats.skippedLegacy)      -ForegroundColor DarkGray
 Write-Host ("skipped (RootNamespace) : {0}" -f $stats.skippedRootNamespace) -ForegroundColor DarkGray
 Write-Host ("blocked by ns guard     : {0}" -f $stats.skippedByGuard)     -ForegroundColor $(if ($stats.skippedByGuard) { 'Yellow' } else { 'DarkGray' })
