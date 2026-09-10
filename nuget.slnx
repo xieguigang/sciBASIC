@@ -1330,6 +1330,9 @@
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="Data_science/Mathematica/Math/CVODE_Solver/Sundials.CVODE.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj">
       <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
       <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
@@ -1394,6 +1397,12 @@
       <BuildType Solution="Publish|*" Project="nuget_release" />
       <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/Gibbs/Gibbs.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/KaplanMeierEstimator/KaplanMeierEstimator.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
@@ -1533,6 +1542,9 @@
       <BuildType Solution="Publish|*" Project="nuget_release" />
       <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/ODESolver.Extensions/ODESolver.Extensions.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="Data_science/Mathematica/Math/Randomizer/randomizer-netcore5.vbproj">
@@ -2136,6 +2148,9 @@
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="nlp/KnowledgeGraph/KnowledgeGraph.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="nlp/NLP/NLP.NET.vbproj">
       <BuildType Solution="Biodeep|*" Project="Release" />
       <BuildType Solution="Biostack|*" Project="Rsharp_app_release" />
@@ -2667,28 +2682,13 @@
     <Project Path="Data_science/MachineVision/GaussianSplatting3D/GaussianSplatting/GaussianSplatting.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="Data_science/Mathematica/Math/CVODE_Solver/Sundials.CVODE.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
     <Project Path="Data_science/Mathematica/Math/GeneticProgramming/GeneticProgramming.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="Data_science/Mathematica/Math/Gibbs/Gibbs.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="Data_science/Mathematica/Math/KaplanMeierEstimator/KaplanMeierEstimator.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="Data_science/Mathematica/Math/ODESolver.Extensions/ODESolver.Extensions.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="Data_science/Mathematica/SignalProcessing/MachineVision/MachineVision.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="gr/network-visualization/NetworkCanvas/NetworkCanvas.NET5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="nlp/KnowledgeGraph/KnowledgeGraph.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj">
