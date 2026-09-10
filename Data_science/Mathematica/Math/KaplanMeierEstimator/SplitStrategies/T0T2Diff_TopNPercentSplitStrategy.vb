@@ -64,7 +64,7 @@ Namespace SplitStrategies
         Private ReadOnly m_percent As Integer
         Private ReadOnly m_patients As IDictionary(Of Integer, Patient)
 
-        Public Sub New(ByVal percent As Integer, ByVal patients As IDictionary(Of Integer, Patient))
+        Public Sub New(percent As Integer, patients As IDictionary(Of Integer, Patient))
             If percent <= 0 OrElse percent > 50 Then
                 Throw New ArgumentOutOfRangeException("percent")
             End If
@@ -77,7 +77,7 @@ Namespace SplitStrategies
             m_patients = patients
         End Sub
 
-        Public Sub DoSplit(ByVal genes As IEnumerable(Of GeneExpression), <Out> ByRef groupA As IEnumerable(Of Patient), <Out> ByRef groupB As IEnumerable(Of Patient)) Implements ISplitStrategy.DoSplit
+        Public Sub DoSplit(genes As IEnumerable(Of GeneExpression), <Out> ByRef groupA As IEnumerable(Of Patient), <Out> ByRef groupB As IEnumerable(Of Patient)) Implements ISplitStrategy.DoSplit
             Dim relevantGenes = genes.Where(Function(gene) Not Double.IsNaN(gene.AbsoluteDifference) AndAlso m_patients.ContainsKey(gene.PatientId))
             Dim orderedGenes = relevantGenes.OrderBy(Function(gene) gene.AbsoluteDifference)
 
