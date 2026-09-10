@@ -361,6 +361,21 @@ function Find-PropertyOwnerGroup($doc, [string]$name) {
     return $null
 }
 
+function Test-ShouldPatchPackagingProp($doc, [string]$name, [string]$value) {
+    # Only an *unconditional* definition counts as "already declared": a value
+    # that merely exists inside a conditional PropertyGroup (for instance the
+    # nuget_release|x64 group) is not a project wide setting and must still be
+    # added, otherwise every other configuration builds without a package.
+    $owner = Find-PropertyOwnerGroup $doc $name
+    if ($null -eq $owner) { return $true }
+    $existing = Find-ChildElement $owner $name
+    if ($null -eq $existing) { return $true }
+    if ($existing.InnerText.Trim() -eq $value) { return $false }
+    # Declared unconditionally, but with another value -- rewrite it in place.
+    $mainGroup = Find-RootNsPropertyGroup $doc
+    return ($null -ne $mainGroup) -and ($owner -eq $mainGroup)
+}
+
 function Test-TargetCondition([string]$condition) {
     if (-not $condition) { return $false }
     $a = $condition       -replace '\s', ''
@@ -587,6 +602,8 @@ $stats = @{
     platformTargetAdded   = 0
     outputPathAdded       = 0
     outputPathUpdated     = 0
+    packagingAdded        = 0
+    packagingUpdated      = 0
 }
 $report        = New-Object System.Collections.Generic.List[object]
 $slnxDirty     = $false
@@ -805,6 +822,8 @@ Write-Host ("  PropertyGroups added  : {0}" -f $stats.groupsAdded)
 Write-Host ("  PlatformTarget added  : {0}" -f $stats.platformTargetAdded)
 Write-Host ("  OutputPath added      : {0}" -f $stats.outputPathAdded)
 Write-Host ("  OutputPath rewritten  : {0}" -f $stats.outputPathUpdated)
+Write-Host ("  Packaging props added : {0}" -f $stats.packagingAdded)
+Write-Host ("  Packaging props fixed : {0}" -f $stats.packagingUpdated)
 Write-Host ("skipped (non SDK style) : {0}" -f $stats.skippedLegacy)      -ForegroundColor DarkGray
 Write-Host ("skipped (RootNamespace) : {0}" -f $stats.skippedRootNamespace) -ForegroundColor DarkGray
 Write-Host ("blocked by ns guard     : {0}" -f $stats.skippedByGuard)     -ForegroundColor $(if ($stats.skippedByGuard) { 'Yellow' } else { 'DarkGray' })
