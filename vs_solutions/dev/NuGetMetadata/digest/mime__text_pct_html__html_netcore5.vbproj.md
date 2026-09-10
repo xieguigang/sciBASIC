@@ -1,0 +1,255 @@
+# mime/text%html/html_netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MIME.Html
+- AssemblyName  : Microsoft.VisualBasic.MIME.Html
+- TargetFramework: net10.0
+- Source files  : 63
+- Existing Title: HTML/CSS Parser, DOM and GDI+ Rendering Engine
+- Existing Desc : A professional HTML renderer for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors and property values, lays out boxes, lines and tables, and paints the result onto a GDI+ graphics canvas.
+- Existing Tags : scibasic;html;css;html-renderer;dom
+
+## Namespaces
+- CSS  [files: 10]
+- Document  [files: 10]
+- HTML.Head  [files: 1]
+- HTML.jQuery  [files: 2]
+- Language  [files: 5]
+- Language.CSS  [files: 6]
+- Render  [files: 7]
+- Render.CSS  [files: 17]
+- XmlMeta  [files: 2]
+
+## Public types
+- Class CSSEnvirnment (CSS\CSSEnvirnment.vb)
+- Interface CSSLayer (CSS\CSSLayer.vb) - 进行样式渲染的图层对象
+- Enum CssUnit (CSS\CssUnit.vb) - Represents the possible units of the CSS lengths http://www.w3.org/TR/CSS21/syndata.html#length-units
+- Class Fill (CSS\Elements\Fill.vb) - <see cref="Brush"/>: <see cref="SolidBrush"/> and <see cref="TextureBrush"/>
+- Class CSSFont (CSS\Elements\FontStyle.vb) - 这个简写属性用于一次设置元素字体的两个或更多方面。使用 ``icon`` 等关键字可以适当地设置元素的字体，使之与用户计算机环境中的某个方面一致。 注意，如果没有使用这些关键词，至少要指定字体大小和字体系列。 可以按顺序设置如下属性：
+- Structure PaddingLayout (CSS\Elements\Padding.vb) - A fix numeric layout data
+- Structure Padding (CSS\Elements\Padding.vb) - Represents padding or margin information associated with a gdi+ element. (padding: top, right, bottom, left)
+- Class CSSsize (CSS\Elements\Size.vb) - parse the width and height data from the css style string
+- Class Stroke (CSS\Elements\Stroke.vb) - ```css stroke: color/image; stroke-width: width(px); stroke-dash: dash_style; ```
+- Module Extensions (CSS\Extensions.vb)
+- Class Anchor (Document\Elements\Anchor.vb)
+- Module BuildHtmlDocument (Document\Elements\BuildHtml.vb)
+- Class HtmlHead (Document\Elements\HTML.vb)
+- Class CSS (Document\Elements\HTML.vb)
+- Class CSSElement (Document\Elements\HTML.vb)
+- Class HtmlElement (Document\Elements\HtmlElement.vb) - 在选择器里： + ID 和 类 选择器 区分 大小写 + 标签选择器、属性选择器不区分大小写
+- Class Image (Document\Elements\Image.vb)
+- Class InnerPlantText (Document\Elements\InnerPlantText.vb) - Plant text inner the html.(HTML文档内的纯文本对象)
+- Structure ValueAttribute (Document\Elements\ValueAttribute.vb) - A key-value pair of the html attribute, includes the attribute name and attribute value
+- Module Extensions (Document\Extensions.vb)
+- Class Charset (Document\Head\Meta.vb)
+- Class ContentType (Document\Head\Meta.vb)
+- Class Meta (Document\Head\Meta.vb)
+- Class Description (Document\Head\Meta.vb)
+- Class Author (Document\Head\Meta.vb)
+- Class Copyright (Document\Head\Meta.vb)
+- Class Keywords (Document\Head\Meta.vb)
+- Class Viewport (Document\Head\Meta.vb)
+- Class Link (Document\Head\Meta.vb)
+- Class ScriptRef (Document\Head\Meta.vb)
+- Class ScriptDeclare (Document\Head\Meta.vb)
+- Class HeadMeta (Document\Head\Meta.vb)
+- Module HtmlCompress (Document\HtmlCompress.vb)
+- Class HtmlDocument (Document\HtmlDocument.vb) - A root document that is a kind of subclass of <see cref="HtmlElement"/>
+- Module DocumentFormatter (DocumentFormatter.vb) - Module provides some method for text document
+- Module Extensions (Extensions.vb)
+- Module Extensions (jQuery\Extensions.vb)
+- Class jQuery (jQuery\jQuery.vb)
+- Enum CssProperty (Parser\CSS\Enums\CssProperty.vb) - Css properties list.
+- Enum CSSSelectorTypes (Parser\CSS\Enums\Enums.vb) - | 3 |:nth-last-of-type(n)|p:nth-last-of-type(2)|同上，但是从最后一个子元素开始计数。 | | 3 |:last-child |p:last-child |选择属于其父元素最后一个子元素每个 &lt;p> 元素。 | | 3 |:root |:root |选择文档的根元素。 |
+- Enum HtmlTags (Parser\CSS\Enums\Enums.vb) - HTML Tags.
+- Class CSSFile (Parser\CSS\File.vb) - CSS文件的对象模型，一个CSS文件是由若干个selector节点选择器所构成的，以及每一个选择器都是由若干样式属性定义所构成
+- Module CssParser (Parser\CSS\Parser.vb) - Parser css code to add/remove or manage it. #### Jo-CSS-Parser https://github.com/rizwan3d/Jo-CSS-Parser
+- Class Selector (Parser\CSS\Selector.vb) - CSS之中的样式选择器
+- Module UrlEvaluator (Parser\CSS\UrlEvaluator.vb)
+- Class Escaping (Parser\Escaping.vb)
+- Class HtmlParser (Parser\HtmlParser.vb)
+- Enum HtmlTokens (Parser\HtmlTokens.vb)
+- Class Token (Parser\Token.vb)
+- Class TokenIcer (Parser\TokenIcer.vb)
+- Class CssAnonymousBlockBox (Render\CSS\CssAnonymousBlockBox.vb) - Represents an anonymous block box To learn more about anonymous block boxes visit CSS spec: http://www.w3.org/TR/CSS21/visuren.html#anonymous-block-level
+- Class CssAnonymousSpaceBlockBox (Render\CSS\CssAnonymousBlockBox.vb) - Represents an AnonymousBlockBox which contains only blank spaces
+- Class CssAnonymousBox (Render\CSS\CssAnonymousBox.vb) - Represents an anonymous inline box To learn more about anonymous inline boxes visit: http://www.w3.org/TR/CSS21/visuren.html#anonymous
+- Class CssAnonymousSpaceBox (Render\CSS\CssAnonymousBox.vb) - Represents an anonymous inline box which contains nothing but blank spaces
+- Class CssBlock (Render\CSS\CssBlock.vb) - Represents a block of CSS property values To learn more about CSS blocks visit CSS spec: http://www.w3.org/TR/CSS21/syndata.html#block
+- Class CssBox (Render\CSS\CssBox.vb) - Represents a CSS Box of text or replaced elements. The Box can contains other boxes, that's the way that the CSS Tree is composed.
+- Class CssBoxWord (Render\CSS\CssBoxWord.vb) - Represents a word inside an inline box Because of performance, words of text are the most atomic element in the project. It should be characters, but come on,
+- Class CssBoxWordSplitter (Render\CSS\CssBoxWordSplitter.vb) - Splits text on words for a box
+- Class CssConstants (Render\CSS\CssConstants.vb) - String constants to avoid typing errors.
+- Class CssDefaults (Render\CSS\CssDefaults.vb)
+- Enum Border (Render\CSS\CssDrawingHelper.vb) - Border specifiers
+- Class CssLength (Render\CSS\CssLength.vb) - Represents and gets info about a CSS Length http://www.w3.org/TR/CSS21/syndata.html#length-units
+- Class CssLineBox (Render\CSS\CssLineBox.vb) - Represents a line of text. To learn more about line-boxes see CSS spec: http://www.w3.org/TR/CSS21/visuren.html
+- Class CssPropertyAttribute (Render\CSS\CssPropertyAttribute.vb) - Used to mark a property as a Css property. The <see cref="Name"/> property is used to specify the oficial CSS name
+- Class CssPropertyInheritedAttribute (Render\CSS\CssPropertyInheritedAttribute.vb)
+- Class CssRectangle (Render\CSS\CssRectangle.vb)
+- Class CssTable (Render\CSS\CssTable.vb)
+- Class SpacingBox (Render\CSS\CssTable.vb) - Used to make space on vertical cell combination
+- Class HtmlConstants (Render\HtmlConstants.vb) - Defines HTML strings
+- Module HtmlRenderer (Render\HtmlRenderer.vb) - A Professional HTML Renderer You Will Use > https://www.codeproject.com/Articles/32376/A-Professional-HTML-Renderer-You-Will-Use
+- Class HtmlTag (Render\HtmlTag.vb)
+- Class InitialContainer (Render\InitialContainer.vb) - HTML rendering
+- Class TextString (Render\TextString.vb)
+- Enum WeightStyles (Render\TextString.vb)
+- Module TextAPI (Render\TextStringModel.vb) - 用于简单的HTML文档渲染
+- Class CSS (Xml\Meta.vb) - Html之中的CSS样式
+- Class GenericNode (Xml\Node.vb)
+
+## Notable public members
+- Public ReadOnly Property baseFont As Font
+- Public ReadOnly Property baseLine As Pen
+- Public ReadOnly Property dpi As Single = 100
+- Public ReadOnly Property canvas As Size
+- Public Function SetBaseStyles(Optional font As Font = Nothing, Optional stroke As Pen = Nothing) As CSSEnvirnment
+- Public Function GetSize(size As CSSsize) As SizeF
+- Public Function GetValue(size As CssLength, base As Single) As Single
+- Public Function GetWidth(len As String) As Single
+- Public Function GetHeight(len As String) As Single
+- Public Function GetPen(stroke As Stroke, allowNull As Boolean) As Pen
+- Public Function GetPen(stroke As Stroke) As Pen
+- Public Function GetLineWidth(stroke As Stroke) As Single
+- Public Function GetDashStyle(css As Stroke) As DashStyle
+- Public Function GetFontByScale(em As Single) As Font
+- Public Function GetFontFamily(css As CSSFont) As String
+- Public Function GetFontStyle(css As CSSFont) As FontStyle
+- Public Function GetFont(css As String) As Font
+- Public Function GetFont(css As CSSFont, Optional scale As Single = 1.0) As Font
+- Public Shared Function Empty(Optional ppi As Integer = 100) As CSSEnvirnment
+- Public Property fill As String
+- Public Overrides Function ToString() As String
+- Public Function CreateBrush() As Brush
+- Public Const Win10Normal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
+- Public Const Win10NormalLarger$ = "font-style: normal; font-size: 16; font-family: " & FontFace.SegoeUI & ";"
+- Public Const Win10NormalLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.SegoeUI & ";"
+- Public Const Win7Small$ = "font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7Normal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7Bold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7LargerBold$ = "font-style: strong; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7LargerNormal$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7LargeBold$ = "font-style: strong; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7LittleLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7Large$ = "font-style: normal; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7VeryLarge$ = "font-style: normal; font-size: 36; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7VeryVeryLarge$ = "font-style: strong; font-size: 56; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7VeryVeryLargeNormal$ = "font-style: normal; font-size: 56; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7UltraLarge$ = "font-style: strong; font-size: 72; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const Win7UltraLargeNormal$ = "font-style: normal; font-size: 72; font-family: " & FontFace.MicrosoftYaHei & ";"
+- Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
+- Public Const PlotTitleNormal$ = "font-style: normal; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
+- Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
+- Public Const PlotSmallTitle$ = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";"
+- Public Const PlotLabelNormal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.BookmanOldStyle & ";"
+- Public Const UbuntuLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.Ubuntu & ";"
+- Public Const UbuntuNormal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
+- Public Const UbuntuBold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
+- Public Property color As String = "black"
+- Public Overrides ReadOnly Property CSSValue As String
+- Public Shared Function GetFontStyle(family$, style As FontStyle, size$) As String
+- Public Shared Function GetFontStyle(font As Font) As String
+- Public Function SetFontColor(newColor As String) As CSSFont
+- Public Overloads Shared Function ToString(style As FontStyle) As String
+- Public Shared Function GetStyle(style As String) As String
+- Public Shared Function TryParse(css$, Optional [default] As CSSFont = Nothing, Optional ByRef hasValue As Boolean = False) As CSSFont
+- Public Overrides Function ToString() As String
+- Public Const strong = "strong"
+- Public Const italic = "italic"
+- Public Const normal = "normal"
+- Public Const strikeout = "strikeout"
+- Public Const underline = "underline"
+- ... and 782 more
+
+## Imports
+- ASCII = Microsoft.VisualBasic.Text.ASCII
+- Brush = Microsoft.VisualBasic.Imaging.Brush
+- Brush = System.Drawing.Brush
+- DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+- DashStyle = System.Drawing.Drawing2D.DashStyle
+- Font = Microsoft.VisualBasic.Imaging.Font
+- Font = System.Drawing.Font
+- FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+- FontStyle = System.Drawing.FontStyle
+- Image = Microsoft.VisualBasic.Imaging.Image
+- Image = System.Drawing.Image
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+- Microsoft.VisualBasic.Emit.Marshal
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Default
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Linq.Extensions
+- Microsoft.VisualBasic.MIME.Html.CSS
+- Microsoft.VisualBasic.MIME.Html.Document
+- Microsoft.VisualBasic.MIME.Html.Language
+
+## File tree
+- CSS\CSSEnvirnment.vb
+- CSS\CSSLayer.vb
+- CSS\CssUnit.vb
+- CSS\Elements\Fill.vb
+- CSS\Elements\FontStyle.vb
+- CSS\Elements\Padding.vb
+- CSS\Elements\Size.vb
+- CSS\Elements\Stroke.vb
+- CSS\Extensions.vb
+- CSS\ICSSValue.vb
+- Document\Elements\Anchor.vb
+- Document\Elements\BuildHtml.vb
+- Document\Elements\HTML.vb
+- Document\Elements\HtmlElement.vb
+- Document\Elements\Image.vb
+- Document\Elements\InnerPlantText.vb
+- Document\Elements\ValueAttribute.vb
+- Document\Extensions.vb
+- Document\Head\Meta.vb
+- Document\HtmlCompress.vb
+- Document\HtmlDocument.vb
+- DocumentFormatter.vb
+- Extensions.vb
+- jQuery\Extensions.vb
+- jQuery\jQuery.vb
+- Parser\CSS\Enums\CssProperty.vb
+- Parser\CSS\Enums\Enums.vb
+- Parser\CSS\File.vb
+- Parser\CSS\Parser.vb
+- Parser\CSS\Selector.vb
+- Parser\CSS\UrlEvaluator.vb
+- Parser\Escaping.vb
+- Parser\HtmlParser.vb
+- Parser\HtmlTokens.vb
+- Parser\Token.vb
+- Parser\TokenIcer.vb
+- Render\CSS\CssAnonymousBlockBox.vb
+- Render\CSS\CssAnonymousBox.vb
+- Render\CSS\CssBlock.vb
+- Render\CSS\CssBox.vb
+- Render\CSS\CssBoxWord.vb
+- Render\CSS\CssBoxWordSplitter.vb
+- Render\CSS\CssConstants.vb
+- Render\CSS\CssDefaults.vb
+- Render\CSS\CssDrawingHelper.vb
+- Render\CSS\CssLayoutEngine.vb
+- Render\CSS\CssLength.vb
+- Render\CSS\CssLineBox.vb
+- Render\CSS\CssPropertyAttribute.vb
+- Render\CSS\CssPropertyInheritedAttribute.vb
+- Render\CSS\CssRectangle.vb
+- Render\CSS\CssTable.vb
+- Render\CSS\CssValue.vb
+- Render\HtmlConstants.vb
+- Render\HtmlRenderer.vb
+- Render\HtmlTag.vb
+- Render\InitialContainer.vb
+- Render\Parser.vb
+- Render\TextString.vb
+- Render\TextStringModel.vb
+- Xml\Meta.vb
+- Xml\Node.vb
+- zzz.vb
+

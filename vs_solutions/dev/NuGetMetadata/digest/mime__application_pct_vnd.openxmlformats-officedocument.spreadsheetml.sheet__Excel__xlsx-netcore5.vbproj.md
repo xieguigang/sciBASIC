@@ -1,0 +1,308 @@
+# mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MIME.Office.Excel
+- AssemblyName  : Microsoft.VisualBasic.MIME.Office.Excel
+- TargetFramework: net10.0
+- Source files  : 68
+- Existing Title: XLSX Workbook Reader, Writer and Legacy BIFF Parser
+- Existing Desc : XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and parses legacy BIFF files.
+- Existing Tags : scibasic;xlsx;excel;openxml;spreadsheet
+
+## Namespaces
+- XLS  [files: 1]
+- XLS.BIFF  [files: 4]
+- XLSX  [files: 3]
+- XLSX.FileIO  [files: 6]
+- XLSX.Model  [files: 4]
+- XLSX.Model.Directory  [files: 5]
+- XLSX.Writer  [files: 14]
+- XLSX.Writer.Styling  [files: 19]
+- XLSX.XML._rels  [files: 1]
+- XLSX.XML.docProps  [files: 3]
+- XLSX.XML.xl  [files: 4]
+- XLSX.XML.xl.theme  [files: 1]
+- XLSX.XML.xl.worksheets  [files: 1]
+
+## Public types
+- Module ReportHelper (ReportHelper.vb) - Helper for writing scientific-data report sheets with a consistent, pre-styled layout. Layout applied by <see cref="WriteReportSheet"/>: - Row 1 : comment line - white background, italic grass-green font, left aligned, merged across all columns.
+- Enum ValueTypes (XLS\BIFF\EnumConstants.vb) - enum to handle the various types of values that can be written to the excel file.
+- Enum CellAlignment (XLS\BIFF\EnumConstants.vb) - enum to hold cell alignment
+- Enum CellFont (XLS\BIFF\EnumConstants.vb) - enum to handle selecting the font for the cell
+- Enum CellHiddenLocked (XLS\BIFF\EnumConstants.vb)
+- Enum MarginTypes (XLS\BIFF\EnumConstants.vb) - set up variables to hold the spreadsheet's layout
+- Enum FontFormatting (XLS\BIFF\EnumConstants.vb)
+- Class BiffWriter (XLS\BIFF\ExcelFile.vb) - Newer versions of Excel use the OLE Structure Storage methods which are quite complicated. Paul Squires, November 10, 2001
+- Module test (XLS\BIFF\Form1.vb)
+- Structure FONT_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure PASSWORD_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure HEADER_FOOTER_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure PROTECT_SPREADSHEET_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure FORMAT_COUNT_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure FORMAT_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure COLWIDTH_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure BEG_FILE_RECORD (XLS\BIFF\SheetObject.vb) - Beginning Of File record
+- Structure END_FILE_RECORD (XLS\BIFF\SheetObject.vb) - End Of File record
+- Structure PRINT_GRIDLINES_RECORD (XLS\BIFF\SheetObject.vb) - true/false to print gridlines
+- Structure tInteger (XLS\BIFF\SheetObject.vb) - Integer record
+- Structure tNumber (XLS\BIFF\SheetObject.vb) - Number record
+- Structure tText (XLS\BIFF\SheetObject.vb) - Label (Text) record
+- Structure MARGIN_RECORD_LAYOUT (XLS\BIFF\SheetObject.vb)
+- Structure HPAGE_BREAK_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure DEF_ROWHEIGHT_RECORD (XLS\BIFF\SheetObject.vb)
+- Structure ROW_HEIGHT_RECORD (XLS\BIFF\SheetObject.vb)
+- Module VB6 (XLS\BIFF\VB6.vb)
+- Module MsHtml (XLS\MsHtml.vb)
+- Class File (XLSX\File.vb) - Each cell can contain a value Or a formula, which will be used To calculate a value, With a cached value usually stored pending the Next recalculation. A Single spreadsheet document may serve several purposes: as a container for data values;
+- Class DocumentPath (XLSX\FileIO\DocumentPath.vb) - Class to manage XML document paths
+- Class DynamicRow (XLSX\FileIO\DynamicRow.vb) - Class representing a row that is either empty or containing cells. Empty rows can also carry information about height or visibility
+- Module IO (XLSX\FileIO\IO.vb)
+- Class LowLevel (XLSX\FileIO\LowLevel.vb) - Class for low level handling (XML, formatting, packing)
+- Class SortedMap (XLSX\FileIO\SortedMap.vb) - Class to manage key value pairs (string / string). The entries are in the order how they were added
+- Class ZipPackage (XLSX\FileIO\ZipPackage.vb) - a helper function for unzip of the xlsx data file.
+- Class rels (XLSX\IO\_rels\rels.vb)
+- Class app (XLSX\IO\docProps\app.xml.vb)
+- Class Vectors (XLSX\IO\docProps\app.xml.vb)
+- Class vector (XLSX\IO\docProps\app.xml.vb)
+- Class core (XLSX\IO\docProps\core.xml.vb)
+- Structure W3CDTF (XLSX\IO\docProps\core.xml.vb)
+- Class custom (XLSX\IO\docProps\custom.xml.vb)
+- Class calcChain (XLSX\IO\xl\calcChain.xml.vb)
+- Class c (XLSX\IO\xl\calcChain.xml.vb)
+- Class sharedStrings (XLSX\IO\xl\sharedStrings.xml.vb)
+- Class si (XLSX\IO\xl\sharedStrings.xml.vb)
+- Class phoneticPr (XLSX\IO\xl\sharedStrings.xml.vb)
+- Class styles (XLSX\IO\xl\styles.xml.vb)
+- Class List (XLSX\IO\xl\styles.xml.vb)
+- Class tableStyles (XLSX\IO\xl\styles.xml.vb)
+- Class tableStyle (XLSX\IO\xl\styles.xml.vb)
+- Class tableStyleElement (XLSX\IO\xl\styles.xml.vb)
+- Class dxfs (XLSX\IO\xl\styles.xml.vb)
+- Class dxf (XLSX\IO\xl\styles.xml.vb)
+- Class cellStyles (XLSX\IO\xl\styles.xml.vb)
+- Class cellStyle (XLSX\IO\xl\styles.xml.vb)
+- Class cellXfs (XLSX\IO\xl\styles.xml.vb)
+- Class cellStyleXfs (XLSX\IO\xl\styles.xml.vb)
+- Class xf (XLSX\IO\xl\styles.xml.vb)
+- Class borders (XLSX\IO\xl\styles.xml.vb)
+- Class border (XLSX\IO\xl\styles.xml.vb)
+- Class fills (XLSX\IO\xl\styles.xml.vb)
+- Class fill (XLSX\IO\xl\styles.xml.vb)
+- Class patternFill (XLSX\IO\xl\styles.xml.vb)
+- Class fonts (XLSX\IO\xl\styles.xml.vb)
+- Class font (XLSX\IO\xl\styles.xml.vb) - Font style in Xlsx
+- Class StringValue (XLSX\IO\xl\styles.xml.vb)
+- Class ColorValue (XLSX\IO\xl\styles.xml.vb)
+- Class Flag (XLSX\IO\xl\styles.xml.vb)
+- Class theme (XLSX\IO\xl\theme\theme.xml.vb)
+- Class themeElements (XLSX\IO\xl\theme\theme.xml.vb)
+- Class clrScheme (XLSX\IO\xl\theme\theme.xml.vb)
+- Class ThemeColor (XLSX\IO\xl\theme\theme.xml.vb)
+- Class fontScheme (XLSX\IO\xl\theme\theme.xml.vb)
+- Class Fonts (XLSX\IO\xl\theme\theme.xml.vb)
+- Class font (XLSX\IO\xl\theme\theme.xml.vb)
+- Class workbook (XLSX\IO\xl\workbook.xml.vb)
+- Class ext (XLSX\IO\xl\workbook.xml.vb)
+- Class slicerStyles (XLSX\IO\xl\workbook.xml.vb)
+- Class timelineStyles (XLSX\IO\xl\workbook.xml.vb)
+- Class definedName (XLSX\IO\xl\workbook.xml.vb)
+- Class AlternateContent (XLSX\IO\xl\workbook.xml.vb)
+- Class Choice (XLSX\IO\xl\workbook.xml.vb)
+- Class absPath (XLSX\IO\xl\workbook.xml.vb)
+- Class fileRecoveryPr (XLSX\IO\xl\workbook.xml.vb)
+- Class workbookPr (XLSX\IO\xl\workbook.xml.vb)
+- Structure calcPr (XLSX\IO\xl\workbook.xml.vb)
+- Structure sheet (XLSX\IO\xl\workbook.xml.vb)
+- Structure workbookView (XLSX\IO\xl\workbook.xml.vb)
+- Structure fileVersion (XLSX\IO\xl\workbook.xml.vb)
+- Class worksheet (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class drawing (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class hyperlink (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class conditionalFormatting (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class cfRule (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class colorScale (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class sheetFormatPr (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class sheetData (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class sheetView (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class pane (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class selection (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Structure dimension (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class col (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Structure row (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Structure c (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class pageMargins (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class pageSetup (XLSX\IO\xl\worksheets\sheet.xml.vb)
+- Class _rels (XLSX\IO\XlsxDirectoryPart\_rels.vb)
+- Class docProps (XLSX\IO\XlsxDirectoryPart\docProps.vb)
+- Class worksheets (XLSX\IO\XlsxDirectoryPart\worksheets.vb)
+- Class xl (XLSX\IO\XlsxDirectoryPart\xl.vb)
+- Interface IXml (XLSX\IXml.vb)
+- Module StoreProcedure (XLSX\Model\StoreProcedure.vb) - 读取工作表的数据或者生成工作表数据的过程
+- Module Styling (XLSX\Model\Styling.vb)
+- Class SheetTable (XLSX\Model\Worksheet.vb)
+- Module Xmlns (XLSX\Model\Xmlns.vb)
+- Structure Address (XLSX\Writer\Cell\Address.vb) - Struct representing the cell address as column and row (zero based)
+- Class Cell (XLSX\Writer\Cell\Cell.vb) - Class representing a cell of a worksheet
+- Enum CellType (XLSX\Writer\Cell\Enums.vb) - Enum defines the basic data types of a cell
+- Enum AddressType (XLSX\Writer\Cell\Enums.vb) - Enum for the referencing style of the address
+- ... and 38 more
+
+## Notable public members
+- Public Function WriteReportSheet(workbook As Workbook,
+- Public Function CreateFile(FileName As String) As Integer
+- Public Function CloseFile() As Integer
+- Public Function InsertHorizPageBreak(lrow As Long) As Integer
+- Public Function WriteValue(ValueType As ValueTypes,
+- Public Function SetMargin(Margin As MarginTypes, MarginValue As Double) As Integer
+- Public Function SetColumnWidth(FirstColumn As Byte, LastColumn As Byte, WidthValue As Integer)
+- Public Function SetFont(FontName As String, FontHeight As Integer, FontFormat As FontFormatting) As Integer
+- Public Function SetHeader(HeaderText As String) As Integer
+- Public Function SetFooter(FooterText As String) As Integer
+- Public Function SetFilePassword(PasswordText As String) As Integer
+- Public Sub SetPrintGridLines(newvalue As Boolean)
+- Public Sub SetProtectSpreadsheet(newvalue As Boolean)
+- Public Function WriteDefaultFormats() As Integer
+- Public Function SetDefaultRowHeight(HeightValue As Integer)
+- Public Function SetRowHeight(lrow As Long, HeightValue As Integer)
+- Friend Sub Put(Of T As Structure)(file As BinaryWriter, struct As T)
+- Friend Sub Put(file As BinaryWriter, ints As Short())
+- Friend Sub Put(file As BinaryWriter, b As Byte)
+- Public Function ToExcel(Of T As Class)(seq As IEnumerable(Of T), Optional sheetName$ = "Sheet1") As String
+- Public Function ToExcel(file As Table, sheetName As String, Optional width As Dictionary(Of String, String) = Nothing) As String
+- Public ReadOnly Property Sheet1 As [Default](Of String)
+- Public Iterator Function EnumerateTables(xlsx As XlsxFile) As IEnumerable(Of NamedValue(Of csv))
+- Public Function GetSheetNames(path As String) As String()
+- Public Function ReadTableAuto(path$, Optional sheetName$ = "Sheet1") As csv
+- Public Function FirstSheet(xlsx As XlsxFile) As csv
+- Public Function FirstSheet(path As String) As csv
+- Public Sub WriteSheetTable(workbook As Workbook, data As csv)
+- Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As Stream,
+- Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String,
+- Public Property ContentTypes As ContentTypes
+- Public Property _rels As _rels
+- Public Property docProps As docProps
+- Public Property xl As xl
+- Public Property FilePath As String Implements IFileReference.FilePath
+- Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+- Friend Sub New(pkg As ZipPackage)
+- Protected Overrides Function _name() As String
+- Protected Overrides Sub _loadContents()
+- Public Function SheetNames() As IEnumerable(Of String)
+- Public Overrides Function ToString() As String
+- Public Function GetTable(sheetName$) As csv
+- Public Function GetWorksheet(sheetName$) As XML.xl.worksheets.worksheet
+- Public Function GetTable(index As Integer) As csv
+- Public Function LoadDataSet(Of T As Class)(sheetName$) As T()
+- Public Function LoadDataSet(Of T As Class)(sheetIndex As Integer) As T()
+- Public Shared Function CreatePackage(tmp$, xlsx$, Optional throwEx As Boolean = True) As Boolean
+- Public Shared Function Open(path As String) As File
+- Protected Overridable Sub Dispose(disposing As Boolean)
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public Property Filename As String
+- Public Property Path As String
+- Public Sub New()
+- Public Sub New(filename As String, path As String)
+- Public Function GetFullPath() As String
+- Public Property RowNumber As Integer
+- Public ReadOnly Property CellDefinitions As List(Of Cell)
+- Public Sub New()
+- Public Function LoadZip(zip As ZipStream) As File
+- Public Function CreateReader(xlsx As String) As File
+- ... and 727 more
+
+## Imports
+- csv = Microsoft.VisualBasic.Data.Framework.IO.File
+- Directory = Microsoft.VisualBasic.FileIO.Directory
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ApplicationServices.Zip
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Data.Framework.DataSetExtensions
+- Microsoft.VisualBasic.Data.Framework.DataSetExtensions.Excel
+- Microsoft.VisualBasic.Data.Framework.IO
+- Microsoft.VisualBasic.Emit.Delegates
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Default
+- Microsoft.VisualBasic.Language.UnixBash
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.MIME.Office.Excel.XLS.BIFF
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Directory
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling.Style
+- Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
+
+## File tree
+- ReportHelper.vb
+- XLS\BIFF\EnumConstants.vb
+- XLS\BIFF\ExcelFile.vb
+- XLS\BIFF\Form1.vb
+- XLS\BIFF\SheetObject.vb
+- XLS\BIFF\VB6.vb
+- XLS\MsHtml.vb
+- XLSX\Extensions.vb
+- XLSX\File.vb
+- XLSX\FileIO\DocumentPath.vb
+- XLSX\FileIO\DynamicRow.vb
+- XLSX\FileIO\IO.vb
+- XLSX\FileIO\LowLevel.vb
+- XLSX\FileIO\SortedMap.vb
+- XLSX\FileIO\ZipPackage.vb
+- XLSX\IO\_rels\rels.vb
+- XLSX\IO\docProps\app.xml.vb
+- XLSX\IO\docProps\core.xml.vb
+- XLSX\IO\docProps\custom.xml.vb
+- XLSX\IO\xl\calcChain.xml.vb
+- XLSX\IO\xl\sharedStrings.xml.vb
+- XLSX\IO\xl\styles.xml.vb
+- XLSX\IO\xl\theme\theme.xml.vb
+- XLSX\IO\xl\workbook.xml.vb
+- XLSX\IO\xl\worksheets\sheet.xml.vb
+- XLSX\IO\XlsxDirectoryPart\_rels.vb
+- XLSX\IO\XlsxDirectoryPart\docProps.vb
+- XLSX\IO\XlsxDirectoryPart\worksheets.vb
+- XLSX\IO\XlsxDirectoryPart\xl.vb
+- XLSX\IO\XlsxDirectoryPart\XlsxDirectoryPart.vb
+- XLSX\IXml.vb
+- XLSX\Model\StoreProcedure.vb
+- XLSX\Model\Styling.vb
+- XLSX\Model\Worksheet.vb
+- XLSX\Model\Xmlns.vb
+- XLSX\Writer\Cell\Address.vb
+- XLSX\Writer\Cell\BasicFormulas.vb
+- XLSX\Writer\Cell\Cell.vb
+- XLSX\Writer\Cell\Enums.vb
+- XLSX\Writer\Cell\Range.vb
+- XLSX\Writer\Exceptions.vb
+- XLSX\Writer\Metadata.vb
+- XLSX\Writer\NamespaceDoc.vb
+- XLSX\Writer\Style\AbstractStyle.vb
+- XLSX\Writer\Style\AppendAttribute.vb
+- XLSX\Writer\Style\BasicStyles.vb
+- XLSX\Writer\Style\Border.vb
+- XLSX\Writer\Style\CellXf.vb
+- XLSX\Writer\Style\Fill.vb
+- XLSX\Writer\Style\FillType.vb
+- XLSX\Writer\Style\Font.vb
+- XLSX\Writer\Style\FormatNumber.vb
+- XLSX\Writer\Style\FormatRange.vb
+- XLSX\Writer\Style\HorizontalAlignValue.vb
+- XLSX\Writer\Style\NumberFormat.vb
+- XLSX\Writer\Style\SchemeValue.vb
+- XLSX\Writer\Style\Style.vb
+- XLSX\Writer\Style\StyleEnum.vb
+- XLSX\Writer\Style\StyleValue.vb
+- XLSX\Writer\Style\TextBreakValue.vb
+- XLSX\Writer\Style\TextVerticalAlignValue.vb
+- XLSX\Writer\Style\VerticalAlignValue.vb
+- XLSX\Writer\StyleManager.vb
+- XLSX\Writer\StyleRepository.vb
+- XLSX\Writer\Workbook.vb
+- XLSX\Writer\Worksheet\Column.vb
+- XLSX\Writer\Worksheet\Enums.vb
+- XLSX\Writer\Worksheet\Worksheet.vb
+

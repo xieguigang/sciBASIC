@@ -1,0 +1,418 @@
+# Microsoft.VisualBasic.Core/src/Core.vbproj
+
+- RootNamespace : Microsoft.VisualBasic
+- AssemblyName  : Microsoft.VisualBasic.Runtime
+- TargetFramework: net10.0
+- Source files  : 913
+- Existing Title: Visual Basic Runtime Core Library For Scientific Computing
+- Existing Desc : Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, command line parsing, parallel helpers, application services and logging.
+- Existing Tags : scibasic;runtime;linq;reflection;application-services
+
+## Namespaces
+- ApplicationServices  [files: 14]
+- ApplicationServices.Debugging  [files: 7]
+- ApplicationServices.Debugging.Diagnostics  [files: 5]
+- ApplicationServices.Debugging.Logging  [files: 5]
+- ApplicationServices.Development  [files: 3]
+- ApplicationServices.Development.NetCoreApp  [files: 4]
+- ApplicationServices.Development.XmlDoc.Assembly  [files: 5]
+- ApplicationServices.Development.XmlDoc.Serialization  [files: 6]
+- ApplicationServices.DynamicInterop  [files: 9]
+- ApplicationServices.Globalization  [files: 3]
+- ApplicationServices.Plugin  [files: 4]
+- ApplicationServices.Terminal  [files: 18]
+- ApplicationServices.Terminal.LineEdit  [files: 6]
+- ApplicationServices.Terminal.ProgressBar  [files: 5]
+- ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar  [files: 10]
+- ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions  [files: 3]
+- ApplicationServices.Terminal.ProgressBar.Tqdm  [files: 2]
+- ApplicationServices.Terminal.STDIO__  [files: 2]
+- ApplicationServices.Terminal.TablePrinter  [files: 5]
+- ApplicationServices.Terminal.TablePrinter.Flags  [files: 6]
+- ApplicationServices.Terminal.Utility  [files: 10]
+- ApplicationServices.Zip  [files: 5]
+- CommandLine  [files: 17]
+- CommandLine.InteropService  [files: 4]
+- CommandLine.InteropService.Pipeline  [files: 1]
+- CommandLine.InteropService.SharedORM  [files: 7]
+- CommandLine.ManView  [files: 4]
+- CommandLine.Parsers  [files: 4]
+- CommandLine.POSIX  [files: 2]
+- CommandLine.Reflection  [files: 19]
+- CommandLine.Reflection.EntryPoints  [files: 2]
+- ComponentModel  [files: 21]
+- ComponentModel.Algorithm  [files: 4]
+- ComponentModel.Algorithm.base  [files: 9]
+- ComponentModel.Algorithm.BinaryTree  [files: 13]
+- ComponentModel.Algorithm.DynamicProgramming  [files: 5]
+- ComponentModel.Algorithm.DynamicProgramming.Levenshtein  [files: 3]
+- ComponentModel.Collection  [files: 18]
+- ComponentModel.Collection.Deque  [files: 6]
+- ComponentModel.Collection.Generic  [files: 6]
+
+## Public types
+- Module App (ApplicationServices\App.vb)
+- Class Application (ApplicationServices\Application.vb) - Application information
+- Class Clock (ApplicationServices\Clock.vb)
+- Module VBDebugger (ApplicationServices\Debugger.vb) - Debugger helper module for VisualBasic Enterprises System.
+- Class Assert (ApplicationServices\Debugger\Assert.vb)
+- Module DebuggerArgs (ApplicationServices\Debugger\DebuggerArgs.vb) - 调试器设置参数模块
+- Enum DebuggerLevels (ApplicationServices\Debugger\DebuggerLevels.vb) - 默认的参数值是<see cref="DebuggerLevels.On"/>
+- Class ExceptionData (ApplicationServices\Debugger\Exception\ExceptionData.vb)
+- Module ExceptionExtensions (ApplicationServices\Debugger\Exception\ExceptionExtensions.vb)
+- Class Method (ApplicationServices\Debugger\Exception\MethodFrame.vb)
+- Class ObjectNotFoundException (ApplicationServices\Debugger\Exception\netcoreApp\ObjectNotFoundException.vb)
+- Class StackFrame (ApplicationServices\Debugger\Exception\StackFrame.vb)
+- Class TraceBuffer (ApplicationServices\Debugger\Exception\TraceBuffer.vb)
+- Class VisualBasicAppException (ApplicationServices\Debugger\Exception\VisualBasicAppException.vb) - VisualBasic application exception wrapper
+- Class HeapSizeOf (ApplicationServices\Debugger\HeapSizeOf.vb) - How to get object size in memory sizeof operator - determine the memory needs for a given type
+- Module ErrorLog (ApplicationServices\Debugger\Logging\ErrorLog.vb)
+- Structure LogEntry (ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb) - 一条记录日志对象
+- Class LogFile (ApplicationServices\Debugger\Logging\LogFile\LogFile.vb) - 日志文件记录模块。因为在Linux平台上面，Windows的日志记录API可能不会正常工作， 所以需要这个日志模块来接替Windows的日志模块的工作 这个类模块将输入的信息格式化保存到文本文件之中，记录的信息包括信息头，消息文本，以及消息等级
+- Class LogReader (ApplicationServices\Debugger\Logging\LogFile\LogReader.vb) - 分析服务器的问题原因所需要的日志分析工具
+- Enum MSG_TYPES (ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb) - Logging levels, the types enumeration of the log file message.
+- Interface IVisualStudioPreviews (ApplicationServices\Debugger\VisualStudioPreviews.vb)
+- Module InspectObject (ApplicationServices\Debugger\VisualStudioPreviews.vb)
+- Interface IDynamicLibraryLoader (ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb) - An interface definition to hide the platform specific aspects of library loading is obvious from a quick search. Re-consider again if you need more features.</remarks>
+- Interface INativeHandle (ApplicationServices\DynamicInterop\INativeHandle.vb) - behaviors that are more desirable in particular circumstances.
+- Class MarshalExtra (ApplicationServices\DynamicInterop\MarshalExtra.vb) - Extra methods on top of System.Runtime.InteropServices.Marshal for allocating unmanaged memory, copying unmanaged memory blocks, and converting managed to unmanaged types</summary>
+- Module PlatformUtility (ApplicationServices\DynamicInterop\PlatformUtility.vb) - Helper class with functions whose behavior may be depending on the platform
+- Class UnixLibraryLoader (ApplicationServices\DynamicInterop\UnixLibraryLoader.vb)
+- Class UnmanagedDll (ApplicationServices\DynamicInterop\UnmanagedDll.vb) - A proxy for unmanaged dynamic link library (DLL).
+- Class WindowsLibraryLoader (ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb)
+- Module Win32 (ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb)
+- Class VirtualFile (ApplicationServices\FileSystem\Fs\FileSystemTree.vb)
+- Class FileSystemTree (ApplicationServices\FileSystem\Fs\FileSystemTree.vb) - A virtual filesystem tree
+- Interface IFileSystemEnvironment (ApplicationServices\FileSystem\Fs\IFileSystemEnvironment.vb) - an abstract interface for union filesystem: 1. local filesystem: <see cref="Directory"/> 2. zip archive: <see cref="ZipStream"/>
+- Interface IWorkspace (ApplicationServices\FileSystem\Fs\IWorkspace.vb) - A abstract reference to a workdir
+- Class FileSystemView (ApplicationServices\FileSystem\Fs\IWorkspace.vb) - A data view wrapper that used a specific subdir as workfolder
+- Class MemoryStreamPool (ApplicationServices\FileSystem\MemoryStreamPool.vb) - just recommended apply this object for fast binary data read
+- Class ProgramPathSearchTool (ApplicationServices\FileSystem\ProgramPathSearchTool.vb) - Program helper for search dir like ``C:\Program Files`` or ``C:\Program Files(x86)`` Works on windows, have not test on Linux/Mac yet.
+- Class SubStream (ApplicationServices\FileSystem\SubStream.vb)
+- Class TempFileSystem (ApplicationServices\FileSystem\TempFileSystem.vb) - return name and handle of a temporary file safely
+- Class LanguageAttribute (ApplicationServices\LanguageHelper\LanguageAttribute.vb)
+- Class LanguageHelper (ApplicationServices\LanguageHelper\LanguageHelper.vb) - <typeparam name="TLanguage">必须是枚举类型</typeparam>
+- Class StringResources (ApplicationServices\LanguageHelper\StringResources.vb)
+- Class DataPipe (ApplicationServices\Parallel\BufferData\DataPipe.vb) - a <see cref="MemoryStream"/> liked in-memory data
+- Class DuplexPipe (ApplicationServices\Parallel\BufferData\DuplexPipe.vb)
+- Class StreamPipe (ApplicationServices\Parallel\BufferData\StreamPipe.vb)
+- Class ZipDataPipe (ApplicationServices\Parallel\BufferData\ZipDataPipe.vb) - compress the in-memory buffer data
+- Class MSIOReader (ApplicationServices\Parallel\MMFProtocol\MapStream\MSReader.vb)
+- Class MSWriter (ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb) - Memory stream writer mmfServer的主要功能是创建并维护一个内存映射文件
+- Class MMFSocket (ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb)
+- Class ProcessLock (ApplicationServices\Parallel\MMFProtocol\ProcessLock.vb) - 进程排斥锁
+- Module WorkFlow (ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb)
+- Module TimeOutAPI (ApplicationServices\Parallel\OperationTimeOut.vb)
+- Enum Protocols (ApplicationServices\Parallel\RequestStream.vb) - 最基本的Socket数据串流协议
+- Class Actor (ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb) - This Actor class can be used to call a function which has one parameter, object (T) and returns the result, object (V). The result is returned in a delegate.
+- Class State (ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb)
+- Class AsyncHandle (ApplicationServices\Parallel\Tasks\AsyncHandle.vb) - Represents the status of an asynchronous operation.(背景线程加载数据) <typeparam name="TOut"></typeparam> 这个后台任务模块是为了更加方便的构建出匿名方法的调用过程，因为这个对象的
+- Class BackgroundTask (ApplicationServices\Parallel\Tasks\BackgroundTask.vb)
+- Interface ICallbackTask (ApplicationServices\Parallel\Tasks\CallbackTask.vb)
+- Class CallbackTask (ApplicationServices\Parallel\Tasks\CallbackTask.vb) - When the task job complete, then the program will notify user code through callback function.
+- Class Task (ApplicationServices\Parallel\Tasks\Task.vb) - 更加底层的线程模式，和LINQ相比不会受到CPU核心数目的限制 <typeparam name="T">后台任务的执行参数</typeparam> <typeparam name="TOut">后台任务的执行结果</typeparam>
+- Class Task (ApplicationServices\Parallel\Tasks\Task.vb)
+- Interface ITaskHandle (ApplicationServices\Parallel\Tasks\TaskQueue.vb)
+- Class TaskQueue (ApplicationServices\Parallel\Tasks\TaskQueue.vb) - 这个只有一条线程来执行
+- Class TaskWorker (ApplicationServices\Parallel\Tasks\TaskQueue.vb) - A task
+- Class UpdateThread (ApplicationServices\Parallel\Tasks\UpdateThread.vb) - Running a specific <see cref="System.Action"/> in the background periodically. (比较适合用于在服务器上面执行周期性的计划任务)
+- Class GroupResult (ApplicationServices\Parallel\Threads\Groups\DataGroup.vb) - 分组操作的结果 <typeparam name="T">Group的元素的类型</typeparam> <typeparam name="Itag">Group的Key的类型</typeparam>
+- Module LQuerySchedule (ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb) - 在使用``Parallel LINQ``的时候，请务必要注意不能够使用Let语句操作共享变量，因为排除死锁的开销比较大 在设计并行任务的时候应该遵循的一些原则: 1. 假若每一个任务之间都是相互独立的话，则才可以进行并行化调用
+- Structure TimeoutModel (ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb)
+- Module TaskPartitions (ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb) - 对大量的短时间的任务进行分区的操作是在这里完成的
+- Module ParallelExtension (ApplicationServices\Parallel\Threads\ParallelExtension.vb)
+- Class ThreadPool (ApplicationServices\Parallel\Threads\ThreadPool.vb) - 使用多条线程来执行任务队列，推荐在编写Web服务器的时候使用这个模块来执行任务
+- Class ThreadQueue (ApplicationServices\Parallel\Threads\ThreadQueue.vb) - 任务线程队列
+- Class HistoryStacks (ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb)
+- Structure History (ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb)
+- Class InteractiveDevice (ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb)
+- Class Completion (ApplicationServices\Terminal\InteractiveIODevice\LineEdit\Completion.vb) - Completion results returned by the completion handler. You create an instance of this class to return the completion results for the text at the specific position. The prefix parameter
+- Class CompletionState (ApplicationServices\Terminal\InteractiveIODevice\LineEdit\CompletionState.vb)
+- Class LineEditor (ApplicationServices\Terminal\InteractiveIODevice\LineEdit\getline.vb) - <description> Pastes the content of the kill ring into the current position. </description>
+- Structure Handler (ApplicationServices\Terminal\InteractiveIODevice\LineEdit\Handler.vb)
+- Class HistoryType (ApplicationServices\Terminal\InteractiveIODevice\LineEdit\HistoryType.vb) - Emulates the bash-like behavior, where edits done to the history are recorded
+- Class LineReader (ApplicationServices\Terminal\InteractiveIODevice\LineEdit\LineReader.vb)
+- Interface IShellDevice (ApplicationServices\Terminal\InteractiveIODevice\Shell.vb)
+- Class Shell (ApplicationServices\Terminal\InteractiveIODevice\Shell.vb) - Shell model for console.
+- Class Terminal (ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb) - Represents the standard input, output, and error streams for console applications. (交互式的命令行终端)
+- Module TerminalEvents (ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb) - 这个终端事件会依赖于<see cref="App.Running"/>属性值来自动退出的
+- Structure AnsiColor (ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiColor.vb) - ANSI color definitions for the terminal. Each color has a different code depending on if it's applied as a foreground or background color.
+- Enum Type (ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiColor.vb)
+- Module AnsiEscapeCodes (ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiEscapeCodes.vb) - rather than text to display verbatim. ANSI sequences were introduced In the 1970S To replace vendor-specific sequences And became widespread In the computer equipment market by
+- Class ConsoleFormat (ApplicationServices\Terminal\MarkdownRender\ANSI\ConsoleFormat.vb) - define the <see cref="TextSpan.style"/> for print on the console.
+- Class TextSpan (ApplicationServices\Terminal\MarkdownRender\ANSI\TextSpan.vb) - console print text with a specific styles
+- Module UnicodeWidth (ApplicationServices\Terminal\MarkdownRender\ANSI\UnicodeWidth.vb)
+- Class BlockParser (ApplicationServices\Terminal\MarkdownRender\BlockParser.vb) - + the ``#`` atx header + the ``` ``` ``` fenced code block, of which the content is never parsed + the pipe table
+- Class InlineParser (ApplicationServices\Terminal\MarkdownRender\InlineParser.vb) - The inline elements are matched by the priority as follows: 1. ``\`` backslash escape 2. `` ` `` inline code span, the content of the code span is never parsed again
+- Class MarkdownRender (ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb) - + the ``&gt;`` block quote + the ``-``/``+``/``*``/``1.`` list item + the ``---`` horizontal rule
+- Module TableRenderer (ApplicationServices\Terminal\MarkdownRender\TableRenderer.vb) - renders the pipe table block into a set of the plain text lines
+- Class MarkdownTheme (ApplicationServices\Terminal\MarkdownRender\Theme.vb)
+- Module PipelineCLI (ApplicationServices\Terminal\PipelineCLI.vb) - a | b - 管道命令在读写方面更加适合于文本数据，由于省去了IO的时间，故而效率较高
+- Module PrintAsTable (ApplicationServices\Terminal\PrintAsTable.vb)
+- Interface IReadDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
+- Interface IWriteDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
+- Interface InteractiveDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
+- Interface IConsole (ApplicationServices\Terminal\STDIO__\IConsole.vb) - Represents the standard input, output, and error streams for console applications. (表示一个输入输出流控制台界面接口)
+- Module Shell (ApplicationServices\Terminal\STDIO__\Shell.vb)
+- Module STDIO (ApplicationServices\Terminal\STDIO__\STDIO.vb)
+- Class CharMapDefinition (ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb)
+- Class ConsoleColorNullable (ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb)
+- Class ConsoleTableBaseData (ApplicationServices\Terminal\TablePrinter\ConsoleTableBaseData.vb)
+- Class ConsoleTableBuilder (ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb) - A fluent library to print out a nicely formatted table in a console application https://github.com/minhhungit/ConsoleTableExt
+- Module ConsoleTableBuilderExtensions (ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb)
+- Enum CharMapPositions (ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb) - Check map here https://raw.githubusercontent.com/minhhungit/ConsoleTableExt/master/wiki/Images/CharMapPositions.png
+- Enum ConsoleTableBuilderFormat (ApplicationServices\Terminal\TablePrinter\Flags\ConsoleTableBuilderFormat.vb)
+- Enum HeaderCharMapPositions (ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb) - Check map here https://raw.githubusercontent.com/minhhungit/ConsoleTableExt/master/wiki/Images/HeaderCharMapPositions.png
+- Enum MetaRowPositions (ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb)
+- Enum TableAligntment (ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb)
+- Enum TextAligntment (ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb)
+- Class CBusyIndicator (ApplicationServices\Terminal\Utility\CBusyIndicator.vb) - The console BusyIndicator
+- Module Constants (ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb) - Constants used with PInvoke methods
+- Structure uCharUnion (ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb)
+- Structure KEY_EVENT_RECORD (ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb)
+- Structure COORD (ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb)
+- ... and 1016 more
+
+## Notable public members
+- Public ReadOnly Property RunTimeDirectory As String
+- Public ReadOnly Property NanoTime As Long
+- Public ReadOnly Property EnableTqdm As Boolean
+- Public ReadOnly Property EnableAnsiColor As Boolean
+- Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
+- Public ReadOnly Property MemoryLoad As MemoryLoads
+- Public ReadOnly Property MemorySize As String
+- Public ReadOnly Property IsConsoleApp As Boolean = (Not Console.IsErrorRedirected) OrElse (Not Console.IsOutputRedirected)
+- Public ReadOnly Property Desktop As String
+- Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
+- Public ReadOnly Property StdOut As [Default](Of TextWriter)
+- Public ReadOnly Property StdInput As [Default](Of TextReader) = New StreamReader(Console.OpenStandardInput)
+- Public ReadOnly Property PID As Integer = Process.GetCurrentProcess.Id
+- Public ReadOnly Property Process As Process = Process.GetCurrentProcess
+- Public ReadOnly Property CommandLine As CommandLineArgs = GitBashEnvironment.GetCommandLineArgs()
+- Public ReadOnly Property n_threads As Integer = std.Min(8, LQuerySchedule.CPU_NUMBER)
+- Public Function Argument(Of T)(name$) As T
+- Public Function Argument(name$) As String
+- Public ReadOnly Property Github As String = LICENSE.githubURL
+- Public ReadOnly Property RunningInGitBash As Boolean = GitBashEnvironment.isRunningOnGitBash()
+- Public ReadOnly Property Command As String = CLITools.Join(App.CommandLine.Tokens)
+- Public ReadOnly Property ExecutablePath As String
+- Public ReadOnly Property Info As DevAssmInfo
+- Public ReadOnly Property AssemblyName As String
+- Public ReadOnly Property ProductName As String
+- Public ReadOnly Property HOME As String
+- Public ReadOnly Property UserHOME As String
+- Public Property InputFile As String
+- Public Property OutFile As String
+- Public Function GetFile(fileName$) As String
+- Public Property CurrentDirectory As String
+- Public ReadOnly Property PreviousDirectory As String
+- Public ReadOnly Property StartupDirectory As String
+- Public ReadOnly Property ProductProgramData As String
+- Public ReadOnly Property ProductSharedDIR As String
+- Public Function RedirectLogging(file As String) As StreamWriter
+- Public Function RedirectErrLogging(file As String) As StreamWriter
+- Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
+- Public Function GetAppLocalData(exe$) As String
+- Public Sub JoinVariable(name$, value$)
+- Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
+- Public Sub JoinVariables(vars As Dictionary(Of String, String))
+- Public Function GetVariable(<CallerMemberName> Optional name$ = Nothing, Optional defaultValue$ = Nothing) As String
+- Public Function GetAppVariables() As NamedValue(Of String)()
+- Public ReadOnly Property BufferSize As Integer = 4 * 1024 * 1024
+- Public Sub SetBufferSize(size As String)
+- Public Sub DoNothing()
+- Public Sub DoNothing(Of T)(arg As T)
+- Public Function NullDevice(Optional encoding As Encodings = Encodings.ASCII) As StreamWriter
+- Public Sub println(s$, ParamArray args As Object())
+- Public Sub println()
+- Public Sub FlushMemory()
+- Public Sub Free(Of T As Class)(ByRef obj As T)
+- Public Sub Pause(Optional prompted$ = "Press any key to continute...")
+- Public Function GetProductSharedDIR(type As Type) As String
+- Public ReadOnly Property UnixTimeStamp As Double
+- Public ReadOnly Property CurrentUnixTimeMillis() As Long
+- Public ReadOnly Property StartTime As Double = App.UnixTimeStamp
+- Public Function ElapsedMilliseconds() As Long
+- Public Function ElapsedMilliseconds(startTime As Long) As TimeSpan
+- ... and 7472 more
+
+## Imports
+- _rng = Microsoft.VisualBasic.Math.RandomExtensions
+- any = Microsoft.VisualBasic.Scripting
+- ASCII = Microsoft.VisualBasic.Text.ASCII
+- AssemblyMeta = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
+- base = Microsoft.VisualBasic.Strings
+- BitsPerPixelEnum = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.BitsPerPixelEnum
+- ByRefString = Microsoft.VisualBasic.Language.Value(Of String)
+- CLI = Microsoft.VisualBasic.CommandLine.CommandLine
+- CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
+- CommandLineArgs = Microsoft.VisualBasic.CommandLine.CommandLine
+- ConsoleApp = Microsoft.VisualBasic.CommandLine.InteropService.InteropService
+- DataSet = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.Collections.Generic.Dictionary(Of String, Double))
+- defaultEncoding = Microsoft.VisualBasic.Language.Default.Default(Of System.Text.Encoding)
+- DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of Microsoft.VisualBasic.Imaging.Font)
+- DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Font)
+- DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
+- Directory = Microsoft.VisualBasic.FileIO.Directory
+- Factory = System.Runtime.Serialization.Json.DataContractJsonSerializer
+- FieldTuple = System.Collections.Generic.KeyValuePair(Of Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute, System.Reflection.PropertyInfo)
+- FieldTuple = System.Collections.Generic.KeyValuePair(Of String, System.Reflection.PropertyInfo)
+- FS = Microsoft.VisualBasic.FileIO.FileSystem
+- HashValue = Microsoft.VisualBasic.Text.Xml.Models.Property
+- IOModule = System.IO.Path
+- IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
+- MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
+
+## File tree
+- ApplicationServices\App.vb
+- ApplicationServices\Application.vb
+- ApplicationServices\Clock.vb
+- ApplicationServices\Debugger.vb
+- ApplicationServices\Debugger\Assert.vb
+- ApplicationServices\Debugger\DebuggerArgs.vb
+- ApplicationServices\Debugger\DebuggerLevels.vb
+- ApplicationServices\Debugger\Exception\ExceptionData.vb
+- ApplicationServices\Debugger\Exception\ExceptionExtensions.vb
+- ApplicationServices\Debugger\Exception\MethodFrame.vb
+- ApplicationServices\Debugger\Exception\netcoreApp\ObjectNotFoundException.vb
+- ApplicationServices\Debugger\Exception\StackFrame.vb
+- ApplicationServices\Debugger\Exception\TraceBuffer.vb
+- ApplicationServices\Debugger\Exception\VisualBasicAppException.vb
+- ApplicationServices\Debugger\HeapSizeOf.vb
+- ApplicationServices\Debugger\Logging\ErrorLog.vb
+- ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb
+- ApplicationServices\Debugger\Logging\LogFile\LogFile.vb
+- ApplicationServices\Debugger\Logging\LogFile\LogReader.vb
+- ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb
+- ApplicationServices\Debugger\VisualStudioPreviews.vb
+- ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb
+- ApplicationServices\DynamicInterop\INativeHandle.vb
+- ApplicationServices\DynamicInterop\MarshalExtra.vb
+- ApplicationServices\DynamicInterop\NativeHandle.vb
+- ApplicationServices\DynamicInterop\PlatformUtility.vb
+- ApplicationServices\DynamicInterop\SafeHandleUnmanagedDll.vb
+- ApplicationServices\DynamicInterop\UnixLibraryLoader.vb
+- ApplicationServices\DynamicInterop\UnmanagedDll.vb
+- ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb
+- ApplicationServices\FileSystem\Fs\FileSystemTree.vb
+- ApplicationServices\FileSystem\Fs\IFileSystemEnvironment.vb
+- ApplicationServices\FileSystem\Fs\IWorkspace.vb
+- ApplicationServices\FileSystem\MemoryStreamPool.vb
+- ApplicationServices\FileSystem\ProgramPathSearchTool.vb
+- ApplicationServices\FileSystem\SubStream.vb
+- ApplicationServices\FileSystem\TempFileSystem.vb
+- ApplicationServices\LanguageHelper\LanguageAttribute.vb
+- ApplicationServices\LanguageHelper\LanguageHelper.vb
+- ApplicationServices\LanguageHelper\StringResources.vb
+- ApplicationServices\Parallel\BufferData\BufferPipe.vb
+- ApplicationServices\Parallel\BufferData\DataPipe.vb
+- ApplicationServices\Parallel\BufferData\DuplexPipe.vb
+- ApplicationServices\Parallel\BufferData\StreamPipe.vb
+- ApplicationServices\Parallel\BufferData\ZipDataPipe.vb
+- ApplicationServices\Parallel\ConcurenceRunner.vb
+- ApplicationServices\Parallel\MMFProtocol\MapStream\MSReader.vb
+- ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb
+- ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb
+- ApplicationServices\Parallel\MMFProtocol\ProcessLock.vb
+- ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb
+- ApplicationServices\Parallel\OperationTimeOut.vb
+- ApplicationServices\Parallel\RequestStream.vb
+- ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb
+- ApplicationServices\Parallel\Tasks\AsyncHandle.vb
+- ApplicationServices\Parallel\Tasks\BackgroundTask.vb
+- ApplicationServices\Parallel\Tasks\CallbackTask.vb
+- ApplicationServices\Parallel\Tasks\IParallelTask.vb
+- ApplicationServices\Parallel\Tasks\Task.vb
+- ApplicationServices\Parallel\Tasks\TaskQueue.vb
+- ApplicationServices\Parallel\Tasks\UpdateThread.vb
+- ApplicationServices\Parallel\Threads\Groups\DataGroup.vb
+- ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb
+- ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb
+- ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb
+- ApplicationServices\Parallel\Threads\ParallelExtension.vb
+- ApplicationServices\Parallel\Threads\ThreadPool.vb
+- ApplicationServices\Parallel\Threads\ThreadQueue.vb
+- ApplicationServices\Parallel\Threads\ThreadStart.vb
+- ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb
+- ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb
+- ApplicationServices\Terminal\InteractiveIODevice\LineEdit\Completion.vb
+- ApplicationServices\Terminal\InteractiveIODevice\LineEdit\CompletionState.vb
+- ApplicationServices\Terminal\InteractiveIODevice\LineEdit\getline.vb
+- ApplicationServices\Terminal\InteractiveIODevice\LineEdit\Handler.vb
+- ApplicationServices\Terminal\InteractiveIODevice\LineEdit\HistoryType.vb
+- ApplicationServices\Terminal\InteractiveIODevice\LineEdit\LineReader.vb
+- ApplicationServices\Terminal\InteractiveIODevice\Shell.vb
+- ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb
+- ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb
+- ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiColor.vb
+- ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiEscapeCodes.vb
+- ApplicationServices\Terminal\MarkdownRender\ANSI\ConsoleFormat.vb
+- ApplicationServices\Terminal\MarkdownRender\ANSI\TextSpan.vb
+- ApplicationServices\Terminal\MarkdownRender\ANSI\UnicodeWidth.vb
+- ApplicationServices\Terminal\MarkdownRender\BlockParser.vb
+- ApplicationServices\Terminal\MarkdownRender\InlineParser.vb
+- ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb
+- ApplicationServices\Terminal\MarkdownRender\TableRenderer.vb
+- ApplicationServices\Terminal\MarkdownRender\Theme.vb
+- ApplicationServices\Terminal\PipelineCLI.vb
+- ApplicationServices\Terminal\PrintAsTable.vb
+- ApplicationServices\Terminal\STDIO__\IConsole.vb
+- ApplicationServices\Terminal\STDIO__\Shell.vb
+- ApplicationServices\Terminal\STDIO__\STDIO.vb
+- ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb
+- ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb
+- ApplicationServices\Terminal\TablePrinter\ConsoleTableBaseData.vb
+- ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb
+- ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb
+- ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb
+- ApplicationServices\Terminal\TablePrinter\Flags\ConsoleTableBuilderFormat.vb
+- ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb
+- ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb
+- ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb
+- ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb
+- ApplicationServices\Terminal\Utility\CBusyIndicator.vb
+- ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb
+- ApplicationServices\Terminal\Utility\EventProc.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\AbstractBar.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Element.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ElementList.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\ElementExtensions.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\StringExtensions.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\TimeSpanExtensions.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Body.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Layout.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Margin.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Marquee.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Description.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Text.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\Program.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\ProgressBar.vb
+- ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb
+- ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb
+- ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManIndex.vb
+- ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManParser.vb
+- ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManWriter.vb
+- ApplicationServices\Terminal\Utility\UnixMan\ManFile\UnixManPage.vb
+- ApplicationServices\Terminal\Utility\UnixMan\ManualPages.vb
+- ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb
+- ApplicationServices\Tools\OSVersionInfo.vb
+- ApplicationServices\Tools\PerformanceCounter.vb
+- ApplicationServices\Tools\Plugin\Loader.vb
+- ApplicationServices\Tools\Plugin\PluginAttribute.vb
+- ApplicationServices\Tools\Plugin\PropertyFormat\FormattedDoubleConverter.vb
+- ApplicationServices\Tools\Plugin\PropertyFormat\FormattedDoubleFormatString.vb
+- ApplicationServices\Tools\Resources.vb
+- ApplicationServices\Tools\TarGzFileSystem.vb
+- ApplicationServices\Tools\Zip\Options.vb
+- ApplicationServices\Tools\Zip\StreamReader.vb
+- ApplicationServices\Tools\Zip\UnZip.vb
+- ApplicationServices\Tools\Zip\ZipLib.vb
+- ApplicationServices\Tools\Zip\ZipStream.vb
+- ApplicationServices\Utils.vb
+- ... and 763 more files
+

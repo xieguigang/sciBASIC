@@ -1,0 +1,184 @@
+# Data_science/Visualization/DataPlot/DataPlot.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.Plots
+- AssemblyName  : Microsoft.VisualBasic.Data.DataPlot
+- TargetFramework: net10.0
+- Source files  : 33
+- Existing Title: 
+- Existing Desc : 
+- Existing Tags : 
+
+## Namespaces
+- GgplotTheme  [files: 6]
+
+## Public types
+- Class BoxGroup (Advanced\BoxGroup.vb)
+- Class BoxPlot (Advanced\BoxPlot.vb)
+- Class BubbleSeries (Advanced\BubblePlot.vb)
+- Class BubblePlot (Advanced\BubblePlot.vb)
+- Class ChordLink (Advanced\ChordPlot.vb)
+- Class ChordPlot (Advanced\ChordPlot.vb)
+- Class HeatmapPlot (Advanced\HeatmapPlot.vb)
+- Enum ColorMapType (Advanced\HeatmapPlot.vb)
+- Class JitterPlot (Advanced\JitterPlot.vb)
+- Class PiePlot (Advanced\PiePlot.vb)
+- Class RadarPlot (Advanced\RadarPlot.vb)
+- Class RosePlot (Advanced\RosePlot.vb)
+- Class SankeyLink (Advanced\SankeyPlot\SankeyLink.vb)
+- Class SankeyNode (Advanced\SankeyPlot\SankeyNode.vb)
+- Class SankeyPlot (Advanced\SankeyPlot\SankeyPlot.vb)
+- Class TreemapNode (Advanced\TreemapPlot.vb)
+- Class TreemapPlot (Advanced\TreemapPlot.vb)
+- Class ViolinPlot (Advanced\ViolinPlot.vb)
+- Class AreaPlot (Basic\AreaPlot.vb)
+- Class BarPlot (Basic\BarPlot.vb)
+- Class HistogramPlot (Basic\HistogramPlot.vb)
+- Class LinePlot (Basic\LinePlot.vb)
+- Class ScatterPlot (Basic\ScatterPlot.vb)
+- Class StackedAreaPlot (Basic\StackedAreaPlot.vb)
+- Class StackedBarPlot (Basic\StackedBarPlot.vb)
+- Enum AxisSide (Engine\AxisSide.vb)
+- Class CssRule (Engine\GgplotTheme\CssThemeMapper.vb) - Represents a single CSS rule with a selector and a set of properties.
+- Class CssThemeMapper (Engine\GgplotTheme\CssThemeMapper.vb) - axis.ticks.length { length: 0.25cm; }
+- Class ArrowSpec (Engine\GgplotTheme\Elements.vb)
+- Class ElementLine (Engine\GgplotTheme\Elements.vb)
+- Class ElementRect (Engine\GgplotTheme\Elements.vb)
+- Class ElementText (Engine\GgplotTheme\Elements.vb)
+- Class ElementPoint (Engine\GgplotTheme\Elements.vb)
+- Class ElementPolygon (Engine\GgplotTheme\Elements.vb)
+- Class ElementGeom (Engine\GgplotTheme\Elements.vb)
+- Module ElementHelpers (Engine\GgplotTheme\Elements.vb)
+- Class ResolvedElementText (Engine\GgplotTheme\LayoutCalculator.vb) - A text element with all properties resolved to pixel values. Produced by LayoutCalculator for rendering.
+- Class ResolvedElementLine (Engine\GgplotTheme\LayoutCalculator.vb) - A line element with all properties resolved to pixel values.
+- Class ResolvedElementRect (Engine\GgplotTheme\LayoutCalculator.vb) - A rectangle element with all properties resolved to pixel values.
+- Class PlotLayout (Engine\GgplotTheme\LayoutCalculator.vb) - Contains computed pixel positions for the main plot regions. All values are in pixels relative to the canvas origin (top-left).
+- Class LayoutCalculator (Engine\GgplotTheme\LayoutCalculator.vb) - The automatic layout calculation system. Converts all theme units (cm, mm, pt, lines, char, null, npc, inch, px) to pixel values based on the canvas context (canvas size, PPI).
+- Enum ThemeElementType (Engine\GgplotTheme\Theme.vb) - Identifies the type of a theme element, used for CSS parsing and inheritance resolution.
+- Class Theme (Engine\GgplotTheme\Theme.vb)
+- Enum UnitType (Engine\GgplotTheme\Units.vb) - Supported unit types for theme measurements, mirroring R's grid unit() system. These correspond to the units used in ggplot2 theme specifications.
+- Class Unit (Engine\GgplotTheme\Units.vb)
+- Class Margin (Engine\GgplotTheme\Units.vb)
+- Class CanvasContext (Engine\GgplotTheme\Units.vb)
+- Class UnitConverter (Engine\GgplotTheme\Units.vb) - Converts Unit values to pixels based on a CanvasContext. Handles all ggplot unit types: cm, mm, pt, lines, char, null, npc, inch, px. For relative units (rel), resolve against parent value before calling ToPixels.
+- Enum MarkerShape (Engine\MarkerShape.vb)
+- Class PlotEngine (Engine\PlotEngine.vb) - 绘图引擎：所有图表类型的基类与公共能力。 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
+- Enum LegendPos (Engine\PlotEngine.vb)
+- Class PlotTheme (Engine\PlotTheme.vb) - 图表主题：包含颜色、字体、线宽、边距等所有视觉样式参数。 可直接使用预定义主题，也可基于预定义主题派生自定义主题。
+- Class Series (Engine\Series.vb)
+- Module Extensions (Extensions.vb)
+
+## Notable public members
+- Public Property Name As String = ""
+- Public Property Data As Double() = {}
+- Public Property Color As Color? = Nothing
+- Public Property Groups As New List(Of BoxGroup)()
+- Public Property Horizontal As Boolean = False
+- Public Property ShowOutliers As Boolean = True
+- Public Property ShowMean As Boolean = True
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property Sizes As Double() = {}
+- Public Property MinBubbleSize As Single = 4.0F
+- Public Property MaxBubbleSize As Single = 30.0F
+- Public Property FillAlpha As Integer = 140
+- Public Property ShowSizeLegend As Boolean = True
+- Public Property SizeLegendCount As Integer = 3
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot(seriesList As IList(Of BubbleSeries))
+- Public Property Source As Integer
+- Public Property Target As Integer
+- Public Property Value As Double
+- Public Property Color As Color? = Nothing
+- Public Property NodeLabels As String() = {}
+- Public Property Matrix As Double(,) = Nothing
+- Public Property Links As New List(Of ChordLink)()
+- Public Property NodeColors As Color() = Nothing
+- Public Property ChordAlpha As Integer = 100
+- Public Property Symmetric As Boolean = True
+- Public Property ShowSelfLoops As Boolean = False
+- Public Property StartAngle As Single = -90
+- Public Property GapAngle As Single = 1.5F
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property Matrix As Double(,) = Nothing
+- Public Property RowLabels As String() = Nothing
+- Public Property ColLabels As String() = Nothing
+- Public Property ColorMap As ColorMapType = ColorMapType.Viridis
+- Public Property ShowValues As Boolean = False
+- Public Property MinValue As Double? = Nothing
+- Public Property MaxValue As Double? = Nothing
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property Groups As New List(Of BoxGroup)()
+- Public Property JitterWidth As Single = 0.3F
+- Public Property RandomSeed As Integer? = 42
+- Public Property MarkerShape As MarkerShape = MarkerShape.Circle
+- Public Property MarkerSize As Single = 5.0F
+- Public Property MarkerAlpha As Integer = 180
+- Public Property Horizontal As Boolean = False
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property Labels As String() = {}
+- Public Property Values As Double() = {}
+- Public Property Colors As Color() = Nothing
+- Public Property Donut As Boolean = False
+- Public Property DonutRadius As Single = 0.5F
+- Public Property ShowPercentage As Boolean = True
+- Public Property ExplodeIndex As Integer = -1
+- Public Property StartAngle As Single = -90
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- ... and 593 more
+
+## Imports
+- Font = Microsoft.VisualBasic.Imaging.Font
+- FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+- Microsoft.VisualBasic.ComponentModel.DataStructures
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+- Microsoft.VisualBasic.Imaging.Driver
+- std = System.Math
+- stdf = System.Math
+- System
+- System.Collections.Generic
+- System.Drawing
+- System.Globalization
+- System.IO
+- System.Runtime.CompilerServices
+- System.Text
+
+## File tree
+- Advanced\BoxGroup.vb
+- Advanced\BoxPlot.vb
+- Advanced\BubblePlot.vb
+- Advanced\ChordPlot.vb
+- Advanced\HeatmapPlot.vb
+- Advanced\JitterPlot.vb
+- Advanced\PiePlot.vb
+- Advanced\RadarPlot.vb
+- Advanced\RosePlot.vb
+- Advanced\SankeyPlot\SankeyLink.vb
+- Advanced\SankeyPlot\SankeyNode.vb
+- Advanced\SankeyPlot\SankeyPlot.vb
+- Advanced\TreemapPlot.vb
+- Advanced\ViolinPlot.vb
+- Basic\AreaPlot.vb
+- Basic\BarPlot.vb
+- Basic\HistogramPlot.vb
+- Basic\LinePlot.vb
+- Basic\ScatterPlot.vb
+- Basic\StackedAreaPlot.vb
+- Basic\StackedBarPlot.vb
+- Engine\AxisSide.vb
+- Engine\GgplotTheme\CssThemeMapper.vb
+- Engine\GgplotTheme\DefaultTheme.vb
+- Engine\GgplotTheme\Elements.vb
+- Engine\GgplotTheme\LayoutCalculator.vb
+- Engine\GgplotTheme\Theme.vb
+- Engine\GgplotTheme\Units.vb
+- Engine\MarkerShape.vb
+- Engine\PlotEngine.vb
+- Engine\PlotTheme.vb
+- Engine\Series.vb
+- Extensions.vb
+

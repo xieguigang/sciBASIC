@@ -1,0 +1,244 @@
+# Data/BinaryData/HDF5/HDF5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.IO.HDF5
+- AssemblyName  : Microsoft.VisualBasic.Data.IO.HDF5
+- TargetFramework: net10.0
+- Source files  : 64
+- Existing Title: Pure Managed HDF5 Scientific Data File Reader
+- Existing Desc : Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes, and contiguous, chunked or compact datasets to sciBASIC# code.
+- Existing Tags : scibasic;hdf5;scientific-data;dataset;binary-format;reader
+
+## Namespaces
+- dataset  [files: 4]
+- dataset.filters  [files: 3]
+- device  [files: 8]
+- struct  [files: 24]
+- struct.BTree  [files: 1]
+- struct.messages  [files: 12]
+- type  [files: 7]
+
+## Public types
+- Class ChunkedDatasetV3 (dataset\ChunkedDatasetV3.vb) - Chunked: The array domain is regularly decomposed into chunks, and each chunk is allocated and stored separately. This layout supports arbitrary element traversals, compression, encryption, and checksums (these features are described in other messages). The message stores the size of
+- Class ChunkLookup (dataset\ChunkedDatasetV3.vb)
+- Class ChunkOffsetKey (dataset\ChunkedDatasetV3.vb) - Custom key object for indexing chunks. It is optimised for fast hashcode and equals when looking up chunks.
+- Class CompactDataset (dataset\CompactDataset.vb) - Compact: The array is stored in one contiguous block as part of this object header message.
+- Class ContiguousDataset (dataset\ContiguousDataset.vb) - The array is stored in one contiguous area of the file. This layout requires that the size of the array be constant: data manipulations such as chunking, compression, checksums, or encryption are not permitted. The message stores the total storage size of the array.
+- Class DeflatePipelineFilter (dataset\filters\filters.vb) - GZip
+- Class Fletcher32CheckSum (dataset\filters\filters.vb)
+- Class ShufflePipelineFilter (dataset\filters\filters.vb) - HDF5 shuffle 过滤器：解码时按元素字节大小对字节进行反混洗还原。 filterData(0) 为单个元素的字节宽度。
+- Interface IFilter (dataset\filters\IFilter.vb) - Interface to be implemented to be a HDF5 filter. @author James Mudd
+- Enum ReservedFilters (dataset\filters\ReservedFilters.vb) - The filters currently in library version 1.8.0 are listed below:
+- Class BinaryFileReader (device\BinaryFileReader.vb)
+- Module DatasetReader (device\datasetReader\DatasetReader.vb) - "https://support.hdfgroup.org/ftp/HDF5/prev-releases/HDF-JAVA/hdfjni-3.2.1/hdf5_java_doc/hdf/hdf5lib/H5.html">HDF5 Java wrapper H5.java</a></li> <li><a href="http://docs.h5py.org/en/stable/faq.html">h5py FAQ</a></li>
+- Class EnumDatasetReader (device\datasetReader\EnumDatasetReader.vb) - Special case of dataset reader for filling enum datasets, handles converting integer values into the enum strings on the fly while filling. In the future might want to consider if this is actually what people want, maybe a way to read the integer data directly could be useful or even the option to pass in a Java enum and get back a typed array.
+- Module VariableLengthDatasetReader (device\datasetReader\VariableLengthDatasetReader.vb) - Read helpers of <see cref="VariableLength"/> https://github.com/jamesmudd/jhdf
+- Class GlobalHeapId (device\GlobalHeapId.vb)
+- Class MemoryReader (device\MemoryReader.vb)
+- Module ReadHelper (device\ReadHelper.vb)
+- Interface IFileDump (FileDump.vb)
+- Class HDF5File (HDF5File.vb)
+- Class HDF5Reader (HDF5Reader.vb) - 这个reader只会读取一个<see cref="datasetName"/>的数据，如果需要读取其他的dataset的话， 则会需要创建多个<see cref="HDF5Reader"/>对象来进行数据的读取操作 这个对象相当于文件系统之中的一个文件或者文件夹
+- Module HDF5Sparse (HDF5Sparse.vb) - 稀疏感知的 HDF5 读取辅助集合。所有方法都避免将整个数据集一次性解压到内存： 分块数据集按 chunk 流式枚举，COO 三元组直接构造 <see cref="SparseMatrix"/>。
+- Class DataBTree (structure\DataBTree.vb)
+- Class DataChunk (structure\DataChunk.vb) - 所存储的数据块
+- Class DataChunkIterator (structure\DataChunkIterator.vb)
+- Class DataObject (structure\DataObject.vb) - 一个数据块对象
+- Class DataObjectFacade (structure\DataObjectFacade.vb) - 可能是一个dataset，也可能是一个<see cref="Group"/>
+- Enum LayoutClass (structure\DataObjects\Headers\LayoutClass.vb) - The Data Layout message describes how the elements of a multi-dimensional array are stored in the HDF5 file. Four types of data layout are supported.
+- Class AttributeMessage (structure\DataObjects\Headers\Messages\AttributeMessage.vb)
+- Class BogusMessage (structure\DataObjects\Headers\Messages\BogusMessage.vb) - This message is used for testing the HDF5 Library’s response to an “unknown” message type and should never be encountered in a valid HDF5 file. For testing only; should never be stored in a valid file.
+- Class ContinueMessage (structure\DataObjects\Headers\Messages\ContinueMessage.vb)
+- Class DataLayoutMessage (structure\DataObjects\Headers\Messages\DataLayoutMessage.vb) - The Data Layout message describes how the elements of a multi-dimensional array are stored in the HDF5 file. Required for datasets; may not be repeated.
+- Class DataspaceMessage (structure\DataObjects\Headers\Messages\DataspaceMessage.vb) - The dataspace message describes the number of dimensions (in other words, “rank”) and size of each dimension that the data object has. This message is only used for datasets which have a simple, rectilinear, array-like layout; datasets requiring a more complex layout are not yet
+- Class DataTypeMessage (structure\DataObjects\Headers\Messages\DataTypeMessage.vb) - The datatype message defines the datatype for each element of a dataset or a common datatype for sharing between multiple datasets. A datatype can describe an atomic type like a fixed- or floating-point type or more complex
+- Class FillValueMessage (structure\DataObjects\Headers\Messages\FillValueMessage.vb) - The fill value message stores a single data value which is returned to the application when an uninitialized data element is read from a dataset. The fill value is interpreted with the same datatype as the dataset.
+- Class FillValueOldMessage (structure\DataObjects\Headers\Messages\FillValueOldMessage.vb) - The fill value message stores a single data value which is returned to the application when an uninitialized data element is read from a dataset. The fill value is interpreted with the same datatype as the dataset.
+- Class FilterPipelineMessage (structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb) - This message describes the filter pipeline which should be applied to the data stream by providing filter identification numbers, flags, a name, and client data.
+- Class FilterDescription (structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb)
+- Class GroupMessage (structure\DataObjects\Headers\Messages\GroupMessage.vb) - The Symbol Table Message
+- Class LastModifiedMessage (structure\DataObjects\Headers\Messages\LastModifiedMessage.vb)
+- Class LinkMessage (structure\DataObjects\Headers\Messages\LinkMessage.vb)
+- Class ObjectHeader (structure\DataObjects\Headers\ObjectHeader.vb)
+- Class ObjectHeaderMessage (structure\DataObjects\Headers\ObjectHeaderMessage.vb)
+- Enum ObjectHeaderMessages (structure\DataObjects\Headers\ObjectHeaderMessageType.vb)
+- Class ObjectHeaderMessageType (structure\DataObjects\Headers\ObjectHeaderMessageType.vb) - stored in the data object header for each object in an HDF5 file. Data object header messages provide the metadata required to describe an object and its contents, as well as optional pieces of metadata
+- Class Group (structure\Group.vb) - A group of <see cref="DataObjectFacade"/>. a group is an object header that contains a message that points to a local heap (for storing the links to objects in the group) and to a B-tree (which indexes the links).
+- Class GroupBTree (structure\GroupBTree.vb)
+- Class GroupNode (structure\GroupNode.vb) - group points can be cached in the group’s symbol table entry in addition to being in the object’s header. An HDF5 Object name space can be stored hierarchically by partitioning the name into components
+- Class BTreeEntry (structure\Infrastructure\BTree\BTreeEntry.vb)
+- Class BTreeNode (structure\Infrastructure\BTree\BTreeNode.vb) - Version 1 B-trees in HDF5 files are an implementation of the B-link tree. The sibling nodes at a particular level in the tree are stored in a doubly-linked list. See the “Efficient Locking for Concurrent Operations on B-trees” paper by Phillip Lehman and S.
+- Enum BTreeNodeTypes (structure\Infrastructure\BTree\BTreeNodeTypes.vb) - Each B-tree points to a particular type of data. This field indicates the type of data as well as implying the maximum degree K of the tree and the size of each Key field.
+- Class GlobalHeap (structure\Infrastructure\GlobalHeap.vb) - collection, with the possible exception of the final space in the collection, if it is not large enough to hold the header for the collection’s global heap object 0. These features address goal C.
+- Class GlobalHeapObject (structure\Infrastructure\GlobalHeap.vb)
+- Class LocalHeap (structure\Infrastructure\LocalHeap.vb) - A local heap is a collection of small pieces of data that are particular to a single object in the HDF5 file. Objects can be inserted and removed from the heap at any time. The address of a heap does not change once the heap is created. For example, a group stores
+- Class Layout (structure\Layout.vb)
+- Class LayoutField (structure\LayoutField.vb)
+- Class ObjectHeaderScratchpadFormat (structure\ObjectHeaderScratchpadFormat.vb)
+- Class StructureMember (structure\StructureMember.vb)
+- Class Superblock (structure\Superblock.vb) - The superblock may begin at certain predefined offsets within the HDF5 file, allowing a block of unspecified content for users to place additional information at the beginning (and end) of the HDF5 file without limiting the HDF5 Library's ability to manage the
+- Class SymbolicLinkScratchpadFormat (structure\SymbolicLinkScratchpadFormat.vb)
+- Class SymbolTableEntry (structure\SymbolTableEntry.vb)
+- Class NamespaceDoc (types\DataTypes.vb) - The HDF5 primitive data types model, classes representing the data types of HDF5 datasets.
+- Enum DataTypes (types\DataTypes.vb) - 对一些在HDF5文件之中的基础数据类型的枚举，例如长整型，双精度，字符串等
+- Class EnumDataType (types\EnumDataType.vb) - Class for reading enum data type messages. @author James Mudd
+- Class FixedPoint (types\FixedPoint.vb)
+- Class FloatingPoint (types\FloatingPoint.vb)
+- Class StringData (types\StringData.vb)
+- Class VariableLength (types\VariableLength.vb)
+
+## Notable public members
+- Public Property dataType As DataType
+- Public Property dataSpace As DataspaceMessage
+- Public Property dataLayout As Layout
+- Public Property pipeline As FilterPipelineMessage
+- Public MustOverride ReadOnly Property dimensions As Integer()
+- Public ReadOnly Property rank As Integer
+- Public Overridable ReadOnly Property scalar As Boolean
+- Public Function data(sb As Superblock) As Object
+- Protected Function readDataSet(dataBuffer As MemoryStream, sb As Superblock) As Object
+- Protected MustOverride Function getBuffer(sb As Superblock) As MemoryStream
+- Public Overrides Function ToString() As String
+- Public Property dimensionality As Integer
+- Public Property BtreeAddress As Long
+- Public Property dimensionSize As Integer()
+- Public Property byteSize As Integer
+- Public Overridable ReadOnly Property size As Long
+- Public Overridable ReadOnly Property diskSize As Long
+- Public Overrides ReadOnly Property dimensions As Integer()
+- Public Overridable ReadOnly Property maxSize As Integer()
+- Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
+- Public Iterator Function EnumerateChunkArrays(Of T)(sb As Superblock) As IEnumerable(Of T())
+- Public ReadOnly Property sb As Superblock
+- Public ReadOnly Property chunkValues As DataChunk()
+- Public ReadOnly Property key As String
+- Friend Sub New(chunkOffset As Long())
+- Public Overrides Function GetHashCode() As Integer
+- Public Overrides Function Equals(obj As Object) As Boolean
+- Public Overrides Function ToString() As String
+- Public Property size As Integer
+- Public Property rawData As Byte()
+- Public Overrides ReadOnly Property dimensions As Integer()
+- Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
+- Public Property dataAddress As Long
+- Public Property size As Long
+- Public Overrides ReadOnly Property dimensions As Integer()
+- Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
+- Public ReadOnly Property id As Integer Implements IFilter.id
+- Public ReadOnly Property name As String Implements IFilter.name
+- Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements IFilter.decode
+- Public ReadOnly Property id As Integer Implements IFilter.id
+- Public ReadOnly Property name As String Implements IFilter.name
+- Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements IFilter.decode
+- Public ReadOnly Property id As Integer Implements IFilter.id
+- Public ReadOnly Property name As String Implements IFilter.name
+- Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements IFilter.decode
+- Public Overrides Property offset() As Long
+- Public Sub New(filepath As String)
+- Public Sub New(file As FileInfo)
+- Public Overrides Function readByte() As Byte
+- Public Overrides Function ToString() As String
+- Public Overrides Sub close()
+- Public Overrides Function getBuffer() As ByteBuffer
+- Public ReadOnly Property debugView As String
+- Public ReadOnly Property maxOffset As Long
+- Public Overridable Property offset As Long Implements IReaderDebugAccess.Position
+- Public ReadOnly Property size As Long Implements IReaderDebugAccess.Length
+- Public ReadOnly Property deltaSize As Integer
+- Public ReadOnly Property ByteOrder As ByteOrder
+- Public Sub clearMaxOffset()
+- Public MustOverride Function getBuffer() As ByteBuffer
+- ... and 398 more
+
+## Imports
+- ASCII = Microsoft.VisualBasic.Text.ASCII
+- BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.Data.IO.HDF5.dataset
+- Microsoft.VisualBasic.Data.IO.HDF5.dataset.filters
+- Microsoft.VisualBasic.Data.IO.HDF5.device
+- Microsoft.VisualBasic.Data.IO.HDF5.struct
+- Microsoft.VisualBasic.Data.IO.HDF5.struct.BTree
+- Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
+- Microsoft.VisualBasic.Data.IO.HDF5.type
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Java
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+- Microsoft.VisualBasic.Net.Http
+- Microsoft.VisualBasic.SecurityString
+- Microsoft.VisualBasic.Serialization.JSON
+- std = System.Math
+- System.IO
+- System.Numerics
+- System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Text
+
+## File tree
+- dataset\Abstract.vb
+- dataset\ChunkedDatasetV3.vb
+- dataset\CompactDataset.vb
+- dataset\ContiguousDataset.vb
+- dataset\filters\filters.vb
+- dataset\filters\IFilter.vb
+- dataset\filters\ReservedFilters.vb
+- device\BinaryFileReader.vb
+- device\BinaryReader.vb
+- device\datasetReader\DatasetReader.vb
+- device\datasetReader\EnumDatasetReader.vb
+- device\datasetReader\VariableLengthDatasetReader.vb
+- device\GlobalHeapId.vb
+- device\MemoryReader.vb
+- device\ReadHelper.vb
+- FileDump.vb
+- HDF5File.vb
+- HDF5Ptr.vb
+- HDF5Reader.vb
+- HDF5Sparse.vb
+- structure\DataBTree.vb
+- structure\DataChunk.vb
+- structure\DataChunkIterator.vb
+- structure\DataObject.vb
+- structure\DataObjectFacade.vb
+- structure\DataObjects\Headers\LayoutClass.vb
+- structure\DataObjects\Headers\Message.vb
+- structure\DataObjects\Headers\Messages\AttributeMessage.vb
+- structure\DataObjects\Headers\Messages\BogusMessage.vb
+- structure\DataObjects\Headers\Messages\ContinueMessage.vb
+- structure\DataObjects\Headers\Messages\DataLayoutMessage.vb
+- structure\DataObjects\Headers\Messages\DataspaceMessage.vb
+- structure\DataObjects\Headers\Messages\DataTypeMessage.vb
+- structure\DataObjects\Headers\Messages\FillValueMessage.vb
+- structure\DataObjects\Headers\Messages\FillValueOldMessage.vb
+- structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb
+- structure\DataObjects\Headers\Messages\GroupMessage.vb
+- structure\DataObjects\Headers\Messages\LastModifiedMessage.vb
+- structure\DataObjects\Headers\Messages\LinkMessage.vb
+- structure\DataObjects\Headers\ObjectHeader.vb
+- structure\DataObjects\Headers\ObjectHeaderMessage.vb
+- structure\DataObjects\Headers\ObjectHeaderMessageType.vb
+- structure\Group.vb
+- structure\GroupBTree.vb
+- structure\GroupNode.vb
+- structure\Infrastructure\BTree\BTreeEntry.vb
+- structure\Infrastructure\BTree\BTreeNode.vb
+- structure\Infrastructure\BTree\BTreeNodeTypes.vb
+- structure\Infrastructure\GlobalHeap.vb
+- structure\Infrastructure\LocalHeap.vb
+- structure\Layout.vb
+- structure\LayoutField.vb
+- structure\ObjectHeaderScratchpadFormat.vb
+- structure\StructureMember.vb
+- structure\Superblock.vb
+- structure\SymbolicLinkScratchpadFormat.vb
+- structure\SymbolTableEntry.vb
+- types\DataType.vb
+- types\DataTypes.vb
+- types\EnumDataType.vb
+- types\FixedPoint.vb
+- types\FloatingPoint.vb
+- types\StringData.vb
+- types\VariableLength.vb
+

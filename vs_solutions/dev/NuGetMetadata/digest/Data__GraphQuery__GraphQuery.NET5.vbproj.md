@@ -1,0 +1,140 @@
+# Data/GraphQuery/GraphQuery.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.GraphQuery
+- AssemblyName  : Microsoft.VisualBasic.Data.GraphQuery
+- TargetFramework: net10.0-windows;net10.0
+- Source files  : 20
+- Existing Title: Graph Query Language Engine for HTML and XML Documents
+- Existing Desc : Runs a piped graph query language over HTML/XML documents, combining CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values and emit them as JSON.
+- Existing Tags : scibasic;graph-query;html;css-selector;xpath;json
+
+## Namespaces
+- Language  [files: 5]
+- TextParser  [files: 6]
+
+## Public types
+- Class Engine (Engine.vb) - the engine of run graph query
+- Class Escaping (Language\Escaping.vb)
+- Class QueryToken (Language\QueryToken.vb)
+- Class Token (Language\Token.vb)
+- Class TokenIcer (Language\TokenIcer.vb)
+- Enum Tokens (Language\Tokens.vb)
+- Module AutoContext (Query\AutoContext.vb)
+- Class AttributeSelector (Query\Parser\AttributeSelector.vb)
+- Class CSSSelector (Query\Parser\CSSSelector.vb)
+- Structure Selector (Query\Parser\CSSSelector.vb)
+- Class FunctionParser (Query\Parser\FunctionParser.vb)
+- Class XPathSelector (Query\Parser\XPathSelector.vb)
+- Class Query (Query\Query.vb) - the object model of a query
+- Class QueryParser (QueryParser.vb)
+- Module BaseInvoke (TextParser\BaseInvoke.vb)
+- Class CustomFunction (TextParser\FunctionModel\CustomFunction.vb)
+- Class InternalInvoke (TextParser\FunctionModel\InternalInvoke.vb)
+- Module Html (TextParser\Html.vb)
+- Module LINQ (TextParser\LINQ.vb) - LINQ functions for the graphquery parser
+
+## Notable public members
+- Public Function Execute(document As InnerPlantText, func As String, param As String(), isArray As Boolean) As InnerPlantText
+- Public Function Execute(document As XElement, query As Query) As JsonElement
+- Public Function Execute(document As HtmlElement, query As Query) As JsonElement
+- Public Property token As Token
+- Public Property func As Parser
+- Public ReadOnly Property name As Tokens
+- Public ReadOnly Property text As String
+- Public Overrides Function ToString() As String
+- Public Sub New(text As [Variant](Of String, CharPtr))
+- Protected Overrides Function walkChar(c As Char) As Token
+- Protected Overrides Function popOutToken() As Token
+- Friend Const AutoContext As String = "graphquery-auto-context"
+- Friend Function IsAutoContext(element As HtmlElement) As Boolean
+- Public Function Attribute() As ValueAttribute
+- Protected Overrides Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+- Protected Overrides Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+- Friend Shared Function getElementQueryOutput(document As HtmlElement, list As HtmlElement(), selector As Selector) As InnerPlantText
+- Public ReadOnly Property isComposeCssQuery As Boolean
+- Public Function ParseIndex() As Integer?
+- Public Function RunComposeCssQuery(document As InnerPlantText, env As Engine) As InnerPlantText
+- Protected Overrides Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+- Public Property func As String
+- Public Property parameters As String()
+- Public Property pipeNext As Parser
+- Public Function Parse(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+- Protected MustOverride Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+- Protected Shared Function GetElementByIndex(list As InnerPlantText(), i As Integer?) As InnerPlantText
+- Public Overrides Function ToString() As String
+- Protected Overrides Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+- Public Property name As String
+- Public Property parser As Parser
+- Public Property isArray As Boolean
+- Public Property members As Query()
+- Public ReadOnly Property isTextArray As Boolean
+- Public Sub Add(member As Query)
+- Public Overrides Function ToString() As String
+- Public Shared Function GetQuery(text As String) As Query
+- Public Function text(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function strip(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function trim(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function split(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function filter(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function match(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function replace(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function regexp(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function tagValue(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Overrides Function GetToken(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Property name As String
+- Public Property method As MethodInfo
+- Public Overrides Function GetToken(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Overrides Function ToString() As String
+- Public Delegate Function IParserPipeline(document As InnerPlantText) As InnerPlantText
+- Public MustOverride Function GetToken(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Shared Function ParseDocument(document As InnerPlantText,
+- Public Function html(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function urlQuery(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function cssValue(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function skip(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+- Public Function eq(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+
+## Imports
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.GraphQuery.Language
+- Microsoft.VisualBasic.Data.GraphQuery.TextParser
+- Microsoft.VisualBasic.Emit.Marshal
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.C
+- Microsoft.VisualBasic.MIME.application.json.Javascript
+- Microsoft.VisualBasic.MIME.application.xml
+- Microsoft.VisualBasic.MIME.Html
+- Microsoft.VisualBasic.MIME.Html.Document
+- Microsoft.VisualBasic.MIME.Html.Language.CSS
+- Microsoft.VisualBasic.Net.Http
+- Microsoft.VisualBasic.Scripting.TokenIcer
+- Microsoft.VisualBasic.Text
+- Microsoft.VisualBasic.Text.Parser
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Text
+- System.Text.RegularExpressions
+
+## File tree
+- Engine.vb
+- Language\Escaping.vb
+- Language\QueryToken.vb
+- Language\Token.vb
+- Language\TokenIcer.vb
+- Language\Tokens.vb
+- Query\AutoContext.vb
+- Query\Parser\AttributeSelector.vb
+- Query\Parser\CSSSelector.vb
+- Query\Parser\FunctionParser.vb
+- Query\Parser\Parser.vb
+- Query\Parser\XPathSelector.vb
+- Query\Query.vb
+- QueryParser.vb
+- TextParser\BaseInvoke.vb
+- TextParser\FunctionModel\CustomFunction.vb
+- TextParser\FunctionModel\InternalInvoke.vb
+- TextParser\FunctionModel\ParserFunction.vb
+- TextParser\Html.vb
+- TextParser\LINQ.vb
+

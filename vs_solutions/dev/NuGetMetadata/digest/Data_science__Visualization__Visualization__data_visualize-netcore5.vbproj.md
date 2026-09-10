@@ -1,0 +1,147 @@
+# Data_science/Visualization/Visualization/data_visualize-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.visualize
+- AssemblyName  : Microsoft.VisualBasic.Data.visualize
+- TargetFramework: net10.0-windows;net10.0
+- Source files  : 20
+- Existing Title: Visualization Layer for Networks, Clusters and Embeddings
+- Existing Desc : Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.
+- Existing Tags : scibasic;visualization;network-graph;embedding;clustering;umap
+
+## Namespaces
+- KMeans  [files: 6]
+- TabularRender  [files: 4]
+
+## Public types
+- Class EntityNode (BinaryTree\EntityNode.vb)
+- Module NodeTrees (BinaryTree\NodeTrees.vb)
+- Class Partition (BinaryTree\Partition.vb)
+- Module Tree (BinaryTree\Tree.vb)
+- Module CorrelationNetwork (CorrelationNetwork.vb) - 使用这个模块用来生成相关度的网络，相关度网络是``Kmeans``，``Cmeans``或者其他的一些聚类网络可视化的基础
+- Class Embedding2D (Embedding\Embedding2D.vb)
+- Class Embedding3D (Embedding\Embedding3D.vb)
+- Module EmbeddingRenderExtensions (Embedding\EmbeddingRenderExtensions.vb)
+- Class SOMEmbedding (Embedding\SOMEmbedding.vb) - plot SOM embedding
+- Module UMAPGraph (Embedding\UmapGraph.vb) - create network model based on umap result for data visualization
+- Module Extensions (Extensions.vb)
+- Module KmeansExtensions (Kmeans\Kmeans.vb)
+- Module KMeansNetwork (Kmeans\KMeansNetwork.vb)
+- Module BarDataTableExtensions (Tabular\csv.vb)
+- Module Extensions (Tabular\Extensions.vb)
+- Module NamespaceDoc (Tabular\NamespaceDoc.vb) - Helper module for rendering of the data from a csv table file.
+- Class SerialData (Tabular\SerialData.vb)
+- Module ANNVisualize (Testing\ANNVisualize.vb)
+- Module Kmeans3DTest (Testing\Kmeans3DTest.vb)
+
+## Notable public members
+- Public ReadOnly Property EntityID As String
+- Public ReadOnly Property Type As String
+- Public Sub New(name As String, type$)
+- Public Overrides ReadOnly Property MySelf As EntityNode
+- Public Overrides Function ToString() As String
+- Public Function PartionTable(parts As IEnumerable(Of Partition)) As Dictionary(Of String, EntityClusterModel())
+- Public Property Tag As String Implements INamedValue.Key
+- Public ReadOnly Property NumOfEntity As Integer
+- Public Property uids As String()
+- Public Property members As EntityClusterModel()
+- Public ReadOnly Property PropertyMeans As Double()
+- Public Overrides Function ToString() As String
+- Public Function Partitioning(cluster As IEnumerable(Of EntityClusterModel), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(O…
+- Public Overrides Function ToString() As String
+- Public Const ROOT$ = NameOf(ROOT)
+- Public Const EntityType$ = "Entity"
+- Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
+- Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMa…
+- Public Function BuildNetwork(matrix As DistanceMatrix, cutoff As Double) As NetworkGraph
+- Public Function BuildNetwork(corDf As df, cutoff As Double,
+- Public Function BuildNetwork(matrix As CorrelationMatrix, cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMatrix…
+- Public Sub New(umap As IDataEmbedding, labels$(), clusters As Dictionary(Of String, String), colorSet$, showConvexHull As Boolean, theme As Theme)
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+- Public Sub New(umap As IDataEmbedding, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, bubbleAlpha%, theme As Theme…
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+- Protected Sub New(umap As IDataEmbedding, labels$(), clusters As Dictionary(Of String, String), colorSet$, theme As Theme)
+- Protected Function getClusterLabel(i As Integer) As String
+- Protected Function GetClusterColors() As Dictionary(Of String, SolidBrush)
+- Public Function GetPoint2D(umap As IDataEmbedding) As PointF()
+- Public Function GetPoint3D(umap As IDataEmbedding) As Point3D()
+- Public Function DrawEmbedding2D(umap As IDataEmbedding,
+- Public Function DrawEmbedding3D(umap As IDataEmbedding, camera As Camera,
+- Public Sub New(som As SelfOrganizingMap, dims As Integer, theme As Theme)
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+- Public Function CreateGraph(umap As UMAPProject, Optional threshold As Double = 0) As NetworkGraph
+- Public Function CreateGraph(umap As Umap, uid As String(),
+- Public Iterator Function ClusterResultFastLoad(path$) As IEnumerable(Of EntityClusterModel)
+- Public Function CastTo(row As RowObject) As IntegerEntity
+- Public Function ToEntityObjects(dataset As IEnumerable(Of EntityClusterModel)) As IEnumerable(Of EntityObject)
+- Public Function BuildTransactions(data As IEnumerable(Of EntityObject)) As IEnumerable(Of Transaction)
+- Public Function Load(path As String, Optional map As String = "Name") As ClusterEntity()
+- Public Function ClusterGroups(clusters As IEnumerable(Of EntityClusterModel)) As Dictionary(Of String, EntityClusterModel())
+- Public Function Scatter2D(clusterData As IEnumerable(Of EntityClusterModel),
+- Public Function Scatter3D(data As IEnumerable(Of DataSet),
+- Public Function Scatter3D(clusterData As IEnumerable(Of EntityClusterModel),
+- Public Function LoadDataSet(path$,
+- Public Function LoadBarData(csv$, Optional theme$ = NameOf(Office2016)) As BarDataGroup
+- Public Function LoadBarData(csv$, colors$()) As BarDataGroup
+- Public Function LoadBarData(csv$, colors As Color()) As BarDataGroup
+- Public Function LoadBarData(csv As DataFrameResolver, colors As Color()) As BarDataGroup
+- Public Function ScatterSerials(csv As File, fieldX$, fieldY$, color$, Optional ptSize! = 5) As ChartPlots.SerialData
+- Public Function RemovesYOutlier(s As ChartPlots.SerialData, Optional q# = 1) As ChartPlots.SerialData
+- Public Property serial As String
+- Public Property X As Single
+- Public Property Y As Single
+- Public Property value As Double
+- Public Property tag As String
+- Public Property errPlus As Double
+- Public Property errMinus As Double
+- Public Property Statics As Double()
+- ... and 4 more
+
+## Imports
+- Brushes = Microsoft.VisualBasic.Imaging.Brushes
+- Brushes = System.Drawing.Brushes
+- df = Microsoft.VisualBasic.Data.Framework.DataFrame
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+- Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
+- Microsoft.VisualBasic.Data.ChartPlots
+- Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
+- Microsoft.VisualBasic.Data.ChartPlots.Graphic
+- Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+- Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+- Microsoft.VisualBasic.Data.ChartPlots.Plot3D
+- Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Impl
+- Microsoft.VisualBasic.Data.ChartPlots.Plots
+- Microsoft.VisualBasic.Data.csv
+- Microsoft.VisualBasic.Data.csv.IO
+- Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Data.Framework.IO
+- Microsoft.VisualBasic.Data.Framework.StorageProvider
+- Microsoft.VisualBasic.Data.visualize
+- Microsoft.VisualBasic.Data.visualize.KMeans
+
+## File tree
+- BinaryTree\EntityNode.vb
+- BinaryTree\NodeTrees.vb
+- BinaryTree\Partition.vb
+- BinaryTree\Tree.vb
+- CorrelationNetwork.vb
+- Embedding\Embedding2D.vb
+- Embedding\Embedding3D.vb
+- Embedding\EmbeddingRender.vb
+- Embedding\EmbeddingRenderExtensions.vb
+- Embedding\SOMEmbedding.vb
+- Embedding\UmapGraph.vb
+- Extensions.vb
+- Kmeans\Kmeans.vb
+- Kmeans\KMeansNetwork.vb
+- Tabular\csv.vb
+- Tabular\Extensions.vb
+- Tabular\NamespaceDoc.vb
+- Tabular\SerialData.vb
+- Testing\ANNVisualize.vb
+- Testing\Kmeans3DTest.vb
+

@@ -1,0 +1,234 @@
+# Data/BinaryData/Feather/FeatherFormat.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.DataStorage.FeatherFormat
+- AssemblyName  : Microsoft.VisualBasic.DataStorage.FeatherFormat
+- TargetFramework: net10.0
+- Source files  : 53
+- Existing Title: Feather Columnar Data Frame File Format Reader and Writer
+- Existing Desc : A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime. Reads and writes typed and untyped data frames with row/column access, null handling, and categorical or timestamp metadata.
+- Existing Tags : scibasic;feather;arrow;columnar;dataframe;flatbuffers
+
+## Namespaces
+- FlatBuffers  [files: 7]
+- Impl  [files: 17]
+- Impl.FbsMetadata  [files: 11]
+
+## Public types
+- Enum BasisType (BasisType.vb) - Represents whether a dataframe is using 0-based or 1-based indexing.
+- Class ColumnValueEnumerator (Column.vb) - Allocation free enumerator for a column.
+- Class Column (Column.vb) - Represents a column of a DataFrame. Is untyped, but returned values can be implicitly coerced to built-in types.
+- Class ColumnEnumerable (ColumnEnumerable.vb) - Allocation free enumerable for the columns in a dataframe.
+- Class ColumnEnumerator (ColumnEnumerable.vb) - Allocation free enumerator for the columns in a dataframe.
+- Class ColumnMap (ColumnMap.vb) - Utility class for addressing a dataframes columns.
+- Module FeatherReader (FeatherReader.vb) - Utility class for reading Feather files.
+- Enum WriteMode (FeatherWriter.vb) - Indicates how a FeatherWriter should schedule writing to disk.
+- Module CollectionLengthLookup (Impl\CollectionLengthLookup.vb)
+- Class ColumnMetadata (Impl\ColumnMetadata.vb)
+- Enum DateTimePrecisionType (Impl\ColumnSpec.vb)
+- Enum CategoryEnumMapType (Impl\ColumnSpec.vb)
+- Enum ColumnType (Impl\ColumnSpec.vb)
+- Module ColumnTypeExtensionMethods (Impl\ColumnSpec.vb)
+- Class ColumnSpec (Impl\ColumnSpec.vb)
+- Module DateTimePrecisionTypeExtensionMethods (Impl\ColumnSpec.vb)
+- Module DataWidener (Impl\DataWidener.vb)
+- Module EnumDetails (Impl\EnumDetails.vb)
+- Module FeatherMagic (Impl\FeatherMagic.vb)
+- Class ByteBuffer (Impl\Flatbuffers\ByteBuffer.vb) - Class to mimic Java's ByteBuffer which is used heavily in Flatbuffers.
+- Class FlatBufferBuilder (Impl\Flatbuffers\FlatBufferBuilder.vb) - Responsible for building up and accessing a FlatBuffer formatted byte array (via ByteBuffer).
+- Module FlatBufferConstants (Impl\Flatbuffers\FlatBufferConstants.vb)
+- Interface IFlatbufferObject (Impl\Flatbuffers\IFlatbufferObject.vb) - This is the base for both structs and tables.
+- Structure Offset (Impl\Flatbuffers\Offset.vb) - Offset class for typesafe assignments.
+- Structure StringOffset (Impl\Flatbuffers\Offset.vb)
+- Structure VectorOffset (Impl\Flatbuffers\Offset.vb)
+- Class Struct (Impl\Flatbuffers\Struct.vb) - All structs in the generated code derive from this class, and add their own accessors.
+- Class Table (Impl\Flatbuffers\Table.vb) - All tables in the generated code derive from this struct, and add their own accessors.
+- Interface IColumn (Impl\IColumn.vb)
+- Interface IDataFrame (Impl\IDataFrame.vb)
+- Interface IRow (Impl\IRow.vb)
+- Class Metadata (Impl\Metadata.vb)
+- Class CategoryMetadata (Impl\Metadata\CategoryMetadata.vb)
+- Class Column (Impl\Metadata\Column.vb)
+- Class CTable (Impl\Metadata\CTable.vb)
+- Class DateMetadata (Impl\Metadata\DateMetadata.vb)
+- Enum Encoding (Impl\Metadata\Encoding.vb)
+- Class PrimitiveArray (Impl\Metadata\PrimitiveArray.vb)
+- Class TimeMetadata (Impl\Metadata\TimeMetadata.vb)
+- Class TimestampMetadata (Impl\Metadata\TimestampMetadata.vb)
+- Enum TimeUnit (Impl\Metadata\TimeUnit.vb)
+- Enum Type (Impl\Metadata\Type.vb)
+- Enum TypeMetadata (Impl\Metadata\TypeMetadata.vb)
+- Class BufferedStream (Impl\MultiStreamProvider.vb)
+- Class MultiStreamProvider (Impl\MultiStreamProvider.vb)
+- Class PendingEntry (Impl\MultiStreamProvider.vb)
+- Module SyntheticEnum (Impl\SyntheticEnum.vb)
+- Class Key (Impl\SyntheticEnum.vb)
+- Class WriteColumnConfig (Impl\WriteColumnConfig.vb)
+- Module WriterAdapterLookup (Impl\WriterAdapterLookup.vb)
+- Class AdapterKey (Impl\WriterAdapterLookup.vb)
+- Class WriterMethodLookup (Impl\WriterAdapterLookup.vb)
+- Module ArrayAdapter (Impl\WriterAdapterLookup.vb)
+- Module CollectionAdapter (Impl\WriterAdapterLookup.vb)
+- Module EnumerableAdapter (Impl\WriterAdapterLookup.vb)
+- Class ProxyRowMap (ProxyDataFrame.vb) - Utility class for addressing a <see cref="ProxyDataFrame(Of TProxyType)"/>'s rows.
+- Class ProxyRowEnumerable (ProxyRowEnumerable.vb) - Allocation free enumerable for a proxied row.
+- Class ProxyRowEnumerator (ProxyRowEnumerable.vb) - Allocation free enumerator for a proxied row.
+- Class RowValueEnumerator (Row.vb) - Allocation free enumerator for a row.
+- Class Row (Row.vb) - Represents a row of a DataFrame. Is untyped, but returned values can be implicitly coerced to built-in types.
+- Class RowEnumerable (RowEnumerable.vb) - Allocation free enumerable for a row.
+- Class RowEnumerator (RowEnumerable.vb) - Allocation free enumerator for a row.
+- Class RowMap (RowMap.vb) - Utility class for addressing a dataframe's rows.
+- Class TypedColumnEnumerator (TypedColumn.vb) - Allocation free enumerator for a typed column.
+- Class TypedColumn (TypedColumn.vb) - Represents a column of a TypedDataFrame, or a column of a DataFrame that has been mapped. Typing is validated eagerly, but coercision of particular values is done lazily.
+- Class TypedRowMap (TypedDataFrame.vb) - Utility class for addressing a <see cref="TypedDataFrameBase(Of TRowType)"/> rows.
+- Class TypedRowValueEnumerator (TypedRow.vb) - Allocation free enumerator for a typed row.
+- Class TypedRow (TypedRow.vb) - Represents a typed row with 1 column.
+- Class TypedRowType (TypedRow.vb) - Represents a typed row with 2 columns.
+- Class TypedRowType1 (TypedRow.vb) - Represents a typed row with 3 columns.
+- Class TypedRowType2 (TypedRow.vb) - Represents a typed row with 4 columns.
+- Class TypedRowType3 (TypedRow.vb) - Represents a typed row with 5 columns.
+- Class TypedRowType4 (TypedRow.vb) - Represents a typed row with 6 columns.
+- Class TypedRowType5 (TypedRow.vb) - Represents a typed row with 7 columns.
+- Class TypedRowType6 (TypedRow.vb) - Represents a typed row with 8 columns.
+- Class TypedRowEnumerator (TypedRowEnumerable.vb) - Allocation free enumerator for a typed row.
+- Class TypedRowEnumerable (TypedRowEnumerable.vb) - Allocation free enumerable for a typed row.
+- Class Value (Value.vb) - Conversions can be performed with casts (which throw if the conversion is invalid) or the TryConvert methods which return false if the conversion is invalid. Conversions are done lazily. Values just represent offsets into a dataframe.
+
+## Notable public members
+- Public Property CurrentProp As Value Implements IEnumerator(Of Value).Current
+- Friend Sub New(parent As DataFrame, translatedColumnIndex As Long)
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+- Public Sub Reset() Implements IEnumerator.Reset
+- Public ReadOnly Property Index As Long Implements IColumn(Of Value).Index
+- Public ReadOnly Property Name As String Implements IColumn(Of Value).Name
+- Public ReadOnly Property Type As Type Implements IColumn(Of Value).Type
+- Public ReadOnly Property Length As Long Implements IColumn(Of Value).Length
+- Friend ReadOnly Property OnDiskType As ColumnType
+- Public ReadOnly Property Count As Integer Implements ICollection(Of Value).Count
+- Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of Value).IsReadOnly
+- Friend Sub New(parent As DataFrame, translatedColumnIndex As Long)
+- Friend Sub New()
+- Public Function ToArray(Of T)() As T()
+- Public Function ToArray() As Value() Implements IColumn(Of Value).ToArray
+- Public Function GetRange(Of T)(rowIndex As Long, length As Integer) As T()
+- Public Function GetRange(rowIndex As Long, length As Integer) As Value() Implements IColumn(Of Value).GetRange
+- Public Sub ToArray(Of T)(ByRef array As T()) Implements IColumn(Of Value).ToArray
+- Public Sub ToArray(ByRef array As Value()) Implements IColumn(Of Value).ToArray, IColumn(Of Value).ToArrayValue
+- Public Sub GetRange(Of T)(rowSourceIndex As Long, length As Integer, ByRef array As T()) Implements IColumn(Of Value).GetRange
+- Public Sub GetRange(rowSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IColumn(Of Value).GetRangeValue, IColumn(Of Value).G…
+- Public Sub GetRange(Of T)(rowSourceIndex As Long, length As Integer, ByRef array As T(), destinationIndex As Integer) Implements IColumn(Of Value).Get…
+- Public Sub GetRange(rowSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IColumn(Of Value).GetRa…
+- Public Function TryGetValue(Of T)(rowIndex As Long, <Out> ByRef value As T) As Boolean Implements IColumn(Of Value).TryGetValue
+- Public Function TryGetValue(rowIndex As Long, <Out> ByRef value As Value) As Boolean Implements IColumn(Of Value).TryGetValueCell, IColumn(Of Value).T…
+- Public Function GetEnumerator() As ColumnValueEnumerator
+- Public Overrides Function Equals(obj As Object) As Boolean
+- Public Overrides Function GetHashCode() As Integer
+- Public Overrides Function ToString() As String
+- Public Function Cast(Of T)() As TypedColumn(Of T)
+- Public Function IndexOf(item As Value) As Integer Implements IList(Of Value).IndexOf
+- Public Function LongIndexOf(item As Value) As Long
+- Public Sub Insert(index As Integer, item As Value) Implements IList(Of Value).Insert
+- Public Sub RemoveAt(index As Integer) Implements IList(Of Value).RemoveAt
+- Public Sub Add(item As Value) Implements ICollection(Of Value).Add
+- Public Sub Clear() Implements ICollection(Of Value).Clear
+- Public Function Contains(item As Value) As Boolean Implements ICollection(Of Value).Contains
+- Public Sub CopyTo(array As Value(), arrayIndex As Integer) Implements ICollection(Of Value).CopyTo
+- Public Function Remove(item As Value) As Boolean Implements ICollection(Of Value).Remove
+- Friend Function TryGetValueTranslated(translatedRowIndex As Long, <Out> ByRef value As Value) As Boolean
+- Friend Sub New(parent As DataFrame)
+- Public Function GetEnumerator() As ColumnEnumerator
+- Public Property CurrentProp As Column Implements IEnumerator(Of Column).Current
+- Friend Sub New(parent As DataFrame)
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+- Public Sub Reset() Implements IEnumerator.Reset
+- Public ReadOnly Property Count As Long
+- Friend Sub New(parent As DataFrame)
+- Public Function Proxy(Of TProxyType As New)(ParamArray membersToColumns As String()) As ProxyDataFrame(Of TProxyType)
+- Public Function Proxy(Of TProxyType)(factory As Func(Of TProxyType), ParamArray membersToColumns As String()) As ProxyDataFrame(Of TProxyType)
+- Public Function TryProxy(Of TProxyType As New)(<Out> ByRef dataframe As ProxyDataFrame(Of TProxyType), ParamArray membersToColumns As String()) As Boo…
+- Public Function TryProxy(Of TProxyType)(factory As Func(Of TProxyType), <Out> ByRef dataframe As ProxyDataFrame(Of TProxyType), ParamArray membersToCo…
+- Public Function Map(Of TCol1)() As TypedDataFrame(Of TCol1)
+- Public Function TryMap(Of TCol1)(<Out> ByRef dataframe As TypedDataFrame(Of TCol1)) As Boolean
+- Public Function Map(Of TCol1, TCol2)() As TypedDataFrameType(Of TCol1, TCol2)
+- Public Function TryMap(Of TCol1, TCol2)(<Out> ByRef dataframe As TypedDataFrameType(Of TCol1, TCol2)) As Boolean
+- Public Function Map(Of TCol1, TCol2, TCol3)() As TypedDataFrameType1(Of TCol1, TCol2, TCol3)
+- Public Function TryMap(Of TCol1, TCol2, TCol3)(<Out> ByRef dataframe As TypedDataFrameType1(Of TCol1, TCol2, TCol3)) As Boolean
+- ... and 895 more
+
+## Imports
+- Microsoft.VisualBasic.ApplicationServices.Debugging
+- Microsoft.VisualBasic.Data.IO
+- Microsoft.VisualBasic.DataStorage.FeatherFormat.FlatBuffers
+- Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
+- Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl.FbsMetadata
+- Microsoft.VisualBasic.Math.Information
+- std = System.Math
+- System
+- System.Collections
+- System.Collections.Generic
+- System.IO
+- System.IO.MemoryMappedFiles
+- System.Linq
+- System.Reflection
+- System.Reflection.Emit
+- System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Text
+- System.Threading
+
+## File tree
+- BasisType.vb
+- Column.vb
+- ColumnEnumerable.vb
+- ColumnMap.vb
+- DataFrame.Mapping.vb
+- DataFrame.vb
+- FeatherReader.vb
+- FeatherWriter.vb
+- Impl\CollectionLengthLookup.vb
+- Impl\ColumnMetadata.vb
+- Impl\ColumnSpec.vb
+- Impl\DataWidener.vb
+- Impl\EnumDetails.vb
+- Impl\EnumMapper.vb
+- Impl\FeatherMagic.vb
+- Impl\Flatbuffers\ByteBuffer.vb
+- Impl\Flatbuffers\FlatBufferBuilder.vb
+- Impl\Flatbuffers\FlatBufferConstants.vb
+- Impl\Flatbuffers\IFlatbufferObject.vb
+- Impl\Flatbuffers\Offset.vb
+- Impl\Flatbuffers\Struct.vb
+- Impl\Flatbuffers\Table.vb
+- Impl\IColumn.vb
+- Impl\IDataFrame.vb
+- Impl\IRow.vb
+- Impl\Metadata.vb
+- Impl\Metadata\CategoryMetadata.vb
+- Impl\Metadata\Column.vb
+- Impl\Metadata\CTable.vb
+- Impl\Metadata\DateMetadata.vb
+- Impl\Metadata\Encoding.vb
+- Impl\Metadata\PrimitiveArray.vb
+- Impl\Metadata\TimeMetadata.vb
+- Impl\Metadata\TimestampMetadata.vb
+- Impl\Metadata\TimeUnit.vb
+- Impl\Metadata\Type.vb
+- Impl\Metadata\TypeMetadata.vb
+- Impl\MultiStreamProvider.vb
+- Impl\SyntheticEnum.vb
+- Impl\UnsafeArrayReader.vb
+- Impl\ValueCaster.vb
+- Impl\WriteColumnConfig.vb
+- Impl\WriterAdapterLookup.vb
+- ProxyDataFrame.vb
+- ProxyRowEnumerable.vb
+- Row.vb
+- RowEnumerable.vb
+- RowMap.vb
+- TypedColumn.vb
+- TypedDataFrame.vb
+- TypedRow.vb
+- TypedRowEnumerable.vb
+- Value.vb
+

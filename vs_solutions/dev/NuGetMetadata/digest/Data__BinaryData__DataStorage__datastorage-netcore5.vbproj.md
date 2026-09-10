@@ -1,0 +1,138 @@
+# Data/BinaryData/DataStorage/datastorage-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.IO
+- AssemblyName  : Microsoft.VisualBasic.Data.Storage
+- TargetFramework: net10.0
+- Source files  : 12
+- Existing Title: Tabular Frame Serialization with SAS XPORT and ASN.1 Readers
+- Existing Desc : Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.
+- Existing Tags : scibasic;data-storage;sas-xport;asn1;dataframe;binary-serialization
+
+## Namespaces
+- ASN1  [files: 3]
+- Xpt  [files: 5]
+- Xpt.Types  [files: 1]
+
+## Public types
+- Class Index (ASN.1\Index.vb)
+- Class StreamReader (ASN.1\StreamReader.vb) - https://github.com/lapo-luchini/asn1js
+- Module FrameReader (Tabular\FrameReader.vb)
+- Module FrameWriter (Tabular\FrameWriter.vb)
+- Class Schema (Tabular\Schema.vb)
+- Class VectorSchema (Tabular\Schema.vb)
+- Class IO (XPT\IO.vb) - Contains static convenience methods for low level operations (typically close to IO). @author Kasper Sørensen
+- Class PrimitiveUtils (XPT\PrimitiveUtils.vb)
+- Class SASXportConverter (XPT\SASXportConverter.vb)
+- Class SASXportFileIterator (XPT\SASXportFileIterator.vb) - ### 4. **Interoperability with Other Tools** Beyond SAS, XPT files can be processed in other programming environments. For example, in R, the `Hmisc` package's `sasxport.get` function imports XPT data for analysis, demonstrating
+- Class SimpleDateFormat (XPT\XPTReaderUtils.vb)
+- Class XPTReaderUtils (XPT\XPTReaderUtils.vb)
+- Module XPTTypes (XPT\XPTTypes.vb)
+- Class XPTHeader (XPT\XPTTypes.vb)
+- Class XPTNameString (XPT\XPTTypes.vb)
+- Class XPTContext (XPT\XPTTypes.vb)
+- Class TimeStamp (XPT\XPTTypes.vb)
+- Class ReadStatVariable (XPT\XPTTypes.vb)
+- Class ReadstatMissingness (XPT\XPTTypes.vb)
+- Class ReadstatValue (XPT\XPTTypes.vb)
+- Class ReadstatLabelSet (XPT\XPTTypes.vb)
+- Class ReadstatValueLabel (XPT\XPTTypes.vb)
+- Enum ReadstatType (XPT\XPTTypes.vb)
+- Enum ReadstatAlignment (XPT\XPTTypes.vb)
+- Enum ReadstatMeasure (XPT\XPTTypes.vb)
+
+## Notable public members
+- Public Function stringCut(str$, len%) As String
+- Public Const hexDigits = "0123456789ABCDEF"
+- Public Const b64Safe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+- Public Function hexByte(b As Byte) As String
+- Public Function hexDump(start, [end], raw) As String
+- Public Function isASCII(start%, end%) As Boolean
+- Public Function parseStringISO(start%, end%) As String
+- Public Function parseStringUTF(start%, end%) As String
+- Public Function parseStringBMP(start%, end%) As String
+- Public Function parseTime(start%, end%, shortYear As Boolean) As String
+- Public Function ReadFrame(file As String) As DataFrame
+- Public Function ReadFrame(file As Stream) As DataFrame
+- Public Function ReadFeatures(file As String) As DataFrame
+- Public Function ReadSasXPT(file As String) As DataFrame
+- Public Function ReadSasXPT(buffer As Stream, Optional filename As String = Nothing) As DataFrame
+- Public ReadOnly Property magic As IReadOnlyCollection(Of Byte) = Encoding.ASCII.GetBytes("scibasic.net/dataframe")
+- Public Function WriteFrame(df As DataFrame, file As Stream) As Boolean
+- Public Property rownames As String()
+- Public Property cols As Dictionary(Of String, VectorSchema)
+- Public Property dims As Integer()
+- Public Property name As String
+- Public Property description As String
+- Public Property ordinals As String()
+- Public Property type As TypeCode
+- Public Property isScalar As Boolean
+- Public Property offset As Long
+- Public Property attrs As Dictionary(Of String, String)
+- Public Overrides Function ToString() As String
+- Public Function GetTypeInfo() As Type
+- Public Function CreateEmpty() As Array
+- Public Shared Function toBytes(ParamArray arr As Integer()) As Byte()
+- Public Shared Function readString(buffer As Byte(), off As Integer, len As Integer) As String
+- Public Shared Function readByte(buffer As Byte(), off As Integer) As Byte
+- Public Shared Function readInt(buffer As Byte(), off As Integer) As Integer
+- Public Shared Function readDouble(buffer As Byte(), off As Integer) As Double
+- Public Shared Function readBytes(data As Byte(), off As Integer, len As Integer) As Byte()
+- Public Shared Function readShort(buffer As Byte(), off As Integer) As Short
+- Public Shared Function readNumber(buffer As Byte(), off As Integer, len As Integer) As IComparable
+- Public Shared Function concat(arr1 As Byte(), arr2 As Byte()) As Byte()
+- Public Shared Function swap(value As Short) As Short
+- Public Shared Function swap(value As Integer) As Integer
+- Public Shared Function swap(value As Long) As Long
+- Public Shared Function swap(value As Single) As Single
+- Public Shared Function swap(value As Double) As Double
+- Public Shared Sub swap(array As Short())
+- Public Shared Sub swap(array As Integer())
+- Public Shared Sub swap(array As Long())
+- Public Shared Sub swap(array As Single())
+- Public Shared Sub swap(array As Double())
+- Public Shared Function intToBytes(num As Integer) As Byte()
+- Public Shared Function longToBytes(num As Long) As Byte()
+- Public Shared Function toDouble(bytes As Byte()) As Double
+- Public Shared Function toLong(bytes As Byte()) As Long
+- Public Shared Function toLongLittle(bytes As Byte()) As Long
+- Public Shared Sub memset(buffer As Byte(), val As Byte, len As Integer)
+- Public Shared Function memcmp(tgt As Byte(), tgt_off As Integer, src As Byte(), src_off As Integer, len As Integer) As Boolean
+- Public Shared Sub memcpy(tgt As Byte(), tgt_off As Integer, src As Byte(), src_off As Integer, len As Integer)
+- Public Shared Sub memreverse(intp As Byte(), len As Integer)
+- Public Shared Function xpt2ieeeSimple(xport As Byte()) As Double
+- Public Sub New(fileName As String)
+- ... and 40 more
+
+## Imports
+- any = Microsoft.VisualBasic.Scripting
+- Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Data.IO.Xpt
+- Microsoft.VisualBasic.Data.IO.Xpt.Types
+- Microsoft.VisualBasic.DataStorage
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Scripting.Runtime
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.VisualBasic.Text
+- std = System.Math
+- System.Globalization
+- System.IO
+- System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Text
+- System.Text.RegularExpressions
+
+## File tree
+- ASN.1\Extensions.vb
+- ASN.1\Index.vb
+- ASN.1\StreamReader.vb
+- Tabular\FrameReader.vb
+- Tabular\FrameWriter.vb
+- Tabular\Schema.vb
+- XPT\IO.vb
+- XPT\PrimitiveUtils.vb
+- XPT\SASXportConverter.vb
+- XPT\SASXportFileIterator.vb
+- XPT\XPTReaderUtils.vb
+- XPT\XPTTypes.vb
+

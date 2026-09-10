@@ -1,0 +1,203 @@
+# gr/network-visualization/Visualizer/networkVisualizer.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.visualize.Network
+- AssemblyName  : Microsoft.VisualBasic.Data.visualize.Network.Visualizer
+- TargetFramework: net10.0
+- Source files  : 44
+- Existing Title: Network Graph Rendering Engine With CSS Style Mapping
+- Existing Desc : Renders a laid-out NetworkGraph into bitmap or vector images, drawing nodes, edges, arrowheads, labels and convex-hull groups through a CSS-like map-expression language for colours, shapes and sizes in sciBASIC#.
+- Existing Tags : scibasic;network-rendering;data-visualization;style-mapping;convex-hull
+
+## Namespaces
+- Styling  [files: 9]
+- Styling.CSS  [files: 5]
+- Styling.FillBrushes  [files: 7]
+- Styling.Numeric  [files: 4]
+
+## Public types
+- Module CanvasDrawer (Canvas.vb)
+- Module CanvasScaler (CanvasScaler.vb) - 进行网络模型之中的节点的位置缩放以及中心化平移操作的帮助模块 计算节点在画布上面的正确的位置操作： 1. 计算整个网络图形的边界
+- Class DrawKDTree (DrawKDTree.vb)
+- Class LayoutLabel (LayoutLabel.vb)
+- Class BundleNode (MingleRender\BundleNode.vb)
+- Class MingleRender (MingleRender\MingleRender.vb)
+- Class PosItem (MingleRender\PosItem.vb)
+- Module RenderHelpers (MingleRender\RenderHelpers.vb)
+- Class RenderOptions (MingleRender\RenderOptions.vb)
+- Class NetworkPlot (NetworkPlot.vb) - 网络图渲染类：承载网络模型与渲染配置，对外暴露 <see cref="Render"/> 产出图像。 该类对应于 <see cref="NetworkVisualizer.DrawImage"/> 原来的绘图主流程， 将坐标换算、边/节点/标签/凸包多边形的绘制逻辑收敛为职责单一的渲染对象，
+- Class NetworkRenderConfig (NetworkRenderConfig.vb) - 网络图绘制的所有可配置参数的统一承载对象。 该配置类的每一个字段都严格对应 <see cref="NetworkVisualizer.DrawImage"/> 原有的 Optional 参数，并且默认值与原来的 Optional 默认值保持一致，
+- Module NetworkVisualizer (NetworkVisualizer.vb)
+- Class EdgeRendering (Render\EdgeRendering.vb) - 网络边的渲染类。从共享的 <see cref="NetworkRenderConfig"/> 配置对象读取参数， 取代原先一长串的独立构造函数参数。
+- Class LineSegmentRender (Render\EdgeRendering.vb) - draw a line segment
+- Class HullPolygonRendering (Render\HullPolygonRendering.vb) - 将网络节点按照分组绘制出凸包多边形（convex hull polygon）以及其图例。 该类由原 <see cref="NetworkVisualizer"/> 模块内的私有扩展方法 <c>drawhullPolygon</c> 迁移而来，改为从共享的 <see cref="NetworkRenderConfig"/>
+- Class LabelRendering (Render\LabelRendering.vb) - 使用退火算法计算出节点标签文本的位置
+- Class NodeRendering (Render\NodeRendering.vb) - 网络节点的渲染类。从共享的 <see cref="NetworkRenderConfig"/> 配置对象读取参数， 取代原先一长串的独立构造函数参数。
+- Module NamespaceDoc (Styling\CSS\NamespaceDoc.vb) - CSS style file loader module for the network render. How it works? ```
+- Structure StyleCreator (Styling\CSS\StyleCreator.vb)
+- Structure StyleMapper (Styling\CSS\StyleMapper.vb) - Network object visualize styling object model, the network render css file parser
+- Class NodeStyle (Styling\CSS\StyleObject.vb)
+- Class EdgeStyle (Styling\CSS\StyleObject.vb)
+- Class LabelStyle (Styling\CSS\StyleObject.vb)
+- Module StyleParser (Styling\CSS\StyleParser.vb) - The Css file model parser
+- Module EdgeStyles (Styling\EdgeStyles.vb)
+- Class CategoryBrush (Styling\Expression\Brush\CategoryBrush.vb) - 差不多相当于离散映射的一种变种
+- Class ColorRangeBrush (Styling\Expression\Brush\ColorRangeBrush.vb) - 区间映射，也可能是category映射
+- Interface IGetBrush (Styling\Expression\Brush\DiscreteBrush.vb)
+- Class DiscreteSequenceBrush (Styling\Expression\Brush\DiscreteBrush.vb)
+- Class DiscreteBrush (Styling\Expression\Brush\DiscreteBrush.vb)
+- Class ImagePassthroughBrush (Styling\Expression\Brush\ImagePassthroughBrush.vb) - 属性名作为文件名，从指定的文件夹之中读取图片文件的passthrough映射
+- Class PassthroughBrush (Styling\Expression\Brush\PassthroughBrush.vb) - 只能够映射颜色
+- Class UnifyColorBrush (Styling\Expression\Brush\UnifyColorBrush.vb) - 全部都使用统一的颜色进行填充
+- Class UnifyImageBrush (Styling\Expression\Brush\UnifyImageBrush.vb) - 全部都使用统一的图案
+- Module BrushExpression (Styling\Expression\BrushExpression.vb)
+- Structure MapExpression (Styling\Expression\MapExpression.vb)
+- Class ContinuousNumber (Styling\Expression\Numeric\ContinuousNumber.vb)
+- Class DiscreteNumber (Styling\Expression\Numeric\DiscreteNumber.vb)
+- Interface IGetSize (Styling\Expression\Numeric\PassthroughNumber.vb)
+- Class PassthroughNumber (Styling\Expression\Numeric\PassthroughNumber.vb) - 从节点的给定属性之中得到对应的节点大小值
+- Class UnifyNumber (Styling\Expression\Numeric\UnifyNumber.vb) - 所有的节点都统一大小
+- Interface IGetShape (Styling\Expression\ShapeExpression.vb)
+- Module ShapeExpression (Styling\Expression\ShapeExpression.vb)
+- Class DiscreteShape (Styling\Expression\ShapeExpression.vb)
+- Module SizeExpression (Styling\Expression\SizeExpression.vb)
+- Module SyntaxExtensions (Styling\Expression\Syntax.vb)
+- Module MapperProcessor (Styling\MapperProcessor.vb) - Do style mapping from the parsed css file at here
+- Module NodeStyles (Styling\NodeStyles.vb)
+- Module StyleMappings (Styling\StyleMappings.vb) - Color, size, shapes, line type, etc. (这个模块之中的API是为node和edge进行styling所提供的基于<see cref="MapperTypes"/>这三种映射类型的结果)
+
+## Notable public members
+- Public Function DrawImage(net As NetworkGraph, styling As StyleMapper,
+- Public Function CalculateNodePositions(net As NetworkGraph, frameSize As SizeF, padding As Padding,
+- Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As SizeF) As PointF
+- Public Sub New(tree As KdTree(Of Point2D), query As NamedValue(Of PointF)(), k As Integer, theme As Theme)
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+- Public Overloads Shared Function Plot(tree As KdTree(Of Point2D),
+- Public Function NodeBrushAssert(node As Node) As Predicate(Of Object)
+- Public Function GetDisplayText(n As Node) As String
+- Public ReadOnly Property offsetDistance As Double
+- Public ReadOnly Property hasGDIData As Boolean
+- Public Function GetTextAnchor() As Point
+- Public Overrides Function ToString() As String
+- Public ReadOnly Property node As Node
+- Public ReadOnly Property expandedEdges As PosItem()()
+- Public ReadOnly Property unbundledEdges As Dictionary(Of String, PosItem()())
+- Public Overrides Function ToString() As String
+- Public Function expandEdges() As PosItem()()
+- Public Function unbundleEdges(Optional delta As number = 0) As PosItem()()
+- Public Sub renderLine(edges As PosItem()())
+- Public Function adjustPosition(id As String, posItem As PosItem, pos As Vector, margin As number, delta As number) As Vector
+- Public Sub renderBezier(edges As PosItem()())
+- Public Sub renderQuadratic(edges As PosItem()())
+- Public Property node As Node
+- Public Property pos As Vector
+- Public Property normal As Vector
+- Public Property unbundledPos As number()
+- Friend Function cloneEdge(json As PosItem()) As PosItem()
+- Friend Sub expandEdgesHelper(node As Node, Array As List(Of number()), collect As List(Of number()()))
+- Friend Sub expandEdgesRichHelper(node As Node, Array As PosItem(), collect As PosItem()())
+- Public Property lineWidth As Double
+- Public Property fillStyle As String
+- Public Property curviness As Double
+- Public Property margin As Double
+- Public Property delta As Double
+- Public Property scale As Double
+- Public Function Render() As GraphicsData
+- Friend Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
+- Public Property CanvasSize As String = "1024,1024"
+- Public Property Padding As String = g.DefaultPadding
+- Public Property Background As String = "white"
+- Public Property Ppi As Integer = 100
+- Public Property Driver As Drivers = Drivers.Default
+- Public Property DefaultColor As String = "skyblue"
+- Public Property DisplayId As Boolean = True
+- Public Property LabelColorAsNodeColor As Boolean = False
+- Public Property NodeStroke As String = WhiteStroke
+- Public Property NodeRadius As [Variant](Of Func(Of Node, Single), Single) = Nothing
+- Public Property FontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing
+- Public Property LabelFontBase As String = CSSFont.Win7Normal
+- Public Property LabelWordWrapWidth As Integer = -1
+- Public Property HideDisconnectedNode As Boolean = False
+- Public Property DrawNodeShape As NetworkVisualizer.DrawNodeShape = Nothing
+- Public Property NodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF) = Nothing
+- Public Property ShapeRender As NetworkVisualizer.DrawShape = Nothing
+- Public Property GetNodeLabel As Func(Of Node, String) = Nothing
+- Public Property GetLabelPosition As NetworkVisualizer.GetLabelPosition = Nothing
+- Public Property GetLabelColor As Func(Of Node, Color) = Nothing
+- Public Property MinLinkWidth As Single = 2
+- Public Property LinkWidth As Func(Of Edge, Single) = Nothing
+- Public Property EdgeDashTypes As [Variant](Of Dictionary(Of String, DashStyle), DashStyle) = Nothing
+- ... and 66 more
+
+## Imports
+- any = Microsoft.VisualBasic.Scripting
+- Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+- Bitmap = System.Drawing.Bitmap
+- Brush = Microsoft.VisualBasic.Imaging.Brush
+- Brush = System.Drawing.Brush
+- Brushes = Microsoft.VisualBasic.Imaging.Brushes
+- Brushes = System.Drawing.Brushes
+- DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+- DashStyle = System.Drawing.Drawing2D.DashStyle
+- Font = Microsoft.VisualBasic.Imaging.Font
+- Font = System.Drawing.Font
+- GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+- GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+- Image = Microsoft.VisualBasic.Imaging.Image
+- Image = System.Drawing.Image
+- Microsoft.VisualBasic.ApplicationServices.Development
+- Microsoft.VisualBasic.CommandLine
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+- Microsoft.VisualBasic.ComponentModel.DataStructures
+- Microsoft.VisualBasic.ComponentModel.Ranges
+
+## File tree
+- Canvas.vb
+- CanvasScaler.vb
+- DrawKDTree.vb
+- Extensions.vb
+- GlobalSuppressions.vb
+- LayoutLabel.vb
+- MingleRender\BundleNode.vb
+- MingleRender\MingleRender.vb
+- MingleRender\PosItem.vb
+- MingleRender\RenderHelpers.vb
+- MingleRender\RenderOptions.vb
+- NetworkPlot.vb
+- NetworkRenderConfig.vb
+- NetworkVisualizer.vb
+- Render\EdgeRendering.vb
+- Render\HullPolygonRendering.vb
+- Render\LabelRendering.vb
+- Render\NodeRendering.vb
+- Styling\CSS\NamespaceDoc.vb
+- Styling\CSS\StyleCreator.vb
+- Styling\CSS\StyleMapper.vb
+- Styling\CSS\StyleObject.vb
+- Styling\CSS\StyleParser.vb
+- Styling\EdgeStyles.vb
+- Styling\Expression\Brush\CategoryBrush.vb
+- Styling\Expression\Brush\ColorRangeBrush.vb
+- Styling\Expression\Brush\DiscreteBrush.vb
+- Styling\Expression\Brush\ImagePassthroughBrush.vb
+- Styling\Expression\Brush\PassthroughBrush.vb
+- Styling\Expression\Brush\UnifyColorBrush.vb
+- Styling\Expression\Brush\UnifyImageBrush.vb
+- Styling\Expression\BrushExpression.vb
+- Styling\Expression\MapExpression.vb
+- Styling\Expression\Numeric\ContinuousNumber.vb
+- Styling\Expression\Numeric\DiscreteNumber.vb
+- Styling\Expression\Numeric\PassthroughNumber.vb
+- Styling\Expression\Numeric\UnifyNumber.vb
+- Styling\Expression\ShapeExpression.vb
+- Styling\Expression\SizeExpression.vb
+- Styling\Expression\Syntax.vb
+- Styling\MapperProcessor.vb
+- Styling\NodeStyles.vb
+- Styling\StyleMappings.vb
+- zzz.vb
+

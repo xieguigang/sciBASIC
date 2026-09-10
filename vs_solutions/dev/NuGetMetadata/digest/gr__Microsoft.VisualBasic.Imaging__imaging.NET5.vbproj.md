@@ -1,0 +1,415 @@
+# gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Imaging
+- AssemblyName  : Microsoft.VisualBasic.Imaging
+- TargetFramework: net10.0-windows;net10.0
+- Source files  : 269
+- Existing Title: 2D And 3D Scientific Graphics Rendering Engine
+- Existing Desc : A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API. It is the visualization core of sciBASIC#.
+- Existing Tags : scibasic;graphics;imaging;svg;postscript
+
+## Namespaces
+- d3js  [files: 2]
+- d3js.Layout  [files: 6]
+- d3js.scale  [files: 7]
+- d3js.SVG.CSS  [files: 2]
+- Drawing2D  [files: 9]
+- Drawing2D.Colors  [files: 10]
+- Drawing2D.Colors.OfficeAccent  [files: 3]
+- Drawing2D.Colors.Scaler  [files: 6]
+- Drawing2D.HeatMap  [files: 8]
+- Drawing2D.HeatMap.hqx  [files: 7]
+- Drawing2D.Math2D  [files: 4]
+- Drawing2D.Math2D.ConcaveHull  [files: 5]
+- Drawing2D.Math2D.ConvexHull  [files: 3]
+- Drawing2D.Math2D.DelaunayVoronoi  [files: 18]
+- Drawing2D.Math2D.MarchingSquares  [files: 9]
+- Drawing2D.Math2D.PolylineSimplify  [files: 4]
+- Drawing2D.Shapes  [files: 10]
+- Drawing2D.Text  [files: 3]
+- Drawing2D.Text.ASCIIArt  [files: 3]
+- Drawing2D.Text.Nudge  [files: 9]
+- Drawing3D  [files: 9]
+- Drawing3D.Math3D  [files: 9]
+- Drawing3D.Math3D.MarchingCubes  [files: 5]
+- Drawing3D.Models  [files: 5]
+- Drawing3D.Models.Isometric  [files: 2]
+- Drawing3D.Models.Isometric.Paths  [files: 3]
+- Drawing3D.Models.Isometric.Shapes  [files: 7]
+- Driver  [files: 13]
+- Driver.CSS  [files: 2]
+- Filters  [files: 8]
+- PostScript  [files: 7]
+- PostScript.Elements  [files: 7]
+- SVG  [files: 6]
+- SVG.CSS  [files: 8]
+- SVG.PathHelper  [files: 13]
+- SVG.XML  [files: 28]
+- SVG.XML.Enums  [files: 6]
+
+## Public types
+- Class DirectedForceGraph (d3js\CSS.vb) - Style generator for the value of <see cref="XmlMeta.CSS.style"/>
+- Class Font (d3js\CSS.vb)
+- Class CssValue (d3js\CSS.vb)
+- Class Anchor (d3js\labeler\Anchor.vb) - anchor point can be created via <see cref="GetLabelAnchors"/> function
+- Class Forcedirected (d3js\labeler\fdLabeler\Forcedirected.vb)
+- Module LabelCollisionSolver (d3js\labeler\fdLabeler\LabelCollisionSolver.vb) - 用于解决文本标签重叠问题的力导向迭代算法模块
+- Class Label (d3js\labeler\Label.vb) - a text label object
+- Class Labeler (d3js\labeler\labeler.vb) - A D3 plug-in for automatic label placement using simulated annealing that easily incorporates into existing D3 code, with syntax mirroring other D3 layouts.
+- Module ModuleAPI (d3js\ModuleAPI.vb)
+- Class ConstantScale (d3js\scale\constant.vb)
+- Module Extensions (d3js\scale\Extensions.vb)
+- Class LinearScale (d3js\scale\linear.vb) - 连续性的映射
+- Enum MapperTypes (d3js\scale\MapperTypes.vb) - 从graphics的属性值到相应的图形属性(大小，颜色，字体，形状)的映射操作类型
+- Class OrdinalScale (d3js\scale\ordinal.vb) - Unlike continuous scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column
+- Enum scalers (d3js\scale\scalers.vb)
+- Module ScaleChromatic (d3js\ScaleChromatic.vb) - For example, to create a categorical color scale using the Accent color scheme: ```vbnet Dim color = d3js.scaleOrdinal(d3js.schemeAccent)
+- Structure ColorBrewer (Drawing2D\Colors\ColorBrewer.vb) - Most of the qualitative schemes rely on differences in hue with only subtle lightness differences between colors. You may pick a subset of colors from a legend with more classes if you are not pleased with the subsets. For example, you could pick four colors from a seven-color legend. Two exceptions to the use of consistent lightness:
+- Class CustomDesigns (Drawing2D\Colors\CustomDesigns.vb)
+- Module Designer (Drawing2D\Colors\Designer.vb) - Generate color sequence
+- Module DesignerTerms (Drawing2D\Colors\DesignerTerms.vb) - Color name terms
+- Structure DesignerExpression (Drawing2D\Colors\Expression.vb) - ```vbnet lighter(term, percentage) darker(term, percentage)
+- Class ColorMapLegend (Drawing2D\Colors\Legend\ColorMapLegend.vb) - a continues numeric scaler legend bar
+- Module Legends (Drawing2D\Colors\Legend\Legend.vb)
+- Structure ObjectColor (Drawing2D\Colors\Office\ObjectAccent.vb)
+- Structure Accent (Drawing2D\Colors\Office\ObjectAccent.vb)
+- Structure sysClr (Drawing2D\Colors\Office\ObjectAccent.vb)
+- Structure srgbClr (Drawing2D\Colors\Office\ObjectAccent.vb) - 颜色值
+- Module OfficeColorThemes (Drawing2D\Colors\Office\OfficeColorThemes.vb)
+- Enum CategoryPalettes (Drawing2D\Colors\Palette.vb) - color palette for category data.
+- Class ColorHeightMap (Drawing2D\Colors\Scaler\ColorHeightMap.vb) - Map a color to a single numeric value Extract numeric value from a raster data
+- Class ColorIndex (Drawing2D\Colors\Scaler\ColorIndex.vb) - map colors and the numeric range
+- Structure ColorRange (Drawing2D\Colors\Scaler\ColorRange.vb)
+- Class CategoryColorProfile (Drawing2D\Colors\Scaler\Mapper\CategoryColorProfile.vb) - mapping term to color, used for category group plot
+- Class ValueScaleColorProfile (Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb) - scale(color_schema_term_name), apply for the heatmap plot
+- Enum ScalerPalette (Drawing2D\Colors\ScalerPalette.vb) - color set for visualize linear scale data color mapping
+- Enum MoveTypes (Drawing2D\Extensions.vb)
+- Module g (Drawing2D\g.vb)
+- Structure GraphicsRegion (Drawing2D\GraphicsRegion.vb) - 绘图区域的参数
+- Class HeatMapMatrix (Drawing2D\HeatMap\HeatMapMatrix.vb)
+- Class HeatMapBrushes (Drawing2D\HeatMap\HeatMapParameters.vb)
+- Class HeatMapParameters (Drawing2D\HeatMap\HeatMapParameters.vb)
+- Class HeatMapRaster (Drawing2D\HeatMap\HeatMapRaster.vb) - A helper class or produce heatmap raster matrix data https://github.com/RainkLH/HeatMapSharp
+- Class Hqx_2x (Drawing2D\HeatMap\Hqx\Hqx_2x.vb)
+- Class Hqx_3x (Drawing2D\HeatMap\Hqx\Hqx_3x.vb)
+- Class Hqx_4x (Drawing2D\HeatMap\Hqx\Hqx_4x.vb)
+- Enum HqxScales (Drawing2D\HeatMap\Hqx\HqxScales.vb)
+- Module RgbYuv (Drawing2D\HeatMap\Hqx\RgbYuv.vb)
+- Interface IRasterGrayscaleHeatmap (Drawing2D\HeatMap\Pixel.vb)
+- Structure PixelData (Drawing2D\HeatMap\Pixel.vb) - A pixel spot object associate [x,y] with intensity scale data
+- Class PixelRender (Drawing2D\HeatMap\PixelRender.vb)
+- Class RasterMatrix (Drawing2D\HeatMap\RasterMatrix.vb) - matrix helper for do heatmap rendering raster object is based on the <see cref="NumericMatrix"/> or <see cref="SparseMatrix"/> data object with specific size.
+- Class RasterScaler (Drawing2D\HeatMap\RasterScaler.vb) - do image size scaling A internal image data readonly matrix object
+- Class ReinhardColorNormalization (Drawing2D\HeatMap\ReinhardColorNormalization.vb) - This scales and shifts the source channel's distribution to match the target's statistics. 4. **Reconversion**: Convert the transformed LAB image back to RGB using `lab2rgb` to produce the final color-normalized result . ### 3 Key Advantages
+- Module CanvasScaler (Drawing2D\Math2D\CanvasScaler.vb) - the scaler of the canvas size and rectangle
+- Class BallConcave (Drawing2D\Math2D\ConcaveHull\AlphaShapes2D.vb) - + http://www.tuicool.com/articles/iUvMjm + http://www.ian-ko.com/ET_GeoWizards/UserGuide/concaveHull.htm
+- Class DelaunayMesh2d (Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb)
+- Class DelaunayTriangulation (Drawing2D\Math2D\ConcaveHull\DelaunayTriangulation.vb) - http://www.tuicool.com/articles/iUvMjm
+- Module Extensions (Drawing2D\Math2D\ConcaveHull\Extensions.vb)
+- Structure TriangleIndex (Drawing2D\Math2D\ConcaveHull\Triangle.vb) - the 3d point index
+- Structure TriangleVertex (Drawing2D\Math2D\ConcaveHull\Triangle.vb)
+- Structure Triangle (Drawing2D\Math2D\ConcaveHull\Triangle.vb)
+- Structure EdgeInfo (Drawing2D\Math2D\ConcaveHull\Triangle.vb)
+- Module ConvexHull (Drawing2D\Math2D\ConvexHull\ConvexHull.vb) - In mathematics, the convex hull or convex envelope of a set X of points in the Euclidean plane or in a Euclidean space (or, more generally, in an affine space over the reals) is the smallest convex set that contains X. For instance, when X is a bounded subset of the plane, the convex
+- Module GrahamScan (Drawing2D\Math2D\ConvexHull\GrahamScan.vb)
+- Module JarvisMatch (Drawing2D\Math2D\ConvexHull\JarvisMatch.vb)
+- Module HullPolygonDraw (Drawing2D\Math2D\HullPolygonDraw.vb)
+- Module ASCIIPrinter (Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb)
+- Class ContourLayer (Drawing2D\Math2D\MarchingSquares\ContourLayer.vb)
+- Class Polygon2D (Drawing2D\Math2D\MarchingSquares\ContourLayer.vb)
+- Module ContourTracing (Drawing2D\Math2D\MarchingSquares\ContourTracing.vb) - https://raw.githubusercontent.com/STPR/contour_tracing/main/rust/src/lib.rs
+- Class GeneralPath (Drawing2D\Math2D\MarchingSquares\GeneralPath.vb) - a collection of the polygon data
+- Class IsoCell (Drawing2D\Math2D\MarchingSquares\IsoCell.vb) - IsoCell is used to describe properties of data cells, in particular, indicating whether neighbors are above or below a threshold value. Other methods also help the caller follow isolines from cell to cell in a
+- Class MapMatrix (Drawing2D\Math2D\MarchingSquares\MapMatrix.vb) - 将稀疏矩阵数据转换为稠密矩阵数据
+- Class MarchingSquares (Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb) - to least significant bit at the bottom left. The resulting 4-bit index can have 16 possible values in the range 0-15 </para>
+- Class MeasureData (Drawing2D\Math2D\MarchingSquares\MeasureData.vb) - 测量数据
+- Enum Side (Drawing2D\Math2D\MarchingSquares\Side.vb)
+- Module Math2DHelper (Drawing2D\Math2D\Math2DHelper.vb)
+- Interface ISimplifyUtility (Drawing2D\Math2D\PolylineSimplify\ISimplifyUtility.vb)
+- Class Point (Drawing2D\Math2D\PolylineSimplify\Point.vb)
+- Class SimplifyUtility (Drawing2D\Math2D\PolylineSimplify\SimplifyUtility.vb) - Simplification of a 2D-polyline.
+- Class SimplifyUtility3D (Drawing2D\Math2D\PolylineSimplify\SimplifyUtility3D.vb) - Simplification of a 3D-polyline. Use only the 3D version if your point contains altitude information, if no altitude information is provided the 2D library gives a 20%
+- Module Spline (Drawing2D\Math2D\Spline.vb)
+- Class Edge (Drawing2D\Math2D\Voronoi\Delaunay\Edge.vb) - The line segment connecting the two Vertices is part of the Voronoi diagram </summary>
+- Class EdgeList (Drawing2D\Math2D\Voronoi\Delaunay\EdgeList.vb)
+- Class EdgeReorderer (Drawing2D\Math2D\Voronoi\Delaunay\EdgeReorderer.vb)
+- Class Halfedge (Drawing2D\Math2D\Voronoi\Delaunay\Halfedge.vb)
+- Class HalfedgePriorityQueue (Drawing2D\Math2D\Voronoi\Delaunay\HalfedgePriorityQueue.vb)
+- Interface ICoord (Drawing2D\Math2D\Voronoi\Delaunay\ICoord.vb)
+- Class LR (Drawing2D\Math2D\Voronoi\Delaunay\LR.vb)
+- Class LRCollection (Drawing2D\Math2D\Voronoi\Delaunay\LRCollection.vb)
+- Class Site (Drawing2D\Math2D\Voronoi\Delaunay\Site.vb)
+- Class BoundsCheck (Drawing2D\Math2D\Voronoi\Delaunay\Site.vb)
+- Class SiteList (Drawing2D\Math2D\Voronoi\Delaunay\SiteList.vb)
+- Class Triangle (Drawing2D\Math2D\Voronoi\Delaunay\Triangle.vb)
+- Class Vertex (Drawing2D\Math2D\Voronoi\Delaunay\Vertex.vb)
+- Class Voronoi (Drawing2D\Math2D\Voronoi\Delaunay\Voronoi.vb) - https://github.com/jfg8/csDelaunay
+- Class Circle (Drawing2D\Math2D\Voronoi\Geom\Circle.vb)
+- Class LineSegment (Drawing2D\Math2D\Voronoi\Geom\LineSegment.vb)
+- Class Polygon (Drawing2D\Math2D\Voronoi\Geom\Polygon.vb)
+- Structure Rectf (Drawing2D\Math2D\Voronoi\Geom\Rectf.vb)
+- Enum Winding (Drawing2D\Math2D\Voronoi\Geom\Winding.vb)
+- Class PolarGraphics2D (Drawing2D\Polar\PolarGraphics2D.vb) - 以极坐标为主的作图系统模块
+- Class PrinterDimension (Drawing2D\PrinterDimension.vb) - the size definition of the printer, usually apply for the PDF output
+- Enum Orientations (Drawing2D\PrinterDimension.vb)
+- Class Path2D (Drawing2D\Render2D\Path2D.vb) - 通过模拟HTML之中的svg path的绘图操作来将html svg path转换为gdi+ path对象
+- Class RenderContext (Drawing2D\Render2D\RenderContext.vb)
+- Class RenderShape (Drawing2D\Render2D\RenderShape.vb)
+- Class Shadow (Drawing2D\Shadow.vb)
+- Class Arrow (Drawing2D\Shapes\Arrow.vb) - 按照任意角度旋转的箭头对象
+- Class Box (Drawing2D\Shapes\Box.vb) - rectangle model
+- Class Circle (Drawing2D\Shapes\Circle.vb)
+- Class Diamond (Drawing2D\Shapes\Diamond.vb)
+- Class Hexagon (Drawing2D\Shapes\Hexagon.vb) - 六边形
+- Class Line (Drawing2D\Shapes\Line.vb)
+- Class Pentacle (Drawing2D\Shapes\Pentacle.vb) - 五角星
+- Class RoundRect (Drawing2D\Shapes\RoundRect.vb) - 绘制圆角矩形
+- Class Triangle (Drawing2D\Shapes\Triangle.vb)
+- Module CharSet (Drawing2D\Text\ASCIIArt\CharSet.vb)
+- Module HelperMethods (Drawing2D\Text\ASCIIArt\Convert2ASCII.vb) - Program that converts images to ASCII art images > https://github.com/juangallostra/Image2ASCII
+- Class WeightedChar (Drawing2D\Text\ASCIIArt\WeightedChar.vb) - a pixel char
+- ... and 150 more
+
+## Notable public members
+- Public Property node As CssValue
+- Public Property link As CssValue
+- Public Property text As Font
+- Public Overrides Function ToString() As String
+- Public Property font As String = FontFace.MicrosoftYaHei
+- Public Property color As String = "gray"
+- Public Property font_size As Integer = 10
+- Public Overrides Function ToString() As String
+- Public Overrides Function ToString() As String
+- Public Property x As Double
+- Public Property y As Double
+- Public Property r As Double
+- Public Overrides Function ToString() As String
+- Public MustOverride Function Start(Optional nsweeps% = 2000, Optional showProgress As Boolean = True) As DataLabeler
+- Public Function WithOffset(offset As PointF) As DataLabeler
+- Public Overridable Function Width(x#) As DataLabeler
+- Public Overridable Function Height(x#) As DataLabeler
+- Public Function Size(x As SizeF) As DataLabeler
+- Public Function Labels(x As IEnumerable(Of Label)) As DataLabeler
+- Public Function Anchors(x As IEnumerable(Of Anchor)) As DataLabeler
+- Public Iterator Function GetEnumerator() As IEnumerator(Of Label) Implements IEnumerable(Of Label).GetEnumerator
+- Public Overrides Function Width(x As Double) As DataLabeler
+- Public Overrides Function Height(x As Double) As DataLabeler
+- Public Sub Collide()
+- Protected Sub reset()
+- Protected Sub RejectRegions()
+- Protected Overridable Sub runRepulsive()
+- Protected Overridable Sub runAttraction()
+- Public Overrides Function Start(Optional nsweeps As Integer = 2000, Optional showProgress As Boolean = True) As DataLabeler
+- Public Sub ResolveOverlaps(labels As Label(),
+- Public Property X As Double
+- Public Property Y As Double
+- Public Property width As Double
+- Public Property height As Double
+- Public Property text As String = Me.GetHashCode
+- Public Property pinned As Boolean
+- Public ReadOnly Property rectangle As RectangleF
+- Public ReadOnly Property location As PointF
+- Public Overrides Function ToString() As String
+- Public Function distanceTo(anchor As Anchor) As Double
+- Public Delegate Function CoolingSchedule(currT#, initialT#, nsweeps#) As Double
+- Public Function energy(index%) As Double
+- Public Function Temperature(Optional T# = 1, Optional initialT# = 1) As Labeler
+- Public Function MaxMoveDistance(Optional max As Double = 50) As Labeler
+- Public Function RotateChance(Optional rotate# = 0.5) As Labeler
+- Public Overrides Function Start(Optional nsweeps% = 2000, Optional showProgress As Boolean = True) As DataLabeler
+- Public Function EnergyFunction(x As Func(Of Integer, Label(), Anchor(), Double)) As Labeler
+- Public Function CoolingSchedule(x As CoolingSchedule) As Labeler
+- Public Function forcedirectedLabeler(Optional ejectFactor As Integer = 6,
+- Public Function labeler(Optional maxMove# = 5,
+- Public Function GetLabelAnchors(labels As IEnumerable(Of Label), r!) As Anchor()
+- Public Iterator Function Label(g As IGraphics, labels As IEnumerable(Of String), Optional fontCSS$ = CSSFont.Win7Normal) As IEnumerable(Of Label)
+- Public Overrides Function ToString() As String
+- Public Function ordinal() As OrdinalScale
+- Public Function constant(val As Double) As ConstantScale
+- Public Function linear(Optional reverse As Boolean = False) As LinearScale
+- Public Function LinearScale(domain As IEnumerable(Of Double), Optional reverse As Boolean = False) As LinearScale
+- Public MustOverride ReadOnly Property type As scalers
+- Public MustOverride ReadOnly Property Zero As Double
+- Public MustOverride ReadOnly Property domainSize As Double
+- ... and 2127 more
+
+## Imports
+- Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+- bool = System.Boolean
+- Brush = Microsoft.VisualBasic.Imaging.Brush
+- Brush = System.Drawing.Brush
+- Circle2D = Microsoft.VisualBasic.Imaging.Drawing2D.Shapes.Circle
+- i8 = System.SByte
+- Line2D = Microsoft.VisualBasic.Imaging.Drawing2D.Shapes.Line
+- Microsoft.VisualBasic.ApplicationServices.Debugging
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+- Microsoft.VisualBasic.ComponentModel.DataStructures
+- Microsoft.VisualBasic.ComponentModel.Ranges
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.ComponentModel.TagData
+- Microsoft.VisualBasic.Drawing
+- Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
+- Microsoft.VisualBasic.Drawing.Interop
+- Microsoft.VisualBasic.Emit.Delegates
+
+## File tree
+- d3js\CSS.vb
+- d3js\CSSModel.vb
+- d3js\labeler\Anchor.vb
+- d3js\labeler\DataLabeler.vb
+- d3js\labeler\fdLabeler\Forcedirected.vb
+- d3js\labeler\fdLabeler\LabelCollisionSolver.vb
+- d3js\labeler\Label.vb
+- d3js\labeler\labeler.vb
+- d3js\ModuleAPI.vb
+- d3js\scale\constant.vb
+- d3js\scale\Extensions.vb
+- d3js\scale\IScale.vb
+- d3js\scale\linear.vb
+- d3js\scale\MapperTypes.vb
+- d3js\scale\ordinal.vb
+- d3js\scale\scalers.vb
+- d3js\ScaleChromatic.vb
+- Drawing2D\Colors\ColorBrewer.vb
+- Drawing2D\Colors\CustomDesigns.vb
+- Drawing2D\Colors\Designer.vb
+- Drawing2D\Colors\DesignerTerms.vb
+- Drawing2D\Colors\Expression.vb
+- Drawing2D\Colors\Legend\ColorMapLegend.vb
+- Drawing2D\Colors\Legend\Legend.vb
+- Drawing2D\Colors\Office\ObjectAccent.vb
+- Drawing2D\Colors\Office\OfficeColorThemes.vb
+- Drawing2D\Colors\Office\Xml.vb
+- Drawing2D\Colors\Palette.vb
+- Drawing2D\Colors\Scaler\ColorHeightMap.vb
+- Drawing2D\Colors\Scaler\ColorIndex.vb
+- Drawing2D\Colors\Scaler\ColorRange.vb
+- Drawing2D\Colors\Scaler\Mapper\CategoryColorProfile.vb
+- Drawing2D\Colors\Scaler\Mapper\ColorManager.vb
+- Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb
+- Drawing2D\Colors\ScalerPalette.vb
+- Drawing2D\Colors\Viridis.vb
+- Drawing2D\Extensions.vb
+- Drawing2D\g.vb
+- Drawing2D\GraphicsRegion.vb
+- Drawing2D\HeatMap\HeatMapMatrix.vb
+- Drawing2D\HeatMap\HeatMapParameters.vb
+- Drawing2D\HeatMap\HeatMapRaster.vb
+- Drawing2D\HeatMap\Hqx\Hqx.vb
+- Drawing2D\HeatMap\Hqx\Hqx_2x.vb
+- Drawing2D\HeatMap\Hqx\Hqx_3x.vb
+- Drawing2D\HeatMap\Hqx\Hqx_4x.vb
+- Drawing2D\HeatMap\Hqx\HqxScales.vb
+- Drawing2D\HeatMap\Hqx\Interpolation.vb
+- Drawing2D\HeatMap\Hqx\RgbYuv.vb
+- Drawing2D\HeatMap\Pixel.vb
+- Drawing2D\HeatMap\PixelRender.vb
+- Drawing2D\HeatMap\RasterMatrix.vb
+- Drawing2D\HeatMap\RasterScaler.vb
+- Drawing2D\HeatMap\ReinhardColorNormalization.vb
+- Drawing2D\Math2D\CanvasScaler.vb
+- Drawing2D\Math2D\ConcaveHull\AlphaShapes2D.vb
+- Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb
+- Drawing2D\Math2D\ConcaveHull\DelaunayTriangulation.vb
+- Drawing2D\Math2D\ConcaveHull\Extensions.vb
+- Drawing2D\Math2D\ConcaveHull\Triangle.vb
+- Drawing2D\Math2D\ConvexHull\ConvexHull.vb
+- Drawing2D\Math2D\ConvexHull\GrahamScan.vb
+- Drawing2D\Math2D\ConvexHull\JarvisMatch.vb
+- Drawing2D\Math2D\HullPolygonDraw.vb
+- Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb
+- Drawing2D\Math2D\MarchingSquares\ContourLayer.vb
+- Drawing2D\Math2D\MarchingSquares\ContourTracing.vb
+- Drawing2D\Math2D\MarchingSquares\GeneralPath.vb
+- Drawing2D\Math2D\MarchingSquares\IsoCell.vb
+- Drawing2D\Math2D\MarchingSquares\MapMatrix.vb
+- Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb
+- Drawing2D\Math2D\MarchingSquares\MeasureData.vb
+- Drawing2D\Math2D\MarchingSquares\Side.vb
+- Drawing2D\Math2D\Math2DHelper.vb
+- Drawing2D\Math2D\PolylineSimplify\ISimplifyUtility.vb
+- Drawing2D\Math2D\PolylineSimplify\Point.vb
+- Drawing2D\Math2D\PolylineSimplify\SimplifyUtility.vb
+- Drawing2D\Math2D\PolylineSimplify\SimplifyUtility3D.vb
+- Drawing2D\Math2D\Spline.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\Edge.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\EdgeList.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\EdgeReorderer.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\Halfedge.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\HalfedgePriorityQueue.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\ICoord.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\LR.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\LRCollection.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\Site.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\SiteList.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\Triangle.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\Vertex.vb
+- Drawing2D\Math2D\Voronoi\Delaunay\Voronoi.vb
+- Drawing2D\Math2D\Voronoi\Geom\Circle.vb
+- Drawing2D\Math2D\Voronoi\Geom\LineSegment.vb
+- Drawing2D\Math2D\Voronoi\Geom\Polygon.vb
+- Drawing2D\Math2D\Voronoi\Geom\Rectf.vb
+- Drawing2D\Math2D\Voronoi\Geom\Winding.vb
+- Drawing2D\Polar\PolarGraphics2D.vb
+- Drawing2D\PrinterDimension.vb
+- Drawing2D\Render2D\Path2D.vb
+- Drawing2D\Render2D\RenderContext.vb
+- Drawing2D\Render2D\RenderShape.vb
+- Drawing2D\Shadow.vb
+- Drawing2D\Shapes\Arrow.vb
+- Drawing2D\Shapes\Box.vb
+- Drawing2D\Shapes\Circle.vb
+- Drawing2D\Shapes\Diamond.vb
+- Drawing2D\Shapes\Hexagon.vb
+- Drawing2D\Shapes\Line.vb
+- Drawing2D\Shapes\Pentacle.vb
+- Drawing2D\Shapes\RoundRect.vb
+- Drawing2D\Shapes\Shape.vb
+- Drawing2D\Shapes\Triangle.vb
+- Drawing2D\Text\ASCIIArt\CharSet.vb
+- Drawing2D\Text\ASCIIArt\Convert2ASCII.vb
+- Drawing2D\Text\ASCIIArt\WeightedChar.vb
+- Drawing2D\Text\HelperExtensions.vb
+- Drawing2D\Text\HTMLRender.vb
+- Drawing2D\Text\Nudge\Adjustment.vb
+- Drawing2D\Text\Nudge\CloudOfTextRectangle.vb
+- Drawing2D\Text\Nudge\ConflictIndexTuple.vb
+- Drawing2D\Text\Nudge\GraphicsTextHandle.vb
+- Drawing2D\Text\Nudge\PlateRectangle.vb
+- Drawing2D\Text\Nudge\ResolvedTree.vb
+- Drawing2D\Text\Nudge\SimpleNudge.vb
+- Drawing2D\Text\Nudge\States.vb
+- Drawing2D\Text\Nudge\TextRectangle.vb
+- Drawing2D\Text\WordWrap.vb
+- Drawing3D\Camera.vb
+- Drawing3D\DrawGraphics.vb
+- Drawing3D\IPointCloud.vb
+- Drawing3D\IsometricEngine.vb
+- Drawing3D\Light.vb
+- Drawing3D\Math3D\DistanceFieldSampler.vb
+- Drawing3D\Math3D\MarchingCubes\Edge.vb
+- Drawing3D\Math3D\MarchingCubes\MarchingCubes.vb
+- Drawing3D\Math3D\MarchingCubes\MarchingCubesCase.vb
+- Drawing3D\Math3D\MarchingCubes\Utils.vb
+- Drawing3D\Math3D\MarchingCubes\Vertex.vb
+- Drawing3D\Math3D\Matrix.vb
+- Drawing3D\Math3D\MaxPlainCameraView.vb
+- Drawing3D\Math3D\Polyhedron\Math.vb
+- Drawing3D\Math3D\Polyhedron\Polyhedron.vb
+- Drawing3D\Math3D\Projection.vb
+- Drawing3D\Math3D\Transformation.vb
+- Drawing3D\Math3D\Vector.vb
+- Drawing3D\Math3D\Vector3D.vb
+- Drawing3D\Model2D.vb
+- Drawing3D\Models\Cube.vb
+- Drawing3D\Models\Extensions.vb
+- ... and 119 more files
+

@@ -1,0 +1,134 @@
+# Data_science/Mathematica/Math/ODE/odes-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Math.Calculus
+- AssemblyName  : Microsoft.VisualBasic.Math.ODEsSolver
+- TargetFramework: net10.0
+- Source files  : 15
+- Existing Title: Ordinary Differential Equation Solver Core for Dynamic Models
+- Existing Desc : Integrates systems of ordinary differential equations with Euler, RK2, RK4, Gill and trapezoidal solvers over a declarative model of variables, parameters and initial values. Part of sciBASIC#.
+- Existing Tags : scibasic;ode;runge-kutta;dynamical-system;numerical-integration;simulation
+
+## Namespaces
+- Dynamics  [files: 6]
+- Dynamics.Data  [files: 3]
+
+## Public types
+- Class ODEsOut (Dynamics\Data\ODEsOut.vb) - ODEs output, this object can populates the <see cref="ODEsOut.y"/> variables values through its enumerator interface.
+- Module StreamExtension (Dynamics\Data\StreamExtension.vb)
+- Class ValueVector (Dynamics\Data\ValueVector.vb)
+- Class GenericODEs (Dynamics\GenericODEs.vb)
+- Class RungeKutta4 (Dynamics\RungeKutta4.vb)
+- Class SolverIterator (Dynamics\SolverIterator.vb)
+- Class var (Dynamics\var.vb) - Y variable in the ODE
+- Class NonlinearVar (Dynamics\var.vb)
+- Interface Ivar (Dynamics\var.vb)
+- Interface INonlinearVar (Dynamics\var.vb)
+- Class ECDF (ECDF.vb)
+- Module Extensions (Extensions.vb)
+- Module ODESolver (ODESolvers\Gill.vb)
+- Class ODE (ODESolvers\ODE.vb) - Ordinary differential equation(ODE).(常微分方程的模型)
+- Class ODEOutput (ODESolvers\ODEOutput.vb)
+- Module ODESolver (ODESolvers\Solver.vb) - Solving the Ordinary differential equation(ODE) by using trapezoidal method.(使用梯形法求解常微分方程)
+
+## Notable public members
+- Public Property x As Double()
+- Public Property y As Dictionary(Of NamedCollection(Of Double))
+- Public Property y0 As Dictionary(Of String, Double)
+- Public Property params As Dictionary(Of String, Double)
+- Public ReadOnly Property dx As Double
+- Public ReadOnly Property Resolution As Double
+- Public Function GetY0() As Dictionary(Of String, Double)
+- Public ReadOnly Property HaveNaN As Boolean
+- Public Function Join() As ODEsOut
+- Public Overrides Function ToString() As String
+- Public Iterator Function GetEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements IEnumerable(Of NamedCollection(Of Double)).GetEnumer…
+- Public Function Merge(source As IEnumerable(Of ODEsOut), Optional method As Func(Of IEnumerable(Of Double), Double) = Nothing) As ODEsOut
+- Public Property Y As Dictionary(Of NamedCollection(Of Double))
+- Public Overrides Function ToString() As String
+- Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
+- Public Property df As [Function]
+- Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+- Protected Overrides Function y0() As var()
+- Public Const y0RefName As String = NameOf(__vars)
+- Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
+- Protected Sub New(vars As var())
+- Protected MustOverride Function y0() As var()
+- Public Function GetY0(Optional incept As Boolean = False) As Double()
+- Public Shared Iterator Function TimePopulator(n%, a#, b#) As IEnumerable(Of Double)
+- Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+- Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODEsOut
+- Protected MustOverride Sub func(dx#, ByRef dy As Vector)
+- Friend Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
+- Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
+- Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)
+- Public Property RefValues As ValueVector
+- Protected MustOverride Overloads Sub func(dx#, ByRef dy As Vector, Y As ValueVector)
+- Public Sub GetResult(ByRef x As Double(), ByRef y As List(Of Double)())
+- Public Function Solve(y0 As Double(), n As Integer, a As Double, b As Double) As RungeKutta4
+- Friend Iterator Function solverIteration(y0 As Double(), n As Integer, a As Double, b As Double) As IEnumerable(Of Integer)
+- Public Overrides Function ToString() As String
+- Public ReadOnly Property RK4Solver As RungeKutta4
+- Public Function Config(y0 As Double(), n As Integer, a As Double, b As Double) As SolverIterator
+- Public Function Bind(trigger As Action) As SolverIterator
+- Public Sub Tick()
+- Public Overrides Function ToString() As String
+- Public Overloads Property Index As Integer Implements IAddress(Of Integer).Address
+- Public Overridable Property Name As String Implements IReadOnlyId.Identity
+- Public Overrides Property Value As Double Implements Ivar.value
+- Public Overrides Function ToString() As String
+- Public Overridable Function Clone() As Object Implements ICloneable.Clone
+- Public Function Evaluate() As Double
+- Public Overrides Function Clone() As Object
+- Public Function eval(i As Double) As Double
+- Public Function ECDF(v As IEnumerable(Of Double), range As Integer(),
+- Public Function CDF(p As Func(Of Double, Double),
+- Public Function Solve(system As IEnumerable(Of NonlinearVar), dt As (from#, to#, step#)) As ODEsOut
+- Public Function Gill(ByRef ode As ODE, N As Integer, t0 As Double, tt As Double) As ODEOutput
+- Public Property ID As String Implements INamedValue.Key
+- Public Property df As ODESolver.df
+- Public Property y0 As Double
+- Public Overrides Function ToString() As String
+- Public Property ID As String Implements INamedValue.Key
+- Public Property X As Sequence
+- Public Property Y As NumericVector
+- ... and 11 more
+
+## Imports
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Default
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math.Calculus.Dynamics
+- Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Scripting
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.VisualBasic.Text.Xml.Models
+- std = System.Math
+- System.Drawing
+- System.Linq.Expressions
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Xml.Serialization
+
+## File tree
+- Dynamics\Data\ODEsOut.vb
+- Dynamics\Data\StreamExtension.vb
+- Dynamics\Data\ValueVector.vb
+- Dynamics\GenericODEs.vb
+- Dynamics\ODEs.vb
+- Dynamics\RefODEs.vb
+- Dynamics\RungeKutta4.vb
+- Dynamics\SolverIterator.vb
+- Dynamics\var.vb
+- ECDF.vb
+- Extensions.vb
+- ODESolvers\Gill.vb
+- ODESolvers\ODE.vb
+- ODESolvers\ODEOutput.vb
+- ODESolvers\Solver.vb
+

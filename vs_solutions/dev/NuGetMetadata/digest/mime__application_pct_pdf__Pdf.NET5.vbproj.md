@@ -1,0 +1,143 @@
+# mime/application%pdf/Pdf.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MIME.application.pdf
+- AssemblyName  : Microsoft.VisualBasic.MIME.application.pdf
+- TargetFramework: net10.0
+- Source files  : 16
+- Existing Title: PDF Document Reader, Text Extractor and Writer Library
+- Existing Desc : Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text via ToUnicode CMaps, while a streaming generator lays out text, tables and images.
+- Existing Tags : scibasic;pdf;pdf-reader;text-extraction;pdf-writer
+
+## Namespaces
+- (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MIME.application.pdf)
+
+## Public types
+- Module PDF (PDF.vb)
+- Class FlateDecode (PdfReader\FlateDecode.vb)
+- Enum PdfTokenType (PdfReader\PdfLexer.vb)
+- Class PdfToken (PdfReader\PdfLexer.vb)
+- Class PdfLexer (PdfReader\PdfLexer.vb)
+- Class PdfNull (PdfReader\PdfObject.vb)
+- Class PdfBoolean (PdfReader\PdfObject.vb)
+- Class PdfNumber (PdfReader\PdfObject.vb)
+- Class PdfName (PdfReader\PdfObject.vb)
+- Class PdfString (PdfReader\PdfObject.vb)
+- Class PdfReference (PdfReader\PdfObject.vb)
+- Class PdfDictionary (PdfReader\PdfObject.vb)
+- Class PdfArray (PdfReader\PdfObject.vb)
+- Class PdfStream (PdfReader\PdfObject.vb)
+- Class PdfIndirectObject (PdfReader\PdfObject.vb)
+- Class PdfObjectParser (PdfReader\PdfObjectParser.vb)
+- Class PdfReader (PdfReader\PdfReader.vb)
+- Class XRefEntry (PdfReader\PdfReader.vb)
+- Enum EntryType (PdfReader\PdfReader.vb)
+- Class TextExtractor (PdfReader\TextExtractor.vb)
+- Class FontInfo (PdfReader\TextExtractor.vb)
+- Class ToUnicodeCMap (PdfReader\ToUnicodeCMap.vb)
+- Enum PdfBlockType (PdfWriter\PdfBlock.vb)
+- Class PdfBlock (PdfWriter\PdfBlock.vb) - 单个文档内容块。承载文本、级别、样式快照、表格/图片数据等， 由 <see cref="PdfDocument"/> 收集并在 <see cref="PdfLayoutEngine"/> 中消费。
+- Structure PdfColor (PdfWriter\PdfColor.vb) - PDF 颜色工具。把 OOXML 的 6 位十六进制 RGB（无 # 前缀）转换为 PDF 内容流 使用的 0-1 归一化 RGB 三元组，并生成对应的填充/描边指令。
+- Class PdfDocument (PdfWriter\PdfDocument.vb) - PDF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与 <c>WordDocument</c> 完全一致的编程接口，将文本、表格、图片写入并生成 PDF 文件。
+- Class PdfFontEntry (PdfWriter\PdfFontResource.vb) - 一个已注册的 PDF 字体资源条目，供 <see cref="PdfWriter"/> 序列化为 /Font 字典。
+- Class PdfFontResource (PdfWriter\PdfFontResource.vb) - 字体资源管理器。集中管理与解析文档所用字体并提供字符宽度测量与文本编码。 不嵌入任何字体文件，依赖阅读器本地具备相应字体进行替换渲染。
+- Class PdfImageObject (PdfWriter\PdfImageXObject.vb) - 一个已编码好的图片 XObject，供 <see cref="PdfWriter"/> 作为 /XObject 资源嵌入。
+- Class PdfImageXObject (PdfWriter\PdfImageXObject.vb) - 图片 XObject 编码与缓存管理。
+- Class PdfRenderResult (PdfWriter\PdfLayoutEngine.vb)
+- Class PdfLayoutEngine (PdfWriter\PdfLayoutEngine.vb)
+- Structure PdfWriteMeta (PdfWriter\PdfWriter.vb)
+- Class PdfWriter (PdfWriter\PdfWriter.vb)
+
+## Notable public members
+- Public Iterator Function GetText(file As Stream) As IEnumerable(Of String)
+- Public Shared Function Decode(data As Byte()) As Byte()
+- Public Shared Function ApplyPredictor(data As Byte(), columns As Integer,
+- Public Shared Function DecodeAscii85(data As Byte()) As Byte()
+- Public ReadOnly Property Type As PdfTokenType
+- Public ReadOnly Property TextValue As String
+- Public ReadOnly Property ByteValue As Byte()
+- Public ReadOnly Property NumberValue As Double
+- Public ReadOnly Property Position As Long
+- Public Sub New(type As PdfTokenType, text As String, bytes As Byte(), num As Double, pos As Long)
+- Public Sub New(data As Byte())
+- Public Property Position As Integer
+- Public ReadOnly Property Length As Integer
+- Public ReadOnly Property Data As Byte()
+- Public Function NextToken() As PdfToken
+- Public Shared Function DecodePdfString(bytes As Byte()) As String
+- Public Function ReadStreamData(length As Integer) As Byte()
+- Public Function ReadStreamDataScan() As Byte()
+- Public Sub New(v As Boolean)
+- Public Sub New(v As Double)
+- Public ReadOnly Property IntegerValue As Integer
+- Public Sub New(v As String)
+- Public Overrides Function ToString() As String
+- Public Overrides Function Equals(obj As Object) As Boolean
+- Public Overrides Function GetHashCode() As Integer
+- Public Sub New(v As String, raw As Byte())
+- Public Sub New(objNum As Integer, genNum As Integer)
+- Public Overrides Function ToString() As String
+- Public ReadOnly Property Names As IEnumerable(Of String)
+- Public Sub Add(name As String, obj As PdfObject)
+- Public Function Contains(name As String) As Boolean
+- Public ReadOnly Property Items As IReadOnlyList(Of PdfObject)
+- Public Sub Add(obj As PdfObject)
+- Public ReadOnly Property Count As Integer
+- Public Sub New(dict As PdfDictionary, data As Byte())
+- Public Sub New(objNum As Integer, genNum As Integer, content As PdfObject)
+- Public Sub New(lexer As PdfLexer)
+- Public Function ParseObject() As PdfObject
+- Public ReadOnly Property Trailer As PdfDictionary
+- Public ReadOnly Property DataSize As Integer
+- Public ReadOnly Property ObjectCount As Integer
+- Public Sub New(filePath As String)
+- Public Sub New(data As Byte())
+- Public Function Resolve(ref As PdfReference) As PdfObject
+- Public Function GetPages() As List(Of PdfDictionary)
+- Friend Function DecodeStream(stream As PdfStream) As Byte()
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public Sub New(reader As PdfReader)
+- Public Function ExtractFromPage(page As PdfDictionary) As String
+- Public Function ExtractAll() As String
+- Public Sub Parse(data As Byte())
+- Public Function Lookup(code As Integer) As String
+- Public Function HasMapping() As Boolean
+- Public ReadOnly Property MaxCode As Integer
+- Public Shared Function FromHex(hex As String) As PdfColor
+- Public Function IsEmpty() As Boolean
+- Public Function ToFill() As String
+- Public Function ToStroke() As String
+- Public Property Author As String = "" Implements IDocumentWriter.Author
+- Public Property Title As String = "" Implements IDocumentWriter.Title
+- ... and 54 more
+
+## Imports
+- Microsoft.VisualBasic.FileIO
+- Microsoft.VisualBasic.MIME.Office.WordDocument
+- Microsoft.VisualBasic.MIME.text.markdown
+- std = System.Math
+- System.Globalization
+- System.IO
+- System.IO.Compression
+- System.Reflection
+- System.Runtime.InteropServices
+- System.Text
+- System.Text.RegularExpressions
+
+## File tree
+- PDF.vb
+- PdfReader\FlateDecode.vb
+- PdfReader\PdfLexer.vb
+- PdfReader\PdfObject.vb
+- PdfReader\PdfObjectParser.vb
+- PdfReader\PdfReader.vb
+- PdfReader\TextExtractor.vb
+- PdfReader\ToUnicodeCMap.vb
+- PdfWriter\PdfBlock.vb
+- PdfWriter\PdfColor.vb
+- PdfWriter\PdfDocument.vb
+- PdfWriter\PdfFontResource.vb
+- PdfWriter\PdfImageXObject.vb
+- PdfWriter\PdfLayoutEngine.vb
+- PdfWriter\PdfWriter.vb
+- Properties\AssemblyInfo.vb
+

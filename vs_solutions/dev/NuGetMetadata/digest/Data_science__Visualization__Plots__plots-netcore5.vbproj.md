@@ -1,0 +1,316 @@
+# Data_science/Visualization/Plots/plots-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.ChartPlots
+- AssemblyName  : Microsoft.VisualBasic.Data.ChartPlots
+- TargetFramework: net10.0
+- Source files  : 89
+- Existing Title: 2D and 3D Chart Plotting Library for GDI+ Graphics
+- Existing Desc : A charting engine for sciBASIC# that renders scatter, line, bar, histogram, box, violin, contour, heatmap, pie, radar, treemap, Venn and 3D plots with configurable axes, legends and themes.
+- Existing Tags : scibasic;chart;plotting;data-visualization;gdi-plus;graphics
+
+## Namespaces
+- BarPlot  [files: 11]
+- BarPlot.Data  [files: 5]
+- BarPlot.Histogram  [files: 4]
+- BoxPlot  [files: 3]
+- Contour  [files: 2]
+- Contour.HeatMap  [files: 4]
+- Fractions  [files: 6]
+- Graphic  [files: 5]
+- Graphic.Axis  [files: 10]
+- Graphic.Canvas  [files: 5]
+- Graphic.Legend  [files: 5]
+- Plot3D  [files: 5]
+- Plot3D.Device  [files: 2]
+- Plot3D.Impl  [files: 1]
+- Plot3D.Model  [files: 2]
+- Plots  [files: 3]
+
+## Public types
+- Module DataProvider (3D\Data.vb) - Data provider
+- Class Polygon (3D\Device\Element3D.vb) - 一个三维空间之中的面
+- Class ConvexHullPolygon (3D\Device\Element3D.vb)
+- Class Label (3D\Device\Element3D.vb)
+- Class Line (3D\Device\Element3D.vb)
+- Class ShapePoint (3D\Device\Element3D.vb)
+- Module RenderEngine (3D\Device\RenderEngine.vb) - 将生成的绘图元素在这个引擎模块之中进行排序操作，然后进行图表的绘制
+- Module AxisDraw (3D\g\Axis.vb) - 在这个模块之中生成Axis的绘制元素
+- Module Grids (3D\g\Grid.vb)
+- Module PieChart3D (3D\PieChart3D.vb)
+- Class Scatter3D (3D\Plot\Scatter3D.vb)
+- Module Scatter (3D\Scatter.vb) - 3D scatter charting
+- Class Scatter3DPoint (3D\ScatterHeatmap.vb)
+- Module ScatterHeatmap (3D\ScatterHeatmap.vb)
+- Class Serial3D (3D\Serial3D.vb) - Scatter serial data in 3D
+- Module AlignmentPlot (BarPlot\AlignmentPlot.vb) - Visualize and comparing two discrete signals. (以条形图的方式可视化绘制两个离散的信号的比对的图形)
+- Structure Signal (BarPlot\AlignmentPlot.vb)
+- Module BarPlotAPI (BarPlot\BarPlot.vb)
+- Module BarPlotAPI (BarPlot\BarPlot2.vb)
+- Class BarPlotAlternativeDirection (BarPlot\BarPlot2.vb)
+- Class BarDataGroup (BarPlot\Data\BarDataGroup.vb)
+- Class BarDataSample (BarPlot\Data\BarDataSample.vb) - Named value of double vector.
+- Module BarPlotDataExtensions (BarPlot\Data\BarPlotDataExtensions.vb)
+- Class BiDirectionData (BarPlot\Data\BiDirectionData.vb)
+- Module Constructor (BarPlot\Data\Constructor.vb)
+- Structure HistogramData (BarPlot\Histogram\DataModel.vb) - {x, y}，一个柱子的绘图数据 <see cref="x1"/>到<see cref="x2"/>之间的距离是直方图的宽度
+- Class HistogramGroup (BarPlot\Histogram\DataModel.vb)
+- Structure HistProfile (BarPlot\Histogram\DataModel.vb) - The histogram serial data.
+- Module Extensions (BarPlot\Histogram\Extensions.vb)
+- Module Histogram (BarPlot\Histogram\Histogram.vb) - 对经由函数生成的连续数据的图形表述
+- Class HistogramPlot (BarPlot\Histogram\HistogramPlot.vb)
+- Module LevelBarplot (BarPlot\LevelBarplot.vb) - 只针对单组数据的条形图绘制
+- Class BiDirectionBarPlot (BarPlot\Plots\BiDirectionBarPlot.vb) - compare two data set
+- Class PlotAlignmentGroup (BarPlot\Plots\PlotAlignmentGroup.vb)
+- Class SimpleBarPlot (BarPlot\Plots\SimpleBarPlot.vb)
+- Class StackedPercentageBarPlot (BarPlot\Plots\StackedPercentageBarPlot.vb)
+- Class Violin (BarPlot\Plots\Violin.vb)
+- Enum RectangleSides (BarPlot\RectangleStyles.vb)
+- Module RectangleStyles (BarPlot\RectangleStyles.vb)
+- Module StackedBarPlot (BarPlot\StackedBarPlot.vb)
+- Module StyledBarplot (BarPlot\StyledBarplot.vb)
+- Structure BarSerial (BarPlot\StyledBarplot.vb)
+- Module ViolinPlot (BarPlot\ViolinPlot.vb) - ## 小提琴图 + 高度为数据的分布位置 + 宽度为对应的百分位上的数据点的数量
+- Class Box (BoxPlot\Box.vb)
+- Class BoxData (BoxPlot\BoxData.vb) - Group data model for box plot
+- Module BoxPlot (BoxPlot\BoxPlot.vb) - ``` min, q1, q2, q3, max _________
+- Class ContourPlot (Contour\ContourPlot.vb)
+- Class ContourHeatMapPlot (Contour\HeatMap\ContourHeatMapPlot.vb) - Contour heatmap A contour plot is a graphical technique for representing a 3-dimensional surface by plotting constant z slices, called contours, on a 2-dimensional
+- Class FormulaEvaluate (Contour\HeatMap\EvaluatePoints.vb)
+- Class MatrixEvaluate (Contour\HeatMap\MatrixEvaluate.vb) - 直接返回矩阵数据
+- Module Utils (Contour\HeatMap\Utils.vb)
+- Module PlotContour (Contour\PlotContour.vb)
+- Class PolygonGroup (FillPolygons.vb)
+- Class FillPolygons (FillPolygons.vb)
+- Class FractionData (Fractions\FractionData.vb) - 扇形/金字塔的数据模型
+- Enum ValueLabels (Fractions\LabelStyles.vb)
+- Module PieChart (Fractions\PieChart.vb)
+- Module Pyramid (Fractions\Pyramid.vb)
+- Class PyramidPlot (Fractions\Pyramid.vb)
+- Module RadarChart (Fractions\RadarChart.vb) - 雷达图
+- Module TreeMap (Fractions\TreeMap.vb)
+- Class TreeMapPlot (Fractions\TreeMap.vb)
+- Module Axis (g\Axis\Axis.vb)
+- Class AxisValue (g\Axis\AxisData.vb) - 手工指定Axis的数据
+- Structure AxisData (g\Axis\AxisData.vb) - 横纵坐标轴的画图数据
+- Class AxisProvider (g\Axis\AxisProvider.vb) - ```vbnet Dim axis$ = "(min,max),tick=steps,n=parts" ' example as
+- Module AxisScalling (g\Axis\AxisScalling.vb)
+- Class XAxis (g\Axis\Components\XAxis.vb)
+- Class DataScaler (g\Axis\DataScaler\DataScaler.vb) - 将用户数据转换为作图的时候所需要的空间数据
+- Module DataScalerExtensions (g\Axis\DataScaler\DataScaler.vb)
+- Class TermScaler (g\Axis\DataScaler\TermScaler.vb)
+- Class YScaler (g\Axis\DataScaler\YScaler.vb)
+- Enum XAxisLayoutStyles (g\Axis\Styles.vb)
+- Enum YAxisLayoutStyles (g\Axis\Styles.vb)
+- Enum YlabelPosition (g\Axis\Styles.vb)
+- Class TimeRange (g\Axis\TimeRange.vb)
+- Module Resolution2K (g\Canvas.vb)
+- Module Resolution1K (g\Canvas.vb)
+- Class CircleSizeLegend (g\Legends\CircleSizeLegend.vb)
+- Module DualColorBar (g\Legends\ColorBar\DualColorBar.vb)
+- Class LegendObject (g\Legends\LegendObject.vb) - 图例
+- Module LegendPlotExtensions (g\Legends\LegendPlot.vb)
+- Enum LegendStyles (g\Legends\LegendStyles.vb) - Vector shapes that drawing of this legend.
+- Class Mapper (g\Mapper.vb) - 将数据坐标转换为绘图坐标
+- Class Scaling (g\Scaling.vb) - 获取绘图数据的实际范围
+- Class FontStyle (g\Theme\FontStyle.vb)
+- Class LayoutDependency (g\Theme\Layout.vb)
+- Class Absolute (g\Theme\Layout.vb) - 绝对位置定位
+- Class PercentageRelative (g\Theme\Layout.vb) - 百分比相对定位
+- Class Theme (g\Theme\Theme.vb) - The plot style theme definition
+- Module ImageDataExtensions (ImageData.vb)
+- Enum PlotTypes (PlotTypes.vb)
+- Class PrincipalCurveVisualizer (PrincipalCurveVisualizer.vb)
+- Class Bubble (Scatter\Bubble.vb) - the bubble plots
+- Structure Annotation (Scatter\Data\Annotation.vb)
+- Structure PointData (Scatter\Data\PointData.vb) - 绘图的点的数据
+- Class SerialData (Scatter\Data\SerialData.vb) - 一条曲线的绘图数据模型 [x, y]
+- Module Scatter (Scatter\Heatmap.vb)
+- Module LinePlot (Scatter\LinePlot.vb)
+- Class LinePlot2D (Scatter\Plot\LinePlot2D.vb)
+- Class PolygonPlot2D (Scatter\Plot\PolygonPlot2D.vb)
+- Class Scatter2D (Scatter\Plot\Scatter2D.vb) - A scatter plot (also called a scatterplot, scatter graph, scatter chart, scattergram, or scatter diagram)[3] is a type of plot or mathematical diagram using Cartesian coordinates to display values for typically two
+- Module Scatter (Scatter\Scatter.vb)
+- Module VennPlot (VennPlot.vb) - + 圆的半径大小直接与集合的大小相关 + 圆的交集部分的面积大小与两个集合之间的重合度相关 1. 当没有重合度的时候，两个圆心距离为r1+r2，完全没有交集部分
+- Class VennSet (VennPlot.vb)
+
+## Notable public members
+- Public Function Surface(Of T As {INamedValue, DynamicPropertyBase(Of String)})(matrix As IEnumerable(Of T)) As IEnumerable(Of (sf As Surface, c As Dou…
+- Public Iterator Function Surface(xData As IEnumerable(Of (pt As Point3D, c#)())) As IEnumerable(Of (sf As Surface, c As Double()))
+- Public Function Surface(f As Func(Of Double, Double, (Z#, c#)),
+- Public Iterator Function Evaluate(f As Func(Of Double, Double, (Z#, c#)),
+- Public Iterator Function Evaluate(f As Func(Of Double, Double, Double),
+- Public Iterator Function Grid(f As Func(Of Double, Double, Double),
+- Public Iterator Function Grid(f As Func(Of Double, Double, Double),
+- Public Property Location As Point3D
+- Public MustOverride Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+- Public MustOverride Function EnumeratePath() As IEnumerable(Of Point3D)
+- Public MustOverride Function Transform(camera As Camera) As Element3D
+- Public Function GetPosition(frameSize As Size) As PointF
+- Public Overrides Function ToString() As String
+- Public Property Path As Point3D()
+- Public Property Brush As Brush
+- Public Overrides Function Transform(camera As Camera) As Element3D
+- Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
+- Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+- Public Property bspline As Single = 2
+- Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+- Public Property Text As String
+- Public Property FontCss As String
+- Public Property Color As Brush
+- Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
+- Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+- Public Overrides Function Transform(camera As Camera) As Element3D
+- Public ReadOnly Property A As Point3D
+- Public ReadOnly Property B As Point3D
+- Public Property Stroke As Pen
+- Protected Sub __init()
+- Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
+- Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+- Public Overrides Function Transform(camera As Camera) As Element3D
+- Public Property Size As Size
+- Public Property Fill As Brush
+- Public Property Style As LegendStyles
+- Public Property Label As String
+- Public ReadOnly Property Point2D(frameSize As Size) As PointF
+- Public Overrides Iterator Function EnumeratePath() As IEnumerable(Of Point3D)
+- Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+- Public Overrides Function Transform(camera As Camera) As Element3D
+- Public Sub RenderAs3DChart(elements As IEnumerable(Of Element3D),
+- Public Function Axis(css As CSSEnvirnment,
+- Public Iterator Function Grid1(css As CSSEnvirnment,
+- Public Iterator Function Grid2(css As CSSEnvirnment,
+- Public Iterator Function Grid3(css As CSSEnvirnment,
+- Public Function Plot3D(data As IEnumerable(Of NamedValue(Of Integer)), camera As Camera, Optional schema$ = "Paired:c12") As GraphicsData
+- Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera,
+- Public Sub New(serials As IEnumerable(Of Serial3D), camera As Camera, arrowFactor$,
+- Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+- Public Function Plot(serials As IEnumerable(Of Serial3D),
+- Public Function Plot(func As Func(Of Double, Double, Double),
+- Public Property x As Double
+- Public Property y As Double
+- Public Property z As Double
+- Public Property c As Double
+- Public Function Plot(f As Func(Of Double, Double, (Z#, color#)),
+- Public Function GetPlotFunction(f As Func(Of Double, Double, (Z#, color#)),
+- Public Function GetPlotFunction(data As (sf As Surface, c As Double())(),
+- Public Function Plot(data As (sf As Surface, c As Double())(),
+- ... and 434 more
+
+## Imports
+- AdjustableArrowCap = Microsoft.VisualBasic.Imaging.AdjustableArrowCap
+- AdjustableArrowCap = System.Drawing.Drawing2D.AdjustableArrowCap
+- Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+- Bitmap = System.Drawing.Bitmap
+- Brush = Microsoft.VisualBasic.Imaging.Brush
+- Brush = System.Drawing.Brush
+- Brushes = Microsoft.VisualBasic.Imaging.Brushes
+- Brushes = System.Drawing.Brushes
+- DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+- DashStyle = System.Drawing.Drawing2D.DashStyle
+- defaultStyle = Microsoft.VisualBasic.Language.Default.[Default](Of  Microsoft.VisualBasic.Data.ChartPlots.BarPlot.RectangleStyling)
+- Font = Microsoft.VisualBasic.Imaging.Font
+- Font = System.Drawing.Font
+- FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+- FontStyle = System.Drawing.FontStyle
+- GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+- GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+- Image = Microsoft.VisualBasic.Imaging.Image
+- Image = System.Drawing.Image
+- LineCap = Microsoft.VisualBasic.Imaging.LineCap
+- LineCap = System.Drawing.Drawing2D.LineCap
+- Matrix = Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.Matrix
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ComponentModel.Algorithm
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+
+## File tree
+- 3D\Data.vb
+- 3D\Device\Element3D.vb
+- 3D\Device\RenderEngine.vb
+- 3D\g\Axis.vb
+- 3D\g\Grid.vb
+- 3D\PieChart3D.vb
+- 3D\Plot\Scatter3D.vb
+- 3D\Scatter.vb
+- 3D\ScatterHeatmap.vb
+- 3D\Serial3D.vb
+- BarPlot\AlignmentPlot.vb
+- BarPlot\BarPlot.vb
+- BarPlot\BarPlot2.vb
+- BarPlot\Data\BarDataGroup.vb
+- BarPlot\Data\BarDataSample.vb
+- BarPlot\Data\BarPlotDataExtensions.vb
+- BarPlot\Data\BiDirectionData.vb
+- BarPlot\Data\Constructor.vb
+- BarPlot\Histogram\DataModel.vb
+- BarPlot\Histogram\Extensions.vb
+- BarPlot\Histogram\Histogram.vb
+- BarPlot\Histogram\HistogramPlot.vb
+- BarPlot\LevelBarplot.vb
+- BarPlot\Plots\BiDirectionBarPlot.vb
+- BarPlot\Plots\PlotAlignmentGroup.vb
+- BarPlot\Plots\SimpleBarPlot.vb
+- BarPlot\Plots\StackedPercentageBarPlot.vb
+- BarPlot\Plots\Violin.vb
+- BarPlot\RectangleStyles.vb
+- BarPlot\StackedBarPlot.vb
+- BarPlot\StyledBarplot.vb
+- BarPlot\ViolinPlot.vb
+- BoxPlot\Box.vb
+- BoxPlot\BoxData.vb
+- BoxPlot\BoxPlot.vb
+- Contour\ContourPlot.vb
+- Contour\HeatMap\ContourHeatMapPlot.vb
+- Contour\HeatMap\EvaluatePoints.vb
+- Contour\HeatMap\MatrixEvaluate.vb
+- Contour\HeatMap\Utils.vb
+- Contour\PlotContour.vb
+- FillPolygons.vb
+- Fractions\FractionData.vb
+- Fractions\LabelStyles.vb
+- Fractions\PieChart.vb
+- Fractions\Pyramid.vb
+- Fractions\RadarChart.vb
+- Fractions\TreeMap.vb
+- g\Axis\Axis.vb
+- g\Axis\AxisData.vb
+- g\Axis\AxisProvider.vb
+- g\Axis\AxisScalling.vb
+- g\Axis\Components\XAxis.vb
+- g\Axis\DataScaler\DataScaler.vb
+- g\Axis\DataScaler\TermScaler.vb
+- g\Axis\DataScaler\YScaler.vb
+- g\Axis\Styles.vb
+- g\Axis\TimeRange.vb
+- g\Canvas.vb
+- g\HeatMapPlot.vb
+- g\Legends\CircleSizeLegend.vb
+- g\Legends\ColorBar\DualColorBar.vb
+- g\Legends\LegendObject.vb
+- g\Legends\LegendPlot.vb
+- g\Legends\LegendStyles.vb
+- g\Mapper.vb
+- g\Plot.vb
+- g\ProfileGroup.vb
+- g\Scaling.vb
+- g\Theme\Extensions.vb
+- g\Theme\FontStyle.vb
+- g\Theme\Layout.vb
+- g\Theme\Theme.vb
+- ImageData.vb
+- PlotTypes.vb
+- PrincipalCurveVisualizer.vb
+- Scatter\Bubble.vb
+- Scatter\Data\Annotation.vb
+- Scatter\Data\PointData.vb
+- Scatter\Data\SerialData.vb
+- Scatter\Heatmap.vb
+- Scatter\LinePlot.vb
+- Scatter\ManhattanStatics.vb
+- Scatter\Plot\LinePlot2D.vb
+- Scatter\Plot\PolygonPlot2D.vb
+- Scatter\Plot\Scatter2D.vb
+- Scatter\Scatter.vb
+- VennPlot.vb
+- zzz.vb
+

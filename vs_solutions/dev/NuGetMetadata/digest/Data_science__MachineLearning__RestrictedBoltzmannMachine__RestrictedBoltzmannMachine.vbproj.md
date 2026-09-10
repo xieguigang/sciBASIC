@@ -1,0 +1,193 @@
+# Data_science/MachineLearning/RestrictedBoltzmannMachine/RestrictedBoltzmannMachine.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine
+- AssemblyName  : Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine
+- TargetFramework: net10.0
+- Source files  : 39
+- Existing Title: Restricted Boltzmann Machines with Contrastive Divergence Training
+- Existing Desc : Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.
+- Existing Tags : scibasic;rbm;contrastive-divergence;deep-learning;unsupervised
+
+## Namespaces
+- math  [files: 2]
+- math.functions  [files: 9]
+- math.functions.distance  [files: 3]
+- math.functions.doubledouble  [files: 4]
+- math.functions.doubledouble.rbm  [files: 1]
+- nlp  [files: 1]
+- nlp.encode  [files: 3]
+- nlp.ngram  [files: 1]
+- nn.rbm  [files: 1]
+- nn.rbm.deep  [files: 3]
+- nn.rbm.factory  [files: 2]
+- nn.rbm.learn  [files: 6]
+- nn.rbm.save  [files: 2]
+- utils  [files: 1]
+
+## Public types
+- Class DiscreteDistanceFunction (math\functions\distance\DiscreteDistanceFunction.vb) - Created by kenny on 2/16/14.
+- Interface DistanceFunction (math\functions\distance\DistanceFunction.vb) - kenny Distance is analogous to the 1 - normalized(similarityScore)
+- Class EuclideanDistanceFunction (math\functions\distance\EuclideanDistanceFunction.vb) - Created by kenny on 2/16/14.
+- Class Divide (math\functions\Divide.vb) - Created by kenny on 5/24/14.
+- Class Add (math\functions\doubledouble\Add.vb) - Created by kenny on 5/24/14.
+- Class Divide (math\functions\doubledouble\Divide.vb) - Created by kenny on 5/24/14.
+- Class Multiply (math\functions\doubledouble\Multiply.vb) - Created by kenny on 5/24/14.
+- Class ActivationState (math\functions\doubledouble\rbm\ActivationState.vb) - Created by kenny on 5/25/14.
+- Class Subtract (math\functions\doubledouble\Subtract.vb) - Created by kenny on 5/24/14.
+- Class Multiply (math\functions\Multiply.vb) - Created by kenny on 5/24/14.
+- Class OneMinusX (math\functions\OneMinusX.vb) - Created by kenny on 5/24/14.
+- Class Power (math\functions\Power.vb) - Created by kenny on 5/24/14.
+- Class RandomDouble (math\functions\RandomDouble.vb) - Created by kenny on 5/24/14.
+- Class RandomGaussian (math\functions\RandomGaussian.vb) - Created by kenny on 5/24/14.
+- Class RangedSigmoid (math\functions\RangedSigmoid.vb) - Created by kenny on 5/24/14.
+- Class Round (math\functions\Round.vb) - Created by kenny on 5/24/14.
+- Class Sigmoid (math\functions\Sigmoid.vb) - Created by kenny on 5/24/14.
+- Module Helpers (math\MathHelpers.vb)
+- Class DenseMatrix (math\Matrix.vb) - Currently this class is half mutable/immutable. The operations that are immutable are defined. This class serves to wrap the Parallel Colt library. If you need an operation to be immutable just call .copy().
+- Class DiscreteRandomWordEncoder (nlp\encode\DiscreteRandomWordEncoder.vb) - Created by kenny on 6/3/14. generate a random vector for a word
+- Class RandomWordEncoder (nlp\encode\RandomWordEncoder.vb) - Created by kenny on 6/3/14. generate a random vector for a word
+- Interface WordEncoder (nlp\encode\WordEncoder.vb) - Created by kenny on 6/3/14. TODO create word encoder that captures
+- Class NGramGenerator (nlp\ngram\NGramGenerator.vb) - Created by kenny on 5/23/14.
+- Class WordDictionary (nlp\WordDictionary.vb) - Created by kenny on 5/23/14.
+- Class PrettyPrint (PrettyPrint.vb) - Created by kenny on 5/13/14.
+- Class DeepRBM (rbm_nn\deep\DeepRBM.vb) - h_2 (o o o) [X X] h_1 (o o o)
+- Class LayerParameters (rbm_nn\deep\LayerParameters.vb) - Created by kenny on 5/16/14.
+- Class RBMLayer (rbm_nn\deep\RBMLayer.vb) - Created by kenny on 5/16/14. A layer can have multiple RBMs, this allows convolution-like networks when configuring a deep rbm
+- Class RandomRBMFactory (rbm_nn\factory\RandomRBMFactory.vb) - Created by kenny on 5/12/14.
+- Interface RBMFactory (rbm_nn\factory\RBMFactory.vb) - Created by kenny on 5/16/14.
+- Class BackErrorPropagation (rbm_nn\learn\BackErrorPropagation.vb) - Created by kenny on 5/23/14.
+- Class ContrastiveDivergence (rbm_nn\learn\ContrastiveDivergence.vb) - Created by kenny on 5/15/14. * http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/
+- Class DeepContrastiveDivergence (rbm_nn\learn\DeepContrastiveDivergence.vb) - Created by kenny on 5/15/14.
+- Class LearningParameters (rbm_nn\learn\LearningParameters.vb) - Created by kenny on 5/15/14.
+- Class MultiThreadedDeepContrastiveDivergence (rbm_nn\learn\MultiThreadedDeepContrastiveDivergence.vb) - Created by kenny on 5/22/14.
+- Class RecurrentContrastiveDivergence (rbm_nn\learn\RecurrentContrastiveDivergence.vb) - Created by kenny on 5/15/14.
+- Class RBM (rbm_nn\RBM.vb) - Created by kenny on 5/12/14. https://github.com/kennycason/rbm/tree/master
+- Class DeepRBMPersister (rbm_nn\save\DeepRBMPersister.vb) - Created by kenny on 5/22/14.
+- Class RBMPersister (rbm_nn\save\RBMPersister.vb) - Created by kenny on 5/22/14.
+
+## Notable public members
+- Public Function distance(item1 As DenseMatrix, item2 As DenseMatrix) As Double Implements DistanceFunction.distance
+- Public Overrides Function ToString() As String
+- Public Function distance(item1 As DenseMatrix, item2 As DenseMatrix) As Double Implements DistanceFunction.distance
+- Public Overrides Function ToString() As String
+- Public Sub New(divisor As Double)
+- Public Overrides Function apply(v As Double) As Double
+- Public Overrides Function apply(v As Double, v2 As Double) As Double
+- Public Overrides Function apply(v As Double, v2 As Double) As Double
+- Public Overrides Function apply(v As Double, v2 As Double) As Double
+- Public Overrides Function apply(x As Double, y As Double) As Double
+- Public Overrides Function apply(v As Double, v2 As Double) As Double
+- Public Sub New(value As Double)
+- Public Overrides Function apply(v As Double) As Double
+- Public Overrides Function apply(x As Double) As Double
+- Public Sub New(power As Double)
+- Public Overrides Function apply(v As Double) As Double
+- Public Sub New()
+- Public Sub New(scalar As Double)
+- Public Overrides Function apply(v As Double) As Double
+- Public Overrides Function apply(v As Double) As Double
+- Public Sub New(min As Double, max As Double)
+- Public Overrides Function apply(x As Double) As Double
+- Public Overrides Function ToString() As String
+- Public Sub New()
+- Public Sub New(threshold As Double)
+- Public Overrides Function apply(x As Double) As Double
+- Public Overrides Function ToString() As String
+- Public Overrides Function apply(x As Double) As Double
+- Public Overrides Function ToString() As String
+- Public MustOverride Function apply(x As Double) As Double
+- Public MustOverride Function apply(x As Double, y As Double) As Double
+- Public Function assign(m As GeneralMatrix, f As DoubleFunction) As NumericMatrix
+- Public Function assign(m1 As GeneralMatrix, m2 As GeneralMatrix, f As DoubleDoubleFunction) As NumericMatrix
+- Public Function transpose() As DenseMatrix
+- Public Function copy() As DenseMatrix
+- Public Function dot(m2 As DenseMatrix) As DenseMatrix
+- Public Overloads Function apply([function] As DoubleFunction) As DenseMatrix
+- Public Overloads Function apply(m2 As DenseMatrix, [function] As DoubleDoubleFunction) As DenseMatrix
+- Public Shared Function make(r As Integer, c As Integer) As DenseMatrix
+- Public Shared Function randomGaussian(r As Integer, c As Integer) As DenseMatrix
+- Public Shared Function random(r As Integer, c As Integer) As DenseMatrix
+- Public Shared Function make(m As Double()()) As DenseMatrix
+- Public Shared Function make(m As Vector) As DenseMatrix
+- Public Overrides Function ToString() As String
+- Public Function addColumns(m2 As DenseMatrix) As DenseMatrix
+- Public Function data() As GeneralMatrix
+- Public Function toArray() As Double()()
+- Public Function row(pRow As Integer) As Vector
+- Public Function rows() As Integer
+- Public Function columns() As Integer
+- Public Function add(m2 As DenseMatrix) As DenseMatrix
+- Public Function subtract(m2 As DenseMatrix) As DenseMatrix
+- Public Function multiply(m2 As DenseMatrix) As DenseMatrix
+- Public Function multiply(s As Double) As DenseMatrix
+- Public Function divide(m2 As DenseMatrix) As DenseMatrix
+- Public Function divide(s As Double) As DenseMatrix
+- Public Function pow(power As Double) As DenseMatrix
+- Public Function sum() As Double
+- Public Shared Function splitColumns(m As DenseMatrix, numPieces As Integer) As IList(Of Double()())
+- Public Shared Function concatColumns(ParamArray m As DenseMatrix()) As Double()()
+- ... and 96 more
+
+## Imports
+- Microsoft.VisualBasic
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions.distance
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions.doubledouble.rbm
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nlp.encode
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.deep
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.factory
+- Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.utils
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+- Microsoft.VisualBasic.Parallel
+- Microsoft.VisualBasic.Serialization.JSON
+- randf = Microsoft.VisualBasic.Math.RandomExtensions
+- System.Drawing.Drawing2D
+- System.IO
+- System.Runtime.CompilerServices
+- System.Text
+
+## File tree
+- math\functions\distance\DiscreteDistanceFunction.vb
+- math\functions\distance\DistanceFunction.vb
+- math\functions\distance\EuclideanDistanceFunction.vb
+- math\functions\Divide.vb
+- math\functions\doubledouble\Add.vb
+- math\functions\doubledouble\Divide.vb
+- math\functions\doubledouble\Multiply.vb
+- math\functions\doubledouble\rbm\ActivationState.vb
+- math\functions\doubledouble\Subtract.vb
+- math\functions\Multiply.vb
+- math\functions\OneMinusX.vb
+- math\functions\Power.vb
+- math\functions\RandomDouble.vb
+- math\functions\RandomGaussian.vb
+- math\functions\RangedSigmoid.vb
+- math\functions\Round.vb
+- math\functions\Sigmoid.vb
+- math\MathHelpers.vb
+- math\Matrix.vb
+- nlp\encode\DiscreteRandomWordEncoder.vb
+- nlp\encode\RandomWordEncoder.vb
+- nlp\encode\WordEncoder.vb
+- nlp\ngram\NGramGenerator.vb
+- nlp\WordDictionary.vb
+- PrettyPrint.vb
+- rbm_nn\deep\DeepRBM.vb
+- rbm_nn\deep\LayerParameters.vb
+- rbm_nn\deep\RBMLayer.vb
+- rbm_nn\factory\RandomRBMFactory.vb
+- rbm_nn\factory\RBMFactory.vb
+- rbm_nn\learn\BackErrorPropagation.vb
+- rbm_nn\learn\ContrastiveDivergence.vb
+- rbm_nn\learn\DeepContrastiveDivergence.vb
+- rbm_nn\learn\LearningParameters.vb
+- rbm_nn\learn\MultiThreadedDeepContrastiveDivergence.vb
+- rbm_nn\learn\RecurrentContrastiveDivergence.vb
+- rbm_nn\RBM.vb
+- rbm_nn\save\DeepRBMPersister.vb
+- rbm_nn\save\RBMPersister.vb
+

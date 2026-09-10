@@ -1,0 +1,156 @@
+# mime/application%xml/xml-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MIME.application.xml
+- AssemblyName  : Microsoft.VisualBasic.MIME.application.xml
+- TargetFramework: net10.0-windows;net10.0
+- Source files  : 21
+- Existing Title: XML Toolkit with XSD Models, MathML and XPath Queries
+- Existing Desc : XML helpers for sciBASIC#: an XSD element data model with VB.NET class code generation, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.
+- Existing Tags : scibasic;xml;xsd;mathml;xpath
+
+## Namespaces
+- MathML  [files: 10]
+- xsd  [files: 2]
+
+## Public types
+- Class CodeGenerator (CodeGenerator.vb) - Generate the VB.NET class code based on the xsd definition
+- Enum actiontypes (MathML\actiontypes.vb)
+- Module ContentBuilder (MathML\contentBuilder.vb)
+- Class BinaryExpression (MathML\Expression\BinaryExpression.vb)
+- Class LambdaExpression (MathML\Expression\LambdaExpression.vb) - A lambda expression that consist with the <see cref="parameters"/> and <see cref="lambda"/> body.
+- Class MathFunctionExpression (MathML\Expression\MathFunctionExpression.vb)
+- Class SymbolExpression (MathML\Expression\SymbolExpression.vb)
+- Enum mathOperators (MathML\mathOperators.vb)
+- Class Apply (MathML\XML\Apply.vb) - the math xml data should be parsed via the method: <see cref="ContentBuilder.ParseXml(XmlElement)"/>
+- Class maction (MathML\XML\maction.vb) - The MathML ``&lt;maction>`` element provides a possibility to bind actions to (sub-) expressions. The action itself is specified by the actiontype attribute, which accepts
+- Class Math (MathML\XML\Math.vb)
+- Class mathOperator (MathML\XML\Math.vb)
+- Class constant (MathML\XML\Math.vb)
+- Class lambda (MathML\XML\Math.vb)
+- Class symbols (MathML\XML\Math.vb)
+- Class GraphWriter (XmlGeneric\GraphWriter.vb)
+- Module XmlParser (XmlGeneric\XmlDocumentParser.vb)
+- Class XmlElement (XmlGeneric\XmlElement.vb) - A generic xml element node
+- Class SelectByNodeName (XPath\XPath.vb) - 选取此节点的所有子节点。
+- Class RootPathSelector (XPath\XPath.vb) - 从根节点选取。
+- Class CurrentNodes (XPath\XPath.vb) - 从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。
+- Class CurrentNode (XPath\XPath.vb) - 选取当前节点。
+- Class ParentNode (XPath\XPath.vb) - 选取当前节点的父节点。
+- Class SelectAttributes (XPath\XPath.vb) - 选取属性。
+- Class XPathParser (XPath\XPathParser.vb)
+- Class XPathQuery (XPath\XPathQuery.vb)
+- Enum elementTypes (xsd\elementTypes.vb)
+- Module Extensions (xsd\Extensions.vb)
+- Class restriction (xsd\XML.vb)
+- Class simpleType (xsd\XML.vb)
+- Class restrictionValue (xsd\XML.vb)
+- Class include (xsd\XML.vb)
+- Class complexType (xsd\XML.vb)
+- Class extension (xsd\XML.vb)
+- Class attribute (xsd\XML.vb)
+- Class sequence (xsd\XML.vb)
+- Class element (xsd\XML.vb)
+- Class annotation (xsd\XML.vb)
+- Class schema (xsd\XML.vb)
+
+## Notable public members
+- Public Function SimplyOperator(text As String) As String
+- Friend Function ToString(lambda As BinaryExpression) As String
+- Public Function ParseXml(mathML As XmlElement) As LambdaExpression
+- Public Property applyleft As MathExpression
+- Public Property applyright As MathExpression
+- Public Overrides Function ToString() As String
+- Public Property parameters As String()
+- Public Property lambda As MathExpression
+- Public Overrides Function ToString() As String
+- Public Shared Function FromMathML(xmlText As String) As LambdaExpression
+- Public Shared Function FromMathML(xml As XmlElement) As LambdaExpression
+- Public Property name As String
+- Public Property parameters As MathExpression()
+- Public Overrides Function ToString() As String
+- Public Property text As String
+- Public Property isNumericLiteral As Boolean
+- Public Overrides Function ToString() As String
+- Public Property divide As mathOperator
+- Public Property times As mathOperator
+- Public Property plus As mathOperator
+- Public Property power As mathOperator
+- Public Property cn As constant
+- Public Property apply As Apply()
+- Public Overrides Function ToString() As String
+- Public Property actiontype As actiontypes
+- Public Property id As String
+- Public Property style As String
+- Public Property apply As Apply
+- Public Property lambda As lambda
+- Public Shared Function BuildExpressionString(exp As Apply) As String
+- Public Property type As String
+- Public Property value As String
+- Public Overrides Function ToString() As String
+- Public Property bvar As symbols()
+- Public Property apply As Apply
+- Public Overrides Function ToString() As String
+- Public Property ci As String()
+- Public Overrides Function ToString() As String
+- Public Function Load(xml As XmlElement) As Object
+- Public Shared Function LoadXml(Of T)(xml As String) As T
+- Public Function ParseXml(xml As String) As XmlElement
+- Public Property name As String
+- Public Property attributes As Dictionary(Of String, String)
+- Public Property elements As XmlElement()
+- Public Property text As String
+- Public Property comment As String
+- Public ReadOnly Property id As String Implements IReadOnlyId.Identity
+- Public Function getElementById(id As String) As XmlElement
+- Public Iterator Function getElementsByTagName(name As String) As IEnumerable(Of XmlElement)
+- Public Overrides Function ToString() As String
+- Public Shared Function ParseXmlText(xmlText As String) As XmlElement
+- Public Property expression As String
+- Public Property selectNext As XPath
+- Public MustOverride Function Query(document As IXmlDocumentTree) As IXmlNode()
+- Public Shared Function Parse(expression As String) As XPath
+- Public Overrides Function ToString() As String
+- Public Overrides Function Query(document As IXmlDocumentTree) As IXmlNode()
+- Public Overrides Function ToString() As String
+- Public Overrides Function Query(document As IXmlDocumentTree) As IXmlNode()
+- Public Overrides Function ToString() As String
+- ... and 36 more
+
+## Imports
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Text
+- Microsoft.VisualBasic.Text.Xml
+- System.ComponentModel
+- System.Data
+- System.IO
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Xml
+- System.Xml.Serialization
+
+## File tree
+- CodeGenerator.vb
+- MathML\actiontypes.vb
+- MathML\contentBuilder.vb
+- MathML\Expression\BinaryExpression.vb
+- MathML\Expression\LambdaExpression.vb
+- MathML\Expression\MathFunctionExpression.vb
+- MathML\Expression\SymbolExpression.vb
+- MathML\mathOperators.vb
+- MathML\XML\Apply.vb
+- MathML\XML\maction.vb
+- MathML\XML\Math.vb
+- XmlGeneric\GraphWriter.vb
+- XmlGeneric\XmlDocumentParser.vb
+- XmlGeneric\XmlElement.vb
+- XPath\XPath.vb
+- XPath\XPathParser.vb
+- XPath\XPathQuery.vb
+- xsd\elementTypes.vb
+- xsd\Extensions.vb
+- xsd\NamespaceDoc.vb
+- xsd\XML.vb
+

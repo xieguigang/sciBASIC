@@ -1,0 +1,207 @@
+# gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.visualize.Network
+- AssemblyName  : Microsoft.VisualBasic.Data.visualize.Network
+- TargetFramework: net10.0
+- Source files  : 41
+- Existing Title: Network Graph Data Model And Topology Analysis Library
+- Existing Desc : Defines the NetworkGraph node and edge model with dynamic graph tables, and supplies community detection, shortest paths, degree and betweenness centrality. The data layer of the sciBASIC# network visualization stack.
+- Existing Tags : scibasic;network-graph;graph-model;graph-analysis;centrality
+
+## Namespaces
+- Analysis  [files: 7]
+- Analysis.Model  [files: 5]
+- Analysis.SimilarityImpl  [files: 2]
+- com.mxgraph.model  [files: 1]
+- FileStream.Generic  [files: 2]
+- Graph  [files: 10]
+- Graph.Abstract  [files: 1]
+- Graph.EdgeBundling  [files: 4]
+- Layouts  [files: 4]
+- TreeAPI  [files: 1]
+
+## Public types
+- Class Communities (Analysis\Communities.vb)
+- Class NodeReader (Analysis\Extensions.vb)
+- Module GraphEmbedding (Analysis\GraphEmbedding.vb) - Embedding of a graph object as numeric vector
+- Class AdjacencySet (Analysis\Model\AdjacencySet.vb) - 在这个集合中，所有的<see cref=" SparseGraph.IInteraction.source"/>都是一样的
+- Class DirectedVertex (Analysis\Model\DirectedVertex.vb) - an edge collection for indexing the in/out edge connection with current node.
+- Class EdgeSet (Analysis\Model\EdgeSet.vb) - 两个节点对象之间的重复的边链接的集合 所有的<see cref="IInteraction.source"/>和<see cref="IInteraction.target"/>都是一样的
+- Interface EdgeTraversalPolicy (Analysis\Model\EdgeTraversalPolicy.vb)
+- Class ForwardTraversal (Analysis\Model\EdgeTraversalPolicy.vb)
+- Class BackwardTraversal (Analysis\Model\EdgeTraversalPolicy.vb)
+- Class GraphIndex (Analysis\Model\GraphIndex.vb) - The network graph element index <typeparam name="Node">The network node element</typeparam> <typeparam name="Edge">The network edge element</typeparam>
+- Module PAGA (Analysis\PAGA.vb) - PAGA - partition-based graph abstraction
+- Module ClassConnectivity (Analysis\Similarity\ClassConnectivity.vb)
+- Module GraphTopology (Analysis\Similarity\GraphTopology.vb)
+- Module Similarity (Analysis\Similarity\Similarity.vb)
+- Module Statistics (Analysis\Statistics.vb)
+- Interface IGraphValueContainer (Graph\Abstract.vb) - An class object that contains <see cref="GraphData"/> <typeparam name="T"></typeparam>
+- Class GraphTreeNode (Graph\Abstract.vb) - 这是一个节点对象
+- Class GraphTree (Graph\GraphTree.vb)
+- Class EdgeData (Graph\Model\data\EdgeData.vb)
+- Class GraphData (Graph\Model\data\GraphData.vb)
+- Module NamesOf (Graph\Model\data\NameOf.vb) - The preset names value for edge type <see cref="EdgeData.Properties"/> and node type <see cref="NodeData.Properties"/>
+- Class NodeData (Graph\Model\data\NodeData.vb)
+- Class Edge (Graph\Model\Edge.vb) - the network graph edge.
+- Class Handle (Graph\Model\Handle\Handle.vb) - 进行网络之中的边连接的布局走向的``拐点``的矢量化描述 https://github.com/cytoscape/cytoscape-impl/blob/93530ef3b35511d9b1fe0d0eb913ecdcd3b456a8/ding-impl/ding-presentation-impl/src/main/java/org/cytoscape/ding/impl/HandleImpl.java#L247
+- Module HandleCreator (Graph\Model\Handle\HandleCreator.vb) - handle point creator algorithm module
+- Class WayPointVector (Graph\Model\Handle\WayPointVector.vb) - 相对于<see cref="Handle"/>模型，这个矢量模型则是单纯的以xy偏移比例来进行矢量比例缩放
+- Class NetworkGraph (Graph\Model\NetworkGraph.vb) - The network graph object model
+- Class Node (Graph\Model\Node.vb) - <see cref="Node.Label"/> -> <see cref="INamedValue.Key"/>
+- Class FDGVector2 (Graph\Model\Vectors\FDGVector2.vb)
+- Class FDGVector3 (Graph\Model\Vectors\FDGVector3.vb)
+- Module FDGVectorExtensions (Graph\Model\Vectors\FDGVectorExtensions.vb)
+- Class mxGraphModel (Graph\mxGraphModel.vb)
+- Interface Filter (Graph\mxGraphModel.vb)
+- Class mxRootChange (Graph\mxGraphModel.vb)
+- Class mxChildChange (Graph\mxGraphModel.vb)
+- Class mxTerminalChange (Graph\mxGraphModel.vb)
+- Class mxValueChange (Graph\mxGraphModel.vb)
+- Class mxStyleChange (Graph\mxGraphModel.vb)
+- Class mxGeometryChange (Graph\mxGraphModel.vb)
+- Class mxCollapseChange (Graph\mxGraphModel.vb)
+- Class mxVisibleChange (Graph\mxGraphModel.vb)
+- Class NetworkGraphStream (Graph\NetworkGraphStream.vb)
+- Module Selector (Graph\Selector.vb) - Graph value selector by property name
+- Class GraphRouter (GraphRouter.vb)
+- Class Route (GraphRouter.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - 这个模块提供的是网络模型的读写操作，以及ForceDirect网络布局的构建引擎
+- Module NetworkAPI (NetworkAPI.vb)
+- Enum NodeTypes (TreeAPI\TREE.vb)
+- Class LeafX (TreeAPI\TREE.vb)
+- Class Leaf (TreeAPI\TREE.vb)
+
+## Notable public members
+- Public Shared Function Community(g As NetworkGraph) As Dictionary(Of String, String)
+- Public Shared Function GetCommunitySet(g As NetworkGraph) As Dictionary(Of String, Node())
+- Public Shared Function Modularity(g As NetworkGraph, Optional ByRef qsub As Double() = Nothing) As Double
+- Public Shared Function AnalysisUnweighted(ByRef g As NetworkGraph, Optional directed As Boolean = True) As NetworkGraph
+- Public Shared Function Analysis(ByRef g As NetworkGraph,
+- Public Function isTupleEdge(Of Node As INamedValue, IEdge As {Class, SparseGraph.IInteraction})(edge As IEdge, g As GraphIndex(Of Node, IEdge)) As Boo…
+- Public Iterator Function DecomposeGraphByGroup(g As NetworkGraph, Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
+- Public Function getEdgeSet(g As NetworkGraph, nodeSet As IEnumerable(Of Node)) As Edge()
+- Public Function DecomposeGraph(components As Edge(), minVertices As Integer) As NetworkGraph
+- Public Iterator Function DecomposeGraph(components As IEnumerable(Of Edge()), minVertices As Integer) As IEnumerable(Of NetworkGraph)
+- Public Function DecomposeGraph(g As NetworkGraph,
+- Public Function IteratesSubNetworks(network As NetworkGraph,
+- Public Function hasMetadata(v As Node, key As String) As Boolean Implements NodeMetaDataAccessor(Of Node).hasMetadata
+- Public Function getMetadata(v As Node, key As String) As String Implements NodeMetaDataAccessor(Of Node).getMetadata
+- Public Iterator Function ClassNameTuples(classNames As IEnumerable(Of String)) As IEnumerable(Of (String, String))
+- Public Function ToVector(g As NetworkGraph, classNames As String(), Optional directed As Boolean = True) As Vector
+- Public Function ToVector(g As NetworkGraph, classNames As (u_cls As String, v_cls As String)(), Optional directed As Boolean = True) As Vector
+- Public Function Compare(v1 As Node, v2 As Node) As Integer Implements IComparer(Of Node).Compare
+- Public Function GetComponents() As IEnumerable(Of Edge())
+- Public Shared Function StronglyConnectedComponents(gr As NetworkGraph) As Kosaraju
+- Public Property U As String
+- Public ReadOnly Property Count As Integer
+- Public Sub New()
+- Public Function hasNeighbor(i As Node) As Boolean
+- Public Sub Add(edge As Edge)
+- Public Sub Remove(V As String)
+- Public Iterator Function EnumerateAllEdges() As IEnumerable(Of Edge)
+- Public Function EnumerateAllEdges(V As INamedValue) As IEnumerable(Of Edge)
+- Public Overrides Function ToString() As String
+- Public Function Clone() As AdjacencySet(Of Edge) Implements ICloneable(Of AdjacencySet(Of Edge)).Clone
+- Public Shared Operator Like(vlab As String, aset As AdjacencySet(Of Edge)) As Boolean
+- Public ReadOnly Property label As String
+- Public ReadOnly Property outDegree As Integer
+- Public ReadOnly Property inDegree As Integer
+- Public ReadOnly Property outgoingEdges As IEnumerable(Of Edge)
+- Public ReadOnly Property incomingEdges As IEnumerable(Of Edge)
+- Public ReadOnly Property connectivity As Double
+- Public Sub addOutgoingEdge(edge As Edge)
+- Public Sub addIncomingEdge(e As Edge)
+- Public Sub addEdge(edge As Edge)
+- Public Function getEdgeTo(v2 As DirectedVertex) As Edge
+- Public Overrides Function ToString() As String
+- Public Iterator Function GetEnumerator() As IEnumerator(Of Edge) Implements IEnumerable(Of Edge).GetEnumerator
+- Public Overrides Function ToString() As String
+- Public Sub New()
+- Public Overridable Function edges(v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
+- Public Overridable Function vertex(e As Edge) As Node Implements EdgeTraversalPolicy.vertex
+- Public Sub New()
+- Public Overridable Function edges(v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
+- Public Overridable Function vertex(e As Edge) As Node Implements EdgeTraversalPolicy.vertex
+- Public Function nodes(nodeSet As IEnumerable(Of Node)) As GraphIndex(Of Node, Edge)
+- Public Function edges(edgeSet As IEnumerable(Of Edge)) As GraphIndex(Of Node, Edge)
+- Public Sub Delete(node As Node)
+- Public Sub RemoveEdge(edge As Edge)
+- Public Sub Clear()
+- Public Function CreateNodeAdjacencySet(node As INamedValue) As AdjacencySet(Of Edge)
+- Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
+- Public Function GetEdges(nodeKey As String) As IEnumerable(Of Edge)
+- Public Function AddEdge(edge As Edge) As (U As AdjacencySet(Of Edge), V As AdjacencySet(Of Edge))
+- Public Function Abstraction(manifolds As NetworkGraph, Optional threshold As Double = 0.0) As NetworkGraph
+- ... and 361 more
+
+## Imports
+- Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+- Bitmap = System.Drawing.Bitmap
+- Brush = Microsoft.VisualBasic.Imaging.Brush
+- Brush = System.Drawing.Brush
+- Brushes = Microsoft.VisualBasic.Imaging.Brushes
+- Brushes = System.Drawing.Brushes
+- DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+- DashStyle = System.Drawing.Drawing2D.DashStyle
+- Font = Microsoft.VisualBasic.Imaging.Font
+- Font = System.Drawing.Font
+- geometry = Microsoft.VisualBasic.Imaging.Math2D
+- GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+- GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+- GraphNetwork = Microsoft.VisualBasic.Data.GraphTheory.Network
+- Image = Microsoft.VisualBasic.Imaging.Image
+- Image = System.Drawing.Image
+- LineCap = Microsoft.VisualBasic.Imaging.LineCap
+- LineCap = System.Drawing.Drawing2D.LineCap
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Deque
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+
+## File tree
+- Analysis\Communities.vb
+- Analysis\Extensions.vb
+- Analysis\GraphEmbedding.vb
+- Analysis\Kosaraju.vb
+- Analysis\Model\AdjacencySet.vb
+- Analysis\Model\DirectedVertex.vb
+- Analysis\Model\EdgeSet.vb
+- Analysis\Model\EdgeTraversalPolicy.vb
+- Analysis\Model\GraphIndex.vb
+- Analysis\PAGA.vb
+- Analysis\Similarity\ClassConnectivity.vb
+- Analysis\Similarity\GraphTopology.vb
+- Analysis\Similarity\Similarity.vb
+- Analysis\Statistics.vb
+- Graph\Abstract.vb
+- Graph\Extensions.vb
+- Graph\GraphTree.vb
+- Graph\Model\data\EdgeData.vb
+- Graph\Model\data\GraphData.vb
+- Graph\Model\data\NameOf.vb
+- Graph\Model\data\NodeData.vb
+- Graph\Model\Edge.vb
+- Graph\Model\Handle\Extensions.vb
+- Graph\Model\Handle\Handle.vb
+- Graph\Model\Handle\HandleCreator.vb
+- Graph\Model\Handle\WayPointVector.vb
+- Graph\Model\NetworkGraph.vb
+- Graph\Model\Node.vb
+- Graph\Model\Vectors\AbstractVector.vb
+- Graph\Model\Vectors\FDGVector2.vb
+- Graph\Model\Vectors\FDGVector3.vb
+- Graph\Model\Vectors\FDGVectorExtensions.vb
+- Graph\mxGraphModel.vb
+- Graph\NetworkGraphStream.vb
+- Graph\Selector.vb
+- GraphRouter.vb
+- IDynamicsTable.vb
+- NamespaceDoc.vb
+- NetworkAPI.vb
+- TreeAPI\TREE.vb
+- TreeAPI\TreeGraph.vb
+

@@ -1,0 +1,258 @@
+# Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Math.Statistics
+- AssemblyName  : Microsoft.VisualBasic.Math.Statistics
+- TargetFramework: net10.0
+- Source files  : 70
+- Existing Title: Statistics Toolkit: Distributions, Hypothesis Tests and More
+- Existing Desc : Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.
+- Existing Tags : scibasic;statistics;hypothesis-testing;distribution;fastica;shapley-value
+
+## Namespaces
+- Distributions  [files: 3]
+- Distributions.LinearMoments  [files: 7]
+- Distributions.MethodOfMoments  [files: 12]
+- Hypothesis  [files: 8]
+- Hypothesis.FishersExact  [files: 3]
+- Hypothesis.Mantel  [files: 4]
+- MomentFunctions  [files: 4]
+- RANSAC  [files: 4]
+- ShapleyValue  [files: 10]
+- ShapleyValue.TreeShape  [files: 6]
+
+## Public types
+- Class DiscreteDistribution (Distributions\DiscreteDistribution.vb)
+- Class Distribution (Distributions\Distribution.vb)
+- Class Exponential (Distributions\LinearMoments\Exponential.vb) - @author Will_and_Sara
+- Class FDistribution (Distributions\LinearMoments\FDistribution.vb)
+- Class GEV (Distributions\LinearMoments\GEV.vb) - @author Will_and_Sara and Micheal Wright
+- Class Gumbel (Distributions\LinearMoments\Gumbel.vb) - @author Will_and_Sara
+- Class Logistic (Distributions\LinearMoments\Logistic.vb) - @author Will_and_Sara
+- Class LogPearsonIII (Distributions\LinearMoments\LogPearsonIII.vb) - @author Will_and_Sara
+- Class Pareto (Distributions\LinearMoments\Pareto.vb) - @author Will_and_Sara
+- Class Beta (Distributions\MethodOfMoments\Beta.vb) - @author Will_and_Sara
+- Class Emperical (Distributions\MethodOfMoments\Emperical.vb) - @author Will_and_Sara
+- Class Exponential (Distributions\MethodOfMoments\Exponential.vb) - @author Will_and_Sara
+- Class Gamma (Distributions\MethodOfMoments\Gamma.vb) - @author Will_and_Sara
+- Class GEV (Distributions\MethodOfMoments\GEV.vb) - @author Will_and_Sara https://en.wikipedia.org/wiki/Generalized_extreme_value_distribution
+- Class Gumbel (Distributions\MethodOfMoments\Gumbel.vb) - @author Will_and_Sara
+- Class LogNormal (Distributions\MethodOfMoments\LogNormal.vb) - @author Will_and_Sara
+- Class LogPearsonIII (Distributions\MethodOfMoments\LogPearsonIII.vb) - @author Will_and_Sara
+- Class Normal (Distributions\MethodOfMoments\Normal.vb) - normal distribution @author Will_and_Sara
+- Class Rayleigh (Distributions\MethodOfMoments\Rayleigh.vb) - @author Will_and_Sara
+- Class Triangular (Distributions\MethodOfMoments\Triangular.vb) - @author Will_and_Sara
+- Class Uniform (Distributions\MethodOfMoments\Uniform.vb) - @author Will_and_Sara
+- Module Fisher (Example\Fisher.vb)
+- Module ExampleMonteCarlo (Example\Program.vb)
+- Module Extensions (Extensions.vb)
+- Class FastICA (FastICA.vb) - FastICA (Fast Independent Component Analysis) implementation. This class provides a VB.NET port of the FastICA C reference implementation for recovering independent components from component mixtures.
+- Class ChiSquareTest (HypothesisTesting\ChiSquareTest.vb) - 卡方检验 卡方检验用于确定预期频数（expected frequencies）和观察频数（observed frequencies） 在一个或多个类别中是否存在显著差异。预期频数是指在假设两个变量独立的情况下，根据边际
+- Enum ConfidenceLevels (HypothesisTesting\ChiSquareTest.vb)
+- Class FishersExactPvalues (HypothesisTesting\FishersExact\FishersExactPvalues.vb) - `FishersExactPvalues` holds the pvalues calculated by the `fishers_exact` function.
+- Module FishersExactTest (HypothesisTesting\FishersExact\FisherTest.vb) - Implements a 2×2 Fishers exact test. Use this to test the independence of two categorical variables when the sample sizes are small. For an approachable explanation of Fisher's exact test, see
+- Class HyperState (HypothesisTesting\FishersExact\HyperState.vb)
+- Module FisherTest (HypothesisTesting\FisherTest.vb) - analysis of contingency tables.[1][2][3] Although in practice it is employed when sample sizes are small, it is valid for all sample sizes. It is named after its inventor, Ronald Fisher, and is one of a class
+- Class FTest (HypothesisTesting\FTest.vb)
+- Enum Hypothesis (HypothesisTesting\Hypothesis.vb)
+- Module LogLikelihood (HypothesisTesting\LogLikelihood.vb) - calculates log likelihood between a source and a reference corpus. for more details on LLH please visit http : //ucrel.lancs.ac.uk/llwizard.html
+- Module corr (HypothesisTesting\MantelTest\corr.vb)
+- Class Result (HypothesisTesting\MantelTest\Model.vb)
+- Class Model (HypothesisTesting\MantelTest\Model.vb) - the test model
+- Module stats (HypothesisTesting\MantelTest\stats.vb)
+- Module statistical_test (HypothesisTesting\MantelTest\test.vb)
+- Class MoranTest (HypothesisTesting\MoranTest.vb)
+- Class StudenttDistribution (HypothesisTesting\T-test\StudenttDistribution.vb)
+- Class TtestResult (HypothesisTesting\T-test\TestResult.vb)
+- Class Topt (HypothesisTesting\T-test\Topt.vb)
+- Module t (HypothesisTesting\T-test\Ttest.vb) - 数值积分法是一种数学方法，用于估算函数下的面积。在统计学中，特别是在计算t检验的p值时，我们可以使用数值积分法来估算t分布曲线下特定区间（通常是尾区间）的面积。 为了讲解这个算法，我们首先需要了解t分布和p值的基本概念。t分布是一种概率分布，用于小样本数据集的情况。p值则是衡量观察结果或更极端结果在零假设为真时出现的概率。 **数值积分法计算p值的步骤如下**：
+- Class TwoSampleResult (HypothesisTesting\T-test\TwoSampleResult.vb)
+- Class BasicProductMoments (MomentFunctions\BasicProductMoments.vb) - 可以利用这个模块来进行一组数据的正态分布的参数的估计 @author Will_and_Sara
+- Class BasicProductMomentsHistogram (MomentFunctions\BasicProductMomentsHistogram.vb) - @author Will_and_Sara
+- Class LinearMoments (MomentFunctions\LinearMoments.vb) - @author Will_and_Sara
+- Class ProductMoments (MomentFunctions\ProductMoments.vb) - - **Efficiency:** Different sample moments may have different levels of variability; some are more efficient than others. - **Robustness:** Certain moments are more robust to outliers than others. ### Example:
+- Class Algorithm (RANSAC\Algorithm.vb) - system parameters for some input data. A common task For this algorithm Is To find the median subset Of a specified Set. For the regular spaces, the subset Is:
+- Class Point (RANSAC\Point.vb)
+- Class SampleOutput (RANSAC\SampleOutput.vb)
+- Class Vector (RANSAC\Vector.vb)
+- Class CharacteristicFunction (ShapleyValue\CharacteristicFunction.vb) - represent the following function often written by v 2^N to R for each subset of the set {1.. N} is associated a value
+- Class CharacteristicFunctionBuilder (ShapleyValue\CharacteristicFunction.vb)
+- Enum InnerEnum (ShapleyValue\CoalitionStrategy.vb)
+- Class FactorialUtil (ShapleyValue\FactorialUtil.vb)
+- Class Node (ShapleyValue\Node.vb)
+- Class NodeValue (ShapleyValue\NodeValue.vb)
+- Class PermutationLinkList (ShapleyValue\PermutationLinkList.vb)
+- Class Powerset (ShapleyValue\Powerset.vb)
+- Class RandomPermutations (ShapleyValue\RandomPermutations.vb)
+- Interface ShapleyApplication (ShapleyValue\ShapleyApplication.vb) - facade of Shapley application @author Franck Benault @version 0.0.2
+- Class ShapleyValue (ShapleyValue\ShapleyValue.vb)
+- Class PathElement (ShapleyValue\TreeShap\PathElement.vb) - Path element for use in <seealso cref="ShapAlgo2"/>
+- Class PkNode (ShapleyValue\TreeShap\PkNode.vb)
+- Class PkTree (ShapleyValue\TreeShap\PkTree.vb)
+- Class ShapAlgo1 (ShapleyValue\TreeShap\ShapAlgo1.vb) - v - vector of node values; = "internal" for internal nodes a,b - left and right node indexes for each internal node t - thresholds for each internal node
+- Class ShapAlgo2 (ShapleyValue\TreeShap\ShapAlgo2.vb) - - the path (stored in variable "m") has long-named properties to make the thing more readable Bugfixes: - [bugfix1] in EXTEND, iteration misses newly added element, causing wrong computation - see [2]
+- Class ShapOptimized (ShapleyValue\TreeShap\ShapOptimized.vb)
+- Class PathElement (ShapleyValue\TreeShap\ShapOptimized.vb)
+- Module SpecialFunctions (SpecialFunctions.vb) - @author Will_and_Sara
+
+## Notable public members
+- Public Property PeriodOfRecord As Integer
+- Public MustOverride Function GetInvCDF(probability As Double) As Double
+- Public MustOverride Function GetCDF(value As Double) As Double
+- Public MustOverride Function GetPDF(value As Double) As Double
+- Public Function GetInvCDF(probability As Vector) As Vector
+- Public Function GetCDF(value As Vector) As Vector
+- Public Function GetPDF(value As Vector) As Vector
+- Public MustOverride Function Validate() As IEnumerable(Of Exception)
+- Public Overridable Function Kolmogorov_SmirnovTest() As Double
+- Public Overridable Function AndersonDarlingTest() As Double
+- Public Overridable Function GetParamNames() As String()
+- Public Overridable Function GetParamValues() As Object()
+- Public Overridable Function Clone() As ContinuousDistribution
+- Public Overrides Function Equals(dist As Object) As Boolean
+- Public Overrides Function GetHashCode() As Integer
+- Public Overridable Function BootStrap() As Double()
+- Public Overridable Function BootStrap(seed As Long) As Double()
+- Public Sub AddItem(item As String)
+- Public Sub RemoveItem(item As String)
+- Public Sub AddDistribution(distribution As DiscreteDistribution)
+- Public Sub RemoveDistribution(distribution As DiscreteDistribution)
+- Public Function GetSum() As Double
+- Public Function GetIndex(item As String) As Integer
+- Public Function ContainsItem(item As String) As Boolean
+- Public Function GetItem(index As Integer) As String
+- Public Function GetValue(index As Integer) As Integer
+- Public Function GetCount(item As String) As Integer
+- Public Function GetMaxItem() As String
+- Public Function GetMaxItem(includeTheseOnly As List(Of String)) As String
+- Public Function GetProbability(item As String) As Double
+- Public Function GetProbabilityDistribution() As Dictionary(Of String, Double)
+- Public Function GetProbabilityLaplaceSmoothing(item As String) As Double
+- Public Function Entropy() As Double
+- Public Const Z_MAX As Double = 6.0
+- Public Const Z_EPSILON As Double = 0.000001
+- Public Const CHI_EPSILON As Double = 0.000001
+- Public Const CHI_MAX As Double = 99999.0
+- Public Const LOG_SQRT_PI As Double = 0.57236494292470008
+- Public Const I_SQRT_PI As Double = 0.56418958354775628
+- Public Const BIGX As Double = 200.0
+- Public Const I_PI As Double = 0.31830988618379069
+- Public Const F_EPSILON As Double = 0.000001
+- Public Const F_MAX As Double = 9999.0
+- Public Shared Function Beta(x As Double()) As Double
+- Public Shared Function GammaLn(x As Double) As Double
+- Public Shared Function ZNormal(z As Double) As Double
+- Public Shared Function ZInverse(p As Double) As Double
+- Public Shared Function ChiSquare(x As Double, freedom As Integer) As Double
+- Public Shared Function ChiSquareInverse(p As Double, freedom As Integer) As Double
+- Public Shared Function FDistribution(fValue As Double, freedom1 As Integer, freedom2 As Integer) As Double
+- Public Shared Function FDistributionInverse(p As Double, freedom1 As Integer, freedom2 As Integer) As Double
+- Public Shared Function TDistribution(T As Double, freedom As Integer) As Double
+- Public Shared Function TDistributionInverse(p As Double, freedom As Integer) As Double
+- Public Sub New()
+- Public Sub New(data As Double())
+- Public Sub New(Alpha As Double, Xi As Double)
+- Public Overrides Function GetInvCDF(probability As Double) As Double
+- Public Overrides Function GetCDF(value As Double) As Double
+- Public Overrides Function GetPDF(value As Double) As Double
+- Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+- ... and 417 more
+
+## Imports
+- cephes = Microsoft.VisualBasic.Math.Statistics.SpecialFunctions
+- f64 = System.Double
+- i32 = System.Int32
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Imaging.Math2D
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Java
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math.Distributions
+- Microsoft.VisualBasic.Math.Distributions.MathGamma
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Math.Numerics
+- Microsoft.VisualBasic.Math.Statistics
+- Microsoft.VisualBasic.Math.Statistics.Distributions
+- Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
+- Microsoft.VisualBasic.Math.Statistics.Linq
+- Microsoft.VisualBasic.Math.Statistics.MomentFunctions
+- Microsoft.VisualBasic.Serialization.JSON
+- rand = Microsoft.VisualBasic.Math.RandomExtensions
+- rand2 = Microsoft.VisualBasic.Math.RandomExtensions
+- randf2 = Microsoft.VisualBasic.Math.RandomExtensions
+
+## File tree
+- Distributions\ContinuousDistribution.vb
+- Distributions\DiscreteDistribution.vb
+- Distributions\Distribution.vb
+- Distributions\LinearMoments\Exponential.vb
+- Distributions\LinearMoments\FDistribution.vb
+- Distributions\LinearMoments\GEV.vb
+- Distributions\LinearMoments\Gumbel.vb
+- Distributions\LinearMoments\Logistic.vb
+- Distributions\LinearMoments\LogPearsonIII.vb
+- Distributions\LinearMoments\Pareto.vb
+- Distributions\MethodOfMoments\Beta.vb
+- Distributions\MethodOfMoments\Emperical.vb
+- Distributions\MethodOfMoments\Exponential.vb
+- Distributions\MethodOfMoments\Gamma.vb
+- Distributions\MethodOfMoments\GEV.vb
+- Distributions\MethodOfMoments\Gumbel.vb
+- Distributions\MethodOfMoments\LogNormal.vb
+- Distributions\MethodOfMoments\LogPearsonIII.vb
+- Distributions\MethodOfMoments\Normal.vb
+- Distributions\MethodOfMoments\Rayleigh.vb
+- Distributions\MethodOfMoments\Triangular.vb
+- Distributions\MethodOfMoments\Uniform.vb
+- Example\Fisher.vb
+- Example\Program.vb
+- Extensions.vb
+- FastICA.vb
+- HypothesisTesting\ChiSquareTest.vb
+- HypothesisTesting\FishersExact\FishersExactPvalues.vb
+- HypothesisTesting\FishersExact\FisherTest.vb
+- HypothesisTesting\FishersExact\HyperState.vb
+- HypothesisTesting\FisherTest.vb
+- HypothesisTesting\FTest.vb
+- HypothesisTesting\Hypothesis.vb
+- HypothesisTesting\LogLikelihood.vb
+- HypothesisTesting\MantelTest\corr.vb
+- HypothesisTesting\MantelTest\Model.vb
+- HypothesisTesting\MantelTest\stats.vb
+- HypothesisTesting\MantelTest\test.vb
+- HypothesisTesting\MoranTest.vb
+- HypothesisTesting\NullHypothesis.vb
+- HypothesisTesting\T-test\StudenttDistribution.vb
+- HypothesisTesting\T-test\TestResult.vb
+- HypothesisTesting\T-test\Topt.vb
+- HypothesisTesting\T-test\Ttest.vb
+- HypothesisTesting\T-test\TwoSampleResult.vb
+- MomentFunctions\BasicProductMoments.vb
+- MomentFunctions\BasicProductMomentsHistogram.vb
+- MomentFunctions\LinearMoments.vb
+- MomentFunctions\ProductMoments.vb
+- RANSAC\Algorithm.vb
+- RANSAC\Point.vb
+- RANSAC\SampleOutput.vb
+- RANSAC\Vector.vb
+- ShapleyValue\CharacteristicFunction.vb
+- ShapleyValue\CoalitionStrategy.vb
+- ShapleyValue\FactorialUtil.vb
+- ShapleyValue\Node.vb
+- ShapleyValue\NodeValue.vb
+- ShapleyValue\PermutationLinkList.vb
+- ShapleyValue\Powerset.vb
+- ShapleyValue\RandomPermutations.vb
+- ShapleyValue\ShapleyApplication.vb
+- ShapleyValue\ShapleyValue.vb
+- ShapleyValue\TreeShap\PathElement.vb
+- ShapleyValue\TreeShap\PkNode.vb
+- ShapleyValue\TreeShap\PkTree.vb
+- ShapleyValue\TreeShap\ShapAlgo1.vb
+- ShapleyValue\TreeShap\ShapAlgo2.vb
+- ShapleyValue\TreeShap\ShapOptimized.vb
+- SpecialFunctions.vb
+

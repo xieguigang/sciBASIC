@@ -1,0 +1,337 @@
+# gr/network-visualization/network_layout/network_layout.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.visualize.Network.Layouts
+- AssemblyName  : Microsoft.VisualBasic.Data.visualize.Network.Layouts
+- TargetFramework: net10.0
+- Source files  : 98
+- Existing Title: Graph Layout Algorithms For Network Visualization
+- Existing Desc : Supplies force-directed, spring-embedder, constrained Cola, orthogonal, radial, circular, HOLA and edge-bundling layouts behind a common IPlanner interface. Computes node coordinates before rendering sciBASIC# networks.
+- Existing Tags : scibasic;graph-layout;force-directed;orthogonal-routing;edge-bundling
+
+## Namespaces
+- Circular  [files: 2]
+- Cola  [files: 37]
+- Cola.GridRouter  [files: 1]
+- EdgeBundling.Mingle  [files: 6]
+- ForceDirected  [files: 8]
+- Hola  [files: 10]
+- Orthogonal  [files: 11]
+- Orthogonal.optimization  [files: 5]
+- Orthogonal.util  [files: 1]
+- Radial  [files: 2]
+- SpringForce  [files: 8]
+- SpringForce.Interfaces  [files: 3]
+
+## Public types
+- Module CircularLayout (Circular\CircularLayout.vb) - 环形（圆形）布局：将所有节点沿一个圆周均匀分布。 支持按度排序或按自定义键排序以优化视觉表现 / 减少边交叉。
+- Class CircularLayoutParameters (Circular\CircularLayoutParameters.vb) - 环形布局参数，可在 PropertyGrid 中编辑
+- Module batch (Cola\batch.vb) - 这个模块是对外开放网络布局生成的计算函数的接口
+- Class Descent (Cola\descent.vb)
+- Class Leaf (Cola\Extensions.vb)
+- Interface ProjectionGroup (Cola\Extensions.vb)
+- Module Extensions (Cola\Extensions.vb)
+- Module Extensions (Cola\Geom\geom.vb)
+- Class PolyPoint (Cola\Geom\Models.vb)
+- Class tangentPoly (Cola\Geom\Models.vb)
+- Class BiTangent (Cola\Geom\Models.vb)
+- Class BiTangents (Cola\Geom\Models.vb)
+- Class TVGPoint (Cola\Geom\Models.vb)
+- Class VisibilityVertex (Cola\Geom\Models.vb)
+- Class VisibilityEdge (Cola\Geom\Models.vb)
+- Class TangentVisibilityGraph (Cola\Geom\TangentVisibilityGraph.vb)
+- Class GridRouter (Cola\GridRouter\gridrouter.vb)
+- Class AncestorPath (Cola\GridRouter\gridrouter.vb)
+- Class Pair (Cola\GridRouter\gridrouter.vb)
+- Class SVGRoutePath (Cola\GridRouter\Models.vb)
+- Class vsegmentsets (Cola\GridRouter\Models.vb)
+- Class Segment (Cola\GridRouter\Models.vb)
+- Class LinkLine (Cola\GridRouter\Models.vb)
+- Class NodeAccessor (Cola\GridRouter\Models.vb)
+- Class LinkAccessor (Cola\GridRouter\Models.vb)
+- Class NodeWrapper (Cola\GridRouter\Models.vb)
+- Class Vert (Cola\GridRouter\Models.vb)
+- Class GridLine (Cola\GridRouter\Models.vb) - a horizontal Or vertical line of nodes
+- Structure Comparer (Cola\GridRouter\Models.vb)
+- Class packingOptions (Cola\handledisconnected.vb)
+- Class handleDisconnected (Cola\handledisconnected.vb)
+- Class Graph (Cola\handledisconnected.vb)
+- Module JavaScriptHelpers (Cola\JavaScriptHelpers.vb)
+- Enum EventType (Cola\Layout\Event.vb) - The layout process fires three events: > - ``start``: layout iterations started > - ``tick``: fired once per iteration, listen to this to animate
+- Structure Comparer (Cola\Layout\Event.vb)
+- Interface Indexed (Cola\Layout\Group.vb)
+- Class Layout (Cola\Layout\layout.vb) - Main interface to cola layout.
+- Class Link (Cola\Layout\Link.vb) - <typeparam name="NodeRefType">可以是节点对象类型的实例或者节点数组的下标数字值</typeparam>
+- Class InputNode (Cola\Layout\Node.vb)
+- Class Node (Cola\Layout\Node.vb) - Client-passed node may be missing these properties, which will be set upon ingestion
+- Class Projection (Cola\Layout\Projection.vb)
+- Class IndexedVariable (Cola\Layout\Projection.vb)
+- Module ProjectionExtensions (Cola\Layout\ProjectionExtensions.vb)
+- Class Layout3D (Cola\Layout3D\layout3d.vb)
+- Class Link3D (Cola\Layout3D\Link3D.vb)
+- Class IConstraint (Cola\Layout3D\Module1.vb)
+- Class LinkSepAccessor (Cola\Layout3D\Module1.vb)
+- Class Node3D (Cola\Layout3D\Node3D.vb)
+- Module linkLengthExtensions (Cola\linklengths.vb)
+- Class LinkAccessor (Cola\Models\Accessor\LinkAccessor.vb)
+- Class LinkTypeAccessor (Cola\Models\Accessor\LinkAccessor.vb)
+- Class RectAccessors (Cola\Models\Accessor\RectAccessors.vb)
+- Class Block (Cola\Models\Block.vb)
+- Class Blocks (Cola\Models\Blocks.vb)
+- Structure DirectedEdge (Cola\Models\DirectedEdge.vb) - An object with three point properties, the intersection with the source rectangle (sourceIntersection), the intersection with then target rectangle (targetIntersection), And the point an arrow
+- Class PositionStats (Cola\Models\DirectedEdge.vb)
+- Class Constraint (Cola\Models\DirectedEdge.vb)
+- Class ConstraintOffset (Cola\Models\DirectedEdge.vb)
+- Class Constraint (Cola\Models\DirectedEdge.vb)
+- Interface IGraphNode (Cola\Models\IGraphNode.vb) - The common type interface that will be used in <see cref="Projection"/>
+- Class Locks (Cola\Models\Locks.vb) - Descent respects a collection of locks over nodes that should not move
+- Class Rectangle2D (Cola\Models\Rectangle2D.vb)
+- Class Solver (Cola\Models\Solver.vb)
+- Class Variable (Cola\Models\Variable.vb)
+- Module powergraphExtensions (Cola\PowerGraph\AlgorithmExtensions.vb)
+- Class Configuration (Cola\PowerGraph\Configuration.vb)
+- Class ModuleMerge (Cola\PowerGraph\Configuration.vb)
+- Class LinkSets (Cola\PowerGraph\LinkSet.vb)
+- Class ModuleSet (Cola\PowerGraph\Module.vb)
+- Class PowerEdge (Cola\PowerGraph\PowerEdge.vb)
+- Interface network (Cola\PowerGraph\powergraph.vb)
+- Class PowerGraph (Cola\PowerGraph\powergraph.vb)
+- Class LayoutGraph (Cola\PowerGraph\powergraph.vb)
+- Class Accessor (EdgeBundling\Mingle\Accessor.vb)
+- Class Bundler (EdgeBundling\Mingle\Bundler.vb) - Edge bundling algorithm class.
+- Class GraphKdNode (EdgeBundling\Mingle\GraphKdNode.vb)
+- Module InternalMath (EdgeBundling\Mingle\InternalMath.vb)
+- Class MingleNodeData (EdgeBundling\Mingle\MingleNodeData.vb)
+- Class MingleData (EdgeBundling\Mingle\MingleNodeData.vb)
+- Class Options (EdgeBundling\Mingle\Options.vb)
+- Enum Algorithms (ForceDirected\Algorithms.vb)
+- Class CircularPlanner (ForceDirected\CircularPlanner.vb)
+- Class DegreeWeightedPlanner (ForceDirected\DegreeWeightedPlanner.vb) - 依据节点度值的大小对每一个节点动态生产排斥力权重： 度值越大则该节点对周围节点的排斥力越大
+- Class EdgeWeightedPlanner (ForceDirected\EdgeWeightedPlanner.vb) - 力导向+边权重：边权重越大，两个节点的引力越大
+- Class ForceDirectedParameters (ForceDirected\ForceDirectedParameters.vb) - Force-Directed 力导向布局参数，可在 PropertyGrid 中编辑。 与 <see cref="Planner"/> 构造函数参数一一对应。
+- Class GroupPlanner (ForceDirected\GroupPlanner.vb) - 这个模块之中的方法会尽量让相同类型分组的节点聚集在一块
+- Class MassHandler (ForceDirected\MassHandler.vb)
+- Class Planner (ForceDirected\Planner.vb) - 力导向原始算法代码
+- Module forceNetwork (forceNetwork.vb)
+- Module AlignRelaxation (HOLA\AlignRelaxation.vb) - HOLA 阶段 4：对齐松弛（Align Relaxation）。 将坐标轴上相互接近（差距小于 alignEpsilon）的节点对强制对齐到同一网格线， 形成轴对齐的正交结构，这是 HOLA "Human-like" 观感的关键来源。
+- Module ConstraintHelper (HOLA\ConstraintHelper.vb) - 封装对 CoLa 约束求解器（投影梯度下降）的调用，供 HOLA 各松弛阶段复用。 坐标系统一为 GDI（y 向下），NORTH 对应 y 减小。
+- Enum Axis (HOLA\ConstraintHelper.vb) - 坐标轴枚举：HORIZONTAL 处理 x 值，VERTICAL 处理 y 值。
+- Class HolaLayouter (HOLA\HolaLayouter.vb) - HOLA 主控类。按照 hola2015.md 第 2 节与 8.2 节描述的阶段顺序， 协调各松弛/路由阶段，把最终坐标写回 <see cref="NodeData.initialPostion"/>。
+- Class HolaLayoutState (HOLA\HolaLayoutState.vb) - HOLA 布局过程中的共享中间状态。所有阶段都围绕这份状态读写节点坐标， 最终由主控阶段把状态写回到 <see cref="NodeData.initialPostion"/>。
+- Class HolaOptions (HOLA\HolaOptions.vb) - 可调节的 HOLA 算法参数集合。所有数值约定为 GDI 坐标系（y 轴向下， NORTH 对应 y 值减小）。集中管理便于在不同数据集上调参。
+- Module InitialLayout (HOLA\InitialLayout.vb) - HOLA 阶段 1：初始布局。 负责把 <see cref="NetworkGraph"/> 转换为内部布局状态，并对缺少初始坐标的节点 按连通分量做确定性的网格散布，作为后续松弛迭代的起点。
+- Module LayerScanRelaxation (HOLA\LayerScanRelaxation.vb) - HOLA 阶段 2/3：分层扫描松弛（Layer-wise Scan Relaxation）。 通过几何方式检测相交的连线（边），对相交边涉及到的节点施加分离/对齐约束， 并借助 CoLa 求解器投影，从而逐步消除边交叉，使布局趋向"人类可读"的正交形态。
+- Module OrthogonalRouter (HOLA\OrthogonalRouter.vb) - HOLA 阶段 6：最终正交路由（Final Orthogonal Route）。 把相邻节点之间的连线生成为轴对齐的正交折线（Z 形），并把折点写入 <see cref="EdgeData.bends"/>（用相对比例偏移的 WayPointVector 描述，
+- Module SpreadRelaxation (HOLA\SpreadRelaxation.vb) - HOLA 阶段 5：扩散松弛（Spread Relaxation）。 在两个坐标轴上分别以一维扫描排序的方式施加分离约束（相邻节点间距 >= nodeGap）， 借助 CoLa 求解器投影，消除节点与边的重叠，使布局疏密得当。
+- Interface IPlanner (IPlanner.vb)
+- Module Program (LayoutSanityCheck\Program.vb)
+- Class Blocks (Orthogonal\Blocks.vb) - @author santi
+- Class DisconnectedGraphs (Orthogonal\DisconnectedGraphs.vb) - @author santi
+- Class OEElement (Orthogonal\OEElement.vb) - @author santi
+- Class OEVertex (Orthogonal\OEVertex.vb) - @author santi
+- Interface EmbeddingComparator (Orthogonal\optimization\EmbeddingComparator.vb) - @author santi
+- Class OrthographicEmbeddingBoardSizeOptimizer (Orthogonal\optimization\OrthographicEmbeddingBoardSizeOptimizer.vb) - @author santi
+- Class OrthographicEmbeddingOptimizer (Orthogonal\optimization\OrthographicEmbeddingOptimizer.vb) - @author santi
+- Class OrthographicEmbeddingPathOptimizer (Orthogonal\optimization\OrthographicEmbeddingPathOptimizer.vb) - @author santi
+- Class SegmentLengthEmbeddingComparator (Orthogonal\optimization\SegmentLengthEmbeddingComparator.vb) - @author santi
+- Class OrthographicEmbedding (Orthogonal\OrthographicEmbedding.vb) - The output embedding is saved in a text file that contains: - First the adjacency matrix of the graph (including any auxiliary vertices that might have had to be added)
+- Class OrthographicEmbeddingResult (Orthogonal\OrthographicEmbeddingResult.vb) - @author santi
+- Class PlanarEmbedding (Orthogonal\PlanarEmbedding.vb) - @author santi
+- Module Router (Orthogonal\Router.vb)
+- Class STNumbering (Orthogonal\STNumbering.vb) - @author santi
+- Module algorithm (Orthogonal\util\algorithm.vb)
+- Class Pair (Orthogonal\util\Pair.vb)
+- Class Visibility (Orthogonal\Visibility.vb) - @author santi
+- Module RadialLayout (Radial\RadialLayout.vb)
+- Class RadialLayoutParameters (Radial\RadialLayoutParameters.vb) - 径向布局参数，可在 PropertyGrid 中编辑
+- ... and 13 more
+
+## Notable public members
+- Public Function LayoutNodes(g As NetworkGraph,
+- Public Function LayoutNodesWithCrossingOptimization(g As NetworkGraph,
+- Public Function LayoutNodes(g As NetworkGraph, params As CircularLayoutParameters) As NetworkGraph
+- Public Property Radius As Double = Double.NaN
+- Public Property CenterX As Double = 500.0
+- Public Property CenterY As Double = 500.0
+- Public Property SortByDegree As Boolean = True
+- Public Property OptimizeCrossing As Boolean = False
+- Public Property MaxSwaps As Integer = 1000
+- Public Overrides Function ToString() As String
+- Public Function powerGraphGridLayout(graph As network, size As Integer(), grouppadding As Double) As LayoutGraph
+- Public Sub New(x As Double()(), Dmatrix As Double()(), Optional G As Double()() = Nothing)
+- Public Shared Function createSquareMatrix(n As Integer, f As Func(Of Integer, Integer, Integer)) As Double()()
+- Public Sub computeDerivatives(x As Double()())
+- Public Function computeStepSize(d As Double()()) As Double
+- Public Function reduceStress() As Double
+- Public Function run(iterations As Integer) As Double
+- Public Function rungeKutta() As Double
+- Public Sub takeDescentStep(x As Double(), d As Double(), stepSize As Double)
+- Public Function computeStress() As Double
+- Public Overridable Property bounds As Rectangle2D
+- Public Overridable Property variable As Variable
+- Public Sub setXCentre(rect As Rectangle2D, cx As Double)
+- Public Sub setYCentre(rect As Rectangle2D, cy As Double)
+- Public Function compareEvents(a As [Event], b As [Event]) As Integer
+- Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
+- Public Function makeEdgeBetween(source As Rectangle2D, target As Rectangle2D, ah As Double) As DirectedEdge
+- Public Function makeEdgeTo(s As Point2D, target As Rectangle2D, ah As Double) As Point2D
+- Public Function removeOverlapInOneDimension(spans As (size As Double, desiredCenter As Double)(), lowerBound As Double, upperBound As Double) As (newC…
+- Public Function tangent_PointPolyC(P As Point2D, V As Point2D()) As tangentPoly
+- Public Function Rtangent_PointPolyC(P As Point2D, V As List(Of Point2D)) As Integer
+- Public Function Ltangent_PointPolyC(P As Point2D, V As List(Of Point2D)) As Integer
+- Public Delegate Function ComparePoints(a As Point2D, b As Point2D, c As Point2D) As Boolean
+- Public Delegate Function PointPolyC(p As Point2D, points As List(Of Point2D)) As Integer
+- Public Function tangent_PolyPolyC(V As List(Of Point2D), W As List(Of Point2D), t1 As PointPolyC, t2 As PointPolyC, cmp1 As ComparePoints, cmp2 As Com…
+- Public Function LRtangent_PolyPolyC(V As List(Of Point2D), W As List(Of Point2D)) As BiTangent
+- Public Function intersects(l As Line, P As Point2D()) As Point2D()
+- Public Function tangents(V As Point2D(), W As Point2D()) As BiTangents
+- Public Property polyIndex() As Integer
+- Public Property rtan() As Integer
+- Public Property ltan() As Integer
+- Public Sub New()
+- Public Sub New(t1 As Integer, t2 As Integer)
+- Public Sub New(id As Integer, polyid As Double, polyvertid As Double, p As TVGPoint)
+- Public ReadOnly Property length() As Double
+- Public Sub New(P__1 As TVGPoint()(), Optional g0 As Object = Nothing)
+- Public Sub addEdgeIfVisible(u As TVGPoint, v As TVGPoint, i1 As Integer, i2 As Integer)
+- Public Function addPoint(p As TVGPoint, i1 As Double) As VisibilityVertex
+- Public Function intersectsPolys(l As Line, i1 As Integer, i2 As Integer) As Boolean
+- Public Sub New(originalnodes As Node(), accessor As NodeAccessor(Of Node), Optional groupPadding As Double = 12)
+- Public Function siblingObstacles(a As NodeWrapper, b As NodeWrapper) As NodeWrapper()
+- Public Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, Integer), target As Func(Of Edge, Integer)) As List(O…
+- Public Function route(s As Integer, t As Integer) As Vert()
+- Public Shared Function getRoutePath(route As Point2D()(), cornerradius As Double, arrowwidth As Double, arrowheight As Double) As SVGRoutePath
+- Public Sub Reverse()
+- Public Delegate Function IGetChildren(v As Node) As Integer()
+- Public Delegate Function IGetBounds(v As Node) As Rectangle2D
+- Public Property getChildren As IGetChildren
+- Public Property getBounds As IGetBounds
+- Public Delegate Function IGetIndex(l As Link) As Integer
+- ... and 457 more
+
+## Imports
+- any = System.Object
+- circular = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Circular.CircularLayout
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+- Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.ComponentModel.Settings.Inf
+- Microsoft.VisualBasic.Data.GraphTheory
+- Microsoft.VisualBasic.Data.GraphTheory.Analysis
+- Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+- Microsoft.VisualBasic.Data.GraphTheory.KdTree
+- Microsoft.VisualBasic.Data.visualize.Network.Analysis
+- Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
+- Microsoft.VisualBasic.Data.visualize.Network.Graph
+- Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.optimization
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+- Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
+
+## File tree
+- Circular\CircularLayout.vb
+- Circular\CircularLayoutParameters.vb
+- Cola\batch.vb
+- Cola\descent.vb
+- Cola\Extensions.vb
+- Cola\Geom\geom.vb
+- Cola\Geom\Models.vb
+- Cola\Geom\TangentVisibilityGraph.vb
+- Cola\GridRouter\gridrouter.vb
+- Cola\GridRouter\Models.vb
+- Cola\handledisconnected.vb
+- Cola\JavaScriptHelpers.vb
+- Cola\Layout\Event.vb
+- Cola\Layout\Group.vb
+- Cola\Layout\layout.vb
+- Cola\Layout\Link.vb
+- Cola\Layout\Node.vb
+- Cola\Layout\Projection.vb
+- Cola\Layout\ProjectionExtensions.vb
+- Cola\Layout3D\layout3d.vb
+- Cola\Layout3D\Link3D.vb
+- Cola\Layout3D\Module1.vb
+- Cola\Layout3D\Node3D.vb
+- Cola\linklengths.vb
+- Cola\Models\Accessor\LinkAccessor.vb
+- Cola\Models\Accessor\RectAccessors.vb
+- Cola\Models\Block.vb
+- Cola\Models\Blocks.vb
+- Cola\Models\DirectedEdge.vb
+- Cola\Models\IGraphNode.vb
+- Cola\Models\Locks.vb
+- Cola\Models\Rectangle2D.vb
+- Cola\Models\Solver.vb
+- Cola\Models\Variable.vb
+- Cola\PowerGraph\AlgorithmExtensions.vb
+- Cola\PowerGraph\Configuration.vb
+- Cola\PowerGraph\LinkSet.vb
+- Cola\PowerGraph\Module.vb
+- Cola\PowerGraph\PowerEdge.vb
+- Cola\PowerGraph\powergraph.vb
+- EdgeBundling\Mingle\Accessor.vb
+- EdgeBundling\Mingle\Bundler.vb
+- EdgeBundling\Mingle\GraphKdNode.vb
+- EdgeBundling\Mingle\InternalMath.vb
+- EdgeBundling\Mingle\MingleNodeData.vb
+- EdgeBundling\Mingle\Options.vb
+- ForceDirected\Algorithms.vb
+- ForceDirected\CircularPlanner.vb
+- ForceDirected\DegreeWeightedPlanner.vb
+- ForceDirected\EdgeWeightedPlanner.vb
+- ForceDirected\ForceDirectedParameters.vb
+- ForceDirected\GroupPlanner.vb
+- ForceDirected\MassHandler.vb
+- ForceDirected\Planner.vb
+- forceNetwork.vb
+- HOLA\AlignRelaxation.vb
+- HOLA\ConstraintHelper.vb
+- HOLA\HOLA.vb
+- HOLA\HolaLayouter.vb
+- HOLA\HolaLayoutState.vb
+- HOLA\HolaOptions.vb
+- HOLA\InitialLayout.vb
+- HOLA\LayerScanRelaxation.vb
+- HOLA\OrthogonalRouter.vb
+- HOLA\SpreadRelaxation.vb
+- IPlanner.vb
+- LayoutSanityCheck\Program.vb
+- Orthogonal\Blocks.vb
+- Orthogonal\DisconnectedGraphs.vb
+- Orthogonal\OEElement.vb
+- Orthogonal\OEVertex.vb
+- Orthogonal\optimization\EmbeddingComparator.vb
+- Orthogonal\optimization\OrthographicEmbeddingBoardSizeOptimizer.vb
+- Orthogonal\optimization\OrthographicEmbeddingOptimizer.vb
+- Orthogonal\optimization\OrthographicEmbeddingPathOptimizer.vb
+- Orthogonal\optimization\SegmentLengthEmbeddingComparator.vb
+- Orthogonal\OrthographicEmbedding.vb
+- Orthogonal\OrthographicEmbeddingResult.vb
+- Orthogonal\PlanarEmbedding.vb
+- Orthogonal\Router.vb
+- Orthogonal\STNumbering.vb
+- Orthogonal\util\algorithm.vb
+- Orthogonal\util\Pair.vb
+- Orthogonal\Visibility.vb
+- Radial\RadialLayout.vb
+- Radial\RadialLayoutParameters.vb
+- SpringEmbedder.vb
+- SpringForce\Interfaces\IForceDirected.vb
+- SpringForce\Interfaces\IGraph.vb
+- SpringForce\Interfaces\IRenderer.vb
+- SpringForce\Layout\AbstractRenderer.vb
+- SpringForce\Layout\Layout\ForceDirected.vb
+- SpringForce\Layout\Layout\ForceDirected2D.vb
+- SpringForce\Layout\Layout\ForceDirected3D.vb
+- SpringForce\Layout\Point.vb
+- SpringForce\Layout\Spring.vb
+- SpringForce\LayoutUpdater.vb
+- SpringForce\Parameters.vb
+
