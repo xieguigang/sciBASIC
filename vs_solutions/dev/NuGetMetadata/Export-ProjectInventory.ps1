@@ -6,11 +6,19 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$Root    = (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))),
-    [string]$OutFile = (Join-Path $PSScriptRoot 'projects.json')
+    [string]$Root    = '',
+    [string]$OutFile = ''
 )
 
 $ErrorActionPreference = 'Stop'
+
+# $PSScriptRoot is empty under some hosts (powershell -File from a wrapper),
+# so fall back to the invocation path before deriving any defaults.
+$ScriptDir = $PSScriptRoot
+if ([string]::IsNullOrEmpty($ScriptDir)) { $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition }
+if ([string]::IsNullOrEmpty($Root))    { $Root    = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $ScriptDir)) }
+if ([string]::IsNullOrEmpty($OutFile)) { $OutFile = Join-Path $ScriptDir 'projects.json' }
+
 $Root = (Resolve-Path $Root).Path.TrimEnd('\')
 
 $TestPathSegments = @(

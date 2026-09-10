@@ -1,14 +1,55 @@
 ﻿{
-    "generatedAt":  "2026-09-04T16:19:26.3169013+08:00",
-    "root":  "G:\\pixelArtist\\src\\framework",
+    "generatedAt":  "2026-09-11T05:53:56.3999076+08:00",
+    "root":  "G:\\GCModeller\\src\\runtime\\sciBASIC#",
     "totalVbproj":  195,
     "matchedCount":  91,
-    "libraryCount":  89,
-    "excludedCount":  2,
+    "libraryCount":  91,
+    "excludedCount":  0,
     "legacyCount":  1,
     "iconFixCount":  0,
-    "iconAddCount":  0,
+    "iconAddCount":  2,
     "projects":  [
+                     {
+                         "path":  "cuda/ILCuda/ILCuda.vbproj",
+                         "depth":  2,
+                         "rootNamespace":  "Microsoft.VisualBasic.Computing.ILCuda",
+                         "assemblyName":  "Microsoft.VisualBasic.Computing.ILCuda",
+                         "targetFramework":  "net10.0",
+                         "outputType":  "Library",
+                         "isLibrary":  true,
+                         "isLegacy":  false,
+                         "excludeReason":  "",
+                         "iconRelPath":  "..\\..\\vs_solutions\\logo-knot.png",
+                         "existingIconItem":  null,
+                         "hasPackageIcon":  false,
+                         "needsIconFix":  false,
+                         "needsIconAdd":  true,
+                         "title":  "",
+                         "description":  "",
+                         "packageTags":  "",
+                         "assemblyTitle":  "",
+                         "notes":  "",
+                         "snapshot":  {
+                                          "PackageLicenseExpression":  null,
+                                          "Description":  "纯 Interop 的 VB.NET CUDA 计算框架：设备/上下文/流/显存管理、NVRTC 多通道内核编译、通用归约与线性代数内核。零 NuGet 依赖。",
+                                          "PackageReadmeFile":  null,
+                                          "Copyright":  null,
+                                          "PackageLicenseFile":  null,
+                                          "Version":  null,
+                                          "PackageProjectUrl":  null,
+                                          "PackageId":  null,
+                                          "Company":  null,
+                                          "Authors":  null,
+                                          "Title":  null,
+                                          "PackageIcon":  null,
+                                          "IsPackable":  null,
+                                          "RepositoryType":  null,
+                                          "PackageTags":  null,
+                                          "RepositoryUrl":  null,
+                                          "AssemblyTitle":  null,
+                                          "GeneratePackageOnBuild":  null
+                                      }
+                     },
                      {
                          "path":  "Data/BinaryData/BinaryData/binarydata-netcore5.vbproj",
                          "depth":  3,
@@ -670,7 +711,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork",
-                         "targetFramework":  "net10.0;net8.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -793,7 +834,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.FeatureFrame",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.FeatureFrame",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -916,7 +957,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.HiddenMarkovChain",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.HiddenMarkovChain",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -957,7 +998,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.PaCMAP",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.PaCMAP",
-                         "targetFramework":  "net10.0;net10.0-windows",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1367,7 +1408,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.Data",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.Data.Extensions",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1406,9 +1447,9 @@
                      {
                          "path":  "Data_science/MachineLearning/MLDataStorage/MLDataStorage.vbproj",
                          "depth":  3,
-                         "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure",
-                         "assemblyName":  "Microsoft.VisualBasic.MachineLearning.$(MSBuildProjectName)",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.DataStorage",
+                         "assemblyName":  "Microsoft.VisualBasic.MachineLearning.DataStorage",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1440,7 +1481,7 @@
                                           "RepositoryType":  "git",
                                           "PackageTags":  "scibasic;machine-learning;dataset;mnist;data-storage",
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
-                                          "AssemblyTitle":  "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure",
+                                          "AssemblyTitle":  "Common Machine Learning DataSet Provider",
                                           "GeneratePackageOnBuild":  null
                                       }
                      },
@@ -1449,7 +1490,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.Debugger",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.Debugger",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1490,7 +1531,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine",
-                         "targetFramework":  "net6.0-windows;net6.0;net48",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1572,7 +1613,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.VariationalAutoencoder",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.VAE",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1613,7 +1654,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.XGBoost",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.XGBoost",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1654,7 +1695,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1900,7 +1941,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming",
                          "assemblyName":  "Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1941,7 +1982,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.GibbsSampling",
                          "assemblyName":  "Microsoft.VisualBasic.Math.GibbsSampling",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1982,7 +2023,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.KaplanMeierEstimator",
                          "assemblyName":  "Microsoft.VisualBasic.Math.KaplanMeierEstimator",
-                         "targetFramework":  "net6.0-windows;net6.0;net48",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -2183,52 +2224,11 @@
                                       }
                      },
                      {
-                         "path":  "Data_science/Mathematica/Math/ODE/test/test5.vbproj",
-                         "depth":  5,
-                         "rootNamespace":  "Microsoft.VisualBasic.Math.Calculus",
-                         "assemblyName":  "test",
-                         "targetFramework":  "net5.0",
-                         "outputType":  "Exe",
-                         "isLibrary":  false,
-                         "isLegacy":  false,
-                         "excludeReason":  "test/demo path; OutputType=Exe",
-                         "iconRelPath":  "..\\..\\..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "existingIconItem":  "..\\..\\..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "hasPackageIcon":  true,
-                         "needsIconFix":  false,
-                         "needsIconAdd":  false,
-                         "title":  "",
-                         "description":  "",
-                         "packageTags":  "",
-                         "assemblyTitle":  "",
-                         "notes":  "",
-                         "snapshot":  {
-                                          "PackageLicenseExpression":  null,
-                                          "Description":  "LAPACK (Linear Algebra PACKage)",
-                                          "PackageReadmeFile":  null,
-                                          "Copyright":  "GPL3",
-                                          "PackageLicenseFile":  "LICENSE",
-                                          "Version":  "5.0.9742.7537",
-                                          "PackageProjectUrl":  "http://sciBASIC.NET",
-                                          "PackageId":  null,
-                                          "Company":  "sciBASIC.NET",
-                                          "Authors":  "xie.guigang@live.com",
-                                          "Title":  null,
-                                          "PackageIcon":  "logo-knot.png",
-                                          "IsPackable":  null,
-                                          "RepositoryType":  "git",
-                                          "PackageTags":  null,
-                                          "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
-                                          "AssemblyTitle":  null,
-                                          "GeneratePackageOnBuild":  "false"
-                                      }
-                     },
-                     {
                          "path":  "Data_science/Mathematica/Math/ODESolver.Extensions/ODESolver.Extensions.NET5.vbproj",
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.Calculus",
                          "assemblyName":  "Microsoft.VisualBasic.Math.ODEsSolver.Extensions",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -2310,7 +2310,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.MachineVision",
                          "assemblyName":  "Microsoft.VisualBasic.Math.MachineVision",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -2470,6 +2470,47 @@
                                       }
                      },
                      {
+                         "path":  "Data_science/Visualization/DataPlot/DataPlot.vbproj",
+                         "depth":  3,
+                         "rootNamespace":  "Microsoft.VisualBasic.Data.Plots",
+                         "assemblyName":  "Microsoft.VisualBasic.Data.DataPlot",
+                         "targetFramework":  "net10.0",
+                         "outputType":  "Library",
+                         "isLibrary":  true,
+                         "isLegacy":  false,
+                         "excludeReason":  "",
+                         "iconRelPath":  "..\\..\\..\\vs_solutions\\logo-knot.png",
+                         "existingIconItem":  null,
+                         "hasPackageIcon":  false,
+                         "needsIconFix":  false,
+                         "needsIconAdd":  true,
+                         "title":  "",
+                         "description":  "",
+                         "packageTags":  "",
+                         "assemblyTitle":  "",
+                         "notes":  "",
+                         "snapshot":  {
+                                          "PackageLicenseExpression":  null,
+                                          "Description":  null,
+                                          "PackageReadmeFile":  null,
+                                          "Copyright":  null,
+                                          "PackageLicenseFile":  null,
+                                          "Version":  "1.0.9742.7537",
+                                          "PackageProjectUrl":  null,
+                                          "PackageId":  null,
+                                          "Company":  null,
+                                          "Authors":  null,
+                                          "Title":  null,
+                                          "PackageIcon":  null,
+                                          "IsPackable":  null,
+                                          "RepositoryType":  null,
+                                          "PackageTags":  null,
+                                          "RepositoryUrl":  null,
+                                          "AssemblyTitle":  null,
+                                          "GeneratePackageOnBuild":  "True"
+                                      }
+                     },
+                     {
                          "path":  "Data_science/Visualization/Plots/plots-netcore5.vbproj",
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.Data.ChartPlots",
@@ -2549,47 +2590,6 @@
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
                                           "AssemblyTitle":  "Microsoft.VisualBasic.Data.ChartPlots.Statistics",
                                           "GeneratePackageOnBuild":  "True"
-                                      }
-                     },
-                     {
-                         "path":  "Data_science/Visualization/test/test5.vbproj",
-                         "depth":  3,
-                         "rootNamespace":  "Microsoft.VisualBasic.Data.visualize",
-                         "assemblyName":  "test",
-                         "targetFramework":  "net10.0-windows",
-                         "outputType":  "Exe",
-                         "isLibrary":  false,
-                         "isLegacy":  false,
-                         "excludeReason":  "test/demo path; OutputType=Exe",
-                         "iconRelPath":  "..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "existingIconItem":  "..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "hasPackageIcon":  true,
-                         "needsIconFix":  false,
-                         "needsIconAdd":  false,
-                         "title":  "",
-                         "description":  "",
-                         "packageTags":  "",
-                         "assemblyTitle":  "",
-                         "notes":  "",
-                         "snapshot":  {
-                                          "PackageLicenseExpression":  null,
-                                          "Description":  null,
-                                          "PackageReadmeFile":  null,
-                                          "Copyright":  "GPL3",
-                                          "PackageLicenseFile":  "LICENSE",
-                                          "Version":  "5.0.9742.7537",
-                                          "PackageProjectUrl":  "http://sciBASIC.NET",
-                                          "PackageId":  null,
-                                          "Company":  "sciBASIC.NET",
-                                          "Authors":  "xie.guigang@live.com",
-                                          "Title":  null,
-                                          "PackageIcon":  "logo-knot.png",
-                                          "IsPackable":  null,
-                                          "RepositoryType":  null,
-                                          "PackageTags":  null,
-                                          "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
-                                          "AssemblyTitle":  null,
-                                          "GeneratePackageOnBuild":  "true"
                                       }
                      },
                      {
@@ -3458,7 +3458,7 @@
                          "depth":  2,
                          "rootNamespace":  "Microsoft.VisualBasic.MIME.text.yaml",
                          "assemblyName":  "Microsoft.VisualBasic.MIME.text.yaml",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -3704,7 +3704,7 @@
                          "depth":  2,
                          "rootNamespace":  "Microsoft.VisualBasic.Data.KnowledgeBase.Web",
                          "assemblyName":  "Microsoft.VisualBasic.Web.KnowledgeBase",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -3742,6 +3742,10 @@
                      }
                  ],
     "skipped":  [
+                    {
+                        "path":  "cuda/ILCuda/test/test.vbproj",
+                        "reason":  "RootNamespace=ILCudaDemo"
+                    },
                     {
                         "path":  "Data/BinaryData/DataStorage/test/test.vbproj",
                         "reason":  "RootNamespace=test"
@@ -3781,10 +3785,6 @@
                     {
                         "path":  "Data/Trinity/Test/Test.vbproj",
                         "reason":  "RootNamespace=Test"
-                    },
-                    {
-                        "path":  "Data_science/algorithms/CMeans/DEMO/DEMO.vbproj",
-                        "reason":  "RootNamespace=DEMO"
                     },
                     {
                         "path":  "Data_science/algorithms/PageRank/PR_test/PR_test.vbproj",
@@ -3887,10 +3887,6 @@
                         "reason":  "RootNamespace=test"
                     },
                     {
-                        "path":  "Data_science/Mathematica/CUDA/test/test.vbproj",
-                        "reason":  "RootNamespace=test"
-                    },
-                    {
                         "path":  "Data_science/Mathematica/data/least-squares/test2/test/test.vbproj",
                         "reason":  "RootNamespace=Testing"
                     },
@@ -3959,10 +3955,6 @@
                         "reason":  "RootNamespace=mHG"
                     },
                     {
-                        "path":  "Data_science/Mathematica/Math/ODE/test/test.vbproj",
-                        "reason":  "RootNamespace=Testing"
-                    },
-                    {
                         "path":  "Data_science/Mathematica/Quick_correlation_matrix_heatmap/Heatmap/Heatmap.vbproj",
                         "reason":  "RootNamespace=HeatmapTesting"
                     },
@@ -3987,8 +3979,12 @@
                         "reason":  "RootNamespace=PCAtest"
                     },
                     {
-                        "path":  "Data_science/Visualization/DataPlot/DataPlot.vbproj",
-                        "reason":  "RootNamespace=DataPlot"
+                        "path":  "Data_science/Visualization/DataPlot/test/test.vbproj",
+                        "reason":  "RootNamespace=test"
+                    },
+                    {
+                        "path":  "Data_science/Visualization/test/test5.vbproj",
+                        "reason":  "RootNamespace=test"
                     },
                     {
                         "path":  "Data_science/Visualization/test/ChartingBase.Test/ChartingBase.Test.vbproj",
@@ -4091,7 +4087,7 @@
                         "reason":  "RootNamespace=test"
                     },
                     {
-                        "path":  "mime/text%html/Test/test.vbproj",
+                        "path":  "mime/text%html/Test/Test.vbproj",
                         "reason":  "RootNamespace=Test"
                     },
                     {
@@ -4149,6 +4145,10 @@
                     {
                         "path":  "vs_solutions/PkgVersionUpgrade/PkgVersionUpgrade.vbproj",
                         "reason":  "RootNamespace=PkgVersionUpgrade"
+                    },
+                    {
+                        "path":  "vs_solutions/VBS/VBS.vbproj",
+                        "reason":  "RootNamespace=VBScriptHost"
                     },
                     {
                         "path":  "www/axel/axel.vbproj",
