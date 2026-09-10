@@ -438,7 +438,7 @@
     "title": "Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import",
     "description": "Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.",
     "packageTags": "scibasic;machine-learning;dataset;mnist;data-storage",
-    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure"
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.DataStorage"
   },
   {
     "path": "Data_science/MachineLearning/MLDebugger/ML_debugger-netcore5.vbproj",
