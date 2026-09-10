@@ -9,7 +9,7 @@
     * SDK style       -- <Project Sdk="Microsoft.NET.Sdk">
     * package worthy  -- <RootNamespace> starts with "Microsoft.VisualBasic"
 
-  For every matching project the script performs four idempotent checks:
+  For every matching project the script performs five idempotent checks:
 
     1. Solution membership
        If the project is not referenced by nuget.slnx it is appended to the
@@ -35,6 +35,20 @@
        the repository level ".nuget" directory, e.g. "../../.nuget/" for
        gr/avi/AVI.NET5.vbproj. Missing values are inserted, wrong ones rewritten
        (this also normalises sloppy values such as a missing trailing slash).
+
+    5. Packaging properties
+       The four properties that make MSBuild actually emit a .nupkg on build are
+       upserted into the first unconditional PropertyGroup of every matching
+       project (a project missing them silently produces no package):
+
+           GeneratePackageOnBuild          = True
+           PackageRequireLicenseAcceptance = True
+           IncludeSymbols                  = True
+           SymbolPackageFormat             = snupkg
+
+       Properties that are already present with the target value are left alone;
+       a present but different value is rewritten. Use -SkipPackagingProps to
+       turn step 5 off.
 
   The script is safe to run repeatedly: a file is only rewritten when at least
   one real change was produced, and encoding (UTF-8 BOM or not), line endings
@@ -71,6 +85,10 @@
   Optional CSV path receiving one row per matched project with the individual
   operations that were applied.
 
+.PARAMETER SkipPackagingProps
+  Do not touch GeneratePackageOnBuild / PackageRequireLicenseAcceptance /
+  IncludeSymbols / SymbolPackageFormat.
+
 .PARAMETER WhatIf
   Run every check and print the resulting operations without writing anything.
 
@@ -99,6 +117,7 @@ param(
     [string]$ProjectFilter  = '*',
     [string]$ExcludePattern = '(^|[\\/])(obj|bin|\.git|packages|package-install-cache|package-install-SetupFiles)([\\/]|$)',
     [string]$ReportFile     = '',
+    [switch]$SkipPackagingProps,
     [switch]$WhatIf
 )
 
@@ -125,6 +144,17 @@ $DefaultPlatforms      = 'AnyCPU'
 # Only projects whose <RootNamespace> starts with this prefix are picked up, and
 # only such projects are ever registered in the solution.
 $NamespacePrefix = 'Microsoft.VisualBasic'
+
+# Without these four properties MSBuild never emits a .nupkg for a project, so
+# they are upserted into the first unconditional PropertyGroup of every project
+# that is picked up. Values are forced, matching the convention already used by
+# the packed projects in this repository (e.g. gr/avi/AVI.NET5.vbproj).
+$PackagingProps = [ordered]@{
+    GeneratePackageOnBuild          = 'True'
+    PackageRequireLicenseAcceptance = 'True'
+    IncludeSymbols                  = 'True'
+    SymbolPackageFormat             = 'snupkg'
+}
 
 # ---------------------------------------------------------------------------
 # Generic XML helpers (kept in sync with dev/NuGetMetadata/Apply-NuGetMetadata.ps1)
