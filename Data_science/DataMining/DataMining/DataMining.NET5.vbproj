@@ -18,7 +18,7 @@
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Title>Core Data Mining Toolkit: Clustering, Association Rules and Evaluation</Title>
-    <Description>Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, OPTICS, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.</Description>
+    <Description>Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.Framework</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

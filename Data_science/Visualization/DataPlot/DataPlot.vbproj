@@ -11,6 +11,18 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <OutputPath>../../../.nuget</OutputPath>
     <Configurations>Debug;Release;nuget_release</Configurations>
+    <Title>DataPlot: GDI+ Chart Engine with ggplot2-Style Theme Units</Title>
+    <Description>Standalone GDI+ charting engine for sciBASIC#: scatter, line, bar, histogram, box, violin, jitter, bubble, pie, radar, rose, heatmap, chord, Sankey and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.DataPlot</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -22,6 +34,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -16,8 +16,8 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Title>HTML/CSS Parser, DOM and GDI+ Rendering Engine</Title>
-    <Description>A professional HTML renderer for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors and property values, lays out boxes, lines and tables, and paints the result onto a GDI+ graphics canvas.</Description>
+    <Title>HTML/CSS Parser, DOM and CSS Style Environment</Title>
+    <Description>An HTML and CSS toolkit for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors, rule files and property values into typed models, and resolves CSS lengths, fonts and strokes against a canvas style environment.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Html</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

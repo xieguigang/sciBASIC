@@ -10,7 +10,7 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Product>sciBASIC#</Product>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Title>RDF/XML and Turtle Triple Store Serialization Model</Title>
+    <Title>RDF/XML and Turtle Triple Serialization Model</Title>
     <Description>Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

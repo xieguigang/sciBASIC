@@ -13,9 +13,20 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <Description>纯 Interop 的 VB.NET CUDA 计算框架：设备/上下文/流/显存管理、NVRTC 多通道内核编译、通用归约与线性代数内核。零 NuGet 依赖。</Description>
+    <Description>Dependency-free VB.NET CUDA framework built directly on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu kernel sources, a kernel catalog with launch planning, generic reduction, elementwise and BLAS (GEMM/GEMV) kernels, structured environment diagnostics, and an IL-to-CUDA emitter that translates .NET methods marked with CudaKernelAttribute into CUDA C source.</Description>
     <OutputPath>../../.nuget/</OutputPath>
     <Configurations>Debug;Release;nuget_release</Configurations>
+    <Title>ILCuda: Pure-Interop VB.NET CUDA Compute Framework</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.Computing.ILCuda</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;cuda;nvrtc;gpu;interop;kernels;blas</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -27,6 +38,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

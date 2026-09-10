@@ -13,7 +13,7 @@
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <Title>Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import</Title>
     <Description>Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.</Description>
-    <AssemblyTitle>Common Machine Learning DataSet Provider</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.DataStorage</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

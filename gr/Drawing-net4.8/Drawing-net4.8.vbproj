@@ -14,7 +14,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Product>scibasic.net</Product>
     <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
-    <Description>A Windows-only GDI+ canvas, image filter and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Keeps drawing code compatible across the System.Drawing and SkiaSharp back ends.</Description>
+    <Description>A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Provides the GDI raster back end used by the driver-based sciBASIC# graphics engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Drawing</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <PackageIcon>logo-knot.png</PackageIcon>

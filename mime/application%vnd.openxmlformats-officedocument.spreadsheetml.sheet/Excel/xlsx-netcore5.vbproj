@@ -10,10 +10,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <Title>XLSX Workbook Reader, Writer and Legacy BIFF Parser</Title>
+    <Title>XLSX Workbook Reader, Writer and Legacy BIFF Writer</Title>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
-    <Description>XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and parses legacy BIFF files.</Description>
+    <Description>XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and writes legacy BIFF 2.1 xls files.</Description>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
