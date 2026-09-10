@@ -686,7 +686,27 @@ foreach ($file in $allProjects) {
                                  $DefaultPlatforms (Get-Indents $platGroup)
     if ($platOp -ne 'unchanged') { $stats.platformsPatched++; $ops += "Platforms:$platOp" }
 
-    # ---- 3. conditional property group ------------------------------------
+    # ---- 3. packaging properties ------------------------------------------
+    # Without GeneratePackageOnBuild the build silently produces no .nupkg, so
+    # these belong to the same "make this project packable" check as step 4.
+    $packIndents = Get-Indents $mainGroup
+    foreach ($name in $PackagingProps.Keys) {
+        $value = $PackagingProps[$name]
+        $op    = $null
+        if (-not $SkipPackagingProps -and (Test-ShouldPatchPackagingProp $doc $name $value)) {
+            $op = Set-Property $doc $mainGroup $name $value $packIndents
+        }
+        elseif (-not $SkipPackagingProps) {
+            $op = 'present'
+        }
+        if (-not $SkipPackagingProps) {
+            if ($op -eq 'added')   { $stats.packagingAdded++ }
+            if ($op -eq 'updated') { $stats.packagingUpdated++ }
+            if ($op -ne 'present' -and $op -ne 'unchanged') { $ops += "$name`:$op" }
+        }
+    }
+
+    # ---- 4. conditional property group ------------------------------------
     $groups  = @(Find-TargetGroups $doc)
     $groupOp = 'present'
     if ($groups.Count -eq 0) {
