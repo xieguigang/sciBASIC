@@ -25,6 +25,7 @@
     <PackageTags>scibasic;statistics;roc-curve;heatmap;qq-plot;pca-plot</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -138,6 +139,10 @@
     <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
     <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

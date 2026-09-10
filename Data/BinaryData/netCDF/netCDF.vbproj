@@ -25,6 +25,7 @@
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;netcdf;scientific-data;array-data;dimensions;variables</PackageTags>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -39,6 +40,10 @@
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

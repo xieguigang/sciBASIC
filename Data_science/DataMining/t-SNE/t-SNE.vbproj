@@ -23,6 +23,7 @@
     <PackageTags>scibasic;t-sne;dimensionality-reduction;barnes-hut;visualization</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -105,6 +106,10 @@
     <PackageReference Include="System.Composition" Version="10.0.12" />
     <PackageReference Include="System.Resources.Extensions" Version="10.0.12" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

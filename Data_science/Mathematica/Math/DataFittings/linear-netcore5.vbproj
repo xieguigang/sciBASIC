@@ -24,6 +24,7 @@
 		<PackageTags>scibasic;curve-fitting;regression;lasso;loess;levenberg-marquardt</PackageTags>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -184,6 +185,10 @@
 	  <None Include="..\..\..\..\vs_solutions\logo-knot.png">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
+	  </None>
+	  <None Include="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
 	  </None>
 	</ItemGroup>
 
