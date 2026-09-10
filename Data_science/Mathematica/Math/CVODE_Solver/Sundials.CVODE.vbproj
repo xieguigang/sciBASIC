@@ -13,7 +13,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
       
     <!-- 包信息 -->
-    <PackageId>Sundials.CVODE.NET</PackageId>
+    <PackageId></PackageId>
     <Version>1.0.9742.7537</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Description>A pure managed VB.NET re-implementation of the CVODE solver API with no native P/Invoke, offering variable-step variable-order Adams and BDF integration plus dense and banded linear solvers. Part of sciBASIC#.</Description>
