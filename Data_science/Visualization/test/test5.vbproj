@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>Microsoft.VisualBasic.Data.visualize</RootNamespace>
+		<RootNamespace>test</RootNamespace>
 		<TargetFramework>net10.0-windows</TargetFramework>
 		<AssemblyName>test</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>

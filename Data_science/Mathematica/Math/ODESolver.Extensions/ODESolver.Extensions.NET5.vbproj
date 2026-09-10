@@ -121,6 +121,7 @@
 	  <DefineTrace>true</DefineTrace>
 	  <BaseAddress>4194304</BaseAddress>
 	  <OutputPath>../../../../.nuget/</OutputPath>
+	  <PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 
 	<ItemGroup>
