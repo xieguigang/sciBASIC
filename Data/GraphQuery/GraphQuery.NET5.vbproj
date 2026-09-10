@@ -30,6 +30,8 @@
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphQuery</AssemblyTitle>
     <PackageTags>scibasic;graph-query;html;css-selector;xpath;json</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

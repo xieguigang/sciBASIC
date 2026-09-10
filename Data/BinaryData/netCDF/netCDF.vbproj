@@ -26,6 +26,8 @@
     <PackageTags>scibasic;netcdf;scientific-data;array-data;dimensions;variables</PackageTags>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
