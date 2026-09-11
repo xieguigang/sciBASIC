@@ -224,34 +224,28 @@ Public Module Math
     ''' 计算所有元素的和
     ''' </summary>
     Public Function reduce_sum(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then Return Tensor.computeKernel.Sum(t, Nothing)
-        Return ReduceAlongAxis(t, axis.Value, keepdims, 0.0, Function(acc, val) acc + val)
+        Return Tensor.computeKernel.Sum(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的平均值
     ''' </summary>
     Public Function reduce_mean(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then Return Tensor.computeKernel.Mean(t, Nothing)
-        Dim sumResult = ReduceAlongAxis(t, axis.Value, keepdims, 0.0, Function(acc, val) acc + val)
-        Dim count = t.Shape(axis.Value)
-        Return multiply_scalar(sumResult, 1.0 / count)
+        Return Tensor.computeKernel.Mean(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的最大值
     ''' </summary>
     Public Function reduce_max(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then Return Tensor.computeKernel.Max(t, Nothing)
-        Return ReduceAlongAxis(t, axis.Value, keepdims, Double.NegativeInfinity, Function(acc, val) std.Max(acc, val))
+        Return Tensor.computeKernel.Max(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的最小值
     ''' </summary>
     Public Function reduce_min(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then Return Tensor.computeKernel.Min(t, Nothing)
-        Return ReduceAlongAxis(t, axis.Value, keepdims, Double.PositiveInfinity, Function(acc, val) std.Min(acc, val))
+        Return Tensor.computeKernel.Min(t, axis, keepdims)
     End Function
 
     ''' <summary>
@@ -277,41 +271,14 @@ Public Module Math
     ''' 沿指定轴找到最大值的索引（返回 Double 类型以兼容 Tensor）
     ''' </summary>
     Public Function argmax(t As Tensor, Optional axis As Integer? = Nothing) As Tensor
-        If Not axis.HasValue Then
-            ' 在整个展平数组上找最大值索引
-            Dim src = t.Data
-            Dim maxIdx = 0
-            Dim maxVal = src(0)
-            For i = 1 To src.Length - 1
-                If src(i) > maxVal Then
-                    maxVal = src(i)
-                    maxIdx = i
-                End If
-            Next
-            Return Tensor.Scalar(maxIdx)
-        End If
-
-        Return ReduceArgAxis(t, axis.Value, False)
+        Return Tensor.computeKernel.ArgMax(t, axis)
     End Function
 
     ''' <summary>
     ''' 沿指定轴找到最小值的索引（返回 Double 类型以兼容 Tensor）
     ''' </summary>
     Public Function argmin(t As Tensor, Optional axis As Integer? = Nothing) As Tensor
-        If Not axis.HasValue Then
-            Dim src = t.Data
-            Dim minIdx = 0
-            Dim minVal = src(0)
-            For i = 1 To src.Length - 1
-                If src(i) < minVal Then
-                    minVal = src(i)
-                    minIdx = i
-                End If
-            Next
-            Return Tensor.Scalar(minIdx)
-        End If
-
-        Return ReduceArgAxis(t, axis.Value, True)
+        Return Tensor.computeKernel.ArgMin(t, axis)
     End Function
 
 #End Region

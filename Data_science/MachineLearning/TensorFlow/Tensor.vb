@@ -805,35 +805,8 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 沿指定轴求和
     ''' </summary>
     Public Function Sum(axis As Integer) As Tensor
-        If Rank <> 2 Then
-            Throw New ArgumentException("当前只支持二维张量的轴求和")
-        End If
-
-        If axis = 0 Then
-            ' 沿行方向求和，结果是一行
-            Dim result = New Tensor(1, Shape(1))
-            For j = 0 To Shape(1) - 1
-                Dim lSum As Single = 0
-                For i = 0 To Shape(0) - 1
-                    lSum += Me(i, j)
-                Next
-                result(0, j) = lSum
-            Next
-            Return result
-        ElseIf axis = 1 Then
-            ' 沿列方向求和，结果是一列
-            Dim result = New Tensor(Shape(0), 1)
-            For i = 0 To Shape(0) - 1
-                Dim lSum As Single = 0
-                For j = 0 To Shape(1) - 1
-                    lSum += Me(i, j)
-                Next
-                result(i, 0) = lSum
-            Next
-            Return result
-        End If
-
-        Throw New ArgumentException("轴参数必须是0或1")
+        ' keepdims=True 保持与旧版一致的 (1, cols) / (rows, 1) 结果形状
+        Return computeKernel.Sum(Me, axis, keepdims:=True)
     End Function
 
     ''' <summary>
@@ -854,9 +827,8 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 沿指定轴计算平均值
     ''' </summary>
     Public Function Mean(axis As Integer) As Tensor
-        Dim sumResult = Sum(axis)
-        Dim count = If(axis = 0, Shape(0), Shape(1))
-        Return sumResult / count
+        ' keepdims=True 保持与旧版一致的 (1, cols) / (rows, 1) 结果形状
+        Return computeKernel.Mean(Me, axis, keepdims:=True)
     End Function
 
     ''' <summary>

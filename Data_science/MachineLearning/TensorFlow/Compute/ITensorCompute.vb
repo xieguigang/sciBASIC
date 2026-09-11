@@ -110,15 +110,15 @@ Namespace Compute
 #Region "归约运算"
 
         ''' <summary>沿指定轴（Nothing 表示整体）求和</summary>
-        Function Sum(t As Tensor, axis As Integer?) As Tensor
+        Function Sum(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
         ''' <summary>整体求和</summary>
         Function SumAll(t As Tensor) As Double
         ''' <summary>沿指定轴（Nothing 表示整体）求均值</summary>
-        Function Mean(t As Tensor, axis As Integer?) As Tensor
+        Function Mean(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
         ''' <summary>整体求均值</summary>
         Function MeanAll(t As Tensor) As Double
-        Function Max(t As Tensor, axis As Integer?) As Tensor
-        Function Min(t As Tensor, axis As Integer?) As Tensor
+        Function Max(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
+        Function Min(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
         Function Prod(t As Tensor, axis As Integer?) As Tensor
         ''' <summary>总体标准差</summary>
         Function StdDev(t As Tensor) As Double

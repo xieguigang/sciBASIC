@@ -281,35 +281,35 @@ Namespace Compute
             Return SumAll(t) / t.Length
         End Function
 
-        Public Overridable Function Sum(t As Tensor, axis As Integer?) As Tensor Implements ITensorCompute.Sum
+        Public Overridable Function Sum(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor Implements ITensorCompute.Sum
             If Not axis.HasValue Then
                 Return Tensor.Scalar(SumAll(t))
             End If
-            Return ReduceAlongAxis(t, axis.Value, False, 0.0, Function(acc, val) acc + val)
+            Return ReduceAlongAxis(t, axis.Value, keepdims, 0.0, Function(acc, val) acc + val)
         End Function
 
-        Public Overridable Function Mean(t As Tensor, axis As Integer?) As Tensor Implements ITensorCompute.Mean
+        Public Overridable Function Mean(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor Implements ITensorCompute.Mean
             If Not axis.HasValue Then
                 Return Tensor.Scalar(MeanAll(t))
             End If
 
-            Dim sumResult = ReduceAlongAxis(t, axis.Value, False, 0.0, Function(acc, val) acc + val)
+            Dim sumResult = ReduceAlongAxis(t, axis.Value, keepdims, 0.0, Function(acc, val) acc + val)
             Dim count = t.Shape(axis.Value)
             Return MultiplyScalar(sumResult, 1.0 / count)
         End Function
 
-        Public Overridable Function Max(t As Tensor, axis As Integer?) As Tensor Implements ITensorCompute.Max
+        Public Overridable Function Max(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor Implements ITensorCompute.Max
             If Not axis.HasValue Then
                 Return Tensor.Scalar(ReduceGlobal(t, Double.NegativeInfinity, Function(acc, val) std.Max(acc, val)))
             End If
-            Return ReduceAlongAxis(t, axis.Value, False, Double.NegativeInfinity, Function(acc, val) std.Max(acc, val))
+            Return ReduceAlongAxis(t, axis.Value, keepdims, Double.NegativeInfinity, Function(acc, val) std.Max(acc, val))
         End Function
 
-        Public Overridable Function Min(t As Tensor, axis As Integer?) As Tensor Implements ITensorCompute.Min
+        Public Overridable Function Min(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor Implements ITensorCompute.Min
             If Not axis.HasValue Then
                 Return Tensor.Scalar(ReduceGlobal(t, Double.PositiveInfinity, Function(acc, val) std.Min(acc, val)))
             End If
-            Return ReduceAlongAxis(t, axis.Value, False, Double.PositiveInfinity, Function(acc, val) std.Min(acc, val))
+            Return ReduceAlongAxis(t, axis.Value, keepdims, Double.PositiveInfinity, Function(acc, val) std.Min(acc, val))
         End Function
 
         Public Overridable Function Prod(t As Tensor, axis As Integer?) As Tensor Implements ITensorCompute.Prod

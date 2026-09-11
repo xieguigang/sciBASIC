@@ -215,23 +215,23 @@ Namespace Compute
             Return SimdParallel.Sum(t.Data) / t.Length
         End Function
 
-        Public Overrides Function Sum(t As Tensor, axis As Integer?) As Tensor
+        Public Overrides Function Sum(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
             If Not axis.HasValue Then Return Tensor.Scalar(SumAll(t))
-            Return MyBase.Sum(t, axis)
+            Return MyBase.Sum(t, axis, keepdims)
         End Function
 
-        Public Overrides Function Mean(t As Tensor, axis As Integer?) As Tensor
+        Public Overrides Function Mean(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
             If Not axis.HasValue Then Return Tensor.Scalar(MeanAll(t))
-            Return MyBase.Mean(t, axis)
+            Return MyBase.Mean(t, axis, keepdims)
         End Function
 
-        Public Overrides Function Max(t As Tensor, axis As Integer?) As Tensor
-            If axis.HasValue OrElse t.Length = 0 Then Return MyBase.Max(t, axis)
+        Public Overrides Function Max(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
+            If axis.HasValue OrElse t.Length = 0 Then Return MyBase.Max(t, axis, keepdims)
             Return Tensor.Scalar(SimdParallel.Max(t.Data))
         End Function
 
-        Public Overrides Function Min(t As Tensor, axis As Integer?) As Tensor
-            If axis.HasValue OrElse t.Length = 0 Then Return MyBase.Min(t, axis)
+        Public Overrides Function Min(t As Tensor, axis As Integer?, keepdims As Boolean) As Tensor
+            If axis.HasValue OrElse t.Length = 0 Then Return MyBase.Min(t, axis, keepdims)
             Return Tensor.Scalar(SimdParallel.Min(t.Data))
         End Function
 
