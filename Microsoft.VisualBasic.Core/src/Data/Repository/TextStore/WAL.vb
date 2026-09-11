@@ -70,7 +70,7 @@ Namespace Data.Repository
         End Class
 
         Private ReadOnly _logPath As String
-        Private ReadOnly _opt As JsonlStoreOptions
+        Private ReadOnly _opt As TextStoreOptions
         Private ReadOnly _enc As New UTF8Encoding(False)
 
         Private _logStream As FileStream
@@ -82,7 +82,7 @@ Namespace Data.Repository
         ''' <summary>诊断信息（撕裂尾丢弃、日志重放期间的异常等）。</summary>
         Public Event Info(message As String)
 
-        Public Sub New(logFilePath As String, options As JsonlStoreOptions)
+        Public Sub New(logFilePath As String, options As TextStoreOptions)
             If String.IsNullOrWhiteSpace(logFilePath) Then Throw New ArgumentNullException(NameOf(logFilePath))
             If options Is Nothing Then Throw New ArgumentNullException(NameOf(options))
             _logPath = logFilePath

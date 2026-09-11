@@ -137,6 +137,13 @@ Namespace StorageProvider
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns>
+        ''' -1 means missing
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal
             If SchemaOridinal.ContainsKey(name) Then
