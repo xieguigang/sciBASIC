@@ -48,9 +48,12 @@ Module Program
     ''' </summary>
     Const OVERFLOW_PROBE_ROWS As Integer = 300000
 
-    Private ReadOnly results As New List(Of TestResult)
+    Friend ReadOnly results As New List(Of TestResult)
     Private ReadOnly headerSummary As New List(Of String)
     Private ReadOnly masterEntries As New List(Of String)
+
+    ''' <summary>写入/往返测试的报告说明行(由 <see cref="WriterTests"/> 填充)</summary>
+    Friend ReadOnly writerNotes As New List(Of String)
     Private ReadOnly schemaSummaries As New List(Of String)
     Private ReadOnly scanResults As New List(Of ScanResult)
     Private overflowProbe As OverflowProbeResult
@@ -320,7 +323,12 @@ Module Program
         End If
 
         ' ---------------------------------------------------------------
-        ' 8. 汇总输出 + 报告
+        ' 8. 写入模块: 先写入 sqlite 文件, 再用读取器读回
+        ' ---------------------------------------------------------------
+        Call RunWriterTests()
+
+        ' ---------------------------------------------------------------
+        ' 9. 汇总输出 + 报告
         ' ---------------------------------------------------------------
         Call PrintSummary()
 
@@ -345,7 +353,7 @@ Module Program
     ' 测试基础设施
     ' ===================================================================
 
-    Private Sub Run(name As String, action As Action)
+    Friend Sub Run(name As String, action As Action)
         Dim sw As Stopwatch = Stopwatch.StartNew()
 
         Call Console.Write("  [" & name & "] ... ")
@@ -367,7 +375,7 @@ Module Program
         End Try
     End Sub
 
-    Private Sub Check(condition As Boolean, message As String)
+    Friend Sub Check(condition As Boolean, message As String)
         If Not condition Then
             Throw New Exception(message)
         End If
@@ -717,8 +725,23 @@ Module Program
         End If
         sb.AppendLine()
 
+        ' --- 写入/往返测试 ---
+        sb.AppendLine("## 6. 写入/往返测试")
+        sb.AppendLine()
+        sb.AppendLine("写入模块提供 Builder 链式接口: ``Sqlite3Writer.CreateFile/OpenFile → CreateTable → AddRow/UpdateRow/DeleteRow → Commit``,")
+        sb.AppendLine("提交时整库重建并以临时文件原子替换。以下测试均遵循[先写入 .sqlite 文件, 再用本模块读取器读回比对]的流程。")
+        sb.AppendLine()
+        If writerNotes.Count = 0 Then
+            sb.AppendLine("(未执行写入测试)")
+        Else
+            For Each line As String In writerNotes
+                sb.AppendLine(line)
+            Next
+        End If
+        sb.AppendLine()
+
         ' --- 用例结果 ---
-        sb.AppendLine("## 6. 测试用例结果")
+        sb.AppendLine("## 7. 测试用例结果")
         sb.AppendLine()
         sb.AppendLine("| # | 用例 | 结果 | 耗时(ms) | 说明 |")
         sb.AppendLine("|---|---|---|---|---|")
@@ -730,7 +753,7 @@ Module Program
         sb.AppendLine()
 
         ' --- 问题与修复 ---
-        sb.AppendLine("## 7. 发现的问题与修复记录")
+        sb.AppendLine("## 8. 发现的问题与修复记录")
         sb.AppendLine()
         sb.AppendLine("| 编号 | 问题 | 根因 | 修复 | 状态 |")
         sb.AppendLine("|---|---|---|---|---|")
@@ -743,7 +766,7 @@ Module Program
         sb.AppendLine()
 
         ' --- 结论 ---
-        sb.AppendLine("## 8. 复测结论")
+        sb.AppendLine("## 9. 复测结论")
         sb.AppendLine()
         If allPassed Then
             sb.AppendLine("全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行,")

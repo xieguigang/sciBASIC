@@ -174,7 +174,7 @@ Namespace Writer.Internal
 
                 page.WriteUInt32(0, nextNo)
 
-                Dim length As Integer = Math.Min(capacity, record.Length - offset)
+                Dim length As Integer = System.Math.Min(capacity, record.Length - offset)
                 Dim chunk(length - 1) As Byte
                 Call Array.Copy(record, offset, chunk, 0, length)
                 page.WriteBytes(4, chunk)

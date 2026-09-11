@@ -217,10 +217,10 @@ Namespace Writer
         End Sub
 
         Private Shared Sub WriteAtomic(path As String, bytes As Byte())
-            Dim directory As String = Path.GetDirectoryName(path)
+            Dim directory As String = System.IO.Path.GetDirectoryName(path)
 
             If Not String.IsNullOrEmpty(directory) Then
-                Call Directory.CreateDirectory(directory)
+                Call System.IO.Directory.CreateDirectory(directory)
             End If
 
             Dim tempPath As String = path & ".tmp"
