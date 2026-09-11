@@ -102,11 +102,16 @@ Namespace Core.SQLSchema
         Private Iterator Function ParseColumns(sql$, removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
             Dim tokens As Token() = New SQLParser(sql).GetTokens.ToArray
             Dim [nameOf] = Function(text As Token()) As String
-                               If removeNameEscape Then
-                                   Return text(Scan0).text.GetStackValue("[", "]")
-                               Else
-                                   Return text(Scan0).text
+                               Dim raw As String = text(Scan0).text
+
+                               ' 注意: 不能使用 GetStackValue 来剥离方括号, 因为它对长度小于 2 的字符串会直接返回空串
+                               If removeNameEscape AndAlso raw IsNot Nothing AndAlso raw.Length >= 2 AndAlso
+                                  raw.First = "["c AndAlso raw.Last = "]"c Then
+
+                                   Return raw.Substring(1, raw.Length - 2)
                                End If
+
+                               Return raw
                            End Function
 
             If Not (tokens(Scan0).isKeyword("create") AndAlso tokens(1).isKeyword("table")) Then
@@ -126,7 +131,16 @@ Namespace Core.SQLSchema
                            Return Not b.Length = 1 AndAlso Not b(Scan0).name = TokenTypes.comma
                        End Function)
 
-                name = [nameOf](block).GetStackValue("""", """")
+                Dim rawName As String = [nameOf](block)
+
+                ' 仅当名称确实被双引号包围时才剥离引号(单字符列名会被 GetStackValue 误判为空串)
+                If rawName IsNot Nothing AndAlso rawName.Length >= 2 AndAlso
+                   rawName.First = """"c AndAlso rawName.Last = """"c Then
+
+                    name = rawName.Substring(1, rawName.Length - 2)
+                Else
+                    name = rawName
+                End If
                 type = block.ElementAtOrNull(1)?.text
 
                 ' 跳过表级约束定义(CHECK/CONSTRAINT/UNIQUE/FOREIGN KEY/PRIMARY KEY),

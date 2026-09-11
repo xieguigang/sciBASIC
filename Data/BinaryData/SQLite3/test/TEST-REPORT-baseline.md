@@ -1,11 +1,11 @@
 ﻿# Managed SQLite3 读取模块测试报告
 
-- 生成时间: 2026-09-11 17:29:44
+- 生成时间: 2026-09-11 17:31:51
 - 测试模块: ``Microsoft.VisualBasic.Data.IO.SQLite3``
 - 目标数据库: ``G:\compounds_2-copy.sqlite``
 - 运行形态: 结构 + 抽样(大表 ``compounds`` 前 5,000 行, 其余表全量, 上限 200,000 行)
-- 用例总数: 21, 通过 18, 失败 3, 累计耗时 21,226 ms
-- 总体结论: **存在 3 个失败用例**
+- 用例总数: 21, 通过 20, 失败 1, 累计耗时 3,642 ms
+- 总体结论: **存在 1 个失败用例**
 
 ## 1. 测试环境
 
@@ -318,7 +318,7 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 
 ### 溢出页(长记录)探测
 
-- 探测表: ``compounds``, 扫描行数: 300,000 (达到探测上限)
+- 探测表: ``compounds``, 扫描行数: 20,000 (达到探测上限)
 - 单页内联阈值 U-35: 4061 字节
 - 观测到最大 TEXT 长度: 6,031 字节
 - 观测到最大 BLOB 长度: 342 字节
@@ -337,33 +337,27 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 
 | # | 用例 | 结果 | 耗时(ms) | 说明 |
 |---|---|---|---|---|
-| 1 | 文件头解析 | 通过 | 201 |  |
+| 1 | 文件头解析 | 通过 | 155 |  |
 | 2 | 枚举 sqlite_master | 通过 | 0 |  |
 | 3 | 表结构解析: compound_identifiers | 通过 | 2 |  |
 | 4 | 表结构解析: compound_microspecies | 通过 | 2 |  |
-| 5 | 表结构解析: compounds | 通过 | 0 |  |
+| 5 | 表结构解析: compounds | 通过 | 1 |  |
 | 6 | 表结构解析: magnesium_dissociation_constant | 通过 | 0 |  |
 | 7 | 表结构解析: registries | 通过 | 0 |  |
-| 8 | 扫描: compound_identifiers | 通过 | 1454 |  |
-| 9 | 扫描: compound_microspecies | 通过 | 999 |  |
-| 10 | 扫描: compounds | 通过 | 81 |  |
+| 8 | 扫描: compound_identifiers | 通过 | 1369 |  |
+| 9 | 扫描: compound_microspecies | 通过 | 953 |  |
+| 10 | 扫描: compounds | 通过 | 83 |  |
 | 11 | 扫描: magnesium_dissociation_constant | 通过 | 11 |  |
 | 12 | 扫描: registries | 通过 | 6 |  |
-| 13 | 溢出页/长记录校验: compounds | 通过 | 18414 |  |
+| 13 | 溢出页/长记录校验: compounds | 通过 | 1011 |  |
 | 14 | 取值校验: compounds | 通过 | 0 |  |
 | 15 | blobAsBase64 设置 | 通过 | 4 |  |
 | 16 | 未知表异常处理 | 通过 | 0 |  |
-| 17 | 写入: 新建库并读回基础类型 | **失败** | 26 | DuplicateNameException: There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!
-Duplicated headers: [""]
-
-Here is the column header keys in you data: 
-
-  ["",""]
- |
-| 18 | 写入: 边界值往返 | **失败** | 1 | OverflowException: Arithmetic operation resulted in an overflow. |
-| 19 | 写入: 多页 B 树与溢出页 | 通过 | 15 |  |
-| 20 | 写入: 打开已有库追加/更新/删除 | **失败** | 7 | ArgumentException: 表 [t] 之中不存在列 [v] |
-| 21 | 写入: 文件格式自检 | 通过 | 3 |  |
+| 17 | 写入: 新建库并读回基础类型 | 通过 | 15 |  |
+| 18 | 写入: 边界值往返 | **失败** | 4 | Exception: Long.MaxValue 往返错误 |
+| 19 | 写入: 多页 B 树与溢出页 | 通过 | 17 |  |
+| 20 | 写入: 打开已有库追加/更新/删除 | 通过 | 7 |  |
+| 21 | 写入: 文件格式自检 | 通过 | 2 |  |
 
 ## 8. 发现的问题与修复记录
 

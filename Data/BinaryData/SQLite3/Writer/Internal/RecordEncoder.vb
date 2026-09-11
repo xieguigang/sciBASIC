@@ -133,14 +133,30 @@ Namespace Writer.Internal
             Dim width As Integer = GetMinimalIntegerWidth(integerValue)
 
             data = New Byte(width - 1) {}
-            Dim u As ULong = CULng(integerValue)
+            ' 注意: VB 的 CULng 对负数会抛出 OverflowException, 这里使用 BitConverter 做无检查位重解释
+            Dim u As ULong = BitConverter.ToUInt64(BitConverter.GetBytes(integerValue), 0)
 
             For i As Integer = width - 1 To 0 Step -1
                 data(i) = CByte(u And &HFFUL)
                 u >>= 8
             Next
 
-            Return CLng(width)
+            ' serial type 与字节宽度的对应关系: 1/2/3/4 字节对应 1/2/3/4, 6 字节对应 5, 8 字节对应 6
+            ' (8 和 9 是常量 0 / 1 的特殊类型, 不携带数据, 不可用于普通整数)
+            Select Case width
+                Case 1
+                    Return 1L
+                Case 2
+                    Return 2L
+                Case 3
+                    Return 3L
+                Case 4
+                    Return 4L
+                Case 6
+                    Return 5L
+                Case Else
+                    Return 6L
+            End Select
         End Function
 
         ''' <summary>
