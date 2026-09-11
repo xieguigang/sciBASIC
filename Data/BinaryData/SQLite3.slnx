@@ -28,4 +28,13 @@
     <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="SQLite3/test/test.vbproj">
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Release" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="PlantMAT|*" Project="Release" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
 </Solution>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>test</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\SQLite3.vbproj" />
+  </ItemGroup>
+
+</Project>
