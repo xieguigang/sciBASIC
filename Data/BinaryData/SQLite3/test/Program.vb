@@ -778,13 +778,13 @@ Module Program
                 sb.AppendLine("抽样范围内未出现超过单页内联阈值的字段, 溢出页路径未被实际触发。")
             End If
         Else
-            sb.AppendLine("存在未通过的测试用例, 详见第 6 节; 修复前状态快照见 ``TEST-REPORT-baseline.md``。")
+            sb.AppendLine("存在未通过的测试用例, 详见第 7 节; 修复前状态快照见 ``TEST-REPORT-baseline.md``。")
         End If
         sb.AppendLine()
 
         Dim baselinePath As String = Path.Combine(FindTestDirectory(), "TEST-REPORT-baseline.md")
         If allPassed AndAlso File.Exists(baselinePath) Then
-            sb.AppendLine("## 9. 基线对比")
+            sb.AppendLine("## 10. 基线对比")
             sb.AppendLine()
             sb.AppendLine("修复前(基线)运行的失败快照保存在 ``TEST-REPORT-baseline.md``, 可用于对比修复前后的用例通过情况。")
             sb.AppendLine()
