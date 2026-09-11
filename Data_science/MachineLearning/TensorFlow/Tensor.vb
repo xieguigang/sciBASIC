@@ -98,6 +98,29 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Private _disposed As Boolean = False
 
+    ''' <summary>
+    ''' 数据版本号：任何原地写入（索引器 setter / SetValue）都会自增，
+    ''' 供设备端后端判断其缓存的显存副本是否已经失效。
+    ''' </summary>
+    Friend _version As Long = 0
+
+#End Region
+
+#Region "计算后端"
+
+    ''' <summary>
+    ''' 当前生效的张量计算后端（策略模式）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 默认是 SIMD 加速的 CPU 实现（<see cref="Compute.SIMDTensor.Default"/>）。
+    ''' 通过 <c>SIMDTensor.Register()</c> 或 <c>ILCuda.GPUTensor.CudaTensor.Register()</c>
+    ''' 可以在运行时切换到其它后端（例如 CUDA GPU），下游调用方无需任何改动。
+    ''' </remarks>
+    Public Shared Property computeKernel As Compute.ITensorCompute = Compute.SIMDTensor.Default
+
+    ''' <summary>切换计算后端时使用的同步根对象</summary>
+    Public Shared ReadOnly SyncRoot As New Object()
+
 #End Region
 
 #Region "属性"
@@ -172,6 +195,15 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Property Gradient As Tensor
 
+    ''' <summary>
+    ''' 数据版本号（只读）。任何原地写入都会使其自增，供设备端缓存判断失效。
+    ''' </summary>
+    Public ReadOnly Property Version As Long
+        Get
+            Return _version
+        End Get
+    End Property
+
 #End Region
 
 #Region "索引器"
@@ -185,6 +217,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         End Get
         Set
             _Data(index) = Value
+            System.Threading.Interlocked.Increment(_version)
         End Set
     End Property
 
@@ -197,6 +230,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         End Get
         Set
             _Data(row * _Shape(1) + col) = Value
+            System.Threading.Interlocked.Increment(_version)
         End Set
     End Property
 
@@ -216,6 +250,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         End Get
         Set
             _Data(row * _Shape(1) * _Shape(2) + col * _Shape(2) + depth) = Value
+            System.Threading.Interlocked.Increment(_version)
         End Set
     End Property
 
@@ -231,6 +266,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Set
             Dim ind = Get1DInd(indexes)
             _Data(ind) = Value
+            System.Threading.Interlocked.Increment(_version)
         End Set
     End Property
 
@@ -588,6 +624,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Sub SetValue(value As Double, ParamArray indices As Integer())
         Dim flatIndex = GetFlatIndex(indices)
         _Data(flatIndex) = value
+        System.Threading.Interlocked.Increment(_version)
     End Sub
 
     ''' <summary>
@@ -658,24 +695,14 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentException("张量形状必须相同才能相加")
         End If
 
-        Dim result = New Tensor(a.Shape)
-        For i = 0 To a.Length - 1
-            result._Data(i) = a._Data(i) + b._Data(i)
-        Next
-        Return result
+        Return computeKernel.Add(a, b)
     End Operator
 
     ''' <summary>
     ''' 张量加标量（来自旧版本）
     ''' </summary>
     Public Shared Operator +(t1 As Tensor, f As Single) As Tensor
-        Dim t As New Tensor(t1._Shape)
-
-        For i = 0 To t.Length - 1
-            t._Data(i) = t1._Data(i) + f
-        Next
-
-        Return t
+        Return computeKernel.AddScalar(t1, CDbl(f))
     End Operator
 
     ''' <summary>
@@ -686,11 +713,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentException("张量形状必须相同才能相减")
         End If
 
-        Dim result = New Tensor(a.Shape)
-        For i = 0 To a.Length - 1
-            result._Data(i) = a._Data(i) - b._Data(i)
-        Next
-        Return result
+        Return computeKernel.Subtract(a, b)
     End Operator
 
     ''' <summary>
@@ -704,22 +727,14 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 张量与标量相乘
     ''' </summary>
     Public Shared Operator *(a As Tensor, scalar As Single) As Tensor
-        Dim result = New Tensor(a.Shape)
-        For i = 0 To a.Length - 1
-            result._Data(i) = a._Data(i) * scalar
-        Next
-        Return result
+        Return computeKernel.MultiplyScalar(a, CDbl(scalar))
     End Operator
 
     ''' <summary>
     ''' 张量与标量相除
     ''' </summary>
     Public Shared Operator /(a As Tensor, scalar As Single) As Tensor
-        Dim result = New Tensor(a.Shape)
-        For i = 0 To a.Length - 1
-            result._Data(i) = a._Data(i) / scalar
-        Next
-        Return result
+        Return computeKernel.DivideScalar(a, CDbl(scalar))
     End Operator
 
     ''' <summary>
@@ -737,32 +752,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentException($"矩阵维度不匹配: {t1._Shape(1)} != {t2._Shape(0)}")
         End If
 
-        Dim t As New Tensor(New Integer() {t1._Shape(0), t2._Shape(1)})
-        Dim sum As Double
-        Dim ind1 = New Integer() {0, 0}
-        Dim ind2 = New Integer() {0, 0}
-        Dim ind3 = New Integer() {0, 0}
-
-        For i = 0 To t1._Shape(0) - 1
-            ind1(0) = i
-            ind3(0) = i
-
-            For k = 0 To t2._Shape(1) - 1
-                ind2(1) = k
-                ind3(1) = k
-                sum = 0
-
-                For j = 0 To t1._Shape(1) - 1
-                    ind1(1) = j
-                    ind2(0) = j
-                    sum += t1(ind1) * t2(ind2)
-                Next
-
-                t(ind3) = sum
-            Next
-        Next
-
-        Return t
+        Return computeKernel.MatMul(t1, t2)
     End Operator
 
 #End Region
@@ -777,11 +767,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentException("张量形状必须相同")
         End If
 
-        Dim result = New Tensor(Shape)
-        For i = 0 To Length - 1
-            result._Data(i) = _Data(i) * other._Data(i)
-        Next
-        Return result
+        Return computeKernel.Multiply(Me, other)
     End Function
 
     ''' <summary>
@@ -797,23 +783,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentException($"矩阵维度不匹配: {Shape(1)} != {other.Shape(0)}")
         End If
 
-        Dim m = Shape(0)
-        Dim n = other.Shape(1)
-        Dim k = Shape(1)
-
-        Dim result = New Tensor(m, n)
-
-        For i = 0 To m - 1
-            For j = 0 To n - 1
-                Dim sum = 0.0F
-                For p = 0 To k - 1
-                    sum += Me(i, p) * other(p, j)
-                Next
-                result(i, j) = sum
-            Next
-        Next
-
-        Return result
+        Return computeKernel.MatMul(Me, other)
     End Function
 
     ''' <summary>
@@ -824,13 +794,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentException("只支持二维张量转置")
         End If
 
-        Dim result = New Tensor(Shape(1), Shape(0))
-        For i = 0 To Shape(0) - 1
-            For j = 0 To Shape(1) - 1
-                result(j, i) = Me(i, j)
-            Next
-        Next
-        Return result
+        Return computeKernel.Transpose(Me)
     End Function
 
 #End Region
@@ -876,18 +840,14 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 计算所有元素的和
     ''' </summary>
     Public Function TotalSum() As Single
-        Dim sum As Single = 0
-        For i = 0 To Length - 1
-            sum += CSng(_Data(i))
-        Next
-        Return sum
+        Return CSng(computeKernel.SumAll(Me))
     End Function
 
     ''' <summary>
     ''' 计算所有元素的平均值
     ''' </summary>
     Public Function Mean() As Single
-        Return TotalSum() / Length
+        Return CSng(computeKernel.MeanAll(Me))
     End Function
 
     ''' <summary>
@@ -903,11 +863,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 计算L2范数（欧几里得范数）
     ''' </summary>
     Public Function L2Norm() As Single
-        Dim sumSquares As Single = 0
-        For i = 0 To Length - 1
-            sumSquares += CSng(_Data(i) * _Data(i))
-        Next
-        Return std.Sqrt(sumSquares)
+        Return CSng(computeKernel.L2Norm(Me))
     End Function
 
 #End Region

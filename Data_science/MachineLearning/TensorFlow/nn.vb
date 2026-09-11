@@ -69,13 +69,7 @@ Public Module nn
     ''' ReLU 激活函数: max(0, x)
     ''' </summary>
     Public Function relu(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Max(0.0, src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Relu(t)
     End Function
 
     ''' <summary>
@@ -83,52 +77,28 @@ Public Module nn
     ''' 负值部分使用 alpha 斜率，默认 0.01
     ''' </summary>
     Public Function leaky_relu(t As Tensor, Optional alpha As Double = 0.01) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = If(src(i) >= 0.0, src(i), alpha * src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.LeakyRelu(t, alpha)
     End Function
 
     ''' <summary>
     ''' ELU 激活函数: x if x > 0 else alpha * (exp(x) - 1)
     ''' </summary>
     Public Function elu(t As Tensor, Optional alpha As Double = 1.0) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = If(src(i) >= 0.0, src(i), alpha * (std.Exp(src(i)) - 1.0))
-        Next
-        Return result
+        Return Tensor.computeKernel.Elu(t, alpha)
     End Function
 
     ''' <summary>
     ''' Sigmoid 激活函数: 1 / (1 + e^(-x))
     ''' </summary>
     Public Function sigmoid(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = 1.0 / (1.0 + std.Exp(-src(i)))
-        Next
-        Return result
+        Return Tensor.computeKernel.Sigmoid(t)
     End Function
 
     ''' <summary>
     ''' Tanh 激活函数: (e^x - e^(-x)) / (e^x + e^(-x))
     ''' </summary>
     Public Function tanh(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Tanh(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Tanh(t)
     End Function
 
     ''' <summary>
@@ -136,29 +106,14 @@ Public Module nn
     ''' 使用近似公式: 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715 * x^3)))
     ''' </summary>
     Public Function gelu(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        Dim c = std.Sqrt(2.0 / std.PI)
-        For i = 0 To src.Length - 1
-            Dim x = src(i)
-            dst(i) = 0.5 * x * (1.0 + std.Tanh(c * (x + 0.044715 * x * x * x)))
-        Next
-        Return result
+        Return Tensor.computeKernel.Gelu(t)
     End Function
 
     ''' <summary>
     ''' Swish / SiLU 激活函数: x * sigmoid(x)
     ''' </summary>
     Public Function swish(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            Dim x = src(i)
-            dst(i) = x / (1.0 + std.Exp(-x))
-        Next
-        Return result
+        Return Tensor.computeKernel.Swish(t)
     End Function
 
     ''' <summary>
@@ -341,23 +296,7 @@ Public Module nn
     ''' <param name="logits">模型输出的 logits</param>
     ''' <returns>逐元素损失，形状与输入相同</returns>
     Public Function sigmoid_cross_entropy_with_logits(labels As Tensor, logits As Tensor) As Tensor
-        If Not labels.Shape.SequenceEqual(logits.Shape) Then
-            Throw New ArgumentException($"labels 和 logits 形状必须相同: [{String.Join(",", labels.Shape)}] vs [{String.Join(",", logits.Shape)}]")
-        End If
-
-        Dim result = New Tensor(logits.Shape)
-        Dim srcLabels = labels.Data
-        Dim srcLogits = logits.Data
-        Dim dst = result.Data
-
-        ' 数值稳定的实现: max(x,0) - x*z + log(1 + exp(-|x|))
-        For i = 0 To dst.Length - 1
-            Dim x = srcLogits(i)
-            Dim z = srcLabels(i)
-            dst(i) = std.Max(x, 0.0) - x * z + std.Log(1.0 + std.Exp(-std.Abs(x)))
-        Next
-
-        Return result
+        Return Tensor.computeKernel.SigmoidCrossEntropyWithLogits(labels, logits)
     End Function
 
     ''' <summary>
@@ -451,31 +390,14 @@ Public Module nn
     ''' 均方误差损失: mean((predictions - targets)^2)
     ''' </summary>
     Public Function mse_loss(predictions As Tensor, targets As Tensor) As Tensor
-        If Not predictions.Shape.SequenceEqual(targets.Shape) Then
-            Throw New ArgumentException($"predictions 和 targets 形状必须相同")
-        End If
-
-        Dim sumSq As Double = 0
-        Dim srcPred = predictions.Data
-        Dim srcTarget = targets.Data
-        For i = 0 To srcPred.Length - 1
-            Dim diff = srcPred(i) - srcTarget(i)
-            sumSq += diff * diff
-        Next
-
-        Return Tensor.Scalar(sumSq / srcPred.Length)
+        Return Tensor.computeKernel.MseLoss(predictions, targets)
     End Function
 
     ''' <summary>
     ''' L2 损失: sum(x^2) / 2
     ''' </summary>
     Public Function l2_loss(t As Tensor) As Tensor
-        Dim sumSq As Double = 0
-        Dim src = t.Data
-        For i = 0 To src.Length - 1
-            sumSq += src(i) * src(i)
-        Next
-        Return Tensor.Scalar(sumSq / 2.0)
+        Return Tensor.computeKernel.L2Loss(t)
     End Function
 
     ''' <summary>
@@ -483,23 +405,7 @@ Public Module nn
     ''' 当 |x| 不超过 delta 时为平方损失，否则为线性损失
     ''' </summary>
     Public Function huber_loss(predictions As Tensor, targets As Tensor, Optional delta As Double = 1.0) As Tensor
-        If Not predictions.Shape.SequenceEqual(targets.Shape) Then
-            Throw New ArgumentException($"predictions 和 targets 形状必须相同")
-        End If
-
-        Dim totalLoss As Double = 0
-        Dim srcPred = predictions.Data
-        Dim srcTarget = targets.Data
-        For i = 0 To srcPred.Length - 1
-            Dim diff = std.Abs(srcPred(i) - srcTarget(i))
-            If diff <= delta Then
-                totalLoss += 0.5 * diff * diff
-            Else
-                totalLoss += delta * (diff - 0.5 * delta)
-            End If
-        Next
-
-        Return Tensor.Scalar(totalLoss / srcPred.Length)
+        Return Tensor.computeKernel.HuberLoss(predictions, targets, delta)
     End Function
 
 #End Region
