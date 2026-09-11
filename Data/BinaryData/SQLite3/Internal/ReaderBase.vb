@@ -346,6 +346,11 @@ Namespace Core.Internal
             Return res
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadString(bytes As UShort) As String
+            Return ReadString(CInt(bytes))
+        End Function
+
         Public Function ReadString(bytes As Integer) As String
             Dim data As Byte() = Read(bytes)
             Return _encoding.GetString(data, 0, data.Length)

@@ -1,10 +1,10 @@
 ﻿# Managed SQLite3 读取模块测试报告
 
-- 生成时间: 2026-09-11 17:10:16
+- 生成时间: 2026-09-11 17:12:12
 - 测试模块: ``Microsoft.VisualBasic.Data.IO.SQLite3``
 - 目标数据库: ``G:\compounds_2-copy.sqlite``
 - 运行形态: 结构 + 抽样(大表 ``compounds`` 前 5,000 行, 其余表全量, 上限 200,000 行)
-- 用例总数: 16, 通过 16, 失败 0, 累计耗时 21,099 ms
+- 用例总数: 16, 通过 16, 失败 0, 累计耗时 20,583 ms
 - 总体结论: **全部用例通过**
 
 ## 1. 测试环境
@@ -328,19 +328,19 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 
 | # | 用例 | 结果 | 耗时(ms) | 说明 |
 |---|---|---|---|---|
-| 1 | 文件头解析 | 通过 | 186 |  |
+| 1 | 文件头解析 | 通过 | 181 |  |
 | 2 | 枚举 sqlite_master | 通过 | 0 |  |
-| 3 | 表结构解析: compound_identifiers | 通过 | 1 |  |
+| 3 | 表结构解析: compound_identifiers | 通过 | 2 |  |
 | 4 | 表结构解析: compound_microspecies | 通过 | 2 |  |
 | 5 | 表结构解析: compounds | 通过 | 0 |  |
 | 6 | 表结构解析: magnesium_dissociation_constant | 通过 | 0 |  |
 | 7 | 表结构解析: registries | 通过 | 0 |  |
-| 8 | 扫描: compound_identifiers | 通过 | 1425 |  |
-| 9 | 扫描: compound_microspecies | 通过 | 1006 |  |
-| 10 | 扫描: compounds | 通过 | 79 |  |
+| 8 | 扫描: compound_identifiers | 通过 | 1395 |  |
+| 9 | 扫描: compound_microspecies | 通过 | 970 |  |
+| 10 | 扫描: compounds | 通过 | 78 |  |
 | 11 | 扫描: magnesium_dissociation_constant | 通过 | 10 |  |
 | 12 | 扫描: registries | 通过 | 6 |  |
-| 13 | 溢出页/长记录校验: compounds | 通过 | 18381 |  |
+| 13 | 溢出页/长记录校验: compounds | 通过 | 17936 |  |
 | 14 | 取值校验: compounds | 通过 | 0 |  |
 | 15 | blobAsBase64 设置 | 通过 | 3 |  |
 | 16 | 未知表异常处理 | 通过 | 0 |  |
@@ -367,8 +367,4 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行,
 包含可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB、rowid 别名以及表级约束等场景。
 溢出页路径已被实际覆盖(最大字段 6,031 字节 > 内联阈值 4061 字节), 未发现异常。
-
-## 9. 基线对比
-
-修复前(基线)运行的失败快照保存在 ``TEST-REPORT-baseline.md``, 可用于对比修复前后的用例通过情况。
 
