@@ -289,10 +289,6 @@ Module jsonlStoreTest
         Call wal.Flush()
         Call wal.Dispose()   ' 写句柄关闭后才能再以只读方式打开日志
 
-        Console.WriteLine("RAW-WAL>>>")
-        Console.WriteLine(File.ReadAllText(logPath).Replace(vbLf, "<LF>" & vbLf).Replace(vbTab, "<TAB>"))
-        Console.WriteLine("<<<RAW-WAL")
-
         Dim logLen As Long = New FileInfo(logPath).Length
 
         Dim reader As New WAL(logPath, opt)

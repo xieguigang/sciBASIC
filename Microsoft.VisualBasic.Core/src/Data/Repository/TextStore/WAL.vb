@@ -316,7 +316,7 @@ Namespace Data.Repository
             For Each c As Char In s
                 Dim code As Integer = AscW(c)
                 Select Case code
-                    Case 34 : sb.Append("""""")       ' \"
+                    Case 34 : sb.Append("\"c).Append(""""c)   ' \"
                     Case 92 : sb.Append("\\")         ' \\
                     Case 8 : sb.Append("\b")
                     Case 9 : sb.Append("\t")
