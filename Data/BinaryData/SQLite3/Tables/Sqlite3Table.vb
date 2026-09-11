@@ -100,6 +100,7 @@ Namespace Core.Tables
                         End Function) _
                 .ToArray
 
+            Dim rowIdAlias As Integer = FindRowIdAliasOrdinal()
             Dim rowData As Object()
             Dim index As i32 = Scan0
             Dim row As Sqlite3Row
@@ -110,7 +111,7 @@ Namespace Core.Tables
                 ' And will overflow to any other pages as needed
                 Using dataStream As New SqliteDataStream(Me.reader, cell)
                     Try
-                        rowData = ParseRow(dataStream, metaInfo)
+                        rowData = ParseRow(dataStream, metaInfo, cell.Cell.RowId, rowIdAlias)
                         row = New Sqlite3Row(++index, Me, cell.Cell.RowId, rowData)
 
                         Yield row
@@ -121,88 +122,141 @@ Namespace Core.Tables
             Next
         End Function
 
-        Private Function ParseRow(dataStream As SqliteDataStream, metaInfos As ColumnDataMeta()) As Object()
+        Private Function ParseRow(dataStream As SqliteDataStream, metaInfos As ColumnDataMeta(), rowId As Long, rowIdAlias As Integer) As Object()
             Dim reader As New ReaderBase(dataStream, Me.reader)
             Dim null As Byte
             Dim headerSize As Long = reader.ReadVarInt(null)
-            Dim index As Integer = Scan0
 
-            ' 似乎在sqlite3之中,每一个数据区都有自己的一个header区域
-            ' 因为字符串或者bytes blob这些可变长的数据需要长度信息
-            ' 所以在这里每读取一个数据块之前都需要重新读取一次header信息
+            ' 每一个记录的开头都有属于自己的 header 区域, 其中保存了每一列的真实存储类型
+            ' (serial type)。SQLite 是动态类型数据库, 只有 serial type 才是解码的唯一依据,
+            ' 表结构之中的声明类型仅仅用于提供亲和性(affinity)信息。
+            Dim serialTypes As New System.Collections.Generic.List(Of Long)
+
             While reader.Position < headerSize
-                Dim columnInfo As Long = reader.ReadVarInt(null)
-                Dim meta As ColumnDataMeta = metaInfos(index)
-
-                index += 1
-
-                If columnInfo = 0 Then
-                    ' meta.type = SqliteDataType.Null
-                ElseIf columnInfo = 1 Then
-                    ' meta.type = SqliteDataType.[Integer]
-                    meta.length = 1
-                ElseIf columnInfo = 2 Then
-                    ' meta.type = SqliteDataType.[Integer]
-                    meta.length = 2
-                ElseIf columnInfo = 3 Then
-                    ' meta.type = SqliteDataType.[Integer]
-                    meta.length = 3
-                ElseIf columnInfo = 4 Then
-                    ' meta.type = SqliteDataType.[Integer]
-                    meta.length = 4
-                ElseIf columnInfo = 5 Then
-                    ' meta.type = SqliteDataType.[Integer]
-                    meta.length = 6
-                ElseIf columnInfo = 6 Then
-                    ' meta.type = SqliteDataType.[Integer]
-                    meta.length = 8
-                ElseIf columnInfo = 7 Then
-                    ' meta.type = SqliteDataType.Float
-                    meta.length = 8
-                ElseIf columnInfo = 8 Then
-                    ' meta.type = SqliteDataType.Boolean0
-                ElseIf columnInfo = 9 Then
-                    ' meta.type = SqliteDataType.Boolean1
-                ElseIf columnInfo = 10 OrElse columnInfo = 11 Then
-                    Throw New ArgumentOutOfRangeException()
-                ElseIf (columnInfo And &H1) = &H0 Then
-                    ' Even number
-                    ' meta.type = SqliteDataType.Blob
-                    meta.length = CUShort((columnInfo - 12) \ 2)
-                Else
-                    ' Odd number
-                    ' meta.type = SqliteDataType.Text
-                    meta.length = CUShort((columnInfo - 13) \ 2)
-                End If
+                serialTypes.Add(reader.ReadVarInt(null))
             End While
 
             Dim rowData As Object() = New Object(metaInfos.Length - 1) {}
 
             For i As Integer = 0 To metaInfos.Length - 1
-                Dim meta As ColumnDataMeta = metaInfos(i)
+                If i >= serialTypes.Count Then
+                    ' 记录之中的列数少于 schema 声明的列数
+                    rowData(i) = Nothing
+                    Continue For
+                End If
 
-                Select Case meta.type
-                    Case SqliteDataType.Null : rowData(i) = Nothing
-                         ' TODO: Do we handle negatives correctly?
-                    Case SqliteDataType.[Integer] : rowData(i) = reader.ReadInteger(CByte(meta.length))
-                    Case SqliteDataType.Float : rowData(i) = BitConverter.Int64BitsToDouble(reader.ReadInteger(CByte(meta.length)))
-                    Case SqliteDataType.Boolean0 : rowData(i) = False
-                    Case SqliteDataType.Boolean1 : rowData(i) = True
-                    Case SqliteDataType.Text : rowData(i) = reader.ReadString(meta.length)
-
-                    Case SqliteDataType.Blob
-
-                        If Settings.blobAsBase64 Then
-                            rowData(i) = Convert.ToBase64String(reader.Read(meta.length))
-                        Else
-                            rowData(i) = reader.Read(meta.length)
-                        End If
-                    Case Else
-                        Throw New ArgumentOutOfRangeException()
-                End Select
+                rowData(i) = ReadValue(reader, serialTypes(i), metaInfos(i))
             Next
 
+            If rowIdAlias >= 0 AndAlso rowIdAlias < rowData.Length AndAlso rowData(rowIdAlias) Is Nothing Then
+                ' ``INTEGER PRIMARY KEY`` 是 rowid 的别名, 在记录体之中以 NULL 存储, 这里回填 rowid
+                rowData(rowIdAlias) = rowId
+            End If
+
             Return rowData
+        End Function
+
+        ''' <summary>
+        ''' 查找表之中的 rowid 别名列(即声明为 ``INTEGER PRIMARY KEY`` 的列)的序号, 不存在时返回 -1
+        ''' </summary>
+        Private Function FindRowIdAliasOrdinal() As Integer
+            Dim pks As String() = Me.schema.PrimaryKeys
+
+            If pks Is Nothing OrElse pks.Length = 0 Then
+                Return -1
+            End If
+
+            Dim cols = Me.schema.columns
+
+            For i As Integer = 0 To cols.Length - 1
+                For Each pk As String In pks
+                    If String.Equals(cols(i).Name, pk, StringComparison.OrdinalIgnoreCase) AndAlso
+                       String.Equals(If(cols(i).Value, "").Trim(), "integer", StringComparison.OrdinalIgnoreCase) Then
+
+                        Return i
+                    End If
+                Next
+            Next
+
+            Return -1
+        End Function
+
+        ''' <summary>
+        ''' 依据记录头之中的 serial type 解码出单个列的值。
+        ''' 
+        ''' > https://www.sqlite.org/fileformat2.html#serialtype
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <param name="serialType">记录头之中的存储类型编号</param>
+        ''' <param name="meta">列的声明类型信息, 用于亲和性转换</param>
+        Private Function ReadValue(reader As ReaderBase, serialType As Long, meta As ColumnDataMeta) As Object
+            Select Case serialType
+                Case 0
+                    ' NULL
+                    Return Nothing
+
+                Case 1, 2, 3, 4, 5, 6
+                    ' 1/2/3/4/6/8 字节有符号整数
+                    Return ToDeclaredNumber(reader.ReadInteger(CByte(serialType)), meta)
+
+                Case 7
+                    ' 8 字节 IEEE 浮点数
+                    Return BitConverter.Int64BitsToDouble(reader.ReadInteger(CByte(8)))
+
+                Case 8, 9
+                    ' 整数 0 / 1
+                    Return ToDeclaredBoolean(serialType - 8L, meta)
+
+                Case 10, 11
+                    ' 保留类型, 按照 NULL 处理
+                    Return Nothing
+
+                Case Else
+                    If (serialType And 1L) = 0L Then
+                        ' 偶数 >= 12: BLOB, 长度为 (serialType - 12) / 2
+                        Dim length As Integer = CInt((serialType - 12L) \ 2L)
+
+                        If Settings.blobAsBase64 Then
+                            Return Convert.ToBase64String(reader.Read(length))
+                        Else
+                            Return reader.Read(length)
+                        End If
+                    Else
+                        ' 奇数 >= 13: TEXT, 长度为 (serialType - 13) / 2
+                        Dim length As Integer = CInt((serialType - 13L) \ 2L)
+                        Return reader.ReadString(length)
+                    End If
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 将整数存储值转换为声明类型所对应的 CLR 类型
+        ''' (FLOAT 亲和性转换为 Double, BOOLEAN 转换为 Boolean)
+        ''' </summary>
+        Private Function ToDeclaredNumber(value As Long, meta As ColumnDataMeta) As Object
+            Select Case meta.type
+                Case SqliteDataType.Boolean0, SqliteDataType.Boolean1
+                    Return value <> 0L
+                Case SqliteDataType.Float
+                    Return CDbl(value)
+                Case Else
+                    Return value
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 将 serial type 8/9(整数 0/1) 转换为声明类型所对应的 CLR 类型
+        ''' </summary>
+        Private Function ToDeclaredBoolean(value As Long, meta As ColumnDataMeta) As Object
+            Select Case meta.type
+                Case SqliteDataType.Boolean0, SqliteDataType.Boolean1
+                    Return value <> 0L
+                Case SqliteDataType.Float
+                    ' 数值列之中的 0/1 仍然应保持数值类型
+                    Return CDbl(value)
+                Case Else
+                    Return value
+            End Select
         End Function
     End Class
 End Namespace

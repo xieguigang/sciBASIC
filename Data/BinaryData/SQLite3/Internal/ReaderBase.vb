@@ -278,11 +278,10 @@ Namespace Core.Internal
                 End If
             Next
 
-            ' Read final byte
+            ' Read final byte: the 9th byte is all data (8 bits)
+            ' note: readBytes already equals 9 after the loop above
             res <<= 8
             res += ReadByte()
-
-            readBytes += 1
 
             Return res
         End Function
@@ -347,7 +346,7 @@ Namespace Core.Internal
             Return res
         End Function
 
-        Public Function ReadString(bytes As UShort) As String
+        Public Function ReadString(bytes As Integer) As String
             Dim data As Byte() = Read(bytes)
             Return _encoding.GetString(data, 0, data.Length)
         End Function

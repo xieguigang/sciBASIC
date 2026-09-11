@@ -76,6 +76,18 @@ Namespace Core.SQLSchema
         Public ReadOnly Property RawSql As String
         Public ReadOnly Property Schema As HeaderSchema
 
+        ''' <summary>
+        ''' 表中声明的主键列名。SQLite 之中 ``INTEGER PRIMARY KEY`` 是 rowid 的别名,
+        ''' 该列在记录体之中以 NULL 存储, 实际取值需要使用 rowid 进行回填。
+        ''' </summary>
+        Public ReadOnly Property PrimaryKeys As String()
+            Get
+                Return _primaryKeys.ToArray
+            End Get
+        End Property
+
+        ReadOnly _primaryKeys As New System.Collections.Generic.List(Of String)
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(sql$, Optional removeNameEscape As Boolean = True)
             Me.RawSql = sql
@@ -117,30 +129,53 @@ Namespace Core.SQLSchema
                 name = [nameOf](block).GetStackValue("""", """")
                 type = block.ElementAtOrNull(1)?.text
 
-                If name.ToUpper = "UNIQUE" AndAlso block(1).text = "(" AndAlso block.Last.text = ")" Then
+                ' 跳过表级约束定义(CHECK/CONSTRAINT/UNIQUE/FOREIGN KEY/PRIMARY KEY),
+                ' 这些并不是真实的数据列
+                If name.ToUpper = "CHECK" OrElse name.ToUpper = "CONSTRAINT" Then
                     Continue For
                 End If
-                If name.ToUpper = "FOREIGN" AndAlso
-                    type.ToUpper = "KEY" AndAlso
-                    block.Length > 4 AndAlso
-                    block(2).text = "(" AndAlso
-                    block.Last.text = ")" Then
+                If name.ToUpper = "UNIQUE" AndAlso block.Length > 1 AndAlso block(1).text = "(" Then
+                    Continue For
+                End If
+                If name.ToUpper = "FOREIGN" AndAlso type IsNot Nothing AndAlso type.ToUpper = "KEY" Then
+                    Continue For
+                End If
+                If block(Scan0).text.ToUpper = "PRIMARY" AndAlso block.Length > 1 AndAlso block(1).text.ToUpper = "KEY" Then
+                    ' 表级主键约束: 记录主键列(INTEGER PRIMARY KEY 是 rowid 的别名)
+                    For k As Integer = 2 To block.Length - 1
+                        Dim pkToken As String = block(k).text
+
+                        If pkToken = "(" OrElse pkToken = ")" OrElse pkToken = "," Then
+                            Continue For
+                        End If
+
+                        _primaryKeys.Add(pkToken)
+                    Next
 
                     Continue For
                 End If
-                If block(Scan0).text = "PRIMARY" AndAlso block(1).text = "KEY" Then
-                    Continue For
-                End If
 
-                If type.ToLower = "[varchar]" Then
+                If type Is Nothing Then
+                    ' 未声明类型的列在 SQLite 之中具有 BLOB 亲和性
+                    type = "blob"
+                ElseIf type.ToLower = "[varchar]" Then
                     If tokens.Length > 2 AndAlso tokens(2).text.IsPattern("\(\s*\d+\s*\)") Then
                         type = type.GetStackValue("[", "]") & tokens(2).text
                     Else
                         type = type.GetStackValue("[", "]")
                     End If
-                ElseIf type.ToLower = "not" AndAlso tokens(3).text.ToLower = "null" Then
+                ElseIf type.ToLower = "not" Then
+                    ' 列名之后缺少类型声明, 按 BLOB 亲和性处理
                     type = "blob"
                 End If
+
+                ' 列级主键约束: col INTEGER PRIMARY KEY
+                For k As Integer = 0 To block.Length - 2
+                    If block(k).text.ToUpper = "PRIMARY" AndAlso block(k + 1).text.ToUpper = "KEY" Then
+                        _primaryKeys.Add(name)
+                        Exit For
+                    End If
+                Next
 
                 Yield New NamedValue(Of String) With {
                     .Name = name,
