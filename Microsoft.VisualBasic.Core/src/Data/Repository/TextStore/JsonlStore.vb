@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Text
+Imports std = System.Math
 
 Namespace Data.Repository
 
@@ -597,7 +598,7 @@ Namespace Data.Repository
             Dim n As Integer = _enc.GetByteCount(line)
             Dim need As Integer = n + _nlBytes.Length
             If _rwBuf Is Nothing OrElse _rwBuf.Length < need Then
-                _rwBuf = New Byte(Math.Max(need, _opt.MergeBufferBytes) - 1) {}
+                _rwBuf = New Byte(std.Max(need, _opt.MergeBufferBytes) - 1) {}
             End If
             _enc.GetBytes(line, 0, line.Length, _rwBuf, 0)
             w.Write(_rwBuf, 0, n)
@@ -803,8 +804,8 @@ Namespace Data.Repository
         End Sub
 
         Private Sub DetectBomAndNewLine()
-            Dim n As Integer = CInt(Math.Min(_fs.Length, 8192L))
-            Dim buf(Math.Max(n, 1) - 1) As Byte
+            Dim n As Integer = CInt(std.Min(_fs.Length, 8192L))
+            Dim buf(std.Max(n, 1) - 1) As Byte
             _fs.Position = 0
             Dim got As Integer = 0
             Do While got < n
@@ -843,7 +844,7 @@ Namespace Data.Repository
             If count <= 0 OrElse startLine < 1 Then Return
             Dim done As Long = 0
             Do While done < count
-                Dim take As Integer = CInt(Math.Min(count - done, CLng(ReadChunkLines)))
+                Dim take As Integer = CInt(std.Min(count - done, CLng(ReadChunkLines)))
                 Dim batch(take - 1) As String
                 SyncLock _gate
                     If _fsNextLine <> startLine + done Then PositionReaderAtLine(startLine + done)
@@ -1140,7 +1141,7 @@ Namespace Data.Repository
             Dim pos As Long = _fs.Length
             Using r As New FileStream(_dataPath, FileMode.Open, FileAccess.Read, FileShare.Read Or FileShare.Write)
                 Do While pos > 0
-                    Dim n As Integer = CInt(Math.Min(pos, CLng(chunk)))
+                    Dim n As Integer = CInt(std.Min(pos, CLng(chunk)))
                     r.Position = pos - n
                     Dim got As Integer = 0
                     Do While got < n

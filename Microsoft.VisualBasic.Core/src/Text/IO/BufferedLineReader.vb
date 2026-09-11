@@ -14,6 +14,9 @@ Namespace Text
         Private _lastStart, _lastEnd As Long
         Private _lastTerm As Boolean
 
+        Private Const LF As Byte = 10
+        Private Const CR As Byte = 13
+
         Public Sub New(stream As FileStream, enc As Encoding, bufferSize As Integer)
             _s = stream
             _enc = enc
