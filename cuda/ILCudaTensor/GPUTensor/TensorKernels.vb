@@ -28,6 +28,20 @@ Namespace GPUTensor
         ''' <summary>双精度分块矩阵乘 C(m x n) = A(m x k) * B(k x n)</summary>
         Public Const GemmDouble As String = "tensorGemmDoubleKernel"
 
+        ' ---- 两段式全局归约 ----
+        ''' <summary>全局求和 - 阶段一（部分结果）</summary>
+        Public Const PartialSum As String = "tensorReducePartialSumKernel"
+        ''' <summary>全局求和 - 阶段二（汇总）</summary>
+        Public Const FinalSum As String = "tensorReduceFinalSumKernel"
+        ''' <summary>全局最大值 - 阶段一</summary>
+        Public Const PartialMax As String = "tensorReducePartialMaxKernel"
+        ''' <summary>全局最大值 - 阶段二</summary>
+        Public Const FinalMax As String = "tensorReduceFinalMaxKernel"
+        ''' <summary>全局最小值 - 阶段一</summary>
+        Public Const PartialMin As String = "tensorReducePartialMinKernel"
+        ''' <summary>全局最小值 - 阶段二</summary>
+        Public Const FinalMin As String = "tensorReduceFinalMinKernel"
+
     End Module
 
 End Namespace

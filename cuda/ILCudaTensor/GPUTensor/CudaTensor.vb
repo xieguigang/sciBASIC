@@ -39,6 +39,12 @@ Namespace GPUTensor
         ''' <summary>末轴行内核使用的每 block 线程数（必须与 tensor.cu 的 TENSOR_BLOCK 一致）</summary>
         Public Const RowBlockSize As Integer = 256
 
+        ''' <summary>两段式全局归约阶段一的每 block 线程数</summary>
+        Public Const StageBlockSize As Integer = 256
+
+        ''' <summary>两段式全局归约阶段一的 block 数上限（配合 grid-stride 可处理任意长度）</summary>
+        Public Shared Property MaxStageBlocks As Integer = 1024
+
         ''' <summary>低于该元素数时走 CPU 兜底，避免显存拷贝开销倒挂</summary>
         Public Shared Property MinGpuElements As Integer = 4096
 
@@ -191,13 +197,29 @@ Namespace GPUTensor
             _engine.GetKernel(kernelName).Launch(config, x, out, outerSize, axisSize)
         End Sub
 
-        ''' <summary>全局归约：把整张量当作一行复用末轴归约内核</summary>
-        Private Function ReduceAll(t As tf.Tensor, kernelName As String) As Double
+        ''' <summary>
+        ''' 两段式全局归约：阶段一由多个 block 并行产出部分结果，阶段二由 1 个 block 汇总。
+        ''' 两段都在 GPU 上完成，不需要主机端同步。
+        ''' </summary>
+        Private Function ReduceGlobal(t As tf.Tensor, partialKernel As String, finalKernel As String) As Double
+            Dim n = t.Length
+            Dim blocks = System.Math.Min(ILCudaRuntime.LaunchPlanner.CeilDiv(n, StageBlockSize), MaxStageBlocks)
+            If blocks <= 0 Then blocks = 1
+
             Dim dx = Device(t)
 
-            Using dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(1)
-                LaunchRow(kernelName, dx, dOut, 1, t.Length)
-                Return dOut.Read()(0)
+            Using partials As New ILCudaRuntime.DeviceBuffer(Of Double)(blocks),
+                  out As New ILCudaRuntime.DeviceBuffer(Of Double)(1)
+
+                ' 阶段一：每个 block 一个部分结果
+                Dim stage As New ILCudaRuntime.LaunchConfig(blocks, 1, StageBlockSize, 1, 0)
+                _engine.GetKernel(partialKernel).Launch(stage, dx, partials, n)
+
+                ' 阶段二：汇总部分结果
+                Dim finalCfg As New ILCudaRuntime.LaunchConfig(1, 1, StageBlockSize, 1, 0)
+                _engine.GetKernel(finalKernel).Launch(finalCfg, partials, out, blocks)
+
+                Return out.Read()(0)
             End Using
         End Function
 
@@ -498,7 +520,7 @@ Namespace GPUTensor
         Public Overrides Function SumAll(t As tf.Tensor) As Double
             If Not OnGpu(t) Then Return MyBase.SumAll(t)
 
-            Return ReduceAll(t, TensorKernelNames.RowSum)
+            Return ReduceGlobal(t, TensorKernelNames.PartialSum, TensorKernelNames.FinalSum)
         End Function
 
         Public Overrides Function MeanAll(t As tf.Tensor) As Double
@@ -526,7 +548,7 @@ Namespace GPUTensor
         Public Overrides Function Max(t As tf.Tensor, axis As Integer?, keepdims As Boolean) As tf.Tensor
             If Not axis.HasValue Then
                 If Not OnGpu(t) Then Return MyBase.Max(t, axis, keepdims)
-                Return tf.Tensor.Scalar(ReduceAll(t, TensorKernelNames.RowMax))
+                Return tf.Tensor.Scalar(ReduceGlobal(t, TensorKernelNames.PartialMax, TensorKernelNames.FinalMax))
             End If
 
             Dim r = RowReduce(t, axis.Value, TensorKernelNames.RowMax, keepdims)
@@ -537,7 +559,7 @@ Namespace GPUTensor
         Public Overrides Function Min(t As tf.Tensor, axis As Integer?, keepdims As Boolean) As tf.Tensor
             If Not axis.HasValue Then
                 If Not OnGpu(t) Then Return MyBase.Min(t, axis, keepdims)
-                Return tf.Tensor.Scalar(ReduceAll(t, TensorKernelNames.RowMin))
+                Return tf.Tensor.Scalar(ReduceGlobal(t, TensorKernelNames.PartialMin, TensorKernelNames.FinalMin))
             End If
 
             Dim r = RowReduce(t, axis.Value, TensorKernelNames.RowMin, keepdims)

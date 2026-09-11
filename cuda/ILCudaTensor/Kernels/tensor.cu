@@ -22,6 +22,7 @@
 // ---------------------------------------------------------------------------
 
 #define TENSOR_BLOCK 256
+#define TENSOR_REDUCE_BLOCK 256
 #define TENSOR_NEG_BIG (-1.0e308)
 #define TENSOR_POS_BIG (1.0e308)
 
@@ -183,3 +184,58 @@ extern "C" __global__ void NAME(const double* __restrict__ x,                   
 
 DEFINE_ROW_ARG(tensorRowArgMaxKernel, TENSOR_NEG_BIG, ROW_MAX, PICK_EQ)
 DEFINE_ROW_ARG(tensorRowArgMinKernel, TENSOR_POS_BIG, ROW_MIN, PICK_EQ)
+
+// ---------------------------------------------------------------------------
+// 两段式全局归约（double）
+//
+//   阶段一：grid 个 block，每个 block 用 grid-stride 处理一段数据，
+//           块内共享内存树形归约后写出一个部分结果 partials[blockIdx.x]；
+//   阶段二：1 个 block 把全部部分结果汇总到 out[0]。
+//
+// 相比“整张量当作一行、单 block 处理”的写法，两段式能吃满整块 GPU 的并行度，
+// 对超大张量的全局 sum / max / min 吞吐明显更好；两段之间不需要主机端同步。
+//
+// 启动：
+//   阶段一 grid = (blocks, 1)，block = (TENSOR_REDUCE_BLOCK, 1)
+//   阶段二 grid = (1, 1)，     block = (TENSOR_REDUCE_BLOCK, 1)
+// ---------------------------------------------------------------------------
+
+#define DEFINE_PARTIAL_REDUCE(NAME, INIT, COMBINE)                                   \
+extern "C" __global__ void NAME(const double* __restrict__ x,                        \
+                                double* __restrict__ partials, int n) {              \
+    __shared__ double cache[TENSOR_REDUCE_BLOCK];                                    \
+    const int tid = threadIdx.x;                                                     \
+    double acc = INIT;                                                               \
+    for (int i = blockIdx.x * blockDim.x + tid; i < n; i += blockDim.x * gridDim.x)  \
+        acc = COMBINE(acc, x[i]);                                                    \
+    cache[tid] = acc;                                                                \
+    __syncthreads();                                                                 \
+    for (int s = blockDim.x >> 1; s > 0; s >>= 1) {                                  \
+        if (tid < s) cache[tid] = COMBINE(cache[tid], cache[tid + s]);               \
+        __syncthreads();                                                             \
+    }                                                                                \
+    if (tid == 0) partials[blockIdx.x] = cache[0];                                   \
+}
+
+#define DEFINE_FINAL_REDUCE(NAME, INIT, COMBINE)                                     \
+extern "C" __global__ void NAME(const double* __restrict__ partials,                 \
+                                double* __restrict__ out, int count) {               \
+    __shared__ double cache[TENSOR_REDUCE_BLOCK];                                    \
+    const int tid = threadIdx.x;                                                     \
+    double acc = INIT;                                                               \
+    for (int i = tid; i < count; i += blockDim.x) acc = COMBINE(acc, partials[i]);   \
+    cache[tid] = acc;                                                                \
+    __syncthreads();                                                                 \
+    for (int s = blockDim.x >> 1; s > 0; s >>= 1) {                                  \
+        if (tid < s) cache[tid] = COMBINE(cache[tid], cache[tid + s]);               \
+        __syncthreads();                                                             \
+    }                                                                                \
+    if (tid == 0) out[0] = cache[0];                                                 \
+}
+
+DEFINE_PARTIAL_REDUCE(tensorReducePartialSumKernel, 0.0, ROW_ADD)
+DEFINE_PARTIAL_REDUCE(tensorReducePartialMaxKernel, TENSOR_NEG_BIG, ROW_MAX)
+DEFINE_PARTIAL_REDUCE(tensorReducePartialMinKernel, TENSOR_POS_BIG, ROW_MIN)
+DEFINE_FINAL_REDUCE(tensorReduceFinalSumKernel, 0.0, ROW_ADD)
+DEFINE_FINAL_REDUCE(tensorReduceFinalMaxKernel, TENSOR_NEG_BIG, ROW_MAX)
+DEFINE_FINAL_REDUCE(tensorReduceFinalMinKernel, TENSOR_POS_BIG, ROW_MIN)
