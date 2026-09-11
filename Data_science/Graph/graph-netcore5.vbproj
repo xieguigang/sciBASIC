@@ -27,6 +27,8 @@
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphTheory</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -341,6 +343,10 @@
       <PackagePath>\</PackagePath>
     </None>
     <None Include="Model\Tree\KdTree\KdUtils.vb" />
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

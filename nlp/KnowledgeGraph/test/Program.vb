@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ef1b1d30d0a7b9dfd63ac4f00b428da, nlp\KnowledgeGraph\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a49e1cabdacb9105bbf8d23351db0ef7, nlp\KnowledgeGraph\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 287
-    '    Code Lines: 207 (72.13%)
-    ' Comment Lines: 37 (12.89%)
+    '   Total Lines: 285
+    '    Code Lines: 205 (71.93%)
+    ' Comment Lines: 37 (12.98%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 43 (14.98%)
-    '     File Size: 13.77 KB
+    '   Blank Lines: 43 (15.09%)
+    '     File Size: 13.73 KB
 
 
     ' Module Program
@@ -65,10 +65,8 @@
 '   5. 总结
 ' ============================================================================
 
-Imports System.Collections.Generic
-Imports System.Globalization
 Imports System.Text
-Imports KnowledgeGraph
+Imports Microsoft.VisualBasic.Data.NLP.Knowledge
 
 Module Program
 

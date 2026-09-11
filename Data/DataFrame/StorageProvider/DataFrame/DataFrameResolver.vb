@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57bd47adadc469d620a8c670a546e4f2, Data\DataFrame\StorageProvider\DataFrame\DataFrameResolver.vb"
+﻿#Region "Microsoft.VisualBasic::de50a1d34c15c06c932a3941faffbca7, Data\DataFrame\StorageProvider\DataFrame\DataFrameResolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 869
-    '    Code Lines: 549 (63.18%)
-    ' Comment Lines: 192 (22.09%)
+    '   Total Lines: 882
+    '    Code Lines: 560 (63.49%)
+    ' Comment Lines: 192 (21.77%)
     '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 128 (14.73%)
-    '     File Size: 35.40 KB
+    '   Blank Lines: 130 (14.74%)
+    '     File Size: 35.92 KB
 
 
     '     Class DataFrameResolver

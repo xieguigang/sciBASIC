@@ -29,6 +29,9 @@
     <Title>Graph Query Language Engine for HTML and XML Documents</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphQuery</AssemblyTitle>
     <PackageTags>scibasic;graph-query;html;css-selector;xpath;json</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -175,11 +178,15 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.11" />
-	  <PackageReference Include="System.Composition" Version="10.0.11" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.12" />
+	  <PackageReference Include="System.Composition" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>

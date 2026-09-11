@@ -24,6 +24,9 @@
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyTitle>
 		<PackageTags>scibasic;ode;runge-kutta;dynamical-system;numerical-integration;simulation</PackageTags>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,6 +156,10 @@
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
 	  </None>
+	  <None Include="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
   <ItemGroup>
@@ -160,8 +167,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.11" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.11" />
+    <PackageReference Include="System.Composition" Version="10.0.12" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>

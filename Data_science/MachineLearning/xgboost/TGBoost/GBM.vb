@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa6355027c23fa06df287992dba2cb20, Data_science\MachineLearning\xgboost\TGBoost\GBM.vb"
+﻿#Region "Microsoft.VisualBasic::d02ca339171c2448ebd8d5475fa36b2f, Data_science\MachineLearning\xgboost\TGBoost\GBM.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 343
-    '    Code Lines: 202 (58.89%)
-    ' Comment Lines: 97 (28.28%)
+    '   Total Lines: 347
+    '    Code Lines: 205 (59.08%)
+    ' Comment Lines: 97 (27.95%)
     '    - Xml Docs: 87.63%
     ' 
-    '   Blank Lines: 44 (12.83%)
-    '     File Size: 15.54 KB
+    '   Blank Lines: 45 (12.97%)
+    '     File Size: 15.67 KB
 
 
     '     Class GBM
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: predict, TGBoostIteration
+    '         Function: (+2 Overloads) predict, TGBoostIteration
     ' 
     '         Sub: fit
     ' 
@@ -122,7 +122,7 @@ Namespace train
         Public Overridable ReadOnly Property trees As New List(Of Tree)
 
         Shared Sub New()
-            logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.cat($"{header}({level}): {msg}", vbCrLf))
+            logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.WriteLine($"{header}({level}): {msg}"))
 
             ' save log file on application exit
             Call App.AddExitCleanHook(AddressOf logger.Save)
@@ -377,6 +377,10 @@ Namespace train
             End If
 
             Return True
+        End Function
+
+        Public Function predict(data As TestData) As Double()
+            Return predict(data.origin_feature)
         End Function
 
         Public Overridable Function predict(features As Single()()) As Double()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cf37c3d73b6310aaeeccd2f94a24c0e, Data_science\MachineLearning\xgboost\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f3308cdd32c5bbe290daeee48c4e3dc6, Data_science\MachineLearning\xgboost\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 47 (63.51%)
-    ' Comment Lines: 14 (18.92%)
+    '   Total Lines: 73
+    '    Code Lines: 46 (63.01%)
+    ' Comment Lines: 14 (19.18%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (17.57%)
-    '     File Size: 3.04 KB
+    '   Blank Lines: 13 (17.81%)
+    '     File Size: 3.03 KB
 
 
     ' Module Program
@@ -53,7 +53,6 @@
 
 #End Region
 
-Imports System
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning

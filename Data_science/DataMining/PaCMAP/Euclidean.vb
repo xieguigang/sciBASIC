@@ -1,58 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::bf34450ad3f62712f727b90b2f653b65, Data_science\DataMining\PaCMAP\Euclidean.vb"
+﻿#Region "Microsoft.VisualBasic::64965d830c9b1110366a64fa3ee4c101, Data_science\DataMining\PaCMAP\Euclidean.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 160
-'    Code Lines: 77 (48.12%)
-' Comment Lines: 62 (38.75%)
-'    - Xml Docs: 69.35%
-' 
-'   Blank Lines: 21 (13.12%)
-'     File Size: 6.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module EuclideanDistance
-' 
-'         Function: Compute, ComputeChainable
-' 
-'     Module EuclideanDistanceExtensions
-' 
-'         Function: BroadcastSubForDistance, EuclideanDistanceTo
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 75 (47.47%)
+    ' Comment Lines: 62 (39.24%)
+    '    - Xml Docs: 69.35%
+    ' 
+    '   Blank Lines: 21 (13.29%)
+    '     File Size: 5.80 KB
+
+
+    ' Module EuclideanDistance
+    ' 
+    '     Function: Compute, ComputeChainable
+    ' 
+    ' Module EuclideanDistanceExtensions
+    ' 
+    '     Function: BroadcastSubForDistance, EuclideanDistanceTo
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -214,4 +213,3 @@ Public Module EuclideanDistanceExtensions
         Throw New ArgumentException($"Cannot broadcast subtract shapes [{String.Join(",", a.Shape)}] and [{String.Join(",", b.Shape)}]")
     End Function
 End Module
-

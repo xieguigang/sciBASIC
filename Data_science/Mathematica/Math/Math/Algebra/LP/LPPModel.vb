@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d348c7b105456003ba7aaf1552a70a24, Data_science\Mathematica\Math\Math\Algebra\LP\LPPModel.vb"
+﻿#Region "Microsoft.VisualBasic::f6893c402d4a7b2b61bf6e27f7a154e8, Data_science\Mathematica\Math\Math\Algebra\LP\LPPModel.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 93 (71.54%)
-    ' Comment Lines: 11 (8.46%)
+    '   Total Lines: 153
+    '    Code Lines: 101 (66.01%)
+    ' Comment Lines: 22 (14.38%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 26 (20.00%)
-    '     File Size: 4.49 KB
+    '   Blank Lines: 30 (19.61%)
+    '     File Size: 5.35 KB
 
 
     '     Class LppVariable
     ' 
-    '         Properties: coefficient, symbol
+    '         Properties: coefficient, LowerBound, symbol, UpperBound
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class LppEquation
     ' 

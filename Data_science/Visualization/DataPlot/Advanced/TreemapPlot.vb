@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46389c0f32e829fd34d327bc60338539, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2809931c6aefdaf62998695740402520, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 150 (73.89%)
-    ' Comment Lines: 26 (12.81%)
+    '   Total Lines: 204
+    '    Code Lines: 151 (74.02%)
+    ' Comment Lines: 26 (12.75%)
     '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 27 (13.30%)
-    '     File Size: 8.40 KB
+    '   Blank Lines: 27 (13.24%)
+    '     File Size: 8.42 KB
 
 
     ' Class TreemapNode

@@ -1,3 +1,57 @@
+﻿#Region "Microsoft.VisualBasic::da13a2f8064ff36e83c699d084498598, cuda\ILCuda\test\Metrics\KernelEmulator.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 154
+    '    Code Lines: 100 (64.94%)
+    ' Comment Lines: 23 (14.94%)
+    '    - Xml Docs: 26.09%
+    ' 
+    '   Blank Lines: 31 (20.13%)
+    '     File Size: 6.77 KB
+
+
+    '     Module KernelEmulator
+    ' 
+    '         Function: Emulate, RunSelfTest
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' 内核逻辑的 CPU 精确模拟（自检用）
 '
@@ -152,3 +206,4 @@ Namespace Metrics
         End Function
     End Module
 End Namespace
+

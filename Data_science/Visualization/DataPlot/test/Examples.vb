@@ -1,62 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::d3a637ecd03a5f6dd5c5623aade68ccc, Data_science\Visualization\test\Examples.vb"
+﻿#Region "Microsoft.VisualBasic::6b1a4207a8d6f472acd56415c5d30f04, Data_science\Visualization\DataPlot\test\Examples.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 225
-'    Code Lines: 195 (86.67%)
-' Comment Lines: 14 (6.22%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 16 (7.11%)
-'     File Size: 9.72 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Examples
-' 
-'     Function: SampleNormal
-' 
-'     Sub: DemoBar, DemoBox, DemoHeatmap, DemoHistogram, DemoLine
-'          DemoPie, DemoSankey, DemoScatter, DemoViolin, RunAll
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 196 (86.34%)
+    ' Comment Lines: 14 (6.17%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (7.49%)
+    '     File Size: 9.79 KB
+
+
+    ' Class Examples
+    ' 
+    '     Function: SampleNormal
+    ' 
+    '     Sub: DemoBar, DemoBox, DemoHeatmap, DemoHistogram, DemoLine
+    '          DemoPie, DemoSankey, DemoScatter, DemoViolin, RunAll
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Plots
 Imports stdf = System.Math
 
@@ -229,6 +230,7 @@ Public Class Examples
                 mat(i, j) = stdf.Sin(i * 0.5) * stdf.Cos(j * 0.4) + rnd.NextDouble() * 0.3
             Next
         Next
+
         Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
             plt.Title = "Heatmap Demo"
             plt.Matrix = mat

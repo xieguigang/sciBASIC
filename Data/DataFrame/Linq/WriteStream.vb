@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95635d4b3b8574fde2a343b8ed1ab1f8, Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::a84ae5ff9da04ff038bb35d5b6fd8cad, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 160 (59.26%)
-    ' Comment Lines: 71 (26.30%)
-    '    - Xml Docs: 76.06%
+    '   Total Lines: 274
+    '    Code Lines: 160 (58.39%)
+    ' Comment Lines: 75 (27.37%)
+    '    - Xml Docs: 77.33%
     ' 
-    '   Blank Lines: 39 (14.44%)
-    '     File Size: 10.12 KB
+    '   Blank Lines: 39 (14.23%)
+    '     File Size: 10.26 KB
 
 
     '     Class WriteStream

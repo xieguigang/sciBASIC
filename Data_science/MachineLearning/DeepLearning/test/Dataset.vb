@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f114190040d385a47fba9d7d194c40b, Data_science\MachineLearning\DeepLearning\test\Dataset.vb"
+﻿#Region "Microsoft.VisualBasic::4924038d391a08de2f8c53b1827810e2, Data_science\MachineLearning\DeepLearning\test\Dataset.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 81 (81.82%)
+    '   Total Lines: 97
+    '    Code Lines: 79 (81.44%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 18 (18.18%)
-    '     File Size: 3.21 KB
+    '   Blank Lines: 18 (18.56%)
+    '     File Size: 3.14 KB
 
 
     ' Class Dataset

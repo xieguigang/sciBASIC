@@ -10,10 +10,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <Title>XLSX Workbook Reader, Writer and Legacy BIFF Parser</Title>
+    <Title>XLSX Workbook Reader, Writer and Legacy BIFF Writer</Title>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
-    <Description>XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and parses legacy BIFF files.</Description>
+    <Description>XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and writes legacy BIFF 2.1 xls files.</Description>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -27,6 +27,7 @@
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.Excel</AssemblyTitle>
     <PackageTags>scibasic;xlsx;excel;openxml;spreadsheet</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -254,6 +255,10 @@
     <None Remove="XLS\BIFF\bin\**" />
     <None Remove="XLS\BIFF\obj\**" />
     <None Remove="test\**" />
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -268,7 +273,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IO.Packaging" Version="10.0.11" />
+    <PackageReference Include="System.IO.Packaging" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>

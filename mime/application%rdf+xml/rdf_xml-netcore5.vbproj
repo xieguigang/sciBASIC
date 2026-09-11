@@ -10,7 +10,7 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Product>sciBASIC#</Product>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Title>RDF/XML and Turtle Triple Store Serialization Model</Title>
+    <Title>RDF/XML and Turtle Triple Serialization Model</Title>
     <Description>Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
@@ -24,6 +24,10 @@
     <PackageTags>scibasic;rdf;semantic-web;turtle;linked-data</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -112,6 +116,10 @@
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
     <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

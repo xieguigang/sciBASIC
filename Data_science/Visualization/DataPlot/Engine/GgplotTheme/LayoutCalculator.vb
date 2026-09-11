@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86029cc47c40e85cae093fd95b0b40e1, Data_science\Visualization\DataPlot\Engine\GgplotTheme\LayoutCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::1b5ae69527e168eb246474d74e51bc76, Data_science\Visualization\DataPlot\Engine\GgplotTheme\LayoutCalculator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 63.58%
     ' 
     '   Blank Lines: 89 (13.97%)
-    '     File Size: 30.21 KB
+    '     File Size: 30.22 KB
 
 
     '     Class ResolvedElementText

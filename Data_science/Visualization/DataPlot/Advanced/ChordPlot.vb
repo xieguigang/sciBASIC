@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5cda3fd6c4739049d6570ae3e66c262, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
+﻿#Region "Microsoft.VisualBasic::80474b4a6b2df5134c63cf594bb17cc3, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 186
-    '    Code Lines: 142 (76.34%)
-    ' Comment Lines: 22 (11.83%)
+    '   Total Lines: 181
+    '    Code Lines: 138 (76.24%)
+    ' Comment Lines: 22 (12.15%)
     '    - Xml Docs: 54.55%
     ' 
-    '   Blank Lines: 22 (11.83%)
-    '     File Size: 7.99 KB
+    '   Blank Lines: 21 (11.60%)
+    '     File Size: 7.68 KB
 
 
     ' Class ChordLink

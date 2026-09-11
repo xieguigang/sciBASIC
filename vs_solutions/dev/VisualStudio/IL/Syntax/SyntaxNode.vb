@@ -1,3 +1,102 @@
+﻿#Region "Microsoft.VisualBasic::273901cdc26b80fc879977bf1c28295b, vs_solutions\dev\VisualStudio\IL\Syntax\SyntaxNode.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 161
+    '    Code Lines: 113 (70.19%)
+    ' Comment Lines: 32 (19.88%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 16 (9.94%)
+    '     File Size: 5.69 KB
+
+
+    '     Enum SyntaxKind
+    ' 
+    '         ArrayIndex, ArrayLength, Assignment, Binary, Block
+    '         BreakStmt, ContinueStmt, Convert, ExpressionStatement, ForStmt
+    '         IfStmt, Invoke, Literal, Local, Nop
+    '         Parameter, Phi, ReturnStmt, Ternary, Unary
+    '         VariableDeclaration, WhileStmt
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum BinaryOperator
+    ' 
+    '         Add, BitwiseAnd, BitwiseOr, BitwiseXor, Divide
+    '         Equal, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual
+    '         Modulo, Multiply, NotEqual, ShiftLeft, ShiftRight
+    '         ShortCircuitAnd, ShortCircuitOr, Subtract
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum UnaryOperator
+    ' 
+    '         LogicalNot, Negate, OnesComplement
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class SyntaxNode
+    ' 
+    '         Properties: IsExpression, Kind, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class Expression
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class Statement
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Module OperatorPrecedence
+    ' 
+    '         Function: Negate, OfBinary
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' IL 反编译产物的自定义表达式/语句节点模型（AST）
 '
@@ -159,3 +258,4 @@ Namespace IL
         End Function
     End Module
 End Namespace
+

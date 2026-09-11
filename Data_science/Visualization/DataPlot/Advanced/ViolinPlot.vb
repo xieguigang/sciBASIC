@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b718e21710b5cd8bdb17cad25c12f313, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
+﻿#Region "Microsoft.VisualBasic::058868afd6ef0b53252c8ec3760c0105, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 90 (82.57%)
-    ' Comment Lines: 5 (4.59%)
+    '   Total Lines: 110
+    '    Code Lines: 91 (82.73%)
+    ' Comment Lines: 5 (4.55%)
     '    - Xml Docs: 20.00%
     ' 
-    '   Blank Lines: 14 (12.84%)
-    '     File Size: 4.48 KB
+    '   Blank Lines: 14 (12.73%)
+    '     File Size: 4.50 KB
 
 
     ' Class ViolinPlot

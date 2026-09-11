@@ -14,7 +14,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Product>scibasic.net</Product>
     <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
-    <Description>A Windows-only GDI+ canvas, image filter and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Keeps drawing code compatible across the System.Drawing and SkiaSharp back ends.</Description>
+    <Description>A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Provides the GDI raster back end used by the driver-based sciBASIC# graphics engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Drawing</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <PackageIcon>logo-knot.png</PackageIcon>
@@ -27,6 +27,9 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -68,6 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <OutputPath>../../.nuget/</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -84,6 +88,10 @@
     <Compile Remove="HtmlRender\**" />
     <EmbeddedResource Remove="HtmlRender\**" />
     <None Remove="HtmlRender\**" />
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -98,7 +106,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="10.0.11" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>

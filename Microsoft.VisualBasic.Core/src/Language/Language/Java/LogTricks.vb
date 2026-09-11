@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::071fd3e94bd960ef51b8d4ada9848e6b, Microsoft.VisualBasic.Core\src\Language\Language\Java\LogTricks.vb"
+﻿#Region "Microsoft.VisualBasic::6081fcd66e6ec8e2c1ef55d752f021cc, Microsoft.VisualBasic.Core\src\Language\Language\Java\LogTricks.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 85
-'    Code Lines: 47 (55.29%)
-' Comment Lines: 27 (31.76%)
-'    - Xml Docs: 11.11%
-' 
-'   Blank Lines: 11 (12.94%)
-'     File Size: 3.20 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module LogTricks
-' 
-'         Function: logDiff, (+2 Overloads) logSum, logSumNoCheck
-' 
-'         Sub: logInc
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 48 (55.81%)
+    ' Comment Lines: 27 (31.40%)
+    '    - Xml Docs: 11.11%
+    ' 
+    '   Blank Lines: 11 (12.79%)
+    '     File Size: 3.23 KB
+
+
+    '     Module LogTricks
+    ' 
+    '         Function: logDiff, (+2 Overloads) logSum, logSumNoCheck
+    ' 
+    '         Sub: logInc
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

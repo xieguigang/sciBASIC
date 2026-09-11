@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae4e0b095e558f4a20deba7078ee2251, nlp\word2vec\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::98a502f734233c0c01f5c41cda4e5e78, nlp\word2vec\VectorModel.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 114 (57.58%)
-    ' Comment Lines: 45 (22.73%)
+    '   Total Lines: 204
+    '    Code Lines: 119 (58.33%)
+    ' Comment Lines: 45 (22.06%)
     '    - Xml Docs: 95.56%
     ' 
-    '   Blank Lines: 39 (19.70%)
-    '     File Size: 6.61 KB
+    '   Blank Lines: 40 (19.61%)
+    '     File Size: 6.75 KB
 
 
     ' Class VectorModel
     ' 
-    '     Properties: vectorSize, wordMap, words
+    '     Properties: tokens, vectorSize, wordMap, words
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: analogy, GenericEnumerator, getWordVector, (+2 Overloads) similar, ToString

@@ -25,6 +25,8 @@
     <PackageTags>scibasic;statistics;roc-curve;heatmap;qq-plot;pca-plot</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -141,6 +143,10 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -148,8 +154,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.11" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.11" />
+    <PackageReference Include="System.Composition" Version="10.0.12" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.12" />
   </ItemGroup>
 
 </Project>

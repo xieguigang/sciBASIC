@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60b05d981c46b9e048d47c2bafc881b2, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
+﻿#Region "Microsoft.VisualBasic::af8b3be1d827ce5a964f9c2e1eddad8d, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 88 (79.28%)
-    ' Comment Lines: 10 (9.01%)
+    '   Total Lines: 112
+    '    Code Lines: 89 (79.46%)
+    ' Comment Lines: 10 (8.93%)
     '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 13 (11.71%)
-    '     File Size: 4.53 KB
+    '   Blank Lines: 13 (11.61%)
+    '     File Size: 4.56 KB
 
 
     ' Class AreaPlot

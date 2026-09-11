@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::bfd34e11f0b543897b0eb82c90fadfa4, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::92126f18b94c8c78ae1c8a210e4598ff, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 117
-'    Code Lines: 84 (71.79%)
-' Comment Lines: 22 (18.80%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 11 (9.40%)
-'     File Size: 5.33 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Extensions
-' 
-'         Function: (+2 Overloads) Kmeans, PopulateObjects, (+2 Overloads) ToKMeansModels
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 146
+    '    Code Lines: 108 (73.97%)
+    ' Comment Lines: 22 (15.07%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (10.96%)
+    '     File Size: 6.74 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: (+4 Overloads) Kmeans, PopulateObjects, (+2 Overloads) ToKMeansModels
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,14 +1,55 @@
 ﻿{
-    "generatedAt":  "2026-09-04T16:19:26.3169013+08:00",
-    "root":  "G:\\pixelArtist\\src\\framework",
+    "generatedAt":  "2026-09-11T06:45:34.3236486+08:00",
+    "root":  "G:\\GCModeller\\src\\runtime\\sciBASIC#",
     "totalVbproj":  195,
     "matchedCount":  91,
-    "libraryCount":  89,
-    "excludedCount":  2,
+    "libraryCount":  91,
+    "excludedCount":  0,
     "legacyCount":  1,
     "iconFixCount":  0,
     "iconAddCount":  0,
     "projects":  [
+                     {
+                         "path":  "cuda/ILCuda/ILCuda.vbproj",
+                         "depth":  2,
+                         "rootNamespace":  "Microsoft.VisualBasic.Computing.ILCuda",
+                         "assemblyName":  "Microsoft.VisualBasic.Computing.ILCuda",
+                         "targetFramework":  "net10.0",
+                         "outputType":  "Library",
+                         "isLibrary":  true,
+                         "isLegacy":  false,
+                         "excludeReason":  "",
+                         "iconRelPath":  "..\\..\\vs_solutions\\logo-knot.png",
+                         "existingIconItem":  "..\\..\\vs_solutions\\logo-knot.png",
+                         "hasPackageIcon":  true,
+                         "needsIconFix":  false,
+                         "needsIconAdd":  false,
+                         "title":  "",
+                         "description":  "",
+                         "packageTags":  "",
+                         "assemblyTitle":  "",
+                         "notes":  "",
+                         "snapshot":  {
+                                          "PackageLicenseExpression":  "GPL-3.0-or-later",
+                                          "Description":  "Dependency-free VB.NET CUDA framework built directly on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu kernel sources, a kernel catalog with launch planning, generic reduction, elementwise and BLAS (GEMM/GEMV) kernels, structured environment diagnostics, and an IL-to-CUDA emitter that translates .NET methods marked with CudaKernelAttribute into CUDA C source.",
+                                          "PackageReadmeFile":  "README.md",
+                                          "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
+                                          "PackageLicenseFile":  null,
+                                          "Version":  null,
+                                          "PackageProjectUrl":  "http://scibasic.net/",
+                                          "PackageId":  null,
+                                          "Company":  "sciBASIC.NET Foundation",
+                                          "Authors":  "xieguigang \u003cI@xieguigang.me\u003e",
+                                          "Title":  "ILCuda: Pure-Interop VB.NET CUDA Compute Framework",
+                                          "PackageIcon":  "logo-knot.png",
+                                          "IsPackable":  null,
+                                          "RepositoryType":  "git",
+                                          "PackageTags":  "scibasic;cuda;nvrtc;gpu;interop;kernels;blas",
+                                          "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
+                                          "AssemblyTitle":  "Microsoft.VisualBasic.Computing.ILCuda",
+                                          "GeneratePackageOnBuild":  null
+                                      }
+                     },
                      {
                          "path":  "Data/BinaryData/BinaryData/binarydata-netcore5.vbproj",
                          "depth":  3,
@@ -32,7 +73,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Extends BinaryReader and BinaryWriter with endianness-aware primitives, length-prefixed strings, BZip2/LZW compression, XDR encoding and a Python pickle codec, for parsing custom binary file formats in sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -73,7 +114,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -114,7 +155,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime. Reads and writes typed and untyped data frames with row/column access, null handling, and categorical or timestamp metadata.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "0.6.9742.7537",
@@ -155,7 +196,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes, and contiguous, chunked or compact datasets to sciBASIC# code.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -196,7 +237,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A packable virtual file system that stores many named streams, folders and attributes inside one binary file. Supports block allocation, buffered read/write, file deletion, metadata trees and read-only mounting for dataset archives.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -237,7 +278,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Serializes and deserializes .NET objects to and from the MessagePack binary format, with reflection based member schemas, MessagePackMember attributes, nil implication handling and typed collection support.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -278,7 +319,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads and writes netCDF files for array oriented scientific data, handling dimensions, record dimensions, global and variable attributes, and typed data vectors over byte, short, integer, float and double.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -319,7 +360,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A pure managed parser for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -360,7 +401,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers/writers, MySQL helpers, and reflection based storage providers that map .NET classes to table rows and columns.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -401,7 +442,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -442,7 +483,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Runs a piped graph query language over HTML/XML documents, combining CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values and emit them as JSON.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -483,7 +524,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Implements the Myers O(ND) difference algorithm to compare text files and string sequences, producing shortest edit scripts, structured diff blocks and unified diff output at both line level and character level.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -524,7 +565,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "NLP module of sciBASIC#: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, Brill part-of-speech tagging, and HTML article body extraction.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -565,7 +606,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Clusters vector data by inserting items into an AVL binary tree under a fuzzy similarity comparison, then cutting the tree into partitions. Also offers Newick tree parsing, affinity propagation and KNN graph helpers.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -606,7 +647,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reconstructs a diffusion tree from high-dimensional observations, optimising every branch length and internal node coordinate against a Felsenstein tree likelihood, then laying the tree out for visualisation in sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -646,8 +687,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, OPTICS, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -670,7 +711,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork",
-                         "targetFramework":  "net10.0;net8.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -688,7 +729,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Learns dynamic Bayesian networks from observation sequences, combining initial and transition Bayes nets with MDL, log-likelihood and Bayesian scoring functions, optimum branching search and EM parameter fitting.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -729,7 +770,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Estimates local point density on 2D grids and KD-tree indexes, and segments images into compact superpixels with the SLIC algorithm. Useful for outlier detection and image region grouping in the sciBASIC# framework.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -770,7 +811,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Dynamic programming kernels for sciBASIC#, including Needleman-Wunsch global alignment, Smith-Waterman local alignment with HSP chaining, k-banded search, center star multiple alignment and the 0-1 knapsack solver.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -793,7 +834,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.FeatureFrame",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.FeatureFrame",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -811,7 +852,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Encodes raw feature vectors of a data frame into numeric columns for model training: one-hot style encoding for enums and flag bit fields, numeric binning and discretisation, and automatic per-field encoder selection.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -852,7 +893,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Renders hierarchical clustering results as publication-ready graphics: vertical dendrograms, circular and radial layouts, and horizon or right-to-left panels, with class colour legends, leaf labels and rulers.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -893,7 +934,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -916,7 +957,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.HiddenMarkovChain",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.HiddenMarkovChain",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -934,7 +975,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Implements hidden Markov models and Markov chains with forward, backward, Viterbi, Bayes and Baum-Welch EM algorithms, so you can score, decode and re-estimate state sequences from observation chains in sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -957,7 +998,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.DataMining.PaCMAP",
                          "assemblyName":  "Microsoft.VisualBasic.DataMining.PaCMAP",
-                         "targetFramework":  "net10.0;net10.0-windows",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -975,7 +1016,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "PaCMAP dimensionality reduction for sciBASIC#: preserves local and global structure by optimising neighbour, mid-near and further point pairs with a three-phase loss and an Adagrad optimiser over tensor data.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1016,7 +1057,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "t-Distributed Stochastic Neighbor Embedding for sciBASIC#: converts pairwise affinities into joint probabilities at a given perplexity and minimises KL divergence, with a Barnes-Hut SPTree approximation for large data.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1057,7 +1098,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Uniform Manifold Approximation and Projection for sciBASIC#: builds a fuzzy simplicial set from k-nearest neighbours via NN-descent or KD-trees, then optimises a low-dimensional layout by stochastic gradient descent.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -1098,7 +1139,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Algorithm library for sciBASIC# graphs: Dijkstra and A-star shortest paths, contraction hierarchies, Dinic max flow, Louvain, Leiden and label propagation communities, plus MST, Ullmann isomorphism and HNSW search.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1139,7 +1180,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1180,7 +1221,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A generic cellular automaton engine for sciBASIC#: runs tick-and-commit generations over a 2D grid of typed cells with configurable neighbourhood and boundary modes, and exports per-cell state snapshots to netCDF for analysis.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1221,7 +1262,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "6.0.9742.7537",
@@ -1262,7 +1303,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Graph neural network library for sciBASIC#, providing GCN and graph-attention layers, GRU and RNN recurrent graph layers, temporal graph snapshots, and graph classification models with SGD and Adam training.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1303,7 +1344,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Continuous-time liquid neural networks for sciBASIC#, where neuron dynamics follow learnable ODEs solved by Euler, Heun, RK4 or adaptive RK45 steps; includes SGD/Adam training and time-series preprocessing utilities.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1344,7 +1385,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port, genetic algorithms and differential evolution, Q-learning tables, activation functions and normalised sample datasets.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -1367,7 +1408,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.Data",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.Data.Extensions",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1385,7 +1426,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Helpers for sciBASIC# machine learning data: export a trained Q-table with state features to netCDF, record Q-value curves per iteration to CSV, and save or load labelled clustering matrices in a compact binary format.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -1406,9 +1447,9 @@
                      {
                          "path":  "Data_science/MachineLearning/MLDataStorage/MLDataStorage.vbproj",
                          "depth":  3,
-                         "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure",
-                         "assemblyName":  "Microsoft.VisualBasic.MachineLearning.$(MSBuildProjectName)",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.DataStorage",
+                         "assemblyName":  "Microsoft.VisualBasic.MachineLearning.DataStorage",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1426,7 +1467,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1440,7 +1481,7 @@
                                           "RepositoryType":  "git",
                                           "PackageTags":  "scibasic;machine-learning;dataset;mnist;data-storage",
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
-                                          "AssemblyTitle":  "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure",
+                                          "AssemblyTitle":  "Microsoft.VisualBasic.MachineLearning.DataStorage",
                                           "GeneratePackageOnBuild":  null
                                       }
                      },
@@ -1449,7 +1490,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.Debugger",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.Debugger",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1467,7 +1508,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Diagnostics helpers for sciBASIC# neural network training: builds demo sample sets, converts XML datasets to tabular rows, extracts fitness and neuron value frames from training netCDF logs, and computes ROC validation curves.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -1490,7 +1531,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine",
-                         "targetFramework":  "net6.0-windows;net6.0;net48",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1508,7 +1549,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1549,7 +1590,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Self-contained tensor engine for sciBASIC#, not a Google TensorFlow binding: a managed multi-dimensional Tensor, a NumPy-style API, neural network activations and losses, and reverse-mode automatic differentiation.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1572,7 +1613,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.VariationalAutoencoder",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.VAE",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1590,7 +1631,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Generative modelling library for sciBASIC#: a graph variational autoencoder with GCN encoder and inner-product decoder, a Gaussian mixture VAE with categorical latents, and an EM-trained Gaussian mixture model.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1613,7 +1654,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.XGBoost",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.XGBoost",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1631,7 +1672,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Gradient boosting toolkit for sciBASIC#: reads and scores XGBoost model files through GBTree, GBLinear and Dart boosters, and trains ternary gradient boosting trees with categorical and missing value handling.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1654,7 +1695,7 @@
                          "depth":  3,
                          "rootNamespace":  "Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet",
                          "assemblyName":  "Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1672,7 +1713,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Training data preparation for sciBASIC# XGBoost: two-pass CSV readers for test and validation tables, and converters building labelled TrainData with categorical columns and missing value indexes.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1713,7 +1754,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1754,7 +1795,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "One-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with FDR correction, and multivariate methods (PCA, PLS, OPLS-DA) for omics data. Part of the sciBASIC# scientific computing framework.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1836,7 +1877,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic, LASSO and Levenberg-Marquardt fitting with Bayesian and Gauss-Newton solvers. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -1877,7 +1918,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Labelled numeric matrix model with pairwise correlation and distance matrix builders, missing-value imputation, scaling and centering transforms, and Matrix Market MTX/RUA file IO. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1900,7 +1941,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming",
                          "assemblyName":  "Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1918,7 +1959,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Evolves mathematical expressions and polynomial models with genetic programming and genetic algorithms, using pluggable expression trees and error objectives such as MSE, MAE, SSE and SAE. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1941,7 +1982,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.GibbsSampling",
                          "assemblyName":  "Microsoft.VisualBasic.Math.GibbsSampling",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -1959,7 +2000,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Gibbs sampling for repeated motif discovery in biological sequences, plus a Metropolis-Hastings sampler over Markov bases for contingency table and chi-square analysis. Part of the sciBASIC# statistics stack.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -1982,7 +2023,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.KaplanMeierEstimator",
                          "assemblyName":  "Microsoft.VisualBasic.Math.KaplanMeierEstimator",
-                         "targetFramework":  "net6.0-windows;net6.0;net48",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -2000,7 +2041,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Computes Kaplan-Meier survival curves for two patient cohorts, merges time events, tests group significance and batch-runs gene-expression split strategies in parallel. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2041,7 +2082,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Core math for sciBASIC#: dense and sparse matrices, SVD and linear solvers, simplex linear programming, BigDecimal arithmetic, splines, quantiles, distributions, fuzzy logic and an expression scripting engine.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -2082,7 +2123,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran\u0027s I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2123,7 +2164,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Immutable expression-tree computer algebra for sciBASIC#: derivatives, integrals, limits, Taylor expansion, polynomial factorisation, simplification, Boolean algebra and a MathML to LINQ expression compiler.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -2164,7 +2205,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Integrates systems of ordinary differential equations with Euler, RK2, RK4, Gill and trapezoidal solvers over a declarative model of variables, parameters and initial values. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -2183,52 +2224,11 @@
                                       }
                      },
                      {
-                         "path":  "Data_science/Mathematica/Math/ODE/test/test5.vbproj",
-                         "depth":  5,
-                         "rootNamespace":  "Microsoft.VisualBasic.Math.Calculus",
-                         "assemblyName":  "test",
-                         "targetFramework":  "net5.0",
-                         "outputType":  "Exe",
-                         "isLibrary":  false,
-                         "isLegacy":  false,
-                         "excludeReason":  "test/demo path; OutputType=Exe",
-                         "iconRelPath":  "..\\..\\..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "existingIconItem":  "..\\..\\..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "hasPackageIcon":  true,
-                         "needsIconFix":  false,
-                         "needsIconAdd":  false,
-                         "title":  "",
-                         "description":  "",
-                         "packageTags":  "",
-                         "assemblyTitle":  "",
-                         "notes":  "",
-                         "snapshot":  {
-                                          "PackageLicenseExpression":  null,
-                                          "Description":  "LAPACK (Linear Algebra PACKage)",
-                                          "PackageReadmeFile":  null,
-                                          "Copyright":  "GPL3",
-                                          "PackageLicenseFile":  "LICENSE",
-                                          "Version":  "5.0.9742.7537",
-                                          "PackageProjectUrl":  "http://sciBASIC.NET",
-                                          "PackageId":  null,
-                                          "Company":  "sciBASIC.NET",
-                                          "Authors":  "xie.guigang@live.com",
-                                          "Title":  null,
-                                          "PackageIcon":  "logo-knot.png",
-                                          "IsPackable":  null,
-                                          "RepositoryType":  "git",
-                                          "PackageTags":  null,
-                                          "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
-                                          "AssemblyTitle":  null,
-                                          "GeneratePackageOnBuild":  "false"
-                                      }
-                     },
-                     {
                          "path":  "Data_science/Mathematica/Math/ODESolver.Extensions/ODESolver.Extensions.NET5.vbproj",
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.Calculus",
                          "assemblyName":  "Microsoft.VisualBasic.Math.ODEsSolver.Extensions",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -2246,7 +2246,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Extension helpers that turn ODE integration output into data frames and CSV files, reload them, and compute Pearson or Spearman correlations between the modelled variables. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -2287,7 +2287,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Random number generation for sciBASIC#: Mersenne Twister, a fast xorshift-style generator, a thread-safe wrapper and a table-driven RAND randomizer for normal deviates and Monte Carlo simulation.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2310,7 +2310,7 @@
                          "depth":  4,
                          "rootNamespace":  "Microsoft.VisualBasic.Math.MachineVision",
                          "assemblyName":  "Microsoft.VisualBasic.Math.MachineVision",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -2328,7 +2328,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "2D curve and shape matching with Procrustes and Frechet distance, connected component labelling, Hough circle detection, text OCR, RANSAC point-set alignment and multi-object tracking. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2369,7 +2369,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads and writes time-series signal collections with their metadata, chunk indices and measure units to netCDF files, interoperating with R-based signal analysis pipelines. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2410,7 +2410,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Algorithms for one-dimensional signals in sciBASIC#: FFT and wavelet transforms, Savitzky-Golay filtering, peak detection, baseline removal, resampling, DTW and COW alignment, plus Kalman filtering.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2451,7 +2451,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Parses and writes RIFF/WAVE audio files with FMT and data sub-chunk access, and extracts mel-filterbank voiceprint vectors with delta coefficients, CMVN and L2 normalisation. Part of sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2467,6 +2467,47 @@
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
                                           "AssemblyTitle":  "Microsoft.VisualBasic.Data.Wave",
                                           "GeneratePackageOnBuild":  "true"
+                                      }
+                     },
+                     {
+                         "path":  "Data_science/Visualization/DataPlot/DataPlot.vbproj",
+                         "depth":  3,
+                         "rootNamespace":  "Microsoft.VisualBasic.Data.Plots",
+                         "assemblyName":  "Microsoft.VisualBasic.Data.DataPlot",
+                         "targetFramework":  "net10.0",
+                         "outputType":  "Library",
+                         "isLibrary":  true,
+                         "isLegacy":  false,
+                         "excludeReason":  "",
+                         "iconRelPath":  "..\\..\\..\\vs_solutions\\logo-knot.png",
+                         "existingIconItem":  "..\\..\\..\\vs_solutions\\logo-knot.png",
+                         "hasPackageIcon":  true,
+                         "needsIconFix":  false,
+                         "needsIconAdd":  false,
+                         "title":  "",
+                         "description":  "",
+                         "packageTags":  "",
+                         "assemblyTitle":  "",
+                         "notes":  "",
+                         "snapshot":  {
+                                          "PackageLicenseExpression":  "GPL-3.0-or-later",
+                                          "Description":  "Standalone GDI+ charting engine for sciBASIC#: scatter, line, bar, histogram, box, violin, jitter, bubble, pie, radar, rose, heatmap, chord, Sankey and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.",
+                                          "PackageReadmeFile":  "README.md",
+                                          "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
+                                          "PackageLicenseFile":  null,
+                                          "Version":  "1.0.9742.7537",
+                                          "PackageProjectUrl":  "http://scibasic.net/",
+                                          "PackageId":  null,
+                                          "Company":  "sciBASIC.NET Foundation",
+                                          "Authors":  "xieguigang \u003cI@xieguigang.me\u003e",
+                                          "Title":  "DataPlot: GDI+ Chart Engine with ggplot2-Style Theme Units",
+                                          "PackageIcon":  "logo-knot.png",
+                                          "IsPackable":  null,
+                                          "RepositoryType":  "git",
+                                          "PackageTags":  "scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization",
+                                          "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
+                                          "AssemblyTitle":  "Microsoft.VisualBasic.Data.DataPlot",
+                                          "GeneratePackageOnBuild":  "True"
                                       }
                      },
                      {
@@ -2492,7 +2533,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A charting engine for sciBASIC# that renders scatter, line, bar, histogram, box, violin, contour, heatmap, pie, radar, treemap, Venn and 3D plots with configurable axes, legends and themes.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2533,7 +2574,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Adds statistical graphics to the sciBASIC# chart engine: ROC and QQ plots, forest and Z-score plots, correlation heatmaps and triangles, density plots, time trends, PCA scree plots and regression plots.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2549,47 +2590,6 @@
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
                                           "AssemblyTitle":  "Microsoft.VisualBasic.Data.ChartPlots.Statistics",
                                           "GeneratePackageOnBuild":  "True"
-                                      }
-                     },
-                     {
-                         "path":  "Data_science/Visualization/test/test5.vbproj",
-                         "depth":  3,
-                         "rootNamespace":  "Microsoft.VisualBasic.Data.visualize",
-                         "assemblyName":  "test",
-                         "targetFramework":  "net10.0-windows",
-                         "outputType":  "Exe",
-                         "isLibrary":  false,
-                         "isLegacy":  false,
-                         "excludeReason":  "test/demo path; OutputType=Exe",
-                         "iconRelPath":  "..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "existingIconItem":  "..\\..\\..\\vs_solutions\\logo-knot.png",
-                         "hasPackageIcon":  true,
-                         "needsIconFix":  false,
-                         "needsIconAdd":  false,
-                         "title":  "",
-                         "description":  "",
-                         "packageTags":  "",
-                         "assemblyTitle":  "",
-                         "notes":  "",
-                         "snapshot":  {
-                                          "PackageLicenseExpression":  null,
-                                          "Description":  null,
-                                          "PackageReadmeFile":  null,
-                                          "Copyright":  "GPL3",
-                                          "PackageLicenseFile":  "LICENSE",
-                                          "Version":  "5.0.9742.7537",
-                                          "PackageProjectUrl":  "http://sciBASIC.NET",
-                                          "PackageId":  null,
-                                          "Company":  "sciBASIC.NET",
-                                          "Authors":  "xie.guigang@live.com",
-                                          "Title":  null,
-                                          "PackageIcon":  "logo-knot.png",
-                                          "IsPackable":  null,
-                                          "RepositoryType":  null,
-                                          "PackageTags":  null,
-                                          "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
-                                          "AssemblyTitle":  null,
-                                          "GeneratePackageOnBuild":  "true"
                                       }
                      },
                      {
@@ -2615,7 +2615,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -2656,7 +2656,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A dependency-free AVI (RIFF) writer that assembles main/stream headers and appends bitmap frames into a playable video file, ideal for exporting rendered animation frames from the sciBASIC# imaging pipeline.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2696,8 +2696,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "A Windows-only GDI+ canvas, image filter and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Keeps drawing code compatible across the System.Drawing and SkiaSharp back ends.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Provides the GDI raster back end used by the driver-based sciBASIC# graphics engine.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2737,8 +2737,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "Loads STL, OBJ, glTF/GLB, COLLADA, 3DS, 3MF and PLY meshes into one unified scene model, then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2750,7 +2750,7 @@
                                           "PackageIcon":  "logo-knot.png",
                                           "IsPackable":  null,
                                           "RepositoryType":  "git",
-                                          "PackageTags":  "scibasic;3d-model;mesh-parser;voxelization;geometry",
+                                          "PackageTags":  "scibasic;3d-model;mesh-parser;point-cloud;voxelization;geometry",
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
                                           "AssemblyTitle":  "Microsoft.VisualBasic.Imaging.Landscape",
                                           "GeneratePackageOnBuild":  "true"
@@ -2820,7 +2820,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Defines the NetworkGraph node and edge model with dynamic graph tables, and supplies community detection, shortest paths, degree and betweenness centrality. The data layer of the sciBASIC# network visualization stack.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2861,7 +2861,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads and writes network graphs as CSV, JSON and VB.NET table sets, and imports or exports Cytoscape, Gephi, GML, Sigma.js and graphology documents. The IO layer of the sciBASIC# network visualization stack.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2902,7 +2902,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A Windows Forms canvas that animates force-directed layouts, supports 2D and 3D rendering, mouse hit-testing, node tooltips and viewport panning, and can record the animation to AVI or SVG for sciBASIC# desktop apps.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2943,7 +2943,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Supplies force-directed, spring-embedder, constrained Cola, orthogonal, radial, circular, HOLA and edge-bundling layouts behind a common IPlanner interface. Computes node coordinates before rendering sciBASIC# networks.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -2984,7 +2984,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Renders a laid-out NetworkGraph into bitmap or vector images, drawing nodes, edges, arrowheads, labels and convex-hull groups through a CSS-like map-expression language for colours, shapes and sizes in sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3025,7 +3025,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A fixed-step 2D physics world with rigid bodies, broad and narrow phase collision, revolute, prismatic, spring and weld joints, force fields, SPH fluids and boids flocking, plus force-driven label placement for sciBASIC#.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3107,7 +3107,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, plus BSON binary encoding and object serialization.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3148,7 +3148,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text via ToUnicode CMaps, while a streaming generator lays out text, tables and images.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.1.9742.7537",
@@ -3189,7 +3189,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3197,7 +3197,7 @@
                                           "PackageId":  null,
                                           "Company":  "sciBASIC.NET Foundation",
                                           "Authors":  "xieguigang \u003cI@xieguigang.me\u003e",
-                                          "Title":  "RDF/XML and Turtle Triple Store Serialization Model",
+                                          "Title":  "RDF/XML and Turtle Triple Serialization Model",
                                           "PackageIcon":  "logo-knot.png",
                                           "IsPackable":  null,
                                           "RepositoryType":  "git",
@@ -3270,8 +3270,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and parses legacy BIFF files.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and writes legacy BIFF 2.1 xls files.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3279,7 +3279,7 @@
                                           "PackageId":  null,
                                           "Company":  "sciBASIC.NET Foundation",
                                           "Authors":  "xieguigang \u003cI@xieguigang.me\u003e",
-                                          "Title":  "XLSX Workbook Reader, Writer and Legacy BIFF Parser",
+                                          "Title":  "XLSX Workbook Reader, Writer and Legacy BIFF Writer",
                                           "PackageIcon":  "logo-knot.png",
                                           "IsPackable":  null,
                                           "RepositoryType":  "git",
@@ -3311,8 +3311,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "XML helpers for sciBASIC#: an XSD element data model with VB.NET class code generation, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "XML helpers for sciBASIC#: an XSD element data model, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3353,7 +3353,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Generates Office Word documents in sciBASIC#: a fluent writer builds headings, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx file, and extracts plain text back out.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3393,8 +3393,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "A professional HTML renderer for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors and property values, lays out boxes, lines and tables, and paints the result onto a GDI+ graphics canvas.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "An HTML and CSS toolkit for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors, rule files and property values into typed models, and resolves CSS lengths, fonts and strokes against a canvas style environment.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3402,7 +3402,7 @@
                                           "PackageId":  null,
                                           "Company":  "sciBASIC.NET Foundation",
                                           "Authors":  "xieguigang \u003cI@xieguigang.me\u003e",
-                                          "Title":  "HTML/CSS Parser, DOM and GDI+ Rendering Engine",
+                                          "Title":  "HTML/CSS Parser, DOM and CSS Style Environment",
                                           "PackageIcon":  "logo-knot.png",
                                           "IsPackable":  null,
                                           "RepositoryType":  "git",
@@ -3434,8 +3434,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "A markdown processor for sciBASIC#: parses CommonMark-style blocks and inline spans into a typed block model or JSON document, renders it to HTML or plain text, and generates nested tables of contents from ATX headers.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "A markdown processor for sciBASIC#: a two-phase recursive block and inline parser that renders markdown to HTML or plain text, a typed block model with markdown and HTML renderers driven by JSON documents, plus nested table-of-contents generation from ATX headers.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3458,7 +3458,7 @@
                          "depth":  2,
                          "rootNamespace":  "Microsoft.VisualBasic.MIME.text.yaml",
                          "assemblyName":  "Microsoft.VisualBasic.MIME.text.yaml",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -3476,7 +3476,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3517,7 +3517,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs permutation tests to merge synonyms, and infers ontology relations.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3558,7 +3558,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "NLP toolkit for sciBASIC#: Chinese word segmentation via max-match, HMM and a HuggingFace-compatible BPE/WordPiece/Unigram pipeline, plus a Porter stemmer, TF-IDF, BM25 ranked search and Gibbs-sampled LDA topic modeling.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3599,7 +3599,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "5.0.9742.7537",
@@ -3640,7 +3640,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by reflection and decodes IL and source maps for sciBASIC# code tooling.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3681,7 +3681,7 @@
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
                                           "Description":  "Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and type records into one uniform model for sciBASIC# tooling.",
-                                          "PackageReadmeFile":  null,
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3704,7 +3704,7 @@
                          "depth":  2,
                          "rootNamespace":  "Microsoft.VisualBasic.Data.KnowledgeBase.Web",
                          "assemblyName":  "Microsoft.VisualBasic.Web.KnowledgeBase",
-                         "targetFramework":  "net10.0-windows;net10.0",
+                         "targetFramework":  "net10.0",
                          "outputType":  "Library",
                          "isLibrary":  true,
                          "isLegacy":  false,
@@ -3721,8 +3721,8 @@
                          "notes":  "",
                          "snapshot":  {
                                           "PackageLicenseExpression":  "GPL-3.0-or-later",
-                                          "Description":  "Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal, look up word translations, and fetch the Bing daily image into a WPF attached property.",
-                                          "PackageReadmeFile":  null,
+                                          "Description":  "Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal for article profiles, look up word translations, and decode DOI handle service responses.",
+                                          "PackageReadmeFile":  "README.md",
                                           "Copyright":  "Copyright (c) sciBASIC.NET Foundation",
                                           "PackageLicenseFile":  null,
                                           "Version":  "1.0.9742.7537",
@@ -3730,11 +3730,11 @@
                                           "PackageId":  null,
                                           "Company":  "sciBASIC.NET Foundation",
                                           "Authors":  "xieguigang \u003cI@xieguigang.me\u003e",
-                                          "Title":  "Microsoft Bing Web, Academic, Translation and Image Services Client",
+                                          "Title":  "Microsoft Bing Web, Academic, Translation and DOI Services Client",
                                           "PackageIcon":  "logo-knot.png",
                                           "IsPackable":  null,
                                           "RepositoryType":  "git",
-                                          "PackageTags":  "scibasic;bing;search-engine;web-scraping;translation",
+                                          "PackageTags":  "scibasic;bing;search-engine;web-scraping;translation;doi",
                                           "RepositoryUrl":  "https://github.com/xieguigang/sciBASIC",
                                           "AssemblyTitle":  "Microsoft.VisualBasic.Data.KnowledgeBase.Web",
                                           "GeneratePackageOnBuild":  null
@@ -3742,6 +3742,10 @@
                      }
                  ],
     "skipped":  [
+                    {
+                        "path":  "cuda/ILCuda/test/test.vbproj",
+                        "reason":  "RootNamespace=ILCudaDemo"
+                    },
                     {
                         "path":  "Data/BinaryData/DataStorage/test/test.vbproj",
                         "reason":  "RootNamespace=test"
@@ -3781,10 +3785,6 @@
                     {
                         "path":  "Data/Trinity/Test/Test.vbproj",
                         "reason":  "RootNamespace=Test"
-                    },
-                    {
-                        "path":  "Data_science/algorithms/CMeans/DEMO/DEMO.vbproj",
-                        "reason":  "RootNamespace=DEMO"
                     },
                     {
                         "path":  "Data_science/algorithms/PageRank/PR_test/PR_test.vbproj",
@@ -3887,10 +3887,6 @@
                         "reason":  "RootNamespace=test"
                     },
                     {
-                        "path":  "Data_science/Mathematica/CUDA/test/test.vbproj",
-                        "reason":  "RootNamespace=test"
-                    },
-                    {
                         "path":  "Data_science/Mathematica/data/least-squares/test2/test/test.vbproj",
                         "reason":  "RootNamespace=Testing"
                     },
@@ -3959,10 +3955,6 @@
                         "reason":  "RootNamespace=mHG"
                     },
                     {
-                        "path":  "Data_science/Mathematica/Math/ODE/test/test.vbproj",
-                        "reason":  "RootNamespace=Testing"
-                    },
-                    {
                         "path":  "Data_science/Mathematica/Quick_correlation_matrix_heatmap/Heatmap/Heatmap.vbproj",
                         "reason":  "RootNamespace=HeatmapTesting"
                     },
@@ -3987,8 +3979,12 @@
                         "reason":  "RootNamespace=PCAtest"
                     },
                     {
-                        "path":  "Data_science/Visualization/DataPlot/DataPlot.vbproj",
-                        "reason":  "RootNamespace=DataPlot"
+                        "path":  "Data_science/Visualization/DataPlot/test/test.vbproj",
+                        "reason":  "RootNamespace=test"
+                    },
+                    {
+                        "path":  "Data_science/Visualization/test/test5.vbproj",
+                        "reason":  "RootNamespace=test"
                     },
                     {
                         "path":  "Data_science/Visualization/test/ChartingBase.Test/ChartingBase.Test.vbproj",
@@ -4091,7 +4087,7 @@
                         "reason":  "RootNamespace=test"
                     },
                     {
-                        "path":  "mime/text%html/Test/test.vbproj",
+                        "path":  "mime/text%html/Test/Test.vbproj",
                         "reason":  "RootNamespace=Test"
                     },
                     {
@@ -4149,6 +4145,10 @@
                     {
                         "path":  "vs_solutions/PkgVersionUpgrade/PkgVersionUpgrade.vbproj",
                         "reason":  "RootNamespace=PkgVersionUpgrade"
+                    },
+                    {
+                        "path":  "vs_solutions/VBS/VBS.vbproj",
+                        "reason":  "RootNamespace=VBScriptHost"
                     },
                     {
                         "path":  "www/axel/axel.vbproj",

@@ -57,7 +57,7 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.XLabel = "UMAP1"
     plt.YLabel = "UMAP2"
     plt.Plot(DataSerials(x,y, class_id).tolist())
-    plt.SavePng("Z:/rapunzel-pca-groups.png", 300)
+    plt.SavePng("Z:/rapunzel-umap-groups.png", 300)
 End Using
 
-call result.WriteCsv("Z:/rapunzel-pca-groups.csv")
+call result.WriteCsv("Z:/rapunzel-umap-groups.csv")

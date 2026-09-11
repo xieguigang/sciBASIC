@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5528b1d192e95210e06eee429d07194c, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\NullHypothesis.vb"
+﻿#Region "Microsoft.VisualBasic::fbfd692aedd577906733b8917c5d17f5, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\NullHypothesis.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.00%
     ' 
     '   Blank Lines: 9 (14.75%)
-    '     File Size: 2.39 KB
+    '     File Size: 2.44 KB
 
 
     '     Class NullHypothesis
@@ -82,28 +82,28 @@ Namespace Hypothesis
                 Case Hypothesis.Greater
                     ' mu > mu0
                     n = Aggregate x As T
-                    In zero.AsParallel
-                    Let per_score As Double = Me.Score(x)
-                    Where per_score >= score
-                    Into Count
+                        In zero.AsParallel
+                        Let per_score As Double = Me.Score(x)
+                        Where per_score >= score
+                        Into Count
                 Case Hypothesis.Less
                     ' mu < mu0
                     n = Aggregate x As T
-                    In zero.AsParallel
-                    Let per_score As Double = Me.Score(x)
-                    Where per_score <= score
-                    Into Count
+                        In zero.AsParallel
+                        Let per_score As Double = Me.Score(x)
+                        Where per_score <= score
+                        Into Count
                 Case Hypothesis.TwoSided
                     ' 计算观测统计量的绝对值，用于双侧检验判断极端性
                     Dim abs_score As Double = std.Abs(score)
 
                     ' 双侧检验：置换统计量的绝对值 >= 观测统计量的绝对值
                     n = Aggregate x As T
-                    In zero.AsParallel
-                    Let per_score As Double = Me.Score(x)
-                    Let abs_per_score As Double = std.Abs(per_score)
-                    Where abs_per_score >= abs_score
-                    Into Count
+                        In zero.AsParallel
+                        Let per_score As Double = Me.Score(x)
+                        Let abs_per_score As Double = std.Abs(per_score)
+                        Where abs_per_score >= abs_score
+                        Into Count
                 Case Else
                     Throw New InvalidProgramException($"unknown alternative hypothesis: {alternative}!")
             End Select

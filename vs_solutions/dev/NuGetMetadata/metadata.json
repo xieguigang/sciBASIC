@@ -15,7 +15,7 @@
   },
   {
     "path": "mime/application%rdf+xml/rdf_xml-netcore5.vbproj",
-    "title": "RDF/XML and Turtle Triple Store Serialization Model",
+    "title": "RDF/XML and Turtle Triple Serialization Model",
     "description": "Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.",
     "packageTags": "scibasic;rdf;semantic-web;turtle;linked-data",
     "assemblyTitle": "Microsoft.VisualBasic.MIME.application.rdf_xml"
@@ -29,15 +29,15 @@
   },
   {
     "path": "mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj",
-    "title": "XLSX Workbook Reader, Writer and Legacy BIFF Parser",
-    "description": "XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and parses legacy BIFF files.",
+    "title": "XLSX Workbook Reader, Writer and Legacy BIFF Writer",
+    "description": "XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and writes legacy BIFF 2.1 xls files.",
     "packageTags": "scibasic;xlsx;excel;openxml;spreadsheet",
     "assemblyTitle": "Microsoft.VisualBasic.MIME.Office.Excel"
   },
   {
     "path": "mime/application%xml/xml-netcore5.vbproj",
     "title": "XML Toolkit with XSD Models, MathML and XPath Queries",
-    "description": "XML helpers for sciBASIC#: an XSD element data model with VB.NET class code generation, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.",
+    "description": "XML helpers for sciBASIC#: an XSD element data model, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.",
     "packageTags": "scibasic;xml;xsd;mathml;xpath",
     "assemblyTitle": "Microsoft.VisualBasic.MIME.application.xml"
   },
@@ -50,15 +50,15 @@
   },
   {
     "path": "mime/text%html/html_netcore5.vbproj",
-    "title": "HTML/CSS Parser, DOM and GDI+ Rendering Engine",
-    "description": "A professional HTML renderer for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors and property values, lays out boxes, lines and tables, and paints the result onto a GDI+ graphics canvas.",
+    "title": "HTML/CSS Parser, DOM and CSS Style Environment",
+    "description": "An HTML and CSS toolkit for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors, rule files and property values into typed models, and resolves CSS lengths, fonts and strokes against a canvas style environment.",
     "packageTags": "scibasic;html;css;html-renderer;dom",
     "assemblyTitle": "Microsoft.VisualBasic.MIME.Html"
   },
   {
     "path": "mime/text%markdown/markdown.NET5.vbproj",
     "title": "Markdown Parser, Block Model and Multi-Format Renderer",
-    "description": "A markdown processor for sciBASIC#: parses CommonMark-style blocks and inline spans into a typed block model or JSON document, renders it to HTML or plain text, and generates nested tables of contents from ATX headers.",
+    "description": "A markdown processor for sciBASIC#: a two-phase recursive block and inline parser that renders markdown to HTML or plain text, a typed block model with markdown and HTML renderers driven by JSON documents, plus nested table-of-contents generation from ATX headers.",
     "packageTags": "scibasic;markdown;parser;html-renderer;document",
     "assemblyTitle": "Microsoft.VisualBasic.MIME.text.markdown"
   },
@@ -92,9 +92,9 @@
   },
   {
     "path": "www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj",
-    "title": "Microsoft Bing Web, Academic, Translation and Image Services Client",
-    "description": "Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal, look up word translations, and fetch the Bing daily image into a WPF attached property.",
-    "packageTags": "scibasic;bing;search-engine;web-scraping;translation",
+    "title": "Microsoft Bing Web, Academic, Translation and DOI Services Client",
+    "description": "Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal for article profiles, look up word translations, and decode DOI handle service responses.",
+    "packageTags": "scibasic;bing;search-engine;web-scraping;translation;doi",
     "assemblyTitle": "Microsoft.VisualBasic.Data.KnowledgeBase.Web"
   },
   {
@@ -107,15 +107,15 @@
   {
     "path": "gr/Drawing-net4.8/Drawing-net4.8.vbproj",
     "title": "GDI+ Graphics Wrapper And System.Drawing Interop For Windows",
-    "description": "A Windows-only GDI+ canvas, image filter and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Keeps drawing code compatible across the System.Drawing and SkiaSharp back ends.",
+    "description": "A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Provides the GDI raster back end used by the driver-based sciBASIC# graphics engine.",
     "packageTags": "scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms",
     "assemblyTitle": "Microsoft.VisualBasic.Drawing"
   },
   {
     "path": "gr/Landscape/Landscape.vbproj",
     "title": "3D Mesh Model Parsers And Voxelization Toolkit",
-    "description": "Loads STL, OBJ, glTF/GLB, COLLADA, 3DS, 3MF and PLY meshes into one unified scene model, then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.",
-    "packageTags": "scibasic;3d-model;mesh-parser;voxelization;geometry",
+    "description": "Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.",
+    "packageTags": "scibasic;3d-model;mesh-parser;point-cloud;voxelization;geometry",
     "assemblyTitle": "Microsoft.VisualBasic.Imaging.Landscape"
   },
   {
@@ -296,7 +296,7 @@
   {
     "path": "Data_science/DataMining/DataMining/DataMining.NET5.vbproj",
     "title": "Core Data Mining Toolkit: Clustering, Association Rules and Evaluation",
-    "description": "Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, OPTICS, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.",
+    "description": "Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.",
     "packageTags": "scibasic;data-mining;clustering;association-rules;machine-learning",
     "assemblyTitle": "Microsoft.VisualBasic.DataMining.Framework"
   },
@@ -438,7 +438,7 @@
     "title": "Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import",
     "description": "Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.",
     "packageTags": "scibasic;machine-learning;dataset;mnist;data-storage",
-    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure"
+    "assemblyTitle": "Microsoft.VisualBasic.MachineLearning.DataStorage"
   },
   {
     "path": "Data_science/MachineLearning/MLDebugger/ML_debugger-netcore5.vbproj",
@@ -621,5 +621,19 @@
     "description": "Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.",
     "packageTags": "scibasic;visualization;network-graph;embedding;clustering;umap",
     "assemblyTitle": "Microsoft.VisualBasic.Data.visualize"
+  },
+  {
+    "path": "cuda/ILCuda/ILCuda.vbproj",
+    "title": "ILCuda: Pure-Interop VB.NET CUDA Compute Framework",
+    "description": "Dependency-free VB.NET CUDA framework built directly on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu kernel sources, a kernel catalog with launch planning, generic reduction, elementwise and BLAS (GEMM/GEMV) kernels, structured environment diagnostics, and an IL-to-CUDA emitter that translates .NET methods marked with CudaKernelAttribute into CUDA C source.",
+    "packageTags": "scibasic;cuda;nvrtc;gpu;interop;kernels;blas",
+    "assemblyTitle": "Microsoft.VisualBasic.Computing.ILCuda"
+  },
+  {
+    "path": "Data_science/Visualization/DataPlot/DataPlot.vbproj",
+    "title": "DataPlot: GDI+ Chart Engine with ggplot2-Style Theme Units",
+    "description": "Standalone GDI+ charting engine for sciBASIC#: scatter, line, bar, histogram, box, violin, jitter, bubble, pie, radar, rose, heatmap, chord, Sankey and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.",
+    "packageTags": "scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization",
+    "assemblyTitle": "Microsoft.VisualBasic.Data.DataPlot"
   }
 ]

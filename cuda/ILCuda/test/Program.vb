@@ -1,3 +1,67 @@
+﻿#Region "Microsoft.VisualBasic::75ccb44a5a0207c6e11fa938fb5098d2, cuda\ILCuda\test\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 523
+    '    Code Lines: 384 (73.42%)
+    ' Comment Lines: 53 (10.13%)
+    '    - Xml Docs: 22.64%
+    ' 
+    '   Blank Lines: 86 (16.44%)
+    '     File Size: 23.23 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: Main, ParseCommandLine, RunDemo, RunEmitKernels, RunIlCompare
+    '               RunIlDecompile, RunInfo, RunListKernels, RunSelfTest
+    ' 
+    '     Sub: PrintHelp, RunFrameworkKernelSmokeTest
+    '     Class CliOptions
+    ' 
+    '         Properties: Cols, Command, CpuOnly, CsvPath, DeviceOrdinal
+    '                     DumpIl, Elements, ForceImage, ImagePath, NvrtcPath
+    '                     Preview, Rows, Seed, ShowAst, ShowHelp
+    '                     ShowSource, UseAsyncPipeline
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' ILCuda demo 命令行入口（皮尔逊相关系数矩阵 + 欧氏距离矩阵）
 '
@@ -521,3 +585,4 @@ Module Program
         Console.WriteLine()
     End Sub
 End Module
+

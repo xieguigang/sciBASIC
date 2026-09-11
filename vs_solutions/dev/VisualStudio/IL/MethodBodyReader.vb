@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75bbbd352531d2ceedbfc8dcce6a417b, vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
+﻿#Region "Microsoft.VisualBasic::7424f01d294c6fbdaaec54dbcce3404b, vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,36 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 228
-    '    Code Lines: 149 (65.35%)
-    ' Comment Lines: 35 (15.35%)
-    '    - Xml Docs: 51.43%
+    '   Total Lines: 371
+    '    Code Lines: 248 (66.85%)
+    ' Comment Lines: 52 (14.02%)
+    '    - Xml Docs: 65.38%
     ' 
-    '   Blank Lines: 44 (19.30%)
-    '     File Size: 8.84 KB
+    '   Blank Lines: 71 (19.14%)
+    '     File Size: 14.99 KB
 
 
     '     Class MethodBodyReader
     ' 
+    '         Properties: ExceptionClauses, HasExceptionHandlers, Instructions, Locals, MaxStackSize
+    ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetBodyCode, GetEnumerator, GetRefferencedOperand, IEnumerable_GetEnumerator, ParseIL
+    '         Function: IndexByOffset, InstructionAt, ParseIL
     ' 
-    '         Sub: ConstructInstructions, (+2 Overloads) Dispose
+    '         Sub: ConstructInstructions
+    '         Enum TokenKind
+    ' 
+    '             Field, Method, Tok, Type
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: GetBodyCode, GetEnumerator, GetRefferencedOperand, IEnumerable_GetEnumerator, ResolveOrToken
+    '               Slice
+    ' 
+    '     Sub: (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/

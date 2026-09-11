@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ba708ca2e75dbfadd1b4261da10f55, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::be3da81c0b2894aa37cdf64e1cf39dd0, Data_science\DataMining\DataMining\ComponentModel\EntityModels\Metric.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (30.00%)
-    '     File Size: 597 B
+    '     File Size: 618 B
 
 
     '     Class Metric

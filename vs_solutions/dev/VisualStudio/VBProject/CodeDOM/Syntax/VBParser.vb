@@ -802,7 +802,7 @@ Namespace VBProj.CodeDOM.Syntax
         End Function
 
         Private Sub ParseOneParam(sp As StmtParser, dict As Dictionary(Of String, TypeInfo))
-            ' optional parameter modifier (ByVal / ByRef / Optional / ParamArray)
+            ' optional parameter modifier (/ ByRef / Optional / ParamArray)
             While Not sp.Eof AndAlso IsParamModifier(sp.Current.Text)
                 sp.Pos += 1
             End While

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9e287db502c1b27629daacd0cfc33cf, vs_solutions\dev\VisualStudio\IL\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::5549d3c4d5c42d0e0c5686da86a3f038, vs_solutions\dev\VisualStudio\IL\Globals.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 55 (27.09%)
-    ' Comment Lines: 121 (59.61%)
-    '    - Xml Docs: 11.57%
+    '   Total Lines: 251
+    '    Code Lines: 86 (34.26%)
+    ' Comment Lines: 136 (54.18%)
+    '    - Xml Docs: 18.38%
     ' 
-    '   Blank Lines: 27 (13.30%)
-    '     File Size: 5.19 KB
+    '   Blank Lines: 29 (11.55%)
+    '     File Size: 7.84 KB
 
 
     '     Module Globals
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetOpCode, ProcessSpecialTypes
+    '         Function: FixedPopCount, FixedPushCount, GetOpCode, ProcessSpecialTypes
     ' 
     '         Sub: LoadOpCodes
     ' 

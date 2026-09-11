@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84fc4beb32df7a08630b1764a02325e5, nlp\KnowledgeGraph\SimilarityMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::37580fce91500850a1caa082eeb8ae40, nlp\KnowledgeGraph\SimilarityMetrics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 104 (52.00%)
-    ' Comment Lines: 66 (33.00%)
+    '   Total Lines: 199
+    '    Code Lines: 103 (51.76%)
+    ' Comment Lines: 66 (33.17%)
     '    - Xml Docs: 51.52%
     ' 
-    '   Blank Lines: 30 (15.00%)
-    '     File Size: 8.07 KB
+    '   Blank Lines: 30 (15.08%)
+    '     File Size: 8.03 KB
 
 
     ' Class SimilarityResult
@@ -81,7 +81,6 @@
 '    补偿了实体度数差异的影响。
 ' ============================================================================
 
-Imports System.Collections.Generic
 Imports std = System.Math
 
 ''' <summary>

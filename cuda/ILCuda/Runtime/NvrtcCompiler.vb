@@ -1,3 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::e5a3f4d6e7cef4448cbf3ec60bcd11d7, cuda\ILCuda\Runtime\NvrtcCompiler.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 354
+    '    Code Lines: 227 (64.12%)
+    ' Comment Lines: 59 (16.67%)
+    '    - Xml Docs: 44.07%
+    ' 
+    '   Blank Lines: 68 (19.21%)
+    '     File Size: 17.00 KB
+
+
+    '     Module NvrtcCompiler
+    ' 
+    '         Function: CandidateArchs, FindCandidates, FindImageFiles, IsCompatibilityError, SortByPreference
+    '                   TrimLog, TryBuild, TryLoadImages
+    ' 
+    '         Sub: AddFile, AddFromDirectory, AddToolkitBin
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' 内核镜像（PTX / cubin）的多通道获取
 '
@@ -352,3 +409,4 @@ Namespace Runtime
         End Function
     End Module
 End Namespace
+

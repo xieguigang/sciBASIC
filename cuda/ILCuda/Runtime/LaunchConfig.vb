@@ -1,3 +1,66 @@
+﻿#Region "Microsoft.VisualBasic::b0f4e4361f3c56bebfc5bc658983d46a, cuda\ILCuda\Runtime\LaunchConfig.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 91 (59.48%)
+    ' Comment Lines: 38 (24.84%)
+    '    - Xml Docs: 68.42%
+    ' 
+    '   Blank Lines: 24 (15.69%)
+    '     File Size: 7.48 KB
+
+
+    '     Structure LaunchConfig
+    ' 
+    '         Properties: BlockX, BlockY, GridX, GridY, SharedMemBytes
+    '                     ThreadsPerBlock, TotalBlocks
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Module LaunchPlanner
+    ' 
+    '         Function: AlignToWarp, Auto1D, CeilDiv, For1D, For2D
+    '                   SuggestBlockSize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' 启动配置推导
 '
@@ -151,3 +214,4 @@ Namespace Runtime
         End Function
     End Module
 End Namespace
+

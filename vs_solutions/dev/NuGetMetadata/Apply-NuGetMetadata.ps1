@@ -23,14 +23,22 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$Root          = 'g:\pixelArtist\src\framework',
-    [string]$InventoryFile = (Join-Path $PSScriptRoot 'projects.json'),
-    [string]$MetadataFile  = (Join-Path $PSScriptRoot 'metadata.json'),
+    [string]$Root          = '',
+    [string]$InventoryFile = '',
+    [string]$MetadataFile  = '',
     [string]$ProjectFilter = '*',
     [switch]$WhatIf
 )
 
 $ErrorActionPreference = 'Stop'
+
+# $PSScriptRoot is empty under some hosts (powershell -File from a wrapper),
+# so fall back to the invocation path before deriving any defaults.
+$ScriptDir = $PSScriptRoot
+if ([string]::IsNullOrEmpty($ScriptDir)) { $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition }
+if ([string]::IsNullOrEmpty($Root))          { $Root          = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $ScriptDir)) }
+if ([string]::IsNullOrEmpty($InventoryFile)) { $InventoryFile = Join-Path $ScriptDir 'projects.json' }
+if ([string]::IsNullOrEmpty($MetadataFile))  { $MetadataFile  = Join-Path $ScriptDir 'metadata.json' }
 
 # ---------------------------------------------------------------------------
 # Unified values

@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::946bb090a372ffa248d0bc77c958c7f4, cuda\ILCuda\test\Metrics\GpuMetrics.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 111 (63.07%)
+    ' Comment Lines: 31 (17.61%)
+    '    - Xml Docs: 58.06%
+    ' 
+    '   Blank Lines: 34 (19.32%)
+    '     File Size: 8.55 KB
+
+
+    '     Module MetricsKernelNames
+    ' 
+    ' 
+    ' 
+    '     Module GpuMetrics
+    ' 
+    '         Function: Compute, ComputeAsync
+    ' 
+    '         Sub: RegisterKernels
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ------------------------------------------------------------------------
 ' demo 的 GPU 流水线：rowStats -> gram -> finalize
 '
@@ -174,3 +234,4 @@ Namespace Metrics
         End Function
     End Module
 End Namespace
+

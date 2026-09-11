@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::555be694789b31ae7fc396dd9fca6baa, mime\application%pdf\PdfReader\PdfReader.vb"
+﻿#Region "Microsoft.VisualBasic::431038088b036658aa75a4621c3ecf26, mime\application%pdf\PdfReader\PdfReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 448
-    '    Code Lines: 361 (80.58%)
-    ' Comment Lines: 39 (8.71%)
-    '    - Xml Docs: 5.13%
+    '   Total Lines: 554
+    '    Code Lines: 428 (77.26%)
+    ' Comment Lines: 60 (10.83%)
+    '    - Xml Docs: 26.67%
     ' 
-    '   Blank Lines: 48 (10.71%)
-    '     File Size: 18.00 KB
+    '   Blank Lines: 66 (11.91%)
+    '     File Size: 22.44 KB
 
 
     ' Class PdfReader
@@ -50,10 +50,11 @@
     '     Constructor: (+3 Overloads) Sub New
     ' 
     '     Function: ApplyFilter, DecodeAsciiHex, DecodeStream, FindLastOccurrence, GetPages
-    '               ReadW, Resolve
+    '               ParseXRefSectionAt, ParseXRefStream, ReadW, Resolve, TryGetPages
     ' 
-    '     Sub: Dispose, Initialize, ParseAllObjectStreams, ParseIndirectObjectAt, ParseObjectStream
-    '          ParseXRefAndTrailer, ParseXRefStream, ParseXRefTable, TraversePageTree
+    '     Sub: Dispose, Initialize, MergeXRefEntry, ParseAllObjectStreams, ParseIndirectObjectAt
+    '          ParseObjectStream, ParseXRefAndTrailer, ParseXRefChain, ParseXRefTable, RebuildXRefByScan
+    '          TraversePageTree
     ' 
     ' Class XRefEntry
     ' 

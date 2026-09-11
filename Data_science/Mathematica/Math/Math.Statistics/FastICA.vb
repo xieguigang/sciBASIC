@@ -136,7 +136,7 @@ Public Class FastICA
     ''' <param name="N">Number of sources (rows).</param>
     ''' <param name="M">Number of observation samples (columns).</param>
     ''' <returns>The centered matrix X (M x N).</returns>
-    Public Function PreprocessingCentering(ByVal Xobs As Double()(), ByVal N As Integer, ByVal M As Integer) As Double()()
+    Public Function PreprocessingCentering(Xobs As Double()(), N As Integer, M As Integer) As Double()()
         Dim meanVector As Double() = New Double(N - 1) {}
         Dim X As Double()() = RectangularArray.Matrix(Of Double)(M, N)
 
@@ -174,7 +174,7 @@ Public Class FastICA
     ''' The eigen decomposition uses 100 iterations by default. This value can be changed by
     ''' adjusting <c>iterationsED</c> inside this routine.
     ''' </remarks>
-    Public Function PreprocessingWhitening(ByVal X As Double()(), ByVal N As Integer, ByVal M As Integer) As Double()()
+    Public Function PreprocessingWhitening(X As Double()(), N As Integer, M As Integer) As Double()()
         Dim EigValues As Double() = New Double(N - 1) {}
         Dim EigVectors As Double()() = RectangularArray.Matrix(Of Double)(N, N)
         Dim EigVectorsT As Double()() = RectangularArray.Matrix(Of Double)(N, N)
@@ -238,7 +238,7 @@ Public Class FastICA
     ''' Uses the tanh non-linearity and Gram-Schmidt decorrelation between estimated components.
     ''' For the underlying theory, refer to "ICA: Algorithms and Applications".
     ''' </remarks>
-    Public Function SolveFastICA(ByVal Z As Double()(), ByVal N As Integer, ByVal M As Integer, Optional ByVal iterations As Integer = 1000) As Double()()
+    Public Function SolveFastICA(Z As Double()(), N As Integer, M As Integer, Optional iterations As Integer = 1000) As Double()()
         Dim G As Double() = New Double(M - 1) {}
         Dim Gder As Double() = New Double(M - 1) {}
         Dim dumsum As Double() = New Double(N - 1) {}
@@ -431,7 +431,7 @@ Public Class FastICA
     ''' <param name="N">Number of sources.</param>
     ''' <param name="M">Number of observation samples.</param>
     ''' <returns>The observation matrix Xobs (M x N).</returns>
-    Public Function XobsGen(ByVal Amix As Double()(), ByVal S As Double()(), ByVal N As Integer, ByVal M As Integer) As Double()()
+    Public Function XobsGen(Amix As Double()(), S As Double()(), N As Integer, M As Integer) As Double()()
         Dim Xobs = RectangularArray.Matrix(Of Double)(M, N)
 
         ' Generating observation matrix Xobs
@@ -473,7 +473,7 @@ Public Class FastICA
     ''' <param name="rows2">Number of rows of B.</param>
     ''' <param name="columns2">Number of columns of B.</param>
     ''' <returns>The product matrix Sp = A * B (rows1 x columns2).</returns>
-    Public Function MatMult(ByVal A As Double()(), ByVal rows1 As Integer, ByVal columns1 As Integer, ByVal B As Double()(), ByVal rows2 As Integer, ByVal columns2 As Integer) As Double()()
+    Public Function MatMult(A As Double()(), rows1 As Integer, columns1 As Integer, B As Double()(), rows2 As Integer, columns2 As Integer) As Double()()
         Dim Sp As Double()() = RectangularArray.Matrix(Of Double)(columns2, rows1)
 
         For i As Integer = 0 To rows1 - 1
@@ -495,7 +495,7 @@ Public Class FastICA
     ''' <param name="B">The matrix B (SizeVec x columns).</param>
     ''' <param name="columns">Number of columns of B.</param>
     ''' <returns>The result vector Sp = V * B (length columns).</returns>
-    Public Function VecMatMult(ByRef V As Double(), ByVal SizeVec As Integer, ByVal B As Double()(), ByVal columns As Integer) As Double()
+    Public Function VecMatMult(ByRef V As Double(), SizeVec As Integer, B As Double()(), columns As Integer) As Double()
         Dim Sp As Double() = New Double(columns - 1) {}
 
         For i As Integer = 0 To columns - 1
@@ -515,7 +515,7 @@ Public Class FastICA
     ''' <param name="columns">Number of columns of B (must equal length of V).</param>
     ''' <param name="V">The column vector (passed ByRef).</param>
     ''' <returns>The result vector Sp = B * V (length rows).</returns>
-    Public Function MatVecMult(ByVal B As Double()(), ByVal rows As Integer, ByVal columns As Integer, ByRef V As Double()) As Double()
+    Public Function MatVecMult(B As Double()(), rows As Integer, columns As Integer, ByRef V As Double()) As Double()
         Dim Sp As Double() = New Double(rows - 1) {}
 
         For i As Integer = 0 To rows - 1
@@ -534,7 +534,7 @@ Public Class FastICA
     ''' <param name="rows">Number of rows of A.</param>
     ''' <param name="columns">Number of columns of A.</param>
     ''' <returns>The transposed matrix Sp (columns x rows).</returns>
-    Public Function MatTranspose(ByVal A As Double()(), ByVal rows As Integer, ByVal columns As Integer) As Double()()
+    Public Function MatTranspose(A As Double()(), rows As Integer, columns As Integer) As Double()()
         Dim Sp = RectangularArray.Matrix(Of Double)(rows, columns)
 
         For i As Integer = 0 To columns - 1
@@ -552,7 +552,7 @@ Public Class FastICA
     ''' </summary>
     ''' <param name="wp">The vector to normalize (passed ByRef, modified in place).</param>
     ''' <param name="sizeVec">Length of the vector.</param>
-    Public Sub VectorNormalization(ByRef wp As Double(), ByVal sizeVec As Integer)
+    Public Sub VectorNormalization(ByRef wp As Double(), sizeVec As Integer)
         Dim sqrtwpwp As Double = 0.0
 
         For i As Integer = 0 To sizeVec - 1
@@ -576,7 +576,7 @@ Public Class FastICA
     ''' Uses a Jacobi-like iterative rotation with Gram-Schmidt orthogonalization
     ''' of the eigenvectors during each iteration.
     ''' </remarks>
-    Public Sub EigenDecomposition(ByVal ExxT As Double()(), ByVal N As Integer, ByVal EigVectors As Double()(), ByRef EigValues As Double(), ByVal iterations As Integer)
+    Public Sub EigenDecomposition(ExxT As Double()(), N As Integer, EigVectors As Double()(), ByRef EigValues As Double(), iterations As Integer)
         Dim EigVecs As Double()() = RectangularArray.Matrix(Of Double)(N, N)
         Dim Q As Double()() = RectangularArray.Matrix(Of Double)(N, N)
         Dim EigVals As Double()() = RectangularArray.Matrix(Of Double)(N, N)
@@ -774,42 +774,42 @@ Public Class FastICA
     ''' <summary>First source signal: a sine wave with angular frequency 1.1.</summary>
     ''' <param name="x">The time value.</param>
     ''' <returns>The value of the source signal.</returns>
-    Public Function funcSource1(ByVal x As Double) As Double
+    Public Function funcSource1(x As Double) As Double
         Return std.Sin(1.1 * x)
     End Function
 
     ''' <summary>Second source signal: a cosine wave with angular frequency 0.25.</summary>
     ''' <param name="x">The time value.</param>
     ''' <returns>The value of the source signal.</returns>
-    Public Function funcSource2(ByVal x As Double) As Double
+    Public Function funcSource2(x As Double) As Double
         Return std.Cos(0.25 * x)
     End Function
 
     ''' <summary>Third source signal: a sine wave with angular frequency 0.1.</summary>
     ''' <param name="x">The time value.</param>
     ''' <returns>The value of the source signal.</returns>
-    Public Function funcSource3(ByVal x As Double) As Double
+    Public Function funcSource3(x As Double) As Double
         Return std.Sin(0.1 * x)
     End Function
 
     ''' <summary>Fourth source signal: a cosine wave with angular frequency 0.7.</summary>
     ''' <param name="x">The time value.</param>
     ''' <returns>The value of the source signal.</returns>
-    Public Function funcSource4(ByVal x As Double) As Double
+    Public Function funcSource4(x As Double) As Double
         Return std.Cos(0.7 * x)
     End Function
 
     ''' <summary>Fifth source signal: a saw-tooth (zig-zag) wave defined by the slope K and period <c>periodSource5</c>.</summary>
     ''' <param name="x">The time value.</param>
     ''' <returns>The value of the source signal.</returns>
-    Public Function funcSource5(ByVal x As Double) As Double
+    Public Function funcSource5(x As Double) As Double
         Return K * x - std.Floor(x / periodSource5) * K * periodSource5
     End Function
 
     ''' <summary>Sixth source signal: an alternating step function (+1 / -1) with period <c>periodSource6</c>.</summary>
     ''' <param name="x">The time value.</param>
     ''' <returns>The value of the source signal (+1 or -1).</returns>
-    Public Function funcSource6(ByVal x As Double) As Double
+    Public Function funcSource6(x As Double) As Double
         If CInt(std.Floor(x / periodSource6)) Mod 2 = 0 Then
             Return 1
         Else

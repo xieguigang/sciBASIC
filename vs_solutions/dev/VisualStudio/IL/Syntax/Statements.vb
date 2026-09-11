@@ -1,3 +1,141 @@
+﻿#Region "Microsoft.VisualBasic::582c4fd9bbc1b289c504154a93723375, vs_solutions\dev\VisualStudio\IL\Syntax\Statements.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 284
+    '    Code Lines: 191 (67.25%)
+    ' Comment Lines: 36 (12.68%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 57 (20.07%)
+    '     File Size: 10.62 KB
+
+
+    '     Class BlockStatement
+    ' 
+    '         Properties: Statements
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class VariableDeclarationStatement
+    ' 
+    '         Properties: Initializer, LocalIndex, Name, VariableType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class AssignmentStatement
+    ' 
+    '         Properties: Target, Value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class ExpressionStatement
+    ' 
+    '         Properties: Value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class ReturnStatement
+    ' 
+    '         Properties: Value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class IfStatement
+    ' 
+    '         Properties: Condition, ElseBody, ThenBody
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class WhileStatement
+    ' 
+    '         Properties: Body, Condition, IsPostCondition
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class ForStatement
+    ' 
+    '         Properties: Body, Condition, Increment, Initializer, VariableName
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class BreakStatement
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class ContinueStatement
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class NopStatement
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class ParameterDeclaration
+    ' 
+    '         Properties: Index, Name, ParameterType, SsaName
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class LocalDeclaration
+    ' 
+    '         Properties: Index, LocalType, Name
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class MethodSyntax
+    ' 
+    '         Properties: Body, Diagnostics, IsStatic, Locals, Method
+    '                     Name, Parameters, ReturnType
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' 语句节点：块 / 变量声明 / 赋值 / 表达式语句 / 返回 / if / while / for /
 '           break / continue / nop，以及整个方法的语法树 MethodSyntax
@@ -282,3 +420,4 @@ Namespace IL
         End Function
     End Class
 End Namespace
+

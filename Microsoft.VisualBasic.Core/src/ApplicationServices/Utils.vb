@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::187429947512c1282d3e28e6a31ea6f9, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::3926fb2352807a90e6c9bb76159b42d6, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 255
-    '    Code Lines: 148 (58.04%)
-    ' Comment Lines: 74 (29.02%)
-    '    - Xml Docs: 87.84%
+    '   Total Lines: 226
+    '    Code Lines: 132 (58.41%)
+    ' Comment Lines: 64 (28.32%)
+    '    - Xml Docs: 85.94%
     ' 
-    '   Blank Lines: 33 (12.94%)
-    '     File Size: 10.00 KB
+    '   Blank Lines: 30 (13.27%)
+    '     File Size: 8.79 KB
 
 
     '     Module Utils
@@ -50,7 +50,7 @@
     '         Sub: TryRun
     '         Delegate Function
     ' 
-    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+    '             Function: CLIPath, CLIToken
     ' 
     '             Sub: print, printf, (+2 Overloads) Wait
     ' 

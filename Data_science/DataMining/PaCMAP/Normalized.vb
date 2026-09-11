@@ -1,54 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::04bca75e7fc9e8178ae1b26de2ab9559, Data_science\DataMining\PaCMAP\Normalized.vb"
+﻿#Region "Microsoft.VisualBasic::357ef57be6aef67c7e7d04b6b43681ca, Data_science\DataMining\PaCMAP\Normalized.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 81
-'    Code Lines: 25 (30.86%)
-' Comment Lines: 46 (56.79%)
-'    - Xml Docs: 67.39%
-' 
-'   Blank Lines: 10 (12.35%)
-'     File Size: 3.49 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module NormalizedDistanceExtensions
-' 
-'         Function: Compute, NormalizedDistance
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 23 (28.75%)
+    ' Comment Lines: 46 (57.50%)
+    '    - Xml Docs: 67.39%
+    ' 
+    '   Blank Lines: 11 (13.75%)
+    '     File Size: 3.19 KB
+
+
+    ' Module NormalizedDistanceExtensions
+    ' 
+    '     Function: Compute, NormalizedDistance
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -132,4 +131,3 @@ Public Module NormalizedDistanceExtensions
         Return result
     End Function
 End Module
-

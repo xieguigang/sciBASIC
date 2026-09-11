@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::8a17d253dab51717576271c8ec970468, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::bc752f91e9450d2ee085ef7803458b7c, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 161
-'    Code Lines: 98 (60.87%)
-' Comment Lines: 40 (24.84%)
-'    - Xml Docs: 90.00%
-' 
-'   Blank Lines: 23 (14.29%)
-'     File Size: 5.73 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DataURI
-' 
-'         Properties: base64, chartSet, mime
-' 
-'         Constructor: (+4 Overloads) Sub New
-'         Function: FromFile, IsWellFormedUriString, StringFormatter, SVGImage, ToStream
-'                   ToString, URIParser
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 97 (60.62%)
+    ' Comment Lines: 40 (25.00%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 23 (14.37%)
+    '     File Size: 5.72 KB
+
+
+    '     Class DataURI
+    ' 
+    '         Properties: base64, chartSet, mime
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: FromFile, IsWellFormedUriString, StringFormatter, SVGImage, ToStream
+    '                   ToString, URIParser
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

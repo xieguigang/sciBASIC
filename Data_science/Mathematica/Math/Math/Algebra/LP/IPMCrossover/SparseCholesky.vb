@@ -1,3 +1,85 @@
+﻿#Region "Microsoft.VisualBasic::88fa387642ce3695c7fa3a7017f4e747, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseCholesky.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 493
+    '    Code Lines: 322 (65.31%)
+    ' Comment Lines: 35 (7.10%)
+    '    - Xml Docs: 22.86%
+    ' 
+    '   Blank Lines: 136 (27.59%)
+    '     File Size: 15.77 KB
+
+
+    '     Class SparseChol
+    ' 
+    '         Function: Factor, MinDegreeOrder
+    '         Class SparseCholFactor
+    ' 
+    '             Properties: NonZeros
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Solve
+    ' 
+    '         Class MinHeap
+    ' 
+    '             Properties: Count
+    ' 
+    '             Function: Pop
+    ' 
+    '             Sub: Push
+    ' 
+    ' 
+    ' 
+    '     Class Pcg
+    ' 
+    '         Function: ResidualOk
+    '         Class PcgSolver
+    ' 
+    '             Properties: Converged, LastIters, MaxIter, Tol
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Solve
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' SparseCholesky.vb — 稀疏 LDLᵀ 与 PCG 安全网 [readme §2.2 / plan step 1]
 ' ----------------------------------------------------------------------------
@@ -491,3 +573,4 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Class
 
 End Namespace
+

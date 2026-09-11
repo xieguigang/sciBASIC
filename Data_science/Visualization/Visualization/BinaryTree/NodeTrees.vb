@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::eebccc4ba090d822c53aa53aadf2f32b, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::34a8b5582ebc109bc0024dc60d9b3b9c, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 153
-'    Code Lines: 109 (71.24%)
-' Comment Lines: 22 (14.38%)
-'    - Xml Docs: 50.00%
-' 
-'   Blank Lines: 22 (14.38%)
-'     File Size: 6.95 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module NodeTrees
-' 
-'         Function: __cutTrees, BuildTree, CutTrees, PartionTable
-' 
-'         Sub: __appendChilds
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 109 (71.24%)
+    ' Comment Lines: 22 (14.38%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 22 (14.38%)
+    '     File Size: 6.97 KB
+
+
+    '     Module NodeTrees
+    ' 
+    '         Function: __cutTrees, BuildTree, CutTrees, PartionTable
+    ' 
+    '         Sub: __appendChilds
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

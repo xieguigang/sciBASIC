@@ -1,3 +1,57 @@
+﻿#Region "Microsoft.VisualBasic::3487d2477938ff7952c2515b3f2daba3, vs_solutions\VBS\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 13 (65.00%)
+    ' Comment Lines: 4 (20.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (15.00%)
+    '     File Size: 713 B
+
+
+    ' Module Program
+    ' 
+    '     Function: Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.CommandLine
 Imports VBScriptHost.Script
 
 Module Program
@@ -7,11 +61,14 @@ Module Program
     ''' </summary>
     ''' <param name="args"></param>
     Public Function Main(args As String()) As Integer
+        Dim cmdl As CommandLine = CommandLine.BuildFromArguments(args, NoSubCommand:=False)
         Dim scriptFile As String = args(0)
-        Dim vbs As ScriptParseResult = VBScript.ParseScript(scriptFile)
+        Dim verbose As Boolean = cmdl("--verbose")
+        Dim vbs As ScriptParseResult = VBScript.ParseScript(scriptFile, verbose:=verbose)
 
-        Using script As ScriptRuntime = vbs.CompileScript
+        Using script As ScriptRuntime = vbs.CompileScript(debug:=verbose)
             Return script.Run(args)
         End Using
     End Function
 End Module
+

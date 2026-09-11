@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6c1db6f573e9ae463153f46855b181f, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::467b9bbcd342d60885d8bac107d690d8, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 94 (81.03%)
-    ' Comment Lines: 6 (5.17%)
+    '   Total Lines: 115
+    '    Code Lines: 93 (80.87%)
+    ' Comment Lines: 6 (5.22%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (13.79%)
-    '     File Size: 4.32 KB
+    '   Blank Lines: 16 (13.91%)
+    '     File Size: 4.25 KB
 
 
     ' Module NetworkAPI

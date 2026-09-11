@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67b2da434d9c6a71fa5019318e55a5a2, Data_science\Mathematica\Math\Math\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::97aadb8d8b1c111fb32856e0b1cb4490, Data_science\Mathematica\Math\Math\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 334
-    '    Code Lines: 192 (57.49%)
-    ' Comment Lines: 75 (22.46%)
+    '   Total Lines: 332
+    '    Code Lines: 190 (57.23%)
+    ' Comment Lines: 75 (22.59%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 67 (20.06%)
-    '     File Size: 13.07 KB
+    '   Blank Lines: 67 (20.18%)
+    '     File Size: 12.97 KB
 
 
     ' Module Program
     ' 
-    '     Sub: AssertEqual, AssertThrows, Main, TestExpressionEvaluation, TestFactorial
+    '     Sub: AssertEqual, AssertThrows, Main2, TestExpressionEvaluation, TestFactorial
     '          TestIntegerDivision, TestLogMultiArg, TestMeanArrayParam, TestNotEqualOperator, TestNotEqualWithSpaces
     '          TestParseExpressionNotThrow, TestParseExpressionThrowEx, TestPowMultiArg, TestProcessOperatorsBoundary, TestSymbolFactorial
     '          TestUDF_NestedCall, TestUDF_SetFunction

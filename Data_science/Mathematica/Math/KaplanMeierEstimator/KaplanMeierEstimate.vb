@@ -69,7 +69,7 @@
 
 Imports Microsoft.VisualBasic.Math.KaplanMeierEstimator.Models
 Imports Microsoft.VisualBasic.Math.Statistics.Distributions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Performs the Kaplan Meier algorithm over 2 groups, 
@@ -109,7 +109,7 @@ Public Class KaplanMeierEstimate
         Get
             Return _GroupAEvents
         End Get
-        Private Set(ByVal value As IReadOnlyList(Of KaplanMeierStatus))
+        Private Set(value As IReadOnlyList(Of KaplanMeierStatus))
             _GroupAEvents = value
         End Set
     End Property
@@ -118,7 +118,7 @@ Public Class KaplanMeierEstimate
         Get
             Return _GroupBEvents
         End Get
-        Private Set(ByVal value As IReadOnlyList(Of KaplanMeierStatus))
+        Private Set(value As IReadOnlyList(Of KaplanMeierStatus))
             _GroupBEvents = value
         End Set
     End Property
@@ -127,7 +127,7 @@ Public Class KaplanMeierEstimate
         Get
             Return _TotalFailingA
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _TotalFailingA = value
         End Set
     End Property
@@ -136,7 +136,7 @@ Public Class KaplanMeierEstimate
         Get
             Return _TotalFailingB
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _TotalFailingB = value
         End Set
     End Property
@@ -145,12 +145,12 @@ Public Class KaplanMeierEstimate
         Get
             Return _PValue
         End Get
-        Private Set(ByVal value As Double)
+        Private Set(value As Double)
             _PValue = value
         End Set
     End Property
 
-    Public Sub New(ByVal groupA As IEnumerable(Of Patient), ByVal groupB As IEnumerable(Of Patient))
+    Public Sub New(groupA As IEnumerable(Of Patient), groupB As IEnumerable(Of Patient))
         If groupA Is Nothing OrElse groupB Is Nothing Then
             Throw New ArgumentNullException(If(groupA Is Nothing, "groupA", "groupB"))
         End If
@@ -179,7 +179,7 @@ Public Class KaplanMeierEstimate
     ''' </summary>
     ''' <paramname="patients">The patient collection to convert</param>
     ''' <returns></returns>
-    Private Shared Function RunGroup(ByVal patients As IEnumerable(Of Patient)) As IReadOnlyList(Of KaplanMeierStatus)
+    Private Shared Function RunGroup(patients As IEnumerable(Of Patient)) As IReadOnlyList(Of KaplanMeierStatus)
         Dim retVal As List(Of KaplanMeierStatus) = New List(Of KaplanMeierStatus)()
         Dim atRisk As Integer = patients.Count()
         Dim prevSurvivalProbability = 1.0
@@ -209,7 +209,7 @@ Public Class KaplanMeierEstimate
     Private Sub MergeEvents()
         Dim iA = 0, iB = 0
         While iA < GroupAEvents.Count AndAlso iB < GroupBEvents.Count
-            Dim currentTime = stdNum.Min(GroupAEvents(iA).Time, GroupBEvents(iB).Time)
+            Dim currentTime = std.Min(GroupAEvents(iA).Time, GroupBEvents(iB).Time)
             Dim failingA = If(GroupAEvents(iA).Time = currentTime, GroupAEvents(iA).NumberFailing, 0)
             Dim failingB = If(GroupBEvents(iB).Time = currentTime, GroupBEvents(iB).NumberFailing, 0)
 
@@ -276,12 +276,12 @@ Public Class KaplanMeierEstimate
             sumEB += eB
         Next
 
-        Debug.Assert(Not sumEA = 0 OrElse sumEB = 0) ' (sumEA == 0) ==> (sumEB == 0)
+        System.Diagnostics.Debug.Assert(Not sumEA = 0 OrElse sumEB = 0) ' (sumEA == 0) ==> (sumEB == 0)
 
         Dim statistic As Double = 0
         If sumEA <> 0 AndAlso sumEB <> 0 Then
             ' The test statistic is the deviation from the expected for both groups
-            statistic = stdNum.Pow(TotalFailingA - sumEA, 2) / sumEA + stdNum.Pow(TotalFailingB - sumEB, 2) / sumEB
+            statistic = std.Pow(TotalFailingA - sumEA, 2) / sumEA + std.Pow(TotalFailingB - sumEB, 2) / sumEB
         End If
 
         ' The PValue is computed using the Chi-Square statistic, with degrees of freedom =1
