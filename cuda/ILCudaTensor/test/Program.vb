@@ -75,7 +75,8 @@ Module Program
         Dim logits = tf.Tensor.Random({outer, classes}, seed:=99)
 
         ' 大张量：用于验证两段式全局归约的并行度与精度
-        Const bigN As Integer = 4000000
+        Const bigN As Integer = 400000000
+
         Dim big = tf.Tensor.Random({bigN}, seed:=1234)
 
         ' ---------------- 1) SIMD CPU 参考 ----------------
