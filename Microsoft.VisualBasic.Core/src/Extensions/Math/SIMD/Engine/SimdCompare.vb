@@ -193,14 +193,14 @@ Namespace Math.SIMD
             Dim len As Integer = mask.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
             Dim count As Integer = Vector(Of Double).Count
             Dim zero As Vector(Of Double) = Vector(Of Double).Zero
             Dim i As Integer = 0
 
             If SimdEngine.CanVectorize(Of Double)(len) Then
                 ' 把 Boolean 掩码预先铺成 0.0/1.0，之后即可用一次向量比较得到掩码向量
-                Dim staged As Double() = New Double(len - 1) {}
+                Dim staged As Double() = SimdEngine.NewArray(Of Double)(len)
 
                 For k As Integer = 0 To len - 1
                     staged(k) = If(mask(k), 1.0, 0.0)
@@ -248,13 +248,13 @@ Namespace Math.SIMD
             Dim len As Integer = mask.Length
             If len = 0 Then Return Array.Empty(Of Single)()
 
-            Dim out As Single() = New Single(len - 1) {}
+            Dim out As Single() = SimdEngine.NewArray(Of Single)(len)
             Dim count As Integer = Vector(Of Single).Count
             Dim zero As Vector(Of Single) = Vector(Of Single).Zero
             Dim i As Integer = 0
 
             If SimdEngine.CanVectorize(Of Single)(len) Then
-                Dim staged As Single() = New Single(len - 1) {}
+                Dim staged As Single() = SimdEngine.NewArray(Of Single)(len)
 
                 For k As Integer = 0 To len - 1
                     staged(k) = If(mask(k), 1.0F, 0.0F)

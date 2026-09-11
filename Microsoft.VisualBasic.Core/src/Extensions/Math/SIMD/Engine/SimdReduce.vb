@@ -551,31 +551,49 @@ Namespace Math.SIMD
         Public Shared Function L1Norm(v As Double()) As Double
             CheckNull(v, NameOf(v))
 
-            Dim len As Integer = v.Length
-            If len = 0 Then Return 0.0
+            If v.Length = 0 Then Return 0.0
+
+            Return L1Norm(v, 0, v.Length)
+        End Function
+
+        ''' <summary>
+        ''' 求 <c>[start, ends)</c> 区间（前闭后开）的 L1 范数。
+        ''' </summary>
+        Public Shared Function L1Norm(v As Double(), start As Integer, ends As Integer) As Double
+            CheckNull(v, NameOf(v))
+            CheckRange(v.Length, start, ends)
 
             Dim count As Integer = Vector(Of Double).Count
+            Dim step4 As Integer = count * 4
             Dim ones As New Vector(Of Double)(1.0)
-            Dim i As Integer = 0
-            Dim sum As Double = 0
+            Dim i As Integer = start
+            Dim total As Double = 0
 
-            If SIMDEnvironment.IsEnabled AndAlso len >= count Then
-                Dim acc As Vector(Of Double) = Vector(Of Double).Zero
-                Dim last As Integer = len - count
+            If SIMDEnvironment.IsEnabled AndAlso ends - start >= step4 Then
+                Dim acc0 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim acc1 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim acc2 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim acc3 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim last4 As Integer = ends - step4
 
-                Do While i <= last
-                    acc = Vector.Add(Of Double)(acc, Vector.Abs(Of Double)(New Vector(Of Double)(v, i)))
-                    i += count
+                Do While i <= last4
+                    acc0 = Vector.Add(Of Double)(acc0, Vector.Abs(Of Double)(New Vector(Of Double)(v, i)))
+                    acc1 = Vector.Add(Of Double)(acc1, Vector.Abs(Of Double)(New Vector(Of Double)(v, i + count)))
+                    acc2 = Vector.Add(Of Double)(acc2, Vector.Abs(Of Double)(New Vector(Of Double)(v, i + count * 2)))
+                    acc3 = Vector.Add(Of Double)(acc3, Vector.Abs(Of Double)(New Vector(Of Double)(v, i + count * 3)))
+                    i += step4
                 Loop
 
-                sum = Vector.Dot(Of Double)(acc, ones)
+                acc0 = Vector.Add(Of Double)(Vector.Add(Of Double)(acc0, acc1),
+                                             Vector.Add(Of Double)(acc2, acc3))
+                total = Vector.Dot(Of Double)(acc0, ones)
             End If
 
-            For k As Integer = i To len - 1
-                sum += std.Abs(v(k))
+            For k As Integer = i To ends - 1
+                total += std.Abs(v(k))
             Next
 
-            Return sum
+            Return total
         End Function
 
         ''' <summary>

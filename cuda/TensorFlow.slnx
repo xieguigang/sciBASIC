@@ -39,4 +39,13 @@
     <BuildType Solution="Rsharp_app_release|*" Project="nuget_release" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="ILCudaTensor/ILCudaTensor.vbproj" Id="87001430-ac76-429c-aa5c-a87775db0791">
+    <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="MEMI-Desktop|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Release" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Release" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+  </Project>
 </Solution>

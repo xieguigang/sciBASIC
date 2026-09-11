@@ -73,7 +73,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = SimdEngine.NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim i As Integer = 0
 
@@ -171,7 +171,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = SimdEngine.NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim lo As New Vector(Of T)(min)
             Dim hi As New Vector(Of T)(max)
@@ -222,7 +222,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
 
             For i As Integer = 0 To len - 1
                 out(i) = v1(i) ^ v2(i)
@@ -257,7 +257,7 @@ Namespace Math.SIMD
             If exponent = 0.5 Then Return Sqrt(v)
             If exponent = 1.0 Then Return CType(v.Clone(), Double())
             If exponent = 0.0 Then
-                Dim ones As Double() = New Double(len - 1) {}
+                Dim ones As Double() = SimdEngine.NewArray(Of Double)(len)
 
                 For i As Integer = 0 To len - 1
                     ones(i) = 1.0
@@ -266,7 +266,7 @@ Namespace Math.SIMD
                 Return ones
             End If
             If exponent = 3.0 Then
-                Dim cube As Double() = New Double(len - 1) {}
+                Dim cube As Double() = SimdEngine.NewArray(Of Double)(len)
                 Dim count As Integer = Vector(Of Double).Count
                 Dim i As Integer = 0
 
@@ -295,7 +295,7 @@ Namespace Math.SIMD
                 Return cube
             End If
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
 
             For i As Integer = 0 To len - 1
                 out(i) = v(i) ^ exponent
@@ -321,7 +321,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
 
             For i As Integer = 0 To len - 1
                 out(i) = std.Exp(v(i))
@@ -339,7 +339,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Single)()
 
-            Dim out As Single() = New Single(len - 1) {}
+            Dim out As Single() = SimdEngine.NewArray(Of Single)(len)
 
             For i As Integer = 0 To len - 1
                 out(i) = std.Exp(v(i))
@@ -360,7 +360,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
 
             For i As Integer = 0 To len - 1
                 out(i) = std.Log(v(i))
@@ -378,7 +378,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Single)()
 
-            Dim out As Single() = New Single(len - 1) {}
+            Dim out As Single() = SimdEngine.NewArray(Of Single)(len)
 
             For i As Integer = 0 To len - 1
                 out(i) = std.Log(v(i))

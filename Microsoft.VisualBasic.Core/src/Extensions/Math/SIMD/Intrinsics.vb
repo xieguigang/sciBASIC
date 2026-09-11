@@ -280,7 +280,7 @@ Namespace Math.SIMD
                 Return SimdEngine.Add(Of Double)(SimdEngine.MultiplyScalar(Of Double)(alpha, x), y)
             End If
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
             Dim count As Integer = Vector256(Of Double).Count
             Dim a As Vector256(Of Double) = Vector256.Create(Of Double)(alpha)
             Dim i As Integer = 0
@@ -316,7 +316,7 @@ Namespace Math.SIMD
                 Return SimdEngine.Add(Of Double)(SimdEngine.Multiply(Of Double)(v1, v2), acc)
             End If
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
             Dim count As Integer = Vector256(Of Double).Count
             Dim i As Integer = 0
 

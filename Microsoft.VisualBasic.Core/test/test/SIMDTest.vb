@@ -596,6 +596,9 @@ Module SIMDTest
         Console.WriteLine("=========================================================")
         Console.WriteLine(" benchmark (best of 3 runs)")
         Console.WriteLine("=========================================================")
+        Console.WriteLine(" 标量基线为等价的朴素 for 循环；out-of-place 的标量基线同样使用")
+        Console.WriteLine(" GC.AllocateUninitializedArray，保证与向量版本口径一致。")
+        Console.WriteLine(" 就地(in-place)组的耗时不含结果数组分配，反映的是纯计算/内存带宽上限。")
 
         For Each n As Integer In {1000, 100000, 10000000}
             Dim a As Double() = RandomData(n)
@@ -604,6 +607,7 @@ Module SIMDTest
             Console.WriteLine()
             Console.WriteLine($"--- n = {n:#,##0} ---")
             Call BenchAdd(a, b)
+            Call BenchAddInPlace(a, b)
             Call BenchMultiplyScalar(a, 2.5)
             Call BenchSum(a)
             Call BenchDot(a, b)
@@ -614,15 +618,22 @@ Module SIMDTest
     End Sub
 
     Private Sub BenchAdd(a As Double(), b As Double())
-        Dim ts As Double = TimeBest(3, Sub() Call Ref(a, b, Function(x, y) x + y))
+        Dim ts As Double = TimeBest(3, Sub() Call ScalarAdd(a, b))
         Dim tv As Double = TimeBest(3, Sub() Call SimdEngine.Add(Of Double)(a, b))
         Dim tp As Double = TimeBest(3, Sub() Call SimdParallel.Add(a, b))
 
         WriteLine("add            ", ts, tv, tp)
     End Sub
 
+    Private Sub BenchAddInPlace(a As Double(), b As Double())
+        Dim ts As Double = TimeBest(3, Sub() Call ScalarAddInPlace(a, b))
+        Dim tv As Double = TimeBest(3, Sub() Call SimdEngine.AddInPlace(Of Double)(a, b))
+
+        WriteLine("add (in-place) ", ts, tv, Double.NaN, inPlace:=True)
+    End Sub
+
     Private Sub BenchMultiplyScalar(a As Double(), scalar As Double)
-        Dim ts As Double = TimeBest(3, Sub() Call Ref1(a, Function(x) x * scalar))
+        Dim ts As Double = TimeBest(3, Sub() Call ScalarMultiplyScalar(a, scalar))
         Dim tv As Double = TimeBest(3, Sub() Call SimdEngine.MultiplyScalar(Of Double)(scalar, a))
         Dim tp As Double = TimeBest(3, Sub() Call SimdParallel.MultiplyScalar(scalar, a))
 
@@ -644,6 +655,36 @@ Module SIMDTest
 
         WriteLine("dot            ", ts, tv, tp)
     End Sub
+
+#Region "scalar baselines for the benchmark"
+
+    Private Function ScalarAdd(a As Double(), b As Double()) As Double()
+        Dim out As Double() = GC.AllocateUninitializedArray(Of Double)(a.Length)
+
+        For i As Integer = 0 To a.Length - 1
+            out(i) = a(i) + b(i)
+        Next
+
+        Return out
+    End Function
+
+    Private Function ScalarMultiplyScalar(a As Double(), scalar As Double) As Double()
+        Dim out As Double() = GC.AllocateUninitializedArray(Of Double)(a.Length)
+
+        For i As Integer = 0 To a.Length - 1
+            out(i) = a(i) * scalar
+        Next
+
+        Return out
+    End Function
+
+    Private Sub ScalarAddInPlace(a As Double(), b As Double())
+        For i As Integer = 0 To a.Length - 1
+            a(i) += b(i)
+        Next
+    End Sub
+
+#End Region
 
     Private Function LoopDot(a As Double(), b As Double()) As Double
         Dim s As Double = 0
@@ -670,9 +711,15 @@ Module SIMDTest
         Return best
     End Function
 
-    Private Sub WriteLine(name As String, scalar As Double, vector As Double, parallel As Double)
-        Console.WriteLine($"  {name} scalar={scalar,10:N2}ms  simd={vector,10:N2}ms  parallel={parallel,10:N2}ms  " &
-                          $"speedup(simd)={scalar / std.Max(vector, 1.0E-06),6:N2}x  speedup(parallel)={scalar / std.Max(parallel, 1.0E-06),6:N2}x")
+    Private Sub WriteLine(name As String, scalar As Double, vector As Double, parallel As Double,
+                          Optional inPlace As Boolean = False)
+        If inPlace Then
+            Console.WriteLine($"  {name} scalar={scalar,10:N2}ms  simd={vector,10:N2}ms  " &
+                              $"speedup(simd)={scalar / std.Max(vector, 1.0E-06),6:N2}x")
+        Else
+            Console.WriteLine($"  {name} scalar={scalar,10:N2}ms  simd={vector,10:N2}ms  parallel={parallel,10:N2}ms  " &
+                              $"speedup(simd)={scalar / std.Max(vector, 1.0E-06),6:N2}x  speedup(parallel)={scalar / std.Max(parallel, 1.0E-06),6:N2}x")
+        End If
     End Sub
 
 #End Region

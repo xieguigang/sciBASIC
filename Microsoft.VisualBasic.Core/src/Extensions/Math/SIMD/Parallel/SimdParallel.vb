@@ -297,9 +297,27 @@ Namespace Math.SIMD
             If len = 0 Then Return 0.0
             If Not ShouldParallelize(len) Then Return SimdReduce.L1Norm(v)
 
-            Dim abs As Double() = SimdMath.Abs(Of Double)(v)
+            Dim chunk As Integer = ChunkSize(len)
+            Dim nChunks As Integer = (len + chunk - 1) \ chunk
+            Dim partials As Double() = New Double(nChunks - 1) {}
 
-            Return Sum(abs)
+            ' 注意这里不能先对整体做一次 Abs 再求和：那会多出一次完整数组的
+            ' 分配与读写（大数组下就是 80MB 级别的额外内存流量）
+            System.Threading.Tasks.Parallel.For(0, nChunks,
+                Sub(c)
+                    Dim start As Integer = c * chunk
+                    Dim ends As Integer = std.Min(start + chunk, len)
+
+                    partials(c) = SimdReduce.L1Norm(v, start, ends)
+                End Sub)
+
+            Dim total As Double = 0
+
+            For i As Integer = 0 To nChunks - 1
+                total += partials(i)
+            Next
+
+            Return total
         End Function
 
         ''' <summary>
@@ -401,7 +419,7 @@ Namespace Math.SIMD
             If len = 0 Then Return Array.Empty(Of Double)()
             If Not ShouldParallelize(len) Then Return scalarOp(v1, v2)
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
             Dim chunk As Integer = ChunkSize(len)
             Dim nChunks As Integer = (len + chunk - 1) \ chunk
 
@@ -426,21 +444,48 @@ Namespace Math.SIMD
             If len = 0 Then Return Array.Empty(Of Double)()
             If Not ShouldParallelize(len) Then Return SimdEngine.MultiplyScalar(Of Double)(scalar, v)
 
-            Dim splat As Double() = New Double(len - 1) {}
+            Dim out As Double() = SimdEngine.NewArray(Of Double)(len)
             Dim chunk As Integer = ChunkSize(len)
             Dim nChunks As Integer = (len + chunk - 1) \ chunk
 
+            ' 直接在分块内构造标量广播向量，避免再额外materialize一个和输入等长的
+            ' splat 数组（在大数组下那会是一整趟多余的分配 + 读写）
             System.Threading.Tasks.Parallel.For(0, nChunks,
                 Sub(c)
                     Dim start As Integer = c * chunk
+                    Dim ends As Integer = std.Min(start + chunk, len)
 
-                    For k As Integer = start To std.Min(start + chunk, len) - 1
-                        splat(k) = scalar
-                    Next
+                    Call MultiplyScalarRange(v, out, start, ends, scalar)
                 End Sub)
 
-            Return SimdEngine.Multiply(Of Double)(v, splat)
+            Return out
         End Function
+
+        Private Shared Sub MultiplyScalarRange(v As Double(), out As Double(), start As Integer, ends As Integer,
+                                               scalar As Double)
+            Dim count As Integer = Vector(Of Double).Count
+            Dim splat As New Vector(Of Double)(scalar)
+            Dim i As Integer = start
+
+            If SIMDEnvironment.IsEnabled AndAlso ends - start >= count Then
+                Dim last As Integer = ends - count
+
+                Do While i <= last
+                    Vector.Multiply(Of Double)(New Vector(Of Double)(v, i), splat).CopyTo(out, i)
+                    i += count
+                Loop
+                If i < ends Then
+                    Vector.Multiply(Of Double)(New Vector(Of Double)(v, last), splat).CopyTo(out, last)
+                End If
+
+                Return
+            End If
+
+            Do While i < ends
+                out(i) = v(i) * scalar
+                i += 1
+            Loop
+        End Sub
 
 #End Region
 

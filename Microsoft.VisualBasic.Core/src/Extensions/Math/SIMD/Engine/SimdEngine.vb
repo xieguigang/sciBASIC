@@ -84,6 +84,28 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 分配结果数组，跳过运行时的零初始化。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' <c>New T(n) {}</c> 会让运行时先把整块内存清零，再被我们的循环完整覆盖一次。
+        ''' 对于大数组（例如 1e7 个 <see cref="Double"/> 就是 80MB）这次多余的清零会占用
+        ''' 与真正计算同量级的内存带宽，是实测中最主要的开销之一。
+        ''' <see cref="GC.AllocateUninitializedArray(Of T)(Integer)"/> 可以跳过这一步。
+        ''' </para>
+        ''' <para>
+        ''' <b>安全性</b>：只有当返回数组的每一个元素都会被显式写入时才可以使用这个方法。
+        ''' 本模块中所有调用点都满足该前提（向量块 + 重叠末块，或者完整的标量循环，
+        ''' 覆盖了 <c>[0, length)</c> 的全部下标）；对于元素类型包含对象引用的情况，
+        ''' 运行时本身也会强制清零，因此不存在抛出未初始化引用的问题。
+        ''' </para>
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Shared Function NewArray(Of T)(len As Integer) As T()
+            Return GC.AllocateUninitializedArray(Of T)(len)
+        End Function
+
+        ''' <summary>
         ''' 判断长度 <paramref name="len"/> 的数据是否可以走到量化路径。
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -117,7 +139,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim i As Integer = 0
 
@@ -153,7 +175,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim i As Integer = 0
 
@@ -189,7 +211,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim i As Integer = 0
 
@@ -248,7 +270,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim i As Integer = 0
 
@@ -314,7 +336,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of T)()
 
-            Dim out As T() = New T(len - 1) {}
+            Dim out As T() = NewArray(Of T)(len)
             Dim count As Integer = Vector(Of T).Count
             Dim splat As New Vector(Of T)(scalar)
             Dim i As Integer = 0
@@ -452,7 +474,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = NewArray(Of Double)(len)
             Dim count As Integer = Vector(Of Double).Count
             Dim i As Integer = 0
 
@@ -488,7 +510,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of Single)()
 
-            Dim out As Single() = New Single(len - 1) {}
+            Dim out As Single() = NewArray(Of Single)(len)
             Dim count As Integer = Vector(Of Single).Count
             Dim i As Integer = 0
 
@@ -531,7 +553,7 @@ Namespace Math.SIMD
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = NewArray(Of Double)(len)
             Dim count As Integer = Vector(Of Double).Count
             Dim zero As Vector(Of Double) = Vector(Of Double).Zero
             Dim i As Integer = 0
@@ -582,7 +604,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = NewArray(Of Double)(len)
             Dim count As Integer = Vector(Of Double).Count
             Dim splat As New Vector(Of Double)(scalar)
             Dim i As Integer = 0
@@ -618,7 +640,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Single)()
 
-            Dim out As Single() = New Single(len - 1) {}
+            Dim out As Single() = NewArray(Of Single)(len)
             Dim count As Integer = Vector(Of Single).Count
             Dim splat As New Vector(Of Single)(scalar)
             Dim i As Integer = 0
@@ -654,7 +676,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Double)()
 
-            Dim out As Double() = New Double(len - 1) {}
+            Dim out As Double() = NewArray(Of Double)(len)
             Dim count As Integer = Vector(Of Double).Count
             Dim splat As New Vector(Of Double)(scalar)
             Dim i As Integer = 0
@@ -690,7 +712,7 @@ Namespace Math.SIMD
             Dim len As Integer = v.Length
             If len = 0 Then Return Array.Empty(Of Single)()
 
-            Dim out As Single() = New Single(len - 1) {}
+            Dim out As Single() = NewArray(Of Single)(len)
             Dim count As Integer = Vector(Of Single).Count
             Dim splat As New Vector(Of Single)(scalar)
             Dim i As Integer = 0
