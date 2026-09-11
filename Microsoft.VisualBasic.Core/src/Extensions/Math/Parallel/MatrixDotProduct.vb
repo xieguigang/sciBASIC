@@ -89,13 +89,10 @@ Namespace Math.Parallel
                 Next
                 For i As Integer = 0 To m - 1
                     Dim Arowi As Double() = a(i)
-                    Dim s As Double = 0
 
-                    For k As Integer = 0 To n - 1
-                        s += Arowi(k) * Bcolj(k)
-                    Next
-
-                    c(i)(j) = s
+                    ' 行内使用 SIMD 点积（处理器支持 FMA 时会自动使用融合乘加）：
+                    ' 单条指令处理 Vector(Of Double).Count 个元素，取代原先的标量累加循环
+                    c(i)(j) = Math.SIMD.SimdReduce.Dot(Arowi, Bcolj)
                 Next
             Next
         End Sub

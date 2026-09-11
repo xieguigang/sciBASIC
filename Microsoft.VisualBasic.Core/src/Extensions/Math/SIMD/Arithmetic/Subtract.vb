@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c56a04064fe3efc53d46a2afad71d2bd, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::simdSubtract::Extensions\Math\SIMD\Arithmetic\Subtract.vb"
 
     ' Author:
     ' 
@@ -25,124 +25,114 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
-
     ' /********************************************************************************/
 
     ' Summaries:
 
-
-    ' Code Statistics:
-
-    '   Total Lines: 94
-    '    Code Lines: 60 (63.83%)
-    ' Comment Lines: 18 (19.15%)
-    '    - Xml Docs: 66.67%
-    ' 
-    '   Blank Lines: 16 (17.02%)
-    '     File Size: 3.28 KB
-
-
     '     Class Subtract
-    ' 
-    '         Function: f64_op_subtract_f64, f64_op_subtract_f64_scalar, f64_scalar_op_subtract_f64
-    ' 
-    ' 
+
+    '         Function: f32_op_subtract_f32, f32_op_subtract_f32_scalar, f32_scalar_op_subtract_f32,
+    '                   f64_op_subtract_f64, f64_op_subtract_f64_scalar, f64_scalar_op_subtract_f64,
+    '                   int32_op_subtract_int32, int32_op_subtract_int32_scalar, int32_scalar_op_subtract_int32,
+    '                   int64_op_subtract_int64, int64_op_subtract_int64_scalar, int64_scalar_op_subtract_int64
+
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Numerics
-
-#If Not NET48 Then
-Imports System.Runtime.Intrinsics
-Imports System.Runtime.Intrinsics.X86
-#End If
-
 Namespace Math.SIMD
 
+    ''' <summary>
+    ''' 逐元素减法。注意标量与向量的顺序决定了结果的方向。
+    ''' </summary>
+    ''' <remarks>
+    ''' 原有的三个 ``f64`` 函数在旧版本里是**纯标量循环**（完全没有向量化），
+    ''' 这里改写为 <see cref="SimdEngine"/> 的薄封装之后才真正走上了 SIMD 路径。
+    ''' </remarks>
     Public Class Subtract
 
         ''' <summary>
-        ''' <paramref name="v1"/> - <paramref name="v2"/>
+        ''' 标量减向量：<c>v1 - v2(i)</c>
         ''' </summary>
-        ''' <param name="v1"></param>
-        ''' <param name="v2"></param>
-        ''' <returns></returns>
         Public Shared Function f64_scalar_op_subtract_f64(v1 As Double, v2 As Double()) As Double()
-            Dim result As Double() = New Double(v2.Length - 1) {}
-
-            For i As Integer = 0 To v2.Length - 1
-                result(i) = v1 - v2(i)
-            Next
-
-            Return result
-        End Function
-
-        Public Shared Function f64_op_subtract_f64_scalar(v1 As Double(), v2 As Double) As Double()
-            Dim result As Double() = New Double(v1.Length - 1) {}
-
-            For i As Integer = 0 To v1.Length - 1
-                result(i) = v1(i) - v2
-            Next
-
-            Return result
+            Return SimdEngine.ScalarSubtract(Of Double)(v1, v2)
         End Function
 
         ''' <summary>
-        ''' <paramref name="v1"/> - <paramref name="v2"/>
+        ''' 向量减标量：<c>v1(i) - v2</c>
         ''' </summary>
-        ''' <param name="v1"></param>
-        ''' <param name="v2"></param>
-        ''' <returns></returns>
+        Public Shared Function f64_op_subtract_f64_scalar(v1 As Double(), v2 As Double) As Double()
+            Return SimdEngine.SubtractScalar(Of Double)(v1, v2)
+        End Function
+
+        ''' <summary>
+        ''' 向量减向量：<c>v1(i) - v2(i)</c>
+        ''' </summary>
         Public Shared Function f64_op_subtract_f64(v1 As Double(), v2 As Double()) As Double()
-            Select Case SIMDEnvironment.config
-                Case SIMDConfiguration.disable
-none:               Dim out As Double() = New Double(v1.Length - 1) {}
+            Return SimdEngine.Subtract(Of Double)(v1, v2)
+        End Function
 
-                    For i As Integer = 0 To v1.Length - 1
-                        out(i) = v1(i) - v2(i)
-                    Next
+        ''' <summary>
+        ''' 标量减向量（<see cref="Single"/>）
+        ''' </summary>
+        Public Shared Function f32_scalar_op_subtract_f32(v1 As Single, v2 As Single()) As Single()
+            Return SimdEngine.ScalarSubtract(Of Single)(v1, v2)
+        End Function
 
-                    Return out
-                Case SIMDConfiguration.enable
-#If NET48 Then
-                    GoTo legacy
-#Else
-                    'If Avx2.IsSupported Then
-                    '    Return SIMDIntrinsics.VectorAddAvx2(v1, v2)
-                    'ElseIf Avx.IsSupported Then
-                    '    Return SIMDIntrinsics.VectorAddAvx(v1, v2)
-                    'Else
-                    GoTo legacy
-                    'End If
-#End If
-                Case SIMDConfiguration.legacy
-legacy:             Dim x1 As Vector(Of Double)
-                    Dim x2 As Vector(Of Double)
-                    Dim vec As Double() = New Double(v1.Length - 1) {}
-                    Dim remaining As Integer = v1.Length Mod SIMDEnvironment.countDouble
-                    Dim ends As Integer = v1.Length - remaining - 1
+        ''' <summary>
+        ''' 向量减标量（<see cref="Single"/>）
+        ''' </summary>
+        Public Shared Function f32_op_subtract_f32_scalar(v1 As Single(), v2 As Single) As Single()
+            Return SimdEngine.SubtractScalar(Of Single)(v1, v2)
+        End Function
 
-                    For i As Integer = 0 To ends Step SIMDEnvironment.countDouble
-                        x1 = New Vector(Of Double)(v1, i)
-                        x2 = New Vector(Of Double)(v2, i)
+        ''' <summary>
+        ''' 向量减向量（<see cref="Single"/>）
+        ''' </summary>
+        Public Shared Function f32_op_subtract_f32(v1 As Single(), v2 As Single()) As Single()
+            Return SimdEngine.Subtract(Of Single)(v1, v2)
+        End Function
 
-                        Call (x1 - x2).CopyTo(vec, i)
-                    Next
+        ''' <summary>
+        ''' 标量减向量（<see cref="Integer"/>）
+        ''' </summary>
+        Public Shared Function int32_scalar_op_subtract_int32(v1 As Integer, v2 As Integer()) As Integer()
+            Return SimdEngine.ScalarSubtract(Of Integer)(v1, v2)
+        End Function
 
-                    For i As Integer = v1.Length - remaining To v1.Length - 1
-                        vec(i) = v1(i) - v2(i)
-                    Next
+        ''' <summary>
+        ''' 向量减标量（<see cref="Integer"/>）
+        ''' </summary>
+        Public Shared Function int32_op_subtract_int32_scalar(v1 As Integer(), v2 As Integer) As Integer()
+            Return SimdEngine.SubtractScalar(Of Integer)(v1, v2)
+        End Function
 
-                    Return vec
-                Case Else
-                    If v1.Length < 10000 Then
-                        GoTo none
-                    Else
-                        GoTo legacy
-                    End If
-            End Select
+        ''' <summary>
+        ''' 向量减向量（<see cref="Integer"/>）
+        ''' </summary>
+        Public Shared Function int32_op_subtract_int32(v1 As Integer(), v2 As Integer()) As Integer()
+            Return SimdEngine.Subtract(Of Integer)(v1, v2)
+        End Function
+
+        ''' <summary>
+        ''' 标量减向量（<see cref="Long"/>）
+        ''' </summary>
+        Public Shared Function int64_scalar_op_subtract_int64(v1 As Long, v2 As Long()) As Long()
+            Return SimdEngine.ScalarSubtract(Of Long)(v1, v2)
+        End Function
+
+        ''' <summary>
+        ''' 向量减标量（<see cref="Long"/>）
+        ''' </summary>
+        Public Shared Function int64_op_subtract_int64_scalar(v1 As Long(), v2 As Long) As Long()
+            Return SimdEngine.SubtractScalar(Of Long)(v1, v2)
+        End Function
+
+        ''' <summary>
+        ''' 向量减向量（<see cref="Long"/>）
+        ''' </summary>
+        Public Shared Function int64_op_subtract_int64(v1 As Long(), v2 As Long()) As Long()
+            Return SimdEngine.Subtract(Of Long)(v1, v2)
         End Function
     End Class
 End Namespace

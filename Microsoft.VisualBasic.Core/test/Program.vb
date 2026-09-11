@@ -77,6 +77,13 @@ Module Program
             Return
         End If
 
+        ' runs the SIMD math module correctness regression and benchmark only:
+        '   test.exe --simd
+        If args.Length > 0 AndAlso args(0) = "--simd" Then
+            Call SIMDTest.Run()
+            Return
+        End If
+
         Call qgramTestSearch.Run()
         Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()
@@ -95,7 +102,6 @@ Module Program
 
         Call markdownRenderVerify.Run()
 
-        Call SIMDTest.Main1()
         Call streamTest.Main1()
     End Sub
 End Module
