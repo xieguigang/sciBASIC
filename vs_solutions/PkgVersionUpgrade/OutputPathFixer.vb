@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fe0528e40cbc30497bb86219f926620, vs_solutions\PkgVersionUpgrade\OutputPathFixer.vb"
+﻿#Region "Microsoft.VisualBasic::f66b4d15b60ad37fd7dc495b25664cdf, vs_solutions\PkgVersionUpgrade\OutputPathFixer.vb"
 
     ' Author:
     ' 
@@ -289,4 +289,3 @@ Module OutputPathFixer
     End Function
 
 End Module
-

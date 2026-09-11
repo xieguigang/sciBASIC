@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c6301794376a6db6de41c41ecf9e9d8, Data\BinaryData\SQLite3\Objects\BTreeLeafTablePage.vb"
+﻿#Region "Microsoft.VisualBasic::60fa5f7234b44e5ab61128bdc55fd848, Data\BinaryData\SQLite3\Objects\BTreeLeafTablePage.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 54.17%
     ' 
     '   Blank Lines: 23 (22.12%)
-    '     File Size: 4.10 KB
+    '     File Size: 4.08 KB
 
 
     '     Class BTreeLeafTablePage

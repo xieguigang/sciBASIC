@@ -1,4 +1,84 @@
-﻿Imports System.Collections.Generic
+﻿#Region "Microsoft.VisualBasic::83bb095b4a0396cb0118c78e791ed7d2, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\WAL.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 449
+    '    Code Lines: 337 (75.06%)
+    ' Comment Lines: 56 (12.47%)
+    '    - Xml Docs: 78.57%
+    ' 
+    '   Blank Lines: 56 (12.47%)
+    '     File Size: 19.43 KB
+
+
+    '     Class WAL
+    ' 
+    ' 
+    '         Enum RecordKind
+    ' 
+    '             MergeAppend, MergeDone, MergeFull, Splice
+    ' 
+    ' 
+    ' 
+    '         Class Record
+    ' 
+    ' 
+    ' 
+    '         Class ReadResult
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '  
+    ' 
+    '     Properties: Length, LogFilePath, PendingBufferedLineCount, PendingOperationCount
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: AddPendingLines, ExpectLit, JEscape, PendingLine, ReadJsonStringTok
+    '               ReadLongTok, ReadRecords, TryParseRecord
+    ' 
+    '     Sub: AppendMergeBegin, AppendMergeDone, AppendSplice, BeginReplay, ClearLog
+    '          Dispose, EndReplay, EnsureOpen, Flush, IncrementOperationCount
+    '          Open, ResetPendingState, TruncateTo, WriteLogBytes
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.IO
 Imports System.Text
@@ -447,3 +527,4 @@ Namespace Data.Repository
     End Class
 
 End Namespace
+

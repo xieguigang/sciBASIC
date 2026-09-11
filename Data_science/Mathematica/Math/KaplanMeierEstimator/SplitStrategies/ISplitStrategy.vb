@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::096e533edf419849ad86f807701a81c8, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\ISplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::6f5d718409e7644e7416c80a5020a374, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\ISplitStrategy.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 2 (20.00%)
-    '     File Size: 408 B
+    '     File Size: 402 B
 
 
     '     Interface ISplitStrategy

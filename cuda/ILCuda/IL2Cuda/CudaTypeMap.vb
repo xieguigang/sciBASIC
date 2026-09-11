@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::160f5c6d5bc6c69b40570bb0c26cf504, cuda\ILCuda\IL2Cuda\CudaTypeMap.vb"
+﻿#Region "Microsoft.VisualBasic::dc0975dc95722b0b8a9c730bb4998e24, cuda\ILCuda\IL2Cuda\CudaTypeMap.vb"
 
     ' Author:
     ' 
@@ -268,4 +268,3 @@ Namespace IL2Cuda
         End Function
     End Module
 End Namespace
-

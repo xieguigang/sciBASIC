@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::407e48175e2bac62398a5de887302b3f, vs_solutions\VBS\src\DynamicDll.vb"
+﻿#Region "Microsoft.VisualBasic::bc720b27851a5025dbf341c684a152dd, vs_solutions\VBS\src\DynamicDll.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 38.46%
     ' 
     '   Blank Lines: 27 (18.37%)
-    '     File Size: 6.12 KB
+    '     File Size: 6.11 KB
 
 
     ' Module DynamicDll
@@ -198,4 +198,3 @@ Module DynamicDll
         Return i32
     End Function
 End Module
-

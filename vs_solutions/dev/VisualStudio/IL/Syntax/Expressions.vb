@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f524bf6f1a64f85530cefa633b142550, vs_solutions\dev\VisualStudio\IL\Syntax\Expressions.vb"
+﻿#Region "Microsoft.VisualBasic::c1af334d115e8a238a4fb3bb83354f06, vs_solutions\dev\VisualStudio\IL\Syntax\Expressions.vb"
 
     ' Author:
     ' 
@@ -451,4 +451,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-

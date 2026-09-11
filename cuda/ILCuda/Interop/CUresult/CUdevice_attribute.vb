@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90797993600ddf94aa6c9a42a8f62ab1, cuda\ILCuda\Interop\CUresult\CUdevice_attribute.vb"
+﻿#Region "Microsoft.VisualBasic::cbae4e1bda664533a3178ae409c57177, cuda\ILCuda\Interop\CUresult\CUdevice_attribute.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 21 (63.64%)
-    ' Comment Lines: 8 (24.24%)
+    '   Total Lines: 31
+    '    Code Lines: 21 (67.74%)
+    ' Comment Lines: 8 (25.81%)
     '    - Xml Docs: 37.50%
     ' 
-    '   Blank Lines: 4 (12.12%)
+    '   Blank Lines: 2 (6.45%)
     '     File Size: 1.36 KB
 
 
@@ -47,7 +47,6 @@
     ' 
     ' 
     '  
-    ' 
     ' 
     ' 
     ' 
@@ -86,6 +85,3 @@ Public Enum CUdevice_attribute
     CU_DEVICE_ATTRIBUTE_COMPUTE_CAPABILITY_MINOR = 76
     CU_DEVICE_ATTRIBUTE_MAX_SHARED_MEMORY_PER_BLOCK_OPTIN = 97
 End Enum
-
-
-

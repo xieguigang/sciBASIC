@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf31f0b02e3f4d031e4c337a954a1aaa, vs_solutions\PkgVersionUpgrade\VersionUpgrader.vb"
+﻿#Region "Microsoft.VisualBasic::8d5642bbd24407c07e711b6e91ec64cd, vs_solutions\PkgVersionUpgrade\VersionUpgrader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.98%
     ' 
     '   Blank Lines: 31 (17.51%)
-    '     File Size: 7.58 KB
+    '     File Size: 7.57 KB
 
 
     ' Module VersionUpgrader
@@ -236,4 +236,3 @@ Module VersionUpgrader
     End Function
 
 End Module
-

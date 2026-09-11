@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63aad3b8d64fdd19fc5b12194d961c73, Data_science\Mathematica\Math\Math\test\lpp\SelfTest.vb"
+﻿#Region "Microsoft.VisualBasic::21267406ed8c0de24b619be6485af997, Data_science\Mathematica\Math\Math\test\lpp\SelfTest.vb"
 
     ' Author:
     ' 
@@ -299,4 +299,3 @@ Public Module SelfTest
     End Sub
 
 End Module
-

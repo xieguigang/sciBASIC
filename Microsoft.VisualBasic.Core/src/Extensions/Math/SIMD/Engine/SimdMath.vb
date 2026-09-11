@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdMath::Extensions\Math\SIMD\Engine\SimdMath.vb"
+﻿#Region "Microsoft.VisualBasic::5ab9db360a5ece14b5fcb326fbbdfc37, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdMath.vb"
 
     ' Author:
     ' 
@@ -25,14 +25,32 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 353
+    '    Code Lines: 192 (54.39%)
+    ' Comment Lines: 85 (24.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 76 (21.53%)
+    '     File Size: 13.44 KB
+
+
     '     Class SimdMath
-
-    '         Function: Abs, Clamp, Exp, Log, Negate, Pow, PowScalar, Reciprocal, Sqrt, Square
-
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Abs, Clamp, (+2 Overloads) Exp, (+2 Overloads) Log, Negate
+    '                   Pow, PowScalar, (+2 Overloads) Reciprocal, (+2 Overloads) Sqrt, Square
+    '                   Unary
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

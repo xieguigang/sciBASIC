@@ -1,3 +1,84 @@
+﻿#Region "Microsoft.VisualBasic::54a667fb841dace8d3136fc88929393b, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1126
+    '    Code Lines: 956 (84.90%)
+    ' Comment Lines: 61 (5.42%)
+    '    - Xml Docs: 42.62%
+    ' 
+    '   Blank Lines: 109 (9.68%)
+    '     File Size: 50.53 KB
+
+
+    '     Class TextLineStore
+    ' 
+    ' 
+    '         Enum PieceKind
+    ' 
+    ' 
+    ' 
+    ' 
+    '         Class Piece
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: BaseLineCount, DataFilePath, FileNewLine, HasPendingChanges, IndexFilePath
+    '                 IndexGranularity, LogFilePath, PendingBufferedLineCount, PendingOperationCount, TotalLines
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: FindLastNewlineOffset, IsAppendOnlyLayout, Materialize, ReadAndRecoverLog, ReadLine
+    '               (+2 Overloads) ReadLines, ReadOriginalLines, SnapshotPieces, TryLoadIndexFile, WriteLineBytes
+    ' 
+    '     Sub: AppendLine, AppendLines, ApplySplice, CleanupTempFiles, CloseReader
+    '          CoalesceOriginalPieces, DeleteLine, DeleteLines, DetectBomAndNewLine, Dispose
+    '          DoSplice, EnsureDataFileForOpen, EnsureOpen, FindPiece, FinishMergedState
+    '          FlushLog, InsertLines, LoadOrRebuildIndex, Merge, MergeFastAppend
+    '          MergeFullRewrite, OnWalInfo, Open, OpenReader, PositionReaderAtLine
+    '          RebuildCum, RebuildIndexCore, RebuildLineIndex, RepairDataTail, ReplaceLine
+    '          ReplaceLines, SplitPiece, SwapFile, TruncateDataTo, TryCoalesce
+    '          WriteIndexFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Globalization
 Imports System.IO
 Imports System.Text
@@ -1124,3 +1205,4 @@ Namespace Data.Repository
     End Class
 
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdDivide::Extensions\Math\SIMD\Arithmetic\Divide.vb"
+﻿#Region "Microsoft.VisualBasic::401d8861dd1ce1d3ca3cb55f2cc0ed55, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Divide.vb"
 
     ' Author:
     ' 
@@ -25,16 +25,30 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 32 (37.65%)
+    ' Comment Lines: 41 (48.24%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (14.12%)
+    '     File Size: 3.54 KB
+
+
     '     Class Divide
-
-    '         Function: f32_op_divide_f32, f32_op_divide_f32_scalar, f32_scalar_op_divide_f32,
-    '                   f64_op_divide_f64, f64_op_divide_f64_scalar, f64_scalar_op_divide_f64,
-    '                   int32_op_divide_int32_scalar
-
+    ' 
+    '         Function: f32_op_divide_f32, f32_op_divide_f32_scalar, f32_scalar_op_divide_f32, f64_op_divide_f64, f64_op_divide_f64_scalar
+    '                   f64_scalar_op_divide_f64, int32_op_divide_int32_scalar
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

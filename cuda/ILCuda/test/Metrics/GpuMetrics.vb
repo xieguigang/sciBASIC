@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::946bb090a372ffa248d0bc77c958c7f4, cuda\ILCuda\test\Metrics\GpuMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::f08966ece74d3f82657ac1f2abb04905, cuda\ILCuda\test\Metrics\GpuMetrics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 58.06%
     ' 
     '   Blank Lines: 34 (19.32%)
-    '     File Size: 8.55 KB
+    '     File Size: 8.54 KB
 
 
     '     Module MetricsKernelNames
@@ -234,4 +234,3 @@ Namespace Metrics
         End Function
     End Module
 End Namespace
-

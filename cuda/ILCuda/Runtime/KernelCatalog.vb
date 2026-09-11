@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::852ea2c3036099d06622a69e9e6b2e6a, cuda\ILCuda\Runtime\KernelCatalog.vb"
+﻿#Region "Microsoft.VisualBasic::9cb792a12a57d0efd2e6cd0951d14f97, cuda\ILCuda\Runtime\KernelCatalog.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Namespace Runtime
         End Function
     End Module
 End Namespace
-

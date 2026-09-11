@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae63364b613abc8c8fe855452cdf72cd, cuda\ILCuda\Runtime\CudaTimer.vb"
+﻿#Region "Microsoft.VisualBasic::3744505969714b2fbbfec83087208d04, cuda\ILCuda\Runtime\CudaTimer.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Namespace Runtime
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdCapabilities::Extensions\Math\SIMD\Engine\SimdCapabilities.vb"
+﻿#Region "Microsoft.VisualBasic::58321379684a81a22593f171d54a7f4a, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdCapabilities.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 46 (38.33%)
+    ' Comment Lines: 60 (50.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (11.67%)
+    '     File Size: 5.32 KB
+
+
+    '     Class SimdCapabilities
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: BuildDescription, IsVectorizable, VectorSize
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

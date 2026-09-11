@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a41f9b09877416a87831bfb735a2c60f, Data_science\Mathematica\Math\Math\Algebra\LP\LpSparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::52836d9a529f2a6574a7e093cb2f9551, Data_science\Mathematica\Math\Math\Algebra\LP\LpSparseMatrix.vb"
 
     ' Author:
     ' 
@@ -256,4 +256,3 @@ Namespace LinearAlgebra.LinearProgramming
     End Class
 
 End Namespace
-

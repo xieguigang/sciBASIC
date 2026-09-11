@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdIntrinsics::Extensions\Math\SIMD\Intrinsics.vb"
+﻿#Region "Microsoft.VisualBasic::41ef72abb6c48bf171e0fade525dbf9d, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Intrinsics.vb"
 
     ' Author:
     ' 
@@ -25,14 +25,34 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 301
+    '    Code Lines: 176 (58.47%)
+    ' Comment Lines: 74 (24.58%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 51 (16.94%)
+    '     File Size: 11.84 KB
+
+
     '     Class SIMDIntrinsics
-
-    '         Function: Axpy, DotFma, HorizontalSum4, MultiplyAdd, SumSquaresFma, VectorAddAvx, VectorAddAvx2
-
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Axpy, (+2 Overloads) DotFma, HorizontalSum4, HorizontalSum8, Load4
+    '                   Load8, MultiplyAdd, SumSquaresFma, (+2 Overloads) VectorAddAvx, (+2 Overloads) VectorAddAvx2
+    ' 
+    '         Sub: Store4
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

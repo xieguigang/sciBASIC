@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3190801f1c80d42d950d100448e7f904, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppProblem.vb"
+﻿#Region "Microsoft.VisualBasic::e2e17181313a1b71ac7cf9ac978e288c, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppProblem.vb"
 
     ' Author:
     ' 
@@ -506,4 +506,3 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Class
 
 End Namespace
-

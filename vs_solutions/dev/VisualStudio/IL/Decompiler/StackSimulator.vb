@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f85ed77ef19376c60341f44fafdf21e, vs_solutions\dev\VisualStudio\IL\Decompiler\StackSimulator.vb"
+﻿#Region "Microsoft.VisualBasic::bbedd64080e38b2486dcd0aa18eda8c7, vs_solutions\dev\VisualStudio\IL\Decompiler\StackSimulator.vb"
 
     ' Author:
     ' 
@@ -546,4 +546,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-

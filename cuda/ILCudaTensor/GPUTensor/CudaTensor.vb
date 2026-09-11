@@ -1,3 +1,73 @@
+﻿#Region "Microsoft.VisualBasic::1bc9807cb311066dccc3d8cbe561e839, cuda\ILCudaTensor\GPUTensor\CudaTensor.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 615
+    '    Code Lines: 409 (66.50%)
+    ' Comment Lines: 66 (10.73%)
+    '    - Xml Docs: 62.12%
+    ' 
+    '   Blank Lines: 140 (22.76%)
+    '     File Size: 25.40 KB
+
+
+    '     Class CudaTensor
+    ' 
+    '         Properties: Current, Engine, KernelFailures, LastError, MaxStageBlocks
+    '                     MinGemmElements, MinGpuElements, Name
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Abs, Add, AddScalar, ArgMax, ArgMin
+    '                   Clip, Cos, Device, Divide, DivideScalar
+    '                   Elu, EwBinary, EwUnary, Exp, Gelu
+    '                   IsLastAxis, LeakyRelu, Log, LogSoftmax, MatMul
+    '                   Max, Mean, MeanAll, Min, Multiply
+    '                   MultiplyScalar, Negate, OnGpu, Pow, Reciprocal
+    '                   ReducedShape, ReduceGlobal, Register, Relu, RowReduce
+    '                   RowSoftmax, Sigmoid, Sin, Softmax, Sqrt
+    '                   Square, Subtract, Sum, SumAll, Swish
+    '                   Tanh, Transpose
+    ' 
+    '         Sub: Dispose, LaunchRow, Unregister
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' CudaTensor —— 基于 ILCuda 的 GPU 计算后端（全 double 精度）
 '
@@ -613,3 +683,4 @@ Namespace GPUTensor
     End Class
 
 End Namespace
+

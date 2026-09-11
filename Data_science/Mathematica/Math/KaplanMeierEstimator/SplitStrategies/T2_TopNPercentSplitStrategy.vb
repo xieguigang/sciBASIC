@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d2850ea66d6cabfaea739801e9eac2, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\T2_TopNPercentSplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::9fc9f886bd0770637fa3c48beca2a4b1, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\T2_TopNPercentSplitStrategy.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (21.43%)
-    '     File Size: 1.87 KB
+    '     File Size: 1.86 KB
 
 
     '     Class T2_TopNPercentSplitStrategy

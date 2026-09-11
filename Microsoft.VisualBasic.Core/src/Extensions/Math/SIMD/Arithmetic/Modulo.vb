@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdModulo::Extensions\Math\SIMD\Arithmetic\Modulo.vb"
+﻿#Region "Microsoft.VisualBasic::5cecaee3f52e3a68949d3949816f2498, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Modulo.vb"
 
     ' Author:
     ' 
@@ -25,16 +25,30 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 195
+    '    Code Lines: 106 (54.36%)
+    ' Comment Lines: 43 (22.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 46 (23.59%)
+    '     File Size: 7.20 KB
+
+
     '     Class Modulo
-
-    '         Function: f64_op_modulo_f64, f64_op_modulo_f64_scalar, f64_scalar_op_modulo_f64,
-    '                   int32_op_modulo_int32, int32_op_modulo_int32_scalar, int32_scalar_op_modulo_int32,
-    '                   int64_op_modulo_int64, int64_op_modulo_int64_scalar, int64_scalar_op_modulo_int64
-
+    ' 
+    '         Function: f64_op_modulo_f64, f64_op_modulo_f64_scalar, f64_scalar_op_modulo_f64, int32_op_modulo_int32, int32_op_modulo_int32_scalar
+    '                   int32_scalar_op_modulo_int32, int64_op_modulo_int64, int64_op_modulo_int64_scalar, int64_scalar_op_modulo_int64
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

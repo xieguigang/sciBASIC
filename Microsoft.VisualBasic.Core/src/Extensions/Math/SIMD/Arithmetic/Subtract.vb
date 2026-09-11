@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdSubtract::Extensions\Math\SIMD\Arithmetic\Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::f638e11c520415f196826c30e23e1c84, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Subtract.vb"
 
     ' Author:
     ' 
@@ -25,17 +25,31 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 40 (41.67%)
+    ' Comment Lines: 43 (44.79%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (13.54%)
+    '     File Size: 3.90 KB
+
+
     '     Class Subtract
-
-    '         Function: f32_op_subtract_f32, f32_op_subtract_f32_scalar, f32_scalar_op_subtract_f32,
-    '                   f64_op_subtract_f64, f64_op_subtract_f64_scalar, f64_scalar_op_subtract_f64,
-    '                   int32_op_subtract_int32, int32_op_subtract_int32_scalar, int32_scalar_op_subtract_int32,
-    '                   int64_op_subtract_int64, int64_op_subtract_int64_scalar, int64_scalar_op_subtract_int64
-
+    ' 
+    '         Function: f32_op_subtract_f32, f32_op_subtract_f32_scalar, f32_scalar_op_subtract_f32, f64_op_subtract_f64, f64_op_subtract_f64_scalar
+    '                   f64_scalar_op_subtract_f64, int32_op_subtract_int32, int32_op_subtract_int32_scalar, int32_scalar_op_subtract_int32, int64_op_subtract_int64
+    '                   int64_op_subtract_int64_scalar, int64_scalar_op_subtract_int64
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

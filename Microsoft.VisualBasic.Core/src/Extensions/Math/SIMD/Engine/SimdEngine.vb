@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdEngine::Extensions\Math\SIMD\Engine\SimdEngine.vb"
+﻿#Region "Microsoft.VisualBasic::93caa221f2bfa3367d522d3577acebe1, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdEngine.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,49 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 715
+    '    Code Lines: 427 (59.72%)
+    ' Comment Lines: 142 (19.86%)
+    '    - Xml Docs: 97.18%
+    ' 
+    '   Blank Lines: 146 (20.42%)
+    '     File Size: 27.44 KB
+
+
+    '     Class SimdEngine
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '             Function: Add, AddInPlace, AddScalar, AddScalarInPlace, CanVectorize
+    '                       CheckArgument, Compute, (+2 Overloads) Divide, (+2 Overloads) DivideScalar, DivideZeroSafe
+    '                       InPlace, InPlaceScalar, Max, Min, Multiply
+    '                       MultiplyInPlace, MultiplyScalar, MultiplyScalarInPlace, NewArray, ScalarCompute
+    '                       (+2 Overloads) ScalarDivide, ScalarLane, ScalarSubtract, Subtract, SubtractInPlace
+    '                       SubtractScalar
+    ' 
+    '             Sub: DivideZeroSafeBlock
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

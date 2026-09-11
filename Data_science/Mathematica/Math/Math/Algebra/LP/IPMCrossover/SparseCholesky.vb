@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88fa387642ce3695c7fa3a7017f4e747, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseCholesky.vb"
+﻿#Region "Microsoft.VisualBasic::0fa6a2c3906cfeaf6ceb8927e9174b2f, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseCholesky.vb"
 
     ' Author:
     ' 
@@ -573,4 +573,3 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Class
 
 End Namespace
-

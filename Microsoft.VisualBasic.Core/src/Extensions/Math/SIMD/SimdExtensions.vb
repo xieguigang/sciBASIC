@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdExtensions::Extensions\Math\SIMD\SimdExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8e1ff93e65c5dbbaa608a326cb7b97bb, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\SimdExtensions.vb"
 
     ' Author:
     ' 
@@ -25,17 +25,33 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 355
+    '    Code Lines: 171 (48.17%)
+    ' Comment Lines: 136 (38.31%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 48 (13.52%)
+    '     File Size: 11.35 KB
+
+
     '     Module SimdExtensions
-
-    '         Function: SimdAbs, SimdAdd, SimdAddScalar, SimdClamp, SimdDivide, SimdDivideScalar, SimdDot,
-    '                   SimdL1Norm, SimdL2Norm, SimdMax, SimdMean, SimdMin, SimdMultiply, SimdMultiplyScalar,
-    '                   SimdNegate, SimdReciprocal, SimdSqrt, SimdSquare, SimdSubtract, SimdSum,
+    ' 
+    '         Function: (+3 Overloads) SimdAbs, (+5 Overloads) SimdAdd, SimdAddScalar, SimdClamp, SimdDivide
+    '                   SimdDivideScalar, (+2 Overloads) SimdDot, SimdL1Norm, SimdL2Norm, (+2 Overloads) SimdMax
+    '                   (+2 Overloads) SimdMean, SimdMin, (+5 Overloads) SimdMultiply, SimdMultiplyScalar, (+2 Overloads) SimdNegate
+    '                   SimdReciprocal, (+2 Overloads) SimdSqrt, SimdSquare, (+4 Overloads) SimdSubtract, (+2 Overloads) SimdSum
     '                   SimdSumSquares
-
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

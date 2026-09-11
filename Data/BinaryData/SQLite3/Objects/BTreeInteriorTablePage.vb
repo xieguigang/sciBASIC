@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7af20f02e496ea03023660f5d21d2fe2, Data\BinaryData\SQLite3\Objects\BTreeInteriorTablePage.vb"
+﻿#Region "Microsoft.VisualBasic::b9a36df1a141ccd6e690e7465fa80a6c, Data\BinaryData\SQLite3\Objects\BTreeInteriorTablePage.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (25.00%)
-    '     File Size: 1.33 KB
+    '     File Size: 1.32 KB
 
 
     '     Class BTreeInteriorTablePage

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa2c712526afe80379a89530602dc064, cuda\ILCuda\Runtime\Diagnostics\DeviceReport.vb"
+﻿#Region "Microsoft.VisualBasic::78fdf0c7be4ed179db1622881b17a3dc, cuda\ILCuda\Runtime\Diagnostics\DeviceReport.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
-

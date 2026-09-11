@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf0f0dea7134bcc557ea996b5423f4a2, cuda\ILCuda\IL2Cuda\CudaEmitter.vb"
+﻿#Region "Microsoft.VisualBasic::99d8464c102c17962dbe7488c724ddde, cuda\ILCuda\IL2Cuda\CudaEmitter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 37.50%
     ' 
     '   Blank Lines: 56 (22.13%)
-    '     File Size: 10.34 KB
+    '     File Size: 10.33 KB
 
 
     '     Class CudaEmitter
@@ -312,4 +312,3 @@ Namespace IL2Cuda
         End Function
     End Class
 End Namespace
-

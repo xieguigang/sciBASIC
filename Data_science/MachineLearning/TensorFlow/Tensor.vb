@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69c51c5667af7c6c74f344e4842378ca, Data_science\MachineLearning\TensorFlow\Tensor.vb"
+﻿#Region "Microsoft.VisualBasic::5222c9ee568ee315aa85d234a23a058a, Data_science\MachineLearning\TensorFlow\Tensor.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1014
-    '    Code Lines: 575 (56.71%)
-    ' Comment Lines: 282 (27.81%)
-    '    - Xml Docs: 94.68%
+    '   Total Lines: 942
+    '    Code Lines: 493 (52.34%)
+    ' Comment Lines: 298 (31.63%)
+    '    - Xml Docs: 94.97%
     ' 
-    '   Blank Lines: 157 (15.48%)
-    '     File Size: 30.88 KB
+    '   Blank Lines: 151 (16.03%)
+    '     File Size: 29.49 KB
 
 
     ' Class Tensor
     ' 
-    '     Properties: Data, Dimensions, Gradient, IsVariable, Length
-    '                 Rank, Shape, TotalLength
+    '     Properties: computeKernel, Data, Dimensions, Gradient, IsVariable
+    '                 Length, Rank, Shape, TotalLength, Version
     ' 
     '     Constructor: (+4 Overloads) Sub New
     ' 

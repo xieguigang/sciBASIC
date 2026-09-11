@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::tensorComputeBase::Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
+﻿#Region "Microsoft.VisualBasic::109fa2e9a395f60c6559d6d5014e7f58, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,44 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 657
+    '    Code Lines: 509 (77.47%)
+    ' Comment Lines: 19 (2.89%)
+    '    - Xml Docs: 47.37%
+    ' 
+    '   Blank Lines: 129 (19.63%)
+    '     File Size: 26.34 KB
+
+
+    '     Class TensorComputeBase
+    ' 
+    '         Function: Abs, Add, AddScalar, ArgGlobal, ArgMax
+    '                   ArgMin, Clip, Cos, Divide, DivideScalar
+    '                   Elu, Exp, Gelu, HuberLoss, L2Loss
+    '                   L2Norm, LeakyRelu, Log, LogSoftmax, MapBinary
+    '                   MapUnary, MatMul, Max, Maximum, Mean
+    '                   MeanAll, Min, Minimum, MseLoss, Multiply
+    '                   MultiplyScalar, Negate, Pow, Prod, Reciprocal
+    '                   ReduceAlongAxis, ReduceArgAxis, ReduceGlobal, Relu, Sigmoid
+    '                   SigmoidCrossEntropyWithLogits, Sin, Softmax, Sqrt, Square
+    '                   StdDev, Subtract, Sum, SumAll, Swish
+    '                   Tanh, Transpose, Wrap
+    ' 
+    '         Sub: RequireSameShape
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

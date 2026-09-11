@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::060ea174abee28c6b3af1d39702385c2, cuda\ILCuda\Interop\CUresult\nvrtcResult.vb"
+﻿#Region "Microsoft.VisualBasic::fa5c2171f182323d2302eaedecdf33a9, cuda\ILCuda\Interop\CUresult\nvrtcResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14 (77.78%)
-    ' Comment Lines: 3 (16.67%)
+    '   Total Lines: 17
+    '    Code Lines: 14 (82.35%)
+    ' Comment Lines: 3 (17.65%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (5.56%)
-    '     File Size: 607 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 603 B
 
 
     ' Enum nvrtcResult
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' NVRTC 返回码（nvrtcResult）
@@ -72,4 +71,3 @@ Public Enum nvrtcResult
     NVRTC_ERROR_NAME_EXPRESSION_NOT_VALID = 10
     NVRTC_ERROR_INTERNAL_ERROR = 11
 End Enum
-

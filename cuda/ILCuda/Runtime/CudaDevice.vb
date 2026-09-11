@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58f9bae1a5b78ee4a7dcb91606a7b9f6, cuda\ILCuda\Runtime\CudaDevice.vb"
+﻿#Region "Microsoft.VisualBasic::07ac3c25f9b2f4dc693d4ab1165487b2, cuda\ILCuda\Runtime\CudaDevice.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.57%
     ' 
     '   Blank Lines: 23 (16.67%)
-    '     File Size: 6.40 KB
+    '     File Size: 6.39 KB
 
 
     '     Class CudaDevice
@@ -200,4 +200,3 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
-

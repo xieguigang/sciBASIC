@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a2ea8ca5b4a3a8e6221590b9ed31602, cuda\ILCuda\Runtime\Diagnostics\FixSuggestion.vb"
+﻿#Region "Microsoft.VisualBasic::435a616bcf7f1927beb383e14bdb7ae7, cuda\ILCuda\Runtime\Diagnostics\FixSuggestion.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
-

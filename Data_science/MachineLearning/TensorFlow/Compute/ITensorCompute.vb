@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::itensorCompute::Data_science\MachineLearning\TensorFlow\Compute\ITensorCompute.vb"
+﻿#Region "Microsoft.VisualBasic::e41c7b88cf35cbc15f1fb42d3f63814d, Data_science\MachineLearning\TensorFlow\Compute\ITensorCompute.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,43 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 63 (54.31%)
+    ' Comment Lines: 29 (25.00%)
+    '    - Xml Docs: 58.62%
+    ' 
+    '   Blank Lines: 24 (20.69%)
+    '     File Size: 4.90 KB
+
+
+    '     Interface ITensorCompute
+    ' 
+    '         Properties: Name
+    ' 
+    '         Function: Abs, Add, AddScalar, ArgMax, ArgMin
+    '                   Clip, Cos, Divide, DivideScalar, Elu
+    '                   Exp, Gelu, HuberLoss, L2Loss, L2Norm
+    '                   LeakyRelu, Log, LogSoftmax, MatMul, Max
+    '                   Maximum, Mean, MeanAll, Min, Minimum
+    '                   MseLoss, Multiply, MultiplyScalar, Negate, Pow
+    '                   Prod, Reciprocal, Relu, Sigmoid, SigmoidCrossEntropyWithLogits
+    '                   Sin, Softmax, Sqrt, Square, StdDev
+    '                   Subtract, Sum, SumAll, Swish, Tanh
+    '                   Transpose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

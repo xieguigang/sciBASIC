@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::776cd9ff189646d48d2a4a66f4494d4a, Data\BinaryData\SQLite3\Internal\ReaderBase.vb"
+﻿#Region "Microsoft.VisualBasic::d5aec2963869b7f44f56220bc8fb30b5, Data\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 292
-    '    Code Lines: 192 (65.75%)
-    ' Comment Lines: 30 (10.27%)
-    '    - Xml Docs: 23.33%
+    '   Total Lines: 296
+    '    Code Lines: 195 (65.88%)
+    ' Comment Lines: 31 (10.47%)
+    '    - Xml Docs: 22.58%
     ' 
-    '   Blank Lines: 70 (23.97%)
-    '     File Size: 9.65 KB
+    '   Blank Lines: 70 (23.65%)
+    '     File Size: 9.91 KB
 
 
     '     Class ReaderBase
@@ -51,7 +51,7 @@
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) CheckMagicBytes, (+2 Overloads) Read, ReadByte, ReadInt16, ReadInt32
-    '                   ReadInteger, ReadString, ReadUInt16, ReadUInt32, ReadVarInt
+    '                   ReadInteger, (+2 Overloads) ReadString, ReadUInt16, ReadUInt32, ReadVarInt
     ' 
     '         Sub: ApplySqliteDatabaseHeader, CheckSize, Dispose, SeekPage, SetPosition
     '              SetPositionAndCheckSize, Skip, SkipVarInt

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdCompare::Extensions\Math\SIMD\Engine\SimdCompare.vb"
+﻿#Region "Microsoft.VisualBasic::9ebc226423f2b23d1c84dcc583bbb3c6, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdCompare.vb"
 
     ' Author:
     ' 
@@ -25,15 +25,35 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 327
+    '    Code Lines: 192 (58.72%)
+    ' Comment Lines: 68 (20.80%)
+    '    - Xml Docs: 98.53%
+    ' 
+    '   Blank Lines: 67 (20.49%)
+    '     File Size: 13.53 KB
+
+
     '     Class SimdCompare
-
-    '         Function: All, Any, CountTrue, Equal, GreaterThan, GreaterThanOrEqual, LaneTrue,
-    '                   LessThan, LessThanOrEqual, NotEqual, Select, Where
-
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) [Select], All, Any, Compare, CountTrue
+    '                   Equal, GreaterThan, GreaterThanOrEqual, LaneTrue, LessThan
+    '                   LessThanOrEqual, NotEqual, Where
+    ' 
+    '         Sub: CompareBlock
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

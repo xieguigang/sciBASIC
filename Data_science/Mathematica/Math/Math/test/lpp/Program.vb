@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c92554e0d280eee2fad1b00b259ed0f9, Data_science\Mathematica\Math\Math\test\lpp\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e9d995f5577517c3a656b39288142389, Data_science\Mathematica\Math\Math\test\lpp\Program.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Public Module ProgramLpp
     End Sub
 
 End Module
-

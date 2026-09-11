@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdTest::test\test\SIMDTest.vb"
+﻿#Region "Microsoft.VisualBasic::c78dace7f4bb96ffc127d32e352782b0, Microsoft.VisualBasic.Core\test\test\SIMDTest.vb"
 
     ' Author:
     ' 
@@ -25,14 +25,37 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '     Module SIMDTest
 
-    '         Sub: Benchmark, Main1, Run
+    ' Code Statistics:
 
+    '   Total Lines: 687
+    '    Code Lines: 493 (71.76%)
+    ' Comment Lines: 45 (6.55%)
+    '    - Xml Docs: 84.44%
+    ' 
+    '   Blank Lines: 149 (21.69%)
+    '     File Size: 31.23 KB
+
+
+    ' Module SIMDTest
+    ' 
+    '     Function: CheckInPlaceAdd, LoopArgMax, LoopArgMin, LoopDot, LoopL1
+    '               LoopMax, LoopMin, LoopSum, LoopSumSquares, NaiveMatrixDot
+    '               NearlyEqual, RandomData, RandomIntegers, Ref, Ref1
+    '               RefCmp, ScalarAdd, ScalarMultiplyScalar, SequenceEqual, TestSizes
+    '               TimeBest
+    ' 
+    '     Sub: BenchAdd, BenchAddInPlace, BenchDot, Benchmark, BenchMultiplyScalar
+    '          BenchSum, Check, Main1, Run, ScalarAddInPlace
+    '          VerifyCompare, VerifyDivideSemantics, VerifyElementwise, VerifyModuloSemantics, VerifyParallel
+    '          VerifyReduce, VerifyScalarForms, VerifyUnary, WriteLine
+    ' 
     ' /********************************************************************************/
 
 #End Region

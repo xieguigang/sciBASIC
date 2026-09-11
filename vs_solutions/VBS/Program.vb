@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3487d2477938ff7952c2515b3f2daba3, vs_solutions\VBS\Program.vb"
+﻿#Region "Microsoft.VisualBasic::25f64f15a0c8646abe371b9391e67484, vs_solutions\VBS\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (15.00%)
-    '     File Size: 713 B
+    '     File Size: 711 B
 
 
     ' Module Program
@@ -71,4 +71,3 @@ Module Program
         End Using
     End Function
 End Module
-

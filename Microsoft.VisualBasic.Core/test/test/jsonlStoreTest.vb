@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::jsonlStoreTest, Microsoft.VisualBasic.Core\test\test\jsonlStoreTest.vb"
+﻿#Region "Microsoft.VisualBasic::e804be694a3f994593be0e3a7ed72b32, Microsoft.VisualBasic.Core\test\test\jsonlStoreTest.vb"
 
     ' Author:
     ' 
@@ -25,17 +25,30 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 317
+    '    Code Lines: 204 (64.35%)
+    ' Comment Lines: 42 (13.25%)
+    '    - Xml Docs: 28.57%
+    ' 
+    '   Blank Lines: 71 (22.40%)
+    '     File Size: 14.71 KB
+
+
     ' Module jsonlStoreTest
     ' 
-    '     Function: SameSeq
+    '     Function: FileLength, SameSeq
     ' 
-    '     Sub: Check, CheckAppendAndVirtualRead, CheckMergeAppendFastPath
-    '          CheckMergeFullRewrite, CheckSpliceOperations, CheckTornTailRecovery
-    '          CheckWalModuleRoundTrip, CheckWalReplayAfterCrash, Run
+    '     Sub: Check, CheckAppendAndVirtualRead, CheckMergeAppendFastPath, CheckMergeFullRewrite, CheckSpliceOperations
+    '          CheckTornTailRecovery, CheckWalModuleRoundTrip, CheckWalReplayAfterCrash, Run
     ' 
     ' /********************************************************************************/
 

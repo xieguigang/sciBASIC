@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0912612f8d6a4694db59443eacfaa67e, Data_science\MachineLearning\TensorFlow\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ee97db8e5dcb533b43972ddbb24f6463, Data_science\MachineLearning\TensorFlow\Math.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 724
-    '    Code Lines: 518 (71.55%)
-    ' Comment Lines: 129 (17.82%)
-    '    - Xml Docs: 96.12%
+    '   Total Lines: 502
+    '    Code Lines: 299 (59.56%)
+    ' Comment Lines: 128 (25.50%)
+    '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 77 (10.64%)
-    '     File Size: 23.65 KB
+    '   Blank Lines: 75 (14.94%)
+    '     File Size: 16.47 KB
 
 
     ' Module Math

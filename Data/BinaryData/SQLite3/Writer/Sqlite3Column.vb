@@ -1,3 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::862586d68145314943782a63e7554a9e, Data\BinaryData\SQLite3\Writer\Sqlite3Column.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 58 (55.77%)
+    ' Comment Lines: 25 (24.04%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 21 (20.19%)
+    '     File Size: 3.41 KB
+
+
+    '     Class Sqlite3Column
+    ' 
+    '         Properties: Name, NotNull, PrimaryKey, Type
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: EscapeName, IsPlainName, IsRowIdAlias, ToSql, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Text
 
 Namespace Writer
@@ -102,3 +159,4 @@ Namespace Writer
     End Class
 
 End Namespace
+

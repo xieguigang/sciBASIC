@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdAdd::Extensions\Math\SIMD\Arithmetic\Add.vb"
+﻿#Region "Microsoft.VisualBasic::cd2a7f46631863181574690715021832, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Add.vb"
 
     ' Author:
     ' 
@@ -25,15 +25,30 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 28 (39.44%)
+    ' Comment Lines: 34 (47.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.68%)
+    '     File Size: 2.70 KB
+
+
     '     Class Add
-
-    '         Function: f32_op_add_f32, f32_op_add_f32_scalar, f64_op_add_f64, f64_op_add_f64_scalar,
-    '                   int32_op_add_int32, int32_op_add_int32_scalar, int64_op_add_int64, int64_op_add_int64_scalar
-
+    ' 
+    '         Function: f32_op_add_f32, f32_op_add_f32_scalar, f64_op_add_f64, f64_op_add_f64_scalar, int32_op_add_int32
+    '                   int32_op_add_int32_scalar, int64_op_add_int64, int64_op_add_int64_scalar
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

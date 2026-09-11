@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::simdExponent::Extensions\Math\SIMD\Arithmetic\Exponent.vb"
+﻿#Region "Microsoft.VisualBasic::7fb0296a49e1d159fc922cde32f6a553, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Exponent.vb"
 
     ' Author:
     ' 
@@ -25,15 +25,30 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 63 (46.32%)
+    ' Comment Lines: 46 (33.82%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 27 (19.85%)
+    '     File Size: 5.18 KB
+
+
     '     Class Exponent
-
-    '         Function: f32_exp, f32_op_exponent_f32, f32_op_exponent_f32_scalar, f32_scalar_op_exponent_f32,
-    '                   f64_exp, f64_op_exponent_f64, f64_op_exponent_f64_scalar, f64_scalar_op_exponent_f64
-
+    ' 
+    '         Function: f32_exp, f32_op_exponent_f32, f32_op_exponent_f32_scalar, f32_scalar_op_exponent_f32, f64_exp
+    '                   f64_op_exponent_f64, f64_op_exponent_f64_scalar, f64_scalar_op_exponent_f64
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

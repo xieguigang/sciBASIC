@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5e14c05359d0dbc05dee516d6377929, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\VBParser.vb"
+﻿#Region "Microsoft.VisualBasic::92dc3806dafaf7be87e2af2daf592e4a, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\VBParser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 28.41%
     ' 
     '   Blank Lines: 130 (14.15%)
-    '     File Size: 38.85 KB
+    '     File Size: 38.84 KB
 
 
     '     Module VBParser

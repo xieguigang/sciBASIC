@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdParallel::Extensions\Math\SIMD\Parallel\SimdParallel.vb"
+﻿#Region "Microsoft.VisualBasic::356434074d96da7978acf93bb20ad3d9, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Parallel\SimdParallel.vb"
 
     ' Author:
     ' 
@@ -25,15 +25,38 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 518
+    '    Code Lines: 325 (62.74%)
+    ' Comment Lines: 84 (16.22%)
+    '    - Xml Docs: 94.05%
+    ' 
+    '   Blank Lines: 109 (21.04%)
+    '     File Size: 21.30 KB
+
+
     '     Class SimdParallel
-
-    '         Function: Add, ChunkSize, Dot, L1Norm, L2Norm, MatrixDot, Max, Min, Multiply, MultiplyScalar,
-    '                   ShouldParallelize, Subtract, Sum, SumSquares, Transpose
-
+    ' 
+    '         Properties: Enable, MinParallelLength
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Add, ChunkSize, Dot, DotRange, Elementwise
+    '                   L1Norm, L2Norm, MatrixDot, Max, Min
+    '                   Multiply, MultiplyScalar, ShouldParallelize, Subtract, Sum
+    '                   SumRange, SumSquares, Transpose
+    ' 
+    '         Sub: BinaryRange, MultiplyScalarRange
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

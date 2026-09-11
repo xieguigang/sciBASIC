@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a39325e2fff870a383054c66ec7c14f2, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\SIMD.vb"
+﻿#Region "Microsoft.VisualBasic::fd269d39ccfb6d538013ba33215369ea, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\SIMD.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 23 (35.38%)
-    ' Comment Lines: 34 (52.31%)
+    '   Total Lines: 149
+    '    Code Lines: 58 (38.93%)
+    ' Comment Lines: 77 (51.68%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (12.31%)
-    '     File Size: 2.30 KB
+    '   Blank Lines: 14 (9.40%)
+    '     File Size: 5.74 KB
 
 
     '     Enum SIMDConfiguration
@@ -53,7 +53,8 @@
     ' 
     '     Class SIMDEnvironment
     ' 
-    '         Properties: config
+    '         Properties: config, Description, IsAdvSimdSupported, IsAvx2Supported, IsEnabled
+    '                     IsFmaSupported, IsHardwareAccelerated
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bc56fa453a38383278d4344afca51dd, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseNormal.vb"
+﻿#Region "Microsoft.VisualBasic::481ae2447a9fe4ac4002fcb128b88908, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseNormal.vb"
 
     ' Author:
     ' 
@@ -294,4 +294,3 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Module
 
 End Namespace
-

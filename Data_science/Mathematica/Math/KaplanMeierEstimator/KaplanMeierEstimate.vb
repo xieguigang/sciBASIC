@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5786d956ce34f2a2d7e5fcdefa8fec1d, Data_science\Mathematica\Math\KaplanMeierEstimator\KaplanMeierEstimate.vb"
+﻿#Region "Microsoft.VisualBasic::e13e6427f2c9b346719208d285fb2b41, Data_science\Mathematica\Math\KaplanMeierEstimator\KaplanMeierEstimate.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.19%
     ' 
     '   Blank Lines: 39 (17.57%)
-    '     File Size: 7.95 KB
+    '     File Size: 7.91 KB
 
 
     ' Class KaplanMeierEstimate

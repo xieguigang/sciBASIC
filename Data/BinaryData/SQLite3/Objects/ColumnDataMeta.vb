@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff530451ecfec01ffc904ad8819f8615, Data\BinaryData\SQLite3\Objects\ColumnDataMeta.vb"
+﻿#Region "Microsoft.VisualBasic::3388e57996a2a0bc52a51bfcf8d148aa, Data\BinaryData\SQLite3\Objects\ColumnDataMeta.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (21.43%)
-    '     File Size: 822 B
+    '     File Size: 808 B
 
 
     '     Class ColumnDataMeta

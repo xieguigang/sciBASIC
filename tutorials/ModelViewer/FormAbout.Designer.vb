@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71884705d5331c15c0af09d49efe1fd6, tutorials\ModelViewer\FormAbout.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::bcead455fa4bd0f3986ae1702e6cbbca, tutorials\ModelViewer\FormAbout.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (4.44%)
-    '     File Size: 3.14 KB
+    '     File Size: 3.13 KB
 
 
     ' Class FormAbout

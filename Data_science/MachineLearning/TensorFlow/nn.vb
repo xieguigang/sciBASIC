@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc05cf8874969522ddf1f080e5d1ea88, Data_science\MachineLearning\TensorFlow\nn.vb"
+﻿#Region "Microsoft.VisualBasic::37853226e9d8c00687ed8ba8d53a6ca8, Data_science\MachineLearning\TensorFlow\nn.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 486
-    '    Code Lines: 308 (63.37%)
-    ' Comment Lines: 105 (21.60%)
-    '    - Xml Docs: 73.33%
+    '   Total Lines: 392
+    '    Code Lines: 222 (56.63%)
+    ' Comment Lines: 104 (26.53%)
+    '    - Xml Docs: 74.04%
     ' 
-    '   Blank Lines: 73 (15.02%)
-    '     File Size: 16.66 KB
+    '   Blank Lines: 66 (16.84%)
+    '     File Size: 13.55 KB
 
 
     ' Module nn

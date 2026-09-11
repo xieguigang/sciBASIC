@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::simdTensor::Data_science\MachineLearning\TensorFlow\Compute\SIMDTensor.vb"
+﻿#Region "Microsoft.VisualBasic::6fba187cd5a3336de9139d7de4e7a95b, Data_science\MachineLearning\TensorFlow\Compute\SIMDTensor.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,41 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 149 (65.64%)
+    ' Comment Lines: 24 (10.57%)
+    '    - Xml Docs: 45.83%
+    ' 
+    '   Blank Lines: 54 (23.79%)
+    '     File Size: 8.78 KB
+
+
+    '     Class SIMDTensor
+    ' 
+    '         Properties: [Default], Name
+    ' 
+    '         Function: Abs, Add, AddScalar, Clip, Divide
+    '                   DivideScalar, Exp, L2Norm, Log, MatMul
+    '                   Max, Maximum, Mean, MeanAll, Min
+    '                   Minimum, Multiply, MultiplyScalar, Negate, Pow
+    '                   Reciprocal, Sqrt, Square, StdDev, Subtract
+    '                   Sum, SumAll, ToJagged
+    ' 
+    '         Sub: Register
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
