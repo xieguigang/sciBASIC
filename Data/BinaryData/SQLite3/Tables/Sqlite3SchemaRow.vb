@@ -56,7 +56,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
 
-Namespace ManagedSqlite.Core.Tables
+Namespace Core.Tables
 
     Public Class Sqlite3SchemaRow
 

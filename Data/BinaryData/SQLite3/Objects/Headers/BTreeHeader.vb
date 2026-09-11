@@ -55,7 +55,7 @@
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
-Namespace ManagedSqlite.Core.Objects.Headers
+Namespace Core.Objects.Headers
 
     Friend Structure BTreeHeader
 

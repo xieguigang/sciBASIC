@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
-Namespace ManagedSqlite.Core.Internal
+Namespace Core.Internal
 
     Public Class ReaderBase : Implements IDisposable
 
@@ -278,11 +278,10 @@ Namespace ManagedSqlite.Core.Internal
                 End If
             Next
 
-            ' Read final byte
+            ' Read final byte: the 9th byte is all data (8 bits)
+            ' note: readBytes already equals 9 after the loop above
             res <<= 8
             res += ReadByte()
-
-            readBytes += 1
 
             Return res
         End Function
@@ -347,7 +346,12 @@ Namespace ManagedSqlite.Core.Internal
             Return res
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadString(bytes As UShort) As String
+            Return ReadString(CInt(bytes))
+        End Function
+
+        Public Function ReadString(bytes As Integer) As String
             Dim data As Byte() = Read(bytes)
             Return _encoding.GetString(data, 0, data.Length)
         End Function

@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::c3a7c4395b77a39a38cfa13e2767bcd5, Data\BinaryData\SQLite3\Objects\Enums\SqliteDataType.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 37 (51.39%)
-    ' Comment Lines: 32 (44.44%)
-    '    - Xml Docs: 90.62%
-    ' 
-    '   Blank Lines: 3 (4.17%)
-    '     File Size: 3.95 KB
+' Summaries:
 
 
-    '     Enum SqliteDataType
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Module DataTypeParser
-    ' 
-    '         Function: TryParse
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 37 (51.39%)
+' Comment Lines: 32 (44.44%)
+'    - Xml Docs: 90.62%
+' 
+'   Blank Lines: 3 (4.17%)
+'     File Size: 3.95 KB
+
+
+'     Enum SqliteDataType
+' 
+' 
+'  
+' 
+' 
+' 
+'     Module DataTypeParser
+' 
+'         Function: TryParse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Namespace ManagedSqlite.Core.Objects.Enums
+Namespace Core.Objects.Enums
 
     Public Enum SqliteDataType As Byte
         ''' <summary>
@@ -106,26 +106,54 @@ Namespace ManagedSqlite.Core.Objects.Enums
         ''' <param name="type"></param>
         ''' <returns></returns>
         Public Function TryParse(type As String) As SqliteDataType
-            Select Case Strings.LCase(type).Trim
-                Case "integer", "int", "int64", "[int]", "[bigint]", "bigint"
+            Dim t As String = If(type, "").Trim.ToLower()
+
+            ' 去除 [] 转义, 例如 [varchar]
+            If t.Length > 1 AndAlso t.StartsWith("[") AndAlso t.EndsWith("]") Then
+                t = t.Substring(1, t.Length - 2).Trim()
+            End If
+
+            ' 去除长度限定, 例如 varchar(255)
+            Dim p As Integer = t.IndexOf("("c)
+            If p >= 0 Then
+                t = t.Substring(0, p).Trim()
+            End If
+
+            Select Case t
+                Case "integer", "int", "int64", "int32", "int16", "int8", "int2",
+                     "tinyint", "smallint", "mediumint", "bigint", "unsigned big int"
                     Return SqliteDataType.Integer
-                Case "float", "double", "[float]", "real"
+                Case "float", "double", "double precision", "real", "numeric", "decimal"
                     Return SqliteDataType.Float
-                Case "text", "blob_text", "[text]", "varchar"
+                Case "text", "blob_text", "varchar", "char", "character", "character varying",
+                     "varying character", "nchar", "native character", "nvarchar", "clob"
                     Return SqliteDataType.Text
-                Case "blob", "[blob]"
+                Case "blob"
                     Return SqliteDataType.Blob
                 Case "null"
                     Return SqliteDataType.Null
-                Case "[bool]", "bool", "bit", "[bit]"
+                Case "bool", "boolean", "bit"
                     Return SqliteDataType.Boolean1
-                Case "datetime", "[datetime]"
+                Case "datetime", "date", "time", "timestamp"
                     Return SqliteDataType.Integer
                 Case Else
-                    If type.IsPattern("varchar\(\d+\)") OrElse type.IsPattern("\[varchar\]\(\d+\)") Then
+                    ' 未在列表之中声明的类型, 按照 SQLite 的亲和性规则进行回退, 不再抛出异常
+                    If t.Length = 0 Then
+                        ' 未声明类型 = BLOB 亲和性
+                        Return SqliteDataType.Blob
+                    ElseIf t.Contains("char") OrElse t.Contains("clob") OrElse t.Contains("text") Then
                         Return SqliteDataType.Text
+                    ElseIf t.Contains("blob") Then
+                        Return SqliteDataType.Blob
+                    ElseIf t.Contains("int") Then
+                        Return SqliteDataType.Integer
+                    ElseIf t.Contains("bool") Then
+                        Return SqliteDataType.Boolean1
+                    ElseIf t.Contains("real") OrElse t.Contains("floa") OrElse t.Contains("doub") Then
+                        Return SqliteDataType.Float
                     Else
-                        Throw New NotImplementedException(type)
+                        ' 其余未识别类型按 NUMERIC 亲和性处理
+                        Return SqliteDataType.Float
                     End If
             End Select
         End Function

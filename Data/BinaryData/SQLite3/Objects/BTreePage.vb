@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
-Namespace ManagedSqlite.Core.Objects
+Namespace Core.Objects
 
     Friend MustInherit Class BTreePage
 
@@ -93,11 +93,11 @@ Namespace ManagedSqlite.Core.Objects
             Dim cellOffsets As UShort() = New UShort(header.CellCount - 1) {}
 
             If header.CellCount > 0 Then
+                ' 注意: SQLite 的 cell 指针数组本身已经按照 key(rowid) 升序排列,
+                ' 这里必须保持其原有顺序, 不可以按照物理偏移重排, 否则会打乱记录的行序
                 For i As UShort = 0 To header.CellCount - 1
                     cellOffsets(i) = reader.ReadUInt16()
                 Next
-
-                Call Array.Sort(cellOffsets)
             End If
 
             Select Case header.Type

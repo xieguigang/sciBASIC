@@ -57,7 +57,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
-Namespace ManagedSqlite.Core.Objects
+Namespace Core.Objects
 
     Public Class ColumnDataMeta
 

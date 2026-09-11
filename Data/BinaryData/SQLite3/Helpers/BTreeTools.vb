@@ -54,7 +54,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 
-Namespace ManagedSqlite.Core.Helpers
+Namespace Core.Helpers
 
     Module BTreeTools
 
