@@ -190,6 +190,4 @@ Public Class HtmlRender : Inherits Render
     Public Overrides Sub SetImageUrlRouter(router As Func(Of String, String))
         _router = router
     End Sub
-
-    ReadOnly _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Multiline)
 End Class
