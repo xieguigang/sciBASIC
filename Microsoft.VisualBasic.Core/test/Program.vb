@@ -70,6 +70,13 @@ Module Program
             Return
         End If
 
+        ' runs the jsonl store / WAL (Data.Repository.TextStore) demo checks only:
+        '   test.exe --jsonl
+        If args.Length > 0 AndAlso args(0) = "--jsonl" Then
+            Call jsonlStoreTest.Run()
+            Return
+        End If
+
         Call qgramTestSearch.Run()
         Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()
