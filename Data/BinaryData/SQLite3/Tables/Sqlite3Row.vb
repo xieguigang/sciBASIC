@@ -59,7 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ManagedSqlite.Core.Tables
+Namespace Core.Tables
 
     Public Class Sqlite3Row
 

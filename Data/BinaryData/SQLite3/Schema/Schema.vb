@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ManagedSqlite.Core.SQLSchema
+Namespace Core.SQLSchema
 
     Public Class Schema : Implements Enumeration(Of NamedValue(Of String))
 

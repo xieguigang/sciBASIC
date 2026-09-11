@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
 Imports Microsoft.VisualBasic.Language
 
-Namespace ManagedSqlite.Core.Tables
+Namespace Core.Tables
 
     Public Class Sqlite3Table
 

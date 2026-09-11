@@ -54,7 +54,7 @@
 
 Imports System.Diagnostics
 
-Namespace ManagedSqlite.Core.Objects
+Namespace Core.Objects
 
     <DebuggerDisplay("Page {Page}, Size {Cell.DataSizeInCell} / {Cell.DataSize}")>
     Friend Class BTreeCellData

@@ -59,7 +59,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 
-Namespace ManagedSqlite.Core.Helpers
+Namespace Core.Helpers
 
     Friend Class SqliteDataStream : Inherits ReadonlyStream
 

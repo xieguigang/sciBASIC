@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
-Namespace ManagedSqlite.Core.Internal
+Namespace Core.Internal
 
     Public Class ReaderBase : Implements IDisposable
 

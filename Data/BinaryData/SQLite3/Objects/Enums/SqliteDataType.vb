@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::c3a7c4395b77a39a38cfa13e2767bcd5, Data\BinaryData\SQLite3\Objects\Enums\SqliteDataType.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 37 (51.39%)
-    ' Comment Lines: 32 (44.44%)
-    '    - Xml Docs: 90.62%
-    ' 
-    '   Blank Lines: 3 (4.17%)
-    '     File Size: 3.95 KB
+' Summaries:
 
 
-    '     Enum SqliteDataType
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Module DataTypeParser
-    ' 
-    '         Function: TryParse
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 37 (51.39%)
+' Comment Lines: 32 (44.44%)
+'    - Xml Docs: 90.62%
+' 
+'   Blank Lines: 3 (4.17%)
+'     File Size: 3.95 KB
+
+
+'     Enum SqliteDataType
+' 
+' 
+'  
+' 
+' 
+' 
+'     Module DataTypeParser
+' 
+'         Function: TryParse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Namespace ManagedSqlite.Core.Objects.Enums
+Namespace Core.Objects.Enums
 
     Public Enum SqliteDataType As Byte
         ''' <summary>

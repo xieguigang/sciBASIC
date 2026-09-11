@@ -63,7 +63,7 @@
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
-Namespace ManagedSqlite.Core.Objects
+Namespace Core.Objects
 
     ''' <summary>
     ''' SQLite B-Tree datastructure that contains other Interior / Leaf pages

@@ -55,7 +55,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace ManagedSqlite.Core.SQLSchema
+Namespace Core.SQLSchema
 
     Module Extensions
 

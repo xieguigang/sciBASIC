@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
-Namespace ManagedSqlite.Core.Objects
+Namespace Core.Objects
 
     Friend MustInherit Class BTreePage
 

@@ -55,7 +55,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 
-Namespace ManagedSqlite.Core.Helpers
+Namespace Core.Helpers
 
     Module StreamHelper
 
