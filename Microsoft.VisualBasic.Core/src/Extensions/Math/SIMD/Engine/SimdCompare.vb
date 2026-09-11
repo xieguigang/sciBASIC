@@ -153,17 +153,28 @@ Namespace Math.SIMD
         ''' 判断掩码向量的某个通道是否为真。
         ''' </summary>
         ''' <remarks>
-        ''' 掩码通道是“全 1”位模式，整数类型下它读出 <c>-1</c>，浮点类型下它读出 <c>NaN</c>。
-        ''' 为了用一套代码同时处理整数与浮点，这里把掩码向量按位重新解释成
-        ''' <see cref="Vector(Of Integer)"/> 之后再做 <c>&lt;&gt; 0</c> 判定。
-        ''' 由于所有的 <c>Vector(Of T)</c> 都铺满整个向量寄存器（总字节数恒等），
-        ''' 这种重解释在长度上是安全的。
+        ''' <para>
+        ''' 掩码通道的取值只有两种可能：**全 1** 或者**全 0**（这是 SIMD 比较原语的约定：
+        ''' 浮点类型下“全 1”位模式读出 <c>NaN</c>，整数类型下读出 <c>-1</c>）。
+        ''' 因此只需要检查该通道覆盖的<b>第一个字节</b>就能判定真假：全 1 时是
+        ''' <c>0xFF</c>，全 0 时是 <c>0x00</c>，不存在歧义，而且每次判定只需要一次
+        ''' 通道提取。
+        ''' </para>
+        ''' <para>
+        ''' <b>为什么不能重解释成固定的整数向量</b>：<c>Vector(Of Integer)</c> 的通道宽度是
+        ''' 32 位，而 <see cref="Double"/> 的通道是 64 位，两者并不是一一对应的关系
+        ''' （一个 double 通道会跨越两个 32 位通道）。按字节定位则对所有元素宽度
+        ''' （<see cref="Short"/>/<see cref="Integer"/>/<see cref="Long"/>/<see cref="Single"/>/<see cref="Double"/>）
+        ''' 都成立，因为任何 <c>Vector(Of T)</c> 都铺满整个向量寄存器，
+        ''' 总字节数恒等，所以这种按位重解释在长度上总是安全的。
+        ''' </para>
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function LaneTrue(Of T As Structure)(mask As Vector(Of T), lane As Integer) As Boolean
-            Dim bits As Vector(Of Integer) = Unsafe.As(Of Vector(Of T), Vector(Of Integer))(mask)
+            Dim bytes As Vector(Of Byte) = Unsafe.As(Of Vector(Of T), Vector(Of Byte))(mask)
+            Dim size As Integer = Vector(Of Byte).Count \ Vector(Of T).Count
 
-            Return bits.GetElement(lane) <> 0
+            Return bytes.GetElement(lane * size) <> 0
         End Function
 
 #End Region
