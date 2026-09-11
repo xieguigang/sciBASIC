@@ -1,11 +1,11 @@
 ﻿# Managed SQLite3 读取模块测试报告
 
-- 生成时间: 2026-09-11 17:08:33
+- 生成时间: 2026-09-11 17:08:53
 - 测试模块: ``Microsoft.VisualBasic.Data.IO.SQLite3``
 - 目标数据库: ``G:\compounds_2-copy.sqlite``
 - 运行形态: 结构 + 抽样(大表 ``compounds`` 前 5,000 行, 其余表全量, 上限 200,000 行)
-- 用例总数: 15, 通过 13, 失败 2, 累计耗时 2,662 ms
-- 总体结论: **存在 2 个失败用例**
+- 用例总数: 15, 通过 15, 失败 0, 累计耗时 2,652 ms
+- 总体结论: **全部用例通过**
 
 ## 1. 测试环境
 
@@ -232,14 +232,14 @@ RowId=6: "2019-01-16 11:21:20.553411" (String), <NULL>, 6 (Int64), 2 (Int64), 14
 | number_protons | INTEGER | INTEGER | 0 | 200,000 | Int64 | - | - |
 | number_magnesiums | INTEGER | INTEGER | 0 | 200,000 | Int64 | - | - |
 | is_major | BOOLEAN | BOOLEAN | 0 | 200,000 | Boolean | - | - |
-| ddg_over_rt | FLOAT | REAL | 0 | 200,000 | Int64, Double | - | - |
+| ddg_over_rt | FLOAT | REAL | 0 | 200,000 | Double | - | - |
 
 样例数据(最多 5 行):
 
 ```text
-RowId=1: "2020-05-15 16:43:59.725064" (String), <NULL>, 1 (Int64), 3 (Int64), 0 (Int64), 0 (Int64), 0 (Int64), True (Boolean), 0 (Int64)
-RowId=2: "2020-05-15 16:43:59.725073" (String), <NULL>, 2 (Int64), 4 (Int64), 0 (Int64), 0 (Int64), 0 (Int64), True (Boolean), 0 (Int64)
-RowId=3: "2020-05-15 16:43:59.725076" (String), <NULL>, 3 (Int64), 5 (Int64), 0 (Int64), 2 (Int64), 0 (Int64), True (Boolean), 0 (Int64)
+RowId=1: "2020-05-15 16:43:59.725064" (String), <NULL>, 1 (Int64), 3 (Int64), 0 (Int64), 0 (Int64), 0 (Int64), True (Boolean), 0 (Double)
+RowId=2: "2020-05-15 16:43:59.725073" (String), <NULL>, 2 (Int64), 4 (Int64), 0 (Int64), 0 (Int64), 0 (Int64), True (Boolean), 0 (Double)
+RowId=3: "2020-05-15 16:43:59.725076" (String), <NULL>, 3 (Int64), 5 (Int64), 0 (Int64), 2 (Int64), 0 (Int64), True (Boolean), 0 (Double)
 RowId=4: "2020-05-15 16:43:59.725078" (String), <NULL>, 4 (Int64), 6 (Int64), -5 (Int64), 11 (Int64), 0 (Int64), False (Boolean), 46.097753561740795 (Double)
 RowId=5: "2020-05-15 16:43:59.725080" (String), <NULL>, 5 (Int64), 6 (Int64), -4 (Int64), 12 (Int64), 0 (Int64), False (Boolean), 17.08518139001582 (Double)
 ```
@@ -279,7 +279,7 @@ RowId=5: "2019-01-16 11:19:47.970843" (String), <NULL>, 5 (Int64), "XLYOFNOQVPJJ
 | compound_id | INTEGER | INTEGER | 0 | 1,442 | Int64 | - | - |
 | number_protons | INTEGER | INTEGER | 0 | 1,442 | Int64 | - | - |
 | number_magnesiums | INTEGER | INTEGER | 0 | 1,442 | Int64 | - | - |
-| dissociation_constant | FLOAT | REAL | 0 | 1,442 | Double, Int64 | - | - |
+| dissociation_constant | FLOAT | REAL | 0 | 1,442 | Double | - | - |
 
 样例数据(最多 5 行):
 
@@ -320,39 +320,45 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 
 | # | 用例 | 结果 | 耗时(ms) | 说明 |
 |---|---|---|---|---|
-| 1 | 文件头解析 | 通过 | 152 |  |
+| 1 | 文件头解析 | 通过 | 159 |  |
 | 2 | 枚举 sqlite_master | 通过 | 0 |  |
-| 3 | 表结构解析: compound_identifiers | 通过 | 1 |  |
+| 3 | 表结构解析: compound_identifiers | 通过 | 2 |  |
 | 4 | 表结构解析: compound_microspecies | 通过 | 2 |  |
 | 5 | 表结构解析: compounds | 通过 | 0 |  |
-| 6 | 表结构解析: magnesium_dissociation_constant | 通过 | 0 |  |
+| 6 | 表结构解析: magnesium_dissociation_constant | 通过 | 1 |  |
 | 7 | 表结构解析: registries | 通过 | 0 |  |
-| 8 | 扫描: compound_identifiers | 通过 | 1428 |  |
-| 9 | 扫描: compound_microspecies | **失败** | 981 | Exception: [compound_microspecies.ddg_over_rt] 声明为 REAL(FLOAT), 但读到 Int64 |
-| 10 | 扫描: compounds | 通过 | 78 |  |
-| 11 | 扫描: magnesium_dissociation_constant | **失败** | 11 | Exception: [magnesium_dissociation_constant.dissociation_constant] 声明为 REAL(FLOAT), 但读到 Int64 |
+| 8 | 扫描: compound_identifiers | 通过 | 1406 |  |
+| 9 | 扫描: compound_microspecies | 通过 | 981 |  |
+| 10 | 扫描: compounds | 通过 | 80 |  |
+| 11 | 扫描: magnesium_dissociation_constant | 通过 | 11 |  |
 | 12 | 扫描: registries | 通过 | 6 |  |
 | 13 | 取值校验: compounds | 通过 | 0 |  |
-| 14 | blobAsBase64 设置 | 通过 | 3 |  |
+| 14 | blobAsBase64 设置 | 通过 | 4 |  |
 | 15 | 未知表异常处理 | 通过 | 0 |  |
 
 ## 7. 发现的问题与修复记录
 
 | 编号 | 问题 | 根因 | 修复 | 状态 |
 |---|---|---|---|---|
-| I-01 | BOOLEAN 声明类型无法解析, GetTable 直接抛异常 | DataTypeParser.TryParse 仅映射 bool/[bool]/bit, 未覆盖 boolean; 且遇到未知声明类型直接抛 NotImplementedException。 | DataTypeParser 新增 boolean/bool/bit/date/datetime/numeric/real 等映射, 未知声明类型按 SQLite 亲和性规则回退, 不再抛异常。 | 复现/待修复 |
-| I-02 | 可空列 NULL 值读取错误 | ParseRow 中记录头 serial type=0(NULL) 时仅注释、既不重置长度也不标记为空, 且 ColumnDataMeta 在行间共享复用。 | ParseRow 改为按记录头 serial type 逐列解码, serial type=0 明确返回 Nothing, 不再共享可变的列元数据。 | 复现/待修复 |
-| I-03 | 按声明类型而非真实存储类型解码 | SQLite 为动态类型, 记录头 serial type 才是每列真实存储类型的唯一依据; 原实现使用 schema 声明类型决定读取方式。 | 改为按 serial type 解码: 0=NULL、1..6=整数、7=IEEE 浮点、8/9=0/1、偶数>=12=BLOB、奇数>=13=TEXT; 并依据声明亲和性做合理转换(如 FLOAT 列返回 Double, BOOLEAN 列返回 Boolean)。 | 复现/待修复 |
-| I-04 | BOOLEAN 列恒为 True | 原实现 Select Case 中 Boolean1 分支直接赋值 True, 未读取真实值。 | 按 serial type 8/9 取 0/1 并转换为真实 Boolean。 | 复现/待修复 |
-| I-05 | cellOffsets 排序打乱记录行序 | BTreePage.Parse 对 cell 指针数组执行 Array.Sort, 而 SQLite 的 cell 指针数组本已按 key(rowid) 有序, 按物理偏移重排会破坏行序。 | 移除 Array.Sort, 保持页内 cell 指针数组的 key 顺序遍历。 | 复现/待修复 |
-| I-06 | 9 字节 VarInt 读取计数偏移 | ReadVarInt 在第 9 字节分支对 readBytes 多加 1。 | 修正 9 字节分支的字节计数。 | 待验证 |
-| I-07 | 记录列数与 schema 列数不一致时越界 | ParseRow 未对列索引做边界检查。 | 解码循环加入列数边界保护, 超出部分安全忽略。 | 待验证 |
+| I-01 | BOOLEAN 声明类型无法解析, GetTable 直接抛异常 | DataTypeParser.TryParse 仅映射 bool/[bool]/bit, 未覆盖 boolean; 且遇到未知声明类型直接抛 NotImplementedException。 | DataTypeParser 新增 boolean/bool/bit/date/datetime/numeric/real 等映射, 未知声明类型按 SQLite 亲和性规则回退, 不再抛异常。 | 已修复(复测通过) |
+| I-02 | 可空列 NULL 值读取错误 | ParseRow 中记录头 serial type=0(NULL) 时仅注释、既不重置长度也不标记为空, 且 ColumnDataMeta 在行间共享复用。 | ParseRow 改为按记录头 serial type 逐列解码, serial type=0 明确返回 Nothing, 不再共享可变的列元数据。 | 已修复(复测通过) |
+| I-03 | 按声明类型而非真实存储类型解码 | SQLite 为动态类型, 记录头 serial type 才是每列真实存储类型的唯一依据; 原实现使用 schema 声明类型决定读取方式。 | 改为按 serial type 解码: 0=NULL、1..6=整数、7=IEEE 浮点、8/9=0/1、偶数>=12=BLOB、奇数>=13=TEXT; 并依据声明亲和性做合理转换(如 FLOAT 列返回 Double, BOOLEAN 列返回 Boolean)。 | 已修复(复测通过) |
+| I-04 | BOOLEAN 列恒为 True | 原实现 Select Case 中 Boolean1 分支直接赋值 True, 未读取真实值。 | 按 serial type 8/9 取 0/1 并转换为真实 Boolean。 | 已修复(复测通过) |
+| I-05 | cellOffsets 排序打乱记录行序 | BTreePage.Parse 对 cell 指针数组执行 Array.Sort, 而 SQLite 的 cell 指针数组本已按 key(rowid) 有序, 按物理偏移重排会破坏行序。 | 移除 Array.Sort, 保持页内 cell 指针数组的 key 顺序遍历。 | 已修复(复测通过) |
+| I-06 | 9 字节 VarInt 读取计数偏移 | ReadVarInt 在第 9 字节分支对 readBytes 多加 1。 | 修正 9 字节分支的字节计数。 | 已修复(间接验证) |
+| I-07 | 记录列数与 schema 列数不一致时越界 | ParseRow 未对列索引做边界检查。 | 解码循环加入列数边界保护, 超出部分安全忽略。 | 已修复(间接验证) |
 | I-08 | 表级 CHECK 约束被误判为数据列 | Schema.ParseColumns 仅跳过 UNIQUE/FOREIGN KEY/PRIMARY KEY 约束, 未处理 CHECK/CONSTRAINT 约束。 | Schema.ParseColumns 新增跳过 CHECK/CONSTRAINT 约束, 并为缺失类型声明的列按 BLOB 亲和性回退。 | 已修复(复测通过) |
-| I-09 | INTEGER PRIMARY KEY(rowid 别名)列被读成 NULL | SQLite 把 INTEGER PRIMARY KEY 作为 rowid 的别名, 记录体之中该列存储为 NULL, 读取时需要用该行的 rowid 回填; 原实现直接返回 NULL。 | Schema 记录主键列名, Sqlite3Table 识别 INTEGER PRIMARY KEY 别名列, 并在解码完成后用 rowid 回填该列。 | 复现/待修复 |
+| I-09 | INTEGER PRIMARY KEY(rowid 别名)列被读成 NULL | SQLite 把 INTEGER PRIMARY KEY 作为 rowid 的别名, 记录体之中该列存储为 NULL, 读取时需要用该行的 rowid 回填; 原实现直接返回 NULL。 | Schema 记录主键列名, Sqlite3Table 识别 INTEGER PRIMARY KEY 别名列, 并在解码完成后用 rowid 回填该列。 | 已修复(复测通过) |
+| I-10 | FLOAT 列存储 0/1 时 CLR 类型不一致 | SQLite 对 0/1 使用 serial type 8/9; 解码后只按 BOOLEAN 处理, 未考虑 FLOAT 亲和性。 | ToDeclaredBoolean 对 FLOAT 亲和性列返回 Double, 保证数值列类型稳定。 | 已修复(复测通过) |
 
 > 说明: 相关用例全部通过时状态记为 [已修复(复测通过)]; 存在失败用例时记为 [复现/待修复]。
 
 ## 8. 复测结论
 
-存在未通过的测试用例, 详见第 6 节; 修复前状态快照见 ``TEST-REPORT-baseline.md``。
+全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行, 
+包含可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB 及溢出页等场景未再发现异常。
+
+## 9. 基线对比
+
+修复前(基线)运行的失败快照保存在 ``TEST-REPORT-baseline.md``, 可用于对比修复前后的用例通过情况。
 

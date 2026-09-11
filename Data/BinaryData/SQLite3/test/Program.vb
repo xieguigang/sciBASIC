@@ -43,11 +43,17 @@ Module Program
     ''' </summary>
     Const LARGE_TABLE As String = "compounds"
 
+    ''' <summary>
+    ''' 溢出页探测时对 compounds 最多扫描的行数
+    ''' </summary>
+    Const OVERFLOW_PROBE_ROWS As Integer = 300000
+
     Private ReadOnly results As New List(Of TestResult)
     Private ReadOnly headerSummary As New List(Of String)
     Private ReadOnly masterEntries As New List(Of String)
     Private ReadOnly schemaSummaries As New List(Of String)
     Private ReadOnly scanResults As New List(Of ScanResult)
+    Private overflowProbe As OverflowProbeResult
 
     Sub Main(args As String())
         Dim dbPath As String
@@ -217,7 +223,49 @@ Module Program
         Next
 
         ' ---------------------------------------------------------------
-        ' 5. compounds 取值域校验
+        ' 5. 溢出页(长记录)探测: 深入扫描 compounds, 寻找超过单页内联阈值的字段
+        ' ---------------------------------------------------------------
+        Run("溢出页/长记录校验: compounds", Sub()
+                                                Dim tbl As Sqlite3Table = opened(LARGE_TABLE)
+                                                Dim inlineLimit As Integer = 4096 - 35
+                                                Dim probe As New OverflowProbeResult()
+                                                probe.InlineLimit = inlineLimit
+
+                                                Dim count As Long = 0
+
+                                                For Each row As Sqlite3Row In tbl.EnumerateRows()
+                                                    count += 1
+
+                                                    For ci As Integer = 0 To row.ColumnData.Length - 1
+                                                        Dim v As Object = row.ColumnData(ci)
+                                                        Dim s As String = TryCast(v, String)
+
+                                                        If s IsNot Nothing Then
+                                                            If s.Length > probe.MaxTextLength Then
+                                                                probe.MaxTextLength = s.Length
+                                                            End If
+                                                        Else
+                                                            Dim b As Byte() = TryCast(v, Byte())
+                                                            If b IsNot Nothing AndAlso b.Length > probe.MaxBlobLength Then
+                                                                probe.MaxBlobLength = b.Length
+                                                            End If
+                                                        End If
+                                                    Next
+
+                                                    If count >= OVERFLOW_PROBE_ROWS Then
+                                                        Exit For
+                                                    End If
+                                                Next
+
+                                                probe.Rows = count
+                                                probe.OverflowExercised = probe.MaxTextLength > inlineLimit OrElse probe.MaxBlobLength > inlineLimit
+                                                overflowProbe = probe
+
+                                                Check(count > 0, "溢出页探测未读取到数据行")
+                                            End Sub)
+
+        ' ---------------------------------------------------------------
+        ' 6. compounds 取值域校验
         ' ---------------------------------------------------------------
         Run("取值校验: compounds", Sub()
                                         Dim sr As ScanResult = scanResults.FirstOrDefault(Function(s) s.TableName = LARGE_TABLE)
@@ -654,6 +702,21 @@ Module Program
             End If
         Next
 
+        ' --- 溢出页探测 ---
+        sb.AppendLine("### 溢出页(长记录)探测")
+        sb.AppendLine()
+        If overflowProbe Is Nothing Then
+            sb.AppendLine("(未执行溢出页探测)")
+        Else
+            sb.AppendLine("- 探测表: ``compounds``, 扫描行数: " & overflowProbe.Rows.ToString("N0") &
+                          If(overflowProbe.Rows >= OVERFLOW_PROBE_ROWS, " (达到探测上限)", " (全量)"))
+            sb.AppendLine("- 单页内联阈值 U-35: " & overflowProbe.InlineLimit & " 字节")
+            sb.AppendLine("- 观测到最大 TEXT 长度: " & overflowProbe.MaxTextLength.ToString("N0") & " 字节")
+            sb.AppendLine("- 观测到最大 BLOB 长度: " & overflowProbe.MaxBlobLength.ToString("N0") & " 字节")
+            sb.AppendLine("- 是否命中溢出页: " & If(overflowProbe.OverflowExercised, "是", "否(抽样范围内未出现超出阈值的记录)"))
+        End If
+        sb.AppendLine()
+
         ' --- 用例结果 ---
         sb.AppendLine("## 6. 测试用例结果")
         sb.AppendLine()
@@ -683,8 +746,14 @@ Module Program
         sb.AppendLine("## 8. 复测结论")
         sb.AppendLine()
         If allPassed Then
-            sb.AppendLine("全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行, ")
-            sb.AppendLine("包含可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB 及溢出页等场景未再发现异常。")
+            sb.AppendLine("全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行,")
+            sb.AppendLine("包含可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB、rowid 别名以及表级约束等场景。")
+
+            If overflowProbe IsNot Nothing AndAlso overflowProbe.OverflowExercised Then
+                sb.AppendLine($"溢出页路径已被实际覆盖(最大字段 {Math.Max(overflowProbe.MaxTextLength, overflowProbe.MaxBlobLength).ToString("N0")} 字节 > 内联阈值 {overflowProbe.InlineLimit} 字节), 未发现异常。")
+            Else
+                sb.AppendLine("抽样范围内未出现超过单页内联阈值的字段, 溢出页路径未被实际触发。")
+            End If
         Else
             sb.AppendLine("存在未通过的测试用例, 详见第 6 节; 修复前状态快照见 ``TEST-REPORT-baseline.md``。")
         End If
@@ -829,6 +898,17 @@ Friend Class ScanResult
     Public Property MaxId As Long
     Public ReadOnly Property Columns As New List(Of ColumnStat)
     Public ReadOnly Property Samples As New List(Of String)
+End Class
+
+''' <summary>
+''' 溢出页(长记录)探测结果
+''' </summary>
+Friend Class OverflowProbeResult
+    Public Property Rows As Long
+    Public Property InlineLimit As Integer
+    Public Property MaxTextLength As Long
+    Public Property MaxBlobLength As Long
+    Public Property OverflowExercised As Boolean
 End Class
 
 ''' <summary>
