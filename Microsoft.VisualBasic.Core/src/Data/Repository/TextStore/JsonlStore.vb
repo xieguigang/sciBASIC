@@ -43,20 +43,13 @@ Namespace Data.Repository
             Public Count As Long
         End Class
 
-        Private Structure LogRec
-            Public Op As String            ' "sp" | "mb" | "mbf" | "md"
-            Public Pos, Del, OldLen, NewLen As Long
-            Public Lines As List(Of String)
-            Public StartOffset As Long
-        End Structure
-
 #End Region
 
 #Region "字段"
 
-        Private ReadOnly _dataPath, _logPath, _idxPath, _idxTmpPath, _dataTmpPath, _bakPath, _lockPath As String
+        Private ReadOnly _dataPath, _idxPath, _idxTmpPath, _dataTmpPath, _bakPath, _lockPath As String
         Private ReadOnly _opt As JsonlStoreOptions
-        Private ReadOnly _logEnc As New UTF8Encoding(False)
+        Private ReadOnly _wal As WAL
 
         Private _enc As Encoding
         Private _nlBytes As Byte() = New Byte() {LF}
@@ -75,14 +68,10 @@ Namespace Data.Repository
         Private _idxEntries As Long() = New Long() {}
 
         Private _pieces As New List(Of Piece)    ' 虚拟文档片段表
-        Private _pending As New List(Of String)  ' 挂起行缓冲（只追加）
         Private _virtualCount As Long
         Private _cum As Long() = New Long() {}
         Private _cumDirty As Boolean
-        Private _opCount As Long
 
-        Private _logStream As FileStream
-        Private _replaying As Boolean
         Private _lockStream As FileStream
         Private _isOpen As Boolean
         Private _disposed As Boolean
@@ -103,13 +92,18 @@ Namespace Data.Repository
             _opt = If(options, New JsonlStoreOptions())
             If _opt.IndexGranularity < 1 Then Throw New ArgumentOutOfRangeException(NameOf(options), "IndexGranularity 必须 >= 1。")
             If _opt.ReadBufferBytes < 4096 OrElse _opt.MergeBufferBytes < 4096 Then Throw New ArgumentOutOfRangeException(NameOf(options), "缓冲区必须 >= 4096。")
-            _logPath = _dataPath & ".wal"
             _idxPath = _dataPath & ".idx"
             _idxTmpPath = _dataPath & ".idx.tmp"
             _dataTmpPath = _dataPath & ".merge.tmp"
             _bakPath = _dataPath & ".bak"
             _lockPath = _dataPath & ".lock"
             _g = _opt.IndexGranularity
+            _wal = New WAL(_dataPath & ".wal", _opt)
+            AddHandler _wal.Info, AddressOf OnWalInfo
+        End Sub
+
+        Private Sub OnWalInfo(message As String)
+            RaiseEvent Info(message)
         End Sub
 
         Public Sub Open()
@@ -136,8 +130,9 @@ Namespace Data.Repository
 
             ' 4) 读 WAL 并做崩溃恢复（合并中断 / 撕裂写 / 撕裂日志尾）
             _skipTailRepair = False
-            Dim keepRecs As New List(Of LogRec)
-            Dim keepLen As Long = ReadAndRecoverLog(keepRecs)
+            Dim keepRecs As New List(Of WAL.Record)
+            Dim keepLen As Long = 0
+            If File.Exists(_wal.LogFilePath) Then keepLen = ReadAndRecoverLog(keepRecs)
 
             ' 5) 数据文件尾部修复（外部撕裂写入）
             RepairDataTail()
@@ -146,29 +141,27 @@ Namespace Data.Repository
             LoadOrRebuildIndex()
 
             ' 7) 打开日志，截去被丢弃的尾部
-            _logStream = New FileStream(_logPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read, _opt.LogBufferBytes)
-            If _logStream.Length > keepLen Then _logStream.SetLength(keepLen)
-            _logStream.Position = _logStream.Length
+            _wal.Open()
+            _wal.TruncateTo(keepLen)
 
             ' 8) 初始化虚拟层并重放日志
             _pieces = New List(Of Piece)
-            _pending = New List(Of String)
+            _wal.ResetPendingState()
             If _baseLineCount > 0 Then
                 _pieces.Add(New Piece With {.Kind = PieceKind.OriginalFile, .Start = 1L, .Count = _baseLineCount})
             End If
             _virtualCount = _baseLineCount
-            _opCount = 0
-            _replaying = True
+            _wal.BeginReplay()
             Try
-                For Each rec As LogRec In keepRecs
+                For Each rec As WAL.Record In keepRecs
                     If rec.Pos < 1 OrElse rec.Pos > _virtualCount + 1 OrElse rec.Del < 0 OrElse rec.Pos + rec.Del - 1 > _virtualCount Then
                         Throw New InvalidDataException("WAL 记录行位置越界(pos=" & rec.Pos.ToString(Inv) & ")，日志可能已损坏。")
                     End If
                     ApplySplice(rec.Pos, rec.Del, rec.Lines)
-                    _opCount += 1
+                    _wal.IncrementOperationCount()
                 Next
             Finally
-                _replaying = False
+                _wal.EndReplay()
             End Try
             _cumDirty = True
             RebuildCum()
@@ -178,11 +171,7 @@ Namespace Data.Repository
         Public Sub Dispose() Implements IDisposable.Dispose
             If _disposed Then Return
             SyncLock _gate
-                If _logStream IsNot Nothing Then
-                    Try : _logStream.Flush(True) : Catch : End Try
-                    Try : _logStream.Dispose() : Catch : End Try
-                    _logStream = Nothing
-                End If
+                _wal.Dispose()
                 CloseReader()
                 If _lockStream IsNot Nothing Then
                     Try : _lockStream.Dispose() : Catch : End Try
@@ -204,7 +193,7 @@ Namespace Data.Repository
         End Property
         Public ReadOnly Property LogFilePath As String
             Get
-                Return _logPath
+                Return _wal.LogFilePath
             End Get
         End Property
         Public ReadOnly Property IndexFilePath As String
@@ -238,19 +227,19 @@ Namespace Data.Repository
         Public ReadOnly Property PendingOperationCount As Long
             Get
                 EnsureOpen()
-                SyncLock _gate : Return _opCount : End SyncLock
+                SyncLock _gate : Return _wal.PendingOperationCount : End SyncLock
             End Get
         End Property
         Public ReadOnly Property PendingBufferedLineCount As Long
             Get
                 EnsureOpen()
-                SyncLock _gate : Return CLng(_pending.Count) : End SyncLock
+                SyncLock _gate : Return _wal.PendingBufferedLineCount : End SyncLock
             End Get
         End Property
         Public ReadOnly Property HasPendingChanges As Boolean
             Get
                 EnsureOpen()
-                SyncLock _gate : Return _opCount > 0 OrElse _logStream.Length > 0 : End SyncLock
+                SyncLock _gate : Return _wal.PendingOperationCount > 0 OrElse _wal.Length > 0 : End SyncLock
             End Get
         End Property
 
@@ -326,7 +315,7 @@ Namespace Data.Repository
         Public Sub FlushLog()
             SyncLock _gate
                 EnsureOpen()
-                _logStream.Flush(True)
+                _wal.Flush()
             End SyncLock
         End Sub
 
@@ -345,7 +334,7 @@ Namespace Data.Repository
                 FindPiece(lineNumber, pi, off, before)
                 Dim p As Piece = _pieces(pi)
                 If p.Kind = PieceKind.PendingBuffer Then
-                    Return _pending(CInt(p.Start + off))
+                    Return _wal.PendingLine(CInt(p.Start + off))
                 End If
                 Dim origLine As Long = p.Start + off
                 If _fsNextLine <> origLine Then PositionReaderAtLine(origLine)
@@ -365,7 +354,7 @@ Namespace Data.Repository
                 For Each p As Piece In snap
                     If p.Kind = PieceKind.PendingBuffer Then
                         For j As Long = p.Start To p.Start + p.Count - 1
-                            Yield _pending(CInt(j))
+                            Yield _wal.PendingLine(CInt(j))
                         Next
                     Else
                         For Each s As String In ReadOriginalLines(p.Start, p.Count)
@@ -410,7 +399,7 @@ Namespace Data.Repository
                     Dim take As Long = If(count - emitted < avail, count - emitted, avail)
                     If p.Kind = PieceKind.PendingBuffer Then
                         For j As Long = off To off + take - 1
-                            Yield _pending(CInt(p.Start + j))
+                            Yield _wal.PendingLine(CInt(p.Start + j))
                         Next
                     Else
                         For Each s As String In ReadOriginalLines(p.Start + off, take)
@@ -439,17 +428,15 @@ Namespace Data.Repository
                 If _activeReaders > 0 Then
                     Throw New InvalidOperationException("存在未完成的 ReadLines() 枚举，请先完成枚举再合并。")
                 End If
-                If _opCount = 0 AndAlso _logStream.Length = 0 Then Return
+                If _wal.PendingOperationCount = 0 AndAlso _wal.Length = 0 Then Return
                 CoalesceOriginalPieces()
                 If IsAppendOnlyLayout() Then
                     MergeFastAppend()
                 Else
                     MergeFullRewrite()
                 End If
-                _logStream.SetLength(0)
-                _logStream.Flush(True)
-                _logStream.Position = 0
-                _opCount = 0
+                _wal.ClearLog()
+                _wal.ResetPendingState()
             End SyncLock
         End Sub
 
@@ -496,14 +483,14 @@ Namespace Data.Repository
                 If p.Kind <> PieceKind.PendingBuffer Then Continue For
                 For j As Long = p.Start To p.Start + p.Count - 1
                     If newTotal Mod _g = 0 Then newEntries.Add(pos)
-                    pos += _enc.GetByteCount(_pending(CInt(j))) + _nlBytes.Length
+                    pos += _enc.GetByteCount(_wal.PendingLine(CInt(j))) + _nlBytes.Length
                     newTotal += 1
                 Next
             Next
             Dim newLen As Long = pos
 
             WriteIndexFile(_idxTmpPath, newTotal, newLen, newEntries)               ' 1) 新索引先落盘
-            LogRaw("{""op"":""mb"",""old"":" & oldLen.ToString(Inv) & ",""new"":" & newLen.ToString(Inv) & "}") ' 2) 合并意图
+            _wal.AppendMergeBegin(False, oldLen, newLen)                            ' 2) 合并意图
 
             If newLen > oldLen Then                                                 ' 3) 追加数据
                 Using w As New FileStream(_dataPath, FileMode.Append, FileAccess.Write, FileShare.Read Or FileShare.Write, _opt.MergeBufferBytes)
@@ -511,7 +498,7 @@ Namespace Data.Repository
                     For Each p As Piece In _pieces
                         If p.Kind <> PieceKind.PendingBuffer Then Continue For
                         For j As Long = p.Start To p.Start + p.Count - 1
-                            WriteLineBytes(w, _pending(CInt(j)))
+                            WriteLineBytes(w, _wal.PendingLine(CInt(j)))
                         Next
                     Next
                     w.Flush(True)
@@ -519,13 +506,12 @@ Namespace Data.Repository
             End If
 
             SwapFile(_idxTmpPath, _idxPath, Nothing)                                ' 4) 原子换索引
-            LogRaw("{""op"":""md""}")                                               ' 5) 完成标记
+            _wal.AppendMergeDone()                                                  ' 5) 完成标记
 
             _baseLineCount = newTotal
             _idxEntries = newEntries.ToArray()
             _idxFileLength = newLen
             _dataEndsWithLf = True
-            _pending.Clear()
             _pieces.Clear()
             If newTotal > 0 Then _pieces.Add(New Piece With {.Kind = PieceKind.OriginalFile, .Start = 1L, .Count = newTotal})
             _virtualCount = newTotal
@@ -550,7 +536,7 @@ Namespace Data.Repository
                     If p.Kind = PieceKind.PendingBuffer Then
                         For j As Long = p.Start To p.Start + p.Count - 1
                             If total Mod _g = 0 Then entries.Add(pos)
-                            pos += WriteLineBytes(w, _pending(CInt(j))) + _nlBytes.Length
+                            pos += WriteLineBytes(w, _wal.PendingLine(CInt(j))) + _nlBytes.Length
                             total += 1
                         Next
                     Else
@@ -574,10 +560,10 @@ Namespace Data.Repository
 
             WriteIndexFile(_idxTmpPath, total, newLen, entries)                     ' 1) 索引临时文件
             CloseReader()                                                           ' 2) 释放读句柄以便原子替换
-            LogRaw("{""op"":""mbf"",""old"":" & oldLen.ToString(Inv) & ",""new"":" & newLen.ToString(Inv) & "}") ' 3) 合并意图
+            _wal.AppendMergeBegin(True, oldLen, newLen)                             ' 3) 合并意图
             SwapFile(_dataTmpPath, _dataPath, _bakPath)                             ' 4) 原子换数据文件（保留 .bak）
             SwapFile(_idxTmpPath, _idxPath, Nothing)                                ' 5) 原子换索引
-            LogRaw("{""op"":""md""}")                                               ' 6) 完成标记
+            _wal.AppendMergeDone()                                                  ' 6) 完成标记
 
             If File.Exists(_bakPath) Then
                 Try : File.Delete(_bakPath) : Catch : End Try
@@ -587,7 +573,6 @@ Namespace Data.Repository
             _idxEntries = entries.ToArray()
             _idxFileLength = newLen
             _dataEndsWithLf = True
-            _pending.Clear()
             _pieces.Clear()
             If total > 0 Then _pieces.Add(New Piece With {.Kind = PieceKind.OriginalFile, .Start = 1L, .Count = total})
             _virtualCount = total
@@ -620,34 +605,9 @@ Namespace Data.Repository
             If (lines Is Nothing OrElse lines.Count = 0) AndAlso delCount = 0 Then Return
             ' ★ 关键顺序：先写日志（含 fsync），后改内存。
             '   崩溃在两步之间 → 重启后重放日志，状态一致；崩溃在日志写一半 → 撕裂尾被丢弃。
-            LogSplice(pos, delCount, lines)
+            _wal.AppendSplice(pos, delCount, lines)
             ApplySplice(pos, delCount, lines)
-            _opCount += 1
-        End Sub
-
-        Private Sub LogSplice(pos As Long, delCount As Long, lines As List(Of String))
-            If _replaying Then Return
-            WriteLogBytes("{""op"":""sp"",""pos"":" & pos.ToString(Inv) & ",""del"":" & delCount.ToString(Inv) & ",""l"":[")
-            If lines IsNot Nothing Then
-                For i = 0 To lines.Count - 1
-                    If i > 0 Then WriteLogBytes(",")
-                    WriteLogBytes("""")
-                    WriteLogBytes(JEscape(lines(i)))
-                    WriteLogBytes("""")
-                Next
-            End If
-            WriteLogBytes("]}" & vbLf)
-            If _opt.FsyncEachWrite Then _logStream.Flush(True) Else _logStream.Flush()
-        End Sub
-
-        Private Sub LogRaw(record As String)
-            WriteLogBytes(record & vbLf)
-            _logStream.Flush(True)   ' 合并标记必须立即落盘
-        End Sub
-
-        Private Sub WriteLogBytes(text As String)
-            Dim b As Byte() = _logEnc.GetBytes(text)
-            _logStream.Write(b, 0, b.Length)
+            _wal.IncrementOperationCount()
         End Sub
 
         ' 统一的“接合”操作：在虚拟位置 pos 删除 delCount 行、插入 newLines。
@@ -679,13 +639,8 @@ Namespace Data.Repository
             End If
 
             If newLines IsNot Nothing AndAlso newLines.Count > 0 Then
-                If _pending.Count + newLines.Count > Integer.MaxValue Then
-                    Throw New InvalidOperationException("内存挂起行数过多，请先调用 Merge()。")
-                End If
-                Dim np As New Piece With {.Kind = PieceKind.PendingBuffer, .Start = _pending.Count, .Count = newLines.Count}
-                For Each l As String In newLines
-                    _pending.Add(l)
-                Next
+                Dim startIdx As Long = _wal.AddPendingLines(newLines)
+                Dim np As New Piece With {.Kind = PieceKind.PendingBuffer, .Start = startIdx, .Count = newLines.Count}
                 _pieces.Insert(insertIdx, np)
                 TryCoalesce(insertIdx)
             End If
@@ -987,44 +942,18 @@ Namespace Data.Repository
             End If
         End Sub
 
-        ' 读取 WAL → 处理合并中断 → 返回需要保留重放的记录与日志保留长度
-        Private Function ReadAndRecoverLog(keepRecs As List(Of LogRec)) As Long
-            If Not File.Exists(_logPath) Then Return 0
-            Dim recs As New List(Of LogRec)
-            Dim goodLen As Long = 0
-            Using lfs As New FileStream(_logPath, FileMode.Open, FileAccess.Read, FileShare.Read)
-                Dim lr As New BufferedLineReader(lfs, _logEnc, _opt.ReadBufferBytes)
-                Dim line As String = Nothing
-                Dim lastOkTerm As Boolean = True
-                Do While lr.ReadLine(line)
-                    Dim terminated As Boolean = lr.LastLineWasTerminated
-                    Dim rec As LogRec = New LogRec
-                    If TryParseRecord(line, rec) Then
-                        rec.StartOffset = lr.LastLineStartOffset
-                        recs.Add(rec)
-                        goodLen = lr.LastLineEndOffset
-                        lastOkTerm = terminated
-                    Else
-                        If terminated Then
-                            Throw New InvalidDataException("WAL 在偏移 " & lr.LastLineStartOffset.ToString(Inv) & " 处存在无法解析的记录。")
-                        Else
-                            RaiseEvent Info("WAL 尾部存在不完整记录（崩溃残留），已丢弃。")
-                            Exit Do
-                        End If
-                    End If
-                Loop
-                If recs.Count > 0 AndAlso Not lastOkTerm Then
-                    goodLen = recs(recs.Count - 1).StartOffset
-                    recs.RemoveAt(recs.Count - 1)
-                    RaiseEvent Info("WAL 最后一条记录缺少换行终止（撕裂写），已丢弃。")
-                End If
-            End Using
+        ' 处理 WAL 解析结果 → 合并中断判定 → 返回需要保留重放的记录与日志保留长度。
+        ' 日志读写 / 解析 / 撕裂尾丢弃已由 WAL.ReadRecords 完成，此处只做数据文件相关的恢复决策。
+        Private Function ReadAndRecoverLog(keepRecs As List(Of WAL.Record)) As Long
+            Dim read As WAL.ReadResult = _wal.ReadRecords()
+            Dim recs As List(Of WAL.Record) = read.Records
+            Dim goodLen As Long = read.GoodLength
 
             Dim mbIdx As Integer = -1
             Dim mdIdx As Integer = -1
             For i = 0 To recs.Count - 1
-                If recs(i).Op = "mb" OrElse recs(i).Op = "mbf" Then mbIdx = i
-                If recs(i).Op = "md" Then mdIdx = i
+                If recs(i).Kind = WAL.RecordKind.MergeAppend OrElse recs(i).Kind = WAL.RecordKind.MergeFull Then mbIdx = i
+                If recs(i).Kind = WAL.RecordKind.MergeDone Then mdIdx = i
             Next
 
             If mdIdx >= 0 Then
@@ -1042,11 +971,11 @@ Namespace Data.Repository
 
             If mbIdx >= 0 Then
                 If mbIdx <> recs.Count - 1 Then Throw New InvalidDataException("WAL 中的合并标记位置异常。")
-                Dim mb As LogRec = recs(mbIdx)
+                Dim mb As WAL.Record = recs(mbIdx)
                 Dim curLen As Long = _fs.Length
                 Dim mergedOutcome As Boolean
 
-                If mb.Op = "mbf" Then
+                If mb.Kind = WAL.RecordKind.MergeFull Then
                     ' 全量重写：.bak 的存在 ⇔ 数据交换已发生
                     If File.Exists(_bakPath) Then
                         If curLen <> mb.NewLen Then
@@ -1084,15 +1013,15 @@ Namespace Data.Repository
                 ' 合并未生效：清理临时文件，重放 mb 之前的 splice
                 CleanupTempFiles()
                 For i = 0 To mbIdx - 1
-                    If recs(i).Op = "sp" Then keepRecs.Add(recs(i))
+                    If recs(i).Kind = WAL.RecordKind.Splice Then keepRecs.Add(recs(i))
                 Next
                 Return mb.StartOffset
             End If
 
             ' 无合并标记：正常重放
             CleanupTempFiles()
-            For Each rec As LogRec In recs
-                If rec.Op = "sp" Then keepRecs.Add(rec)
+            For Each rec As WAL.Record In recs
+                If rec.Kind = WAL.RecordKind.Splice Then keepRecs.Add(rec)
             Next
             Return goodLen
         End Function
