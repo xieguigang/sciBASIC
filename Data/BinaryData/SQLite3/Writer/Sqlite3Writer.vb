@@ -209,11 +209,12 @@ Namespace Writer
                 Return
             End If
 
-            _disposed = True
-
+            ' 先提交再标记为已释放, 否则 Commit 会因为 disposed 标记而抛出异常
             If AutoCommitOnDispose AndAlso _dirty Then
                 Call Commit()
             End If
+
+            _disposed = True
         End Sub
 
         Private Shared Sub WriteAtomic(path As String, bytes As Byte())

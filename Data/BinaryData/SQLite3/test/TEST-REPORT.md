@@ -1,11 +1,11 @@
 ﻿# Managed SQLite3 读取模块测试报告
 
-- 生成时间: 2026-09-11 17:27:45
+- 生成时间: 2026-09-11 17:29:44
 - 测试模块: ``Microsoft.VisualBasic.Data.IO.SQLite3``
 - 目标数据库: ``G:\compounds_2-copy.sqlite``
 - 运行形态: 结构 + 抽样(大表 ``compounds`` 前 5,000 行, 其余表全量, 上限 200,000 行)
-- 用例总数: 21, 通过 17, 失败 4, 累计耗时 23,091 ms
-- 总体结论: **存在 4 个失败用例**
+- 用例总数: 21, 通过 18, 失败 3, 累计耗时 21,226 ms
+- 总体结论: **存在 3 个失败用例**
 
 ## 1. 测试环境
 
@@ -330,41 +330,40 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 提交时整库重建并以临时文件原子替换。以下测试均遵循[先写入 .sqlite 文件, 再用本模块读取器读回比对]的流程。
 
 - 测试目录: ``Z:\tmp\1\sqlite3-writer-tests``
+- 多页/溢出: 行数 3,001, 文件 774,144 字节 (189 页)
 - 格式自检文件: ``Z:\tmp\1\sqlite3-writer-tests\format.sqlite`` (12,288 字节)
 
 ## 7. 测试用例结果
 
 | # | 用例 | 结果 | 耗时(ms) | 说明 |
 |---|---|---|---|---|
-| 1 | 文件头解析 | 通过 | 193 |  |
+| 1 | 文件头解析 | 通过 | 201 |  |
 | 2 | 枚举 sqlite_master | 通过 | 0 |  |
 | 3 | 表结构解析: compound_identifiers | 通过 | 2 |  |
 | 4 | 表结构解析: compound_microspecies | 通过 | 2 |  |
 | 5 | 表结构解析: compounds | 通过 | 0 |  |
 | 6 | 表结构解析: magnesium_dissociation_constant | 通过 | 0 |  |
 | 7 | 表结构解析: registries | 通过 | 0 |  |
-| 8 | 扫描: compound_identifiers | 通过 | 1832 |  |
-| 9 | 扫描: compound_microspecies | 通过 | 1222 |  |
-| 10 | 扫描: compounds | 通过 | 103 |  |
-| 11 | 扫描: magnesium_dissociation_constant | 通过 | 14 |  |
-| 12 | 扫描: registries | 通过 | 11 |  |
-| 13 | 溢出页/长记录校验: compounds | 通过 | 19647 |  |
+| 8 | 扫描: compound_identifiers | 通过 | 1454 |  |
+| 9 | 扫描: compound_microspecies | 通过 | 999 |  |
+| 10 | 扫描: compounds | 通过 | 81 |  |
+| 11 | 扫描: magnesium_dissociation_constant | 通过 | 11 |  |
+| 12 | 扫描: registries | 通过 | 6 |  |
+| 13 | 溢出页/长记录校验: compounds | 通过 | 18414 |  |
 | 14 | 取值校验: compounds | 通过 | 0 |  |
-| 15 | blobAsBase64 设置 | 通过 | 3 |  |
+| 15 | blobAsBase64 设置 | 通过 | 4 |  |
 | 16 | 未知表异常处理 | 通过 | 0 |  |
-| 17 | 写入: 新建库并读回基础类型 | **失败** | 27 | DuplicateNameException: There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!
+| 17 | 写入: 新建库并读回基础类型 | **失败** | 26 | DuplicateNameException: There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!
 Duplicated headers: [""]
 
 Here is the column header keys in you data: 
 
   ["",""]
  |
-| 18 | 写入: 边界值往返 | **失败** | 1 | ObjectDisposedException: Cannot access a disposed object.
-Object name: 'Sqlite3Writer'. |
-| 19 | 写入: 多页 B 树与溢出页 | **失败** | 27 | Exception: 行数错误: 3000 |
-| 20 | 写入: 打开已有库追加/更新/删除 | **失败** | 5 | ObjectDisposedException: Cannot access a disposed object.
-Object name: 'Sqlite3Writer'. |
-| 21 | 写入: 文件格式自检 | 通过 | 2 |  |
+| 18 | 写入: 边界值往返 | **失败** | 1 | OverflowException: Arithmetic operation resulted in an overflow. |
+| 19 | 写入: 多页 B 树与溢出页 | 通过 | 15 |  |
+| 20 | 写入: 打开已有库追加/更新/删除 | **失败** | 7 | ArgumentException: 表 [t] 之中不存在列 [v] |
+| 21 | 写入: 文件格式自检 | 通过 | 3 |  |
 
 ## 8. 发现的问题与修复记录
 

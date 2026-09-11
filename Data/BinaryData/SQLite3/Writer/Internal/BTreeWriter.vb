@@ -121,9 +121,11 @@ Namespace Writer.Internal
 
             For Each e As LeafEntry In entries
                 Dim cellSize As Long = GetLeafCellSize(e)
+                ' 指针数组随 cell 数量线性增长, 必须按加入之后的 cell 总数计算
+                Dim pointers As Long = PageBuffer.CellPointerSize * (current.Count + 1)
 
                 If current.Count > 0 AndAlso
-                   (PageBuffer.LeafHeaderSize + used + cellSize + PageBuffer.CellPointerSize) > UsableSize Then
+                   (PageBuffer.LeafHeaderSize + used + cellSize + pointers) > UsableSize Then
 
                     nodes.Add(BTreeNode.CreateLeaf(current))
                     current = New List(Of LeafEntry)()

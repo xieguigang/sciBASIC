@@ -372,6 +372,7 @@ Module Program
             })
             Call Console.WriteLine("FAIL (" & sw.ElapsedMilliseconds & " ms)")
             Call Console.WriteLine("         -> " & ex.GetType().Name & ": " & ex.Message)
+            Call Console.WriteLine(ex.ToString)
         End Try
     End Sub
 
