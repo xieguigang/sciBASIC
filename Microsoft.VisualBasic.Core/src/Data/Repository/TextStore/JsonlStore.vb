@@ -910,7 +910,8 @@ Namespace Data.Repository
 
         Private Sub WriteIndexFile(path As String, totalLines As Long, fileLength As Long, entries As IList(Of Long))
             Using fs As New FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None)
-                Using bw As New BinaryWriter(fs)
+                ' leaveOpen:=True：BinaryWriter 的 Dispose 不能关闭 fs，否则下面的 fs.Flush(True) 会抛 ObjectDisposedException
+                Using bw As New BinaryWriter(fs, New UTF8Encoding(False), leaveOpen:=True)
                     bw.Write(Magic)
                     bw.Write(Version)
                     bw.Write(_g)

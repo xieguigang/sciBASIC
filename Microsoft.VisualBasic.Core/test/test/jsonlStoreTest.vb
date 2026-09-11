@@ -45,7 +45,6 @@ Imports System
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
-Imports System.Text
 Imports Microsoft.VisualBasic.Data.Repository
 
 ''' <summary>
@@ -99,10 +98,10 @@ Module jsonlStoreTest
     Private Sub CheckAppendAndVirtualRead(root As String)
         Console.WriteLine("-- append + virtual read --")
 
-        Dim path As String = Path.Combine(root, "append.jsonl")
+        Dim dbPath As String = Path.Combine(root, "append.jsonl")
         Dim expected As String() = {"{""id"":1}", "{""id"":2}", "{""id"":3}"}
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
             Call store.AppendLine("{""id"":1}")
             Call store.AppendLines({"{""id"":2}", "{""id"":3}"})
@@ -119,7 +118,7 @@ Module jsonlStoreTest
         End Using
 
         ' 未调用 Merge()：源文件仍为空，修改全部停留在 WAL 中
-        Check("source file not modified before merge", FileLength(path) = 0)
+        Check("source file not modified before merge", FileLength(dbPath) = 0)
     End Sub
 
     ' ------------------------------------------------------------------------
@@ -128,9 +127,9 @@ Module jsonlStoreTest
     Private Sub CheckSpliceOperations(root As String)
         Console.WriteLine("-- insert / replace / delete --")
 
-        Dim path As String = Path.Combine(root, "splice.jsonl")
+        Dim dbPath As String = Path.Combine(root, "splice.jsonl")
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
             Call store.AppendLines({"a", "b", "c", "d"})
 
@@ -151,18 +150,18 @@ Module jsonlStoreTest
     Private Sub CheckWalReplayAfterCrash(root As String)
         Console.WriteLine("-- WAL replay after crash --")
 
-        Dim path As String = Path.Combine(root, "replay.jsonl")
+        Dim dbPath As String = Path.Combine(root, "replay.jsonl")
         Dim expected As String() = {"1", "2", "3"}
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
             Call store.AppendLines(expected)
             ' 故意不调用 Merge()，模拟程序被终止：修改只存在于 WAL
         End Using
 
-        Check("data file still empty after crash", FileLength(path) = 0)
+        Check("data file still empty after crash", FileLength(dbPath) = 0)
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
 
             Check("replayed total = 3", store.TotalLines = 3, $"actual={store.TotalLines}")
@@ -173,7 +172,7 @@ Module jsonlStoreTest
             Check("log cleared after merge", Not store.HasPendingChanges AndAlso store.PendingOperationCount = 0)
         End Using
 
-        Check("merged file content", SameSeq(File.ReadAllLines(path), expected))
+        Check("merged file content", SameSeq(File.ReadAllLines(dbPath), expected))
     End Sub
 
     ' ------------------------------------------------------------------------
@@ -182,19 +181,19 @@ Module jsonlStoreTest
     Private Sub CheckTornTailRecovery(root As String)
         Console.WriteLine("-- WAL torn tail recovery --")
 
-        Dim path As String = Path.Combine(root, "torn.jsonl")
+        Dim dbPath As String = Path.Combine(root, "torn.jsonl")
         Dim expected As String() = {"alpha", "beta"}
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
             Call store.AppendLines(expected)
         End Using
 
         ' 在 WAL 末尾追加一条未换行终止的残缺记录，模拟断电撕裂写
-        Call File.AppendAllText(path & ".wal", "{""op"":""sp"",""pos"":1,""del"":0,""l"":[")
+        Call File.AppendAllText(dbPath & ".wal", "{""op"":""sp"",""pos"":1,""del"":0,""l"":[")
 
         Dim messages As New List(Of String)
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             AddHandler store.Info, Sub(m) messages.Add(m)
             Call store.Open()
 
@@ -205,7 +204,7 @@ Module jsonlStoreTest
         Check("torn tail reported via Info", messages.Exists(Function(m) m.Contains("不完整记录")))
 
         ' 撕裂尾已被截断，再次打开应恢复正常
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
             Check("reopen after torn tail ok", store.TotalLines = 2, $"actual={store.TotalLines}")
         End Using
@@ -217,10 +216,10 @@ Module jsonlStoreTest
     Private Sub CheckMergeAppendFastPath(root As String)
         Console.WriteLine("-- merge fast append path --")
 
-        Dim path As String = Path.Combine(root, "merge-append.jsonl")
-        Call File.WriteAllText(path, "base1" & vbLf & "base2" & vbLf)
+        Dim dbPath As String = Path.Combine(root, "merge-append.jsonl")
+        Call File.WriteAllText(dbPath, "base1" & vbLf & "base2" & vbLf)
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
 
             Check("base lines = 2", store.BaseLineCount = 2, $"actual={store.BaseLineCount}")
@@ -236,7 +235,7 @@ Module jsonlStoreTest
             Check("merged base = 4", store.BaseLineCount = 4, $"actual={store.BaseLineCount}")
         End Using
 
-        Check("fast append file content", SameSeq(File.ReadAllLines(path), {"base1", "base2", "new1", "new2"}))
+        Check("fast append file content", SameSeq(File.ReadAllLines(dbPath), {"base1", "base2", "new1", "new2"}))
     End Sub
 
     ' ------------------------------------------------------------------------
@@ -245,12 +244,12 @@ Module jsonlStoreTest
     Private Sub CheckMergeFullRewrite(root As String)
         Console.WriteLine("-- merge full rewrite path --")
 
-        Dim path As String = Path.Combine(root, "merge-full.jsonl")
-        Call File.WriteAllText(path, "a" & vbLf & "b" & vbLf & "c" & vbLf)
+        Dim dbPath As String = Path.Combine(root, "merge-full.jsonl")
+        Call File.WriteAllText(dbPath, "a" & vbLf & "b" & vbLf & "c" & vbLf)
 
         Dim expected As String() = {"head", "a", "B", "c"}
 
-        Using store As New JsonlStore(path)
+        Using store As New JsonlStore(dbPath)
             Call store.Open()
 
             Call store.InsertLines(1, {"head"})      ' head a b c
@@ -263,9 +262,9 @@ Module jsonlStoreTest
             Check("merged total = 4", store.TotalLines = 4, $"actual={store.TotalLines}")
         End Using
 
-        Check("full rewrite file content", SameSeq(File.ReadAllLines(path), expected))
-        Check("index file written", File.Exists(path & ".idx"))
-        Check("merge temp/backup cleaned", Not File.Exists(path & ".merge.tmp") AndAlso Not File.Exists(path & ".bak"))
+        Check("full rewrite file content", SameSeq(File.ReadAllLines(dbPath), expected))
+        Check("index file written", File.Exists(dbPath & ".idx"))
+        Check("merge temp/backup cleaned", Not File.Exists(dbPath & ".merge.tmp") AndAlso Not File.Exists(dbPath & ".bak"))
     End Sub
 
     ' ------------------------------------------------------------------------
@@ -288,11 +287,19 @@ Module jsonlStoreTest
         Call wal.AppendMergeBegin(isFullRewrite:=False, oldLen:=0, newLen:=10)     ' 3
         Call wal.AppendMergeDone()                                                 ' 4
         Call wal.Flush()
+        Call wal.Dispose()   ' 写句柄关闭后才能再以只读方式打开日志
 
-        Dim read As WAL.ReadResult = wal.ReadRecords()
+        Console.WriteLine("RAW-WAL>>>")
+        Console.WriteLine(File.ReadAllText(logPath).Replace(vbLf, "<LF>" & vbLf).Replace(vbTab, "<TAB>"))
+        Console.WriteLine("<<<RAW-WAL")
+
+        Dim logLen As Long = New FileInfo(logPath).Length
+
+        Dim reader As New WAL(logPath, opt)
+        Dim read As WAL.ReadResult = reader.ReadRecords()
 
         Check("record count = 5", read.Records.Count = 5, $"actual={read.Records.Count}")
-        Check("good length = log length", read.GoodLength = wal.Length)
+        Check("good length = log length", read.GoodLength = logLen, $"good={read.GoodLength}, len={logLen}")
         Check("record[0] is splice", read.Records(0).Kind = WAL.RecordKind.Splice)
         Check("record[0] pos/del", read.Records(0).Pos = 1 AndAlso read.Records(0).Del = 0)
         Check("record[0] lines", SameSeq(read.Records(0).Lines, {"hello", "world"}))
@@ -304,28 +311,28 @@ Module jsonlStoreTest
         Check("start offsets ascending",
               read.Records(1).StartOffset > read.Records(0).StartOffset AndAlso read.Records(4).StartOffset > read.Records(3).StartOffset)
 
-        Call wal.Dispose()
+        Call reader.Dispose()
 
         ' 追加一条未终结的残缺记录，验证 ReadRecords 丢弃撕裂尾
         Call File.AppendAllText(logPath, "{""op"":""sp"",""pos"":")
-        Dim wal2 As New WAL(logPath, opt)
+        Dim reader2 As New WAL(logPath, opt)
         Dim messages As New List(Of String)
-        AddHandler wal2.Info, Sub(m) messages.Add(m)
+        AddHandler reader2.Info, Sub(m) messages.Add(m)
 
-        Dim read2 As WAL.ReadResult = wal2.ReadRecords()
+        Dim read2 As WAL.ReadResult = reader2.ReadRecords()
         Check("torn tail record dropped", read2.Records.Count = 5, $"actual={read2.Records.Count}")
         Check("good length unchanged after torn tail", read2.GoodLength = read.GoodLength)
         Check("torn tail reported via Info", messages.Exists(Function(m) m.Contains("不完整记录")))
-        Call wal2.Dispose()
+        Call reader2.Dispose()
     End Sub
 
     ' ------------------------------------------------------------------------
     ' helpers
     ' ------------------------------------------------------------------------
 
-    Private Function FileLength(path As String) As Long
-        If Not File.Exists(path) Then Return 0
-        Return New FileInfo(path).Length
+    Private Function FileLength(filePath As String) As Long
+        If Not File.Exists(filePath) Then Return 0
+        Return New FileInfo(filePath).Length
     End Function
 
     Private Function SameSeq(actual As IEnumerable(Of String), expected As String()) As Boolean
