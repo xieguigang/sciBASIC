@@ -1,10 +1,10 @@
 ﻿# Managed SQLite3 读取模块测试报告
 
-- 生成时间: 2026-09-11 17:12:12
+- 生成时间: 2026-09-11 17:35:19
 - 测试模块: ``Microsoft.VisualBasic.Data.IO.SQLite3``
 - 目标数据库: ``G:\compounds_2-copy.sqlite``
 - 运行形态: 结构 + 抽样(大表 ``compounds`` 前 5,000 行, 其余表全量, 上限 200,000 行)
-- 用例总数: 16, 通过 16, 失败 0, 累计耗时 20,583 ms
+- 用例总数: 21, 通过 21, 失败 0, 累计耗时 21,871 ms
 - 总体结论: **全部用例通过**
 
 ## 1. 测试环境
@@ -324,28 +324,42 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 - 观测到最大 BLOB 长度: 342 字节
 - 是否命中溢出页: 是
 
-## 6. 测试用例结果
+## 6. 写入/往返测试
+
+写入模块提供 Builder 链式接口: ``Sqlite3Writer.CreateFile/OpenFile → CreateTable → AddRow/UpdateRow/DeleteRow → Commit``,
+提交时整库重建并以临时文件原子替换。以下测试均遵循[先写入 .sqlite 文件, 再用本模块读取器读回比对]的流程。
+
+- 测试目录: ``Z:\tmp\1\sqlite3-writer-tests``
+- 多页/溢出: 行数 3,001, 文件 774,144 字节 (189 页)
+- 格式自检文件: ``Z:\tmp\1\sqlite3-writer-tests\format.sqlite`` (12,288 字节)
+
+## 7. 测试用例结果
 
 | # | 用例 | 结果 | 耗时(ms) | 说明 |
 |---|---|---|---|---|
-| 1 | 文件头解析 | 通过 | 181 |  |
+| 1 | 文件头解析 | 通过 | 163 |  |
 | 2 | 枚举 sqlite_master | 通过 | 0 |  |
 | 3 | 表结构解析: compound_identifiers | 通过 | 2 |  |
-| 4 | 表结构解析: compound_microspecies | 通过 | 2 |  |
+| 4 | 表结构解析: compound_microspecies | 通过 | 3 |  |
 | 5 | 表结构解析: compounds | 通过 | 0 |  |
 | 6 | 表结构解析: magnesium_dissociation_constant | 通过 | 0 |  |
 | 7 | 表结构解析: registries | 通过 | 0 |  |
-| 8 | 扫描: compound_identifiers | 通过 | 1395 |  |
-| 9 | 扫描: compound_microspecies | 通过 | 970 |  |
-| 10 | 扫描: compounds | 通过 | 78 |  |
-| 11 | 扫描: magnesium_dissociation_constant | 通过 | 10 |  |
+| 8 | 扫描: compound_identifiers | 通过 | 1474 |  |
+| 9 | 扫描: compound_microspecies | 通过 | 1006 |  |
+| 10 | 扫描: compounds | 通过 | 83 |  |
+| 11 | 扫描: magnesium_dissociation_constant | 通过 | 11 |  |
 | 12 | 扫描: registries | 通过 | 6 |  |
-| 13 | 溢出页/长记录校验: compounds | 通过 | 17936 |  |
+| 13 | 溢出页/长记录校验: compounds | 通过 | 19075 |  |
 | 14 | 取值校验: compounds | 通过 | 0 |  |
-| 15 | blobAsBase64 设置 | 通过 | 3 |  |
+| 15 | blobAsBase64 设置 | 通过 | 4 |  |
 | 16 | 未知表异常处理 | 通过 | 0 |  |
+| 17 | 写入: 新建库并读回基础类型 | 通过 | 16 |  |
+| 18 | 写入: 边界值往返 | 通过 | 4 |  |
+| 19 | 写入: 多页 B 树与溢出页 | 通过 | 14 |  |
+| 20 | 写入: 打开已有库追加/更新/删除 | 通过 | 7 |  |
+| 21 | 写入: 文件格式自检 | 通过 | 3 |  |
 
-## 7. 发现的问题与修复记录
+## 8. 发现的问题与修复记录
 
 | 编号 | 问题 | 根因 | 修复 | 状态 |
 |---|---|---|---|---|
@@ -359,12 +373,19 @@ RowId=5: "2019-01-16 11:19:42.835946" (String), <NULL>, 5 (Int64), "SABIO-RK Com
 | I-08 | 表级 CHECK 约束被误判为数据列 | Schema.ParseColumns 仅跳过 UNIQUE/FOREIGN KEY/PRIMARY KEY 约束, 未处理 CHECK/CONSTRAINT 约束。 | Schema.ParseColumns 新增跳过 CHECK/CONSTRAINT 约束, 并为缺失类型声明的列按 BLOB 亲和性回退。 | 已修复(复测通过) |
 | I-09 | INTEGER PRIMARY KEY(rowid 别名)列被读成 NULL | SQLite 把 INTEGER PRIMARY KEY 作为 rowid 的别名, 记录体之中该列存储为 NULL, 读取时需要用该行的 rowid 回填; 原实现直接返回 NULL。 | Schema 记录主键列名, Sqlite3Table 识别 INTEGER PRIMARY KEY 别名列, 并在解码完成后用 rowid 回填该列。 | 已修复(复测通过) |
 | I-10 | FLOAT 列存储 0/1 时 CLR 类型不一致 | SQLite 对 0/1 使用 serial type 8/9; 解码后只按 BOOLEAN 处理, 未考虑 FLOAT 亲和性。 | ToDeclaredBoolean 对 FLOAT 亲和性列返回 Double, 保证数值列类型稳定。 | 已修复(复测通过) |
+| I-11 | 写入侧叶页容量未计入 cell 指针数组增长 | BTreeWriter 计算叶页容量时只累加 cell 体积并额外 +2, 未按 cell 数量乘算 2 字节指针数组, 导致内容区与指针数组重叠。 | 容量判定改为 LeafHeaderSize + 已用空间 + 新 cell 体积 + 2 * (cell 数 + 1) <= 可用页大小。 | 已修复(复测通过) |
+| I-12 | 写入侧整数 serial type 与字节宽度映射错误 | GetSerialType 直接把字节宽度当作 serial type 返回, 而 serial type 8/9 是常量 0/1 且不携带数据; 8 字节整数应写为 serial type 6。 | 按规范映射: 1/2/3/4 字节 -> serial 1/2/3/4, 6 字节 -> serial 5, 8 字节 -> serial 6。 | 已修复(复测通过) |
+| I-13 | 写入侧负数整数触发 OverflowException | VB 的 CULng 为受检查转换, 对负数会抛出 OverflowException。 | 改为 BitConverter.ToUInt64(BitConverter.GetBytes(值)) 做无检查位重解释。 | 已修复(复测通过) |
+| I-14 | Sqlite3Writer.Dispose 先置释放标记再提交, 掩盖真实异常 | Dispose 中先设置 _disposed = True, 随后调用 Commit() 被释放检查拦截。 | 调整顺序: 先提交(若存在未落盘修改), 再设置释放标记。 | 已修复(间接验证) |
+| I-15 | 读取侧单字符列名被解析为空串 | Schema.ParseColumns 使用 GetStackValue 剥离双引号, 而该函数对长度小于 2 的字符串直接返回空串。 | 改为先判断首尾字符是否为引号/方括号, 再决定是否截断, 不再依赖 GetStackValue。 | 已修复(复测通过) |
+| I-16 | 读取侧 serial type 5/6 的整数宽度映射错误 | ReadValue 直接把 serial type 当作字节数传给 ReadInteger。 | 新增 GetIntegerByteWidth: serial 5 -> 6 字节, serial 6 -> 8 字节, 与写入侧对称。 | 已修复(复测通过) |
 
 > 说明: 相关用例全部通过时状态记为 [已修复(复测通过)]; 存在失败用例时记为 [复现/待修复]。
 
-## 8. 复测结论
+## 9. 复测结论
 
-全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行,
-包含可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB、rowid 别名以及表级约束等场景。
-溢出页路径已被实际覆盖(最大字段 6,031 字节 > 内联阈值 4061 字节), 未发现异常。
+读取与写入模块的测试用例全部通过。
+读取侧可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行, 覆盖可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB、rowid 别名与表级约束等场景。
+读取侧溢出页路径已被实际覆盖(最大字段 6,031 字节 > 内联阈值 4061 字节), 未发现异常。
+写入侧通过 Builder 链式接口完成新建/建表/插行/追加/更新/删除/删表, 生成的文件均可被读取器逐表、逐行、逐列读回, 覆盖边界值、多页 B 树与溢出页。
 

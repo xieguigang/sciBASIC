@@ -196,8 +196,8 @@ Namespace Core.Tables
                     Return Nothing
 
                 Case 1, 2, 3, 4, 5, 6
-                    ' 1/2/3/4/6/8 字节有符号整数
-                    Return ToDeclaredNumber(reader.ReadInteger(CByte(serialType)), meta)
+                    ' 有符号整数: serial type 1/2/3/4 对应 1/2/3/4 字节, serial type 5 对应 6 字节, serial type 6 对应 8 字节
+                    Return ToDeclaredNumber(reader.ReadInteger(CByte(GetIntegerByteWidth(serialType))), meta)
 
                 Case 7
                     ' 8 字节 IEEE 浮点数
@@ -226,6 +226,35 @@ Namespace Core.Tables
                         Dim length As Integer = CInt((serialType - 13L) \ 2L)
                         Return reader.ReadString(length)
                     End If
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 依据 serial type 计算整数所占的字节宽度
+        ''' 
+        ''' | serial type | 字节宽度 |
+        ''' | --- | --- |
+        ''' | 1 | 1 |
+        ''' | 2 | 2 |
+        ''' | 3 | 3 |
+        ''' | 4 | 4 |
+        ''' | 5 | 6 |
+        ''' | 6 | 8 |
+        ''' </summary>
+        Private Shared Function GetIntegerByteWidth(serialType As Long) As Integer
+            Select Case serialType
+                Case 1L
+                    Return 1
+                Case 2L
+                    Return 2
+                Case 3L
+                    Return 3
+                Case 4L
+                    Return 4
+                Case 5L
+                    Return 6
+                Case Else
+                    Return 8
             End Select
         End Function
 

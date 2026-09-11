@@ -48,9 +48,12 @@ Module Program
     ''' </summary>
     Const OVERFLOW_PROBE_ROWS As Integer = 300000
 
-    Private ReadOnly results As New List(Of TestResult)
+    Friend ReadOnly results As New List(Of TestResult)
     Private ReadOnly headerSummary As New List(Of String)
     Private ReadOnly masterEntries As New List(Of String)
+
+    ''' <summary>写入/往返测试的报告说明行(由 <see cref="WriterTests"/> 填充)</summary>
+    Friend ReadOnly writerNotes As New List(Of String)
     Private ReadOnly schemaSummaries As New List(Of String)
     Private ReadOnly scanResults As New List(Of ScanResult)
     Private overflowProbe As OverflowProbeResult
@@ -320,7 +323,12 @@ Module Program
         End If
 
         ' ---------------------------------------------------------------
-        ' 8. 汇总输出 + 报告
+        ' 8. 写入模块: 先写入 sqlite 文件, 再用读取器读回
+        ' ---------------------------------------------------------------
+        Call RunWriterTests()
+
+        ' ---------------------------------------------------------------
+        ' 9. 汇总输出 + 报告
         ' ---------------------------------------------------------------
         Call PrintSummary()
 
@@ -345,7 +353,7 @@ Module Program
     ' 测试基础设施
     ' ===================================================================
 
-    Private Sub Run(name As String, action As Action)
+    Friend Sub Run(name As String, action As Action)
         Dim sw As Stopwatch = Stopwatch.StartNew()
 
         Call Console.Write("  [" & name & "] ... ")
@@ -364,10 +372,11 @@ Module Program
             })
             Call Console.WriteLine("FAIL (" & sw.ElapsedMilliseconds & " ms)")
             Call Console.WriteLine("         -> " & ex.GetType().Name & ": " & ex.Message)
+            Call Console.WriteLine(ex.ToString)
         End Try
     End Sub
 
-    Private Sub Check(condition As Boolean, message As String)
+    Friend Sub Check(condition As Boolean, message As String)
         If Not condition Then
             Throw New Exception(message)
         End If
@@ -717,8 +726,23 @@ Module Program
         End If
         sb.AppendLine()
 
+        ' --- 写入/往返测试 ---
+        sb.AppendLine("## 6. 写入/往返测试")
+        sb.AppendLine()
+        sb.AppendLine("写入模块提供 Builder 链式接口: ``Sqlite3Writer.CreateFile/OpenFile → CreateTable → AddRow/UpdateRow/DeleteRow → Commit``,")
+        sb.AppendLine("提交时整库重建并以临时文件原子替换。以下测试均遵循[先写入 .sqlite 文件, 再用本模块读取器读回比对]的流程。")
+        sb.AppendLine()
+        If writerNotes.Count = 0 Then
+            sb.AppendLine("(未执行写入测试)")
+        Else
+            For Each line As String In writerNotes
+                sb.AppendLine(line)
+            Next
+        End If
+        sb.AppendLine()
+
         ' --- 用例结果 ---
-        sb.AppendLine("## 6. 测试用例结果")
+        sb.AppendLine("## 7. 测试用例结果")
         sb.AppendLine()
         sb.AppendLine("| # | 用例 | 结果 | 耗时(ms) | 说明 |")
         sb.AppendLine("|---|---|---|---|---|")
@@ -730,7 +754,7 @@ Module Program
         sb.AppendLine()
 
         ' --- 问题与修复 ---
-        sb.AppendLine("## 7. 发现的问题与修复记录")
+        sb.AppendLine("## 8. 发现的问题与修复记录")
         sb.AppendLine()
         sb.AppendLine("| 编号 | 问题 | 根因 | 修复 | 状态 |")
         sb.AppendLine("|---|---|---|---|---|")
@@ -743,25 +767,27 @@ Module Program
         sb.AppendLine()
 
         ' --- 结论 ---
-        sb.AppendLine("## 8. 复测结论")
+        sb.AppendLine("## 9. 复测结论")
         sb.AppendLine()
         If allPassed Then
-            sb.AppendLine("全部测试用例通过, 读取模块可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行,")
-            sb.AppendLine("包含可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB、rowid 别名以及表级约束等场景。")
+            sb.AppendLine("读取与写入模块的测试用例全部通过。")
+            sb.AppendLine("读取侧可正确解析目标数据库的文件头、sqlite_master、各表结构以及数据行, 覆盖可空列 NULL、BOOLEAN、FLOAT、TEXT、BLOB、rowid 别名与表级约束等场景。")
 
             If overflowProbe IsNot Nothing AndAlso overflowProbe.OverflowExercised Then
-                sb.AppendLine($"溢出页路径已被实际覆盖(最大字段 {Math.Max(overflowProbe.MaxTextLength, overflowProbe.MaxBlobLength).ToString("N0")} 字节 > 内联阈值 {overflowProbe.InlineLimit} 字节), 未发现异常。")
+                sb.AppendLine($"读取侧溢出页路径已被实际覆盖(最大字段 {Math.Max(overflowProbe.MaxTextLength, overflowProbe.MaxBlobLength).ToString("N0")} 字节 > 内联阈值 {overflowProbe.InlineLimit} 字节), 未发现异常。")
             Else
-                sb.AppendLine("抽样范围内未出现超过单页内联阈值的字段, 溢出页路径未被实际触发。")
+                sb.AppendLine("抽样范围内未出现超过单页内联阈值的字段, 读取侧溢出页路径未被实际触发。")
             End If
+
+            sb.AppendLine("写入侧通过 Builder 链式接口完成新建/建表/插行/追加/更新/删除/删表, 生成的文件均可被读取器逐表、逐行、逐列读回, 覆盖边界值、多页 B 树与溢出页。")
         Else
-            sb.AppendLine("存在未通过的测试用例, 详见第 6 节; 修复前状态快照见 ``TEST-REPORT-baseline.md``。")
+            sb.AppendLine("存在未通过的测试用例, 详见第 7 节; 修复前状态快照见 ``TEST-REPORT-baseline.md``。")
         End If
         sb.AppendLine()
 
         Dim baselinePath As String = Path.Combine(FindTestDirectory(), "TEST-REPORT-baseline.md")
         If allPassed AndAlso File.Exists(baselinePath) Then
-            sb.AppendLine("## 9. 基线对比")
+            sb.AppendLine("## 10. 基线对比")
             sb.AppendLine()
             sb.AppendLine("修复前(基线)运行的失败快照保存在 ``TEST-REPORT-baseline.md``, 可用于对比修复前后的用例通过情况。")
             sb.AppendLine()
@@ -869,6 +895,54 @@ Module Program
                 .RootCause = "SQLite 对 0/1 使用 serial type 8/9; 解码后只按 BOOLEAN 处理, 未考虑 FLOAT 亲和性。",
                 .Fix = "ToDeclaredBoolean 对 FLOAT 亲和性列返回 Double, 保证数值列类型稳定。",
                 .VerifyTest = "扫描: "
+            },
+            New IssueRecord With {
+                .Id = "I-11",
+                .Title = "写入侧叶页容量未计入 cell 指针数组增长",
+                .Symptom = "多页表在写入之后回读会丢失记录(行数偏少)并抛出 EndOfStreamException。",
+                .RootCause = "BTreeWriter 计算叶页容量时只累加 cell 体积并额外 +2, 未按 cell 数量乘算 2 字节指针数组, 导致内容区与指针数组重叠。",
+                .Fix = "容量判定改为 LeafHeaderSize + 已用空间 + 新 cell 体积 + 2 * (cell 数 + 1) <= 可用页大小。",
+                .VerifyTest = "写入: 多页"
+            },
+            New IssueRecord With {
+                .Id = "I-12",
+                .Title = "写入侧整数 serial type 与字节宽度映射错误",
+                .Symptom = "写入 8 字节整数(如 Long.MaxValue)之后回读得到 0, 且该行后续列全部错位。",
+                .RootCause = "GetSerialType 直接把字节宽度当作 serial type 返回, 而 serial type 8/9 是常量 0/1 且不携带数据; 8 字节整数应写为 serial type 6。",
+                .Fix = "按规范映射: 1/2/3/4 字节 -> serial 1/2/3/4, 6 字节 -> serial 5, 8 字节 -> serial 6。",
+                .VerifyTest = "写入: 边界值"
+            },
+            New IssueRecord With {
+                .Id = "I-13",
+                .Title = "写入侧负数整数触发 OverflowException",
+                .RootCause = "VB 的 CULng 为受检查转换, 对负数会抛出 OverflowException。",
+                .Fix = "改为 BitConverter.ToUInt64(BitConverter.GetBytes(值)) 做无检查位重解释。",
+                .Symptom = "写入 Long.MinValue 等负数时报 Arithmetic operation resulted in an overflow。",
+                .VerifyTest = "写入: 边界值"
+            },
+            New IssueRecord With {
+                .Id = "I-14",
+                .Title = "Sqlite3Writer.Dispose 先置释放标记再提交, 掩盖真实异常",
+                .Symptom = "提交失败时最终抛出 ObjectDisposedException, 真实错误信息丢失。",
+                .RootCause = "Dispose 中先设置 _disposed = True, 随后调用 Commit() 被释放检查拦截。",
+                .Fix = "调整顺序: 先提交(若存在未落盘修改), 再设置释放标记。",
+                .VerifyTest = ""
+            },
+            New IssueRecord With {
+                .Id = "I-15",
+                .Title = "读取侧单字符列名被解析为空串",
+                .Symptom = "CREATE TABLE 中长度为 1 的列名(如 a/b/v/i)解析成空字符串, 触发 DuplicateNameException 或按列名取值为 -1。",
+                .RootCause = "Schema.ParseColumns 使用 GetStackValue 剥离双引号, 而该函数对长度小于 2 的字符串直接返回空串。",
+                .Fix = "改为先判断首尾字符是否为引号/方括号, 再决定是否截断, 不再依赖 GetStackValue。",
+                .VerifyTest = "写入: 新建库"
+            },
+            New IssueRecord With {
+                .Id = "I-16",
+                .Title = "读取侧 serial type 5/6 的整数宽度映射错误",
+                .Symptom = "6 字节与 8 字节整数被按 5/6 字节读取, 数值错误(此前数据恰好都是小整数而未暴露)。",
+                .RootCause = "ReadValue 直接把 serial type 当作字节数传给 ReadInteger。",
+                .Fix = "新增 GetIntegerByteWidth: serial 5 -> 6 字节, serial 6 -> 8 字节, 与写入侧对称。",
+                .VerifyTest = "写入: 边界值"
             }
         }
     End Function
