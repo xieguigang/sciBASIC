@@ -25,7 +25,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Configurations>nuget_release</Configurations>
+    <Configurations>nuget_release;Debug</Configurations>
     <Title>Managed CVODE Variable-Order ODE Solver in Pure VB.NET</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>

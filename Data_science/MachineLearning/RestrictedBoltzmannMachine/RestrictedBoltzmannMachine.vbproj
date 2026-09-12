@@ -13,7 +13,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Configurations>nuget_release</Configurations>
+    <Configurations>nuget_release;Debug</Configurations>
     <Title>Restricted Boltzmann Machines with Contrastive Divergence Training</Title>
     <Description>Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine</AssemblyTitle>

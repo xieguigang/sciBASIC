@@ -7,7 +7,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Configurations>nuget_release</Configurations>
+    <Configurations>nuget_release;Debug</Configurations>
     <Title>Myers O(ND) Diff Algorithm for Text Comparison</Title>
     <Description>Implements the Myers O(ND) difference algorithm to compare text files and string sequences, producing shortest edit scripts, structured diff blocks and unified diff output at both line level and character level.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.MyersDiff</AssemblyTitle>

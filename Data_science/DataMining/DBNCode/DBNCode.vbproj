@@ -11,7 +11,7 @@
     <RootNamespace>Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork</RootNamespace>
     <Version>1.0.9742.7537</Version>
     <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
-    <Configurations>nuget_release</Configurations>
+    <Configurations>nuget_release;Debug</Configurations>
     <Title>Dynamic Bayesian Network Structure and Parameter Learning</Title>
     <Description>Learns dynamic Bayesian networks from observation sequences, combining initial and transition Bayes nets with MDL, log-likelihood and Bayesian scoring functions, optimum branching search and EM parameter fitting.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
