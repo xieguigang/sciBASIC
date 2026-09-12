@@ -152,21 +152,32 @@ Public Module XmlExtensions
                             Optional stripInvalidsCharacter As Boolean = False,
                             Optional ignoreXmlns As Boolean = False) As Object
 
-        If Not xmlFile.FileExists(ZERO_Nonexists:=True) Then
-            Dim exMsg$ = $"{xmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
+        Dim xmlDoc$
 
-            With New Exception(exMsg)
-                Call App.LogException(.ByRef)
+        If xmlFile.FileExists(ZERO_Nonexists:=True) Then
+            ' 入参是一个真实存在的 XML 文件路径
+            xmlDoc = File.ReadAllText(xmlFile, encoding Or UTF8)
+        Else
+            ' 入参不是文件路径，则把它当作 XML 文档内容本身来解析。
+            ' 例如 SMRUCC.genomics.Model.SBML.Level3.XmlFile.LoadDocument(xml$)
+            ' 就是直接把文档文本传进来；此时 FileExists 会因为文本过长而抛异常，
+            ' 因此这里先判断是否为文件路径，再退化到「按内容解析」。
+            xmlDoc = xmlFile
 
-                If ThrowEx Then
-                    Throw .ByRef
-                Else
-                    Return Nothing
-                End If
-            End With
+            If String.IsNullOrEmpty(xmlDoc) Then
+                Dim exMsg$ = $"empty xml document content!"
+
+                With New Exception(exMsg)
+                    Call App.LogException(.ByRef)
+
+                    If ThrowEx Then
+                        Throw .ByRef
+                    Else
+                        Return Nothing
+                    End If
+                End With
+            End If
         End If
-
-        Dim xmlDoc$ = File.ReadAllText(xmlFile, encoding Or UTF8)
 
         If Not preprocess Is Nothing Then
             xmlDoc = preprocess(xmlDoc)

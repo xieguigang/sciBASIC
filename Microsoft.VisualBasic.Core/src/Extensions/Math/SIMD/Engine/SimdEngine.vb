@@ -134,7 +134,7 @@ Namespace Math.SIMD
         ''' <c>New T(n) {}</c> 会让运行时先把整块内存清零，再被我们的循环完整覆盖一次。
         ''' 对于大数组（例如 1e7 个 <see cref="Double"/> 就是 80MB）这次多余的清零会占用
         ''' 与真正计算同量级的内存带宽，是实测中最主要的开销之一。
-        ''' <see cref="GC.AllocateUninitializedArray(Of T)(Integer)"/> 可以跳过这一步。
+        ''' <see cref="GC.AllocateUninitializedArray(Of T)"/> 可以跳过这一步。
         ''' </para>
         ''' <para>
         ''' <b>安全性</b>：只有当返回数组的每一个元素都会被显式写入时才可以使用这个方法。
