@@ -379,13 +379,20 @@ Namespace ComponentModel.Collection
         Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T),
                                              keys As IEnumerable(Of String),
                                              Optional [default] As T = Nothing) As IEnumerable(Of T)
-            For Each key As String In keys
-                If table.ContainsKey(key) Then
-                    Yield table(key)
-                Else
+
+            If table Is Nothing Then
+                For Each key As String In keys
                     Yield [default]
-                End If
-            Next
+                Next
+            Else
+                For Each key As String In keys
+                    If table.ContainsKey(key) Then
+                        Yield table(key)
+                    Else
+                        Yield [default]
+                    End If
+                Next
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
