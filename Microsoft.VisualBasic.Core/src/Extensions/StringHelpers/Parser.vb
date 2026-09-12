@@ -350,7 +350,9 @@ Public Module PrimitiveParser
         {"error", False}, {"err", False},
         {"f", False}, {"false", False},
         {"0", False},
-        {"n", False}, {"no", False}
+        {"n", False}, {"no", False},
+        {"nil", False}, {"null", False}, {"none", False},
+        {"n/a", False}, {"na", False}, {"unknown", False}
     }
 
     ''' <summary>
