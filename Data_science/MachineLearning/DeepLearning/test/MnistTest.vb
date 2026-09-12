@@ -119,7 +119,7 @@ Public Class MnistTest
         Next
     End Sub
 
-    Private Shared Sub printPredictions(ByVal correctPredictions As Integer(), ByVal numberDistribution As Integer(), ByVal totalSize As Integer, ByVal numOfClasses As Integer)
+    Private Shared Sub printPredictions(correctPredictions As Integer(), numberDistribution As Integer(), totalSize As Integer, numOfClasses As Integer)
         Dim sumCorrectPredictions = 0
         For i = 0 To numOfClasses - 1
             Dim sb As StringBuilder = New StringBuilder()
