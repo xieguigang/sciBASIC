@@ -67,10 +67,8 @@ Imports System.Net
 Imports System.Net.Http
 Imports System.Net.Http.Headers
 Imports System.Net.NetworkInformation
-Imports System.Net.Security
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
-Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
