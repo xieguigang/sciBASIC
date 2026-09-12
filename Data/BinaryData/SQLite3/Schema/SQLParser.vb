@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::269e6d7fe7f8917e88765ee6fffd309f, Data\BinaryData\SQLite3\Schema\SQLParser.vb"
+﻿#Region "Microsoft.VisualBasic::93a512fe1b13c529d519727f14308b0e, Data\BinaryData\SQLite3\Schema\SQLParser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 189
-'    Code Lines: 160 (84.66%)
-' Comment Lines: 3 (1.59%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 26 (13.76%)
-'     File Size: 6.33 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Enum TokenTypes
-' 
-'         [string], close, comma, keyword, length
-'         name, open, type
-' 
-'  
-' 
-' 
-' 
-'     Class Token
-' 
-' 
-' 
-'     Class SQLParser
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetTokens, populateBufferToken, walkChar
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 186
+    '    Code Lines: 158 (84.95%)
+    ' Comment Lines: 3 (1.61%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 25 (13.44%)
+    '     File Size: 6.28 KB
+
+
+    '     Enum TokenTypes
+    ' 
+    '         [string], close, comma, keyword, length
+    '         name, open, type
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class Token
+    ' 
+    ' 
+    ' 
+    '     Class SQLParser
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetTokens, populateBufferToken, walkChar
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

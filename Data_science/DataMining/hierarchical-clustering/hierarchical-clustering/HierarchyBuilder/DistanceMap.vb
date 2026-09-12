@@ -105,6 +105,10 @@ Namespace Hierarchy
             Next
 
             data = New List(Of HierarchyLink)(linkTable.Values)
+            ' BUG FIX: 构造函数由 linkTable 的字典枚举顺序建立 data 列表，并没有保证 data(0) 是最小距离的连接。
+            ' 而 MinimalDistance / RemoveFirst / flatAgg 均假设 data(0) 即最小距离项（as in the original Java implementation
+            ' the constructor built a sorted PriorityQueue）。这里补充一次排序，否则凝聚层次聚类会从任意一对簇开始合并。
+            Call data.Sort()
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

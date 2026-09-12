@@ -1,60 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::0653de7d94c41805cf24971e6433ee07, Data\BinaryData\SQLite3\Sqlite3Database.vb"
+﻿#Region "Microsoft.VisualBasic::4b4265dcb4ddc8e080040838f09a6f5c, Data\BinaryData\SQLite3\Sqlite3Database.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 115
-'    Code Lines: 72 (62.61%)
-' Comment Lines: 23 (20.00%)
-'    - Xml Docs: 60.87%
-' 
-'   Blank Lines: 20 (17.39%)
-'     File Size: 4.61 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Sqlite3Database
-' 
-'         Properties: GetTables, Header
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetTable, (+2 Overloads) OpenFile
-' 
-'         Sub: Dispose, Initialize, InitializeMasterTable
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 70 (62.50%)
+    ' Comment Lines: 23 (20.54%)
+    '    - Xml Docs: 60.87%
+    ' 
+    '   Blank Lines: 19 (16.96%)
+    '     File Size: 4.22 KB
+
+
+    ' Class Sqlite3Database
+    ' 
+    '     Properties: GetTables, Header
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetTable, (+2 Overloads) OpenFile
+    ' 
+    '     Sub: Dispose, Initialize, InitializeMasterTable
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

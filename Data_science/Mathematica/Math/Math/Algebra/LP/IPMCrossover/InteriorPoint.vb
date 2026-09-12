@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e6b475816541b4421f4092d286214ea, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\InteriorPoint.vb"
+﻿#Region "Microsoft.VisualBasic::d0eae3993fd8a559af81cefed305cd3e, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\InteriorPoint.vb"
 
     ' Author:
     ' 
@@ -696,4 +696,3 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Class
 
 End Namespace
-

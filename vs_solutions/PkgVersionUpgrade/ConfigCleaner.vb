@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85a348885c7f86af8c896690d1a4b5b2, vs_solutions\PkgVersionUpgrade\ConfigCleaner.vb"
+﻿#Region "Microsoft.VisualBasic::8b139c12d957b60e028b85bc20e73aa7, vs_solutions\PkgVersionUpgrade\ConfigCleaner.vb"
 
     ' Author:
     ' 
@@ -186,4 +186,3 @@ Module ConfigCleaner
     End Function
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5087dfdb36b02609dcc18d7e5fd242e9, cuda\ILCuda\test\Reporter.vb"
+﻿#Region "Microsoft.VisualBasic::0717761d89ae75e5bc0ffe2e1a9e4264, cuda\ILCuda\test\Reporter.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Namespace Diagnostics
         End Sub
     End Module
 End Namespace
-

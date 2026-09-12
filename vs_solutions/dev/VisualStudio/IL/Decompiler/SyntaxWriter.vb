@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::079aa59592dd0576899227d188911d43, vs_solutions\dev\VisualStudio\IL\Decompiler\SyntaxWriter.vb"
+﻿#Region "Microsoft.VisualBasic::bb4c9f392e47243872d904c4701115dd, vs_solutions\dev\VisualStudio\IL\Decompiler\SyntaxWriter.vb"
 
     ' Author:
     ' 
@@ -285,4 +285,3 @@ Namespace IL
         End Function
     End Module
 End Namespace
-

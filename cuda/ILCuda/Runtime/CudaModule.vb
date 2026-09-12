@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89345bed203cc33863fbc378773f45df, cuda\ILCuda\Runtime\CudaModule.vb"
+﻿#Region "Microsoft.VisualBasic::309e9cde6de076ce83be27a072aa45b8, cuda\ILCuda\Runtime\CudaModule.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 18 (15.38%)
-    '     File Size: 4.73 KB
+    '     File Size: 4.72 KB
 
 
     '     Class CudaModule
@@ -175,4 +175,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

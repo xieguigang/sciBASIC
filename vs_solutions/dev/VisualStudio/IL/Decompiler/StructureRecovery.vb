@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71d38fc7340813f7220a8000c2e79014, vs_solutions\dev\VisualStudio\IL\Decompiler\StructureRecovery.vb"
+﻿#Region "Microsoft.VisualBasic::bd12d709de313d6c48e8413f7a13268b, vs_solutions\dev\VisualStudio\IL\Decompiler\StructureRecovery.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 25.00%
     ' 
     '   Blank Lines: 91 (24.59%)
-    '     File Size: 15.62 KB
+    '     File Size: 15.61 KB
 
 
     '     Class StructureRecovery
@@ -429,4 +429,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-

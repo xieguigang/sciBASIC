@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c291eb48c16624c979f7d7ce62371bc, vs_solutions\dev\VisualStudio\IL\Decompiler\MethodDecompiler.vb"
+﻿#Region "Microsoft.VisualBasic::15706fba8409c6a03501d23ed97552b1, vs_solutions\dev\VisualStudio\IL\Decompiler\MethodDecompiler.vb"
 
     ' Author:
     ' 
@@ -329,4 +329,3 @@ Namespace IL
         End Function
     End Module
 End Namespace
-

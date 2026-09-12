@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::582c4fd9bbc1b289c504154a93723375, vs_solutions\dev\VisualStudio\IL\Syntax\Statements.vb"
+﻿#Region "Microsoft.VisualBasic::cb55fd2d2e1231d1df236fc549a1541e, vs_solutions\dev\VisualStudio\IL\Syntax\Statements.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.89%
     ' 
     '   Blank Lines: 57 (20.07%)
-    '     File Size: 10.62 KB
+    '     File Size: 10.61 KB
 
 
     '     Class BlockStatement
@@ -420,4 +420,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-

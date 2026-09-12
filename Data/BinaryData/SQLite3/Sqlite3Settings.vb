@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b3b2d800541fbdd2bd3529c8f1458d4, Data\BinaryData\SQLite3\Sqlite3Settings.vb"
+﻿#Region "Microsoft.VisualBasic::e315f4e23c994b3bd6cced52a0ac8f72, Data\BinaryData\SQLite3\Sqlite3Settings.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 9 (52.94%)
-    ' Comment Lines: 4 (23.53%)
+    '   Total Lines: 14
+    '    Code Lines: 7 (50.00%)
+    ' Comment Lines: 4 (28.57%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (23.53%)
-    '     File Size: 553 B
+    '   Blank Lines: 3 (21.43%)
+    '     File Size: 466 B
 
 
-    '     Class Sqlite3Settings
+    ' Class Sqlite3Settings
     ' 
-    '         Properties: blobAsBase64
+    '     Properties: blobAsBase64
     ' 
-    '         Function: GetDefaultSettings
-    ' 
+    '     Function: GetDefaultSettings
     ' 
     ' /********************************************************************************/
 
@@ -68,4 +67,3 @@ Public Class Sqlite3Settings
         Return New Sqlite3Settings
     End Function
 End Class
-

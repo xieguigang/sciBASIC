@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06647a4f7ce1aeb8dfd0cf60faeb8720, vs_solutions\dev\VisualStudio\IL\Decompiler\BasicBlock.vb"
+﻿#Region "Microsoft.VisualBasic::3d689fa256de342b4911d735daf08580, vs_solutions\dev\VisualStudio\IL\Decompiler\BasicBlock.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-

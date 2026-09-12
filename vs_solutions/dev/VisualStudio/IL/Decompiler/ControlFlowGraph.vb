@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b660f705d76f5eb7c3abc5a7e352fb50, vs_solutions\dev\VisualStudio\IL\Decompiler\ControlFlowGraph.vb"
+﻿#Region "Microsoft.VisualBasic::9066425557471c43851e5a5e53113497, vs_solutions\dev\VisualStudio\IL\Decompiler\ControlFlowGraph.vb"
 
     ' Author:
     ' 
@@ -607,4 +607,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c0d809b987329357fdf79803ce3de5f, Data\BinaryData\SQLite3\Schema\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::74ad6c123ba6023aa8d9c334a1f9e0b0, Data\BinaryData\SQLite3\Schema\Schema.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 86 (81.90%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 154
+    '    Code Lines: 113 (73.38%)
+    ' Comment Lines: 12 (7.79%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 19 (18.10%)
-    '     File Size: 4.41 KB
+    '   Blank Lines: 29 (18.83%)
+    '     File Size: 6.83 KB
 
 
     '     Class Schema
     ' 
-    '         Properties: columns, RawSql, Schema, tableName
+    '         Properties: columns, PrimaryKeys, RawSql, Schema, tableName
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GenericEnumerator, GetOrdinal, ParseColumns, ToString

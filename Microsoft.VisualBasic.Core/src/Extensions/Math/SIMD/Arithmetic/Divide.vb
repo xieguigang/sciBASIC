@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0fa6db6262c7ab51360b6d295325dbd, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Divide.vb"
+﻿#Region "Microsoft.VisualBasic::401d8861dd1ce1d3ca3cb55f2cc0ed55, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Divide.vb"
 
     ' Author:
     ' 
@@ -34,113 +34,66 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 71 (61.21%)
-    ' Comment Lines: 24 (20.69%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 85
+    '    Code Lines: 32 (37.65%)
+    ' Comment Lines: 41 (48.24%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (18.10%)
-    '     File Size: 4.26 KB
+    '   Blank Lines: 12 (14.12%)
+    '     File Size: 3.54 KB
 
 
     '     Class Divide
     ' 
-    '         Function: f64_op_divide_f64, f64_op_divide_f64_scalar, f64_scalar_op_divide_f64, int32_op_divide_int32_scalar
+    '         Function: f32_op_divide_f32, f32_op_divide_f32_scalar, f32_scalar_op_divide_f32, f64_op_divide_f64, f64_op_divide_f64_scalar
+    '                   f64_scalar_op_divide_f64, int32_op_divide_int32_scalar
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Numerics
-
-#If Not NET48 Then
-Imports System.Runtime.Intrinsics
-Imports System.Runtime.Intrinsics.X86
-#End If
-
 Namespace Math.SIMD
 
+    ''' <summary>
+    ''' 逐元素除法。
+    ''' </summary>
+    ''' <remarks>
+    ''' 整数除法没有对应的硬件指令（<c>vdivpd</c>/<c>vdivps</c> 只作用于浮点），
+    ''' 因此 <see cref="int32_op_divide_int32_scalar(Integer(), Double)"/> 保持标量实现。
+    ''' </remarks>
     Public Class Divide
 
+        ''' <summary>
+        ''' 标量除以向量：<c>v1 / v2(i)</c>
+        ''' </summary>
         Public Shared Function f64_scalar_op_divide_f64(v1 As Double, v2 As Double()) As Double()
-            Dim result As Double() = New Double(v2.Length - 1) {}
-
-            For i As Integer = 0 To v2.Length - 1
-                result(i) = v1 / v2(i)
-            Next
-
-            Return result
+            Return SimdEngine.ScalarDivide(v1, v2)
         End Function
 
         ''' <summary>
-        ''' <paramref name="v1"/> / <paramref name="v2"/>
+        ''' 向量除以标量：<c>v1(i) / v2</c>
         ''' </summary>
-        ''' <param name="v1"></param>
-        ''' <param name="v2"></param>
-        ''' <returns></returns>
         Public Shared Function f64_op_divide_f64_scalar(v1 As Double(), v2 As Double) As Double()
-            Select Case SIMDEnvironment.config
-                Case SIMDConfiguration.disable
-none:               Dim out As Double() = New Double(v1.Length - 1) {}
-
-                    For i As Integer = 0 To v1.Length - 1
-                        out(i) = v1(i) / v2
-                    Next
-
-                    Return out
-                Case SIMDConfiguration.enable
-                    '#If NET48 Then
-                    '                    GoTo legacy
-                    '#Else
-                    '                    If Avx2.IsSupported Then
-                    '                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx2.Add)
-                    '                    ElseIf Avx.IsSupported Then
-                    '                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx.Add)
-                    '                    Else
-                    '                        GoTo legacy
-                    '                    End If
-                    '#End If
-                    GoTo legacy
-                Case SIMDConfiguration.legacy
-legacy:
-                    Dim array_v2 As Double() = New Double(SIMDEnvironment.countDouble - 1) {}
-
-                    For i As Integer = 0 To array_v2.Length - 1
-                        array_v2(i) = v2
-                    Next
-
-                    Dim x1 As Vector(Of Double)
-                    Dim x2 As Vector(Of Double) = New Vector(Of Double)(array_v2, Scan0)
-                    Dim vec As Double() = New Double(v1.Length - 1) {}
-                    Dim remaining As Integer = v1.Length Mod SIMDEnvironment.countDouble
-                    Dim ends As Integer = v1.Length - remaining - 1
-
-                    For i As Integer = 0 To ends Step SIMDEnvironment.countDouble
-                        x1 = New Vector(Of Double)(v1, i)
-                        ' x2 = New Vector(Of Double)(v2, i)
-
-                        Call (x1 / x2).CopyTo(vec, i)
-                    Next
-
-                    For i As Integer = v1.Length - remaining To v1.Length - 1
-                        vec(i) = v1(i) / v2
-                    Next
-
-                    Return vec
-                Case Else
-                    If v1.Length < 10000 Then
-                        GoTo none
-                    Else
-                        GoTo legacy
-                    End If
-            End Select
+            Return SimdEngine.DivideScalar(v1, v2)
         End Function
 
+        ''' <summary>
+        ''' 整数向量除以 <see cref="Double"/> 标量，结果提升为 <see cref="Double"/>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这个函数没有向量化：把 <see cref="Integer"/> 逐元素提升为 <see cref="Double"/>
+        ''' 再相除的转换开销会抵消掉向量化收益，当前调用点也不在热路径上。
+        ''' </remarks>
         Public Shared Function int32_op_divide_int32_scalar(v1 As Integer(), v2 As Double) As Double()
-            Dim result As Double() = New Double(v1.Length - 1) {}
+            If v1 Is Nothing Then Throw New ArgumentNullException(NameOf(v1))
 
-            For i As Integer = 0 To v1.Length - 1
+            Dim len As Integer = v1.Length
+            If len = 0 Then Return Array.Empty(Of Double)()
+
+            Dim result As Double() = New Double(len - 1) {}
+
+            For i As Integer = 0 To len - 1
                 result(i) = v1(i) / v2
             Next
 
@@ -148,23 +101,40 @@ legacy:
         End Function
 
         ''' <summary>
-        ''' v1 / v2
+        ''' 向量除以向量：<c>v1(i) / v2(i)</c>
         ''' </summary>
-        ''' <param name="v1"></param>
-        ''' <param name="v2"></param>
-        ''' <returns></returns>
+        ''' <remarks>
+        ''' <b>语义提醒</b>：为了与历史实现保持一致，当分子 <c>v1(i) = 0</c> 时结果被直接置为
+        ''' <c>0</c>（而不是让 <c>0 / 0</c> 产生 <see cref="Double.NaN"/>）。向量化实现通过
+        ''' 掩码选择完成同样的语义。
+        ''' </remarks>
         Public Shared Function f64_op_divide_f64(v1 As Double(), v2 As Double()) As Double()
-            Dim result As Double() = New Double(v1.Length - 1) {}
+            Return SimdEngine.DivideZeroSafe(v1, v2)
+        End Function
 
-            For i As Integer = 0 To v1.Length - 1
-                If v1(i) = 0.0 Then
-                    result(i) = 0
-                Else
-                    result(i) = v1(i) / v2(i)
-                End If
-            Next
+        ''' <summary>
+        ''' 标量除以向量（<see cref="Single"/>）
+        ''' </summary>
+        Public Shared Function f32_scalar_op_divide_f32(v1 As Single, v2 As Single()) As Single()
+            Return SimdEngine.ScalarDivide(v1, v2)
+        End Function
 
-            Return result
+        ''' <summary>
+        ''' 向量除以标量（<see cref="Single"/>）
+        ''' </summary>
+        Public Shared Function f32_op_divide_f32_scalar(v1 As Single(), v2 As Single) As Single()
+            Return SimdEngine.DivideScalar(v1, v2)
+        End Function
+
+        ''' <summary>
+        ''' 向量除以向量（<see cref="Single"/>）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这是一个新增的普通除法；如果同样需要“分子为零则结果为零”的历史语义，
+        ''' 请使用 <see cref="SimdEngine.DivideZeroSafe(Double(), Double())"/>。
+        ''' </remarks>
+        Public Shared Function f32_op_divide_f32(v1 As Single(), v2 As Single()) As Single()
+            Return SimdEngine.Divide(v1, v2)
         End Function
     End Class
 End Namespace

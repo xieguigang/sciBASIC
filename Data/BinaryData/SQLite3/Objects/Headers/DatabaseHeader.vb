@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d82c51e03b36f10fb04ab48e71f437, Data\BinaryData\SQLite3\Objects\Headers\DatabaseHeader.vb"
+﻿#Region "Microsoft.VisualBasic::9ebeb4c791bd6e3531dad4096d0983e1, Data\BinaryData\SQLite3\Objects\Headers\DatabaseHeader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.00%
     ' 
     '   Blank Lines: 34 (35.05%)
-    '     File Size: 3.39 KB
+    '     File Size: 3.38 KB
 
 
     '     Class DatabaseHeader

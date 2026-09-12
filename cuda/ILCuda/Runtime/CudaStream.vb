@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de9a71085e07df9405cb2c5210f52f99, cuda\ILCuda\Runtime\CudaStream.vb"
+﻿#Region "Microsoft.VisualBasic::f8133567325e938cd26d0b48b5afd365, cuda\ILCuda\Runtime\CudaStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 64.71%
     ' 
     '   Blank Lines: 20 (21.05%)
-    '     File Size: 3.53 KB
+    '     File Size: 3.52 KB
 
 
     '     Enum CudaStreamFlags
@@ -160,4 +160,3 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
-

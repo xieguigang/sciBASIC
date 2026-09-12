@@ -66,11 +66,18 @@ Public Module FileWriter
     ''' <param name="file"></param>
     ''' <param name="blank"></param>
     <Extension>
-    Public Sub WriteCsv(df As DataFrame, file As String, Optional blank As String = "")
-        Using s As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True)
-            Call df.WriteCsv(s, blank)
-        End Using
-    End Sub
+    Public Function WriteCsv(df As DataFrame, file As String, Optional blank As String = "") As Boolean
+        Try
+            Using s As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True)
+                Call df.WriteCsv(s, blank)
+            End Using
+
+            Return True
+        Catch ex As Exception
+            Call App.LogException(ex)
+            Return False
+        End Try
+    End Function
 
     ''' <summary>
     ''' save dataframe object as csv file

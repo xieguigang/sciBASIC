@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::273901cdc26b80fc879977bf1c28295b, vs_solutions\dev\VisualStudio\IL\Syntax\SyntaxNode.vb"
+﻿#Region "Microsoft.VisualBasic::91a473c9cd3ecbcae695f318f922cbec, vs_solutions\dev\VisualStudio\IL\Syntax\SyntaxNode.vb"
 
     ' Author:
     ' 
@@ -258,4 +258,3 @@ Namespace IL
         End Function
     End Module
 End Namespace
-

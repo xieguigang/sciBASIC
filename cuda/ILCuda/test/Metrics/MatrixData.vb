@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe54c4591078489bfbded418009f45e0, cuda\ILCuda\test\Metrics\MatrixData.vb"
+﻿#Region "Microsoft.VisualBasic::78f1a601a09fa665d07d5a02f1611b78, cuda\ILCuda\test\Metrics\MatrixData.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 37 (18.41%)
-    '     File Size: 7.56 KB
+    '     File Size: 7.55 KB
 
 
     '     Class MatrixData
@@ -266,4 +266,3 @@ Namespace Metrics
         End Property
     End Class
 End Namespace
-

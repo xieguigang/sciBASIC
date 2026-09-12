@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20695c3534346675e1a08b264e80fe64, nlp\word2vec\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6ff3091501ce56167d29004d0f47e72c, nlp\word2vec\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (9.09%)
-    '     File Size: 332 B
+    '     File Size: 330 B
 
 
     ' Module Extensions
@@ -62,4 +62,3 @@ Public Module Extensions
         Return New Word2VecFactory
     End Function
 End Module
-

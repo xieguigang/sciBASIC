@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90136f90c1f739ed7c2ecad17c6f9f2f, cuda\ILCuda\Interop\NvrtcLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::bf57cddd59ecd0ab9c16190611d29901, cuda\ILCuda\Interop\NvrtcLibrary.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 162 (74.31%)
-    ' Comment Lines: 27 (12.39%)
+    '   Total Lines: 217
+    '    Code Lines: 162 (74.65%)
+    ' Comment Lines: 27 (12.44%)
     '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 29 (13.30%)
+    '   Blank Lines: 28 (12.90%)
     '     File Size: 9.07 KB
 
 
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.InteropServices
 Imports System.Text

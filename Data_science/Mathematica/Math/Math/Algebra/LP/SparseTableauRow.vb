@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2301e89d9cdeb10e19829b4099a7156c, Data_science\Mathematica\Math\Math\Algebra\LP\SparseTableauRow.vb"
+﻿#Region "Microsoft.VisualBasic::a7af1f1955d2f2ee42cdeb6434e2ba06, Data_science\Mathematica\Math\Math\Algebra\LP\SparseTableauRow.vb"
 
     ' Author:
     ' 
@@ -334,4 +334,3 @@ Namespace LinearAlgebra.LinearProgramming
     End Class
 
 End Namespace
-

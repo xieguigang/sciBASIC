@@ -1,3 +1,89 @@
+﻿#Region "Microsoft.VisualBasic::fded4fc6fcacc1a41cbdbaa53eba785d, Data\BinaryData\SQLite3\test\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1070
+    '    Code Lines: 837 (78.22%)
+    ' Comment Lines: 93 (8.69%)
+    '    - Xml Docs: 43.01%
+    ' 
+    '   Blank Lines: 140 (13.08%)
+    '     File Size: 54.43 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: Affinity, BuildIssues, Describe, FindColumn, FindTestDirectory
+    '               FormatRow, GetExpectedColumnCount, GetNonEmptyTextColumns, GetNotNullColumns, IsConstraintName
+    '               ResolveIssueStatus, ScanTable
+    ' 
+    '     Sub: AssertAffinity, Check, Main, PrintSummary, Run
+    '          WriteReport
+    ' 
+    ' Class TestResult
+    ' 
+    '     Properties: Detail, ElapsedMs, Name, Passed
+    ' 
+    ' Class ScanResult
+    ' 
+    '     Properties: Columns, DeclaredColumns, MaxId, MinId, RowCount
+    '                 RowIdMonotonic, Samples, TableName, Truncated
+    ' 
+    ' Class OverflowProbeResult
+    ' 
+    '     Properties: InlineLimit, MaxBlobLength, MaxTextLength, OverflowExercised, Rows
+    ' 
+    ' Class ColumnStat
+    ' 
+    '     Properties: DeclaredType, FirstValue, HasNumber, MaxBlobLength, MaxNumber
+    '                 MaxTextLength, MinNumber, Name, NonNullCount, NullCount
+    '                 Types
+    ' 
+    '     Function: TryNumber
+    ' 
+    '     Sub: Observe
+    ' 
+    ' Class IssueRecord
+    ' 
+    '     Properties: Fix, Id, RootCause, Status, Symptom
+    '                 Title, VerifyTest
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System
 Imports System.Collections.Generic
 Imports System.Diagnostics
@@ -1068,3 +1154,4 @@ Friend Class IssueRecord
     Public Property Status As String
     Public Property VerifyTest As String
 End Class
+

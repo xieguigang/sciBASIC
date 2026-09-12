@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93cbc332b395481350233ddf3d38ce33, cuda\ILCuda\Interop\CudaDriverApi.vb"
+﻿#Region "Microsoft.VisualBasic::ee7809e07b55a491181aff541af9578f, cuda\ILCuda\Interop\CudaDriverApi.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 12.28%
     ' 
     '   Blank Lines: 53 (17.79%)
-    '     File Size: 13.88 KB
+    '     File Size: 13.87 KB
 
 
     ' Module CudaDriverApi
@@ -358,4 +358,3 @@ Public Module CudaDriverApi
         Return $"{name} ({CInt(status)}): {desc}"
     End Function
 End Module
-

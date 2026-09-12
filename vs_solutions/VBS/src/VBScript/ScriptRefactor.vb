@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cc6ced3a1bf472f05557306caa00ccb, vs_solutions\VBS\src\VBScript\ScriptRefactor.vb"
+﻿#Region "Microsoft.VisualBasic::aa3391f8d6a6c50c1799715871e74342, vs_solutions\VBS\src\VBScript\ScriptRefactor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 64.17%
     ' 
     '   Blank Lines: 112 (18.04%)
-    '     File Size: 26.64 KB
+    '     File Size: 26.63 KB
 
 
     '     Class ScriptRefactor
@@ -687,4 +687,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

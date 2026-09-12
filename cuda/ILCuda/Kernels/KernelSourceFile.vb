@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3cd451e3d8f90c6691d205551e97a57, cuda\ILCuda\Kernels\KernelSourceFile.vb"
+﻿#Region "Microsoft.VisualBasic::06127b0645bc99aac1a16333f5574b33, cuda\ILCuda\Kernels\KernelSourceFile.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Namespace Kernels
         End Function
     End Class
 End Namespace
-

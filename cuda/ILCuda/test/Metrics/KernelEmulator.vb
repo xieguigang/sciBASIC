@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da13a2f8064ff36e83c699d084498598, cuda\ILCuda\test\Metrics\KernelEmulator.vb"
+﻿#Region "Microsoft.VisualBasic::8a55d806fe2fef2aa99a634803f9d8eb, cuda\ILCuda\test\Metrics\KernelEmulator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 26.09%
     ' 
     '   Blank Lines: 31 (20.13%)
-    '     File Size: 6.77 KB
+    '     File Size: 6.76 KB
 
 
     '     Module KernelEmulator
@@ -206,4 +206,3 @@ Namespace Metrics
         End Function
     End Module
 End Namespace
-

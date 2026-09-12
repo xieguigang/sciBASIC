@@ -83,15 +83,28 @@ Public Module GDIPlusInterop
 
     <Extension>
     Public Function CastFontStyle(style As Microsoft.VisualBasic.Imaging.FontStyle) As System.Drawing.FontStyle
-        Select Case style
-            Case Microsoft.VisualBasic.Imaging.FontStyle.Regular : Return System.Drawing.FontStyle.Regular
-            Case Microsoft.VisualBasic.Imaging.FontStyle.Bold : Return System.Drawing.FontStyle.Bold
-            Case Microsoft.VisualBasic.Imaging.FontStyle.Italic : Return System.Drawing.FontStyle.Italic
-            Case Microsoft.VisualBasic.Imaging.FontStyle.Underline : Return System.Drawing.FontStyle.Underline
-            Case Microsoft.VisualBasic.Imaging.FontStyle.Strikeout : Return System.Drawing.FontStyle.Strikeout
+        ' FontStyle 是 <Flags> 枚举：可能是单个样式，也可能是多个样式的组合
+        ' （例如 Bold Or Italic）。原来用 Select Case 只能匹配单一样式，
+        ' 组合值会走到 Case Else 并抛出 NotImplementedException ——
+        ' 而 SVG 文本测量同样会经过这里，导致 SVG 输出整体失败。
+        Dim result As System.Drawing.FontStyle = System.Drawing.FontStyle.Regular
 
-            Case Else
-                Throw New NotImplementedException
-        End Select
+        If (style And Microsoft.VisualBasic.Imaging.FontStyle.Bold) = Microsoft.VisualBasic.Imaging.FontStyle.Bold Then
+            result = result Or System.Drawing.FontStyle.Bold
+        End If
+
+        If (style And Microsoft.VisualBasic.Imaging.FontStyle.Italic) = Microsoft.VisualBasic.Imaging.FontStyle.Italic Then
+            result = result Or System.Drawing.FontStyle.Italic
+        End If
+
+        If (style And Microsoft.VisualBasic.Imaging.FontStyle.Underline) = Microsoft.VisualBasic.Imaging.FontStyle.Underline Then
+            result = result Or System.Drawing.FontStyle.Underline
+        End If
+
+        If (style And Microsoft.VisualBasic.Imaging.FontStyle.Strikeout) = Microsoft.VisualBasic.Imaging.FontStyle.Strikeout Then
+            result = result Or System.Drawing.FontStyle.Strikeout
+        End If
+
+        Return result
     End Function
 End Module

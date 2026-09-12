@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e60943fa235537b1e6a63dd9725bb07, Data\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
+﻿#Region "Microsoft.VisualBasic::8b52e9dcce159f4bbb91effbac3e3401, Data\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (23.68%)
-    '     File Size: 1.35 KB
+    '     File Size: 1.34 KB
 
 
     '     Structure BTreeHeader

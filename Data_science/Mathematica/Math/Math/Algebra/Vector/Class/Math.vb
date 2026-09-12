@@ -228,7 +228,21 @@ Namespace LinearAlgebra
         Public Shared Function BesselI(x As Vector, nu As Vector,
                                 <Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
                                 Optional ExponScaled As Boolean = False) As Vector
-            Throw New NotImplementedException
+            Return Distributions.BesselFunctions.BesselI(x, nu, ExponScaled)
+        End Function
+
+        ''' <summary>
+        ''' Bessel Functions of integer and fractional order, of first and second kind, J(nu) and Y(nu), 
+        ''' and Modified Bessel functions (of first and third kind), I(nu) and K(nu).
+        ''' </summary>
+        ''' <param name="x">a numeric vector, the argument of the Bessel function.</param>
+        ''' <param name="nu">a numeric vector, the order of the Bessel function.</param>
+        ''' <param name="ExponScaled">if TRUE, the results are exponentially scaled in order to avoid overflow.</param>
+        ''' <returns>Numeric vector with the (scaled) values of the modified Bessel function I(nu).</returns>
+        <ExportAPI("Besseli")>
+        Public Shared Function BesselI(x As Vector, nu As Double,
+                                Optional ExponScaled As Boolean = False) As Vector
+            Return Distributions.BesselFunctions.BesselI(x, nu, ExponScaled)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -257,8 +271,8 @@ Namespace LinearAlgebra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("pchisq")>
-        Public Shared Function pchisq(q As Vector, df As Vector, Optional ncp As Integer = 0, Optional lowertail As Boolean = True, Optional logp As Boolean = False) As Vector
-            Throw New NotImplementedException
+        Public Shared Function pchisq(q As Vector, df As Vector, Optional ncp As Double = 0, Optional lowertail As Boolean = True, Optional logp As Boolean = False) As Vector
+            Return Distributions.ChiSquareDistribution.pchisq(q, df, ncp, lowertail, logp)
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a74f0a9c987e9972b84d993668b149ea, Data\DataFrame\StorageProvider\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::2e474d05bfc2bc6a071ebc986620bf47, Data\DataFrame\StorageProvider\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 109 (67.70%)
-    ' Comment Lines: 26 (16.15%)
-    '    - Xml Docs: 80.77%
+    '   Total Lines: 168
+    '    Code Lines: 109 (64.88%)
+    ' Comment Lines: 33 (19.64%)
+    '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 26 (16.15%)
-    '     File Size: 6.49 KB
+    '   Blank Lines: 26 (15.48%)
+    '     File Size: 6.67 KB
 
 
     '     Class HeaderSchema

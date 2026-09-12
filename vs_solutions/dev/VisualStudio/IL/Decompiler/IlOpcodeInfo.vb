@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ea94b6413cc2c55af3ae32e8477bda0, vs_solutions\dev\VisualStudio\IL\Decompiler\IlOpcodeInfo.vb"
+﻿#Region "Microsoft.VisualBasic::bf58a9ae77fae34b9d76964be76e03bd, vs_solutions\dev\VisualStudio\IL\Decompiler\IlOpcodeInfo.vb"
 
     ' Author:
     ' 
@@ -352,4 +352,3 @@ Namespace IL
         End Function
     End Module
 End Namespace
-

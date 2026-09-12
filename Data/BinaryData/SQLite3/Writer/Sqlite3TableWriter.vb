@@ -1,3 +1,66 @@
+﻿#Region "Microsoft.VisualBasic::ac358be28c17855cb9628c52ed1361d9, Data\BinaryData\SQLite3\Writer\Sqlite3TableWriter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 331
+    '    Code Lines: 229 (69.18%)
+    ' Comment Lines: 29 (8.76%)
+    '    - Xml Docs: 93.10%
+    ' 
+    '   Blank Lines: 73 (22.05%)
+    '     File Size: 11.91 KB
+
+
+    '     Class Sqlite3TableWriter
+    ' 
+    '         Properties: Columns, PrimaryKeyOrdinal, RowCount, RowIdAliasOrdinal, Sql
+    '                     TableName
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) AddRow, BuildSnapshot, DeleteRow, DeleteRowByPrimaryKey, EnumerateRows
+    '                   GenerateSql, GetOrdinal, GetRow, IsIntegerValue, NormalizeValues
+    '                   ToString, (+2 Overloads) UpdateRow, UpdateRowByPrimaryKey, ValuesEqual
+    ' 
+    '         Sub: Clear, LoadRow, SetOriginalSql
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Collections.Generic
 Imports System.Linq
 
@@ -329,3 +392,4 @@ Namespace Writer
     End Class
 
 End Namespace
+

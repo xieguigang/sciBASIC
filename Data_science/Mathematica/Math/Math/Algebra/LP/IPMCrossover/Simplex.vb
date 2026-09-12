@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71036d78be5e07883dc3852161235cef, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\Simplex.vb"
+﻿#Region "Microsoft.VisualBasic::3c7d3bae69a38562d77ce714ae19e402, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\Simplex.vb"
 
     ' Author:
     ' 
@@ -428,4 +428,3 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     End Class
 
 End Namespace
-

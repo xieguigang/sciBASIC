@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ab34d444d6818c5004627c9c62fc825, vs_solutions\PkgVersionUpgrade\MsBuildCondition.vb"
+﻿#Region "Microsoft.VisualBasic::5e0c4ca715996d2550f3f6c422b95e32, vs_solutions\PkgVersionUpgrade\MsBuildCondition.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.00%
     ' 
     '   Blank Lines: 24 (16.67%)
-    '     File Size: 5.97 KB
+    '     File Size: 5.96 KB
 
 
     ' Module MsBuildCondition
@@ -195,4 +195,3 @@ Module MsBuildCondition
     End Function
 
 End Module
-

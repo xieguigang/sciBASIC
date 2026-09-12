@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cebd80e2d212717ab8c1f5af793e26, cuda\ILCuda\Kernels\KernelSources.vb"
+﻿#Region "Microsoft.VisualBasic::a8efeff196642464ae260c97f4d23a69, cuda\ILCuda\Kernels\KernelSources.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 57.14%
     ' 
     '   Blank Lines: 37 (19.79%)
-    '     File Size: 8.00 KB
+    '     File Size: 7.99 KB
 
 
     '     Module KernelSources
@@ -242,4 +242,3 @@ Namespace Kernels
         End Function
     End Module
 End Namespace
-

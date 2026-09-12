@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::277d7a69a3d822d95ef4b0c442d2ef19, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolverTwoPhased.vb"
+﻿#Region "Microsoft.VisualBasic::7a3aa0f21415e8a63946f0d82d813a44, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolverTwoPhased.vb"
 
     ' Author:
     ' 
@@ -1234,4 +1234,3 @@ Namespace LinearAlgebra.LinearProgramming
     End Class
 
 End Namespace
-

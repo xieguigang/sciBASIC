@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e063c69ef2e64f5765ffa759dec204d4, cuda\ILCuda\Math\GpuReduce.vb"
+﻿#Region "Microsoft.VisualBasic::951174229a1f3eb37da70e219be51121, cuda\ILCuda\Math\GpuReduce.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 55.00%
     ' 
     '   Blank Lines: 20 (16.26%)
-    '     File Size: 5.21 KB
+    '     File Size: 5.20 KB
 
 
     '     Enum ReduceOp
@@ -190,4 +190,3 @@ Namespace Math
         End Function
     End Class
 End Namespace
-

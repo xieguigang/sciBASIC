@@ -91,15 +91,50 @@ Namespace Distributions.MethodOfMoments
             _Beta = Beta
         End Sub
 
+        ''' <summary>
+        ''' 使用牛顿迭代法求解 Gamma 分布的逆累积分布函数（分位数）。
+        ''' </summary>
+        ''' <remarks>
+        ''' BUG FIX: 原实现的循环条件 <c>|cdf - p| &lt;= eps Or i = 100</c> 是**反的** ——
+        ''' 它会在估计值已经足够精确（或恰好迭代到第 100 次）时继续循环，反而在尚未收敛时立即退出，
+        ''' 因此通常只做了一两次迭代就返回，分位数结果不可靠。这里改为标准的收敛判据
+        ''' （未收敛且迭代次数未用尽时继续），并加入 pdf=0 与越界保护。
+        ''' </remarks>
         Public Overrides Function GetInvCDF(probability As Double) As Double
+            If probability <= 0 Then
+                Return 0
+            ElseIf probability >= 1 Then
+                Return Double.PositiveInfinity
+            End If
+
             Dim xn As Double = _Alpha / _Beta
-            Dim testvalue As Double = GetCDF(xn)
             Dim i As Integer = 0
-            Do
-                xn = xn - ((testvalue - probability) / GetPDF(xn))
-                testvalue = GetCDF(xn)
+
+            Do While i < 100
+                Dim cdf As Double = GetCDF(xn)
+                Dim diff As Double = cdf - probability
+
+                If std.Abs(diff) <= 0.00000000000001 Then
+                    Exit Do
+                End If
+
+                Dim pdf As Double = GetPDF(xn)
+
+                If pdf <= 0 Then
+                    Exit Do
+                End If
+
+                Dim nextValue As Double = xn - diff / pdf
+
+                If nextValue <= 0 Then
+                    ' 保持解在正数域内
+                    nextValue = xn / 2
+                End If
+
+                xn = nextValue
                 i += 1
-            Loop While std.Abs(testvalue - probability) <= 0.00000000000001 Or i = 100
+            Loop
+
             Return xn
         End Function
 

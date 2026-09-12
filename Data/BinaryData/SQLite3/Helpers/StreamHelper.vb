@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0e42c57c523973aaf7d35d39c60a1ea, Data\BinaryData\SQLite3\Helpers\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::2714866f304a1216a6df11d68e8739c8, Data\BinaryData\SQLite3\Helpers\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (24.24%)
-    '     File Size: 1021 B
+    '     File Size: 1007 B
 
 
     '     Module StreamHelper

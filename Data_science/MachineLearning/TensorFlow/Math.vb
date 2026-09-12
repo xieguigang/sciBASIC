@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0912612f8d6a4694db59443eacfaa67e, Data_science\MachineLearning\TensorFlow\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ee97db8e5dcb533b43972ddbb24f6463, Data_science\MachineLearning\TensorFlow\Math.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 724
-    '    Code Lines: 518 (71.55%)
-    ' Comment Lines: 129 (17.82%)
-    '    - Xml Docs: 96.12%
+    '   Total Lines: 502
+    '    Code Lines: 299 (59.56%)
+    ' Comment Lines: 128 (25.50%)
+    '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 77 (10.64%)
-    '     File Size: 23.65 KB
+    '   Blank Lines: 75 (14.94%)
+    '     File Size: 16.47 KB
 
 
     ' Module Math
@@ -72,156 +72,84 @@ Public Module Math
     ''' 逐元素指数函数 e^x
     ''' </summary>
     Public Function exp(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Exp(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Exp(t)
     End Function
 
     ''' <summary>
     ''' 逐元素自然对数 ln(x)
     ''' </summary>
     Public Function log(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Log(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Log(t)
     End Function
 
     ''' <summary>
     ''' 逐元素平方根 sqrt(x)
     ''' </summary>
     Public Function sqrt(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Sqrt(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Sqrt(t)
     End Function
 
     ''' <summary>
     ''' 逐元素平方 x^2
     ''' </summary>
     Public Function square(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = src(i) * src(i)
-        Next
-        Return result
+        Return Tensor.computeKernel.Square(t)
     End Function
 
     ''' <summary>
     ''' 逐元素绝对值 |x|
     ''' </summary>
     Public Function abs(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Abs(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Abs(t)
     End Function
 
     ''' <summary>
     ''' 逐元素正弦 sin(x)
     ''' </summary>
     Public Function sin(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Sin(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Sin(t)
     End Function
 
     ''' <summary>
     ''' 逐元素余弦 cos(x)
     ''' </summary>
     Public Function cos(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Cos(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Cos(t)
     End Function
 
     ''' <summary>
     ''' 逐元素双曲正切 tanh(x)
     ''' </summary>
     Public Function tanh(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Tanh(src(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Tanh(t)
     End Function
 
     ''' <summary>
     ''' 逐元素 Sigmoid 函数 1/(1+e^(-x))
     ''' </summary>
     Public Function sigmoid(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = 1.0 / (1.0 + std.Exp(-src(i)))
-        Next
-        Return result
+        Return Tensor.computeKernel.Sigmoid(t)
     End Function
 
     ''' <summary>
     ''' 逐元素幂运算 x^exponent
     ''' </summary>
     Public Function pow(t As Tensor, exponent As Double) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = std.Pow(src(i), exponent)
-        Next
-        Return result
+        Return Tensor.computeKernel.Pow(t, exponent)
     End Function
 
     ''' <summary>
     ''' 逐元素取负 -x
     ''' </summary>
     Public Function negative(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = -src(i)
-        Next
-        Return result
+        Return Tensor.computeKernel.Negate(t)
     End Function
 
     ''' <summary>
     ''' 逐元素取倒数 1/x
     ''' </summary>
     Public Function reciprocal(t As Tensor) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = 1.0 / src(i)
-        Next
-        Return result
+        Return Tensor.computeKernel.Reciprocal(t)
     End Function
 
 #End Region
@@ -232,92 +160,42 @@ Public Module Math
     ''' 逐元素加法 a + b
     ''' </summary>
     Public Function add(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then
-            Throw New ArgumentException($"张量形状必须相同: [{String.Join(",", a.Shape)}] vs [{String.Join(",", b.Shape)}]")
-        End If
-        Dim result = New Tensor(a.Shape)
-        Dim srcA = a.Data
-        Dim srcB = b.Data
-        Dim dst = result.Data
-        For i = 0 To dst.Length - 1
-            dst(i) = srcA(i) + srcB(i)
-        Next
-        Return result
+        Return Tensor.computeKernel.Add(a, b)
     End Function
 
     ''' <summary>
     ''' 逐元素减法 a - b
     ''' </summary>
     Public Function subtract(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then
-            Throw New ArgumentException($"张量形状必须相同: [{String.Join(",", a.Shape)}] vs [{String.Join(",", b.Shape)}]")
-        End If
-        Dim result = New Tensor(a.Shape)
-        Dim srcA = a.Data
-        Dim srcB = b.Data
-        Dim dst = result.Data
-        For i = 0 To dst.Length - 1
-            dst(i) = srcA(i) - srcB(i)
-        Next
-        Return result
+        Return Tensor.computeKernel.Subtract(a, b)
     End Function
 
     ''' <summary>
     ''' 逐元素乘法 a * b（Hadamard 积）
     ''' </summary>
     Public Function multiply(a As Tensor, b As Tensor) As Tensor
-        Return a.ElementwiseMultiply(b)
+        Return Tensor.computeKernel.Multiply(a, b)
     End Function
 
     ''' <summary>
     ''' 逐元素除法 a / b
     ''' </summary>
     Public Function divide(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then
-            Throw New ArgumentException($"张量形状必须相同: [{String.Join(",", a.Shape)}] vs [{String.Join(",", b.Shape)}]")
-        End If
-        Dim result = New Tensor(a.Shape)
-        Dim srcA = a.Data
-        Dim srcB = b.Data
-        Dim dst = result.Data
-        For i = 0 To dst.Length - 1
-            dst(i) = srcA(i) / srcB(i)
-        Next
-        Return result
+        Return Tensor.computeKernel.Divide(a, b)
     End Function
 
     ''' <summary>
     ''' 逐元素最大值 max(a, b)
     ''' </summary>
     Public Function maximum(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then
-            Throw New ArgumentException($"张量形状必须相同: [{String.Join(",", a.Shape)}] vs [{String.Join(",", b.Shape)}]")
-        End If
-        Dim result = New Tensor(a.Shape)
-        Dim srcA = a.Data
-        Dim srcB = b.Data
-        Dim dst = result.Data
-        For i = 0 To dst.Length - 1
-            dst(i) = std.Max(srcA(i), srcB(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Maximum(a, b)
     End Function
 
     ''' <summary>
     ''' 逐元素最小值 min(a, b)
     ''' </summary>
     Public Function minimum(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then
-            Throw New ArgumentException($"张量形状必须相同: [{String.Join(",", a.Shape)}] vs [{String.Join(",", b.Shape)}]")
-        End If
-        Dim result = New Tensor(a.Shape)
-        Dim srcA = a.Data
-        Dim srcB = b.Data
-        Dim dst = result.Data
-        For i = 0 To dst.Length - 1
-            dst(i) = std.Min(srcA(i), srcB(i))
-        Next
-        Return result
+        Return Tensor.computeKernel.Minimum(a, b)
     End Function
 
 #End Region
@@ -328,26 +206,14 @@ Public Module Math
     ''' 张量与标量相加 t + scalar
     ''' </summary>
     Public Function add_scalar(t As Tensor, scalar As Double) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = src(i) + scalar
-        Next
-        Return result
+        Return Tensor.computeKernel.AddScalar(t, scalar)
     End Function
 
     ''' <summary>
     ''' 张量与标量相乘 t * scalar
     ''' </summary>
     Public Function multiply_scalar(t As Tensor, scalar As Double) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            dst(i) = src(i) * scalar
-        Next
-        Return result
+        Return Tensor.computeKernel.MultiplyScalar(t, scalar)
     End Function
 
 #End Region
@@ -358,76 +224,35 @@ Public Module Math
     ''' 计算所有元素的和
     ''' </summary>
     Public Function reduce_sum(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then
-            Dim sum As Double = 0
-            Dim src = t.Data
-            For i = 0 To src.Length - 1
-                sum += src(i)
-            Next
-            Return If(keepdims, Tensor.Scalar(sum), Tensor.Scalar(sum))
-        End If
-        Return ReduceAlongAxis(t, axis.Value, keepdims, 0.0, Function(acc, val) acc + val)
+        Return Tensor.computeKernel.Sum(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的平均值
     ''' </summary>
     Public Function reduce_mean(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then
-            Dim sum As Double = 0
-            Dim src = t.Data
-            For i = 0 To src.Length - 1
-                sum += src(i)
-            Next
-            Return Tensor.Scalar(sum / src.Length)
-        End If
-        Dim sumResult = ReduceAlongAxis(t, axis.Value, keepdims, 0.0, Function(acc, val) acc + val)
-        Dim count = t.Shape(axis.Value)
-        Return multiply_scalar(sumResult, 1.0 / count)
+        Return Tensor.computeKernel.Mean(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的最大值
     ''' </summary>
     Public Function reduce_max(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then
-            Dim src = t.Data
-            Dim maxVal = src(0)
-            For i = 1 To src.Length - 1
-                If src(i) > maxVal Then maxVal = src(i)
-            Next
-            Return Tensor.Scalar(maxVal)
-        End If
-        Return ReduceAlongAxis(t, axis.Value, keepdims, Double.NegativeInfinity, Function(acc, val) std.Max(acc, val))
+        Return Tensor.computeKernel.Max(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的最小值
     ''' </summary>
     Public Function reduce_min(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then
-            Dim src = t.Data
-            Dim minVal = src(0)
-            For i = 1 To src.Length - 1
-                If src(i) < minVal Then minVal = src(i)
-            Next
-            Return Tensor.Scalar(minVal)
-        End If
-        Return ReduceAlongAxis(t, axis.Value, keepdims, Double.PositiveInfinity, Function(acc, val) std.Min(acc, val))
+        Return Tensor.computeKernel.Min(t, axis, keepdims)
     End Function
 
     ''' <summary>
     ''' 计算所有元素的乘积
     ''' </summary>
     Public Function reduce_prod(t As Tensor, Optional axis As Integer? = Nothing, Optional keepdims As Boolean = False) As Tensor
-        If Not axis.HasValue Then
-            Dim prod As Double = 1
-            Dim src = t.Data
-            For i = 0 To src.Length - 1
-                prod *= src(i)
-            Next
-            Return Tensor.Scalar(prod)
-        End If
+        If Not axis.HasValue Then Return Tensor.computeKernel.Prod(t, Nothing)
         Return ReduceAlongAxis(t, axis.Value, keepdims, 1.0, Function(acc, val) acc * val)
     End Function
 
@@ -435,15 +260,7 @@ Public Module Math
     ''' 计算所有元素的标准差（总体）
     ''' </summary>
     Public Function reduce_std(t As Tensor) As Tensor
-        Dim meanVal = reduce_mean(t)
-        Dim src = t.Data
-        Dim meanD = meanVal.Data(0)
-        Dim sumSq As Double = 0
-        For i = 0 To src.Length - 1
-            Dim diff = src(i) - meanD
-            sumSq += diff * diff
-        Next
-        Return Tensor.Scalar(std.Sqrt(sumSq / src.Length))
+        Return Tensor.Scalar(Tensor.computeKernel.StdDev(t))
     End Function
 
 #End Region
@@ -454,41 +271,14 @@ Public Module Math
     ''' 沿指定轴找到最大值的索引（返回 Double 类型以兼容 Tensor）
     ''' </summary>
     Public Function argmax(t As Tensor, Optional axis As Integer? = Nothing) As Tensor
-        If Not axis.HasValue Then
-            ' 在整个展平数组上找最大值索引
-            Dim src = t.Data
-            Dim maxIdx = 0
-            Dim maxVal = src(0)
-            For i = 1 To src.Length - 1
-                If src(i) > maxVal Then
-                    maxVal = src(i)
-                    maxIdx = i
-                End If
-            Next
-            Return Tensor.Scalar(maxIdx)
-        End If
-
-        Return ReduceArgAxis(t, axis.Value, False)
+        Return Tensor.computeKernel.ArgMax(t, axis)
     End Function
 
     ''' <summary>
     ''' 沿指定轴找到最小值的索引（返回 Double 类型以兼容 Tensor）
     ''' </summary>
     Public Function argmin(t As Tensor, Optional axis As Integer? = Nothing) As Tensor
-        If Not axis.HasValue Then
-            Dim src = t.Data
-            Dim minIdx = 0
-            Dim minVal = src(0)
-            For i = 1 To src.Length - 1
-                If src(i) < minVal Then
-                    minVal = src(i)
-                    minIdx = i
-                End If
-            Next
-            Return Tensor.Scalar(minIdx)
-        End If
-
-        Return ReduceArgAxis(t, axis.Value, True)
+        Return Tensor.computeKernel.ArgMin(t, axis)
     End Function
 
 #End Region
@@ -624,19 +414,7 @@ Public Module Math
     ''' 将张量值裁剪到 [minValue, maxValue] 范围内
     ''' </summary>
     Public Function clip_by_value(t As Tensor, minValue As Double, maxValue As Double) As Tensor
-        Dim result = New Tensor(t.Shape)
-        Dim src = t.Data
-        Dim dst = result.Data
-        For i = 0 To src.Length - 1
-            If src(i) < minValue Then
-                dst(i) = minValue
-            ElseIf src(i) > maxValue Then
-                dst(i) = maxValue
-            Else
-                dst(i) = src(i)
-            End If
-        Next
-        Return result
+        Return Tensor.computeKernel.Clip(t, minValue, maxValue)
     End Function
 
     ''' <summary>
@@ -776,7 +554,7 @@ Public Module Math
     ''' 矩阵乘法（二维张量），等价于 MatMul
     ''' </summary>
     Public Function matmul(a As Tensor, b As Tensor) As Tensor
-        Return a.MatMul(b)
+        Return Tensor.computeKernel.MatMul(a, b)
     End Function
 
 #End Region

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba004c2087291d87082016d1fdfb792a, vs_solutions\PkgVersionUpgrade\XmlEditor.vb"
+﻿#Region "Microsoft.VisualBasic::f3b883acfe481c64e9ef0df28f21337f, vs_solutions\PkgVersionUpgrade\XmlEditor.vb"
 
     ' Author:
     ' 
@@ -239,4 +239,3 @@ Module XmlEditor
     End Sub
 
 End Module
-

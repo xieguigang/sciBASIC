@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66c1d601fea08178998e081d9f2f6b40, cuda\ILCuda\Interop\CUresult\CUresult.vb"
+﻿#Region "Microsoft.VisualBasic::74bf30e458c5bb744073946101adda51, cuda\ILCuda\Interop\CUresult\CUresult.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 49 (92.45%)
-    ' Comment Lines: 3 (5.66%)
+    '   Total Lines: 52
+    '    Code Lines: 49 (94.23%)
+    ' Comment Lines: 3 (5.77%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (1.89%)
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 2.00 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' CUDA Driver API 的返回码（取自 cuda.h 中的 CUresult 定义，覆盖常用错误）

@@ -15,7 +15,7 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Description>Dependency-free VB.NET CUDA framework built directly on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu kernel sources, a kernel catalog with launch planning, generic reduction, elementwise and BLAS (GEMM/GEMV) kernels, structured environment diagnostics, and an IL-to-CUDA emitter that translates .NET methods marked with CudaKernelAttribute into CUDA C source.</Description>
     <OutputPath>../../.nuget/</OutputPath>
-    <Configurations>Debug;Release;nuget_release</Configurations>
+    <Configurations>Debug;Release;nuget_release;Rsharp_app_release</Configurations>
     <Title>ILCuda: Pure-Interop VB.NET CUDA Compute Framework</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Computing.ILCuda</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
@@ -35,6 +35,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7de5f1dda4bd5f52bb5cca6f95c8b97, mime\text%markdown\Render\HtmlRender.vb"
+﻿#Region "Microsoft.VisualBasic::bf99c40758ebafcb9fa613d63ccbccfe, mime\text%markdown\Render\HtmlRender.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 115 (83.94%)
+    '   Total Lines: 135
+    '    Code Lines: 114 (84.44%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (16.06%)
-    '     File Size: 4.62 KB
+    '   Blank Lines: 21 (15.56%)
+    '     File Size: 4.54 KB
 
 
     ' Class HtmlRender

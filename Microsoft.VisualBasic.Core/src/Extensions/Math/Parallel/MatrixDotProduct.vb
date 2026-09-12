@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739b0928af13857c56de54d466305f55, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\MatrixDotProduct.vb"
+﻿#Region "Microsoft.VisualBasic::019197557ceab25216ec29d882a3720e, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\MatrixDotProduct.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 41 (75.93%)
-    ' Comment Lines: 3 (5.56%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 51
+    '    Code Lines: 37 (72.55%)
+    ' Comment Lines: 5 (9.80%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.76 KB
+    '   Blank Lines: 9 (17.65%)
+    '     File Size: 1.85 KB
 
 
     '     Class MatrixDotProduct
@@ -89,13 +89,10 @@ Namespace Math.Parallel
                 Next
                 For i As Integer = 0 To m - 1
                     Dim Arowi As Double() = a(i)
-                    Dim s As Double = 0
 
-                    For k As Integer = 0 To n - 1
-                        s += Arowi(k) * Bcolj(k)
-                    Next
-
-                    c(i)(j) = s
+                    ' 行内使用 SIMD 点积（处理器支持 FMA 时会自动使用融合乘加）：
+                    ' 单条指令处理 Vector(Of Double).Count 个元素，取代原先的标量累加循环
+                    c(i)(j) = Math.SIMD.SimdReduce.Dot(Arowi, Bcolj)
                 Next
             Next
         End Sub

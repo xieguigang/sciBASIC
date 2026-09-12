@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de618e67f1212fdd64cc4be7ace788a7, Data_science\Mathematica\Math\KaplanMeierEstimator\StrategyRunner.vb"
+﻿#Region "Microsoft.VisualBasic::9bc67857c87ed6cd16dfdcc3bd32b6cd, Data_science\Mathematica\Math\KaplanMeierEstimator\StrategyRunner.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 11 (25.00%)
-    '     File Size: 1.97 KB
+    '     File Size: 1.96 KB
 
 
     ' Class StrategyRunner

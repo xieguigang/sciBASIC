@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ba6797fe956282071ff92ede50288a8, cuda\ILCuda\Runtime\PinnedHostBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::5ecd493974c83c18bbe63ebe65faedf4, cuda\ILCuda\Runtime\PinnedHostBuffer.vb"
 
     ' Author:
     ' 
@@ -239,4 +239,3 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
-

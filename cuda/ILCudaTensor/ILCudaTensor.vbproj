@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.Computing.ILCuda</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyName>Microsoft.VisualBasic.Computing.ILCuda.GPUTensor</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <!-- ILCuda 仅支持 x64，因此这里固定以 x64 目标编译（AnyCPU 平台也产出 x64 程序集） -->
+    <PlatformTarget>x64</PlatformTarget>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      手写张量内核（double）：末轴 softmax / log-softmax / 归约 / arg 极值。
+      以内嵌资源形式随程序集分发，运行时由 CudaTensor.Register 通过
+      KernelSources.Register 注入 NVRTC 编译单元。
+    -->
+    <EmbeddedResource Include="Kernels\tensor.cu" />
+    <EmbeddedResource Include="Kernels\gemm.cu" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data_science\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+    <ProjectReference Include="..\ILCuda\ILCuda.vbproj" />
+  </ItemGroup>
+
+</Project>

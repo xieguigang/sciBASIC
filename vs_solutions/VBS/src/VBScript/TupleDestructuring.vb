@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::846a8683437f7577f399ea03187ab436, vs_solutions\VBS\src\VBScript\TupleDestructuring.vb"
+﻿#Region "Microsoft.VisualBasic::e573300fb4960ea5f45f8ed5b86b5237, vs_solutions\VBS\src\VBScript\TupleDestructuring.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
-    '    Code Lines: 97 (65.99%)
-    ' Comment Lines: 22 (14.97%)
+    '   Total Lines: 146
+    '    Code Lines: 97 (66.44%)
+    ' Comment Lines: 22 (15.07%)
     '    - Xml Docs: 68.18%
     ' 
-    '   Blank Lines: 28 (19.05%)
+    '   Blank Lines: 27 (18.49%)
     '     File Size: 5.59 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
