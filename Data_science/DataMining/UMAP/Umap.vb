@@ -349,6 +349,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Return GetNEpochs()
     End Function
 
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象作为数据输入，该重载将会在后续版本中移除。", False)>
     Public Function InitializeFit(x As IEnumerable(Of ClusterEntity)) As Integer
         Return InitializeFit(x.Select(Function(v) v.entityVector).ToArray)
     End Function

@@ -112,6 +112,14 @@ Public Class PaCMAP : Implements IDisposable
     ''' </summary>
     Public Property NumIterations As Integer
 
+    ''' <summary>
+    ''' 是否静默运行？（默认 True，不向控制台输出迭代进度）
+    ''' 
+    ''' 作为库在其它程序中调用时应当保持静默；只有在命令行调试场景下
+    ''' 才将其设置为 False 以查看迭代收敛过程。
+    ''' </summary>
+    Public Property Silent As Boolean = True
+
 #End Region
 
 #Region "内部状态 / Internal State"
@@ -256,51 +264,58 @@ Public Class PaCMAP : Implements IDisposable
     ''' <summary>
     ''' 查找中近邻对
     ''' Find mid-near pairs
+    ''' 
+    ''' 对每一个观测样本 i，随机采样 6 个候选样本并取其中第 2 近的那个作为
+    ''' 中近邻；该过程重复 5 组，最终得到 ``[N, 5]`` 的中近邻索引矩阵。
+    ''' 
+    ''' 这里直接基于已计算好的距离矩阵实现，避免原始张量拼接实现之中的形状错误。
     ''' </summary>
     Private Function FindMidNearPairs() As Tensor
-        ' 创建observation indices
-        ' tf.range(0, N, 1).reshape([N, 1]).expandDims(2).expandDims(3).tile([1, 5, 6, 1])
-        Dim observationIndices = TensorExtensions.ExpandDims(TensorExtensions.ExpandDims(TensorExtensions.Reshape(Tensor.Range(0, N, 1), N, 1), 2), 3).Tile(New Integer() {1, 5, 6, 1})
+        Const groups As Integer = 5      ' 每一行重复采样的组数
+        Const candidates As Integer = 6  ' 每一组随机采样的候选样本数量
 
-        ' 生成随机索引
-        Dim samples = New List(Of Tensor)()
-        For i = 0 To N - 1
-            Dim indices = New Integer(29) {}
-            Dim idx = 0
-            For s = 0 To 4
-                For t = 0 To 5
-                    Dim random As Integer
-                    Do
-                        random = _random.Next(N)
-                    Loop While random = i
-                    indices(std.Min(Threading.Interlocked.Increment(idx), idx - 1)) = random
+        Dim result As Double() = New Double(N * groups - 1) {}
+
+        For i As Integer = 0 To N - 1
+            For s As Integer = 0 To groups - 1
+                ' 采样 candidates 个不包含自身的随机索引
+                Dim sample As Integer() = New Integer(candidates - 1) {}
+                Dim filled As Integer = 0
+
+                While filled < candidates
+                    Dim r As Integer = _random.Next(N)
+
+                    If r = i Then
+                        Continue While
+                    End If
+
+                    sample(filled) = r
+                    filled += 1
+                End While
+
+                ' 取其中距离第 2 近的候选作为中近邻
+                Dim first As Integer = -1, second As Integer = -1
+                Dim firstDist As Double = Double.MaxValue, secondDist As Double = Double.MaxValue
+
+                For Each c As Integer In sample
+                    Dim d As Double = distances.Data(i * N + c)
+
+                    If d < firstDist Then
+                        secondDist = firstDist
+                        second = first
+                        firstDist = d
+                        first = c
+                    ElseIf d < secondDist Then
+                        secondDist = d
+                        second = c
+                    End If
                 Next
+
+                result(i * groups + s) = second
             Next
-            samples.Add(New Tensor(indices.[Select](Function(x) CDbl(x)).ToArray(), New Integer() {5, 6, 1}))
         Next
-        Dim randomIndices = samples.ToArray().Stack(0) ' [N, 5, 6, 1]
 
-        ' 合并索引
-        Dim combinedIndices = observationIndices.Concat(randomIndices, 3)
-
-        ' 收集距离样本
-        Dim distanceSamples = distances.GatherND(combinedIndices)
-
-        ' 找第2近的邻居
-        Dim topTwoResult = TensorExtensions.Neg(distanceSamples).TopK(2, True)
-        Dim topTwoIndices = topTwoResult.Indices.Slice(New Integer() {0, 0, 1}, New Integer() {-1, -1, -1})
-
-        ' 构建收集索引
-        Dim observationIndicesForTopPairs = TensorExtensions.ExpandDims(TensorExtensions.ExpandDims(TensorExtensions.Reshape(Tensor.Range(0, N, 1), N, 1)), 2).Tile(New Integer() {1, 1, 5, 1})
-
-        Dim sampleIndicesForTopPairs = TensorExtensions.ExpandDims(TensorExtensions.ExpandDims(TensorExtensions.Reshape(Tensor.Range(0, 5, 1), 5, 1))).Tile(New Integer() {1, N, 1, 1})
-
-        Dim combinedIndicesForTopPairs = TensorExtensions.Concat(observationIndicesForTopPairs, CType(sampleIndicesForTopPairs, Tensor), 0).Concat(topTwoIndices.ExpandDims(), 3)
-
-        ' 收集中近邻对
-        Dim midNearPairs = TensorExtensions.GatherND(TensorExtensions.Squeeze(randomIndices), CType(combinedIndicesForTopPairs, Tensor)).Squeeze()
-
-        Return midNearPairs
+        Return New Tensor(result, New Integer() {N, groups})
     End Function
 
     ''' <summary>
@@ -340,12 +355,7 @@ Public Class PaCMAP : Implements IDisposable
     ''' Calculate loss for neighbor pairs
     ''' </summary>
     Private Function LossNeighbourPairs() As Tensor
-        Dim J = Y.Gather(neighbourPairs)
-        Dim dist = EuclideanDistance.Compute(Y, J)
-        Dim numerator = TensorExtensions.Square(dist).Add(1.0)
-        Dim denominator = Tensor.Scalar(10).Add(numerator)
-        Dim loss = TensorExtensions.Div(numerator, CType(denominator, Tensor)).Sum()
-        Return loss
+        Return SumPairLoss(neighbourPairs, Function(d2) (d2 + 1.0) / (d2 + 11.0))
     End Function
 
     ''' <summary>
@@ -353,12 +363,7 @@ Public Class PaCMAP : Implements IDisposable
     ''' Calculate loss for mid-near pairs
     ''' </summary>
     Private Function LossMidNearPairs() As Tensor
-        Dim J = Y.Gather(midNearPairs)
-        Dim dist = EuclideanDistance.Compute(Y, J)
-        Dim numerator = TensorExtensions.Square(dist).Add(1.0)
-        Dim denominator = Tensor.Scalar(10000).Add(numerator)
-        Dim loss = TensorExtensions.Div(numerator, CType(denominator, Tensor)).Sum()
-        Return loss
+        Return SumPairLoss(midNearPairs, Function(d2) (d2 + 1.0) / (d2 + 10001.0))
     End Function
 
     ''' <summary>
@@ -366,12 +371,41 @@ Public Class PaCMAP : Implements IDisposable
     ''' Calculate loss for further pairs
     ''' </summary>
     Private Function LossFurtherPairs() As Tensor
-        Dim J = Y.Gather(furtherPairs)
-        Dim dist = EuclideanDistance.Compute(Y, J)
-        Dim numerator = Tensor.Scalar(1)
-        Dim denominator = Tensor.Scalar(1).Add(TensorExtensions.Square(dist).Add(1.0))
-        Dim loss = TensorExtensions.Div(numerator, CType(denominator, Tensor)).Sum()
-        Return loss
+        Return SumPairLoss(furtherPairs, Function(d2) 1.0 / (d2 + 2.0))
+    End Function
+
+    ''' <summary>
+    ''' 基于低维嵌入坐标 <see cref="Y"/> 对给定的配对索引矩阵计算逐对损失之和。
+    ''' 
+    ''' 索引矩阵的形状为 ``[rows, pairs]``，其 data 为行主序的样本下标；
+    ''' 这里直接在数值数组之上进行计算，避免张量广播带来的兼容问题。
+    ''' </summary>
+    ''' <param name="pairs">形如 ``[rows, pairs]`` 的配对索引矩阵</param>
+    ''' <param name="loss">由成对平方距离计算该对损失的函数</param>
+    Private Function SumPairLoss(pairs As Tensor, loss As Func(Of Double, Double)) As Tensor
+        Dim rows As Integer = pairs.Shape(0)
+        Dim count As Integer = pairs.Shape(1)
+        Dim dims As Integer = NDimensions
+        Dim sum As Double = 0
+
+        For i As Integer = 0 To rows - 1
+            Dim offset As Integer = i * dims
+
+            For k As Integer = 0 To count - 1
+                Dim j As Integer = CInt(pairs.Data(i * count + k))
+                Dim jOffset As Integer = j * dims
+                Dim d2 As Double = 0
+
+                For d As Integer = 0 To dims - 1
+                    Dim diff As Double = Y.Data(offset + d) - Y.Data(jOffset + d)
+                    d2 += diff * diff
+                Next
+
+                sum += loss(d2)
+            Next
+        Next
+
+        Return Tensor.Scalar(sum)
     End Function
 
     ''' <summary>
@@ -439,7 +473,7 @@ Public Class PaCMAP : Implements IDisposable
             Me.ComputeGradientsAndUpdate(optimizer, totalLoss)
 
             ' 输出进度
-            If i Mod 50 = 0 OrElse i = NumIterations - 1 Then
+            If Not Silent AndAlso (i Mod 50 = 0 OrElse i = NumIterations - 1) Then
                 Console.WriteLine($"Iteration {i + 1}/{NumIterations}, Loss: {totalLoss.Data(0):F6}")
             End If
         Next

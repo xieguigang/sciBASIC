@@ -124,5 +124,47 @@ Namespace Data
                                   Return g.Select(Function(x) x.i).ToArray
                               End Function)
         End Function
+
+        ''' <summary>
+        ''' 将降维/嵌入算法的结果矩阵封装为一个新的二维表。
+        ''' 
+        ''' 新的表以嵌入坐标作为特征矩阵（列名 ``{prefix}_1 .. {prefix}_n``），
+        ''' 并继承源表的行名、标签矩阵以及名称/描述信息，因此生成的结果表可以
+        ''' 直接送入聚类等后续分析入口进行链式调用。
+        ''' </summary>
+        ''' <param name="source">产生该嵌入结果的原始二维表</param>
+        ''' <param name="embedding">行主序的嵌入坐标矩阵，行数必须与源表的样本数一致</param>
+        ''' <param name="prefix">嵌入维度列的名称前缀，缺省为 ``dim``</param>
+        ''' <returns>以嵌入坐标为特征的新二维表</returns>
+        <Extension>
+        Public Function ToEmbeddingTable(source As NumericTable,
+                                         embedding As Double()(),
+                                         Optional prefix As String = "dim") As NumericTable
+
+            If source Is Nothing Then
+                Throw New ArgumentNullException(NameOf(source))
+            End If
+            If embedding Is Nothing Then
+                Throw New ArgumentNullException(NameOf(embedding))
+            End If
+            If embedding.Length <> source.nsamples Then
+                Throw New InvalidConstraintException(
+                    $"the embedding rows {embedding.Length} is not equals to the source table samples {source.nsamples}!"
+                )
+            End If
+
+            Dim dims As Integer = If(embedding.Length = 0 OrElse embedding(0) Is Nothing, 0, embedding(0).Length)
+            Dim featureNames As String() = Enumerable _
+                .Range(1, dims) _
+                .Select(Function(i) $"{prefix}_{i}") _
+                .ToArray
+
+            Return New NumericTable(embedding, source.RowNamesOrDefault(), featureNames) With {
+                .labels = source.labels,
+                .labelNames = source.labelNames,
+                .name = source.name,
+                .description = source.description
+            }
+        End Function
     End Module
 End Namespace
