@@ -221,6 +221,13 @@ Namespace Compute
             Return MapUnary(t, Function(x) x / (1.0 + std.Exp(-x)))
         End Function
 
+        ''' <summary>
+        ''' 阶跃函数(Heaviside): 大于 0 的元素取 1, 否则取 0
+        ''' </summary>
+        Public Overridable Function Heaviside(t As Tensor) As Tensor Implements ITensorCompute.Heaviside
+            Return MapUnary(t, Function(x) If(x > 0.0, 1.0, 0.0))
+        End Function
+
 #End Region
 
 #Region "标量运算"

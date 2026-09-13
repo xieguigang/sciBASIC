@@ -59,6 +59,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace CNN.layers
 
@@ -94,11 +95,24 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
+            in_act = db
+
             Dim V2 As DataBlock = db.clone()
+
+            If threshold = 0.0 Then
+                ' threshold 为 0 时正是标准的 ReLU, 直接交给张量后端的统一算子完成,
+                ' 从而能够被 Tensor.computeKernel 派发到 CUDA(无 GPU 时由 CPU/SIMD 后端兜底)
+                Dim activated = Tensor.computeKernel.Relu(db.Value)
+
+                Call Array.Copy(activated.Data, V2.w, V2.w.Length)
+
+                out_act = V2
+                Return out_act
+            End If
+
+            ' threshold 非 0 的截断语义无法用标准 ReLU 表达, 保留原有的标量实现
             Dim N = db.Weights.Length
             Dim V2w = V2.Weights
-
-            in_act = db
 
             For i As Integer = 0 To N - 1
                 If V2w(i) < threshold Then
@@ -107,7 +121,6 @@ Namespace CNN.layers
             Next
 
             out_act = V2
-
             Return out_act
         End Function
 
@@ -115,15 +128,21 @@ Namespace CNN.layers
             ' zero out gradient wrt data
             Dim V = in_act.clearGradient() ' we need to set dw of this
             Dim V2 = out_act
+
+            If threshold = 0.0 Then
+                ' 反向的掩码 (x > 0) 由后端的 Heaviside 算子给出, 再与上游梯度逐元素相乘;
+                ' 两个算子都定义在 computeKernel 上, 因此这一步同样可以整体下放到 GPU
+                Dim mask = Tensor.computeKernel.Heaviside(V.Value)
+                Dim dx = Tensor.computeKernel.Multiply(V2.Grad, mask)
+
+                Call V.setGradient(dx.Data)
+                Return
+            End If
+
             Dim N = V.Weights.Length
             Dim Vw = V.Weights ' 获取前向传播的输入值
 
             For i As Integer = 0 To N - 1
-                'If V2.getWeight(i) <= threshold Then
-                '    V.setGradient(i, threshold) ' threshold
-                'Else
-                '    V.setGradient(i, V2.getGradient(i))
-                'End If
                 If Vw(i) <= 0 Then ' 如果原始输入 <= 0
                     V.setGradient(i, 0.0) ' 则梯度为 0
                 Else

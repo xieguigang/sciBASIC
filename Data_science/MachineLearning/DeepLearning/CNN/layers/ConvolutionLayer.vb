@@ -69,7 +69,9 @@
 
 #End Region
 
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
 
@@ -151,262 +153,128 @@ Namespace CNN.layers
             def.depth = out_depth
         End Sub
 
+        ''' <summary>
+        ''' 最近一次前向传播时按后端布局打包好的卷积核张量, 形状 (KH, KW, C, OutC)。
+        ''' </summary>
+        ''' <remarks>
+        ''' 反向传播需要把它作为 <c>Conv2DBackwardInput</c> 的输入(计算对输入的梯度要用到前向的卷积核),
+        ''' 所以在每次前向时缓存下来; 由于卷积核在训练过程中一直被就地更新, 这里每次都重新打包,
+        ''' 因此不存在缓存过期的问题。
+        ''' </remarks>
+        <IgnoreDataMember>
+        Private filtersPacked As Tensor
+
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(out_sx, out_sy, out_depth, 0.0) With {.trace = Me.ToString}
+
             in_act = db
             out_act = lA
-            Call New ForwardTask(Me, lA).Run()
-            Return lA
+
+            ' 后端张量的布局约定是 (N, H, W, C), 与 DataBlock 的 (SY, SX, Depth) 在内存里同序,
+            ' 因此输入只需要一次零拷贝的形状重解释, 算完把结果整块拷回即可
+            Dim x4 As Tensor = Tensor.Wrap(db.Value, db.TensorShape4D)
+            Dim packed As Tensor = PackFilters()
+            Dim y = Tensor.computeKernel.Conv2D(x4, packed, Tensor.Wrap(biases.w, out_depth), stride, padding)
+
+            Call Array.Copy(y.Data, lA.w, lA.w.Length)
+
+            filtersPacked = packed
+            Return out_act
         End Function
 
-        Private Class ForwardTask : Inherits VectorTask
+        ''' <summary>
+        ''' 把各个输出通道的卷积核打包成一个 (KH, KW, C, OutC) 的后端张量。
+        ''' </summary>
+        ''' <remarks>
+        ''' 每个 <see cref="filters"/>(d) 的内部布局是 (KH, KW, C), 而后端要求输出通道作为**最末轴**,
+        ''' 因此需要一次带跨步的重新排布, 不能简单地整块拷贝。
+        ''' </remarks>
+        Private Function PackFilters() As Tensor
+            Dim inDepth = in_depth
+            Dim OutC = out_depth
+            Dim dst As Tensor = Tensor.Zeros(New Integer() {sy, sx, inDepth, OutC})
+            Dim w = dst.Data
 
-            Dim layer As ConvolutionLayer
-            Dim lA As DataBlock
+            For d As Integer = 0 To OutC - 1
+                Dim src = filters(d).w
 
-            Public Sub New(layer As ConvolutionLayer, lA As DataBlock)
-                MyBase.New(layer.out_depth)
-                Me.lA = lA
-                Me.layer = layer
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim V_sx = layer.in_sx
-                Dim V_sy = layer.in_sy
-                Dim xy_stride = layer.stride
-                Dim db = layer.in_act
-
-                For d As Integer = start To ends
-                    Dim f = layer.filters(d)
-                    Dim y = -layer.padding
-                    Dim ay = 0
-
-                    While ay < layer.out_sy
-                        Dim x = -layer.padding
-                        Dim ax = 0
-
-                        While ax < layer.out_sx
-
-                            ' convolve centered at this particular location
-                            Dim a = 0.0
-                            For fy = 0 To f.SY - 1
-                                Dim oy = y + fy ' coordinates in the original input array coordinates
-                                For fx = 0 To f.SX - 1
-                                    Dim ox = x + fx
-                                    If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
-                                        For fd = 0 To f.Depth - 1
-                                            ' avoid function call overhead (x2) for efficiency, compromise modularity :(
-                                            a += f.getWeight(fx, fy, fd) * db.getWeight(ox, oy, fd)
-                                        Next
-                                    End If
-                                Next
-                            Next
-                            a += layer.biases.getWeight(d)
-                            lA.setWeight(ax, ay, d, a)
-                            x += xy_stride
-                            ax += 1 ' xy_stride
-                        End While
-
-                        y += xy_stride
-                        ay += 1 ' xy_stride
-                    End While
+                For kh As Integer = 0 To sy - 1
+                    For kw As Integer = 0 To sx - 1
+                        For c As Integer = 0 To inDepth - 1
+                            w(((kh * sx + kw) * inDepth + c) * OutC + d) = src((sx * kh + kw) * inDepth + c)
+                        Next
+                    Next
                 Next
-            End Sub
-        End Class
+            Next
+
+            Return dst
+        End Function
+
+        ''' <summary>
+        ''' 把后端算出的 (KH, KW, C, OutC) 卷积核梯度**累加**回各个 <see cref="filters"/>(d) 的 dw。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这里必须累加而不是直接赋值: 参数梯度是在一个 mini-batch 之内跨样本累加的
+        ''' (``TrainerAlgorithm.train`` 每 ``batch_size`` 个样本才调用一次 ``adjustWeights``,
+        ''' 且只有在那里才把 ``g(j)`` 清零), 如果直接赋值就会丢掉同一批内前面样本的贡献,
+        ''' 等效学习率被缩小 batch_size 倍。
+        ''' </remarks>
+        Private Sub UnpackFilterGradients(packedGrad As Tensor)
+            Dim inDepth = in_depth
+            Dim OutC = out_depth
+            Dim src = packedGrad.Data
+
+            For d As Integer = 0 To OutC - 1
+                Dim dst = filters(d).dw
+
+                For kh As Integer = 0 To sy - 1
+                    For kw As Integer = 0 To sx - 1
+                        For c As Integer = 0 To inDepth - 1
+                            dst((sx * kh + kw) * inDepth + c) += src(((kh * sx + kw) * inDepth + c) * OutC + d)
+                        Next
+                    Next
+                Next
+            Next
+        End Sub
 
         Public Overridable Sub backward() Implements Layer.backward
             ' zero out gradient wrt bottom data, we're about to fill it
             Dim db As DataBlock = in_act.clearGradient()
 
-            ' 第一阶段: 滤波核与偏置项的梯度。
-            ' 按输出通道 d 并行, 每个线程只写 filters(d) 与 biases 的第 d 个分量, 写入区域互不相交。
-            Call New BackwardFilterTask(Me, db).Run()
+            Dim x4 As Tensor = Tensor.Wrap(db.Value, db.TensorShape4D)
+            Dim gradOut As Tensor = Tensor.Wrap(out_act.Grad, out_act.TensorShape4D)
 
-            ' 第二阶段: 输入数据的梯度。
-            ' 原先的实现是在上面那个按 d 并行的同一个循环里做 db.addGradient(ix1, ...),
-            ' 但 ix1 的取值集合在所有线程之间是完全重叠的(不同输出通道都落在同一批滤波窗口上),
-            ' 于是 dw(ix) += val 这种非原子的读-改-写在多线程并发时会出现丢失更新,
-            ' 导致训练结果随线程调度而漂移(实测同一个随机种子多次运行 loss 从 0.37 漂到 0.75)。
-            ' 这里改为按**输入位置**并行: 每个线程独占自己那段输入位置的梯度元素,
-            ' 先对全部贡献求和再一次性写入, 既消除了数据竞争又保留了并行。
-            Call New BackwardInputTask(Me, db).Run()
+            If filtersPacked Is Nothing Then
+                ' 正常情况下 backward 总是紧跟在本层自己的 forward 之后; 这里只是兜底, 避免空引用
+                filtersPacked = PackFilters()
+            End If
+
+            ' 1) 对卷积核的梯度: 后端按 im2col 语义直接给出 (KH, KW, C, OutC), 再拆回各个 filters(d)
+            Dim gradFilters = Tensor.computeKernel.Conv2DBackwardFilter(
+                gradOut, x4, New Integer() {sy, sx, in_depth, out_depth}, stride, padding)
+
+            Call UnpackFilterGradients(gradFilters)
+
+            ' 2) 对偏置的梯度: 沿 N/OH/OW 求和得到 (OutC)。
+            '    与卷积核一样属于参数梯度, 必须跨样本累加到 mini-batch 结束
+            Dim gradBias = Tensor.computeKernel.Conv2DBackwardBias(gradOut)
+            Dim biasGrad = gradBias.Data
+
+            For i As Integer = 0 To biases.dw.Length - 1
+                biases.dw(i) += biasGrad(i)
+            Next
+
+            ' 3) 对输入的梯度: 用前向缓存下来的卷积核算出, 布局与 DataBlock 同序, 整块拷贝
+            '
+            ' 原先这一步是在按输出通道并行的循环里对本层的输入块做 addGradient, 而不同输出通道
+            ' 会落在同一批滤波窗口上, 因此属于跨线程的读-改-写, 存在丢失更新(实测同一个随机种子
+            ' 多次运行 loss 从 0.37 漂到 0.75)。改为走后端算子之后, 累加在算子内部按位置唯一完成,
+            ' 既没有数据竞争也不再需要按线程切分。
+            Dim gradInput = Tensor.computeKernel.Conv2DBackwardInput(
+                gradOut, filtersPacked, db.TensorShape4D, stride, padding)
+
+            Call Array.Copy(gradInput.Data, db.dw, db.dw.Length)
         End Sub
-
-        ''' <summary>
-        ''' 反向传播第一阶段: 计算各个滤波核以及偏置项的梯度。
-        ''' </summary>
-        ''' <remarks>
-        ''' 按输出通道并行; 每个线程独占 <see cref="filters"/>(d) 以及 <see cref="biases"/>
-        ''' 之中下标为 d 的那个元素, 因此不存在跨线程的写入冲突。
-        ''' </remarks>
-        Private Class BackwardFilterTask : Inherits VectorTask
-
-            Dim layer As ConvolutionLayer
-            Dim db As DataBlock
-
-            Public Sub New(layer As ConvolutionLayer, db As DataBlock)
-                MyBase.New(layer.out_depth)
-                Me.db = db
-                Me.layer = layer
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim V_sx = db.SX
-                Dim V_sy = db.SY
-                Dim xy_stride = layer.stride
-
-                For d As Integer = start To ends
-                    Dim f = layer.filters(d)
-                    Dim y = -layer.padding
-                    Dim ay = 0
-
-                    While ay < layer.out_sy
-                        Dim x = -layer.padding
-                        Dim ax = 0
-
-                        While ax < layer.out_sx
-                            ' convolve centered at this particular location
-                            ' gradient from above, from chain rule
-                            Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
-
-                            For fy As Integer = 0 To f.SY - 1
-                                Dim oy As Integer = y + fy ' coordinates in the original input array coordinates
-
-                                For fx As Integer = 0 To f.SX - 1
-                                    Dim ox = x + fx
-
-                                    If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
-                                        For fd As Integer = 0 To f.Depth - 1
-                                            ' avoid function call overhead (x2) for efficiency, compromise modularity :(
-                                            Dim ix1 = (V_sx * oy + ox) * db.Depth + fd
-                                            Dim ix2 = (f.SY * fy + fx) * f.Depth + fd
-
-                                            f.addGradient(ix2, db.getWeight(ix1) * chain_grad)
-                                        Next
-                                    End If
-                                Next
-                            Next
-
-                            layer.biases.addGradient(d, chain_grad)
-                            x += xy_stride
-                            ax += 1 ' xy_stride
-                        End While
-
-                        y += xy_stride
-                        ay += 1 ' xy_stride
-                    End While
-                Next
-            End Sub
-        End Class
-
-        ''' <summary>
-        ''' 反向传播第二阶段: 计算输入数据的梯度。
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>
-        ''' 按输入平面上的空间位置(展平后的 ox,oy)并行。
-        ''' </para>
-        ''' <para>
-        ''' 前向传播之中, 输出位置与输入位置之间的关系是
-        ''' ``ox = ax * stride - padding + fx`` (``oy`` 同理), 反向传播需要的就是这个映射的逆:
-        ''' 对每一个输入位置反解出所有会对它产生贡献的输出位置与滤波核偏移量,
-        ''' 把全部贡献一次累加完毕之后只写一次结果。
-        ''' </para>
-        ''' <para>
-        ''' 由于每个空间位置只属于一个线程, 因此每个梯度元素都只被写入一次, 不存在数据竞争。
-        ''' </para>
-        ''' </remarks>
-        Private Class BackwardInputTask : Inherits VectorTask
-
-            Dim layer As ConvolutionLayer
-            Dim db As DataBlock
-
-            Public Sub New(layer As ConvolutionLayer, db As DataBlock)
-                ' 并行粒度 = 输入平面上所有空间位置的个数
-                MyBase.New(db.SX * db.SY)
-                Me.db = db
-                Me.layer = layer
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim V_sx = db.SX
-                Dim V_sy = db.SY
-                Dim V_depth = db.Depth
-                Dim xy_stride = layer.stride
-                Dim padding = layer.padding
-                Dim out_sx = layer.out_sx
-                Dim out_sy = layer.out_sy
-
-                ' 当前输入位置在各输入通道上的部分和; 在位置循环之内复用, 避免反复分配
-                Dim acc As Double() = New Double(V_depth - 1) {}
-
-                For p As Integer = start To ends
-                    Dim oy As Integer = p \ V_sx
-                    Dim ox As Integer = p Mod V_sx
-
-                    Call Array.Clear(acc, 0, acc.Length)
-
-                    For d As Integer = 0 To layer.out_depth - 1
-                        Dim f = layer.filters(d)
-
-                        For fy As Integer = 0 To f.SY - 1
-                            Dim ay = InversePosition(oy + padding - fy, xy_stride, out_sy)
-
-                            If ay >= 0 Then
-                                For fx As Integer = 0 To f.SX - 1
-                                    Dim ax = InversePosition(ox + padding - fx, xy_stride, out_sx)
-
-                                    If ax >= 0 Then
-                                        Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
-
-                                        For fd As Integer = 0 To V_depth - 1
-                                            acc(fd) += f.getWeight(fx, fy, fd) * chain_grad
-                                        Next
-                                    End If
-                                Next
-                            End If
-                        Next
-                    Next
-
-                    For fd As Integer = 0 To V_depth - 1
-                        db.addGradient((V_sx * oy + ox) * V_depth + fd, acc(fd))
-                    Next
-                Next
-            End Sub
-
-            ''' <summary>
-            ''' 由 ``坐标差 = 输出索引 * stride`` 反解出输出索引; 无法整除或者越界时返回 -1。
-            ''' </summary>
-            ''' <param name="delta">``输入坐标 + padding - 滤波核偏移``</param>
-            ''' <param name="stride">卷积步长</param>
-            ''' <param name="outSize">该维度上输出的大小</param>
-            Private Shared Function InversePosition(delta As Integer, stride As Integer, outSize As Integer) As Integer
-                If delta < 0 Then
-                    Return -1
-                End If
-
-                ' stride = 1 是最常见的配置, 免去除法与取模的开销
-                If stride = 1 Then
-                    If delta >= outSize Then
-                        Return -1
-                    Else
-                        Return delta
-                    End If
-                End If
-
-                If delta Mod stride <> 0 Then
-                    Return -1
-                End If
-
-                Dim index As Integer = delta \ stride
-
-                If index >= outSize Then
-                    Return -1
-                Else
-                    Return index
-                End If
-            End Function
-        End Class
 
         Public Overrides Function ToString() As String
             Return "conv()"

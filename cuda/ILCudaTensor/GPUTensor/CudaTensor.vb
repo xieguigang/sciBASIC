@@ -463,6 +463,15 @@ Namespace GPUTensor
             Return MyBase.Relu(t)
         End Function
 
+        ''' <summary>
+        ''' 阶跃函数(Heaviside): 大于 0 的元素取 1, 否则取 0
+        ''' </summary>
+        Public Overrides Function Heaviside(t As tf.Tensor) As tf.Tensor
+            Dim r = EwUnary(t, DoubleKernelRegistry.EwStep)
+            If r IsNot Nothing Then Return r
+            Return MyBase.Heaviside(t)
+        End Function
+
         Public Overrides Function Gelu(t As tf.Tensor) As tf.Tensor
             Dim r = EwUnary(t, DoubleKernelRegistry.EwGelu)
             If r IsNot Nothing Then Return r

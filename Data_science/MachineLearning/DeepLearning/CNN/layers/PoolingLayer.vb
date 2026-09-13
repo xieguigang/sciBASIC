@@ -76,6 +76,7 @@
 
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
 
@@ -96,29 +97,16 @@ Namespace CNN.layers
         Private sx, sy, stride, padding As Integer
 
         ''' <summary>
-        ''' [ax,ay] map to [x,y]
+        ''' 最近一次前向传播产出的 argMax 张量: 每个输出位置对应的**输入张量扁平下标**。
         ''' </summary>
+        ''' <remarks>
+        ''' 由后端 <c>MaxPool2D</c> 算子在同一次调用里与池化结果一并算出, 反向传播直接按它做
+        ''' 散射累加。这取代了原先那套 ``Dictionary(Of UInteger, Dictionary(Of String, SwitchMap))``
+        ''' (每个输出位置用 "ax,ay" 这样的字符串作为键) 的索引映射——字符串字典既无法映射到 GPU,
+        ''' 也需要在每个线程上各持一份。
+        ''' </remarks>
         <IgnoreDataMember>
-        Dim switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, SwitchMap))
-
-        Private Class SwitchMap
-
-            Public switchx As Integer
-            Public switchy As Integer
-
-            Sub New()
-            End Sub
-
-            Sub New(winx As Integer, winy As Integer)
-                switchx = winx
-                switchy = winy
-            End Sub
-
-            Public Overrides Function ToString() As String
-                Return $"[{switchx}, {switchy}]"
-            End Function
-
-        End Class
+        Dim argMaxIndex As Tensor
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
@@ -156,16 +144,6 @@ Namespace CNN.layers
             def.outY = out_sy
             def.depth = out_depth
 
-            Call initSwitchMaps()
-        End Sub
-
-        Private Sub initSwitchMaps()
-            ' store switches for x,y coordinates for where the max comes from, for each output neuron
-            ' switchx = New Integer(out_sx * out_sy * out_depth - 1) {}
-            ' switchy = New Integer(out_sx * out_sy * out_depth - 1) {}
-            For d As Integer = 0 To out_depth - 1
-                Call switchMaps.Add(d, New Dictionary(Of String, SwitchMap))
-            Next
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
@@ -174,137 +152,32 @@ Namespace CNN.layers
             in_act = db
             out_act = lA
 
-            If Not training Then
-                If switchMaps.IsNullOrEmpty Then
-                    Call initSwitchMaps()
-                End If
-            End If
+            ' 最大池化的前向由张量后端的 MaxPool2D 算子一次完成, 并且在同一次调用里产出 argMax
+            ' (每个输出位置对应的输入张量扁平下标), 供反向传播做散射累加使用。
+            '
+            ' 后端张量的布局约定是 (N, H, W, C), 而 DataBlock 的 (SY, SX, Depth) 与它在内存里
+            ' 是同一个顺序, 所以只需要一次零拷贝的形状重解释, 算完之后把结果整块拷回即可。
+            Dim x4 As Tensor = Tensor.Wrap(db.Value, db.TensorShape4D)
+            Dim argMax As Tensor = Nothing
+            Dim pooled = Tensor.computeKernel.MaxPool2D(x4, sx, stride, padding, argMax)
 
-            ' clear all mapping
-            ' a counter for switches
-            For Each d As UInteger In switchMaps.Keys
-                Call switchMaps(key:=d).Clear()
-            Next
+            Call Array.Copy(pooled.Data, lA.w, lA.w.Length)
 
-            Call New ForwardTask(Me, lA, db).Run()
-
+            argMaxIndex = argMax
             Return out_act
         End Function
 
-        Private Class ForwardTask : Inherits VectorTask
-
-            Dim layer As PoolingLayer
-            Dim lA, db As DataBlock
-
-            Public Sub New(layer As PoolingLayer, lA As DataBlock, db As DataBlock)
-                MyBase.New(layer.out_depth)
-                Me.db = db
-                Me.lA = lA
-                Me.layer = layer
-                ' Me.sequenceMode = True
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                For d As Integer = start To ends
-                    Dim x = -layer.padding
-                    Dim ax = 0
-                    Dim map As Dictionary(Of String, SwitchMap) = layer.switchMaps(key:=CUInt(d))
-
-                    While ax < layer.out_sx
-                        Dim y = -layer.padding
-                        Dim ay = 0
-
-                        While ay < layer.out_sy
-                            ' convolve centered at this particular location
-                            Dim a As Double = -99999 ' hopefully small enough ;\
-                            Dim winx = -1
-                            Dim winy = -1
-
-                            For fx = 0 To layer.sx - 1
-                                For fy = 0 To layer.sy - 1
-                                    Dim oy = y + fy
-                                    Dim ox = x + fx
-                                    If oy >= 0 AndAlso oy < db.SY AndAlso ox >= 0 AndAlso ox < db.SX Then
-                                        Dim v = db.getWeight(ox, oy, d)
-                                        ' perform max pooling and store pointers to where
-                                        ' the max came from. This will speed up backprop
-                                        ' and can help make nice visualizations in future
-                                        If v > a Then
-                                            a = v
-                                            winx = ox
-                                            winy = oy
-                                        End If
-                                    End If
-                                Next
-                            Next
-
-                            Call map.Add(ax & "," & ay, New SwitchMap(winx, winy))
-
-                            'switchx(n) = winx
-                            'switchy(n) = winy
-                            'n += 1
-                            lA.setWeight(ax, ay, d, a)
-                            y += layer.stride
-                            ay += 1
-                        End While
-
-                        x += layer.stride
-                        ax += 1
-                    End While
-                Next
-            End Sub
-        End Class
-
         Public Overridable Sub backward() Implements Layer.backward
-            ' pooling layers have no parameters, so simply compute
-            ' gradient wrt data here
-            ' zero out gradient wrt data
-            Call New BackwardTask(Me, v:=in_act.clearGradient()).Run()
+            ' pooling layers have no parameters, so simply compute gradient wrt data here
+            Dim v As DataBlock = in_act.clearGradient()
+
+            ' 反向严格按前向记录下来的 argMax 做散射累加: 每个输出位置唯一对应一个输入位置,
+            ' 因此既不需要原子操作, 也不存在数据竞争
+            Dim gradOut As Tensor = Tensor.Wrap(out_act.Grad, out_act.TensorShape4D)
+            Dim dx = Tensor.computeKernel.MaxPool2DBackward(gradOut, argMaxIndex, v.TensorShape4D)
+
+            Call Array.Copy(dx.Data, v.dw, v.dw.Length)
         End Sub
-
-        Private Class BackwardTask : Inherits VectorTask
-
-            Dim layer As PoolingLayer
-            Dim v As DataBlock
-
-            Public Sub New(layer As PoolingLayer, v As DataBlock)
-                MyBase.New(layer.out_depth)
-                Me.v = v
-                Me.layer = layer
-                ' Me.sequenceMode = True
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                For d As Integer = start To ends
-                    Dim x = -layer.padding
-                    Dim ax = 0
-                    Dim map = layer.switchMaps(key:=CUInt(d))
-
-                    While ax < layer.out_sx
-                        Dim y = -layer.padding
-                        Dim ay = 0
-
-                        While ay < layer.out_sy
-                            Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
-                            Dim key As String = ax & "," & ay
-
-                            If map.ContainsKey(key) Then
-                                Dim switch As SwitchMap = map(key)
-
-                                ' V.addGradient(switchx(n), switchy(n), d, chain_grad)
-                                v.addGradient(switch.switchx, switch.switchy, d, chain_grad)
-                                y += layer.stride
-                            End If
-
-                            ay += 1
-                        End While
-
-                        x += layer.stride
-                        ax += 1
-                    End While
-                Next
-            End Sub
-        End Class
 
         Public Overrides Function ToString() As String
             Return "pooling()"

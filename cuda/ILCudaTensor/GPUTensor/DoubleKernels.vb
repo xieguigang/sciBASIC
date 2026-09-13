@@ -177,6 +177,18 @@ Namespace GPUTensor
             Return std.Max(0.0, x)
         End Function
 
+        ''' <summary>
+        ''' 阶跃函数(Heaviside): 大于 0 时为 1, 否则为 0
+        ''' </summary>
+        <CudaKernel(DoubleKernelRegistry.EwStep)>
+        Public Function DStep(x As Double) As Double
+            If x > 0.0 Then
+                Return 1.0
+            End If
+
+            Return 0.0
+        End Function
+
         <CudaKernel(DoubleKernelRegistry.EwGelu)>
         Public Function DGelu(x As Double) As Double
             Return 0.5 * x * (1.0 + std.Tanh(std.Sqrt(2.0 / std.PI) * (x + 0.044715 * x * x * x)))
@@ -273,6 +285,7 @@ Namespace GPUTensor
         Public Const EwSin As String = "il_tensor_ew_sin"
         Public Const EwCos As String = "il_tensor_ew_cos"
         Public Const EwRelu As String = "il_tensor_ew_relu"
+        Public Const EwStep As String = "il_tensor_ew_step"
         Public Const EwGelu As String = "il_tensor_ew_gelu"
         Public Const EwSwish As String = "il_tensor_ew_swish"
         Public Const EwScale As String = "il_tensor_ew_scale"
@@ -340,6 +353,7 @@ Namespace GPUTensor
                     {NameOf(DoubleKernels.DSin), EwSin},
                     {NameOf(DoubleKernels.DCos), EwCos},
                     {NameOf(DoubleKernels.DRelu), EwRelu},
+                    {NameOf(DoubleKernels.DStep), EwStep},
                     {NameOf(DoubleKernels.DGelu), EwGelu},
                     {NameOf(DoubleKernels.DSwish), EwSwish},
                     {NameOf(DoubleKernels.DScale), EwScale},

@@ -124,6 +124,17 @@ Namespace Compute
         Function Gelu(t As Tensor) As Tensor
         Function Swish(t As Tensor) As Tensor
 
+        ''' <summary>
+        ''' 阶跃函数(Heaviside): 大于 0 的元素取 1, 否则取 0。
+        ''' </summary>
+        ''' <remarks>
+        ''' 后端本身没有比较/掩码算子, 而 ReLU 系激活函数的反向传播需要的正是
+        ''' `` (x &gt; 0) ? dy : 0 `` 这样的逐元素掩码; 有了本算子之后就可以写成
+        ''' ``Heaviside(x)`` 与上游梯度逐元素相乘, 从而让整个反向过程同样可以下放到 GPU。
+        ''' (命名为 Heaviside 而不是 Step, 是因为 ``Step`` 是 VB 的保留字)
+        ''' </remarks>
+        Function Heaviside(t As Tensor) As Tensor
+
 #End Region
 
 #Region "标量运算"

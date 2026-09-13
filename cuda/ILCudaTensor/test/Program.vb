@@ -145,6 +145,9 @@ Module Program
         Dim rsCpu = tfMath.reduce_sum(logits, axis:=1)
         Dim amCpu = tfMath.argmax(logits, axis:=1)
 
+        ' Heaviside 阶跃算子: ReLU 系激活函数反向传播所需的 (x > 0) 掩码
+        Dim hvCpu = tf.Tensor.computeKernel.Heaviside(x)
+
         ' ---- 卷积 / 池化的 CPU 参考（走当前后端 = SIMDTensor，即 TensorComputeBase 的标量实现）----
         Dim convIn = tf.Tensor.Random({2, 8, 8, 3}, seed:=5)
         Dim convW = tf.Tensor.Random({3, 3, 3, 4}, seed:=6)
@@ -207,6 +210,9 @@ Module Program
         Dim rsGpu = tfMath.reduce_sum(logits, axis:=1)
         Dim amGpu = tfMath.argmax(logits, axis:=1)
 
+        ' Heaviside 阶跃算子（GPU）
+        Dim hvGpu = tf.Tensor.computeKernel.Heaviside(x)
+
         sw.Restart()
         Dim bigSumGpu = tfMath.reduce_sum(big).Data(0)
         Dim bigMaxGpu = tfMath.reduce_max(big).Data(0)
@@ -250,6 +256,7 @@ Module Program
         Dim lsErr = MaxDiff(lsCpu.Data, lsGpu.Data)
         Dim rsErr = MaxDiff(rsCpu.Data, rsGpu.Data)
         Dim amErr = MaxDiff(amCpu.Data, amGpu.Data)
+        Dim hvErr = MaxDiff(hvCpu.Data, hvGpu.Data)
         Dim gemmErr = RelErr(matGpu.Data(0), matCpu.Data(0))
         Dim sumErr = RelErr(bigSumGpu, bigSumCpu)
         Dim maxErr = RelErr(bigMaxGpu, bigMaxCpu)
@@ -261,6 +268,12 @@ Module Program
         Check("P3 log_softmax", lsErr < 1.0E-13, $"maxdiff={lsErr:E3}")
         Check("P3 末轴求和", rsErr < 1.0E-12, $"maxdiff={rsErr:E3}")
         Check("P3 末轴 argmax", amErr = 0.0, $"maxdiff={amErr:E3}")
+
+        ' Heaviside: 既要求 CPU/GPU 逐位一致, 也要求取值语义正确(恰好是正元素的个数)
+        Dim expectOnes = x.Data.Count(Function(v) v > 0.0)
+        Dim actualOnes = hvCpu.Data.Sum()
+        Check("P2 Heaviside 阶跃", hvErr = 0.0 AndAlso Math.Abs(actualOnes - expectOnes) < 0.5,
+              $"maxdiff={hvErr:E3} ones={actualOnes}/{expectOnes}")
         Check("double GEMM", gemmErr < 1.0E-13, $"relerr={gemmErr:E3}")
         Check("两段式全局 sum", sumErr < 1.0E-13, $"relerr={sumErr:E3}")
         Check("两段式全局 max", maxErr < 1.0E-15, $"relerr={maxErr:E3}")
