@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>XML Toolkit with XSD Models, MathML and XPath Queries</Title>
     <Description>XML helpers for sciBASIC#: an XSD element data model, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.xml</AssemblyTitle>

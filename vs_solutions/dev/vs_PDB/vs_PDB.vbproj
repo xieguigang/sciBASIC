@@ -7,8 +7,8 @@
     <RootNamespace>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>PDB Debug Symbol File Reader For Classic And Portable Formats</Title>
     <Description>Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and type records into one uniform model for sciBASIC# tooling.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyTitle>

@@ -10,6 +10,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <OutputPath>../../.nuget/</OutputPath>
     <LangVersion>16</LangVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

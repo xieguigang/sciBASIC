@@ -6,8 +6,8 @@
     <AssemblyName>Microsoft.VisualBasic.Web.KnowledgeBase</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;nuget_release</Configurations>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Microsoft Bing Web, Academic, Translation and DOI Services Client</Title>
     <Description>Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal for article profiles, look up word translations, and decode DOI handle service responses.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.KnowledgeBase.Web</AssemblyTitle>

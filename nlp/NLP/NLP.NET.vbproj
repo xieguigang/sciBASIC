@@ -15,8 +15,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Natural Language Processing Toolkit: Tokenizers, Stemmer, BM25 and LDA</Title>
     <Description>NLP toolkit for sciBASIC#: Chinese word segmentation via max-match, HMM and a HuggingFace-compatible BPE/WordPiece/Unigram pipeline, plus a Porter stemmer, TF-IDF, BM25 ranked search and Gibbs-sampled LDA topic modeling.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.NLP</AssemblyTitle>

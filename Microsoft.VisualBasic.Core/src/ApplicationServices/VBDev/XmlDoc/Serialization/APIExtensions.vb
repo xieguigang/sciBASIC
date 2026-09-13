@@ -94,106 +94,261 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             End Try
         End Function
 
-        Const cref As String = "<see(also)? cref=""[^""]+?""/>"
-        Const cref2 As String = "<see(also)? cref=""[^""]+?"">\s*</see(also)?>"
-        Const crefFull As String = "<see(also)? cref=""[^""]+?"">.+?</see(also)?>"
+        ''' <summary>
+        ''' the url protocol prefix of a cross reference link that is generated from
+        ''' the ``&lt;see cref="..." /&gt;`` / ``&lt;seealso cref="..." /&gt;`` xml
+        ''' document tags. the api document generator will resolve this prefix into
+        ''' the real target page url, and it will be rendered as a plain text when
+        ''' the target could not be resolved.
+        ''' </summary>
+        Public Const CrefUrlPrefix$ = "cref:"
 
-        Const paramRef As String = "<(type)?paramref name=""[^""]+""/>"
-        Const paramRef2 As String = "<(type)?paramref name=""[^""]+"">\s*</(type)?paramref>"
-        Const paramRefFull As String = "<(type)?paramref name=""[^""]+"">.+?</(type)?paramref>"
+        Private ReadOnly RegexICS As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Singleline
+        Private ReadOnly RegexICSml As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Singleline Or RegexOptions.Multiline
 
-        Const code As String = "<code>.+?</code>"
-        Const example As String = "<example>.*?</example>"
+        Private ReadOnly inheritdocTag As New Regex("<inheritdoc\s*/>", RegexICS)
+        Private ReadOnly listTag As New Regex("<list(?<attr>[^>]*)>(?<body>.*?)</list>", RegexICS)
+        Private ReadOnly itemTag As New Regex("<item>(?<body>.*?)</item>", RegexICS)
+        Private ReadOnly termTag As New Regex("<term>(?<text>.*?)</term>", RegexICS)
+        Private ReadOnly descTag As New Regex("<description>(?<text>.*?)</description>", RegexICS)
+        Private ReadOnly codeTag As New Regex("<code>(?<text>.*?)</code>", RegexICS)
+        ''' <summary>
+        ''' the markdown fenced code block that is written in the xml comment text.
+        ''' the body is not allowed to cross a xml element boundary (a line which
+        ''' starts with ``&lt;``), so this replace could never break the xml
+        ''' structure of the comment document.
+        ''' </summary>
+        Private ReadOnly fenceTag As New Regex(
+            "^[ \t]*(?<open>`{3,}[^\r\n]*\r?\n)(?<body>(?:(?!\r?\n[ \t]*<)[\s\S])*?)(?<close>\r?\n[ \t]*`{3,}[ \t]*(?=\r?\n|$))",
+            RegexICSml)
+        Private ReadOnly cTag As New Regex("<c>(?<text>.*?)</c>", RegexICS)
+        Private ReadOnly seeCrefSelfTag As New Regex("<see(?:also)?\s+cref=""(?<cref>[^""]+)""[^>]*?/>", RegexICS)
+        Private ReadOnly seeCrefTextTag As New Regex("<see(?:also)?\s+cref=""(?<cref>[^""]+)""[^>]*?>(?<text>.*?)</see(?:also)?>", RegexICS)
+        Private ReadOnly seeLangwordTag As New Regex("<see\s+langword=""(?<word>[^""]+)""\s*/>", RegexICS)
+        Private ReadOnly paramRefSelfTag As New Regex("<(?:type)?paramref\s+name=""(?<name>[^""]+)""\s*/>", RegexICS)
+        Private ReadOnly paramRefTextTag As New Regex("<(?:type)?paramref\s+name=""(?<name>[^""]+)""[^>]*?>(?<text>.*?)</(?:type)?paramref>", RegexICS)
+        Private ReadOnly brTag As New Regex("<br\s*/?>", RegexICS)
+        Private ReadOnly anyTag As New Regex("<[^>]+>", RegexICS)
 
+        ''' <summary>
+        ''' Normalize the raw .net xml comment document into markdown text:
+        ''' 1. ``&lt;code&gt;`` / ``&lt;c&gt;`` into code block / inline code;
+        ''' 2. ``&lt;see cref="..." /&gt;`` / ``&lt;seealso /&gt;`` into a markdown
+        '''    link that keeps the original cref identity (see cref link prefix);
+        ''' 3. ``&lt;paramref /&gt;`` / ``&lt;typeparamref /&gt;`` into bold text;
+        ''' 4. ``&lt;list&gt;`` / ``&lt;para&gt;`` / ``&lt;br/&gt;`` into the
+        '''    markdown equivalent.
+        ''' </summary>
+        ''' <param name="doc"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function TrimAssemblyDoc(doc As String) As String
-            Dim sb As New StringBuilder(doc)
-            Dim ms As String() = Regex.Matches(doc, cref, RegexICSng).ToArray
+            If String.IsNullOrEmpty(doc) Then
+                Return doc
+            End If
 
-            For Each m As String In ms
-                Call sb.Replace(m, "@" & m.__trans)
-            Next
+            Dim s$ = doc
 
-            ms = Regex.Matches(sb.ToString, cref2, RegexICSng).ToArray
+            ' block level tags should be processed before the inline tags
+            s = inheritdocTag.Replace(s, "")
+            s = listTag.Replace(s, AddressOf transList)
+            s = fenceTag.Replace(s, AddressOf transFence)
+            s = codeTag.Replace(s, AddressOf transCodeBlock)
+            s = cTag.Replace(s, AddressOf transInlineCode)
 
-            For Each m As String In ms
-                Call sb.Replace(m, "@" & m.__trans)
-            Next
+            ' cross references: the self closing tag must be handled before the
+            ' tag with the inner text, otherwise the text form regex may swallow
+            ' a large region when the self closing tag is not closed properly.
+            s = seeCrefSelfTag.Replace(s, AddressOf transCref)
+            s = seeCrefTextTag.Replace(s, AddressOf transCrefText)
+            s = seeLangwordTag.Replace(s, AddressOf transLangword)
 
-            ms = Regex.Matches(sb.ToString, crefFull, RegexICSng).ToArray
+            s = paramRefSelfTag.Replace(s, AddressOf transParamRef)
+            s = paramRefTextTag.Replace(s, AddressOf transParamRefText)
 
-            For Each m As String In ms
-                Call sb.Replace(m, "@" & m.__trans)
-            Next
+            s = s.Replace("<para>", vbLf & vbLf).Replace("</para>", vbLf & vbLf)
+            s = brTag.Replace(s, vbLf)
 
-            doc = sb.__boldParam
-
-            Return doc
+            Return s
         End Function
 
-        <Extension> Private Function __boldParam(sb As StringBuilder) As String
-            Dim ms As String() = Regex.Matches(sb.ToString, paramRef, RegexICSng).ToArray
-
-            For Each m As String In ms
-                Dim bold As String = m.__trans
-                bold = Mid(bold, 2, bold.Length - 2)
-                bold = $"**{bold}**"
-                Call sb.Replace(m, bold)
-            Next
-
-            ms = Regex.Matches(sb.ToString, paramRef2, RegexICSng).ToArray
-
-            For Each m As String In ms
-                Dim bold As String = m.__trans
-                bold = Mid(bold, 2, bold.Length - 2)
-                bold = $"**{bold}**"
-                Call sb.Replace(m, bold)
-            Next
-
-            ms = Regex.Matches(sb.ToString, paramRefFull, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
-
-            For Each m As String In ms
-                Dim bold As String = m.__trans
-                Dim name As String = Regex.Match(bold, "``[^`]*``").Value
-                ' bold = bold.Replace(name, (Mid(name, 2, name.Length - 2)))
-                ' bold = $"**{bold}**"
-                Call sb.Replace(m, bold)
-            Next
-
-            ms = Regex.Matches(sb.ToString, code, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
-
-            For Each m As String In ms
-                Call sb.Replace(m, "'" & m.GetValue & "'")
-            Next
-
-            'ms = Regex.Matches(sb.ToString, example, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
-
-            'For Each m As String In ms
-            '    Call sb.Replace(m, "==" & m.GetValue & "==")
-            'Next
-
-            Return sb.ToString
+        Private Function transCodeBlock(m As Match) As String
+            Dim code = codeSafe(m.Groups("text").Value)
+            code = code.Trim(ControlChars.Cr, ControlChars.Lf)
+            Return vbLf & "```" & vbLf & code & vbLf & "```" & vbLf
         End Function
 
         ''' <summary>
-        ''' 这里会将双引号替换成为markdown里面的inline code形式
+        ''' the markdown fenced code block that is written by the author is a literal
+        ''' text too, so its inner xml document tags are also converted into the
+        ''' plain text.
+        ''' </summary>
+        ''' <param name="m"></param>
+        ''' <returns></returns>
+        Private Function transFence(m As Match) As String
+            Return m.Groups("open").Value & codeSafe(m.Groups("body").Value) & m.Groups("close").Value
+        End Function
+
+        ''' <summary>
+        ''' the content of a code block is a literal text which is not parsed as
+        ''' markdown, so the inner xml document tags must be converted into the
+        ''' plain text instead of the markdown formatting.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        Private Function codeSafe(s As String) As String
+            s = seeCrefTextTag.Replace(s, Function(m) CrefDisplayName(m.Groups("cref").Value))
+            s = seeCrefSelfTag.Replace(s, Function(m) CrefDisplayName(m.Groups("cref").Value))
+            s = seeLangwordTag.Replace(s, Function(m) m.Groups("word").Value)
+            s = paramRefSelfTag.Replace(s, Function(m) m.Groups("name").Value)
+            s = paramRefTextTag.Replace(s, Function(m) m.Groups("text").Value)
+            s = cTag.Replace(s, Function(m) m.Groups("text").Value)
+
+            Return s
+        End Function
+
+        Private Function transInlineCode(m As Match) As String
+            Dim text = m.Groups("text").Value.Trim()
+            If text.Contains("`") Then
+                Return "`` " & text & " ``"
+            Else
+                Return "`" & text & "`"
+            End If
+        End Function
+
+        Private Function transList(m As Match) As String
+            Dim ordered As Boolean = m.Groups("attr").Value.IndexOf("number", StringComparison.OrdinalIgnoreCase) >= 0
+            Dim sb As New StringBuilder
+            Dim i As Integer = 0
+
+            For Each item As Match In itemTag.Matches(m.Groups("body").Value)
+                i += 1
+                Dim body = item.Groups("body").Value
+                Dim term = termTag.Match(body)
+                Dim desc = descTag.Match(body)
+                Dim text$
+
+                If desc.Success Then
+                    text = desc.Groups("text").Value.Trim()
+
+                    If term.Success Then
+                        text = "**" & term.Groups("text").Value.Trim() & "** — " & text
+                    End If
+                Else
+                    text = anyTag.Replace(body, "").Trim()
+                End If
+
+                sb.Append(If(ordered, $"{i}. ", "- ")).Append(text).Append(vbLf)
+            Next
+
+            Return vbLf & sb.ToString & vbLf
+        End Function
+
+        Private Function transCref(m As Match) As String
+            Return MakeCrefLink(m.Groups("cref").Value, Nothing)
+        End Function
+
+        Private Function transCrefText(m As Match) As String
+            Return MakeCrefLink(m.Groups("cref").Value, m.Groups("text").Value)
+        End Function
+
+        Private Function transLangword(m As Match) As String
+            Return "`" & m.Groups("word").Value & "`"
+        End Function
+
+        Private Function transParamRef(m As Match) As String
+            Return "**" & m.Groups("name").Value & "**"
+        End Function
+
+        Private Function transParamRefText(m As Match) As String
+            Dim text = m.Groups("text").Value.Trim()
+
+            If String.IsNullOrEmpty(text) Then
+                Return "**" & m.Groups("name").Value & "**"
+            Else
+                Return "**" & text & "**"
+            End If
+        End Function
+
+        Private Function MakeCrefLink(cref As String, alt As String) As String
+            Dim display$
+
+            If String.IsNullOrWhiteSpace(alt) Then
+                display = CrefDisplayName(cref)
+            Else
+                display = alt.Trim()
+            End If
+
+            ' escape the square bracket characters, otherwise the generated
+            ' markdown link could be broken by a display text that contains them.
+            display = display.Replace("[", "\[").Replace("]", "\]")
+
+            ' the generic arity suffix of a clr type name is a backtick character,
+            ' it must be encoded, otherwise it will break the match of the markdown
+            ' inline code span in the comment text.
+            Dim id$ = cref.Trim().Replace("%", "%25").Replace("`", "%60")
+
+            Return $"[{display}]({CrefUrlPrefix}{id})"
+        End Function
+
+        ''' <summary>
+        ''' Build a human readable display text for a xml document cref identity,
+        ''' for example ``T:System.Console`` =&gt; ``Console``, and
+        ''' ``M:Ns.ProjectSpace.Import(System.String)`` =&gt;
+        ''' ``ProjectSpace.Import()``.
         ''' </summary>
         ''' <param name="cref"></param>
         ''' <returns></returns>
-        <Extension> Private Function __trans(cref As String) As String
-            Dim m As String = Regex.Match(cref, "="".+?""").Value
-            Dim alt As String = cref.GetValue
-
-            m = Mid(m, 2)
-
-            If String.IsNullOrEmpty(alt) Then
-            Else
-                m &= $"[{alt}]"
+        Public Function CrefDisplayName(cref As String) As String
+            If String.IsNullOrWhiteSpace(cref) Then
+                Return ""
             End If
 
-            m = m.Replace("""", "``")
+            Dim id$ = cref.Trim()
+            Dim kind As Char = " "c
 
-            Return m
+            If id.Length > 2 AndAlso id(1) = ":"c Then
+                kind = id(0)
+                id = id.Substring(2)
+            End If
+
+            Dim p = id.IndexOf("("c)
+            If p > 0 Then
+                id = id.Substring(0, p)
+            End If
+
+            Dim parts = id.Split("."c)
+            Dim shortName = StripArity(parts(parts.Length - 1))
+
+            If kind = "T"c OrElse kind = "N"c OrElse kind = "!"c OrElse kind = " "c Then
+                Return shortName
+            End If
+
+            Dim owner$ = If(parts.Length >= 2, StripArity(parts(parts.Length - 2)), "")
+            Dim text$ = If(owner.Length > 0, owner & "." & shortName, shortName)
+
+            If kind = "M"c Then
+                text &= "()"
+            End If
+
+            Return text
+        End Function
+
+        ''' <summary>
+        ''' remove the generic arity suffix of a clr type name, for example
+        ''' ``List`1`` =&gt; ``List``.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Private Function StripArity(name As String) As String
+            Dim p = name.IndexOf("`"c)
+            If p > 0 Then
+                name = name.Substring(0, p)
+            End If
+            If name.Contains("#") Then
+                name = name.Replace("#", ".")
+            End If
+            Return name
         End Function
     End Module
 End Namespace

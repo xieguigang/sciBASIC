@@ -9,7 +9,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop;nuget_release</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>2.33.9742.7537</AssemblyVersion>
+	  <AssemblyVersion>2.33.9753.4776</AssemblyVersion>
 	  <Deterministic>false</Deterministic>
 	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -22,7 +22,7 @@
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <MyType>WindowsForms</MyType>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
-    <Version>1.0.9742.7537</Version>
+    <Version>1.0.9753.4776</Version>
     <Title>Interactive WinForms Network Graph Viewer Control</Title>
     <Description>A Windows Forms canvas that animates force-directed layouts, supports 2D and 3D rendering, mouse hit-testing, node tooltips and viewport panning, and can record the animation to AVI or SVG for sciBASIC# desktop apps.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyTitle>

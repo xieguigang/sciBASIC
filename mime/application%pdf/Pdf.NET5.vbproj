@@ -8,8 +8,8 @@
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;gcmodeller_desktop;nuget_release</Configurations>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <Version>1.1.9742.7537</Version>
-    <FileVersion>1.1.9742.7537</FileVersion>
+    <Version>1.1.9753.4776</Version>
+    <FileVersion>1.1.9753.4776</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -18,7 +18,7 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>PDF Document Reader, Text Extractor and Writer Library</Title>
     <Description>Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text via ToUnicode CMaps, while a streaming generator lays out text, tables and images.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.pdf</AssemblyTitle>

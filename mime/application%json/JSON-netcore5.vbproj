@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>JSON and BSON Parser, Serializer and JavaScript Object Model</Title>
     <Description>A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, plus BSON binary encoding and object serialization.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.json</AssemblyTitle>

@@ -14,8 +14,8 @@
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Statistical Chart Extensions: ROC, QQ, Heatmap and PCA Plots</Title>
     <Description>Adds statistical graphics to the sciBASIC# chart engine: ROC and QQ plots, forest and Z-score plots, correlation heatmaps and triangles, density plots, time trends, PCA scree plots and regression plots.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.ChartPlots.Statistics</AssemblyTitle>

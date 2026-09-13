@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.MachineLearning.Data.Extensions</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9742.7537</Version>
+		<Version>5.0.9753.4776</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -19,7 +19,7 @@
 		<DocumentationFile />
 		<PublishDocumentationFile>True</PublishDocumentationFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
 		<Title>Q-Learning and Labelled Dataset Serialization Extensions</Title>
 		<Description>Helpers for sciBASIC# machine learning data: export a trained Q-table with state features to netCDF, record Q-value curves per iteration to CSV, and save or load labelled clustering matrices in a compact binary format.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Data.Extensions</AssemblyTitle>

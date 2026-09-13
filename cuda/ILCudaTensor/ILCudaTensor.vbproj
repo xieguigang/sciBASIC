@@ -6,11 +6,14 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyName>Microsoft.VisualBasic.Computing.ILCuda.GPUTensor</AssemblyName>
-    <Platforms>AnyCPU;x64</Platforms>
+    
     <!-- ILCuda 仅支持 x64，因此这里固定以 x64 目标编译（AnyCPU 平台也产出 x64 程序集） -->
     <PlatformTarget>x64</PlatformTarget>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <OutputPath>../../.nuget</OutputPath>
+   
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

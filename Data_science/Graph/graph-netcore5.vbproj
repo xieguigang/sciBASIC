@@ -22,8 +22,8 @@
     <PackageTags>scibasic;graph-theory;graph-algorithm;shortest-path;community-detection</PackageTags>
     <IncludeSymbols>True</IncludeSymbols>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphTheory</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>

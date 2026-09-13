@@ -14,8 +14,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Pure Managed HDF5 Scientific Data File Reader</Title>
     <Description>Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes, and contiguous, chunked or compact datasets to sciBASIC# code.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO.HDF5</AssemblyTitle>

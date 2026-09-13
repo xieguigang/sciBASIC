@@ -14,8 +14,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Graph Layout Algorithms For Network Visualization</Title>
     <Description>Supplies force-directed, spring-embedder, constrained Cola, orthogonal, radial, circular, HOLA and edge-bundling layouts behind a common IPlanner interface. Computes node coordinates before rendering sciBASIC# networks.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Layouts</AssemblyTitle>

@@ -169,63 +169,57 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Dim memberFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
             Dim firstParen As Integer = memberFullName.IndexOf("(")
 
+            ' the parameter list is not a part of the member short name
             If firstParen > 0 Then
                 memberFullName = memberFullName.Substring(0, firstParen)
             End If
 
+            ' Ns.Type.Member  ->  member = last segment, typeFullName = the rest
             Dim lastPeriod As Integer = memberFullName.LastIndexOf(".")
 
-            If lastPeriod > 0 Then
-                Dim typeFullName As String = memberFullName.Substring(0, lastPeriod)
-
-                lastPeriod = typeFullName.LastIndexOf(".")
-
-                If lastPeriod > 0 Then
-                    Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
-
-                    lastPeriod = typeFullName.LastIndexOf(".")
-
-                    If lastPeriod > 0 Then
-                        Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
-
-                        lastPeriod = memberFullName.LastIndexOf(".")
-
-                        If lastPeriod > 0 Then
-                            Dim memberShortName As String = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
-                            Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
-                            Dim pt As ProjectType = pn.EnsureType(typeShortName)
-
-                            If typeChar = "M"c Then
-                                pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
-                            ElseIf typeChar = "P"c Then
-                                pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
-                            ElseIf typeChar = "F"c Then
-                                pt.EnsureField(memberShortName).LoadFromNode(memberNode)
-                            ElseIf typeChar = "E"c Then
-                                pt.EnsureEvent(memberShortName).LoadFromNode(memberNode)
-                            Else
-                                Throw New NotImplementedException
-                            End If
-                        End If
-                    End If
-                End If
+            If lastPeriod <= 0 Then
+                Return
             End If
+
+            Dim typeFullName As String = memberFullName.Substring(0, lastPeriod)
+            Dim memberShortName As String = memberFullName.Substring(lastPeriod + 1)
+
+            ' typeFullName = Ns.Type  ->  type = last segment, namespace = the rest
+            Dim typeTokens = typeFullName.Split("."c)
+            Dim typeShortName As String = typeTokens.Last
+            Dim namespaceFullName As String = typeTokens.Take(typeTokens.Length - 1).JoinBy(".")
+
+            Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
+            Dim pt As ProjectType = pn.EnsureType(typeShortName)
+
+            Select Case typeChar
+                Case "M"c
+                    pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
+                Case "P"c
+                    pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
+                Case "F"c
+                    pt.EnsureField(memberShortName).LoadFromNode(memberNode)
+                Case "E"c
+                    pt.EnsureEvent(memberShortName).LoadFromNode(memberNode)
+                Case Else
+                    Throw New NotImplementedException
+            End Select
         End Sub
 
         Private Sub processType(memberNode As XmlNode, memberDescription$)
             Dim typeFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
-            Dim lastPeriod As Integer = typeFullName.LastIndexOf(".")
+            Dim tokens = typeFullName.Split("."c)
 
-            lastPeriod = typeFullName.LastIndexOf(".")
-
-            If lastPeriod > 0 Then
-                Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
-                Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
-
-                Call EnsureNamespace(namespaceFullName) _
-                    .EnsureType(typeShortName) _
-                    .LoadFromNode(memberNode)
+            If tokens.Length < 1 Then
+                Return
             End If
+
+            Dim typeShortName As String = tokens.Last
+            Dim namespaceFullName As String = tokens.Take(tokens.Length - 1).JoinBy(".")
+
+            Call EnsureNamespace(namespaceFullName) _
+                .EnsureType(typeShortName) _
+                .LoadFromNode(memberNode)
         End Sub
     End Class
 End Namespace

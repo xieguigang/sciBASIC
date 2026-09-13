@@ -8,10 +8,10 @@
     <RootNamespace>Microsoft.VisualBasic.DataMining.PaCMAP</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.DataMining.PaCMAP</AssemblyName>
     <Description>PaCMAP dimensionality reduction for sciBASIC#: preserves local and global structure by optimising neighbour, mid-near and further point pairs with a three-phase loss and an Adagrad optimiser over tensor data.</Description>
-    <Version>1.0.9742.7537</Version>
+    <Version>1.0.9753.4776</Version>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <Platforms>AnyCPU;x64</Platforms>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release;Debug</Configurations>
     <Title>PaCMAP Pairwise Controlled Manifold Approximation Embedding</Title>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.PaCMAP</AssemblyTitle>

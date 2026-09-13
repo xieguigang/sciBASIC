@@ -270,8 +270,6 @@ Namespace ComponentModel.Collection
             Return file.SaveTo(saveTo, encoding.CodePage)
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
-
         ''' <summary>
         ''' tuple set to dictionary table
         ''' </summary>
@@ -284,8 +282,6 @@ Namespace ComponentModel.Collection
         Public Function AsTable(Of K, V)(tuples As IEnumerable(Of (K, V))) As Dictionary(Of K, V)
             Return tuples.ToDictionary(Function(t) t.Item1, Function(t) t.Item2)
         End Function
-
-#End If
 
         ''' <summary>
         ''' Item selector by directly text equals match.
@@ -1034,6 +1030,22 @@ Namespace ComponentModel.Collection
         <Extension>
         Public Function [Select](Of V, T)(source As IEnumerable(Of KeyValuePair(Of String, V)), project As Func(Of String, V, T)) As IEnumerable(Of T)
             Return source.Select(Function(value) project(value.Key, value.Value))
+        End Function
+
+        ''' <summary>
+        ''' get length of the value array
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="dict"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Size(Of K, V)(dict As KeyValuePair(Of K, V())) As Integer
+            If dict.Value Is Nothing Then
+                Return 0
+            Else
+                Return dict.Value.Length
+            End If
         End Function
     End Module
 

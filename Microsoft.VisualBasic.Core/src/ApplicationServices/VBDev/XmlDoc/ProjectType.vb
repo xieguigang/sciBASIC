@@ -101,6 +101,13 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Property Keywords As String
 
         ''' <summary>
+        ''' the xml document text for the generic type parameters of the current
+        ''' generic type or generic method
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property TypeParams As typeparam()
+
+        ''' <summary>
         ''' a unify method for read content data from xml
         ''' </summary>
         ''' <param name="xn"></param>
@@ -112,7 +119,37 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Summary = readFieldText(xn, "summary")
             Remarks = readFieldText(xn, "remarks")
             Keywords = readFieldText(xn, "keywords")
+            TypeParams = readTypeParams(xn)
         End Sub
+
+        ''' <summary>
+        ''' read the ``typeparam`` nodes of a generic type or a generic method
+        ''' </summary>
+        ''' <param name="xn"></param>
+        ''' <returns></returns>
+        Protected Shared Function readTypeParams(xn As XmlNode) As typeparam()
+            Dim ns = xn.SelectNodes("typeparam")
+
+            If ns Is Nothing Then
+                Return Nothing
+            End If
+
+            Dim list As New List(Of typeparam)
+
+            For Each node As XmlNode In ns
+                Dim name$ = node.Attributes _
+                    .GetNamedItem("name") _
+                    .InnerText _
+                    .Trim(ASCII.CR, ASCII.LF, " ")
+
+                list.Add(New typeparam With {
+                    .name = name,
+                    .text = node.InnerText
+                })
+            Next
+
+            Return list.ToArray
+        End Function
 
         Protected Shared Function readFieldText(xn As XmlNode, nodeKey As String) As String
             Dim textNode As XmlNode = xn.SelectSingleNode(nodeKey)
@@ -161,6 +198,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Sub New()
             properties = New Dictionary(Of String, List(Of ProjectMember))
             methods = New Dictionary(Of String, List(Of ProjectMember))
+            fields = New Dictionary(Of String, ProjectMember)
+            events = New Dictionary(Of String, ProjectMember)
         End Sub
 
         Public Sub New(projectNamespace As ProjectNamespace)
@@ -185,10 +224,22 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Friend Sub New(t1 As ProjectType, t2 As ProjectType)
             projectNamespace = t1.projectNamespace
+            Call t1.ensureTables()
+            Call t2.ensureTables()
             fields = (t1.fields.Values.AsList + t2.fields.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Me))
             events = (t1.events.Values.AsList + t2.events.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Me))
             properties = (t1.properties.Values.AsList + t2.properties.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
             methods = (t1.methods.Values.AsList + t2.methods.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
+        End Sub
+
+        ''' <summary>
+        ''' 保证四个成员表都已经初始化，避免默认构造函数或者合并路径下出现空引用异常
+        ''' </summary>
+        Private Sub ensureTables()
+            If fields Is Nothing Then fields = New Dictionary(Of String, ProjectMember)
+            If events Is Nothing Then events = New Dictionary(Of String, ProjectMember)
+            If properties Is Nothing Then properties = New Dictionary(Of String, List(Of ProjectMember))
+            If methods Is Nothing Then methods = New Dictionary(Of String, List(Of ProjectMember))
         End Sub
 
         Public Overrides Function ToString() As String
@@ -230,6 +281,50 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return getInternal(properties, propertyName.ToLower)
         End Function
 
+        ''' <summary>
+        ''' all of the methods that is declared in this type, the overloads are flattened
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllMethods As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return methods.Values.IteratesALL
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' all of the properties that is declared in this type, the overloads are flattened
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllProperties As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return properties.Values.IteratesALL
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' all of the fields that is declared in this type
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllFields As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return fields.Values
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' all of the events that is declared in this type
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllEvents As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return events.Values
+            End Get
+        End Property
+
         Friend Function EnsureProperty(propertyName As String) As ProjectMember
             Dim pmlist As List(Of ProjectMember) = Me.GetProperties(propertyName)
             Dim pm As New ProjectMember(Me) With {
@@ -242,9 +337,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Public Function GetField(fieldName As String) As ProjectMember
-            If Me.fields Is Nothing Then
-                Me.fields = New Dictionary(Of String, ProjectMember)
-            End If
+            Call Me.ensureTables()
 
             If Me.fields.ContainsKey(fieldName.ToLower()) Then
                 Return Me.fields(fieldName.ToLower())
@@ -268,6 +361,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Public Function GetEvent(eventName As String) As ProjectMember
+            Call Me.ensureTables()
+
             If Me.events.ContainsKey(eventName.ToLower()) Then
                 Return Me.events(eventName.ToLower())
             End If
@@ -276,14 +371,14 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Friend Function EnsureEvent(eventName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetField(eventName)
+            Dim pm As ProjectMember = Me.GetEvent(eventName)
 
             If pm Is Nothing Then
                 pm = New ProjectMember(Me) With {
                     .Name = eventName
                 }
 
-                Me.fields.Add(eventName.ToLower(), pm)
+                Me.events.Add(eventName.ToLower(), pm)
             End If
 
             Return pm
