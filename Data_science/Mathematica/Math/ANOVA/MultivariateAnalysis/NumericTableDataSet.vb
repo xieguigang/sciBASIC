@@ -30,7 +30,6 @@
 Imports System.Collections.ObjectModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data
 
 ''' <summary>
@@ -80,7 +79,7 @@ Public Module NumericTableDataSet
         Dim m As Integer = table.nfeatures
 
         If n = 0 OrElse m = 0 Then
-            Throw New InvalidConstraintException(
+            Throw New InvalidOperationException(
                 $"the given table contains no feature data matrix({n} samples x {m} features) for run the multivariate analysis!"
             )
         End If

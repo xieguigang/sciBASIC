@@ -66,6 +66,7 @@ Public Module PCAData
     ''' <param name="mvar"></param>
     ''' <returns>a dataframe object that contains data field column: ``PC1, PC2, PCx``</returns>
     <Extension>
+    <Obsolete("use MultivariateAnalysisResult.ScoreTable instead", False)>
     Public Function GetPCAScore(mvar As MultivariateAnalysisResult) As DataFrame
         Dim score As New DataFrame
         Dim filesize = mvar.StatisticsObject.YIndexes.Count
@@ -96,6 +97,7 @@ Public Module PCAData
     End Function
 
     <Extension>
+    <Obsolete("use MultivariateAnalysisResult.LoadingTable instead", False)>
     Public Function GetPCALoading(mvar As MultivariateAnalysisResult) As DataFrame
         Dim loading As New DataFrame
         Dim metsize = mvar.StatisticsObject.XLabels.Count

@@ -81,6 +81,7 @@ Public Module PLSData
     End Function
 
     <Extension>
+    <Obsolete("use MultivariateAnalysisResult.ScoreTable instead", False)>
     Public Function GetPLSScore(mvar As MultivariateAnalysisResult, opls As Boolean) As DataFrame
         Dim [class] As String() = mvar.StatisticsObject.YLabels.ToArray
         Dim smaple_id As String() = mvar.StatisticsObject.YLabels2.ToArray
@@ -123,6 +124,7 @@ Public Module PLSData
     End Function
 
     <Extension>
+    <Obsolete("use MultivariateAnalysisResult.LoadingTable instead", False)>
     Public Function GetPLSLoading(mvar As MultivariateAnalysisResult, opls As Boolean) As DataFrame
         Dim features As String() = mvar.StatisticsObject.XLabels.ToArray
         Dim Ploads As New List(Of Double())

@@ -75,6 +75,7 @@ Public Module DataSetHelper
     ''' </param>
     ''' <returns></returns>
     <Extension>
+    <Obsolete("use NumericTable.AsStatisticsObject instead", False)>
     Public Function CommonDataSet(df As DataFrame, Optional labels As Array = Nothing) As StatisticsObject
         Return df.NumericMatrix().CommonDataSet(colnames:=df.featureNames, If(labels, df.rownames))
     End Function
@@ -89,6 +90,7 @@ Public Module DataSetHelper
     ''' </param>
     ''' <returns></returns>
     <Extension>
+    <Obsolete("use NumericTable.AsStatisticsObject instead", False)>
     Public Function CommonDataSet(Of Row As {INamedValue, IVector})(mat As IEnumerable(Of Row), colnames As String(), Optional labels As Array = Nothing) As StatisticsObject
         Return mat _
             .Select(Function(r) New NamedCollection(Of Double)(r.Key, r.Data)) _
@@ -96,6 +98,7 @@ Public Module DataSetHelper
     End Function
 
     <Extension>
+    <Obsolete("use NumericTable.AsStatisticsObject instead", False)>
     Public Function CommonDataSet(Of Row As {INamedValue, DynamicPropertyBase(Of Double)})(mat As IEnumerable(Of Row), Optional labels As Array = Nothing) As StatisticsObject
         Dim matAll As Row() = mat.ToArray
         Dim colnames As String() = matAll.PropertyNames
