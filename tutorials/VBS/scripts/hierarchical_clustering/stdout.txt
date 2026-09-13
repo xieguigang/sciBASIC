@@ -6,7 +6,7 @@ hcut(threshold := 3.0) -> 2 clusters
   Iris-setosa: 50, 0, 0
   Iris-versicolor: 0, 0, 50
   Iris-virginica: 0, 12, 38
-Calculate component 1... cost 3ms and run 17 loop [DONE]
+Calculate component 1... cost 4ms and run 17 loop [DONE]
 Calculate component 2... cost 0ms and run 10 loop [DONE]
 done: bezdekIris-hclust.png
 done: bezdekIris-hclust.csv
