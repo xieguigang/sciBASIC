@@ -69,8 +69,9 @@
 
 #End Region
 
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace CNN.layers
 
@@ -136,126 +137,93 @@ Namespace CNN.layers
             def.depth = out_depth
         End Sub
 
+        ''' <summary>
+        ''' 最近一次前向传播时按后端布局打包好的权值矩阵, 形状 (out_depth, num_inputs)。
+        ''' </summary>
+        ''' <remarks>
+        ''' 本层的权值原本是按"每个输出神经元一个 DataBlock"分开存放的, 与后端 <c>MatMul</c> 要求的
+        ''' 矩阵形状不匹配; 这里在每次前向时按行拼成一个矩阵, 反向传播也需要它(的转置),
+        ''' 所以一并缓存下来。因为权值在训练过程中一直被就地更新, 每次前向都重新打包, 不存在过期问题。
+        ''' </remarks>
+        <IgnoreDataMember>
+        Private weightsPacked As Tensor
+
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(1, 1, out_depth, 0.0) With {.trace = Me.ToString}
 
             in_act = db
             out_act = lA
 
-            Call New ForwardTask(Me, lA, db).Run()
+            Dim packed As Tensor = PackWeights()
+            Dim x2 As Tensor = Tensor.Wrap(db.w, num_inputs, 1)
 
+            ' y = W·x : (out_depth x num_inputs) * (num_inputs x 1) -> (out_depth x 1)
+            Dim y = Tensor.computeKernel.MatMul(packed, x2)
+            ' 偏置同样当作 (out_depth x 1) 的列向量逐元素相加
+            Dim withBias = Tensor.computeKernel.Add(y, Tensor.Wrap(biases.w, out_depth, 1))
+
+            Call Array.Copy(withBias.Data, lA.w, lA.w.Length)
+
+            weightsPacked = packed
             Return out_act
+        End Function
+
+        ''' <summary>
+        ''' 把各个输出神经元的权值按行拼成一个 (out_depth, num_inputs) 的矩阵。
+        ''' </summary>
+        ''' <remarks>
+        ''' 每个 <see cref="filters"/>(i) 内部是连续的 num_inputs 个权值, 目标矩阵的每一行也是连续的,
+        ''' 所以这里可以按行整块拷贝, 不需要逐元素重排。
+        ''' </remarks>
+        Private Function PackWeights() As Tensor
+            Dim dst As Tensor = Tensor.Zeros(New Integer() {out_depth, num_inputs})
+            Dim w = dst.Data
+            Dim rowSize = num_inputs
+
+            For i As Integer = 0 To out_depth - 1
+                Call Array.Copy(filters(i).w, 0, w, i * rowSize, rowSize)
+            Next
+
+            Return dst
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward
             Dim v As DataBlock = in_act.clearGradient()
 
-            ' 第一阶段: 权重与偏置的梯度。
-            ' 按输出下标 i 并行, 每个线程独占 filters(i) 与 biases 的第 i 个分量。
-            Call New BackwardParamTask(Me, v).Run()
+            If weightsPacked Is Nothing Then
+                ' 正常情况下 backward 总是紧跟在本层自己的 forward 之后; 这里只是兜底
+                weightsPacked = PackWeights()
+            End If
 
-            ' 第二阶段: 输入数据的梯度。
-            ' 原先的实现是在上面那个按 i 并行的同一个循环里对 v 的**全体**下标做
-            ' v.addGradient(d, ...), 所有线程写入的区域完全重叠, 与卷积层一样存在
-            ' 非原子读-改-写造成的丢失更新。这里改为按输入下标 d 并行,
-            ' 每个线程先把自己那段元素沿输出维度的贡献累加完毕再写入一次。
-            Call New BackwardInputTask(Me, v).Run()
+            Dim gradOut2 As Tensor = Tensor.Wrap(out_act.dw, out_depth, 1)
+            Dim x2 As Tensor = Tensor.Wrap(in_act.w, num_inputs, 1)
+
+            ' 1) 对权值的梯度: gradW = gradOut · xᵀ -> (out_depth x num_inputs)
+            Dim gradW = Tensor.computeKernel.MatMul(gradOut2, Tensor.computeKernel.Transpose(x2))
+            Dim gw = gradW.Data
+
+            ' 参数梯度是在一个 mini-batch 之内跨样本累加的(清零发生在 TrainerAlgorithm.adjustWeights),
+            ' 因此这里必须累加而不是赋值
+            For i As Integer = 0 To out_depth - 1
+                Dim dst = filters(i).dw
+                Dim ro = i * num_inputs
+
+                For j As Integer = 0 To num_inputs - 1
+                    dst(j) += gw(ro + j)
+                Next
+            Next
+
+            ' 2) 对偏置的梯度: 每个输出神经元的偏置梯度恰好就是它的上游梯度
+            For i As Integer = 0 To out_depth - 1
+                biases.dw(i) += out_act.dw(i)
+            Next
+
+            ' 3) 对输入的梯度: gradX = Wᵀ · gradOut -> (num_inputs x 1)
+            '    输入梯度是每个样本独立消费的(反向一开始就 clearGradient 清零), 因此直接赋值
+            Dim gradX = Tensor.computeKernel.MatMul(Tensor.computeKernel.Transpose(weightsPacked), gradOut2)
+
+            Call Array.Copy(gradX.Data, v.dw, v.dw.Length)
         End Sub
-
-        Private Class ForwardTask : Inherits VectorTask
-
-            Dim layer As FullyConnectedLayer
-            Dim lA As DataBlock
-            Dim db As DataBlock
-
-            Public Sub New(layer As FullyConnectedLayer, lA As DataBlock, db As DataBlock)
-                MyBase.New(layer.out_depth)
-                Me.lA = lA
-                Me.db = db
-                Me.layer = layer
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim Vw As Double() = db.Weights
-
-                For i As Integer = start To ends
-                    Dim a = 0.0
-                    Dim wi = layer.filters(i).Weights
-
-                    For d As Integer = 0 To layer.num_inputs - 1
-                        a += Vw(d) * wi(d) ' for efficiency use Vols directly for now
-                    Next
-
-                    a += layer.biases.getWeight(i)
-                    lA.setWeight(i, a)
-                Next
-            End Sub
-        End Class
-
-        ''' <summary>
-        ''' 反向传播第一阶段: 计算权重与偏置的梯度。
-        ''' </summary>
-        ''' <remarks>
-        ''' 按输出下标并行; 每个线程只写 <see cref="filters"/>(i) 以及 <see cref="biases"/>
-        ''' 之中下标为 i 的那个元素, 不存在跨线程的写入冲突。
-        ''' </remarks>
-        Private Class BackwardParamTask : Inherits VectorTask
-
-            Dim v As DataBlock
-            Dim layer As FullyConnectedLayer
-
-            Public Sub New(layer As FullyConnectedLayer, v As DataBlock)
-                MyBase.New(layer.out_depth)
-                Me.v = v
-                Me.layer = layer
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                ' compute gradient wrt weights
-                For i As Integer = start To ends
-                    Dim tfi = layer.filters(i)
-                    Dim chain_grad = layer.out_act.Gradients(i)
-
-                    For d As Integer = 0 To layer.num_inputs - 1
-                        Call tfi.addGradient(d, v.getWeight(d) * chain_grad) ' grad wrt params
-                    Next
-
-                    Call layer.biases.addGradient(i, chain_grad)
-                Next
-            End Sub
-        End Class
-
-        ''' <summary>
-        ''' 反向传播第二阶段: 计算输入数据的梯度。
-        ''' </summary>
-        ''' <remarks>
-        ''' 按输入下标并行, 每个线程只写自己那段输入梯度元素, 因此不存在数据竞争。
-        ''' </remarks>
-        Private Class BackwardInputTask : Inherits VectorTask
-
-            Dim v As DataBlock
-            Dim layer As FullyConnectedLayer
-
-            Public Sub New(layer As FullyConnectedLayer, v As DataBlock)
-                MyBase.New(layer.num_inputs)
-                Me.v = v
-                Me.layer = layer
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim grads As Double() = layer.out_act.Gradients
-
-                For d As Integer = start To ends
-                    Dim a = 0.0
-
-                    For i As Integer = 0 To layer.out_depth - 1
-                        a += layer.filters(i).getWeight(d) * grads(i)
-                    Next
-
-                    Call v.addGradient(d, a) ' grad wrt input data
-                Next
-            End Sub
-        End Class
 
         Public Overrides Function ToString() As String
             Return $"full_connected({out_depth})"

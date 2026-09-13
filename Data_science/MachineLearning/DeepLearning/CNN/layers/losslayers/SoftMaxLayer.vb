@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
@@ -101,32 +102,14 @@ Namespace CNN.losslayers
 
             in_act = db
 
-            ' compute max activation
-            Dim [as] = db.Weights
-            Dim amax = db.getWeight(0)
-            For i As Integer = 1 To out_depth - 1
-                If [as](i) > amax Then
-                    amax = [as](i)
-                End If
-            Next
+            ' softmax 由张量后端完成(其内部会先减去最大值以保证数值稳定)。
+            ' 本层的输入输出都是一个 (1, 1, out_depth) 的向量, 因此归约轴是最末轴。
+            Dim probs = Tensor.computeKernel.Softmax(db.Value, db.Value.Rank - 1)
 
-            ' compute exponentials (carefully to not blow up)
-            Dim es = New Double(out_depth - 1) {}
-            Dim esum = 0.0
+            Call Array.Copy(probs.Data, A.w, A.w.Length)
 
-            For i As Integer = 0 To out_depth - 1
-                Dim e = std.Exp([as](i) - amax)
-                esum += e
-                es(i) = e
-            Next
-
-            ' normalize and output to sum to one
-            For i As Integer = 0 To out_depth - 1
-                es(i) /= esum
-                A.setWeight(i, es(i))
-            Next
-
-            Me.es = es ' save these for backprop
+            ' A.w 在本层之内不会再被改写, 反向传播直接引用同一份存储即可, 无需额外拷贝
+            Me.es = A.w ' save these for backprop
             out_act = A
             Return out_act
         End Function
@@ -139,12 +122,13 @@ Namespace CNN.losslayers
         Public Overrides Function backward(y As Integer) As Double
             Dim x As DataBlock = in_act.clearGradient() ' zero out the gradient of input Vol
 
-            For i = 0 To out_depth - 1
-                Dim indicator = If(i = y, 1.0, 0.0)
-                Dim mul = -(indicator - es(i))
+            ' 梯度 = es - onehot(y), 走后端的逐元素减法
+            Dim indicator As Tensor = Tensor.Zeros(New Integer() {out_depth})
+            indicator.Item(y) = 1.0
 
-                x.setGradient(i, mul)
-            Next
+            Dim mul = Tensor.computeKernel.Subtract(Tensor.Wrap(es, out_depth), indicator)
+
+            Call x.setGradient(mul.Data)
 
             ' loss is the class negative log likelihood
             Return -std.Log(es(y))
@@ -153,8 +137,9 @@ Namespace CNN.losslayers
         Public Overrides Function backward(y() As Double) As Double()
             Dim x As DataBlock = in_act.clearGradient
             ' -(y-es) = es - y
-            Dim mul = SIMD.Subtract.f64_op_subtract_f64(es, y)
-            x.setGradient(mul)
+            Dim mul = Tensor.computeKernel.Subtract(Tensor.Wrap(es, out_depth), Tensor.Wrap(y, out_depth))
+
+            Call x.setGradient(mul.Data)
             Return New Vector(es).Log * -1
         End Function
 
