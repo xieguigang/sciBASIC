@@ -73,6 +73,7 @@ Imports System.Xml
 Imports System.Xml.Linq
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
+Imports Microsoft.VisualBasic.CommandLine
 
 ''' <summary>
 ''' sciBASIC# 框架 vbproj 批量升级工具
@@ -169,7 +170,7 @@ Module Program
         Console.WriteLine($"timestamp      : {timestamp:yyyy-MM-dd HH:mm:ss}")
         Console.WriteLine($"nuget version  : {If(String.IsNullOrWhiteSpace(opts.Version), "<auto> (major.minor + timestamp)", opts.Version)}")
         Console.WriteLine($"assembly ver   : <auto> (major.minor + timestamp)")
-        Console.WriteLine($"clean configs  : {If(opts.NoClean, "disabled", "enabled")}")
+        Console.WriteLine($"clean configs  : {If(Not opts.MakeClean, "disabled", "enabled")}")
         Console.WriteLine($"output path    : {If(opts.FixOutputPath, nugetDir, "disabled")}")
         Console.WriteLine($"mode           : {If(opts.DryRun, "dry-run (no write)", "write")}")
         Console.WriteLine(New String("-"c, 96))
@@ -220,7 +221,7 @@ Module Program
 
             result.Changes = VersionUpgrader.Apply(doc, ns, nuGetVersion, assemblyVersion, fileVersion, False)
 
-            If Not opts.NoClean Then
+            If opts.MakeClean Then
                 Dim cleaned = ConfigCleaner.Clean(doc, ns, ConfigCleaner.GetTargetFrameworkSet(model))
 
                 result.RemovedConditions = cleaned.Removed
@@ -467,62 +468,7 @@ Module Program
     ''' 解析命令行参数
     ''' </summary>
     Private Function ParseCommandLine(args As String()) As CliOptions
-        Dim opts As New CliOptions()
-
-        If args Is Nothing Then
-            Return opts
-        End If
-
-        Dim i As Integer = 0
-
-        While i < args.Length
-            Dim arg As String = args(i)
-            Dim value As String = Nothing
-
-            ' 同时支持 --key=value 与 --key value 两种写法
-            Dim eq As Integer = arg.IndexOf("="c)
-
-            If eq > 0 Then
-                value = arg.Substring(eq + 1)
-                arg = arg.Substring(0, eq)
-            End If
-
-            Select Case arg.ToLower()
-                Case "-h", "--help", "/?", "-?"
-                    opts.ShowHelp = True
-                    Return opts
-                Case "-n", "--dry-run"
-                    opts.DryRun = True
-                Case "--clean"
-                    opts.NoClean = False
-                Case "--fix-output-path"
-                    opts.FixOutputPath = True
-                Case "-v", "--version", "-r", "--root"
-                    If value Is Nothing Then
-                        i += 1
-
-                        If i >= args.Length Then
-                            opts.Error = $"参数 {arg} 缺少取值"
-                            Return opts
-                        End If
-
-                        value = args(i)
-                    End If
-
-                    If arg.ToLower() = "-v" OrElse arg.ToLower() = "--version" Then
-                        opts.Version = value
-                    Else
-                        opts.Root = value
-                    End If
-                Case Else
-                    opts.Error = $"无法识别的命令行参数: {args(i)}"
-                    Return opts
-            End Select
-
-            i += 1
-        End While
-
-        Return opts
+        Return CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of CliOptions)
     End Function
 
     Private Sub PrintUsage()
