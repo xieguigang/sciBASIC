@@ -75,6 +75,7 @@ Public Module DoCluster
     Public ReadOnly Property DefaultLinkageStrategy As [Default](Of LinkageStrategy) = New AverageLinkageStrategy()
 
     <Extension>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 距离矩阵表，先通过 distanceMatrix() 将特征表转换为距离矩阵，再调用 hca()/hcut() 进行层次聚类。", False)>
     Public Function RunVectorCluster(Of DataSet As {INamedValue, IVector})(objects As IEnumerable(Of DataSet),
                                                                            Optional algorithm As ClusteringAlgorithm = Nothing,
                                                                            Optional linkageStrategy As LinkageStrategy = Nothing) As Cluster
@@ -100,6 +101,7 @@ Public Module DoCluster
     ''' <param name="linkageStrategy">Default is <see cref="AverageLinkageStrategy"/></param>
     ''' <returns></returns>
     <Extension>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 距离矩阵表，先通过 distanceMatrix() 将特征表转换为距离矩阵，再调用 hca()/hcut() 进行层次聚类。", False)>
     Public Function RunCluster(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(objects As IEnumerable(Of DataSet),
                                Optional algorithm As ClusteringAlgorithm = Nothing,
                                Optional linkageStrategy As LinkageStrategy = Nothing) As Cluster

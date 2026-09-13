@@ -94,6 +94,15 @@ Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
     Public Property debug As Boolean = False
 
     ''' <summary>
+    ''' 是否静默运行？（默认 True，不向控制台输出 tqdm 进度条与调试信息）
+    ''' 
+    ''' 作为库在其它程序中调用层次聚类时应当保持静默；只有在命令行调试场景下
+    ''' 才将其设置为 False 以查看凝聚过程的迭代进度。
+    ''' </summary>
+    ''' <returns><c>True</c> 表示静默运行；否则输出进度信息。默认值为 <c>True</c>。</returns>
+    Public Property Silent As Boolean = True
+
+    ''' <summary>
     ''' Performs full hierarchical agglomerative clustering on the given distance matrix,
     ''' using the specified linkage strategy. Progress is reported via a console progress bar.
     ''' </summary>
@@ -113,15 +122,26 @@ Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
         Dim builder As New HierarchyBuilder(clusters, linkages)
         Dim i As i32 = 1
         Dim total As Integer = clusters.Count
-        Dim tqdm As ProgressBar = TqdmWrapper.Wrap(total)
+        Dim tqdm As ProgressBar = Nothing
+
+        If Not Silent Then
+            tqdm = TqdmWrapper.Wrap(total)
+        End If
+
         Do While Not builder.TreeComplete
             Call builder.Agglomerate(linkageStrategy)
-            Call tqdm.SetLabel($"[iteration_{++i}] {builder.Clusters.Count}...")
-            Call tqdm.Progress(total - builder.Clusters.Count, total)
+
+            If Not Silent Then
+                Call tqdm.SetLabel($"[iteration_{++i}] {builder.Clusters.Count}...")
+                Call tqdm.Progress(total - builder.Clusters.Count, total)
+            End If
         Loop
 
-        Call tqdm.Finish()
-        Call VBDebugger.EchoLine("")
+        If Not Silent Then
+            Call tqdm.Finish()
+            Call VBDebugger.EchoLine("")
+        End If
+
         Return builder.RootCluster
     End Function
 
