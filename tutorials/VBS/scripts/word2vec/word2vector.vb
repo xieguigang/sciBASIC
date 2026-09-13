@@ -17,7 +17,7 @@ Imports Microsoft.VisualBasic.DataMining.UMAP
 imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 
-dim textfile = "G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Rapunzel.txt"
+dim textfile = here("../../data/Rapunzel.txt")
 dim wv As Word2Vec = BuildWord2VecFactory() _
     .setVectorSize(30) _
     .setMethod(TrainMethod.CBow) _
@@ -103,7 +103,7 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.XLabel = "UMAP1"
     plt.YLabel = "UMAP2"
     plt.Plot(DataSerials(x, y, classes).tolist())
-    plt.SavePng("Z:/rapunzel-umap-groups.png", 300)
+    plt.SavePng(here("rapunzel-umap-groups.png"), 300)
 End Using
 
 ' ---------------------------------------------------------------------------
@@ -112,7 +112,7 @@ End Using
 '    导出布局同样遵循「行名 + 特征列 + label: 前缀标签列」的约定，
 '    可以再次通过 NumericTableIO.ReadCsv 无损加载回来
 ' ---------------------------------------------------------------------------
-call clusters.WriteCsv("Z:/rapunzel-umap-groups.csv")
+call clusters.WriteCsv(here("rapunzel-umap-groups.csv"))
 
-call console.WriteLine("done: Z:/rapunzel-umap-groups.png")
-call console.WriteLine("done: Z:/rapunzel-umap-groups.csv")
+call console.WriteLine("done: rapunzel-umap-groups.png")
+call console.WriteLine("done: rapunzel-umap-groups.csv")

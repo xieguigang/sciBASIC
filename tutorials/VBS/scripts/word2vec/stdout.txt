@@ -1,0 +1,22 @@
+read 461 word totally.
+alpha:0.025     Progress: 99.93021632937894%
+word vectors: 461 tokens x 30 dims
+Create NNDescent
+Set Iteration Parameters
+make 6 trees...
+[MakeNNDescent] Start sample rejection loop... [parallel: 1]
+████████████████████████████████████████| 100.0% [ 461 / 461 | 29ms < 0ms ]                                         | 1.1% [ 5 / 461 | 8ms < 236ms ]  
+
+Build candidates... [parallel: 1]
+Build candidates... [parallel: 1]
+Build candidates... [parallel: 1]
+Nearest Neighbor Descent: 51ms
+DeHeapSort... [parallel: 1]
+████████████████████████████████████████| 100.0% [ 461 / 461 | 4ms < 0ms ]                                          | 2.0% [ 9 / 461 | 2ms < 124ms ]  
+
+SmoothKNNDistance...
+ComputeMembershipStrengths... [parallel: 1]
+umap embedding: 461 samples x 9 dims
+kmeans cluster sizes: 49, 64, 45, 53, 50, 36, 51, 49, 64
+done: rapunzel-umap-groups.png
+done: rapunzel-umap-groups.csv

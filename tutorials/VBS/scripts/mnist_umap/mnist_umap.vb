@@ -18,10 +18,10 @@ imports microsoft.visualbasic.drawing
 ' MNIST 训练集一共有 60000 个样本，对全量样本做 UMAP 的计算量非常大，
 ' 因此这个教程脚本只取前面的 limit 个样本进行演示(把 limit 调大即可处理更多样本)
 dim limit = 5000
-
+dim repo_data = ?"--data"
 dim mnist as new MNIST(
-    "G:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-images-idx3-ubyte",
-    "G:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-labels-idx1-ubyte")
+    $"{repo_data}\train-images-idx3-ubyte",
+    $"{repo_data}\train-labels-idx1-ubyte")
 
 ' ---------------------------------------------------------------------------
 ' 1. 把 MNIST 的手写数字样本构建为统一的二维表对象(NumericTable)
@@ -86,13 +86,13 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.XLabel = "UMAP1"
     plt.YLabel = "UMAP2"
     plt.Plot(DataSerials(x := x, y := y, number).tolist())
-    plt.SavePng("Z:/mnist-umap.png", 300)
+    plt.SavePng(here("mnist-umap.png"), 300)
 End Using
 
 ' ---------------------------------------------------------------------------
 ' 4. 把降维结果表导出为 csv（dim_1, dim_2 特征列 + label:class 标签列）
 ' ---------------------------------------------------------------------------
-call manifold.WriteCsv("Z:/mnist-umap.csv")
+call manifold.WriteCsv(here("mnist-umap.csv"))
 
-call console.WriteLine("done: Z:/mnist-umap.png")
-call console.WriteLine("done: Z:/mnist-umap.csv")
+call console.WriteLine("done: mnist-umap.png")
+call console.WriteLine("done: mnist-umap.csv")

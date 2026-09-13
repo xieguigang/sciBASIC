@@ -113,6 +113,6 @@ Call NetworkVisualizer.DrawImage(g, "1400,1400",
                                  drawEdgeBends:=True,
                                  labelerIterations:=-1,
                                  minLinkWidth:=8) _
-    .Save("Z:/HOLA_complex_layout.png")
+    .Save(here("HOLA_complex_layout.png"))
 
 console.WriteLine("[HOLA] complex test done. see ./HOLA_complex_layout.png")

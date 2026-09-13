@@ -58,5 +58,5 @@ Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
     plt.ColorMap = HeatmapPlot.ColorMapType.Plasma
     plt.ShowValues = False
     plt.Plot()
-    plt.SavePng("Z:/tfidf-heatmap.png", 300)
+    plt.SavePng(here("tfidf-heatmap.png"), 300)
 End Using

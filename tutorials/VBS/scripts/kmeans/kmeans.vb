@@ -12,7 +12,7 @@ imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
 imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 
-dim file = "G:\GCModeller\src\R-sharp\REnv\data\bezdekIris.csv"
+dim file = here("../../data/bezdekIris.csv")
 dim k = 3
 
 ' ---------------------------------------------------------------------------
@@ -69,7 +69,7 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.XLabel = "PC1"
     plt.YLabel = "PC2"
     plt.Plot(DataSerials(x := pc1, y := pc2, class_id).tolist())
-    plt.SavePng("Z:/bezdekIris-pca-groups.png", 300)
+    plt.SavePng(here("bezdekIris-pca-groups.png"), 300)
 End Using
 
 ' ---------------------------------------------------------------------------
@@ -78,7 +78,7 @@ End Using
 '    导出之后的文件布局仍然遵循「行名 + 特征列 + label: 前缀标签列」的约定，
 '    因此可以再次通过 NumericTableIO.ReadCsv 无损地加载回来
 ' ---------------------------------------------------------------------------
-call result.WriteCsv("Z:/bezdekIris-kmeans.csv")
+call result.WriteCsv(here("bezdekIris-kmeans.csv"))
 
-call console.WriteLine("done: Z:/bezdekIris-pca-groups.png")
-call console.WriteLine("done: Z:/bezdekIris-kmeans.csv")
+call console.WriteLine("done: bezdekIris-pca-groups.png")
+call console.WriteLine("done: bezdekIris-kmeans.csv")

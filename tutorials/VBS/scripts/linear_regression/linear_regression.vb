@@ -104,13 +104,13 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.XLabel = "x"
     plt.YLabel = "y"
     plt.Plot(DataSerials(xs, ys, class_id).tolist())
-    plt.SavePng("Z:/linear-regression.png", 300)
+    plt.SavePng(here("linear-regression.png"), 300)
 End Using
 
 ' ---------------------------------------------------------------------------
 ' 6. 导出结果表（行名 + x 特征列 + label:y / label:prediction / label:residual）
 ' ---------------------------------------------------------------------------
-call result.WriteCsv("Z:/linear-regression.csv")
+call result.WriteCsv(here("linear-regression.csv"))
 
-call console.WriteLine("done: Z:/linear-regression.png")
-call console.WriteLine("done: Z:/linear-regression.csv")
+call console.WriteLine("done: linear-regression.png")
+call console.WriteLine("done: linear-regression.csv")

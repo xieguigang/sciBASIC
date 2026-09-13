@@ -1,0 +1,8 @@
+dataset: 100 samples x 1 feature
+linear fit  : y = 2.0017701770176988 * x + 2.986237623762391
+R2 = 0.9987900231789764, adjust R2 = 0.998777676476721, RMSE = 0.20111909379516651
+poly fit(2) : R2 = 0.9987939843937537, RMSE = 0.20078961267610587
+prediction labels: y, prediction, residual
+first row: y = 2.7, prediction = 2.986237623762391, residual = 0.2862376237623909
+done: linear-regression.png
+done: linear-regression.csv
