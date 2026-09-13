@@ -117,8 +117,6 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         Private ReadOnly seeLangwordTag As New Regex("<see\s+langword=""(?<word>[^""]+)""\s*/>", RegexICS)
         Private ReadOnly paramRefSelfTag As New Regex("<(?:type)?paramref\s+name=""(?<name>[^""]+)""\s*/>", RegexICS)
         Private ReadOnly paramRefTextTag As New Regex("<(?:type)?paramref\s+name=""(?<name>[^""]+)""[^>]*?>(?<text>.*?)</(?:type)?paramref>", RegexICS)
-        Private ReadOnly exampleOpenTag As New Regex("<example>", RegexICS)
-        Private ReadOnly exampleCloseTag As New Regex("</example>", RegexICS)
         Private ReadOnly brTag As New Regex("<br\s*/?>", RegexICS)
         Private ReadOnly anyTag As New Regex("<[^>]+>", RegexICS)
 
@@ -144,8 +142,6 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             ' block level tags should be processed before the inline tags
             s = inheritdocTag.Replace(s, "")
             s = listTag.Replace(s, AddressOf transList)
-            s = exampleOpenTag.Replace(s, vbLf & vbLf & "**Example**" & vbLf)
-            s = exampleCloseTag.Replace(s, vbLf & vbLf)
             s = codeTag.Replace(s, AddressOf transCodeBlock)
             s = cTag.Replace(s, AddressOf transInlineCode)
 
