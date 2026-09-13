@@ -61,13 +61,18 @@ Module Program
     ''' </summary>
     ''' <param name="args"></param>
     Public Function Main(args As String()) As Integer
-        Dim cmdl As CommandLine = CommandLine.BuildFromArguments(args, NoSubCommand:=False)
-        Dim scriptFile As String = args(0)
-        Dim verbose As Boolean = cmdl("--verbose")
-        Dim vbs As ScriptParseResult = VBScript.ParseScript(scriptFile, verbose:=verbose)
+        If Not args.IsNullOrEmpty Then
+            Dim cmdl As CommandLine = CommandLine.BuildFromArguments(args, NoSubCommand:=False)
+            Dim scriptFile As String = args(0)
+            Dim verbose As Boolean = cmdl("--verbose")
+            Dim vbs As ScriptParseResult = VBScript.ParseScript(scriptFile, verbose:=verbose)
 
-        Using script As ScriptRuntime = vbs.CompileScript(debug:=verbose)
-            Return script.Run(args)
-        End Using
+            Using script As ScriptRuntime = vbs.CompileScript(debug:=verbose)
+                Return script.Run(args)
+            End Using
+        Else
+            Call Console.WriteLine("vbs </path/to/script.vb> [--arg1=val1 --arg2=val2 ...]")
+            Return 0
+        End If
     End Function
 End Module
