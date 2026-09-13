@@ -203,6 +203,12 @@ Namespace CNN.trainers
                     g(j) = 0.0 ' zero out gradient so that we can begin accumulating anew
                 Next
             Next
+
+            ' 上面的 update 是"绕过 Tensor 直接就地改写权重/梯度数组"的（p(j) / g(j)），
+            ' 张量自身无从感知这类写入。GPU 后端会把主机数组缓存到显存并靠
+            ' Tensor.Version 判断是否失效，因此这里必须显式让全部设备端缓存失效，
+            ' 否则下一轮前向会用显存里的旧权重计算，得到静默错误的结果。
+            Call Microsoft.VisualBasic.MachineLearning.TensorFlow.Tensor.InvalidateAllDeviceCaches()
         End Sub
 
         Public MustOverride Sub update(i As Integer, j As Integer, gij As Double, p As Double())

@@ -20,7 +20,18 @@ Imports Microsoft.VisualBasic.MachineLearning.DataStorage
 ''' </summary>
 Public Class MnistTest
 
-    Public Shared Sub Main()
+    Public Shared Sub Main(args As String())
+        ' --baseline [--seed=N] [--passes=N] [--samples=N]
+        ' 确定性基线测量：固定随机种子与样本集，用于判断重构是否改变了数值行为
+        If args.Any(Function(a) String.Equals(a, "--baseline", StringComparison.OrdinalIgnoreCase)) Then
+            Call MnistBaseline.Run(
+                seed:=ArgValue(args, "--seed", 12345),
+                passes:=ArgValue(args, "--passes", 5),
+                samples:=ArgValue(args, "--samples", 300))
+
+            Return
+        End If
+
         Dim layers As New LayerBuilder
 
         '        Reader mr = new MnistReader("mnist/train-labels-idx1-ubyte", "mnist/train-images-idx3-ubyte");
@@ -118,6 +129,17 @@ Public Class MnistTest
             printPredictions(correctPredictions, numberDistribution, i, 10)
         Next
     End Sub
+
+    ''' <summary>从命令行参数中取出 <paramref name="name"/>=value 的整数值，缺失时返回默认值</summary>
+    Private Shared Function ArgValue(args As String(), name As String, defaultValue As Integer) As Integer
+        For Each arg As String In args
+            If arg.StartsWith(name & "=", StringComparison.OrdinalIgnoreCase) Then
+                Return CInt(Val(arg.Substring(name.Length + 1)))
+            End If
+        Next
+
+        Return defaultValue
+    End Function
 
     Private Shared Sub printPredictions(correctPredictions As Integer(), numberDistribution As Integer(), totalSize As Integer, numOfClasses As Integer)
         Dim sumCorrectPredictions = 0

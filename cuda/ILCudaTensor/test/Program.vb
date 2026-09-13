@@ -229,6 +229,16 @@ Module Program
         Dim convBwdBGpu = tf.Tensor.computeKernel.Conv2DBackwardBias(convGrad)
         Dim poolBwdGpu = tf.Tensor.computeKernel.MaxPool2DBackward(poolGrad, poolIdxGpu, poolIn.Shape)
 
+        ' ---- 设备端缓存失效验证 ----
+        ' 模拟"绕过 Tensor 直接就地改写底层数组"（CNN 训练器的做法）：
+        ' 若不调用 InvalidateAllDeviceCaches，GPU 会继续使用显存里的旧副本。
+        Dim mutableData As Double() = {1.0, 2.0, 3.0, 4.0}
+        Dim mutable = tf.Tensor.Wrap(mutableData, 4)
+        Dim sumBefore = tf.Tensor.computeKernel.SumAll(mutable)   ' 触发一次上传
+        mutableData(0) = 100.0                                    ' 就地改写，张量自身无从感知
+        tf.Tensor.InvalidateAllDeviceCaches()
+        Dim sumAfter = tf.Tensor.computeKernel.SumAll(mutable)
+
         gpu.CudaTensor.MinGpuElements = savedMinGpu
 
         ' ---------------- 3) 正确性断言 ----------------
@@ -272,6 +282,11 @@ Module Program
         Check("P4 conv2d 反向-卷积核", convBwdWErr < 1.0E-12, $"maxdiff={convBwdWErr:E3}")
         Check("P4 conv2d 反向-偏置", convBwdBErr < 1.0E-12, $"maxdiff={convBwdBErr:E3}")
         Check("P4 maxpool2d 反向", poolBwdErr < 1.0E-15, $"maxdiff={poolBwdErr:E3}")
+
+        ' 缓存失效：就地改写 + InvalidateAllDeviceCaches 之后，GPU 必须看到新值
+        Check("P4 设备端缓存失效",
+              std.Abs(sumBefore - 10.0) < 1.0E-12 AndAlso std.Abs(sumAfter - 109.0) < 1.0E-12,
+              $"before={sumBefore}, after={sumAfter}")
 
         Dim rowSums = tfMath.reduce_sum(smGpu, axis:=1)
         Dim rowErr As Double = 0

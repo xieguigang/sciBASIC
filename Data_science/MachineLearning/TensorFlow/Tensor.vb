@@ -121,6 +121,39 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <summary>切换计算后端时使用的同步根对象</summary>
     Public Shared ReadOnly SyncRoot As New Object()
 
+    ''' <summary>
+    ''' 全局的设备端缓存纪元号。
+    ''' </summary>
+    ''' <remarks>
+    ''' 后端（例如 CUDA）会把张量的主机数据上传到显存并做 LRU 缓存，缓存键是
+    ''' "主机数组引用 + <see cref="Version"/>"。当调用方<b>绕过</b> Tensor 的索引器 /
+    ''' <c>SetValue</c>，直接就地修改了底层 <c>Double()</c> 数组（典型例子是 CNN 的
+    ''' 训练器直接改写权重数组）时，张量自身无从感知，显存副本会一直停留在旧值上，
+    ''' 导致后续计算静默使用过期数据。
+    '''
+    ''' 这类调用方在修改完成之后必须调用一次 <see cref="InvalidateAllDeviceCaches"/>，
+    ''' 让所有张量的缓存副本失效（<see cref="Version"/> 会随之改变）。
+    ''' </remarks>
+    Private Shared _deviceEpoch As Long = 0
+
+    ''' <summary>当前的全局设备端缓存纪元号</summary>
+    Public Shared ReadOnly Property DeviceEpoch As Long
+        Get
+            Return System.Threading.Interlocked.Read(_deviceEpoch)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 让所有张量的设备端缓存副本失效。
+    ''' </summary>
+    ''' <remarks>
+    ''' 仅在"绕过 Tensor 的索引器直接就地修改底层数组"之后需要调用；
+    ''' 通过索引器 / <c>SetValue</c> 的写入会自动使该张量自身的缓存失效，无需调用本方法。
+    ''' </remarks>
+    Public Shared Sub InvalidateAllDeviceCaches()
+        System.Threading.Interlocked.Increment(_deviceEpoch)
+    End Sub
+
 #End Region
 
 #Region "属性"
@@ -198,9 +231,14 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <summary>
     ''' 数据版本号（只读）。任何原地写入都会使其自增，供设备端缓存判断失效。
     ''' </summary>
+    ''' <remarks>
+    ''' 返回值 = 本实例自身的写入计数 + <see cref="DeviceEpoch"/>。
+    ''' 加上全局纪元是为了覆盖"绕过 Tensor 直接就地修改底层数组"的场景
+    ''' （见 <see cref="InvalidateAllDeviceCaches"/>）。
+    ''' </remarks>
     Public ReadOnly Property Version As Long
         Get
-            Return _version
+            Return _version + DeviceEpoch
         End Get
     End Property
 
