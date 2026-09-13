@@ -185,6 +185,9 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <Compile Remove="_smoketest\**" />
+    <EmbeddedResource Remove="_smoketest\**" />
+    <None Remove="_smoketest\**" />
     <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
