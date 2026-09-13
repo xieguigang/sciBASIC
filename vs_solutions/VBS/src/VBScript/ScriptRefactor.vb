@@ -135,6 +135,12 @@ Namespace Script
         ReadOnly _typeBlocks As New List(Of String)
         ReadOnly _headerLines As New List(Of String)
 
+        ReadOnly magics As New List(Of String)
+
+        Sub New(magics As IEnumerable(Of String))
+            Call Me.magics.AddRange(magics)
+        End Sub
+
         ' ==================================================================
         ' 阶段编排
         ' ==================================================================
@@ -471,6 +477,16 @@ Namespace Script
             Call sb.AppendLine($"Imports System.Xml.Linq")
 
             Call sb.AppendLine($"Namespace {NamespaceName}")
+
+            Call sb.AppendLine("     Module VBScriptHostMagics")
+
+            For Each magic As String In magics
+                Call sb.AppendLine(magic)
+            Next
+
+            Call sb.AppendLine("     End Module")
+
+
             Call sb.AppendLine($"    Module {ModuleName}")
             Call sb.AppendLine()
             Call sb.AppendLine($"        Public Function {MainName}(args As CommandLine) As Integer")

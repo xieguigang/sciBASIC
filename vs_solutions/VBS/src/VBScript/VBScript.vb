@@ -54,7 +54,6 @@
 
 Imports System.IO
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Script
 
@@ -63,6 +62,12 @@ Namespace Script
         ' =========================================================================
         ' 函数1: 脚本源代码文件解析
         ' =========================================================================
+
+        Public Function Here(root As String) As String
+            Return $"Public Function Here(relpath As String) As String
+    Return $""{root.GetFullPath}/{{relpath}}""
+End Function"
+        End Function
 
         ''' <summary>
         ''' 对VB.NET脚本源代码文件进行解析处理
@@ -101,7 +106,7 @@ Namespace Script
             Next
 
             ' ---- Step2: 代码结构重构 ----
-            Dim code As String = RefactorScript(source)
+            Dim code As String = RefactorScript(source, magics:={Here(scriptFile.ParentPath)})
 
             If verbose Then
                 Call Console.WriteLine("----- generated code -----")
@@ -128,8 +133,8 @@ Namespace Script
         ''' <see cref="ScriptRefactor"/> 负责, 这里只是一个薄封装。
         ''' </remarks>
         ''' <param name="source">脚本源代码文本</param>
-        Private Function RefactorScript(source As String) As String
-            Return New ScriptRefactor().Refactor(source)
+        Private Function RefactorScript(source As String, magics As IEnumerable(Of String)) As String
+            Return New ScriptRefactor(magics).Refactor(source)
         End Function
     End Module
 End Namespace
