@@ -66,6 +66,7 @@ Namespace ComponentModel.EntityModels
     ''' 只不过多带了一个用来描述cluster的<see cref="Cluster"/>
     ''' 属性标签
     ''' </summary>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象，该类型将会在后续版本中移除。", False)>
     Public Class EntityClusterModel : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
         Implements IReadOnlyId

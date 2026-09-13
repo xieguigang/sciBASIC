@@ -89,7 +89,7 @@ Module DynamicDll
     ''' 将解析后的脚本代码基于Roslyn在内存中编译为assembly(全程不落盘)
     ''' </summary>
     ''' <param name="script">ParseScript函数的返回结果</param>
-    ''' <param name="asmName">目标assembly名称(默认取脚本文件名)</param>
+    ''' <param name="asmName">目标assembly名称(默认依次取脚本 #package 指令、脚本文件名)</param>
     ''' <param name="extraRefs">额外的引用程序集路径</param>
     ''' <param name="debug">是否以debug模式编译</param>
     ''' 
@@ -150,9 +150,19 @@ Module DynamicDll
             If(debug, OptimizationLevel.Debug, OptimizationLevel.Release))
 
         ' ---- Step4: 执行编译 ----
+        ' assembly名称: 显式参数 > #package指令 > 脚本文件名
+        Dim finalAsmName As String = asmName
+
+        If String.IsNullOrEmpty(finalAsmName) AndAlso script.Metadata IsNot Nothing Then
+            finalAsmName = script.Metadata.Package
+        End If
+
+        If String.IsNullOrEmpty(finalAsmName) Then
+            finalAsmName = Path.GetFileNameWithoutExtension(script.ScriptFile)
+        End If
+
         Dim compilation As VisualBasicCompilation = VisualBasicCompilation.Create(
-            assemblyName:=If(String.IsNullOrEmpty(asmName),
-                Path.GetFileNameWithoutExtension(script.ScriptFile), asmName),
+            assemblyName:=finalAsmName,
             syntaxTrees:=trees,
             references:=references,
             options:=options)

@@ -64,6 +64,7 @@ Namespace ComponentModel
     ''' An abstract property vector 
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象作为数据输入，该类型将会在后续版本中移除。", False)>
     Public MustInherit Class EntityBase(Of T As {IComparable, IConvertible})
 
         ''' <summary>

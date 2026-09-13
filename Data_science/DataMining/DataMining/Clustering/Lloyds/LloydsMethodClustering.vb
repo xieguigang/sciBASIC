@@ -151,9 +151,13 @@ Namespace Lloyds
 
                 ' calculate the new center
                 For i As Integer = 0 To _kmeansClusters.Count - 1
-                    _kmeansClusters(i).Center = New Point With {
-                        .entityVector = _kmeansClusters(i).CalculateClusterMean
-                    }
+                    ' 空簇不参与中心点更新，避免对空向量做除法
+                    If _kmeansClusters(i).NumOfEntity > 0 Then
+                        _kmeansClusters(i).Center = New Point With {
+                            .entityVector = _kmeansClusters(i).CalculateClusterMean
+                        }
+                    End If
+
                     currentKMeansCost += _kmeansClusters(i).CalculateKMeansCost()
                 Next
             Loop While std.Abs(oldKmeansCost - currentKMeansCost) > 1

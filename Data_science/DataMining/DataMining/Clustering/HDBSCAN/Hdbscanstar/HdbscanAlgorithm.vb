@@ -417,7 +417,15 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <returns>true if there are any clusters with infinite stability, false otherwise</returns>
         Public Shared Function PropagateTree(clusters As List(Of Cluster)) As Boolean
             Dim clustersToExamine = New SortedDictionary(Of Integer, Cluster)()
-            Dim addedToExaminationList = New BitSet(capacity:=0, defaultValue:=False)
+            Dim maxLabel As Integer = -1
+
+            For Each c In clusters
+                If c IsNot Nothing AndAlso c.Label > maxLabel Then
+                    maxLabel = c.Label
+                End If
+            Next
+
+            Dim addedToExaminationList = New BitSet(capacity:=maxLabel + 1, defaultValue:=False)
             Dim infiniteStability = False
 
             'Find all leaf clusters in the cluster tree:

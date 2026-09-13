@@ -173,4 +173,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="_smoketest\**" />
+    <EmbeddedResource Remove="_smoketest\**" />
+    <None Remove="_smoketest\**" />
+  </ItemGroup>
+
 </Project>

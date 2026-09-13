@@ -216,7 +216,10 @@ Namespace LASSO
             Dim bar As ProgressBar = Nothing
 
             For Each iteration As Integer In TqdmWrapper.Range(1, numberOfLambdas, bar:=bar, wrap_console:=tqdm_verbose)
-                Call bar.SetLabel("Starting iteration " & iteration.ToString() & " of Compression.")
+                ' 进度条对象可能为空（取决于宿主环境），这里做空值保护
+                If bar IsNot Nothing Then
+                    Call bar.SetLabel("Starting iteration " & iteration.ToString() & " of Compression.")
+                End If
 
                 ' ********
                 ' Compute lambda for this round
