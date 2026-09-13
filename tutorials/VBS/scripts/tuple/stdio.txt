@@ -1,0 +1,7 @@
+demo test result of variable tuple deconstruct in vb:
+a := 1
+b := 2
+(a+b) := 3
+a => 123.0000
+b => 456.0000
+c => 789.0000

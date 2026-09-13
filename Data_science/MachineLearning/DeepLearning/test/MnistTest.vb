@@ -27,7 +27,8 @@ Public Class MnistTest
             Call MnistBaseline.Run(
                 seed:=ArgValue(args, "--seed", 12345),
                 passes:=ArgValue(args, "--passes", 5),
-                samples:=ArgValue(args, "--samples", 300))
+                samples:=ArgValue(args, "--samples", 300),
+                threads:=ArgValue(args, "--threads", 0))
 
             Return
         End If

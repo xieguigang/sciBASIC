@@ -60,9 +60,14 @@ Public Class MnistBaseline
     ''' <param name="seed">权重初始化的随机种子</param>
     ''' <param name="passes">训练轮数（每轮遍历 <paramref name="samples"/> 张图）</param>
     ''' <param name="samples">每轮使用的样本数</param>
-    Public Shared Sub Run(seed As Integer, passes As Integer, samples As Integer)
+    Public Shared Sub Run(seed As Integer, passes As Integer, samples As Integer, threads As Integer)
         ' 必须在构建网络(即首次调用 Vector.rand)之前播种
         Call randf2.SetSeed(seed)
+
+        ' threads <= 0 表示沿用引擎默认的并行度; 指定为 1 可以排除 VectorTask 并发带来的影响
+        If threads > 0 Then
+            Call ConvolutionalNN.SetThreads(threads)
+        End If
 
         Dim mr As New MNIST(MnistImages, MnistLabels)
 
@@ -103,7 +108,7 @@ Public Class MnistBaseline
 
         ' 机器可读的单行结果：同样的 (seed, passes, samples) 必须得到同样的这几个数值
         Call Console.WriteLine(
-            $"BASELINE seed={seed} passes={passes} samples={dataset.Length} " &
+            $"BASELINE seed={seed} threads={ConvolutionalNN.GetThreads()} passes={passes} samples={dataset.Length} " &
             $"loss={lastLoss:R} correct={correct}/{dataset.Length} " &
             $"accuracy={CDbl(correct) / dataset.Length:R} seconds={watch.Elapsed.TotalSeconds:F3}")
     End Sub
