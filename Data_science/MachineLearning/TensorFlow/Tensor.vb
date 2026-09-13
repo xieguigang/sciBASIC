@@ -242,6 +242,18 @@ Public Class Tensor : Implements ICloneable, IDisposable
         End Get
     End Property
 
+    ''' <summary>
+    ''' 声明本张量的主机数据已被**绕过索引器**就地修改过，从而让设备端缓存副本失效。
+    ''' </summary>
+    ''' <remarks>
+    ''' 适用于"零拷贝视图 + 外部直接改写底层 <c>Double()</c>"的场景。
+    ''' 与全局的 <see cref="InvalidateAllDeviceCaches"/> 相比，本方法只失效<b>当前这一个</b>张量，
+    ''' 粒度更细，也不会把其它张量的缓存一并冲掉。
+    ''' </remarks>
+    Public Sub MarkHostModified()
+        System.Threading.Interlocked.Increment(_version)
+    End Sub
+
 #End Region
 
 #Region "索引器"

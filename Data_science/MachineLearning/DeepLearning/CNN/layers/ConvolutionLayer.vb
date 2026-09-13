@@ -176,7 +176,7 @@ Namespace CNN.layers
             Dim packed As Tensor = PackFilters()
             Dim y = Tensor.computeKernel.Conv2D(x4, packed, Tensor.Wrap(biases.w, out_depth), stride, padding)
 
-            Call Array.Copy(y.Data, lA.w, lA.w.Length)
+            Call lA.SetValues(y.Data)
 
             filtersPacked = packed
             Return out_act
@@ -234,6 +234,8 @@ Namespace CNN.layers
                         Next
                     Next
                 Next
+
+                Call filters(d).MarkGradientModified()
             Next
         End Sub
 
@@ -264,6 +266,8 @@ Namespace CNN.layers
                 biases.dw(i) += biasGrad(i)
             Next
 
+            Call biases.MarkGradientModified()
+
             ' 3) 对输入的梯度: 用前向缓存下来的卷积核算出, 布局与 DataBlock 同序, 整块拷贝
             '
             ' 原先这一步是在按输出通道并行的循环里对本层的输入块做 addGradient, 而不同输出通道
@@ -273,7 +277,7 @@ Namespace CNN.layers
             Dim gradInput = Tensor.computeKernel.Conv2DBackwardInput(
                 gradOut, filtersPacked, db.TensorShape4D, stride, padding)
 
-            Call Array.Copy(gradInput.Data, db.dw, db.dw.Length)
+            Call db.SetGradients(gradInput.Data)
         End Sub
 
         Public Overrides Function ToString() As String

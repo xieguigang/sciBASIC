@@ -8,6 +8,8 @@
     <Version>1.0.9753.4776</Version>
     <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <StartupObject>test.MnistTest</StartupObject>
+    <!-- ILCuda / ILCudaTensor 强制 x64，本工程必须同为 x64，否则会出现 MSB3270 架构不匹配 -->
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +28,9 @@
     <ProjectReference Include="..\..\MLDataStorage\MLDataStorage.vbproj" />
     <ProjectReference Include="..\..\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\DeepLearning.NET6.vbproj" />
+    <!-- GPU 后端：ILCudaTensor 提供 CudaTensor，ILCuda 提供 NVRTC/驱动 API 与内核编译单元 -->
+    <ProjectReference Include="..\..\..\..\cuda\ILCuda\ILCuda.vbproj" />
+    <ProjectReference Include="..\..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
   </ItemGroup>
 
 </Project>

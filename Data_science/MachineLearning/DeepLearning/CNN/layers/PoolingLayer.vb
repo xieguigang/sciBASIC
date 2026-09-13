@@ -161,7 +161,7 @@ Namespace CNN.layers
             Dim argMax As Tensor = Nothing
             Dim pooled = Tensor.computeKernel.MaxPool2D(x4, sx, stride, padding, argMax)
 
-            Call Array.Copy(pooled.Data, lA.w, lA.w.Length)
+            Call lA.SetValues(pooled.Data)
 
             argMaxIndex = argMax
             Return out_act
@@ -176,7 +176,7 @@ Namespace CNN.layers
             Dim gradOut As Tensor = Tensor.Wrap(out_act.Grad, out_act.TensorShape4D)
             Dim dx = Tensor.computeKernel.MaxPool2DBackward(gradOut, argMaxIndex, v.TensorShape4D)
 
-            Call Array.Copy(dx.Data, v.dw, v.dw.Length)
+            Call v.SetGradients(dx.Data)
         End Sub
 
         Public Overrides Function ToString() As String

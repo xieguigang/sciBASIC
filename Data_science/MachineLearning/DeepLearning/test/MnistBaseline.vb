@@ -38,7 +38,7 @@ Public Class MnistBaseline
     ''' 构建与本仓库 MnistTest 完全一致的网络结构
     ''' （input 28x28x1 -> conv5x32 -> relu -> pool2 -> conv5x64 -> relu -> pool2 -> fc10 -> softmax）
     ''' </summary>
-    Private Shared Function BuildNetwork(mr As MNIST) As ConvolutionalNN
+    Public Shared Function BuildNetwork(mr As MNIST) As ConvolutionalNN
         Dim layers As New LayerBuilder
 
         Call layers.buildInputLayer(New Dimension(mr.ImageSize.Width, mr.ImageSize.Height), 1)

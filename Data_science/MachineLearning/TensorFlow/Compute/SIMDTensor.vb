@@ -76,7 +76,9 @@
 ' ---------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.Math.SIMD
+Imports nv = System.Numerics
 Imports std = System.Math
+Imports tpl = System.Threading.Tasks
 
 Namespace Compute
 
@@ -234,6 +236,296 @@ Namespace Compute
                 jagged(i) = row
             Next
             Return jagged
+        End Function
+
+#End Region
+
+#Region "卷积与池化"
+
+        ''' <summary>
+        ''' 卷积参与并行/向量化计算所需的最少乘加次数；低于该规模时调度开销会超过收益，
+        ''' 直接退回 <see cref="TensorComputeBase"/> 的标量实现。
+        ''' </summary>
+        Public Const ConvParallelThreshold As Long = 200000
+
+        ''' <summary>
+        ''' 卷积前向：按输出行并行，行内沿输出通道向量化。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 并行粒度取“输出行”（batch × outH）；每一行完全由某一个线程独立计算并写入，
+        ''' 线程之间没有任何共享读写，因此结果与线程数无关，可复现。
+        ''' </para>
+        ''' <para>
+        ''' 行内的循环次序改为“先按 (kh,kw,c) 取一个输入标量，再沿输出通道 oc 累加”。
+        ''' 由于后端张量采用 channel-last 布局，卷积核与累加器沿 oc 都是连续的，
+        ''' 这一步正好是一次 axpy 风格的向量运算。对任一输出元素而言，它仍然只沿着
+        ''' (kh,kw,c) 递增的方向累加，求和顺序与标量实现逐项一致，所以结果逐位相同。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function Conv2D(x As Tensor, filters As Tensor, bias As Tensor,
+                                        stride As Integer, padding As Integer) As Tensor
+            If x Is Nothing OrElse x.Rank <> 4 OrElse filters Is Nothing OrElse filters.Rank <> 4 OrElse
+               x.Shape(3) <> filters.Shape(2) OrElse
+               (bias IsNot Nothing AndAlso bias.Length <> filters.Shape(3)) Then
+                ' 形状非法时交给基类抛出规范的异常
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1), outC = filters.Shape(3)
+            Dim outH = ConvOutSize(inH, filtH, stride, padding)
+            Dim outW = ConvOutSize(inW, filtW, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            Dim totalOps = CType(batch, Long) * outH * outW * outC * filtH * filtW * inC
+
+            If totalOps < ConvParallelThreshold Then
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            Dim result = New Tensor(batch, outH, outW, outC)
+            Dim src = x.Data
+            Dim kern = filters.Data
+            Dim dst = result.Data
+            Dim biasData = If(bias Is Nothing, Nothing, bias.Data)
+            Dim filterPlane = inC * outC
+
+            Call tpl.Parallel.For(0, batch * outH,
+                Sub(row)
+                    Dim n = row \ outH
+                    Dim oh = row Mod outH
+                    Dim acc(outC - 1) As Double
+
+                    For ow As Integer = 0 To outW - 1
+                        If biasData Is Nothing Then
+                            Call Array.Clear(acc, 0, outC)
+                        Else
+                            Call Array.Copy(biasData, 0, acc, 0, outC)
+                        End If
+
+                        For kh As Integer = 0 To filtH - 1
+                            Dim ih = oh * stride + kh - padding
+                            If ih < 0 OrElse ih >= inH Then Continue For
+
+                            For kw As Integer = 0 To filtW - 1
+                                Dim iw = ow * stride + kw - padding
+                                If iw < 0 OrElse iw >= inW Then Continue For
+
+                                Dim xBase = ((n * inH + ih) * inW + iw) * inC
+                                Dim kBase = (kh * filtW + kw) * filterPlane
+
+                                For c As Integer = 0 To inC - 1
+                                    Call Axpy(src(xBase + c), kern, kBase + c * outC, acc, 0, outC)
+                                Next
+                            Next
+                        Next
+
+                        Call Array.Copy(acc, 0, dst, ((n * outH + oh) * outW + ow) * outC, outC)
+                    Next
+                End Sub)
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 卷积反向 - 对卷积核的梯度：按 (kh, kw, c) 平面并行，平面内沿输出通道向量化。
+        ''' </summary>
+        ''' <remarks>
+        ''' 一个 (kh, kw, c) 三元组恰好对应 dst 之中长度为 outC 的一段连续区间，因此各线程写入
+        ''' 的区域互不相交。每个 dst 元素由唯一的三元组负责，线程把该元素在 (n, oh, ow) 上的
+        ''' 全部贡献按同样的顺序累加完毕后一次写入，与标量实现逐位相同。
+        ''' </remarks>
+        Public Overrides Function Conv2DBackwardFilter(gradOutput As Tensor, x As Tensor,
+                                                      filterShape As Integer(), stride As Integer,
+                                                      padding As Integer) As Tensor
+            If gradOutput Is Nothing OrElse gradOutput.Rank <> 4 OrElse x Is Nothing OrElse x.Rank <> 4 Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim filtH = filterShape(0), filtW = filterShape(1), outC = filterShape(3)
+            Dim outH = gradOutput.Shape(1), outW = gradOutput.Shape(2)
+
+            Dim totalOps = CType(batch, Long) * outH * outW * outC * filtH * filtW * inC
+
+            If totalOps < ConvParallelThreshold Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim result = New Tensor(filterShape)
+            Dim g = gradOutput.Data
+            Dim src = x.Data
+            Dim dst = result.Data
+
+            Call tpl.Parallel.For(0, filtH * filtW * inC,
+                Function() New Double(outC - 1) {},
+                Function(plane, state, acc)
+                    Dim kh = plane \ (filtW * inC)
+                    Dim kw = (plane \ inC) Mod filtW
+                    Dim c = plane Mod inC
+
+                    Call Array.Clear(acc, 0, outC)
+
+                    For n As Integer = 0 To batch - 1
+                        For oh As Integer = 0 To outH - 1
+                            Dim ih = oh * stride + kh - padding
+                            If ih < 0 OrElse ih >= inH Then Continue For
+
+                            For ow As Integer = 0 To outW - 1
+                                Dim iw = ow * stride + kw - padding
+                                If iw < 0 OrElse iw >= inW Then Continue For
+
+                                Dim sv = src(((n * inH + ih) * inW + iw) * inC + c)
+                                Dim gBase = ((n * outH + oh) * outW + ow) * outC
+
+                                Call Axpy(sv, g, gBase, acc, 0, outC)
+                            Next
+                        Next
+                    Next
+
+                    Dim dstBase = ((kh * filtW + kw) * inC + c) * outC
+
+                    ' dst 的初值为 0 且只被本线程写入, 所以这里的赋值与累加等价
+                    Call Array.Copy(acc, 0, dst, dstBase, outC)
+
+                    Return acc
+                End Function,
+                Sub(acc)
+                End Sub)
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 卷积反向 - 对输入的梯度：按输入行并行。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 每个线程独占一整行输入 (ih)，行与行之间的梯度元素互不相交，因此不存在数据竞争，
+        ''' 结果也与线程数无关。
+        ''' </para>
+        ''' <para>
+        ''' 对某个输入行有贡献的输出行 oh 满足 ``ih = oh * stride + kh - padding`` 且
+        ''' ``kh ∈ [0, filtH)``，也就是 ``oh ∈ [(ih + padding - filtH + 1) / stride, (ih + padding) / stride]``；
+        ''' 只遍历这个小窗口即可，总计算量与标量实现的 (oh, kh) 遍历相当。
+        ''' </para>
+        ''' <para>
+        ''' 对任一输入梯度元素，贡献按 (oh, ow, oc, kw) 递增的顺序累加，其中 kh 由 (ih, oh) 唯一确定，
+        ''' 因此与标量实现之中 (oh, ow, oc, kh, kw) 的求和顺序逐项一致，结果逐位相同。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function Conv2DBackwardInput(gradOutput As Tensor, filters As Tensor,
+                                                      inputShape As Integer(), stride As Integer,
+                                                      padding As Integer) As Tensor
+            If gradOutput Is Nothing OrElse gradOutput.Rank <> 4 OrElse filters Is Nothing OrElse filters.Rank <> 4 Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim batch = inputShape(0), inH = inputShape(1), inW = inputShape(2), inC = inputShape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1), outC = filters.Shape(3)
+            Dim outH = gradOutput.Shape(1), outW = gradOutput.Shape(2)
+
+            Dim totalOps = CType(batch, Long) * outH * outW * outC * filtH * filtW * inC
+
+            If totalOps < ConvParallelThreshold Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim result = New Tensor(batch, inH, inW, inC)
+            Dim g = gradOutput.Data
+            Dim kern = filters.Data
+            Dim dst = result.Data
+            Dim filterPlane = inC * outC
+
+            Call tpl.Parallel.For(0, batch * inH,
+                Sub(inputRow)
+                    Dim n = inputRow \ inH
+                    Dim ih = inputRow Mod inH
+
+                    Dim ohFirst = CeilDiv(ih + padding - filtH + 1, stride)
+                    Dim ohLast = (ih + padding) \ stride
+
+                    If ohFirst < 0 Then ohFirst = 0
+                    If ohLast > outH - 1 Then ohLast = outH - 1
+
+                    For oh As Integer = ohFirst To ohLast
+                        Dim kh = ih - (oh * stride - padding)
+                        If kh < 0 OrElse kh >= filtH Then Continue For
+
+                        Dim rowBase = (kh * filtW) * filterPlane
+
+                        For ow As Integer = 0 To outW - 1
+                            For oc As Integer = 0 To outC - 1
+                                Dim gv = g(((n * outH + oh) * outW + ow) * outC + oc)
+                                Dim kBase = rowBase + oc
+
+                                For kw As Integer = 0 To filtW - 1
+                                    Dim iw = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim dstBase = ((n * inH + ih) * inW + iw) * inC
+                                    Dim kB = kBase + kw * filterPlane
+
+                                    For c As Integer = 0 To inC - 1
+                                        dst(dstBase + c) += gv * kern(kB + c * outC)
+                                    Next
+                                Next
+                            Next
+                        Next
+                    Next
+                End Sub)
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' ``dst(dstOffset .. +len) += scalar * src(srcOffset .. +len)`` 的向量化实现。
+        ''' </summary>
+        ''' <remarks>
+        ''' 每个元素只做一次“乘 + 加”，与标量循环的运算顺序完全一致，因此不引入任何数值差异。
+        ''' </remarks>
+        Private Shared Sub Axpy(scalar As Double, src As Double(), srcOffset As Integer,
+                               dst As Double(), dstOffset As Integer, len As Integer)
+            Dim lanes = nv.Vector(Of Double).Count
+            Dim i As Integer = 0
+
+            If len >= lanes Then
+                Dim vs = New nv.Vector(Of Double)(scalar)
+
+                While i <= len - lanes
+                    Dim acc = New nv.Vector(Of Double)(dst, dstOffset + i)
+                    Dim v = New nv.Vector(Of Double)(src, srcOffset + i)
+
+                    Call nv.Vector.Add(acc, nv.Vector.Multiply(vs, v)).CopyTo(dst, dstOffset + i)
+
+                    i += lanes
+                End While
+            End If
+
+            While i < len
+                dst(dstOffset + i) += scalar * src(srcOffset + i)
+                i += 1
+            End While
+        End Sub
+
+        ''' <summary>``ceil(a / b)``，其中 ``b`` 为正数</summary>
+        ''' <remarks>
+        ''' VB 的 ``\`` 是“向零截断”而不是向下取整，因此这里按
+        ''' ``ceil(a / b) = -floor(-a / b)`` 计算，并把负数情形下的截断偏差补回来。
+        ''' </remarks>
+        Private Shared Function CeilDiv(a As Integer, b As Integer) As Integer
+            Dim negA = -a
+            Dim q = negA \ b
+
+            If negA Mod b <> 0 AndAlso negA < 0 Then
+                q -= 1
+            End If
+
+            Return -q
         End Function
 
 #End Region

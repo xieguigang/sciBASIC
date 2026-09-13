@@ -177,6 +177,45 @@ Namespace CNN.data
             End Get
         End Property
 
+        ' ------------------------------------------------------------------
+        ' 设备端缓存一致性
+        '
+        ' <see cref="Value"/> / <see cref="Grad"/> 是 <see cref="w"/> / <see cref="dw"/> 的**零拷贝**张量视图，
+        ' 而本类型的大量写入（addImageData / setWeight / addGradient / clearGradient ...）都是
+        ' 绕过 Tensor 索引器直接改写底层数组的。CUDA 后端会把主机数组缓存到显存，
+        ' 缓存键是"(数组引用, 张量版本号)"，版本号只会在通过 Tensor 索引器写入、
+        ' 或者调用 Tensor.InvalidateAllDeviceCaches() 时才变化。
+        '
+        ' 因此：**任何绕过 Tensor 索引器的就地写入，都必须紧跟一次 MarkXxxModified()**，
+        ' 否则 GPU 侧会一直复用旧数据，造成静默的数值错误（实测表现为训练结果与 CPU 不一致）。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>把整块数据写入 <see cref="w"/>，并声明值数据的设备端缓存已失效</summary>
+        Friend Sub SetValues(data As Double())
+            Array.ConstrainedCopy(data, Scan0, w, Scan0, w.Length)
+            Call MarkValueModified()
+        End Sub
+
+        ''' <summary>把整块数据写入 <see cref="dw"/>，并声明梯度数据的设备端缓存已失效</summary>
+        Friend Sub SetGradients(data As Double())
+            Array.ConstrainedCopy(data, Scan0, dw, Scan0, dw.Length)
+            Call MarkGradientModified()
+        End Sub
+
+        ''' <summary>声明值数据的设备端缓存已失效（就地改写 <see cref="w"/> 之后必须调用）</summary>
+        Friend Sub MarkValueModified()
+            Dim t = Value
+
+            If t IsNot Nothing Then Call t.MarkHostModified()
+        End Sub
+
+        ''' <summary>声明梯度数据的设备端缓存已失效（就地改写 <see cref="dw"/> 之后必须调用）</summary>
+        Friend Sub MarkGradientModified()
+            Dim t = Grad
+
+            If t IsNot Nothing Then Call t.MarkHostModified()
+        End Sub
+
         Sub New()
         End Sub
 
@@ -237,6 +276,8 @@ Namespace CNN.data
             For i As Integer = 0 To imgData.Length - 1
                 w(i) = imgData(i) / max - 0.5 ' normalize image pixels to [-0.5, 0.5]
             Next
+
+            Call MarkValueModified()
         End Sub
 
         ''' <summary>
@@ -248,6 +289,8 @@ Namespace CNN.data
             For i As Integer = 0 To imgData.Length - 1
                 w(i) = imgData(i) / maxvalue - 0.5 ' normalize image pixels to [-0.5, 0.5]
             Next
+
+            Call MarkValueModified()
         End Sub
 
         ''' <summary>
@@ -261,6 +304,8 @@ Namespace CNN.data
             For i As Integer = 0 To imgData.Length - 1
                 w(i) = imgData(i) / max - 0.5 ' normalize image pixels to [-0.5, 0.5]
             Next
+
+            Call MarkValueModified()
         End Sub
 
         ''' <summary>
@@ -286,6 +331,7 @@ Namespace CNN.data
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setWeight(ix As Integer, val As Double)
             w(ix) = val
+            Call MarkValueModified()
         End Sub
 
         Public Overridable Sub setWeight(x As Integer, y As Integer, depth As Integer, val As Double)
@@ -296,6 +342,7 @@ Namespace CNN.data
         Public Overridable Sub addWeight(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             w(ix) += val
+            Call MarkValueModified()
         End Sub
 
         Public Overridable Function getGradient(x As Integer, y As Integer, depth As Integer) As Double
@@ -332,11 +379,13 @@ Namespace CNN.data
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setGradient(ix As Integer, val As Double)
             dw(ix) = val
+            Call MarkGradientModified()
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub setGradient(val As Double())
             Array.ConstrainedCopy(val, Scan0, dw, Scan0, dw.Length)
+            Call MarkGradientModified()
         End Sub
 
         Public Overridable Sub addGradient(x As Integer, y As Integer, depth As Integer, val As Double)
@@ -347,11 +396,13 @@ Namespace CNN.data
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub addGradient(ix As Integer, val As Double)
             dw(ix) += val
+            Call MarkGradientModified()
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub subGradient(ix As Integer, val As Double)
             dw(ix) -= val
+            Call MarkGradientModified()
         End Sub
 
         ''' <summary>
@@ -387,6 +438,7 @@ Namespace CNN.data
         ''' </summary>
         Public Function clearGradient() As DataBlock
             Call dw.fill(0)
+            Call MarkGradientModified()
             Return Me
         End Function
 

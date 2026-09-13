@@ -104,7 +104,7 @@ Namespace CNN.layers
                 ' 从而能够被 Tensor.computeKernel 派发到 CUDA(无 GPU 时由 CPU/SIMD 后端兜底)
                 Dim activated = Tensor.computeKernel.Relu(db.Value)
 
-                Call Array.Copy(activated.Data, V2.w, V2.w.Length)
+                Call V2.SetValues(activated.Data)
 
                 out_act = V2
                 Return out_act

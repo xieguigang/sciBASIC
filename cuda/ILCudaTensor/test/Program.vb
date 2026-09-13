@@ -106,6 +106,47 @@ Module Program
         Return If(std.Abs(expected) > 0.0, d / std.Abs(expected), d)
     End Function
 
+    ''' <summary>
+    ''' 只使用 <see cref="tfCompute.TensorComputeBase"/> 之中的标量实现，不覆盖任何算子。
+    ''' </summary>
+    ''' <remarks>
+    ''' 用于给做过并行/向量化优化的后端(例如 <see cref="tfCompute.SIMDTensor"/> 的卷积)做逐位对照：
+    ''' 优化实现必须与标量实现在**同样的求和顺序**下得到完全相同的结果。
+    ''' </remarks>
+    Private Class ScalarProbe
+        Inherits tfCompute.TensorComputeBase
+
+        Public Overrides ReadOnly Property Name As String = "scalar-probe"
+    End Class
+
+    ''' <summary>
+    ''' 用与 MNIST CNN 实际网络**完全相同的规模**（N=1、padding=2、inC=32、outC=64）跑一组算子。
+    ''' </summary>
+    ''' <remarks>
+    ''' 小规模用例通过并不代表真实网络也正确：这里专门覆盖
+    ''' (a) batch = 1，(b) padding = 2，(c) 较大的 inC/outC，
+    ''' 用于排查"小规模测试通过但真实网络不一致"的问题。
+    ''' </remarks>
+    Private Function NetShapeProbe() As tf.Tensor()
+        Dim x = tf.Tensor.Random({1, 14, 14, 32}, seed:=81)
+        Dim w = tf.Tensor.Random({5, 5, 32, 64}, seed:=82)
+        Dim b = tf.Tensor.Random({64}, seed:=83)
+        Dim grad = tf.Tensor.Random({1, 14, 14, 64}, seed:=84)
+
+        Dim poolX = tf.Tensor.Random({1, 28, 28, 32}, seed:=85)
+        Dim poolGrad = tf.Tensor.Random({1, 14, 14, 32}, seed:=86)
+        Dim poolIdx As tf.Tensor = Nothing
+
+        Return {
+            tf.Tensor.computeKernel.Conv2D(x, w, b, 1, 2),
+            tf.Tensor.computeKernel.Conv2DBackwardInput(grad, w, New Integer() {1, 14, 14, 32}, 1, 2),
+            tf.Tensor.computeKernel.Conv2DBackwardFilter(grad, x, New Integer() {5, 5, 32, 64}, 1, 2),
+            tf.Tensor.computeKernel.Conv2DBackwardBias(grad),
+            tf.Tensor.computeKernel.MaxPool2D(poolX, 2, 2, 0, poolIdx),
+            tf.Tensor.computeKernel.MaxPool2DBackward(poolGrad, poolIdx, New Integer() {1, 28, 28, 32})
+        }
+    End Function
+
     Sub Main(args As String())
         Console.WriteLine("=== ILCudaTensor demo test：SIMD CPU vs CUDA GPU（全 double）===")
         Console.WriteLine($"默认后端 : {tf.Tensor.computeKernel.Name}")
@@ -148,7 +189,34 @@ Module Program
         ' Heaviside 阶跃算子: ReLU 系激活函数反向传播所需的 (x > 0) 掩码
         Dim hvCpu = tf.Tensor.computeKernel.Heaviside(x)
 
-        ' ---- 卷积 / 池化的 CPU 参考（走当前后端 = SIMDTensor，即 TensorComputeBase 的标量实现）----
+        ' ---- SIMD 后端的卷积算子 vs 标量参考实现（必须逐位一致）----
+        ' 注意：规模必须超过 SIMDTensor.ConvParallelThreshold(200000)，否则会回退标量路径而测不到目标代码
+        Dim probe As New ScalarProbe()
+
+        Dim bigX = tf.Tensor.Random({2, 16, 16, 8}, seed:=71)
+        Dim bigW = tf.Tensor.Random({3, 3, 8, 16}, seed:=72)
+        Dim bigBias = tf.Tensor.Random({16}, seed:=73)
+        Dim bigGrad = tf.Tensor.Random({2, 16, 16, 16}, seed:=74)
+
+        Dim simdConv = tf.Tensor.computeKernel.Conv2D(bigX, bigW, bigBias, 1, 1)
+        Dim simdBwInput = tf.Tensor.computeKernel.Conv2DBackwardInput(
+            bigGrad, bigW, New Integer() {2, 16, 16, 8}, 1, 1)
+        Dim simdBwFilter = tf.Tensor.computeKernel.Conv2DBackwardFilter(
+            bigGrad, bigX, New Integer() {3, 3, 8, 16}, 1, 1)
+
+        Dim scalarConv = probe.Conv2D(bigX, bigW, bigBias, 1, 1)
+        Dim scalarBwInput = probe.Conv2DBackwardInput(bigGrad, bigW, New Integer() {2, 16, 16, 8}, 1, 1)
+        Dim scalarBwFilter = probe.Conv2DBackwardFilter(bigGrad, bigX, New Integer() {3, 3, 8, 16}, 1, 1)
+
+        Dim simdConvErr = MaxDiff(simdConv.Data, scalarConv.Data)
+        Dim simdBwInputErr = MaxDiff(simdBwInput.Data, scalarBwInput.Data)
+        Dim simdBwFilterErr = MaxDiff(simdBwFilter.Data, scalarBwFilter.Data)
+
+        Check("SIMD conv2d 前向 == 标量", simdConvErr = 0.0, $"maxdiff={simdConvErr:E3}")
+        Check("SIMD conv2d 反向-输入 == 标量", simdBwInputErr = 0.0, $"maxdiff={simdBwInputErr:E3}")
+        Check("SIMD conv2d 反向-卷积核 == 标量", simdBwFilterErr = 0.0, $"maxdiff={simdBwFilterErr:E3}")
+
+        ' ---- 卷积 / 池化的 CPU 参考（走当前后端 = SIMDTensor）----
         Dim convIn = tf.Tensor.Random({2, 8, 8, 3}, seed:=5)
         Dim convW = tf.Tensor.Random({3, 3, 3, 4}, seed:=6)
         Dim convB = tf.Tensor.Random({4}, seed:=7)
@@ -163,6 +231,9 @@ Module Program
         Dim convBwdWCpu = tf.Tensor.computeKernel.Conv2DBackwardFilter(convGrad, convIn, convW.Shape, 1, 1)
         Dim convBwdBCpu = tf.Tensor.computeKernel.Conv2DBackwardBias(convGrad)
         Dim poolBwdCpu = tf.Tensor.computeKernel.MaxPool2DBackward(poolGrad, poolIdxCpu, poolIn.Shape)
+
+        ' ---- 真实网络规模的探针（N=1, padding=2, inC=32, outC=64）----
+        Dim netProbeCpu = NetShapeProbe()
 
         Dim sw = Stopwatch.StartNew()
         Dim bigSumCpu = tfMath.reduce_sum(big).Data(0)
@@ -212,6 +283,60 @@ Module Program
 
         ' Heaviside 阶跃算子（GPU）
         Dim hvGpu = tf.Tensor.computeKernel.Heaviside(x)
+
+        ' ---- 真实网络规模的探针（GPU）----
+        Dim netProbeGpu = NetShapeProbe()
+        Dim netProbeNames = {
+            "net-shape conv2d 前向",
+            "net-shape conv2d 反向-输入",
+            "net-shape conv2d 反向-卷积核",
+            "net-shape conv2d 反向-偏置",
+            "net-shape maxpool2d 前向",
+            "net-shape maxpool2d 反向"
+        }
+
+        For i As Integer = 0 To netProbeNames.Length - 1
+            Dim netDiff = MaxDiff(netProbeCpu(i).Data, netProbeGpu(i).Data)
+            ' 卷积反向在 GPU 上是用 atomicAdd 散射累加的，归约顺序与 CPU 的顺次累加不同，
+            ' 因此这里容许舍入级差异；真正的回归判据是"不能出现结构性偏差"。
+            Check(netProbeNames(i) & " == CPU", netDiff < 1.0E-12, $"maxdiff={netDiff:E3}")
+        Next
+
+        ' ---- 显存缓存失效验证：模拟 DataBlock.addImageData 的"就地改写输入数组" ----
+        ' CNN 的输入图像块是**复用的数组**，每个样本由 addImageData 就地覆盖写入，
+        ' 期间不会调用 InvalidateAllDeviceCaches。若设备端缓存没跟着失效，
+        ' 同一个批次内后续样本就会一直复用第一个样本的输入 —— 这会静默污染训练。
+        Dim staleImg = tf.Tensor.Random({1, 28, 28, 1}, seed:=95)
+        Dim staleW = tf.Tensor.Random({5, 5, 1, 32}, seed:=96)
+        Dim staleGrad = tf.Tensor.Random({1, 28, 28, 32}, seed:=97)
+
+        Call tf.Tensor.computeKernel.Conv2DBackwardFilter(
+            staleGrad, staleImg, New Integer() {5, 5, 1, 32}, 1, 2)
+
+        ' 就地改写主机数组。
+        ' 契约：任何"绕过 Tensor 索引器"的就地写入之后，必须调用 MarkHostModified() 声明失效，
+        ' 否则设备端会继续复用旧副本（CNN 的 DataBlock 就是这样在 AddImageData/SetValues 等
+        ' 写入路径里统一调用它的）。
+        For i As Integer = 0 To staleImg.Data.Length - 1
+            staleImg.Data(i) = -staleImg.Data(i)
+        Next
+
+        staleImg.MarkHostModified()
+
+        Dim staleResult = tf.Tensor.computeKernel.Conv2DBackwardFilter(
+            staleGrad, staleImg, New Integer() {5, 5, 1, 32}, 1, 2)
+
+        Dim savedKernel = tf.Tensor.computeKernel
+
+        tf.Tensor.computeKernel = tfCompute.SIMDTensor.Default
+        Dim staleExpect = New ScalarProbe().Conv2DBackwardFilter(
+            staleGrad, staleImg, New Integer() {5, 5, 1, 32}, 1, 2)
+        tf.Tensor.computeKernel = savedKernel
+
+        ' 判据：若设备端仍复用旧副本，误差会是 O(1) 的结构性偏差（修复前实测 6.9e+01）；
+        ' 只要降到舍入量级就说明缓存已经正确失效。
+        Dim staleErr = MaxDiff(staleResult.Data, staleExpect.Data)
+        Check("就地改写输入后设备缓存已同步", staleErr < 1.0E-12, $"maxdiff={staleErr:E3}")
 
         sw.Restart()
         Dim bigSumGpu = tfMath.reduce_sum(big).Data(0)

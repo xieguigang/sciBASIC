@@ -162,7 +162,7 @@ Namespace CNN.layers
             ' 偏置同样当作 (out_depth x 1) 的列向量逐元素相加
             Dim withBias = Tensor.computeKernel.Add(y, Tensor.Wrap(biases.w, out_depth, 1))
 
-            Call Array.Copy(withBias.Data, lA.w, lA.w.Length)
+            Call lA.SetValues(withBias.Data)
 
             weightsPacked = packed
             Return out_act
@@ -211,6 +211,8 @@ Namespace CNN.layers
                 For j As Integer = 0 To num_inputs - 1
                     dst(j) += gw(ro + j)
                 Next
+
+                Call filters(i).MarkGradientModified()
             Next
 
             ' 2) 对偏置的梯度: 每个输出神经元的偏置梯度恰好就是它的上游梯度
@@ -218,11 +220,13 @@ Namespace CNN.layers
                 biases.dw(i) += out_act.dw(i)
             Next
 
+            Call biases.MarkGradientModified()
+
             ' 3) 对输入的梯度: gradX = Wᵀ · gradOut -> (num_inputs x 1)
             '    输入梯度是每个样本独立消费的(反向一开始就 clearGradient 清零), 因此直接赋值
             Dim gradX = Tensor.computeKernel.MatMul(Tensor.computeKernel.Transpose(weightsPacked), gradOut2)
 
-            Call Array.Copy(gradX.Data, v.dw, v.dw.Length)
+            Call v.SetGradients(gradX.Data)
         End Sub
 
         Public Overrides Function ToString() As String

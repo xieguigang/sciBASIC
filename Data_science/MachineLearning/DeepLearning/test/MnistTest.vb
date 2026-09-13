@@ -33,6 +33,17 @@ Public Class MnistTest
             Return
         End If
 
+        ' --gpu [--seed=N] [--passes=N] [--samples=N]
+        ' GPU 加速 demo：在同一确定性配置下分别用 CPU(SIMD) 与 CUDA 后端跑训练并对比
+        If args.Any(Function(a) String.Equals(a, "--gpu", StringComparison.OrdinalIgnoreCase)) Then
+            Call MnistCnnGpuTest.Run(
+                seed:=ArgValue(args, "--seed", 12345),
+                passes:=ArgValue(args, "--passes", 5),
+                samples:=ArgValue(args, "--samples", 300))
+
+            Return
+        End If
+
         Dim layers As New LayerBuilder
 
         '        Reader mr = new MnistReader("mnist/train-labels-idx1-ubyte", "mnist/train-images-idx3-ubyte");
