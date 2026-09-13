@@ -507,12 +507,30 @@ Namespace Data.Repository
         ''' 合并过程本身崩溃安全（mb/mbf/md 标记 + .bak 备份）。
         ''' </summary>
         Public Sub Merge()
+            If Not TryMerge() Then
+                Throw New InvalidOperationException("存在未完成的 ReadLines() 枚举，请先完成枚举再合并。")
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 尝试把挂起修改合并回源文件。
+        ''' </summary>
+        ''' <returns>
+        ''' True 表示合并已完成（或本来就无需合并）；False 表示合并被推迟 —— 此刻仍有
+        ''' 未完成的 <see cref="ReadLines()"/> 枚举，调用方应当稍后重试。
+        ''' 
+        ''' 后台检查点必须优先使用本方法：抛异常会让调用方难以区分「暂时无法合并」与
+        ''' 「合并失败」，从而把一次可重试的并发冲突变成永久故障。
+        ''' </returns>
+        Public Function TryMerge() As Boolean
             SyncLock _gate
                 EnsureOpen()
+
                 If _activeReaders > 0 Then
-                    Throw New InvalidOperationException("存在未完成的 ReadLines() 枚举，请先完成枚举再合并。")
+                    Return False
                 End If
-                If _wal.PendingOperationCount = 0 AndAlso _wal.Length = 0 Then Return
+
+                If _wal.PendingOperationCount = 0 AndAlso _wal.Length = 0 Then Return True
                 CoalesceOriginalPieces()
                 If IsAppendOnlyLayout() Then
                     MergeFastAppend()
@@ -521,8 +539,10 @@ Namespace Data.Repository
                 End If
                 _wal.ClearLog()
                 _wal.ResetPendingState()
+
+                Return True
             End SyncLock
-        End Sub
+        End Function
 
         ''' <summary>强制重建并保存行索引（维护用途）。</summary>
         Public Sub RebuildLineIndex()
