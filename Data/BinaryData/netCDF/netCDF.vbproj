@@ -15,8 +15,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>netCDF Scientific Array Data File Reader and Writer</Title>
     <Description>Reads and writes netCDF files for array oriented scientific data, handling dimensions, record dimensions, global and variable attributes, and typed data vectors over byte, short, integer, float and double.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataStorage.netCDF</AssemblyTitle>

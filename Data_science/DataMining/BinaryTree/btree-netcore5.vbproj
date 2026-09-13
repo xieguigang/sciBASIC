@@ -14,8 +14,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Description>Clusters vector data by inserting items into an AVL binary tree under a fuzzy similarity comparison, then cutting the tree into partitions. Also offers Newick tree parsing, affinity propagation and KNN graph helpers.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.BinaryTreeClustering</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

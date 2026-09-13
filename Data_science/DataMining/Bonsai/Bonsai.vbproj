@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9742.7537</Version>
+		<Version>5.0.9753.4776</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -21,7 +21,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Bonsai Diffusion Tree Layout for High-Dimensional Data</Title>
 		<IncludeSymbols>True</IncludeSymbols>
-		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
 		<AssemblyTitle>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyTitle>
 		<PackageTags>scibasic;bonsai;dimensionality-reduction;diffusion-tree;visualization</PackageTags>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>

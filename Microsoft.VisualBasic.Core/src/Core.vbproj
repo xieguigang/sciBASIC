@@ -6,8 +6,8 @@
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.5.9742.7537</Version>    
-		<AssemblyVersion>5.33.9742.7537</AssemblyVersion>
+		<Version>10.5.9753.4776</Version>    
+		<AssemblyVersion>5.33.9753.4776</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

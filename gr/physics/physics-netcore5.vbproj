@@ -15,8 +15,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>2D Rigid Body Physics Engine With Particle And Fluid Solvers</Title>
     <Description>A fixed-step 2D physics world with rigid bodies, broad and narrow phase collision, revolute, prismatic, spring and weld joints, force fields, SPH fluids and boids flocking, plus force-driven label placement for sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging.Physics</AssemblyTitle>

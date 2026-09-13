@@ -8,7 +8,7 @@
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
     <PackageId></PackageId>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
-    <Version>5.0.9742.7537</Version>
+    <Version>5.0.9753.4776</Version>
     <Product>sciBASIC</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -21,7 +21,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Data Framework Extension Methods for Object Serialization</Title>
     <Description>Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Framework.Extensions</AssemblyTitle>

@@ -13,6 +13,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>ILCudaDemo.Program</StartupObject>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

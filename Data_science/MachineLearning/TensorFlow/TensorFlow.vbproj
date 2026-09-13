@@ -15,8 +15,8 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Pure VB.NET Tensor Library with NumPy API and Autodiff</Title>
     <Description>Self-contained tensor engine for sciBASIC#, not a Google TensorFlow binding: a managed multi-dimensional Tensor, a NumPy-style API, neural network activations and losses, and reverse-mode automatic differentiation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.TensorFlow</AssemblyTitle>

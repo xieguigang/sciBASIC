@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9742.7537</Version>
+		<Version>5.0.9753.4776</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -22,7 +22,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.Core</AssemblyTitle>
-		<AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
 		<Description>Core math for sciBASIC#: dense and sparse matrices, SVD and linear solvers, simplex linear programming, BigDecimal arithmetic, splines, quantiles, distributions, fuzzy logic and an expression scripting engine.</Description>
 		<PackageTags>scibasic;mathematics;linear-algebra;numerics;linear-programming;spline</PackageTags>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>

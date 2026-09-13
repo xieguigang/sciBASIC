@@ -5,6 +5,8 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <RootNamespace>WpfApp1</RootNamespace>
     <UseWPF>true</UseWPF>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

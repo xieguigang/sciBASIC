@@ -6,8 +6,8 @@
     <AssemblyName>Microsoft.VisualBasic.Math.KaplanMeierEstimator</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Kaplan-Meier Survival Estimator for Two-Group Studies</Title>
     <Description>Computes Kaplan-Meier survival curves for two patient cohorts, merges time events, tests group significance and batch-runs gene-expression split strategies in parallel. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.KaplanMeierEstimator</AssemblyTitle>

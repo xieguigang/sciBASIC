@@ -14,8 +14,8 @@
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.text.yaml</AssemblyTitle>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>YAML to JSON Object Model Parser and Front Matter Reader</Title>
     <Description>Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

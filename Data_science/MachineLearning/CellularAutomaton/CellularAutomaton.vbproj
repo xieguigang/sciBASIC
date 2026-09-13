@@ -13,8 +13,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Cellular Automaton Grid Simulator with netCDF Snapshot Debugging</Title>
     <Description>A generic cellular automaton engine for sciBASIC#: runs tick-and-commit generations over a 2D grid of typed cells with configurable neighbourhood and boundary modes, and exports per-cell state snapshots to netCDF for analysis.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.CellularAutomaton</AssemblyTitle>

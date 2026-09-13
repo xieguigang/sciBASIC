@@ -13,8 +13,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9742.7537</Version>
-    <AssemblyVersion>1.0.9742.7537</AssemblyVersion>
+    <Version>1.0.9753.4776</Version>
+    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
     <Title>Trinity TextRank Keyword Extraction and Text Summarization</Title>
     <Description>NLP module of sciBASIC#: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, Brill part-of-speech tagging, and HTML article body extraction.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.TrinityNLP</AssemblyTitle>
