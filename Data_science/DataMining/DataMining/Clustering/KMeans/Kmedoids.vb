@@ -100,6 +100,10 @@ Namespace KMeans
                 n += 1
             Next
 
+            If sum Is Nothing OrElse n = 0 Then
+                Return Nothing
+            End If
+
             Return SIMD.Divide.f64_op_divide_f64_scalar(sum, n)
         End Function
 

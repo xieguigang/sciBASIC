@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.EntityModels
 
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象，该类型将会在后续版本中移除。", False)>
     Public Class DataSetConvertor
 
         ReadOnly maps As String()

@@ -147,6 +147,7 @@ Public Module ValueMapping
     End Function
 
     <Extension>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象，该重载将会在后续版本中移除。", False)>
     Public Iterator Function AsDataSet(vec As IEnumerable(Of NamedCollection(Of Single))) As IEnumerable(Of ClusterEntity)
         For Each row As NamedCollection(Of Single) In vec
             Yield New ClusterEntity With {.entityVector = row.AsDouble, .uid = row.name}
@@ -161,12 +162,15 @@ Public Module ValueMapping
     End Function
 
     <Extension>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象，该重载将会在后续版本中移除。", False)>
     Public Iterator Function AsDataSet(manifold As IDataEmbedding, labels As IEnumerable(Of String)) As IEnumerable(Of ClusterEntity)
         Dim i As i32 = 0
         Dim mat As Double()() = manifold.GetEmbedding
 
         For Each id As String In labels
-            Yield New ClusterEntity With {.uid = id, .entityVector = mat(++i)}
+            Yield New ClusterEntity With {.uid = id, .entityVector = mat(i)}
+
+            i += 1
         Next
     End Function
 End Module

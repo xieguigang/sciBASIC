@@ -1,0 +1,12 @@
+dataset: 150 samples x 4 features, 3 species
+distance matrix: 150 x 150 (square matrix)
+dendrogram: leafs = 150, leaf order head = sample_42, sample_23, sample_14, sample_43, sample_9
+hcut(k := 3) cluster sizes: 50, 12, 88
+hcut(threshold := 3.0) -> 2 clusters
+  Iris-setosa: 50, 0, 0
+  Iris-versicolor: 0, 0, 50
+  Iris-virginica: 0, 12, 38
+Calculate component 1... cost 3ms and run 17 loop [DONE]
+Calculate component 2... cost 0ms and run 10 loop [DONE]
+done: bezdekIris-hclust.png
+done: bezdekIris-hclust.csv

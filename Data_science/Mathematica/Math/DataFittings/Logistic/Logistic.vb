@@ -135,9 +135,11 @@ Namespace Logistic
             Next
 
             For i As Integer = 0 To ITERATIONS - 1
-                Dim featuresTranspose As NumericMatrix = features.Transpose
-                Dim hx = sigmoid(features * theta)
-                Dim A = featuresTranspose * hx
+                Dim featuresTranspose As NumericMatrix = DirectCast(features.Transpose, NumericMatrix)
+                ' 注意：NumericMatrix 的 * 运算符是逐元素乘法，
+                ' 这里需要的是矩阵乘积，因此必须使用 DotProduct
+                Dim hx As NumericMatrix = sigmoid(DirectCast(features.DotProduct(theta), NumericMatrix))
+                Dim A As NumericMatrix = DirectCast(featuresTranspose.DotProduct(hx), NumericMatrix)
                 Dim B = (featuresTranspose * values) / size
                 Dim delta = A - B
 

@@ -68,9 +68,11 @@ vbs.exe <repo>\tutorials\VBS\cuda.vb
 vbs.exe <repo>\tutorials\VBS\mnist_umap.vb
 vbs.exe <repo>\tutorials\VBS\word2vector.vb
 vbs.exe <repo>\tutorials\VBS\tfidf.vb
+vbs.exe <repo>\tutorials\VBS\linear_regression.vb
+vbs.exe <repo>\tutorials\VBS\hierarchical_clustering.vb
 ```
 
-> `kmeans.vb` / `mnist_umap.vb` / `word2vector.vb` / `tfidf.vb` 会读取外部数据并把结果图写到 `Z:\`；若相应数据文件或盘符不存在，请按需修改脚本里的路径。
+> 上面这些脚本都会把结果图/结果表写到 `Z:\`；其中 `kmeans.vb` / `hierarchical_clustering.vb` / `mnist_umap.vb` / `word2vector.vb` / `tfidf.vb` 还需要读取外部数据文件（`linear_regression.vb` 使用的是脚本内部生成的合成数据）。若相应数据文件或盘符不存在，请按需修改脚本里的路径。
 
 ---
 
@@ -369,7 +371,9 @@ console.writeLine(a+b)
 | 脚本 | 演示内容 | 涉及语法 |
 | --- | --- | --- |
 | `tuple.vb` | 最小可运行示例：元组分解后打印 | [3.7 元组分解](#37-元组分解) |
+| `linear_regression.vb` | 合成数据 → 线性/多项式回归 → 预测与残差写回标签列 → 散点+拟合线存盘 | `NumericTable` 表入口、`label:` 标签列约定、顶层 `Using` 块 |
 | `kmeans.vb` | 读 CSV → kmeans 聚类 → PCA → 散点图存盘 | `#include` 多个程序集、顶层语句、顶层 `Using` 块 |
+| `hierarchical_clustering.vb` | 读 CSV → 距离矩阵 → 层次聚类（`hca` / `hcut`）→ 与真实物种交叉表 → PCA 散点图存盘 | 距离矩阵契约、`label:` 标签列约定、顶层 `Using` 块 |
 | `hola_layout.vb` | HOLA 正交布局，45 节点 / 61 边网络 | **顶层 `Function` / `Sub` 捕获顶层变量**（[3.6](#36-顶层函数与落位规则) 的标准范例） |
 | `tfidf.vb` | TF-IDF 文档距离矩阵 + 热力图 | 顶层 `For` 循环、交错数组、绘图 |
 | `mnist_umap.vb` | MNIST 手写数字 → UMAP 降维可视化 | 大数据集加载、长耗时计算 |
