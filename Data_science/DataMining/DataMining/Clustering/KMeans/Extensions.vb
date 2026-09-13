@@ -56,6 +56,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -142,12 +143,38 @@ Namespace KMeans
             Next
         End Function
 
+        ''' <summary>
+        ''' 对统一二维表执行 KMeans 聚类，聚类结果会写入标签矩阵的 ``cluster`` 列。
+        ''' 
+        ''' ```vb
+        ''' Dim result = x.kmeans(k:=3)
+        ''' ```
+        ''' </summary>
+        ''' <param name="source">经过预处理之后的纯数值二维表</param>
+        ''' <param name="k">簇的数量</param>
+        ''' <param name="n_threads">并行计算所使用的线程数</param>
+        ''' <param name="debug">是否输出调试信息</param>
+        ''' <returns>写入聚类结果之后的原表对象</returns>
         <Extension>
-        Public Function Kmeans(Of T As {INumericMatrix, ILabeledMatrix})(df As T, k As Integer, Optional debug As Boolean = True, Optional n_threads As Integer = 16) As IEnumerable(Of ClusterEntity)
-            Dim labels As String() = df.GetLabels.ToArray
-            Dim mat As Double()() = df.ArrayPack
+        Public Function kmeans(source As NumericTable,
+                               k As Integer,
+                               Optional n_threads As Integer = 16,
+                               Optional debug As Boolean = False) As NumericTable
 
-            Return labels.Select(Function(id, i) New ClusterEntity(id, mat(i))).Kmeans(k, debug, n_threads)
+            Dim engine As New KMeansEngine(debug:=debug, n_threads:=n_threads)
+            Dim clusters As NumericClusterCollection = engine.ClusterDataSet(source, k)
+            Dim labels As Integer() = New Integer(source.nsamples - 1) {}
+            Dim class_id As Integer = 1
+
+            For Each cluster As NumericKMeansCluster In clusters
+                For i As Integer = 0 To cluster.NumOfEntity - 1
+                    labels(cluster.ClusterIndex(i)) = class_id
+                Next
+
+                class_id += 1
+            Next
+
+            Return source.SetLabel("cluster", labels)
         End Function
 
         ''' <summary>

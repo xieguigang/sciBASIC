@@ -75,6 +75,7 @@ Namespace ComponentModel.EntityModels
     ''' 
     ''' (计算所使用的对象实例实体模型)
     ''' </remarks>
+    <Obsolete("已弃用：请统一使用 Microsoft.VisualBasic.Data.NumericTable 二维表对象，该类型将会在后续版本中移除。", False)>
     Public Class ClusterEntity : Inherits EntityBase(Of Double)
         Implements INamedValue
         Implements IVector

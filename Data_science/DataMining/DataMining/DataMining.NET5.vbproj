@@ -27,6 +27,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- 兼容层：ClusterEntity / EntityClusterModel / IntegerEntity 已标记为 Obsolete，
+         这里在主项目内部屏蔽其弃用警告，外部调用方在引用时仍然会收到弃用提示 -->
+    <NoWarn>$(NoWarn);BC40000</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

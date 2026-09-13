@@ -142,7 +142,7 @@ Namespace HDBSCAN.Runner
                                                                                              If index Mod [option].MaxDegreeOfParallelism <> indexThread Then Continue For
 
                                                                                              Dim i = index Mod numPoints
-                                                                                             Dim j = index / numPoints
+                                                                                             Dim j = index \ numPoints
                                                                                              If i >= j Then Continue For
 
                                                                                              Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
@@ -192,7 +192,7 @@ Namespace HDBSCAN.Runner
 
                     Parallel0.For(0, size, [option], Sub(index)
                                                          Dim i = index Mod numPoints
-                                                         Dim j = index / numPoints
+                                                         Dim j = index \ numPoints
                                                          If i < j Then
                                                              Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
                                                              distances(i)(j) = distance

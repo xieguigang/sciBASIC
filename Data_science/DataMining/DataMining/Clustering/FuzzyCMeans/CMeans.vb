@@ -56,9 +56,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
@@ -96,6 +98,53 @@ Namespace FuzzyCMeans
     ''' Is more appropriate than hard clustering.
     ''' </remarks>
     Public Module CMeans
+
+        ''' <summary>
+        ''' 对统一二维表执行模糊 C 均值聚类，硬划分簇编号写入 ``cluster`` 标签列，
+        ''' 每一个簇的隶属度写入 ``membership_i`` 标签列。
+        ''' 
+        ''' ```vb
+        ''' Dim result = x.cmeans(c:=9)
+        ''' ```
+        ''' </summary>
+        ''' <param name="source">经过预处理之后的纯数值二维表</param>
+        ''' <param name="c">簇的数量</param>
+        ''' <param name="m">模糊因子 fuzzification</param>
+        ''' <param name="threshold">迭代收敛的阈值</param>
+        ''' <param name="maxLoop">最大迭代次数</param>
+        ''' <param name="parallel">是否使用并行计算更新隶属度矩阵</param>
+        ''' <returns>写入聚类结果之后的原表对象</returns>
+        <Extension>
+        Public Function cmeans(source As NumericTable,
+                               c As Integer,
+                               Optional m As Double = 2,
+                               Optional threshold As Double = 0.001,
+                               Optional maxLoop As Integer = 10000,
+                               Optional parallel As Boolean = True) As NumericTable
+
+            Dim engine As New CMeansEngine()
+            Dim result As CMeansResult = engine.Run(
+                rows:=source.NumericRows(),
+                classCount:=c,
+                m:=m,
+                threshold:=threshold,
+                parallel:=parallel,
+                maxLoop:=maxLoop
+            )
+
+            Call source.SetLabel("cluster", result.cluster)
+
+            For i As Integer = 0 To c - 1
+                Dim idx As Integer = i
+                Dim column As Double() = result.membership _
+                    .Select(Function(row) row(idx)) _
+                    .ToArray
+
+                Call source.SetLabel($"membership_{i + 1}", column)
+            Next
+
+            Return source
+        End Function
 
         ''' <summary>
         ''' **Fuzzy clustering** (also referred to as **soft clustering**) is a form of clustering in which 
