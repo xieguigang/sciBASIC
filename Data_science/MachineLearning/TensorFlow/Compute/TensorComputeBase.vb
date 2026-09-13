@@ -303,6 +303,295 @@ Namespace Compute
 
 #End Region
 
+#Region "卷积与池化"
+
+        ' ------------------------------------------------------------------
+        ' 标量参考实现（正确性优先）。
+        '
+        ' 布局约定与 <see cref="ITensorCompute"/> 的声明一致，全部 channel-last:
+        '     输入 (N,H,W,C) / 卷积核 (KH,KW,C,OutC) / 输出 (N,OH,OW,OutC)
+        ' 该实现同时充当 SIMDTensor 与 CudaTensor 的兜底（内核不可用时回退到这里）。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>卷积/池化的输出边长: (input + 2*padding - kernel) / stride + 1</summary>
+        Protected Shared Function ConvOutSize(inputSize As Integer, kernelSize As Integer,
+                                              stride As Integer, padding As Integer) As Integer
+            If stride <= 0 Then Throw New ArgumentException("stride 必须为正数")
+            Return (inputSize + 2 * padding - kernelSize) \ stride + 1
+        End Function
+
+        ''' <summary>卷积/池化的入参形状校验</summary>
+        Private Shared Sub RequireRank4(t As Tensor, name As String)
+            If t Is Nothing OrElse t.Rank <> 4 Then
+                Throw New ArgumentException($"{name} 需要四维张量 (N,H,W,C)")
+            End If
+        End Sub
+
+        Public Overridable Function Conv2D(x As Tensor, filters As Tensor, bias As Tensor,
+                                           stride As Integer, padding As Integer) As Tensor Implements ITensorCompute.Conv2D
+            Call RequireRank4(x, "x")
+            Call RequireRank4(filters, "filters")
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1)
+            Dim filtC = filters.Shape(2), outC = filters.Shape(3)
+
+            If filtC <> inC Then
+                Throw New ArgumentException($"卷积核通道数 {filtC} 与输入通道数 {inC} 不一致")
+            End If
+            If bias IsNot Nothing AndAlso bias.Length <> outC Then
+                Throw New ArgumentException($"偏置长度 {bias.Length} 与输出通道数 {outC} 不一致")
+            End If
+
+            Dim outH = ConvOutSize(inH, filtH, stride, padding)
+            Dim outW = ConvOutSize(inW, filtW, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then
+                Throw New ArgumentException($"卷积输出尺寸非法: {outH}x{outW}")
+            End If
+
+            Dim result = New Tensor(batch, outH, outW, outC)
+            Dim src = x.Data
+            Dim kern = filters.Data
+            Dim dst = result.Data
+            Dim biasData = If(bias Is Nothing, Nothing, bias.Data)
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        For oc As Integer = 0 To outC - 1
+                            Dim sum As Double = If(biasData Is Nothing, 0.0, biasData(oc))
+
+                            For kh As Integer = 0 To filtH - 1
+                                Dim ih As Integer = oh * stride + kh - padding
+                                If ih < 0 OrElse ih >= inH Then Continue For
+
+                                For kw As Integer = 0 To filtW - 1
+                                    Dim iw As Integer = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim xBase = ((n * inH + ih) * inW + iw) * inC
+                                    Dim kBase = ((kh * filtW + kw) * inC) * outC + oc
+
+                                    For c As Integer = 0 To inC - 1
+                                        sum += src(xBase + c) * kern(kBase + c * outC)
+                                    Next
+                                Next
+                            Next
+
+                            dst(((n * outH + oh) * outW + ow) * outC + oc) = sum
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function Conv2DBackwardInput(gradOutput As Tensor, filters As Tensor,
+                                                        inputShape As Integer(), stride As Integer,
+                                                        padding As Integer) As Tensor Implements ITensorCompute.Conv2DBackwardInput
+            Call RequireRank4(gradOutput, "gradOutput")
+            Call RequireRank4(filters, "filters")
+
+            Dim batch = inputShape(0), inH = inputShape(1), inW = inputShape(2), inC = inputShape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1), outC = filters.Shape(3)
+            Dim outH = gradOutput.Shape(1), outW = gradOutput.Shape(2)
+
+            Dim result = New Tensor(batch, inH, inW, inC)
+            Dim g = gradOutput.Data
+            Dim kern = filters.Data
+            Dim dst = result.Data
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        For oc As Integer = 0 To outC - 1
+                            Dim gv = g(((n * outH + oh) * outW + ow) * outC + oc)
+
+                            For kh As Integer = 0 To filtH - 1
+                                Dim ih As Integer = oh * stride + kh - padding
+                                If ih < 0 OrElse ih >= inH Then Continue For
+
+                                For kw As Integer = 0 To filtW - 1
+                                    Dim iw As Integer = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim xBase = ((n * inH + ih) * inW + iw) * inC
+                                    Dim kBase = ((kh * filtW + kw) * inC) * outC + oc
+
+                                    For c As Integer = 0 To inC - 1
+                                        dst(xBase + c) += gv * kern(kBase + c * outC)
+                                    Next
+                                Next
+                            Next
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function Conv2DBackwardFilter(gradOutput As Tensor, x As Tensor,
+                                                         filterShape As Integer(), stride As Integer,
+                                                         padding As Integer) As Tensor Implements ITensorCompute.Conv2DBackwardFilter
+            Call RequireRank4(gradOutput, "gradOutput")
+            Call RequireRank4(x, "x")
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim filtH = filterShape(0), filtW = filterShape(1), outC = filterShape(3)
+            Dim outH = gradOutput.Shape(1), outW = gradOutput.Shape(2)
+
+            Dim result = New Tensor(filterShape)
+            Dim g = gradOutput.Data
+            Dim src = x.Data
+            Dim dst = result.Data
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        For oc As Integer = 0 To outC - 1
+                            Dim gv = g(((n * outH + oh) * outW + ow) * outC + oc)
+
+                            For kh As Integer = 0 To filtH - 1
+                                Dim ih As Integer = oh * stride + kh - padding
+                                If ih < 0 OrElse ih >= inH Then Continue For
+
+                                For kw As Integer = 0 To filtW - 1
+                                    Dim iw As Integer = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim xBase = ((n * inH + ih) * inW + iw) * inC
+                                    Dim kBase = ((kh * filtW + kw) * inC) * outC + oc
+
+                                    For c As Integer = 0 To inC - 1
+                                        dst(kBase + c * outC) += gv * src(xBase + c)
+                                    Next
+                                Next
+                            Next
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function Conv2DBackwardBias(gradOutput As Tensor) As Tensor Implements ITensorCompute.Conv2DBackwardBias
+            Call RequireRank4(gradOutput, "gradOutput")
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+
+            Dim result = New Tensor(New Integer() {outC})
+            Dim g = gradOutput.Data
+            Dim dst = result.Data
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        Dim baseIndex = ((n * outH + oh) * outW + ow) * outC
+
+                        For oc As Integer = 0 To outC - 1
+                            dst(oc) += g(baseIndex + oc)
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function MaxPool2D(x As Tensor, size As Integer, stride As Integer, padding As Integer,
+                                              ByRef argMax As Tensor) As Tensor Implements ITensorCompute.MaxPool2D
+            Call RequireRank4(x, "x")
+
+            If size <= 0 Then Throw New ArgumentException("池化窗口必须为正数")
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim outH = ConvOutSize(inH, size, stride, padding)
+            Dim outW = ConvOutSize(inW, size, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then
+                Throw New ArgumentException($"池化输出尺寸非法: {outH}x{outW}")
+            End If
+
+            Dim result = New Tensor(batch, outH, outW, inC)
+            Dim idx = New Tensor(batch, outH, outW, inC)
+            Dim src = x.Data
+            Dim dst = result.Data
+            Dim dstIdx = idx.Data
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        For c As Integer = 0 To inC - 1
+                            ' 越界的窗口位置直接跳过(等价于 -inf), 避免零填充在负数输入时错误胜出
+                            Dim best As Double = Double.NegativeInfinity
+                            Dim bestIdx As Integer = -1
+
+                            For kh As Integer = 0 To size - 1
+                                Dim ih As Integer = oh * stride + kh - padding
+                                If ih < 0 OrElse ih >= inH Then Continue For
+
+                                For kw As Integer = 0 To size - 1
+                                    Dim iw As Integer = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim flat = ((n * inH + ih) * inW + iw) * inC + c
+                                    Dim v = src(flat)
+
+                                    If v > best Then
+                                        best = v
+                                        bestIdx = flat
+                                    End If
+                                Next
+                            Next
+
+                            Dim outIndex = ((n * outH + oh) * outW + ow) * inC + c
+
+                            If bestIdx < 0 Then
+                                ' 整个窗口都落在填充区(极小输入 + 大 padding 才会出现)
+                                dst(outIndex) = 0.0
+                                dstIdx(outIndex) = 0
+                            Else
+                                dst(outIndex) = best
+                                dstIdx(outIndex) = bestIdx
+                            End If
+                        Next
+                    Next
+                Next
+            Next
+
+            argMax = idx
+
+            Return result
+        End Function
+
+        Public Overridable Function MaxPool2DBackward(gradOutput As Tensor, argMax As Tensor,
+                                                      inputShape As Integer()) As Tensor Implements ITensorCompute.MaxPool2DBackward
+            Call RequireRank4(gradOutput, "gradOutput")
+
+            Dim result = New Tensor(inputShape)
+            Dim g = gradOutput.Data
+            Dim idx = argMax.Data
+            Dim dst = result.Data
+
+            ' 每个输出位置唯一对应一个输入位置, 因此可以直接累加而无需原子操作
+            For i As Integer = 0 To g.Length - 1
+                Dim target As Integer = CInt(idx(i))
+
+                If target >= 0 AndAlso target < dst.Length Then
+                    dst(target) += g(i)
+                End If
+            Next
+
+            Return result
+        End Function
+
+#End Region
+
 #Region "归约运算"
 
         Public Overridable Function SumAll(t As Tensor) As Double Implements ITensorCompute.SumAll

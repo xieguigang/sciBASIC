@@ -62,10 +62,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
+Imports Tensor = Microsoft.VisualBasic.MachineLearning.TensorFlow.Tensor
 
 Namespace CNN.data
 
@@ -117,6 +119,63 @@ Namespace CNN.data
         ''' backend of <see cref="Gradients"/>
         ''' </summary>
         Friend dw As Double()
+
+        ' ------------------------------------------------------------------
+        ' 张量视图
+        '
+        ' 本类对外仍然是"扁平 Double() + (SX,SY,Depth) 索引"的老接口（24 个引用文件
+        ' 的调用点因此完全不需要改动），但真正参与计算的数据载体是 TensorFlow 的
+        ' Tensor：下面两个属性把 w / dw 零拷贝包装成张量视图，各层的计算实现即可
+        ' 直接调用 Tensor / Math / nn 的算子，从而由 Tensor.computeKernel 统一派发到
+        ' CPU(SIMD) 或 CUDA 后端。
+        '
+        ' 采用"按需包装 + 引用比对"而不是把 Tensor 作为持久字段，有两个好处：
+        '   1) 任何对 w / dw 的整数组替换（例如 mulGradient、序列化后的字段回填）
+        '      都会被自动察觉并重新包装，不存在"别名失效导致写入丢失"的隐患；
+        '   2) 反射式序列化仍然只看到 w / dw 两个 Double() 字段，
+        '      磁盘格式与旧模型完全兼容。
+        ' ------------------------------------------------------------------
+
+        <IgnoreDataMember> Private _value As Tensor
+        <IgnoreDataMember> Private _grad As Tensor
+
+        ''' <summary>
+        ''' 值数据的张量视图（零拷贝，与 <see cref="Weights"/> 共享同一份底层存储）。
+        ''' 形状为 (SY, SX, Depth)，正好对应索引公式 (SX*y + x)*Depth + depth。
+        ''' </summary>
+        Friend ReadOnly Property Value As Tensor
+            Get
+                If w Is Nothing Then Return Nothing
+
+                If _value Is Nothing OrElse Not Object.ReferenceEquals(_value.Data, w) Then
+                    _value = Tensor.Wrap(w, _SY, _SX, _Depth)
+                End If
+
+                Return _value
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 梯度数据的张量视图（零拷贝，与 <see cref="Gradients"/> 共享同一份底层存储）。
+        ''' </summary>
+        Friend ReadOnly Property Grad As Tensor
+            Get
+                If dw Is Nothing Then Return Nothing
+
+                If _grad Is Nothing OrElse Not Object.ReferenceEquals(_grad.Data, dw) Then
+                    _grad = Tensor.Wrap(dw, _SY, _SX, _Depth)
+                End If
+
+                Return _grad
+            End Get
+        End Property
+
+        ''' <summary>把本块当作单样本图像时的四维形状 (N=1, H=SY, W=SX, C=Depth)</summary>
+        Friend ReadOnly Property TensorShape4D As Integer()
+            Get
+                Return New Integer() {1, _SY, _SX, _Depth}
+            End Get
+        End Property
 
         Sub New()
         End Sub

@@ -82,6 +82,20 @@ Namespace GPUTensor
         ''' <summary>双精度分块矩阵乘 C(m x n) = A(m x k) * B(k x n)</summary>
         Public Const GemmDouble As String = "tensorGemmDoubleKernel"
 
+        ' ---- 卷积与池化（Kernels\conv.cu / Kernels\pool.cu）----
+        ''' <summary>卷积前向（NHWC）</summary>
+        Public Const Conv2DForward As String = "tensorConv2DForwardKernel"
+        ''' <summary>卷积反向 - 对输入的梯度</summary>
+        Public Const Conv2DBackwardInput As String = "tensorConv2DBackwardInputKernel"
+        ''' <summary>卷积反向 - 对卷积核的梯度</summary>
+        Public Const Conv2DBackwardFilter As String = "tensorConv2DBackwardFilterKernel"
+        ''' <summary>卷积反向 - 对偏置的梯度</summary>
+        Public Const Conv2DBackwardBias As String = "tensorConv2DBackwardBiasKernel"
+        ''' <summary>最大池化前向（同时产出 argMax）</summary>
+        Public Const MaxPool2DForward As String = "tensorMaxPool2DForwardKernel"
+        ''' <summary>最大池化反向（按 argMax 散射）</summary>
+        Public Const MaxPool2DBackward As String = "tensorMaxPool2DBackwardKernel"
+
         ' ---- 两段式全局归约 ----
         ''' <summary>全局求和 - 阶段一（部分结果）</summary>
         Public Const PartialSum As String = "tensorReducePartialSumKernel"

@@ -143,6 +143,89 @@ Namespace Compute
 
 #End Region
 
+#Region "卷积与池化"
+
+        ' ------------------------------------------------------------------
+        ' 布局约定（全部为行主序 / channel-last，与 CNN 的 DataBlock 一致）:
+        '
+        '   输入   x          : (N, H, W, C)
+        '   卷积核 filters    : (KH, KW, C, OutC)
+        '   偏置   bias       : (OutC)
+        '   输出   y          : (N, OH, OW, OutC)
+        '
+        '   OH = (H + 2*padding - KH) / stride + 1
+        '   OW = (W + 2*padding - KW) / stride + 1
+        '
+        ' 选择 channel-last 是为了与 CNN 既有的 DataBlock（索引 (y*SX + x)*Depth + c）
+        ' 完全同构，从而迁移时不需要任何转置/重排。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>
+        ''' 二维卷积（严格来说是互相关，与主流深度学习框架一致）。
+        ''' </summary>
+        ''' <param name="x">输入，形状 (N, H, W, C)</param>
+        ''' <param name="filters">卷积核，形状 (KH, KW, C, OutC)</param>
+        ''' <param name="bias">偏置，形状 (OutC)；传 Nothing 表示不加偏置</param>
+        ''' <param name="stride">步长</param>
+        ''' <param name="padding">四周零填充宽度</param>
+        ''' <returns>输出，形状 (N, OH, OW, OutC)</returns>
+        Function Conv2D(x As Tensor, filters As Tensor, bias As Tensor,
+                        stride As Integer, padding As Integer) As Tensor
+
+        ''' <summary>
+        ''' 卷积反向：计算对输入的梯度。
+        ''' </summary>
+        ''' <param name="gradOutput">上游梯度，形状 (N, OH, OW, OutC)</param>
+        ''' <param name="filters">前向使用过的卷积核，形状 (KH, KW, C, OutC)</param>
+        ''' <param name="inputShape">前向输入的形状 (N, H, W, C)，用于确定输出形状</param>
+        ''' <returns>对输入的梯度，形状 (N, H, W, C)</returns>
+        Function Conv2DBackwardInput(gradOutput As Tensor, filters As Tensor,
+                                     inputShape As Integer(), stride As Integer, padding As Integer) As Tensor
+
+        ''' <summary>
+        ''' 卷积反向：计算对卷积核的梯度。
+        ''' </summary>
+        ''' <param name="gradOutput">上游梯度，形状 (N, OH, OW, OutC)</param>
+        ''' <param name="x">前向使用过的输入，形状 (N, H, W, C)</param>
+        ''' <param name="filterShape">卷积核形状 (KH, KW, C, OutC)，用于确定输出形状</param>
+        ''' <returns>对卷积核的梯度，形状 (KH, KW, C, OutC)</returns>
+        Function Conv2DBackwardFilter(gradOutput As Tensor, x As Tensor,
+                                      filterShape As Integer(), stride As Integer, padding As Integer) As Tensor
+
+        ''' <summary>
+        ''' 卷积反向：计算对偏置的梯度（沿 N / OH / OW 三个维度求和）。
+        ''' </summary>
+        ''' <param name="gradOutput">上游梯度，形状 (N, OH, OW, OutC)</param>
+        ''' <returns>对偏置的梯度，形状 (OutC)</returns>
+        Function Conv2DBackwardBias(gradOutput As Tensor) As Tensor
+
+        ''' <summary>
+        ''' 二维最大池化前向，同时输出每个输出位置所对应的<b>输入扁平下标</b>（供反向 scatter）。
+        ''' </summary>
+        ''' <param name="x">输入，形状 (N, H, W, C)</param>
+        ''' <param name="size">池化窗口边长</param>
+        ''' <param name="stride">步长</param>
+        ''' <param name="padding">四周零填充宽度</param>
+        ''' <param name="argMax">
+        ''' 输出参数：形状 (N, OH, OW, C)，元素为获胜元素在<b>输入张量</b>之中的扁平下标
+        ''' （即 <c>n*H*W*C + h*W*C + w*C + c</c>）。反向传播依赖它做梯度回填，
+        ''' 因为每个输出位置唯一的对应一个输入位置，所以反向不需要原子操作。
+        ''' </param>
+        ''' <returns>输出，形状 (N, OH, OW, C)</returns>
+        Function MaxPool2D(x As Tensor, size As Integer, stride As Integer, padding As Integer,
+                           ByRef argMax As Tensor) As Tensor
+
+        ''' <summary>
+        ''' 二维最大池化反向：按前向记录的 <paramref name="argMax"/> 把梯度回填到输入位置。
+        ''' </summary>
+        ''' <param name="gradOutput">上游梯度，形状 (N, OH, OW, C)</param>
+        ''' <param name="argMax">前向返回的输入扁平下标，形状 (N, OH, OW, C)</param>
+        ''' <param name="inputShape">前向输入的形状 (N, H, W, C)</param>
+        ''' <returns>对输入的梯度，形状 (N, H, W, C)</returns>
+        Function MaxPool2DBackward(gradOutput As Tensor, argMax As Tensor, inputShape As Integer()) As Tensor
+
+#End Region
+
 #Region "归约运算"
 
         ''' <summary>沿指定轴（Nothing 表示整体）求和</summary>

@@ -145,6 +145,22 @@ Module Program
         Dim rsCpu = tfMath.reduce_sum(logits, axis:=1)
         Dim amCpu = tfMath.argmax(logits, axis:=1)
 
+        ' ---- 卷积 / 池化的 CPU 参考（走当前后端 = SIMDTensor，即 TensorComputeBase 的标量实现）----
+        Dim convIn = tf.Tensor.Random({2, 8, 8, 3}, seed:=5)
+        Dim convW = tf.Tensor.Random({3, 3, 3, 4}, seed:=6)
+        Dim convB = tf.Tensor.Random({4}, seed:=7)
+        Dim poolIn = tf.Tensor.Random({2, 8, 8, 4}, seed:=8)
+        Dim convGrad = tf.Tensor.Random({2, 8, 8, 4}, seed:=12)
+        Dim poolGrad = tf.Tensor.Random({2, 4, 4, 4}, seed:=13)
+
+        Dim convCpu = tf.Tensor.computeKernel.Conv2D(convIn, convW, convB, 1, 1)
+        Dim poolIdxCpu As tf.Tensor = Nothing
+        Dim poolCpu = tf.Tensor.computeKernel.MaxPool2D(poolIn, 2, 2, 0, poolIdxCpu)
+        Dim convBwdInCpu = tf.Tensor.computeKernel.Conv2DBackwardInput(convGrad, convW, convIn.Shape, 1, 1)
+        Dim convBwdWCpu = tf.Tensor.computeKernel.Conv2DBackwardFilter(convGrad, convIn, convW.Shape, 1, 1)
+        Dim convBwdBCpu = tf.Tensor.computeKernel.Conv2DBackwardBias(convGrad)
+        Dim poolBwdCpu = tf.Tensor.computeKernel.MaxPool2DBackward(poolGrad, poolIdxCpu, poolIn.Shape)
+
         Dim sw = Stopwatch.StartNew()
         Dim bigSumCpu = tfMath.reduce_sum(big).Data(0)
         Dim bigMaxCpu = tfMath.reduce_max(big).Data(0)
@@ -198,6 +214,23 @@ Module Program
         sw.Stop()
         Dim gpuBigMs = sw.Elapsed.TotalMilliseconds
 
+        ' ---- 卷积 / 池化的 GPU 路径 ----
+        ' 注意：这些张量的元素数（2*8*8*3 = 384）远小于默认阈值 MinGpuElements=4096，
+        ' 若不调低阈值就会静默回退 CPU，使断言"假通过"。这里临时下调阈值，
+        ' 保证确实执行了 GPU 内核。
+        Dim savedMinGpu = gpu.CudaTensor.MinGpuElements
+        gpu.CudaTensor.MinGpuElements = 1
+
+        Dim convGpu = tf.Tensor.computeKernel.Conv2D(convIn, convW, convB, 1, 1)
+        Dim poolIdxGpu As tf.Tensor = Nothing
+        Dim poolGpu = tf.Tensor.computeKernel.MaxPool2D(poolIn, 2, 2, 0, poolIdxGpu)
+        Dim convBwdInGpu = tf.Tensor.computeKernel.Conv2DBackwardInput(convGrad, convW, convIn.Shape, 1, 1)
+        Dim convBwdWGpu = tf.Tensor.computeKernel.Conv2DBackwardFilter(convGrad, convIn, convW.Shape, 1, 1)
+        Dim convBwdBGpu = tf.Tensor.computeKernel.Conv2DBackwardBias(convGrad)
+        Dim poolBwdGpu = tf.Tensor.computeKernel.MaxPool2DBackward(poolGrad, poolIdxGpu, poolIn.Shape)
+
+        gpu.CudaTensor.MinGpuElements = savedMinGpu
+
         ' ---------------- 3) 正确性断言 ----------------
         Console.WriteLine(">> 3) 正确性检查（以 CPU 双精度为基准）")
 
@@ -222,6 +255,23 @@ Module Program
         Check("两段式全局 sum", sumErr < 1.0E-13, $"relerr={sumErr:E3}")
         Check("两段式全局 max", maxErr < 1.0E-15, $"relerr={maxErr:E3}")
         Check("两段式全局 min", minErr < 1.0E-15, $"relerr={minErr:E3}")
+
+        ' ---- 卷积 / 池化（Kernels\conv.cu / pool.cu）----
+        Dim convErr = MaxDiff(convCpu.Data, convGpu.Data)
+        Dim poolErr = MaxDiff(poolCpu.Data, poolGpu.Data)
+        Dim poolIdxErr = MaxDiff(poolIdxCpu.Data, poolIdxGpu.Data)
+        Dim convBwdInErr = MaxDiff(convBwdInCpu.Data, convBwdInGpu.Data)
+        Dim convBwdWErr = MaxDiff(convBwdWCpu.Data, convBwdWGpu.Data)
+        Dim convBwdBErr = MaxDiff(convBwdBCpu.Data, convBwdBGpu.Data)
+        Dim poolBwdErr = MaxDiff(poolBwdCpu.Data, poolBwdGpu.Data)
+
+        Check("P4 conv2d 前向", convErr < 1.0E-12, $"maxdiff={convErr:E3}")
+        Check("P4 maxpool2d 前向", poolErr = 0.0, $"maxdiff={poolErr:E3}")
+        Check("P4 maxpool2d argmax", poolIdxErr = 0.0, $"maxdiff={poolIdxErr:E3}")
+        Check("P4 conv2d 反向-输入", convBwdInErr < 1.0E-12, $"maxdiff={convBwdInErr:E3}")
+        Check("P4 conv2d 反向-卷积核", convBwdWErr < 1.0E-12, $"maxdiff={convBwdWErr:E3}")
+        Check("P4 conv2d 反向-偏置", convBwdBErr < 1.0E-12, $"maxdiff={convBwdBErr:E3}")
+        Check("P4 maxpool2d 反向", poolBwdErr < 1.0E-15, $"maxdiff={poolBwdErr:E3}")
 
         Dim rowSums = tfMath.reduce_sum(smGpu, axis:=1)
         Dim rowErr As Double = 0

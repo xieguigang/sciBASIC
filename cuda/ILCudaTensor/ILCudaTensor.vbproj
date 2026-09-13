@@ -30,6 +30,12 @@
     -->
     <EmbeddedResource Include="Kernels\tensor.cu" />
     <EmbeddedResource Include="Kernels\gemm.cu" />
+    <!--
+      手写卷积 / 池化内核（double, NHWC）：前向 + 反向（gradInput / gradFilter /
+      gradBias / pool argMax 散射）。同样以内嵌资源分发并在 Register 时注入。
+    -->
+    <EmbeddedResource Include="Kernels\conv.cu" />
+    <EmbeddedResource Include="Kernels\pool.cu" />
   </ItemGroup>
 
   <ItemGroup>

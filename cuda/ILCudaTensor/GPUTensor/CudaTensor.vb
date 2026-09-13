@@ -585,6 +585,209 @@ Namespace GPUTensor
 
 #End Region
 
+#Region "卷积与池化（手写内核：Kernels\conv.cu / Kernels\pool.cu）"
+
+        ''' <summary>卷积/池化的输出边长: (input + 2*padding - kernel) / stride + 1</summary>
+        Private Shared Function ConvOutSize(inputSize As Integer, kernelSize As Integer,
+                                            stride As Integer, padding As Integer) As Integer
+            Return (inputSize + 2 * padding - kernelSize) \ stride + 1
+        End Function
+
+        ''' <summary>形状的元素总数</summary>
+        Private Shared Function ElementCount(shape As Integer()) As Integer
+            Dim n As Integer = 1
+
+            For Each d As Integer In shape
+                n *= d
+            Next
+
+            Return n
+        End Function
+
+        ''' <summary>
+        ''' 取一个手写内核；若该符号不在当前 NVRTC 编译单元之中则返回 Nothing，
+        ''' 由调用方回退到 CPU 参考实现（与其它算子的回退策略一致）。
+        ''' </summary>
+        Private Function TryKernel(name As String) As ILCudaRuntime.CudaKernel
+            Try
+                Return _engine.GetKernel(name)
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        ''' <summary>偏置为 Nothing 时用零张量占位，使后续显存上传路径保持统一</summary>
+        Private Shared Function ZeroBias(channels As Integer) As tf.Tensor
+            Return tf.Tensor.Zeros(New Integer() {channels})
+        End Function
+
+        Public Overrides Function Conv2D(x As tf.Tensor, filters As tf.Tensor, bias As tf.Tensor,
+                                         stride As Integer, padding As Integer) As tf.Tensor
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DForward)
+
+            If Not OnGpu(x) OrElse kernel Is Nothing Then
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            Dim N = x.Shape(0), H = x.Shape(1), W = x.Shape(2), C = x.Shape(3)
+            Dim KH = filters.Shape(0), KW = filters.Shape(1), OutC = filters.Shape(3)
+            Dim OH = ConvOutSize(H, KH, stride, padding)
+            Dim OW = ConvOutSize(W, KW, stride, padding)
+            Dim total = N * OH * OW * OutC
+
+            Dim dx = Device(x)
+            Dim df = Device(filters)
+            Dim db = Device(If(bias Is Nothing, ZeroBias(OutC), bias))
+
+            Using dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(total)
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(total, 256),
+                              dx, df, db, dOut, N, H, W, C, KH, KW, OutC, OH, OW, stride, padding)
+
+                Return Wrap(dOut.Read(), New Integer() {N, OH, OW, OutC})
+            End Using
+        End Function
+
+        Public Overrides Function Conv2DBackwardInput(gradOutput As tf.Tensor, filters As tf.Tensor,
+                                                      inputShape As Integer(), stride As Integer,
+                                                      padding As Integer) As tf.Tensor
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DBackwardInput)
+
+            If Not OnGpu(gradOutput) OrElse kernel Is Nothing Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim N = inputShape(0), H = inputShape(1), W = inputShape(2), C = inputShape(3)
+            Dim KH = filters.Shape(0), KW = filters.Shape(1), OutC = filters.Shape(3)
+            Dim OH = gradOutput.Shape(1), OW = gradOutput.Shape(2)
+
+            Dim dg = Device(gradOutput)
+            Dim df = Device(filters)
+
+            Using dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(ElementCount(inputShape))
+                ' 反向是散加(重叠窗口会命中同一个输入位置), 因此先清零再用 atomicAdd 累加
+                dOut.Fill(0.0)
+
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(N * OH * OW * OutC, 256),
+                              dg, df, dOut, N, H, W, C, KH, KW, OutC, OH, OW, stride, padding)
+
+                Return Wrap(dOut.Read(), inputShape)
+            End Using
+        End Function
+
+        Public Overrides Function Conv2DBackwardFilter(gradOutput As tf.Tensor, x As tf.Tensor,
+                                                       filterShape As Integer(), stride As Integer,
+                                                       padding As Integer) As tf.Tensor
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DBackwardFilter)
+
+            If Not OnGpu(gradOutput) OrElse kernel Is Nothing Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim N = x.Shape(0), H = x.Shape(1), W = x.Shape(2), C = x.Shape(3)
+            Dim KH = filterShape(0), KW = filterShape(1), OutC = filterShape(3)
+            Dim OH = gradOutput.Shape(1), OW = gradOutput.Shape(2)
+
+            Dim dg = Device(gradOutput)
+            Dim dx = Device(x)
+
+            Using dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(ElementCount(filterShape))
+                dOut.Fill(0.0)
+
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(N * OH * OW * OutC, 256),
+                              dg, dx, dOut, N, H, W, C, KH, KW, OutC, OH, OW, stride, padding)
+
+                Return Wrap(dOut.Read(), filterShape)
+            End Using
+        End Function
+
+        Public Overrides Function Conv2DBackwardBias(gradOutput As tf.Tensor) As tf.Tensor
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DBackwardBias)
+
+            If Not OnGpu(gradOutput) OrElse kernel Is Nothing Then
+                Return MyBase.Conv2DBackwardBias(gradOutput)
+            End If
+
+            Dim N = gradOutput.Shape(0), OH = gradOutput.Shape(1)
+            Dim OW = gradOutput.Shape(2), OutC = gradOutput.Shape(3)
+
+            Dim dg = Device(gradOutput)
+
+            Using dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(OutC)
+                ' 一个线程负责一个通道, 独占写入, 无需清零也无需原子操作
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(OutC, 64), dg, dOut, N, OH, OW, OutC)
+
+                Return Wrap(dOut.Read(), New Integer() {OutC})
+            End Using
+        End Function
+
+        Public Overrides Function MaxPool2D(x As tf.Tensor, size As Integer, stride As Integer,
+                                            padding As Integer, ByRef argMax As tf.Tensor) As tf.Tensor
+            Dim kernel = TryKernel(TensorKernelNames.MaxPool2DForward)
+
+            If Not OnGpu(x) OrElse kernel Is Nothing Then
+                Return MyBase.MaxPool2D(x, size, stride, padding, argMax)
+            End If
+
+            Dim N = x.Shape(0), H = x.Shape(1), W = x.Shape(2), C = x.Shape(3)
+            Dim OH = ConvOutSize(H, size, stride, padding)
+            Dim OW = ConvOutSize(W, size, stride, padding)
+            Dim total = N * OH * OW * C
+            Dim shape As Integer() = {N, OH, OW, C}
+
+            Dim dx = Device(x)
+
+            Using dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(total),
+                  dIdx As New ILCudaRuntime.DeviceBuffer(Of Integer)(total)
+
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(total, 256),
+                              dx, dOut, dIdx, N, H, W, C, size, OH, OW, stride, padding)
+
+                ' argMax 以整数的扁平输入下标产出, 这里转成 double 承载 (与 Tensor 的载体类型一致)
+                Dim hostIdx = dIdx.Read()
+                Dim idxData(hostIdx.Length - 1) As Double
+
+                For i As Integer = 0 To hostIdx.Length - 1
+                    idxData(i) = CDbl(hostIdx(i))
+                Next
+
+                argMax = Wrap(idxData, shape)
+
+                Return Wrap(dOut.Read(), shape)
+            End Using
+        End Function
+
+        Public Overrides Function MaxPool2DBackward(gradOutput As tf.Tensor, argMax As tf.Tensor,
+                                                    inputShape As Integer()) As tf.Tensor
+            Dim kernel = TryKernel(TensorKernelNames.MaxPool2DBackward)
+
+            If Not OnGpu(gradOutput) OrElse kernel Is Nothing Then
+                Return MyBase.MaxPool2DBackward(gradOutput, argMax, inputShape)
+            End If
+
+            Dim srcIdx = argMax.Data
+            Dim hostIdx(srcIdx.Length - 1) As Integer
+
+            For i As Integer = 0 To srcIdx.Length - 1
+                hostIdx(i) = CInt(srcIdx(i))
+            Next
+
+            Dim dg = Device(gradOutput)
+
+            Using dIdx As New ILCudaRuntime.DeviceBuffer(Of Integer)(hostIdx.Length),
+                  dOut As New ILCudaRuntime.DeviceBuffer(Of Double)(ElementCount(inputShape))
+
+                Call dIdx.Write(hostIdx)
+                dOut.Fill(0.0)
+
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(hostIdx.Length, 256),
+                              dg, dIdx, dOut, CLng(hostIdx.Length))
+
+                Return Wrap(dOut.Read(), inputShape)
+            End Using
+        End Function
+
+#End Region
+
 #Region "归约运算"
 
         Public Overrides Function SumAll(t As tf.Tensor) As Double

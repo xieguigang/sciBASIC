@@ -275,6 +275,23 @@ Public Class Tensor : Implements ICloneable, IDisposable
 #Region "构造函数"
 
     ''' <summary>
+    ''' 创建一个空的张量（形状为 {0}、不含数据）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 该重载的唯一用途是给反射式反序列化（<c>Activator.CreateInstance</c>，见
+    ''' <c>Microsoft.VisualBasic.Serialization.BinaryDumping</c> 的 <c>ObjectInputStream</c>）
+    ''' 提供一个真正的无参构造函数：实例化之后由反序列化流程直接填充字段，
+    ''' 因此这里只做能够安全通过 <see cref="UpdateDimProds"/> 的最小初始化。
+    ''' </remarks>
+    Public Sub New()
+        Me._Shape = New Integer() {0}
+        _Data = New Double() {}
+
+        ' 初始化维度乘积数组
+        Call UpdateDimProds()
+    End Sub
+
+    ''' <summary>
     ''' 创建指定形状的张量，并用零初始化
     ''' </summary>
     ''' <param name="shape">张量的形状</param>
@@ -448,6 +465,53 @@ Public Class Tensor : Implements ICloneable, IDisposable
 #End Region
 
 #Region "静态工厂方法"
+
+    ''' <summary>
+    ''' 直接使用给定的数据数组创建张量（<b>不做数据拷贝</b>）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与 <c>New(data, shape)</c> 的区别在于本方法<b>不会克隆</b> <paramref name="data"/>：
+    ''' 张量与调用方共享同一份底层存储，任一侧的就地修改都会立刻反映到另一侧，
+    ''' 因此它适合"把已有的 <c>Double()</c> 缓冲区包装成张量视图"的场景
+    ''' （例如 CNN 把 <c>DataBlock</c> 的权重数组交给张量算子参与计算）。
+    ''' 需要独立副本时请使用构造函数。
+    ''' </remarks>
+    ''' <param name="data">底层数据数组，长度必须与 <paramref name="shape"/> 的乘积一致</param>
+    ''' <param name="shape">张量形状</param>
+    Public Shared Function Wrap(data As Double(), ParamArray shape As Integer()) As Tensor
+        If data Is Nothing Then
+            Throw New ArgumentNullException(NameOf(data))
+        End If
+
+        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+
+        If data.Length <> expectedSize Then
+            Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
+        End If
+
+        Dim t As New Tensor()
+        t._Data = data
+        t._Shape = CType(shape.Clone(), Integer())
+
+        ' 初始化维度乘积数组
+        Call t.UpdateDimProds()
+
+        Return t
+    End Function
+
+    ''' <summary>
+    ''' 用已有张量的底层存储与指定形状再创建一个张量视图（零拷贝 reshape）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 元素总数必须保持不变，否则抛 <see cref="ArgumentException"/>。
+    ''' </remarks>
+    Public Shared Function Wrap(source As Tensor, ParamArray shape As Integer()) As Tensor
+        If source Is Nothing Then
+            Throw New ArgumentNullException(NameOf(source))
+        End If
+
+        Return Wrap(source.Data, shape)
+    End Function
 
     ''' <summary>
     ''' 从二维数组创建张量
