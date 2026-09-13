@@ -60,7 +60,7 @@ Module Program
 
         Dim back As NumericTable = df.AsNumericTable()
 
-        Call CheckComparable(table, back, "dataframe")
+        Call CheckComparable(table, back, "dataframe", withMeta:=True)
 
         ' ---------- labels 参数叠加 ----------
         Call Section("labels parameter")
@@ -124,7 +124,7 @@ Module Program
         Return New MemoryStream(New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False).GetBytes(text))
     End Function
 
-    Private Sub CheckComparable(source As NumericTable, loaded As NumericTable, tag As String)
+    Private Sub CheckComparable(source As NumericTable, loaded As NumericTable, tag As String, Optional withMeta As Boolean = False)
         Call Check(loaded IsNot Nothing, $"[{tag}] the table object was loaded")
         Call Check(loaded.nsamples = source.nsamples, $"[{tag}] nsamples = {loaded.nsamples}")
         Call Check(loaded.nfeatures = source.nfeatures, $"[{tag}] nfeatures = {loaded.nfeatures}")
@@ -134,8 +134,29 @@ Module Program
         Call Check(SameStrings(source.labelNames, loaded.labelNames), $"[{tag}] labelNames = {String.Join(", ", loaded.labelNames)}")
         Call Check(SameMatrix(source.features, loaded.features), $"[{tag}] feature matrix is identical (including the NaN cell)")
         Call Check(SameMatrix(source.labels, loaded.labels), $"[{tag}] label matrix is identical")
-        Call Check(loaded.name = source.name, $"[{tag}] name = {loaded.name}")
+
+        If withMeta Then
+            Call Check(loaded.name = source.name, $"[{tag}] name = {loaded.name}")
+            Call Check(loaded.description = source.description, $"[{tag}] description = {loaded.description}")
+        End If
     End Sub
+
+    Private Function SameVector(a As Double(), b As Double()) As Boolean
+        If a Is Nothing OrElse b Is Nothing Then
+            Return a Is Nothing AndAlso b Is Nothing
+        End If
+        If a.Length <> b.Length Then
+            Return False
+        End If
+
+        For i As Integer = 0 To a.Length - 1
+            If Not SameValue(a(i), b(i)) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
 
     Private Function SameStrings(a As String(), b As String()) As Boolean
         If a Is Nothing OrElse b Is Nothing Then
