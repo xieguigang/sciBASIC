@@ -104,6 +104,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         Public Const CrefUrlPrefix$ = "cref:"
 
         Private ReadOnly RegexICS As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Singleline
+        Private ReadOnly RegexICSml As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Singleline Or RegexOptions.Multiline
 
         Private ReadOnly inheritdocTag As New Regex("<inheritdoc\s*/>", RegexICS)
         Private ReadOnly listTag As New Regex("<list(?<attr>[^>]*)>(?<body>.*?)</list>", RegexICS)
@@ -111,6 +112,15 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         Private ReadOnly termTag As New Regex("<term>(?<text>.*?)</term>", RegexICS)
         Private ReadOnly descTag As New Regex("<description>(?<text>.*?)</description>", RegexICS)
         Private ReadOnly codeTag As New Regex("<code>(?<text>.*?)</code>", RegexICS)
+        ''' <summary>
+        ''' the markdown fenced code block that is written in the xml comment text.
+        ''' the body is not allowed to cross a xml element boundary (a line which
+        ''' starts with ``&lt;``), so this replace could never break the xml
+        ''' structure of the comment document.
+        ''' </summary>
+        Private ReadOnly fenceTag As New Regex(
+            "^[ \t]*(?<open>`{3,}[^\r\n]*\r?\n)(?<body>(?:(?!\r?\n[ \t]*<)[\s\S])*?)(?<close>\r?\n[ \t]*`{3,}[ \t]*(?=\r?\n|$))",
+            RegexICSml)
         Private ReadOnly cTag As New Regex("<c>(?<text>.*?)</c>", RegexICS)
         Private ReadOnly seeCrefSelfTag As New Regex("<see(?:also)?\s+cref=""(?<cref>[^""]+)""[^>]*?/>", RegexICS)
         Private ReadOnly seeCrefTextTag As New Regex("<see(?:also)?\s+cref=""(?<cref>[^""]+)""[^>]*?>(?<text>.*?)</see(?:also)?>", RegexICS)
@@ -142,6 +152,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             ' block level tags should be processed before the inline tags
             s = inheritdocTag.Replace(s, "")
             s = listTag.Replace(s, AddressOf transList)
+            s = fenceTag.Replace(s, AddressOf transFence)
             s = codeTag.Replace(s, AddressOf transCodeBlock)
             s = cTag.Replace(s, AddressOf transInlineCode)
 
@@ -162,8 +173,38 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         End Function
 
         Private Function transCodeBlock(m As Match) As String
-            Dim code = m.Groups("text").Value.Trim(ControlChars.Cr, ControlChars.Lf)
+            Dim code = codeSafe(m.Groups("text").Value)
+            code = code.Trim(ControlChars.Cr, ControlChars.Lf)
             Return vbLf & "```" & vbLf & code & vbLf & "```" & vbLf
+        End Function
+
+        ''' <summary>
+        ''' the markdown fenced code block that is written by the author is a literal
+        ''' text too, so its inner xml document tags are also converted into the
+        ''' plain text.
+        ''' </summary>
+        ''' <param name="m"></param>
+        ''' <returns></returns>
+        Private Function transFence(m As Match) As String
+            Return m.Groups("open").Value & codeSafe(m.Groups("body").Value) & m.Groups("close").Value
+        End Function
+
+        ''' <summary>
+        ''' the content of a code block is a literal text which is not parsed as
+        ''' markdown, so the inner xml document tags must be converted into the
+        ''' plain text instead of the markdown formatting.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        Private Function codeSafe(s As String) As String
+            s = seeCrefTextTag.Replace(s, Function(m) CrefDisplayName(m.Groups("cref").Value))
+            s = seeCrefSelfTag.Replace(s, Function(m) CrefDisplayName(m.Groups("cref").Value))
+            s = seeLangwordTag.Replace(s, Function(m) m.Groups("word").Value)
+            s = paramRefSelfTag.Replace(s, Function(m) m.Groups("name").Value)
+            s = paramRefTextTag.Replace(s, Function(m) m.Groups("text").Value)
+            s = cTag.Replace(s, Function(m) m.Groups("text").Value)
+
+            Return s
         End Function
 
         Private Function transInlineCode(m As Match) As String
@@ -242,7 +283,12 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             ' markdown link could be broken by a display text that contains them.
             display = display.Replace("[", "\[").Replace("]", "\]")
 
-            Return $"[{display}]({CrefUrlPrefix}{cref.Trim()})"
+            ' the generic arity suffix of a clr type name is a backtick character,
+            ' it must be encoded, otherwise it will break the match of the markdown
+            ' inline code span in the comment text.
+            Dim id$ = cref.Trim().Replace("%", "%25").Replace("`", "%60")
+
+            Return $"[{display}]({CrefUrlPrefix}{id})"
         End Function
 
         ''' <summary>

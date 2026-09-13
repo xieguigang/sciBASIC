@@ -66,7 +66,7 @@ Public Class HtmlRender : Inherits Render
 
     Public Overrides Function Paragraph(text As String, Optional createParagraphs As Boolean = True) As String
         If createParagraphs Then
-            Return _leadingWhitespace.Replace(text, "<p>")
+            Return $"<p>{text}</p>"
         End If
         Return text
     End Function
