@@ -110,7 +110,7 @@ Module Program
         ''' <summary>只打印将要发生的改动，不写盘</summary>
         Public Property DryRun As Boolean
         ''' <summary>只更新版本号，跳过过时编译配置的清理</summary>
-        Public Property NoClean As Boolean
+        Public Property NoClean As Boolean = True
         ''' <summary>是否修正 nuget_release|x64 配置的产物输出路径</summary>
         Public Property FixOutputPath As Boolean
         ''' <summary>是否请求打印用法说明</summary>
@@ -511,8 +511,8 @@ Module Program
                     Return opts
                 Case "-n", "--dry-run"
                     opts.DryRun = True
-                Case "--no-clean"
-                    opts.NoClean = True
+                Case "--clean"
+                    opts.NoClean = False
                 Case "--fix-output-path"
                     opts.FixOutputPath = True
                 Case "-v", "--version", "-r", "--root"
@@ -554,7 +554,7 @@ Module Program
         Console.WriteLine("  -r, --root <dir>      框架根目录。默认从程序所在目录向上回溯查找")
         Console.WriteLine("                        包含 Microsoft.VisualBasic.Core 的目录。")
         Console.WriteLine("  -n, --dry-run         只打印将要发生的改动，不写入文件。")
-        Console.WriteLine("      --no-clean        只更新版本号，不清理过时的 TargetFramework 条件配置组。")
+        Console.WriteLine("      --clean           不仅仅只更新版本号，清理过时的 TargetFramework 条件配置组。")
         Console.WriteLine("      --fix-output-path 修正 nuget_release|x64 的产物输出路径。将 RootNamespace")
         Console.WriteLine("                        以 Microsoft.VisualBasic 起始的工程的该配置 <OutputPath>")
         Console.WriteLine("                        统一设为指向框架根下 .nuget 目录的相对路径；缺配置组的补建，")
