@@ -35,7 +35,7 @@ End Using
 
 整个执行流水线分为四个阶段：
 
-1. **解析**(`VBScript.ParseScript`)：读取源码，提取 `#include` 引用的外部程序集，并进行文本预处理（移除 `#include` 行、展开命令行参数语法、展开元组分解语法）；
+1. **解析**(`VBScript.ParseScript`)：读取源码，提取 `#include` 引用的外部程序集，解析 `#package/#author/#title/#version` 程序集元数据指令，并进行文本预处理（移除 `#include` 行、展开命令行参数语法、展开 `let` 动态类型声明、展开元组分解语法）；
 2. **结构重构**(`ScriptRefactor.Refactor`)：逐行扫描代码，利用块栈分离出类型定义块、顶层函数、顶层控制流块与顶层语句，将顶层函数重写为匿名函数并求解其在 `Main` 中的落位，最终组装为固定容器结构；
 3. **内存编译**(`DynamicDll.CompileScript`)：基于 Roslyn 将生成的代码编译为 `DynamicallyLinkedLibrary`，IL 与 PDB 均直接发射到内存流中；
 4. **反射执行**(`ScriptRuntime.Run`)：在可回收的 `ScriptLoadContext`(自定义 `AssemblyLoadContext`) 中加载 assembly，通过反射调用 `DynamicDll.Program.Main(args As CommandLine)`，`Dispose` 时卸载整个加载上下文。
@@ -241,6 +241,78 @@ Dim b = __tuple2.Item2
 
 生成的代码固定包含 `Option Strict Off` / `Option Explicit On` / `Option Infer On`。
 
+#### 7. 程序集元数据指令(#package / #author / #title / #version)
+
+脚本头部可以使用下列预处理指令声明动态编译 assembly 的元数据：
+
+```vbnet
+#package "MyScript.Package"     ' 设置动态编译 assembly 的名称
+#author  "xieguigang"           ' assembly 级别 AssemblyCompanyAttribute
+#title   "My First Script"      ' assembly 级别 AssemblyTitleAttribute
+#version "1.2.3.4"              ' assembly 级别 AssemblyVersionAttribute
+```
+
+- `#package` 作为 Roslyn 编译时的 assembly name，其取值优先级为：`CompileScript` 的显式 `asmName` 参数 > `#package` 指令 > 脚本文件名；
+- `#author` / `#title` / `#version` 会分别生成 assembly 级别的 `AssemblyCompanyAttribute` / `AssemblyTitleAttribute` / `AssemblyVersionAttribute`；
+- 指令值可以使用双引号包裹，也可以直接写裸标记（例如 `#version 1.2.3.4`）；
+- 若需要在运行时读回这些值，可以使用魔法方法 `Package()` / `Author()` / `Title()` / `Version()` / `Meta("key")`。
+
+#### 8. let 动态类型声明
+
+采用 `Dim` 声明时由 Roslyn 自动进行类型推断，得到的是一个强类型变量；而采用 `let` 声明时，引擎会在预处理阶段将其重写为 `Object` 类型的 `Dim` 声明：
+
+```vbnet
+Dim strong = "hello"     ' Roslyn 类型推断 => String(强类型)
+let dynamic = "hello"    ' 预处理为 Dim dynamic As Object = "hello"(动态类型)
+```
+
+`let` 声明的变量被强制声明为 `Object`，因此可以在运行时重新绑定任意类型并动态访问其成员：
+
+```vbnet
+let value = 123
+value = "now a string"
+value = New Person With {.Name = "asuka", .Age = 18}
+
+Call Console.WriteLine(value.Name)      ' 动态成员访问
+```
+
+引擎会自动区分 LINQ 查询表达式之中的 `Let` 子句，下面的 `Let` 不会被改写：
+
+```vbnet
+Dim numbers = {1, 2, 3, 4, 5, 6}
+Dim squares = From n In numbers
+              Let sq = n * n
+              Where sq > 9
+              Select sq
+```
+
+#### 9. 魔法方法
+
+引擎会在预处理阶段把与脚本上下文相关的信息（脚本文件路径、头部指令元数据、`#include` 依赖与搜索目录）以常量/字面量的形式烘焙进生成代码，并注入到 `DynamicDll.VBScriptHostMagics` 模块之中。脚本无需任何 import 即可直接调用：
+
+| 分组 | 方法 | 说明 |
+|------|------|------|
+| 脚本上下文 | `ScriptDir()` | 脚本文件所在的文件夹 |
+| | `ScriptFile()` | 脚本文件的绝对路径 |
+| | `ScriptName(Optional withExtension As Boolean = True)` | 脚本文件名 |
+| | `Here(relpath)` | 将相对路径解析为相对于脚本所在文件夹的绝对路径 |
+| | `ScriptText()` | 读取脚本自身的源代码文本 |
+| | `ScriptLines()` | 逐行读取脚本自身的源代码 |
+| | `Self()` | 脚本自身编译得到的 `Assembly` |
+| 元数据反射 | `Package()` / `Author()` / `Title()` / `Version()` | 读回对应的 `#` 指令值 |
+| | `Meta(key)` | 按名称(大小写不敏感)读取指令值，未知名称返回 `Nothing` |
+| 依赖与定位 | `Includes()` | `#include` 引用的外部程序集绝对路径数组 |
+| | `Locate(name)` | 按 `#include` 相同的搜索顺序定位文件，返回绝对路径或 `Nothing` |
+
+```vbnet
+Call Console.WriteLine($"脚本位于: {ScriptDir()}")
+Call Console.WriteLine($"配置文件: {Here("config.json")}")
+
+For Each dll In Includes()
+    Call Console.WriteLine(dll)
+Next
+```
+
 ## 退出码
 
 脚本对应的虚拟 `Main` 函数返回 `Integer` 作为进程退出码，默认 `Return 0`。若脚本执行过程中抛出未捕获的异常，宿主进程会以异常终止。
@@ -274,6 +346,9 @@ End Using   ' Dispose后动态加载的assembly会被卸载
 | `src/DynamicDll.vb` | Roslyn 内存编译（引用收集、编译、IL 发射与加载）与反射调用 |
 | `src/VBScript/VBScript.vb` | 脚本解析入口：`#include` 提取与路径解析、代码重构调度 |
 | `src/VBScript/ScriptRefactor.vb` | 代码结构重构核心：文本预处理、逐行块扫描、顶层函数落位、代码组装 |
+| `src/VBScript/ScriptMetadata.vb` | 程序集元数据指令(`#package/#author/#title/#version`)解析与 assembly 特性生成 |
+| `src/VBScript/LetStatement.vb` | `let` 动态类型声明展开，并区分 LINQ 查询之中的 `Let` 子句 |
+| `src/VBScript/Magics.vb` | 脚本上下文魔法方法源码生成器 |
 | `src/VBScript/TupleDestructuring.vb` | 元组分解语法展开 |
-| `src/VBScript/ScriptParseResult.vb` | 解析结果数据对象 |
+| `src/VBScript/ScriptParseResult.vb` | 解析结果数据对象(含程序集元数据) |
 | `src/VBScript/ScriptRuntime.vb` | 脚本运行时：封装动态 assembly 的执行与卸载(`IDisposable`) |

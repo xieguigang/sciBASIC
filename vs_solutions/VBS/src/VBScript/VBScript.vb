@@ -63,12 +63,6 @@ Namespace Script
         ' 函数1: 脚本源代码文件解析
         ' =========================================================================
 
-        Public Function Here(root As String) As String
-            Return $"Public Function Here(relpath As String) As String
-    Return $""{root.GetFullPath}/{{relpath}}""
-End Function"
-        End Function
-
         ''' <summary>
         ''' 对VB.NET脚本源代码文件进行解析处理
         ''' </summary>
@@ -105,8 +99,14 @@ End Function"
                 End If
             Next
 
-            ' ---- Step2: 代码结构重构 ----
-            Dim code As String = RefactorScript(source, magics:={Here(scriptFile.ParentPath)})
+            ' ---- Step2: 解析程序集元数据指令(#package/#author/#title/#version) ----
+            Dim metadata As ScriptMetadata = ScriptMetadata.Parse(source)
+
+            ' ---- Step3: 代码结构重构 ----
+            ' 魔法方法与 #include 采用一致的相对路径搜索顺序
+            Dim searchRoots As String() = {baseDir, root0, root1, root2}
+            Dim magicSnippets As IEnumerable(Of String) = Magics.Build(scriptFile, metadata, [imports], searchRoots)
+            Dim code As String = RefactorScript(source, metadata, magicSnippets)
 
             If verbose Then
                 Call Console.WriteLine("----- generated code -----")
@@ -116,6 +116,7 @@ End Function"
             Return New ScriptParseResult With {
                 .ScriptFile = scriptFile,
                 .CommandLine = Nothing,
+                .Metadata = metadata,
                 .Imports = [imports],
                 .GeneratedCode = code
             }
@@ -133,8 +134,13 @@ End Function"
         ''' <see cref="ScriptRefactor"/> 负责, 这里只是一个薄封装。
         ''' </remarks>
         ''' <param name="source">脚本源代码文本</param>
-        Private Function RefactorScript(source As String, magics As IEnumerable(Of String)) As String
-            Return New ScriptRefactor(magics).Refactor(source)
+        ''' <param name="metadata">脚本头部指令解析得到的程序集元数据</param>
+        ''' <param name="magics">需要注入到 VBScriptHostMagics 模块的魔法方法源码</param>
+        Private Function RefactorScript(source As String,
+                                        metadata As ScriptMetadata,
+                                        magics As IEnumerable(Of String)) As String
+
+            Return New ScriptRefactor(metadata, magics).Refactor(source)
         End Function
     End Module
 End Namespace

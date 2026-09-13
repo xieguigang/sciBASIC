@@ -136,8 +136,13 @@ Namespace Script
         ReadOnly _headerLines As New List(Of String)
 
         ReadOnly magics As New List(Of String)
+        ReadOnly _metadata As ScriptMetadata
 
-        Sub New(magics As IEnumerable(Of String))
+        ''' <summary>创建一个脚本重构器</summary>
+        ''' <param name="metadata">脚本头部指令解析得到的程序集元数据(可以为Nothing)</param>
+        ''' <param name="magics">需要注入到 VBScriptHostMagics 模块的魔法方法源码</param>
+        Sub New(metadata As ScriptMetadata, magics As IEnumerable(Of String))
+            Me._metadata = metadata
             Call Me.magics.AddRange(magics)
         End Sub
 
@@ -172,6 +177,8 @@ Namespace Script
 
             ' ?"--a" => args("--a")
             code = Regex.Replace(code, "\?""(?<name>[^""]+)""", "args(""${name}"")")
+            ' let x = ... => Dim x As Object = ... (不会改写 LINQ 查询之中的 Let 子句)
+            code = LetStatement.Expand(code)
             code = TupleDestructuring.Expand(code)
 
             Return code
@@ -476,6 +483,8 @@ Namespace Script
             Call sb.AppendLine($"Imports System.Threading.Tasks")
             Call sb.AppendLine($"Imports System.Xml.Linq")
 
+            Call AppendAssemblyAttributes(sb)
+
             Call sb.AppendLine($"Namespace {NamespaceName}")
 
             Call sb.AppendLine("     Module VBScriptHostMagics")
@@ -521,6 +530,30 @@ Namespace Script
 
             Return sb.ToString()
         End Function
+
+        ''' <summary>
+        ''' 把脚本头部指令声明的 assembly 级特性输出到生成代码之中。
+        ''' 按照 VB 语法要求, assembly 特性必须位于 Imports 之后、Namespace 之前。
+        ''' </summary>
+        Private Sub AppendAssemblyAttributes(sb As StringBuilder)
+            If _metadata Is Nothing Then
+                Return
+            End If
+
+            Dim attrs As String() = _metadata.BuildAttributes()
+
+            If attrs.Length = 0 Then
+                Return
+            End If
+
+            Call sb.AppendLine()
+
+            For Each attr As String In attrs
+                Call sb.AppendLine(attr)
+            Next
+
+            Call sb.AppendLine()
+        End Sub
 
         ''' <summary>把落在指定槽位上的全部顶层函数块输出到Main之中</summary>
         Private Sub AppendFunctions(sb As StringBuilder, slot As Integer)
