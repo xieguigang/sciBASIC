@@ -281,6 +281,50 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return getInternal(properties, propertyName.ToLower)
         End Function
 
+        ''' <summary>
+        ''' all of the methods that is declared in this type, the overloads are flattened
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllMethods As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return methods.Values.IteratesALL
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' all of the properties that is declared in this type, the overloads are flattened
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllProperties As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return properties.Values.IteratesALL
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' all of the fields that is declared in this type
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllFields As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return fields.Values
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' all of the events that is declared in this type
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AllEvents As IEnumerable(Of ProjectMember)
+            Get
+                Call ensureTables()
+                Return events.Values
+            End Get
+        End Property
+
         Friend Function EnsureProperty(propertyName As String) As ProjectMember
             Dim pmlist As List(Of ProjectMember) = Me.GetProperties(propertyName)
             Dim pm As New ProjectMember(Me) With {
