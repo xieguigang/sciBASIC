@@ -26,7 +26,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/packages/">
-    <Project Path="../../../../Microsoft.VisualBasic.Drawing/src/Microsoft.VisualBasic.Drawing/Microsoft.VisualBasic.Drawing.vbproj">
+    <Project Path="../../../Microsoft.VisualBasic.Drawing/src/Microsoft.VisualBasic.Drawing/Microsoft.VisualBasic.Drawing.vbproj">
       <BuildType Solution="Biodeep|*" Project="Release" />
       <BuildType Solution="Biostack|*" Project="MEMI-Desktop" />
       <BuildType Solution="CFD_win32|*" Project="MEMI-Desktop" />

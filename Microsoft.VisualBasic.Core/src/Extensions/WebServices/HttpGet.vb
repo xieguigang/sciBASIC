@@ -54,13 +54,9 @@
 #End Region
 
 Imports System.IO
-Imports System.IO.Compression
-Imports System.Net
 Imports System.Net.Http
-Imports System.Net.Http.Headers
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
