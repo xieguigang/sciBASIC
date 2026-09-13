@@ -17,7 +17,7 @@ imports microsoft.visualbasic.drawing
 '   特征表 → distanceMatrix() → 距离矩阵表 → hca() 聚类树 / hcut() 切分成簇
 '     → 与真实物种对比 → PCA 降维绘图 → 导出 csv
 ' ---------------------------------------------------------------------------
-dim file = "G:\GCModeller\src\R-sharp\REnv\data\bezdekIris.csv"
+dim file = here("../../data/bezdekIris.csv")
 dim k = 3
 
 ' ---------------------------------------------------------------------------
