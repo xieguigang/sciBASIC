@@ -220,10 +220,11 @@ Public Module NumericTableIO
                             Optional labelPrefix As String = DefaultLabelPrefix,
                             Optional rowHeader As Boolean = True,
                             Optional encoding As Encodings = Encodings.UTF8,
-                            Optional strict As Boolean = True) As NumericTable
+                            Optional strict As Boolean = True,
+                            Optional columns As String() = Nothing) As NumericTable
 
         Using s As Stream = New FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read)
-            Return ReadDelimited(s, ","c, labels, labelPrefix, rowHeader, encoding, strict)
+            Return ReadDelimited(s, ","c, labels, labelPrefix, rowHeader, encoding, strict, columns)
         End Using
     End Function
 
@@ -235,9 +236,10 @@ Public Module NumericTableIO
                             Optional labelPrefix As String = DefaultLabelPrefix,
                             Optional rowHeader As Boolean = True,
                             Optional encoding As Encodings = Encodings.UTF8,
-                            Optional strict As Boolean = True) As NumericTable
+                            Optional strict As Boolean = True,
+                            Optional columns As String() = Nothing) As NumericTable
 
-        Return ReadDelimited(stream, ","c, labels, labelPrefix, rowHeader, encoding, strict)
+        Return ReadDelimited(stream, ","c, labels, labelPrefix, rowHeader, encoding, strict, columns)
     End Function
 
     ''' <summary>
@@ -248,10 +250,11 @@ Public Module NumericTableIO
                             Optional labelPrefix As String = DefaultLabelPrefix,
                             Optional rowHeader As Boolean = True,
                             Optional encoding As Encodings = Encodings.UTF8,
-                            Optional strict As Boolean = True) As NumericTable
+                            Optional strict As Boolean = True,
+                            Optional columns As String() = Nothing) As NumericTable
 
         Using s As Stream = New FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read)
-            Return ReadDelimited(s, vbTab, labels, labelPrefix, rowHeader, encoding, strict)
+            Return ReadDelimited(s, vbTab, labels, labelPrefix, rowHeader, encoding, strict, columns)
         End Using
     End Function
 
@@ -263,9 +266,10 @@ Public Module NumericTableIO
                             Optional labelPrefix As String = DefaultLabelPrefix,
                             Optional rowHeader As Boolean = True,
                             Optional encoding As Encodings = Encodings.UTF8,
-                            Optional strict As Boolean = True) As NumericTable
+                            Optional strict As Boolean = True,
+                            Optional columns As String() = Nothing) As NumericTable
 
-        Return ReadDelimited(stream, vbTab, labels, labelPrefix, rowHeader, encoding, strict)
+        Return ReadDelimited(stream, vbTab, labels, labelPrefix, rowHeader, encoding, strict, columns)
     End Function
 
     ''' <summary>
@@ -291,6 +295,10 @@ Public Module NumericTableIO
     ''' + True（缺省）：直接抛出 <see cref="System.IO.InvalidDataException"/>
     ''' + False：宽容模式下将该单元格置为 <see cref="Double.NaN"/>
     ''' </param>
+    ''' <param name="columns">
+    ''' 需要加载的列名白名单（缺省加载全部列）；不在白名单之中的列会被完全忽略，
+    ''' 因此可以借助这个参数跳过 csv 文件之中的ID列、文本类别列等非数值列
+    ''' </param>
     ''' <returns></returns>
     Public Function ReadDelimited(stream As Stream,
                                   delimiter As Char,
@@ -298,7 +306,8 @@ Public Module NumericTableIO
                                   Optional labelPrefix As String = DefaultLabelPrefix,
                                   Optional rowHeader As Boolean = True,
                                   Optional encoding As Encodings = Encodings.UTF8,
-                                  Optional strict As Boolean = True) As NumericTable
+                                  Optional strict As Boolean = True,
+                                  Optional columns As String() = Nothing) As NumericTable
 
         If stream Is Nothing Then
             Throw New ArgumentNullException(NameOf(stream))
@@ -318,7 +327,7 @@ Public Module NumericTableIO
             Throw New InvalidDataException($"the delimited text document has no data column: '{lines(0)}'")
         End If
 
-        Dim columns As String() = header.Skip(offset).ToArray
+        Dim headerColumns As String() = header.Skip(offset).ToArray
         Dim rowNames As New List(Of String)
         Dim cells As New List(Of String())
 
@@ -340,17 +349,27 @@ Public Module NumericTableIO
         Dim labelCols As New List(Of String)
         Dim labelIndex As New List(Of Integer)
 
-        For j As Integer = 0 To columns.Length - 1
-            Dim stripped As String = StripPrefix(columns(j), prefix)
+        For j As Integer = 0 To headerColumns.Length - 1
+            If Not IsSelected(headerColumns(j), columns) Then
+                Continue For
+            End If
 
-            If stripped <> columns(j) OrElse IsDeclaredLabel(columns(j), stripped, labels) Then
+            Dim stripped As String = StripPrefix(headerColumns(j), prefix)
+
+            If stripped <> headerColumns(j) OrElse IsDeclaredLabel(headerColumns(j), stripped, labels) Then
                 Call labelCols.Add(stripped)
                 Call labelIndex.Add(j)
             Else
-                Call featureCols.Add(columns(j))
+                Call featureCols.Add(headerColumns(j))
                 Call featureIndex.Add(j)
             End If
         Next
+
+        If columns IsNot Nothing AndAlso columns.Length > 0 AndAlso featureCols.Count = 0 AndAlso labelCols.Count = 0 Then
+            Throw New InvalidDataException(
+                $"none of the required columns {String.Join(", ", columns)} was found in the delimited text document!"
+            )
+        End If
 
         Dim hasLabels As Boolean = labelCols.Count > 0
 
@@ -431,6 +450,23 @@ Public Module NumericTableIO
         Next
 
         Return (featureCols.ToArray, labelCols.ToArray, labelSource.ToArray)
+    End Function
+
+    ''' <summary>
+    ''' 指定的列是否在加载白名单之中（白名单为空的时候表示加载全部列）
+    ''' </summary>
+    Private Function IsSelected(name As String, columns As String()) As Boolean
+        If columns Is Nothing OrElse columns.Length = 0 Then
+            Return True
+        End If
+
+        For Each col As String In columns
+            If String.Equals(col, name, StringComparison.OrdinalIgnoreCase) Then
+                Return True
+            End If
+        Next
+
+        Return False
     End Function
 
     Private Function StripPrefix(name As String, prefix As String) As String

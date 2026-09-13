@@ -75,6 +75,17 @@ Module Program
 
         Call Check(SameVector(f1, moved), "the moved column keeps its values")
 
+        ' ---------- 列白名单 ----------
+        Call Section("column whitelist")
+        Dim subset As NumericTable = NumericTableIO.ReadCsv(csv, columns:={"f2", "label:score"})
+
+        Call Check(subset.nfeatures = 1 AndAlso subset.featureNames(0) = "f2",
+                   $"whitelist features = {String.Join(", ", subset.featureNames)}")
+        Call Check(subset.nlabels = 1 AndAlso subset.labelNames(0) = "score",
+                   $"whitelist labels = {String.Join(", ", subset.labelNames)}")
+        Call Check(ThrowsInvalidData(Sub() Call NumericTableIO.ReadCsv(csv, columns:={"not-exists"})),
+                   "an unknown column whitelist raises a clear error")
+
         ' ---------- 数值解析策略 ----------
         Call Section("numeric parsing policy")
         Dim dirty As String = ",f1,f2" & vbCrLf & "s1,1.5,abc" & vbCrLf & "s2,2.5,3.5" & vbCrLf
