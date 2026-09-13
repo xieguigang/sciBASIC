@@ -43,7 +43,7 @@ Module Program
         Dim tsvText As String = Encoding.UTF8.GetString(ms.ToArray())
         Dim tsvHeader As String = tsvText.Split({vbCrLf, vbLf}, StringSplitOptions.RemoveEmptyEntries)(0)
 
-        Call Check(tsvHeader = ",f1" & vbTab & "f2" & vbTab & "f3" & vbTab & "label:cluster" & vbTab & "label:score",
+        Call Check(tsvHeader = "" & vbTab & "f1" & vbTab & "f2" & vbTab & "f3" & vbTab & "label:cluster" & vbTab & "label:score",
                    $"tsv header = '{tsvHeader.Replace(vbTab, "\t")}'")
 
         Dim tsvLoaded As NumericTable = NumericTableIO.ReadTsv(New MemoryStream(ms.ToArray()))
@@ -69,7 +69,11 @@ Module Program
         Call Check(extra.nfeatures = 2, $"feature columns = {extra.nfeatures} ({String.Join(", ", extra.featureNames)})")
         Call Check(extra.nlabels = 3, $"label columns = {extra.nlabels} ({String.Join(", ", extra.labelNames)})")
         Call Check(extra.nlabels = 3 AndAlso extra.labelNames.Contains("f1"), "the 'f1' column was moved into the label matrix")
-        Call Check(SameVector(table.features(0), extra.labels(0)), "the moved column keeps its values")
+        ' 对比源表的 f1 列（注意矩阵是按行主序存放的：labels(i)(0) 才是第 0 列的数值）
+        Dim f1 As Double() = Enumerable.Range(0, table.nsamples).Select(Function(i) table.features(i)(0)).ToArray()
+        Dim moved As Double() = Enumerable.Range(0, extra.nsamples).Select(Function(i) extra.labels(i)(0)).ToArray()
+
+        Call Check(SameVector(f1, moved), "the moved column keeps its values")
 
         ' ---------- 数值解析策略 ----------
         Call Section("numeric parsing policy")

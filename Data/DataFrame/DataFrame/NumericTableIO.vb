@@ -49,6 +49,9 @@ Imports Microsoft.VisualBasic.Text
 ''' 即「首列行名 + 全部特征列 + 末尾带 <see cref="DefaultLabelPrefix"/> 前缀的标签列」；
 ''' 读入的时候会依据该前缀自动把标签列还原到标签矩阵之中（前缀会被去掉），
 ''' 并可以再通过 <c>labels</c> 参数叠加指定其它的标签列。
+''' 
+''' 文本格式是一种简单格式：单元格的内容不应该包含分隔符、双引号或者换行符，
+''' 否则无法保证读写的往返一致性。
 ''' </summary>
 Public Module NumericTableIO
 
@@ -225,17 +228,16 @@ Public Module NumericTableIO
     End Function
 
     ''' <summary>
-    ''' 从逗号分隔的 csv 数据流之中加载一个二维表对象
+    ''' 从逗号分隔的 csv 数据流之中加载一个二维表对象（**不会关闭调用方传入的流**）
     ''' </summary>
     Public Function ReadCsv(stream As Stream,
                             Optional labels As String() = Nothing,
                             Optional labelPrefix As String = DefaultLabelPrefix,
                             Optional rowHeader As Boolean = True,
                             Optional encoding As Encodings = Encodings.UTF8,
-                            Optional strict As Boolean = True,
-                            Optional verbose As Boolean = False) As NumericTable
+                            Optional strict As Boolean = True) As NumericTable
 
-        Return ReadDelimited(stream, ","c, labels, labelPrefix, rowHeader, encoding, strict, verbose)
+        Return ReadDelimited(stream, ","c, labels, labelPrefix, rowHeader, encoding, strict)
     End Function
 
     ''' <summary>
@@ -254,17 +256,16 @@ Public Module NumericTableIO
     End Function
 
     ''' <summary>
-    ''' 从制表符分隔的 tsv 数据流之中加载一个二维表对象
+    ''' 从制表符分隔的 tsv 数据流之中加载一个二维表对象（**不会关闭调用方传入的流**）
     ''' </summary>
     Public Function ReadTsv(stream As Stream,
                             Optional labels As String() = Nothing,
                             Optional labelPrefix As String = DefaultLabelPrefix,
                             Optional rowHeader As Boolean = True,
                             Optional encoding As Encodings = Encodings.UTF8,
-                            Optional strict As Boolean = True,
-                            Optional verbose As Boolean = False) As NumericTable
+                            Optional strict As Boolean = True) As NumericTable
 
-        Return ReadDelimited(stream, vbTab, labels, labelPrefix, rowHeader, encoding, strict, verbose)
+        Return ReadDelimited(stream, vbTab, labels, labelPrefix, rowHeader, encoding, strict)
     End Function
 
     ''' <summary>
@@ -287,10 +288,9 @@ Public Module NumericTableIO
     ''' <param name="strict">
     ''' 无法解析为数值的单元格的处理策略：
     ''' 
-    ''' + True（缺省）：<paramref name="strict"/> 模式下直接抛出 <see cref="InvalidDataException"/>
+    ''' + True（缺省）：直接抛出 <see cref="System.IO.InvalidDataException"/>
     ''' + False：宽容模式下将该单元格置为 <see cref="Double.NaN"/>
     ''' </param>
-    ''' <param name="verbose">是否显示文件读取的进度条</param>
     ''' <returns></returns>
     Public Function ReadDelimited(stream As Stream,
                                   delimiter As Char,
@@ -298,27 +298,110 @@ Public Module NumericTableIO
                                   Optional labelPrefix As String = DefaultLabelPrefix,
                                   Optional rowHeader As Boolean = True,
                                   Optional encoding As Encodings = Encodings.UTF8,
-                                  Optional strict As Boolean = True,
-                                  Optional verbose As Boolean = False) As NumericTable
+                                  Optional strict As Boolean = True) As NumericTable
 
         If stream Is Nothing Then
             Throw New ArgumentNullException(NameOf(stream))
         End If
 
-        Dim raw As DataFrame = FastLoader.ReadCsv(stream, delimiter, rowHeader, encoding, verbose)
-        Dim prefix As String = If(labelPrefix, DefaultLabelPrefix)
-        Dim splits = SplitColumns(raw.featureNames, labels, prefix)
-        Dim n As Integer = raw.nsamples
-        Dim features As Double()() = ToMatrix(raw, splits.features, n, strict)
-        Dim hasLabels As Boolean = splits.labels.Length > 0
-        Dim labelMatrix As Double()() = If(hasLabels, ToMatrix(raw, splits.labels, n, strict), Nothing)
+        Dim lines As List(Of String) = ReadLines(stream, encoding)
 
-        Return New NumericTable(features, raw.rownames, splits.features) With {
-            .labels = labelMatrix,
-            .labelNames = If(hasLabels, splits.labels, Nothing),
-            .name = raw.name,
-            .description = raw.description
+        If lines.Count = 0 Then
+            Throw New InvalidDataException("the given delimited text document contains no data table!")
+        End If
+
+        Dim prefix As String = If(labelPrefix, DefaultLabelPrefix)
+        Dim header As String() = lines(0).Split(delimiter)
+        Dim offset As Integer = If(rowHeader, 1, 0)
+
+        If header.Length <= offset Then
+            Throw New InvalidDataException($"the delimited text document has no data column: '{lines(0)}'")
+        End If
+
+        Dim columns As String() = header.Skip(offset).ToArray
+        Dim rowNames As New List(Of String)
+        Dim cells As New List(Of String())
+
+        For i As Integer = 1 To lines.Count - 1
+            Dim tokens As String() = lines(i).Split(delimiter)
+
+            If tokens.Length <> header.Length Then
+                Throw New InvalidDataException(
+                    $"the column number {tokens.Length} at line {i + 1} is not equals to the header column number {header.Length}: '{lines(i)}'"
+                )
+            End If
+
+            Call rowNames.Add(If(rowHeader, tokens(0), CStr(i)))
+            Call cells.Add(tokens.Skip(offset).ToArray)
+        Next
+
+        Dim featureCols As New List(Of String)
+        Dim featureIndex As New List(Of Integer)
+        Dim labelCols As New List(Of String)
+        Dim labelIndex As New List(Of Integer)
+
+        For j As Integer = 0 To columns.Length - 1
+            Dim stripped As String = StripPrefix(columns(j), prefix)
+
+            If stripped <> columns(j) OrElse IsDeclaredLabel(columns(j), stripped, labels) Then
+                Call labelCols.Add(stripped)
+                Call labelIndex.Add(j)
+            Else
+                Call featureCols.Add(columns(j))
+                Call featureIndex.Add(j)
+            End If
+        Next
+
+        Dim hasLabels As Boolean = labelCols.Count > 0
+
+        Return New NumericTable(BuildMatrix(cells, featureIndex, featureCols, strict),
+                                rowNames.ToArray,
+                                featureCols.ToArray) With {
+            .labels = If(hasLabels, BuildMatrix(cells, labelIndex, labelCols, strict), Nothing),
+            .labelNames = If(hasLabels, labelCols.ToArray, Nothing)
         }
+    End Function
+
+    ''' <summary>
+    ''' 读取文本之中的全部非空行
+    ''' </summary>
+    Private Function ReadLines(stream As Stream, encoding As Encodings) As List(Of String)
+        Dim lines As New List(Of String)
+        Dim reader As New StreamReader(stream, encoding.CodePage)
+        Dim line As String = reader.ReadLine()
+
+        While line IsNot Nothing
+            If line.Trim().Length > 0 Then
+                Call lines.Add(line)
+            End If
+
+            line = reader.ReadLine()
+        End While
+
+        Return lines
+    End Function
+
+    ''' <summary>
+    ''' 依据列下标从单元格文本之中构建行主序的数值矩阵
+    ''' </summary>
+    Private Function BuildMatrix(cells As List(Of String()),
+                                 indexes As List(Of Integer),
+                                 names As List(Of String),
+                                 strict As Boolean) As Double()()
+
+        Dim matrix As Double()() = New Double(cells.Count - 1)() {}
+
+        For i As Integer = 0 To cells.Count - 1
+            Dim row As Double() = New Double(indexes.Count - 1) {}
+
+            For j As Integer = 0 To indexes.Count - 1
+                row(j) = ParseText(cells(i)(indexes(j)), names(j), i, strict)
+            Next
+
+            matrix(i) = row
+        Next
+
+        Return matrix
     End Function
 
 #End Region
@@ -326,23 +409,28 @@ Public Module NumericTableIO
 #Region "column helpers"
 
     ''' <summary>
-    ''' 依据 ``label:`` 前缀与 <c>labels</c> 参数把列名拆分为特征列与标签列
+    ''' 依据 ``label:`` 前缀与 <c>labels</c> 参数把列名拆分为特征列与标签列。
+    ''' 
+    ''' 返回值之中的 <c>labels</c> 是**去掉前缀之后**的标签列名（写入标签矩阵的名称），
+    ''' <c>labelColumns</c> 则是标签列在源表格之中的**原始列名**（用于取值）。
     ''' </summary>
-    Friend Function SplitColumns(names As String(), labels As String(), prefix As String) As (features As String(), labels As String())
+    Friend Function SplitColumns(names As String(), labels As String(), prefix As String) As (features As String(), labels As String(), labelColumns As String())
         Dim featureCols As New List(Of String)
         Dim labelCols As New List(Of String)
+        Dim labelSource As New List(Of String)
 
         For Each name As String In If(names, New String() {})
             Dim stripped As String = StripPrefix(name, prefix)
 
             If stripped <> name OrElse IsDeclaredLabel(name, stripped, labels) Then
                 Call labelCols.Add(stripped)
+                Call labelSource.Add(name)
             Else
                 Call featureCols.Add(name)
             End If
         Next
 
-        Return (featureCols.ToArray, labelCols.ToArray)
+        Return (featureCols.ToArray, labelCols.ToArray, labelSource.ToArray)
     End Function
 
     Private Function StripPrefix(name As String, prefix As String) As String
@@ -390,10 +478,7 @@ Public Module NumericTableIO
     End Function
 
     ''' <summary>
-    ''' 把数据帧之中的单元格转换为数值。
-    ''' 
-    ''' 空串以及 ``NA``/``N/A``/``NaN``/``null``/``none``/``nil``/``?`` 等缺失值标记
-    ''' 会被转换为 <see cref="Double.NaN"/>。
+    ''' 把数据帧之中的单元格转换为数值（单元格可能已经是数值类型）
     ''' </summary>
     Private Function ParseValue(value As Object, column As String, row As Integer, strict As Boolean) As Double
         If value Is Nothing Then
@@ -410,21 +495,35 @@ Public Module NumericTableIO
             Return CDbl(DirectCast(value, Date).ToOADate())
         ElseIf TypeOf value Is TimeSpan Then
             Return DirectCast(value, TimeSpan).TotalSeconds
+        Else
+            Return ParseText(value.ToString(), column, row, strict)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 把单元格的文本转换为数值。
+    ''' 
+    ''' 空串以及 ``NA``/``N/A``/``NaN``/``null``/``none``/``nil``/``missing``/``?``
+    ''' 等缺失值标记会被转换为 <see cref="Double.NaN"/>。
+    ''' </summary>
+    Friend Function ParseText(text As String, column As String, row As Integer, strict As Boolean) As Double
+        If text Is Nothing Then
+            Return Double.NaN
         End If
 
-        Dim text As String = value.ToString().Trim()
+        Dim value As String = text.Trim()
 
-        If IsNaNToken(text) Then
+        If IsNaNToken(value) Then
             Return Double.NaN
         End If
 
         Dim d As Double
 
-        If Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, d) Then
+        If Double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, d) Then
             Return d
         ElseIf strict Then
             Throw New InvalidDataException(
-                $"the cell value '{text}' at row {row + 1} of the column '{column}' cannot be parsed as a numeric value!"
+                $"the cell value '{value}' at row {row + 1} of the column '{column}' cannot be parsed as a numeric value!"
             )
         Else
             Return Double.NaN

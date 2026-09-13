@@ -94,7 +94,7 @@ Public Module NumericTableConversion
     ''' <param name="labels">需要额外作为标签列的列名集合</param>
     ''' <param name="labelPrefix">标签列的列名前缀</param>
     ''' <param name="strict">
-    ''' 无法解析为数值的单元格的处理策略：True 直接抛出 <see cref="InvalidDataException"/>，
+    ''' 无法解析为数值的单元格的处理策略：True 直接抛出 ``InvalidDataException``，
     ''' False 则置为 <see cref="Double.NaN"/>
     ''' </param>
     ''' <returns></returns>
@@ -115,7 +115,7 @@ Public Module NumericTableConversion
         Dim hasLabels As Boolean = splits.labels.Length > 0
 
         Return New NumericTable(features, df.rownames, splits.features) With {
-            .labels = If(hasLabels, NumericTableIO.ToMatrix(df, splits.labels, n, strict), Nothing),
+            .labels = If(hasLabels, NumericTableIO.ToMatrix(df, splits.labelColumns, n, strict), Nothing),
             .labelNames = If(hasLabels, splits.labels, Nothing),
             .name = df.name,
             .description = df.description
