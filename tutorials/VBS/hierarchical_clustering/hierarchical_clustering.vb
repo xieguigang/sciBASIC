@@ -120,7 +120,7 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
     plt.XLabel = "PC1"
     plt.YLabel = "PC2"
     plt.Plot(DataSerials(score.Feature("PC1"), score.Feature("PC2"), class_id).tolist())
-    plt.SavePng("Z:/bezdekIris-hclust.png", 300)
+    plt.SavePng(here("bezdekIris-hclust.png"), 300)
 End Using
 
 ' ---------------------------------------------------------------------------
@@ -130,7 +130,7 @@ End Using
 ' ---------------------------------------------------------------------------
 dim result = table.SetLabel("cluster", labels)
 
-call result.WriteCsv("Z:/bezdekIris-hclust.csv")
+call result.WriteCsv(here("bezdekIris-hclust.csv"))
 
-call console.WriteLine("done: Z:/bezdekIris-hclust.png")
-call console.WriteLine("done: Z:/bezdekIris-hclust.csv")
+call console.WriteLine("done: bezdekIris-hclust.png")
+call console.WriteLine("done: bezdekIris-hclust.csv")
