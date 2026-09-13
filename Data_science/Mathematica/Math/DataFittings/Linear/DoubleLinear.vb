@@ -143,6 +143,7 @@ Public Module DoubleLinear
     ''' </param>
     ''' <returns></returns>
     <Extension>
+    <Obsolete("use NumericTable.AutoPointDeletion instead", False)>
     Public Function AutoPointDeletion(points As IEnumerable(Of PointF),
                                       Optional weighted As Weights = Nothing,
                                       Optional max As Integer = -1,
@@ -166,7 +167,7 @@ Public Module DoubleLinear
         If max <= 0 Then
             ' 1. user specific no deletions
             ' 2. or can not delete any more points
-            Return pointVec.LinearRegression(weighted)
+            Return LinearRegression(pointVec.X, pointVec.Y, weighted)
         End If
 
         ' evaluate R2 for each point removes

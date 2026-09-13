@@ -104,6 +104,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' 
     <Extension>
+    <Obsolete("use NumericTable.LinearRegression instead", False)>
     Public Function LinearRegression(line As PointF(), weighted As Weights) As IFitted
         ' X是实验值，可能会因为标准曲线溶液配制的问题出现，
         ' 所以这个可能会需要使用异常点检测

@@ -59,6 +59,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data
 
 Namespace LASSO
 
@@ -163,6 +164,7 @@ Namespace LASSO
             Return sb.ToString().Trim()
         End Function
 
+        <Obsolete("use toNumericTable instead", False)>
         Public Function toDataFrame() As Dictionary(Of String, Array)
             Dim len As Integer = intercepts.Length
             Dim weights As New Dictionary(Of String, Double())
@@ -191,6 +193,68 @@ Namespace LASSO
             Next
 
             Return output
+        End Function
+
+        ''' <summary>
+        ''' 将 LASSO 的正则化路径导出为统一的二维表对象 <see cref="NumericTable"/>：
+        ''' 
+        ''' 1. 每一行对应 lambda 路径上面的一个步骤
+        ''' 2. 表的第一列是模型的截距，其余的特征列是各个变量的回归系数
+        ''' 3. 标签矩阵之中附带 ``rsquared``、``lambdas``、``Df`` 与
+        '''    ``numberOfWeights`` 这几个路径指标
+        ''' </summary>
+        ''' <param name="featureNames">
+        ''' 特征列的名称。为空的时候使用 <see cref="featureNames"/> 属性；
+        ''' 数量不匹配的时候自动生成 ``[1]..[n]`` 序号
+        ''' </param>
+        ''' <returns></returns>
+        Public Function toNumericTable(Optional featureNames As String() = Nothing) As NumericTable
+            Dim names As String() = If(featureNames, Me.featureNames)
+
+            If names Is Nothing OrElse names.Length <> numFeatures Then
+                names = Enumerable.Range(1, numFeatures).Select(Function(i) $"[{i}]").ToArray
+            End If
+
+            Dim lambdaSize As Integer = intercepts.Length
+            Dim header As String() = New String(names.Length) {}
+            Dim labelNames As String() = {"intercepts", "rsquared", "lambdas", "Df", "numberOfWeights"}
+            Dim matrix As Double()() = New Double(lambdaSize - 1)() {}
+            Dim labels As Double()() = New Double(lambdaSize - 1)() {}
+
+            header(0) = "intercept"
+
+            For j As Integer = 0 To names.Length - 1
+                header(j + 1) = names(j)
+            Next
+
+            For i As Integer = 0 To lambdaSize - 1
+                Dim w As Double() = getWeights(i)
+                Dim row As Double() = New Double(names.Length) {}
+
+                row(0) = intercepts(i)
+
+                For j As Integer = 0 To names.Length - 1
+                    row(j + 1) = If(j < w.Length, w(j), 0.0)
+                Next
+
+                matrix(i) = row
+                labels(i) = New Double() {
+                    intercepts(i),
+                    rsquared(i),
+                    lambdas(i),
+                    CDbl(nonZeroWeights(i)),
+                    CDbl(numberOfWeights(i))
+                }
+            Next
+
+            Return New NumericTable(matrix,
+                                    Enumerable.Range(1, lambdaSize).Select(Function(i) CStr(i)).ToArray,
+                                    header) With {
+                .labels = labels,
+                .labelNames = labelNames,
+                .name = "LASSO regularization path",
+                .description = "each row is one step along the lambda regularization path"
+            }
         End Function
 
     End Class
