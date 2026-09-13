@@ -51,7 +51,7 @@ Public Class CnnRunner
     ''' </summary>
     ''' <returns>``{最后一轮 loss, 分类正确数, 样本总数, 耗时秒}``</returns>
     Public Shared Function Execute(imagesPath As String, labelsPath As String,
-                                  randomSeed As Integer, passes As Integer, samples As Integer) As Double()
+                                  randomSeed As Integer, passes As Integer, samples As Integer) As (lastLoss as double, correct as double, size as double, cost_ms as double)
         ' 必须在构建网络（即首次调用 Vector.rand）之前播种
         Call Microsoft.VisualBasic.Math.RandomExtensions.SetSeed(randomSeed)
 
@@ -101,7 +101,7 @@ Public Class CnnRunner
             Call Console.WriteLine($"    pass {p}/{passes}  loss={lastLoss:R}")
         Next
 
-        Dim correct As Integer = 0
+        Dim correct As double = 0
 
         For Each digit In dataset
             Call db.addImageData(digit.value, digit.value.Max)
@@ -113,7 +113,7 @@ Public Class CnnRunner
 
         watch.Stop()
 
-        Return {lastLoss, correct, dataset.Length, watch.Elapsed.TotalSeconds}
+        Return (lastLoss, correct, cdbl( dataset.Length), cdbl( watch.Elapsed.TotalSeconds))
     End Function
 
 End Class
@@ -127,7 +127,7 @@ dim labels_file = $"{mnist_repo}\train-labels-idx1-ubyte"
 
 dim random_seed = 12345
 dim train_passes = 5
-dim train_samples = 300
+dim train_samples = 1000
 
 ' ---------------------------------------------------------------------------
 ' 1) 环境探测
@@ -143,11 +143,7 @@ call console.WriteLine($"    训练配置  = {train_passes} 轮 x {train_samples
 call console.WriteLine()
 call console.WriteLine("=== 2) CPU(SIMD) 训练 + 评估 ===")
 
-dim cpu_run = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
-dim cpu_loss = cpu_run(0)
-dim cpu_correct = CInt(cpu_run(1))
-dim cpu_total = CInt(cpu_run(2))
-dim cpu_seconds = cpu_run(3)
+dim (cpu_loss, cpu_correct,cpu_total,cpu_seconds) = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
 
 call console.WriteLine($"    后端={Tensor.computeKernel.Name}  loss={cpu_loss:R}  " &
                       $"正确={cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})  耗时={cpu_seconds:F3}s")
@@ -189,11 +185,7 @@ if gpu_enabled then
     call console.WriteLine()
     call console.WriteLine("=== 4) CUDA(GPU) 训练 + 评估 ===")
 
-    dim gpu_run = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
-    dim gpu_loss = gpu_run(0)
-    dim gpu_correct = CInt(gpu_run(1))
-    dim gpu_total = CInt(gpu_run(2))
-    dim gpu_seconds = gpu_run(3)
+    dim (gpu_loss ,gpu_correct,gpu_total,gpu_seconds) = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
 
     call console.WriteLine($"    后端={Tensor.computeKernel.Name}  loss={gpu_loss:R}  " &
                           $"正确={gpu_correct}/{gpu_total} ({gpu_correct / gpu_total:P2})  耗时={gpu_seconds:F3}s")

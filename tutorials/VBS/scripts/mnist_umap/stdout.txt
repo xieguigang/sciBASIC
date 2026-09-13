@@ -1,0 +1,17 @@
+mnist table: 20000 samples x 784 pixels
+Create NNDescent
+Set Iteration Parameters
+make 12 trees...
+[MakeNNDescent] Start sample rejection loop... [parallel: 24]
+Build candidates... [parallel: 24]
+Build candidates... [parallel: 24]
+Build candidates... [parallel: 24]
+Build candidates... [parallel: 24]
+Nearest Neighbor Descent: 21.182s
+DeHeapSort... [parallel: 24]
+DeHeapSort in parallel...
+SmoothKNNDistance...
+ComputeMembershipStrengths... [parallel: 24]
+umap embedding: 20000 samples x 2 dims
+done: mnist-umap.png
+done: mnist-umap.csv

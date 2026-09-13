@@ -17,7 +17,7 @@ imports microsoft.visualbasic.drawing
 
 ' MNIST 训练集一共有 60000 个样本，对全量样本做 UMAP 的计算量非常大，
 ' 因此这个教程脚本只取前面的 limit 个样本进行演示(把 limit 调大即可处理更多样本)
-dim limit = 5000
+dim limit = 20000
 dim repo_data = ?"--data"
 dim mnist as new MNIST(
     $"{repo_data}\train-images-idx3-ubyte",

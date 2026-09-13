@@ -1,0 +1,57 @@
+=== 1) 环境探测 ===
+    默认后端  = SIMD
+    随机种子  = 12345（权重初始化）
+    训练配置  = 5 轮 x 1000 张
+
+=== 2) CPU(SIMD) 训练 + 评估 ===
+    pass 1/5  loss=2.390096552476107
+    pass 2/5  loss=0.8209807836912226
+    pass 3/5  loss=0.5247906421962469
+    pass 4/5  loss=0.4266240644466655
+    pass 5/5  loss=0.3594098222432395
+    后端=SIMD  loss=0.3594098222432395  正确=915/1000 (91.50%)  耗时=71.224s
+
+=== 3) 注册 CUDA 计算引擎 ===
+    [OK] 当前后端 = CUDA
+    阈值      : MinGpuElements=4096, MinGemmElements=65536
+    IL2Cuda 双精度内核: 全部翻译并注册成功
+
+=== 4) CUDA(GPU) 训练 + 评估 ===
+    pass 1/5  loss=2.3900965524761064
+    pass 2/5  loss=0.8209807836912225
+    pass 3/5  loss=0.524790642196247
+    pass 4/5  loss=0.42662406444666534
+    pass 5/5  loss=0.3594098222432394
+    后端=CUDA  loss=0.3594098222432394  正确=915/1000 (91.50%)  耗时=110.091s
+
+=== 5) 各张量算子的实际执行后端 ===
+    后端 = CUDA；单样本(N=1)；阈值 MinGpuElements=4096, MinGemmElements=65536
+    算子                          规模  门控对象        结论
+    conv1 前向                   784  输入 x        CPU 回退
+    conv1 反向                 25088  gradOutput  GPU
+    pool1 前向                 25088  输入 x        GPU
+    pool1 反向                  6272  gradOutput  GPU
+    relu1 前反向                25088  输入 x        GPU
+    conv2 前向                  6272  输入 x        GPU
+    conv2 反向                 12544  gradOutput  GPU
+    pool2 前向                 12544  输入 x        GPU
+    pool2 反向                  3136  gradOutput  CPU 回退
+    relu2 前反向                12544  输入 x        GPU
+    fc  MatMul               31360  m*k*n       CPU 回退
+    softmax                     10  输入 x        CPU 回退
+
+=== 6) CPU(SIMD) vs CUDA(GPU) ===
+    后端            loss                    accuracy          耗时(s)
+    SIMD(CPU)     0.3594098222432395      91.50%            71.224
+    CUDA(GPU)     0.3594098222432394      91.50%            110.091
+
+    loss 最大绝对误差 = 5.551E-017   OK
+    分类正确数        = CPU 915/1000  GPU 915/1000   OK
+    耗时比            = CPU 71.224s  GPU 110.091s  比=0.65x
+
+    说明: loss 只差舍入量级说明 GPU 与 CPU 的数值实现一致。单样本(N=1)下端到端
+          并不会比 CPU 更快 —— ILCudaTensor 采用『每次算子调用都 H2D 上传 + 内核
+          + D2H 读回』的拷贝式执行模型，而池化/全连接/softmax 的规模低于 GPU
+          阈值、本就回退 CPU。要体现 GPU 吞吐需要 batch 化的大张量。
+
+done: mnist-cnn
