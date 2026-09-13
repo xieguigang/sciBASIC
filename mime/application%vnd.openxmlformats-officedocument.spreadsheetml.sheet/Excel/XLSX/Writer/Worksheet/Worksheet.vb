@@ -270,8 +270,10 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Returns either null (if no cells are selected), or the first defined range of selected cells
         ''' </summary>
-        ''' <remarks>Use <see cref="SelectedCellRanges"/> to get all defined ranges</remarks>
-        <Obsolete("This method is a deprecated subset of the function SelectedCellRanges. SelectedCellRanges will get this function name in a future version. Therefore, the type will change")>
+        ''' <remarks>Use <see cref="SelectedCellRanges"/> to get all defined ranges.<br />
+        ''' 
+        ''' OBSOLETE: This method is a deprecated subset of the function SelectedCellRanges. SelectedCellRanges will get this function name in a future version. Therefore, the type will change
+        ''' </remarks>
         Public ReadOnly Property SelectedCells As Range?
             Get
                 If SelectedCellRanges.Count = 0 Then
