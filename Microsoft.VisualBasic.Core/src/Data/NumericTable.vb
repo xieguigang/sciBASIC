@@ -29,6 +29,7 @@
 
 Imports System.Collections
 Imports System.Collections.Generic
+Imports System.IO
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -652,6 +653,29 @@ Namespace Data
                                            Optional rowNames As String() = Nothing) As NumericTable
 
             Return New NumericTable(featureNames, columns, rowNames)
+        End Function
+
+        ''' <summary>
+        ''' 从二进制文件之中加载一个二维表对象实例。
+        ''' 
+        ''' 二进制格式的详细说明请参考 <see cref="NumericTableBinary"/>；
+        ''' 保存对象请使用 <see cref="NumericTableBinary.WriteBinary(NumericTable, String, Boolean)"/>。
+        ''' </summary>
+        ''' <param name="file">二进制文件的路径</param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadBinary(file As String) As NumericTable
+            Return NumericTableBinary.LoadBinary(file)
+        End Function
+
+        ''' <summary>
+        ''' 从二进制数据流之中加载一个二维表对象实例（不会关闭调用方传入的流）。
+        ''' </summary>
+        ''' <param name="stream">二进制数据流</param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadBinary(stream As Stream) As NumericTable
+            Return NumericTableBinary.LoadBinary(stream)
         End Function
 
         ''' <summary>
