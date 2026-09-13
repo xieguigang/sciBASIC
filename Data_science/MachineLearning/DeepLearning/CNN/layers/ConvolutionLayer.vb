@@ -216,10 +216,30 @@ Namespace CNN.layers
 
         Public Overridable Sub backward() Implements Layer.backward
             ' zero out gradient wrt bottom data, we're about to fill it
-            Call New BackwardTask(Me, in_act.clearGradient()).Run()
+            Dim db As DataBlock = in_act.clearGradient()
+
+            ' 第一阶段: 滤波核与偏置项的梯度。
+            ' 按输出通道 d 并行, 每个线程只写 filters(d) 与 biases 的第 d 个分量, 写入区域互不相交。
+            Call New BackwardFilterTask(Me, db).Run()
+
+            ' 第二阶段: 输入数据的梯度。
+            ' 原先的实现是在上面那个按 d 并行的同一个循环里做 db.addGradient(ix1, ...),
+            ' 但 ix1 的取值集合在所有线程之间是完全重叠的(不同输出通道都落在同一批滤波窗口上),
+            ' 于是 dw(ix) += val 这种非原子的读-改-写在多线程并发时会出现丢失更新,
+            ' 导致训练结果随线程调度而漂移(实测同一个随机种子多次运行 loss 从 0.37 漂到 0.75)。
+            ' 这里改为按**输入位置**并行: 每个线程独占自己那段输入位置的梯度元素,
+            ' 先对全部贡献求和再一次性写入, 既消除了数据竞争又保留了并行。
+            Call New BackwardInputTask(Me, db).Run()
         End Sub
 
-        Private Class BackwardTask : Inherits VectorTask
+        ''' <summary>
+        ''' 反向传播第一阶段: 计算各个滤波核以及偏置项的梯度。
+        ''' </summary>
+        ''' <remarks>
+        ''' 按输出通道并行; 每个线程独占 <see cref="filters"/>(d) 以及 <see cref="biases"/>
+        ''' 之中下标为 d 的那个元素, 因此不存在跨线程的写入冲突。
+        ''' </remarks>
+        Private Class BackwardFilterTask : Inherits VectorTask
 
             Dim layer As ConvolutionLayer
             Dim db As DataBlock
@@ -262,7 +282,6 @@ Namespace CNN.layers
                                             Dim ix2 = (f.SY * fy + fx) * f.Depth + fd
 
                                             f.addGradient(ix2, db.getWeight(ix1) * chain_grad)
-                                            db.addGradient(ix1, f.getWeight(ix2) * chain_grad)
                                         Next
                                     End If
                                 Next
@@ -278,6 +297,115 @@ Namespace CNN.layers
                     End While
                 Next
             End Sub
+        End Class
+
+        ''' <summary>
+        ''' 反向传播第二阶段: 计算输入数据的梯度。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 按输入平面上的空间位置(展平后的 ox,oy)并行。
+        ''' </para>
+        ''' <para>
+        ''' 前向传播之中, 输出位置与输入位置之间的关系是
+        ''' ``ox = ax * stride - padding + fx`` (``oy`` 同理), 反向传播需要的就是这个映射的逆:
+        ''' 对每一个输入位置反解出所有会对它产生贡献的输出位置与滤波核偏移量,
+        ''' 把全部贡献一次累加完毕之后只写一次结果。
+        ''' </para>
+        ''' <para>
+        ''' 由于每个空间位置只属于一个线程, 因此每个梯度元素都只被写入一次, 不存在数据竞争。
+        ''' </para>
+        ''' </remarks>
+        Private Class BackwardInputTask : Inherits VectorTask
+
+            Dim layer As ConvolutionLayer
+            Dim db As DataBlock
+
+            Public Sub New(layer As ConvolutionLayer, db As DataBlock)
+                ' 并行粒度 = 输入平面上所有空间位置的个数
+                MyBase.New(db.SX * db.SY)
+                Me.db = db
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim V_sx = db.SX
+                Dim V_sy = db.SY
+                Dim V_depth = db.Depth
+                Dim xy_stride = layer.stride
+                Dim padding = layer.padding
+                Dim out_sx = layer.out_sx
+                Dim out_sy = layer.out_sy
+
+                ' 当前输入位置在各输入通道上的部分和; 在位置循环之内复用, 避免反复分配
+                Dim acc As Double() = New Double(V_depth - 1) {}
+
+                For p As Integer = start To ends
+                    Dim oy As Integer = p \ V_sx
+                    Dim ox As Integer = p Mod V_sx
+
+                    Call Array.Clear(acc, 0, acc.Length)
+
+                    For d As Integer = 0 To layer.out_depth - 1
+                        Dim f = layer.filters(d)
+
+                        For fy As Integer = 0 To f.SY - 1
+                            Dim ay = InversePosition(oy + padding - fy, xy_stride, out_sy)
+
+                            If ay >= 0 Then
+                                For fx As Integer = 0 To f.SX - 1
+                                    Dim ax = InversePosition(ox + padding - fx, xy_stride, out_sx)
+
+                                    If ax >= 0 Then
+                                        Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
+
+                                        For fd As Integer = 0 To V_depth - 1
+                                            acc(fd) += f.getWeight(fx, fy, fd) * chain_grad
+                                        Next
+                                    End If
+                                Next
+                            End If
+                        Next
+                    Next
+
+                    For fd As Integer = 0 To V_depth - 1
+                        db.addGradient((V_sx * oy + ox) * V_depth + fd, acc(fd))
+                    Next
+                Next
+            End Sub
+
+            ''' <summary>
+            ''' 由 ``坐标差 = 输出索引 * stride`` 反解出输出索引; 无法整除或者越界时返回 -1。
+            ''' </summary>
+            ''' <param name="delta">``输入坐标 + padding - 滤波核偏移``</param>
+            ''' <param name="stride">卷积步长</param>
+            ''' <param name="outSize">该维度上输出的大小</param>
+            Private Shared Function InversePosition(delta As Integer, stride As Integer, outSize As Integer) As Integer
+                If delta < 0 Then
+                    Return -1
+                End If
+
+                ' stride = 1 是最常见的配置, 免去除法与取模的开销
+                If stride = 1 Then
+                    If delta >= outSize Then
+                        Return -1
+                    Else
+                        Return delta
+                    End If
+                End If
+
+                If delta Mod stride <> 0 Then
+                    Return -1
+                End If
+
+                Dim index As Integer = delta \ stride
+
+                If index >= outSize Then
+                    Return -1
+                Else
+                    Return index
+                End If
+            End Function
         End Class
 
         Public Overrides Function ToString() As String

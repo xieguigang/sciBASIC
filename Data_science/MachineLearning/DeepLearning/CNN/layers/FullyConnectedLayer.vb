@@ -148,7 +148,18 @@ Namespace CNN.layers
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward
-            Call New BackwardTask(Me, v:=in_act.clearGradient()).Run()
+            Dim v As DataBlock = in_act.clearGradient()
+
+            ' 第一阶段: 权重与偏置的梯度。
+            ' 按输出下标 i 并行, 每个线程独占 filters(i) 与 biases 的第 i 个分量。
+            Call New BackwardParamTask(Me, v).Run()
+
+            ' 第二阶段: 输入数据的梯度。
+            ' 原先的实现是在上面那个按 i 并行的同一个循环里对 v 的**全体**下标做
+            ' v.addGradient(d, ...), 所有线程写入的区域完全重叠, 与卷积层一样存在
+            ' 非原子读-改-写造成的丢失更新。这里改为按输入下标 d 并行,
+            ' 每个线程先把自己那段元素沿输出维度的贡献累加完毕再写入一次。
+            Call New BackwardInputTask(Me, v).Run()
         End Sub
 
         Private Class ForwardTask : Inherits VectorTask
@@ -181,7 +192,14 @@ Namespace CNN.layers
             End Sub
         End Class
 
-        Private Class BackwardTask : Inherits VectorTask
+        ''' <summary>
+        ''' 反向传播第一阶段: 计算权重与偏置的梯度。
+        ''' </summary>
+        ''' <remarks>
+        ''' 按输出下标并行; 每个线程只写 <see cref="filters"/>(i) 以及 <see cref="biases"/>
+        ''' 之中下标为 i 的那个元素, 不存在跨线程的写入冲突。
+        ''' </remarks>
+        Private Class BackwardParamTask : Inherits VectorTask
 
             Dim v As DataBlock
             Dim layer As FullyConnectedLayer
@@ -193,17 +211,48 @@ Namespace CNN.layers
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                ' compute gradient wrt weights and data
+                ' compute gradient wrt weights
                 For i As Integer = start To ends
                     Dim tfi = layer.filters(i)
                     Dim chain_grad = layer.out_act.Gradients(i)
 
                     For d As Integer = 0 To layer.num_inputs - 1
-                        Call v.addGradient(d, tfi.getWeight(d) * chain_grad) ' grad wrt input data
                         Call tfi.addGradient(d, v.getWeight(d) * chain_grad) ' grad wrt params
                     Next
 
                     Call layer.biases.addGradient(i, chain_grad)
+                Next
+            End Sub
+        End Class
+
+        ''' <summary>
+        ''' 反向传播第二阶段: 计算输入数据的梯度。
+        ''' </summary>
+        ''' <remarks>
+        ''' 按输入下标并行, 每个线程只写自己那段输入梯度元素, 因此不存在数据竞争。
+        ''' </remarks>
+        Private Class BackwardInputTask : Inherits VectorTask
+
+            Dim v As DataBlock
+            Dim layer As FullyConnectedLayer
+
+            Public Sub New(layer As FullyConnectedLayer, v As DataBlock)
+                MyBase.New(layer.num_inputs)
+                Me.v = v
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim grads As Double() = layer.out_act.Gradients
+
+                For d As Integer = start To ends
+                    Dim a = 0.0
+
+                    For i As Integer = 0 To layer.out_depth - 1
+                        a += layer.filters(i).getWeight(d) * grads(i)
+                    Next
+
+                    Call v.addGradient(d, a) ' grad wrt input data
                 Next
             End Sub
         End Class
