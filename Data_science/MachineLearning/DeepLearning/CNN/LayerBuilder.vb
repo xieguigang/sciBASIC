@@ -91,6 +91,47 @@ Namespace CNN
             Return Me
         End Function
 
+        ''' <summary>
+        ''' 以流式写法追加一个层规格：``New LayerBuilder() + conv_layer(5, 32, 1, 2)``
+        ''' </summary>
+        ''' <param name="builder">正在构建的网络</param>
+        ''' <param name="args">
+        ''' 由 <see cref="CNNLayers"/> 中的工厂函数（``input_layer`` / ``conv_layer`` / ...）产出的层规格
+        ''' </param>
+        ''' <remarks>
+        ''' 运算符按表达式从左到右的顺序被求值，因此
+        ''' ``New LayerBuilder() + input_layer(...) + conv_layer(...) + ...``
+        ''' 与依次调用 ``buildInputLayer`` / ``buildConvLayer`` / ... 得到的层序列完全一致。
+        ''' </remarks>
+        Public Shared Operator +(builder As LayerBuilder, args As CNNLayerArguments) As LayerBuilder
+            If builder Is Nothing Then
+                Throw New ArgumentNullException(NameOf(builder), $"请以 New {NameOf(LayerBuilder)}() 作为链式表达式的起点")
+            End If
+            If args Is Nothing Then
+                Throw New ArgumentNullException(NameOf(args), "不能向网络里追加一个空的层规格")
+            End If
+
+            Return args.CreateLayer(builder)
+        End Operator
+
+        ''' <summary>
+        ''' 以流式写法追加一个已经构造好的层对象：``builder + someLayer``
+        ''' </summary>
+        ''' <remarks>
+        ''' 供需要自行构造层（例如复用某个已有的层实例）的场景使用；
+        ''' 常规搭建网络请用 <see cref="CNNLayers"/> 里的层规格工厂函数。
+        ''' </remarks>
+        Public Shared Operator +(builder As LayerBuilder, layer As Layer) As LayerBuilder
+            If builder Is Nothing Then
+                Throw New ArgumentNullException(NameOf(builder), $"请以 New {NameOf(LayerBuilder)}() 作为链式表达式的起点")
+            End If
+            If layer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(layer), "不能向网络里追加一个空层")
+            End If
+
+            Return builder.add(layer)
+        End Operator
+
         Public Function buildGaussian() As LayerBuilder
             Return add(New GaussianLayer(def))
         End Function

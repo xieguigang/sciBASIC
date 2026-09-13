@@ -168,14 +168,21 @@ Public Class MnistCnnGpuTest
                                       "超出舍入量级 => 回退路径本身有问题"))
         End If
 
-        Dim explained = ulpDrift >= lossErr * 0.1
+        ' 判据（按优先级）：
+        '   1) 差异已在舍入量级          => 后端数值实现一致
+        '   2) 与"仅扰动 1 个 ULP"的漂移同量级 => 差异来自训练过程的敏感性放大，而非算子错误
+        '   3) 其余                       => 需要进一步排查
+        Dim verdict As String
 
-        ' 判据: 后端算子之间的差异只有 ~1e-15，训练过程会把它逐轮放大。
-        ' 如果"只扰动 1 个 ULP"也能造成同量级甚至更大的最终 loss 漂移，
-        ' 就说明 CPU/GPU 的差异属于训练过程自身的敏感性，而不是算子实现错误。
-        Call Console.WriteLine($"    => " & If(explained,
-            "同量级 => GPU 与 CPU 的差异是训练过程对 ULP 级差异的放大, 不是算子错误",
-            "量级不符 => 需要进一步排查 GPU 算子"))
+        If lossErr < 1.0E-9 Then
+            verdict = "舍入量级 => GPU 与 CPU 数值一致"
+        ElseIf ulpDrift >= lossErr * 0.1 Then
+            verdict = "同量级 => 差异来自训练过程的敏感性放大, 不是算子错误"
+        Else
+            verdict = "量级不符 => 需要进一步排查 GPU 算子"
+        End If
+
+        Call Console.WriteLine($"    => {verdict}")
         Call Console.WriteLine($"    分类正确数 = CPU {cpu.Correct}/{cpu.Total}   " &
                                $"SIMD+1ULP {perturbed.Correct}/{perturbed.Total}   " &
                                $"GPU {gpuRun.Correct}/{gpuRun.Total}")

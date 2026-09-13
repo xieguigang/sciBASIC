@@ -100,10 +100,20 @@ Namespace CNN.layers
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 For i As Integer = 0 To out_depth - 1
-                    Yield New BackPropResult(filters(i).Weights, filters(i).Gradients, l2_decay_mul, l1_decay_mul)
+                    Dim block = filters(i)
+
+                    Yield New BackPropResult(block.Weights, block.Gradients, l2_decay_mul, l1_decay_mul,
+                                             Sub()
+                                                 block.MarkValueModified()
+                                                 block.MarkGradientModified()
+                                             End Sub)
                 Next
 
-                Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0)
+                Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0,
+                                         Sub()
+                                             biases.MarkValueModified()
+                                             biases.MarkGradientModified()
+                                         End Sub)
             End Get
         End Property
 
@@ -172,9 +182,9 @@ Namespace CNN.layers
 
             ' 后端张量的布局约定是 (N, H, W, C), 与 DataBlock 的 (SY, SX, Depth) 在内存里同序,
             ' 因此输入只需要一次零拷贝的形状重解释, 算完把结果整块拷回即可
-            Dim x4 As Tensor = Tensor.Wrap(db.Value, db.TensorShape4D)
+            Dim x4 As Tensor = db.Value4D
             Dim packed As Tensor = PackFilters()
-            Dim y = Tensor.computeKernel.Conv2D(x4, packed, Tensor.Wrap(biases.w, out_depth), stride, padding)
+            Dim y = Tensor.computeKernel.Conv2D(x4, packed, biases.Value, stride, padding)
 
             Call lA.SetValues(y.Data)
 
@@ -243,8 +253,8 @@ Namespace CNN.layers
             ' zero out gradient wrt bottom data, we're about to fill it
             Dim db As DataBlock = in_act.clearGradient()
 
-            Dim x4 As Tensor = Tensor.Wrap(db.Value, db.TensorShape4D)
-            Dim gradOut As Tensor = Tensor.Wrap(out_act.Grad, out_act.TensorShape4D)
+            Dim x4 As Tensor = db.Value4D
+            Dim gradOut As Tensor = out_act.Grad4D
 
             If filtersPacked Is Nothing Then
                 ' 正常情况下 backward 总是紧跟在本层自己的 forward 之后; 这里只是兜底, 避免空引用

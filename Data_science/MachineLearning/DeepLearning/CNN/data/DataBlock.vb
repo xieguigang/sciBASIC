@@ -138,6 +138,10 @@ Namespace CNN.data
 
         <IgnoreDataMember> Private _value As Tensor
         <IgnoreDataMember> Private _grad As Tensor
+        <IgnoreDataMember> Private _value4D As Tensor
+        <IgnoreDataMember> Private _grad4D As Tensor
+        <IgnoreDataMember> Private _value2D As Tensor
+        <IgnoreDataMember> Private _grad2D As Tensor
 
         ''' <summary>
         ''' 值数据的张量视图（零拷贝，与 <see cref="Weights"/> 共享同一份底层存储）。
@@ -178,6 +182,68 @@ Namespace CNN.data
         End Property
 
         ' ------------------------------------------------------------------
+        ' 缓存张量视图
+        '
+        ' 各层需要的张量形状不止一种：卷积/池化要 (1,H,W,C) 的四维视图、全连接要 (n,1) 的二维视图、
+        ' 激活函数要三维视图。这些视图必须**由本块缓存并持有**，不能在各层里用 Tensor.Wrap(...) 现场构造，
+        ' 原因见下方 MarkValueModified 的说明：显存缓存的键是"(主机数组, 张量版本号)"，
+        ' 而现场构造的新包装对象版本号是独立起算的，无法从本块继承，因此一旦主机数组被就地改写，
+        ' 那些现场构造的视图就会命中旧的显存副本 —— 这是一个静默的数值错误。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>值数据的四维视图 (1, SY, SX, Depth)：供卷积/池化算子使用</summary>
+        Friend ReadOnly Property Value4D As Tensor
+            Get
+                If w Is Nothing Then Return Nothing
+
+                If _value4D Is Nothing OrElse Not Object.ReferenceEquals(_value4D.Data, w) Then
+                    _value4D = Tensor.Wrap(w, 1, _SY, _SX, _Depth)
+                End If
+
+                Return _value4D
+            End Get
+        End Property
+
+        ''' <summary>梯度数据的四维视图 (1, SY, SX, Depth)：作为卷积/池化的 gradOutput</summary>
+        Friend ReadOnly Property Grad4D As Tensor
+            Get
+                If dw Is Nothing Then Return Nothing
+
+                If _grad4D Is Nothing OrElse Not Object.ReferenceEquals(_grad4D.Data, dw) Then
+                    _grad4D = Tensor.Wrap(dw, 1, _SY, _SX, _Depth)
+                End If
+
+                Return _grad4D
+            End Get
+        End Property
+
+        ''' <summary>值数据的二维列向量视图 (n, 1)：供矩阵乘使用</summary>
+        Friend ReadOnly Property Value2D As Tensor
+            Get
+                If w Is Nothing Then Return Nothing
+
+                If _value2D Is Nothing OrElse Not Object.ReferenceEquals(_value2D.Data, w) Then
+                    _value2D = Tensor.Wrap(w, w.Length, 1)
+                End If
+
+                Return _value2D
+            End Get
+        End Property
+
+        ''' <summary>梯度数据的二维列向量视图 (n, 1)：作为矩阵乘的 gradOutput</summary>
+        Friend ReadOnly Property Grad2D As Tensor
+            Get
+                If dw Is Nothing Then Return Nothing
+
+                If _grad2D Is Nothing OrElse Not Object.ReferenceEquals(_grad2D.Data, dw) Then
+                    _grad2D = Tensor.Wrap(dw, dw.Length, 1)
+                End If
+
+                Return _grad2D
+            End Get
+        End Property
+
+        ' ------------------------------------------------------------------
         ' 设备端缓存一致性
         '
         ' <see cref="Value"/> / <see cref="Grad"/> 是 <see cref="w"/> / <see cref="dw"/> 的**零拷贝**张量视图，
@@ -203,16 +269,28 @@ Namespace CNN.data
         End Sub
 
         ''' <summary>声明值数据的设备端缓存已失效（就地改写 <see cref="w"/> 之后必须调用）</summary>
+        ''' <remarks>
+        ''' 需要把本块持有的**全部**视图都标记一遍：三维的 <see cref="Value"/>、四维的 <see cref="Value4D"/>、
+        ''' 二维的 <see cref="Value2D"/>。它们各自持有独立的版本号，少标一个就会出现
+        ''' "某个算子读到旧值"的静默错误。
+        ''' 由于视图都由本块缓存，这里已经不需要再调用全局的 <c>Tensor.InvalidateAllDeviceCaches</c>，
+        ''' 失效粒度从"所有张量"收敛到"本块"。
+        ''' </remarks>
         Friend Sub MarkValueModified()
-            Dim t = Value
-
-            If t IsNot Nothing Then Call t.MarkHostModified()
+            Call MarkHostModified(Value)
+            Call MarkHostModified(_value4D)
+            Call MarkHostModified(_value2D)
         End Sub
 
         ''' <summary>声明梯度数据的设备端缓存已失效（就地改写 <see cref="dw"/> 之后必须调用）</summary>
         Friend Sub MarkGradientModified()
-            Dim t = Grad
+            Call MarkHostModified(Grad)
+            Call MarkHostModified(_grad4D)
+            Call MarkHostModified(_grad2D)
+        End Sub
 
+        ''' <summary>对已创建的视图逐个推进版本号（未创建的视图本来就没有显存副本，无需处理）</summary>
+        Private Shared Sub MarkHostModified(t As Tensor)
             If t IsNot Nothing Then Call t.MarkHostModified()
         End Sub
 

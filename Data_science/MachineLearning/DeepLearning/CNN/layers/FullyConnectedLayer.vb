@@ -99,10 +99,20 @@ Namespace CNN.layers
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 For i As Integer = 0 To out_depth - 1
-                    Yield New BackPropResult(filters(i).Weights, filters(i).Gradients, l1_decay_mul, l2_decay_mul)
+                    Dim block = filters(i)
+
+                    Yield New BackPropResult(block.Weights, block.Gradients, l1_decay_mul, l2_decay_mul,
+                                             Sub()
+                                                 block.MarkValueModified()
+                                                 block.MarkGradientModified()
+                                             End Sub)
                 Next
 
-                Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0)
+                Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0,
+                                         Sub()
+                                             biases.MarkValueModified()
+                                             biases.MarkGradientModified()
+                                         End Sub)
             End Get
         End Property
 
@@ -155,12 +165,12 @@ Namespace CNN.layers
             out_act = lA
 
             Dim packed As Tensor = PackWeights()
-            Dim x2 As Tensor = Tensor.Wrap(db.w, num_inputs, 1)
+            Dim x2 As Tensor = db.Value2D
 
             ' y = W·x : (out_depth x num_inputs) * (num_inputs x 1) -> (out_depth x 1)
             Dim y = Tensor.computeKernel.MatMul(packed, x2)
             ' 偏置同样当作 (out_depth x 1) 的列向量逐元素相加
-            Dim withBias = Tensor.computeKernel.Add(y, Tensor.Wrap(biases.w, out_depth, 1))
+            Dim withBias = Tensor.computeKernel.Add(y, biases.Value2D)
 
             Call lA.SetValues(withBias.Data)
 
@@ -195,8 +205,8 @@ Namespace CNN.layers
                 weightsPacked = PackWeights()
             End If
 
-            Dim gradOut2 As Tensor = Tensor.Wrap(out_act.dw, out_depth, 1)
-            Dim x2 As Tensor = Tensor.Wrap(in_act.w, num_inputs, 1)
+            Dim gradOut2 As Tensor = out_act.Grad2D
+            Dim x2 As Tensor = in_act.Value2D
 
             ' 1) 对权值的梯度: gradW = gradOut · xᵀ -> (out_depth x num_inputs)
             Dim gradW = Tensor.computeKernel.MatMul(gradOut2, Tensor.computeKernel.Transpose(x2))

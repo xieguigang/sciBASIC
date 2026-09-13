@@ -95,11 +95,31 @@ Namespace CNN.data
             End Get
         End Property
 
-        Public Sub New(w As Double(), dw As Double(), l1_decay_mul As Double, l2_decay_mul As Double)
+        ''' <summary>
+        ''' 训练器就地改写 <see cref="Weights"/> / <see cref="Gradients"/> 之后调用的回调。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这两个数组往往就是某个 <c>DataBlock</c> 的底层存储，而 CUDA 后端会把它们缓存到显存；
+        ''' 训练器绕过 Tensor 索引器直接写数组，Tensor 自身无从感知，必须由本回调显式声明失效，
+        ''' 否则 GPU 侧会一直复用旧副本，造成静默的数值错误。
+        ''' 为 <c>Nothing</c> 表示该参数块不涉及设备端缓存。
+        ''' </remarks>
+        Public Property ModifiedHandler As Action
+
+        Public Sub New(w As Double(), dw As Double(), l1_decay_mul As Double, l2_decay_mul As Double,
+                       Optional modifiedHandler As Action = Nothing)
             Me.w = w
             Me.dw = dw
             Me.l1_decay_mul = l1_decay_mul
             Me.l2_decay_mul = l2_decay_mul
+            Me.ModifiedHandler = modifiedHandler
+        End Sub
+
+        ''' <summary>由训练器在就地改写参数/梯度之后调用，声明设备端缓存副本已经失效</summary>
+        Public Sub NotifyModified()
+            Dim handler = ModifiedHandler
+
+            If handler IsNot Nothing Then Call handler()
         End Sub
 
         Public Overrides Function ToString() As String

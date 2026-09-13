@@ -157,7 +157,7 @@ Namespace CNN.layers
             '
             ' 后端张量的布局约定是 (N, H, W, C), 而 DataBlock 的 (SY, SX, Depth) 与它在内存里
             ' 是同一个顺序, 所以只需要一次零拷贝的形状重解释, 算完之后把结果整块拷回即可。
-            Dim x4 As Tensor = Tensor.Wrap(db.Value, db.TensorShape4D)
+            Dim x4 As Tensor = db.Value4D
             Dim argMax As Tensor = Nothing
             Dim pooled = Tensor.computeKernel.MaxPool2D(x4, sx, stride, padding, argMax)
 
@@ -173,7 +173,7 @@ Namespace CNN.layers
 
             ' 反向严格按前向记录下来的 argMax 做散射累加: 每个输出位置唯一对应一个输入位置,
             ' 因此既不需要原子操作, 也不存在数据竞争
-            Dim gradOut As Tensor = Tensor.Wrap(out_act.Grad, out_act.TensorShape4D)
+            Dim gradOut As Tensor = out_act.Grad4D
             Dim dx = Tensor.computeKernel.MaxPool2DBackward(gradOut, argMaxIndex, v.TensorShape4D)
 
             Call v.SetGradients(dx.Data)

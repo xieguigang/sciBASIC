@@ -122,11 +122,13 @@ Namespace CNN.losslayers
         Public Overrides Function backward(y As Integer) As Double
             Dim x As DataBlock = in_act.clearGradient() ' zero out the gradient of input Vol
 
-            ' 梯度 = es - onehot(y), 走后端的逐元素减法
-            Dim indicator As Tensor = Tensor.Zeros(New Integer() {out_depth})
-            indicator.Item(y) = 1.0
+            ' 梯度 = es - onehot(y), 走后端的逐元素减法。
+            ' 这里的 es 就是 out_act 的值数据（同一份存储），因此统一使用 out_act 的缓存视图，
+            ' 以便它与本块其它视图共享同一套设备端缓存失效标记。
+            Dim indicator As Tensor = Tensor.Zeros(New Integer() {1, 1, out_depth})
+            indicator.Item(0, 0, y) = 1.0
 
-            Dim mul = Tensor.computeKernel.Subtract(Tensor.Wrap(es, out_depth), indicator)
+            Dim mul = Tensor.computeKernel.Subtract(out_act.Value, indicator)
 
             Call x.setGradient(mul.Data)
 
@@ -137,7 +139,7 @@ Namespace CNN.losslayers
         Public Overrides Function backward(y() As Double) As Double()
             Dim x As DataBlock = in_act.clearGradient
             ' -(y-es) = es - y
-            Dim mul = Tensor.computeKernel.Subtract(Tensor.Wrap(es, out_depth), Tensor.Wrap(y, out_depth))
+            Dim mul = Tensor.computeKernel.Subtract(out_act.Value, Tensor.Wrap(y, 1, 1, out_depth))
 
             Call x.setGradient(mul.Data)
             Return New Vector(es).Log * -1
