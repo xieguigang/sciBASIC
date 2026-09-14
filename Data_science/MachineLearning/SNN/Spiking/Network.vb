@@ -1,0 +1,272 @@
+' ============================================================================
+' Network.vb — SNN 网络模型 + 损失函数 + Adam 优化器
+'
+' 信息流（readme 第四节）：
+'   1. 输入编码  连续值 x[batch,f] → T 个时间步的脉冲序列 X[1..T]
+'   2. 时间展开  逐时间步、逐层执行 LIF 积分-泄漏-触发-复位
+'   3. 跨层传播  上层输出脉冲直接作为下层输入（无延迟）
+'   4. 输出解码  累积输出层脉冲计数 count = Σ_t S_out[t] → softmax → argmax
+'   5. 训练      softmax 交叉熵 + 替代梯度 BPTT + Adam（含梯度范数裁剪）
+' ============================================================================
+
+Imports System
+Imports System.Collections.Generic
+Imports System.Linq
+
+Namespace SpikingNN
+
+    ''' <summary>Softmax 交叉熵的返回结构</summary>
+    Public Structure LossGradient
+        ''' <summary>平均交叉熵损失</summary>
+        Public Loss As Double
+        ''' <summary>dL/dlogits（logits = 脉冲计数）</summary>
+        Public Grad As Tensor
+    End Structure
+
+    ''' <summary>损失函数库</summary>
+    Public Module Losses
+
+        ''' <summary>
+        ''' Softmax + 交叉熵（数值稳定：先减去行最大值）。
+        ''' dL/dz_j = softmax(z)_j − onehot(y)_j
+        ''' </summary>
+        Public Function SoftmaxCrossEntropy(logits As Tensor, labels As Integer()) As LossGradient
+            Dim batch = logits.Shape(0)
+            Dim n = logits.Shape(1)
+            If labels.Length <> batch Then
+                Throw New ArgumentException("labels 数量与 batch 大小不一致")
+            End If
+
+            Dim grad = New Tensor(batch, n)
+            Dim loss = 0.0
+
+            For b = 0 To batch - 1
+                Dim mx = Double.MinValue
+                For j = 0 To n - 1
+                    If logits(b, j) > mx Then mx = logits(b, j)
+                Next
+
+                Dim sum = 0.0
+                For j = 0 To n - 1
+                    sum += Math.Exp(logits(b, j) - mx)
+                Next
+                Dim logSum = Math.Log(sum)
+
+                ' −ln softmax(z_y) = −(z_y − mx − ln Σexp(z−mx))
+                loss -= (logits(b, labels(b)) - mx - logSum)
+
+                For j = 0 To n - 1
+                    grad(b, j) = Math.Exp(logits(b, j) - mx) / sum - If(j = labels(b), 1.0, 0.0)
+                Next
+            Next
+
+            Return New LossGradient With {
+                .Loss = loss / batch,
+                .Grad = grad * CSng(1.0 / batch)
+            }
+        End Function
+
+    End Module
+
+    ''' <summary>
+    ''' Adam 优化器（含梯度 L2 范数裁剪）。
+    ''' key 用于区分不同参数的动量状态（例如各层权重）。
+    ''' </summary>
+    Public Class AdamOptimizer
+
+        Public Property LearningRate As Double
+        Public Property Beta1 As Double = 0.9
+        Public Property Beta2 As Double = 0.999
+        Public Property Epsilon As Double = 0.00000001
+
+        ''' <summary>梯度 L2 范数裁剪上限（≤0 表示不裁剪）</summary>
+        Public Property ClipNorm As Double
+
+        Private _step As Long
+        Private _m As New Dictionary(Of String, Double())()
+        Private _v As New Dictionary(Of String, Double())()
+
+        Public Sub New(Optional learningRate As Double = 0.002, Optional clipNorm As Double = 1.0)
+            Me.LearningRate = learningRate
+            Me.ClipNorm = clipNorm
+        End Sub
+
+        Public Sub Update(param As Tensor, grad As Tensor, key As String)
+            Dim g = grad.ToDoubleArray()
+
+            ' 梯度裁剪（SNN 训练中抑制脉冲稀疏引起的梯度尖峰）
+            If ClipNorm > 0 Then
+                Dim sq = 0.0
+                For Each v In g : sq += v * v : Next
+                Dim norm = Math.Sqrt(sq)
+                If norm > ClipNorm Then
+                    Dim s = ClipNorm / norm
+                    For i = 0 To g.Length - 1 : g(i) *= s : Next
+                End If
+            End If
+
+            If Not _m.ContainsKey(key) Then
+                _m(key) = New Double(g.Length - 1) {}
+                _v(key) = New Double(g.Length - 1) {}
+            End If
+
+            _step += 1L
+            Dim m = _m(key)
+            Dim vArr = _v(key)
+            Dim bc1 = 1.0 - Math.Pow(Beta1, _step)
+            Dim bc2 = 1.0 - Math.Pow(Beta2, _step)
+
+            For i = 0 To g.Length - 1
+                m(i) = Beta1 * m(i) + (1.0 - Beta1) * g(i)
+                vArr(i) = Beta2 * vArr(i) + (1.0 - Beta2) * g(i) * g(i)
+                Dim mHat = m(i) / bc1
+                Dim vHat = vArr(i) / bc2
+                param(i) = param(i) - CSng(LearningRate * mHat / (Math.Sqrt(vHat) + Epsilon))
+            Next
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' 脉冲神经网络：编码器 + 多个 LIF 层 + 时间展开 + 计数解码。
+    ''' </summary>
+    Public Class SpikingNetwork
+
+        Public ReadOnly Property Layers As New List(Of LIFLayer)()
+
+        ''' <summary>仿真时间步数 T</summary>
+        Public Property TimeSteps As Integer
+
+        ''' <summary>输入脉冲编码方式</summary>
+        Public Property Encoding As SpikeEncoding
+
+        ''' <summary>频率编码随机源（推理时同样有编码噪声，加长 T 可降低方差）</summary>
+        Public Property Rng As New Random(42)
+
+        Private _inputSize As Integer
+
+        Public Sub New(inputSize As Integer, timeSteps As Integer,
+                       Optional encoding As SpikeEncoding = SpikeEncoding.RateCoding)
+            _inputSize = inputSize
+            Me.TimeSteps = timeSteps
+            Me.Encoding = encoding
+        End Sub
+
+        ''' <summary>追加一个 LIF 层（输入维度自动衔接上一层输出）</summary>
+        Public Function AddLayer(units As Integer,
+                                 Optional beta As Double = 0.9,
+                                 Optional threshold As Double = 1.0,
+                                 Optional resetMode As LIFResetMode = LIFResetMode.ZeroOnSpike,
+                                 Optional surrogate As SurrogateKind = SurrogateKind.FastSigmoid,
+                                 Optional alpha As Double = 2.0,
+                                 Optional seed As Integer? = Nothing) As LIFLayer
+            Dim inSize = If(Layers.Count = 0, _inputSize, Layers(Layers.Count - 1).Units)
+            Dim layer = New LIFLayer($"LIF{Layers.Count}", inSize, units,
+                                     beta, threshold, resetMode, surrogate, alpha, seed)
+            Layers.Add(layer)
+            Return layer
+        End Function
+
+        ''' <summary>把连续输入编码为 T 个时间步的脉冲序列</summary>
+        Private Function Encode(x As Tensor) As List(Of Tensor)
+            Select Case Encoding
+                Case SpikeEncoding.RateCoding
+                    Return SpikeEncoders.RateEncode(x, TimeSteps, Rng)
+                Case Else
+                    Return SpikeEncoders.LatencyEncode(x, TimeSteps)
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 前向仿真 T 个时间步，返回输出层脉冲计数（计数解码的 logits）[batch, n_out]。
+        ''' 开始前自动重置所有层的膜电位。
+        ''' </summary>
+        Public Function ForwardSpikes(x As Tensor) As Tensor
+            If x.Rank <> 2 OrElse x.Shape(1) <> _inputSize Then
+                Throw New ArgumentException($"输入形状应为 [batch, {_inputSize}]，实际 [{String.Join(",", x.Shape)}]")
+            End If
+
+            Dim batch = x.Shape(0)
+            Dim seq = Encode(x)
+
+            For Each l In Layers : l.ResetState(batch) : Next
+
+            Dim outUnits = Layers(Layers.Count - 1).Units
+            Dim counts = New Tensor(batch, outUnits)
+
+            For t = 0 To TimeSteps - 1
+                Dim sig = seq(t)
+                For Each l In Layers
+                    sig = l.ForwardStep(sig)
+                Next
+                counts = counts + sig
+            Next
+
+            Return counts
+        End Function
+
+        ''' <summary>前向推理：返回各样本的预测类别（计数解码 argmax）</summary>
+        Public Function Predict(x As Tensor) As Integer()
+            Dim counts = ForwardSpikes(x)
+            Dim batch = counts.Shape(0)
+            Dim n = counts.Shape(1)
+            Dim pred(batch - 1) As Integer
+            For b = 0 To batch - 1
+                Dim best = 0
+                For j = 1 To n - 1
+                    If counts(b, j) > counts(b, best) Then best = j
+                Next
+                pred(b) = best
+            Next
+            Return pred
+        End Function
+
+        ''' <summary>
+        ''' 前向 + 反向传播，计算并缓存所有层的权重梯度（不更新参数）。
+        ''' 返回本批次平均损失。梯度自检依赖"不更新"这一性质。
+        ''' </summary>
+        Public Function ComputeGradients(x As Tensor, labels As Integer()) As Double
+            Dim counts = ForwardSpikes(x)
+            Dim lg = Losses.SoftmaxCrossEntropy(counts, labels)
+
+            ' counts = Σ_t S_out[t] → 每个时间步的 dS_out 都等于 dL/dcounts
+            Dim dS As List(Of Tensor) = Nothing
+            For i = Layers.Count - 1 To 0 Step -1
+                If dS Is Nothing Then
+                    Dim rep As New List(Of Tensor)()
+                    For t = 1 To TimeSteps : rep.Add(lg.Grad) : Next
+                    dS = Layers(i).BackwardTime(rep)
+                Else
+                    dS = Layers(i).BackwardTime(dS)
+                End If
+            Next
+
+            Return lg.Loss
+        End Function
+
+        ''' <summary>
+        ''' 单次训练步：前向 → softmax 交叉熵 → BPTT → Adam 更新。
+        ''' 返回本批次平均损失。
+        ''' </summary>
+        Public Function TrainStep(x As Tensor, labels As Integer(), opt As AdamOptimizer) As Double
+            Dim loss = ComputeGradients(x, labels)
+
+            For Each l In Layers
+                opt.Update(l.Weight, l.WeightGrad, l.Name)
+            Next
+
+            Return loss
+        End Function
+
+        ''' <summary>分类准确率</summary>
+        Public Shared Function Accuracy(pred As Integer(), truth As Integer()) As Double
+            Dim hit = 0
+            For i = 0 To pred.Length - 1
+                If pred(i) = truth(i) Then hit += 1
+            Next
+            Return hit / CDbl(pred.Length)
+        End Function
+
+    End Class
+
+End Namespace
