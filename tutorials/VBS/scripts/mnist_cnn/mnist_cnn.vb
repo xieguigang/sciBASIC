@@ -29,7 +29,7 @@ imports Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
 '      6) CPU vs GPU numeric consistency, wall-clock time and speedup
 '
 '  Run:
-'      vbs.exe tutorials\VBS\scripts\mnist_cnn\mnist_cnn.vb --mnist-data <MNIST dir>
+'      vbs.exe tutorials\VBS\scripts\mnist_cnn\mnist_cnn.vb --mnist-data=<MNIST dir>
 '
 '  Notes:
 '    * The network weights are initialized through a shared "unseeded" random
@@ -143,27 +143,27 @@ dim train_samples = 1000
 ' ---------------------------------------------------------------------------
 ' 1) Environment probe
 ' ---------------------------------------------------------------------------
-call console.WriteLine("=== 1) 环境探测 ===")
-call console.WriteLine($"    默认后端  = {Tensor.computeKernel.Name}")
-call console.WriteLine($"    随机种子  = {random_seed}（权重初始化）")
-call console.WriteLine($"    训练配置  = {train_passes} 轮 x {train_samples} 张")
+call console.WriteLine("=== 1) Environment probe ===")
+call console.WriteLine($"    default backend = {Tensor.computeKernel.Name}")
+call console.WriteLine($"    random seed     = {random_seed} (weight init)")
+call console.WriteLine($"    training config = {train_passes} passes x {train_samples} images")
 
 ' ---------------------------------------------------------------------------
 ' 2) CPU (SIMD) baseline
 ' ---------------------------------------------------------------------------
 call console.WriteLine()
-call console.WriteLine("=== 2) CPU(SIMD) 训练 + 评估 ===")
+call console.WriteLine("=== 2) CPU(SIMD) training + evaluation ===")
 
 dim (cpu_loss, cpu_correct,cpu_total,cpu_seconds) = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
 
-call console.WriteLine($"    后端={Tensor.computeKernel.Name}  loss={cpu_loss:R}  " &
-                      $"正确={cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})  耗时={cpu_seconds:F3}s")
+call console.WriteLine($"    backend={Tensor.computeKernel.Name}  loss={cpu_loss:R}  " &
+                      $"correct={cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})  elapsed={cpu_seconds:F3}s")
 
 ' ---------------------------------------------------------------------------
 ' 3) Register the CUDA compute engine
 ' ---------------------------------------------------------------------------
 call console.WriteLine()
-call console.WriteLine("=== 3) 注册 CUDA 计算引擎 ===")
+call console.WriteLine("=== 3) Register the CUDA compute engine ===")
 
 dim gpu_enabled = false
 dim gpu_options as new EngineOptions()
@@ -171,18 +171,18 @@ dim gpu_options as new EngineOptions()
 if CudaTensor.Register(gpu_options) then
     gpu_enabled = true
 
-    call console.WriteLine($"    [OK] 当前后端 = {Tensor.computeKernel.Name}")
-    call console.WriteLine($"    阈值      : MinGpuElements={CudaTensor.MinGpuElements}, MinGemmElements={CudaTensor.MinGemmElements}")
+    call console.WriteLine($"    [OK] current backend = {Tensor.computeKernel.Name}")
+    call console.WriteLine($"    thresholds  : MinGpuElements={CudaTensor.MinGpuElements}, MinGemmElements={CudaTensor.MinGemmElements}")
 
     if CudaTensor.KernelFailures.Count = 0 then
-        call console.WriteLine("    IL2Cuda 双精度内核: 全部翻译并注册成功")
+        call console.WriteLine("    IL2Cuda double-precision kernels: all translated and registered successfully")
     else
         for each failure in CudaTensor.KernelFailures
-            call console.WriteLine($"    [内核翻译失败] {failure.Key} -> {failure.Value}")
+            call console.WriteLine($"    [kernel translation failed] {failure.Key} -> {failure.Value}")
         next
     end if
 else
-    call console.WriteLine($"    [回退] 注册失败，本次仍使用 CPU: {CudaTensor.LastError}")
+    call console.WriteLine($"    [fallback] registration failed, using the CPU this run: {CudaTensor.LastError}")
 
     for each line in gpu_options.Diagnostics
         call console.WriteLine($"      {line}")
@@ -194,12 +194,12 @@ end if
 ' ---------------------------------------------------------------------------
 if gpu_enabled then
     call console.WriteLine()
-    call console.WriteLine("=== 4) CUDA(GPU) 训练 + 评估 ===")
+    call console.WriteLine("=== 4) CUDA(GPU) training + evaluation ===")
 
     dim (gpu_loss ,gpu_correct,gpu_total,gpu_seconds) = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
 
-    call console.WriteLine($"    后端={Tensor.computeKernel.Name}  loss={gpu_loss:R}  " &
-                          $"正确={gpu_correct}/{gpu_total} ({gpu_correct / gpu_total:P2})  耗时={gpu_seconds:F3}s")
+    call console.WriteLine($"    backend={Tensor.computeKernel.Name}  loss={gpu_loss:R}  " &
+                          $"correct={gpu_correct}/{gpu_total} ({gpu_correct / gpu_total:P2})  elapsed={gpu_seconds:F3}s")
 
     ' -----------------------------------------------------------------------
     ' 5) The actual execution backend of every tensor operator of this network
@@ -217,7 +217,7 @@ if gpu_enabled then
     '    "some operators run on the GPU" as "everything runs on the GPU".
     ' -----------------------------------------------------------------------
     call console.WriteLine()
-    call console.WriteLine("=== 5) 各张量算子的实际执行后端 ===")
+    call console.WriteLine("=== 5) Actual execution backend of every tensor operator ===")
 
     dim min_gpu = CudaTensor.MinGpuElements
     dim min_gemm = CudaTensor.MinGemmElements
@@ -228,21 +228,21 @@ if gpu_enabled then
     dim pool2_size = 7 * 7 * 64
     dim fc_gemm = 10 * pool2_size * 1
 
-    call console.WriteLine($"    后端 = {Tensor.computeKernel.Name}；单样本(N=1)；阈值 MinGpuElements={min_gpu}, MinGemmElements={min_gemm}")
+    call console.WriteLine($"    backend = {Tensor.computeKernel.Name}; single sample (N=1); thresholds MinGpuElements={min_gpu}, MinGemmElements={min_gemm}")
 
-    call console.WriteLine($"    {"算子",-16}{"规模",14}{"  门控对象",-14}{"结论"}")
-    call console.WriteLine($"    {"conv1 前向",-16}{image_size * image_size,14}{"  输入 x",-14}{If(image_size * image_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"conv1 反向",-16}{relu1_size,14}{"  gradOutput",-14}{If(relu1_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"pool1 前向",-16}{relu1_size,14}{"  输入 x",-14}{If(relu1_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"pool1 反向",-16}{pool1_size,14}{"  gradOutput",-14}{If(pool1_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"relu1 前反向",-16}{relu1_size,14}{"  输入 x",-14}{If(relu1_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"conv2 前向",-16}{pool1_size,14}{"  输入 x",-14}{If(pool1_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"conv2 反向",-16}{conv2_size,14}{"  gradOutput",-14}{If(conv2_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"pool2 前向",-16}{conv2_size,14}{"  输入 x",-14}{If(conv2_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"pool2 反向",-16}{pool2_size,14}{"  gradOutput",-14}{If(pool2_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"relu2 前反向",-16}{conv2_size,14}{"  输入 x",-14}{If(conv2_size >= min_gpu, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"fc  MatMul",-16}{fc_gemm,14}{"  m*k*n",-14}{If(fc_gemm >= min_gemm, "GPU", "CPU 回退")}")
-    call console.WriteLine($"    {"softmax",-16}{10,14}{"  输入 x",-14}{If(10 >= min_gpu, "GPU", "CPU 回退")}")
+    call console.WriteLine($"    {"operator",-16}{"size",14}{"  gating operand",-20}{"verdict"}")
+    call console.WriteLine($"    {"conv1 fwd",-16}{image_size * image_size,14}{"  input x",-20}{If(image_size * image_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"conv1 bwd",-16}{relu1_size,14}{"  gradOutput",-20}{If(relu1_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"pool1 fwd",-16}{relu1_size,14}{"  input x",-20}{If(relu1_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"pool1 bwd",-16}{pool1_size,14}{"  gradOutput",-20}{If(pool1_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"relu1 fwd/bwd",-16}{relu1_size,14}{"  input x",-20}{If(relu1_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"conv2 fwd",-16}{pool1_size,14}{"  input x",-20}{If(pool1_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"conv2 bwd",-16}{conv2_size,14}{"  gradOutput",-20}{If(conv2_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"pool2 fwd",-16}{conv2_size,14}{"  input x",-20}{If(conv2_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"pool2 bwd",-16}{pool2_size,14}{"  gradOutput",-20}{If(pool2_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"relu2 fwd/bwd",-16}{conv2_size,14}{"  input x",-20}{If(conv2_size >= min_gpu, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"fc  MatMul",-16}{fc_gemm,14}{"  m*k*n",-20}{If(fc_gemm >= min_gemm, "GPU", "CPU fallback")}")
+    call console.WriteLine($"    {"softmax",-16}{10,14}{"  input x",-20}{If(10 >= min_gpu, "GPU", "CPU fallback")}")
 
     ' -----------------------------------------------------------------------
     ' 6) CPU vs GPU comparison
@@ -252,26 +252,29 @@ if gpu_enabled then
 
     dim loss_error = System.Math.Abs(cpu_loss - gpu_loss)
 
-    call console.WriteLine($"    {"后端",-14}{"loss",-24}{"accuracy",-18}{"耗时(s)"}")
+    call console.WriteLine($"    {"backend",-14}{"loss",-24}{"accuracy",-18}{"elapsed(s)"}")
     call console.WriteLine($"    {"SIMD(CPU)",-14}{cpu_loss,-24:R}{cpu_correct / cpu_total,-18:P2}{cpu_seconds:F3}")
     call console.WriteLine($"    {"CUDA(GPU)",-14}{gpu_loss,-24:R}{gpu_correct / gpu_total,-18:P2}{gpu_seconds:F3}")
     call console.WriteLine()
-    call console.WriteLine($"    loss 最大绝对误差 = {loss_error:E3}   " &
+    call console.WriteLine($"    loss max abs error = {loss_error:E3}   " &
                           If(loss_error < 1.0E-9, "OK", "FAIL"))
-    call console.WriteLine($"    分类正确数        = CPU {cpu_correct}/{cpu_total}  GPU {gpu_correct}/{gpu_total}   " &
-                          If(cpu_correct = gpu_correct, "OK", "差值见上"))
-    call console.WriteLine($"    耗时比            = CPU {cpu_seconds:F3}s  GPU {gpu_seconds:F3}s  " &
-                          $"比={cpu_seconds / gpu_seconds:F2}x")
+    call console.WriteLine($"    correct count      = CPU {cpu_correct}/{cpu_total}  GPU {gpu_correct}/{gpu_total}   " &
+                          If(cpu_correct = gpu_correct, "OK", "difference see above"))
+    call console.WriteLine($"    elapsed ratio      = CPU {cpu_seconds:F3}s  GPU {gpu_seconds:F3}s  " &
+                          $"ratio={cpu_seconds / gpu_seconds:F2}x")
 
     call console.WriteLine()
-    call console.WriteLine("    说明: loss 只差舍入量级说明 GPU 与 CPU 的数值实现一致。单样本(N=1)下端到端")
-    call console.WriteLine("          并不会比 CPU 更快 —— ILCudaTensor 采用『每次算子调用都 H2D 上传 + 内核")
-    call console.WriteLine("          + D2H 读回』的拷贝式执行模型，而池化/全连接/softmax 的规模低于 GPU")
-    call console.WriteLine("          阈值、本就回退 CPU。要体现 GPU 吞吐需要 batch 化的大张量。")
+    call console.WriteLine("    note: a loss difference only at the rounding level means the GPU and CPU")
+    call console.WriteLine("          numeric implementations agree. With a single sample (N=1) the end-to-end")
+    call console.WriteLine("          run is not faster than the CPU -- ILCudaTensor uses a copy-based")
+    call console.WriteLine("          execution model that performs an H2D upload + kernel + D2H read-back")
+    call console.WriteLine("          on every operator call, and pooling/full-connected/softmax are below")
+    call console.WriteLine("          the GPU threshold and already fall back to the CPU. GPU throughput only")
+    call console.WriteLine("          shows up with large batched tensors.")
 else
     call console.WriteLine()
-    call console.WriteLine("=== 4-6) 已跳过 ===")
-    call console.WriteLine($"    GPU 未启用，CPU 结果 = loss {cpu_loss:R}, {cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})")
+    call console.WriteLine("=== 4-6) skipped ===")
+    call console.WriteLine($"    GPU not enabled, CPU result = loss {cpu_loss:R}, {cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})")
 end if
 
 call console.WriteLine()

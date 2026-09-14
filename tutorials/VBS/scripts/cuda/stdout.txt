@@ -1,19 +1,19 @@
 
 ==========================================================================
-  IL -> CUDA 教程: 皮尔逊相关矩阵 与 欧氏距离矩阵
+  IL -> CUDA tutorial: Pearson correlation matrix and Euclidean distance matrix
 ==========================================================================
-  输入规模: 1024 行 x 1024 列, 随机种子 42
+  input size: 1024 rows x 1024 cols, random seed 42
 
 ==========================================================================
-  第 1 步: 把 VB.NET 函数反编译为 AST, 再发射成 .cu
+  Step 1: decompile the VB.NET functions into an AST and emit .cu source
 ==========================================================================
 
   ---- RowSum ----
-  索引模式  : Grid1D
-  设备函数  : il_RowSum_scalar
-  内核      : il_RowSum_kernel
+  index mode : Grid1D
+  device func: il_RowSum_scalar
+  kernel     : il_RowSum_kernel
 
-  还原出的伪代码:
+  reconstructed pseudo code:
     Shared Function RowSum(p_x As Single(), p_cols As Integer, p_i As Integer) As Single
         Dim V_0 As Single = 0F
         Dim V_1 As Integer = 0
@@ -30,14 +30,14 @@
         Next
         Return V_0_1
     End Function
+    
 
-
-  生成的 CUDA 源码:
+  generated CUDA source:
     // ===== 本文件由 IL -> AST -> CUDA 流水线自动生成，请勿手工编辑 =====
     // 来源方法 : RowSum
     // 设备函数 : il_RowSum_scalar
     // 内核     : il_RowSum_kernel（索引模式 Grid1D）
-
+    
     __device__ float il_RowSum_scalar(const float* __restrict__ p_x, int p_cols, int p_i) {
         float V_0 = 0.0f;
         int V_1 = 0;
@@ -54,22 +54,22 @@
         }
         return V_0_1;
     }
-
+    
     extern "C" __global__ void il_RowSum_kernel(const float* __restrict__ p_x, int p_cols, float* __restrict__ il_out, int il_n) {
         int p_i = blockIdx.x * blockDim.x + threadIdx.x;
         if (p_i >= il_n) return;
         il_out[p_i] = il_RowSum_scalar(p_x, p_cols, p_i);
     }
+    
 
-
-  解释求值自检: 原方法=-13.5, AST=-13.5, 差=0.000E+000  OK
+  interpreter self-check: original=-13.5, AST=-13.5, diff=0.000E+000  OK
 
   ---- RowSumSq ----
-  索引模式  : Grid1D
-  设备函数  : il_RowSumSq_scalar
-  内核      : il_RowSumSq_kernel
+  index mode : Grid1D
+  device func: il_RowSumSq_scalar
+  kernel     : il_RowSumSq_kernel
 
-  还原出的伪代码:
+  reconstructed pseudo code:
     Shared Function RowSumSq(p_x As Single(), p_cols As Integer, p_i As Integer) As Single
         Dim V_0 As Single = 0F
         Dim V_1 As Integer = 0
@@ -91,14 +91,14 @@
         Next
         Return V_0_1
     End Function
+    
 
-
-  生成的 CUDA 源码:
+  generated CUDA source:
     // ===== 本文件由 IL -> AST -> CUDA 流水线自动生成，请勿手工编辑 =====
     // 来源方法 : RowSumSq
     // 设备函数 : il_RowSumSq_scalar
     // 内核     : il_RowSumSq_kernel（索引模式 Grid1D）
-
+    
     __device__ float il_RowSumSq_scalar(const float* __restrict__ p_x, int p_cols, int p_i) {
         float V_0 = 0.0f;
         int V_1 = 0;
@@ -120,22 +120,22 @@
         }
         return V_0_1;
     }
-
+    
     extern "C" __global__ void il_RowSumSq_kernel(const float* __restrict__ p_x, int p_cols, float* __restrict__ il_out, int il_n) {
         int p_i = blockIdx.x * blockDim.x + threadIdx.x;
         if (p_i >= il_n) return;
         il_out[p_i] = il_RowSumSq_scalar(p_x, p_cols, p_i);
     }
+    
 
-
-  解释求值自检: 原方法=66.75, AST=66.75, 差=0.000E+000  OK
+  interpreter self-check: original=66.75, AST=66.75, diff=0.000E+000  OK
 
   ---- GramDot ----
-  索引模式  : Grid2D
-  设备函数  : il_GramDot_scalar
-  内核      : il_GramDot_kernel
+  index mode : Grid2D
+  device func: il_GramDot_scalar
+  kernel     : il_GramDot_kernel
 
-  还原出的伪代码:
+  reconstructed pseudo code:
     Shared Function GramDot(p_x As Single(), p_cols As Integer, p_i As Integer, p_j As Integer) As Single
         Dim V_0 As Single = 0F
         Dim V_1 As Integer = 0
@@ -152,14 +152,14 @@
         Next
         Return V_0_1
     End Function
+    
 
-
-  生成的 CUDA 源码:
+  generated CUDA source:
     // ===== 本文件由 IL -> AST -> CUDA 流水线自动生成，请勿手工编辑 =====
     // 来源方法 : GramDot
     // 设备函数 : il_GramDot_scalar
     // 内核     : il_GramDot_kernel（索引模式 Grid2D）
-
+    
     __device__ float il_GramDot_scalar(const float* __restrict__ p_x, int p_cols, int p_i, int p_j) {
         float V_0 = 0.0f;
         int V_1 = 0;
@@ -176,23 +176,23 @@
         }
         return V_0_1;
     }
-
+    
     extern "C" __global__ void il_GramDot_kernel(const float* __restrict__ p_x, int p_cols, float* __restrict__ il_out, int il_nRows, int il_nCols) {
         int p_i = blockIdx.y * blockDim.y + threadIdx.y;
         int p_j = blockIdx.x * blockDim.x + threadIdx.x;
         if (p_i >= il_nRows || p_j >= il_nCols) return;
         il_out[p_i * il_nCols + p_j] = il_GramDot_scalar(p_x, p_cols, p_i, p_j);
     }
+    
 
-
-  解释求值自检: 原方法=-14.5, AST=-14.5, 差=0.000E+000  OK
+  interpreter self-check: original=-14.5, AST=-14.5, diff=0.000E+000  OK
 
   ---- CorrelationCell ----
-  索引模式  : Grid2D
-  设备函数  : il_CorrelationCell_scalar
-  内核      : il_CorrelationCell_kernel
+  index mode : Grid2D
+  device func: il_CorrelationCell_scalar
+  kernel     : il_CorrelationCell_kernel
 
-  还原出的伪代码:
+  reconstructed pseudo code:
     Shared Function CorrelationCell(p_dot As Single(), p_rowSum As Single(), p_rowSumSq As Single(), p_rows As Integer, p_cols As Integer, p_i As Integer, p_j As Integer) As Single
         Dim V_0 As Single = 0F
         Dim V_1 As Single = 0F
@@ -247,14 +247,14 @@
         End If
         Return V_0_1
     End Function
+    
 
-
-  生成的 CUDA 源码:
+  generated CUDA source:
     // ===== 本文件由 IL -> AST -> CUDA 流水线自动生成，请勿手工编辑 =====
     // 来源方法 : CorrelationCell
     // 设备函数 : il_CorrelationCell_scalar
     // 内核     : il_CorrelationCell_kernel（索引模式 Grid2D）
-
+    
     __device__ float il_CorrelationCell_scalar(const float* __restrict__ p_dot, const float* __restrict__ p_rowSum, const float* __restrict__ p_rowSumSq, int p_rows, int p_cols, int p_i, int p_j) {
         float V_0 = 0.0f;
         float V_1 = 0.0f;
@@ -309,23 +309,23 @@
         }
         return V_0_1;
     }
-
+    
     extern "C" __global__ void il_CorrelationCell_kernel(const float* __restrict__ p_dot, const float* __restrict__ p_rowSum, const float* __restrict__ p_rowSumSq, int p_rows, int p_cols, float* __restrict__ il_out, int il_nRows, int il_nCols) {
         int p_i = blockIdx.y * blockDim.y + threadIdx.y;
         int p_j = blockIdx.x * blockDim.x + threadIdx.x;
         if (p_i >= il_nRows || p_j >= il_nCols) return;
         il_out[p_i * il_nCols + p_j] = il_CorrelationCell_scalar(p_dot, p_rowSum, p_rowSumSq, p_rows, p_cols, p_i, p_j);
     }
+    
 
-
-  解释求值自检: 原方法=0, AST=0, 差=0.000E+000  OK
+  interpreter self-check: original=0, AST=0, diff=0.000E+000  OK
 
   ---- DistanceCell ----
-  索引模式  : Grid2D
-  设备函数  : il_DistanceCell_scalar
-  内核      : il_DistanceCell_kernel
+  index mode : Grid2D
+  device func: il_DistanceCell_scalar
+  kernel     : il_DistanceCell_kernel
 
-  还原出的伪代码:
+  reconstructed pseudo code:
     Shared Function DistanceCell(p_dot As Single(), p_rowSumSq As Single(), p_rows As Integer, p_i As Integer, p_j As Integer) As Single
         Dim V_0 As Single = 0F
         Dim V_1 As Single = 0F
@@ -343,14 +343,14 @@
         End If
         Return V_0_1
     End Function
+    
 
-
-  生成的 CUDA 源码:
+  generated CUDA source:
     // ===== 本文件由 IL -> AST -> CUDA 流水线自动生成，请勿手工编辑 =====
     // 来源方法 : DistanceCell
     // 设备函数 : il_DistanceCell_scalar
     // 内核     : il_DistanceCell_kernel（索引模式 Grid2D）
-
+    
     __device__ float il_DistanceCell_scalar(const float* __restrict__ p_dot, const float* __restrict__ p_rowSumSq, int p_rows, int p_i, int p_j) {
         float V_0 = 0.0f;
         float V_1 = 0.0f;
@@ -368,23 +368,23 @@
         }
         return V_0_1;
     }
-
+    
     extern "C" __global__ void il_DistanceCell_kernel(const float* __restrict__ p_dot, const float* __restrict__ p_rowSumSq, int p_rows, float* __restrict__ il_out, int il_nRows, int il_nCols) {
         int p_i = blockIdx.y * blockDim.y + threadIdx.y;
         int p_j = blockIdx.x * blockDim.x + threadIdx.x;
         if (p_i >= il_nRows || p_j >= il_nCols) return;
         il_out[p_i * il_nCols + p_j] = il_DistanceCell_scalar(p_dot, p_rowSumSq, p_rows, p_i, p_j);
     }
+    
 
-
-  解释求值自检: 原方法=0.70710677, AST=0.70710677, 差=0.000E+000  OK
+  interpreter self-check: original=0.70710677, AST=0.70710677, diff=0.000E+000  OK
 
   ---- PearsonClamp ----
-  索引模式  : Grid1D
-  设备函数  : il_PearsonClamp_scalar
-  内核      : il_PearsonClamp_kernel
+  index mode : Grid1D
+  device func: il_PearsonClamp_scalar
+  kernel     : il_PearsonClamp_kernel
 
-  还原出的伪代码:
+  reconstructed pseudo code:
     Shared Function PearsonClamp(p_cov As Single, p_denom As Single) As Single
         Dim V_0 As Single = 0F
         Dim V_0_1 As Single
@@ -397,14 +397,14 @@
         End If
         Return System.MathF.Min(1F, System.MathF.Max(-1F, V_0_1))
     End Function
+    
 
-
-  生成的 CUDA 源码:
+  generated CUDA source:
     // ===== 本文件由 IL -> AST -> CUDA 流水线自动生成，请勿手工编辑 =====
     // 来源方法 : PearsonClamp
     // 设备函数 : il_PearsonClamp_scalar
     // 内核     : il_PearsonClamp_kernel（索引模式 Grid1D）
-
+    
     __device__ float il_PearsonClamp_scalar(float p_cov, float p_denom) {
         float V_0 = 0.0f;
         float V_0_1;
@@ -417,41 +417,41 @@
         }
         return fminf(1.0f, fmaxf(-1.0f, V_0_1));
     }
-
+    
     extern "C" __global__ void il_PearsonClamp_kernel(const float* __restrict__ p_cov, const float* __restrict__ p_denom, float* __restrict__ il_out, int il_n) {
         int il_i = blockIdx.x * blockDim.x + threadIdx.x;
         if (il_i >= il_n) return;
         il_out[il_i] = il_PearsonClamp_scalar(p_cov[il_i], p_denom[il_i]);
     }
+    
 
-
-  解释求值自检: 原方法=1, AST=1, 差=0.000E+000  OK
-
-==========================================================================
-  第 2 步: 注册内核源码(必须在创建引擎之前)
-==========================================================================
-  已注册 il_RowSum_kernel [Grid1D] <- PearsonMetrics.RowSum
-  已注册 il_RowSumSq_kernel [Grid1D] <- PearsonMetrics.RowSumSq
-  已注册 il_GramDot_kernel [Grid2D] <- PearsonMetrics.GramDot
-  已注册 il_CorrelationCell_kernel [Grid2D] <- PearsonMetrics.CorrelationCell
-  已注册 il_DistanceCell_kernel [Grid2D] <- PearsonMetrics.DistanceCell
-  已注册 il_PearsonClamp_kernel [Grid1D] <- PearsonMetrics.PearsonClamp
+  interpreter self-check: original=1, AST=1, diff=0.000E+000  OK
 
 ==========================================================================
-  第 3 步: 在 GPU 上计算相关矩阵与距离矩阵
+  Step 2: register the kernel sources (must be done before creating the engine)
 ==========================================================================
-  设备      : NVIDIA RTX A4000
-  内核镜像  : NVRTC 13.3 (cubin) arch=sm_86 [C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.3\bin\x64\nvrtc64_130_0.dll]
-
-  PearsonClamp(逐元素自动包裹) 最大绝对误差 = 0.000E+000  OK
+  registered il_RowSum_kernel [Grid1D] <- PearsonMetrics.RowSum
+  registered il_RowSumSq_kernel [Grid1D] <- PearsonMetrics.RowSumSq
+  registered il_GramDot_kernel [Grid2D] <- PearsonMetrics.GramDot
+  registered il_CorrelationCell_kernel [Grid2D] <- PearsonMetrics.CorrelationCell
+  registered il_DistanceCell_kernel [Grid2D] <- PearsonMetrics.DistanceCell
+  registered il_PearsonClamp_kernel [Grid1D] <- PearsonMetrics.PearsonClamp
 
 ==========================================================================
-  第 4 步: CPU 参考实现比对 + 结果预览
+  Step 3: compute the correlation and distance matrices on the GPU
 ==========================================================================
-  皮尔逊相关矩阵 最大绝对误差 = 2.221E-007  OK
-  欧氏距离矩阵   最大绝对误差 = 2.069E-005  OK
+  device      : NVIDIA RTX A4000
+  kernel image: NVRTC 13.3 (cubin) arch=sm_86 [C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.3\bin\x64\nvrtc64_130_0.dll]
 
-  皮尔逊相关矩阵(GPU, 左上 6 x 6):
+  PearsonClamp (auto-wrapped element-wise) max abs error = 0.000E+000  OK
+
+==========================================================================
+  Step 4: compare with the CPU reference implementation + preview the results
+==========================================================================
+  Pearson correlation matrix max abs error = 2.221E-007  OK
+  Euclidean distance matrix  max abs error = 2.069E-005  OK
+
+  Pearson correlation matrix (GPU, top-left 6 x 6):
         1.0000   -0.0151   -0.0096   -0.0299   -0.0083    0.0006
        -0.0151    1.0000   -0.0564   -0.0311   -0.0131   -0.0156
        -0.0096   -0.0564    1.0000    0.0206   -0.0392   -0.0140
@@ -459,7 +459,7 @@
        -0.0083   -0.0131   -0.0392    0.0250    1.0000   -0.0185
         0.0006   -0.0156   -0.0140   -0.0570   -0.0185    1.0000
 
-  欧氏距离矩阵(GPU, 左上 6 x 6):
+  Euclidean distance matrix (GPU, top-left 6 x 6):
         0.0000   26.8603   26.5958   26.5702   26.4389   26.4184
        26.8603    0.0000   27.1844   26.5662   26.4858   26.5902
        26.5958   27.1844    0.0000   25.6775   26.5984   26.3983
@@ -467,4 +467,4 @@
        26.4389   26.4858   26.5984   25.4752    0.0000   26.3193
        26.4184   26.5902   26.3983   26.6538   26.3193    0.0000
 
-教程全部步骤通过。
+All tutorial steps passed.

@@ -7,7 +7,7 @@ Build candidates... [parallel: 24]
 Build candidates... [parallel: 24]
 Build candidates... [parallel: 24]
 Build candidates... [parallel: 24]
-Nearest Neighbor Descent: 21.182s
+Nearest Neighbor Descent: 24.499s
 DeHeapSort... [parallel: 24]
 DeHeapSort in parallel...
 SmoothKNNDistance...

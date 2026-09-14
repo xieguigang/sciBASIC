@@ -1,57 +1,60 @@
-=== 1) 环境探测 ===
-    默认后端  = SIMD
-    随机种子  = 12345（权重初始化）
-    训练配置  = 5 轮 x 1000 张
+=== 1) Environment probe ===
+    default backend = SIMD
+    random seed     = 12345 (weight init)
+    training config = 5 passes x 1000 images
 
-=== 2) CPU(SIMD) 训练 + 评估 ===
+=== 2) CPU(SIMD) training + evaluation ===
     pass 1/5  loss=2.390096552476107
     pass 2/5  loss=0.8209807836912226
     pass 3/5  loss=0.5247906421962469
     pass 4/5  loss=0.4266240644466655
     pass 5/5  loss=0.3594098222432395
-    后端=SIMD  loss=0.3594098222432395  正确=915/1000 (91.50%)  耗时=71.224s
+    backend=SIMD  loss=0.3594098222432395  correct=915/1000 (91.50%)  elapsed=77.354s
 
-=== 3) 注册 CUDA 计算引擎 ===
-    [OK] 当前后端 = CUDA
-    阈值      : MinGpuElements=4096, MinGemmElements=65536
-    IL2Cuda 双精度内核: 全部翻译并注册成功
+=== 3) Register the CUDA compute engine ===
+    [OK] current backend = CUDA
+    thresholds  : MinGpuElements=4096, MinGemmElements=65536
+    IL2Cuda double-precision kernels: all translated and registered successfully
 
-=== 4) CUDA(GPU) 训练 + 评估 ===
+=== 4) CUDA(GPU) training + evaluation ===
     pass 1/5  loss=2.3900965524761064
-    pass 2/5  loss=0.8209807836912225
-    pass 3/5  loss=0.524790642196247
+    pass 2/5  loss=0.8209807836912223
+    pass 3/5  loss=0.5247906421962472
     pass 4/5  loss=0.42662406444666534
-    pass 5/5  loss=0.3594098222432394
-    后端=CUDA  loss=0.3594098222432394  正确=915/1000 (91.50%)  耗时=110.091s
+    pass 5/5  loss=0.3594098222432393
+    backend=CUDA  loss=0.3594098222432393  correct=915/1000 (91.50%)  elapsed=107.877s
 
-=== 5) 各张量算子的实际执行后端 ===
-    后端 = CUDA；单样本(N=1)；阈值 MinGpuElements=4096, MinGemmElements=65536
-    算子                          规模  门控对象        结论
-    conv1 前向                   784  输入 x        CPU 回退
-    conv1 反向                 25088  gradOutput  GPU
-    pool1 前向                 25088  输入 x        GPU
-    pool1 反向                  6272  gradOutput  GPU
-    relu1 前反向                25088  输入 x        GPU
-    conv2 前向                  6272  输入 x        GPU
-    conv2 反向                 12544  gradOutput  GPU
-    pool2 前向                 12544  输入 x        GPU
-    pool2 反向                  3136  gradOutput  CPU 回退
-    relu2 前反向                12544  输入 x        GPU
-    fc  MatMul               31360  m*k*n       CPU 回退
-    softmax                     10  输入 x        CPU 回退
+=== 5) Actual execution backend of every tensor operator ===
+    backend = CUDA; single sample (N=1); thresholds MinGpuElements=4096, MinGemmElements=65536
+    operator                  size  gating operand    verdict
+    conv1 fwd                  784  input x           CPU fallback
+    conv1 bwd                25088  gradOutput        GPU
+    pool1 fwd                25088  input x           GPU
+    pool1 bwd                 6272  gradOutput        GPU
+    relu1 fwd/bwd            25088  input x           GPU
+    conv2 fwd                 6272  input x           GPU
+    conv2 bwd                12544  gradOutput        GPU
+    pool2 fwd                12544  input x           GPU
+    pool2 bwd                 3136  gradOutput        CPU fallback
+    relu2 fwd/bwd            12544  input x           GPU
+    fc  MatMul               31360  m*k*n             CPU fallback
+    softmax                     10  input x           CPU fallback
 
 === 6) CPU(SIMD) vs CUDA(GPU) ===
-    后端            loss                    accuracy          耗时(s)
-    SIMD(CPU)     0.3594098222432395      91.50%            71.224
-    CUDA(GPU)     0.3594098222432394      91.50%            110.091
+    backend       loss                    accuracy          elapsed(s)
+    SIMD(CPU)     0.3594098222432395      91.50%            77.354
+    CUDA(GPU)     0.3594098222432393      91.50%            107.877
 
-    loss 最大绝对误差 = 5.551E-017   OK
-    分类正确数        = CPU 915/1000  GPU 915/1000   OK
-    耗时比            = CPU 71.224s  GPU 110.091s  比=0.65x
+    loss max abs error = 1.665E-016   OK
+    correct count      = CPU 915/1000  GPU 915/1000   OK
+    elapsed ratio      = CPU 77.354s  GPU 107.877s  ratio=0.72x
 
-    说明: loss 只差舍入量级说明 GPU 与 CPU 的数值实现一致。单样本(N=1)下端到端
-          并不会比 CPU 更快 —— ILCudaTensor 采用『每次算子调用都 H2D 上传 + 内核
-          + D2H 读回』的拷贝式执行模型，而池化/全连接/softmax 的规模低于 GPU
-          阈值、本就回退 CPU。要体现 GPU 吞吐需要 batch 化的大张量。
+    note: a loss difference only at the rounding level means the GPU and CPU
+          numeric implementations agree. With a single sample (N=1) the end-to-end
+          run is not faster than the CPU -- ILCudaTensor uses a copy-based
+          execution model that performs an H2D upload + kernel + D2H read-back
+          on every operator call, and pooling/full-connected/softmax are below
+          the GPU threshold and already fall back to the CPU. GPU throughput only
+          shows up with large batched tensors.
 
 done: mnist-cnn

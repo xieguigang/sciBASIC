@@ -364,8 +364,8 @@ dim seed As Integer = 42
 dim preview As Integer = 6
 dim allOk As Boolean = True
 
-call TutorialKit.PrintTitle("IL -> CUDA 教程: 皮尔逊相关矩阵 与 欧氏距离矩阵")
-call console.WriteLine("  输入规模: " & rows & " 行 x " & cols & " 列, 随机种子 " & seed)
+call TutorialKit.PrintTitle("IL -> CUDA tutorial: Pearson correlation matrix and Euclidean distance matrix")
+call console.WriteLine("  input size: " & rows & " rows x " & cols & " cols, random seed " & seed)
 
 ' ---------- Build the input matrix ----------
 dim data As Single() = TutorialKit.MakeMatrix(rows, cols, seed)
@@ -373,7 +373,7 @@ dim data As Single() = TutorialKit.MakeMatrix(rows, cols, seed)
 ' ---------- Step 1: IL -> AST -> .cu ----------
 dim kernels As New Dictionary(Of String, IlCudaKernel)(StringComparer.Ordinal)
 
-call TutorialKit.PrintTitle("第 1 步: 把 VB.NET 函数反编译为 AST, 再发射成 .cu")
+call TutorialKit.PrintTitle("Step 1: decompile the VB.NET functions into an AST and emit .cu source")
 
 for each m As MethodInfo In TutorialKit.Targets()
     dim errMsg As String = Nothing
@@ -386,21 +386,21 @@ for each m As MethodInfo In TutorialKit.Targets()
     end try
 
     if errMsg IsNot Nothing Then
-        call console.WriteLine("  " & m.Name & " 反编译失败: " & errMsg)
+        call console.WriteLine("  " & m.Name & " decompile failed: " & errMsg)
         allOk = False
     else
         call kernels.Add(m.Name, kernel)
 
         call console.WriteLine()
         call console.WriteLine("  ---- " & m.Name & " ----")
-        call console.WriteLine("  索引模式  : " & kernel.IndexMode.ToString())
-        call console.WriteLine("  设备函数  : " & kernel.DeviceFunctionName)
-        call console.WriteLine("  内核      : " & kernel.Name)
+        call console.WriteLine("  index mode : " & kernel.IndexMode.ToString())
+        call console.WriteLine("  device func: " & kernel.DeviceFunctionName)
+        call console.WriteLine("  kernel     : " & kernel.Name)
         call console.WriteLine()
-        call console.WriteLine("  还原出的伪代码:")
+        call console.WriteLine("  reconstructed pseudo code:")
         call TutorialKit.PrintBlock(SyntaxWriter.WriteMethod(kernel.Syntax), "    ")
         call console.WriteLine()
-        call console.WriteLine("  生成的 CUDA 源码:")
+        call console.WriteLine("  generated CUDA source:")
         call TutorialKit.PrintBlock(kernel.Source, "    ")
 
         ' Interpreter self-check: run the same AST through the CPU interpreter and
@@ -413,8 +413,8 @@ for each m As MethodInfo In TutorialKit.Targets()
         dim pass As Boolean = diff <= tol
 
         call console.WriteLine()
-        call console.WriteLine("  解释求值自检: 原方法=" & expected & ", AST=" & actual &
-                               ", 差=" & diff.ToString("E3") & "  " & (if(pass, "OK", "FAIL")))
+        call console.WriteLine("  interpreter self-check: original=" & expected & ", AST=" & actual &
+                               ", diff=" & diff.ToString("E3") & "  " & (if(pass, "OK", "FAIL")))
 
         if Not pass Then
             allOk = False
@@ -423,15 +423,15 @@ for each m As MethodInfo In TutorialKit.Targets()
 next
 
 ' ---------- Step 2: register the generated .cu into KernelSources ----------
-call TutorialKit.PrintTitle("第 2 步: 注册内核源码(必须在创建引擎之前)")
+call TutorialKit.PrintTitle("Step 2: register the kernel sources (must be done before creating the engine)")
 
 for each k As IlCudaKernel In kernels.Values
     call k.Register()
-    call console.WriteLine("  已注册 " & k.ToString())
+    call console.WriteLine("  registered " & k.ToString())
 next
 
 ' ---------- Step 3: NVRTC compile + launch the kernels ----------
-call TutorialKit.PrintTitle("第 3 步: 在 GPU 上计算相关矩阵与距离矩阵")
+call TutorialKit.PrintTitle("Step 3: compute the correlation and distance matrices on the GPU")
 
 dim opts As New EngineOptions With {.DeviceOrdinal = 0}
 dim engine As CudaEngine = CudaEngine.TryCreate(opts)
@@ -440,25 +440,25 @@ dim distGPU As Single() = Nothing
 dim gpuOk As Boolean = False
 
 if Not allOk Then
-    call console.WriteLine("  第 1 步存在失败项, 跳过 GPU 计算。")
+    call console.WriteLine("  Step 1 had failures, skipping the GPU computation.")
 elseif engine Is Nothing Then
-    call console.WriteLine("  GPU 不可用: " & opts.ErrorMessage)
+    call console.WriteLine("  GPU unavailable: " & opts.ErrorMessage)
 
     dim report = CudaEnvironment.Probe()
 
     for each s As FixSuggestion In CudaEnvironment.Suggest(report)
-        call console.WriteLine("  建议: " & s.ToString())
+        call console.WriteLine("  suggestion: " & s.ToString())
         call console.WriteLine("        " & s.Detail)
     next
 
     call console.WriteLine()
-    call console.WriteLine("  >> 已回退 CPU 参考实现, 下面只给出 CPU 结果。")
+    call console.WriteLine("  >> fell back to the CPU reference implementation; only CPU results are shown below.")
 else
     using engine
         dim cells As Integer = rows * rows
 
-        call console.WriteLine("  设备      : " & engine.Device.Name)
-        call console.WriteLine("  内核镜像  : " & engine.Image.ToString())
+        call console.WriteLine("  device      : " & engine.Device.Name)
+        call console.WriteLine("  kernel image: " & engine.Image.ToString())
 
         using bufX As New DeviceBuffer(Of Single)(data.Length), _
               bufSum As New DeviceBuffer(Of Single)(rows), _
@@ -530,7 +530,7 @@ else
                 dim clampPass As Boolean = clampErr <= 1.0E-5
 
                 call console.WriteLine()
-                call console.WriteLine("  PearsonClamp(逐元素自动包裹) 最大绝对误差 = " &
+                call console.WriteLine("  PearsonClamp (auto-wrapped element-wise) max abs error = " &
                                        clampErr.ToString("E3") & "  " & (if(clampPass, "OK", "FAIL")))
 
                 if Not clampPass Then
@@ -542,7 +542,7 @@ else
 end if
 
 ' ---------- Step 4: compare against the CPU reference implementation ----------
-call TutorialKit.PrintTitle("第 4 步: CPU 参考实现比对 + 结果预览")
+call TutorialKit.PrintTitle("Step 4: compare with the CPU reference implementation + preview the results")
 
 dim refCorr As Double() = TutorialKit.CpuCorrelation(data, rows, cols)
 dim refDist As Double() = TutorialKit.CpuDistance(data, rows, cols)
@@ -553,29 +553,29 @@ if gpuOk Then
     dim corrPass As Boolean = eCorr <= 1.0E-3
     dim distPass As Boolean = eDist <= 1.0E-2
 
-    call console.WriteLine("  皮尔逊相关矩阵 最大绝对误差 = " & eCorr.ToString("E3") & "  " & (if(corrPass, "OK", "FAIL")))
-    call console.WriteLine("  欧氏距离矩阵   最大绝对误差 = " & eDist.ToString("E3") & "  " & (if(distPass, "OK", "FAIL")))
+    call console.WriteLine("  Pearson correlation matrix max abs error = " & eCorr.ToString("E3") & "  " & (if(corrPass, "OK", "FAIL")))
+    call console.WriteLine("  Euclidean distance matrix  max abs error = " & eDist.ToString("E3") & "  " & (if(distPass, "OK", "FAIL")))
 
     if (Not corrPass) OrElse (Not distPass) Then
         allOk = False
     end if
 
     call console.WriteLine()
-    call TutorialKit.PrintMatrix("皮尔逊相关矩阵(GPU, 左上 " & preview & " x " & preview & "):", corrGPU, rows, preview)
+    call TutorialKit.PrintMatrix("Pearson correlation matrix (GPU, top-left " & preview & " x " & preview & "):", corrGPU, rows, preview)
     call console.WriteLine()
-    call TutorialKit.PrintMatrix("欧氏距离矩阵(GPU, 左上 " & preview & " x " & preview & "):", distGPU, rows, preview)
+    call TutorialKit.PrintMatrix("Euclidean distance matrix (GPU, top-left " & preview & " x " & preview & "):", distGPU, rows, preview)
 else
-    call console.WriteLine("  GPU 结果不可用, 下面是 CPU 参考实现的结果。")
+    call console.WriteLine("  GPU results unavailable; the CPU reference results are shown below.")
     call console.WriteLine()
-    call TutorialKit.PrintMatrix("皮尔逊相关矩阵(CPU, 左上 " & preview & " x " & preview & "):", TutorialKit.ToSingle(refCorr), rows, preview)
+    call TutorialKit.PrintMatrix("Pearson correlation matrix (CPU, top-left " & preview & " x " & preview & "):", TutorialKit.ToSingle(refCorr), rows, preview)
     call console.WriteLine()
-    call TutorialKit.PrintMatrix("欧氏距离矩阵(CPU, 左上 " & preview & " x " & preview & "):", TutorialKit.ToSingle(refDist), rows, preview)
+    call TutorialKit.PrintMatrix("Euclidean distance matrix (CPU, top-left " & preview & " x " & preview & "):", TutorialKit.ToSingle(refDist), rows, preview)
 end if
 
 call console.WriteLine()
 
 if allOk Then
-    call console.WriteLine("教程全部步骤通过。")
+    call console.WriteLine("All tutorial steps passed.")
 else
-    call console.WriteLine("存在失败项, 请查看上面的输出。")
+    call console.WriteLine("Some steps failed, please check the output above.")
 end if
