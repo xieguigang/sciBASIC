@@ -16,56 +16,67 @@ imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 imports Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
 
 ' ============================================================================
-'  MNIST CNN 的 CUDA 加速 demo（脚本版）
+'  MNIST CNN CUDA acceleration demo (script version)
 '
-'  与 DeepLearning\test 工程里的 MnistCnnGpuTest 是同一份逻辑：
-'      1) 环境探测（默认后端 / 随机种子 / 训练配置）
-'      2) 用 CPU(SIMD) 后端跑一遍作为基准
-'      3) 注册 CUDA 计算引擎；失败则打印诊断并回退 CPU（保证脚本始终能跑出结果）
-'      4) 用 CUDA 后端再跑一遍同样的配置
-'      5) 打印本网络各张量算子会被门控到 GPU 还是回退 CPU
-'      6) CPU vs GPU 的数值一致性、耗时与加速比
+'  The same logic as the MnistCnnGpuTest project under DeepLearning\test:
+'      1) environment probe (default backend / random seed / training config)
+'      2) run one pass with the CPU (SIMD) backend as the baseline
+'      3) register the CUDA compute engine; on failure print diagnostics and
+'         fall back to CPU (so the script always produces a result)
+'      4) run the very same configuration again with the CUDA backend
+'      5) print, for every tensor operator of this network, whether it is gated
+'         onto the GPU or falls back to the CPU
+'      6) CPU vs GPU numeric consistency, wall-clock time and speedup
 '
-'  运行：
-'      vbs.exe tutorials\VBS\scripts\mnist_cnn\mnist_cnn.vb --mnist-data <MNIST 目录>
+'  Run:
+'      vbs.exe tutorials\VBS\scripts\mnist_cnn\mnist_cnn.vb --mnist-data <MNIST dir>
 '
-'  说明：
-'    * 网络权值的初始化走共享的“未播种”随机数发生器，不固定种子的话每次运行的初始权值
-'      都不同、结果无法比对。因此每跑一遍之前都重新播种，使 CPU 与 GPU 两条路径看到的
-'      初始权值与样本顺序完全相同，两者之差只可能来自后端的数值实现。
-'    * 训练流程放在下面的 Public Class 里（脚本顶层的 Function 会被引擎重写为匿名函数，
-'      既拿不到外层变量也无法反射；类型块则会被原样保留）。
+'  Notes:
+'    * The network weights are initialized through a shared "unseeded" random
+'      generator; without fixing the seed every run starts from different
+'      weights and the results cannot be compared. The seed is therefore reset
+'      before each pass, so the CPU and GPU paths see exactly the same initial
+'      weights and sample order -- any difference can only come from the numeric
+'      implementation of the backend.
+'    * The training flow lives in the Public Class below (a top-level Function
+'      in a script is rewritten by the engine into an anonymous function, which
+'      can neither capture outer variables nor be reflected; type blocks are
+'      kept verbatim).
 ' ============================================================================
 
 ''' <summary>
-''' 一次“构建网络 -> 训练 -> 评估”的完整流程。
+''' One complete "build network -> train -> evaluate" pass.
 ''' </summary>
 ''' <remarks>
-''' 用当前 <c>Tensor.computeKernel</c> 所指向的后端执行，因此同一份代码既能跑 CPU(SIMD)
-''' 也能跑 CUDA，便于两者直接对比。
+''' Executes on whichever backend <c>Tensor.computeKernel</c> currently points
+''' to, so the same code can run on CPU (SIMD) or CUDA and the two can be
+''' compared directly.
 ''' </remarks>
 Public Class CnnRunner
 
     ''' <summary>
-    ''' 跑一次确定性的训练 + 评估。
+    ''' Run one deterministic training + evaluation pass.
     ''' </summary>
-    ''' <returns>``{最后一轮 loss, 分类正确数, 样本总数, 耗时秒}``</returns>
+    ''' <returns>``{last pass loss, number of correct classifications, total samples, elapsed seconds}``</returns>
     Public Shared Function Execute(imagesPath As String, labelsPath As String,
                                   randomSeed As Integer, passes As Integer, samples As Integer) As (lastLoss as double, correct as double, size as double, cost_ms as double)
-        ' 必须在构建网络（即首次调用 Vector.rand）之前播种
+        ' The seed must be set before the network is built (i.e. before the
+        ' first call to Vector.rand)
         Call Microsoft.VisualBasic.Math.RandomExtensions.SetSeed(randomSeed)
 
         Dim reader As New MNIST(imagesPath, labelsPath)
 
-        ' 先把样本物化，保证每轮、每次运行看到的都是同一批、同一顺序的数据
+        ' Materialize the samples first, guaranteeing that every pass and every
+        ' run sees the same batch of data in the same order
         Dim dataset = reader.ExtractVectors.Take(samples).ToArray
 
-        ' 网络结构与仓库里的 MnistTest 完全一致：
+        ' The network structure is identical to MnistTest in the repository:
         '   input 28x28x1 -> conv5x32 -> relu -> pool2 -> conv5x64 -> relu -> pool2 -> fc10 -> softmax
         '
-        ' 用 LayerBuilder 的 + 运算符做流式搭建，与 R# 的 auto_encoder.R 一一对应：
+        ' Streamed with the LayerBuilder + operator, one-to-one with R# auto_encoder.R:
         '   let cnn = cnn() + input_layer([28,28],1) + conv_layer(5,32,1,2) + pool_layer(2,2,0) + ...
-        ' 差别只是 VB 的隐式换行要求二元运算符写在上一行行尾。
+        ' The only difference is that VB implicit line continuation requires the
+        ' binary operator to stay at the end of the previous line.
         Dim cnn As LayerBuilder = New LayerBuilder() +
             input_layer({reader.ImageSize.Width, reader.ImageSize.Height}, 1) +
             conv_layer(5, 32, 1, 2) +
@@ -119,7 +130,7 @@ Public Class CnnRunner
 End Class
 
 ' ---------------------------------------------------------------------------
-' 0) 命令行参数
+' 0) Command line arguments
 ' ---------------------------------------------------------------------------
 dim mnist_repo = ?"--mnist-data"
 dim images_file = $"{mnist_repo}\train-images-idx3-ubyte"
@@ -130,7 +141,7 @@ dim train_passes = 5
 dim train_samples = 1000
 
 ' ---------------------------------------------------------------------------
-' 1) 环境探测
+' 1) Environment probe
 ' ---------------------------------------------------------------------------
 call console.WriteLine("=== 1) 环境探测 ===")
 call console.WriteLine($"    默认后端  = {Tensor.computeKernel.Name}")
@@ -138,7 +149,7 @@ call console.WriteLine($"    随机种子  = {random_seed}（权重初始化）"
 call console.WriteLine($"    训练配置  = {train_passes} 轮 x {train_samples} 张")
 
 ' ---------------------------------------------------------------------------
-' 2) CPU(SIMD) 基准
+' 2) CPU (SIMD) baseline
 ' ---------------------------------------------------------------------------
 call console.WriteLine()
 call console.WriteLine("=== 2) CPU(SIMD) 训练 + 评估 ===")
@@ -149,7 +160,7 @@ call console.WriteLine($"    后端={Tensor.computeKernel.Name}  loss={cpu_loss:
                       $"正确={cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})  耗时={cpu_seconds:F3}s")
 
 ' ---------------------------------------------------------------------------
-' 3) 注册 CUDA 计算引擎
+' 3) Register the CUDA compute engine
 ' ---------------------------------------------------------------------------
 call console.WriteLine()
 call console.WriteLine("=== 3) 注册 CUDA 计算引擎 ===")
@@ -179,7 +190,7 @@ else
 end if
 
 ' ---------------------------------------------------------------------------
-' 4) CUDA(GPU) 训练 + 评估
+' 4) CUDA (GPU) training + evaluation
 ' ---------------------------------------------------------------------------
 if gpu_enabled then
     call console.WriteLine()
@@ -191,14 +202,19 @@ if gpu_enabled then
                           $"正确={gpu_correct}/{gpu_total} ({gpu_correct / gpu_total:P2})  耗时={gpu_seconds:F3}s")
 
     ' -----------------------------------------------------------------------
-    ' 5) 本网络各张量算子的实际执行后端
+    ' 5) The actual execution backend of every tensor operator of this network
     '
-    '    关键：门控对象各不相同（均已对照 CudaTensor 的实现确认）
-    '      * 逐元素算子 / MaxPool2D —— 门控输入张量自身的元素数
-    '      * Conv2D 前向          —— 门控**输入** x 的元素数（不是输出！）
-    '      * Conv2DBackward*      —— 门控 gradOutput（即本层输出）的元素数
-    '      * MatMul               —— 门控 m*k*n
-    '    不把门控对象摆出来，很容易把“部分算子走 GPU”误读成“端到端都在 GPU 上”。
+    '    Key point: the gating operand is not the same for every operator
+    '    (all verified against the CudaTensor implementation):
+    '      * element-wise operators / MaxPool2D -- gated on the element count of
+    '        the input tensor itself
+    '      * Conv2D forward                    -- gated on the element count of
+    '        the **input** x (NOT the output!)
+    '      * Conv2DBackward*                   -- gated on gradOutput (i.e. the
+    '        output of this layer)
+    '      * MatMul                            -- gated on m*k*n
+    '    Without making the gating operand explicit it is very easy to misread
+    '    "some operators run on the GPU" as "everything runs on the GPU".
     ' -----------------------------------------------------------------------
     call console.WriteLine()
     call console.WriteLine("=== 5) 各张量算子的实际执行后端 ===")
@@ -229,7 +245,7 @@ if gpu_enabled then
     call console.WriteLine($"    {"softmax",-16}{10,14}{"  输入 x",-14}{If(10 >= min_gpu, "GPU", "CPU 回退")}")
 
     ' -----------------------------------------------------------------------
-    ' 6) CPU vs GPU 对比
+    ' 6) CPU vs GPU comparison
     ' -----------------------------------------------------------------------
     call console.WriteLine()
     call console.WriteLine("=== 6) CPU(SIMD) vs CUDA(GPU) ===")

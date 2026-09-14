@@ -12,21 +12,25 @@ imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 
 ' ---------------------------------------------------------------------------
-' 层次聚类的 demo
+' Hierarchical clustering demo
 '
-'   特征表 → distanceMatrix() → 距离矩阵表 → hca() 聚类树 / hcut() 切分成簇
-'     → 与真实物种对比 → PCA 降维绘图 → 导出 csv
+'   feature table -> distanceMatrix() -> distance matrix table
+'    -> hca() dendrogram / hcut() cut into clusters
+'    -> compare with the real species -> PCA scatter plot -> export csv
 ' ---------------------------------------------------------------------------
 dim file = here("../../data/bezdekIris.csv")
 dim k = 3
 
 ' ---------------------------------------------------------------------------
-' 1. 加载 iris 数据集为统一二维表（首列行名 + D1..D4 特征列）
+' 1. Load the iris dataset as the unified 2D table format
+'    (first column = row names, then the D1..D4 feature columns)
 ' ---------------------------------------------------------------------------
 dim table = NumericTableIO.ReadCsv(file, columns := {"D1","D2","D3","D4"})
 
-' iris 文件的第一列是物种名(有重复)，而层次聚类要求样本名唯一，
-' 因此这里把行名改写为唯一的样本编号，同时把真实物种映射为数值标签列 species 保留下来
+' The first column of the iris file is the species name (with duplicates), but
+' hierarchical clustering requires unique sample names. So the row names are
+' rewritten to unique sample ids here, while the real species is mapped to a
+' numeric label column named species and kept on the table.
 dim species = table.rowNames
 dim spNames as new List(Of String)
 dim sp(table.nsamples - 1) as double
@@ -46,17 +50,18 @@ call table.SetLabel("species", sp)
 call console.WriteLine($"dataset: {table.nsamples} samples x {table.nfeatures} features, {spNames.Count} species")
 
 ' ---------------------------------------------------------------------------
-' 2. 特征表 → 对称距离矩阵表（默认欧氏距离）
+' 2. Feature table -> symmetric distance matrix table (Euclidean by default)
 ' ---------------------------------------------------------------------------
 dim dist = table.distanceMatrix()
 
 call console.WriteLine($"distance matrix: {dist.nsamples} x {dist.nfeatures} (square matrix)")
 
 ' ---------------------------------------------------------------------------
-' 3. 层次聚类
+' 3. Hierarchical clustering
 '
-'    + hca()  返回聚类树(dendrogram)的根节点
-'    + hcut() 把聚类树切分成目标数量的簇，并把类编号写入 cluster 标签列
+'    + hca()  returns the root node of the dendrogram
+'    + hcut() cuts the dendrogram into the requested number of clusters and
+'      writes the cluster id into the cluster label column
 ' ---------------------------------------------------------------------------
 dim tree = dist.hca()
 dim flat = dist.hcut(k := k)
@@ -77,7 +82,8 @@ next
 call console.WriteLine($"dendrogram: leafs = {tree.Leafs}, leaf order head = {String.Join(", ", leafHead)}")
 call console.WriteLine($"hcut(k := {k}) cluster sizes: {String.Join(", ", sizes)}")
 
-' 按照距离阈值切分聚类树（阈值小于该值的时候簇会被合并）
+' Cut the dendrogram by a distance threshold (clusters are merged while the
+' linkage distance is below the threshold)
 dim byThreshold = dist.hcut(threshold := 3.0)
 dim thresholdLabels = byThreshold.ClusterLabels()
 dim clusterNumber = 0
@@ -89,7 +95,7 @@ next
 call console.WriteLine($"hcut(threshold := 3.0) -> {clusterNumber} clusters")
 
 ' ---------------------------------------------------------------------------
-' 4. 与真实物种做对比（交叉表）
+' 4. Compare the clusters with the real species (cross tabulation)
 ' ---------------------------------------------------------------------------
 for each name in spNames
     dim counts(k - 1) as integer
@@ -103,7 +109,8 @@ for each name in spNames
 next
 
 ' ---------------------------------------------------------------------------
-' 5. 在特征表上做 PCA 降维，并且按照层次聚类的簇编号着色
+' 5. Run PCA on the feature table and colour the scatter plot by the
+'    hierarchical cluster id
 ' ---------------------------------------------------------------------------
 dim score = table.pca(maxPC := 2).ScoreTable()
 dim class_id(labels.length - 1) as string
@@ -124,9 +131,11 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
 End Using
 
 ' ---------------------------------------------------------------------------
-' 6. 把层次聚类的簇编号写回到原始特征表之后导出为 csv
+' 6. Write the hierarchical cluster ids back onto the original feature table
+'    and export it as csv
 '
-'    导出布局仍然遵循「行名 + 特征列 + label: 前缀标签列」的约定
+'    The exported layout still follows the convention of
+'    "row names + feature columns + label: prefixed label columns"
 ' ---------------------------------------------------------------------------
 dim result = table.SetLabel("cluster", labels)
 

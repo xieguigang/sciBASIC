@@ -17,6 +17,12 @@ Imports Microsoft.VisualBasic.DataMining.UMAP
 imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 
+' ---------------------------------------------------------------------------
+' Word2Vec + UMAP + KMeans demo
+'
+'   Rapunzel text -> Word2Vec training -> word vector table
+'    -> UMAP embedding -> KMeans clustering -> scatter plot -> export csv
+' ---------------------------------------------------------------------------
 dim textfile = here("../../data/Rapunzel.txt")
 dim wv As Word2Vec = BuildWord2VecFactory() _
     .setVectorSize(30) _
@@ -35,12 +41,14 @@ Next
 call wv.training()
 
 ' ---------------------------------------------------------------------------
-' 1. 把训练出来的词向量集合构建为统一的二维表对象(NumericTable)
+' 1. Build the trained word vector collection into a unified 2D table object
+'    (NumericTable)
 '
-'    + 行名    = 词 token
-'    + 特征列  = v_1 .. v_n，即每一个词的词向量
+'    + row names  = the word token
+'    + features   = v_1 .. v_n, i.e. the word vector of each token
 '
-'    后续所有的降维、聚类、导出操作都直接基于这张表进行
+'    All the following operations (dimension reduction, clustering, export) are
+'    performed directly on this table
 ' ---------------------------------------------------------------------------
 dim vector = wv.outputVector()
 dim tokens = vector.tokens
@@ -63,24 +71,26 @@ dim table = NumericTable.FromRows(tokens, rows, colnames)
 call console.WriteLine($"word vectors: {table.nsamples} tokens x {table.nfeatures} dims")
 
 ' ---------------------------------------------------------------------------
-' 2. 使用 UMAP 把词向量降维到 9 维
+' 2. Use UMAP to reduce the word vectors to 9 dimensions
 '
-'    umap 方法接收统一二维表，并且返回以嵌入坐标 dim_1..dim_n 为特征的新表，
-'    行名以及原有的标签列都会被继承下来
+'    The umap method accepts the unified 2D table and returns a new table whose
+'    features are the embedding coordinates dim_1..dim_n; the row names and the
+'    existing label columns are inherited
 ' ---------------------------------------------------------------------------
 dim manifold = table.umap(dims := 9, neighbors := 64)
 
 call console.WriteLine($"umap embedding: {manifold.nsamples} samples x {manifold.nfeatures} dims")
 
 ' ---------------------------------------------------------------------------
-' 3. 对降维之后的表执行 KMeans 聚类
+' 3. Run KMeans clustering on the reduced table
 '
-'    聚类的结果会以标签列 cluster 的形式写入到表的标签矩阵之中
+'    The clustering result is written into the label matrix of the table as the
+'    label column cluster
 ' ---------------------------------------------------------------------------
 dim clusters = manifold.kmeans(k := 9)
 
 ' ---------------------------------------------------------------------------
-' 4. 从结果表之中取出绘图所需要的数据
+' 4. Extract the data needed for plotting from the result table
 ' ---------------------------------------------------------------------------
 dim x = manifold.Feature("dim_1")
 dim y = manifold.Feature("dim_2")
@@ -107,10 +117,11 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
 End Using
 
 ' ---------------------------------------------------------------------------
-' 5. 把聚类结果表导出为 csv
+' 5. Export the clustering result table as csv
 '
-'    导出布局同样遵循「行名 + 特征列 + label: 前缀标签列」的约定，
-'    可以再次通过 NumericTableIO.ReadCsv 无损加载回来
+'    The exported layout also follows the convention of
+'    "row names + feature columns + label: prefixed label columns", so it can
+'    be loaded back losslessly through NumericTableIO.ReadCsv
 ' ---------------------------------------------------------------------------
 call clusters.WriteCsv(here("rapunzel-umap-groups.csv"))
 

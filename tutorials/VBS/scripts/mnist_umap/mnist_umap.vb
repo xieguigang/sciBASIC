@@ -15,8 +15,9 @@ imports Microsoft.VisualBasic.DataMining
 imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 
-' MNIST 训练集一共有 60000 个样本，对全量样本做 UMAP 的计算量非常大，
-' 因此这个教程脚本只取前面的 limit 个样本进行演示(把 limit 调大即可处理更多样本)
+' The MNIST training set contains 60000 samples and running UMAP on the full set
+' is very expensive, so this tutorial script only takes the first ``limit``
+' samples for the demonstration (increase limit to process more samples)
 dim limit = 20000
 dim repo_data = ?"--data"
 dim mnist as new MNIST(
@@ -24,12 +25,14 @@ dim mnist as new MNIST(
     $"{repo_data}\train-labels-idx1-ubyte")
 
 ' ---------------------------------------------------------------------------
-' 1. 把 MNIST 的手写数字样本构建为统一的二维表对象(NumericTable)
+' 1. Build the handwritten digit samples of MNIST into a unified 2D table
+'    object (NumericTable)
 '
-'    + 特征列 = p_1 .. p_784，即图像的像素灰度
-'    + 标签列 = class，即每一个样本所对应的数字类别
+'    + feature columns = p_1 .. p_784, i.e. the pixel grey levels of the image
+'    + label column   = class, i.e. the digit category of every sample
 '
-'    后续的降维、聚类、导出操作都直接基于这一张表
+'    All the following operations (dimension reduction, clustering, export) are
+'    performed directly on this single table
 ' ---------------------------------------------------------------------------
 dim rows As Double()() = New Double(limit - 1)() {}
 dim classes(limit - 1) as double
@@ -43,7 +46,7 @@ for each digit in mnist.ExtractDataSet(of ClusterEntity)()
     i += 1
 next
 
-' 实际读取到的样本数量可能少于 limit
+' The number of samples actually read may be smaller than limit
 if i > 0 andalso i < limit then
     redim preserve rows(i - 1)
     redim preserve classes(i - 1)
@@ -58,17 +61,18 @@ call table.SetLabel("class", classes)
 call console.WriteLine($"mnist table: {table.nsamples} samples x {table.nfeatures} pixels")
 
 ' ---------------------------------------------------------------------------
-' 2. 使用 UMAP 把 784 维的像素数据降维到二维
+' 2. Use UMAP to reduce the 784-dimensional pixel data to two dimensions
 '
-'    umap 方法接收统一二维表，返回以嵌入坐标 dim_1..dim_2 为特征的新表，
-'    行名以及原有的 class 标签列都会被继承下来
+'    The umap method accepts the unified 2D table and returns a new table whose
+'    features are the embedding coordinates dim_1..dim_2; the row names and the
+'    existing class label column are inherited
 ' ---------------------------------------------------------------------------
 dim manifold = table.umap(dims := 2, neighbors := 128)
 
 call console.WriteLine($"umap embedding: {manifold.nsamples} samples x {manifold.nfeatures} dims")
 
 ' ---------------------------------------------------------------------------
-' 3. 绘图：UMAP1/UMAP2 散点图，按照手写数字的类别进行着色
+' 3. Plot: UMAP1/UMAP2 scatter plot coloured by the handwritten digit class
 ' ---------------------------------------------------------------------------
 dim x = manifold.Feature("dim_1")
 dim y = manifold.Feature("dim_2")
@@ -90,7 +94,8 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
 End Using
 
 ' ---------------------------------------------------------------------------
-' 4. 把降维结果表导出为 csv（dim_1, dim_2 特征列 + label:class 标签列）
+' 4. Export the embedding table as csv
+'    (dim_1, dim_2 feature columns + the label:class label column)
 ' ---------------------------------------------------------------------------
 call manifold.WriteCsv(here("mnist-umap.csv"))
 

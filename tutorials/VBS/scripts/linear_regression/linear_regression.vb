@@ -10,18 +10,21 @@ imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 
 ' ---------------------------------------------------------------------------
-' 线性回归的 demo
+' Linear regression demo
 '
-'   数据集 → 统一二维表(NumericTable) → LinearFit 拟合 → 预测/残差写回标签列
-'     → 绘图 → 导出 csv
+'   dataset -> unified 2D table (NumericTable) -> LinearFit
+'    -> prediction / residual written back to label columns
+'    -> plot -> export csv
 '
-' 其中回归算法的输入约定为：X = 表的全部特征列，y = y 参数指定的标签列
+' The regression input convention is: X = all feature columns of the table,
+' y = the label column named by the y parameter
 ' ---------------------------------------------------------------------------
 
 ' ---------------------------------------------------------------------------
-' 1. 构造一个带噪声的线性数据集：y = 2x + 3 + noise
+' 1. Build a noisy linear dataset: y = 2x + 3 + noise
 '
-'    噪声使用确定性的锯齿函数，保证每次运行的拟合结果完全一致
+'    The noise is a deterministic sawtooth function so that every run produces
+'    exactly the same fitting result
 ' ---------------------------------------------------------------------------
 dim n = 100
 dim features As Double()() = New Double(n - 1)() {}
@@ -42,9 +45,10 @@ call table.SetLabel("y", y)
 call console.WriteLine($"dataset: {table.nsamples} samples x {table.nfeatures} feature")
 
 ' ---------------------------------------------------------------------------
-' 2. 线性回归建模
+' 2. Build the linear regression model
 '
-'    LinearFit 返回 FitResult 模型对象（斜率/截距/R2/RMSE/残差等都在模型对象上）
+'    LinearFit returns a FitResult model object (slope/intercept/R2/RMSE/
+'    residuals and so on are all carried on the model object)
 ' ---------------------------------------------------------------------------
 dim model = table.LinearFit(y := "y")
 
@@ -52,16 +56,17 @@ call console.WriteLine($"linear fit  : y = {model.Slope} * x + {model.Intercept}
 call console.WriteLine($"R2 = {model.R_square}, adjust R2 = {model.AdjustR_square}, RMSE = {model.RMSE}")
 
 ' ---------------------------------------------------------------------------
-' 3. 用二次多项式回归做对比
+' 3. Use a quadratic polynomial regression for comparison
 ' ---------------------------------------------------------------------------
 dim quad = table.PolyFit(poly_n := 2)
 
 call console.WriteLine($"poly fit(2) : R2 = {quad.R_square}, RMSE = {quad.RMSE}")
 
 ' ---------------------------------------------------------------------------
-' 4. 把预测值与残差写回到表的标签矩阵之中
+' 4. Write the prediction and the residual back into the label matrix of the table
 '
-'    SetPrediction 不会修改源表，而是返回写入预测列之后的新表
+'    SetPrediction does not modify the source table; it returns a new table with
+'    the prediction columns written in
 ' ---------------------------------------------------------------------------
 dim result = table.SetPrediction(model, withResidual := True)
 
@@ -69,7 +74,7 @@ call console.WriteLine($"prediction labels: {String.Join(", ", result.labelNames
 call console.WriteLine($"first row: y = {result.GetLabel("y")(0)}, prediction = {result.GetLabel("prediction")(0)}, residual = {result.GetLabel("residual")(0)}")
 
 ' ---------------------------------------------------------------------------
-' 5. 绘制观测散点 + 拟合直线
+' 5. Draw the observed scatter points together with the fitted line
 ' ---------------------------------------------------------------------------
 dim lineSize = 50
 dim lineX(lineSize - 1) as double
@@ -108,7 +113,8 @@ Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
 End Using
 
 ' ---------------------------------------------------------------------------
-' 6. 导出结果表（行名 + x 特征列 + label:y / label:prediction / label:residual）
+' 6. Export the result table
+'    (row names + x feature column + label:y / label:prediction / label:residual)
 ' ---------------------------------------------------------------------------
 call result.WriteCsv(here("linear-regression.csv"))
 
