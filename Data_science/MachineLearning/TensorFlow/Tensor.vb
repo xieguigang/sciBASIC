@@ -705,6 +705,15 @@ Public Class Tensor : Implements ICloneable, IDisposable
     End Function
 
     ''' <summary>
+    ''' 转换为单精度张量 <see cref="TensorF"/>。数据会被复制并逐元素窄化为 Single，
+    ''' 用于把双精度生态的结果交给 CFD 求解 / 三维可视化这类内存带宽受限的下游环节。
+    ''' </summary>
+    ''' <returns>同形状的单精度张量</returns>
+    Public Function ToTensorF() As TensorF
+        Return TensorF.FromTensor(Me)
+    End Function
+
+    ''' <summary>
     ''' 重塑张量形状（来自旧版本）
     ''' 改变张量的维度结构，但不改变数据
     ''' </summary>
