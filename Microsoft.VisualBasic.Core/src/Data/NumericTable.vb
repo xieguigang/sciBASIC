@@ -36,6 +36,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Data
 
@@ -170,6 +171,26 @@ Namespace Data
             Me.features = features
             Me.rowNames = rowNames
             Me.featureNames = featureNames
+        End Sub
+
+        ''' <summary>
+        ''' Overloads for regression
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        Sub New(x As IEnumerable(Of Double()), y As IEnumerable(Of Double))
+            Me.features = x.ToArray
+            Me.labels = y.Select(Function(yi) {yi}).ToArray
+        End Sub
+
+        ''' <summary>
+        ''' Overloads for classification
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        Sub New(x As IEnumerable(Of Double()), y As IEnumerable(Of Integer))
+            Me.features = x.ToArray
+            Me.labels = y.Select(Function(yi) New Double() {yi}).ToArray
         End Sub
 
         ''' <summary>
@@ -349,8 +370,17 @@ Namespace Data
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLabel(name As String) As Double()
-            Dim idx As Integer = RequireLabelIndex(name)
+            Return GetLabel(idx:=RequireLabelIndex(name))
+        End Function
+
+        Public Function GetClassLabel(idx As Integer) As Integer()
+            Return GetLabel(idx).AsInteger
+        End Function
+
+        Public Function GetLabel(idx As Integer) As Double()
             Dim v As Double() = New Double(nsamples - 1) {}
 
             For i As Integer = 0 To nsamples - 1
