@@ -60,20 +60,18 @@
 
 Imports System.IO
 Imports System.Xml.Linq
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 
 ''' <summary>
 ''' nuget_release|x64 编译配置的产物输出路径修正模块
 ''' </summary>
 ''' <remarks>
-''' 框架下 RootNamespace 以 ``Microsoft.VisualBasic`` 起始的工程都是要发布到 nuget 的库，
-''' 它们在 ``nuget_release|x64`` 配置下应当统一把产物输出到框架根的 ``.nuget`` 目录中，
-''' 便于集中打包。
+''' 被命名空间前缀筛选命中的目标工程，在 ``nuget_release|x64`` 配置下应当统一把产物
+''' 输出到用户通过 ``--output`` 指定的文件夹中，便于集中打包。
 '''
 ''' 这个模块负责三件事：
 '''
 ''' 1. 把所有 ``nuget_release|x64`` 条件组（含带 ``$(TargetFramework)`` 的变体）的
-'''    ``&lt;OutputPath&gt;`` 改写为指向 ``.nuget`` 的正确相对路径；
+'''    ``&lt;OutputPath&gt;`` 改写为指向输出文件夹的正确相对路径；
 ''' 2. 完全没有该配置组的工程，补建一个只含 ``&lt;PlatformTarget&gt;`` 与 ``&lt;OutputPath&gt;``
 '''    的条件属性组；
 ''' 3. 补齐 ``&lt;Configurations&gt;`` 中的 ``nuget_release`` 与 ``&lt;Platforms&gt;`` 中的 ``x64`` 声明，
@@ -97,7 +95,7 @@ Module OutputPathFixer
         Public Property Created As Integer
         ''' <summary>补齐的 Configurations / Platforms 声明条数</summary>
         Public Property DeclarationsAdded As Integer
-        ''' <summary>本次计算出的、指向 .nuget 的相对路径，用于日志展示</summary>
+        ''' <summary>本次计算出的、指向输出文件夹的相对路径，用于日志展示</summary>
         Public Property OutputPath As String
 
         Public ReadOnly Property Changed As Boolean
@@ -108,46 +106,23 @@ Module OutputPathFixer
 
     End Class
 
-    ''' <summary>目标工程的 RootNamespace 前缀</summary>
-    Private Const RootNamespacePrefix As String = "Microsoft.VisualBasic"
     ''' <summary>需要修正的编译配置名</summary>
     Private Const ReleaseConfiguration As String = "nuget_release"
     ''' <summary>需要修正的目标平台名</summary>
     Private Const ReleasePlatform As String = "x64"
 
     ''' <summary>
-    ''' 判定一个工程是否需要参与输出路径修正
-    ''' </summary>
-    ''' <param name="model">由 <see cref="VBProject.LoadProjectXml(String)"/> 加载得到的工程模型。</param>
-    ''' <returns>
-    ''' 需要同时满足：是 Microsoft.NET.Sdk 风格工程，且 RootNamespace 以
-    ''' ``Microsoft.VisualBasic`` 起始（大小写不敏感）。
-    ''' </returns>
-    ''' <remarks>
-    ''' legacy 工程被排除在外 —— 它们没有 &lt;Platforms&gt; 这个 SDK 专有属性，
-    ''' 补声明没有意义，工具既有的版本号升级与配置清理也一视同仁地跳过了它们。
-    ''' </remarks>
-    Public Function IsTarget(model As VBProject) As Boolean
-        If model Is Nothing OrElse Not model.IsDotNetCoreSDK Then
-            Return False
-        End If
-
-        Return Not String.IsNullOrWhiteSpace(model.RootNamespace) AndAlso
-               model.RootNamespace.StartsWith(RootNamespacePrefix, StringComparison.OrdinalIgnoreCase)
-    End Function
-
-    ''' <summary>
-    ''' 计算出从工程所在目录到 .nuget 目录的相对路径
+    ''' 计算出从工程所在目录到输出文件夹的相对路径
     ''' </summary>
     ''' <param name="projectPath">vbproj 文件的路径。</param>
-    ''' <param name="nugetDir">.nuget 目录的绝对路径，一般是框架根下的 .nuget。</param>
+    ''' <param name="outputDir">编译产物输出文件夹的绝对路径（一般来自命令行 --output）。</param>
     ''' <returns>
     ''' MSBuild 风格的相对路径，分隔符统一为正斜杠并且以斜杠结尾，
-    ''' 例如 ``../../.nuget/``、``../../../.nuget/``。
+    ''' 例如 ``../../out/``、``../../../out/``。
     ''' </returns>
-    Public Function ComputeOutputPath(projectPath As String, nugetDir As String) As String
+    Public Function ComputeOutputPath(projectPath As String, outputDir As String) As String
         Dim projectDir As String = Path.GetDirectoryName(Path.GetFullPath(projectPath))
-        Dim relative As String = Path.GetRelativePath(projectDir, nugetDir)
+        Dim relative As String = Path.GetRelativePath(projectDir, outputDir)
 
         Return relative.Replace("\"c, "/"c).TrimEnd("/"c) & "/"
     End Function
@@ -170,12 +145,12 @@ Module OutputPathFixer
     ''' <param name="doc">以 PreserveWhitespace 方式加载的原始文档。</param>
     ''' <param name="ns">文档根元素的命名空间。</param>
     ''' <param name="projectPath">vbproj 文件的绝对路径，用于推算相对路径。</param>
-    ''' <param name="nugetDir">.nuget 目录的绝对路径。</param>
+    ''' <param name="outputDir">编译产物输出文件夹的绝对路径（来自命令行 --output）。</param>
     ''' <returns>本次的修正统计。</returns>
     Public Function Apply(doc As XDocument,
                           ns As XNamespace,
                           projectPath As String,
-                          nugetDir As String) As OutputPathResult
+                          outputDir As String) As OutputPathResult
 
         Dim result As New OutputPathResult()
 
@@ -183,7 +158,7 @@ Module OutputPathFixer
             Return result
         End If
 
-        Dim outputPath As String = ComputeOutputPath(projectPath, nugetDir)
+        Dim outputPath As String = ComputeOutputPath(projectPath, outputDir)
         Dim matched As Integer = 0
 
         result.OutputPath = outputPath
