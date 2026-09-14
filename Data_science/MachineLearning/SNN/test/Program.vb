@@ -6,11 +6,10 @@
 ' Part 2  STDP 无监督学习  —— 赢者通吃 + 脉冲时序可塑性，神经元自发分化
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Text
-Imports SpikingNN
+Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork.SpikingNN
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
 
 Module Program
 
@@ -77,14 +76,14 @@ Module Program
 
                 Dim gAna = layer.WeightGrad(fi)
                 Dim gNum = (lp - lm) / (2.0 * eps)
-                Dim denom = Math.Max(Math.Abs(gAna), Math.Abs(gNum))
-                Dim rel = If(denom < 0.000000001, 0.0, Math.Abs(gAna - gNum) / denom)
+                Dim denom = std.Max(Math.abs(gAna), std.Abs(gNum))
+                Dim rel = If(denom < 0.000000001, 0.0, Math.abs(gAna - gNum) / denom)
 
                 Console.WriteLine(
                     $"    {layer.Name}.W({fi \ cols},{fi Mod cols}): " &
                     $"解析={gAna,12:E4}  数值={gNum,12:E4}  相对误差={rel:E2}")
 
-                maxRel = Math.Max(maxRel, rel)
+                maxRel = std.Max(maxRel, rel)
                 nChecked += 1
             Next
         Next
@@ -103,16 +102,16 @@ Module Program
 
     ''' <summary>3 个类别在 8 维空间中的中心（各维取值 [0,1]）</summary>
     Private ReadOnly ClassCenters As Double()() = {
-        New Double() {0.20, 0.20, 0.75, 0.75, 0.50, 0.50, 0.20, 0.80},
-        New Double() {0.75, 0.75, 0.20, 0.20, 0.80, 0.20, 0.50, 0.50},
-        New Double() {0.50, 0.80, 0.50, 0.80, 0.20, 0.75, 0.80, 0.20}
+        New Double() {0.2, 0.2, 0.75, 0.75, 0.5, 0.5, 0.2, 0.8},
+        New Double() {0.75, 0.75, 0.2, 0.2, 0.8, 0.2, 0.5, 0.5},
+        New Double() {0.5, 0.8, 0.5, 0.8, 0.2, 0.75, 0.8, 0.2}
     }
 
     Private Function Gaussian(rng As Random) As Double
         ' Box-Muller 变换
         Dim u1 = 1.0 - rng.NextDouble()
         Dim u2 = 1.0 - rng.NextDouble()
-        Return Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2)
+        Return Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2.0 * Math.PI * u2)
     End Function
 
     Private Function SampleClass(rng As Random, cls As Integer) As Double()
@@ -296,8 +295,8 @@ Module Program
         Console.WriteLine("  理论 STDP 学习窗口（Δt = t_post − t_pre, τ=20）:")
         Dim tau = 20.0
         For dt = -5 To 5
-            Dim dw = If(dt > 0, Math.Exp(-dt / tau), -1.1 * Math.Exp(dt / tau))
-            Dim w = CInt(Math.Min(24, Math.Abs(dw) * 22))
+            Dim dw = If(dt > 0, Math.exp(-dt / tau), -1.1 * Math.exp(dt / tau))
+            Dim w = CInt(Math.Min(24, Math.abs(dw) * 22))
             Dim bar = New String(If(dw >= 0, "+"c, "-"c), w)
             Console.WriteLine($"    Δt={dt,3}: {bar}")
         Next
