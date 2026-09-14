@@ -7,7 +7,7 @@
 ' ============================================================================
 
 Imports System.Text
-Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork.SpikingNN
+Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
