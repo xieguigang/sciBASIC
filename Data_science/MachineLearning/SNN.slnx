@@ -1,14 +1,19 @@
 <Solution>
   <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="Release" />
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
   <Folder Name="/framework/">
     <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
       <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="nuget_release|Any CPU" Project="ARM64" />
     </Project>
     <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="nuget_release|Any CPU" Project="x86" />
     </Project>
     <Project Path="TensorFlow/TensorFlow.vbproj">
       <Platform Solution="*|x64" Project="x64" />
@@ -18,6 +23,8 @@
     <Platform Solution="*|x64" Project="x64" />
   </Project>
   <Project Path="SNN/test/test.vbproj">
+    <BuildType Solution="nuget_release|*" Project="Release" />
     <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="nuget_release|x64" Project="x64" />
   </Project>
 </Solution>

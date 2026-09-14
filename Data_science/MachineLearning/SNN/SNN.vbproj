@@ -10,12 +10,14 @@
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork</AssemblyName>
     <NoWarn>42016,41999,42004,42032</NoWarn>
     <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
     <AssemblyTitle>Spiking Neural Network  ·  LIF + SurrogateGrad + STDP</AssemblyTitle>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spiking Neural Network  ·  LIF + SurrogateGrad + STDP</Title>
     <PackageTags>deep learning;spiking Neural Network;LIF;Surrogate-grad;STDP;tensor;tensorflow</PackageTags>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
