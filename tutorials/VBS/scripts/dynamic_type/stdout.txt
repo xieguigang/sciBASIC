@@ -1,0 +1,5 @@
+a := 123
+b := 456
+b.a := 123
+b.b := 456
+check boolean := False
