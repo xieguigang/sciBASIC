@@ -45,15 +45,14 @@
 
     ' Module Program
     ' 
-    '     Function: FindFrameworkRoot, HasUtf8Bom, OtherValue, ParseCommandLine, ProcessProject
-    '               RelativePath, ScanProjects
+    '     Function: EnumerateProjects, HasUtf8Bom, OtherValue, ParseCommandLine, ProcessProject
+    '               RelativePath, Validate
     ' 
-    '     Sub: CollectProjects, Main, PrintSummary, PrintUsage, ReportProject
-    '          SaveDocument
+    '     Sub: Main, PrintSummary, PrintUsage, ReportProject, SaveDocument
     '     Class CliOptions
     ' 
-    '         Properties: [Error], DryRun, FixOutputPath, NoClean, Root
-    '                     ShowHelp, Version
+    '         Properties: [Error], DryRun, FixOutputPath, MakeClean, NamespacePrefix
+    '                     OutputDir, ShowHelp, Slnx, Version
     ' 
     '     Class ProjectResult
     ' 
@@ -73,13 +72,17 @@ Imports System.Xml
 Imports System.Xml.Linq
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln.File
 Imports Microsoft.VisualBasic.CommandLine
 
 ''' <summary>
 ''' sciBASIC# 框架 vbproj 批量升级工具
 ''' </summary>
 ''' <remarks>
-''' 扫描框架目录下所有的 Microsoft.NET.Sdk 风格工程，统一做两件事情：
+''' 工具以一个 slnx 解决方案文件为输入：解析该解决方案并枚举其中声明的 vbproj，
+''' 再按命令行给定的命名空间前缀（对 RootNamespace 做大小写不敏感的前缀匹配）过滤，
+''' 仅对过滤后命中的目标工程统一做两件事：
 '''
 ''' 1. 刷新版本号
 '''    - ``&lt;Version&gt;``（nuget 程序包版本号）：命令行显式指定时用指定值，
@@ -91,10 +94,10 @@ Imports Microsoft.VisualBasic.CommandLine
 '''    移除 Condition 中引用了 $(TargetFramework) 但该框架已经不在
 '''    TargetFramework / TargetFrameworks 声明集合中的 PropertyGroup。
 '''
-''' 3. 修正 nuget_release|x64 的产物输出路径（需显式加 --fix-output-path）
-'''    把 RootNamespace 以 Microsoft.VisualBasic 起始的工程的
-'''    nuget_release|x64 编译配置的 &lt;OutputPath&gt; 统一指向框架根下的 .nuget 目录，
-'''    缺失该配置组的工程自动补建，并补齐 Configurations / Platforms 声明。
+''' 3. 修正 nuget_release|x64 的产物输出路径（需显式加 --fix-output-path，并配合 --output）
+'''    把命中工程的 nuget_release|x64 编译配置的 &lt;OutputPath&gt; 统一指向 --output
+'''    所指定的输出文件夹（化为相对于该 vbproj 的相对路径），缺失该配置组的工程自动补建，
+'''    并补齐 Configurations / Platforms 声明。
 '''
 ''' 出于数据安全考虑，写回的时候不使用 <see cref="VBProject.Generate"/> 重建文档，
 ''' 而是对原始 XML 做原地外科手术式修改，完整保留 EmbeddedResource / None / Content
@@ -136,9 +139,6 @@ Module Program
         End Property
     End Class
 
-    ''' <summary>扫描与遍历时需要跳过的目录名</summary>
-    ReadOnly ExcludedDirectories As String() = {"obj", "bin", ".git", ".vs", "node_modules", "packages"}
-
     Public Sub Main(args As String())
         Dim opts As CliOptions = ParseCommandLine(args)
 
@@ -153,34 +153,36 @@ Module Program
             Return
         End If
 
-        Dim root As String = FindFrameworkRoot(opts.Root)
+        Dim sln As Solution = Solution.Load(opts.Slnx)
 
-        If Not Directory.Exists(root) Then
-            Console.WriteLine($"[error] 框架根目录不存在: {root}")
+        If sln Is Nothing Then
+            Console.WriteLine($"[error] 无法解析 slnx 解决方案文件: {opts.Slnx}")
             Environment.ExitCode = 1
             Return
         End If
 
         ' 整批处理共用同一个时间戳，保证这一批里面所有工程的 build/revision 段完全一致
         Dim timestamp As Date = Now
-        Dim nugetDir As String = Path.Combine(root, ".nuget")
+        Dim outputDir As String = If(opts.FixOutputPath, Path.GetFullPath(opts.OutputDir), Nothing)
+        Dim solutionDir As String = Path.GetDirectoryName(Path.GetFullPath(opts.Slnx))
 
         Console.WriteLine("sciBASIC# framework vbproj upgrade tool")
-        Console.WriteLine($"framework root : {root}")
+        Console.WriteLine($"solution      : {opts.Slnx}")
+        Console.WriteLine($"namespace     : {opts.NamespacePrefix}")
         Console.WriteLine($"timestamp      : {timestamp:yyyy-MM-dd HH:mm:ss}")
         Console.WriteLine($"nuget version  : {If(String.IsNullOrWhiteSpace(opts.Version), "<auto> (major.minor + timestamp)", opts.Version)}")
         Console.WriteLine($"assembly ver   : <auto> (major.minor + timestamp)")
         Console.WriteLine($"clean configs  : {If(Not opts.MakeClean, "disabled", "enabled")}")
-        Console.WriteLine($"output path    : {If(opts.FixOutputPath, nugetDir, "disabled")}")
+        Console.WriteLine($"output path    : {If(opts.FixOutputPath, outputDir, "disabled")}")
         Console.WriteLine($"mode           : {If(opts.DryRun, "dry-run (no write)", "write")}")
         Console.WriteLine(New String("-"c, 96))
 
-        Dim projects As List(Of String) = ScanProjects(root)
+        Dim projects As List(Of String) = EnumerateProjects(sln, opts)
         Dim results As New List(Of ProjectResult)
         Dim watch As Stopwatch = Stopwatch.StartNew()
 
         For Each path As String In projects
-            results.Add(ProcessProject(path, root, nugetDir, opts, timestamp))
+            results.Add(ProcessProject(path, RelativePath(path, solutionDir), outputDir, opts, timestamp))
         Next
 
         watch.Stop()
@@ -192,15 +194,14 @@ Module Program
     ''' 处理单个 vbproj 文件
     ''' </summary>
     Private Function ProcessProject(path As String,
-                                     root As String,
-                                     nugetDir As String,
+                                     display As String,
+                                     outputDir As String,
                                      opts As CliOptions,
                                      timestamp As Date) As ProjectResult
         Dim result As New ProjectResult With {
             .FilePath = path,
             .Changes = New VersionUpgrader.VersionChange() {}
         }
-        Dim display As String = RelativePath(path, root)
 
         Try
             ' 只用模型来读取元数据，写回一律走原始 XML
@@ -228,8 +229,8 @@ Module Program
                 result.Warnings = cleaned.Warnings
             End If
 
-            If opts.FixOutputPath AndAlso OutputPathFixer.IsTarget(model) Then
-                result.OutputPath = OutputPathFixer.Apply(doc, ns, path, nugetDir)
+            If opts.FixOutputPath AndAlso outputDir IsNot Nothing Then
+                result.OutputPath = OutputPathFixer.Apply(doc, ns, path, outputDir)
             End If
 
             If Not opts.DryRun AndAlso (result.Changed OrElse result.RemovedConditions > 0 OrElse result.OutputPathChanged) Then
@@ -383,60 +384,55 @@ Module Program
     End Sub
 
     ''' <summary>
-    ''' 递归扫描框架目录下的所有 vbproj 文件
+    ''' 解析 slnx 解决方案并枚举其中声明的 vbproj，按命名空间前缀过滤出目标工程。
     ''' </summary>
-    Private Function ScanProjects(root As String) As List(Of String)
+    ''' <remarks>
+    ''' 1. 用 <see cref="Solution.Load"/> 解析 slnx，过滤掉解决方案文件夹与非 .vbproj 工程；
+    ''' 2. 逐个加载 vbproj 模型，按 RootNamespace 是否以 --namespace 前缀起始（大小写不敏感）过滤；
+    ''' 3. 非 Microsoft.NET.Sdk 工程以及文件不存在的工程直接跳过。
+    ''' 返回经过排序的绝对路径目标 vbproj 集合。
+    ''' </remarks>
+    Private Function EnumerateProjects(solution As Solution, opts As CliOptions) As List(Of String)
         Dim list As New List(Of String)
 
-        Call CollectProjects(New DirectoryInfo(root), list)
+        For Each p As Project In solution.Projects
+            If p.IsFolder Then
+                Continue For
+            End If
+            If String.IsNullOrEmpty(p.FullPath) OrElse
+               Not p.FullPath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase) Then
+                Continue For
+            End If
+            If Not File.Exists(p.FullPath) Then
+                Console.WriteLine($"  [warn] slnx 引用的工程不存在，已跳过: {p.FullPath}")
+                Continue For
+            End If
+
+            ' slnx 不携带 RootNamespace，必须先加载模型才能做前缀过滤
+            Dim model As VBProject = Nothing
+
+            Try
+                model = VBProject.LoadProjectXml(p.FullPath)
+            Catch ex As Exception
+                Console.WriteLine($"  [warn] 无法加载工程，已跳过: {p.FullPath} ({ex.Message})")
+                Continue For
+            End Try
+
+            If model Is Nothing OrElse Not model.IsDotNetCoreSDK Then
+                Continue For
+            End If
+
+            If String.IsNullOrWhiteSpace(model.RootNamespace) OrElse
+               Not model.RootNamespace.StartsWith(opts.NamespacePrefix, StringComparison.OrdinalIgnoreCase) Then
+                Continue For
+            End If
+
+            list.Add(p.FullPath)
+        Next
 
         list.Sort(StringComparer.OrdinalIgnoreCase)
 
         Return list
-    End Function
-
-    Private Sub CollectProjects(dir As DirectoryInfo, list As List(Of String))
-        If ExcludedDirectories.Contains(dir.Name, StringComparer.OrdinalIgnoreCase) Then
-            Return
-        End If
-
-        Try
-            For Each file As FileInfo In dir.EnumerateFiles("*.vbproj")
-                list.Add(file.FullName)
-            Next
-
-            For Each subDir As DirectoryInfo In dir.EnumerateDirectories()
-                Call CollectProjects(subDir, list)
-            Next
-        Catch ex As Exception
-            Console.WriteLine($"  [warn] 无法访问目录 {dir.FullName}: {ex.Message}")
-        End Try
-    End Sub
-
-    ''' <summary>
-    ''' 定位框架根目录：默认从程序集所在位置逐级向上回溯，
-    ''' 命中第一个包含 Microsoft.VisualBasic.Core 子目录的目录即为框架根。
-    ''' </summary>
-    Private Function FindFrameworkRoot(explicit As String) As String
-        If Not String.IsNullOrWhiteSpace(explicit) Then
-            Return Path.GetFullPath(explicit)
-        End If
-
-        Dim dir As String = AppContext.BaseDirectory
-
-        If String.IsNullOrEmpty(dir) Then
-            dir = Directory.GetCurrentDirectory()
-        End If
-
-        Do While Not String.IsNullOrEmpty(dir)
-            If Directory.Exists(Path.Combine(dir, "Microsoft.VisualBasic.Core")) Then
-                Return dir
-            End If
-
-            dir = Path.GetDirectoryName(dir)
-        Loop
-
-        Return Directory.GetCurrentDirectory()
     End Function
 
     ''' <summary>
@@ -465,28 +461,56 @@ Module Program
     End Function
 
     ''' <summary>
-    ''' 解析命令行参数
+    ''' 解析命令行参数，并做必填项校验
     ''' </summary>
     Private Function ParseCommandLine(args As String()) As CliOptions
-        Return CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of CliOptions)
+        Dim opts As CliOptions = CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of CliOptions)
+
+        opts.Error = Validate(opts)
+
+        Return opts
+    End Function
+
+    ''' <summary>
+    ''' 校验必填的命令行参数，返回错误描述（无错误时为空串）
+    ''' </summary>
+    Private Function Validate(opts As CliOptions) As String
+        If String.IsNullOrWhiteSpace(opts.Slnx) Then
+            Return "缺少必填参数 --slnx（slnx 解决方案文件路径）。"
+        End If
+        If Not File.Exists(opts.Slnx) Then
+            Return $"slnx 解决方案文件不存在: {opts.Slnx}"
+        End If
+        If String.IsNullOrWhiteSpace(opts.NamespacePrefix) Then
+            Return "缺少必填参数 --namespace（命名空间前缀）。"
+        End If
+        If opts.FixOutputPath AndAlso String.IsNullOrWhiteSpace(opts.OutputDir) Then
+            Return "启用 --fix-output-path 时必须同时提供 --output（输出文件夹）。"
+        End If
+
+        Return ""
     End Function
 
     Private Sub PrintUsage()
         Console.WriteLine("Usage:")
-        Console.WriteLine("  PkgVersionUpgrade [options]")
+        Console.WriteLine("  PkgVersionUpgrade --slnx <solution.slnx> --namespace <prefix> [options]")
+        Console.WriteLine()
+        Console.WriteLine("Required:")
+        Console.WriteLine("  -s, --slnx <file>     要处理的 slnx 解决方案文件路径。")
+        Console.WriteLine("  -p, --namespace <p>  命名空间前缀，用于按 RootNamespace 过滤 slnx 中的 vbproj。")
         Console.WriteLine()
         Console.WriteLine("Options:")
         Console.WriteLine("  -v, --version <ver>   nuget 程序包版本号。指定时直接写入 <Version>；")
         Console.WriteLine("                        未指定时在每个工程现有 <Version> 的 major.minor 基础上")
         Console.WriteLine("                        用当前时间戳推算出剩余数字（CalculateVersion）。")
-        Console.WriteLine("  -r, --root <dir>      框架根目录。默认从程序所在目录向上回溯查找")
-        Console.WriteLine("                        包含 Microsoft.VisualBasic.Core 的目录。")
         Console.WriteLine("  -n, --dry-run         只打印将要发生的改动，不写入文件。")
         Console.WriteLine("      --clean           不仅仅只更新版本号，清理过时的 TargetFramework 条件配置组。")
-        Console.WriteLine("      --fix-output-path 修正 nuget_release|x64 的产物输出路径。将 RootNamespace")
-        Console.WriteLine("                        以 Microsoft.VisualBasic 起始的工程的该配置 <OutputPath>")
-        Console.WriteLine("                        统一设为指向框架根下 .nuget 目录的相对路径；缺配置组的补建，")
-        Console.WriteLine("                        并补齐 <Configurations> 中的 nuget_release 与 <Platforms> 中的 x64。")
+        Console.WriteLine("  -o, --output <dir>    编译产物输出文件夹。仅当 --fix-output-path 开启时必填；")
+        Console.WriteLine("                        会被设为所操作目标 vbproj 的 nuget_release|x64 配置的")
+        Console.WriteLine("                        <OutputPath>，并化为相对于该 vbproj 的相对路径。")
+        Console.WriteLine("      --fix-output-path 修正 nuget_release|x64 的产物输出路径（需配合 --output）。")
+        Console.WriteLine("                        缺配置组的工程自动补建，并补齐 <Configurations> 中的")
+        Console.WriteLine("                        nuget_release 与 <Platforms> 中的 x64。")
         Console.WriteLine("  -h, --help            显示本帮助信息。")
         Console.WriteLine()
         Console.WriteLine("Notes:")
@@ -494,13 +518,13 @@ Module Program
         Console.WriteLine("    nuget 版本号与 assembly version 在所有 SDK 工程中确保存在，file version 只更新已有值。")
         Console.WriteLine("  * --fix-output-path 默认关闭，需要显式指定才执行；带 $(TargetFramework) 的")
         Console.WriteLine("    nuget_release|net10.0|x64 变体配置组同样会被修正。")
-        Console.WriteLine("  * 仅处理 Microsoft.NET.Sdk 风格工程，legacy 工程自动跳过；obj/bin 目录不参与扫描。")
+        Console.WriteLine("  * 仅处理 Microsoft.NET.Sdk 风格工程，legacy 工程自动跳过；")
+        Console.WriteLine("    命名空间前缀不匹配的工程同样不参与任何更新。")
         Console.WriteLine()
         Console.WriteLine("Examples:")
-        Console.WriteLine("  PkgVersionUpgrade --dry-run")
-        Console.WriteLine("  PkgVersionUpgrade -v 10.5.0.0")
-        Console.WriteLine("  PkgVersionUpgrade --root G:\pixelArtist\src\framework -n")
-        Console.WriteLine("  PkgVersionUpgrade --fix-output-path --dry-run")
+        Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic --dry-run")
+        Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic -v 10.5.0.0")
+        Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic --fix-output-path --output G:\out -n")
     End Sub
 
 End Module
