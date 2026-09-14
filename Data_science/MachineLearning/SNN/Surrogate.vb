@@ -11,7 +11,7 @@
 '   STE         : σ'(u) = 1（straight-through estimator）
 ' ============================================================================
 
-Imports System
+Imports std = System.Math
 
 Namespace SpikingNN
 
@@ -43,10 +43,10 @@ Namespace SpikingNN
         Public Function Derivative(u As Double, kind As SurrogateKind, alpha As Double) As Double
             Select Case kind
                 Case SurrogateKind.FastSigmoid
-                    Return 1.0 / Math.Pow(alpha * Math.Abs(u) + 1.0, 2.0)
+                    Return 1.0 / std.Pow(alpha * std.Abs(u) + 1.0, 2.0)
                 Case SurrogateKind.ATan
-                    Dim s = (Math.PI / 2.0) * alpha * u
-                    Return (alpha / (2.0 * Math.PI)) / (1.0 + s * s)
+                    Dim s = (std.PI / 2.0) * alpha * u
+                    Return (alpha / (2.0 * std.PI)) / (1.0 + s * s)
                 Case Else ' STE
                     Return 1.0
             End Select
@@ -62,11 +62,11 @@ Namespace SpikingNN
         Public Function SmoothSpike(u As Double, kind As SurrogateKind, alpha As Double) As Double
             Select Case kind
                 Case SurrogateKind.ATan
-                    Return (1.0 / Math.PI) * Math.Atan((Math.PI / 2.0) * alpha * u) + 0.5
+                    Return (1.0 / std.PI) * std.Atan((std.PI / 2.0) * alpha * u) + 0.5
                 Case SurrogateKind.STE
                     Return Spike(u)  ' STE 无光滑原函数，自检时不使用
                 Case Else
-                    Return u / (alpha * Math.Abs(u) + 1.0)
+                    Return u / (alpha * std.Abs(u) + 1.0)
             End Select
         End Function
 

@@ -76,8 +76,8 @@ Module Program
 
                 Dim gAna = layer.WeightGrad(fi)
                 Dim gNum = (lp - lm) / (2.0 * eps)
-                Dim denom = std.Max(Math.abs(gAna), std.Abs(gNum))
-                Dim rel = If(denom < 0.000000001, 0.0, Math.abs(gAna - gNum) / denom)
+                Dim denom = std.Max(std.Abs(gAna), std.Abs(gNum))
+                Dim rel = If(denom < 0.000000001, 0.0, std.Abs(gAna - gNum) / denom)
 
                 Console.WriteLine(
                     $"    {layer.Name}.W({fi \ cols},{fi Mod cols}): " &
@@ -111,14 +111,14 @@ Module Program
         ' Box-Muller 变换
         Dim u1 = 1.0 - rng.NextDouble()
         Dim u2 = 1.0 - rng.NextDouble()
-        Return Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2.0 * Math.PI * u2)
+        Return std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
     End Function
 
     Private Function SampleClass(rng As Random, cls As Integer) As Double()
         Dim f = ClassCenters(0).Length
         Dim v(f - 1) As Double
         For i = 0 To f - 1
-            v(i) = Math.Max(0.02, Math.Min(0.98, ClassCenters(cls)(i) + 0.09 * Gaussian(rng)))
+            v(i) = std.Max(0.02, std.Min(0.98, ClassCenters(cls)(i) + 0.09 * Gaussian(rng)))
         Next
         Return v
     End Function
@@ -295,8 +295,8 @@ Module Program
         Console.WriteLine("  理论 STDP 学习窗口（Δt = t_post − t_pre, τ=20）:")
         Dim tau = 20.0
         For dt = -5 To 5
-            Dim dw = If(dt > 0, Math.exp(-dt / tau), -1.1 * Math.exp(dt / tau))
-            Dim w = CInt(Math.Min(24, Math.abs(dw) * 22))
+            Dim dw = If(dt > 0, std.Exp(-dt / tau), -1.1 * std.Exp(dt / tau))
+            Dim w = CInt(std.Min(24, std.Abs(dw) * 22))
             Dim bar = New String(If(dw >= 0, "+"c, "-"c), w)
             Console.WriteLine($"    Δt={dt,3}: {bar}")
         Next
