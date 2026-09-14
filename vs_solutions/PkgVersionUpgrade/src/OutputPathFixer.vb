@@ -45,7 +45,7 @@
 
     ' Module OutputPathFixer
     ' 
-    '     Function: Apply, ComputeOutputPath, EnsureDeclared, IsNugetReleaseX64, IsTarget
+    '     Function: Apply, ComputeOutputPath, EnsureDeclared, IsNugetReleaseX64
     ' 
     '     Sub: CreateReleaseGroup
     '     Class OutputPathResult
@@ -74,8 +74,9 @@ Imports System.Xml.Linq
 '''    ``&lt;OutputPath&gt;`` 改写为指向输出文件夹的正确相对路径；
 ''' 2. 完全没有该配置组的工程，补建一个只含 ``&lt;PlatformTarget&gt;`` 与 ``&lt;OutputPath&gt;``
 '''    的条件属性组；
-''' 3. 补齐 ``&lt;Configurations&gt;`` 中的 ``nuget_release`` 与 ``&lt;Platforms&gt;`` 中的 ``x64`` 声明，
-'''    否则新加的条件组永远不会被 MSBuild 求值。
+''' 3. 在主属性组已有的 ``&lt;Configurations&gt;`` / ``&lt;Platforms&gt;`` 声明里补齐 ``nuget_release`` / ``x64``；
+'''    工程若完全没有显式声明这些列表（SDK 工程默认隐式包含 Debug;Release / AnyCPU），
+'''    则连同隐式默认值一起补齐，避免把原有的 Debug/Release 配置整组覆盖掉。
 '''
 ''' 条件判定统一走 <see cref="MsBuildCondition.IsMatch"/>，
 ''' 模板中占位符的顺序由下标动态定位，因此纯形式
@@ -190,8 +191,8 @@ Module OutputPathFixer
         End If
 
         ' 3. 补齐 Configurations / Platforms 声明，确保上面的配置真的会被求值
-        result.DeclarationsAdded += EnsureDeclared(doc, ns, "Configurations", ReleaseConfiguration)
-        result.DeclarationsAdded += EnsureDeclared(doc, ns, "Platforms", ReleasePlatform)
+        result.DeclarationsAdded += EnsureDeclared(doc, ns, "Configurations", ReleaseConfiguration, "Debug;Release")
+        result.DeclarationsAdded += EnsureDeclared(doc, ns, "Platforms", ReleasePlatform, "AnyCPU")
 
         Return result
     End Function
@@ -231,34 +232,65 @@ Module OutputPathFixer
     ''' <param name="doc">原始文档。</param>
     ''' <param name="name">声明元素名，例如 ``Configurations`` / ``Platforms``。</param>
     ''' <param name="value">必须出现的取值，例如 ``nuget_release`` / ``x64``。</param>
+    ''' <param name="defaultWhenMissing">
+    ''' 工程本身没有显式声明该列表时（SDK 工程的 Configurations / Platforms 是隐式的），
+    ''' 用来与新值一起补齐的初始取值。传空表示「缺失时不做任何处理」，
+    ''' 避免凭空覆盖隐式的 Debug/Release / AnyCPU 配置。
+    ''' </param>
     ''' <returns>发生了改动返回 1，原本就已经包含返回 0。</returns>
-    Private Function EnsureDeclared(doc As XDocument, ns As XNamespace, name As String, value As String) As Integer
+    Private Function EnsureDeclared(doc As XDocument,
+                                    ns As XNamespace,
+                                    name As String,
+                                    value As String,
+                                    Optional defaultWhenMissing As String = Nothing) As Integer
         Dim group As XElement = XmlEditor.MainPropertyGroup(doc, ns)
         Dim el As XElement = group.Element(ns + name)
 
         If el Is Nothing Then
-            Call XmlEditor.AddElement(group, ns, name, value)
+            If String.IsNullOrEmpty(defaultWhenMissing) Then
+                Return 0
+            End If
+
+            ' 工程没有显式声明该列表：SDK 工程默认隐式包含 Debug;Release / AnyCPU，
+            ' 不能只写入新值，否则会把隐式默认配置整组覆盖掉。这里把隐式默认值与新值一起补齐，
+            ' 原有的 Debug/Release / AnyCPU 都得以保留。
+            Dim items As New List(Of String)
+
+            For Each part As String In defaultWhenMissing.Split(";"c)
+                Dim item As String = part.Trim()
+
+                If item.Length > 0 AndAlso Not items.Contains(item) Then
+                    items.Add(item)
+                End If
+            Next
+
+            If Not items.Contains(value, StringComparer.OrdinalIgnoreCase) Then
+                items.Add(value)
+            End If
+
+            Call XmlEditor.AddElement(group, ns, name, String.Join(";", items))
+
             Return 1
         End If
 
-        Dim items As New List(Of String)
+        Dim existing As New List(Of String)
 
         For Each part As String In If(el.Value, "").Split(";"c)
             Dim item As String = part.Trim()
 
             If item.Length > 0 Then
-                items.Add(item)
+                existing.Add(item)
             End If
         Next
 
-        For Each item As String In items
+        For Each item As String In existing
             If item.Equals(value, StringComparison.OrdinalIgnoreCase) Then
                 Return 0
             End If
         Next
 
-        items.Add(value)
-        el.Value = String.Join(";", items)
+        existing.Add(value)
+        el.Value = String.Join(";", existing)
 
         Return 1
     End Function
