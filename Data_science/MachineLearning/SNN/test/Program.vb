@@ -200,7 +200,7 @@ Module Program
             Dim nb = 0
 
             For start = 0 To order.Length - 1 Step batchSize
-                Dim cnt = Math.Min(batchSize, order.Length - start)
+                Dim cnt = std.Min(batchSize, order.Length - start)
                 Dim bx = BatchTensor(train.xs, order, start, cnt)
                 Dim by(cnt - 1) As Integer
                 For b = 0 To cnt - 1
@@ -382,10 +382,10 @@ Module Program
         Const blocks = "▁▂▃▄▅▆▇█"
         Dim mx = v.Max()
         Dim mn = v.Min()
-        Dim span = Math.Max(mx - mn, 0.0000001)
+        Dim span = std.Max(mx - mn, 0.0000001)
         Dim sb As New StringBuilder()
         For Each x In v
-            Dim k = CInt(Math.Floor((x - mn) / span * 7.999))
+            Dim k = CInt(std.Floor((x - mn) / span * 7.999))
             If k < 0 Then k = 0
             If k > 7 Then k = 7
             sb.Append(blocks(k))
@@ -404,8 +404,8 @@ Module Program
         For i = 0 To inN - 1
             Console.Write($"   i{i,-3}")
             For j = 0 To outN - 1
-                Dim v = Math.Max(0.0, Math.Min(1.0, w(i, j)))
-                Console.Write($"{ramp(CInt(Math.Floor(v * 9.999)))}   ")
+                Dim v = std.Max(0.0, std.Min(1.0, w(i, j)))
+                Console.Write($"{ramp(CInt(std.Floor(v * 9.999)))}   ")
             Next
             Console.WriteLine()
         Next

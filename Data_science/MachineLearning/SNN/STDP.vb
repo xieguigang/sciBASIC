@@ -21,6 +21,8 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
 
 Namespace SpikingNN
 
@@ -61,7 +63,7 @@ Namespace SpikingNN
                 If s > 0.000001 Then
                     Dim scale = NormalizeSum / s
                     For i = 0 To _in - 1
-                        Weight(i, j) = Math.Max(0.0, Math.Min(WMax, Weight(i, j) * scale))
+                        Weight(i, j) = std.Max(0.0, std.Min(WMax, Weight(i, j) * scale))
                     Next
                 End If
             Next
@@ -155,7 +157,7 @@ Namespace SpikingNN
                 If spike.Data(j) > 0 Then
                     For i = 0 To _in - 1
                         If _preTrace(i) > 0 Then
-                            Weight(i, j) = Math.Min(WMax, Weight(i, j) + APlus * _preTrace(i))
+                            Weight(i, j) = std.Min(WMax, Weight(i, j) + APlus * _preTrace(i))
                         End If
                     Next
                 End If
@@ -165,7 +167,7 @@ Namespace SpikingNN
                 If x.Data(i) > 0 Then
                     For j = 0 To _out - 1
                         If _postTrace(j) > 0 Then
-                            Weight(i, j) = Math.Max(0.0, Weight(i, j) - AMinus * _postTrace(j))
+                            Weight(i, j) = std.Max(0.0, Weight(i, j) - AMinus * _postTrace(j))
                         End If
                     Next
                 End If

@@ -12,8 +12,9 @@
 '     极致稀疏（每特征至多 1 个脉冲）、延迟低、且为确定性编码。
 ' ============================================================================
 
-Imports System
+Imports std = System.Math
 Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace SpikingNN
 
@@ -40,7 +41,7 @@ Namespace SpikingNN
                                    rng As Random, Optional dt As Double = 1.0) As List(Of Tensor)
             Dim seq As New List(Of Tensor)()
 
-            For t = 1 To T
+            For T = 1 To T
                 Dim spk = New Tensor(x.Shape)
                 For i = 0 To x.Length - 1
                     If rng.NextDouble() < x.Data(i) * dt Then
@@ -64,13 +65,13 @@ Namespace SpikingNN
                                       Optional tau As Double = 5.0,
                                       Optional eps As Double = 0.01) As List(Of Tensor)
             Dim seq As New List(Of Tensor)()
-            For t = 1 To T
+            For T = 1 To T
                 seq.Add(New Tensor(x.Shape))
             Next
 
             For i = 0 To x.Length - 1
-                Dim v = Math.Max(x.Data(i), eps)
-                Dim tFirst = CInt(Math.Round(-tau * Math.Log(v)))
+                Dim v = std.Max(x.Data(i), eps)
+                Dim tFirst = CInt(std.Round(-tau * std.Log(v)))
                 If tFirst >= 0 AndAlso tFirst < T Then
                     seq(tFirst).Data(i) = 1.0
                 End If

@@ -50,15 +50,15 @@ Namespace SpikingNN
 
                 Dim sum = 0.0
                 For j = 0 To n - 1
-                    sum += Math.Exp(logits(b, j) - mx)
+                    sum += std.Exp(logits(b, j) - mx)
                 Next
-                Dim logSum = Math.Log(sum)
+                Dim logSum = std.Log(sum)
 
                 ' −ln softmax(z_y) = −(z_y − mx − ln Σexp(z−mx))
                 loss -= (logits(b, labels(b)) - mx - logSum)
 
                 For j = 0 To n - 1
-                    grad(b, j) = Math.Exp(logits(b, j) - mx) / sum - If(j = labels(b), 1.0, 0.0)
+                    grad(b, j) = std.Exp(logits(b, j) - mx) / sum - If(j = labels(b), 1.0, 0.0)
                 Next
             Next
 
@@ -100,7 +100,7 @@ Namespace SpikingNN
             If ClipNorm > 0 Then
                 Dim sq = 0.0
                 For Each v In g : sq += v * v : Next
-                Dim norm = Math.Sqrt(sq)
+                Dim norm = std.Sqrt(sq)
                 If norm > ClipNorm Then
                     Dim s = ClipNorm / norm
                     For i = 0 To g.Length - 1 : g(i) *= s : Next
@@ -115,15 +115,15 @@ Namespace SpikingNN
             _step += 1L
             Dim m = _m(key)
             Dim vArr = _v(key)
-            Dim bc1 = 1.0 - Math.Pow(Beta1, _step)
-            Dim bc2 = 1.0 - Math.Pow(Beta2, _step)
+            Dim bc1 = 1.0 - std.Pow(Beta1, _step)
+            Dim bc2 = 1.0 - std.Pow(Beta2, _step)
 
             For i = 0 To g.Length - 1
                 m(i) = Beta1 * m(i) + (1.0 - Beta1) * g(i)
                 vArr(i) = Beta2 * vArr(i) + (1.0 - Beta2) * g(i) * g(i)
                 Dim mHat = m(i) / bc1
                 Dim vHat = vArr(i) / bc2
-                param(i) = param(i) - CSng(LearningRate * mHat / (Math.Sqrt(vHat) + Epsilon))
+                param(i) = param(i) - CSng(LearningRate * mHat / (std.Sqrt(vHat) + Epsilon))
             Next
         End Sub
 

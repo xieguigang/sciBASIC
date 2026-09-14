@@ -20,6 +20,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace SpikingNN
 
@@ -201,10 +202,10 @@ Namespace SpikingNN
             Dim dX As New List(Of Tensor)()
             Dim dU_next As Tensor = Nothing     ' dL/dU[t+1]
 
-            For t = T - 1 To 0 Step -1
-                Dim U = _U(t)
-                Dim S = _S(t)
-                Dim X = _X(t)
+            For T = T - 1 To 0 Step -1
+                Dim U = _U(T)
+                Dim S = _S(T)
+                Dim X = _X(T)
 
                 ' dH[t] = β·dU[t+1]（t = T−1 时为 0）
                 Dim dH As Tensor =
@@ -213,9 +214,9 @@ Namespace SpikingNN
                 ' 复位路径给 S 带来的额外梯度
                 Dim dS_total As Tensor
                 If ResetMode = LIFResetMode.ZeroOnSpike Then
-                    dS_total = dS_ext(t) - dH.ElementwiseMultiply(U)      ' ∂H/∂S = −U
+                    dS_total = dS_ext(T) - dH.ElementwiseMultiply(U)      ' ∂H/∂S = −U
                 Else
-                    dS_total = dS_ext(t) - (dH * CSng(Threshold))         ' ∂H/∂S = −θ
+                    dS_total = dS_ext(T) - (dH * CSng(Threshold))         ' ∂H/∂S = −θ
                 End If
 
                 ' 替代导数 σ'(U[t] − θ)
