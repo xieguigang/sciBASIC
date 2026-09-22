@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd1fd096074adc0bce4a572658264dcb, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::06268d1aa644d11bb13da8898f484cae, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Layer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 81 (64.80%)
-    ' Comment Lines: 20 (16.00%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 179
+    '    Code Lines: 81 (45.25%)
+    ' Comment Lines: 74 (41.34%)
+    '    - Xml Docs: 86.49%
     ' 
-    '   Blank Lines: 24 (19.20%)
-    '     File Size: 4.46 KB
+    '   Blank Lines: 24 (13.41%)
+    '     File Size: 8.13 KB
 
 
     '     Class Layer
@@ -64,18 +64,43 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Base class of all layers in a CeNiN feed-forward network.
+    ''' </summary>
+    ''' <remarks>
+    ''' Layers form a singly linked chain: every layer keeps a reference to the <see cref="nextLayer"/> it
+    ''' feeds into, writes its activations directly into that layer's input tensor and then releases its
+    ''' own input tensor, so the memory footprint of one forward pass stays bounded regardless of depth.
+    ''' </remarks>
     Public MustInherit Class Layer : Implements IDisposable
 
+        ''' <summary>Gets the kind of this layer, used for serialization and diagnostics.</summary>
         Public MustOverride ReadOnly Property type As CNN.LayerTypes
 
+        ''' <summary>Gets the dimensions <c>[height, width, depth]</c> of this layer's input tensor.</summary>
         Public ReadOnly Property inputTensorDims As Integer()
 
+        ''' <summary>
+        ''' Indicates whether writes into the next layer's input tensor must be shifted by this layer's padding.
+        ''' </summary>
         Protected _paddedWriting As Boolean
 
+        ''' <summary>The padding <c>[top, bottom, left, right]</c> applied to the input borders.</summary>
         Public pad As Integer()
+        ''' <summary>The input activation tensor of this layer.</summary>
         Public inputTensor As Tensor = Nothing
+        ''' <summary>The layer that receives the output of this layer.</summary>
         Public nextLayer As Layer
 
+        ''' <summary>
+        ''' Writes a single activation value into the input tensor of the next layer.
+        ''' </summary>
+        ''' <param name="indexes">The <c>[height, width, depth]</c> coordinate of the value in this layer's output.</param>
+        ''' <param name="value">The activation value to store.</param>
+        ''' <remarks>
+        ''' When the next layer expects padded input the coordinates are shifted by that layer's padding so
+        ''' that the value lands at the correct padded position.
+        ''' </remarks>
         Public Sub writeNextLayerInput(indexes As Integer(), value As Single)
             If nextLayer._paddedWriting Then
                 Dim nInd As Integer() = CType(indexes.Clone(), Integer())
@@ -87,11 +112,20 @@ Namespace Convolutional
             End If
         End Sub
 
+        ''' <summary>
+        ''' Creates a layer without padding.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The dimensions <c>[height, width, depth]</c> of the layer input.</param>
         Public Sub New(inputTensorDims As Integer())
             _paddedWriting = False
             _inputTensorDims = CType(inputTensorDims.Clone(), Integer())
         End Sub
 
+        ''' <summary>
+        ''' Creates a layer whose input tensor is enlarged by the given padding.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The unpadded dimensions <c>[height, width, depth]</c> of the layer input.</param>
+        ''' <param name="pad">The padding <c>[top, bottom, left, right]</c> added to the input borders.</param>
         Public Sub New(inputTensorDims As Integer(), pad As Integer())
             Me.pad = CType(pad.Clone(), Integer())
 
@@ -106,14 +140,21 @@ Namespace Convolutional
             _inputTensorDims(1) += pad(2) + pad(3)
         End Sub
 
+        ''' <summary>Dimensions <c>[height, width, depth]</c> of the tensor produced by this layer.</summary>
         Public outputDims As Integer()
         Private disposedValue As Boolean
 
+        ''' <summary>
+        ''' Initializes <see cref="outputDims"/> from the input dimensions; layers that change the spatial
+        ''' shape override this method.
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub setOutputDims()
             outputDims = CType(_inputTensorDims.Clone(), Integer())
         End Sub
 
+        ''' <summary>Returns the human readable name of this layer type.</summary>
+        ''' <returns>The description of the layer's <see cref="type"/>.</returns>
         Public Overrides Function ToString() As String
             Return type.Description
         End Function
@@ -127,16 +168,22 @@ Namespace Convolutional
         ''' </returns>
         Protected MustOverride Function layerFeedNext() As Layer
 
+        ''' <summary>
+        ''' Allocates the next layer's input tensor and then runs the layer specific forward computation.
+        ''' </summary>
+        ''' <returns>This layer instance, allowing the caller to advance along the chain.</returns>
         Public Overridable Function feedNext() As Layer
             Call outputTensorMemAlloc()
             Return layerFeedNext()
         End Function
 
+        ''' <summary>Allocates a fresh input tensor using this layer's input dimensions.</summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub inputTensorMemAlloc()
             inputTensor = New Tensor(_inputTensorDims)
         End Sub
 
+        ''' <summary>Allocates the next layer's input tensor so this layer has a destination to write to.</summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub outputTensorMemAlloc()
             nextLayer.inputTensorMemAlloc()
@@ -150,11 +197,17 @@ Namespace Convolutional
             inputTensor = Nothing
         End Sub
 
+        ''' <summary>
+        ''' Links the given layer after this one, building the forward propagation chain.
+        ''' </summary>
+        ''' <param name="nextLayer">The layer that will consume this layer's output.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub appendNext(nextLayer As Layer)
             Me.nextLayer = nextLayer
         End Sub
 
+        ''' <summary>Releases the resources held by this layer.</summary>
+        ''' <param name="disposing"><c>True</c> to release both managed and unmanaged resources.</param>
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
@@ -177,6 +230,7 @@ Namespace Convolutional
         '     MyBase.Finalize()
         ' End Sub
 
+        ''' <summary>Releases all resources held by this layer.</summary>
         Public Sub Dispose() Implements IDisposable.Dispose
             ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
             Dispose(disposing:=True)

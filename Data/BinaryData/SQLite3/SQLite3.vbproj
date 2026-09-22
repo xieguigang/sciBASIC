@@ -14,15 +14,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Managed SQLite3 Database File Reader</Title>
-    <Description>A pure managed parser for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.</Description>
+    <Description>A pure managed parser and writer for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO.SQLite3</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;sqlite3;database;btree;sql-parser;reader</PackageTags>
+    <PackageTags>scibasic;sqlite3;database;btree;sql-parser;reader;writer;managed</PackageTags>
+    <PackageReleaseNotes>A pure managed SQLite3 database file reader and writer for sciBASIC# - the native SQLite engine is not required. Reading: Sqlite3Database.OpenFile opens a .db file, exposes the DatabaseHeader and enumerates tables through GetTables / GetTable; the sqlite_master catalog is modelled by Sqlite3MasterTable and Sqlite3SchemaRow, and Sqlite3Table.EnumerateRows streams rows which are addressable by column ordinal or name. Format layer: the Core.Objects namespace covers the B-tree page structures (BTreePage, BTreeInteriorTablePage, BTreeLeafTablePage, BTreeCellData and ColumnDataMeta) and their headers; Core.Objects.Enums holds the file format enumerations (BTreeType, FileReadVersion, FileWriteVersion, SqliteDataType and SqliteEncoding); Core.Helpers provides B-tree navigation tools and the sqlite data stream. Schema: Core.SQLSchema parses the CREATE TABLE statement of each table into a column schema (SQLParser, Schema, Token) so rows can be addressed by name. Writing: the Writer namespace (Sqlite3Writer, Sqlite3TableWriter, Sqlite3Column and Sqlite3DataRow) creates a database, defines tables, inserts, updates and deletes rows and commits; the writer keeps an in-memory model and rebuilds the file atomically on Commit, after which the produced file can be reopened by the reader. Not supported: secondary indexes, views, triggers, WITHOUT ROWID tables and custom collations.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

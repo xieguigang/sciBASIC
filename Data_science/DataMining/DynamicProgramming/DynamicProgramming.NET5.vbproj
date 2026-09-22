@@ -14,15 +14,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Dynamic Programming Sequence Alignment and Knapsack Solvers</Title>
     <Description>Dynamic programming kernels for sciBASIC#, including Needleman-Wunsch global alignment, Smith-Waterman local alignment with HSP chaining, k-banded search, center star multiple alignment and the 0-1 knapsack solver.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.DynamicProgramming</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch</PackageTags>
+    <PackageTags>scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch;knapsack;hsp-chaining;multiple-alignment</PackageTags>
+    <PackageReleaseNotes>Dynamic programming kernels for sciBASIC#. The NeedlemanWunsch namespace implements global sequence alignment, while SmithWaterman implements local alignment together with HSP (high scoring pair) chaining, k-banded search to reduce the search space, and center star multiple alignment; the Knapsack namespace provides the 0-1 knapsack solver. All algorithms are exposed as reusable kernels over generic element sequences, so the same implementation aligns nucleotide or protein sequences, text token sequences or numeric series without modification. Together they cover the classic dynamic programming workloads of bioinformatics and sequence comparison.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

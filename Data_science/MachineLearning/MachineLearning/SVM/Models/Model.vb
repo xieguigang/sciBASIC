@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e91ebeaa2d6bb270b917c8e60474c2bb, Data_science\MachineLearning\MachineLearning\SVM\Models\Model.vb"
+﻿#Region "Microsoft.VisualBasic::a287df5c40b91590c255e3ac1c16abbf, Data_science\MachineLearning\MachineLearning\SVM\Models\Model.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 52 (40.62%)
-    ' Comment Lines: 53 (41.41%)
-    '    - Xml Docs: 67.92%
+    '   Total Lines: 153
+    '    Code Lines: 52 (33.99%)
+    ' Comment Lines: 78 (50.98%)
+    '    - Xml Docs: 78.21%
     ' 
-    '   Blank Lines: 23 (17.97%)
-    '     File Size: 4.52 KB
+    '   Blank Lines: 23 (15.03%)
+    '     File Size: 5.69 KB
 
 
     '     Class Model
@@ -137,13 +137,33 @@ Namespace SVM
         ''' Number of support vectors per class.
         ''' </summary>
         Public Property numberOfSVPerClass As Integer()
+        ''' <summary>
+        ''' The names of the feature dimensions of the training data.
+        ''' </summary>
+        ''' <returns>An array of the dimension names.</returns>
         Public Property dimensionNames As String()
 
+        ''' <summary>
+        ''' The number of the samples which was used for training this model.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Property trainingSize As Integer
 
+        ''' <summary>
+        ''' Create a new empty model object.
+        ''' </summary>
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Compares this model with another object.
+        ''' </summary>
+        ''' <param name="obj">The object that will be compared with this model.</param>
+        ''' <returns>
+        ''' ``True`` when the <paramref name="obj"/> is a <see cref="Model"/> object 
+        ''' which has the same class labels, support vectors, coefficients and 
+        ''' parameters, otherwise ``False``.
+        ''' </returns>
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim test As Model = TryCast(obj, Model)
 
@@ -171,6 +191,11 @@ Namespace SVM
             Return same
         End Function
 
+        ''' <summary>
+        ''' Gets the hash code of this model, which is combined by the hash code 
+        ''' of all of its coefficients and labels.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> hash code value.</returns>
         Public Overrides Function GetHashCode() As Integer
             Return classLabels.ComputeHashcode() +
                 numberOfClasses.GetHashCode() +

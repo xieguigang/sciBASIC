@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0880a8b54f1632c3131ca010da4854ae, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::79dd894f0da5e06f81509c09bef637b7, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 324
-    '    Code Lines: 201 (62.04%)
-    ' Comment Lines: 75 (23.15%)
-    '    - Xml Docs: 96.00%
+    '   Total Lines: 424
+    '    Code Lines: 201 (47.41%)
+    ' Comment Lines: 175 (41.27%)
+    '    - Xml Docs: 98.29%
     ' 
-    '   Blank Lines: 48 (14.81%)
-    '     File Size: 11.75 KB
+    '   Blank Lines: 48 (11.32%)
+    '     File Size: 17.49 KB
 
 
     '     Class MLDataFrame
@@ -98,31 +98,43 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' a collection of the samples data.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the <see cref="SampleData"/> objects.</returns>
         Public Property samples As SampleData()
         ''' <summary>
         ''' the column name of the <see cref="SampleData.features"/> 
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the feature column names.</returns>
         Public Property featureNames As String()
         ''' <summary>
         ''' the column name of the <see cref="SampleData.labels"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the label column names.</returns>
         Public Property featureLabels As String()
 
+        ''' <summary>
+        ''' The number of the feature attributes in each sample.
+        ''' </summary>
+        ''' <returns>The length of the <see cref="featureNames"/> list.</returns>
         Public ReadOnly Property N_attributes As Integer
             Get
                 Return featureNames.Length
             End Get
         End Property
 
+        ''' <summary>
+        ''' The total number of the samples in this data frame.
+        ''' </summary>
+        ''' <returns>The length of the <see cref="samples"/> array.</returns>
         Public ReadOnly Property N_tot As Integer
             Get
                 Return samples.Length
             End Get
         End Property
 
+        ''' <summary>
+        ''' Display the feature names and the label names of this data frame.
+        ''' </summary>
+        ''' <returns>A string which is combined by the two json text of the names.</returns>
         Public Overrides Function ToString() As String
             Return featureNames.GetJson & " -> " & featureLabels.GetJson
         End Function
@@ -137,14 +149,31 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' the unique id
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The unique reference id of this sample data.</returns>
         Public Property id As String Implements INamedValue.Key
+        ''' <summary>
+        ''' The sample features vector, which is the input of the machine learning model.
+        ''' </summary>
+        ''' <returns>An array of the feature values.</returns>
         Public Property features As Double()
+        ''' <summary>
+        ''' The sample label values, which is the expected output of the machine learning model.
+        ''' </summary>
+        ''' <returns>An array of the label values.</returns>
         Public Property labels As Double()
 
+        ''' <summary>
+        ''' Create a new empty sample data object.
+        ''' </summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a new sample data object with a single label value.
+        ''' </summary>
+        ''' <param name="id">The unique reference id of this sample.</param>
+        ''' <param name="features">The sample features vector.</param>
+        ''' <param name="label">The single label value of this sample.</param>
         Sub New(id As String, features As Double(), label As Double)
             Me.id = id
             Me.features = features
@@ -155,7 +184,7 @@ Namespace ComponentModel.StoreProcedure
         ''' make data copy from the given sample object, this constructor will assign the id, 
         ''' features and labels from the given sample data object.
         ''' </summary>
-        ''' <param name="sample"></param>
+        ''' <param name="sample">The source <see cref="Sample"/> object.</param>
         Sub New(sample As Sample)
             id = sample.ID
             features = sample.vector
@@ -165,25 +194,49 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' create the dataset for predictions, so no label data
         ''' </summary>
-        ''' <param name="data"></param>
+        ''' <param name="data">The input feature vector of this sample.</param>
         Sub New(data As Double())
             Me.features = data
         End Sub
 
+        ''' <summary>
+        ''' Create a new sample data object with a single label value, and no id is assigned.
+        ''' </summary>
+        ''' <param name="features">The sample features vector.</param>
+        ''' <param name="label">The single label value of this sample.</param>
         Sub New(features As Double(), label As Double)
             Me.features = features
             Me.labels = {label}
         End Sub
 
+        ''' <summary>
+        ''' Create a new sample data object with multiple label values, and no id is assigned.
+        ''' </summary>
+        ''' <param name="features">The sample features vector.</param>
+        ''' <param name="labels">The label values of this sample.</param>
         Sub New(features As Double(), labels As Double())
             Me.features = features
             Me.labels = labels
         End Sub
 
+        ''' <summary>
+        ''' Check whether an invalid ``NaN`` value is exists in the 
+        ''' <see cref="features"/> or the <see cref="labels"/> vector?
+        ''' </summary>
+        ''' <returns>
+        ''' ``True`` when a ``NaN`` value is detected, otherwise ``False``.
+        ''' </returns>
         Public Function CheckInvalidNaN() As Boolean
             Return features.Any(Function(d) d.IsNaNImaginary) OrElse labels.Any(Function(d) d.IsNaNImaginary)
         End Function
 
+        ''' <summary>
+        ''' Display the sample id in string format.
+        ''' </summary>
+        ''' <returns>
+        ''' The <see cref="id"/> value; a string in format like ``*(NaN!) id`` 
+        ''' will be returned when the sample data contains an invalid ``NaN`` value.
+        ''' </returns>
         Public Overrides Function ToString() As String
             If CheckInvalidNaN() Then
                 Return $"*(NaN!) {id}"
@@ -192,6 +245,15 @@ Namespace ComponentModel.StoreProcedure
             Return id
         End Function
 
+        ''' <summary>
+        ''' Create a training <see cref="DataSet"/> object from a collection of 
+        ''' the <see cref="SampleData"/> objects.
+        ''' </summary>
+        ''' <param name="ds">A collection of the <see cref="SampleData"/> objects.</param>
+        ''' <returns>
+        ''' A <see cref="DataSet"/> object, in which the feature names are generated 
+        ''' in format ``x%d`` and the output names are generated in format ``y%d``.
+        ''' </returns>
         Public Shared Function CreateDataSet(ds As IEnumerable(Of SampleData)) As DataSet
             Dim samples As New SampleList With {
                 .items = ds _
@@ -215,10 +277,20 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' make dataset normalization
         ''' </summary>
-        ''' <param name="trainset"></param>
-        ''' <param name="is_generative"></param>
-        ''' <param name="is_training"></param>
-        ''' <returns></returns>
+        ''' <param name="trainset">The source sample data collection.</param>
+        ''' <param name="is_generative">
+        ''' Whether the label values should also be normalized? The label 
+        ''' normalization is only applied when both this flag and the 
+        ''' <paramref name="is_training"/> flag are enabled.
+        ''' </param>
+        ''' <param name="is_training">
+        ''' Whether the <paramref name="trainset"/> is the training data? When it 
+        ''' is ``False`` the label value will not be rescaled.
+        ''' </param>
+        ''' <returns>
+        ''' A sequence of the <see cref="SampleData"/> objects whose feature 
+        ''' values are divided by the maximum value of each feature column.
+        ''' </returns>
         Public Shared Iterator Function TransformDataset(trainset As SampleData(), is_generative As Boolean, is_training As Boolean) As IEnumerable(Of SampleData)
             Dim featureMax As Double() = New Double(trainset(0).features.Length - 1) {}
             Dim labelMax As Double() = Nothing
@@ -262,6 +334,17 @@ Namespace ComponentModel.StoreProcedure
             Next
         End Function
 
+        ''' <summary>
+        ''' Write the sample data collection into a binary <see cref="Stream"/>.
+        ''' </summary>
+        ''' <param name="data">A collection of the <see cref="SampleData"/> objects that will be written.</param>
+        ''' <param name="file">The target output <see cref="Stream"/>.</param>
+        ''' <remarks>
+        ''' The binary layout of the output stream is: the feature vector size 
+        ''' (int32), the label vector size (int32), and then each sample is 
+        ''' written as its id string buffer, the features vector and the labels 
+        ''' vector in network byte order.
+        ''' </remarks>
         Public Shared Sub Save(data As IEnumerable(Of SampleData), file As Stream)
             Dim wr As New BinaryWriter(file)
             Dim encode As New NetworkByteOrderBuffer
@@ -285,6 +368,12 @@ Namespace ComponentModel.StoreProcedure
             Call wr.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Read the sample data collection back from a binary <see cref="Stream"/> 
+        ''' which was written by the <see cref="Save"/> method.
+        ''' </summary>
+        ''' <param name="file">The input <see cref="Stream"/> which contains the binary sample data.</param>
+        ''' <returns>A sequence of the <see cref="SampleData"/> objects.</returns>
         Public Shared Iterator Function Load(file As Stream) As IEnumerable(Of SampleData)
             Dim rd As New BinaryReader(file)
             Dim decode As New NetworkByteOrderBuffer
@@ -314,14 +403,17 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' 可选的数据集唯一标记信息
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The optional unique reference id of this sample.</returns>
         <XmlAttribute("id")>
         Public Property ID As String Implements IKeyedEntity(Of String).Key
 
         ''' <summary>
         ''' Neuron network input parameters
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The base64 encoded (and gzip compressed) text which represents the 
+        ''' input feature vector.
+        ''' </returns>
         ''' <remarks>
         ''' 属性值可能会很长,为了XML文件的美观,在这里使用element
         ''' 
@@ -336,14 +428,14 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' The network expected output values
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the expected output values of this sample.</returns>
         <XmlAttribute>
         Public Property target As Double()
 
         ''' <summary>
         ''' sample features data
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the input feature values of this sample.</returns>
         <XmlIgnore>
         Public ReadOnly Property vector As Double()
             Get
@@ -368,6 +460,10 @@ Namespace ComponentModel.StoreProcedure
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a new sample data object which only contains the input vector.
+        ''' </summary>
+        ''' <param name="samples">The neuron network input parameters.</param>
         Sub New(samples As IEnumerable(Of Double))
             Call Me.encodeVector(samples)
         End Sub
@@ -393,6 +489,10 @@ Namespace ComponentModel.StoreProcedure
             End Using
         End Sub
 
+        ''' <summary>
+        ''' Display this training sample as a mapping expression.
+        ''' </summary>
+        ''' <returns>A string in format like ``input vector => output vector``.</returns>
         Public Overrides Function ToString() As String
             Return $"{vector.AsVector.ToString} => {target.AsVector.ToString}"
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7a8cfbae2c451f8a143de383a1b4d38, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::fd6353a9239b6d3af34afaf1cdc6acd7, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 275
-    '    Code Lines: 169 (61.45%)
+    '    Code Lines: 168 (61.09%)
     ' Comment Lines: 65 (23.64%)
     '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 41 (14.91%)
-    '     File Size: 9.56 KB
+    '   Blank Lines: 42 (15.27%)
+    '     File Size: 9.67 KB
 
 
     '     Class Decomposition
@@ -60,6 +60,7 @@
 #End Region
 
 Imports __std = System.Math
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Matrix
 
@@ -308,23 +309,22 @@ Namespace LinearAlgebra.Matrix
             Dim Xmat As GeneralMatrix = B.GetMatrix(piv, 0, nx - 1)
             Dim X As Double()() = Xmat.ArrayPack
 
-            ' Solve L*Y = B(piv,:)
+            ' Solve L*Y = B(piv,:)：前代等价于逐行 AXPY（X(i) -= LU(i)(k) * X(k)）
             For k As Integer = 0 To n - 1
                 For i As Integer = k + 1 To n - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * LU(i)(k)
-                    Next
+                    Call SIMDIntrinsics.AxpyInPlace(-LU(i)(k), X(k), X(i))
                 Next
             Next
             ' Solve U*X = Y;
             For k As Integer = n - 1 To 0 Step -1
+                Dim rowK As Double() = X(k)
+                Dim pivot As Double = LU(k)(k)
+
                 For j As Integer = 0 To nx - 1
-                    X(k)(j) /= LU(k)(k)
+                    rowK(j) /= pivot
                 Next
                 For i As Integer = 0 To k - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * LU(i)(k)
-                    Next
+                    Call SIMDIntrinsics.AxpyInPlace(-LU(i)(k), rowK, X(i))
                 Next
             Next
             Return Xmat

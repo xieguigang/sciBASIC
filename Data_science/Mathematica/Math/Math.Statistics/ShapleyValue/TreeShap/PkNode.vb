@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d2439e7dd00c11de1db9e415c8fc786, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PkNode.vb"
+﻿#Region "Microsoft.VisualBasic::0b778bc966dcdfa010549bfbf5c3710a, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PkNode.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
     Public Class PkNode
         ''' <summary>
         ''' (v) Leaf value. If not leaf, contains NAN.

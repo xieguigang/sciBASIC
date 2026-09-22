@@ -20,15 +20,16 @@
 		<UseApplicationFramework>True</UseApplicationFramework>
 
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Version>1.0.9753.4776</Version>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<Version>1.0.9762.11310</Version>
+		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 		<Title>3D Mesh Model Parsers And Voxelization Toolkit</Title>
-		<Description>Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation. Part of the sciBASIC# imaging stack.</Description>
+		<Description>Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation, as part of the sciBASIC# imaging stack.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.Imaging.Landscape</AssemblyTitle>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-		<PackageTags>scibasic;3d-model;mesh-parser;point-cloud;voxelization;geometry</PackageTags>
+		<PackageTags>scibasic;3d-model;mesh-parser;point-cloud;voxelization;sdf;stl;obj;gltf;collada;3mf</PackageTags>
+    <PackageReleaseNotes>A 3D mesh parsing and voxelization toolkit for sciBASIC#. Format readers: STL (ASCII and binary), Wavefront OBJ, glTF and GLB, COLLADA, Autodesk 3DS, 3MF and PLY (as point clouds) each have a dedicated parser in their own namespace - StlAsciiReader / StlBinaryReader, ObjTextParser / ObjModel, GltfReader / GlbReader / GltfTypes, ColladaParser / ColladaTypes, Max3DSParser / Max3DSTypes, the 3MF project and XML models (Mesh, Model3D, Resources) and PlyReader / PlyWriter. Unified model: the Data namespace provides the shared scene representation (SceneModel, Surface and Vertex) plus a ModelLoader that dispatches by file type, so downstream code works on one model regardless of the source format. Voxelization: the Voxelization namespace converts surfaces into volumes - Voxelizer and VoxelModel for surface voxelization, BVH for the bounding volume hierarchy, and SDFVoxelizer / SDFVolume for signed distance fields used as CFD simulation grids.</PackageReleaseNotes>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>

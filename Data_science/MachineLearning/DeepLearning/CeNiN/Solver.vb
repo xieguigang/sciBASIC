@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28daf6e7f24459077fa1676589aa5ea5, Data_science\MachineLearning\DeepLearning\CeNiN\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::113cc5e475f60039e813df8cb9bb1e48, Data_science\MachineLearning\DeepLearning\CeNiN\Solver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 72 (81.82%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 106
+    '    Code Lines: 72 (67.92%)
+    ' Comment Lines: 18 (16.98%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (18.18%)
-    '     File Size: 3.51 KB
+    '   Blank Lines: 16 (15.09%)
+    '     File Size: 4.58 KB
 
 
     '     Module Solver
@@ -87,8 +87,26 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' High level inference helpers that run a loaded <see cref="CeNiN"/> network over an image and
+    ''' return the ranked class predictions.
+    ''' </summary>
     Public Module Solver
 
+        ''' <summary>
+        ''' Feeds a bitmap through the network and returns the predicted class probabilities ranked from the
+        ''' most to the least likely class.
+        ''' </summary>
+        ''' <param name="cnn">The loaded convolutional network to evaluate.</param>
+        ''' <param name="image">The source image; it is resized to the network input size before inference.</param>
+        ''' <param name="resize">The resizing strategy applied to <paramref name="image"/>.</param>
+        ''' <param name="dev">
+        ''' Optional progress writer. When omitted, progress is written to the standard output stream.
+        ''' </param>
+        ''' <returns>
+        ''' An array of name/value pairs in which each name is a class label and the value is the probability
+        ''' assigned to that class by the network output layer.
+        ''' </returns>
         <Extension>
         Public Function DetectObject(cnn As CeNiN,
                                      image As Bitmap,

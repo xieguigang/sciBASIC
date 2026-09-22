@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3461f5a5c8b28b7785574cdc181b9a48, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\InitializationHelper.vb"
+﻿#Region "Microsoft.VisualBasic::701639f8bda658c668b06efd7c8142a9, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\InitializationHelper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 51 (54.26%)
-    ' Comment Lines: 33 (35.11%)
-    '    - Xml Docs: 75.76%
+    '   Total Lines: 124
+    '    Code Lines: 51 (41.13%)
+    ' Comment Lines: 63 (50.81%)
+    '    - Xml Docs: 87.30%
     ' 
-    '   Blank Lines: 10 (10.64%)
-    '     File Size: 4.86 KB
+    '   Blank Lines: 10 (8.06%)
+    '     File Size: 6.99 KB
 
 
     '     Module InitializationHelper
@@ -60,18 +60,29 @@ Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Darwinism.GAF.Helper
 
+    ''' <summary>
+    ''' The helper module for creates the initial population of a genetic algorithm.
+    ''' </summary>
     Public Module InitializationHelper
 
         ''' <summary>
         ''' The simplest strategy for creating initial population <br/>
         ''' in real life it could be more complex.
         ''' </summary>
+        ''' <typeparam name="T">The chromosome type of the genetic algorithm.</typeparam>
+        ''' <param name="base">The base chromosome, all of the initial population members are mutated from it.</param>
+        ''' <param name="popSize%">The expected size of the initial population.</param>
         ''' <param name="parallel">
         ''' sort the population in ga algorithm in parallel?
+        ''' </param>
+        ''' <param name="addBase">
+        ''' Should the <paramref name="base"/> chromosome be added into the new 
+        ''' population directly? The default value is ``True``.
         ''' </param>
         ''' <param name="parallelInitialize">
         ''' generates the initial population in parallel?
         ''' </param>
+        ''' <returns>A newly created initial <see cref="Population(Of T)"/>.</returns>
         <Extension>
         Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, popSize%,
                                                                              Optional parallel As Boolean = True,
@@ -88,12 +99,18 @@ Namespace Darwinism.GAF.Helper
         ''' The simplest strategy for creating initial population <br/>
         ''' in real life it could be more complex.
         ''' </summary>
-        ''' <param name="parallel">
-        ''' sort the population in ga algorithm in parallel?
+        ''' <typeparam name="T">The chromosome type of the genetic algorithm.</typeparam>
+        ''' <param name="base">The base chromosome, all of the initial population members are mutated from it.</param>
+        ''' <param name="popSize%">The expected size of the initial population.</param>
+        ''' <param name="parallel">The custom parallel compute implementation which is used by the new population.</param>
+        ''' <param name="addBase">
+        ''' Should the <paramref name="base"/> chromosome be added into the new 
+        ''' population directly? The default value is ``True``.
         ''' </param>
         ''' <param name="parallelInitialize">
         ''' generates the initial population in parallel?
         ''' </param>
+        ''' <returns>A newly created initial <see cref="Population(Of T)"/>.</returns>
         <Extension>
         Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, popSize%, parallel As ParallelComputeFitness(Of T),
                                                                              Optional addBase As Boolean = True,
@@ -111,6 +128,19 @@ Namespace Darwinism.GAF.Helper
         ''' 
         ''' (如果<paramref name="population"/>对象的构造函数所传递的fitness计算函数是False，则整个GA的计算过程为串行计算过程)
         ''' </summary>
+        ''' <typeparam name="T">The chromosome type of the genetic algorithm.</typeparam>
+        ''' <param name="base">The base chromosome, all of the initial population members are mutated from it.</param>
+        ''' <param name="population">
+        ''' The target population object which the initial members will be added into.
+        ''' </param>
+        ''' <param name="addBase">
+        ''' Should the <paramref name="base"/> chromosome be added into the new 
+        ''' population directly? The default value is ``True``.
+        ''' </param>
+        ''' <param name="parallelInitialize">
+        ''' generates the initial population in parallel?
+        ''' </param>
+        ''' <returns>The <paramref name="population"/> object which is filled with the initial members.</returns>
         <Extension>
         Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, population As IPopulation(Of T),
                                                                              Optional addBase As Boolean = True,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c959d801678d18a1c85e6b1f32c95c, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\EliteReplacement.vb"
+﻿#Region "Microsoft.VisualBasic::52a4e12811c62750103635df6a32a816, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\EliteReplacement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 26 (50.00%)
-    ' Comment Lines: 17 (32.69%)
-    '    - Xml Docs: 76.47%
+    '   Total Lines: 59
+    '    Code Lines: 26 (44.07%)
+    ' Comment Lines: 24 (40.68%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 9 (17.31%)
-    '     File Size: 2.00 KB
+    '   Blank Lines: 9 (15.25%)
+    '     File Size: 2.47 KB
 
 
     '     Class EliteReplacement
@@ -71,6 +71,10 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
         ''' </summary>
         ReadOnly top As Double = 0.65
 
+        ''' <summary>
+        ''' The <see cref="Strategies.EliteCrossbreed"/> strategy identifier.
+        ''' </summary>
+        ''' <returns>Always returns <see cref="Strategies.EliteCrossbreed"/>.</returns>
         Public ReadOnly Property type As Strategies Implements IStrategy(Of Chr).type
             Get
                 Return Strategies.EliteCrossbreed
@@ -80,9 +84,12 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
         ''' <summary>
         ''' 只保留10%的个体,然后这些个体杂交补充到种群的大小
         ''' </summary>
-        ''' <param name="newPop"></param>
-        ''' <param name="GA"></param>
-        ''' <returns></returns>
+        ''' <param name="newPop">The new population which contains the offspring individuals.</param>
+        ''' <param name="GA">The genetic algorithm driver of the current evolution process.</param>
+        ''' <returns>
+        ''' The population of the next generation, which contains the elite 
+        ''' individuals and their offspring.
+        ''' </returns>
         Public Function newPopulation(newPop As Population(Of Chr), GA As GeneticAlgorithm(Of Chr)) As Population(Of Chr) Implements IStrategy(Of Chr).newPopulation
             Dim x, y As Chr
 

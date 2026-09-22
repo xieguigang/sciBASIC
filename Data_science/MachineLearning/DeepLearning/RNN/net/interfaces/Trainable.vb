@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36c5635da05afdcaa42489d18300079e, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\Trainable.vb"
+﻿#Region "Microsoft.VisualBasic::5af00e64b7d36716ea420bcb743351ac, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\Trainable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 5 (25.00%)
-    ' Comment Lines: 11 (55.00%)
-    '    - Xml Docs: 27.27%
+    '   Total Lines: 18
+    '    Code Lines: 5 (27.78%)
+    ' Comment Lines: 9 (50.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (20.00%)
-    '     File Size: 530 B
+    '   Blank Lines: 4 (22.22%)
+    '     File Size: 625 B
 
 
     '     Interface Trainable
@@ -59,14 +59,12 @@ Namespace RNN
     ''' </summary>
     Public Interface Trainable
 
-        ' 
-        ' 			Performs a forward-backward pass for the given indices.
-        ' 	
-        ' 			ix.length and iy.length lengths must match.
-        ' 			All indices must be less than the vocabulary size.
-        ' 	
-        ' 			Returns the cross-entropy loss.
-        ' 		
+        ''' <summary>
+        ''' Performs a forward-backward pass for the given indices.
+        ''' </summary>
+        ''' <param name="ix">The input indices; its length must match <paramref name="iy"/>.</param>
+        ''' <param name="iy">The target indices; every index must be smaller than the vocabulary size.</param>
+        ''' <returns>The cross-entropy loss.</returns>
         Function forwardBackward(ix As Integer(), iy As Integer()) As Double
 
     End Interface

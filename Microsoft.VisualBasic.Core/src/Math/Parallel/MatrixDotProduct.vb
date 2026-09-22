@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::019197557ceab25216ec29d882a3720e, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\MatrixDotProduct.vb"
+﻿#Region "Microsoft.VisualBasic::e57a58ba28ec806770d5e5c730356aa3, Microsoft.VisualBasic.Core\src\Math\Parallel\MatrixDotProduct.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 37 (72.55%)
-    ' Comment Lines: 5 (9.80%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 56
+    '    Code Lines: 32 (57.14%)
+    ' Comment Lines: 15 (26.79%)
+    '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 9 (17.65%)
-    '     File Size: 1.85 KB
+    '   Blank Lines: 9 (16.07%)
+    '     File Size: 2.25 KB
 
 
     '     Class MatrixDotProduct
@@ -97,13 +97,18 @@ Namespace Math.Parallel
             Next
         End Sub
 
+        ''' <summary>
+        ''' 并行矩阵乘法入口。
+        ''' </summary>
+        ''' <remarks>
+        ''' 内部已经委托给 <see cref="SIMD.SimdParallel.MatrixDot(Double()(), Double()())"/>：
+        ''' 后者会先对右矩阵做一次转置，使内层内积变成两段连续内存的
+        ''' <c>SIMDIntrinsics.DotFma</c>，再按行并行 —— 相比这里逐列拷贝 <c>Bcolj</c>
+        ''' 的旧实现，既省掉了每一列重复的拷贝，也用上了 FMA 融合乘加。
+        ''' 这个函数保留下来只是为了不破坏既有调用点的源码兼容性。
+        ''' </remarks>
         Public Shared Function Resolve(a As Double()(), b As Double()()) As Double()()
-            Dim nrowA As Integer = a.Length
-            Dim ncolB As Integer = b(0).Length
-            Dim c As Double()() = RectangularArray.Matrix(Of Double)(nrowA, ncolB)
-            Dim solver As New MatrixDotProduct(a, b, c, ncolB)
-            Call solver.Run()
-            Return c
+            Return SIMD.SimdParallel.MatrixDot(a, b)
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50198cbfa03528281f782fbbe2de206d, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\GroupBins.vb"
+﻿#Region "Microsoft.VisualBasic::50198cbfa03528281f782fbbe2de206d, Microsoft.VisualBasic.Core\src\Math\StatisticsMathExtensions\GroupBins.vb"
 
     ' Author:
     ' 

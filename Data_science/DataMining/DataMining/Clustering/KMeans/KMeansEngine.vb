@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::KMeansEngine, Data_science\DataMining\DataMining\Clustering\KMeans\KMeansEngine.vb"
+﻿#Region "Microsoft.VisualBasic::6e95bde9a042a213bb68ce32b1a08b98, Data_science\DataMining\DataMining\Clustering\KMeans\KMeansEngine.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,33 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 188
+    '    Code Lines: 122 (64.89%)
+    ' Comment Lines: 30 (15.96%)
+    '    - Xml Docs: 96.67%
+    ' 
+    '   Blank Lines: 36 (19.15%)
+    '     File Size: 7.55 KB
+
+
+    '     Class KMeansEngine
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+3 Overloads) ClusterDataSet, ClusterDataSetLoop, CreateInitialCenters
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

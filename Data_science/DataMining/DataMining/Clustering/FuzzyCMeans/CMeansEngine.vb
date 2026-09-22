@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::CMeansEngine, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\CMeansEngine.vb"
+﻿#Region "Microsoft.VisualBasic::abee9bb7f24a92cdd43763dd3333c1a5, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\CMeansEngine.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,39 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 248
+    '    Code Lines: 162 (65.32%)
+    ' Comment Lines: 35 (14.11%)
+    '    - Xml Docs: 97.14%
+    ' 
+    '   Blank Lines: 51 (20.56%)
+    '     File Size: 8.92 KB
+
+
+    '     Class CMeansResult
+    ' 
+    '         Properties: centers, cluster, membership
+    ' 
+    '     Class CMeansEngine
+    ' 
+    '         Function: GetCenters, GetRandomMatrix, J, Run, scanRow
+    '                   updateMembershipParallel
+    ' 
+    '         Sub: sanitizeNaN, updateMembership
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

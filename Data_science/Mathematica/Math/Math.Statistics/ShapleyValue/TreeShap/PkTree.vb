@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6fe8446e2aa0ceff2437282f475d58, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PkTree.vb"
+﻿#Region "Microsoft.VisualBasic::7925381ffae1c8b15c0780f54433111d, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PkTree.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     Public Class PkTree
 

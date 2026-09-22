@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a051d109f84ade76419bad0e8255b728, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\SampleHelper.vb"
+﻿#Region "Microsoft.VisualBasic::32843145b3c7cad0143793b0f77e63c0, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\SampleHelper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 10 (50.00%)
-    ' Comment Lines: 6 (30.00%)
+    '   Total Lines: 26
+    '    Code Lines: 10 (38.46%)
+    ' Comment Lines: 12 (46.15%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (20.00%)
-    '     File Size: 603 B
+    '   Blank Lines: 4 (15.38%)
+    '     File Size: 965 B
 
 
     '     Module SampleHelper
@@ -56,15 +56,21 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.StoreProcedure
 
+    ''' <summary>
+    ''' The projection helpers of the sample data collection.
+    ''' </summary>
     <HideModuleName>
     Public Module SampleHelper
 
         ''' <summary>
         ''' get feature dimension
         ''' </summary>
-        ''' <param name="samples"></param>
-        ''' <param name="[dim]"></param>
-        ''' <returns></returns>
+        ''' <param name="samples">A collection of the <see cref="SampleData"/> objects.</param>
+        ''' <param name="[dim]">The zero based index of the target feature dimension.</param>
+        ''' <returns>
+        ''' A sequence of the feature values which are projected from the 
+        ''' <paramref name="[dim]"/> dimension of each sample.
+        ''' </returns>
         <Extension>
         Public Function dimension(samples As IEnumerable(Of SampleData), [dim] As Integer) As IEnumerable(Of Double)
             Return samples.Select(Function(si) si.features([dim]))

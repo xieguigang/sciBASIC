@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ebc226423f2b23d1c84dcc583bbb3c6, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdCompare.vb"
+﻿#Region "Microsoft.VisualBasic::4d348bd4f86df316f9b37cfe678fc909, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdCompare.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 327
-    '    Code Lines: 192 (58.72%)
-    ' Comment Lines: 68 (20.80%)
-    '    - Xml Docs: 98.53%
+    '   Total Lines: 421
+    '    Code Lines: 245 (58.19%)
+    ' Comment Lines: 93 (22.09%)
+    '    - Xml Docs: 98.92%
     ' 
-    '   Blank Lines: 67 (20.49%)
-    '     File Size: 13.53 KB
+    '   Blank Lines: 83 (19.71%)
+    '     File Size: 17.64 KB
 
 
     '     Class SimdCompare
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) [Select], All, Any, Compare, CountTrue
-    '                   Equal, GreaterThan, GreaterThanOrEqual, LaneTrue, LessThan
-    '                   LessThanOrEqual, NotEqual, Where
+    '         Function: (+2 Overloads) [Select], All, Any, Compare, CompareScalar
+    '                   CountTrue, (+2 Overloads) Equal, (+2 Overloads) GreaterThan, (+2 Overloads) GreaterThanOrEqual, LaneTrue
+    '                   (+2 Overloads) LessThan, (+2 Overloads) LessThanOrEqual, (+2 Overloads) NotEqual, Where
     ' 
-    '         Sub: CompareBlock
+    '         Sub: CompareBlock, CompareScalarBlock
     ' 
     ' 
     ' /********************************************************************************/
@@ -118,6 +118,100 @@ Namespace Math.SIMD
         Public Shared Function NotEqual(Of T As Structure)(v1 As T(), v2 As T()) As Boolean()
             Return Compare(Of T)(v1, v2, Function(a, b) Vector.OnesComplement(Vector.Equals(Of T)(a, b)))
         End Function
+
+        ''' <summary>
+        ''' 逐元素大于（与标量广播比较）：<c>out(i) = v(i) &gt; scalar</c>
+        ''' </summary>
+        Public Shared Function GreaterThan(v As Double(), scalar As Double) As Boolean()
+            Return CompareScalar(v, scalar, Function(a, b) Vector.GreaterThan(Of Double)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素小于（与标量广播比较）。
+        ''' </summary>
+        Public Shared Function LessThan(v As Double(), scalar As Double) As Boolean()
+            Return CompareScalar(v, scalar, Function(a, b) Vector.LessThan(Of Double)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素大于等于（与标量广播比较）。
+        ''' </summary>
+        Public Shared Function GreaterThanOrEqual(v As Double(), scalar As Double) As Boolean()
+            Return CompareScalar(v, scalar, Function(a, b) Vector.GreaterThanOrEqual(Of Double)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素小于等于（与标量广播比较）。
+        ''' </summary>
+        Public Shared Function LessThanOrEqual(v As Double(), scalar As Double) As Boolean()
+            Return CompareScalar(v, scalar, Function(a, b) Vector.LessThanOrEqual(Of Double)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素相等（与标量广播比较）。
+        ''' </summary>
+        Public Shared Function Equal(v As Double(), scalar As Double) As Boolean()
+            Return CompareScalar(v, scalar, Function(a, b) Vector.Equals(Of Double)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素不等（与标量广播比较）。
+        ''' </summary>
+        Public Shared Function NotEqual(v As Double(), scalar As Double) As Boolean()
+            Return CompareScalar(v, scalar, Function(a, b) Vector.OnesComplement(Vector.Equals(Of Double)(a, b)))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素与标量广播比较的通用实现。
+        ''' </summary>
+        ''' <remarks>
+        ''' 标量用 <c>New Vector(Of Double)(scalar)</c> 一次广播到整个寄存器，
+        ''' 不需要为比较物化一个和输入等长的常量数组。
+        ''' </remarks>
+        Private Shared Function CompareScalar(v As Double(), scalar As Double,
+                                              op As SimdEngine.VectorBinaryOp(Of Double)) As Boolean()
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+
+            Dim len As Integer = v.Length
+            If len = 0 Then Return Array.Empty(Of Boolean)()
+
+            Dim out As Boolean() = New Boolean(len - 1) {}
+            Dim count As Integer = Vector(Of Double).Count
+            Dim splat As New Vector(Of Double)(scalar)
+            Dim i As Integer = 0
+
+            If SimdEngine.CanVectorize(Of Double)(len) Then
+                Dim last As Integer = len - count
+
+                Do While i <= last
+                    Call CompareScalarBlock(v, splat, out, i, op)
+                    i += count
+                Loop
+                If i < len Then
+                    Call CompareScalarBlock(v, splat, out, last, op)
+                End If
+
+                Return out
+            End If
+
+            Do While i < len
+                out(i) = LaneTrue(Of Double)(op(New Vector(Of Double)(v(i)), splat), 0)
+                i += 1
+            Loop
+
+            Return out
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Sub CompareScalarBlock(v As Double(), splat As Vector(Of Double), out As Boolean(),
+                                              offset As Integer, op As SimdEngine.VectorBinaryOp(Of Double))
+            Dim mask As Vector(Of Double) = op(New Vector(Of Double)(v, offset), splat)
+            Dim count As Integer = Vector(Of Double).Count
+
+            For k As Integer = 0 To count - 1
+                out(offset + k) = LaneTrue(Of Double)(mask, k)
+            Next
+        End Sub
 
         Private Shared Function Compare(Of T As Structure)(v1 As T(), v2 As T(),
                                                            op As SimdEngine.VectorBinaryOp(Of T)) As Boolean()

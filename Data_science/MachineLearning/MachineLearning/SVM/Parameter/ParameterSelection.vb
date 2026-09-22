@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d7fa37b611e891092f8116ec265d9a6, Data_science\MachineLearning\MachineLearning\SVM\Parameter\ParameterSelection.vb"
+﻿#Region "Microsoft.VisualBasic::dc6119fc123250c1cc72cbcb71b36211, Data_science\MachineLearning\MachineLearning\SVM\Parameter\ParameterSelection.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.84%
     ' 
     '   Blank Lines: 16 (7.44%)
-    '     File Size: 12.16 KB
+    '     File Size: 12.24 KB
 
 
     '     Module ParameterSelection
@@ -121,7 +121,7 @@ Namespace SVM
         ''' <param name="minPower">The minimum power of 2</param>
         ''' <param name="maxPower">The maximum power of 2</param>
         ''' <param name="iteration">The iteration size to use in powers</param>
-        ''' <returns></returns>
+        ''' <returns>A list of the values ``2 ^ p`` for each power ``p`` in the requested range.</returns>
         Public Function GetList(minPower As Double, maxPower As Double, iteration As Double) As List(Of Double)
             Dim list As List(Of Double) = New List(Of Double)()
             Dim d = minPower

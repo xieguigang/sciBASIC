@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41ef72abb6c48bf171e0fade525dbf9d, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Intrinsics.vb"
+﻿#Region "Microsoft.VisualBasic::d76d6383463af150f60a0b79ab20a7a2, Microsoft.VisualBasic.Core\src\Math\SIMD\Intrinsics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
-    '    Code Lines: 176 (58.47%)
-    ' Comment Lines: 74 (24.58%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 400
+    '    Code Lines: 230 (57.50%)
+    ' Comment Lines: 108 (27.00%)
+    '    - Xml Docs: 97.22%
     ' 
-    '   Blank Lines: 51 (16.94%)
-    '     File Size: 11.84 KB
+    '   Blank Lines: 62 (15.50%)
+    '     File Size: 17.20 KB
 
 
     '     Class SIMDIntrinsics
@@ -50,7 +50,7 @@
     '         Function: Axpy, (+2 Overloads) DotFma, HorizontalSum4, HorizontalSum8, Load4
     '                   Load8, MultiplyAdd, SumSquaresFma, (+2 Overloads) VectorAddAvx, (+2 Overloads) VectorAddAvx2
     ' 
-    '         Sub: Store4
+    '         Sub: AxpyInPlace, Store4
     ' 
     ' 
     ' /********************************************************************************/
@@ -76,9 +76,11 @@ Namespace Math.SIMD
     ''' 增加代码量而不会提升吞吐。
     ''' </para>
     ''' <para>
-    ''' 所有的 FMA 内核都会在运行期检查 <see cref="SimdCapabilities.IsFma"/>：
-    ''' 当处理器不支持 FMA 时自动退回到等价的
-    ''' <see cref="SimdEngine"/> 实现，因此这些函数在任何平台上都是安全的。
+    ''' 所有的 FMA 内核都会在运行期同时检查 <see cref="SimdCapabilities.IsFma"/> 与
+    ''' <see cref="SIMDEnvironment.IsEnabled"/>：前者保证处理器确实有 FMA 指令，
+    ''' 后者保证 <see cref="SIMDConfiguration.disable"/> 这个全局逃生开关依然有效。
+    ''' 任一条件不满足时会退回到等价的 <see cref="SimdEngine"/> /
+    ''' <see cref="SimdReduce"/> 实现，因此这些函数在任何平台与任何配置下都是安全的。
     ''' </para>
     ''' <para>
     ''' 与旧实现的关键差别：这里使用批量装载/存储
@@ -178,6 +180,10 @@ Namespace Math.SIMD
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>
         ''' <returns><c>SUM(v1(i) * v2(i))</c></returns>
+        ''' <remarks>
+        ''' 与 <see cref="SumSquaresFma(Double())"/> 一样使用 4 路独立累加器来打断
+        ''' FMA 的依赖链；归约顺序不同会带来 ULP 级差异。
+        ''' </remarks>
         Public Shared Function DotFma(v1 As Double(), v2 As Double()) As Double
             If v1 Is Nothing Then Throw New ArgumentNullException(NameOf(v1))
             If v2 Is Nothing Then Throw New ArgumentNullException(NameOf(v2))
@@ -187,24 +193,38 @@ Namespace Math.SIMD
 
             Dim len As Integer = v1.Length
             If len = 0 Then Return 0.0
-            If Not SimdCapabilities.IsFma Then
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
                 Return SimdReduce.Dot(v1, v2)
             End If
 
             Dim count As Integer = Vector256(Of Double).Count
-            Dim acc As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim step4 As Integer = count * 4
+            Dim acc0 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc1 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc2 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc3 As Vector256(Of Double) = Vector256(Of Double).Zero
             Dim i As Integer = 0
 
-            If len >= count Then
-                Dim last As Integer = len - count
+            If len >= step4 Then
+                Dim last4 As Integer = len - step4
 
-                Do While i <= last
-                    acc = Fma.MultiplyAdd(Load4(v1, i), Load4(v2, i), acc)
-                    i += count
+                Do While i <= last4
+                    acc0 = Fma.MultiplyAdd(Load4(v1, i), Load4(v2, i), acc0)
+                    acc1 = Fma.MultiplyAdd(Load4(v1, i + count), Load4(v2, i + count), acc1)
+                    acc2 = Fma.MultiplyAdd(Load4(v1, i + count * 2), Load4(v2, i + count * 2), acc2)
+                    acc3 = Fma.MultiplyAdd(Load4(v1, i + count * 3), Load4(v2, i + count * 3), acc3)
+                    i += step4
                 Loop
             End If
 
-            Dim sum As Double = HorizontalSum4(acc)
+            ' 不足 4 路的整块继续用单路累加
+            Do While i <= len - count
+                acc0 = Fma.MultiplyAdd(Load4(v1, i), Load4(v2, i), acc0)
+                i += count
+            Loop
+
+            Dim sum As Double = HorizontalSum4(
+                Vector256.Add(Vector256.Add(acc0, acc1), Vector256.Add(acc2, acc3)))
 
             Do While i < len
                 sum += v1(i) * v2(i)
@@ -226,7 +246,7 @@ Namespace Math.SIMD
 
             Dim len As Integer = v1.Length
             If len = 0 Then Return 0.0
-            If Not SimdCapabilities.IsFma Then
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
                 Return SimdReduce.Dot(v1, v2)
             End If
 
@@ -256,28 +276,61 @@ Namespace Math.SIMD
         ''' <summary>
         ''' 平方和：<c>SUM(v(i) ^ 2)</c>，使用 FMA 融合乘加。
         ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 使用 <b>4 路独立累加器</b>：FMA 的延时约为 4 个周期，若只用一个累加器，
+        ''' 整个循环会被这条依赖链串行化，吞吐无法超过「1 条 FMA / 4 周期」；
+        ''' 4 路累加器让乱序执行可以同时保持多条 FMA 在飞，长数组上能拿到接近
+        ''' 3~4 倍的额外提升（这也是 <see cref="SimdReduce.SumSquares(Double())"/>
+        ''' 采用同样策略的原因）。
+        ''' </para>
+        ''' <para>
+        ''' 归约顺序与单累加器版本不同，因此结果可能存在浮点末位（ULP）级差异。
+        ''' </para>
+        ''' </remarks>
         Public Shared Function SumSquaresFma(v As Double()) As Double
             If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
             If v.Length = 0 Then Return 0.0
-            If Not SimdCapabilities.IsFma Then
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
                 Return SimdReduce.SumSquares(v)
             End If
 
             Dim len As Integer = v.Length
             Dim count As Integer = Vector256(Of Double).Count
-            Dim acc As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim step4 As Integer = count * 4
+            Dim acc0 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc1 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc2 As Vector256(Of Double) = Vector256(Of Double).Zero
+            Dim acc3 As Vector256(Of Double) = Vector256(Of Double).Zero
             Dim i As Integer = 0
 
-            If len >= count Then
-                Dim last As Integer = len - count
+            If len >= step4 Then
+                Dim last4 As Integer = len - step4
 
-                Do While i <= last
-                    acc = Fma.MultiplyAdd(Load4(v, i), Load4(v, i), acc)
-                    i += count
+                Do While i <= last4
+                    Dim x0 As Vector256(Of Double) = Load4(v, i)
+                    Dim x1 As Vector256(Of Double) = Load4(v, i + count)
+                    Dim x2 As Vector256(Of Double) = Load4(v, i + count * 2)
+                    Dim x3 As Vector256(Of Double) = Load4(v, i + count * 3)
+
+                    acc0 = Fma.MultiplyAdd(x0, x0, acc0)
+                    acc1 = Fma.MultiplyAdd(x1, x1, acc1)
+                    acc2 = Fma.MultiplyAdd(x2, x2, acc2)
+                    acc3 = Fma.MultiplyAdd(x3, x3, acc3)
+                    i += step4
                 Loop
             End If
 
-            Dim sum As Double = HorizontalSum4(acc)
+            ' 不足 4 路的整块继续用单路累加
+            Do While i <= len - count
+                Dim x As Vector256(Of Double) = Load4(v, i)
+
+                acc0 = Fma.MultiplyAdd(x, x, acc0)
+                i += count
+            Loop
+
+            Dim sum As Double = HorizontalSum4(
+                Vector256.Add(Vector256.Add(acc0, acc1), Vector256.Add(acc2, acc3)))
 
             Do While i < len
                 sum += v(i) * v(i)
@@ -296,7 +349,7 @@ Namespace Math.SIMD
 
             Dim len As Integer = x.Length
             If len = 0 Then Return Array.Empty(Of Double)()
-            If Not SimdCapabilities.IsFma Then
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
                 Return SimdEngine.Add(Of Double)(SimdEngine.MultiplyScalar(Of Double)(alpha, x), y)
             End If
 
@@ -323,6 +376,52 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 就地 AXPY：<c>y(i) += alpha * x(i)</c>，使用 FMA 融合乘加。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 这是矩阵分解/求解器里出现频率最高的一类 BLAS-1 操作（列消元、Gram-Schmidt
+        ''' 正交化、秩一更新的行部分），就地更新可以避免为每次迭代分配临时数组。
+        ''' </para>
+        ''' <para>
+        ''' <b>为什么不使用“末块与末尾重叠”的技巧</b>：输入与输出共用同一块内存，
+        ''' 重叠部分会把已经更新过的元素再算一次，因此尾块退化为单通道逐元素计算。
+        ''' </para>
+        ''' </remarks>
+        Public Shared Sub AxpyInPlace(alpha As Double, x As Double(), y As Double())
+            If x Is Nothing Then Throw New ArgumentNullException(NameOf(x))
+            If y Is Nothing Then Throw New ArgumentNullException(NameOf(y))
+
+            Dim len As Integer = y.Length
+            If len = 0 Then Return
+            If x.Length <> len Then
+                Throw New ArgumentException($"vector size not agree: {x.Length} vs {len}!")
+            End If
+
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
+                ' 无 FMA 时退化为“先数乘再就地累加”，仍然是向量化路径
+                Dim scaled As Double() = SimdEngine.MultiplyScalar(Of Double)(alpha, x)
+
+                Call SimdEngine.AddInPlace(Of Double)(y, scaled)
+                Return
+            End If
+
+            Dim count As Integer = Vector256(Of Double).Count
+            Dim a As Vector256(Of Double) = Vector256.Create(Of Double)(alpha)
+            Dim i As Integer = 0
+
+            Do While i <= len - count
+                Call Store4(Fma.MultiplyAdd(a, Load4(x, i), Load4(y, i)), y, i)
+                i += count
+            Loop
+
+            Do While i < len
+                y(i) += alpha * x(i)
+                i += 1
+            Loop
+        End Sub
+
+        ''' <summary>
         ''' 融合乘加：<c>out(i) = v1(i) * v2(i) + acc(i)</c>
         ''' </summary>
         Public Shared Function MultiplyAdd(v1 As Double(), v2 As Double(), acc As Double()) As Double()
@@ -332,7 +431,7 @@ Namespace Math.SIMD
 
             Dim len As Integer = v1.Length
             If len = 0 Then Return Array.Empty(Of Double)()
-            If Not SimdCapabilities.IsFma Then
+            If Not SimdCapabilities.IsFma OrElse Not SIMDEnvironment.IsEnabled Then
                 Return SimdEngine.Add(Of Double)(SimdEngine.Multiply(Of Double)(v1, v2), acc)
             End If
 

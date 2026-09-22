@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9aba2b9cfa36bc705448f5f727101971, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\SoftMaxLayer.vb"
+﻿#Region "Microsoft.VisualBasic::37e98ff7301185067d878e18eb6fd119, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\SoftMaxLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 69 (63.89%)
-    ' Comment Lines: 17 (15.74%)
-    '    - Xml Docs: 58.82%
+    '   Total Lines: 115
+    '    Code Lines: 53 (46.09%)
+    ' Comment Lines: 40 (34.78%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 22 (20.37%)
-    '     File Size: 3.39 KB
+    '   Blank Lines: 22 (19.13%)
+    '     File Size: 4.92 KB
 
 
     '     Class SoftMaxLayer
@@ -74,12 +74,17 @@ Namespace CNN.losslayers
 
         Dim es As Double()
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.SoftMax"/>.</summary>
         Public Overrides ReadOnly Property Type As LayerTypes
             Get
                 Return LayerTypes.SoftMax
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates the softmax loss layer and flattens the shared output definition to a vector.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the last layer shape.</param>
         Public Sub New(def As OutputDefinition)
             MyBase.New(def)
 
@@ -94,9 +99,17 @@ Namespace CNN.losslayers
             def.depth = out_depth
         End Sub
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Converts the incoming scores into a probability distribution; the softmax is computed on the tensor back end with
+        ''' the maximum subtracted for numerical stability.
+        ''' </summary>
+        ''' <param name="db">The input score vector.</param>
+        ''' <param name="training">Ignored; the loss layer behaves the same in both modes.</param>
+        ''' <returns>The class probabilities.</returns>
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             Dim A As New DataBlock(1, 1, out_depth, 0.0) With {.trace = Me.ToString}
 
@@ -115,10 +128,10 @@ Namespace CNN.losslayers
         End Function
 
         ''' <summary>
-        ''' compute and accumulate gradient wrt weights and bias of this layer
+        ''' Computes the cross entropy loss and its gradient for a classification target.
         ''' </summary>
-        ''' <param name="y"></param>
-        ''' <returns></returns>
+        ''' <param name="y">Index of the target class.</param>
+        ''' <returns>The negative log likelihood of the target class.</returns>
         Public Overrides Function backward(y As Integer) As Double
             Dim x As DataBlock = in_act.clearGradient() ' zero out the gradient of input Vol
 
@@ -136,6 +149,11 @@ Namespace CNN.losslayers
             Return -std.Log(es(y))
         End Function
 
+        ''' <summary>
+        ''' Computes the cross entropy loss and its gradient against a soft target distribution.
+        ''' </summary>
+        ''' <param name="y">The target probability distribution.</param>
+        ''' <returns>The per element loss vector.</returns>
         Public Overrides Function backward(y() As Double) As Double()
             Dim x As DataBlock = in_act.clearGradient
             ' -(y-es) = es - y
@@ -145,6 +163,8 @@ Namespace CNN.losslayers
             Return New Vector(es).Log * -1
         End Function
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>softmax()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "softmax()"
         End Function

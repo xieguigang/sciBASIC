@@ -31,14 +31,15 @@
 
     <RepositoryType>git</RepositoryType>
 
-    <PackageTags>scibasic;graphics;imaging;svg;postscript</PackageTags>
+    <PackageTags>scibasic;graphics;imaging;svg;postscript;drawing;heatmap;color-palette;d3js;isometric-3d</PackageTags>
+    <PackageReleaseNotes>The 2D and 3D scientific graphics rendering engine of sciBASIC#. Driver model: one IGraphics API is implemented by several back ends - the bitmap driver, the SVG writer, the PostScript writer and the CSS driver - so drawing code is written once and rendered to different outputs. Drawing2D: shapes (line, box, circle, diamond, hexagon, pentacle, round rectangle, triangle and arrow), text (HTML text, word wrap, ASCII art and nudge label placement), colours (palettes, ColorBrewer, Viridis, Office accents, scalers and legends), heat maps with HQx upscaling, and a 2D math toolkit (canvas scaling, splines, convex and concave hulls, marching squares contouring, Delaunay / Voronoi and polyline simplification). Drawing3D: an isometric engine with camera, lighting, the painter algorithm, point clouds and surfaces, 3D math (matrices, vectors, projections, marching cubes and polyhedra) and ready made isometric models and shapes. Drivers and styling: the Driver namespace defines the IGraphics contract with its factory, device description and canvas; d3.js inspired scales and CSS models drive SVG gradients and filters over the SVG XML element model.</PackageReleaseNotes>
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
-    <Description>A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API. It is the visualization core of sciBASIC#.</Description>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
+    <Description>A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API, with d3.js style scales, color palettes, heat maps and an isometric 3D engine. The visualization core of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

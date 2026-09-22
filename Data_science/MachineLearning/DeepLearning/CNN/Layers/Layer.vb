@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca29c7949833a75d56174d47a78f5e6f, Data_science\MachineLearning\DeepLearning\CNN\Layers\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::580fa6488565b1f10f5fcded80bb4bf8, Data_science\MachineLearning\DeepLearning\CNN\Layers\Layer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 10 (34.48%)
-    ' Comment Lines: 13 (44.83%)
-    '    - Xml Docs: 92.31%
+    '   Total Lines: 35
+    '    Code Lines: 10 (28.57%)
+    ' Comment Lines: 19 (54.29%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 6 (20.69%)
-    '     File Size: 975 B
+    '   Blank Lines: 6 (17.14%)
+    '     File Size: 1.44 KB
 
 
     '     Interface Layer
@@ -70,15 +70,21 @@ Namespace CNN.layers
     Public Interface Layer
 
         ''' <summary>
-        ''' adjust the weight at here in the trainer module
+        ''' Gets the parameter and gradient blocks of this layer; the trainer reads them to adjust the weights.
         ''' </summary>
-        ''' <returns></returns>
         ReadOnly Property BackPropagationResult As IEnumerable(Of BackPropResult)
+        ''' <summary>Gets the kind of this layer.</summary>
         ReadOnly Property Type As LayerTypes
 
+        ''' <summary>
+        ''' Runs the forward pass of the layer.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">When <c>True</c> the layer runs in training mode (for example dropout is active).</param>
+        ''' <returns>The output data block passed to the next layer.</returns>
         Function forward(db As DataBlock, training As Boolean) As DataBlock
         ''' <summary>
-        ''' compute and accumulate gradient wrt weights and bias of this layer
+        ''' Computes and accumulates the gradients with respect to the weights and biases of this layer.
         ''' </summary>
         Sub backward()
 

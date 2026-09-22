@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97f53272e58f1a2881a84bd30d751d92, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\IntegerSampleable.vb"
+﻿#Region "Microsoft.VisualBasic::d8dc463bfadc1fbb0f106b8cb7e15f10, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\IntegerSampleable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 6 (35.29%)
-    ' Comment Lines: 9 (52.94%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 26
+    '    Code Lines: 6 (23.08%)
+    ' Comment Lines: 18 (69.23%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (11.76%)
-    '     File Size: 706 B
+    '   Blank Lines: 2 (7.69%)
+    '     File Size: 1.36 KB
 
 
     ' 	Interface IntegerSampleable
@@ -53,19 +53,28 @@
 #End Region
 
 Namespace RNN
-	' Network that can be sampled for a sequence of integers.
+	''' <summary>
+	''' Network that can be sampled for a sequence of integer indices.
+	''' </summary>
 	Public Interface IntegerSampleable
 
-		' Samples n indices, advances the state.
-		' Seed must be at least one index.
-		' temp is the must be in (0.0,1.0]. Lower temp means more conservative
-		' predictions.
+		''' <summary>
+		''' Samples <paramref name="n"/> indices, advancing the hidden state.
+		''' </summary>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices; there must be at least one.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>; a lower temperature yields more conservative predictions.</param>
+		''' <returns>The sampled indices.</returns>
 		Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer()
 
-		' Samples n indices, choose whether to advance the state.
-		' Seed must be at least one index.
-		' temp is the must be in (0.0,1.0]. Lower temp means more conservative
-		' predictions.
+		''' <summary>
+		''' Samples <paramref name="n"/> indices, optionally advancing the hidden state.
+		''' </summary>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices; there must be at least one.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>; a lower temperature yields more conservative predictions.</param>
+		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+		''' <returns>The sampled indices.</returns>
 		Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
 	End Interface
 End Namespace

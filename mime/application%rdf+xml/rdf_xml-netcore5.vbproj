@@ -11,17 +11,18 @@
     <Product>sciBASIC#</Product>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Title>RDF/XML and Turtle Triple Serialization Model</Title>
-    <Description>Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus a RDF 1.1 Turtle parser that streams subject-predicate-object triples.</Description>
+    <Description>Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus an RDF 1.1 Turtle parser that streams subject-predicate-object triples and re-materializes them as RDF entities.</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.rdf_xml</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;rdf;semantic-web;turtle;linked-data</PackageTags>
+    <PackageTags>scibasic;rdf;rdf-xml;turtle;semantic-web;linked-data;dublin-core;dcmi</PackageTags>
+    <PackageReleaseNotes>The application/rdf+xml support of sciBASIC#. XML model: XmlSerializer ready classes model an RDF document - the must-inherit RDF(Of T) root container that declares the rdf/rdfs namespaces, Description nodes, Resource references, RDFType, rdf:Bag containers with li list items, and the base classes Description / RDFEntity / RDFProperty intended to be inherited by application specific metadata readers. Dublin Core (DCMI) metadata fields (title, creator, subject, publisher, rights and more) are provided out of the box, together with XSD data type URIs and the mapping between .NET types and RDF literal types so that typed literals round trip correctly. Turtle: the Turtle namespace implements an RDF 1.1 Turtle (TTL) streaming reader that yields subject-predicate-object triples (TurtleFile.ReadObjects, @prefix handling), models each parsed subject with its predicate/object relations (Triple, Relation, ttl_property) and re-materializes RDFEntity objects from the triple sequence through BuildObject. Namespace documentation retains the author caveat that element namespaces must not be set to the RDF namespace itself, otherwise comment data cannot be read back.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

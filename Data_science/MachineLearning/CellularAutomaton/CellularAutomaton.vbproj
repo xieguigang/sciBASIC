@@ -13,15 +13,16 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Cellular Automaton Grid Simulator with netCDF Snapshot Debugging</Title>
     <Description>A generic cellular automaton engine for sciBASIC#: runs tick-and-commit generations over a 2D grid of typed cells with configurable neighbourhood and boundary modes, and exports per-cell state snapshots to netCDF for analysis.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.CellularAutomaton</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;cellular-automaton;simulation;netcdf;grid-model</PackageTags>
+    <PackageTags>scibasic;cellular-automaton;simulation;lattice-gas;reaction-diffusion;netcdf;grid-model</PackageTags>
+    <PackageReleaseNotes>A generic cellular automaton engine for sciBASIC#. The simulation runs tick-and-commit generations over a 2D grid of typed cells, where each generation evaluates the neighbourhood of every cell and only then commits the new states - so the update order cannot bias the result - while neighbourhood shape and boundary handling (wrap around or fixed edge) stay configurable. Because the engine is generic over the cell type it can model lattice gas systems, reaction diffusion processes, forest fire and epidemic spread, or pixel level image operations alike, and per cell state snapshots can be exported to netCDF for later analysis and animation.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>

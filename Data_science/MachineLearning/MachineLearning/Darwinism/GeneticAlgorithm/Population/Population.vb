@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b94522cd5ff0aa972886a5a98d31365, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
+﻿#Region "Microsoft.VisualBasic::d2e87374b398ae56c69d94e139691d96, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 86 (50.29%)
-    ' Comment Lines: 61 (35.67%)
-    '    - Xml Docs: 63.93%
+    '   Total Lines: 192
+    '    Code Lines: 86 (44.79%)
+    ' Comment Lines: 82 (42.71%)
+    '    - Xml Docs: 74.39%
     ' 
-    '   Blank Lines: 24 (14.04%)
-    '     File Size: 6.98 KB
+    '   Blank Lines: 24 (12.50%)
+    '     File Size: 8.59 KB
 
 
     '     Class Population
@@ -80,6 +80,10 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF.Population
 
+    ''' <summary>
+    ''' The default genetic algorithm population model.
+    ''' </summary>
+    ''' <typeparam name="Chr">The chromosome type of the genetic algorithm.</typeparam>
     Public Class Population(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits IPopulation(Of Chr)
         Implements IEnumerable(Of Chr)
 
@@ -92,7 +96,7 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' 是否使用并行模式在排序之前来计算出fitness
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A <see cref="Boolean"/> value, the default value is ``True``.</returns>
         Public Property parallel As Boolean = True
 
         ''' <summary>
@@ -101,7 +105,7 @@ Namespace Darwinism.GAF.Population
         ''' 如果只需要获取得到种群的固定大小,可以使用<see cref="capacitySize"/>
         ''' 属性)
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The current number of the chromosomes in this population.</returns>
         Public ReadOnly Property Size As Integer
             Get
                 Return chromosomes.Count
@@ -111,7 +115,8 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' Gets random chromosome
         ''' </summary>
-        ''' <returns></returns>
+        ''' <param name="rnd">The random number generator which is used for selecting the chromosome.</param>
+        ''' <returns>A randomly selected chromosome from the current population.</returns>
         Public ReadOnly Property Random(rnd As Random) As Chr
             Get
                 Dim numOfChromosomes As Integer = chromosomes.Count
@@ -126,8 +131,8 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' Gets chromosome by index
         ''' </summary>
-        ''' <param name="index%"></param>
-        ''' <returns></returns>
+        ''' <param name="index%">The zero based index of the target chromosome.</param>
+        ''' <returns>A chromosome object.</returns>
         Default Public ReadOnly Property Item(index As Integer) As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -138,7 +143,13 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
         ''' </summary>
-        ''' <param name="parallel"></param>
+        ''' <param name="collection">The chromosome collection of this population.</param>
+        ''' <param name="parallel">
+        ''' The parallel compute mode: a ``Boolean`` value selects the built-in 
+        ''' parallel implementation, a <see cref="ParallelComputeFitness(Of Chr)"/> 
+        ''' object uses the external implementation, and ``Nothing`` will use the 
+        ''' internal GA_PLinq api by default.
+        ''' </param>
         Public Sub New(collection As PopulationCollection(Of Chr), Optional parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean) = Nothing)
             Me.Pcompute = GetParallelCompute(parallel)
             Me.chromosomes = collection
@@ -177,7 +188,7 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' 这里是ODEs参数估计的限速步骤
         ''' </summary>
-        ''' <param name="comparator"></param>
+        ''' <param name="comparator">The fitness evaluation function of the current environment.</param>
         Friend Sub SortPopulationByFitness(comparator As FitnessPool(Of Chr))
             Dim fitness = Pcompute.ComputeFitness(comparator, chromosomes) _
                 .ToArray _
@@ -198,7 +209,7 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' Add chromosome
         ''' </summary>
-        ''' <param name="chromosome"></param>
+        ''' <param name="chromosome">The chromosome object that will be added into this population.</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Add(chromosome As Chr)
@@ -208,16 +219,26 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' shortening population till specific number
         ''' </summary>
-        ''' 
+        ''' <param name="len">The maximum number of the chromosomes which will be kept.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Trim(len As Integer)
             Call chromosomes.Trim(capacitySize:=len)
         End Sub
 
+        ''' <summary>
+        ''' Display the brief summary information of this population.
+        ''' </summary>
+        ''' <returns>
+        ''' A string in format like ``A population with capacity N, current size M. //type``
+        ''' </returns>
         Public Overrides Function ToString() As String
             Return $"A population with capacity {capacitySize}, current size {Size}. //{GetType(Chr).FullName}"
         End Function
 
+        ''' <summary>
+        ''' Iterate through all of the chromosome objects in this population.
+        ''' </summary>
+        ''' <returns>An enumerator of the chromosome objects.</returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of Chr) Implements IEnumerable(Of Chr).GetEnumerator
             For i As Integer = 0 To chromosomes.Count - 1
                 Yield chromosomes(i)

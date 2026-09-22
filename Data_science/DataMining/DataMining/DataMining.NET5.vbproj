@@ -15,14 +15,15 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Core Data Mining Toolkit: Clustering, Association Rules and Evaluation</Title>
     <Description>Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.Framework</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;data-mining;clustering;association-rules;machine-learning</PackageTags>
+    <PackageTags>scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;decision-tree;association-rules;model-evaluation</PackageTags>
+    <PackageReleaseNotes>The core data mining toolkit of sciBASIC#. Clustering: KMeans, BisectingKMeans, Lloyd's algorithm, DBSCAN, HDBSCAN (split into its Distance, Hdbscanstar and Runner namespaces), FuzzyCMeans and the shared Clustering namespace. Association rules: the AprioriRules namespace with its entity models and implementation. Classification: DecisionTree together with its data models, plus the Kernel.Classifier and Kernel.BayesianBeliefNetwork kernels. Data preparation: the ComponentModel namespace covers discretization, feature encoders and their variable definitions, entity models, normalizers and the serialization of all of them. Evaluation: ROC and AUC style model evaluation. The DFL_Driver namespace defines the driver interface that plugs the mining algorithms into the sciBASIC# data framework, so any of the above can be driven from a uniform pipeline.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

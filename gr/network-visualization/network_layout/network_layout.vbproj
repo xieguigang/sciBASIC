@@ -14,15 +14,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Graph Layout Algorithms For Network Visualization</Title>
     <Description>Supplies force-directed, spring-embedder, constrained Cola, orthogonal, radial, circular, HOLA and edge-bundling layouts behind a common IPlanner interface. Computes node coordinates before rendering sciBASIC# networks.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Layouts</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;graph-layout;force-directed;orthogonal-routing;edge-bundling</PackageTags>
+    <PackageTags>scibasic;graph-layout;force-directed;spring-embedder;cola;orthogonal-routing;hola;edge-bundling;radial</PackageTags>
+    <PackageReleaseNotes>Graph layout algorithms for network visualization in sciBASIC#, all behind a common IPlanner interface so a layout can be swapped without touching rendering code. Algorithms: force directed and spring embedder layouts (ForceDirected, SpringForce with its Interfaces), the constrained layout engine (Cola) with 3D layout, power graph and grid routing plus geometry and model accessors, orthogonal layout with its optimization passes and utilities, radial and circular layouts, HOLA, and Mingle edge bundling for dense graphs. Usage: a layout consumes a graph and produces node coordinates (the Layouts vector types), which the rendering layer (Visualizer, NetworkCanvas) then draws. Because layouts are pure algorithms over the graph model, they can also be used headlessly to pre-compute coordinates for static images.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

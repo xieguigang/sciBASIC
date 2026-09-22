@@ -1,44 +1,69 @@
-# Deep Learning Framework: CNN, RNN, Transformer and ANN Models
+# 深度学习框架：CNN、RNN、Transformer 与 ANN
 
-Deep learning toolkit for sciBASIC#, spanning a CeNiN CNN reader, a trainable convolutional network, recurrent and Transformer models, and a general ANN facade.
+## 引言
 
-## Overview
-- CeNiN (`Convolutional.CeNiN`): loads the "CeNiN NEURAL NETWORK FILE" binary format (conv / relu / pool / softmax layers) and runs the feed-forward phase to classify an image.
-- Trainable CNN (`CNN.ConvolutionalNN`): layers are composed fluently with `LayerBuilder` (conv, pool, ReLU/LeakyReLU, sigmoid, tanh, maxout, dropout, LRN, fully connected, softmax/regression/SVM loss) and fitted with SGD, AdaGrad, AdaDelta, Adam, Nesterov or window-grad trainers.
-- Character-level RNNs (`RNN`): single- and multi-layer networks over an `Alphabet` with `RNNTrainer`, plus a `CharRNN` port.
-- Transformer (`Transformer`): embedding, multi-head attention, encoder/decoder stacks and an Adam optimizer, following "Attention is all you need".
-- Artificial neural networks (`NeuralNetwork.Netz` / `NeuralNetwork.Network`): classic MLP API implemented on top of the CNN fully-connected kernel, with save/load of `.cnn` models.
+主流深度学习框架（PyTorch / TensorFlow）都依赖庞大的原生运行时。本包走另一条路：在**纯托管的张量运行时**之上，用 VB.NET 实现现代网络结构。
 
-## Key Types
-- `Microsoft.VisualBasic.MachineLearning.Convolutional.CeNiN` — `LoadFile(stream)` reader; `Solver.DetectObject` extension classifies a bitmap.
-- `Microsoft.VisualBasic.MachineLearning.CNN.ConvolutionalNN` — `New(layers As LayerBuilder)`, `forward`, `backward`, `predict(v As Double())`.
-- `Microsoft.VisualBasic.MachineLearning.CNN.LayerBuilder` — fluent builder (`buildInputLayer`, `buildConvLayer`, `buildPoolLayer`, `buildFullyConnectedLayer`, ...).
-- `Microsoft.VisualBasic.MachineLearning.CNN.Trainer` and `CNN.trainers.*Trainer` — training loop and the AdaGrad/AdaDelta/Adam/SGD/Nesterov/window-grad update rules.
-- `Microsoft.VisualBasic.MachineLearning.RNN.net.MultiLayerCharLevelRNN` — stacked character-level RNN with sampling interfaces.
-- `Microsoft.VisualBasic.MachineLearning.Transformer.TransformerModel` — encoder/decoder stack, `MultiHeadAttention`, `Embedding`, `Optimizer` (Adam).
-- `Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Netz` — MLP facade: `train`, `predict`, `TotalError`, `Save`/`Load`.
-- `Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Network` — MLP with `ForwardPropagate`, `BackPropagate`, `TrainBatch`, `Compute`, `Save`/`Load`.
+它的适用场景很明确：
 
-## Quick Start
+- 需要**零原生依赖**部署（如受限环境、单文件发布）；
+- 需要在 .NET 进程内**嵌入小模型**推理与训练；
+- 需要**可读、可调试**的网络实现，而非黑箱调用。
+
+## 支持的模型
+
+| 模型 | 命名空间 | 说明 |
+|---|---|---|
+| **卷积网络（CNN）** | `CNN`（+ `data` / `layers` / `losslayers` / `trainers`） | 可训练 CNN，含数据容器、层实现、损失层与专用训练器 |
+| **CeNiN 网络读取** | `Convolutional` | 导入 CeNiN 定义的网络结构 |
+| **循环网络（RNN）** | `RNN` | 字符级循环网络，单元可配置 |
+| **Transformer** | `Transformer` | 注意力层与 Transformer 模型 |
+| **前馈网络（ANN）** | `NeuralNetwork` | 通用人工神经网络 |
+
+## 训练器与优化器
+
+`CNN.trainers` 与 `RNN` 相关命名空间提供训练循环，支持三种优化器：
+
+| 优化器 | 特点 | 适用 |
+|---|---|---|
+| **SGD** | 简单，需仔细调学习率 | 小模型 / 教学 |
+| **AdaGrad** | 逐维自适应，累积梯度平方 | 稀疏特征 |
+| **Adam** | 动量 + 自适应（一阶 / 二阶矩估计） | **默认推荐** |
+
+## 快速上手
+
 ```vbnet
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning
+Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 
-Dim net As New Netz(inputNeurons:=2, hiddenNeurons:=4, hiddenLayers:=1, outputNeurons:=1,
-                    activate:=Function(x) 1.0 / (1.0 + Math.Exp(-x)))
-net.LERNRATE = 0.05
+' 1. 构建卷积网络
+Dim net As New ConvolutionalNetwork()
+Call net.AddLayer(New ConvolutionLayer(filters:=32, kernelSize:=3))
+Call net.AddLayer(New PoolingLayer(size:=2))
+Call net.AddLayer(New DenseLayer(units:=10))
+Call net.Compile(loss:=New SoftmaxCrossEntropy())
 
-For i As Integer = 1 To 8000
-    Call net.train({rnd.NextDouble(), rnd.NextDouble()}, {0.8})
+' 2. 用 Adam 训练
+Dim trainer As New SGDTrainer(optimizer:=Optimizer.Adam, learningRate:=0.001)
+
+For epoch As Integer = 1 To 20
+    Call trainer.TrainEpoch(net, trainData)
 Next
 
-Dim y As Double() = net.predict({0.3, 0.5})
-Call net.Save("netz_model.cnn")
+' 3. 字符级 RNN / Transformer 用法类似，只是层类型不同
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.DeepLearning` (RootNamespace `Microsoft.VisualBasic.MachineLearning`)
-- TargetFramework: `net10.0`
-- Tags: `scibasic;deep-learning;cnn;rnn;transformer`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **为什么把 CNN 拆成 data / layers / losslayers / trainers 四个命名空间**：数据组织、层的正向反向、损失函数与训练调度是四件独立的事；分开后可以替换其中任意一环（换损失、换优化器）而不影响其余部分。
+- **Adam 为什么通常是默认选择**：它同时利用一阶矩（动量，平滑方向）与二阶矩（自适应步长），对学习率不敏感，在多数任务上无需精细调参即可收敛。
+- **纯托管方案的边界**：没有 cuDNN 级别的算子优化，因此训练大模型不现实；但用于小规模模型、教学与嵌入式推理完全够用。需要 GPU 时可叠加 `ILCudaTensor` 提供的 CUDA 后端。
+- **Transformer 的注意力层**：注意力机制的核心是「按相关性加权聚合」；实现中把 QKV 投影、缩放点积注意力与前馈层分开，便于单独调试。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.MachineLearning`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;deep-learning;cnn;rnn;transformer;attention;adam-optimizer;neural-network;cenin`
+- 许可：GPL-3.0-or-later

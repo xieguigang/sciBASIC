@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e30489689be61313da887d4ddbc8a00a, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
+﻿#Region "Microsoft.VisualBasic::b89d6d4e057dd4ed128cca9c5ce636c9, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 411
-    '    Code Lines: 222 (54.01%)
-    ' Comment Lines: 157 (38.20%)
-    '    - Xml Docs: 36.31%
+    '   Total Lines: 527
+    '    Code Lines: 256 (48.58%)
+    ' Comment Lines: 223 (42.31%)
+    '    - Xml Docs: 51.12%
     ' 
-    '   Blank Lines: 32 (7.79%)
-    '     File Size: 21.16 KB
+    '   Blank Lines: 48 (9.11%)
+    '     File Size: 26.82 KB
 
 
     '     Class RanFog
     ' 
     '         Properties: false_negative_cost, false_positive_cost, LF_c, max_branch, max_tree
-    '                     mtry, Selected, VI
+    '                     mtry, Selected, Trees, VI
     ' 
-    '         Function: Run, Tree
+    '         Function: Predict, Run, Tree
     ' 
     '     Class Result
     ' 
@@ -88,33 +88,53 @@ Namespace RandomForests
         ''' <summary>
         ''' [ForestSize]Max number of trees to be constructed
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The number of the decision trees in the forest, the default value is ``500``.</returns>
         Public Property max_tree As Integer = 500
         ''' <summary>
         ''' Max number of branches allowed
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The maximum number of the branch nodes of each tree, the default value is ``2000``.</returns>
         Public Property max_branch As Integer = 2000
         ''' <summary>
         ''' [mtry]
         ''' Number of Features randomly selected at each node,
         ''' Percentage of Features randomly selected at each node
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The number of the features which are randomly tested at each node, the default value is ``100``.</returns>
         Public Property mtry As Integer = 100
         ''' <summary>
         ''' [LossFunction]
         ''' Loss function used for continuous features
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A <see cref="LF_c"/> value, the default value is 
+        ''' <see cref="LF_c.Mean_Squared_Error"/>.
+        ''' </returns>
         Public Property LF_c As LF_c = LF_c.Mean_Squared_Error
+
+        ''' <summary>
+        ''' The cost of a false positive (an individual is incorrectly assigned 
+        ''' as ``y_hat = 1``), it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> cost value, the default value is ``1``.</returns>
         Public Property false_positive_cost As Double = 1
+        ''' <summary>
+        ''' The cost of a false negative (an individual is incorrectly assigned 
+        ''' as ``y_hat = 0``), it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> cost value, the default value is ``1``.</returns>
         Public Property false_negative_cost As Double = 1
 
         ''' <summary>
         ''' variable importance
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The averaged relative importance value of each feature, which is 
+        ''' measured by the increase of the out-of-bag error after the feature 
+        ''' value was permuted.
+        ''' </returns>
         ''' <remarks>
         ''' Write file with number of times each Feature was selected and its relative importance 
         ''' </remarks>
@@ -122,11 +142,24 @@ Namespace RandomForests
         ''' <summary>
         ''' number of times SNPs are selected
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The number of the times which each feature was selected for splitting a branch.</returns>
         ''' <remarks>
         ''' Write file with number of times each Feature was selected and its relative importance 
         ''' </remarks>
         Public Property Selected As Integer()
+
+        ''' <summary>
+        ''' The trained tree structures of the current forest.
+        ''' 
+        ''' Each element is a trimmed branch array holding ``n_branch + 1`` nodes,
+        ''' and the node indices stored in <see cref="Branch.Child1"/> /
+        ''' <see cref="Branch.Child2"/> refer to the position inside the same array.
+        ''' The array is kept after <see cref="Run"/> returns so that downstream
+        ''' analysis (for example TreeSHAP based model interpretation) can walk
+        ''' the actual trees instead of treating the forest as a black box.
+        ''' </summary>
+        ''' <returns>A list of the branch arrays, each element describes one decision tree.</returns>
+        Public Property Trees As New List(Of Branch())
 
         Private Function Tree(n_tree As Integer, train As Data, GEBV As Double()(), ByRef MSE_oob_ave As Double) As (Double, Double)
             'Variables involved in the trees
@@ -181,7 +214,10 @@ Namespace RandomForests
             '    branch_tst(n_branch).list.Insert(i, i)
             'Next
             'Construct the tree. Grow branches until size<5 or not better classification is achieved	
-            For k = 0 To n_branch + 1 - 1
+            ' NOTE: the number of branches grows while the tree is being built,
+            ' therefore the loop condition must be re-evaluated on each iteration.
+            k = 0
+            While k <= n_branch AndAlso k < max_branch
                 If branch(k).list.Count > 5 Then 'Minimum size=5
                     node = N_attributes
                     minLoss = Double.MaxValue
@@ -218,7 +254,9 @@ Namespace RandomForests
                         End If
                         '}
                     Next
-                    If node <> N_attributes Then 'Create a new branch, only if MSE of the previous branch is minimized
+                    ' 只有在分支数组之中还有空间容纳两个子节点的时候才进行分裂，
+                    ' 否则让当前节点保持为叶节点，避免数组越界访问
+                    If node <> N_attributes AndAlso n_branch + 2 < max_branch Then 'Create a new branch, only if MSE of the previous branch is minimized
                         Selected(node) += 1
                         SNP_tree.Add(node) 'add the selected SNP to the end of the list
 
@@ -289,7 +327,8 @@ Namespace RandomForests
                     '    Next
                     'End If
                 End If 'checking branch size
-            Next 'for over n_branch
+                k += 1
+            End While 'for over n_branch
 
             'Construct the oob-tree following nodes selected previously, and calculate miss-classification rate in the oob sample
             MSE_oob = 0
@@ -369,6 +408,21 @@ Namespace RandomForests
             'Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
             VBDebugger.EchoLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
 
+            ' Snapshot the trained tree structure before the local branch array
+            ' goes out of scope. The cached mean phenotype of each node is used
+            ' as the leaf value during prediction and TreeSHAP interpretation.
+            Dim snapshot As Branch() = New Branch(n_branch) {}
+
+            For n As Integer = 0 To n_branch
+                snapshot(n) = branch(n)
+
+                If snapshot(n).list.Count > 0 Then
+                    Call snapshot(n).getMean(train.phenotype)
+                End If
+            Next
+
+            Call Trees.Add(snapshot)
+
             Return (MSE_oob_ave / CSng(n_tree + 1), MSE_oob)
             ' outTreeTest.WriteLine(MSEval_tree / N_tst)
         End Function
@@ -424,6 +478,9 @@ Namespace RandomForests
             ' number of times SNPs are selected
             Selected = New Integer(train.N_attributes - 1) {}
 
+            ' reset the trained tree structures from a previous run
+            Trees = New List(Of Branch())
+
             ' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             While n_tree < max_tree
@@ -455,17 +512,76 @@ Namespace RandomForests
 
             Return New Result With {.Model = Me, .outGEBV = outEGBV.ToArray, .data = train}
         End Function
+
+        ''' <summary>
+        ''' Predict the phenotype values of the given samples by averaging the
+        ''' leaf values over all of the trees in the current forest.
+        ''' </summary>
+        ''' <param name="Genotype">
+        ''' the feature matrix, each row is one sample. The feature order must be
+        ''' identical to the one used during training.
+        ''' </param>
+        ''' <returns>the predicted phenotype value for each sample</returns>
+        Public Function Predict(Genotype As Double()()) As Double()
+            Dim pred As Double() = New Double(Genotype.Length - 1) {}
+
+            If Trees.Count = 0 Then
+                Return pred
+            End If
+
+            For i As Integer = 0 To Genotype.Length - 1
+                Dim sum As Double = 0
+
+                For Each tree As Branch() In Trees
+                    Dim node As Integer = 0
+
+                    While tree(node).status <> "F"
+                        If Genotype(i)(tree(node).Feature) <= tree(node).mean_snp Then
+                            node = tree(node).Child1
+                        Else
+                            node = tree(node).Child2
+                        End If
+                    End While
+
+                    sum += tree(node).mean
+                Next
+
+                pred(i) = sum / Trees.Count
+            Next
+
+            Return pred
+        End Function
     End Class
 
+    ''' <summary>
+    ''' The result object of the random forest training procedure.
+    ''' </summary>
     Public Class Result
 
         ''' <summary>
         ''' Predicted GBV in training set
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the predicted phenotype value of each training sample.</returns>
         Public Property outGEBV As Double()
+
+        ''' <summary>
+        ''' The trained random forest model.
+        ''' </summary>
+        ''' <returns>A <see cref="RanFog"/> model object.</returns>
         Public Property Model As RanFog
+        ''' <summary>
+        ''' The training dataset which was used for training the <see cref="Model"/>.
+        ''' </summary>
+        ''' <returns>A <see cref="Data"/> object.</returns>
         Public Property data As Data
+        ''' <summary>
+        ''' The out-of-bag mean squared error which was evaluated at each tree.
+        ''' </summary>
+        ''' <returns>
+        ''' An array of the tuples, in which the ``ave`` item is the averaged 
+        ''' out-of-bag error and the ``MSE_oob`` item is the out-of-bag error of 
+        ''' the current tree.
+        ''' </returns>
         Public Property MSE_oob As (ave As Double, MSE_oob As Double)()
 
     End Class

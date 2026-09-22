@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.SHAP</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.SHAPAnalysis</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
+    <Title>SHAP Model Interpretation for sciBASIC# Machine Learning</Title>
+    <Description>SHAP (SHapley Additive exPlanations) analysis facade for sciBASIC# machine learning: runs any IShapExplainer over a ShapDataset to produce per sample contribution matrices and global feature importance.</Description>
+    <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance;machine-learning</PackageTags>
+    <PackageReleaseNotes>ML_SHAP provides the analysis facade that turns Shapley value attribution into report ready model interpretation for sciBASIC# machine learning workflows. ShapAnalyzer.Analyze takes any IShapExplainer together with a ShapDataset and produces a ShapAnalysisResult containing the per sample contributions and additive values (ShapExplanation), the explainer baseline / expected value, and two global aggregates - MeanAbsShap (mean absolute contribution, used as feature importance) and MeanShap (mean signed contribution, indicating the direction of each feature effect); GlobalImportance() returns the features ordered by descending mean absolute SHAP value. The facade covers both regression and classification models, supports a sample cap through maxSamples for fast exploratory runs, and optionally accepts a raw model output delegate so the reported output can be the true model prediction instead of the additive approximation. Missing feature names fall back to F1, F2 placeholders. The explainers themselves live in Microsoft.VisualBasic.Math.Statistics.ShapleyValue (including TreeSHAP for tree ensembles) and in the XGBoost integration, keeping this package free of any model specific dependency.</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\XGBoostDataSet\XGBoostDataSet.vbproj" />
+    <ProjectReference Include="..\xgboost\xgboost.vbproj" />
+  </ItemGroup>
+
+</Project>

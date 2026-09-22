@@ -28,6 +28,8 @@
     <ProjectReference Include="..\..\MLDataStorage\MLDataStorage.vbproj" />
     <ProjectReference Include="..\..\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\DeepLearning.NET6.vbproj" />
+    <!-- 中文分词：ChineseTokenizer（词典最大匹配 + HMM），用于英译中翻译 demo -->
+    <ProjectReference Include="..\..\..\..\nlp\NLP\NLP.NET.vbproj" />
     <!-- GPU 后端：ILCudaTensor 提供 CudaTensor，ILCuda 提供 NVRTC/驱动 API 与内核编译单元 -->
     <ProjectReference Include="..\..\..\..\cuda\ILCuda\ILCuda.vbproj" />
     <ProjectReference Include="..\..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />

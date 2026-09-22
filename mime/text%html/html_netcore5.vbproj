@@ -14,15 +14,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>HTML/CSS Parser, DOM and CSS Style Environment</Title>
-    <Description>An HTML and CSS toolkit for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors, rule files and property values into typed models, and resolves CSS lengths, fonts and strokes against a canvas style environment.</Description>
+    <Description>An HTML and CSS toolkit for sciBASIC#: tokenizes HTML into a queryable DOM, parses CSS selectors, rule files and property values into typed models, resolves CSS lengths, fonts and strokes against a canvas style environment, and renders the DOM through a CSS box layout engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Html</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;html;css;html-renderer;dom</PackageTags>
+    <PackageTags>scibasic;html;css;html-parser;dom;css-parser;html-renderer;layout-engine</PackageTags>
+    <PackageReleaseNotes>The HTML and CSS toolkit of sciBASIC#. Tokenizer and DOM: TokenIcer produces a Token stream (HtmlTokens), HtmlParser.ParseTree builds a queryable HtmlDocument, and HtmlDocument.LoadDocument loads from a file or URL with optional tag stripping; HtmlElement exposes getElementById, getElementsByName, getElementsByTagName, getElementsByClassName, GetAllChilds, GetAllChildsByNodeName and hasAttribute. CSS parsing: CssParser.ParseStyle and CssParser.GetTagWithCSS build Selector and CSSFile models, with CssProperty, CSSSelectorTypes and HtmlTags enumerating the supported properties, selectors and tags. CSS value model: Fill, Stroke, Padding, CSSsize, CSSFont and CSSEnvirnment turn CSS strings into brushes, pens, sizes and fonts for the imaging layer. Extras: HtmlCompress, DocumentFormatter (link / URL / e-mail highlighting in plain text) and StripHTMLDirectly for text extraction. Note that the GDI+ box layout and painting engine under the Render namespace (HtmlRenderer.Render, InitialContainer, CssBox, CssLayoutEngine, CssTable) is compiled only when the NET48 constant is defined and is therefore not part of the net10.0 build.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7be5dc6114764537639233a7cf51c9eb, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
+﻿#Region "Microsoft.VisualBasic::f86e9e58212725392b76f114ff5f182a, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 116 (77.33%)
-    ' Comment Lines: 1 (0.67%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 177
+    '    Code Lines: 116 (65.54%)
+    ' Comment Lines: 28 (15.82%)
+    '    - Xml Docs: 96.43%
     ' 
-    '   Blank Lines: 33 (22.00%)
-    '     File Size: 5.37 KB
+    '   Blank Lines: 33 (18.64%)
+    '     File Size: 7.21 KB
 
 
     '     Class Convolution
@@ -65,24 +65,46 @@ Imports std = System.Math
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Convolutional layer of a CeNiN network: it slides a bank of filters over the padded input and
+    ''' produces one output feature map per filter.
+    ''' </summary>
+    ''' <remarks>
+    ''' The filter bank is stored as a tensor with dimensions <c>[filterHeight, filterWidth, channels, filterCount]</c>.
+    ''' The forward pass first materializes every receptive field of the input into a matrix and then
+    ''' multiplies it with the flattened filters in parallel, which keeps the hot loop cache friendly.
+    ''' </remarks>
     Public Class Convolution : Inherits Layer
 
+        ''' <summary>The vertical and horizontal stride <c>[strideY, strideX]</c> of the sliding window.</summary>
         Public stride As Integer()
+        ''' <summary>The filter bank, shaped <c>[filterHeight, filterWidth, channels, filterCount]</c>.</summary>
         Public weights As Tensor
+        ''' <summary>One bias value per output filter.</summary>
         Public biases As Tensor
 
+        ''' <summary>Gets the layer kind, always <see cref="CNN.LayerTypes.Convolution"/>.</summary>
         Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
                 Return CNN.LayerTypes.Convolution
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a convolutional layer.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The unpadded dimensions <c>[height, width, channels]</c> of the input.</param>
+        ''' <param name="pad">The padding <c>[top, bottom, left, right]</c> applied to the input borders.</param>
         Public Sub New(inputTensorDims As Integer(), pad As Integer())
             Call MyBase.New(inputTensorDims, pad)
 
             stride = New Integer(1) {}
         End Sub
 
+        ''' <summary>
+        ''' Computes the output dimensions from the padded input size, the filter size and the stride,
+        ''' producing <c>[outHeight, outWidth, filterCount]</c>.
+        ''' </summary>
         Public Overloads Sub setOutputDims()
             Dim newHeight = CInt(std.Floor((inputTensorDims(0) - weights.Dimensions(0)) / stride(0))) + 1
             Dim newWidth = CInt(std.Floor((inputTensorDims(1) - weights.Dimensions(1)) / stride(1))) + 1
@@ -90,6 +112,11 @@ Namespace Convolutional
             outputDims = New Integer() {newHeight, newWidth, weights.Dimensions(3)}
         End Sub
 
+        ''' <summary>
+        ''' Runs the convolution: it gathers the receptive fields into a matrix, multiplies them with the
+        ''' filters in parallel and adds the filter biases.
+        ''' </summary>
+        ''' <returns>This layer instance once the feature maps have been written to the next layer.</returns>
         Protected Overrides Function layerFeedNext() As Layer
             Dim inputHeight = inputTensorDims(0)
             Dim inputWidth = inputTensorDims(1)

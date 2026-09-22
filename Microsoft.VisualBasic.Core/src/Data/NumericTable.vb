@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTable, Microsoft.VisualBasic.Core\src\Data\NumericTable.vb"
+﻿#Region "Microsoft.VisualBasic::e24892d91f5c7c8982e87452081b587e, Microsoft.VisualBasic.Core\src\Data\NumericTable.vb"
 
     ' Author:
     ' 
@@ -23,19 +23,56 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 728
+    '    Code Lines: 423 (58.10%)
+    ' Comment Lines: 182 (25.00%)
+    '    - Xml Docs: 96.70%
+    ' 
+    '   Blank Lines: 123 (16.90%)
+    '     File Size: 27.07 KB
+
+
+    '     Class NumericTable
+    ' 
+    '         Properties: description, featureNames, features, isEmpty, labelNames
+    '                     labels, name, nfeatures, nlabels, nsamples
+    '                     rowNames
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: [Select], ArrayPack, Clone, ColumnsToMatrix, CopyArray
+    '                   CopyMatrix, CreateMatrix, EnumerateAll, Feature, FeatureIndex
+    '                   FeatureWidth, FromColumns, FromRows, GetClassLabel, GetEnumerator
+    '                   (+2 Overloads) GetLabel, GetLabels, GetRowName, HasFeature, HasLabel
+    '                   IndexOfName, LabelIndex, (+2 Overloads) LoadBinary, RemoveLabel, RequireFeatureIndex
+    '                   RequireLabelIndex, Row, RowNamesOrDefault, (+2 Overloads) SetLabel, Slice
+    '                   ToString, TryGetLabel
+    ' 
+    '         Sub: AppendLabelColumn, Validate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
-Imports System.Collections
-Imports System.Collections.Generic
 Imports System.IO
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Data
 
@@ -170,6 +207,26 @@ Namespace Data
             Me.features = features
             Me.rowNames = rowNames
             Me.featureNames = featureNames
+        End Sub
+
+        ''' <summary>
+        ''' Overloads for regression
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        Sub New(x As IEnumerable(Of Double()), y As IEnumerable(Of Double))
+            Me.features = x.ToArray
+            Me.labels = y.Select(Function(yi) {yi}).ToArray
+        End Sub
+
+        ''' <summary>
+        ''' Overloads for classification
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        Sub New(x As IEnumerable(Of Double()), y As IEnumerable(Of Integer))
+            Me.features = x.ToArray
+            Me.labels = y.Select(Function(yi) New Double() {yi}).ToArray
         End Sub
 
         ''' <summary>
@@ -349,8 +406,17 @@ Namespace Data
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLabel(name As String) As Double()
-            Dim idx As Integer = RequireLabelIndex(name)
+            Return GetLabel(idx:=RequireLabelIndex(name))
+        End Function
+
+        Public Function GetClassLabel(idx As Integer) As Integer()
+            Return GetLabel(idx).AsInteger
+        End Function
+
+        Public Function GetLabel(idx As Integer) As Double()
             Dim v As Double() = New Double(nsamples - 1) {}
 
             For i As Integer = 0 To nsamples - 1

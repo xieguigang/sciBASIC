@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::109fa2e9a395f60c6559d6d5014e7f58, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
+﻿#Region "Microsoft.VisualBasic::40b8815b9390fa86abecbf5b3f30b0bf, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,36 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 657
-    '    Code Lines: 509 (77.47%)
-    ' Comment Lines: 19 (2.89%)
-    '    - Xml Docs: 47.37%
+    '   Total Lines: 1333
+    '    Code Lines: 980 (73.52%)
+    ' Comment Lines: 81 (6.08%)
+    '    - Xml Docs: 59.26%
     ' 
-    '   Blank Lines: 129 (19.63%)
-    '     File Size: 26.34 KB
+    '   Blank Lines: 272 (20.41%)
+    '     File Size: 56.04 KB
 
 
     '     Class TensorComputeBase
     ' 
-    '         Function: Abs, Add, AddScalar, ArgGlobal, ArgMax
-    '                   ArgMin, Clip, Cos, Divide, DivideScalar
-    '                   Elu, Exp, Gelu, HuberLoss, L2Loss
-    '                   L2Norm, LeakyRelu, Log, LogSoftmax, MapBinary
-    '                   MapUnary, MatMul, Max, Maximum, Mean
-    '                   MeanAll, Min, Minimum, MseLoss, Multiply
-    '                   MultiplyScalar, Negate, Pow, Prod, Reciprocal
-    '                   ReduceAlongAxis, ReduceArgAxis, ReduceGlobal, Relu, Sigmoid
-    '                   SigmoidCrossEntropyWithLogits, Sin, Softmax, Sqrt, Square
-    '                   StdDev, Subtract, Sum, SumAll, Swish
-    '                   Tanh, Transpose, Wrap
+    '         Properties: PinnedDeviceBytes, SupportsDeviceResidency
     ' 
-    '         Sub: RequireSameShape
+    '         Function: Abs, Add, AddScalar, ArgGlobal, ArgMax
+    '                   ArgMin, Clip, Concat, Conv2D, Conv2DBackwardBias
+    '                   Conv2DBackwardFilter, Conv2DBackwardInput, ConvOutSize, Cos, Divide
+    '                   DivideScalar, Elu, Exp, Gelu, Heaviside
+    '                   HuberLoss, IsDevicePinned, L2Loss, L2Norm, LeakyRelu
+    '                   Log, LogSoftmax, MapBinary, MapUnary, MaskedCrossEntropy
+    '                   MatMul, Max, Maximum, MaxPool2D, MaxPool2DBackward
+    '                   Mean, MeanAll, Min, Minimum, MseLoss
+    '                   Multiply, MultiplyScalar, Negate, NormalizeAxis, PinDevice
+    '                   Pow, Prod, Reciprocal, ReduceAlongAxis, ReduceArgAxis
+    '                   ReduceGlobal, Relu, Sigmoid, SigmoidCrossEntropyWithLogits, Sin
+    '                   Slice, Softmax, SpMM, Sqrt, Square
+    '                   StdDev, Subtract, Sum, SumAll, Swish
+    '                   SyncFromDevice, Tanh, TopK, Transpose, TryAdamWStep
+    '                   UnpinDevice, Wrap
+    ' 
+    '         Sub: AxisLayout, RequireRank4, RequireSameShape
     ' 
     ' 
     ' /********************************************************************************/
@@ -288,6 +294,54 @@ Namespace Compute
             Return result
         End Function
 
+        ''' <summary>
+        ''' 稀疏 × 稠密的主机（标量）实现：dense[batch, Rows] · W[Rows, Columns] → [batch, Columns]。
+        ''' </summary>
+        ''' <remarks>
+        ''' 热路径直接操作底层数组，并对 0/1 脉冲输入跳过零源以利用稀疏性。
+        ''' 有 CUDA 内核的后端（CudaTensor）会覆盖本方法。
+        ''' </remarks>
+        Public Overridable Function SpMM(csr As SparseCsr, dense As Tensor) As Tensor Implements ITensorCompute.SpMM
+            If csr Is Nothing Then
+                Throw New ArgumentNullException(NameOf(csr))
+            End If
+            If dense Is Nothing Then
+                Throw New ArgumentNullException(NameOf(dense))
+            End If
+            If dense.Rank <> 2 OrElse dense.Shape(1) <> csr.Rows Then
+                Throw New ArgumentException(
+                    $"SpMM 输入形状应为 [batch, {csr.Rows}]，实际 [{String.Join(",", dense.Shape)}]")
+            End If
+
+            Dim batch = dense.Shape(0)
+            Dim rows = csr.Rows
+            Dim cols = csr.Columns
+            Dim rp = csr.RowPointers
+            Dim ci = csr.ColumnIndices
+            Dim vv = csr.Values
+
+            Dim result = New Tensor(batch, cols)
+            Dim xd = dense.Data
+            Dim od = result.Data
+
+            For b As Integer = 0 To batch - 1
+                Dim bo = b * cols
+                Dim ro = b * rows
+                For r As Integer = 0 To rows - 1
+                    Dim xv = xd(ro + r)
+                    If xv = 0.0 Then Continue For    ' 脉冲输入高度稀疏：跳过零源
+                    Dim k = rp(r)
+                    Dim kEnd = rp(r + 1)
+                    While k < kEnd
+                        od(bo + ci(k)) += xv * vv(k)
+                        k += 1
+                    End While
+                Next
+            Next
+
+            Return result
+        End Function
+
         Public Overridable Function Transpose(t As Tensor) As Tensor Implements ITensorCompute.Transpose
             If t.Rank <> 2 Then
                 Throw New ArgumentException("只支持二维张量转置")
@@ -306,6 +360,338 @@ Namespace Compute
             Next
 
             Return result
+        End Function
+
+#End Region
+
+#Region "形状变换与选择"
+
+        ' ------------------------------------------------------------------
+        ' Slice / Concat / TopK
+        '
+        ' 这三个算子都是「索引与搬移」语义而不是「算术」语义：
+        '   * Slice / Concat 的实现完全由 Array.Copy 的整块内存搬移构成，
+        '     已经是内存带宽受限的最优形态，因此不在 SIMDTensor 中重复覆写；
+        '   * TopK 是选择问题，没有可利用的向量指令收益。
+        ' 把实现统一放在这里，等价于同时为 SIMDTensor 与 CudaTensor 提供正确行为。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>把可能为负的轴编号规范到 <c>[0, Rank)</c>，并做越界校验</summary>
+        Protected Shared Function NormalizeAxis(t As Tensor, axis As Integer, opName As String) As Integer
+            Dim a As Integer = axis
+            If a < 0 Then a = t.Rank + a
+
+            If a < 0 OrElse a >= t.Rank Then
+                Throw New ArgumentOutOfRangeException(
+                    NameOf(axis), $"{opName} 的轴编号 {axis} 超出张量秩 {t.Rank} 的合法范围")
+            End If
+
+            Return a
+        End Function
+
+        ''' <summary>
+        ''' 把某根轴上的索引分解成「外层个数 / 轴长度 / 内层连续长度」三元组。
+        ''' </summary>
+        ''' <remarks>
+        ''' 行主序下第 <paramref name="axis"/> 维的步长是 <c>innerSize = Π shape(axis+1..)</c>，
+        ''' 而 <c>outerSize = Π shape(0..axis-1)</c> 是前面各维的元素总数。
+        ''' 因此 "沿该轴取第 k 段" 就是一次长度为 <c>innerSize</c> 的连续块搬移。
+        ''' </remarks>
+        Protected Shared Sub AxisLayout(shape As Integer(), axis As Integer,
+                                        ByRef outerSize As Integer, ByRef axisSize As Integer, ByRef innerSize As Integer)
+            outerSize = 1
+            For i As Integer = 0 To axis - 1
+                outerSize *= shape(i)
+            Next
+
+            axisSize = shape(axis)
+
+            innerSize = 1
+            For i As Integer = axis + 1 To shape.Length - 1
+                innerSize *= shape(i)
+            Next
+        End Sub
+
+        Public Overridable Function Slice(t As Tensor, axis As Integer, start As Integer, length As Integer) As Tensor Implements ITensorCompute.Slice
+            If t Is Nothing Then Throw New ArgumentNullException(NameOf(t))
+
+            Dim a = NormalizeAxis(t, axis, "Slice")
+
+            If start < 0 OrElse length < 0 Then
+                Throw New ArgumentException($"Slice 的 start({start}) / length({length}) 不能为负数")
+            End If
+
+            Dim shape = t.Shape
+
+            If start + length > shape(a) Then
+                Throw New ArgumentException(
+                    $"Slice 区间 [{start}, {start + length}) 超出轴 {a} 的长度 {shape(a)}")
+            End If
+
+            Dim outerSize As Integer, axisSize As Integer, innerSize As Integer
+            Call AxisLayout(shape, a, outerSize, axisSize, innerSize)
+
+            Dim outShape = CType(shape.Clone(), Integer())
+            outShape(a) = length
+
+            Dim result = New Tensor(outShape)
+            Dim src = t.Data
+            Dim dst = result.Data
+            Dim blockSize = length * innerSize
+
+            If blockSize > 0 Then
+                For o As Integer = 0 To outerSize - 1
+                    Call Array.Copy(src, (o * axisSize + start) * innerSize, dst, o * blockSize, blockSize)
+                Next
+            End If
+
+            Return result
+        End Function
+
+        Public Overridable Function Concat(parts As Tensor(), axis As Integer) As Tensor Implements ITensorCompute.Concat
+            If parts Is Nothing OrElse parts.Length = 0 Then
+                Throw New ArgumentException("Concat 至少需要一个输入张量")
+            End If
+            If parts.Any(Function(p) p Is Nothing) Then
+                Throw New ArgumentException("Concat 的输入张量不能为 Nothing")
+            End If
+
+            Dim rank = parts(0).Rank
+            Dim a = NormalizeAxis(parts(0), axis, "Concat")
+            Dim refShape = parts(0).Shape
+            Dim totalAxis As Integer = 0
+
+            For i As Integer = 0 To parts.Length - 1
+                Dim p = parts(i)
+
+                If p.Rank <> rank Then
+                    Throw New ArgumentException($"Concat 要求所有输入张量秩一致: {rank} vs {p.Rank}")
+                End If
+
+                For d As Integer = 0 To rank - 1
+                    If d <> a AndAlso p.Shape(d) <> refShape(d) Then
+                        Throw New ArgumentException(
+                            $"Concat 要求除轴 {a} 外的所有维度一致，第 {d} 维出现 {refShape(d)} vs {p.Shape(d)}")
+                    End If
+                Next
+
+                totalAxis += p.Shape(a)
+            Next
+
+            Dim outShape = CType(refShape.Clone(), Integer())
+            outShape(a) = totalAxis
+
+            Dim outerSize As Integer, axisSize As Integer, innerSize As Integer
+            Call AxisLayout(refShape, a, outerSize, axisSize, innerSize)
+
+            Dim result = New Tensor(outShape)
+            Dim dst = result.Data
+
+            For o As Integer = 0 To outerSize - 1
+                Dim cursor As Integer = 0
+
+                For i As Integer = 0 To parts.Length - 1
+                    Dim partAxis = parts(i).Shape(a)
+                    Dim blockSize = partAxis * innerSize
+
+                    If blockSize > 0 Then
+                        Call Array.Copy(parts(i).Data, o * blockSize, dst,
+                                        (o * totalAxis + cursor) * innerSize, blockSize)
+                    End If
+
+                    cursor += partAxis
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function TopK(t As Tensor, k As Integer, ByRef indices As Tensor) As Tensor Implements ITensorCompute.TopK
+            If t Is Nothing Then Throw New ArgumentNullException(NameOf(t))
+            If t.Rank < 1 Then Throw New ArgumentException("TopK 需要秩 >= 1 的张量")
+
+            Dim n = t.Shape(t.Rank - 1)
+
+            If k < 1 OrElse k > n Then
+                Throw New ArgumentException($"TopK 的 k={k} 必须落在 [1, {n}] 范围内")
+            End If
+
+            Dim blocks = t.Length \ n
+            Dim outShape = CType(t.Shape.Clone(), Integer())
+            outShape(t.Rank - 1) = k
+
+            Dim values = New Tensor(outShape)
+            Dim indexTensor = New Tensor(outShape)
+            Dim src = t.Data
+            Dim dstValues = values.Data
+            Dim dstIndex = indexTensor.Data
+
+            ' 复用的临时缓冲区：避免每个 block 都重新分配
+            Dim cursor(n - 1) As Integer
+            Dim work(n - 1) As Double
+
+            For blk As Integer = 0 To blocks - 1
+                Dim offset = blk * n
+                Call Array.Copy(src, offset, work, 0, n)
+
+                For i As Integer = 0 To n - 1
+                    cursor(i) = i
+                Next
+
+                ' 部分选择排序：每轮在剩余区间内挑出最大者交换到区间首部，
+                ' 只做 k 轮即可，复杂度 O(n * k)，在 k << n 时远优于全排序。
+                For s As Integer = 0 To k - 1
+                    Dim best As Integer = s
+
+                    For j As Integer = s + 1 To n - 1
+                        If work(j) > work(best) Then best = j
+                    Next
+
+                    If best <> s Then
+                        Dim swapValue = work(s)
+                        work(s) = work(best)
+                        work(best) = swapValue
+
+                        Dim swapIndex = cursor(s)
+                        cursor(s) = cursor(best)
+                        cursor(best) = swapIndex
+                    End If
+
+                    dstValues(blk * k + s) = work(s)
+                    dstIndex(blk * k + s) = cursor(s)
+                Next
+            Next
+
+            indices = indexTensor
+
+            Return values
+        End Function
+
+#End Region
+
+#Region "训练算子"
+
+        ''' <summary>
+        ''' 带损失掩码的 softmax 交叉熵（CPU 参考实现）。
+        ''' </summary>
+        ''' <remarks>
+        ''' CPU 后端保持"逐行三趟循环"的朴素写法：求行最大值 → 求 exp 和 → 归一化。
+        ''' GPU 后端（<c>CudaTensor</c>）会用"每行一个 block + 共享内存树形归约"的
+        ''' 融合内核覆盖它，把 3300 万次 <c>exp</c> 从主机搬到设备。
+        ''' 两条路径的损失定义与梯度定义必须严格一致，否则 CPU/GPU 结果不可比。
+        ''' </remarks>
+        Public Overridable Function MaskedCrossEntropy(logits As Tensor,
+                                                       targets As Integer(),
+                                                       mask As Boolean(),
+                                                       ByRef dLogits As Tensor) As Double Implements ITensorCompute.MaskedCrossEntropy
+            If logits Is Nothing Then Throw New ArgumentNullException(NameOf(logits))
+            If logits.Rank <> 2 Then Throw New ArgumentException("掩码交叉熵要求 [rows, vocab] 的二维 logits")
+
+            Dim rows = logits.Shape(0)
+            Dim vocab = logits.Shape(1)
+
+            dLogits = New Tensor(logits.Shape)
+
+            Dim src = logits.Data
+            Dim grad = dLogits.Data
+            Dim total As Double = 0.0
+            Dim count As Integer = 0
+
+            For r As Integer = 0 To rows - 1
+                If mask IsNot Nothing AndAlso r < mask.Length AndAlso Not mask(r) Then Continue For
+                If targets Is Nothing OrElse r >= targets.Length Then Continue For
+
+                Dim t = targets(r)
+                If t < 0 OrElse t >= vocab Then Continue For
+
+                count += 1
+
+                Dim offset = r * vocab
+                Dim maxVal = Double.NegativeInfinity
+
+                For j As Integer = 0 To vocab - 1
+                    If src(offset + j) > maxVal Then maxVal = src(offset + j)
+                Next
+
+                Dim sumExp As Double = 0.0
+
+                For j As Integer = 0 To vocab - 1
+                    Dim e = std.Exp(src(offset + j) - maxVal)
+                    grad(offset + j) = e
+                    sumExp += e
+                Next
+
+                If sumExp <= 0 Then sumExp = 1.0
+
+                For j As Integer = 0 To vocab - 1
+                    grad(offset + j) /= sumExp
+                Next
+
+                total -= std.Log(std.Max(grad(offset + t), 1.0E-12))
+                grad(offset + t) -= 1.0
+            Next
+
+            If count = 0 Then
+                Call dLogits.MarkHostModified()
+                Return 0.0
+            End If
+
+            ' 归一化：损失与梯度都除以有效位置数，使不同 batch 的损失可比
+            Dim inv = 1.0 / count
+
+            For i As Integer = 0 To grad.Length - 1
+                grad(i) *= inv
+            Next
+
+            Call dLogits.MarkHostModified()
+
+            Return total * inv
+        End Function
+
+        ''' <summary>
+        ''' 默认后端不提供设备端 AdamW，返回 <c>False</c> 让调用方走主机循环。
+        ''' </summary>
+        Public Overridable Function TryAdamWStep(param As Tensor, gradient As Tensor,
+                                                 momentum As Tensor, velocity As Tensor,
+                                                 learningRate As Double, beta1 As Double, beta2 As Double,
+                                                 eps As Double, biasCorrection1 As Double,
+                                                 biasCorrection2 As Double,
+                                                 weightDecay As Double) As Boolean Implements ITensorCompute.TryAdamWStep
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有"设备常驻"概念。</summary>
+        Public Overridable ReadOnly Property SupportsDeviceResidency As Boolean Implements ITensorCompute.SupportsDeviceResidency
+            Get
+                Return False
+            End Get
+        End Property
+
+        ''' <summary>默认后端不支持钉住，直接返回 <c>False</c>。</summary>
+        Public Overridable Function PinDevice(t As Tensor, label As String, zeroFill As Boolean) As Boolean Implements ITensorCompute.PinDevice
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有常驻缓冲，返回 <c>False</c>。</summary>
+        Public Overridable Function UnpinDevice(t As Tensor) As Boolean Implements ITensorCompute.UnpinDevice
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有任何张量被钉住。</summary>
+        Public Overridable Function IsDevicePinned(t As Tensor) As Boolean Implements ITensorCompute.IsDevicePinned
+            Return False
+        End Function
+
+        ''' <summary>默认后端不占用显存。</summary>
+        Public Overridable ReadOnly Property PinnedDeviceBytes As Long Implements ITensorCompute.PinnedDeviceBytes
+            Get
+                Return 0L
+            End Get
+        End Property
+
+        ''' <summary>默认后端没有设备副本，因此无需同步。</summary>
+        Public Overridable Function SyncFromDevice(t As Tensor) As Boolean Implements ITensorCompute.SyncFromDevice
+            Return False
         End Function
 
 #End Region

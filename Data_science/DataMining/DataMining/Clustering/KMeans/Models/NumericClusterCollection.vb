@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericClusterCollection, Data_science\DataMining\DataMining\Clustering\KMeans\Models\NumericClusterCollection.vb"
+﻿#Region "Microsoft.VisualBasic::d3c456f08b576039c42d57677d81229c, Data_science\DataMining\DataMining\Clustering\KMeans\Models\NumericClusterCollection.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,36 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 34 (69.39%)
+    ' Comment Lines: 6 (12.24%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (18.37%)
+    '     File Size: 1.78 KB
+
+
+    '     Class NumericClusterCollection
+    ' 
+    '         Properties: NumOfCluster
+    ' 
+    '         Function: EnumerateAll, GetEnumerator, ToString
+    ' 
+    '         Sub: Add
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58321379684a81a22593f171d54a7f4a, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdCapabilities.vb"
+﻿#Region "Microsoft.VisualBasic::58321379684a81a22593f171d54a7f4a, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdCapabilities.vb"
 
     ' Author:
     ' 

@@ -12,15 +12,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Barnes-Hut t-SNE Dimensionality Reduction Embedding</Title>
     <Description>t-Distributed Stochastic Neighbor Embedding for sciBASIC#: converts pairwise affinities into joint probabilities at a given perplexity and minimises KL divergence, with a Barnes-Hut SPTree approximation for large data.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.t-SNE</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;t-sne;dimensionality-reduction;barnes-hut;visualization</PackageTags>
+    <PackageTags>scibasic;t-sne;dimensionality-reduction;barnes-hut;sptree;kl-divergence;visualization</PackageTags>
+    <PackageReleaseNotes>Barnes-Hut t-SNE dimensionality reduction for sciBASIC#. The algorithm converts pairwise affinities into joint probabilities at a given perplexity (SparseProbability), then minimises the Kullback-Leibler divergence between the high dimensional and the low dimensional distributions using the cost function and its gradient (CostFunction, BarnesHutGradient). To keep the quadratic pairwise computation tractable, the gradient is approximated with the Barnes-Hut algorithm over an SPTree quadtree, so each point interacts individually only with nearby points and with distant clusters through their centres of mass. Helper types cover random initialisation (RandomHelper), the shared helpers and the numeric table extensions used to feed data in. This makes t-SNE usable on datasets far larger than the O(n^2) exact formulation would allow.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

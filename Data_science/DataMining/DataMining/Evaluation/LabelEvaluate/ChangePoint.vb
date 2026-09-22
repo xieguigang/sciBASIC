@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e7f55177d63fdf2b40f29d1db8eadd4, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\ChangePoint.vb"
+﻿#Region "Microsoft.VisualBasic::1e411e939d45d3cc55b737f0cf2145e1, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\ChangePoint.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14 (77.78%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 22
+    '    Code Lines: 15 (68.18%)
+    ' Comment Lines: 3 (13.64%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (22.22%)
-    '     File Size: 474 B
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 737 B
 
 
     '     Class ChangePoint
@@ -55,6 +55,10 @@
 
 Namespace Evaluation
 
+    ''' <summary>
+    ''' 混淆矩阵在排序扫描过程之中的一个变化点（SVM.NET 评估器内部使用）。
+    ''' </summary>
+    <Obsolete("该类型仅服务于旧的 PerformanceEvaluator，请改用统一的 Validation/RocCurve。", False)>
     Friend Class ChangePoint
 
         Public Sub New(tp As Integer, fp As Integer, tn As Integer, fn As Integer)

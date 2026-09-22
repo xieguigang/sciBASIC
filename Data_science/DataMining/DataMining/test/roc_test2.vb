@@ -60,8 +60,14 @@ Module roc_test2
         Dim predicts = "E:\biodeep\biodeepdb_v3\biodeepdb_v3\workspace\202410-mslearn\networking_pos_roc\predicts.txt".ReadAllLines.AsDouble
         Dim labels = "E:\biodeep\biodeepdb_v3\biodeepdb_v3\workspace\202410-mslearn\networking_pos_roc\label.txt".ReadAllLines.AsDouble
 
-        Dim test = RegressionROC.ROC(predicts, labels, n:=500).ToArray
-        Dim auc As Double = test.AUC
+        ' 统一评估框架入口：回归结果 → EvaluationReport（含 ROC 曲线与 AUC）
+        Dim report = ModelEvaluation.Evaluate(
+            RegressionResult.Create(predicts, labels, "networking_pos_roc", eps:=0.1, sweepSteps:=500))
+
+        Dim auc As Double = report.Metric("auc")
+        Dim curve = report.Curve
+
+        Call Console.WriteLine(report.ToString)
 
         Pause()
     End Sub

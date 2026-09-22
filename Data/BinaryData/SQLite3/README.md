@@ -1,86 +1,65 @@
-# Managed SQLite3 Database File Reader/Writer
+# 托管 SQLite3 数据库文件读写器
 
-A pure managed parser and writer for SQLite3 database files. It decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine. It can also create new database files, define tables, insert/update/delete rows and commit the whole database back to disk.
+## 引言
 
-## Overview
-- Decodes the file-level structures of the SQLite format: `DatabaseHeader`, `BTreeHeader`, interior and leaf table B-tree pages, cells and overflow pages.
-- Enumerates tables through the `sqlite_master` master table (`Sqlite3MasterTable`, `Sqlite3SchemaRow`) and rows through `Sqlite3Table.EnumerateRows`.
-- Parses the CREATE TABLE statement of each table into a column schema (`Schema`, `SQLParser`, `Token`, `TokenTypes`), so rows can be addressed by column name or ordinal.
-- Decodes SQLite serial types and text encodings (`SqliteDataType`, `DataTypeParser`, `SqliteEncoding`), with varint and record-format helpers.
-- Writes SQLite3 files (`Sqlite3Writer`): create a new file, define tables, insert/update/delete rows, drop tables and commit. The writer uses an in-memory model and rebuilds the whole file on `Commit` (atomic temp-file replace), then the produced file can be reopened by the reader above.
+在 .NET 里访问 SQLite 通常需要原生库（`e_sqlite3` / `sqlite3.dll`）。但在某些场景下，我们并不需要 SQL 引擎——只需要**把 `.db` 文件当成一种表格文件来读写**：
 
-## Key Types
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Sqlite3Database` — opens a `.db` file via `OpenFile`, exposes `Header` and `GetTables` / `GetTable`.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables.Sqlite3Table` — a user table; `EnumerateRows` streams its rows.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables.Sqlite3Row` — a row, addressable by column ordinal or name.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables.Sqlite3MasterTable` / `Sqlite3SchemaRow` — the `sqlite_master` catalog entries.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers.DatabaseHeader` — the 100-byte database header.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.BTreeLeafTablePage` / `BTreeInteriorTablePage` — B-tree page structures.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema.SQLParser` / `Schema` — CREATE TABLE SQL tokenizer and column schema.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums.SqliteDataType` — SQLite storage class enumeration.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Writer.Sqlite3Writer` — creates/opens a database for writing (`CreateFile` / `OpenFile`), manages tables and commits.
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Writer.Sqlite3TableWriter` — a writable table with chained CRUD (`AddRow` / `UpdateRow` / `DeleteRow` / `EnumerateRows`).
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Writer.Sqlite3Column` — column definition (`Name` / `Type` / `NotNull` / `PrimaryKey`).
-- `Microsoft.VisualBasic.Data.IO.ManagedSqlite.Writer.Sqlite3DataRow` — an in-memory row of the writer.
+- 只读导出：把上游系统给的 `.db` 直接读成表格；
+- 便携生成：把程序内的表格写成标准 `.db`，无需依赖原生库。
 
-## Quick Start
-### Reading
+本包就是这样一个**纯托管**的 SQLite3 文件解析器与写出器。
+
+## 设计目标
+
+- **零原生依赖**：直接解码文件格式；
+- **schema 可解析**：把 `CREATE TABLE` SQL 解析成列模式，从而支持**按列名**取值；
+- **可写**：不止读，还能建库、建表、增删改并原子提交。
+
+## 核心特性
+
+- **文件级结构解码**：`DatabaseHeader`、`BTreeHeader`、内部 / 叶子表 B 树页、cell 与溢出页；
+- **表与行枚举**：通过 `sqlite_master` 主表枚举表（`Sqlite3MasterTable`、`Sqlite3SchemaRow`），通过 `Sqlite3Table.EnumerateRows` 枚举行；
+- **列模式解析**：把每张表的 `CREATE TABLE` 语句解析为列模式（`Schema`、`SQLParser`、`Token`、`TokenTypes`），从而可按列名或序号取值；
+- **存储类与文本编码**：`SqliteDataType`、`DataTypeParser`、`SqliteEncoding`，配 varint 与记录格式辅助；
+- **写出**：`Sqlite3Writer` 可创建新文件、定义表、增 / 改 / 删行、删表并提交；写出器维护内存模型，在 `Commit` 时**重建整个文件**（临时文件原子替换），产物可被上述读取器重新打开。
+
+## 关键类型与 API
+
+- `...ManagedSqlite.Sqlite3Database` —— 通过 `OpenFile` 打开 `.db`，暴露 `Header` 与 `GetTables` / `GetTable`；
+- `...ManagedSqlite.Core.Tables.Sqlite3Table` —— 用户表；`EnumerateRows` 流式枚举行；
+- `...ManagedSqlite.Core.Tables.Sqlite3Row` —— 一行，可按列序号或列名取值；
+- `...ManagedSqlite.Core.Tables.Sqlite3MasterTable` / `Sqlite3SchemaRow` —— `sqlite_master` 目录条目；
+- `...ManagedSqlite.Core.Objects.Headers.DatabaseHeader` —— 100 字节数据库头；
+- `...ManagedSqlite.Core.Objects.BTreeLeafTablePage` / `BTreeInteriorTablePage` —— B 树页结构；
+- `...ManagedSqlite.Core.SQLSchema.SQLParser` / `Schema` —— `CREATE TABLE` 分词器与列模式；
+- `...ManagedSqlite.Core.Objects.Enums.SqliteDataType` —— SQLite 存储类枚举；
+- `...ManagedSqlite.Writer.Sqlite3Writer` —— 创建 / 打开数据库用于写出（`CreateFile` / `OpenFile`），管理表并提交。
+
+## 快速上手
+
 ```vbnet
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite
-Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
 
-Using db As Sqlite3Database = Sqlite3Database.OpenFile("demo.db")
-    For Each t As Sqlite3SchemaRow In db.GetTables
-        Call Console.WriteLine(t.TableName)
-    Next
+Using db = Sqlite3Database.OpenFile("sample.db")
+    For Each table In db.GetTables()
+        Console.WriteLine(table.Name)
 
-    Dim tbl As Sqlite3Table = db.GetTable("genes")
-
-    For Each row As Sqlite3Row In tbl.EnumerateRows()
-        Dim id As Object = row("id")
+        For Each row In table.EnumerateRows()
+            Console.WriteLine(row("name"))
+        Next
     Next
 End Using
 ```
 
-### Writing
-```vbnet
-Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Writer
+## 实现要点与不支持项
 
-' 新建文件 + 建表 + 插入数据
-Using w As Sqlite3Writer = Sqlite3Writer.CreateFile("demo.db")
-    Dim tbl = w.CreateTable("genes", {
-        New Sqlite3Column("id", "INTEGER", notNull:=True, primaryKey:=True),
-        New Sqlite3Column("name", "VARCHAR"),
-        New Sqlite3Column("mass", "FLOAT"),
-        New Sqlite3Column("data", "BLOB"),
-        New Sqlite3Column("flag", "BOOLEAN")
-    })
+- **记录格式与列的对应关系**：SQLite 的每行是一条「记录」（serial type 序列 + 值区），列名到序号的映射来自解析出的 `CREATE TABLE` 模式——两者缺一不可。
+- **写出为何是「重建文件」**：直接原地修改 B 树需要完整的页分裂 / 合并实现，复杂度极高；本包选择在内存中建模、提交时重建文件并原子替换，牺牲写入性能换取可靠性与实现简洁。
+- **不支持**：二级索引、视图、触发器、`WITHOUT ROWID` 表与自定义排序规则。打开既有数据库时，索引条目会被忽略，只保留表数据。
 
-    Dim rowId As Long = tbl.AddRow({1, "p53", 43653.0, New Byte() {1, 2, 3}, True})
-    Call tbl.UpdateRow(rowId, "name", "TP53")
-    w.Commit()
-End Using
+## 包信息
 
-' 打开已有文件 + 追加 / 更新 / 删除
-Using w As Sqlite3Writer = Sqlite3Writer.OpenFile("demo.db")
-    Dim tbl = w.GetTable("genes")
-    Call tbl.AddRow({2, "BRCA1", 207721.0, Nothing, False})
-    Call tbl.UpdateRowByPrimaryKey(1, {1, "TP53", 43653.0, Nothing, True})
-    Call tbl.DeleteRow(2)
-    w.Commit()
-End Using
-```
-
-## Writer Notes & Limitations
-- The writer keeps an in-memory model and rebuilds the entire file on `Commit` (written to a temp file and atomically replaced, so a failed commit does not corrupt the original). `Commit` is idempotent. This trades memory for correctness — the whole database must fit in memory.
-- Supported column types: NULL, integer (1/2/3/4/6/8 bytes), 64-bit IEEE float, UTF-8 text, BLOB and boolean; large values are automatically stored in overflow pages.
-- `INTEGER PRIMARY KEY` is treated as a rowid alias: the column is stored as NULL in the record and the rowid carries the value (symmetric with the reader).
-- Not supported: secondary indexes, views, triggers, WITHOUT ROWID tables and custom collations. When opening an existing database, index entries are ignored and only table rows are preserved.
-
-## Package
-- Assembly: `Microsoft.VisualBasic.Data.IO.SQLite3`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;sqlite3;database;btree;sql-parser;reader`
-
-## License
-GPL-3.0-or-later
+- Assembly：`Microsoft.VisualBasic.Data.IO.SQLite3`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;sqlite3;database;btree;sql-parser;reader;writer;managed`
+- 许可：GPL-3.0-or-later

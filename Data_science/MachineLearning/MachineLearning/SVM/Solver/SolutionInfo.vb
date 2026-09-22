@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22b7b7dadb4ea218029ff9342eb54b85, Data_science\MachineLearning\MachineLearning\SVM\Solver\SolutionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6e4dda3676e40c917b02951fb547566b, Data_science\MachineLearning\MachineLearning\SVM\Solver\SolutionInfo.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 13 (54.17%)
-    ' Comment Lines: 6 (25.00%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 48
+    '    Code Lines: 13 (27.08%)
+    ' Comment Lines: 30 (62.50%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 678 B
+    '   Blank Lines: 5 (10.42%)
+    '     File Size: 1.84 KB
 
 
     '     Class SolutionInfo
@@ -60,19 +60,43 @@ Namespace SVM
 
     ' java: information about solution except alpha,
     ' because we cannot return multiple values otherwise...
+    ''' <summary>
+    ''' The solution information of the support vector machine solver, which 
+    ''' contains everything of the solution except the alpha coefficients.
+    ''' </summary>
     Public Class SolutionInfo
 
+        ''' <summary>
+        ''' The value of the objective function which was minimized.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property obj As Double
+        ''' <summary>
+        ''' The bias term of the decision function.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property rho As Double
+        ''' <summary>
+        ''' The upper bound value of the positive side lagrange multiplier.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property upper_bound_p As Double
+        ''' <summary>
+        ''' The upper bound value of the negative side lagrange multiplier.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property upper_bound_n As Double
 
         ''' <summary>
         ''' for Solver_NU
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The <i>r</i> value which is only used by the nu solver.</returns>
         Public Property r As Double
 
+        ''' <summary>
+        ''' Display this solution information as a json string.
+        ''' </summary>
+        ''' <returns>A json text which describes this solution information.</returns>
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

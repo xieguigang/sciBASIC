@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DeepLearning</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>6.0.9753.4776</Version>
+		<Version>6.0.9762.11310</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -19,11 +19,12 @@
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<DocumentationFile>Microsoft.VisualBasic.DeepLearning.xml</DocumentationFile>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 		<Title>Deep Learning Framework: CNN, RNN, Transformer and ANN Models</Title>
 		<Description>Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.DeepLearning</AssemblyTitle>
-		<PackageTags>scibasic;deep-learning;cnn;rnn;transformer</PackageTags>
+		<PackageTags>scibasic;deep-learning;cnn;rnn;transformer;attention;adam-optimizer;neural-network;cenin</PackageTags>
+    <PackageReleaseNotes>The deep learning framework of sciBASIC#. Models: a trainable convolutional network with its data containers, layer implementations and loss layers, plus the CeNiN reader for importing CeNiN network definitions; character level recurrent networks with configurable cells; and a Transformer implementation with attention layers. Training: dedicated trainer namespaces for the CNN and RNN models using the SGD, AdaGrad and Adam optimisers. A general artificial neural network implementation is also included for feed forward models. Together these cover the standard modern architectures, and because the tensor runtime underneath is a pure managed implementation there is no native dependency to deploy.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

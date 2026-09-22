@@ -4,7 +4,7 @@
     <RootNamespace>Microsoft.VisualBasic.DataStorage.HDSPack</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.DataStorage.HDSPack</AssemblyName>
-    <Description>A packable virtual file system that stores many named streams, folders and attributes inside one binary file. Supports block allocation, buffered read/write, file deletion, metadata trees and read-only mounting for dataset archives.</Description>
+    <Description>A packable virtual file system that stores many named streams, folders and attributes inside a single binary file: block allocation, buffered read and write, file deletion, MessagePack encoded metadata trees and read-only mounting for dataset archives.</Description>
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -15,14 +15,15 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>StreamPack Virtual File System in a Single Binary File</Title>
     <AssemblyTitle>Microsoft.VisualBasic.DataStorage.HDSPack</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;hdspack;virtual-filesystem;stream-pack;archive;binary-format</PackageTags>
+    <PackageTags>scibasic;hdspack;virtual-filesystem;stream-pack;archive;binary-format;container</PackageTags>
+    <PackageReleaseNotes>StreamPack, the single file virtual file system of sciBASIC#. It stores many named streams, folders and attributes inside one binary file - an HDF5 like container used for dataset archives. Hierarchy: StreamPack is the pack file itself, StreamGroup a folder node, and StreamBlock a stored file reference carrying its offset, size, MIME type and extension. I/O: Allocate reserves a BufferRegion, OpenBlock returns a seekable Stream over that region (or an in-memory StreamBuffer flushed to the underlying stream on Dispose), and the root namespace extensions provide WriteText, ReadText, ReadBinary, LoadStream and ListFiles conveniences. Metadata: the metadata tree is serialized through TreeParser and TreeWriter, while AttributeMetadata, LazyAttribute and PackAttributeData store named attributes encoded with MessagePack. Access modes: StreamPack.OpenReadOnly mounts an existing pack without modification, and listing, deletion, size and modification time helpers are included. This format is what the sciBASIC# data framework uses when a dataset has to ship as a single portable file.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dca0d8eb053aea50944ddbb57bb9b978, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
+﻿#Region "Microsoft.VisualBasic::ba2f8d7f4f4c8c447602bd1e0b07083e, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 83 (65.87%)
-    ' Comment Lines: 26 (20.63%)
-    '    - Xml Docs: 88.46%
+    '   Total Lines: 164
+    '    Code Lines: 83 (50.61%)
+    ' Comment Lines: 63 (38.41%)
+    '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 17 (13.49%)
-    '     File Size: 4.67 KB
+    '   Blank Lines: 18 (10.98%)
+    '     File Size: 6.85 KB
 
 
     '     Class SupportVector
@@ -71,21 +71,44 @@ Namespace SVM.StorageProcedure
     Public Class SupportVector : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
+        ''' <summary>
+        ''' The unique reference id of this support vector row.
+        ''' </summary>
+        ''' <returns>A string value.</returns>
         Public Property id As String Implements INamedValue.Key
+
+        ''' <summary>
+        ''' The expected class label of this sample row, the dictionary key is 
+        ''' the topic name and the value is the class label of that topic.
+        ''' </summary>
+        ''' <returns>A dictionary which maps the topic name to its class label.</returns>
         Public Property labels As Dictionary(Of String, String)
 
     End Class
 
+    ''' <summary>
+    ''' A tabular training data model: each <see cref="SupportVector"/> row 
+    ''' contains the feature values and the class labels of multiple topics.
+    ''' </summary>
     Public Class ProblemTable
 
+        ''' <summary>
+        ''' The sample rows of this problem table.
+        ''' </summary>
+        ''' <returns>An array of the <see cref="SupportVector"/> objects.</returns>
         Public Property vectors As SupportVector()
 
         ''' <summary>
         ''' the key collection of the support vector: <see cref="SupportVector.Properties"/> inputs.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the feature dimension names.</returns>
         Public Property dimensionNames As String()
 
+        ''' <summary>
+        ''' Get all of the topic names which are defined by the 
+        ''' <see cref="SupportVector.labels"/> of the sample rows.
+        ''' </summary>
+        ''' <returns>An array of the distinct topic names.</returns>
         Public Function GetTopics() As String()
             ' 20200828
             ' 使用readonly属性会导致json反序列化出错
@@ -101,6 +124,10 @@ Namespace SVM.StorageProcedure
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' Create a deep copy of this problem table.
+        ''' </summary>
+        ''' <returns>A new <see cref="ProblemTable"/> object with the same data.</returns>
         Public Function Clone() As ProblemTable
             Return New ProblemTable With {
                 .dimensionNames = dimensionNames.ToArray,
@@ -119,8 +146,15 @@ Namespace SVM.StorageProcedure
         ''' <summary>
         ''' 获取所指定的<paramref name="topic"/>下的所有标签数据，不去重
         ''' </summary>
-        ''' <param name="topic"></param>
-        ''' <returns></returns>
+        ''' <param name="topic">The name of the target topic.</param>
+        ''' <returns>
+        ''' The class label of each sample row under the <paramref name="topic"/>; 
+        ''' the duplicated label values are kept.
+        ''' </returns>
+        ''' <exception cref="KeyNotFoundException">
+        ''' Thrown when a sample row does not define the class label of the 
+        ''' <paramref name="topic"/>.
+        ''' </exception>
         Public Function GetTopicLabels(topic As String) As String()
             Return vectors _
                 .Select(Function(a)
@@ -136,8 +170,8 @@ Namespace SVM.StorageProcedure
         ''' <summary>
         ''' create a problem model under the given <paramref name="topic"/>
         ''' </summary>
-        ''' <param name="topic"></param>
-        ''' <returns></returns>
+        ''' <param name="topic">The name of the target topic, which provides the class label values.</param>
+        ''' <returns>A <see cref="Problem"/> object which is ready for the SVM training.</returns>
         Public Function GetProblem(topic As String) As Problem
             Dim inputs As New List(Of Node())
             Dim labels As New List(Of String)
@@ -164,9 +198,13 @@ Namespace SVM.StorageProcedure
         ''' <summary>
         ''' row append
         ''' </summary>
-        ''' <param name="a"></param>
-        ''' <param name="b"></param>
-        ''' <returns></returns>
+        ''' <param name="a">The first problem table.</param>
+        ''' <param name="b">The second problem table which will be appended to the <paramref name="a"/>.</param>
+        ''' <returns>
+        ''' A new <see cref="ProblemTable"/> object which contains all of the 
+        ''' sample rows of both <paramref name="a"/> and <paramref name="b"/>, the 
+        ''' dimension names are the union of the columns of the two tables.
+        ''' </returns>
         Public Shared Function Append(a As ProblemTable, b As ProblemTable) As ProblemTable
             Dim union As SupportVector() = a.vectors _
                 .JoinIterates(b.vectors) _

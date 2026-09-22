@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::ClusteringTableExtensions, Data_science\DataMining\DataMining\Clustering\ClusteringTableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::61b24d0814c00c370703fba8ca39180e, Data_science\DataMining\DataMining\Clustering\ClusteringTableExtensions.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,35 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 625
+    '    Code Lines: 438 (70.08%)
+    ' Comment Lines: 52 (8.32%)
+    '    - Xml Docs: 98.08%
+    ' 
+    '   Blank Lines: 135 (21.60%)
+    '     File Size: 22.56 KB
+
+
+    '     Module ClusteringTableExtensions
+    ' 
+    '         Function: bisectingKMeans, calinskiHarabasz, canopyCluster, dbscan, densityScore
+    '                   dunn, hdbscan, kmedoids, knnClassify, knnCluster
+    '                   lloydsCluster, mean, runKMedoids, silhouette, spectralCluster
+    '                   ToIndexedEntities, ToNamedEntities
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

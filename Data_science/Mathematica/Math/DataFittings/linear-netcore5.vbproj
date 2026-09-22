@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Data.Bootstrapping.Fittings</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9762.11310</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -18,10 +18,11 @@
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;PlantMAT;CellaLAB-Desktop</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 		<Title>Curve Fitting and Regression Modelling Library</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Data.Bootstrapping.Fittings</AssemblyTitle>
-		<PackageTags>scibasic;curve-fitting;regression;lasso;loess;levenberg-marquardt</PackageTags>
+		<PackageTags>scibasic;curve-fitting;regression;linear-least-squares;lasso;loess;logistic-regression;levenberg-marquardt</PackageTags>
+    <PackageReleaseNotes>Curve fitting and regression modelling for sciBASIC#. The root namespace covers linear and polynomial least squares, weighted and non-negative least squares, multivariate linear regression, LOESS / LOWESS local regression, and Bayesian and Gauss-Newton solvers. The LASSO namespace adds L1 regularised regression, LevenbergMarquardt implements the Levenberg-Marquardt non-linear least squares algorithm with its damped normal equations, the Multivariate namespace (under Linear/MLR) provides the multiple linear regression model, and Logistic provides logistic regression. The package is the curve fitting layer used by the plotting and data analysis stacks, and covers both the easy case (linear in parameters) and the general case (arbitrary non-linear model functions).</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

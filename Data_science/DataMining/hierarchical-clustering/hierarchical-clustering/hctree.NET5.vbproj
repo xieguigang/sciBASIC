@@ -14,15 +14,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Hierarchical Clustering with BIRCH and Linkage Strategies</Title>
     <Description>Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.HierarchicalClustering</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;hierarchical-clustering;birch;linkage;clustering</PackageTags>
+    <PackageTags>scibasic;hierarchical-clustering;birch;cf-tree;linkage;dendrogram;clustering</PackageTags>
+    <PackageReleaseNotes>Agglomerative hierarchical clustering for sciBASIC#. The BIRCH namespace implements the JBIRCH CF-tree, which clusters streaming data in a single pass by maintaining a compact clustering feature summary of the data - making it suitable when the full distance matrix cannot be held in memory. The HierarchyBuilder namespace provides the linkage strategies (single, complete, average and weighted) together with distance map computation and a reusable hierarchy tree builder, so the resulting dendrogram can be consumed by plotting (HCTreePlot) or by downstream analysis.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

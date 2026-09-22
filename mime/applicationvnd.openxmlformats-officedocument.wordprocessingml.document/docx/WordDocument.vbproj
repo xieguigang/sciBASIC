@@ -12,19 +12,20 @@
     <Import>System.Collections.Generic</Import>
     <Import>System.Linq</Import>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 
   
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
 
     <Title>DOCX Word Document Generator and Text Extractor</Title>
-    <Description>Generates Office Word documents in sciBASIC#: a fluent writer builds headings, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx file, and extracts plain text back out.</Description>
+    <Description>Generates Office Word documents in sciBASIC#: a fluent writer builds document titles, headings H1-H6, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx package, and extracts plain text back out.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.WordDocument</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;docx;word;office-openxml;document-generation</PackageTags>
+    <PackageTags>scibasic;docx;word;office-openxml;document-generation;word-document;text-extraction</PackageTags>
+    <PackageReleaseNotes>The DOCX (WordprocessingML) generator of sciBASIC#. Writing: WordDocument is a fluent builder and an IDocumentWriter implementation - document title, headings H1-H6, paragraphs, code blocks, block quotes, ordered / unordered / task / definition lists, horizontal rules, page breaks, tables and embedded images - with page setup in twips (A4/Letter presets or explicit width, height and margins) and an auto-generated table of contents with a configurable maximum heading level. Styling: WordStyle covers character and paragraph formatting (font name and size, bold, italic, underline, foreground and background colour, alignment and spacing), TableStyle covers table borders, headers and auto-fit, and WordColors provides ready made OOXML six digit hex RGB constants. Packaging: DocxPackager assembles the body XML, styles and embedded images into the OPC (.docx) zip package, while ImageHelper probes PNG/JPEG dimensions. Reading: DocxTextReader extracts plain text, a per-paragraph array, table text and the docProps/core.xml metadata. Because the writer implements IDocumentWriter - the same contract as the PDF writer - identical document code can emit either format, and the builder can render a markdown block model directly into a Word document.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

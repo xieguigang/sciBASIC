@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54f9ae354347166e82be636ea7d78dd9, Data\BinaryData\SQLite3\Writer\Sqlite3Writer.vb"
+﻿#Region "Microsoft.VisualBasic::9dd52f7d9463b95dbb7fef5443cbba4c, Data\BinaryData\SQLite3\Writer\Sqlite3Writer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.89%
     ' 
     '   Blank Lines: 52 (20.63%)
-    '     File Size: 9.71 KB
+    '     File Size: 9.70 KB
 
 
     '     Class Sqlite3Writer
@@ -311,4 +311,3 @@ Namespace Writer
     End Class
 
 End Namespace
-

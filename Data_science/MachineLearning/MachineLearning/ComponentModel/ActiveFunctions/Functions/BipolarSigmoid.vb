@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbcbabb59589e74901b504eda00b6e55, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::3a9f5c1c7cbdd7d97ee990a55fc2083a, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 114
-    '    Code Lines: 35 (30.70%)
-    ' Comment Lines: 69 (60.53%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 126
+    '    Code Lines: 35 (27.78%)
+    ' Comment Lines: 81 (64.29%)
+    '    - Xml Docs: 71.60%
     ' 
-    '   Blank Lines: 10 (8.77%)
-    '     File Size: 3.97 KB
+    '   Blank Lines: 10 (7.94%)
+    '     File Size: 4.55 KB
 
 
     '     Class BipolarSigmoid
@@ -109,6 +109,14 @@ Namespace ComponentModel.Activations
         ''' 
         Public Property Alpha As Double = 2.0R
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this bipolar sigmoid function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``BipolarSigmoid``, and the <see cref="Alpha"/> value 
+        ''' is stored as its only argument.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -164,6 +172,10 @@ Namespace ComponentModel.Activations
             Return (_Alpha * (1 - x * x) / 2)
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``BipolarSigmoid(alpha:=2)``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(BipolarSigmoid)}(alpha:={Alpha})"
         End Function

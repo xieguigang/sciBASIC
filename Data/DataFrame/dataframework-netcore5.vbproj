@@ -7,13 +7,12 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.Framework</PackageId>
-    <Version>5.0.9753.4776</Version>
-    <Description>Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers/writers, MySQL helpers, and reflection based storage providers that map .NET classes to table rows and columns.</Description>
+    <Version>5.0.9762.11310</Version>
+    <Description>Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers and writers, MySQL helpers, reflection based storage providers that map .NET classes to table rows and columns, and a streaming LINQ style I/O layer.</Description>
     <Product>sciBASIC</Product>
     <Company>sciBASIC.NET Foundation</Company>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageReleaseNotes>Data Framework for sciBASIC# runtime, provides the library function for I/O of the csv 2D table, binary data format dataframe object.</PackageReleaseNotes>
     <OutputType>Library</OutputType>
     <StartupObject></StartupObject>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -28,10 +27,11 @@
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Tabular Data Frame and CSV/ARFF Storage Provider Framework</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Framework</AssemblyTitle>
-    <PackageTags>scibasic;dataframe;csv;arff;storage-provider;tabular-data</PackageTags>
+    <PackageTags>scibasic;dataframe;dataset;csv;arff;storage-provider;tabular-data;reflection</PackageTags>
+    <PackageReleaseNotes>Data Framework for sciBASIC# runtime: the library function for I/O of the csv 2D table and of the binary data format dataframe object. Data objects: DataFrame and DataSet together with the numeric data set, feature vector and mapper types (DataFrame, DataFrameReader, FastLoader, NumericDataSet, NumericTableConversion and Mapper) form the in-memory table model, while Mappings and the extension methods provide the common column operations. I/O: the IO namespace covers the generic DataSet, Table and EntityObject models with metadata handling, IO.CSVFile implements the CSV loader and row tokenizer (header parsing, row iteration, field tokenization and streaming reads), and IO.ArffFile adds ARFF (WEKA) reading and writing. Streaming: the IO.Linq namespace offers LINQ style operators over tabular data - batch queues, data streams and write streams. Storage providers: StorageProvider defines the schema interfaces and the data frame resolver; StorageProvider.ComponentModels provides the provider base with row builder, row writer and the reflection bridges for arrays, dictionaries, enums, fields and key value pairs; StorageProvider.Reflection maps .NET types to table schemas through column and data attributes. DataSet extensions add data rows, table unions, an HTML writer, a matrix provider, MySQL helpers and R data frame helpers.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

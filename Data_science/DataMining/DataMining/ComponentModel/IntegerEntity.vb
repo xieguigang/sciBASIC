@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::262fc9a8828c6837a47f77f0f6cb0a39, Data_science\DataMining\DataMining\ComponentModel\IntegerEntity.vb"
+﻿#Region "Microsoft.VisualBasic::684f60f6e1c3ff03b947c0465d0ef227, Data_science\DataMining\DataMining\ComponentModel\IntegerEntity.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 30 (73.17%)
-    ' Comment Lines: 4 (9.76%)
+    '   Total Lines: 42
+    '    Code Lines: 31 (73.81%)
+    ' Comment Lines: 4 (9.52%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (17.07%)
-    '     File Size: 1.45 KB
+    '   Blank Lines: 7 (16.67%)
+    '     File Size: 1.60 KB
 
 
     '     Class IntegerEntity

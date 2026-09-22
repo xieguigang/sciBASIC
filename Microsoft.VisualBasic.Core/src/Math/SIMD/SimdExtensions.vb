@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e1ff93e65c5dbbaa608a326cb7b97bb, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\SimdExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7699d5d81dc2c73af98fa1d49f310db2, Microsoft.VisualBasic.Core\src\Math\SIMD\SimdExtensions.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 355
-    '    Code Lines: 171 (48.17%)
-    ' Comment Lines: 136 (38.31%)
+    '   Total Lines: 415
+    '    Code Lines: 201 (48.43%)
+    ' Comment Lines: 157 (37.83%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 48 (13.52%)
-    '     File Size: 11.35 KB
+    '   Blank Lines: 57 (13.73%)
+    '     File Size: 13.38 KB
 
 
     '     Module SimdExtensions
     ' 
     '         Function: (+3 Overloads) SimdAbs, (+5 Overloads) SimdAdd, SimdAddScalar, SimdClamp, SimdDivide
-    '                   SimdDivideScalar, (+2 Overloads) SimdDot, SimdL1Norm, SimdL2Norm, (+2 Overloads) SimdMax
-    '                   (+2 Overloads) SimdMean, SimdMin, (+5 Overloads) SimdMultiply, SimdMultiplyScalar, (+2 Overloads) SimdNegate
-    '                   SimdReciprocal, (+2 Overloads) SimdSqrt, SimdSquare, (+4 Overloads) SimdSubtract, (+2 Overloads) SimdSum
-    '                   SimdSumSquares
+    '                   SimdDivideScalar, (+2 Overloads) SimdDot, SimdL1Norm, SimdL2Norm, SimdMatrixAdd
+    '                   SimdMatrixDivideZeroSafe, SimdMatrixDot, SimdMatrixMultiply, SimdMatrixScale, SimdMatrixSubtract
+    '                   SimdMatrixTranspose, (+2 Overloads) SimdMax, (+2 Overloads) SimdMean, SimdMin, (+5 Overloads) SimdMultiply
+    '                   SimdMultiplyScalar, (+2 Overloads) SimdNegate, SimdReciprocal, (+2 Overloads) SimdSqrt, SimdSquare
+    '                   (+4 Overloads) SimdSubtract, (+2 Overloads) SimdSum, SimdSumSquares
     ' 
     ' 
     ' /********************************************************************************/
@@ -406,6 +407,66 @@ Namespace Math.SIMD
         <Extension>
         Public Function SimdMultiply(v1 As Short(), v2 As Short()) As Short()
             Return SimdEngine.Multiply(Of Short)(v1, v2)
+        End Function
+
+#End Region
+
+#Region "matrix"
+
+        ''' <summary>
+        ''' 矩阵逐元素相加，等价于 <see cref="SimdMatrix.Add(Double()(), Double()())"/>。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixAdd(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Add(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵逐元素相减。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixSubtract(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Subtract(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵逐元素相乘。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixMultiply(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Multiply(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵逐元素相除（分子为零则结果置零）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixDivideZeroSafe(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.DivideZeroSafe(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 数乘矩阵。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixScale(a As Double()(), scalar As Double) As Double()()
+            Return SimdMatrix.MultiplyScalar(a, scalar)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵转置（分块）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixTranspose(a As Double()()) As Double()()
+            Return SimdMatrix.Transpose(a)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵乘积 <c>A * B</c>（行方向并行 + 行内 FMA 点积）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixDot(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Dot(a, b)
         End Function
 
 #End Region

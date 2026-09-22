@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableExtensions, Data_science\DataMining\UMAP\NumericTableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::591e62408d571f78cde1ad6d929c0d0d, Data_science\DataMining\UMAP\NumericTableExtensions.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,31 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 30 (52.63%)
+    ' Comment Lines: 20 (35.09%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 7 (12.28%)
+    '     File Size: 2.41 KB
+
+
+    ' Module NumericTableExtensions
+    ' 
+    '     Function: umap
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

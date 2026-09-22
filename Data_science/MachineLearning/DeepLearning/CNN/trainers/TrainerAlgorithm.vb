@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80323dca5f7ab545a720d282050aeb48, Data_science\MachineLearning\DeepLearning\CNN\trainers\TrainerAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::d385009c646d64f02171b058c231143f, Data_science\MachineLearning\DeepLearning\CNN\trainers\TrainerAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 154
-    '    Code Lines: 99 (64.29%)
-    ' Comment Lines: 24 (15.58%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 196
+    '    Code Lines: 100 (51.02%)
+    ' Comment Lines: 64 (32.65%)
+    '    - Xml Docs: 70.31%
     ' 
-    '   Blank Lines: 31 (20.13%)
-    '     File Size: 5.92 KB
+    '   Blank Lines: 32 (16.33%)
+    '     File Size: 9.34 KB
 
 
     '     Class TrainerAlgorithm
@@ -79,23 +79,25 @@ Namespace CNN.trainers
 
         Dim net As ConvolutionalNN
 
-        ''' <summary>
-        ''' alpha
-        ''' </summary>
+        ''' <summary>Learning rate (alpha) applied to the weight update.</summary>
         Public Property learning_rate As Double = 0.01
+        ''' <summary>Small constant added for numerical conditioning, avoiding division by zero.</summary>
         Public Property eps As Double = 0.00000001
+        ''' <summary>Momentum factor used by the momentum based update rules.</summary>
         Public Property momentum As Double = 0.9
 
+        ''' <summary>L1 and L2 regularization strengths applied during the weight update.</summary>
         Protected Friend l1_decay, l2_decay As Double
 
-        ''' <summary>
-        ''' iteration counter
-        ''' </summary>
+        ''' <summary>Iteration counter, incremented on every training step.</summary>
         Protected Friend k As Integer = 0
+        ''' <summary>Per parameter accumulators used by the update rules (first and second moment estimates).</summary>
         Protected Friend gsum, xsum As IList(Of Double())
 
+        ''' <summary>Gets the mini batch size; the weights are updated every <see cref="batch_size"/> samples.</summary>
         Public ReadOnly Property batch_size As Integer
 
+        ''' <summary>Gets the convolutional network this trainer updates.</summary>
         Public ReadOnly Property conv_net As ConvolutionalNN
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -103,6 +105,7 @@ Namespace CNN.trainers
             End Get
         End Property
 
+        ''' <summary>Gets the output activations produced by the most recent forward pass.</summary>
         Public ReadOnly Property get_output As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -110,6 +113,11 @@ Namespace CNN.trainers
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a trainer algorithm with default hyper parameters.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength; the L1 decay is fixed at 0.001.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single)
             Me.learning_rate = 0.01
             Me.l1_decay = 0.001
@@ -122,11 +130,25 @@ Namespace CNN.trainers
             xsum = New List(Of Double())()
         End Sub
 
+        ''' <summary>
+        ''' Attaches the network to be trained.
+        ''' </summary>
+        ''' <param name="cnn">The network whose weights are updated by this trainer.</param>
+        ''' <returns>This trainer, so the call can be chained.</returns>
         Public Function SetKernel(cnn As ConvolutionalNN) As TrainerAlgorithm
             Me.net = cnn
             Return Me
         End Function
 
+        ''' <summary>
+        ''' Runs one training step: a forward pass, a backward pass and, every <see cref="batch_size"/> samples, a weight
+        ''' update.
+        ''' </summary>
+        ''' <param name="x">The input data block.</param>
+        ''' <param name="y">The target output; a single element is treated as a class index, several elements as a
+        ''' regression target.</param>
+        ''' <param name="checkpoints">Optional performance counter used to time the individual steps.</param>
+        ''' <returns>The loss and timing information of this training step.</returns>
         Public Overridable Function train(x As DataBlock, y As Double(), checkpoints As PerformanceCounter) As TrainResult
             Dim cost_loss As Double
             Dim l2_decay_loss = 0.0
@@ -214,8 +236,19 @@ Namespace CNN.trainers
             Next
         End Sub
 
+        ''' <summary>
+        ''' Applies the concrete update rule to one parameter of one parameter block.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public MustOverride Sub update(i As Integer, j As Integer, gij As Double, p As Double())
 
+        ''' <summary>
+        ''' Allows an update rule to allocate its additional per parameter accumulator for a parameter block.
+        ''' </summary>
+        ''' <param name="bpr">The parameter block that is about to be trained for the first time.</param>
         Public Overridable Sub initTrainData(bpr As BackPropResult)
         End Sub
 

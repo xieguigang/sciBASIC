@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59b868baadfc1aa76fe6a2c67733b893, Data_science\MachineLearning\DeepLearning\RNN\net\SingleLayerRNN.vb"
+﻿#Region "Microsoft.VisualBasic::4a23e4d2168b6168c6166fec187f469c, Data_science\MachineLearning\DeepLearning\RNN\net\SingleLayerRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 67 (55.83%)
-    ' Comment Lines: 27 (22.50%)
-    '    - Xml Docs: 22.22%
+    '   Total Lines: 136
+    '    Code Lines: 67 (49.26%)
+    ' Comment Lines: 43 (31.62%)
+    '    - Xml Docs: 93.02%
     ' 
-    '   Blank Lines: 26 (21.67%)
-    '     File Size: 3.27 KB
+    '   Blank Lines: 26 (19.12%)
+    '     File Size: 4.49 KB
 
 
     ' 	Class SingleLayerRNN
@@ -74,12 +74,15 @@ Namespace RNN
 
 		Private m_initialized As Boolean
 
-		' Creates a net with default parameters.
+		''' <summary>Creates a net with default parameters.</summary>
 		Public Sub New()
 			layer = New RNNLayer()
 		End Sub
 
-		' Creates a net with default parameters and initializes immediately.
+		''' <summary>
+		''' Creates a net with default parameters and initializes it immediately.
+		''' </summary>
+		''' <param name="vocabularySize">The vocabulary size; it must be greater than zero.</param>
 		Public Sub New(vocabularySize As Integer)
 			Me.New()
 			initialize(vocabularySize)
@@ -87,7 +90,7 @@ Namespace RNN
 
 		' * Hyperparameters ** 
 
-		' Sets the hidden layer size. Network must be initialized again.
+		''' <summary>Sets the hidden layer size. The network must be initialized again afterwards.</summary>
 		Public Overridable WriteOnly Property HiddenSize As Integer
 			Set(value As Integer)
 				layer.HiddenSize = value
@@ -95,15 +98,17 @@ Namespace RNN
 			End Set
 		End Property
 
-		' Sets the learning rate.
+		''' <summary>Sets the learning rate of the single layer.</summary>
 		Public Overridable WriteOnly Property LearningRate As Double
 			Set(value As Double)
 				layer.LearningRate = value
 			End Set
 		End Property
 
-		' Initializes the net for this vocabulary size.
-		' Requires vocabularySize > 0.
+		''' <summary>
+		''' Initializes the network for the given vocabulary size.
+		''' </summary>
+		''' <param name="vocabularySize">The vocabulary size; it must be greater than zero.</param>
 		Public Overrides Sub initialize(vocabularySize As Integer)
 			' Set the layer parameters.
 
@@ -117,14 +122,12 @@ Namespace RNN
 
 		' * Train ** 
 
-		' 
-		' 		    Performs a forward-backward pass for the given indices.
-		' 	
-		' 		    ix.length and iy.length lengths must match, can't be empty.
-		' 		    All indices must be less than the vocabulary size.
-		' 	
-		' 		    Returns the cross-entropy loss.
-		' 		
+		''' <summary>
+		''' Performs a forward-backward pass for the given token indices.
+		''' </summary>
+		''' <param name="ix">The input indices; its length must match <paramref name="iy"/> and must not be empty.</param>
+		''' <param name="iy">The target indices; every index must be smaller than the vocabulary size.</param>
+		''' <returns>The cross-entropy loss of this sequence.</returns>
 		Public Overrides Function forwardBackward(ix As Integer(), iy As Integer()) As Double
 			layer.forward(layer.ixTox(ix))
 			Dim loss = layer.getLoss(iy)
@@ -133,12 +136,25 @@ Namespace RNN
 			Return loss
 		End Function
 
-		' Samples n indices, sequence seed, advance the state.
+		''' <summary>
+		''' Samples <paramref name="n"/> indices, advancing the hidden state.
+		''' </summary>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <returns>The sampled indices.</returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer()
 			Return sampleIndices(n, seed, temp, True)
 		End Function
 
-		' Samples n indices, sequence seed, choose whether to advance the state.
+		''' <summary>
+		''' Samples <paramref name="n"/> indices, optionally advancing the hidden state.
+		''' </summary>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+		''' <returns>The sampled indices.</returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
 			Dim savedState As Matrix = If(Not advance, layer.saveHiddenState(), Nothing)
 
@@ -162,14 +178,14 @@ Namespace RNN
 			Return sampled
 		End Function
 
-		' Returns true if the net was initialized.
+		''' <summary>Gets a value indicating whether the network has been initialized.</summary>
 		Public Overrides ReadOnly Property Initialized As Boolean
 			Get
 				Return m_initialized
 			End Get
 		End Property
 
-		' Returns the vocabulary size - max index + 1.
+		''' <summary>Gets the vocabulary size, i.e. the maximum index plus one.</summary>
 		Public Overrides ReadOnly Property VocabularySize As Integer
 			Get
 				Return layer.InputSize

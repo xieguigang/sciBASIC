@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c59ae33089d607e89bd64816b3891bd6, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
+﻿#Region "Microsoft.VisualBasic::c59ae33089d607e89bd64816b3891bd6, Microsoft.VisualBasic.Core\src\Math\Correlations\DistanceMethods.vb"
 
     ' Author:
     ' 

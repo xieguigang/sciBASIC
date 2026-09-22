@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b1fa5ec442f4b6eac8630a98a642988, Data_science\MachineLearning\DeepLearning\CNN\Layers\LeakyReluLayer.vb"
+﻿#Region "Microsoft.VisualBasic::e6faf6cdf2e56326bd13560702cb7751, Data_science\MachineLearning\DeepLearning\CNN\Layers\LeakyReluLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 46 (69.70%)
-    ' Comment Lines: 6 (9.09%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 87
+    '    Code Lines: 46 (52.87%)
+    ' Comment Lines: 27 (31.03%)
+    '    - Xml Docs: 77.78%
     ' 
-    '   Blank Lines: 14 (21.21%)
-    '     File Size: 2.09 KB
+    '   Blank Lines: 14 (16.09%)
+    '     File Size: 3.39 KB
 
 
     '     Class LeakyReluLayer
@@ -62,9 +62,14 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
 Namespace CNN.layers
 
+    ''' <summary>
+    ''' Leaky rectified linear unit activation: <c>f(x) = x</c> for <c>x &gt; 0</c> and <c>f(x) = leakySlope * x</c> otherwise.
+    ''' The small negative slope keeps the gradient non zero for negative inputs and avoids dead neurons.
+    ''' </summary>
     Public Class LeakyReluLayer : Inherits RectifiedLinearUnitsLayer
         Implements Layer
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.LeakyReLU"/>.</summary>
         Public Overrides ReadOnly Property Type As LayerTypes
             Get
                 Return LayerTypes.LeakyReLU
@@ -73,13 +78,24 @@ Namespace CNN.layers
 
         Dim leakySlope As Double = 0.01
 
+        ''' <summary>
+        ''' Creates a leaky ReLU layer with the given negative slope.
+        ''' </summary>
+        ''' <param name="leakySlope">Slope applied to negative inputs.</param>
         Sub New(Optional leakySlope As Double = 0.01)
             Me.leakySlope = leakySlope
         End Sub
 
+        ''' <summary>Creates a leaky ReLU layer with the default slope of 0.01.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Applies the leaky rectifier element wise.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the activation behaves the same in both modes.</param>
+        ''' <returns>The activated data block.</returns>
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             Dim V2 As DataBlock = db.clone()
             Dim N = db.Weights.Length
@@ -98,6 +114,9 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>
+        ''' Backpropagates the gradient, scaling it by <c>leakySlope</c> where the original input was not positive.
+        ''' </summary>
         Public Overrides Sub backward()
             ' zero out gradient wrt data
             Dim V = in_act.clearGradient() ' we need to set dw of this
@@ -119,6 +138,8 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>leaky_relu()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "leaky_relu()"
         End Function

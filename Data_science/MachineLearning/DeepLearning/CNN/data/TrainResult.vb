@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b6ad84a20bf49c36fd0a3bb8ce3f8a, Data_science\MachineLearning\DeepLearning\CNN\data\TrainResult.vb"
+﻿#Region "Microsoft.VisualBasic::582fe9c7a3b7de28f4667b34f18c4e39, Data_science\MachineLearning\DeepLearning\CNN\data\TrainResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 34 (72.34%)
-    ' Comment Lines: 3 (6.38%)
+    '   Total Lines: 60
+    '    Code Lines: 34 (56.67%)
+    ' Comment Lines: 16 (26.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (21.28%)
-    '     File Size: 1.34 KB
+    '   Blank Lines: 10 (16.67%)
+    '     File Size: 2.21 KB
 
 
     '     Class TrainResult
@@ -69,12 +69,23 @@ Namespace CNN.data
 
         Dim m_loss As Double
 
+        ''' <summary>Gets the total loss reported by this training step.</summary>
         Public Overridable ReadOnly Property Loss As Double
             Get
                 Return m_loss
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a training step result.
+        ''' </summary>
+        ''' <param name="fwd_time">Elapsed time of the forward pass, in ticks.</param>
+        ''' <param name="bwd_time">Elapsed time of the backward pass, in ticks.</param>
+        ''' <param name="l1_decay_loss">L1 regularization loss component.</param>
+        ''' <param name="l2_decay_loss">L2 regularization loss component.</param>
+        ''' <param name="cost_loss">Data (cost) loss component.</param>
+        ''' <param name="softmax_loss">Softmax loss component.</param>
+        ''' <param name="loss">The total loss.</param>
         Public Sub New(fwd_time As Long,
                        bwd_time As Long,
                        l1_decay_loss As Double,
@@ -93,6 +104,8 @@ Namespace CNN.data
             m_loss = loss
         End Sub
 
+        ''' <summary>Returns a short description of the training result.</summary>
+        ''' <returns>A text of the form <c>loss: N</c>.</returns>
         Public Overrides Function ToString() As String
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("loss: ")

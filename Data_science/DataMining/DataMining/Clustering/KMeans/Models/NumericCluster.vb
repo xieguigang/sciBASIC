@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericCluster, Data_science\DataMining\DataMining\Clustering\KMeans\Models\NumericCluster.vb"
+﻿#Region "Microsoft.VisualBasic::85cdd64cbed6515b009a6898e0b4ea8d, Data_science\DataMining\DataMining\Clustering\KMeans\Models\NumericCluster.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,40 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 63 (57.27%)
+    ' Comment Lines: 29 (26.36%)
+    '    - Xml Docs: 96.55%
+    ' 
+    '   Blank Lines: 18 (16.36%)
+    '     File Size: 4.04 KB
+
+
+    '     Class NumericCluster
+    ' 
+    '         Properties: size
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ClusterIndex, CompleteLinkageDistance, RowId, ToString
+    ' 
+    '         Sub: Add
+    ' 
+    '         Operators: +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::042e05ebdd4baf5722b347399d4773fe, Data_science\DataMining\DataMining\ComponentModel\EntityModels\DataSetConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::5ccc031707ed10fa02dda122e0472ffc, Data_science\DataMining\DataMining\ComponentModel\EntityModels\DataSetConvertor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 44 (78.57%)
+    '   Total Lines: 57
+    '    Code Lines: 45 (78.95%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (21.43%)
-    '     File Size: 2.02 KB
+    '   Blank Lines: 12 (21.05%)
+    '     File Size: 2.18 KB
 
 
     '     Class DataSetConvertor

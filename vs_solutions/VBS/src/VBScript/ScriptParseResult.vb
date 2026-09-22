@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54f255fd3b5c0536cf00264b0806e45f, vs_solutions\VBS\src\VBScript\ScriptParseResult.vb"
+﻿#Region "Microsoft.VisualBasic::22baa22e1f23cf74651a9a57c4a62ebc, vs_solutions\VBS\src\VBScript\ScriptParseResult.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 9 (40.91%)
-    ' Comment Lines: 7 (31.82%)
+    '   Total Lines: 75
+    '    Code Lines: 24 (32.00%)
+    ' Comment Lines: 35 (46.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (27.27%)
-    '     File Size: 763 B
+    '   Blank Lines: 16 (21.33%)
+    '     File Size: 3.26 KB
 
 
     '     Class ScriptParseResult
     ' 
-    '         Properties: [Imports], CommandLine, GeneratedCode, ScriptFile
+    '         Properties: [Imports], CommandLine, GeneratedCode, IncludeWarnings, Metadata
+    '                     NuGetPackages, PreprocessedCode, Projections, ResolvedAssemblies, ScriptFile
+    '                     ScriptIncludes, SearchRoots, Vectorized, VectorizeEnabled
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.NuGet
 Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Script
@@ -72,8 +75,55 @@ Namespace Script
         ''' </summary>
         Public Property Metadata As ScriptMetadata
 
-        ''' <summary>#include所引用的外部程序集路径列表(统一为绝对路径)</summary>
+        ''' <summary>
+        ''' #include所引用的外部程序集路径列表(统一为绝对路径)。
+        ''' nuget 包解析出的资产与脚本引用转发的依赖也一并汇入本列表。
+        ''' </summary>
         Public Property [Imports] As List(Of String)
+
+        ''' <summary>被 #include 引入的其它脚本(递归展开后的有序列表)</summary>
+        Public Property ScriptIncludes As List(Of IncludedScript)
+
+        ''' <summary>#include 引入的 nuget 包及其解析出的资产(根包 + 全部传递依赖)</summary>
+        Public Property NuGetPackages As List(Of NuGetPackage)
+
+        ''' <summary>
+        ''' 送入 Roslyn <c>MetadataReference</c> 与运行期 ALC 探测的全部 dll 绝对路径
+        ''' (dll include + nuget 资产 + 脚本转发依赖), 等价于 <see cref="ScriptParseResult.Imports"/>。
+        ''' </summary>
+        Public ReadOnly Property ResolvedAssemblies As List(Of String)
+            Get
+                Return [Imports]
+            End Get
+        End Property
+
+        ''' <summary>#include 解析过程中的告警信息(未解析的目标等)</summary>
+        Public Property IncludeWarnings As List(Of String)
+
+        ''' <summary>与 #include 一致的相对路径搜索目录(按优先级排列)</summary>
+        Public Property SearchRoots As String()
+
+        ''' <summary>
+        ''' 本次解析是否启用了向量化改写(命令行 <c>--no-vectorize</c> 或脚本头部的
+        ''' <c>#no-vectorize</c> 都会使其为 <c>False</c>)。
+        ''' </summary>
+        Public Property VectorizeEnabled As Boolean
+
+        ''' <summary>
+        ''' 预处理阶段是否**确实**发生了向量化改写。
+        ''' 生成代码只有在为 <c>True</c> 时才需要注入 SIMD 的 Imports。
+        ''' </summary>
+        Public Property Vectorized As Boolean
+
+        ''' <summary>
+        ''' <c>@</c> 数组投影运算符被展开的次数(<c>@</c> 是语法糖, 与 <see cref="VectorizeEnabled"/> 无关)
+        ''' </summary>
+        Public Property Projections As Integer
+
+        ''' <summary>
+        ''' 文本预处理(移除 #include 行、展开 ?args / let / 元组分解 / 向量化)之后的脚本代码。
+        ''' </summary>
+        Public Property PreprocessedCode As String
 
         ''' <summary>重构之后的可以直接被Roslyn编译的完整VB.NET源代码</summary>
         Public Property GeneratedCode As String

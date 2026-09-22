@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f3caf295bab8dfaf0b14a4b68b46a87, Data_science\MachineLearning\MachineLearning\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e1c0dd8aec353b8d354c8b357c725ca2, Data_science\MachineLearning\MachineLearning\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 42 (50.60%)
-    ' Comment Lines: 32 (38.55%)
-    '    - Xml Docs: 96.88%
+    '   Total Lines: 93
+    '    Code Lines: 42 (45.16%)
+    ' Comment Lines: 42 (45.16%)
+    '    - Xml Docs: 97.62%
     ' 
-    '   Blank Lines: 9 (10.84%)
-    '     File Size: 3.18 KB
+    '   Blank Lines: 9 (9.68%)
+    '     File Size: 3.81 KB
 
 
     ' Module Extensions
@@ -64,11 +64,15 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
     ''' <summary>
     ''' 对值进行约束剪裁
     ''' </summary>
-    ''' <param name="value#"></param>
+    ''' <param name="value">The target value that will be truncated.</param>
     ''' <param name="truncate">
     ''' the absolute value of the limitation.(修建的阈值应该是一个正实数来的)
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A value that is limited in the interval ``[-truncate, truncate]``; the
+    ''' ``NaN``, ``+Infinity`` and ``-Infinity`` values will also be replaced
+    ''' by a valid number.
+    ''' </returns>
     Public Function ValueTruncate(value#, truncate#) As Double
         If Double.IsNegativeInfinity(value) Then
             value = -truncate * randf.seeds.NextDouble
@@ -86,9 +90,15 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
     ''' <summary>
     ''' Generate small delta for GA mutations
     ''' </summary>
-    ''' <param name="x#"></param>
-    ''' <param name="d#"></param>
-    ''' <returns></returns>
+    ''' <param name="x">The reference value for calculates the magnitude of the delta.</param>
+    ''' <param name="d">
+    ''' The ratio factor of the generated delta relative to the magnitude of 
+    ''' the <paramref name="x"/> value, the default value is ``0.1``.
+    ''' </param>
+    ''' <returns>
+    ''' A small delta value which is proportional to the order of magnitude 
+    ''' of the <paramref name="x"/> value.
+    ''' </returns>
     ''' <remarks>
     ''' 1 = 10 ^ 0  ~  0.1 = 10 ^ 1 * 0.1
     ''' 10 = 10 ^ 1  ~ 1 = 10 ^ 2 * 0.1
@@ -104,7 +114,7 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
     ''' Convert samples data to dataset matrix
     ''' </summary>
     ''' <typeparam name="T">The type of the target output dataset.</typeparam>
-    ''' <param name="samples"></param>
+    ''' <param name="samples">A collection of the <see cref="Sample"/> data.</param>
     ''' <param name="names">The property names of the sample data vector.</param>
     ''' <param name="outputNames">The property names of the output vector for each sample</param>
     ''' <returns>

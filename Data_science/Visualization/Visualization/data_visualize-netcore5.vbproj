@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Data.visualize</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9762.11310</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -17,11 +17,12 @@
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 		<Title>Visualization Layer for Networks, Clusters and Embeddings</Title>
 		<Description>Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.Data.visualize</AssemblyTitle>
-		<PackageTags>scibasic;visualization;network-graph;embedding;clustering;umap</PackageTags>
+		<PackageTags>scibasic;visualization;network-graph;correlation-network;embedding;clustering;kmeans;umap;tabular-rendering</PackageTags>
+    <PackageReleaseNotes>Visualization abstractions for sciBASIC#. The root namespace provides correlation network graphs and the K-means clustering visualization together with tabular CSV rendering helpers, and the Tabular namespace handles the tabular rendering model. The package renders the outputs of the data mining and machine learning stacks - network graphs, cluster assignments, binary tree layouts and 2D or 3D embeddings from UMAP, SOM and similar methods - turning analysis results into inspectable graphics. It is the glue layer between the analysis packages and the charting engines.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

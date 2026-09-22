@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6234d1388d8aba0af78ad7be5448645f, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\CMeans.vb"
+﻿#Region "Microsoft.VisualBasic::13dbc4061ac6e7805d7662c6bc38dde6, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\CMeans.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 297
-    '    Code Lines: 196 (65.99%)
-    ' Comment Lines: 62 (20.88%)
-    '    - Xml Docs: 82.26%
+    '   Total Lines: 346
+    '    Code Lines: 224 (64.74%)
+    ' Comment Lines: 77 (22.25%)
+    '    - Xml Docs: 84.42%
     ' 
-    '   Blank Lines: 39 (13.13%)
-    '     File Size: 13.73 KB
+    '   Blank Lines: 45 (13.01%)
+    '     File Size: 15.79 KB
 
 
     '     Module CMeans
     ' 
-    '         Function: (+3 Overloads) CMeans, GetCenters, GetRandomMatrix, J, PopulateClusters
-    '                   scanRow
+    '         Function: cmeans, (+3 Overloads) CMeans, GetCenters, GetRandomMatrix, J
+    '                   PopulateClusters, scanRow
     ' 
     '         Sub: updateMembership, updateMembershipParallel
     ' 

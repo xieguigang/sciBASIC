@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd2a7f46631863181574690715021832, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Add.vb"
+﻿#Region "Microsoft.VisualBasic::cd2a7f46631863181574690715021832, Microsoft.VisualBasic.Core\src\Math\SIMD\Arithmetic\Add.vb"
 
     ' Author:
     ' 

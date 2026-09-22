@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ba5c9aae345811ad56abc1b61231b3b, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\SVMLayer.vb"
+﻿#Region "Microsoft.VisualBasic::8d58f5b64c21a71858d4b1f3afe1e34c, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\SVMLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 44 (63.77%)
-    ' Comment Lines: 11 (15.94%)
-    '    - Xml Docs: 45.45%
+    '   Total Lines: 94
+    '    Code Lines: 44 (46.81%)
+    ' Comment Lines: 36 (38.30%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 14 (20.29%)
-    '     File Size: 2.21 KB
+    '   Blank Lines: 14 (14.89%)
+    '     File Size: 3.68 KB
 
 
     '     Class SVMLayer
@@ -67,25 +67,42 @@ Namespace CNN.losslayers
     ''' </summary>
     Public Class SVMLayer : Inherits LossLayer
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.SVM"/>.</summary>
         Public Overrides ReadOnly Property Type As LayerTypes
             Get
                 Return LayerTypes.SVM
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates the SVM (structured hinge loss) layer.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the last layer shape.</param>
         Public Sub New(def As OutputDefinition)
             MyBase.New(def)
         End Sub
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Passes the raw scores through unchanged; the SVM layer applies no activation.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the loss layer behaves the same in both modes.</param>
+        ''' <returns>The raw scores.</returns>
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             in_act = db
             out_act = db ' nothing to do, output raw scores
             Return db
         End Function
 
+        ''' <summary>
+        ''' Computes the structured hinge loss and its gradient for a classification target.
+        ''' </summary>
+        ''' <param name="y">Index of the target class.</param>
+        ''' <returns>The loss value.</returns>
         Public Overrides Function backward(y As Integer) As Double
             ' compute and accumulate gradient wrt weights and bias of this layer
             Dim x = in_act.clearGradient()
@@ -114,10 +131,18 @@ Namespace CNN.losslayers
             Return loss
         End Function
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>svm()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "svm()"
         End Function
 
+        ''' <summary>
+        ''' Not supported; the SVM loss only accepts a single class index.
+        ''' </summary>
+        ''' <param name="y">The target distribution, which is ignored.</param>
+        ''' <returns>This method never returns.</returns>
+        ''' <exception cref="NotSupportedException">Always thrown.</exception>
         Public Overrides Function backward(y() As Double) As Double()
             Throw New NotSupportedException("svm not supported")
         End Function

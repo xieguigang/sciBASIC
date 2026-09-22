@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca66c562dd8e5f6e2a8adba5cef331d3, Data_science\MachineLearning\DeepLearning\CNN\ReadModelCNN.vb"
+﻿#Region "Microsoft.VisualBasic::8544e0f01cf67b58d99cf2b5c8fcef42, Data_science\MachineLearning\DeepLearning\CNN\ReadModelCNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 37 (75.51%)
-    ' Comment Lines: 1 (2.04%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 59
+    '    Code Lines: 37 (62.71%)
+    ' Comment Lines: 11 (18.64%)
+    '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 11 (22.45%)
-    '     File Size: 1.68 KB
+    '   Blank Lines: 11 (18.64%)
+    '     File Size: 2.24 KB
 
 
     '     Module ReadModelCNN
@@ -59,8 +59,18 @@ Imports Layer = Microsoft.VisualBasic.MachineLearning.CNN.layers.Layer
 
 Namespace CNN
 
+    ''' <summary>
+    ''' Deserializes a <see cref="ConvolutionalNN"/> from the CNN binary model format produced by
+    ''' <see cref="SaveModelCNN"/>.
+    ''' </summary>
     Public Module ReadModelCNN
 
+        ''' <summary>
+        ''' Reads a CNN model from a binary stream.
+        ''' </summary>
+        ''' <param name="file">The stream that contains a serialized CNN model.</param>
+        ''' <returns>The reconstructed network.</returns>
+        ''' <exception cref="InvalidDataException">Thrown when the stream does not start with the <c>CNN</c> magic header.</exception>
         Public Function Read(file As Stream) As ConvolutionalNN
             Using rd As New BinaryReader(file)
                 Dim magic As String = Encoding.ASCII.GetString(rd.ReadBytes(3))

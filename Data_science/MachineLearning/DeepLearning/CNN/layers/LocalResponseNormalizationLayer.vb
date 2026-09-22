@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7de8d6d257d46e4c3bb0b8ab1f1882f, Data_science\MachineLearning\DeepLearning\CNN\Layers\LocalResponseNormalizationLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9767e664977e1dc29c2783a9bf61fc4c, Data_science\MachineLearning\DeepLearning\CNN\Layers\LocalResponseNormalizationLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 132
-    '    Code Lines: 81 (61.36%)
-    ' Comment Lines: 28 (21.21%)
-    '    - Xml Docs: 46.43%
+    '   Total Lines: 150
+    '    Code Lines: 81 (54.00%)
+    ' Comment Lines: 46 (30.67%)
+    '    - Xml Docs: 67.39%
     ' 
-    '   Blank Lines: 23 (17.42%)
-    '     File Size: 5.09 KB
+    '   Blank Lines: 23 (15.33%)
+    '     File Size: 6.27 KB
 
 
     '     Class LocalResponseNormalizationLayer
@@ -96,21 +96,28 @@ Namespace CNN.layers
 
         Dim S_cache_ As DataBlock
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the LRN layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.LRN"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.LRN
             End Get
         End Property
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a local response normalization layer.
+        ''' </summary>
+        ''' <param name="n">Size of the normalization neighborhood; a warning is logged when it is even.</param>
         Public Sub New(n As Integer)
             ' checks
             If n Mod 2 = 0 Then
@@ -120,6 +127,12 @@ Namespace CNN.layers
             Me.n = n
         End Sub
 
+        ''' <summary>
+        ''' Normalizes every activation by the response of its neighbors along the channel axis.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the normalization behaves the same in both modes.</param>
+        ''' <returns>The normalized activations.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim A As DataBlock = db.cloneAndZero()
             Dim n2 = std.Floor(n / 2)
@@ -152,6 +165,9 @@ Namespace CNN.layers
             Return out_act ' dummy identity function for now
         End Function
 
+        ''' <summary>
+        ''' Backpropagates the gradient through the normalization window using the cached normalization factors.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' evaluate gradient wrt data
             ' we need to set dw of this
@@ -184,6 +200,8 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>LRN()</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"LRN()"
         End Function

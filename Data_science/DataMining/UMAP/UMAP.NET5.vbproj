@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DataMining.UMAP</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9762.11310</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -20,9 +20,10 @@
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>UMAP Uniform Manifold Approximation and Projection</Title>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 		<AssemblyTitle>Microsoft.VisualBasic.DataMining.UMAP</AssemblyTitle>
-		<PackageTags>scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor</PackageTags>
+		<PackageTags>scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor;fuzzy-simplicial-set;visualization</PackageTags>
+    <PackageReleaseNotes>UMAP (Uniform Manifold Approximation and Projection) for sciBASIC#. The algorithm first builds a fuzzy simplicial set over the data by computing k nearest neighbours - either approximately through NN-descent or exactly through the KD-tree index (KNN.KDTreeMethod) - then symmetrises the local fuzzy memberships into a single weighted graph, and finally optimises a low dimensional layout by stochastic gradient descent on the edge based cross entropy, with the Components.Tree namespace holding the tree structures used during neighbour descent. Compared with t-SNE, the fuzzy graph formulation makes UMAP substantially faster on large data and preserves more of the global arrangement, at the cost of being sensitive to the n_neighbors and min_dist settings.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
     <!-- 兼容层：ClusterEntity 已标记为 Obsolete，这里在该项目内部屏蔽其弃用警告，

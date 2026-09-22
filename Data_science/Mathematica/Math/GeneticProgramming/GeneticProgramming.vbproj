@@ -12,14 +12,15 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Symbolic Regression via Genetic Programming and GA</Title>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Description>Evolves mathematical expressions and polynomial models with genetic programming and genetic algorithms, using pluggable expression trees and error objectives such as MSE, MAE, SSE and SAE. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;genetic-programming;symbolic-regression;expression-tree;evolutionary-algorithm</PackageTags>
+    <PackageTags>scibasic;genetic-programming;symbolic-regression;expression-tree;evolutionary-algorithm;polynomial-model;fitness-function</PackageTags>
+    <PackageReleaseNotes>Symbolic regression via genetic programming for sciBASIC#. The evolution namespace implements the evolution engine over pluggable expression trees, and the measure namespace provides the error objectives (MSE, MAE, SSE and SAE) used to rank candidate expressions; the model namespace defines the symbolic expression model, model.factory builds the initial expressions and model.impl provides the concrete node implementations. The result is a symbolic expression or polynomial model that fits the data, rather than a black box predictor - which makes the outcome inspectable, differentiable and directly usable inside other mathematical code. It is the interpretable counterpart of the regression models in the DataFittings package.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

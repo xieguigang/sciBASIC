@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b7a5206264cfe3798bff7fc1c803042, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\FakeAUCGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c4f4b1319914f235389a235e2527dddf, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\FakeAUCGenerator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 60 (72.29%)
-    ' Comment Lines: 9 (10.84%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 87
+    '    Code Lines: 61 (70.11%)
+    ' Comment Lines: 12 (13.79%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 14 (16.87%)
-    '     File Size: 3.32 KB
+    '   Blank Lines: 14 (16.09%)
+    '     File Size: 3.56 KB
 
 
     '     Module FakeAUCGenerator
@@ -60,6 +60,10 @@ Imports std = System.Math
 
 Namespace Evaluation
 
+    ''' <summary>
+    ''' 依据目标 AUC 反向生成「假」的预测向量，用于构造测试数据。
+    ''' </summary>
+    <Obsolete("该工具仅用于测试数据构造，AUC 计算已统一委托到 Auc.RankAUC。", False)>
     Public Module FakeAUCGenerator
 
         ''' <summary>
@@ -120,7 +124,7 @@ Namespace Evaluation
                     End If
                 Next
 
-                Dim eval As Double = Evaluation.AUC(out, labels)
+                Dim eval As Double = RocAuc.RankAUC(out, labels)
                 Dim delta = std.Abs(eval - auc)
 
                 Call bar.SetLabel($"auc: {eval }")

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93caa221f2bfa3367d522d3577acebe1, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdEngine.vb"
+﻿#Region "Microsoft.VisualBasic::fab51b1a9395a6f57c16accf8ad3d932, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 715
-    '    Code Lines: 427 (59.72%)
-    ' Comment Lines: 142 (19.86%)
-    '    - Xml Docs: 97.18%
+    '   Total Lines: 950
+    '    Code Lines: 576 (60.63%)
+    ' Comment Lines: 184 (19.37%)
+    '    - Xml Docs: 96.74%
     ' 
-    '   Blank Lines: 146 (20.42%)
-    '     File Size: 27.44 KB
+    '   Blank Lines: 190 (20.00%)
+    '     File Size: 36.90 KB
 
 
     '     Class SimdEngine
@@ -53,14 +53,15 @@
     ' 
     '             Constructor: (+1 Overloads) Sub New
     ' 
-    '             Function: Add, AddInPlace, AddScalar, AddScalarInPlace, CanVectorize
-    '                       CheckArgument, Compute, (+2 Overloads) Divide, (+2 Overloads) DivideScalar, DivideZeroSafe
-    '                       InPlace, InPlaceScalar, Max, Min, Multiply
-    '                       MultiplyInPlace, MultiplyScalar, MultiplyScalarInPlace, NewArray, ScalarCompute
-    '                       (+2 Overloads) ScalarDivide, ScalarLane, ScalarSubtract, Subtract, SubtractInPlace
-    '                       SubtractScalar
+    '             Function: Add, AddAbsInPlace, AddInPlace, AddScalar, AddScalarInPlace
+    '                       CanVectorize, CheckArgument, Compute, (+2 Overloads) Divide, DivideInPlace
+    '                       (+2 Overloads) DivideScalar, (+2 Overloads) DivideZeroSafe, DivideZeroSafeInPlace, InPlace, InPlaceScalar
+    '                       Max, MaxScalar, Min, MinScalar, Multiply
+    '                       MultiplyInPlace, MultiplyScalar, MultiplyScalarInPlace, MultiplyZeroSafe, NewArray
+    '                       ScalarCompute, (+2 Overloads) ScalarDivide, ScalarLane, ScalarSubtract, Subtract
+    '                       SubtractInPlace, SubtractScalar
     ' 
-    '             Sub: DivideZeroSafeBlock
+    '             Sub: DivideZeroSafeBlock, DivideZeroSafeBlockSingle, MultiplyZeroSafeBlock
     ' 
     ' 
     ' 
@@ -72,6 +73,7 @@
 
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace Math.SIMD
 
@@ -281,6 +283,68 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 带“任一因子为零则结果为零”语义的逐元素乘法。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这个语义来自旧版 <c>Vector</c> 的 <c>.*</c> 运算符实现：显式地把
+        ''' <c>0 * Inf</c> 固定成 <c>0</c>，而不是让 IEEE 规则产生 <see cref="Double.NaN"/>。
+        ''' 向量化实现用两次
+        ''' <see cref="System.Numerics.Vector.ConditionalSelect(Of T)(System.Numerics.Vector(Of T), System.Numerics.Vector(Of T), System.Numerics.Vector(Of T))"/>
+        ''' 覆盖零通道，全程不需要物化布尔掩码数组。
+        ''' </remarks>
+        Public Shared Function MultiplyZeroSafe(v1 As Double(), v2 As Double()) As Double()
+            v1 = CheckArgument(v1, NameOf(v1))
+            v2 = CheckArgument(v2, NameOf(v2))
+
+            Dim len As Integer = v1.Length
+            If len = 0 Then Return Array.Empty(Of Double)()
+
+            Dim out As Double() = NewArray(Of Double)(len)
+            Dim count As Integer = Vector(Of Double).Count
+            Dim zero As Vector(Of Double) = Vector(Of Double).Zero
+            Dim i As Integer = 0
+
+            If CanVectorize(Of Double)(len) Then
+                Dim last As Integer = len - count
+
+                Do While i <= last
+                    Call MultiplyZeroSafeBlock(v1, v2, out, i, zero)
+                    i += count
+                Loop
+                If i < len Then
+                    Call MultiplyZeroSafeBlock(v1, v2, out, last, zero)
+                End If
+
+                Return out
+            End If
+
+            Do While i < len
+                If v1(i) = 0.0 OrElse v2(i) = 0.0 Then
+                    out(i) = 0
+                Else
+                    out(i) = v1(i) * v2(i)
+                End If
+
+                i += 1
+            Loop
+
+            Return out
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Sub MultiplyZeroSafeBlock(v1 As Double(), v2 As Double(), out As Double(),
+                                                 offset As Integer, zero As Vector(Of Double))
+            Dim a As New Vector(Of Double)(v1, offset)
+            Dim b As New Vector(Of Double)(v2, offset)
+            Dim product As Vector(Of Double) = Vector.Multiply(Of Double)(a, b)
+
+            product = Vector.ConditionalSelect(Of Double)(Vector.Equals(Of Double)(a, zero), zero, product)
+            product = Vector.ConditionalSelect(Of Double)(Vector.Equals(Of Double)(b, zero), zero, product)
+
+            Call product.CopyTo(out, offset)
+        End Sub
+
+        ''' <summary>
         ''' 逐元素取最小值：<c>out(i) = Min(v1(i), v2(i))</c>
         ''' </summary>
         ''' <remarks>
@@ -371,6 +435,20 @@ Namespace Math.SIMD
             Return ScalarCompute(Of T)(v, scalar, Function(a, b) Vector.Multiply(Of T)(a, b))
         End Function
 
+        ''' <summary>
+        ''' 逐元素取较大值：<c>out(i) = Max(v(i), scalar)</c>
+        ''' </summary>
+        Public Shared Function MaxScalar(Of T As Structure)(v As T(), scalar As T) As T()
+            Return ScalarCompute(Of T)(v, scalar, Function(a, b) Vector.Max(Of T)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素取较小值：<c>out(i) = Min(v(i), scalar)</c>
+        ''' </summary>
+        Public Shared Function MinScalar(Of T As Structure)(v As T(), scalar As T) As T()
+            Return ScalarCompute(Of T)(v, scalar, Function(a, b) Vector.Min(Of T)(a, b))
+        End Function
+
         Private Shared Function ScalarCompute(Of T As Structure)(v As T(), scalar As T,
                                                                 op As VectorBinaryOp(Of T)) As T()
 
@@ -422,6 +500,41 @@ Namespace Math.SIMD
         ''' </summary>
         Public Shared Function SubtractInPlace(Of T As Structure)(v As T(), operand As T()) As T()
             Return InPlace(Of T)(v, operand, Function(a, b) Vector.Subtract(Of T)(a, b))
+        End Function
+
+        ''' <summary>
+        ''' 就地累加绝对值：<c>v(i) += |operand(i)|</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 用于逐行累加绝对值的归约（例如 1-范数）：相比「先 <c>SimdMath.Abs</c> 生成
+        ''' 临时数组再 <c>AddInPlace</c>」少了一整行数据的分配与往返读写。
+        ''' </remarks>
+        Public Shared Function AddAbsInPlace(v As Double(), operand As Double()) As Double()
+            v = CheckArgument(v, NameOf(v))
+            operand = CheckArgument(operand, NameOf(operand))
+
+            Dim len As Integer = v.Length
+            If len = 0 Then Return v
+
+            Dim count As Integer = Vector(Of Double).Count
+            Dim i As Integer = 0
+
+            If CanVectorize(Of Double)(len) Then
+                ' 就地运算不能使用重叠末块
+                Do While i <= len - count
+                    Vector.Add(Of Double)(
+                        New Vector(Of Double)(v, i),
+                        Vector.Abs(Of Double)(New Vector(Of Double)(operand, i))).CopyTo(v, i)
+                    i += count
+                Loop
+            End If
+
+            Do While i < len
+                v(i) += std.Abs(operand(i))
+                i += 1
+            Loop
+
+            Return v
         End Function
 
         ''' <summary>
@@ -637,6 +750,129 @@ Namespace Math.SIMD
 
             Call Vector.ConditionalSelect(Of Double)(mask, zero, quotient).CopyTo(out, offset)
         End Sub
+
+        ''' <summary>
+        ''' 带“分子为零则结果为零”语义的逐元素除法（<see cref="Single"/>）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与 <see cref="DivideZeroSafe(Double(), Double())"/> 语义一致，只是把累加/判零
+        ''' 的通道宽度换成 <see cref="Single"/>（一条 256 位指令可处理 8 个通道）。
+        ''' </remarks>
+        Public Shared Function DivideZeroSafe(v1 As Single(), v2 As Single()) As Single()
+            v1 = CheckArgument(v1, NameOf(v1))
+            v2 = CheckArgument(v2, NameOf(v2))
+
+            Dim len As Integer = v1.Length
+            If len = 0 Then Return Array.Empty(Of Single)()
+
+            Dim out As Single() = NewArray(Of Single)(len)
+            Dim count As Integer = Vector(Of Single).Count
+            Dim zero As Vector(Of Single) = Vector(Of Single).Zero
+            Dim i As Integer = 0
+
+            If CanVectorize(Of Single)(len) Then
+                Dim last As Integer = len - count
+
+                Do While i <= last
+                    Call DivideZeroSafeBlockSingle(v1, v2, out, i, zero)
+                    i += count
+                Loop
+                If i < len Then
+                    Call DivideZeroSafeBlockSingle(v1, v2, out, last, zero)
+                End If
+
+                Return out
+            End If
+
+            Do While i < len
+                If v1(i) = 0.0F Then
+                    out(i) = 0
+                Else
+                    out(i) = v1(i) / v2(i)
+                End If
+
+                i += 1
+            Loop
+
+            Return out
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Sub DivideZeroSafeBlockSingle(v1 As Single(), v2 As Single(), out As Single(),
+                                                     offset As Integer, zero As Vector(Of Single))
+            Dim numerator As New Vector(Of Single)(v1, offset)
+            Dim quotient As Vector(Of Single) = Vector.Divide(Of Single)(numerator, New Vector(Of Single)(v2, offset))
+            Dim mask As Vector(Of Single) = Vector.Equals(Of Single)(numerator, zero)
+
+            Call Vector.ConditionalSelect(Of Single)(mask, zero, quotient).CopyTo(out, offset)
+        End Sub
+
+        ''' <summary>
+        ''' 就地逐元素相除（<see cref="Double"/>）：<c>v1(i) = v1(i) / v2(i)</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 就地版**不能**使用“末块与末尾重叠”的技巧：输入与输出共用同一块内存，
+        ''' 重叠部分会把已经写过的元素再算一次，因此尾块退化为单通道逐元素计算。
+        ''' </remarks>
+        Public Shared Function DivideInPlace(v1 As Double(), v2 As Double()) As Double()
+            v1 = CheckArgument(v1, NameOf(v1))
+            v2 = CheckArgument(v2, NameOf(v2))
+
+            Dim len As Integer = v1.Length
+            If len = 0 Then Return v1
+
+            Dim count As Integer = Vector(Of Double).Count
+            Dim i As Integer = 0
+
+            If CanVectorize(Of Double)(len) Then
+                Do While i <= len - count
+                    Vector.Divide(Of Double)(New Vector(Of Double)(v1, i), New Vector(Of Double)(v2, i)).CopyTo(v1, i)
+                    i += count
+                Loop
+            End If
+
+            Do While i < len
+                v1(i) = v1(i) / v2(i)
+                i += 1
+            Loop
+
+            Return v1
+        End Function
+
+        ''' <summary>
+        ''' 就地“分子为零则结果为零”的逐元素除法（<see cref="Double"/>）。
+        ''' </summary>
+        Public Shared Function DivideZeroSafeInPlace(v1 As Double(), v2 As Double()) As Double()
+            v1 = CheckArgument(v1, NameOf(v1))
+            v2 = CheckArgument(v2, NameOf(v2))
+
+            Dim len As Integer = v1.Length
+            If len = 0 Then Return v1
+
+            Dim count As Integer = Vector(Of Double).Count
+            Dim zero As Vector(Of Double) = Vector(Of Double).Zero
+            Dim i As Integer = 0
+
+            If CanVectorize(Of Double)(len) Then
+                ' DivideZeroSafeBlock 会先把分子装载到向量寄存器再回写，因此 out 与 v1 重合是安全的
+                Do While i <= len - count
+                    Call DivideZeroSafeBlock(v1, v2, v1, i, zero)
+                    i += count
+                Loop
+            End If
+
+            Do While i < len
+                If v1(i) = 0.0 Then
+                    v1(i) = 0
+                Else
+                    v1(i) = v1(i) / v2(i)
+                End If
+
+                i += 1
+            Loop
+
+            Return v1
+        End Function
 
         ''' <summary>
         ''' 向量除以标量（<see cref="Double"/>）：<c>out(i) = v(i) / scalar</c>

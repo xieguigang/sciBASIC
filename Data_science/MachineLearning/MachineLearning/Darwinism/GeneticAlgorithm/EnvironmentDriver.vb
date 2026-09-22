@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f228581cf6fd4b5457ed84b6431c138, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::85ff287fc2b9c353cf82709ef00380a6, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 182
-    '    Code Lines: 116 (63.74%)
-    ' Comment Lines: 39 (21.43%)
-    '    - Xml Docs: 61.54%
+    '   Total Lines: 246
+    '    Code Lines: 116 (47.15%)
+    ' Comment Lines: 102 (41.46%)
+    '    - Xml Docs: 86.27%
     ' 
-    '   Blank Lines: 27 (14.84%)
-    '     File Size: 7.13 KB
+    '   Blank Lines: 28 (11.38%)
+    '     File Size: 10.74 KB
 
 
     '     Class EnvironmentDriver
@@ -88,14 +88,21 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 需要运行的总的迭代次数
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The maximum number of the evolution iterations.</returns>
         Public Property Iterations As Integer
+
+        ''' <summary>
+        ''' The error threshold of the evolutionary optimization: the training 
+        ''' loop will be terminated once the fitness value of the best individual 
+        ''' is less than this threshold.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> fitness threshold value.</returns>
         Public Property Threshold As Double
 
         ''' <summary>
         ''' get the <see cref="GeneticAlgorithm(Of Chr).Best"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The best chromosome which was found by the current genetic algorithm.</returns>
         Public ReadOnly Property BestModel As Chr
             Get
                 Return core.Best
@@ -105,7 +112,13 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
-        ''' <param name="ga"></param>
+        ''' <param name="ga">The genetic algorithm driver which will be evolved.</param>
+        ''' <param name="takeBestSnapshot">
+        ''' An optional callback which is invoked at each iteration with the best 
+        ''' chromosome and its fitness value; when this parameter is ``Nothing`` 
+        ''' the iteration progress will be printed to the debugger output instead.
+        ''' </param>
+        ''' <param name="iterations">The maximum number of the evolution iterations, the default value is ``500000``.</param>
         Sub New(ga As GeneticAlgorithm(Of Chr), Optional takeBestSnapshot As Action(Of Chr, Double) = Nothing, Optional iterations% = 500000)
             Me.core = ga
             Me.Iterations = iterations
@@ -123,6 +136,22 @@ Namespace Darwinism.GAF
             End If
         End Sub
 
+        ''' <summary>
+        ''' Run the genetic algorithm evolution loop, the loop will be terminated 
+        ''' when the <see cref="Iterations"/> limit is reached, when the fitness 
+        ''' value is less than the <see cref="Threshold"/>, or when the 
+        ''' <see cref="Terminate"/> method is called.
+        ''' </summary>
+        ''' <param name="parallel">
+        ''' Whether the fitness calculation should be run in parallel mode? 
+        ''' The default value of this parameter is ``False``.
+        ''' </param>
+        ''' <remarks>
+        ''' The environment driver will automatically re-seed the population with 
+        ''' a mutated best individual when the fitness value was stagnated for a 
+        ''' long time, so that the evolution process is able to escape from the 
+        ''' local optimal solution.
+        ''' </remarks>
         Public Overrides Sub Train(Optional parallel As Boolean = False)
             Dim errStatSize As Integer = 200
             Dim errors As New Queue(Of Double)(capacity:=errStatSize)
@@ -203,7 +232,8 @@ Namespace Darwinism.GAF
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Request the running evolution loop to be terminated gracefully at 
+        ''' the end of the current iteration.
         ''' </summary>
         ''' <example>
         ''' ' If fitness is satisfying - we can stop Genetic algorithm
@@ -216,6 +246,14 @@ Namespace Darwinism.GAF
             Me.terminated = True
         End Sub
 
+        ''' <summary>
+        ''' Create one iteration report record from the current state of the 
+        ''' genetic algorithm.
+        ''' </summary>
+        ''' <param name="iteration%">The current iteration number.</param>
+        ''' <param name="fitness#">The fitness value of the current best individual.</param>
+        ''' <param name="ga">The genetic algorithm driver of the current evolution process.</param>
+        ''' <returns>An <see cref="outPrint"/> record which describes the current iteration.</returns>
         Public Shared Function CreateReport(iteration%, fitness#, ga As GeneticAlgorithm(Of Chr)) As outPrint
             Dim best As Chr = ga.Best
             Dim bestFit As Double = ga.GetFitness(best)
@@ -230,18 +268,44 @@ Namespace Darwinism.GAF
         End Function
     End Class
 
+    ''' <summary>
+    ''' One iteration report record of the genetic algorithm evolution process.
+    ''' </summary>
     Public Structure outPrint
 
+        ''' <summary>
+        ''' The current iteration number.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Property iter%
+        ''' <summary>
+        ''' The fitness value of the best individual of the current iteration.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property fit#
+        ''' <summary>
+        ''' The string expression of the best chromosome of the current iteration.
+        ''' </summary>
+        ''' <returns>A string value.</returns>
         Public Property chromosome$
+        ''' <summary>
+        ''' The mutation rate of the best individual of the current iteration.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property MutationRate#
 
+        ''' <summary>
+        ''' Print the column title line of the iteration report table.
+        ''' </summary>
         Public Shared Sub PrintTitle()
             ' just for pretty print
             Console.WriteLine($"{NameOf(outPrint.iter)}{vbTab}{NameOf(outPrint.fit)}{vbTab}{NameOf(outPrint.chromosome)}({NameOf(outPrint.MutationRate)})")
         End Sub
 
+        ''' <summary>
+        ''' Display this iteration report record as one tabular delimited text line.
+        ''' </summary>
+        ''' <returns>A tab delimited text line.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{iter}{vbTab}{fit}{vbTab}{chromosome}({MutationRate})"

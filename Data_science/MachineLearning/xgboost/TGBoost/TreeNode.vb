@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c05213e2e579f274491f78d88e79b431, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::ae770809cd381eaa168557168c6d1b84, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 199
-    '    Code Lines: 150 (75.38%)
-    ' Comment Lines: 24 (12.06%)
-    '    - Xml Docs: 12.50%
+    '   Total Lines: 213
+    '    Code Lines: 155 (72.77%)
+    ' Comment Lines: 32 (15.02%)
+    '    - Xml Docs: 31.25%
     ' 
-    '   Blank Lines: 25 (12.56%)
-    '     File Size: 7.91 KB
+    '   Blank Lines: 26 (12.21%)
+    '     File Size: 8.54 KB
 
 
     '     Class TreeNode
+    ' 
+    '         Properties: leafValue
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
@@ -102,6 +104,20 @@ Namespace train
         Public right_child As TreeNode
         'leaf node
         Friend leaf_score As Double
+
+        ''' <summary>
+        ''' 叶节点的输出值（leaf score）。该值等于 ``-G / (H + lambda)``，
+        ''' 对于回归任务是加性空间下的叶值，对于分类任务是 log-odds 空间下的叶值。
+        ''' 
+        ''' 该属性将内部的 ``leaf_score`` 字段只读地暴露给下游的可解释性分析
+        ''' （例如 TreeSHAP），而不会改变任何训练/预测行为。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property leafValue As Double
+            Get
+                Return leaf_score
+            End Get
+        End Property
         'for categorical feature,store (col,(value,(grad_sum,hess_sum)))
         Public cat_feature_col_value_GH As New Dictionary(Of String, Dictionary(Of String, Double()))()
         Private cat_feature_col_leftcatvalue As New Dictionary(Of String, List(Of Integer))()

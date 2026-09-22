@@ -1,39 +1,62 @@
-# Spatial Density Query and SLIC Superpixel Segmentation
+# 空间密度查询与 SLIC 超像素分割
 
-Estimates local point density on 2D grids and KD-tree indexes, and segments images into compact superpixels with SLIC.
+## 引言
 
-## Overview
-- Grid-based 2D density: bins points into a `Grid(Of T)` and returns a normalised `[0, 1]` local density per point from a sliding `GridBox` window, serially or in parallel.
-- KD-tree density: `KDQuery` implements `IQueryDensity(Of ClusterEntity)` and returns `1 / mean distance to the k nearest neighbours`, a standard outlier/lof-style score.
-- SLIC (Simple Linear Iterative Clustering) superpixels: reads pixels from a `BitmapBuffer`, seeds centres on a regular grid and iteratively re-assigns pixels in combined colour plus image-plane space.
-- Works directly on the sciBASIC# `ClusterEntity` vector model, so the density scores can be fed back into the clustering toolkit.
+两个看似无关的问题，其实共享同一种数学工具：
 
-## Key Types
-- `Microsoft.VisualBasic.DataMining.DensityQuery.SLIC` — superpixel segmenter: `ReadImagePixels`, `InitializeCenters`, `IterateClustering`, `MeasureSegments`.
-- `Microsoft.VisualBasic.DataMining.DensityQuery.SLICPixel` — a pixel with `x`, `y`, `color` channels, a `cluster` label and `DistanceTo`.
-- `Microsoft.VisualBasic.DataMining.DensityQuery.KDQuery` — KD-tree index over `ClusterEntity` rows implementing `QueryDensity(row, k)` and `Raw()`.
-- `Microsoft.VisualBasic.DataMining.DensityQuery.Metric` — distance metric adapter used to build the underlying `KdTree`.
-- `Microsoft.VisualBasic.DataMining.DensityQuery.Density2D` — module with `WindowSize` and the `Density` extension methods over 2D grids.
-- `Microsoft.VisualBasic.DataMining.DensityQuery.GridBox` — sliding window query box over a `Grid(Of T)`.
+- **离群点检测**：一个点周围「邻居很少」，它就很可能是异常值；
+- **图像区域分组**：一块区域内「像素很密」，它们就很可能属于同一个物体。
 
-## Quick Start
+两者都需要快速回答：**这个位置附近的密度是多少？**
+
+本包提供两类互补的实现：规则网格上的密度估计，与 KD 树索引上的邻居查询。
+
+## 设计目标
+
+- **两种索引并存**：网格适合均匀分布（查询 O(1)），KD 树适合稀疏 / 聚类分布（查询 O(log n)）；
+- **距离可配置**：欧氏、曼哈顿等度量统一由 `Metric` 提供；
+- **附带图像分割**：SLIC 超像素把密度思想扩展到图像区域。
+
+## 核心类型与职责
+
+全部类型位于根命名空间 `Microsoft.VisualBasic.DataMining.DensityQuery`：
+
+| 类型 | 职责 |
+|---|---|
+| `Density2D` | 在规则 2D 网格上估计局部点密度 |
+| `GridBox` | 网格容器（范围、分辨率与分箱统计） |
+| `KDQuery` | 通过 KD 树做密度与邻居查询（适合散乱点） |
+| `Metric` | 查询使用的距离度量 |
+| `SLIC` | 简单线性迭代聚类：把图像分割为紧凑均匀的超像素 |
+
+## 快速上手
+
 ```vbnet
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 
-' density of a point set through a KD-tree index
-Dim query As New KDQuery(entities)          ' entities: IEnumerable(Of ClusterEntity)
-Dim d As NamedValue(Of Double) = query.QueryDensity(entities(0), k:=10)
+' 1. 把点集装入 KD 树查询器
+Dim query As New KDQuery(points, Metric.Euclidean)
 
-' SLIC superpixels over an image buffer (buffer As BitmapBuffer)
-Dim slic As New SLIC(buffer)
-Dim pixels As SLICPixel() = slic.MeasureSegments(regionSize:=20, numIterations:=10)
+' 2. 查询某点半径内的邻居数量，据此判断离群
+Dim density = query.CountWithin(center, radius:=0.5)
+
+If density < 5 Then
+    Console.WriteLine("possible outlier")
+End If
+
+' 3. 图像超像素分割
+Dim labels = SLIC.Segment(image, superpixels:=200, compactness:=10)
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.DataMining.DensityQuery`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;density;superpixel;slic;kd-tree`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **网格 vs KD 树的取舍**：网格密度查询是 O(1)（直接查桶），但分辨率固定，稀疏区域会浪费内存；KD 树自适应数据分布，但查询需要树遍历。数据越不均匀，KD 树越有优势。
+- **超像素的意义**：把百万像素降到几百个区域后再做分割 / 识别，计算量下降数个数量级；SLIC 之所以流行，是因为它**只用一个参数（超像素数量）**就能得到紧凑、边界贴合的结果。
+- **密度阈值的确定**：实现只提供「统计邻居数」的能力，阈值需要按数据规模设定——通常取邻居数的下分位数作为离群判据。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.DataMining.DensityQuery`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;density;superpixel;slic;kd-tree;outlier-detection;image-segmentation`
+- 许可：GPL-3.0-or-later

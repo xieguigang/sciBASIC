@@ -358,3 +358,19 @@ CUDA 运行时有一套硬性的版本匹配规则：
 ```bat
 ILCuda.Demo selftest
 ```
+
+## NuGet 包信息
+
+本项目的 NuGet 元数据（见 `ILCuda.vbproj`）：
+
+| 元素 | 取值 |
+|---|---|
+| Assembly / RootNamespace | `Microsoft.VisualBasic.Computing.ILCuda` |
+| Title | ILCuda: Pure-Interop VB.NET CUDA Compute Framework |
+| TargetFramework | `net10.0`（`Platforms` 含 `AnyCPU;x64`） |
+| PackageTags | `scibasic;cuda;nvrtc;gpu;interop;cuda-driver-api;kernels;blas;jit-compilation;il-to-cuda` |
+| 关键技术特征 | 直接 P/Invoke `nvcuda.dll` 与 `nvrtc64_*.dll`，**零第三方 NuGet 依赖** |
+| README | 即本文档，通过 `<None Include="README.md">` 与 `Pack=True` 打入包内 |
+| 许可 | GPL-3.0-or-later |
+
+**相关包**：`ILCudaTensor`（`Microsoft.VisualBasic.Computing.ILCuda.GPUTensor`）在本包之上提供设备驻留张量与手写 double 精度内核（GEMM / softmax / 归约 / 卷积 / 池化 / 稀疏 × 稠密），二者共同构成 `sciBASIC#` 的 GPU 计算栈。上层使用方包括脉冲神经网络 `SNN`，其在加载 FlyWire 等真实连接组时需要 `spmm` 稀疏内核。

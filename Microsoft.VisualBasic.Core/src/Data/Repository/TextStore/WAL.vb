@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83bb095b4a0396cb0118c78e791ed7d2, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\WAL.vb"
+﻿#Region "Microsoft.VisualBasic::1f2f18f7271960ccdf452e35031b8b5d, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\WAL.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 449
-    '    Code Lines: 337 (75.06%)
-    ' Comment Lines: 56 (12.47%)
-    '    - Xml Docs: 78.57%
+    '   Total Lines: 466
+    '    Code Lines: 345 (74.03%)
+    ' Comment Lines: 63 (13.52%)
+    '    - Xml Docs: 80.95%
     ' 
-    '   Blank Lines: 56 (12.47%)
-    '     File Size: 19.43 KB
+    '   Blank Lines: 58 (12.45%)
+    '     File Size: 20.24 KB
 
 
     '     Class WAL
@@ -70,8 +70,8 @@
     '               ReadLongTok, ReadRecords, TryParseRecord
     ' 
     '     Sub: AppendMergeBegin, AppendMergeDone, AppendSplice, BeginReplay, ClearLog
-    '          Dispose, EndReplay, EnsureOpen, Flush, IncrementOperationCount
-    '          Open, ResetPendingState, TruncateTo, WriteLogBytes
+    '          Dispose, EndReplay, EnsureOpen, EnsureWritable, Flush
+    '          IncrementOperationCount, Open, ResetPendingState, TruncateTo, WriteLogBytes
     ' 
     ' 
     ' /********************************************************************************/
@@ -202,24 +202,31 @@ Namespace Data.Repository
 
 #Region "生命周期"
 
-        ''' <summary>打开（或创建）日志文件，并把写入位置定位到末尾。</summary>
+        ''' <summary>
+        ''' 打开（或创建）日志文件，并把写入位置定位到末尾。
+        ''' <para>
+        ''' 共享读（<see cref="TextStoreLockMode.SharedRead"/>）模式下不打开写句柄：
+        ''' 日志只用于读取重放，任何写入操作都会抛出 <see cref="InvalidOperationException"/>。
+        ''' </para>
+        ''' </summary>
         Public Sub Open()
             If _disposed Then Throw New ObjectDisposedException(NameOf(WAL))
             If _logStream IsNot Nothing Then Return
+            If _opt.LockMode = TextStoreLockMode.SharedRead Then Return
             _logStream = New FileStream(_logPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read, _opt.LogBufferBytes)
             _logStream.Position = _logStream.Length
         End Sub
 
         ''' <summary>把日志截断到指定长度（不会扩容），并把写入位置移到新末尾。</summary>
         Public Sub TruncateTo(length As Long)
-            EnsureOpen()
+            EnsureWritable()
             If _logStream.Length > length Then _logStream.SetLength(length)
             _logStream.Position = _logStream.Length
         End Sub
 
         ''' <summary>清空日志（合并完成后调用）。</summary>
         Public Sub ClearLog()
-            EnsureOpen()
+            EnsureWritable()
             _logStream.SetLength(0)
             _logStream.Flush(True)
             _logStream.Position = 0
@@ -269,7 +276,7 @@ Namespace Data.Repository
 
         ''' <summary>强制把日志刷到磁盘（FsyncEachWrite=False 时由外部定期调用）。</summary>
         Public Sub Flush()
-            EnsureOpen()
+            EnsureWritable()
             _logStream.Flush(True)
         End Sub
 
@@ -373,7 +380,17 @@ Namespace Data.Repository
             If _logStream Is Nothing Then Throw New InvalidOperationException("必须先调用 Open()。")
         End Sub
 
+        ''' <summary>确认当前处于可写状态（非共享读模式，且已打开写句柄）。</summary>
+        Private Sub EnsureWritable()
+            If _opt.LockMode = TextStoreLockMode.SharedRead Then
+                Throw New InvalidOperationException("日志以共享读（只读）模式打开，不支持写入操作。")
+            End If
+
+            EnsureOpen()
+        End Sub
+
         Private Sub WriteLogBytes(text As String)
+            EnsureWritable()
             Dim b As Byte() = _enc.GetBytes(text)
             _logStream.Write(b, 0, b.Length)
         End Sub
@@ -527,4 +544,3 @@ Namespace Data.Repository
     End Class
 
 End Namespace
-

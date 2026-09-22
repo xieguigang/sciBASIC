@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6236cec149600a9f406ed0e06a8f748c, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\ParallelCompute.vb"
+﻿#Region "Microsoft.VisualBasic::54e800954b8acf7cdafaaf21ed0aca5b, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\ParallelCompute.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 63 (64.95%)
-    ' Comment Lines: 16 (16.49%)
+    '   Total Lines: 149
+    '    Code Lines: 63 (42.28%)
+    ' Comment Lines: 68 (45.64%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 18 (18.56%)
-    '     File Size: 4.22 KB
+    '   Blank Lines: 18 (12.08%)
+    '     File Size: 7.19 KB
 
 
     '     Class ParallelComputeFitness
@@ -85,22 +85,63 @@ Namespace Darwinism.GAF.Population
     ''' </remarks>
     Public MustInherit Class ParallelComputeFitness(Of chr As {Class, Chromosome(Of chr)})
 
+        ''' <summary>
+        ''' Evaluate the fitness value of each individual in a population.
+        ''' </summary>
+        ''' <param name="comparator">The fitness evaluation function of the genetic algorithm.</param>
+        ''' <param name="source">The target population collection.</param>
+        ''' <returns>
+        ''' A sequence of the <see cref="NamedValue(Of Double)"/> objects, in which 
+        ''' the name is the <see cref="Chromosome(Of T).Identity"/> of the 
+        ''' individual and the value is its fitness value.
+        ''' </returns>
         Public MustOverride Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
 
     End Class
 
+    ''' <summary>
+    ''' A parallel compute implementation which distributes the population 
+    ''' individuals onto all of the available cpu cores.
+    ''' </summary>
+    ''' <typeparam name="chr">The chromosome type of the genetic algorithm.</typeparam>
     Public Class ParallelPopulationCompute(Of chr As {Class, Chromosome(Of chr)}) : Inherits ParallelComputeFitness(Of chr)
 
+        ''' <summary>
+        ''' Evaluate the fitness value of each individual in the population by 
+        ''' distributing the task onto all of the available cpu cores.
+        ''' </summary>
+        ''' <param name="comparator">The fitness evaluation function of the genetic algorithm.</param>
+        ''' <param name="source">The target population collection.</param>
+        ''' <returns>A sequence of the fitness value of each individual.</returns>
         Public Overrides Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
             Return DirectCast(New ParallelTask(source.GetCollection().ToArray, comparator).Run, ParallelTask).fitness
         End Function
 
+        ''' <summary>
+        ''' The parallel task which evaluates the fitness value of the assigned 
+        ''' chromosome individuals on one cpu core.
+        ''' </summary>
         Private Class ParallelTask : Inherits VectorTask
 
+            ''' <summary>
+            ''' The fitness value of each chromosome, the name is the 
+            ''' <see cref="Chromosome(Of T).Identity"/> of the individual.
+            ''' </summary>
             Public fitness As NamedValue(Of Double)()
+            ''' <summary>
+            ''' The chromosome individuals which are assigned to this task.
+            ''' </summary>
             Public chrs As chr()
+            ''' <summary>
+            ''' The fitness evaluation function of the genetic algorithm.
+            ''' </summary>
             Public env As FitnessPool(Of chr)
 
+            ''' <summary>
+            ''' Create a parallel fitness evaluation task.
+            ''' </summary>
+            ''' <param name="pop">The chromosome individuals which are assigned to this task.</param>
+            ''' <param name="comparator">The fitness evaluation function of the genetic algorithm.</param>
             Public Sub New(pop As chr(), comparator As FitnessPool(Of chr))
                 MyBase.New(nsize:=pop.Length)
 
@@ -123,8 +164,19 @@ Namespace Darwinism.GAF.Population
         End Class
     End Class
 
+    ''' <summary>
+    ''' A compute implementation for the case that the parallelism is already 
+    ''' handled inside the fitness calculation function itself, so that the 
+    ''' individuals of the population are evaluated in sequence.
+    ''' </summary>
+    ''' <typeparam name="chr">The chromosome type of the genetic algorithm.</typeparam>
     Public Class ParallelDataSetCompute(Of chr As {Class, Chromosome(Of chr)}) : Inherits ParallelComputeFitness(Of chr)
 
+        ''' <summary>
+        ''' Whether a progress bar should be displayed while the fitness values 
+        ''' are being evaluated? The default value is ``True``.
+        ''' </summary>
+        ''' <returns>A <see cref="Boolean"/> value.</returns>
         Public Property verbose As Boolean = True
 
         ''' <summary>
@@ -133,8 +185,8 @@ Namespace Darwinism.GAF.Population
         ''' <param name="comparator">
         ''' parallel computation between the dataset in this fitness calculation
         ''' </param>
-        ''' <param name="source"></param>
-        ''' <returns></returns>
+        ''' <param name="source">The target population collection.</param>
+        ''' <returns>A sequence of the fitness value of each individual.</returns>
         Public Overrides Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
             If verbose Then
                 Return ComputeFitnessVerboseProgress(comparator, source)

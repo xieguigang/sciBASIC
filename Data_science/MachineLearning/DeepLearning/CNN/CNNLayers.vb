@@ -1,15 +1,72 @@
+﻿#Region "Microsoft.VisualBasic::1c67db2b05e762a92da6d1ed2a01093c, Data_science\MachineLearning\DeepLearning\CNN\CNNLayers.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 81 (37.50%)
+    ' Comment Lines: 109 (50.46%)
+    '    - Xml Docs: 99.08%
+    ' 
+    '   Blank Lines: 26 (12.04%)
+    '     File Size: 11.60 KB
+
+
+    '     Module CNNLayers
+    ' 
+    '         Function: conv_layer, conv_transpose_layer, dropout_layer, full_connected_layer, gaussian_layer
+    '                   (+2 Overloads) input_layer, leaky_relu_layer, lrn_layer, maxout_layer, pool_layer
+    '                   regression_layer, relu_layer, sigmoid_layer, softmax_layer, spec
+    '                   tanh_layer
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
 Namespace CNN
 
     ''' <summary>
-    ''' 搭建 CNN 网络时使用的“层规格”工厂函数。
+    ''' Factory functions for building the layer specifications of a CNN network.
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' 函数命名与 R# 的 MLkit（``studio\Rsharp_kit\MLkit\MachineLearning\CNN.vb``）保持一一对应，
-    ''' 因此 R# 脚本中的网络定义可以逐行翻译到 VB。以
-    ''' ``tutorials\..\CNN_image\auto_encoder.R`` 为例：
+    ''' The function names correspond one to one with the MLkit of R#
+    ''' (<c>studio\Rsharp_kit\MLkit\MachineLearning\CNN.vb</c>), so a network definition written in an R# script can
+    ''' be translated line by line into VB. Taking <c>tutorials\..\CNN_image\auto_encoder.R</c> as an example:
     ''' </para>
     ''' <code>
     ''' ' R#:
@@ -29,12 +86,13 @@ Namespace CNN
     '''     softmax_layer()
     ''' </code>
     ''' <para>
-    ''' 两者唯一的差别是 VB 的隐式换行要求二元运算符写在**上一行行尾**（R# 允许写在行首）。
+    ''' The only difference is that VB requires the binary operator at the end of the previous line for an implicit
+    ''' line continuation, whereas R# allows it at the start of the next line.
     ''' </para>
     ''' <para>
-    ''' 这些函数返回的都是 <see cref="CNNLayerArguments"/>（尚未创建的层），
-    ''' 由 <see cref="LayerBuilder"/> 的 ``+`` 运算符按从左到右的顺序实例化，
-    ''' 因此最终得到的层序列与逐个调用 ``buildXxxLayer`` 完全一致。
+    ''' These functions all return <see cref="CNNLayerArguments"/> objects (layers that have not been created yet).
+    ''' The <see cref="LayerBuilder"/> <c>+</c> operator instantiates them from left to right, so the resulting layer
+    ''' sequence is identical to calling <c>buildXxxLayer</c> for every layer individually.
     ''' </para>
     ''' </remarks>
     Public Module CNNLayers
@@ -47,10 +105,11 @@ Namespace CNN
         End Function
 
         ''' <summary>
-        ''' 输入层：把数据透传进网络，同时声明输入图像的尺寸与通道数。
+        ''' Input layer: passes the data into the network and declares the image size and channel count.
         ''' </summary>
-        ''' <param name="size">形如 ``{width, height}`` 的图像尺寸</param>
-        ''' <param name="depth">通道数，灰度图为 1</param>
+        ''' <param name="size">The image size, given as <c>{width, height}</c>.</param>
+        ''' <param name="depth">Number of channels; 1 for grayscale images.</param>
+        ''' <returns>The input layer specification.</returns>
         Public Function input_layer(size As Integer(), Optional depth As Integer = 1) As CNNLayerArguments
             If size Is Nothing OrElse size.Length < 2 Then
                 Throw New ArgumentException("需要形如 {width, height} 的图像尺寸", NameOf(size))
@@ -63,20 +122,24 @@ Namespace CNN
         End Function
 
         ''' <summary>
-        ''' 输入层（直接给出 <see cref="Dimension"/> 的版本）
+        ''' Input layer variant that takes the image size directly as a <see cref="Dimension"/>.
         ''' </summary>
+        ''' <param name="dims">The image size.</param>
+        ''' <param name="depth">Number of channels; 1 for grayscale images.</param>
+        ''' <returns>The input layer specification.</returns>
         Public Function input_layer(dims As Dimension, Optional depth As Integer = 1) As CNNLayerArguments
             Return spec($"input_layer(size=[{dims.x}, {dims.y}], depth={depth})",
                         Function(cnn) cnn.buildInputLayer(dims, depth))
         End Function
 
         ''' <summary>
-        ''' 卷积层：用多个滤波器去提取局部特征（边缘、纹理等）。
+        ''' Convolution layer: extracts local features (edges, textures and so on) with a bank of filters.
         ''' </summary>
-        ''' <param name="sx">滤波窗口边长（方窗）</param>
-        ''' <param name="filters">滤波器个数，即输出通道数</param>
-        ''' <param name="stride">滑动步长</param>
-        ''' <param name="padding">零填充宽度</param>
+        ''' <param name="sx">Side length of the (square) filter window.</param>
+        ''' <param name="filters">Number of filters, i.e. the number of output channels.</param>
+        ''' <param name="stride">Sliding step of the filter window.</param>
+        ''' <param name="padding">Width of the zero padding applied to the input.</param>
+        ''' <returns>The convolution layer specification.</returns>
         Public Function conv_layer(sx As Integer,
                                    filters As Integer,
                                    Optional stride As Integer = 1,
@@ -87,12 +150,14 @@ Namespace CNN
         End Function
 
         ''' <summary>
-        ''' 转置卷积层：把特征图上采样回更大的空间尺寸（自编码器的解码端、语义分割等场景）。
+        ''' Transposed convolution layer: upsamples a feature map back to a larger spatial size (decoder side of an
+        ''' auto encoder, semantic segmentation, and similar scenarios).
         ''' </summary>
-        ''' <param name="dims">目标输出尺寸 ``{width, height, depth}``</param>
-        ''' <param name="filter">滤波窗口 ``{width, height}``</param>
-        ''' <param name="filters">滤波器个数</param>
-        ''' <param name="stride">步长</param>
+        ''' <param name="dims">Target output size <c>{width, height, depth}</c>.</param>
+        ''' <param name="filter">Filter window <c>{width, height}</c>.</param>
+        ''' <param name="filters">Number of filters.</param>
+        ''' <param name="stride">Stride.</param>
+        ''' <returns>The transposed convolution layer specification.</returns>
         Public Function conv_transpose_layer(dims As Integer(),
                                              filter As Integer(),
                                              Optional filters As Integer = 3,
@@ -113,78 +178,93 @@ Namespace CNN
         End Function
 
         ''' <summary>
-        ''' 池化层：在窗口内做下采样，缩小特征图尺寸。
+        ''' Pooling layer: downsamples the feature map inside a sliding window.
         ''' </summary>
-        ''' <param name="sx">池化窗口边长（方窗）</param>
-        ''' <param name="stride">步长</param>
-        ''' <param name="padding">零填充宽度</param>
+        ''' <param name="sx">Side length of the (square) pooling window.</param>
+        ''' <param name="stride">Stride of the pooling window.</param>
+        ''' <param name="padding">Width of the zero padding applied to the input.</param>
+        ''' <returns>The pooling layer specification.</returns>
         Public Function pool_layer(sx As Integer, stride As Integer, padding As Integer) As CNNLayerArguments
             Return spec($"pool_layer(sx={sx}, stride={stride}, padding={padding})",
                         Function(cnn) cnn.buildPoolLayer(sx, stride, padding))
         End Function
 
         ''' <summary>
-        ''' 全连接层：每个神经元与上一层全部输出相连。
+        ''' Fully connected layer: every neuron is connected to the complete output of the previous layer.
         ''' </summary>
-        ''' <param name="size">神经元个数</param>
+        ''' <param name="size">Number of neurons.</param>
+        ''' <returns>The fully connected layer specification.</returns>
         Public Function full_connected_layer(size As Integer) As CNNLayerArguments
             Return spec($"full_connected_layer(size={size})",
                         Function(cnn) cnn.buildFullyConnectedLayer(size))
         End Function
 
-        ''' <summary>ReLU 激活：``f(x) = max(0, x)``</summary>
+        ''' <summary>ReLU activation: <c>f(x) = max(0, x)</c>.</summary>
+        ''' <returns>The ReLU layer specification.</returns>
         Public Function relu_layer() As CNNLayerArguments
             Return spec(NameOf(relu_layer), Function(cnn) cnn.buildReLULayer())
         End Function
 
-        ''' <summary>LeakyReLU 激活：负半轴保留一个小的斜率，避免神经元“死亡”</summary>
+        ''' <summary>
+        ''' LeakyReLU activation: keeps a small slope on the negative half axis so neurons do not "die".
+        ''' </summary>
+        ''' <returns>The LeakyReLU layer specification.</returns>
         Public Function leaky_relu_layer() As CNNLayerArguments
             Return spec(NameOf(leaky_relu_layer), Function(cnn) cnn.buildLeakyReLULayer())
         End Function
 
-        ''' <summary>Sigmoid 激活：``f(x) = 1 / (1 + exp(-x))``，输出落在 (0, 1)</summary>
+        ''' <summary>Sigmoid activation: <c>f(x) = 1 / (1 + exp(-x))</c>, with output in <c>(0, 1)</c>.</summary>
+        ''' <returns>The sigmoid layer specification.</returns>
         Public Function sigmoid_layer() As CNNLayerArguments
             Return spec(NameOf(sigmoid_layer), Function(cnn) cnn.buildSigmoidLayer())
         End Function
 
-        ''' <summary>Tanh 激活：输出落在 (-1, 1)</summary>
+        ''' <summary>Tanh activation: output in <c>(-1, 1)</c>.</summary>
+        ''' <returns>The tanh layer specification.</returns>
         Public Function tanh_layer() As CNNLayerArguments
             Return spec(NameOf(tanh_layer), Function(cnn) cnn.buildTanhLayer())
         End Function
 
-        ''' <summary>Maxout 激活：在分组内取最大值</summary>
+        ''' <summary>Maxout activation: takes the maximum value inside each group.</summary>
+        ''' <returns>The maxout layer specification.</returns>
         Public Function maxout_layer() As CNNLayerArguments
             Return spec(NameOf(maxout_layer), Function(cnn) cnn.buildMaxoutLayer())
         End Function
 
-        ''' <summary>高斯激活层</summary>
+        ''' <summary>Gaussian activation layer.</summary>
+        ''' <returns>The Gaussian layer specification.</returns>
         Public Function gaussian_layer() As CNNLayerArguments
             Return spec(NameOf(gaussian_layer), Function(cnn) cnn.buildGaussian())
         End Function
 
         ''' <summary>
-        ''' 局部响应归一化 (LRN)：在大响应神经元附近做侧抑制，增强高频特征的对比度
+        ''' Local response normalization (LRN): lateral inhibition around strongly responding neurons increases the
+        ''' contrast of high frequency features.
         ''' </summary>
-        ''' <param name="n">参与归一化的邻域大小</param>
+        ''' <param name="n">Size of the neighborhood involved in the normalization.</param>
+        ''' <returns>The LRN layer specification.</returns>
         Public Function lrn_layer(Optional n As Integer = 5) As CNNLayerArguments
             Return spec($"lrn_layer(n={n})", Function(cnn) cnn.buildLocalResponseNormalizationLayer(n))
         End Function
 
         ''' <summary>
-        ''' Dropout 层：训练时随机丢弃一部分激活值，用于抑制过拟合
+        ''' Dropout layer: randomly drops a fraction of the activations during training to reduce overfitting.
         ''' </summary>
-        ''' <param name="drop_prob">丢弃概率</param>
+        ''' <param name="drop_prob">Probability of dropping an activation.</param>
+        ''' <returns>The dropout layer specification.</returns>
         Public Function dropout_layer(Optional drop_prob As Double = 0.5) As CNNLayerArguments
             Return spec($"dropout_layer(drop_prob={drop_prob})",
                         Function(cnn) cnn.buildDropoutLayer(drop_prob))
         End Function
 
-        ''' <summary>Softmax：把激活值压成 0~1 的概率分布（多分类的输出层）</summary>
+        ''' <summary>Softmax: turns the activations into a probability distribution in <c>[0, 1]</c> (multi-class output layer).</summary>
+        ''' <returns>The softmax layer specification.</returns>
         Public Function softmax_layer() As CNNLayerArguments
             Return spec(NameOf(softmax_layer), Function(cnn) cnn.buildSoftmaxLayer())
         End Function
 
-        ''' <summary>回归损失层：连续值输出（自编码器、变分自编码器）的损失</summary>
+        ''' <summary>Regression loss layer: the loss used for continuous outputs (auto encoders, variational auto encoders).</summary>
+        ''' <returns>The regression layer specification.</returns>
         Public Function regression_layer() As CNNLayerArguments
             Return spec(NameOf(regression_layer), Function(cnn) cnn.buildRegressionLayer())
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee8aa68c9d679037ff90e4f264f009bb, Data_science\MachineLearning\DeepLearning\Transformer\Embedding.vb"
+﻿#Region "Microsoft.VisualBasic::00e03f2cdd7a6667e293c366bfff7fbc, Data_science\MachineLearning\DeepLearning\Transformer\Embedding.vb"
 
     ' Author:
     ' 
@@ -34,32 +34,42 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 129 (61.72%)
-    ' Comment Lines: 47 (22.49%)
-    '    - Xml Docs: 97.87%
+    '   Total Lines: 327
+    '    Code Lines: 182 (55.66%)
+    ' Comment Lines: 90 (27.52%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 33 (15.79%)
-    '     File Size: 8.18 KB
+    '   Blank Lines: 55 (16.82%)
+    '     File Size: 14.29 KB
 
 
     '     Class Embedding
     ' 
-    '         Properties: DictionarySize, EmbeddingSize, SequenceLength
+    '         Properties: DictionarySize, EmbeddingSize, Parameters, SequenceLength
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: AllWordsInDictionary, Embed, GetWordIndex, GetWords
+    '         Function: AllWordsInDictionary, CalculateLossAndGradient, Embed, GetWordIndex, GetWords
     ' 
-    '         Sub: AddPositionalEncoding, CalculateLossFunction, MakeTrainingStep, OneHotEmbedding, SetDropoutNodes
+    '         Sub: AddPositionalEncoding, Backward, MakeTrainingStep, OneHotEmbedding, SetDropoutNodes
+    '              ZeroGradients
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+' ---------------------------------------------------------------------------
+' Embedding —— 词嵌入层（迁移到 TensorFlow\Tensor.vb + 手写反向传播）
+'
+' 前向：按 one-hot 索引把 embeddingLayer 的对应行拷贝到 [batch, seq, emb]，
+'       再叠加正弦位置编码，训练时按最后一维做 dropout。
+' 反向：穿过 dropout 之后，把每个 (sentence, position) 的梯度散射累加回
+'       embeddingLayer 对应行（同一词出现多次会自然累加）。
+' ---------------------------------------------------------------------------
+
 Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.AutomaticDifferentiation
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -83,12 +93,14 @@ Namespace Transformer
 
         Private embeddingLayerOptimizer As Optimizer
 
+        ''' <summary>Gets the number of distinct words in the dictionary.</summary>
         Public ReadOnly Property DictionarySize As Integer
             Get
                 Return one_hot.Count
             End Get
         End Property
 
+        ''' <summary>Gets the width of the embedding vectors.</summary>
         Public Property EmbeddingSize As Integer
             Get
                 Return _EmbeddingSize
@@ -98,6 +110,7 @@ Namespace Transformer
             End Set
         End Property
 
+        ''' <summary>Gets the fixed sequence length used by this embedding layer.</summary>
         Public Property SequenceLength As Integer
             Get
                 Return _SequenceLength
@@ -108,79 +121,157 @@ Namespace Transformer
         End Property
 
         ''' <summary>
-        ''' Constructor
+        ''' 与 <see cref="embeddingLayer"/> 同形的梯度累加器。
         ''' </summary>
-        ''' <param name="embeddingSize"></param>
-        ''' <param name="sequenceLength"></param>
-        ''' <param name="sentences"></param>
+        Friend ReadOnly Property Parameters As Tensor
+            Get
+                Return embeddingLayer
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Creates the embedding layer and builds the one-hot dictionary from the given sentences.
+        ''' </summary>
+        ''' <param name="embeddingSize">Width of the embedding vectors.</param>
+        ''' <param name="sequenceLength">Fixed sequence length of the inputs.</param>
+        ''' <param name="sentences">The sentences used to build the word dictionary.</param>
         Public Sub New(embeddingSize As Integer, sequenceLength As Integer, sentences As List(Of List(Of String)))
             Me.EmbeddingSize = embeddingSize
             Me.SequenceLength = sequenceLength
 
-            OneHotEmbedding(sentences)
-            embeddingLayer = New Tensor(DictionarySize, Me.EmbeddingSize)
-            embeddingLayer.GenerateNormalRandomValues()
+            Call OneHotEmbedding(sentences)
 
+            embeddingLayer = TensorOps.HeNormalInit(New Integer() {DictionarySize, Me.EmbeddingSize})
             embeddingLayerOptimizer = New Optimizer(embeddingLayer)
 
             dropoutMask = New Boolean(embeddingSize - 1) {}
         End Sub
 
         ''' <summary>
-        ''' Multiply the one-hot embeddings with the embedding layer to project onto a smaller space
+        ''' Looks up the embedding of every word, adds the positional encoding and optionally applies dropout.
         ''' </summary>
-        ''' <param name="sentences"></param>
-        ''' <param name="isTraining"></param>
-        ''' <returns></returns>
+        ''' <param name="sentences">The batch of tokenized sentences.</param>
+        ''' <param name="isTraining">When <c>True</c> dropout is applied where configured.</param>
+        ''' <returns>The embedded sentences, shaped <c>[batch, seq, emb]</c>.</returns>
         Public Function Embed(sentences As List(Of List(Of String)), isTraining As Boolean) As Tensor
             Dim batchSize = sentences.Count
             Dim wordEmbeddings As Tensor = New Tensor(batchSize, SequenceLength, EmbeddingSize)
-
+            Dim emb = wordEmbeddings.Data
+            Dim layer = embeddingLayer.Data
+            Dim n = EmbeddingSize
             Dim s = 0
+
             For Each sentence In sentences
                 Dim word_count = 0
+
                 For Each word In sentence
                     ' No need for matrix multiplication since only one element of vector is nonzero
                     Dim pos As Integer = one_hot(word.ToLower())
-                    For i = 0 To EmbeddingSize - 1
-                        wordEmbeddings(s, word_count, i) = embeddingLayer(pos, i)
-                    Next
+                    Array.Copy(layer, pos * n, emb, (s * SequenceLength + word_count) * n, n)
                     word_count += 1
                 Next
 
-                AddPositionalEncoding(wordEmbeddings, s, sentence.Count())
+                Call AddPositionalEncoding(wordEmbeddings, s, sentence.Count())
                 s += 1
             Next
 
-            If isTraining AndAlso dropoutRate > 0 Then wordEmbeddings = wordEmbeddings.Dropout(dropoutMask, dropoutRate)
+            Call wordEmbeddings.MarkHostModified()
+
+            If isTraining AndAlso dropoutRate > 0 Then wordEmbeddings = TensorOps.DropoutMask(wordEmbeddings, dropoutMask, dropoutRate)
 
             Return wordEmbeddings
         End Function
 
         ''' <summary>
-        ''' Cross entropy loss function between the correct word in a sentence and the decoder output word.
-        ''' For a batch of several sentences the loss is accumulated.
+        ''' Backpropagates through the embedding layer: the gradient of every (sentence, position) pair is scattered back into
+        ''' the row of the embedding matrix that belongs to the word.
         ''' </summary>
-        ''' <param name="filteredOutout"></param>
-        ''' <param name="correctSpanishSentences"></param>
-        ''' <param name="w"></param>
-        ''' <param name="loss"></param>
-        Public Sub CalculateLossFunction(filteredOutout As Tensor, correctSpanishSentences As List(Of List(Of String)), w As Integer, ByRef loss As Rev)
-            For s = 0 To correctSpanishSentences.Count() - 1
-                If w >= correctSpanishSentences(s).Count() Then Continue For
+        ''' <param name="dWordEmbeddings">Gradient with respect to the <see cref="Embed"/> output, shaped <c>[batch, seq, emb]</c>.</param>
+        ''' <param name="sentences">The sentences used during the forward pass, needed to recover the word indices.</param>
+        ''' <param name="applyDropout">Whether dropout was applied during the forward pass.</param>
+        Public Sub Backward(dWordEmbeddings As Tensor, sentences As List(Of List(Of String)), applyDropout As Boolean)
+            Dim dOut = dWordEmbeddings
 
-                Dim correctWord = correctSpanishSentences(s)(w)
+            If applyDropout AndAlso dropoutRate > 0 Then
+                dOut = TensorOps.DropoutMaskBackward(dOut, dropoutMask, dropoutRate)
+            End If
 
-                Dim ind = GetWordIndex(correctWord)
-                loss -= filteredOutout(s, 0, ind).Log()
+            Dim grad = embeddingLayerOptimizer.Gradient.Data
+            Dim dIn = dOut.Data
+            Dim n = EmbeddingSize
+            Dim s = 0
+
+            For Each sentence In sentences
+                Dim word_count = 0
+
+                For Each word In sentence
+                    Dim pos As Integer = one_hot(word.ToLower())
+                    Dim src = (s * SequenceLength + word_count) * n
+                    Dim dst = pos * n
+
+                    For i As Integer = 0 To n - 1
+                        grad(dst + i) += dIn(src + i)
+                    Next
+
+                    word_count += 1
+                Next
+
+                s += 1
             Next
+
+            Call embeddingLayerOptimizer.Gradient.MarkHostModified()
         End Sub
 
         ''' <summary>
-        ''' Get a word based on its index in the dictionary
+        ''' Computes the cross entropy loss and its gradient with respect to the output layer logits.
         ''' </summary>
-        ''' <param name="indexes"></param>
-        ''' <returns></returns>
+        ''' <remarks>
+        ''' For softmax followed by cross entropy the derivative is simply <c>d(logits) = softmax - onehot</c>, so the chain rule
+        ''' through log and softmax is skipped. The returned value is the unscaled loss contribution of this step; the caller
+        ''' divides it by <c>sequenceLength * batchSize</c>.
+        ''' </remarks>
+        ''' <param name="filteredOutput">Output layer softmax probabilities, shaped <c>[batch, 1, dictSize]</c>.</param>
+        ''' <param name="correctSentences">The correct target sentences.</param>
+        ''' <param name="w">Index of the word position that is currently being predicted.</param>
+        ''' <param name="dLogits">Receives the gradient with respect to the logits, with the same shape as <paramref name="filteredOutput"/>.</param>
+        ''' <returns>The unscaled cross entropy loss of this step.</returns>
+        Public Function CalculateLossAndGradient(filteredOutput As Tensor,
+                                                 correctSentences As List(Of List(Of String)),
+                                                 w As Integer,
+                                                 ByRef dLogits As Tensor) As Double
+            Dim dictSize = filteredOutput.Shape(filteredOutput.Rank - 1)
+            Dim batchSize = filteredOutput.Shape(0)
+
+            dLogits = New Tensor(filteredOutput.Shape)
+
+            Dim p = filteredOutput.Data
+            Dim g = dLogits.Data
+            Dim total As Double = 0.0
+
+            For s = 0 To correctSentences.Count() - 1
+                If w >= correctSentences(s).Count() Then Continue For
+
+                Dim ind = GetWordIndex(correctSentences(s)(w))
+                Dim baseIdx = s * dictSize
+
+                For j = 0 To dictSize - 1
+                    g(baseIdx + j) = p(baseIdx + j)
+                Next
+
+                g(baseIdx + ind) -= 1.0
+                total -= std.Log(std.Max(p(baseIdx + ind), 1.0E-12))
+            Next
+
+            Call dLogits.MarkHostModified()
+
+            Return total
+        End Function
+
+        ''' <summary>
+        ''' Gets the words that correspond to the given dictionary indices.
+        ''' </summary>
+        ''' <param name="indexes">The dictionary indices.</param>
+        ''' <returns>The words stored at those indices.</returns>
         Public Function GetWords(indexes As Integer()) As String()
             Dim words = New String(indexes.Length - 1) {}
             For s = 0 To indexes.Length - 1
@@ -191,14 +282,20 @@ Namespace Transformer
         End Function
 
         ''' <summary>
-        ''' Get the index of a specific word in a dictionary
+        ''' Gets the dictionary index of a word.
         ''' </summary>
-        ''' <param name="word"></param>
-        ''' <returns></returns>
+        ''' <param name="word">The word to look up.</param>
+        ''' <returns>The dictionary index of <paramref name="word"/>.</returns>
         Public Function GetWordIndex(word As String) As Integer
             Return one_hot(word)
         End Function
 
+        ''' <summary>
+        ''' Checks whether every word of the given sentences exists in the dictionary.
+        ''' </summary>
+        ''' <param name="sentences">The sentences to check.</param>
+        ''' <param name="wordNotInDictionary">Receives the first word that is missing from the dictionary.</param>
+        ''' <returns><c>True</c> when all words are known; otherwise <c>False</c>.</returns>
         Public Function AllWordsInDictionary(sentences As List(Of List(Of String)), <Out> ByRef wordNotInDictionary As String) As Boolean
             wordNotInDictionary = ""
 
@@ -224,7 +321,8 @@ Namespace Transformer
                 For Each word In sentence
                     If Not one_hot.ContainsKey(word.ToLower()) Then
                         allWords.Add(word.ToLower())
-                        one_hot.Add(word.ToLower(), std.Min(Threading.Interlocked.Increment(word_index), word_index - 1))
+                        one_hot.Add(word.ToLower(), word_index)
+                        word_index += 1
                     End If
                 Next
             Next
@@ -237,7 +335,13 @@ Namespace Transformer
         ''' <param name="s"></param>
         ''' <param name="sentenceLength"></param>
         Private Sub AddPositionalEncoding(wordEmbeddings As Tensor, s As Integer, sentenceLength As Integer)
+            Dim data = wordEmbeddings.Data
+            Dim n = EmbeddingSize
+            Dim baseIdx = s * SequenceLength * n
+
             For pos = 0 To sentenceLength - 1
+                Dim posBase = baseIdx + pos * n
+
                 For i = 0 To EmbeddingSize - 1
                     Dim pe As Double
                     If i Mod 2 = 0 Then
@@ -245,11 +349,16 @@ Namespace Transformer
                     Else
                         pe = std.Cos(pos / std.Pow(10000, (i - 1) / EmbeddingSize))
                     End If
-                    wordEmbeddings(s, pos, i) += pe
+                    data(posBase + i) += pe
                 Next
             Next
         End Sub
 
+        ''' <summary>
+        ''' Configures dropout for the embedding output and draws a new dropout mask.
+        ''' </summary>
+        ''' <param name="dropoutRate">Dropout rate in <c>[0, 1)</c>.</param>
+        ''' <exception cref="ArgumentException">Thrown when the rate is outside <c>[0, 1)</c>.</exception>
         Public Sub SetDropoutNodes(dropoutRate As Double)
             If dropoutRate < 0 OrElse dropoutRate >= 1 Then Throw New ArgumentException("Error: dropout rate must be >= 0 and < 1")
 
@@ -261,6 +370,16 @@ Namespace Transformer
             Next
         End Sub
 
+        ''' <summary>Clears the gradient accumulator of the embedding matrix.</summary>
+        Public Sub ZeroGradients()
+            embeddingLayerOptimizer.ZeroGrad()
+        End Sub
+
+        ''' <summary>
+        ''' Applies one optimizer step to the embedding matrix.
+        ''' </summary>
+        ''' <param name="learningRate">The learning rate for this step.</param>
+        ''' <param name="[step]">The current step index, used by the Adam bias correction.</param>
         Public Sub MakeTrainingStep(learningRate As Double, [step] As Integer)
             embeddingLayerOptimizer.MakeTrainingStep(learningRate, [step], embeddingLayer)
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a511bd96efe8430f71c8824b2dddf131, Data_science\MachineLearning\DeepLearning\CNN\DataLink.vb"
+﻿#Region "Microsoft.VisualBasic::efbbd18b67f28e41a0a20dc65c52bab3, Data_science\MachineLearning\DeepLearning\CNN\DataLink.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 8 (42.11%)
-    ' Comment Lines: 7 (36.84%)
+    '   Total Lines: 22
+    '    Code Lines: 8 (36.36%)
+    ' Comment Lines: 10 (45.45%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (21.05%)
-    '     File Size: 559 B
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 746 B
 
 
     '     Class DataLink
@@ -57,14 +57,17 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
 Namespace CNN
 
+    ''' <summary>
+    ''' Base class for layer links that hold the input and output <see cref="DataBlock"/> of a layer.
+    ''' </summary>
     Public MustInherit Class DataLink
 
         ''' <summary>
-        ''' the input and output
+        ''' The input and output activations of the layer.
         ''' </summary>
         ''' <remarks>
-        ''' data object at here for link the current layer and the next layer
-        ''' no needs for save into the model file
+        ''' These data objects link the current layer to the next layer and therefore do not need to be persisted into
+        ''' the model file.
         ''' </remarks>
         <IgnoreDataMember> Protected in_act As DataBlock
         <IgnoreDataMember> Protected out_act As DataBlock

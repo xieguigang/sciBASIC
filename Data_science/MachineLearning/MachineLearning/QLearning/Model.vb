@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c079a3366665f8e118f16ab3b051ea84, Data_science\MachineLearning\MachineLearning\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::397674fe1181eb73cb1da81b3b365031, Data_science\MachineLearning\MachineLearning\QLearning\Model.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 38 (70.37%)
-    ' Comment Lines: 6 (11.11%)
+    '   Total Lines: 116
+    '    Code Lines: 38 (32.76%)
+    ' Comment Lines: 68 (58.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.73 KB
+    '   Blank Lines: 10 (8.62%)
+    '     File Size: 4.48 KB
 
 
     '     Interface IQTable
@@ -70,11 +70,31 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace QLearning.DataModel
 
+    ''' <summary>
+    ''' The common interface of the tabular Q-learning models.
+    ''' </summary>
     Public Interface IQTable
+        ''' <summary>
+        ''' The state-action value table: the key is the environment state and 
+        ''' the value is the Q-value vector of all of the possible actions.
+        ''' </summary>
         ReadOnly Property Table As Dictionary(Of Action)
+        ''' <summary>
+        ''' The number of the possible actions of each environment state.
+        ''' </summary>
         ReadOnly Property ActionRange As Integer
+        ''' <summary>
+        ''' The chance of taking a random action instead of the best known 
+        ''' action, which is the epsilon value of the epsilon-greedy strategy.
+        ''' </summary>
         Property ExplorationChance As Single
+        ''' <summary>
+        ''' The discount factor of the future reward.
+        ''' </summary>
         Property GammaValue As Single
+        ''' <summary>
+        ''' The learning rate of the Q-value update.
+        ''' </summary>
         Property LearningRate As Single
     End Interface
 
@@ -83,12 +103,36 @@ Namespace QLearning.DataModel
     ''' </summary>
     Public Class QModel
 
+        ''' <summary>
+        ''' All of the state-action pairs which are stored in the Q table.
+        ''' </summary>
+        ''' <returns>An array of the <see cref="Action"/> objects.</returns>
         Public Property Actions As Action()
+        ''' <summary>
+        ''' The number of the possible actions of each environment state.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Property ActionRange As Integer
+        ''' <summary>
+        ''' The chance of taking a random action instead of the best known action.
+        ''' </summary>
+        ''' <returns>A <see cref="Single"/> value in the interval ``[0, 1]``.</returns>
         Public Property ExplorationChance As Single
+        ''' <summary>
+        ''' The discount factor of the future reward.
+        ''' </summary>
+        ''' <returns>A <see cref="Single"/> value in the interval ``[0, 1]``.</returns>
         Public Property GammaValue As Single
+        ''' <summary>
+        ''' The learning rate of the Q-value update.
+        ''' </summary>
+        ''' <returns>A <see cref="Single"/> value in the interval ``[0, 1]``.</returns>
         Public Property LearningRate As Single
 
+        ''' <summary>
+        ''' Create the data model from a trained Q table object.
+        ''' </summary>
+        ''' <param name="qtable">A trained <see cref="IQTable"/> object.</param>
         Sub New(qtable As IQTable)
             Actions = qtable.Table.Values.ToArray
             ActionRange = qtable.ActionRange
@@ -97,6 +141,9 @@ Namespace QLearning.DataModel
             LearningRate = qtable.LearningRate
         End Sub
 
+        ''' <summary>
+        ''' Create a new empty Q model.
+        ''' </summary>
         Sub New()
         End Sub
     End Class
@@ -104,14 +151,29 @@ Namespace QLearning.DataModel
     ''' <summary>
     ''' 属性是时间
     ''' </summary>
+    ''' <remarks>
+    ''' The property keys of this dynamic property object are the time index 
+    ''' and the property values are the curve values at the corresponding time.
+    ''' </remarks>
     Public Class IndexCurve : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
+        ''' <summary>
+        ''' The unique reference id of this time curve.
+        ''' </summary>
+        ''' <returns>A string value.</returns>
         Public Property uid As String Implements INamedValue.Key
 
+        ''' <summary>
+        ''' Create a new empty time curve.
+        ''' </summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a new time curve with a specific unique reference id.
+        ''' </summary>
+        ''' <param name="uid">The unique reference id of this time curve.</param>
         Sub New(uid As String)
             Me.Properties = New Dictionary(Of String, Double)
             Me.uid = uid

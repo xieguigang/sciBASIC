@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9605c6a9ec2456263fbf22501e73c4c, Data_science\MachineLearning\TensorFlow\NumPy.vb"
+﻿#Region "Microsoft.VisualBasic::5eae9eaed8ef8bf8c884f0368237adc8, Data_science\MachineLearning\TensorFlow\NumPy.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 732
-    '    Code Lines: 411 (56.15%)
-    ' Comment Lines: 200 (27.32%)
-    '    - Xml Docs: 91.50%
+    '   Total Lines: 757
+    '    Code Lines: 417 (55.09%)
+    ' Comment Lines: 217 (28.67%)
+    '    - Xml Docs: 92.17%
     ' 
-    '   Blank Lines: 121 (16.53%)
-    '     File Size: 25.66 KB
+    '   Blank Lines: 123 (16.25%)
+    '     File Size: 27.02 KB
 
 
     '     Module NumPyModule
@@ -52,9 +52,10 @@
     '                   less, linspace, log, logspace, matmul
     '                   max, maximum, mean, min, minimum
     '                   ndim, ones, power, prod, reshape
-    '                   shape, sin, size, split, sqrt
-    '                   square, squeeze, stack, std, sum
-    '                   tanh, transpose, vstack, zeros
+    '                   shape, sin, size, slice, split
+    '                   sqrt, square, squeeze, stack, std
+    '                   sum, tanh, topk, transpose, vstack
+    '                   zeros
     '         Class RandomState
     ' 
     '             Function: rand, randint, randn
@@ -557,6 +558,31 @@ Namespace NumPy
             Next
 
             Return results
+        End Function
+
+        ''' <summary>
+        ''' 沿指定轴截取连续区间 (np.slice / 基本切片的等价形式)。
+        ''' </summary>
+        ''' <param name="t">输入张量</param>
+        ''' <param name="start">起始下标（含）</param>
+        ''' <param name="length">截取长度</param>
+        ''' <param name="axis">切片轴，支持负数</param>
+        Public Function slice(t As Tensor, start As Integer, length As Integer, Optional axis As Integer = 0) As Tensor
+            Return Tensor.computeKernel.Slice(t, axis, start, length)
+        End Function
+
+        ''' <summary>
+        ''' 沿最后一维取最大的 k 个元素及其下标。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与 <c>argmax</c> 一样，下标以 <c>Double</c> 存储。该算子没有 NumPy 的一一对应
+        ''' 函数（np.argsort 只给下标），因此同时返回 "值" 与 "下标" 两个张量。
+        ''' </remarks>
+        ''' <param name="t">输入张量</param>
+        ''' <param name="k">保留的元素个数</param>
+        ''' <param name="indices">输出参数：被选中元素在原始最后一维中的下标</param>
+        Public Function topk(t As Tensor, k As Integer, ByRef indices As Tensor) As Tensor
+            Return Tensor.computeKernel.TopK(t, k, indices)
         End Function
 
 #End Region

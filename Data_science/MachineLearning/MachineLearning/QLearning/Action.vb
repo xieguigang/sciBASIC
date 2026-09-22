@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e447eb813cb5c104a66868b83d7eb59b, Data_science\MachineLearning\MachineLearning\QLearning\Action.vb"
+﻿#Region "Microsoft.VisualBasic::349c20bbbd39b44f1c960f41bf9eb341, Data_science\MachineLearning\MachineLearning\QLearning\Action.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 10 (32.26%)
-    ' Comment Lines: 16 (51.61%)
+    '   Total Lines: 37
+    '    Code Lines: 10 (27.03%)
+    ' Comment Lines: 22 (59.46%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (16.13%)
-    '     File Size: 1.10 KB
+    '   Blank Lines: 5 (13.51%)
+    '     File Size: 1.49 KB
 
 
     '     Class Action
@@ -67,18 +67,24 @@ Namespace QLearning
         ''' <summary>
         ''' The environment variables state as inputs for the machine.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A string expression which uniquely describes the environment state.</returns>
         Public Property EnvirState As String Implements INamedValue.Key
         ''' <summary>
         ''' Actions for the current state.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The accumulated Q-value of each possible action which is taken on 
+        ''' the current environment state.
+        ''' </returns>
         Public Property Qvalues As Single()
 
         ''' <summary>
         ''' Environment -> actions' Q-values
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A string in format like ``[ state ] \t--> [ q1 \t q2 \t ... ]``, in 
+        ''' which the Q-values are displayed with a precision of 4 decimal places.
+        ''' </returns>
         Public Overrides Function ToString() As String
             Return $"[ {EnvirState} ] {vbTab}--> [{Qvalues.Select(Function(di) di.ToString("F4")).JoinBy(vbTab)}]"
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c33ff5f0b5afdb466bf4476dca09c06, sciBASIC#\mime\application%rtf\Rtf.vb"
+﻿#Region "Microsoft.VisualBasic::b500d0e5a134743ff6d1a97b09bad7b9, mime\application%rtf\Rtf.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 209
-    '    Code Lines: 112
-    ' Comment Lines: 64
-    '   Blank Lines: 33
-    '     File Size: 8.40 KB
+    '    Code Lines: 112 (53.59%)
+    ' Comment Lines: 64 (30.62%)
+    '    - Xml Docs: 95.31%
+    ' 
+    '   Blank Lines: 33 (15.79%)
+    '     File Size: 8.37 KB
 
 
     ' Class Rtf
@@ -233,7 +235,7 @@ Public Class Rtf
 
         Dim MetaBuilder As StringBuilder = New StringBuilder(__metaData)
         Call MetaBuilder.Replace("%cl_meta%", String.Join(" ", (From cl As Color In _colorMetas Select Font.FontColorToString(cl.R, cl.G, cl.B))).ToArray)
-        Call MetaBuilder.Replace("%version%", My.Application.Info.Version.ToString)
+        Call MetaBuilder.Replace("%version%", "1.0")
         Call MetaBuilder.Replace("%font_meta%", String.Join("", (From ffName As String In _fontMetas Select FontToken.Replace("%font.name%", ffName)).ToArray))
 
         Return MetaBuilder.ToString

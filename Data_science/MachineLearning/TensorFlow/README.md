@@ -1,39 +1,56 @@
-# Pure VB.NET Tensor Library with NumPy API and Autodiff
+# 纯 VB.NET 张量库（NumPy 风格 API 与可插拔计算后端）
 
-Self-contained tensor engine for sciBASIC#, not a Google TensorFlow binding: a managed multi-dimensional `Tensor`, a NumPy-style API, neural network activations and losses, and reverse-mode automatic differentiation.
+## 引言
 
-## Overview
-- `Tensor` is an N-dimensional double array with shape/indexers, `MatMul`, `Transpose`, `Reshape`, `Apply`, reductions and the initialisers `Zeros`, `Ones`, `Random`, `RandomNormal`, `HeInit`, `XavierInit`, plus a `Gradient` slot for training.
-- `NumPy.NumPyModule` offers a NumPy-like static surface: `array`, `zeros`, `ones`, `arange`, `linspace`, `eye`, `reshape`, `transpose`, `dot`/`matmul`, `concatenate`/`stack`/`vstack`/`hstack`, `sum`/`mean`/`std`/`max`/`min`/`argmax`, and `NumPyModule.RandomState` for `rand`, `randn`, `randint`.
-- `Math` implements TensorFlow-style elementwise math and clipping (`exp`, `log`, `sqrt`, `square`, `abs`, `sin`, `cos`, `tanh`, `sigmoid`, `pow`, `negative`); `nn` implements activations and losses (`relu`, `sigmoid`, `softmax`, `sigmoid_cross_entropy_with_logits`, `softmax_cross_entropy_with_logits`, `sparse_softmax_cross_entropy_with_logits`, `mse_loss`).
-- `AutomaticDifferentiation` supplies reverse-mode autodiff: the `Rev` value type with operator-overloaded derivatives, `Checkpoints` for gradient checkpointing, and parallel `SIMDMatMul` / `MultiplyScale` kernels.
+**首先要澄清一件事**：本包的名字虽然叫 `TensorFlow`，但它**不是** Google TensorFlow 的绑定，而是一个**自包含的托管数值引擎**。
 
-## Key Types
-- `Microsoft.VisualBasic.MachineLearning.TensorFlow.Tensor` — the multi-dimensional numeric container all computation is built on.
-- `Microsoft.VisualBasic.MachineLearning.TensorFlow.NumPy.NumPyModule` — NumPy-compatible static API over `Tensor`.
-- `Microsoft.VisualBasic.MachineLearning.TensorFlow.NumPy.NumPyModule.RandomState` — random tensor generation (`rand`, `randn`, `randint`).
-- `Microsoft.VisualBasic.MachineLearning.TensorFlow.Math` — elementwise math, reductions and clipping.
-- `Microsoft.VisualBasic.MachineLearning.TensorFlow.nn` — activations, losses and regularisation.
-- `Microsoft.VisualBasic.MachineLearning.TensorFlow.AutomaticDifferentiation.Rev` — reverse-mode automatic differentiation scalar with gradient accumulation.
+它解决的是 .NET 生态的一个真实缺口：需要多维数组与高性能数值计算，但不想引入几百 MB 的原生运行时。
 
-## Quick Start
+## 设计目标
+
+- **零原生依赖**：纯托管实现，可单文件部署；
+- **NumPy 风格 API**：降低从 Python 数值生态迁移的成本；
+- **可插拔计算后端**：默认 SIMD 加速的 CPU 实现，注册一次即可整体切到 CUDA GPU。
+
+## 核心能力
+
+| 命名空间 | 能力 |
+|---|---|
+| `...MachineLearning.TensorFlow`（根） | `Tensor`：托管多维数组，支持切片、广播与算术运算 |
+| `....TensorFlow.NumPy` | NumPy 风格 API（`np` 式的数组操作惯例） |
+| `....TensorFlow.Compute` | 张量计算引擎（`ITensorCompute` 后端契约，默认 `SIMDTensor`） |
+| `....TensorFlow.Math` / `nn` | 数值运算、激活函数与损失函数 |
+
+## 快速上手
+
 ```vbnet
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.NumPy
 
-Dim a As Tensor = NumPyModule.zeros(3, 4)
-Dim b As Tensor = NumPyModule.RandomState.randn(4, 2)
-Dim y As Tensor = NumPyModule.dot(a, b)      ' shape (3, 2)
-Dim p As Tensor = nn.softmax(y)
-Dim loss As Tensor = Math.sum(Math.square(y))
+' 1. 创建张量（NumPy 风格）
+Dim a As Tensor = np.RandomNormal(shape:={100, 50})
+Dim b As Tensor = np.Ones(shape:={50, 20})
 
-Console.WriteLine(p.Shape(0) & " x " & p.Shape(1))
+' 2. 常规运算（广播、切片、矩阵乘）
+Dim c As Tensor = a.MatMul(b)
+Dim column = a(All, 0)
+
+' 3. 神经网络常用构件
+Dim activated = nn.Relu(c)
+Dim l = nn.MeanSquaredError(c, target)
+
+' 4. 切换计算后端（例如注册 CUDA 实现后整体走 GPU）
+' Tensor.computeKernel = CudaTensor.Default
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.MachineLearning.TensorFlow`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;tensor;numpy;automatic-differentiation;numerical`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **数值算子与反向传播分离**：`ITensorCompute` 只提供纯数值算子（含为 ReLU 系反向传播准备的 `Heaviside` 掩码算子），因此下游的深度学习模块既可以把算子整体下放到 GPU，也可以在这些算子的最底层之上手写反向传播。
+- **托管实现的取舍**：缺少原生框架级别的 kernel 融合与显存管理优化，因此超大模型训练性能不及原生框架；但作为**可调试、可嵌入、零部署成本**的数值引擎，它对教学、小模型与嵌入式场景非常合适。
+- **与 `ILCudaTensor` 的关系**：`ILCudaTensor` 实现了本包定义的 `ITensorCompute` 接口，并继承 `TensorComputeBase` 作为 CPU 兜底——因此在本包之上注册一次 CUDA 后端，所有 Tensor / Math / nn 运算即可透明地切到 GPU。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.MachineLearning.TensorFlow`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;tensor;numpy;numerical;computation-engine;activation-functions;simd`
+- 许可：GPL-3.0-or-later

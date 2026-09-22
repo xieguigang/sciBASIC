@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c0c6cdbf3c27738d9dcadaf89831893, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b9abce28495d98b32d63abbbf9ec70a8, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 34 (77.27%)
-    ' Comment Lines: 6 (13.64%)
+    '   Total Lines: 51
+    '    Code Lines: 36 (70.59%)
+    ' Comment Lines: 10 (19.61%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (9.09%)
-    '     File Size: 1.97 KB
+    '   Blank Lines: 5 (9.80%)
+    '     File Size: 2.22 KB
 
 
     '     Module NamespaceDocExtensions
     ' 
     '         Function: IsNamespaceDoc, ScanAnnotations
+    ' 
+    '     Module NamespaceDoc
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -94,5 +98,12 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                               End Function)
             Return annotations
         End Function
+    End Module
+
+    ''' <summary>
+    ''' Serialization helpers of the assembly XML documentation model, including the scanning of
+    ''' NamespaceDoc annotations from the documentation object graph.
+    ''' </summary>
+    Module NamespaceDoc
     End Module
 End Namespace

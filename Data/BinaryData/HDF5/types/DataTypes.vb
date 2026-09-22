@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d45a6445ca7d8d53966a92f60e206c37, Data\BinaryData\HDF5\types\DataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::9c0181f3eebb9f9496c8046a5bf72cae, Data\BinaryData\HDF5\types\DataTypes.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 17 (29.31%)
-    ' Comment Lines: 39 (67.24%)
+    '   Total Lines: 52
+    '    Code Lines: 15 (28.85%)
+    ' Comment Lines: 36 (69.23%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (3.45%)
-    '     File Size: 1.52 KB
+    '   Blank Lines: 1 (1.92%)
+    '     File Size: 1.34 KB
 
 
-    '     Class NamespaceDoc
-    ' 
-    ' 
-    ' 
     '     Enum DataTypes
     ' 
     ' 
@@ -60,12 +56,6 @@
 #End Region
 
 Namespace type
-
-    ''' <summary>
-    ''' The HDF5 primitive data types model, classes representing the data types of HDF5 datasets.
-    ''' </summary>
-    Friend Class NamespaceDoc
-    End Class
 
     ''' <summary>
     ''' 对一些在HDF5文件之中的基础数据类型的枚举，例如长整型，双精度，字符串等

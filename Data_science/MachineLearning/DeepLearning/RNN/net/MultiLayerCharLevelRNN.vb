@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe472601b9af1ab3255b76663dc8be10, Data_science\MachineLearning\DeepLearning\RNN\net\MultiLayerCharLevelRNN.vb"
+﻿#Region "Microsoft.VisualBasic::d82fbe50cd35a5640c595cd7e174eb70, Data_science\MachineLearning\DeepLearning\RNN\net\MultiLayerCharLevelRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 48 (40.34%)
-    ' Comment Lines: 55 (46.22%)
-    '    - Xml Docs: 70.91%
+    '   Total Lines: 128
+    '    Code Lines: 48 (37.50%)
+    ' Comment Lines: 64 (50.00%)
+    '    - Xml Docs: 95.31%
     ' 
-    '   Blank Lines: 16 (13.45%)
-    '     File Size: 3.33 KB
+    '   Blank Lines: 16 (12.50%)
+    '     File Size: 4.29 KB
 
 
     ' 	Class MultiLayerCharLevelRNN
@@ -61,7 +61,7 @@
 Namespace RNN
 
 	''' <summary>
-	''' Single layer character level RNN.
+	''' Multi layer character level RNN: a character level network backed by a stack of RNN layers.
 	''' </summary>
 	<Serializable>
 	Public Class MultiLayerCharLevelRNN : Inherits CharLevelRNN
@@ -82,8 +82,10 @@ Namespace RNN
 			internal = New MultiLayerRNN()
 		End Sub
 
-		' Constructs and initializes immediately.
-		' Requires that alphabet != null.
+		''' <summary>
+		''' Creates the network and initializes it immediately.
+		''' </summary>
+		''' <param name="alphabet">The alphabet; it must not be <c>Nothing</c>.</param>
 		Public Sub New(alphabet As Alphabet)
 			Me.New()
 			initialize(alphabet)
@@ -91,19 +93,28 @@ Namespace RNN
 
 		' * Hyperparameters ** 
 
-		' Sets the hidden layer size. Network must be initialized again.
+		''' <summary>
+		''' Sets the hidden layer sizes of the wrapped network. The network must be initialized again afterwards.
+		''' </summary>
+		''' <param name="value">The hidden size of every layer.</param>
 		Public Sub SetHiddenSize(value As Integer())
 			internal.HiddenSize = value
 		End Sub
 
-		' Sets the learning rate.
+		''' <summary>
+		''' Sets the learning rate of the wrapped network.
+		''' </summary>
+		''' <param name="value">The learning rate.</param>
 		Public Sub SetLearningRate(value As Double)
 			internal.LearningRate = value
 		End Sub
 
 		' * Initialize ** 
 
-		' Initializes the net. alphabet != null.
+		''' <summary>
+		''' Initializes the network for the given alphabet.
+		''' </summary>
+		''' <param name="alphabet">The alphabet; it must not be <c>Nothing</c>.</param>
 		Public Overrides Sub initialize(alphabet As Alphabet)
 			m_alphabet = alphabet
 			internal.initialize(alphabet.size())
@@ -111,37 +122,35 @@ Namespace RNN
 
 		' * Train ** 
 
-		' 
-		' 		    Performs a forward-backward pass for the given indices.
-		' 	
-		' 		    ix.length and iy.length lengths must match, can't be empty.
-		' 		    All indices must be less than the vocabulary size.
-		' 	
-		' 		    Returns the cross-entropy loss.
-		' 		
+		''' <summary>
+		''' Performs a forward-backward pass for the given token indices.
+		''' </summary>
+		''' <param name="ix">The input indices; its length must match <paramref name="iy"/> and must not be empty.</param>
+		''' <param name="iy">The target indices; every index must be smaller than the vocabulary size.</param>
+		''' <returns>The cross-entropy loss of this sequence.</returns>
 		Public Overrides Function forwardBackward(ix As Integer(), iy As Integer()) As Double
 			Return internal.forwardBackward(ix, iy)
 		End Function
 
 		''' <summary>
-		''' Samples n indices, sequence seed, advance the state.
+		''' Samples <paramref name="n"/> indices, advancing the hidden state.
 		''' </summary>
-		''' <param name="n"></param>
-		''' <param name="seed"></param>
-		''' <param name="temp"></param>
-		''' <returns></returns>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <returns>The sampled indices.</returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer()
 			Return internal.sampleIndices(n, seed, temp)
 		End Function
 
 		''' <summary>
-		''' Samples n indices, sequence seed, choose whether to advance the state.
+		''' Samples <paramref name="n"/> indices, optionally advancing the hidden state.
 		''' </summary>
-		''' <param name="n"></param>
-		''' <param name="seed"></param>
-		''' <param name="temp"></param>
-		''' <param name="advance"></param>
-		''' <returns></returns>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+		''' <returns>The sampled indices.</returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
 			Return internal.sampleIndices(n, seed, temp, advance)
 		End Function

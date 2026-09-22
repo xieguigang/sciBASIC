@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d08199cf5b438f3e7d87767f686ee50, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkViews.vb"
+﻿#Region "Microsoft.VisualBasic::deccc2f6b362f0a7b47a55a17e00ee00, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkViews.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 55 (52.38%)
-    ' Comment Lines: 35 (33.33%)
-    '    - Xml Docs: 94.29%
+    '   Total Lines: 108
+    '    Code Lines: 55 (50.93%)
+    ' Comment Lines: 38 (35.19%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (14.29%)
-    '     File Size: 3.62 KB
+    '   Blank Lines: 15 (13.89%)
+    '     File Size: 4.24 KB
 
 
     '     Class NetworkLayerView
@@ -68,22 +68,20 @@ Imports Microsoft.VisualBasic.Linq
 Namespace NeuralNetwork
 
     ''' <summary>
-    ''' 只读视图：表示一个神经网络层（输入层 / 隐藏层 / 输出层）。
-    ''' 
-    ''' 本视图不依赖任何遗留计算类（Layer/Neuron/Synapse），
-    ''' 其规模（<see cref="Count"/>）与输出（<see cref="Output"/>）均从 CNN 内核派生，
-    ''' 用于支撑 <see cref="Network"/> 的 <see cref="Network.InputLayer"/> /
-    ''' <see cref="Network.HiddenLayer"/> / <see cref="Network.OutputLayer"/> 公开属性。
+    ''' Read-only view of a single neural network layer (input, hidden or output).
     ''' </summary>
+    ''' <remarks>
+    ''' The view does not depend on any legacy compute type (Layer/Neuron/Synapse). Its size
+    ''' (<see cref="Count"/>) and last activation vector (<see cref="Output"/>) are derived from the CNN
+    ''' kernel, and it backs the <see cref="Network.InputLayer"/>, <see cref="Network.HiddenLayer"/> and
+    ''' <see cref="Network.OutputLayer"/> properties.
+    ''' </remarks>
     Public Class NetworkLayerView
 
         Private ReadOnly m_count As Integer
         Private m_output As Double()
 
-        ''' <summary>
-        ''' 该层神经元节点数量（供 <c>.Count</c> 与 <see cref="ToString"/> 使用）
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Number of neuron nodes in this layer.</summary>
         Public ReadOnly Property Count As Integer
             Get
                 Return m_count
@@ -91,9 +89,9 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>
-        ''' 该层最近一次前向传播的输出向量（只读镜像，由 CNN 内核派生）
+        ''' The activation vector produced by the most recent forward pass of this layer (a read-only
+        ''' mirror derived from the CNN kernel).
         ''' </summary>
-        ''' <returns></returns>
         Public Property Output As Double()
             Get
                 Return m_output
@@ -103,61 +101,66 @@ Namespace NeuralNetwork
             End Set
         End Property
 
+        ''' <summary>
+        ''' Creates a layer view with the given neuron count.
+        ''' </summary>
+        ''' <param name="count">Number of neuron nodes in the layer.</param>
         Sub New(count As Integer)
             m_count = count
             m_output = New Double(System.Math.Max(count, 1) - 1) {}
         End Sub
 
+        ''' <summary>Returns a short description of the layer size.</summary>
+        ''' <returns>A text of the form <c>layer with N neurons</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"layer with {m_count} neurons"
         End Function
     End Class
 
     ''' <summary>
-    ''' 只读视图：表示网络之中的全部隐藏层集合。
-    ''' 
-    ''' 保留旧 "HiddenLayers" 公开接口之中的 <see cref="Count"/> 与索引器，
-    ''' 但其内部不再维护遗留的 Layer/Neuron/Synapse 数据图。
+    ''' Read-only view over all hidden layers of a network.
     ''' </summary>
+    ''' <remarks>
+    ''' The legacy <c>HiddenLayers</c> interface is preserved through <see cref="Count"/> and the indexer,
+    ''' but the view no longer maintains a Layer/Neuron/Synapse data graph internally.
+    ''' </remarks>
     Public Class HiddenLayersView : Implements IEnumerable(Of NetworkLayerView)
 
         Private ReadOnly m_layers As NetworkLayerView()
 
-        ''' <summary>
-        ''' 隐藏层的数量
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Number of hidden layers.</summary>
         Public ReadOnly Property Count As Integer
             Get
                 Return m_layers.Length
             End Get
         End Property
 
-        ''' <summary>
-        ''' 隐藏层视图数组
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>The hidden layer views.</summary>
         Public ReadOnly Property Layers As NetworkLayerView()
             Get
                 Return m_layers
             End Get
         End Property
 
-        ''' <summary>
-        ''' 按索引访问第 i 个隐藏层视图
-        ''' </summary>
-        ''' <param name="index"></param>
-        ''' <returns></returns>
+        ''' <summary>Gets the hidden layer view at the given index.</summary>
+        ''' <param name="index">Zero based index of the hidden layer.</param>
+        ''' <returns>The hidden layer view stored at <paramref name="index"/>.</returns>
         Default Public ReadOnly Property Item(index%) As NetworkLayerView
             Get
                 Return m_layers(index)
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates the hidden layer collection view.
+        ''' </summary>
+        ''' <param name="layers">The hidden layer views, materialized into an array.</param>
         Sub New(layers As IEnumerable(Of NetworkLayerView))
             m_layers = layers.ToArray
         End Sub
 
+        ''' <summary>Enumerates the hidden layer views.</summary>
+        ''' <returns>An enumerator over the hidden layers.</returns>
         Public Function GetEnumerator() As IEnumerator(Of NetworkLayerView) Implements IEnumerable(Of NetworkLayerView).GetEnumerator
             Return m_layers.AsEnumerable.GetEnumerator()
         End Function

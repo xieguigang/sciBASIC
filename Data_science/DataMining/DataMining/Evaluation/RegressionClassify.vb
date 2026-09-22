@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::071ba879b853e83d31a344eee042f44a, Data_science\DataMining\DataMining\Evaluation\RegressionClassify.vb"
+﻿#Region "Microsoft.VisualBasic::90a973ea734f7fdf75ad70af5d64a848, Data_science\DataMining\DataMining\Evaluation\RegressionClassify.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 16 (55.17%)
-    ' Comment Lines: 7 (24.14%)
+    '   Total Lines: 53
+    '    Code Lines: 29 (54.72%)
+    ' Comment Lines: 15 (28.30%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (20.69%)
-    '     File Size: 780 B
+    '   Blank Lines: 9 (16.98%)
+    '     File Size: 1.84 KB
 
 
     '     Class RegressionClassify
     ' 
     '         Properties: actual, errors, predicts, sampleID
     ' 
-    '         Function: ToString
+    '         Function: ToResult, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Linq
 Imports std = System.Math
 
 Namespace Evaluation
@@ -76,6 +77,29 @@ Namespace Evaluation
                 Return std.Abs(predicts - actual)
             End Get
         End Property
+
+        ''' <summary>
+        ''' 把一组回归分类样本转换为统一评估框架的 <see cref="RegressionResult"/>。
+        ''' </summary>
+        ''' <param name="test"></param>
+        ''' <param name="name"></param>
+        ''' <param name="eps"></param>
+        ''' <param name="steps"></param>
+        ''' <returns></returns>
+        Public Shared Function ToResult(test As IEnumerable(Of RegressionClassify),
+                                        Optional name As String = Nothing,
+                                        Optional eps As Double = 0.1,
+                                        Optional steps As Integer = 25) As RegressionResult
+
+            Dim data As RegressionClassify() = test.ToArray
+
+            Return RegressionResult.Create(
+                predictions:=data.Select(Function(t) t.predicts).ToArray,
+                actuals:=data.Select(Function(t) t.actual).ToArray,
+                name:=name,
+                eps:=eps,
+                sweepSteps:=steps)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{sampleID}] {errors} = |{actual} - {predicts}|"

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73b3d6e670ff635929112a2133a7e93d, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::ebf6d94f88bac98721a6ba7667081f96, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 99 (65.56%)
-    ' Comment Lines: 33 (21.85%)
+    '   Total Lines: 187
+    '    Code Lines: 99 (52.94%)
+    ' Comment Lines: 69 (36.90%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (12.58%)
-    '     File Size: 5.80 KB
+    '   Blank Lines: 19 (10.16%)
+    '     File Size: 8.02 KB
 
 
     '     Class DataSet
@@ -77,27 +77,27 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' the training data samples
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The <see cref="SampleList"/> object which contains all of the training samples.</returns>
         <XmlElement("sample")>
         Public Property DataSamples As SampleList
 
         ''' <summary>
         ''' 主要是对<see cref="Sample.label"/>输入向量进行``[0, 1]``区间内的归一化操作
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A <see cref="NormalizeMatrix"/> object which is built from the <see cref="DataSamples"/>.</returns>
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
         ''' <summary>
         ''' The element names of output vector
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the output element names.</returns>
         Public Property output As String()
 
         ''' <summary>
         ''' 样本的矩阵大小：``[属性长度, 样本数量]``
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A <see cref="Size"/> value whose width is the feature count and whose height is the sample count.</returns>
         Public ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -108,6 +108,14 @@ Namespace ComponentModel.StoreProcedure
             End Get
         End Property
 
+        ''' <summary>
+        ''' 样本输入向量的长度，即属性维度的数量
+        ''' </summary>
+        ''' <returns>
+        ''' When the <see cref="NormalizeMatrix"/> is not defined, the length of the 
+        ''' <see cref="Sample.vector"/> of the first sample will be returned; 
+        ''' otherwise the size of the normalization matrix will be returned.
+        ''' </returns>
         Public ReadOnly Property width As Integer
             Get
                 If NormalizeMatrix Is Nothing Then
@@ -121,7 +129,11 @@ Namespace ComponentModel.StoreProcedure
         ''' <summary>
         ''' 神经网络的输出节点的数量
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The length of the <see cref="output"/> list, or the length of the 
+        ''' <see cref="Sample.target"/> vector when the <see cref="output"/> list 
+        ''' is not defined.
+        ''' </returns>
         Public ReadOnly Property OutputSize As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -139,7 +151,11 @@ Namespace ComponentModel.StoreProcedure
         ''' <param name="dummyExtends">
         ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A sequence of the normalized <see cref="Sample"/> data; an 
+        ''' <see cref="InvalidProgramException"/> will be thrown when a ``NaN`` 
+        ''' value is detected in the normalized sample data.
+        ''' </returns>
         Public Iterator Function PopulateNormalizedSamples(Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler,
                                                            Optional dummyExtends% = 0) As IEnumerable(Of Sample)
             Dim input#()
@@ -173,6 +189,20 @@ Namespace ComponentModel.StoreProcedure
             Return extends
         End Function
 
+        ''' <summary>
+        ''' Merge a collection of the new samples into an exists dataset, and then 
+        ''' rebuild the normalization matrix of the merged dataset.
+        ''' </summary>
+        ''' <param name="dataset">The exists training dataset.</param>
+        ''' <param name="samples">A collection of the new <see cref="Sample"/> data that will be merged into the <paramref name="dataset"/>.</param>
+        ''' <param name="estimateQuantile">
+        ''' Whether the quantile value of the sample distribution should be 
+        ''' estimated? The default value is ``True``.
+        ''' </param>
+        ''' <returns>
+        ''' A new <see cref="DataSet"/> object which contains both the original 
+        ''' samples and the new <paramref name="samples"/>.
+        ''' </returns>
         Public Shared Function JoinSamples(dataset As DataSet, samples As IEnumerable(Of Sample), Optional estimateQuantile As Boolean = True) As DataSet
             Dim union As Sample() = dataset.DataSamples _
                 .AsEnumerable _
@@ -201,6 +231,12 @@ Namespace ComponentModel.StoreProcedure
             }
         End Function
 
+        ''' <summary>
+        ''' Display the brief summary information of this dataset.
+        ''' </summary>
+        ''' <returns>
+        ''' A string in format like ``DataSet with N samples and M properties in each sample.``
+        ''' </returns>
         Public Overrides Function ToString() As String
             Return $"DataSet with {Size.Height} samples and {Size.Width} properties in each sample."
         End Function

@@ -9,8 +9,8 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release;Debug</Configurations>
     <Title>Machine Vision Tools: Shape, Blob, OCR and Tracking</Title>
     <Description>2D curve and shape matching with Procrustes and Frechet distance, connected component labelling, Hough circle detection, text OCR, RANSAC point-set alignment and multi-object tracking. Part of sciBASIC#.</Description>
@@ -18,7 +18,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;machine-vision;shape-matching;hough-transform;connected-component;tracking</PackageTags>
+    <PackageTags>scibasic;machine-vision;shape-matching;procrustes;frechet-distance;hough-transform;connected-component;ransac;ocr;tracking</PackageTags>
+    <PackageReleaseNotes>2D machine vision tools for sciBASIC#. Shape analysis: curve and shape matching with Procrustes alignment and Frechet distance, and RANSAC based point set alignment that tolerates outliers. Segmentation: connected component labelling (the CCL namespace) and Hough circle detection (HoughCircles). Recognition: text OCR for simple glyph extraction. Tracking: multi object tracking across frames. The package is built on the signal processing math library, so the underlying transforms, filters and peak detection are shared with the general signal analysis code rather than reimplemented here.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

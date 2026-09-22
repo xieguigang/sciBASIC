@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee50458d0a734abe5791b95add19f118, Data_science\MachineLearning\MachineLearning\SVM\Cache\head_t.vb"
+﻿#Region "Microsoft.VisualBasic::08d685b59d68fee6d4e269396cb29735, Data_science\MachineLearning\MachineLearning\SVM\Cache\head_t.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 16 (59.26%)
-    ' Comment Lines: 6 (22.22%)
+    '   Total Lines: 35
+    '    Code Lines: 16 (45.71%)
+    ' Comment Lines: 14 (40.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (18.52%)
-    '     File Size: 696 B
+    '   Blank Lines: 5 (14.29%)
+    '     File Size: 1.06 KB
 
 
     '     Class head_t
@@ -60,6 +60,10 @@ Namespace SVM
 
         Dim m_enclosingInstance As Cache
 
+        ''' <summary>
+        ''' The <see cref="Cache"/> object which owns this entry.
+        ''' </summary>
+        ''' <returns>A <see cref="Cache"/> object.</returns>
         Public ReadOnly Property EnclosingInstance As Cache
             Get
                 Return m_enclosingInstance
@@ -76,6 +80,10 @@ Namespace SVM
         Friend data As Single()
         Friend len As Integer
 
+        ''' <summary>
+        ''' Create a new cache entry.
+        ''' </summary>
+        ''' <param name="enclosingInstance">The <see cref="Cache"/> object which owns this entry.</param>
         Public Sub New(enclosingInstance As Cache)
             m_enclosingInstance = enclosingInstance
         End Sub

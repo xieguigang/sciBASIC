@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a702a7310410631d9a9b52410e029b1, Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
+﻿#Region "Microsoft.VisualBasic::24d96fd74f62ea3178405a0a6ef7cd37, Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 44 (37.61%)
-    ' Comment Lines: 62 (52.99%)
-    '    - Xml Docs: 88.71%
+    '   Total Lines: 120
+    '    Code Lines: 44 (36.67%)
+    ' Comment Lines: 64 (53.33%)
+    '    - Xml Docs: 85.94%
     ' 
-    '   Blank Lines: 11 (9.40%)
-    '     File Size: 4.54 KB
+    '   Blank Lines: 12 (10.00%)
+    '     File Size: 4.81 KB
 
 
     '     Module GaussianElimination
@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Solvers
 
@@ -125,12 +126,14 @@ Namespace LinearAlgebra.Solvers
             Next
 
             ' Gaussian Elimination Core
+            ' 行消元就是 BLAS-1 的 AXPY：第 i 行整行累减 TMP 倍的第 k 行，
+            ' 直接走 FMA 的就地 AXPY 内核（整行含增广列一起更新）
+            Dim data As Double()() = Ab.ArrayPack(deepcopy:=False)
+
             For k As Integer = 0 To n - 2
                 For i As Integer = k + 1 To n - 1
-                    TMP = Ab(i, k) / Ab(k, k)
-                    For j As Integer = 0 To n
-                        Ab(i, j) = Ab(i, j) - TMP * Ab(k, j)
-                    Next
+                    TMP = data(i)(k) / data(k)(k)
+                    Call SIMDIntrinsics.AxpyInPlace(-TMP, data(k), data(i))
                 Next
             Next
 

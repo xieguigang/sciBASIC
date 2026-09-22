@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b83af17119b96d097bbc1a9d62a2c554, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Worksheet.vb"
+﻿#Region "Microsoft.VisualBasic::ec53b73c88b40c33650815f989788758, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Worksheet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1847
-    '    Code Lines: 989 (53.55%)
-    ' Comment Lines: 698 (37.79%)
-    '    - Xml Docs: 98.42%
+    '   Total Lines: 1849
+    '    Code Lines: 988 (53.43%)
+    ' Comment Lines: 701 (37.91%)
+    '    - Xml Docs: 98.29%
     ' 
-    '   Blank Lines: 160 (8.66%)
-    '     File Size: 92.28 KB
+    '   Blank Lines: 160 (8.65%)
+    '     File Size: 92.32 KB
 
 
     '     Class Worksheet

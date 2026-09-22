@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6782b5aaa2c98bfec1e1b73e3eb62d48, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::6782b5aaa2c98bfec1e1b73e3eb62d48, Microsoft.VisualBasic.Core\src\Math\SIMD\Arithmetic\Multiply.vb"
 
     ' Author:
     ' 

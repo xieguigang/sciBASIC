@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52a6e177fec3e35d695a5dd37f3913be, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\ShapAlgo1.vb"
+﻿#Region "Microsoft.VisualBasic::cca9c5790e28febb362dbae738624dcc, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\ShapAlgo1.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     ''' <summary>
     ''' See https://arxiv.org/pdf/1802.03888.pdf - Chapter 3.1, Algorithm 1.

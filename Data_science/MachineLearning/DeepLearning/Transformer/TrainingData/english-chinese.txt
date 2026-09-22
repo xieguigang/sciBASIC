@@ -1,0 +1,337 @@
+hello.	你好。
+good morning.	早上好。
+good afternoon.	下午好。
+good evening.	晚上好。
+good night.	晚安。
+goodbye.	再见。
+thank you.	谢谢你。
+thanks a lot.	非常感谢。
+you are welcome.	不客气。
+sorry.	对不起。
+no problem.	没关系。
+excuse me.	打扰一下。
+how are you?	你好吗？
+i am fine.	我很好。
+i am happy.	我很高兴。
+see you tomorrow.	明天见。
+nice to meet you.	很高兴见到你。
+please sit down.	请坐。
+please come in.	请进。
+have a nice day.	祝你今天愉快。
+i am a student.	我是一个学生。
+i am a teacher.	我是一个老师。
+i am a doctor.	我是一个医生。
+i am a worker.	我是一个工人。
+i am hungry.	我饿了。
+i am thirsty.	我渴了。
+i am tired.	我累了。
+i am busy.	我很忙。
+i am ready.	我准备好了。
+i am late.	我迟到了。
+he is my friend.	他是我的朋友。
+she is my sister.	她是我的姐姐。
+he is my brother.	他是我的哥哥。
+she is my mother.	她是我的妈妈。
+he is my father.	他是我的爸爸。
+they are students.	他们是学生。
+we are friends.	我们是朋友。
+this is my book.	这是我的书。
+that is my bag.	那是我的包。
+it is my phone.	这是我的电话。
+i get up at six.	我六点起床。
+i get up early.	我起得很早。
+i wash my face.	我洗脸。
+i brush my teeth.	我刷牙。
+i eat breakfast.	我吃早饭。
+i drink milk.	我喝牛奶。
+i go to school.	我去学校。
+i go to work.	我去上班。
+i take the bus.	我坐公共汽车。
+i ride a bike.	我骑自行车。
+i walk to school.	我走路去学校。
+i read a book.	我看书。
+i write a letter.	我写信。
+i listen to music.	我听音乐。
+i watch television.	我看电视。
+i play football.	我踢足球。
+i play basketball.	我打篮球。
+i do my homework.	我做作业。
+i clean my room.	我打扫房间。
+i cook dinner.	我做晚饭。
+i eat lunch.	我吃午饭。
+i eat dinner.	我吃晚饭。
+i go home.	我回家。
+i go to bed.	我去睡觉。
+i sleep at ten.	我十点睡觉。
+i take a shower.	我洗澡。
+i buy some food.	我买一些食物。
+i help my mother.	我帮助我的妈妈。
+i call my friend.	我给我的朋友打电话。
+i study english.	我学习英语。
+i like rice.	我喜欢米饭。
+i like noodles.	我喜欢面条。
+i like bread.	我喜欢面包。
+i like fish.	我喜欢鱼。
+i like meat.	我喜欢肉。
+i like fruit.	我喜欢水果。
+i like apples.	我喜欢苹果。
+i like bananas.	我喜欢香蕉。
+i like tea.	我喜欢茶。
+i like coffee.	我喜欢咖啡。
+i want some water.	我想要一些水。
+i want some rice.	我想要一些米饭。
+this apple is red.	这个苹果是红色的。
+this banana is yellow.	这个香蕉是黄色的。
+the food is good.	这个食物很好吃。
+the soup is hot.	这个汤很热。
+the tea is warm.	这个茶是温的。
+the cake is sweet.	这个蛋糕很甜。
+i am hungry now.	我现在饿了。
+let us eat.	我们吃饭吧。
+breakfast is ready.	早饭准备好了。
+dinner is ready.	晚饭准备好了。
+i drink tea every day.	我每天喝茶。
+i eat an apple every day.	我每天吃一个苹果。
+i do not like coffee.	我不喜欢咖啡。
+today is monday.	今天是星期一。
+today is friday.	今天是星期五。
+tomorrow is sunday.	明天是星期天。
+it is monday today.	今天星期一。
+it is sunny today.	今天晴天。
+it is raining.	下雨了。
+it is cold today.	今天很冷。
+it is hot today.	今天很热。
+it is warm today.	今天很暖和。
+the weather is good.	天气很好。
+the weather is bad.	天气不好。
+it is a nice day.	今天天气不错。
+i like sunny days.	我喜欢晴天。
+winter is cold.	冬天很冷。
+summer is hot.	夏天很热。
+spring is warm.	春天很暖和。
+autumn is cool.	秋天很凉快。
+it is seven o clock.	现在七点了。
+it is nine o clock.	现在九点了。
+what time is it?	现在几点？
+it is time to go.	该走了。
+it is time to sleep.	该睡觉了。
+i am free today.	我今天有空。
+i am busy today.	我今天很忙。
+see you next week.	下周见。
+this is my family.	这是我的家人。
+my father is a doctor.	我的爸爸是一个医生。
+my mother is a teacher.	我的妈妈是一个老师。
+my sister is a student.	我的姐姐是一个学生。
+my brother is tall.	我的哥哥很高。
+my family is happy.	我的家人很快乐。
+i love my family.	我爱我的家人。
+i love my mother.	我爱我的妈妈。
+i love my father.	我爱我的爸爸。
+i have a brother.	我有一个哥哥。
+i have a sister.	我有一个姐姐。
+i have a dog.	我有一只狗。
+i have a cat.	我有一只猫。
+the dog is small.	这只狗很小。
+the cat is white.	这只猫是白色的。
+the house is big.	这个房子很大。
+the room is clean.	这个房间很干净。
+the door is open.	门是开着的。
+the window is closed.	窗户是关着的。
+my home is near.	我的家很近。
+my home is far.	我的家很远。
+we live in beijing.	我们住在北京。
+we live in a big city.	我们住在一个大城市。
+the garden is beautiful.	这个花园很漂亮。
+the sky is blue.	天空是蓝色的。
+i study at school.	我在学校学习。
+i like my school.	我喜欢我的学校。
+my teacher is kind.	我的老师很和善。
+i have a class today.	我今天有课。
+i have no class today.	我今天没有课。
+i read english books.	我读英语书。
+i learn chinese.	我学习中文。
+i learn to write.	我学习写字。
+i do my homework at home.	我在家做作业。
+the homework is easy.	这个作业很容易。
+the question is hard.	这个问题很难。
+i know the answer.	我知道答案。
+i do not know.	我不知道。
+please help me.	请帮助我。
+i go to the office.	我去办公室。
+my work is busy.	我的工作很忙。
+i like my work.	我喜欢我的工作。
+i finish my work.	我完成了工作。
+i work every day.	我每天工作。
+i have a meeting.	我有一个会议。
+the meeting is long.	这个会议很长。
+my friend works here.	我的朋友在这里工作。
+he is a good worker.	他是一个好工人。
+she works in a hospital.	她在医院工作。
+he works in a school.	他在学校工作。
+i go to the shop.	我去商店。
+the shop is open.	商店开门了。
+the shop is closed.	商店关门了。
+i want to buy a book.	我想买一本书。
+i want to buy a bag.	我想买一个包。
+how much is it?	这个多少钱？
+it is ten yuan.	这个十元。
+it is too expensive.	这个太贵了。
+it is very cheap.	这个很便宜。
+i buy two apples.	我买两个苹果。
+i pay for the food.	我付食物的钱。
+i go to the station.	我去车站。
+the train is late.	火车晚点了。
+the bus is coming.	公共汽车来了。
+i go to the airport.	我去机场。
+the plane is big.	飞机很大。
+i like to travel.	我喜欢旅行。
+i go to shanghai.	我去上海。
+i go to the park.	我去公园。
+the park is beautiful.	公园很漂亮。
+i take a photo.	我拍一张照片。
+the city is big.	这个城市很大。
+the street is long.	这条街很长。
+i walk on the street.	我在街上走。
+i go home by bus.	我坐公共汽车回家。
+i am very happy.	我很高兴。
+i am very sad.	我很伤心。
+i am angry.	我生气了。
+i am afraid.	我害怕。
+i am surprised.	我很惊讶。
+i feel good.	我感觉很好。
+i feel tired.	我感觉累。
+i like this song.	我喜欢这首歌。
+i like this film.	我喜欢这部电影。
+i like this city.	我喜欢这个城市。
+i do not like it.	我不喜欢它。
+it is very good.	它非常好。
+it is very bad.	它非常糟糕。
+it is interesting.	它很有趣。
+it is boring.	它很无聊。
+it is important.	它很重要。
+it is easy.	它很容易。
+it is difficult.	它很困难。
+i think so.	我也这样认为。
+i do not think so.	我不这样认为。
+i agree with you.	我同意你。
+i am sure.	我很确定。
+i am not sure.	我不确定。
+that is a good idea.	那是一个好主意。
+it does not matter.	没关系。
+what is your name?	你叫什么名字？
+my name is li.	我姓李。
+where are you from?	你来自哪里？
+i am from china.	我来自中国。
+how old are you?	你多大了？
+i am ten years old.	我十岁。
+what do you want?	你想要什么？
+i want some water.	我想要一些水。
+where is the school?	学校在哪里？
+it is near my home.	它在我家附近。
+who is he?	他是谁？
+he is my friend.	他是我的朋友。
+what is this?	这是什么？
+this is a book.	这是一本书。
+what are you doing?	你在做什么？
+i am reading a book.	我在看书。
+do you like tea?	你喜欢茶吗？
+yes i like tea.	是的我喜欢茶。
+no i do not.	不我不喜欢。
+can you help me?	你能帮助我吗？
+yes of course.	当然可以。
+are you ready?	你准备好了吗？
+yes i am ready.	是的我准备好了。
+may i come in?	我可以进来吗？
+one two three.	一二三。
+i have two books.	我有两本书。
+i have three pens.	我有三支笔。
+there are four people.	有四个人。
+there are five apples.	有五个苹果。
+i see six birds.	我看到六只鸟。
+i have many friends.	我有很多朋友。
+i have a little money.	我有一点钱。
+i want one cup of tea.	我想要一杯茶。
+i need two tickets.	我需要两张票。
+give me a pen please.	请给我一支笔。
+there is a book on the desk.	桌子上有一本书。
+there is a cat on the chair.	椅子上有一只猫。
+there are many people here.	这里有很多人。
+i have some questions.	我有一些问题。
+she has a new bag.	她有一个新包。
+he has a small dog.	他有一只小狗。
+we have a big house.	我们有一个大房子。
+they have two children.	他们有两个孩子。
+i have no time.	我没有时间。
+the book is new.	这本书是新的。
+the bag is old.	这个包是旧的。
+the car is fast.	这辆车很快。
+the bike is slow.	这辆自行车很慢。
+the water is clean.	水很干净。
+the tree is tall.	这棵树很高。
+the flower is red.	这朵花是红色的。
+the bird is small.	这只鸟很小。
+the moon is bright.	月亮很亮。
+the sun is hot.	太阳很热。
+the man is tall.	这个男人很高。
+the woman is kind.	这个女人很和善。
+the child is happy.	这个孩子很快乐。
+the teacher is busy.	这个老师很忙。
+the student is smart.	这个学生很聪明。
+the room is quiet.	这个房间很安静。
+the music is nice.	这个音乐很好听。
+the story is long.	这个故事很长。
+the road is wide.	这条路很宽。
+the train is fast.	这列火车很快。
+i open the door.	我打开门。
+i close the window.	我关上窗户。
+i turn on the light.	我打开灯。
+i turn off the light.	我关灯。
+i put on my coat.	我穿上外套。
+i take off my shoes.	我脱下鞋子。
+i sit on the chair.	我坐在椅子上。
+i stand near the door.	我站在门附近。
+i look at the sky.	我看着天空。
+i listen to the teacher.	我听老师讲。
+i write my name.	我写下我的名字。
+i draw a picture.	我画一幅画。
+i sing a song.	我唱一首歌。
+i dance with my friend.	我和我的朋友跳舞。
+i run in the park.	我在公园里跑步。
+i swim in the river.	我在河里游泳。
+i wait for the bus.	我等公共汽车。
+i look for my key.	我找我的钥匙。
+i find my key.	我找到了我的钥匙。
+i say goodbye.	我说再见。
+the child drinks milk.	这个孩子喝牛奶。
+the mother cooks rice.	妈妈做米饭。
+the father reads a book.	爸爸看书。
+the sister sings a song.	姐姐唱歌。
+the brother plays football.	哥哥踢足球。
+we eat together.	我们一起吃饭。
+we go to the park together.	我们一起去公园。
+they play in the garden.	他们在花园里玩。
+she writes a letter.	她写信。
+he reads the newspaper.	他看报纸。
+i call my mother.	我给我的妈妈打电话。
+i help my friend.	我帮助我的朋友。
+i thank my teacher.	我感谢我的老师。
+i meet my friend.	我见到我的朋友。
+i wait for my father.	我等我的爸爸。
+i go home with my sister.	我和我的姐姐回家。
+we study in the same school.	我们在同一个学校学习。
+they live in the same city.	他们住在同一个城市。
+he works in a big company.	他在一个大公司工作。
+she studies in a good school.	她在一个好学校学习。
+where do you live?	你住在哪里？
+i live in beijing.	我住在北京。
+when do you get up?	你什么时候起床？
+what do you like?	你喜欢什么？
+i like music.	我喜欢音乐。
+how do you go to school?	你怎么去学校？
+i go to school by bus.	我坐公共汽车去学校。
+why are you late?	你为什么迟到？
+who is that man?	那个男人是谁？
+he is my teacher.	他是我的老师。
+which book do you want?	你想要哪本书？
+i want this book.	我想要这本书。
+can you speak chinese?	你会说中文吗？

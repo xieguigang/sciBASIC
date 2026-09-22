@@ -6,9 +6,9 @@
 
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9762.11310</Version>
 
-		<AssemblyVersion>5.33.9753.4776</AssemblyVersion>
+		<AssemblyVersion>5.33.9762.11310</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
@@ -32,9 +32,10 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>Word2Vec Embedding Trainer with Skip-Gram and CBOW</Title>
-    <Description>Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.</Description>
+    <Description>Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window, sampling and thread count, plus vector models for similarity and analogy queries.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.NLP.Word2Vec</AssemblyTitle>
-    <PackageTags>scibasic;word2vec;word-embedding;skip-gram;machine-learning</PackageTags>
+    <PackageTags>scibasic;word2vec;word-embedding;skip-gram;cbow;huffman-tree;word-similarity;machine-learning</PackageTags>
+    <PackageReleaseNotes>The Word2Vec word embedding trainer of sciBASIC#. A fluent Word2VecFactory configures vector size, window size, sampling rate, frequency threshold, learning rate and thread count (setVectorSize, setWindow, setSample, setMethod, setNumOfThread) and builds a Word2Vec trainer. Training is multi-threaded and supports both the skip-gram and the CBOW objective (TrainMethod.Skip_Gram / TrainMethod.CBow), implemented over Huffman tree word neurons (WordNeuron) so that frequent words receive short codes. Corpus text is ingested through readTokens - accepting Sentence models or plain token collections - and training runs through training(), with rare words pruned by the configured frequency threshold. The trained set is exposed as a VectorModel via outputVector(), offering nearest neighbour lookup by word or by a raw centre vector through similar(), word vector retrieval through getWordVector(), and analogy resolution of the form word a - word b + word c through analogy(). WordScore carries each ranked neighbour (word name plus score), and Trainer wraps the background training task used by the parallel trainer.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>

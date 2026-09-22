@@ -1,199 +1,81 @@
-# GraphQuery
+# 面向 HTML / XML 文档的图查询语言引擎
 
-> https://github.com/storyicon/graphquery
+## 引言
 
-GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.
+从网页或 XML 文档里取数据，通常要组合几种手段：CSS 选择器找结构、XPath 定位路径、属性选择器筛值，再写几行代码做转换。
 
-## Getting Started
+**GraphQuery** 把这些手段统一成**一条管道式查询语言**：
 
-GraphQuery consists of query language and pipelines. To guide you through each of these components, we've written an example designed to illustrate the various pieces of GraphQuery. This example is not comprehensive, but it is designed to quickly introduce the core concepts of GraphQuery. The premise of the example is that we want to use GraphQuery to query for information about library books.
+- 查询文本是**可书写、可复用**的（而不是散落在代码里的选择器字符串）；
+- 结果统一输出为 **JSON**，便于后续处理；
+- 引擎与文档来源解耦——只要能提供文档树即可。
 
-### Programming With VisualBasic Code
+## 设计目标
+
+- **管道式组合**：查询由若干阶段（选择、筛选、取值、函数）串联，接近 Unix 管道的思路；
+- **后端无关**：只要求实现 `IXmlDocumentTree`，因此 HTML 抓取结果与本地 XML 都能查询；
+- **可调用 .NET 函数**：查询表达式中可以内嵌函数模型，把逻辑导出到代码。
+
+## 核心特性
+
+- **查询与执行分离**：`QueryParser.GetQuery` 解析查询文本为 `Query`，`Engine.Execute` 在文档上执行并返回结果；
+- **多类选择器**：CSS 选择器、XPath 表达式、属性选择器与函数调用（`Query.Parser` 下的 `CSSSelector`、`XPathSelector`、`AttributeSelector`、`FunctionParser`）；
+- **词法层**：`Language` 命名空间提供 `QueryToken`、`Token`、`TokenIcer` 与转义规则；
+- **函数模型**：`TextParser` 命名空间解析表达式并提供自定义 / 内部 / HTML / LINQ 函数模型；
+- **JSON 输出**：结果以 `JsonElement` 呈现，可直接序列化为缩进 JSON 便于调试。
+
+## 命名空间地图
+
+| 命名空间 | 职责 |
+|---|---|
+| `Microsoft.VisualBasic.Data.GraphQuery`（根） | `Engine`、`QueryParser`、`Query`、`AutoContext` |
+| `....GraphQuery.Query.Parser` | 选择器解析器（CSS / XPath / 属性 / 函数） |
+| `....GraphQuery.Language` | 查询词法分析：`QueryToken`、`Token`、`TokenIcer` |
+| `....GraphQuery.TextParser`（+ `.FunctionModel`） | 表达式解析与函数模型 |
+
+## 关键类型与 API
+
+- `QueryParser.GetQuery` —— 把查询文本解析为 `Query`；
+- `Engine.Execute(doc, query)` —— 在文档树上执行查询，返回 `JsonElement`；
+- `Language.TokenIcer` / `QueryToken` —— 查询语言的词法层；
+- `Query.Parser.CSSSelector` / `XPathSelector` / `AttributeSelector` / `FunctionParser` —— 各类选择器与函数解析器；
+- `TextParser.FunctionModel.ParserFunction` / `CustomFunction` / `InternalInvoke` —— 查询可调用的函数模型。
+
+## 快速上手
 
 ```vbnet
 Imports Microsoft.VisualBasic.Data.GraphQuery
-Imports Microsoft.VisualBasic.Data.GraphQuery.Language
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.MIME.HTML
 
-' define your graph query at here
+' 在这里定义你的图查询
 Dim queryText As String = "..."
 Dim query As Query = QueryParser.GetQuery(queryText)
 Dim engine As New Engine
-' http get of the html document text from web server or local filesystem
+
+' 从 Web 服务器或本地文件系统 HTTP GET 得到 html 文档文本
 Dim url As String = "..."
 Dim doc As HtmlDocument = HtmlDocument.LoadDocument(url)
 Dim data As JsonElement = engine.Execute(doc, query)
-' debug view of the graph query result
+
+' 图查询结果的调试视图
 Dim json As String = data.BuildJsonString(New JSONSerializerOptions With {.indent = True})
 
 Call Console.WriteLine(json)
 ```
 
-![](Capture.PNG)
-![](Debug.png)
+![查询结果](Capture.PNG)
+![调试视图](Debug.png)
 
-## Demo
+## 实现要点
 
-Given a such html document text:
+- **为什么要把查询语言独立出来**：把选择逻辑写在源码里，意味着每改一次取数规则就要重新编译；独立的查询文本可以由调用方提供，甚至从配置文件加载。
+- **函数模型的意义**：真实取数往往需要「取属性后做一次字符串处理」这类操作；`FunctionModel` 允许在查询管道中插入 .NET 逻辑，避免为此写第二遍遍历代码。
 
-```html
-<library>
-<!-- Great book. -->
-<book id="b0836217462" available="true">
-    <isbn>0836217462</isbn>
-    <title lang="en">Being a Dog Is a Full-Time Job</title>
-    <quote>I'd dog paddle the deepest ocean.</quote>
-    <author id="CMS">
-        <?echo "go rocks"?>
-        <name>Charles M Schulz</name>
-        <born>1922-11-26</born>
-        <dead>2000-02-12</dead>
-    </author>
-    <character id="PP">
-        <name>Peppermint Patty</name>
-        <born>1966-08-22</born>
-        <qualification>bold, brash and tomboyish</qualification>
-    </character>
-    <character id="Snoopy">
-        <name>Snoopy</name>
-        <born>1950-10-04</born>
-        <qualification>extroverted beagle</qualification>
-    </character>
-</book>
-</library>
-```
+## 包信息
 
-Then faced with such a text structure, we naturally think of extracting the following data structure from the text :
-
-```json
-{
-    bookID
-    title
-    isbn
-    quote
-    language
-    author{
-        name
-        born
-        dead
-    }
-    character [{
-        name
-        born
-        qualification
-    }]
-}
-```
-
-This is perfect, when you know the data structure you want to extract, you have actually succeeded 80%, the above is the data structure we want, we call it DDL (Data Definition Language) for the time being. let's see how GraphQuery does it:
-
-```bash
-# https://www.codeproject.com/Articles/1264613/GraphQuery-Powerful-Text-Query-Language-3
-
-graphquery
-{
-    # parser function pipeline can be 
-    # in different line,
-    # this will let you write graphquery
-    # code in a more graceful style when
-    # you needs a lot of pipeline function
-    # for parse value data.
-    bookID    css("book") 
-            | attr("id")
-
-    title     css("title")
-    isbn      xpath("//isbn")
-    quote     css("quote")
-    language  css("title") | attr("lang")
-
-    # another sub query in current graph query
-    author css("author") {
-        name css("name")
-        born css("born")
-        dead css("dead")
-    }
-
-    # this is a array of type character
-    character xpath("//character") [{
-        name          css("name")
-        born          css("born")
-        qualification xpath("qualification")
-    }]
-}
-```
-
-As you can see, the syntax of GraphQuery adds some strings wrapped in ` to the DDL. These strings wrapped by ` are called Pipeline. We will introduce Pipeline later. Let's first take a look at what data GraphQuery engine returns to us.
-
-```json
-{
-    "bookID": "b0836217462",
-    "title": "Being a Dog Is a Full-Time Job",
-    "isbn": "0836217462",
-    "quote": "I'd dog paddle the deepest ocean.",
-    "language": "en",
-    "author": {
-        "born": "1922-11-26",
-        "dead": "2000-02-12",
-        "name": "Charles M Schulz"
-    },
-    "character": [
-        {
-            "born": "1966-08-22",
-            "name": "Peppermint Patty",
-            "qualification": "bold, brash and tomboyish"
-        },
-        {
-            "born": "1950-10-04",
-            "name": "Snoopy",
-            "qualification": "extroverted beagle"
-        }
-    ],
-}
-```
-
-Wow, it's wonderful. Just like what we want.
-
-Here is another example of parse a simple array content:
-
-```vbnet
-Imports Microsoft.VisualBasic.Data.GraphQuery
-Imports Microsoft.VisualBasic.Data.GraphQuery.Language
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.MIME.HTML
-
-Dim document = 
-    <html>
-
-        <body>
-            <a href="01.html">Page 1</a>
-            <a href="02.html">Page 2</a>
-            <a href="03.html">Page 3</a>
-        </body>
-
-    </html>
-
-Dim query As Query = QueryParser.GetQuery("
-    
-    graphquery { 
-    
-        anchor css('a') [ 
-            text() 
-        ] 
-    }
-
-")
-
-Dim data As JsonElement = New Engine().Execute(document, query)
-Dim json As String = data.BuildJsonString(indent:=True)
-
-Call Console.WriteLine(json)
-```
-
-Run the vb file, the output is as follows :
-
-```json
-{"anchor":["Page 1","Page 2","Page 3"]}
-```
+- Assembly：`Microsoft.VisualBasic.Data.GraphQuery`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;graph-query;query-language;html;css-selector;xpath;json;web-scraping`
+- 许可：GPL-3.0-or-later

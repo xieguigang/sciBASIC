@@ -1,50 +1,62 @@
-# Labelled Data Matrix, Correlation and Distance Utilities
+# 带标签数据矩阵、相关性与距离工具
 
-Matrix utilities for pairwise comparison analysis: labelled numeric matrices, correlation and distance matrices, transforms and sparse matrix file IO.
+## 引言
 
-## Overview
-- `DataMatrix` model: a named NxN numeric matrix convertible to a graph under a cutoff, with row/column vector access and object visiting.
-- Correlation and distance builders: Pearson / Spearman correlation matrices with p-value matrices, Euclidean distance, cosine similarity and general pairwise evaluation.
-- Missing-value handling and transforms: imputation and missing-value simulation by feature or by sample, plus log, center, 0-1, standard and Z-score scaling over data frames.
-- Matrix Market and Harwell-Boeing IO: MTX (with optional gzip compression) and RUA sparse matrix readers and writers.
+数值线性代数库在 .NET 里并不少见，但它们都有一个共同的短板：**矩阵没有标签**。
 
-## Key Types
-- `Microsoft.VisualBasic.Math.Matrix.DataMatrix` — labelled numeric matrix; `GetVector`, `HasObject`, `Visit`, `ArrayPack`, `PopulateRows`.
-- `Microsoft.VisualBasic.Math.Matrix.CorrelationMatrix` — correlation matrix joined with its p-value matrix (`pvalue(i, j)`, `GetPvalueMatrix`, `Power`, `PositiveMatrix`).
-- `Microsoft.VisualBasic.Math.Matrix.DistanceMatrix` — dissimilarity / similarity matrix with quantile estimation and `CreateMatrix`.
-- `Microsoft.VisualBasic.Math.Matrix.Builder` — `MatrixBuilder` extensions that build data / correlation / distance matrices from datasets or a `DataFrame`.
-- `Microsoft.VisualBasic.Math.Matrix.Correlation` — `Pearson`, `Spearman` and correlation-matrix helpers over named datasets.
-- `Microsoft.VisualBasic.Math.Matrix.Distance` — `Euclidean`, `Correlation` and `Similarity` matrix builders.
-- `Microsoft.VisualBasic.Math.Matrix.Impute` — missing-value simulation and inference (`InferMethods`).
-- `Microsoft.VisualBasic.Math.Matrix.MathFormula` — `Log`, `Center`, `Scale01`, `Standard`, `ZScale`, `Evaluate` and `GetDataFrame` over data frames.
-- `Microsoft.VisualBasic.Math.Matrix.MatrixMarket.MTXFormat` / `RUAFormat` — Matrix Market MTX and Harwell-Boeing RUA file IO.
+一旦矩阵来自真实数据表，第 3 行是什么样本、第 7 列是什么特征，都必须记住——这在分析过程中极易出错。本包的做法是**把标签与矩阵绑定在一起**：
 
-## Quick Start
+- 相关矩阵的行列名来自特征名；
+- 距离矩阵的行列名来自样本名；
+- 缩放 / 中心化 / 缺失值填补的统计量也随标签记录。
+
+## 核心能力
+
+| 能力 | 说明 |
+|---|---|
+| **带标签数值矩阵** | 行列均带名称的矩阵模型，运算结果自动继承标签 |
+| **成对相关矩阵** | 计算特征间相关系数矩阵 |
+| **成对距离矩阵** | 计算样本间距离矩阵 |
+| **缺失值填补** | 缺失值的插补处理，避免下游算法报错 |
+| **缩放与中心化** | 为多变量分析准备矩阵（标准化 / 均值中心化） |
+| **Matrix Market I/O** | 读写 MTX / RUA 格式，与外部数值工具交换矩阵 |
+
+## 命名空间
+
+| 命名空间 | 职责 |
+|---|---|
+| `Microsoft.VisualBasic.Math.Matrix`（根） | 带标签矩阵模型、相关 / 距离矩阵、缺失值填补与变换 |
+| `....Math.Matrix.MatrixMarket` | Matrix Market 文件格式读写 |
+
+## 快速上手
+
 ```vbnet
-Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Math.Matrix
-Imports Microsoft.VisualBasic.Math.Matrix.MatrixMarket
 
-Dim mat As New DataMatrix({"a", "b", "c"}, {
-    New Double() {1, 0.21, 0.55},
-    New Double() {0.21, 1, 0.33},
-    New Double() {0.55, 0.33, 1}
-})
+' 1. 由数据表建立带标签矩阵
+Dim m = Matrix.FromDataFrame(frame)
 
-Console.WriteLine(String.Join(", ", mat.GetVector("a")))
+' 2. 缺失值填补 + 标准化
+Dim clean = m.ImputeMissing()
+Dim scaled = clean.Scale()
 
-Dim df As DataFrame = MathFormula.GetDataFrame(mat)
-Dim z As DataFrame = MathFormula.ZScale(df)
+' 3. 相关矩阵（行列名自动来自特征名）
+Dim corr = scaled.CorrelationMatrix()
+Console.WriteLine(corr("featureA", "featureB"))
 
-' sparse matrix IO
-Dim net As SparseMatrix = MTXFormat.ReadMatrix("network.mtx")
-MTXFormat.WriteMatrix(net, "network-copy.mtx")
+' 4. 与外部工具交换
+Call MatrixMarket.Write(corr, "./corr.mtx")
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.Math.Matrix`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **为什么标签如此重要**：相关矩阵的 (i, j) 元素没有标签就毫无意义；把标签纳入类型系统后，「按名字取相关系数」成为一次 O(1) 查询，而不是「数第几行第几列」的易错操作。
+- **缺失值的处理顺序**：必须**先填补再缩放**——若先缩放，缺失值会污染均值与标准差，导致所有样本的标准化结果都偏移。
+- **Matrix Market 的用途**：它是稀疏矩阵交换的事实标准，被 MATLAB、SciPy、PETSc 等广泛支持；能读写它意味着数据可以在 .NET 与主流数值生态之间往返。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.Math.Matrix`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation;scaling;centering`
+- 许可：GPL-3.0-or-later

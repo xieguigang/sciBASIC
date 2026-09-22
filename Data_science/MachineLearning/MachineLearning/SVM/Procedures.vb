@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::326cb29fe10c9b0c046c8d0018dbdbac, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
+﻿#Region "Microsoft.VisualBasic::271f7198b4ce787cae2dd96afccbd67c, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1451
-    '    Code Lines: 1067 (73.54%)
-    ' Comment Lines: 100 (6.89%)
-    '    - Xml Docs: 65.00%
+    '   Total Lines: 1569
+    '    Code Lines: 1067 (68.01%)
+    ' Comment Lines: 218 (13.89%)
+    '    - Xml Docs: 84.40%
     ' 
-    '   Blank Lines: 284 (19.57%)
-    '     File Size: 52.76 KB
+    '   Blank Lines: 284 (18.10%)
+    '     File Size: 60.18 KB
 
 
     '     Module Procedures
@@ -80,6 +80,10 @@ Namespace SVM
 
         Dim rand As Random = randf.seeds
 
+        ''' <summary>
+        ''' Set the random seed value which is used by the LibSVM procedure.
+        ''' </summary>
+        ''' <param name="seed">The random seed value.</param>
         Public Sub setRandomSeed(seed As Integer)
             rand = New Random(seed)
         End Sub
@@ -252,13 +256,26 @@ Namespace SVM
         End Sub
 
         ''' <summary>
-        ''' decision_function
+        ''' The decision function of one binary sub-problem: it holds the lagrange 
+        ''' multipliers of the samples and the bias term.
         ''' </summary>
         Private Class decision_function
 
+            ''' <summary>
+            ''' The lagrange multiplier of each training sample.
+            ''' </summary>
+            ''' <returns>An array of the alpha values.</returns>
             Public Property alpha As Double()
+            ''' <summary>
+            ''' The bias term of the decision function.
+            ''' </summary>
+            ''' <returns>A <see cref="Double"/> value.</returns>
             Public Property rho As Double
 
+            ''' <summary>
+            ''' Display this decision function as a json string.
+            ''' </summary>
+            ''' <returns>A json text which describes this decision function.</returns>
             Public Overrides Function ToString() As String
                 Return Me.GetJson
             End Function
@@ -316,10 +333,13 @@ Namespace SVM
         ''' <summary>
         ''' Platt's binary SVM Probablistic Output: an improvement from Lin et al.
         ''' </summary>
-        ''' <param name="l"></param>
-        ''' <param name="dec_values"></param>
-        ''' <param name="labels"></param>
-        ''' <param name="probAB"></param>
+        ''' <param name="l">The number of the decision values.</param>
+        ''' <param name="dec_values">The decision value of each training sample.</param>
+        ''' <param name="labels">The class label of each training sample.</param>
+        ''' <param name="probAB">
+        ''' The output array which will receive the two parameters ``A`` and ``B`` 
+        ''' of the sigmoid function, its length should be 2 or more.
+        ''' </param>
         Private Sub sigmoid_train(l As Integer, dec_values As Double(), labels As ColorClass(), probAB As Double())
             Dim A, B As Double
             Dim prior1 As Double = 0, prior0 As Double = 0
@@ -460,9 +480,12 @@ Namespace SVM
         ''' <summary>
         ''' Method 2 from the multiclass_prob paper by Wu, Lin, and Weng
         ''' </summary>
-        ''' <param name="k"></param>
-        ''' <param name="r"></param>
-        ''' <param name="p"></param>
+        ''' <param name="k">The number of the classes.</param>
+        ''' <param name="r">
+        ''' The pairwise probability matrix, in which the element ``(i, j)`` is 
+        ''' the probability of the class ``i`` against the class ``j``.
+        ''' </param>
+        ''' <param name="p">The output array which will receive the probability value of each class.</param>
         Private Sub multiclass_probability(k As Integer, r As Double(,), p As Double())
             Dim t, j As Integer
             Dim iter = 0, max_iter = std.Max(100, k)
@@ -528,11 +551,14 @@ Namespace SVM
         ''' <summary>
         ''' Cross-validation decision values for probability estimates
         ''' </summary>
-        ''' <param name="prob"></param>
-        ''' <param name="param"></param>
-        ''' <param name="Cp"></param>
-        ''' <param name="Cn"></param>
-        ''' <param name="probAB"></param>
+        ''' <param name="prob">The training data of the binary sub-problem.</param>
+        ''' <param name="param">The training parameters.</param>
+        ''' <param name="Cp">The C value of the positive side samples.</param>
+        ''' <param name="Cn">The C value of the negative side samples.</param>
+        ''' <param name="probAB">
+        ''' The output array which will receive the two parameters ``A`` and ``B`` 
+        ''' of the sigmoid function, its length should be 2 or more.
+        ''' </param>
         Private Sub svm_binary_svc_probability(prob As Problem, param As Parameter, Cp As Double, Cn As Double, probAB As Double())
             Dim i As Integer
             Dim nr_fold = 5
@@ -629,9 +655,12 @@ Namespace SVM
         ''' <summary>
         ''' Return parameter of a Laplace distribution 
         ''' </summary>
-        ''' <param name="prob"></param>
-        ''' <param name="param"></param>
-        ''' <returns></returns>
+        ''' <param name="prob">The training data of the regression problem.</param>
+        ''' <param name="param">The training parameters.</param>
+        ''' <returns>
+        ''' The sigma value of the estimated Laplace distribution; a large value 
+        ''' is returned when the regression result is not reliable.
+        ''' </returns>
         Private Function svm_svr_probability(prob As Problem, param As Parameter) As Double
             Dim i As Integer
             Dim nr_fold = 5
@@ -671,8 +700,8 @@ Namespace SVM
         ''' <summary>
         ''' group training data of the same class
         ''' </summary>
-        ''' <param name="prob"></param>
-        ''' <param name="nr_class_ret"></param>
+        ''' <param name="prob">The source training data which will be grouped.</param>
+        ''' <param name="nr_class_ret">The output number of the classes.</param>
         ''' <param name="label_ret">label name</param>
         ''' <param name="start_ret">begin of each class</param>
         ''' <param name="count_ret">#data of classes</param>
@@ -772,9 +801,9 @@ Namespace SVM
         ''' <summary>
         ''' regression or one-class-svm
         ''' </summary>
-        ''' <param name="model"></param>
-        ''' <param name="prob"></param>
-        ''' <param name="param"></param>
+        ''' <param name="model">The model object which will be filled with the training result.</param>
+        ''' <param name="prob">The training data of the one-class or the regression problem.</param>
+        ''' <param name="param">The training parameters.</param>
         <Extension>
         Private Sub oneClassSvm(ByRef model As Model, prob As Problem, param As Parameter)
             Dim nSV = 0
@@ -824,9 +853,9 @@ Namespace SVM
         ''' <summary>
         ''' classification
         ''' </summary>
-        ''' <param name="model"></param>
-        ''' <param name="prob"></param>
-        ''' <param name="param"></param>
+        ''' <param name="model">The model object which will be filled with the training result.</param>
+        ''' <param name="prob">The training data of the multi-class classification problem.</param>
+        ''' <param name="param">The training parameters.</param>
         <Extension>
         Private Sub multipleClassification(ByRef model As Model, prob As Problem, param As Parameter)
             Dim l As Integer = prob.count
@@ -1038,6 +1067,13 @@ Namespace SVM
         '
         ' Interface functions
         '
+        ''' <summary>
+        ''' Train a support vector machine model from the given problem and 
+        ''' parameters, this is the entry point of the whole training procedure.
+        ''' </summary>
+        ''' <param name="prob">The training data.</param>
+        ''' <param name="param">The training parameters.</param>
+        ''' <returns>A trained <see cref="Model"/> object.</returns>
         Public Function svm_train(prob As Problem, param As Parameter) As Model
             Dim model As New Model() With {
                 .parameter = param,
@@ -1061,10 +1097,10 @@ Namespace SVM
         ''' <summary>
         ''' Stratified cross validation
         ''' </summary>
-        ''' <param name="prob"></param>
-        ''' <param name="param"></param>
-        ''' <param name="nr_fold"></param>
-        ''' <param name="target"></param>
+        ''' <param name="prob">The training data which will be cross validated.</param>
+        ''' <param name="param">The training parameters.</param>
+        ''' <param name="nr_fold">The number of the folds of the cross validation.</param>
+        ''' <param name="target">The output array which will receive the prediction result of each sample.</param>
         Public Sub svm_cross_validation(prob As Problem, param As Parameter, nr_fold As Integer, target As SVMPrediction())
             Dim i As Integer
             Dim fold_start = New Integer(nr_fold + 1 - 1) {}
@@ -1201,14 +1237,32 @@ Namespace SVM
             Next
         End Sub
 
+        ''' <summary>
+        ''' Gets the svm type of the given model.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <returns>A <see cref="SvmType"/> value.</returns>
         Public Function svm_get_svm_type(model As Model) As SvmType
             Return model.parameter.svmType
         End Function
 
+        ''' <summary>
+        ''' Gets the number of the classes of the given model.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Function svm_get_nr_class(model As Model) As Integer
             Return model.numberOfClasses
         End Function
 
+        ''' <summary>
+        ''' Copy the class label values of the given model into the target array.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <param name="label">
+        ''' The output array which will receive the class labels, its length 
+        ''' should be equals to <see cref="Model.numberOfClasses"/>.
+        ''' </param>
         Public Sub svm_get_labels(model As Model, label As Integer())
             If model.classLabels IsNot Nothing Then
                 For i = 0 To model.numberOfClasses - 1
@@ -1217,6 +1271,14 @@ Namespace SVM
             End If
         End Sub
 
+        ''' <summary>
+        ''' Copy the indices of the support vectors into the target array.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <param name="indices">
+        ''' The output array which will receive the support vector indices, its 
+        ''' length should be equals to <see cref="Model.supportVectorCount"/>.
+        ''' </param>
         Public Sub svm_get_sv_indices(model As Model, indices As Integer())
             If model.supportVectorIndices IsNot Nothing Then
                 For i As Integer = 0 To model.supportVectorCount - 1
@@ -1225,10 +1287,25 @@ Namespace SVM
             End If
         End Sub
 
+        ''' <summary>
+        ''' Gets the number of the support vectors of the given model.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Function svm_get_nr_sv(model As Model) As Integer
             Return model.supportVectorCount
         End Function
 
+        ''' <summary>
+        ''' Gets the sigma value of the laplace distribution which was estimated 
+        ''' for the support vector regression model.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <returns>
+        ''' The sigma value; a message will be written to the error console and 
+        ''' ``0`` will be returned when the target model does not contain the 
+        ''' information for the SVR probability inference.
+        ''' </returns>
         Public Function svm_get_svr_probability(model As Model) As Double
             If (model.parameter.svmType = SvmType.EPSILON_SVR OrElse model.parameter.svmType = SvmType.NU_SVR) AndAlso model.pairwiseProbabilityA IsNot Nothing Then
                 Return model.pairwiseProbabilityA(0)
@@ -1340,6 +1417,17 @@ Namespace SVM
             }
         End Function
 
+        ''' <summary>
+        ''' Evaluate the decision function values of the given input sample.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <param name="x">The sparse feature vector of the input sample.</param>
+        ''' <param name="dec_values">
+        ''' The output array which will receive the pairwise decision values; for 
+        ''' the one-class and the regression models its length should be 1, 
+        ''' otherwise it should be ``nr_class * (nr_class - 1) / 2``.
+        ''' </param>
+        ''' <returns>The <see cref="SVMPrediction"/> result of the given sample.</returns>
         Public Function svm_predict_values(model As Model, x As Node(), dec_values As Double()) As SVMPrediction
             If model.parameter.svmType = SvmType.ONE_CLASS OrElse
                 model.parameter.svmType = SvmType.EPSILON_SVR OrElse
@@ -1352,10 +1440,10 @@ Namespace SVM
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Predict the label or the target value of a single input sample.
         ''' </summary>
-        ''' <param name="model"></param>
-        ''' <param name="x"></param>
+        ''' <param name="model">The target model.</param>
+        ''' <param name="x">The sparse feature vector of the input sample.</param>
         ''' <returns>
         ''' 兼容分类以及打分这两种工作模式
         ''' </returns>
@@ -1377,6 +1465,20 @@ Namespace SVM
             Return pred_result
         End Function
 
+        ''' <summary>
+        ''' Evaluate the class probability distribution of the given input sample.
+        ''' </summary>
+        ''' <param name="model">The target model, it should be trained with the probability estimation enabled.</param>
+        ''' <param name="x">The sparse feature vector of the input sample.</param>
+        ''' <param name="prob_estimates">
+        ''' The output array which will receive the probability value of each 
+        ''' class, its length should be equals to <see cref="Model.numberOfClasses"/>.
+        ''' </param>
+        ''' <returns>
+        ''' The <see cref="SVMPrediction"/> result of the given sample; when the 
+        ''' model does not provide the pairwise probability, this function falls 
+        ''' back to the <see cref="svm_predict"/> function.
+        ''' </returns>
         Public Function svm_predict_probability(model As Model, x As Node(), prob_estimates As Double()) As SVMPrediction
             If (model.parameter.svmType = SvmType.C_SVC OrElse model.parameter.svmType = SvmType.NU_SVC) AndAlso model.pairwiseProbabilityA IsNot Nothing AndAlso model.pairwiseProbabilityB IsNot Nothing Then
                 Dim i As Integer
@@ -1418,6 +1520,16 @@ Namespace SVM
             End If
         End Function
 
+        ''' <summary>
+        ''' Validate the training parameters against the given problem before 
+        ''' the training procedure starts.
+        ''' </summary>
+        ''' <param name="prob">The training data.</param>
+        ''' <param name="param">The training parameters that will be validated.</param>
+        ''' <returns>
+        ''' An error message which describes the first invalid parameter, or 
+        ''' ``Nothing`` when all of the parameters are valid.
+        ''' </returns>
         Public Function svm_check_parameter(prob As Problem, param As Parameter) As String
             ' svm_type
             Dim svm_type As SvmType = param.svmType
@@ -1503,6 +1615,12 @@ Namespace SVM
             Return Nothing
         End Function
 
+        ''' <summary>
+        ''' Check whether the given model contains the information which is 
+        ''' required by the probability inference.
+        ''' </summary>
+        ''' <param name="model">The target model.</param>
+        ''' <returns>``1`` when the probability information is available, otherwise ``0``.</returns>
         Public Function svm_check_probability_model(model As Model) As Integer
             If (model.parameter.svmType = SvmType.C_SVC OrElse model.parameter.svmType = SvmType.NU_SVC) AndAlso
                 model.pairwiseProbabilityA IsNot Nothing AndAlso

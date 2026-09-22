@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80984e9213c8d04f63180e720b91907d, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaGradTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::7e579a4485c763ccd04843e448b6ab2d, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaGradTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 19 (61.29%)
-    ' Comment Lines: 7 (22.58%)
-    '    - Xml Docs: 71.43%
+    '   Total Lines: 45
+    '    Code Lines: 19 (42.22%)
+    ' Comment Lines: 21 (46.67%)
+    '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 5 (16.13%)
-    '     File Size: 1.06 KB
+    '   Blank Lines: 5 (11.11%)
+    '     File Size: 2.00 KB
 
 
     '     Class AdaGradTrainer
@@ -68,10 +68,22 @@ Namespace CNN.trainers
     ''' </summary>
     Public Class AdaGradTrainer : Inherits TrainerAlgorithm
 
+        ''' <summary>
+        ''' Creates an AdaGrad trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)
         End Sub
 
+        ''' <summary>
+        ''' Applies one AdaGrad update step, scaling the step size by the accumulated squared gradient.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi As Double() = gsum(i)
             Dim dx As Double
@@ -82,6 +94,8 @@ Namespace CNN.trainers
             p(j) += dx
         End Sub
 
+        ''' <summary>Returns a short description of this update rule.</summary>
+        ''' <returns>A text that reports the batch size, the L2 decay and the learning rate.</returns>
         Public Overrides Function ToString() As String
             Return $"ada_grad(batch_size:{batch_size}, l2_decay:{l2_decay})"
         End Function

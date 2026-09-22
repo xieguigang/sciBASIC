@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e69392bfe8e845a7da0810c5925927, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\PopulationList.vb"
+﻿#Region "Microsoft.VisualBasic::f9e1012e4be082143e5bc0ddca585305, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\PopulationList.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 40 (74.07%)
-    ' Comment Lines: 4 (7.41%)
+    '   Total Lines: 84
+    '    Code Lines: 40 (47.62%)
+    ' Comment Lines: 34 (40.48%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.93 KB
+    '   Blank Lines: 10 (11.90%)
+    '     File Size: 3.41 KB
 
 
     '     Class PopulationList
@@ -62,12 +62,21 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF.Population
 
+    ''' <summary>
+    ''' A <see cref="PopulationCollection(Of Chr)"/> implementation which is 
+    ''' based on the <see cref="List(Of T)"/> object.
+    ''' </summary>
+    ''' <typeparam name="Chr">The chromosome type of the genetic algorithm.</typeparam>
     Public Class PopulationList(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits PopulationCollection(Of Chr)
 
         Const DEFAULT_NUMBER_OF_CHROMOSOMES% = 32
 
         Dim innerList As New List(Of Chr)(capacity:=DEFAULT_NUMBER_OF_CHROMOSOMES)
 
+        ''' <summary>
+        ''' The number of the chromosome objects in this list.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Overrides ReadOnly Property Count As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -75,6 +84,11 @@ Namespace Darwinism.GAF.Population
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the chromosome object at the specific index of this list.
+        ''' </summary>
+        ''' <param name="index">The zero based index of the target chromosome.</param>
+        ''' <returns>A chromosome object.</returns>
         Default Public Overrides ReadOnly Property Item(index As Integer) As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -82,16 +96,29 @@ Namespace Darwinism.GAF.Population
             End Get
         End Property
 
+        ''' <summary>
+        ''' Add a chromosome object into this list.
+        ''' </summary>
+        ''' <param name="chr">The chromosome object that will be added.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Add(chr As Chr)
             Call innerList.Add(chr)
         End Sub
 
+        ''' <summary>
+        ''' Keep only the first <paramref name="capacitySize"/> chromosome objects 
+        ''' of this list.
+        ''' </summary>
+        ''' <param name="capacitySize">The maximum number of the chromosomes which will be kept.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Trim(capacitySize As Integer)
             innerList = innerList.subList(0, capacitySize)
         End Sub
 
+        ''' <summary>
+        ''' Get all of the chromosome objects in this list.
+        ''' </summary>
+        ''' <returns>A sequence of the chromosome objects.</returns>
         Public Overrides Function GetCollection() As IEnumerable(Of Chr)
             Return innerList
         End Function
@@ -99,7 +126,10 @@ Namespace Darwinism.GAF.Population
         ''' <summary>
         ''' Order by [unique_hashKey => fitness]
         ''' </summary>
-        ''' <param name="fitness"></param>
+        ''' <param name="fitness">
+        ''' The fitness value provider function, its parameter is the 
+        ''' <see cref="Chromosome(Of T).Identity"/> value of a chromosome.
+        ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub OrderBy(fitness As Func(Of String, Double))
             innerList = innerList _

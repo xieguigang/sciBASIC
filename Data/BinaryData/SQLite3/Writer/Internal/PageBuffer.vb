@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3efbbaeb48d9324dd1f2b1e4824e9c0f, Data\BinaryData\SQLite3\Writer\Internal\PageBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::334e115dc0f36cd27e1eee26271af1e1, Data\BinaryData\SQLite3\Writer\Internal\PageBuffer.vb"
 
     ' Author:
     ' 
@@ -186,4 +186,3 @@ Namespace Writer.Internal
     End Class
 
 End Namespace
-

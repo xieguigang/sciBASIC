@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac358be28c17855cb9628c52ed1361d9, Data\BinaryData\SQLite3\Writer\Sqlite3TableWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1ccd2a9b02120accbc578656a2b97054, Data\BinaryData\SQLite3\Writer\Sqlite3TableWriter.vb"
 
     ' Author:
     ' 
@@ -392,4 +392,3 @@ Namespace Writer
     End Class
 
 End Namespace
-

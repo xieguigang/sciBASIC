@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableExtensions, Data_science\DataMining\t-SNE\NumericTableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ba776652cc1cd58abfd84ebbe2ea0b18, Data_science\DataMining\t-SNE\NumericTableExtensions.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,31 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 39 (57.35%)
+    ' Comment Lines: 22 (32.35%)
+    '    - Xml Docs: 86.36%
+    ' 
+    '   Blank Lines: 7 (10.29%)
+    '     File Size: 3.12 KB
+
+
+    ' Module NumericTableExtensions
+    ' 
+    '     Function: tsne
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

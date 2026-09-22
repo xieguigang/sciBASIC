@@ -14,7 +14,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Product>scibasic.net</Product>
     <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
-    <Description>A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Provides the GDI raster back end used by the driver-based sciBASIC# graphics engine.</Description>
+    <Description>A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing, providing the GDI raster back end of the driver based graphics engine.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Drawing</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <PackageIcon>logo-knot.png</PackageIcon>
@@ -22,11 +22,12 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms</PackageTags>
+    <PackageTags>scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms;gif-encoder;tiff;font-metrics</PackageTags>
+    <PackageReleaseNotes>The Windows GDI+ back end of the sciBASIC# graphics engine. Canvas: the Graphics namespace wraps a GDI+ drawing surface (GDICanvas, Graphics2D and Wmf) with a CSS interop bridge, so rendering code written against the driver based IGraphics API can target GDI+ unchanged. Encoders: the FileEncoder namespace provides the GIF and TIFF writers together with the image format enumeration. Interop: the Interop namespace holds the P/Invoke bindings and managed images (GDIPlusInterop, GDIPlusImage, DrawingInterop and BitmapBuffer) that marshal between sciBASIC# graphics models and System.Drawing types. Images and filters: Imager and the Filters namespace (Effects, ImageExtensions and Utils) apply bitmap effects inside the same pipeline. Text: the Text namespace provides font metrics (FontMetrics), graphics text drawing and the text layout model. The project targets the .NET Framework and is therefore Windows only.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

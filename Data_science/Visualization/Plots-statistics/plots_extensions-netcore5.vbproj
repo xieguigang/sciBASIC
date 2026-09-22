@@ -14,15 +14,16 @@
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Statistical Chart Extensions: ROC, QQ, Heatmap and PCA Plots</Title>
     <Description>Adds statistical graphics to the sciBASIC# chart engine: ROC and QQ plots, forest and Z-score plots, correlation heatmaps and triangles, density plots, time trends, PCA scree plots and regression plots.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.ChartPlots.Statistics</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;statistics;roc-curve;heatmap;qq-plot;pca-plot</PackageTags>
+    <PackageTags>scibasic;statistics;roc-curve;qq-plot;forest-plot;heatmap;correlation-matrix;pca-plot;regression-plot</PackageTags>
+    <PackageReleaseNotes>Statistical chart extensions for the sciBASIC# chart engine. The root namespace adds the model evaluation and diagnostic plots: ROC and QQ plots, forest and Z-score plots, correlation heatmaps and correlation triangles, density plots, time trend plots and regression plots. The Heatmap namespace provides the general heat map chart type, and PCA provides the principal component scree and score plots. Together they turn the generic chart engine into a statistical graphics toolkit covering the plots most commonly needed when reporting model performance and multivariate structure, and they are the chart layer used by the statistics and machine learning packages.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

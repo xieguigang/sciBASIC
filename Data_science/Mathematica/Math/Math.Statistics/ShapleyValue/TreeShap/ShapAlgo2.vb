@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::764afd76ebe148f00dc0fdeae0ad22e2, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\ShapAlgo2.vb"
+﻿#Region "Microsoft.VisualBasic::0d344ac3dba8c55c271429de6621ec0f, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\ShapAlgo2.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     ''' <summary>
     ''' Rewrite of the Algorithm 2 from [1].
@@ -82,7 +82,7 @@ Namespace ShapleyValue.TreeShape
     ''' https://github.com/pkozelka/treeshap
     ''' </remarks>
     Public Class ShapAlgo2
-        Friend Shared DEBUG As Boolean = True
+        Public Shared DEBUG As Boolean = False
         Private indent As String = ""
 
         Private ReadOnly phi As Double()

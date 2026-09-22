@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7a0e75360c457b7918d168374ce624, Data_science\DataMining\DataMining\Evaluation\Validation.vb"
+﻿#Region "Microsoft.VisualBasic::3e339734d11457ad2a405bbd3fd625f6, Data_science\DataMining\DataMining\Evaluation\Validation.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 132 (60.55%)
-    ' Comment Lines: 64 (29.36%)
-    '    - Xml Docs: 81.25%
+    '   Total Lines: 261
+    '    Code Lines: 136 (52.11%)
+    ' Comment Lines: 93 (35.63%)
+    '    - Xml Docs: 87.10%
     ' 
-    '   Blank Lines: 22 (10.09%)
-    '     File Size: 8.46 KB
+    '   Blank Lines: 32 (12.26%)
+    '     File Size: 10.51 KB
 
 
     '     Structure Validation
     ' 
     '         Properties: F1Score, FbetaScore, FPR, NPV
     ' 
-    '         Function: AUC, Calc, ROC, ToDataSet, ToString
+    '         Function: AUC, Calc, FromConfusion, ROC, ToDataSet
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -64,10 +65,15 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Namespace Evaluation
 
     ''' <summary>
-    ''' 验证结果描述
+    ''' 验证结果描述：ROC 曲线之上的一个阈值点。
     ''' 
-    ''' ``灵敏度 = 真阳性人数 / (真阳性人数 + 假阴性人数) * 100%``
-    ''' ``特异度 = 真阴性人数 / (真阴性人数 + 假阳性人数) * 100%``
+    ''' ``灵敏度 = 真阳性人数 / (真阳性人数 + 假阴性人数)``
+    ''' ``特异度 = 真阴性人数 / (真阴性人数 + 假阳性人数)``
+    ''' 
+    ''' 注意：本类型是整个 <see cref="Evaluation"/> 模块的**规范 ROC 点**，
+    ''' 其中 <see cref="Sensibility"/> / <see cref="Specificity"/> / <see cref="Accuracy"/> /
+    ''' <see cref="Precision"/> 等所有比率字段统一采用 ``[0, 1]`` 的**分数**表示
+    ''' （旧版本使用的是 ``[0, 100]`` 的百分数，已在本轮重构中规范化）。
     ''' </summary>
     ''' <remarks>
     ''' https://www.jianshu.com/p/f0c7c1ad9091
@@ -75,23 +81,34 @@ Namespace Evaluation
     Public Structure Validation
 
         ''' <summary>
-        ''' TNR
+        ''' TNR：特异度（真阴性率），``[0, 1]``。
         ''' </summary>
-        Dim Specificity As Double
-        ''' <summary>
-        ''' Recall, TPR
-        ''' </summary>
-        Dim Sensibility As Double
-        Dim Accuracy As Double
-        ''' <summary>
-        ''' PPV
-        ''' </summary>
-        Dim Precision As Double
-        ''' <summary>
-        ''' balanced error rate
-        ''' </summary>
-        Dim BER As Double
+        Public Specificity As Double
 
+        ''' <summary>
+        ''' Recall / TPR：灵敏度（真阳性率），``[0, 1]``。
+        ''' </summary>
+        Public Sensibility As Double
+
+        ''' <summary>
+        ''' 准确率，``[0, 1]``。
+        ''' </summary>
+        Public Accuracy As Double
+
+        ''' <summary>
+        ''' PPV：精确率，``[0, 1]``。
+        ''' </summary>
+        Public Precision As Double
+
+        ''' <summary>
+        ''' balanced error rate，``[0, 1]``。
+        ''' </summary>
+        Public BER As Double
+
+        ''' <summary>
+        ''' 假阳性率（FPR = 1 - 特异度），``[0, 1]``。
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FPR As Double
             Get
                 Return FP / (FP + TN)
@@ -108,16 +125,16 @@ Namespace Evaluation
             End Get
         End Property
 
-        Dim All As Integer
-        Dim TP As Integer
-        Dim FP As Integer
-        Dim TN As Integer
-        Dim FN As Integer
+        Public All As Integer
+        Public TP As Integer
+        Public FP As Integer
+        Public TN As Integer
+        Public FN As Integer
 
         ''' <summary>
-        ''' 进行当前的预测鉴定分析的百分比等级，默认是0.5，即 50%
+        ''' 进行当前的预测鉴定分析的阈值等级
         ''' </summary>
-        Dim Threshold As Double
+        Public Threshold As Double
 
         Public ReadOnly Property F1Score As Double
             Get
@@ -155,7 +172,45 @@ Namespace Evaluation
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 由混淆矩阵直接构造 ROC 点。这是整个模块之中**唯一**的 ROC 点构造原语，
+        ''' 所有比率字段统一归一化为 ``[0, 1]`` 的分数。
+        ''' </summary>
+        ''' <param name="tp">真阳性人数</param>
+        ''' <param name="fp">假阳性人数</param>
+        ''' <param name="tn">真阴性人数</param>
+        ''' <param name="fn">假阴性人数</param>
+        ''' <param name="threshold">当前阈值</param>
+        ''' <returns></returns>
+        Public Shared Function FromConfusion(tp As Integer,
+                                             fp As Integer,
+                                             tn As Integer,
+                                             fn As Integer,
+                                             Optional threshold# = 0.5) As Validation
+
+            Dim all As Integer = tp + fp + tn + fn
+            Dim sensitivity As Double = If(tp + fn = 0, Double.NaN, tp / (tp + fn))
+            Dim specificity As Double = If(tn + fp = 0, Double.NaN, tn / (tn + fp))
+            Dim accuracy As Double = If(all = 0, Double.NaN, (tp + tn) / all)
+            Dim precision As Double = If(tp + fp = 0, Double.NaN, tp / (tp + fp))
+            Dim fpr As Double = If(fp + tn = 0, Double.NaN, fp / (fp + tn))
+
+            Return New Validation With {
+                .Sensibility = sensitivity,
+                .Specificity = specificity,
+                .Accuracy = accuracy,
+                .Precision = precision,
+                .All = all,
+                .FN = fn,
+                .FP = fp,
+                .TN = tn,
+                .TP = tp,
+                .Threshold = threshold,
+                .BER = 0.5 * (fpr + If(fn + tp = 0, Double.NaN, fn / (fn + tp)))
+            }
+        End Function
+
+        ''' <summary>
+        ''' 统计样本集合在给定判定规则下的混淆矩阵，并构造 ROC 点。
         ''' </summary>
         ''' <typeparam name="T">
         ''' + ``true`` 表示阳性
@@ -164,11 +219,13 @@ Namespace Evaluation
         ''' <param name="entity"></param>
         ''' <param name="getValidate">得到实际的分类结果</param>
         ''' <param name="getPredict">得到预测的分类结果</param>
+        ''' <param name="percentile">当前的阈值</param>
         ''' <returns></returns>
         Public Shared Function Calc(Of T)(entity As IEnumerable(Of T),
                                           getValidate As Func(Of T, Boolean),
                                           getPredict As Func(Of T, Boolean),
                                           Optional percentile# = 0.5) As Validation
+
             ' 真阳性人数
             Dim TP As Integer
             ' 假阳性人数
@@ -206,35 +263,29 @@ Namespace Evaluation
                 All += 1
             Next
 
-            Return New Validation With {
-                .Sensibility = TP / (TP + FN) * 100,
-                .Specificity = TN / (TN + FP) * 100,
-                .Accuracy = (TP + TN) / All * 100,
-                .Precision = TP / (TP + FP) * 100,
-                .All = All,
-                .FN = FN,
-                .FP = FP,
-                .TN = TN,
-                .TP = TP,
-                .Threshold = percentile,
-                .BER = 1 / 2 * (.FPR + FN / (FN + TP))
-            }
+            Return FromConfusion(TP, FP, TN, FN, percentile)
         End Function
 
         Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 10000)
 
+        ''' <summary>
+        ''' ROC 曲线下面积（梯形法）。统一委托到 <see cref="RocAuc.Trapezoid(IEnumerable(Of Validation))"/>。
+        ''' </summary>
+        ''' <param name="validates"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function AUC(validates As IEnumerable(Of Validation)) As Double
-            Return validates.AUC
+            Return RocAuc.Trapezoid(validates)
         End Function
 
         ''' <summary>
-        ''' 生ROC曲线的绘制数据(这个函数产生的曲线默认是阈值在[0,1]之间的)
+        ''' 生ROC曲线的绘制数据（统一委托到 <see cref="RocBuilder.SweepThresholds(Of T)"/>）
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="entity"></param>
         ''' <param name="getValidate">``func x, threshold => yes/no``</param>
         ''' <param name="getPredict"></param>
+        ''' <param name="threshold"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 在一个二分类模型中，对于所得到的连续结果，假设已确定一个阈值，比如说 0.6，
@@ -243,32 +294,25 @@ Namespace Evaluation
         ''' 但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，
         ''' 在此引入ROC。
         ''' </remarks>
-        Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
-                                                  getValidate As Func(Of T, Double, Boolean),
-                                                  getPredict As Func(Of T, Double, Boolean),
-                                                  Optional threshold As [Variant](Of Sequence, Func(Of T, Double)) = Nothing) As IEnumerable(Of Validation)
+        Public Shared Function ROC(Of T)(entity As IEnumerable(Of T),
+                                         getValidate As Func(Of T, Double, Boolean),
+                                         getPredict As Func(Of T, Double, Boolean),
+                                         Optional threshold As [Variant](Of Sequence, Func(Of T, Double)) = Nothing) As IEnumerable(Of Validation)
 
-            Dim validate As Func(Of T, Boolean)
-            Dim predict As Func(Of T, Boolean)
             Dim dataArray As T() = entity.ToArray
-            Dim thresholdPopulator = Function() As IEnumerable(Of Double)
-                                         If threshold Is Nothing Then
-                                             Return normalRange.DefaultValue.AsEnumerable
-                                         ElseIf threshold Like GetType(Sequence) Then
-                                             Return threshold.TryCast(Of Sequence).AsEnumerable
-                                         Else
-                                             Return dataArray.Select(threshold.TryCast(Of Func(Of T, Double)))
-                                         End If
-                                     End Function
+            Dim cutoffs As Double()
 
-            For Each cutoff As Double In thresholdPopulator()
-#Disable Warning
-                validate = Function(x) getValidate(x, cutoff)
-                predict = Function(x) getPredict(x, cutoff)
+            If threshold Is Nothing Then
+                cutoffs = normalRange.DefaultValue.AsEnumerable.ToArray
+            ElseIf threshold Like GetType(Sequence) Then
+                cutoffs = threshold.TryCast(Of Sequence).AsEnumerable.ToArray
+            Else
+                cutoffs = dataArray.Select(threshold.TryCast(Of Func(Of T, Double))).ToArray
+            End If
 
-                Yield Validation.Calc(dataArray, validate, predict, percentile:=cutoff)
-#Enable Warning
-            Next
+            Return RocBuilder.SweepThresholds(dataArray, getValidate, getPredict, cutoffs)
         End Function
+
     End Structure
+
 End Namespace

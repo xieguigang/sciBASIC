@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc0775901ddb816844768b0bf5dc3adb, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\SimpleReplacement.vb"
+﻿#Region "Microsoft.VisualBasic::5a74edf789c312427df8edd87f0d9c89, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\SimpleReplacement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 16 (43.24%)
-    ' Comment Lines: 15 (40.54%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 41
+    '    Code Lines: 16 (39.02%)
+    ' Comment Lines: 19 (46.34%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 6 (16.22%)
-    '     File Size: 1.57 KB
+    '   Blank Lines: 6 (14.63%)
+    '     File Size: 1.94 KB
 
 
     '     Structure SimpleReplacement
@@ -65,6 +65,10 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
     Public Structure SimpleReplacement(Of Chr As {Class, Chromosome(Of Chr)})
         Implements IStrategy(Of Chr)
 
+        ''' <summary>
+        ''' The <see cref="Strategies.Naive"/> strategy identifier.
+        ''' </summary>
+        ''' <returns>Always returns <see cref="Strategies.Naive"/>.</returns>
         Public ReadOnly Property type As Strategies Implements IStrategy(Of Chr).type
             Get
                 Return Strategies.Naive
@@ -79,9 +83,9 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
         ''' 然后对种群进行裁剪,将错误率比较大的种群删除
         ''' 从而实现了择优进化, 即程序模型对我们的训练数据集产生了学习
         ''' </summary>
-        ''' <param name="newPop"></param>
-        ''' <param name="GA"></param>
-        ''' <returns></returns>
+        ''' <param name="newPop">The new population which contains the offspring individuals.</param>
+        ''' <param name="GA">The genetic algorithm driver of the current evolution process.</param>
+        ''' <returns>The trimmed new population of the next generation.</returns>
         Public Function newPopulation(newPop As Population(Of Chr), GA As GeneticAlgorithm(Of Chr)) As Population(Of Chr) Implements IStrategy(Of Chr).newPopulation
             Call newPop.SortPopulationByFitness(GA.chromosomesComparator) ' 通过fitness排序来进行择优
             Call newPop.Trim(newPop.capacitySize)                         ' 剪裁掉后面的对象，达到淘汰的效果

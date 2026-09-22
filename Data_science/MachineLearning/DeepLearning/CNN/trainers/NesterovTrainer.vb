@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11b3127a85e844332b5155f9840a1f87, Data_science\MachineLearning\DeepLearning\CNN\trainers\NesterovTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::1fe523b6f917a881dc44e2398d1e1f38, Data_science\MachineLearning\DeepLearning\CNN\trainers\NesterovTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 14 (58.33%)
-    ' Comment Lines: 5 (20.83%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 36
+    '    Code Lines: 14 (38.89%)
+    ' Comment Lines: 17 (47.22%)
+    '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 812 B
+    '   Blank Lines: 5 (13.89%)
+    '     File Size: 1.57 KB
 
 
     '     Class NesterovTrainer
@@ -63,10 +63,22 @@ Namespace CNN.trainers
 
     Public Class NesterovTrainer : Inherits TrainerAlgorithm
 
+        ''' <summary>
+        ''' Creates a Nesterov accelerated gradient trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)
         End Sub
 
+        ''' <summary>
+        ''' Applies one Nesterov accelerated momentum update step to a single parameter.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
             Dim dx = gsumi(j)

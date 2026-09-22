@@ -15,15 +15,16 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
-    <Title>Pure VB.NET Tensor Library with NumPy API and Autodiff</Title>
-    <Description>Self-contained tensor engine for sciBASIC#, not a Google TensorFlow binding: a managed multi-dimensional Tensor, a NumPy-style API, neural network activations and losses, and reverse-mode automatic differentiation.</Description>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
+    <Title>Pure VB.NET Tensor Library with NumPy API and Pluggable Compute Backend</Title>
+    <Description>Self-contained tensor engine for sciBASIC#, not a Google TensorFlow binding: a managed multi-dimensional Tensor, a NumPy-style API, neural network activations and losses, and a pluggable SIMD/CUDA compute backend.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.TensorFlow</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;tensor;numpy;automatic-differentiation;numerical</PackageTags>
+    <PackageTags>scibasic;tensor;numpy;numerical;computation-engine;activation-functions;simd</PackageTags>
+    <PackageReleaseNotes>The pure VB.NET tensor library of sciBASIC# - it is a self contained numerical engine and explicitly not a binding to Google TensorFlow. The Tensor type is a managed multi dimensional array with slicing, broadcasting and the usual arithmetic; the NumPy namespace provides a NumPy style API over it, so code written against familiar array idioms ports easily. The Compute namespace implements the tensor computation engine behind the pluggable ITensorCompute contract (SIMD accelerated CPU by default, CUDA backend can be registered at runtime), and Math together with nn provides the numerical operations, activations and loss functions. This package is the numerical foundation on which the deep learning, liquid neural network and CUDA tensor packages are built.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

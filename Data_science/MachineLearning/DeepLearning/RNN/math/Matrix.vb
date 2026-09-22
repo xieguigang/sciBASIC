@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04c4431efe585be74de6824ba373ce45, Data_science\MachineLearning\DeepLearning\RNN\math\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::a0007061efa18dcad48292152512fe10, Data_science\MachineLearning\DeepLearning\RNN\math\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 443
-    '    Code Lines: 304 (68.62%)
-    ' Comment Lines: 72 (16.25%)
-    '    - Xml Docs: 11.11%
+    '   Total Lines: 569
+    '    Code Lines: 304 (53.43%)
+    ' Comment Lines: 198 (34.80%)
+    '    - Xml Docs: 91.92%
     ' 
-    '   Blank Lines: 67 (15.12%)
-    '     File Size: 15.60 KB
+    '   Blank Lines: 67 (11.78%)
+    '     File Size: 22.49 KB
 
 
     '     Class Matrix
@@ -66,10 +66,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace RNN
 
-    ' MxN Matrix
-    ' If M=1 or N=1, the matrix is treated as a k-vector v.
-    ' v is equivalent to v.T() in scenarios like matrix multiplication,
-    ' or element-wise addition.
+    ''' <summary>
+    ''' A dense M x N matrix of doubles used by the character level RNN implementation.
+    ''' </summary>
+    ''' <remarks>
+    ''' When M = 1 or N = 1 the matrix is treated as a k-vector <c>v</c>. In matrix multiplication and element-wise
+    ''' operations such a vector behaves like <c>v.T()</c>, so the row and column vector forms can be mixed freely.
+    ''' </remarks>
     <Serializable>
     Public Class Matrix
 
@@ -77,14 +80,20 @@ Namespace RNN
 
         ' Create 
 
-        ' Constructs by copying other. Requires other != null.
+        ''' <summary>
+        ''' Creates a copy of another matrix.
+        ''' </summary>
+        ''' <param name="other">The matrix to copy; it must not be <c>Nothing</c>.</param>
         Public Sub New(other As Matrix)
             M = other.M
             N = other.N
             data = Utils.deepCopyOf(other.data)
         End Sub
 
-        ' Constructs using an MxN array. Requires M, N > 0.
+        ''' <summary>
+        ''' Creates a matrix from a rectangular jagged array.
+        ''' </summary>
+        ''' <param name="data">The M x N array; both dimensions must be greater than zero.</param>
         Private Sub New(data As Double()())
             M = Utils.arrayRows(data)
             N = Utils.arrayCols(data)
@@ -96,7 +105,11 @@ Namespace RNN
             Me.data = data
         End Sub
 
-        ' Constructs using an M*N row-major array. Requires M > 0.
+        ''' <summary>
+        ''' Creates a matrix from a row-major flat array.
+        ''' </summary>
+        ''' <param name="M">The row count; it must be greater than zero.</param>
+        ''' <param name="data">The row-major flat data.</param>
         Private Sub New(M As Integer, data As Double())
             Me.M = M
             Me.N = data.Length Mod Me.M
@@ -108,56 +121,101 @@ Namespace RNN
             Next
         End Sub
 
-        ' Returns a matrix constructed using an MxN array. Requires M, N > 0.
+        ''' <summary>
+        ''' Creates a matrix from a rectangular jagged array, copying the data.
+        ''' </summary>
+        ''' <param name="data">The M x N array; both dimensions must be greater than zero.</param>
+        ''' <returns>The new matrix.</returns>
         Public Shared Function fromRaw(data As Double()()) As Matrix
             Return New Matrix(Utils.deepCopyOf(data))
         End Function
 
-        ' Constructs using an M*N row-major array. Requires M > 0.
+        ''' <summary>
+        ''' Creates a matrix from a row-major flat array.
+        ''' </summary>
+        ''' <param name="M">The row count; it must be greater than zero.</param>
+        ''' <param name="data">The row-major flat data.</param>
+        ''' <returns>The new matrix.</returns>
         Public Shared Function fromFlat(M As Integer, data As Double()) As Matrix
             Return New Matrix(M, data)
         End Function
 
-        ' Returns a matrix with all zeros, M rows, N cols. Requires M, N > 0.
+        ''' <summary>
+        ''' Creates a matrix of all zeros.
+        ''' </summary>
+        ''' <param name="M">Row count; must be greater than zero.</param>
+        ''' <param name="N">Column count; must be greater than zero.</param>
+        ''' <returns>A zero filled matrix.</returns>
         Public Shared Function zeros(M As Integer, N As Integer) As Matrix
             Return New Matrix(RectangularArray.Matrix(Of Double)(M, N))
         End Function
 
-        ' Returns a k-dimensional vector with all zeros. Requires k > 0.
+        ''' <summary>
+        ''' Creates a k dimensional zero vector.
+        ''' </summary>
+        ''' <param name="k">Vector length; must be greater than zero.</param>
+        ''' <returns>A zero filled vector.</returns>
         Public Shared Function zeros(k As Integer) As Matrix
             Return zeros(1, k)
         End Function
 
-        ' Returns a matrix shaped like other with all zeros. Requires other !=
-        ' null.
+        ''' <summary>
+        ''' Creates a zero matrix shaped like another one.
+        ''' </summary>
+        ''' <param name="other">The template matrix; it must not be <c>Nothing</c>.</param>
+        ''' <returns>A zero filled matrix with the same shape.</returns>
         Public Shared Function zerosLike(other As Matrix) As Matrix
             Return zeros(other.M, other.N)
         End Function
 
-        ' Returns a matrix with all ones, M rows, N cols. Requires M, N > 0.
+        ''' <summary>
+        ''' Creates a matrix of all ones.
+        ''' </summary>
+        ''' <param name="M">Row count; must be greater than zero.</param>
+        ''' <param name="N">Column count; must be greater than zero.</param>
+        ''' <returns>A matrix filled with ones.</returns>
         Public Shared Function ones(M As Integer, N As Integer) As Matrix
             Return zeros(M, N).add(1.0)
         End Function
 
-        ' Returns a k-dimensional vector with all ones. Requires k > 0.
+        ''' <summary>
+        ''' Creates a k dimensional vector of ones.
+        ''' </summary>
+        ''' <param name="k">Vector length; must be greater than zero.</param>
+        ''' <returns>A vector filled with ones.</returns>
         Public Shared Function ones(k As Integer) As Matrix
             Return ones(1, k)
         End Function
 
-        ' Returns a matrix shaped like other with all ones.
+        ''' <summary>
+        ''' Creates a matrix of ones shaped like another one.
+        ''' </summary>
+        ''' <param name="other">The template matrix.</param>
+        ''' <returns>A matrix filled with ones and the same shape.</returns>
         Public Shared Function onesLike(other As Matrix) As Matrix
             Return ones(other.M, other.N)
         End Function
 
-        ' Returns a one-hot vector (v.at(i) = 1, v.at(j) = 0 ; j != i).
-        ' Requires 0 <= i < k.
+        ''' <summary>
+        ''' Creates a one-hot vector, in which <c>v(i) = 1</c> and every other element is zero.
+        ''' </summary>
+        ''' <param name="k">Vector length.</param>
+        ''' <param name="i">Index of the single one; requires <c>0 &lt;= i &lt; k</c>.</param>
+        ''' <returns>The one-hot vector.</returns>
         Public Shared Function oneHot(k As Integer, i As Integer) As Matrix
             Dim v = zeros(k)
             v.setAt(i, 1.0)
             Return v
         End Function
 
-        ' Returns the matrix product (a x b)
+        ''' <summary>
+        ''' Computes the matrix product <c>a x b</c>, transposing <paramref name="b"/> when that makes the dimensions
+        ''' compatible.
+        ''' </summary>
+        ''' <param name="a">The left matrix.</param>
+        ''' <param name="b">The right matrix.</param>
+        ''' <returns>The product matrix.</returns>
+        ''' <exception cref="Exception">Thrown when the dimensions are incompatible.</exception>
         Public Shared Function dot(a As Matrix, b As Matrix) As Matrix
             ' System.out.println("a: " + a.M + "x" + a.N + "b:" + b.M + "x" + b.N);
             If a.N <> b.M Then ' if dimensions are not compatible
@@ -184,7 +242,8 @@ Namespace RNN
             Return New Matrix(c)
         End Function
 
-        ' Returns the transpose of this matrix.
+        ''' <summary>Returns the transpose of this matrix.</summary>
+        ''' <returns>A new matrix with rows and columns swapped.</returns>
         Public Overridable Function T() As Matrix
             Dim new_data = RectangularArray.Matrix(Of Double)(N, M)
 
@@ -199,7 +258,11 @@ Namespace RNN
 
         ' Operators 
 
-        ' Adds x to all elements.
+        ''' <summary>
+        ''' Adds a scalar to every element, in place.
+        ''' </summary>
+        ''' <param name="x">The value to add.</param>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function add(x As Double) As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -209,8 +272,12 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Adds element-wise. Requires the matrices to have the same
-        ' dimensions.
+        ''' <summary>
+        ''' Adds another matrix element wise, in place. Row and column vectors of matching length are broadcast together.
+        ''' </summary>
+        ''' <param name="other">The matrix or vector to add.</param>
+        ''' <returns>This matrix.</returns>
+        ''' <exception cref="Exception">Thrown when the shapes are incompatible.</exception>
         Public Overridable Function add(other As Matrix) As Matrix
             If M = other.M AndAlso N = other.N Then ' compatible matrices
                 For i = 0 To M - 1
@@ -235,7 +302,11 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Multiplies all elements by x.
+        ''' <summary>
+        ''' Multiplies every element by a scalar, in place.
+        ''' </summary>
+        ''' <param name="x">The scale factor.</param>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function mul(x As Double) As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -245,7 +316,12 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Multiplies element-wise.
+        ''' <summary>
+        ''' Multiplies another matrix element wise, in place. Row and column vectors of matching length are broadcast together.
+        ''' </summary>
+        ''' <param name="other">The matrix or vector to multiply with.</param>
+        ''' <returns>This matrix.</returns>
+        ''' <exception cref="Exception">Thrown when the shapes are incompatible.</exception>
         Public Overridable Function mul(other As Matrix) As Matrix
             If M = other.M AndAlso N = other.N Then ' compatible matrices
                 For i = 0 To M - 1
@@ -270,12 +346,17 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Multiplies all elements by -1.0.
+        ''' <summary>Negates every element, in place.</summary>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function neg() As Matrix
             Return mul(-1.0)
         End Function
 
-        ' Divides all elements by x.
+        ''' <summary>
+        ''' Divides every element by a scalar, in place.
+        ''' </summary>
+        ''' <param name="x">The divisor.</param>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function div(x As Double) As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -285,7 +366,12 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Divides element-wise.
+        ''' <summary>
+        ''' Divides by another matrix element wise, in place. Row and column vectors of matching length are broadcast together.
+        ''' </summary>
+        ''' <param name="other">The matrix or vector divisor.</param>
+        ''' <returns>This matrix.</returns>
+        ''' <exception cref="Exception">Thrown when the shapes are incompatible.</exception>
         Public Overridable Function div(other As Matrix) As Matrix
             If M = other.M AndAlso N = other.N Then ' compatible matrices
                 For i = 0 To M - 1
@@ -310,7 +396,8 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Applies e^x element-wise.
+        ''' <summary>Applies <c>e^x</c> element wise, in place.</summary>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function exp() As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -320,7 +407,8 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Applies tanh(x) element-wise.
+        ''' <summary>Applies <c>tanh(x)</c> element wise, in place.</summary>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function tanh() As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -330,7 +418,12 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Clips all elements to the interval [x_a, x_b]. Requires that x_a < x_b
+        ''' <summary>
+        ''' Clips every element into the interval <c>[x_a, x_b]</c>, in place.
+        ''' </summary>
+        ''' <param name="x_a">Lower bound; it must be smaller than <paramref name="x_b"/>.</param>
+        ''' <param name="x_b">Upper bound.</param>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function clip(x_a As Double, x_b As Double) As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -345,7 +438,11 @@ Namespace RNN
             Return Me
         End Function
 
-        ' Calls f for each element.
+        ''' <summary>
+        ''' Applies a function to every element, in place.
+        ''' </summary>
+        ''' <param name="f">The function to apply.</param>
+        ''' <returns>This matrix.</returns>
         Public Overridable Function apply(f As Func(Of Double, Double)) As Matrix
             For Each row In data
                 For j = 0 To N - 1
@@ -357,7 +454,8 @@ Namespace RNN
 
         ' Other of all elements 
 
-        ' Returns the sum of elements.
+        ''' <summary>Returns the sum of all elements.</summary>
+        ''' <returns>The total sum.</returns>
         Public Overridable Function sum() As Double
             Dim lSum = 0.0
             For Each row In data
@@ -369,7 +467,8 @@ Namespace RNN
             Return lSum
         End Function
 
-        ' Returns the product of elements.
+        ''' <summary>Returns the product of all elements.</summary>
+        ''' <returns>The total product.</returns>
         Public Overridable Function prod() As Double
             Dim lProd = 0.0
             For Each row In data
@@ -381,12 +480,14 @@ Namespace RNN
             Return lProd
         End Function
 
-        ' Returns a copy of the MxN array.
+        ''' <summary>Returns a deep copy of the underlying M x N array.</summary>
+        ''' <returns>The copied jagged array.</returns>
         Public Overridable Function raw() As Double()()
             Return Utils.deepCopyOf(data)
         End Function
 
-        ' Returns a row-major flattened array.
+        ''' <summary>Returns the matrix flattened in row-major order.</summary>
+        ''' <returns>A flat copy of the matrix data.</returns>
         Public Overridable Function unravel() As Double()
             Dim result = New Double(M * N - 1) {}
 
@@ -401,15 +502,18 @@ Namespace RNN
 
         ' State 
 
-        ' Returns true, if the matrix is a vector.
+        ''' <summary>Gets a value indicating whether the matrix is a vector (a single row or column).</summary>
         Public Overridable ReadOnly Property Vector As Boolean
             Get
                 Return M = 1 OrElse N = 1
             End Get
         End Property
 
-        ' Returns the index with the value 1.0.
-        ' Requires the matrix to be a one-hot vector.
+        ''' <summary>
+        ''' Returns the index of the single element equal to one.
+        ''' </summary>
+        ''' <returns>The index of the one.</returns>
+        ''' <exception cref="Exception">Thrown when the matrix is not a valid one-hot vector.</exception>
         Public Overridable Function oneHotIndex() As Integer
             Dim one_already_encountered = False
             Dim one_hot_index = 0
@@ -439,19 +543,17 @@ Namespace RNN
 
         ' Dimensions 
 
-        ''' <summary>
-        ''' Returns the row count.
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Gets the row count.</summary>
         Public Overridable ReadOnly Property M As Integer
 
-        ''' <summary>
-        ''' Returns the column count.
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Gets the column count.</summary>
         Public Overridable ReadOnly Property N As Integer
 
-        ' Returns the vector length. Requires that the matrix is a vector.
+        ''' <summary>
+        ''' Returns the vector length of this matrix.
+        ''' </summary>
+        ''' <returns>The length of the vector.</returns>
+        ''' <exception cref="Exception">Thrown when the matrix is not a vector.</exception>
         Public Overridable Function getk() As Integer
             If M = 1 Then
                 Return N
@@ -464,7 +566,11 @@ Namespace RNN
 
         ' Element access 
 
-        ' Returns the vector element at i. Requires i < k
+        ''' <summary>
+        ''' Gets a vector element. Requires the matrix to be a vector.
+        ''' </summary>
+        ''' <param name="i">The element index; requires <c>i &lt; k</c>.</param>
+        ''' <returns>The value at <paramref name="i"/>.</returns>
         Public Overridable Function at(i As Integer) As Double
             If M = 1 Then
                 Return data(0)(i) ' row vector
@@ -472,18 +578,30 @@ Namespace RNN
             Return data(i)(0) ' column vector
         End Function
 
-        ' Returns the matrix element at i,j. Requires i < M, j < N.
+        ''' <summary>
+        ''' Gets a matrix element.
+        ''' </summary>
+        ''' <param name="i">Row index; requires <c>i &lt; M</c>.</param>
+        ''' <param name="j">Column index; requires <c>j &lt; N</c>.</param>
+        ''' <returns>The value at (<paramref name="i"/>, <paramref name="j"/>).</returns>
         Public Overridable Function at(i As Integer, j As Integer) As Double
             Return data(i)(j)
         End Function
 
-        ' Returns the vector element at m.oneHotIndex(). Requires index to be a
-        ' one-hot vector.
+        ''' <summary>
+        ''' Gets the vector element addressed by a one-hot index vector.
+        ''' </summary>
+        ''' <param name="index">A one-hot vector whose single one selects the element.</param>
+        ''' <returns>The selected value.</returns>
         Public Overridable Function at(index As Matrix) As Double
             Return at(index.oneHotIndex())
         End Function
 
-        ' Sets the vector element at i to x. Requires 0 <= i < k.
+        ''' <summary>
+        ''' Sets a vector element.
+        ''' </summary>
+        ''' <param name="i">The element index; requires <c>0 &lt;= i &lt; k</c>.</param>
+        ''' <param name="x">The value to store.</param>
         Public Overridable Sub setAt(i As Integer, x As Double)
             If M = 1 Then
                 data(0)(i) = x ' row vector
@@ -493,13 +611,21 @@ Namespace RNN
             End If
         End Sub
 
-        ' Sets the matrix element at i,j to x. Requires 0 <= i < M and 0 <= j < N.
+        ''' <summary>
+        ''' Sets a matrix element.
+        ''' </summary>
+        ''' <param name="i">Row index; requires <c>0 &lt;= i &lt; M</c>.</param>
+        ''' <param name="j">Column index; requires <c>0 &lt;= j &lt; N</c>.</param>
+        ''' <param name="x">The value to store.</param>
         Public Overridable Sub setAt(i As Integer, j As Integer, x As Double)
             data(i)(j) = x
         End Sub
 
-        ' Sets the vector element at m.oneHotIndex() to x.
-        ' Requires index to be a one-hot vector, and its index i < k.
+        ''' <summary>
+        ''' Sets the vector element addressed by a one-hot index vector.
+        ''' </summary>
+        ''' <param name="m">A one-hot vector whose single one selects the element.</param>
+        ''' <param name="x">The value to store.</param>
         Public Overridable Sub setAt(m As Matrix, x As Double)
             setAt(m.oneHotIndex(), x)
         End Sub

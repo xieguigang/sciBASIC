@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b049b3ee3b51a8682534cdf96635719, Data_science\MachineLearning\MachineLearning\SVM\Cache\Cache.vb"
+﻿#Region "Microsoft.VisualBasic::cd1f4150c467808e199931fe7761aba9, Data_science\MachineLearning\MachineLearning\SVM\Cache\Cache.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 82 (58.16%)
-    ' Comment Lines: 37 (26.24%)
-    '    - Xml Docs: 48.65%
+    '   Total Lines: 155
+    '    Code Lines: 82 (52.90%)
+    ' Comment Lines: 51 (32.90%)
+    '    - Xml Docs: 62.75%
     ' 
-    '   Blank Lines: 22 (15.60%)
-    '     File Size: 4.51 KB
+    '   Blank Lines: 22 (14.19%)
+    '     File Size: 5.55 KB
 
 
     '     Class Cache
@@ -84,6 +84,11 @@ Namespace SVM
         Dim head As head_t()
         Dim lru_head As head_t
 
+        ''' <summary>
+        ''' Create the LRU cache of the kernel matrix.
+        ''' </summary>
+        ''' <param name="count">The number of the rows of the kernel matrix.</param>
+        ''' <param name="size">The maximum size of the cache, in bytes.</param>
         Public Sub New(count As Integer, size As Long)
             m_count = count
             m_size = size
@@ -103,7 +108,7 @@ Namespace SVM
         ''' <summary>
         ''' delete from current location
         ''' </summary>
-        ''' <param name="h"></param>
+        ''' <param name="h">The cache entry which will be unlinked from the LRU list.</param>
         Private Sub lru_delete(h As head_t)
             h.prev.next = h.next
             h.next.prev = h.prev
@@ -112,7 +117,7 @@ Namespace SVM
         ''' <summary>
         ''' insert to last position
         ''' </summary>
-        ''' <param name="h"></param>
+        ''' <param name="h">The cache entry which will be appended to the LRU list.</param>
         Private Sub lru_insert(h As head_t)
             h.next = lru_head
             h.prev = lru_head.prev
@@ -126,10 +131,14 @@ Namespace SVM
         ''' (p >= len if nothing needs to be filled)
         ''' java: simulate pointer using single-element array
         ''' </summary>
-        ''' <param name="index"></param>
-        ''' <param name="data"></param>
-        ''' <param name="len"></param>
-        ''' <returns></returns>
+        ''' <param name="index">The zero based index of the target row of the kernel matrix.</param>
+        ''' <param name="data">The output array which will receive the cached data of the target row.</param>
+        ''' <param name="len">The number of the elements that are requested.</param>
+        ''' <returns>
+        ''' The number of the valid elements which have already been cached; the 
+        ''' elements from this position to <paramref name="len"/> need to be filled 
+        ''' by the caller.
+        ''' </returns>
         Public Function GetData(index As Integer, <Out> ByRef data As Single(), len As Integer) As Integer
             Dim h = head(index)
             If h.len > 0 Then lru_delete(h)
@@ -158,6 +167,11 @@ Namespace SVM
             Return len
         End Function
 
+        ''' <summary>
+        ''' Swap the content of two rows in the cached kernel matrix.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the first row.</param>
+        ''' <param name="j">The zero based index of the second row.</param>
         Public Sub SwapIndex(i As Integer, j As Integer)
             If i = j Then
                 Return

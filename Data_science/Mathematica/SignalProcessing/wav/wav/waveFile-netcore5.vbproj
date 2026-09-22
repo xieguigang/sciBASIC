@@ -19,14 +19,15 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Description>Parses and writes RIFF/WAVE audio files with FMT and data sub-chunk access, and extracts mel-filterbank voiceprint vectors with delta coefficients, CMVN and L2 normalisation. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Wave</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;wav;audio;voiceprint;mfcc;riff</PackageTags>
+    <PackageTags>scibasic;wav;audio;voiceprint;mfcc;mel-filterbank;cmvn;riff</PackageTags>
+    <PackageReleaseNotes>WAV audio file support for sciBASIC#. The package parses and writes RIFF/WAVE files with direct access to the FMT and data sub chunks, so sample rate, channel count, bit depth and the raw sample buffer are all available. On top of that it extracts mel filterbank voiceprint vectors, including delta coefficients, CMVN (cepstral mean and variance normalisation) and L2 normalisation - the standard front end for audio based machine learning. Together the two layers mean an audio file can be read and turned into model ready feature vectors in a single step, which makes the package the entry point of the audio analysis pipeline.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

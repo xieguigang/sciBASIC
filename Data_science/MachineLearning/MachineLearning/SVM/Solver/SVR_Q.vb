@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b35028f536129cdaf5d5c52643c696d, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVR_Q.vb"
+﻿#Region "Microsoft.VisualBasic::45ced4b9f22596b9124dbc9823c935d8, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVR_Q.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 65 (80.25%)
-    ' Comment Lines: 1 (1.23%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 109
+    '    Code Lines: 65 (59.63%)
+    ' Comment Lines: 29 (26.61%)
+    '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 15 (18.52%)
-    '     File Size: 2.44 KB
+    '   Blank Lines: 15 (13.76%)
+    '     File Size: 4.05 KB
 
 
     '     Class SVR_Q
@@ -58,6 +58,11 @@
 
 Namespace SVM
 
+    ''' <summary>
+    ''' The epsilon-SVR / nu-SVR formulation of the kernel matrix: the kernel 
+    ''' matrix is expanded to twice of the sample size so that the two slack 
+    ''' variables of each sample can be handled at the same time.
+    ''' </summary>
     Friend Class SVR_Q : Inherits Kernel
 
         Private ReadOnly l As Integer
@@ -68,6 +73,11 @@ Namespace SVM
         Private buffer As Single()()
         Private ReadOnly QD As Double()
 
+        ''' <summary>
+        ''' Create the epsilon-SVR / nu-SVR formulation of the kernel matrix.
+        ''' </summary>
+        ''' <param name="prob">The training data.</param>
+        ''' <param name="param">The training parameters.</param>
         Public Sub New(prob As Problem, param As Parameter)
             Call MyBase.New(prob.count, prob.X, param)
 
@@ -90,6 +100,13 @@ Namespace SVM
             next_buffer = 0
         End Sub
 
+        ''' <summary>
+        ''' Swap the position of the two samples in the expanded kernel matrix, 
+        ''' the sign values, the sample indices and the diagonal elements are 
+        ''' swapped at the same time.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the first sample variable.</param>
+        ''' <param name="j">The zero based index of the second sample variable.</param>
         Public Overrides Sub SwapIndex(i As Integer, j As Integer)
             Do
                 Dim __ = sign(i)
@@ -110,6 +127,13 @@ Namespace SVM
             Loop While False
         End Sub
 
+        ''' <summary>
+        ''' Request a column of the expanded kernel matrix, the result is 
+        ''' reordered by the sign value of the slack variables.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the target row.</param>
+        ''' <param name="len">The number of the elements that will be requested.</param>
+        ''' <returns>An array which contains the requested elements of the target column.</returns>
         Public Overrides Function GetQ(i As Integer, len As Integer) As Single()
             Dim data As Single() = Nothing
             Dim j As Integer, real_i = index(i)
@@ -132,6 +156,10 @@ Namespace SVM
             Return buf
         End Function
 
+        ''' <summary>
+        ''' Gets the diagonal elements of the expanded kernel matrix.
+        ''' </summary>
+        ''' <returns>An array which contains the diagonal elements <i>Q(i, i)</i>.</returns>
         Public Overrides Function GetQD() As Double()
             Return QD
         End Function

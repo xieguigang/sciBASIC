@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19aec2692bc715cc6b610a086cca0f58, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\Identical.vb"
+﻿#Region "Microsoft.VisualBasic::f33f3b6125749e94c6b3aa35cadf7c3d, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\Identical.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 21 (80.77%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 54
+    '    Code Lines: 21 (38.89%)
+    ' Comment Lines: 28 (51.85%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (19.23%)
-    '     File Size: 759 B
+    '   Blank Lines: 5 (9.26%)
+    '     File Size: 2.04 KB
 
 
     '     Class Identical
@@ -56,8 +56,22 @@
 
 Namespace ComponentModel.Activations
 
+    ''' <summary>
+    ''' The identity activation function: <i>f(x) = x</i>.
+    ''' </summary>
+    ''' <remarks>
+    ''' This activation function is usually used by the regression model, in 
+    ''' which the output of the neuron node should not be transformed.
+    ''' </remarks>
     Public Class Identical : Inherits IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this identity function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``Identical`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -67,14 +81,28 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Returns the input value itself: <i>f(x) = x</i>.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The <paramref name="x"/> value itself.</returns>
         Public Overrides Function [Function](x As Double) As Double
             Return x
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>The text expression of this identity function.</returns>
         Public Overrides Function ToString() As String
             Return Store.ToString
         End Function
 
+        ''' <summary>
+        ''' The derivative of the identity function is the constant ``1``.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The constant value ``1``.</returns>
         Protected Overrides Function Derivative(x As Double) As Double
             Return 1
         End Function

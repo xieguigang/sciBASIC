@@ -1,0 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::094ed12e9a12e58b4578374d4d0e98a2, vs_solutions\dev\vs_PDB\NamespaceDoc.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 2 (28.57%)
+    ' Comment Lines: 5 (71.43%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 343 B
+
+
+    ' Class NamespaceDoc
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''' <summary>
+''' PDB debug symbol file readers for the classic MSF and Portable PDB formats: MSF stream and
+''' symbol stream access, CodeView and TPI/DBI parsing, decoded into one uniform model with source
+''' documents, sequence points, line numbers, public symbols and type records.
+''' </summary>
+Friend Class NamespaceDoc
+End Class

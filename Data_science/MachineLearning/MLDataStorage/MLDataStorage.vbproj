@@ -9,15 +9,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import</Title>
     <Description>Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.DataStorage</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;machine-learning;dataset;mnist;data-storage</PackageTags>
+    <PackageTags>scibasic;machine-learning;dataset;mnist;idx;data-storage;hdspack;archive</PackageTags>
+    <PackageReleaseNotes>The dataset persistence layer of sciBASIC# machine learning. It imports a data frame into a normalised sample dataset (the form expected by the learning algorithms), reads MNIST IDX image and label files directly so the classic benchmark datasets can be used without any conversion step, and packs large sample collections into streamable HDSPack archives - a single file container that supports random access to individual samples, which matters when the dataset does not fit comfortably in memory.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

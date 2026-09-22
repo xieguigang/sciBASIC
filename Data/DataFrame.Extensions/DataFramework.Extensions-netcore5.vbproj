@@ -8,7 +8,7 @@
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
     <PackageId></PackageId>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
-    <Version>5.0.9753.4776</Version>
+    <Version>5.0.9762.11310</Version>
     <Product>sciBASIC</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -21,13 +21,14 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Data Framework Extension Methods for Object Serialization</Title>
-    <Description>Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers.</Description>
+    <Description>Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers and property reflection utilities.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Framework.Extensions</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;dataframe;extensions;serialization;datatable;outlining</PackageTags>
+    <PackageTags>scibasic;dataframe;extensions;serialization;datatable;outlining;template</PackageTags>
+    <PackageReleaseNotes>Extension helpers for the sciBASIC# data framework. Object serialization: the Serialize namespace streams CLR objects into a DataTable and writes complex objects as multi sheet Excel like tables through outlining schemas (Extensions, Writer), with Serialize.ObjectSchema providing the class, field and schema descriptors that describe how a type maps onto columns. Outlining: the Outlining namespace implements the outlining data loader and its schema, which flatten nested objects into a flat table with generated column paths and reconstruct them on the way back. IO.Properties: reflection helpers that enumerate and read the properties and attributes of CLR types. Templates: TemplateAttribute and TemplateHelper provide CSV template driven import and export. DataTableStream ties the above together for DataTable based streaming I/O.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

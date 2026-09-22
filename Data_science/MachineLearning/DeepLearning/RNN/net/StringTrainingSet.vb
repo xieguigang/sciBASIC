@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d920974f5052252f933dff3d333599, Data_science\MachineLearning\DeepLearning\RNN\net\StringTrainingSet.vb"
+﻿#Region "Microsoft.VisualBasic::437f576d5c6b4a7b024133259c7a70ce, Data_science\MachineLearning\DeepLearning\RNN\net\StringTrainingSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 51 (60.00%)
-    ' Comment Lines: 17 (20.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 99
+    '    Code Lines: 51 (51.52%)
+    ' Comment Lines: 31 (31.31%)
+    '    - Xml Docs: 80.65%
     ' 
-    '   Blank Lines: 17 (20.00%)
-    '     File Size: 2.35 KB
+    '   Blank Lines: 17 (17.17%)
+    '     File Size: 3.29 KB
 
 
     ' 	Class StringTrainingSet
@@ -60,7 +60,9 @@
 
 Namespace RNN
 
-	' Immutable training set for a character level RNN.
+	''' <summary>
+	''' Immutable training set for a character level RNN: a block of text together with the alphabet extracted from it.
+	''' </summary>
 	Public Class StringTrainingSet
 		Implements TrainingSet
 
@@ -79,22 +81,32 @@ Namespace RNN
 
 		' Create 
 
-		' Returns a training set with data from file (UTF-8).
-		' Requires fileName != null.
+		''' <summary>
+		''' Creates a training set by reading a UTF-8 text file.
+		''' </summary>
+		''' <param name="fileName">Path of the training data file; it must not be <c>Nothing</c>.</param>
+		''' <returns>The training set built from the file contents.</returns>
 		Public Shared Function fromFile(fileName As String) As StringTrainingSet
 			Return New StringTrainingSet(fileName.ReadAllText)
 		End Function
 
-		' Returns a training set created from a string.
+		''' <summary>
+		''' Creates a training set from a string.
+		''' </summary>
+		''' <param name="data">The training text.</param>
+		''' <returns>The training set built from the text.</returns>
 		Public Shared Function fromString(data As String) As StringTrainingSet
 			Return New StringTrainingSet(data)
 		End Function
 
 		' Main functionality 
 
-		' Extracts out.length indices starting at index.
-		' ix - input sequence
-		' iy - expected output sequence (shifted by 1)
+		''' <summary>
+		''' Extracts a training pair starting at the given position.
+		''' </summary>
+		''' <param name="lowerBound">Index of the first character of the sequence.</param>
+		''' <param name="ix">Receives the input sequence indices.</param>
+		''' <param name="iy">Receives the expected output sequence indices, shifted by one character.</param>
 		Public Overridable Sub extract(lowerBound As Integer, ix As Integer(), iy As Integer()) Implements TrainingSet.extract
 			' fetch one more symbol than the length.
 			Dim upperBound = lowerBound + iy.Length + 1
@@ -117,26 +129,28 @@ Namespace RNN
 
 		' Getters 
 
-		' Returns the loaded data.
+		''' <summary>Gets the loaded training text.</summary>
 		Public Overridable ReadOnly Property Data As String
 			Get
 				Return dataField
 			End Get
 		End Property
 
-		' Returns the alphabet.
+		''' <summary>Gets the alphabet extracted from the training text.</summary>
 		Public Overridable ReadOnly Property Alphabet As Alphabet
 			Get
 				Return alphabetField
 			End Get
 		End Property
 
-		' Returns data size.
+		''' <summary>Returns the number of characters in the training text.</summary>
+		''' <returns>The data size.</returns>
 		Public Overridable Function size() As Integer Implements TrainingSet.size
 			Return dataField.Length
 		End Function
 
-		' Returns the alphabet size.
+		''' <summary>Returns the alphabet size, i.e. the vocabulary size.</summary>
+		''' <returns>The number of distinct symbols.</returns>
 		Public Overridable Function vocabularySize() As Integer Implements TrainingSet.vocabularySize
 			Return alphabetField.size()
 		End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4180706faef7434aee370fc381737ac, Data_science\MachineLearning\MachineLearning\RandomForests\LossFunction.vb"
+﻿#Region "Microsoft.VisualBasic::fcd17db0ba13f62f0bccf42f7d1a0c2e, Data_science\MachineLearning\MachineLearning\RandomForests\LossFunction.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 385
-    '    Code Lines: 321 (83.38%)
-    ' Comment Lines: 50 (12.99%)
-    '    - Xml Docs: 20.00%
+    '   Total Lines: 455
+    '    Code Lines: 321 (70.55%)
+    ' Comment Lines: 121 (26.59%)
+    '    - Xml Docs: 66.94%
     ' 
-    '   Blank Lines: 14 (3.64%)
-    '     File Size: 19.83 KB
+    '   Blank Lines: 13 (2.86%)
+    '     File Size: 24.04 KB
 
 
     '     Class LossFunction
@@ -69,9 +69,27 @@ Namespace RandomForests
     '''  More Loss functions can be added in the future.
     ''' 
     ''' </summary>
-
     Public Class LossFunction
 
+        ''' <summary>
+        ''' Evaluate the impurity (loss) of one node without splitting it.
+        ''' </summary>
+        ''' <param name="type">The <see cref="LF_c"/> loss function type.</param>
+        ''' <param name="a">The target <see cref="Branch"/> node.</param>
+        ''' <param name="phenotype">The phenotype (label) value of each sample in the whole training set.</param>
+        ''' <param name="Genotype">The feature matrix of the training set, in layout ``[sample, feature]``.</param>
+        ''' <param name="false_positive_cost">
+        ''' The cost of a false positive, it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </param>
+        ''' <param name="false_negative_cost">
+        ''' The cost of a false negative, it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </param>
+        ''' <returns>
+        ''' The loss value of the target node; an <see cref="InvalidProgramException"/> 
+        ''' will be thrown when the <paramref name="type"/> is not a valid loss type.
+        ''' </returns>
         Public Shared Function getLossFunctionNode(type As LF_c,
                                                    a As Branch,
                                                    phenotype As Double(),
@@ -160,6 +178,33 @@ Namespace RandomForests
             Return LF_val
         End Function
 
+        ''' <summary>
+        ''' Evaluate the loss value of one node after it has been split on a 
+        ''' specific feature, the split threshold is the mean value of that 
+        ''' feature over the samples of the node.
+        ''' </summary>
+        ''' <param name="type">The <see cref="LF_c"/> loss function type.</param>
+        ''' <param name="snp">The index of the target splitting feature.</param>
+        ''' <param name="a">The target <see cref="Branch"/> node that will be split.</param>
+        ''' <param name="phenotype">The phenotype (label) value of each sample in the whole training set.</param>
+        ''' <param name="Genotype">The feature matrix of the training set, in layout ``[sample, feature]``.</param>
+        ''' <param name="false_positive_cost">
+        ''' The cost of a false positive, it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </param>
+        ''' <param name="false_negative_cost">
+        ''' The cost of a false negative, it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </param>
+        ''' <returns>
+        ''' The loss value of the two child nodes after the split; an 
+        ''' <see cref="InvalidProgramException"/> will be thrown when the 
+        ''' <paramref name="type"/> is not a valid loss type.
+        ''' </returns>
+        ''' <remarks>
+        ''' The tree growing procedure selects the feature which produces the 
+        ''' smallest value of this function.
+        ''' </remarks>
         Public Shared Function getLossFunctionSplit(type As LF_c,
                                                     snp As Integer,
                                                     a As Branch,
@@ -361,6 +406,31 @@ Namespace RandomForests
             Return LF_val
         End Function
 
+        ''' <summary>
+        ''' Evaluate the loss value of the out-of-bag (OOB) samples of one node, 
+        ''' relative to a given predicted value.
+        ''' </summary>
+        ''' <param name="type">The <see cref="LF_c"/> loss function type.</param>
+        ''' <param name="a">The out-of-bag <see cref="Branch"/> node.</param>
+        ''' <param name="phenotype">The phenotype (label) value of each sample in the whole training set.</param>
+        ''' <param name="yhat">The predicted phenotype value of the target node.</param>
+        ''' <param name="false_positive_cost">
+        ''' The cost of a false positive, it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </param>
+        ''' <param name="false_negative_cost">
+        ''' The cost of a false negative, it is only used by the 
+        ''' <see cref="LF_c.Personalized_Cost_Function_for_categories"/> loss.
+        ''' </param>
+        ''' <returns>
+        ''' The loss value of the out-of-bag samples; an 
+        ''' <see cref="InvalidProgramException"/> will be thrown when the 
+        ''' <paramref name="type"/> is not a valid loss type.
+        ''' </returns>
+        ''' <remarks>
+        ''' The out-of-bag loss is the base of the variable importance 
+        ''' measurement: permuting an important feature will increase this value.
+        ''' </remarks>
         Public Shared Function getLossFunctionOOB(type As LF_c,
                                                   a As Branch,
                                                   phenotype As Double(),

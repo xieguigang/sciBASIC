@@ -14,17 +14,18 @@
       
     <!-- 包信息 -->
     <PackageId></PackageId>
-    <Version>1.0.9753.4776</Version>
+    <Version>1.0.9762.11310</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Description>A pure managed VB.NET re-implementation of the CVODE solver API with no native P/Invoke, offering variable-step variable-order Adams and BDF integration plus dense and banded linear solvers. Part of sciBASIC#.</Description>
     <PackageTags>scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>PROJECT_SUMMARY.md</PackageReadmeFile>
+    <PackageReleaseNotes>The managed CVODE solver re-implements the SUNDIALS CVODE integration API entirely in VB.NET, removing the native P/Invoke dependency so that stiff and non stiff ODE systems can be integrated on any .NET target without shipping a native binary. Capabilities: variable step, variable order integration with both the Adams-Moulton (non stiff) and BDF (stiff) method families; dense and banded linear solver options together with the classic Newton iteration control parameters (initial step size, minimum and maximum step size, maximum order, relative and absolute tolerances); the usual CVODE statistics and return code surface so ported code keeps working. The implementation is a clean room port written for the sciBASIC# numerics stack, so it integrates directly with the ODE solver and Dynamics models of the Math package and can be used for stiff kinetic models, chemical reaction networks and dynamic system simulation. The project targets net10.0 with OptionStrict enabled and ships an XML documentation file.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>Managed CVODE Variable-Order ODE Solver in Pure VB.NET</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>

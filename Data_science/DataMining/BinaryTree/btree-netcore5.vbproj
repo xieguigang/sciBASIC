@@ -14,14 +14,15 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Description>Clusters vector data by inserting items into an AVL binary tree under a fuzzy similarity comparison, then cutting the tree into partitions. Also offers Newick tree parsing, affinity propagation and KNN graph helpers.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.BinaryTreeClustering</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;clustering;binary-tree;avl-tree;newick</PackageTags>
+    <PackageTags>scibasic;clustering;binary-tree;avl-tree;newick;diffusion-map;knn-graph;affinity-propagation</PackageTags>
+    <PackageReleaseNotes>AVL binary tree clustering for sciBASIC#. BuildTree inserts vector items into an AVL tree under a fuzzy similarity comparison, and Partitioning cuts the resulting tree into clusters; DiffusionMap adds diffusion map embedding, KNNGraph builds k nearest neighbour graphs, and newickParser reads and writes Newick tree text so dendrograms can round trip through standard tree formats. The AffinityPropagation namespace adds affinity propagation clustering, which selects exemplars directly from a similarity matrix without requiring a preset cluster count. The package is used by the hierarchical clustering and visualization layers whenever a similarity driven tree has to be produced from raw feature vectors.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

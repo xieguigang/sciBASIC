@@ -14,15 +14,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Pure Managed HDF5 Scientific Data File Reader</Title>
-    <Description>Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes, and contiguous, chunked or compact datasets to sciBASIC# code.</Description>
+    <Description>Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes and contiguous, chunked or compact datasets, with deflate and shuffle filter support and sparse matrix helpers.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO.HDF5</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;hdf5;scientific-data;dataset;binary-format;reader</PackageTags>
+    <PackageTags>scibasic;hdf5;scientific-data;dataset;chunked-storage;filter-pipeline;sparse-matrix;reader</PackageTags>
+    <PackageReleaseNotes>A pure managed HDF5 reader for sciBASIC# - no native HDF5 library is required. Structure layer: the struct namespace decodes the superblock, object headers and their messages (dataspace, datatype, data layout, fill value, filter pipeline, link, attribute and group), plus the local and global heaps, symbol table entries, and the data and group B-trees. Dataset layer: the dataset namespace models the three HDF5 storage layouts - ContiguousDataset, CompactDataset and ChunkedDatasetV3 - with chunk enumeration so that large arrays can be streamed instead of materialised at once. Filters: the dataset.filters namespace implements the filter pipeline including deflate (GZip), shuffle and the Fletcher32 checksum, extensible through IFilter. Types: the type namespace models fixed point, floating point, string, enum and variable length data types. Access: HDF5File opens a file, parses the superblock and resolves objects by symbol name; HDF5Reader exposes data, attributes, dataSpace, dataType and layout for a single dataset; device.BinaryFileReader performs address based byte access; and HDF5Sparse builds sparse matrices without materialising the whole dataset.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

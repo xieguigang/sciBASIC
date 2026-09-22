@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a77694e7dafebe4cd0276c06a2ca095, Microsoft.VisualBasic.Core\src\ComponentModel\LazyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::dadccb9f30e5a9b4e1b498350add0ba2, Microsoft.VisualBasic.Core\src\ComponentModel\LazyLoader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 85 (56.29%)
-    ' Comment Lines: 43 (28.48%)
+    '   Total Lines: 150
+    '    Code Lines: 84 (56.00%)
+    ' Comment Lines: 43 (28.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 23 (15.23%)
-    '     File Size: 4.84 KB
+    '   Blank Lines: 23 (15.33%)
+    '     File Size: 4.80 KB
 
 
     '     Class LazyLoader
@@ -74,7 +74,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel

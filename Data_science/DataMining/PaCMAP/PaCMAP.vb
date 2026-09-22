@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c024e85ae92ff9bddfdaf8bbd8c810b2, Data_science\DataMining\PaCMAP\PaCMAP.vb"
+﻿#Region "Microsoft.VisualBasic::13c8d70812bb76121b039cb74457f24f, Data_science\DataMining\PaCMAP\PaCMAP.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 506
-    '    Code Lines: 246 (48.62%)
-    ' Comment Lines: 172 (33.99%)
-    '    - Xml Docs: 79.07%
+    '   Total Lines: 540
+    '    Code Lines: 259 (47.96%)
+    ' Comment Lines: 185 (34.26%)
+    '    - Xml Docs: 81.62%
     ' 
-    '   Blank Lines: 88 (17.39%)
-    '     File Size: 17.26 KB
+    '   Blank Lines: 96 (17.78%)
+    '     File Size: 18.05 KB
 
 
     ' Class PaCMAP
     ' 
     '     Properties: LearningRate, NDimensions, NumIterations, NumNeighbourPairs, RatioFurtherPairs
-    '                 RatioMidNearPairs
+    '                 RatioMidNearPairs, Silent
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: ComputeNumericalGradient, ComputeTotalLoss, FindFurtherPairs, FindMidNearPairs, FindNeighbourPairs
     '               Fit, GetResult, LossFurtherPairs, LossMidNearPairs, LossNeighbourPairs
+    '               SumPairLoss
     ' 
     '     Sub: ComputeGradientsAndUpdate, DecideNumPairs, Dispose, FindPairs
     ' 

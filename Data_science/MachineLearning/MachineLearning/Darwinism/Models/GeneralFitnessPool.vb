@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::051f97cb403a58668588554d00fa186e, Data_science\MachineLearning\MachineLearning\Darwinism\Models\GeneralFitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::8e855f54616437e2c60ebe4eb228e517, Data_science\MachineLearning\MachineLearning\Darwinism\Models\GeneralFitnessPool.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 113
-    '    Code Lines: 69 (61.06%)
-    ' Comment Lines: 25 (22.12%)
-    '    - Xml Docs: 84.00%
+    '   Total Lines: 141
+    '    Code Lines: 69 (48.94%)
+    ' Comment Lines: 53 (37.59%)
+    '    - Xml Docs: 92.45%
     ' 
-    '   Blank Lines: 19 (16.81%)
-    '     File Size: 4.22 KB
+    '   Blank Lines: 19 (13.48%)
+    '     File Size: 5.72 KB
 
 
     '     Class GeneralFitnessPool
@@ -73,6 +73,10 @@ Namespace Darwinism.Models
     ''' </remarks>
     Public Class GeneralFitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
+        ''' <summary>
+        ''' The maximum number of the cached fitness results, the oldest records 
+        ''' will be removed once this capacity is reached.
+        ''' </summary>
         Protected Friend maxCapacity%
         ''' <summary>
         ''' A fitness cache pool indexed via the unique id of target
@@ -83,17 +87,34 @@ Namespace Darwinism.Models
 
         Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
 
+        ''' <summary>
+        ''' Whether the fitness calculation of the current environment is 
+        ''' cacheable? The result is delegated to the wrapped fitness function.
+        ''' </summary>
+        ''' <returns>A <see cref="Boolean"/> value.</returns>
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
                 Return evaluateFitness.Cacheable
             End Get
         End Property
 
+        ''' <summary>
+        ''' The raw fitness calculation function which is wrapped by this cache pool.
+        ''' </summary>
+        ''' <returns>The wrapped fitness calculation model object.</returns>
         Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
 
         ''' <summary>
+        ''' Create a fitness cache pool.
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
+        ''' <param name="capacity">
+        ''' The maximum number of the cached fitness results; a value that is not 
+        ''' greater than zero will use the <see cref="defaultCacheSize"/> value.
+        ''' </param>
+        ''' <param name="toString">
+        ''' The function which produces the unique cache key from an individual.
+        ''' </param>
         Sub New(cacl As Fitness(Of Individual), capacity%, toString As Func(Of Individual, String))
             evaluateFitness = cacl
             maxCapacity = capacity Or defaultCacheSize
@@ -107,14 +128,21 @@ Namespace Darwinism.Models
             End If
         End Sub
 
+        ''' <summary>
+        ''' Create an empty fitness cache pool.
+        ''' </summary>
         Sub New()
         End Sub
 
         ''' <summary>
         ''' This function tells how well given individual performs at given problem.
         ''' </summary>
-        ''' <param name="[in]"></param>
-        ''' <returns></returns>
+        ''' <param name="[in]">The target individual that will be evaluated.</param>
+        ''' <param name="parallel">Whether the fitness calculation should be run in parallel mode?</param>
+        ''' <returns>
+        ''' The fitness value of the given individual; the cached result will be 
+        ''' returned directly when the <see cref="Cacheable"/> flag is set.
+        ''' </returns>
         Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
             ' 20200827
             ' the synlock will stop the parallel computing in GA engine

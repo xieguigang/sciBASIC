@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef42b4d06bf19e5b8e3454794c2eb083, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::f007d0f30e3e12704d3683ed5da781e2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2010
-    '    Code Lines: 1088 (54.13%)
-    ' Comment Lines: 652 (32.44%)
-    '    - Xml Docs: 93.56%
+    '   Total Lines: 1801
+    '    Code Lines: 881 (48.92%)
+    ' Comment Lines: 665 (36.92%)
+    '    - Xml Docs: 91.73%
     ' 
-    '   Blank Lines: 270 (13.43%)
-    '     File Size: 73.16 KB
+    '   Blank Lines: 255 (14.16%)
+    '     File Size: 68.19 KB
 
 
     '     Class NumericMatrix
@@ -87,6 +87,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Parallel
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SimdCompare = Microsoft.VisualBasic.Math.SIMD.SimdCompare
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
+Imports SimdMath = Microsoft.VisualBasic.Math.SIMD.SimdMath
+Imports SimdMatrix = Microsoft.VisualBasic.Math.SIMD.SimdMatrix
+Imports SimdParallel = Microsoft.VisualBasic.Math.SIMD.SimdParallel
+Imports SimdReduce = Microsoft.VisualBasic.Math.SIMD.SimdReduce
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra.Matrix
@@ -423,12 +429,13 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property RowPackedCopy() As Double()
             Get
+                ' 行主序打包 ＝ 逐行连续块拷贝
                 Dim vals As Double() = New Double(m * n - 1) {}
+
                 For i As Integer = 0 To m - 1
-                    For j As Integer = 0 To n - 1
-                        vals(i * n + j) = buffer(i)(j)
-                    Next
+                    Call System.Array.Copy(buffer(i), 0, vals, i * n, n)
                 Next
+
                 Return vals
             End Get
         End Property
@@ -465,13 +472,13 @@ Namespace LinearAlgebra.Matrix
 
         Public ReadOnly Property DiagonalVector As Vector
             Get
-                Dim v As New List(Of Double)
+                Dim values As Double() = New Double(m - 1) {}
 
                 For i As Integer = 0 To m - 1
-                    v += buffer(i)(i)
+                    values(i) = buffer(i)(i)
                 Next
 
-                Return New Vector(v)
+                Return New Vector(values)
             End Get
         End Property
 
@@ -526,9 +533,8 @@ Namespace LinearAlgebra.Matrix
                 If A(i).Length <> n Then
                     Throw New System.ArgumentException("All rows must have the same length.")
                 End If
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = A(i)(j)
-                Next
+                ' 行长已校验，整行用块拷贝搬运
+                Call System.Array.Copy(A(i), 0, C(i), 0, n)
             Next
             Return X
         End Function
@@ -538,16 +544,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Function Abs() As NumericMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = System.Math.Abs(buffer(i)(j))
-                Next
-            Next
-
-            Return X
+            Return New NumericMatrix(SimdMatrix.Abs(buffer), m, n)
         End Function
 
         ''' <summary>
@@ -557,16 +554,7 @@ Namespace LinearAlgebra.Matrix
         ''' this function will break the array class reference between the matrix instance
         ''' </remarks>
         Public Overridable Overloads Function Copy() As GeneralMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j)
-                Next
-            Next
-
-            Return X
+            Return New NumericMatrix(ArrayPack(deepcopy:=True), m, n)
         End Function
 
         ''' <summary>Get a single element.</summary>
@@ -901,14 +889,7 @@ Namespace LinearAlgebra.Matrix
         ''' make a value copy of the matrix 
         ''' </remarks>
         Public Overridable Function Transpose() As GeneralMatrix Implements GeneralMatrix.Transpose
-            Dim X As New NumericMatrix(n, m)
-            Dim C As Double()() = X.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(j)(i) = buffer(i)(j)
-                Next
-            Next
-            Return X
+            Return New NumericMatrix(SimdMatrix.Transpose(buffer), n, m)
         End Function
 
         ''' <summary>One norm</summary>
@@ -917,15 +898,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function Norm1() As Double
-            Dim f As Double = 0
-            For j As Integer = 0 To n - 1
-                Dim s As Double = 0
-                For i As Integer = 0 To m - 1
-                    s += System.Math.Abs(buffer(i)(j))
-                Next
-                f = System.Math.Max(f, s)
-            Next
-            Return f
+            Return SimdMatrix.Norm1(buffer)
         End Function
 
         ''' <summary>Two norm</summary>
@@ -943,18 +916,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function NormInf() As Double
-            Dim f As Double = 0
-
-            For i As Integer = 0 To m - 1
-                Dim s As Double = 0
-
-                For j As Integer = 0 To n - 1
-                    s += System.Math.Abs(buffer(i)(j))
-                Next
-
-                f = System.Math.Max(f, s)
-            Next
-            Return f
+            Return SimdMatrix.NormInf(buffer)
         End Function
 
         ''' <summary>Frobenius norm</summary>
@@ -963,27 +925,15 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function NormF() As Double
-            Dim f As Double = 0
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    f = Hypot(f, buffer(i)(j))
-                Next
-            Next
-            Return f
+            ' 保持原 Hypot 逐步缩放的抗上溢语义：内核内部同样先做最大值缩放再求平方和
+            Return SimdMatrix.NormF(buffer)
         End Function
 
         ''' <summary>Unary minus</summary>
         ''' <returns>    -A
         ''' </returns>
         Public Shared Operator -(m As NumericMatrix) As NumericMatrix
-            Dim X As New NumericMatrix(m.m, m.n)
-            Dim C As Double()() = X.Array
-            For i As Integer = 0 To m.m - 1
-                For j As Integer = 0 To m.n - 1
-                    C(i)(j) = -m.buffer(i)(j)
-                Next
-            Next
-            Return X
+            Return New NumericMatrix(SimdMatrix.Negate(m.buffer), m.m, m.n)
         End Operator
 
         ''' <summary>C = A + B</summary>
@@ -995,15 +945,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function Add(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) + B(i, j)
-                Next
-            Next
-            Return X
+            Call CheckMatrixDimensions(B)
+
+            Return New NumericMatrix(SimdMatrix.Add(buffer, B.ArrayPack(deepcopy:=False)), m, n)
         End Function
 
         ''' <summary>A = A + B</summary>
@@ -1015,12 +959,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function AddEquals(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) + B(i, j)
-                Next
-            Next
+            Call CheckMatrixDimensions(B)
+            Call SimdMatrix.AddInPlace(buffer, B.ArrayPack(deepcopy:=False))
+
             Return Me
         End Function
 
@@ -1034,16 +975,7 @@ Namespace LinearAlgebra.Matrix
         Public Overridable Function Subtract(B As GeneralMatrix) As GeneralMatrix
             Call CheckMatrixDimensions(B)
 
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) - B(i, j)
-                Next
-            Next
-
-            Return X
+            Return New NumericMatrix(SimdMatrix.Subtract(buffer, B.ArrayPack(deepcopy:=False)), m, n)
         End Function
 
         ''' <summary>C = A - B</summary>
@@ -1053,16 +985,7 @@ Namespace LinearAlgebra.Matrix
         ''' A - B
         ''' </returns>
         Public Overridable Function Subtract(B As Double) As GeneralMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) - B
-                Next
-            Next
-
-            Return X
+            Return New NumericMatrix(SimdMatrix.SubtractScalar(buffer, B), m, n)
         End Function
 
         ''' <summary>C = x ^ y</summary>
@@ -1071,29 +994,12 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>x ^ y
         ''' </returns>
         Public Overridable Function Power(y As Double) As GeneralMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) ^ y
-                Next
-            Next
-
-            Return X
+            ' 指数为 2/3/4/0.5 时走向量化快速路径
+            Return New NumericMatrix(SimdMatrix.PowScalar(buffer, y), m, n)
         End Function
 
         Public Overridable Function Log(Optional newBase As Double = System.Math.E) As NumericMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = System.Math.Log(buffer(i)(j), newBase)
-                Next
-            Next
-
-            Return X
+            Return New NumericMatrix(SimdMatrix.Log(buffer, newBase), m, n)
         End Function
 
         ''' <summary>A = A - B</summary>
@@ -1105,12 +1011,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function SubtractEquals(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) - B(i, j)
-                Next
-            Next
+            Call CheckMatrixDimensions(B)
+            Call SimdMatrix.SubtractInPlace(buffer, B.ArrayPack(deepcopy:=False))
+
             Return Me
         End Function
 
@@ -1123,15 +1026,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function ArrayMultiply(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) * B(i, j)
-                Next
-            Next
-            Return X
+            Call CheckMatrixDimensions(B)
+
+            Return New NumericMatrix(SimdMatrix.Multiply(buffer, B.ArrayPack(deepcopy:=False)), m, n)
         End Function
 
         ''' <summary>Element-by-element multiplication in place, A = A.*B</summary>
@@ -1143,12 +1040,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function ArrayMultiplyEquals(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) * B(i, j)
-                Next
-            Next
+            Call CheckMatrixDimensions(B)
+            Call SimdMatrix.MultiplyInPlace(buffer, B.ArrayPack(deepcopy:=False))
+
             Return Me
         End Function
 
@@ -1163,21 +1057,8 @@ Namespace LinearAlgebra.Matrix
         Public Overridable Function ArrayRightDivide(B As GeneralMatrix) As GeneralMatrix
             Call CheckMatrixDimensions(B)
 
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    ' A / B
-                    If buffer(i)(j) = 0.0 Then
-                        C(i)(j) = 0.0
-                    Else
-                        C(i)(j) = buffer(i)(j) / B(i, j)
-                    End If
-                Next
-            Next
-
-            Return X
+            ' 保持历史语义：分子为 0 时结果直接置 0，避免 0/0 产生 NaN
+            Return New NumericMatrix(SimdMatrix.DivideZeroSafe(buffer, B.ArrayPack(deepcopy:=False)), m, n)
         End Function
 
         ''' <summary>Element-by-element right division in place, A = A./B</summary>
@@ -1189,12 +1070,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function ArrayRightDivideEquals(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) / B(i, j)
-                Next
-            Next
+            Call CheckMatrixDimensions(B)
+            Call SimdMatrix.DivideInPlace(buffer, B.ArrayPack(deepcopy:=False))
+
             Return Me
         End Function
 
@@ -1207,15 +1085,9 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function ArrayLeftDivide(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = B(i, j) / buffer(i)(j)
-                Next
-            Next
-            Return X
+            Call CheckMatrixDimensions(B)
+
+            Return New NumericMatrix(SimdMatrix.Divide(B.ArrayPack(deepcopy:=False), buffer), m, n)
         End Function
 
         ''' <summary>Element-by-element left division in place, A = A.\B</summary>
@@ -1228,11 +1100,15 @@ Namespace LinearAlgebra.Matrix
 
         Public Overridable Function ArrayLeftDivideEquals(B As GeneralMatrix) As GeneralMatrix
             Call CheckMatrixDimensions(B)
+
+            ' 分子来自 B，不能就地对 buffer 写入（会破坏 B 自身的数据），
+            ' 因此先算出商矩阵，再整行块拷贝回 buffer（保持行对象引用不变）
+            Dim quotient As Double()() = SimdMatrix.Divide(B.ArrayPack(deepcopy:=False), buffer)
+
             For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = B(i, j) / buffer(i)(j)
-                Next
+                Call System.Array.Copy(quotient(i), 0, buffer(i), 0, n)
             Next
+
             Return Me
         End Function
 
@@ -1244,14 +1120,7 @@ Namespace LinearAlgebra.Matrix
         ''' s*A
         ''' </returns>
         Public Overridable Function Multiply(s As Double) As GeneralMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = s * buffer(i)(j)
-                Next
-            Next
-            Return X
+            Return New NumericMatrix(SimdMatrix.MultiplyScalar(buffer, s), m, n)
         End Function
 
         ''' <summary>Multiply a matrix by a scalar, ``C = s*A``</summary>
@@ -1270,24 +1139,35 @@ Namespace LinearAlgebra.Matrix
 
         Public Function DotMultiply(v As Vector) As Vector
             Dim out As Double() = New Double(Me.RowDimension - 1) {}
-            Dim i As Integer = 0
+            Dim values As Double() = v.Array
 
-            For Each row As Vector In Me.RowVectors
-                out(i) = (row * v).Sum
-                i += 1
+            ' 逐行直接走 SIMD 点积，避免为每一行构造临时 Vector 与乘积数组
+            For i As Integer = 0 To RowDimension - 1
+                out(i) = SimdParallel.Dot(buffer(i), values)
             Next
 
             Return New Vector(out)
         End Function
 
         Public Function max(axis As Integer) As Vector
+            Dim out As Double()
+
             If axis = 0 Then
-                Return Enumerable.Range(0, ColumnDimension) _
-                    .Select(Function(ci) Me.ColumnVector(ci).Max) _
-                    .AsVector
+                ' 逐列取最大值：先把列抽取成连续数组，再走 SIMD 归约
+                out = New Double(ColumnDimension - 1) {}
+
+                For i As Integer = 0 To ColumnDimension - 1
+                    out(i) = SimdReduce.Max(SimdMatrix.ExtractColumn(buffer, i))
+                Next
             Else
-                Return buffer.Select(Function(r) r.Max).AsVector
+                out = New Double(RowDimension - 1) {}
+
+                For i As Integer = 0 To RowDimension - 1
+                    out(i) = SimdReduce.Max(buffer(i))
+                Next
             End If
+
+            Return New Vector(out)
         End Function
 
         ''' <summary>
@@ -1295,21 +1175,7 @@ Namespace LinearAlgebra.Matrix
         ''' </summary>
         ''' <returns></returns>
         Public Function Max(<Out> Optional ByRef row As Integer = Nothing, <Out> Optional ByRef col As Integer = Nothing) As Double
-            Dim maxVal As Double = Double.MinValue
-
-            For i As Integer = 0 To buffer.Length - 1
-                Dim r = buffer(i)
-
-                For j As Integer = 0 To r.Length - 1
-                    If r(j) > maxVal Then
-                        row = i
-                        col = j
-                        maxVal = r(j)
-                    End If
-                Next
-            Next
-
-            Return maxVal
+            Return SimdMatrix.MaxIndex(buffer, row, col)
         End Function
 
         ''' <summary>
@@ -1319,21 +1185,7 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="col"></param>
         ''' <returns></returns>
         Public Function Min(<Out> Optional ByRef row As Integer = Nothing, <Out> Optional ByRef col As Integer = Nothing) As Double
-            Dim minVal As Double = Double.MaxValue
-
-            For i As Integer = 0 To buffer.Length - 1
-                Dim r = buffer(i)
-
-                For j As Integer = 0 To r.Length - 1
-                    If r(j) < minVal Then
-                        row = i
-                        col = j
-                        minVal = r(j)
-                    End If
-                Next
-            Next
-
-            Return minVal
+            Return SimdMatrix.MinIndex(buffer, row, col)
         End Function
 
         Public Function RowWise() As WiseOperation
@@ -1353,11 +1205,8 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function MultiplyEquals(s As Double) As GeneralMatrix
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = s * buffer(i)(j)
-                Next
-            Next
+            Call SimdMatrix.MultiplyScalarInPlace(buffer, s)
+
             Return Me
         End Function
 
@@ -1400,7 +1249,15 @@ Namespace LinearAlgebra.Matrix
 
         Public Shared Operator +(m As NumericMatrix, v As Vector) As NumericMatrix
             If m.ColumnDimension = v.Dim Then
-                Return New NumericMatrix(m.RowVectors.Select(Function(ri) ri + v))
+                ' 每一行与向量逐元素相加（行内走向量化加法）
+                Dim rows As Double()() = New Double(m.m - 1)() {}
+                Dim values As Double() = v.Array
+
+                For i As Integer = 0 To m.m - 1
+                    rows(i) = SimdEngine.Add(Of Double)(m.buffer(i), values)
+                Next
+
+                Return New NumericMatrix(rows, m.m, m.n)
             ElseIf m.RowDimension = v.Dim Then
                 Dim cols As New List(Of Double())
 
@@ -1423,14 +1280,7 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator +(x As Double, m1 As NumericMatrix) As NumericMatrix
-            Dim y As New NumericMatrix(m1.m, m1.n)
-            Dim C As Double()() = y.Array
-            For i As Integer = 0 To m1.m - 1
-                For j As Integer = 0 To m1.n - 1
-                    C(i)(j) = x + m1(i, j)
-                Next
-            Next
-            Return y
+            Return New NumericMatrix(SimdMatrix.AddScalar(m1.buffer, x), m1.m, m1.n)
         End Operator
 
         ''' <summary>
@@ -1481,16 +1331,7 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator -(x As Double, m As NumericMatrix) As GeneralMatrix
-            Dim Xmat As New NumericMatrix(m.RowDimension, m.ColumnDimension)
-            Dim C As Double()() = Xmat.Array
-
-            For i As Integer = 0 To m.RowDimension - 1
-                For j As Integer = 0 To m.ColumnDimension - 1
-                    C(i)(j) = x - m.buffer(i)(j)
-                Next
-            Next
-
-            Return Xmat
+            Return New NumericMatrix(SimdMatrix.ScalarSubtract(x, m.buffer), m.m, m.n)
         End Operator
 
         ''' <summary>
@@ -1526,16 +1367,15 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator *(m As NumericMatrix, v As Vector) As NumericMatrix
-            Dim y As New NumericMatrix(m.RowDimension, m.ColumnDimension)
-            Dim x As Double()() = m.Array
+            ' 注意：这里刻意保留了历史行为 —— 该运算符实际是“就地按行缩放左操作数”，
+            ' 而返回值是一整片零矩阵（历史缺陷）。本次重构只做向量化，不改变可观察行为。
+            Dim scaled As Double()() = SimdMatrix.MultiplyRows(m.buffer, v.Array)
 
-            For i As Integer = 0 To x.Length - 1
-                Dim factor As Double = v(i)
-                Dim newV As Vector = x(i).AsVector * factor
-                x(i) = newV
+            For i As Integer = 0 To m.m - 1
+                Call System.Array.Copy(scaled(i), 0, m.buffer(i), 0, m.n)
             Next
 
-            Return y
+            Return New NumericMatrix(m.RowDimension, m.ColumnDimension)
         End Operator
 
         ''' <summary>
@@ -1549,29 +1389,11 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator /(x As Double, m1 As NumericMatrix) As NumericMatrix
-            Dim Xmat As New NumericMatrix(m1.RowDimension, m1.ColumnDimension)
-            Dim C As Double()() = Xmat.Array
-
-            For i As Integer = 0 To m1.RowDimension - 1
-                For j As Integer = 0 To m1.ColumnDimension - 1
-                    C(i)(j) = x / m1.buffer(i)(j)
-                Next
-            Next
-
-            Return Xmat
+            Return New NumericMatrix(SimdMatrix.ScalarDivide(x, m1.buffer), m1.m, m1.n)
         End Operator
 
         Public Shared Operator /(m1 As NumericMatrix, x As Double) As NumericMatrix
-            Dim Xmat As New NumericMatrix(m1.RowDimension, m1.ColumnDimension)
-            Dim C As Double()() = Xmat.Array
-
-            For i As Integer = 0 To m1.RowDimension - 1
-                For j As Integer = 0 To m1.ColumnDimension - 1
-                    C(i)(j) = m1.buffer(i)(j) / x
-                Next
-            Next
-
-            Return Xmat
+            Return New NumericMatrix(SimdMatrix.DivideScalar(m1.buffer, x), m1.m, m1.n)
         End Operator
 
         ''' <summary>
@@ -1611,7 +1433,7 @@ Namespace LinearAlgebra.Matrix
             Dim flags As New List(Of Boolean())
 
             For Each row As Double() In w.buffer
-                flags.Add(row.Select(Function(ci) ci = xi).ToArray)
+                flags.Add(SimdCompare.Equal(row, xi))
             Next
 
             Return flags.ToArray
@@ -1753,11 +1575,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function Trace() As Double
-            Dim t As Double = 0
-            For i As Integer = 0 To System.Math.Min(m, n) - 1
-                t += buffer(i)(i)
-            Next
-            Return t
+            Return SimdMatrix.Trace(buffer)
         End Function
 
         ''' <summary>Generate identity matrix</summary>
@@ -1971,11 +1789,7 @@ Namespace LinearAlgebra.Matrix
                 Dim makecopy As Double()() = New Double(m - 1)() {}
                 For i As Integer = 0 To m - 1
                     makecopy(i) = New Double(n - 1) {}
-                Next
-                For i As Integer = 0 To m - 1
-                    For j As Integer = 0 To n - 1
-                        makecopy(i)(j) = buffer(i)(j)
-                    Next
+                    Call System.Array.Copy(buffer(i), 0, makecopy(i), 0, n)
                 Next
                 Return makecopy
             End If
@@ -2054,32 +1868,9 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="B"></param>
         ''' <returns></returns>
         Public Function DotProduct(B As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
-            Dim c As Double()()
-
-            If ParallelEnvironment.Enable AndAlso VectorTask.n_threads > 1 Then
-                c = MatrixDotProduct.Resolve(buffer, B.ArrayPack)
-            Else
-                Dim Bcolj As Double() = New Double(n - 1) {}
-
-                c = RectangularArray.Matrix(Of Double)(m, B.ColumnDimension)
-
-                For j As Integer = 0 To B.ColumnDimension - 1
-                    For k As Integer = 0 To n - 1
-                        Bcolj(k) = B(k, j)
-                    Next
-                    For i As Integer = 0 To m - 1
-                        Dim Arowi As Double() = buffer(i)
-                        Dim s As Double = 0
-
-                        For k As Integer = 0 To n - 1
-                            s += Arowi(k) * Bcolj(k)
-                        Next
-                        c(i)(j) = s
-                    Next
-                Next
-            End If
-
-            Return New NumericMatrix(c)
+            ' 右矩阵预转置 + 行方向并行 + 行内 FMA 点积；
+            ' 是否真正并行由内核按数据规模（ShouldParallelize）自行决定
+            Return New NumericMatrix(SimdMatrix.Dot(buffer, B.ArrayPack(deepcopy:=False)))
         End Function
     End Class
 End Namespace

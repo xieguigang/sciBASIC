@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40c740ce307b247baf9dfc001e135437, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
+﻿#Region "Microsoft.VisualBasic::1fddd69a719582d81cb29e1e589f77be, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 20 (57.14%)
-    ' Comment Lines: 9 (25.71%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 33
+    '    Code Lines: 15 (45.45%)
+    ' Comment Lines: 13 (39.39%)
+    '    - Xml Docs: 61.54%
     ' 
-    '   Blank Lines: 6 (17.14%)
-    '     File Size: 1.07 KB
+    '   Blank Lines: 5 (15.15%)
+    '     File Size: 1.30 KB
 
 
     '     Module Subtraction
@@ -69,18 +69,16 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         <Extension>
         Public Function RowSubtraction(v As Vector, m As GeneralMatrix) As GeneralMatrix
+            ' 注意：这里保留了历史可观察行为 —— 原实现从未读取 m 的元素值，
+            ' 结果矩阵的每一行 j 都被整体填充为 v(j)（疑似历史缺陷）。
+            ' 本次只做向量化/块写入改造，不改变可观察行为。
             Dim m2 As New NumericMatrix(m.RowDimension, m.ColumnDimension)
-            Dim buffer = m2.Array
-            Dim v2 As Vector
+            Dim C As Double()() = m2.Array
+            Dim values As Double() = v.Array
 
-            For i As Integer = 0 To m2.ColumnDimension - 1
-                v2 = m2.ColumnVector(i)
-                v2 = v - v2
-
-                For j As Integer = 0 To buffer.Length - 1
-                    Dim x = buffer(j)
-                    x(i) = v2(j)
-                Next
+            For j As Integer = 0 To m.RowDimension - 1
+                ' Array.Fill 走 Span.Fill 的向量化填充，取代逐元素赋值
+                Call System.Array.Fill(C(j), values(j))
             Next
 
             Return m2

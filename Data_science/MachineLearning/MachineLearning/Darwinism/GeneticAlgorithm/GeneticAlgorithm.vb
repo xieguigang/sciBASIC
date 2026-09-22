@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85bd8e350572383e6eab137c29ed7efd, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::6a20dd3b07798e477eed8480701348eb, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 216
-    '    Code Lines: 101 (46.76%)
-    ' Comment Lines: 87 (40.28%)
-    '    - Xml Docs: 65.52%
+    '   Total Lines: 256
+    '    Code Lines: 101 (39.45%)
+    ' Comment Lines: 127 (49.61%)
+    '    - Xml Docs: 77.17%
     ' 
-    '   Blank Lines: 28 (12.96%)
-    '     File Size: 9.21 KB
+    '   Blank Lines: 28 (10.94%)
+    '     File Size: 11.30 KB
 
 
     '     Class GeneticAlgorithm
@@ -101,10 +101,24 @@ Namespace Darwinism.GAF
         ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
         ''' 所以在这里不可以加readonly修饰
         ''' </summary>
+        ''' <returns>The current population of the genetic algorithm.</returns>
         Public ReadOnly Property population As Population(Of Chr)
 
+        ''' <summary>
+        ''' The population substitution strategy which is used by this genetic 
+        ''' algorithm driver.
+        ''' </summary>
+        ''' <returns>An <see cref="IStrategy(Of Chr)"/> object.</returns>
         Public ReadOnly Property popStrategy As IStrategy(Of Chr)
 
+        ''' <summary>
+        ''' Gets the best chromosome of the current population.
+        ''' </summary>
+        ''' <returns>
+        ''' The first chromosome of the <see cref="population"/>, as the 
+        ''' population is always sorted by the fitness value in ascending order 
+        ''' (smaller value is better).
+        ''' </returns>
         Public ReadOnly Property Best As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -112,6 +126,14 @@ Namespace Darwinism.GAF
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the worst chromosome of the current population.
+        ''' </summary>
+        ''' <returns>
+        ''' The last chromosome of the <see cref="population"/>, as the 
+        ''' population is always sorted by the fitness value in ascending order 
+        ''' (smaller value is better).
+        ''' </returns>
         Public ReadOnly Property Worst As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -123,16 +145,19 @@ Namespace Darwinism.GAF
         ''' Number of parental chromosomes, which survive (and move to new
         ''' population)
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The maximum number of the parental chromosomes which will be copied 
+        ''' into the new population directly.
+        ''' </returns>
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
         Shared ReadOnly randfSeeds As New [Default](Of IRandomSeeds)(Function() randf.seeds)
         Shared ReadOnly createList As New [Default](Of PopulationCollectionCreator(Of Chr))(Function() New PopulationList(Of Chr))
 
         ''' <summary>
-        ''' 
+        ''' Create the genetic algorithm engine from an initial population.
         ''' </summary>
-        ''' <param name="population"></param>
+        ''' <param name="population">The initial population of the genetic algorithm.</param>
         ''' <param name="fitnessFunc">
         ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
         ''' </param>
@@ -165,6 +190,11 @@ Namespace Darwinism.GAF
             End If
         End Sub
 
+        ''' <summary>
+        ''' Gets the raw fitness calculation model which is wrapped inside the 
+        ''' internal <see cref="FitnessPool(Of Chr)"/> cache.
+        ''' </summary>
+        ''' <returns>A <see cref="Fitness(Of Chr)"/> object.</returns>
         Public Function GetRawFitnessModel() As Fitness(Of Chr)
             If TypeOf chromosomesComparator Is FitnessPool(Of Chr) Then
                 Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).evaluateFitness
@@ -216,7 +246,10 @@ Namespace Darwinism.GAF
         ''' 并行化过程之中的单个迭代
         ''' </summary>
         ''' <param name="i">种群之中的个体的序号,也就是即将发生的目标个体</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A sequence of the new chromosomes which are produced by the mutation 
+        ''' and the crossover operations.
+        ''' </returns>
         ''' <remarks>
         ''' 进化发生的契机是个体的突变,这体现在
         '''
@@ -245,8 +278,12 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 调用这个函数的代码应该是非并行的
         ''' </summary>
-        ''' <param name="chromosome"></param>
-        ''' <returns></returns>
+        ''' <param name="chromosome">The target chromosome which will be evaluated.</param>
+        ''' <returns>
+        ''' The fitness value of the given <paramref name="chromosome"/>; the 
+        ''' parallel mode is always enabled as this function is designed to be 
+        ''' called from a sequential context.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
             Return chromosomesComparator.Fitness(chromosome, parallel:=True)
@@ -255,7 +292,10 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 更新种群中的每一个个体的突变变异程度
         ''' </summary>
-        ''' <param name="newRate"></param>
+        ''' <param name="newRate">
+        ''' The new mutation rate value which will be assigned to every individual 
+        ''' of the current population.
+        ''' </param>
         Public Sub UpdateMutationRate(newRate As Double)
             For i As Integer = 0 To population.Size - 1
                 population(i).MutationRate = newRate

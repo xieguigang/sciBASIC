@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91b96c3ba6701e84b45f7ff89ea2c8eb, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
+﻿#Region "Microsoft.VisualBasic::52d12a34f6e6d29cba750025c22b2ea5, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 30 (35.29%)
-    ' Comment Lines: 46 (54.12%)
-    '    - Xml Docs: 63.04%
+    '   Total Lines: 102
+    '    Code Lines: 30 (29.41%)
+    ' Comment Lines: 63 (61.76%)
+    '    - Xml Docs: 73.02%
     ' 
-    '   Blank Lines: 9 (10.59%)
-    '     File Size: 2.73 KB
+    '   Blank Lines: 9 (8.82%)
+    '     File Size: 3.51 KB
 
 
     '     Class Threshold
@@ -93,6 +93,13 @@ Namespace ComponentModel.Activations
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this threshold function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``Threshold`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -116,6 +123,12 @@ Namespace ComponentModel.Activations
             Return If((x >= 0), 1, 0)
         End Function
 
+        ''' <summary>
+        ''' The threshold function is not differentiable, so that this method 
+        ''' always returns zero.
+        ''' </summary>
+        ''' <param name="x">Function input value.</param>
+        ''' <returns>Always returns ``0``.</returns>
         Public Overrides Function CalculateDerivative(x As Double) As Double
             Return 0
         End Function
@@ -135,6 +148,10 @@ Namespace ComponentModel.Activations
             Return 0
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``Threshold()``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(Threshold)}()"
         End Function

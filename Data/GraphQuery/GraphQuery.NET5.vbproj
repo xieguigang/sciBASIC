@@ -2,18 +2,19 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.GraphQuery</RootNamespace>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.GraphQuery</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <PackageId></PackageId>
-    <Version>5.0.9753.4776</Version>
-    <Description>Runs a piped graph query language over HTML/XML documents, combining CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values and emit them as JSON.</Description>
+    <Version>5.0.9762.11310</Version>
+    <Description>Runs a piped graph query language over HTML and XML documents: combines CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values, and emits the result as JSON.</Description>
     <Product>sciBASIC</Product>
     <Company>sciBASIC.NET Foundation</Company>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageReleaseNotes>GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.</PackageReleaseNotes>
+    <PackageTags>scibasic;graph-query;query-language;html;css-selector;xpath;json;web-scraping</PackageTags>
+    <PackageReleaseNotes>GraphQuery is a piped query language and execution engine for HTML and XML documents in sciBASIC#. Query model: QueryParser.GetQuery parses query text into a Query - the Language namespace provides the lexer (QueryToken, Token and TokenIcer) while Query.Parser contains the selector parsers for CSS selectors, XPath expressions, attribute selectors and functions; Query and AutoContext describe the parsed pipeline and the execution context it carries. Execution: Engine.Execute runs a parsed query against an IXmlDocumentTree / HtmlDocument and returns the extracted nodes, text and values, so the same query text can be applied to HTML fetched from a URL or to a local XML document. Text parser: the TextParser namespace parses query expressions with built-in function models for custom, internal and HTML or LINQ functions, allowing a query pipeline to call into .NET code while resolving a document. Output: results are JsonElement trees, so they can be inspected directly or serialised with the JSON serializer (BuildJsonString with indentation) for downstream tooling. The engine is back-end independent: it only requires an XML document tree, not a particular document source.</PackageReleaseNotes>
     <OutputType>Library</OutputType>
     <StartupObject></StartupObject>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -25,10 +26,9 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Graph Query Language Engine for HTML and XML Documents</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphQuery</AssemblyTitle>
-    <PackageTags>scibasic;graph-query;html;css-selector;xpath;json</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

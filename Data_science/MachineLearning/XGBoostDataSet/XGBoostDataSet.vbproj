@@ -12,15 +12,16 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>CSV Tabular Data Loader for XGBoost Training Sets</Title>
     <Description>Training data preparation for sciBASIC# XGBoost: two-pass CSV readers for test and validation tables, and converters building labelled TrainData with categorical columns and missing value indexes.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;xgboost;dataset;csv;data-preprocessing</PackageTags>
+    <PackageTags>scibasic;xgboost;dataset;csv;data-preprocessing;categorical-encoding;missing-values;train-data</PackageTags>
+    <PackageReleaseNotes>Training data preparation for sciBASIC# XGBoost. The package provides two pass CSV readers for the test and validation tables - the two pass approach allows categorical columns and missing value positions to be discovered before the numeric matrix is materialised - and converters that build a labelled TrainData instance with categorical columns and missing value indexes, which is exactly what the ternary gradient boosting trainer expects. Keeping this preparation separate from the trainer means the same dataset can be reused across experiments with different hyperparameters, which is the common case when tuning a boosting model.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -111,6 +112,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\xgboost\xgboost.vbproj" />
   </ItemGroup>
 

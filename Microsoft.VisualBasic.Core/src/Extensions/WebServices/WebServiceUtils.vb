@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5730506c28fcfb442a2720e0444cec07, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::b41dde6bc051b11b6839734bc9e73ddc, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 928
-    '    Code Lines: 563 (60.67%)
-    ' Comment Lines: 233 (25.11%)
+    '   Total Lines: 926
+    '    Code Lines: 561 (60.58%)
+    ' Comment Lines: 233 (25.16%)
     '    - Xml Docs: 91.42%
     ' 
-    '   Blank Lines: 132 (14.22%)
-    '     File Size: 34.00 KB
+    '   Blank Lines: 132 (14.25%)
+    '     File Size: 33.92 KB
 
 
     ' Module WebServiceUtils

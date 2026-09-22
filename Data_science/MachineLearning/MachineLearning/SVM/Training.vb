@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec49fa844e4c4bc2f8f20063093fe370, Data_science\MachineLearning\MachineLearning\SVM\Training.vb"
+﻿#Region "Microsoft.VisualBasic::a2978580d092b3b2f552819a5cbce846, Data_science\MachineLearning\MachineLearning\SVM\Training.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 52 (52.53%)
-    ' Comment Lines: 32 (32.32%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 103
+    '    Code Lines: 52 (50.49%)
+    ' Comment Lines: 36 (34.95%)
+    '    - Xml Docs: 55.56%
     ' 
-    '   Blank Lines: 15 (15.15%)
-    '     File Size: 4.01 KB
+    '   Blank Lines: 15 (14.56%)
+    '     File Size: 4.20 KB
 
 
     '     Module Training
@@ -115,6 +115,10 @@ Namespace SVM
             Return total_correct / problem.count
         End Function
 
+        ''' <summary>
+        ''' Set the random seed value which is used by the training procedure.
+        ''' </summary>
+        ''' <param name="seed">The random seed value.</param>
         Public Sub SetRandomSeed(seed As Integer)
             Procedures.setRandomSeed(seed)
         End Sub

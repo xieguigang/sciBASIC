@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.Lambda</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9762.11310</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -18,10 +18,11 @@
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 		<Title>Symbolic Math Engine: Calculus, Algebra and MathML Compiler</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.Lambda</AssemblyTitle>
-		<PackageTags>scibasic;symbolic-math;computer-algebra;calculus;mathml;polynomial</PackageTags>
+		<PackageTags>scibasic;symbolic-math;computer-algebra;calculus;differentiation;integration;mathml;polynomial;immutable-expression-tree</PackageTags>
+    <PackageReleaseNotes>An immutable expression tree computer algebra engine for sciBASIC#. Each Symbolic expression is an immutable tree node, so simplification and transformation always produce new expressions instead of mutating shared state - which makes the engine safe to use concurrently and easy to reason about. Calculus: derivatives, integrals, limits and Taylor expansion are implemented as structural transformations over the tree. Algebra: polynomial factorisation, simplification and Boolean algebra rewrites reduce expressions to canonical or more compact forms. Compilation: the MathML compiler turns MathML content markup into a symbolic expression and further into a compiled LINQ expression tree, so a formula can be written in a document format, simplified symbolically and finally executed as a compiled delegate at native speed.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

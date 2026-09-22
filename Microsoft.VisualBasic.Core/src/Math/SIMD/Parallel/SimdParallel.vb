@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::356434074d96da7978acf93bb20ad3d9, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Parallel\SimdParallel.vb"
+﻿#Region "Microsoft.VisualBasic::356434074d96da7978acf93bb20ad3d9, Microsoft.VisualBasic.Core\src\Math\SIMD\Parallel\SimdParallel.vb"
 
     ' Author:
     ' 

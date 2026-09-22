@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8c4ac7a443430f795986931dcac8a82, Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::fac444eba1ee7264523ef927bd3cae17, Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 84 (35.90%)
-    ' Comment Lines: 117 (50.00%)
-    '    - Xml Docs: 94.02%
+    '   Total Lines: 247
+    '    Code Lines: 84 (34.01%)
+    ' Comment Lines: 130 (52.63%)
+    '    - Xml Docs: 94.62%
     ' 
-    '   Blank Lines: 33 (14.10%)
-    '     File Size: 10.78 KB
+    '   Blank Lines: 33 (13.36%)
+    '     File Size: 11.44 KB
 
 
     '     Class QTable
@@ -80,6 +80,11 @@ Namespace QLearning
         ''' directly as the actual map. Each map state has an array of Q values
         ''' for all the actions available for that state.
         ''' </summary>
+        ''' <returns>
+        ''' A dictionary in which the key is the map state and the value is the 
+        ''' <see cref="Action"/> object which contains the Q-value of each 
+        ''' available action of that state.
+        ''' </returns>
         Public ReadOnly Property Table As Dictionary(Of Action) Implements IQTable.Table
 
         ''' <summary>
@@ -87,6 +92,7 @@ Namespace QLearning
         ''' at any map state, and therefore the number of Q values in each entry
         ''' of the Q-table.
         ''' </summary>
+        ''' <returns>The number of the Q-values in each entry of the Q-table.</returns>
         Public ReadOnly Property ActionRange As Integer Implements IQTable.ActionRange
 
 #Region "E-GREEDY Q-LEARNING SPECIFIC VARIABLES"
@@ -144,6 +150,13 @@ Namespace QLearning
             Me.Table = New Dictionary(Of Action)
         End Sub
 
+        ''' <summary>
+        ''' Restore a trained Q table from its data model.
+        ''' </summary>
+        ''' <param name="model">
+        ''' The <see cref="QModel"/> data model which contains the trained Q-values 
+        ''' and the hyper parameters.
+        ''' </param>
         Sub New(model As QModel)
             Call Me.New()
 
@@ -239,7 +252,7 @@ Namespace QLearning
         ''' <summary>
         ''' This helper function is used for entering the map state into the
         ''' HashMap </summary>
-        ''' <param name="map"> </param>
+        ''' <param name="map">The map state which will be converted.</param>
         ''' <returns> String used as a key for the HashMap </returns>
         Protected MustOverride Function MapToString(map As T) As String
 

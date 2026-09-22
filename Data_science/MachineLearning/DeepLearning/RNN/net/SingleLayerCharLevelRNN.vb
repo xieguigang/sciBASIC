@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::220ddb3e6c94bbc468a99db615c4e0f6, Data_science\MachineLearning\DeepLearning\RNN\net\SingleLayerCharLevelRNN.vb"
+﻿#Region "Microsoft.VisualBasic::52c0d2f5b6d8b3a68f14cc151caaaa90, Data_science\MachineLearning\DeepLearning\RNN\net\SingleLayerCharLevelRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 49 (48.51%)
-    ' Comment Lines: 35 (34.65%)
-    '    - Xml Docs: 51.43%
+    '   Total Lines: 112
+    '    Code Lines: 49 (43.75%)
+    ' Comment Lines: 46 (41.07%)
+    '    - Xml Docs: 95.65%
     ' 
-    '   Blank Lines: 17 (16.83%)
-    '     File Size: 2.95 KB
+    '   Blank Lines: 17 (15.18%)
+    '     File Size: 3.82 KB
 
 
     ' 	Class SingleLayerCharLevelRNN
@@ -70,12 +70,15 @@ Namespace RNN
 
 		Protected Friend internal As SingleLayerRNN ' Basic network.
 
-		' Constructs without initialization.
+		''' <summary>Creates the network without initializing it.</summary>
 		Public Sub New()
 			internal = New SingleLayerRNN()
 		End Sub
 
-		' Constructs and initializes immediately. Requires that alphabet != null.
+		''' <summary>
+		''' Creates the network and initializes it immediately.
+		''' </summary>
+		''' <param name="alphabet">The alphabet; it must not be <c>Nothing</c>.</param>
 		Public Sub New(alphabet As Alphabet)
 			Me.New()
 			initialize(alphabet)
@@ -91,7 +94,10 @@ Namespace RNN
 			internal.HiddenSize = value
 		End Sub
 
-		' Sets the learning rate.
+		''' <summary>
+		''' Sets the learning rate of the wrapped single layer network.
+		''' </summary>
+		''' <param name="value">The learning rate.</param>
 		Public Sub SetLearningRate(value As Double)
 			internal.LearningRate = value
 		End Sub
@@ -107,14 +113,12 @@ Namespace RNN
 
 		' * Train ** 
 
-		' 
-		' 		    Performs a forward-backward pass for the given indices.
-		' 	
-		' 		    ix.length and iy.length lengths must match, can't be empty.
-		' 		    All indices must be less than the vocabulary size.
-		' 	
-		' 		    Returns the cross-entropy loss.
-		' 		
+		''' <summary>
+		''' Performs a forward-backward pass for the given token indices.
+		''' </summary>
+		''' <param name="ix">The input indices; its length must match <paramref name="iy"/> and must not be empty.</param>
+		''' <param name="iy">The target indices; every index must be smaller than the vocabulary size.</param>
+		''' <returns>The cross-entropy loss of this sequence.</returns>
 		Public Overrides Function forwardBackward(ix As Integer(), iy As Integer()) As Double
 			Return internal.forwardBackward(ix, iy)
 		End Function
@@ -130,26 +134,33 @@ Namespace RNN
 			Return internal.sampleIndices(n, seed, temp)
 		End Function
 
-		' Samples n indices, sequence seed, choose whether to advance the state.
+		''' <summary>
+		''' Samples <paramref name="n"/> indices, optionally advancing the hidden state.
+		''' </summary>
+		''' <param name="n">Number of indices to sample.</param>
+		''' <param name="seed">The seed indices.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+		''' <returns>The sampled indices.</returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
 			Return internal.sampleIndices(n, seed, temp, advance)
 		End Function
 
-		' Returns the alphabet, if initialized.
+		''' <summary>Gets the alphabet used by this network, if initialized.</summary>
 		Public Overrides ReadOnly Property Alphabet As Alphabet
 			Get
 				Return alphabetField
 			End Get
 		End Property
 
-		' Returns true if the net was initialized.
+		''' <summary>Gets a value indicating whether the network has been initialized.</summary>
 		Public Overrides ReadOnly Property Initialized As Boolean
 			Get
 				Return internal.Initialized
 			End Get
 		End Property
 
-		' Returns the vocabulary size (the alphabet size), if initialized.
+		''' <summary>Gets the vocabulary size (the alphabet size), if initialized.</summary>
 		Public Overrides ReadOnly Property VocabularySize As Integer
 			Get
 				Return internal.VocabularySize

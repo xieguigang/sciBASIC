@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96dfaab9d9ad863eb1ec98819e17c38b, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c8dd3ebda2f8147b89fdde8c3447a6f8, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.49%
     ' 
     '   Blank Lines: 44 (17.32%)
-    '     File Size: 10.26 KB
+    '     File Size: 10.27 KB
 
 
     '     Class RowBuilder
@@ -190,7 +190,7 @@ Namespace StorageProvider.ComponentModels
 
                 Call "Schema has meta dictionary property...".debug(mute:=silent)
 
-                For Each name In NonIndexed.Keys.ToArray
+                For Each name As String In NonIndexed.Keys
                     ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
                     If Not schema.GetField(name) Is Nothing Then
                         Call NonIndexed.Remove(name)

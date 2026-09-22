@@ -13,15 +13,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Markdown Parser, Block Model and Multi-Format Renderer</Title>
     <Description>A markdown processor for sciBASIC#: a two-phase recursive block and inline parser that renders markdown to HTML or plain text, a typed block model with markdown and HTML renderers driven by JSON documents, plus nested table-of-contents generation from ATX headers.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.text.markdown</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;markdown;parser;html-renderer;document</PackageTags>
+    <PackageTags>scibasic;markdown;markdown-parser;html-renderer;text-renderer;table-of-contents;json;document</PackageTags>
+    <PackageReleaseNotes>The markdown processor of sciBASIC#. Parsing: MarkdownParser is a two phase recursive parser - block level tokenization followed by inline span parsing - so nested lists, block quotes containing headers or lists, and tables with inline formatting all work through recursion. Output: MarkdownRender.Transform renders markdown to HTML, or to plain text when constructed with a TextRender; the abstract Render base class defines the pluggable output contract implemented by HtmlRender and TextRender, and an image URL router is exposed for rewriting embedded image locations. Block model: JSONSchema.Block is a typed block model (type, level, content, headers, rows and list data) suited to structured content such as large language model output - JSONRenderer.Parse turns a JSON document into an IEnumerable(Of Block), while ToMarkdown / ToHtml render them back out and BlockRenderer converts a single block. Table of contents: TOC.GenerateToc builds a nested markdown list from ATX headers, TOC.AddToc prepends it to the document, and MarkdownRender.GetTOC returns each header text together with its level.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c125591dfd2e9f45a2cc3c75978b4ad, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PathElement.vb"
+﻿#Region "Microsoft.VisualBasic::c11cf4898924673175768efeac168ee8, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PathElement.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (10.34%)
-    '     File Size: 906 B
+    '     File Size: 905 B
 
 
     '     Class PathElement
@@ -52,7 +52,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     ''' <summary>
     ''' Path element for use in <seealso cref="ShapAlgo2"/>

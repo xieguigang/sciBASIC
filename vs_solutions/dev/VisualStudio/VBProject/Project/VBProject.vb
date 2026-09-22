@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d29a1a39eb185295c790c8f7d28b8b11, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
+﻿#Region "Microsoft.VisualBasic::50c2248f0b3baf07e52451d1fa9b51d8, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 704
-    '    Code Lines: 550 (78.12%)
-    ' Comment Lines: 72 (10.23%)
-    '    - Xml Docs: 69.44%
+    '   Total Lines: 732
+    '    Code Lines: 569 (77.73%)
+    ' Comment Lines: 77 (10.52%)
+    '    - Xml Docs: 66.23%
     ' 
-    '   Blank Lines: 82 (11.65%)
-    '     File Size: 33.88 KB
+    '   Blank Lines: 86 (11.75%)
+    '     File Size: 35.30 KB
 
 
     '     Class VBProject
     ' 
     '         Properties: AssemblyName, AssemblyVersion, CompileExcludes, CompileFiles, Configurations
     '                     FilePath, IsDotNetCoreSDK, Metadata, MimeType, NuGet
-    '                     OutputType, PackageReferences, ProjectReferences, RootNamespace, Sdk
+    '                     OutputType, PackageReferences, ProjectReferences, References, RootNamespace
+    '                     Sdk
     ' 
     '         Function: [GetType], CleanName, ElementValue, ExtractImports, FindByLastName
     '                   FindInContainer, Generate, GetCompileFiles, IsNuGetProperty, Load
@@ -100,6 +101,8 @@ Namespace VBProj
         Public Property ProjectReferences As VBProjectReference()
         ''' <summary>nuget package references</summary>
         Public Property PackageReferences As VBPackageReference()
+        ''' <summary>external assembly references (dll + HintPath)</summary>
+        Public Property References As VBReference()
         ''' <summary>Compile Remove patterns collected from the vbproj</summary>
         Public Property CompileExcludes As String()
 
@@ -629,7 +632,11 @@ Namespace VBProj
             Dim mainPg As New XElement("PropertyGroup")
             AddIf(mainPg, "TargetFramework", Metadata?.TargetFramework)
             AddIf(mainPg, "TargetFrameworks", Metadata?.TargetFrameworks)
-            AddIf(mainPg, "RootNamespace", RootNamespace)
+            ' RootNamespace: Nothing => 不输出(沿用 SDK 默认); "" => 显式输出空元素,
+            ' 用于关闭 "以项目名作为根命名空间" 的默认行为。
+            If RootNamespace IsNot Nothing Then
+                mainPg.Add(New XElement(mainPg.Name.Namespace + "RootNamespace", RootNamespace))
+            End If
             AddIf(mainPg, "AssemblyName", AssemblyName)
             AddIf(mainPg, "OutputType", OutputType)
             AddIf(mainPg, "Platforms", Metadata?.Platforms)
@@ -706,6 +713,28 @@ Namespace VBProj
                     Next
                 End If
                 root.Add(ig)
+            End If
+
+            ' external assembly references (only emitted when the model declares them,
+            ' so the output of every existing caller stays byte-identical).
+            If References IsNot Nothing AndAlso References.Length > 0 Then
+                Dim refGroup As New XElement("ItemGroup")
+
+                For Each reference In References
+                    If String.IsNullOrWhiteSpace(reference.Include) Then
+                        Continue For
+                    End If
+
+                    Dim el As New XElement("Reference", New XAttribute("Include", reference.Include))
+                    AddAttrIf(el, "Condition", reference.Condition)
+                    AddIf(el, "HintPath", reference.HintPath)
+                    AddIf(el, "Private", reference.Private)
+                    refGroup.Add(el)
+                Next
+
+                If refGroup.Elements().Any() Then
+                    root.Add(refGroup)
+                End If
             End If
 
             ' Project / package references.

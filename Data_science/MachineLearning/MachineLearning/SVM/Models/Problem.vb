@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::699d191daf55f0dbc4851fc04ed40a8f, Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
+﻿#Region "Microsoft.VisualBasic::558c2eecf22c298160f0996de0b78328, Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 33 (34.74%)
-    ' Comment Lines: 49 (51.58%)
-    '    - Xml Docs: 67.35%
+    '   Total Lines: 115
+    '    Code Lines: 33 (28.70%)
+    ' Comment Lines: 69 (60.00%)
+    '    - Xml Docs: 76.81%
     ' 
-    '   Blank Lines: 13 (13.68%)
-    '     File Size: 3.34 KB
+    '   Blank Lines: 13 (11.30%)
+    '     File Size: 4.31 KB
 
 
     '     Class Problem
@@ -111,7 +111,7 @@ Namespace SVM
         ''' <summary>
         ''' the width of each row in <see cref="X"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the feature dimension names.</returns>
         Public Property dimensionNames As String()
 
         ''' <summary>
@@ -135,16 +135,36 @@ Namespace SVM
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Display the brief summary information of this problem.
+        ''' </summary>
+        ''' <returns>
+        ''' A string in format like ``dim [...], N labels = [...]``.
+        ''' </returns>
         Public Overrides Function ToString() As String
             Return $"dim {dimensionNames.GetJson}, {Y.Length} labels = {Y.Distinct.GetJson}"
         End Function
 
+        ''' <summary>
+        ''' Compares this problem with another object.
+        ''' </summary>
+        ''' <param name="obj">The object that will be compared with this problem.</param>
+        ''' <returns>
+        ''' ``True`` when the <paramref name="obj"/> is a <see cref="Problem"/> 
+        ''' object which has the same sample data and the same label data, 
+        ''' otherwise ``False``.
+        ''' </returns>
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other As Problem = TryCast(obj, Problem)
             If other Is Nothing Then Return False
             Return other.count = count AndAlso other.maxIndex = maxIndex AndAlso other.X.IsEqual(X) AndAlso other.Y.IsEqual(Y)
         End Function
 
+        ''' <summary>
+        ''' Gets the hash code of this problem, which is combined by the hash 
+        ''' code of the sample matrix and the label vector.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> hash code value.</returns>
         Public Overrides Function GetHashCode() As Integer
             Return count.GetHashCode() + maxIndex.GetHashCode() + X.ComputeHashcode2() + Y.ComputeHashcode()
         End Function

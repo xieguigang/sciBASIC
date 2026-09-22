@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::73b51cedab0c6dd4a41622550af321fa, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 98 (49.49%)
-    ' Comment Lines: 74 (37.37%)
-    '    - Xml Docs: 78.38%
+    '   Total Lines: 218
+    '    Code Lines: 98 (44.95%)
+    ' Comment Lines: 94 (43.12%)
+    '    - Xml Docs: 82.98%
     ' 
-    '   Blank Lines: 26 (13.13%)
-    '     File Size: 6.87 KB
+    '   Blank Lines: 26 (11.93%)
+    '     File Size: 7.90 KB
 
 
     '     Class Parameter
@@ -137,7 +137,10 @@ Namespace SVM
         ''' <summary>
         ''' <see cref="ColorClass.name"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A dictionary which maps the class name to its weight value, so that 
+        ''' different penalty can be applied on different classes.
+        ''' </returns>
         Public Property weights As Dictionary(Of Integer, Double)
             Get
                 Return m_Weights
@@ -186,10 +189,22 @@ Namespace SVM
             weights = New Dictionary(Of Integer, Double)()
         End Sub
 
+        ''' <summary>
+        ''' Display this parameter set as a json string.
+        ''' </summary>
+        ''' <returns>A json text which describes all of the parameter values.</returns>
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
 
+        ''' <summary>
+        ''' Compares this parameter set with another object.
+        ''' </summary>
+        ''' <param name="obj">The object that will be compared with this parameter set.</param>
+        ''' <returns>
+        ''' ``True`` when the <paramref name="obj"/> is a <see cref="Parameter"/> 
+        ''' object which has the identical parameter values, otherwise ``False``.
+        ''' </returns>
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other As Parameter = TryCast(obj, Parameter)
 
@@ -212,6 +227,11 @@ Namespace SVM
                 other.weights.ToArray().IsEqual(weights.ToArray())
         End Function
 
+        ''' <summary>
+        ''' Gets the hash code of this parameter set, which is combined by the 
+        ''' hash code of all of its parameter values.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> hash code value.</returns>
         Public Overrides Function GetHashCode() As Integer
             Return c.GetHashCode() +
                 cacheSize.GetHashCode() +

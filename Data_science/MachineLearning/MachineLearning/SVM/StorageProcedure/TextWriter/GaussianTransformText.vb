@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6c2f8a0b2ef43875405d6134ab9ade4, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\GaussianTransformText.vb"
+﻿#Region "Microsoft.VisualBasic::f3c70263331a35dacac46d80757312fb, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\GaussianTransformText.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 20 (58.82%)
-    ' Comment Lines: 6 (17.65%)
+    '   Total Lines: 42
+    '    Code Lines: 20 (47.62%)
+    ' Comment Lines: 14 (33.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (23.53%)
-    '     File Size: 1.05 KB
+    '   Blank Lines: 8 (19.05%)
+    '     File Size: 1.45 KB
 
 
     '     Module GaussianTransformText
@@ -77,6 +77,14 @@ Namespace SVM
             Call stream.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the gaussian transform into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="transform">The transform that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains the dimension count followed by the mean value
+        ''' and the standard deviation value of each dimension.
+        ''' </returns>
         Public Function ToString(transform As GaussianTransform) As String
             Dim sb As New StringBuilder
 

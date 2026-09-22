@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d2509b51641e7a1f9435583d63565b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\WiseOperation.vb"
+﻿#Region "Microsoft.VisualBasic::6a524270bb14e169467a961b30b0201d, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\WiseOperation.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 29 (78.38%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 45
+    '    Code Lines: 34 (75.56%)
+    ' Comment Lines: 1 (2.22%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (21.62%)
-    '     File Size: 1.27 KB
+    '   Blank Lines: 10 (22.22%)
+    '     File Size: 1.58 KB
 
 
     '     Class WiseOperation
@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+Imports SimdParallel = Microsoft.VisualBasic.Math.SIMD.SimdParallel
 
 Namespace LinearAlgebra.Matrix
 
@@ -63,7 +64,14 @@ Namespace LinearAlgebra.Matrix
         Public ReadOnly Property matrix_wise As Vector()
 
         Public Function Sum() As Vector
-            Return matrix_wise.Select(Function(xi) xi.Sum).AsVector
+            Dim out As Double() = New Double(matrix_wise.Length - 1) {}
+
+            ' 每一行/列直接走 SIMD 归约求和
+            For i As Integer = 0 To matrix_wise.Length - 1
+                out(i) = SimdParallel.Sum(matrix_wise(i).Array)
+            Next
+
+            Return New Vector(out)
         End Function
 
         Public Iterator Function ScaleX(Optional center As Boolean = True, Optional scale As Boolean = True) As IEnumerable(Of Vector)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ff2c2041da66ee8061460dfc0e7115, Data_science\MachineLearning\DeepLearning\CNN\trainers\SGDTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::5d42265a5a98c2f2b160dc91954a128b, Data_science\MachineLearning\DeepLearning\CNN\trainers\SGDTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 17 (51.52%)
-    ' Comment Lines: 11 (33.33%)
-    '    - Xml Docs: 63.64%
+    '   Total Lines: 46
+    '    Code Lines: 17 (36.96%)
+    ' Comment Lines: 24 (52.17%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 5 (15.15%)
-    '     File Size: 1.29 KB
+    '   Blank Lines: 5 (10.87%)
+    '     File Size: 2.12 KB
 
 
     '     Class SGDTrainer
@@ -66,10 +66,23 @@ Namespace CNN.trainers
 
     Public Class SGDTrainer : Inherits TrainerAlgorithm
 
+        ''' <summary>
+        ''' Creates a stochastic gradient descent trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)
         End Sub
 
+        ''' <summary>
+        ''' Applies one gradient descent step to a single parameter, using momentum when
+        ''' <see cref="TrainerAlgorithm.momentum"/> is greater than zero.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
             ' assume SGD

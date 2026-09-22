@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dff8b8855b823b9787546b54b5850aca, sciBASIC#\mime\application%rtf\Omml\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::dff8b8855b823b9787546b54b5850aca, mime\application%rtf\Omml\HTML.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 25
-    '    Code Lines: 15
-    ' Comment Lines: 4
-    '   Blank Lines: 6
-    '     File Size: 927.00 B
+    '    Code Lines: 15 (60.00%)
+    ' Comment Lines: 4 (16.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (24.00%)
+    '     File Size: 927 B
 
 
     '     Class HTML

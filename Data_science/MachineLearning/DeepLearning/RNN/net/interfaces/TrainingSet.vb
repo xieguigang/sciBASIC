@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9361aeca5d03b8f144a21a49213446b4, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\TrainingSet.vb"
+﻿#Region "Microsoft.VisualBasic::8a6ceac8691056e6d8d1b12b9255fe18, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\TrainingSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 7 (41.18%)
-    ' Comment Lines: 6 (35.29%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 24
+    '    Code Lines: 7 (29.17%)
+    ' Comment Lines: 13 (54.17%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (23.53%)
-    '     File Size: 444 B
+    '   Blank Lines: 4 (16.67%)
+    '     File Size: 873 B
 
 
     ' 	Interface TrainingSet
@@ -55,17 +55,24 @@
 Namespace RNN
 
 
-	' Training set for sequences.
+	''' <summary>
+	''' Training set for sequences.
+	''' </summary>
 	Public Interface TrainingSet
-		' Extracts out.length indices starting at index.
-		' ix - input sequence
-		' iy - expected output sequence (shifted by 1)
+		''' <summary>
+		''' Extracts a training pair starting at the given position.
+		''' </summary>
+		''' <param name="lowerBound">Index of the first symbol of the sequence.</param>
+		''' <param name="ix">Receives the input sequence indices.</param>
+		''' <param name="iy">Receives the expected output sequence indices, shifted by one symbol.</param>
 		Sub extract(lowerBound As Integer, ix As Integer(), iy As Integer())
 
-		' Returns the data size.
+		''' <summary>Returns the data size.</summary>
+		''' <returns>The number of symbols in the training data.</returns>
 		Function size() As Integer
 
-		' Returns the max index + 1.
+		''' <summary>Returns the vocabulary size.</summary>
+		''' <returns>The maximum index plus one.</returns>
 		Function vocabularySize() As Integer
 	End Interface
 End Namespace

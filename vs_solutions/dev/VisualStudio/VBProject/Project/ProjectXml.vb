@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b7c236d6d8cb63a20303c8f107d47a2, vs_solutions\dev\VisualStudio\VBProject\Project\ProjectXml.vb"
+﻿#Region "Microsoft.VisualBasic::bc64882fd65f3082d5a85aba2b0c924e, vs_solutions\dev\VisualStudio\VBProject\Project\ProjectXml.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 58 (59.18%)
-    ' Comment Lines: 24 (24.49%)
+    '   Total Lines: 117
+    '    Code Lines: 64 (54.70%)
+    ' Comment Lines: 31 (26.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (16.33%)
-    '     File Size: 3.80 KB
+    '   Blank Lines: 22 (18.80%)
+    '     File Size: 4.51 KB
 
 
     '     Class VBProjectReference
     ' 
     '         Properties: [Include], [Private], Aliases, Condition, ReferenceOutputAssembly
     '                     SetTargetFramework
+    ' 
+    '     Class VBReference
+    ' 
+    '         Properties: [Include], [Private], Condition, HintPath
     ' 
     '     Class VBPackageReference
     ' 
@@ -89,6 +93,25 @@ Namespace VBProj.ProjectXml
         Public Property [Private] As String
         Public Property SetTargetFramework As String
         Public Property ReferenceOutputAssembly As String
+
+    End Class
+
+    ''' <summary>
+    ''' external assembly reference: a <c>Reference</c> item carrying a <c>HintPath</c>.
+    ''' </summary>
+    Public Class VBReference
+
+        ''' <summary>assembly simple name (the Include attribute)</summary>
+        Public Property [Include] As String
+
+        ''' <summary>path of the referenced dll (relative to the project file or absolute)</summary>
+        Public Property HintPath As String
+
+        ''' <summary>whether the referenced assembly should be copied into the output folder</summary>
+        Public Property [Private] As String
+
+        ''' <summary>optional Condition attribute</summary>
+        Public Property Condition As String
 
     End Class
 

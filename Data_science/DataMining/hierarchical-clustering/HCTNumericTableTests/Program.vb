@@ -1,7 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::1d0394e87e34144cb7e21b26d2bbe497, Data_science\DataMining\hierarchical-clustering\HCTNumericTableTests\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 222
+    '    Code Lines: 150 (67.57%)
+    ' Comment Lines: 30 (13.51%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 42 (18.92%)
+    '     File Size: 8.15 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: SampleData
+    ' 
+    '     Sub: CheckApproximation, CheckDistanceMatrix, CheckPartition, Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System
 Imports System.Data
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.BIRCH
 
 ''' <summary>
 ''' 层次聚类统一二维表入口（<c>x.distanceMatrix()</c> / <c>x.hca()</c> / <c>x.hcut(...)</c>）的冒烟测试。
@@ -16,7 +72,13 @@ Module Program
     Private Const N As Integer = 40
     Private Const Half As Integer = 20
 
-    Sub Main()
+    Sub Main(args As String())
+        ' dotnet run -- benchmark  -> 只运行性能基准
+        If args IsNot Nothing AndAlso args.Any(Function(a) String.Equals(a, "benchmark", StringComparison.OrdinalIgnoreCase)) Then
+            Call Benchmark.RunAll()
+            Return
+        End If
+
         Dim failures As New List(Of String)
         Dim x = SampleData()
 
@@ -57,6 +119,9 @@ Module Program
         Dim byT = dist.hcut(threshold:=3.0)
         Call CheckPartition(failures, "hcut(threshold:=3.0)", byT)
 
+        ' 6. BIRCH 近似通道（n 不超过目标子簇数时会退化为恒等预聚类，结果应与精确通道一致）
+        Call CheckApproximation(failures, x)
+
         If failures.Count > 0 Then
             Console.WriteLine("FAILED:")
 
@@ -68,6 +133,29 @@ Module Program
         Else
             Console.WriteLine("hierarchical clustering NumericTable checks passed.")
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 校验 BIRCH 近似通道（特征表入口）：当样本数不超过目标子簇数时预聚类退化为恒等映射，
+    ''' 此时近似通道的簇划分应与精确通道保持一致（两个合成簇被正确分开）
+    ''' </summary>
+    Private Sub CheckApproximation(failures As List(Of String), x As NumericTable)
+        Dim options As New BirchOptions With {.targetSubclusters = 1000, .silent = True}
+
+        ' 近似通道的输入是**特征表**（而不是距离矩阵）
+        Dim tree = x.hcaApprox(options)
+
+        If tree Is Nothing Then
+            Call failures.Add("hcaApprox: the clustering tree is Nothing")
+        ElseIf tree.Leafs <> N Then
+            Call failures.Add($"hcaApprox: leafs {tree.Leafs} <> {N}")
+        End If
+
+        Dim byK = x.hcutApprox(2, options)
+        Call CheckPartition(failures, "hcutApprox(k:=2)", byK)
+
+        Dim byT = x.hcutApprox(3.0, options)
+        Call CheckPartition(failures, "hcutApprox(threshold:=3.0)", byT)
     End Sub
 
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7e43da5a21ff4962785cf3ded148e5e, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::d004fc7636a3f269b0b6c4fcd1ad3770, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 30 (83.33%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 71
+    '    Code Lines: 30 (42.25%)
+    ' Comment Lines: 35 (49.30%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (16.67%)
-    '     File Size: 1019 B
+    '   Blank Lines: 6 (8.45%)
+    '     File Size: 2.56 KB
 
 
     '     Class Sinc
@@ -58,8 +58,22 @@ Imports std = System.Math
 
 Namespace ComponentModel.Activations
 
+    ''' <summary>
+    ''' The sinc (cardinal sine) activation function: <i>f(x) = sin(x) / x</i>.
+    ''' </summary>
+    ''' <remarks>
+    ''' The function value at the origin point <i>x = 0</i> is defined as ``1``, 
+    ''' which is the limit value of <i>sin(x) / x</i> when <i>x</i> tends to zero.
+    ''' </remarks>
     Public Class Sinc : Inherits IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this sinc function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``Sinc`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -69,6 +83,14 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Calculates the sinc function value: <i>sin(x) / x</i>.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' The function output value, ``1`` will be returned when 
+        ''' <paramref name="x"/> is zero.
+        ''' </returns>
         Public Overrides Function [Function](x As Double) As Double
             If x = 0R Then
                 Return 1
@@ -77,10 +99,23 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>The text expression of this sinc function.</returns>
         Public Overrides Function ToString() As String
             Return Store.ToString
         End Function
 
+        ''' <summary>
+        ''' Calculates the derivative of the sinc function: 
+        ''' <i>f'(x) = cos(x) / x - sin(x) / x ^ 2</i>.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' The derivative value, ``0`` will be returned when 
+        ''' <paramref name="x"/> is zero.
+        ''' </returns>
         Protected Overrides Function Derivative(x As Double) As Double
             If x = 0R Then
                 Return 0

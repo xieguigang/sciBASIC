@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c60731238d2af8bea3a459516dffc8c, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::c66d5c9732cc44d8acabacb397e7b233, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 299
-    '    Code Lines: 118 (39.46%)
-    ' Comment Lines: 151 (50.50%)
-    '    - Xml Docs: 88.74%
+    '   Total Lines: 351
+    '    Code Lines: 145 (41.31%)
+    ' Comment Lines: 168 (47.86%)
+    '    - Xml Docs: 86.31%
     ' 
-    '   Blank Lines: 30 (10.03%)
-    '     File Size: 13.47 KB
+    '   Blank Lines: 38 (10.83%)
+    '     File Size: 15.77 KB
 
 
     ' Class Cluster
     ' 
-    '     Properties: Children, Distance, DistanceValue, isLeaf, IsRoot
-    '                 LeafNames, Leafs, Name, Parent, TotalDistance
-    '                 WeightValue
+    '     Properties: Children, Distance, DistanceValue, Id, isLeaf
+    '                 IsRoot, LeafCount, LeafNames, Leafs, Name
+    '                 Parent, TotalDistance, WeightValue
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
@@ -137,6 +138,16 @@ Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
     ''' <returns>A <see cref="String"/>  representing the name of this cluster.</returns>
     Public Property Name As String Implements INamedValue.Key, ITreeNodeData(Of Cluster).FullyQualifiedName
 
+    Private Shared __nextId As Integer = 0
+
+    ''' <summary>
+    ''' 进程内唯一、单调递增的簇标识（非负、小于 2^31）。作为链接表（<see cref="DistanceMap"/>）的哈希键，
+    ''' 避免每次链接查找都对簇名执行字符串哈希与 <see cref="String.CompareTo(String)"/> 比较，
+    ''' 同时保证不同的簇对象不会因为重名而共享同一个链接键。
+    ''' </summary>
+    ''' <returns></returns>
+    Friend ReadOnly Property Id As Integer
+
     ''' <summary>
     ''' Gets the read-only collection of child clusters directly under this node.
     ''' An empty collection indicates that this node is a leaf cluster.
@@ -151,6 +162,8 @@ Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
 
     Dim m_childs As New List(Of Cluster)
 
+    Private m_leafNames As List(Of String) = Nothing
+
     ''' <summary>
     ''' Gets the list of leaf names contained within this cluster's subtree.
     ''' For leaf clusters, this list contains the cluster's own name. For internal clusters,
@@ -158,6 +171,26 @@ Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
     ''' </summary>
     ''' <returns>A <see cref="List(Of String)"/>  containing the names of all leaf nodes in this subtree.</returns>
     Public ReadOnly Property LeafNames As List(Of String)
+        Get
+            ' 惰性计算：叶节点即自身名称，内部节点递归合并子节点的叶名。
+            ' 
+            ' 旧实现会在每次合并（HierarchyTreeNode.Agglomerate）时把两棵子树的叶名 eager 拷贝到新簇，
+            ' 累计 O(n^2) 时间与内存，而该属性实际上极少被使用。这里改为首次访问时才计算并缓存。
+            If m_leafNames Is Nothing Then
+                m_leafNames = New List(Of String)
+
+                If m_childs.Count = 0 Then
+                    Call m_leafNames.Add(Name)
+                Else
+                    For Each child As Cluster In m_childs
+                        Call m_leafNames.AddRange(child.LeafNames)
+                    Next
+                End If
+            End If
+
+            Return m_leafNames
+        End Get
+    End Property
 
     ''' <summary>
     ''' Gets a value indicating whether this cluster is the root node of the dendrogram.
@@ -192,8 +225,27 @@ Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
     Public ReadOnly Property Leafs() As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return CountLeafs(Me, 0)
+            ' 惰性缓存：合并（HierarchyTreeNode.Agglomerate）时已经可以 O(1) 地得到新簇的叶数并写入缓存；
+            ' 这里仅在外部手工构造、未经合并流程的聚类树上回退到递归计算
+            If _leafs < 0 Then
+                _leafs = CountLeafs(Me, 0)
+            End If
+
+            Return _leafs
         End Get
+    End Property
+
+    Private _leafs As Integer = -1
+
+    ''' <summary>
+    ''' 供 <see cref="HierarchyTreeNode.Agglomerate"/> 在合并时 O(1) 写入新簇的叶节点数量，
+    ''' 避免 <see cref="Leafs"/> 在树切分（cutTree）、<see cref="OrderLeafs"/>
+    ''' 以及树图绘制过程中被反复递归重算。
+    ''' </summary>
+    Friend WriteOnly Property LeafCount As Integer
+        Set(value As Integer)
+            _leafs = value
+        End Set
     End Property
 
     ''' <summary>
@@ -222,7 +274,7 @@ Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
     ''' <param name="name">The unique name identifier for this cluster.</param>
     Public Sub New(name$)
         Me.Name = name
-        LeafNames = New List(Of String)
+        Me.Id = Interlocked.Increment(__nextId) And &H7FFFFFFF
         Distance = New Distance
     End Sub
 

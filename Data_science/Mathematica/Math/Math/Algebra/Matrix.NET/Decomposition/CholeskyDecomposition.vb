@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::608b9c452c516e6c329b6b460fc1ec8b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::83852c7657703bb4e0af1f7d742f10b9, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 84 (58.33%)
-    ' Comment Lines: 41 (28.47%)
-    '    - Xml Docs: 87.80%
+    '   Total Lines: 151
+    '    Code Lines: 85 (56.29%)
+    ' Comment Lines: 42 (27.81%)
+    '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 19 (13.19%)
-    '     File Size: 5.17 KB
+    '   Blank Lines: 24 (15.89%)
+    '     File Size: 5.46 KB
 
 
     '     Class CholeskyDecomposition
@@ -54,6 +54,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Matrix
 
@@ -119,9 +121,10 @@ Namespace LinearAlgebra.Matrix
                 d = A(j)(j) - d
                 isspd = isspd And (d > 0.0)
                 L(j)(j) = System.Math.Sqrt(System.Math.Max(d, 0.0))
-                For k As Integer = j + 1 To n - 1
-                    L(j)(k) = 0.0
-                Next
+                ' 右上角清零：块清零比逐元素赋值少一整轮下标计算
+                If j + 1 < n Then
+                    Call System.Array.Clear(L(j), j + 1, n - j - 1)
+                End If
             Next
         End Sub
 
@@ -170,27 +173,31 @@ Namespace LinearAlgebra.Matrix
             Dim X As Double()() = B.ArrayPack(deepcopy:=True)
             Dim nx As Integer = B.ColumnDimension
 
-            ' Solve L*Y = B;
+            ' Solve L*Y = B：逐行 AXPY（X(i) -= L(i)(k) * X(k)）
             For k As Integer = 0 To n - 1
+                Dim rowK As Double() = X(k)
+
                 For i As Integer = k + 1 To n - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * L(i)(k)
-                    Next
+                    Call SIMDIntrinsics.AxpyInPlace(-L(i)(k), rowK, X(i))
                 Next
+
+                Dim pivot As Double = L(k)(k)
+
                 For j As Integer = 0 To nx - 1
-                    X(k)(j) /= L(k)(k)
+                    rowK(j) /= pivot
                 Next
             Next
 
             ' Solve L'*X = Y;
             For k As Integer = n - 1 To 0 Step -1
+                Dim rowK As Double() = X(k)
+                Dim pivot As Double = L(k)(k)
+
                 For j As Integer = 0 To nx - 1
-                    X(k)(j) /= L(k)(k)
+                    rowK(j) /= pivot
                 Next
                 For i As Integer = 0 To k - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * L(k)(i)
-                    Next
+                    Call SIMDIntrinsics.AxpyInPlace(-L(k)(i), rowK, X(i))
                 Next
             Next
             Return New NumericMatrix(X, n, nx)

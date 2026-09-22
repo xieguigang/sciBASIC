@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9595bde639194e052d862dfe194e2033, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\RankPair.vb"
+﻿#Region "Microsoft.VisualBasic::dcfb4b120c5687e4d3f39dc51fb4e74b, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\RankPair.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 18 (36.00%)
-    ' Comment Lines: 23 (46.00%)
+    '   Total Lines: 55
+    '    Code Lines: 19 (34.55%)
+    ' Comment Lines: 27 (49.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (18.00%)
-    '     File Size: 1.69 KB
+    '   Blank Lines: 9 (16.36%)
+    '     File Size: 2.03 KB
 
 
     '     Class RankPair
@@ -60,6 +60,11 @@ Namespace Evaluation
     ''' <summary>
     ''' Class encoding a member of a ranked set of labels.
     ''' </summary>
+    ''' <remarks>
+    ''' 保留仅用于兼容旧的 <see cref="PerformanceEvaluator"/>；新代码请直接使用
+    ''' <see cref="ClassificationResult"/>（分数 + 标签）。
+    ''' </remarks>
+    <Obsolete("请改用 ClassificationResult（分数 + 标签）配合 ModelEvaluation.Evaluate 进行统一评估。", False)>
     Public Class RankPair : Implements IComparable(Of RankPair)
 
         ''' <summary>

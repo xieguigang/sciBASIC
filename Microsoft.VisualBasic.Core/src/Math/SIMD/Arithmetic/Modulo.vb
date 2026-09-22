@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cecaee3f52e3a68949d3949816f2498, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Modulo.vb"
+﻿#Region "Microsoft.VisualBasic::5cecaee3f52e3a68949d3949816f2498, Microsoft.VisualBasic.Core\src\Math\SIMD\Arithmetic\Modulo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fba187cd5a3336de9139d7de4e7a95b, Data_science\MachineLearning\TensorFlow\Compute\SIMDTensor.vb"
+﻿#Region "Microsoft.VisualBasic::df141690c5e45888cc472f653a55c947, Data_science\MachineLearning\TensorFlow\Compute\SIMDTensor.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
-    '    Code Lines: 149 (65.64%)
-    ' Comment Lines: 24 (10.57%)
-    '    - Xml Docs: 45.83%
+    '   Total Lines: 524
+    '    Code Lines: 328 (62.60%)
+    ' Comment Lines: 85 (16.22%)
+    '    - Xml Docs: 78.82%
     ' 
-    '   Blank Lines: 54 (23.79%)
-    '     File Size: 8.78 KB
+    '   Blank Lines: 111 (21.18%)
+    '     File Size: 22.79 KB
 
 
     '     Class SIMDTensor
     ' 
     '         Properties: [Default], Name
     ' 
-    '         Function: Abs, Add, AddScalar, Clip, Divide
-    '                   DivideScalar, Exp, L2Norm, Log, MatMul
-    '                   Max, Maximum, Mean, MeanAll, Min
-    '                   Minimum, Multiply, MultiplyScalar, Negate, Pow
-    '                   Reciprocal, Sqrt, Square, StdDev, Subtract
-    '                   Sum, SumAll, ToJagged
+    '         Function: Abs, Add, AddScalar, CeilDiv, Clip
+    '                   Conv2D, Conv2DBackwardFilter, Conv2DBackwardInput, Divide, DivideScalar
+    '                   Exp, L2Norm, Log, MatMul, Max
+    '                   Maximum, Mean, MeanAll, Min, Minimum
+    '                   Multiply, MultiplyScalar, Negate, Pow, Reciprocal
+    '                   Sqrt, Square, StdDev, Subtract, Sum
+    '                   SumAll, ToJagged
     ' 
-    '         Sub: Register
+    '         Sub: Axpy, Register
     ' 
     ' 
     ' /********************************************************************************/
@@ -212,7 +213,12 @@ Namespace Compute
             Dim k = a.Shape(1)
             Dim n = b.Shape(1)
 
-            If m * k * n < MatrixDotThreshold Then
+            ' 注意必须用 Long 计算规模：语言模型的输出层是 [N, d_model] × [d_model, vocab]，
+            ' 在 10 万级词表下 m*k*n 轻松超过 Int32 上限（约 21.5 亿），
+            ' 用 Int32 会直接抛 OverflowException。
+            Dim totalOps As Long = CLng(m) * k * n
+
+            If totalOps < MatrixDotThreshold Then
                 Return MyBase.MatMul(a, b)
             End If
 

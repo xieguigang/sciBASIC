@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3256650bdc5697c9f37cecead64c2e53, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::3c1f44533b1ab324cb0e19a5499d3715, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sigmoid.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 39 (31.20%)
-    ' Comment Lines: 74 (59.20%)
-    '    - Xml Docs: 70.27%
+    '   Total Lines: 148
+    '    Code Lines: 39 (26.35%)
+    ' Comment Lines: 97 (65.54%)
+    '    - Xml Docs: 77.32%
     ' 
-    '   Blank Lines: 12 (9.60%)
-    '     File Size: 4.30 KB
+    '   Blank Lines: 12 (8.11%)
+    '     File Size: 5.38 KB
 
 
     '     Class Sigmoid
@@ -109,6 +109,14 @@ Namespace ComponentModel.Activations
         ''' 
         Public Property Alpha() As Double = 2.0R
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this sigmoid function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``Sigmoid``, and the <see cref="Alpha"/> value is 
+        ''' stored as its only argument.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -156,6 +164,17 @@ Namespace ComponentModel.Activations
             Return (1 / (1 + std.Exp(-_Alpha * x)))
         End Function
 
+        ''' <summary>
+        ''' Evaluate the logistic sigmoid function value with a specific alpha value.
+        ''' </summary>
+        ''' <param name="x">Function input value.</param>
+        ''' <param name="alpha">
+        ''' The steepness factor of the sigmoid function, the default value is ``1``.
+        ''' </param>
+        ''' <returns>
+        ''' Function output value <i>f(x) = 1 / (1 + exp(-alpha * x))</i>, which 
+        ''' is limited in the interval ``[0, 1]``.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function doCall(x#, Optional alpha# = 1.0) As Double
             Return (1 / (1 + std.Exp(-alpha * x)))
@@ -175,6 +194,10 @@ Namespace ComponentModel.Activations
             Return (_Alpha * x * (1 - x))
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``Sigmoid(alpha:=2)``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(Sigmoid)}(alpha:={Alpha})"
         End Function

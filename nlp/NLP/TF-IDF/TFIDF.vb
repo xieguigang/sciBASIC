@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79996874bd9bd541f245d3bb09863dff, nlp\NLP\TF-IDF\TFIDF.vb"
+﻿#Region "Microsoft.VisualBasic::9545c7bc80ed896940d8f4a5bd85edbf, nlp\NLP\TF-IDF\TFIDF.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 117 (59.39%)
-    ' Comment Lines: 55 (27.92%)
+    '   Total Lines: 198
+    '    Code Lines: 118 (59.60%)
+    ' Comment Lines: 55 (27.78%)
     '    - Xml Docs: 83.64%
     ' 
-    '   Blank Lines: 25 (12.69%)
-    '     File Size: 7.15 KB
+    '   Blank Lines: 25 (12.63%)
+    '     File Size: 7.21 KB
 
 
     ' Class TFIDF
@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports dft = Microsoft.VisualBasic.Data.Framework.DataFrame
 Imports std = System.Math
 
 Public Class TFIDF
@@ -203,7 +204,7 @@ Public Class TFIDF
                             End Function) _
                 .ToArray
 
-            m = DataFrame.FromRows(rows, m.featureNames)
+            m = dft.FromRows(rows, m.featureNames)
         End If
 
         Return m

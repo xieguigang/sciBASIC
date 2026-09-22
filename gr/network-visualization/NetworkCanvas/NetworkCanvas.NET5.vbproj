@@ -9,7 +9,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop;nuget_release</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>2.33.9753.4776</AssemblyVersion>
+	  <AssemblyVersion>2.33.9762.11310</AssemblyVersion>
 	  <Deterministic>false</Deterministic>
 	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -22,13 +22,14 @@
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <MyType>WindowsForms</MyType>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
-    <Version>1.0.9753.4776</Version>
+    <Version>1.0.9762.11310</Version>
     <Title>Interactive WinForms Network Graph Viewer Control</Title>
     <Description>A Windows Forms canvas that animates force-directed layouts, supports 2D and 3D rendering, mouse hit-testing, node tooltips and viewport panning, and can record the animation to AVI or SVG for sciBASIC# desktop apps.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
-    <PackageTags>scibasic;network-canvas;winforms;interactive-viewer;data-visualization</PackageTags>
+    <PackageTags>scibasic;network-canvas;winforms;interactive-viewer;data-visualization;animation</PackageTags>
+    <PackageReleaseNotes>An interactive Windows Forms network graph viewer for sciBASIC#. It hosts a laid out NetworkGraph on a WinForms canvas and animates force directed layouts in real time, supporting both 2D and 3D rendering, mouse hit testing, node tooltips, and viewport panning and zooming, with the styling of UI elements kept separate from the graph rendering. The animation produced by a layout can be recorded and exported to AVI (through the AVIMedia package) or to SVG, which makes the control useful both as an interactive explorer and as a way to produce publication ready animations of network evolution.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>

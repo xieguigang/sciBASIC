@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1c344ab73de5832bbeb3a43e8a6a62d, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
+﻿#Region "Microsoft.VisualBasic::b344926fbf0cf3be861a2fb815047dad, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 24 (63.16%)
-    ' Comment Lines: 5 (13.16%)
+    '   Total Lines: 46
+    '    Code Lines: 24 (52.17%)
+    ' Comment Lines: 13 (28.26%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (23.68%)
-    '     File Size: 1.12 KB
+    '   Blank Lines: 9 (19.57%)
+    '     File Size: 1.48 KB
 
 
     '     Module ProblemText
@@ -81,6 +81,14 @@ Namespace SVM
             output.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the problem into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="problem">The problem that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains one line for each sample, in the layout 
+        ''' ``label index:value index:value ...``.
+        ''' </returns>
         Public Function ToString(problem As Problem) As String
             Dim sb As New StringBuilder
 

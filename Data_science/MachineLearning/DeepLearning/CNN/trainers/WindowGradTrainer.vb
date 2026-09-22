@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d38839fd0208e8f563ba3fd1e4af4568, Data_science\MachineLearning\DeepLearning\CNN\trainers\WindowGradTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::7c4c077bbbd2f24d74c59d4db7f194d0, Data_science\MachineLearning\DeepLearning\CNN\trainers\WindowGradTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 18 (50.00%)
-    ' Comment Lines: 10 (27.78%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 49
+    '    Code Lines: 18 (36.73%)
+    ' Comment Lines: 23 (46.94%)
+    '    - Xml Docs: 82.61%
     ' 
-    '   Blank Lines: 8 (22.22%)
-    '     File Size: 1.37 KB
+    '   Blank Lines: 8 (16.33%)
+    '     File Size: 2.20 KB
 
 
     '     Class WindowGradTrainer
@@ -69,11 +69,24 @@ Namespace CNN.trainers
 
         Private ReadOnly ro As Double = 0.95
 
+        ''' <summary>
+        ''' Creates a windowed gradient trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
+        ''' <param name="ro">Decay factor of the moving window average, normally 0.95.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single, Optional ro As Double = 0.95)
             MyBase.New(batch_size, l2_decay)
             Me.ro = ro
         End Sub
 
+        ''' <summary>
+        ''' Applies one windowed average update step to a single parameter.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::049f5119a6c621ef7ab8c67e280d38c4, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::f429a5efda2233e1e74db31e3ebce86d, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 656
-    '    Code Lines: 461 (70.27%)
-    ' Comment Lines: 70 (10.67%)
-    '    - Xml Docs: 28.57%
+    '   Total Lines: 672
+    '    Code Lines: 461 (68.60%)
+    ' Comment Lines: 86 (12.80%)
+    '    - Xml Docs: 41.86%
     ' 
-    '   Blank Lines: 125 (19.05%)
-    '     File Size: 21.49 KB
+    '   Blank Lines: 125 (18.60%)
+    '     File Size: 22.87 KB
 
 
     '     Class Solver
@@ -250,6 +250,19 @@ Namespace SVM
             End If
         End Sub
 
+        ''' <summary>
+        ''' Solve the quadratic programming sub-problem of the support vector machine.
+        ''' </summary>
+        ''' <param name="l">The number of the variables (the training samples).</param>
+        ''' <param name="Q">The kernel matrix of the current svm formulation.</param>
+        ''' <param name="p_">The linear term of the objective function.</param>
+        ''' <param name="y_">The signed label (+1/-1) of each variable.</param>
+        ''' <param name="alpha_">The lagrange multiplier of each variable, the solution will be written into this array.</param>
+        ''' <param name="Cp">The upper bound of the lagrange multiplier of the positive side variables.</param>
+        ''' <param name="Cn">The upper bound of the lagrange multiplier of the negative side variables.</param>
+        ''' <param name="eps">The stopping tolerance of the iteration.</param>
+        ''' <param name="si">The <see cref="SolutionInfo"/> object which will be filled with the solution information.</param>
+        ''' <param name="shrinking">Whether the shrinking heuristic should be applied during the iteration?</param>
         Public Overridable Sub Solve(l As Integer, Q As IQMatrix, p_ As Double(), y_ As SByte(), alpha_ As Double(), Cp As Double, Cn As Double, eps As Double, si As SolutionInfo, shrinking As Boolean)
             Me.l = l
             Me.Q = Q
@@ -509,8 +522,11 @@ Namespace SVM
         ''' <summary>
         ''' return 1 if already optimal, return 0 otherwise
         ''' </summary>
-        ''' <param name="working_set"></param>
-        ''' <returns></returns>
+        ''' <param name="working_set">
+        ''' The output array which will receive the indices of the two selected 
+        ''' variables, its length should be 2 or more.
+        ''' </param>
+        ''' <returns>``1`` when the current solution is already optimal, otherwise ``0``.</returns>
         Protected Overridable Function select_working_set(working_set As Integer()) As Integer
             ' return i,j such that
             ' i: maximizes -y_i * grad(f)_i, i in I_up(\alpha)

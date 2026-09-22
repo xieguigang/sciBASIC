@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4781baf8d1c0e4246eb5cd33fca020fc, Data_science\MachineLearning\DeepLearning\CNN\Layers\ConvolutionLayer.vb"
+﻿#Region "Microsoft.VisualBasic::dcebd11c5b16796e57c65b8aafdc535c, Data_science\MachineLearning\DeepLearning\CNN\Layers\ConvolutionLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 156 (71.89%)
-    ' Comment Lines: 20 (9.22%)
-    '    - Xml Docs: 30.00%
+    '   Total Lines: 249
+    '    Code Lines: 134 (53.82%)
+    ' Comment Lines: 73 (29.32%)
+    '    - Xml Docs: 71.23%
     ' 
-    '   Blank Lines: 41 (18.89%)
-    '     File Size: 8.76 KB
+    '   Blank Lines: 42 (16.87%)
+    '     File Size: 11.42 KB
 
 
     '     Class ConvolutionLayer
@@ -49,20 +49,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: forward, ToString
+    '         Function: forward, PackFilters, ToString
     ' 
-    '         Sub: backward
-    '         Class ForwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    '         Class BackwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    ' 
+    '         Sub: backward, UnpackFilterGradients
     ' 
     ' 
     ' /********************************************************************************/
@@ -97,6 +86,7 @@ Namespace CNN.layers
         Friend filters As DataBlock()
         Friend biases As DataBlock
 
+        ''' <summary>Gets the filter and bias parameter blocks of this layer.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 For i As Integer = 0 To out_depth - 1
@@ -117,15 +107,25 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Convolution"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Convolution
             End Get
         End Property
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a convolution layer and derives the output size from the input size, the filter size and the padding.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the input size.</param>
+        ''' <param name="sx">Side length of the square filter window.</param>
+        ''' <param name="filters">Number of filters, i.e. the number of output channels.</param>
+        ''' <param name="stride">Sliding stride of the filter window.</param>
+        ''' <param name="padding">Zero padding applied around the input.</param>
         Public Sub New(def As OutputDefinition, sx As Integer, filters As Integer,
                        Optional stride As Integer = 1,
                        Optional padding As Integer = 0)
@@ -174,6 +174,12 @@ Namespace CNN.layers
         <IgnoreDataMember>
         Private filtersPacked As Tensor
 
+        ''' <summary>
+        ''' Runs the convolution of the input with every filter and adds the per filter bias.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the convolution layer behaves the same in both modes.</param>
+        ''' <returns>The output feature maps.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(out_sx, out_sy, out_depth, 0.0) With {.trace = Me.ToString}
 
@@ -249,6 +255,9 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>
+        ''' Computes the gradients with respect to the filters, the biases and the input of this layer.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' zero out gradient wrt bottom data, we're about to fill it
             Dim db As DataBlock = in_act.clearGradient()
@@ -290,6 +299,8 @@ Namespace CNN.layers
             Call db.SetGradients(gradInput.Data)
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>conv()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "conv()"
         End Function

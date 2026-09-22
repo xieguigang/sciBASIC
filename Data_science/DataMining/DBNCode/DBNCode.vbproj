@@ -9,15 +9,16 @@
     <AssemblyName>Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork</AssemblyName>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork</AssemblyTitle>
     <RootNamespace>Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork</RootNamespace>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>Dynamic Bayesian Network Structure and Parameter Learning</Title>
     <Description>Learns dynamic Bayesian networks from observation sequences, combining initial and transition Bayes nets with MDL, log-likelihood and Bayesian scoring functions, optimum branching search and EM parameter fitting.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;bayesian-network;dynamic-bayesian-network;structure-learning;data-mining</PackageTags>
+    <PackageTags>scibasic;bayesian-network;dynamic-bayesian-network;structure-learning;scoring-function;em;data-mining</PackageTags>
+    <PackageReleaseNotes>Dynamic Bayesian network structure and parameter learning for sciBASIC#. The dbn namespace models the network - BayesNet for a static network, DynamicBayesNet and MultiNet for the dynamic and multi-net cases - together with attributes (NominalAttribute, NumericAttribute and their common Attribute base), configurations (Configuration, LocalConfiguration, MutableConfiguration) and Observations. Scoring: Scores plus the ScoringFunction family (LLScoringFunction for log likelihood, MDLScoringFunction for minimum description length and RandomScoringFunction as a baseline) drive structure search, while OptimumBranching finds the optimal branching over parent candidates and CrossValidation estimates generalisation. The utils namespace holds the supporting helpers. Together they implement the classic two stage approach: search the structure with a scoring metric, then fit the parameters.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59d99f299ee33c9879cd970e39c22416, Data_science\MachineLearning\DeepLearning\RNN\net\CharLevelRNN.vb"
+﻿#Region "Microsoft.VisualBasic::d3a4907a75533904c9895608eccd55e1, Data_science\MachineLearning\DeepLearning\RNN\net\CharLevelRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 17 (44.74%)
-    ' Comment Lines: 14 (36.84%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 51
+    '    Code Lines: 17 (33.33%)
+    ' Comment Lines: 27 (52.94%)
+    '    - Xml Docs: 96.30%
     ' 
-    '   Blank Lines: 7 (18.42%)
-    '     File Size: 1.44 KB
+    '   Blank Lines: 7 (13.73%)
+    '     File Size: 2.23 KB
 
 
     '     Class CharLevelRNN
@@ -76,11 +76,24 @@ Namespace RNN
         Public MustOverride ReadOnly Property Alphabet As Alphabet
 
 		''' <summary>
-		''' * Sample ** </summary>
+		''' Samples a string of the given length, advancing the hidden state.
+		''' </summary>
+		''' <param name="length">Number of characters to sample.</param>
+		''' <param name="seed">The seed text used to warm up the hidden state.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <returns>The sampled text.</returns>
 		Public Overridable Function sampleString(length As Integer, seed As String, temp As Double) As String Implements CharacterSampleable.sampleString
 			Return sampleString(length, seed, temp, True)
 		End Function
 
+		''' <summary>
+		''' Samples a string of the given length.
+		''' </summary>
+		''' <param name="length">Number of characters to sample.</param>
+		''' <param name="seed">The seed text used to warm up the hidden state.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+		''' <returns>The sampled text.</returns>
 		Public Overridable Function sampleString(length As Integer, seed As String, temp As Double, advance As Boolean) As String Implements CharacterSampleable.sampleString
 			Dim seedIndices = Alphabet.charsToIndices(seed)
             Dim sampledIndices = sampleIndices(length, seedIndices, temp, advance)

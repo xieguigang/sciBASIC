@@ -1,4 +1,58 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::a5ef9d71c943ef382cbbf1ace3fe2449, Data_science\MachineLearning\DeepLearning\test\MnistTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 131 (65.17%)
+    ' Comment Lines: 38 (18.91%)
+    '    - Xml Docs: 15.79%
+    ' 
+    '   Blank Lines: 32 (15.92%)
+    '     File Size: 8.61 KB
+
+
+    ' Class MnistTest
+    ' 
+    '     Function: (+2 Overloads) ArgValue
+    ' 
+    '     Sub: Main, printPredictions
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
@@ -40,6 +94,15 @@ Public Class MnistTest
                 seed:=ArgValue(args, "--seed", 12345),
                 passes:=ArgValue(args, "--passes", 5),
                 samples:=ArgValue(args, "--samples", 300))
+
+            Return
+        End If
+
+        ' --transformer-zh [--corpus=path]
+        ' Transformer 英译中翻译 demo：读取内置英中平行语料，用 NLP 包的中文分词器切词，
+        ' 训练完成后打印若干测试句的模型译文与参考译文
+        If args.Any(Function(a) String.Equals(a, "--transformer-zh", StringComparison.OrdinalIgnoreCase)) Then
+            Call testTransformerZh.run(ArgValue(args, "--corpus", CType(Nothing, String)))
 
             Return
         End If
@@ -153,6 +216,17 @@ Public Class MnistTest
         Return defaultValue
     End Function
 
+    ' 字符串版本：用于 --corpus=path 这类文本参数
+    Private Shared Function ArgValue(args As String(), name As String, defaultValue As String) As String
+        For Each arg As String In args
+            If arg.StartsWith(name & "=", StringComparison.OrdinalIgnoreCase) Then
+                Return arg.Substring(name.Length + 1)
+            End If
+        Next
+
+        Return defaultValue
+    End Function
+
     Private Shared Sub printPredictions(correctPredictions As Integer(), numberDistribution As Integer(), totalSize As Integer, numOfClasses As Integer)
         Dim sumCorrectPredictions = 0
         For i = 0 To numOfClasses - 1
@@ -180,5 +254,3 @@ Public Class MnistTest
         Console.WriteLine(sb2.ToString())
     End Sub
 End Class
-
-

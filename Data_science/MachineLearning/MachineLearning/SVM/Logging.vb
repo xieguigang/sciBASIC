@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8c67a02e8a413d7afc1b96f69ac38e9, Data_science\MachineLearning\MachineLearning\SVM\Logging.vb"
+﻿#Region "Microsoft.VisualBasic::0814ac8525c80a704b4c09627622b906, Data_science\MachineLearning\MachineLearning\SVM\Logging.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 19 (67.86%)
-    ' Comment Lines: 3 (10.71%)
+    '   Total Lines: 39
+    '    Code Lines: 19 (48.72%)
+    ' Comment Lines: 14 (35.90%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (21.43%)
-    '     File Size: 764 B
+    '   Blank Lines: 6 (15.38%)
+    '     File Size: 1.24 KB
 
 
     '     Class Logging
@@ -58,6 +58,9 @@ Imports System.IO
 
 Namespace SVM
 
+    ''' <summary>
+    ''' The console logging helper of the LibSVM port.
+    ''' </summary>
     Public Class Logging
 
         ''' <summary>
@@ -67,12 +70,20 @@ Namespace SVM
 
         Shared svm_print_stdout As TextWriter = Console.Out
 
+        ''' <summary>
+        ''' Flush the buffered logging content into the output writer.
+        ''' </summary>
         Public Shared Sub flush()
             SyncLock svm_print_stdout
                 Call svm_print_stdout.Flush()
             End SyncLock
         End Sub
 
+        ''' <summary>
+        ''' Write a message into the logging output; nothing will happen when the 
+        ''' <see cref="IsVerbose"/> flag is not enabled.
+        ''' </summary>
+        ''' <param name="s">The message text that will be written.</param>
         Public Shared Sub info(s As String)
             If _IsVerbose Then
                 SyncLock svm_print_stdout

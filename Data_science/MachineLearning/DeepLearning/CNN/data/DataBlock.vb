@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd786f444aa1a1a78435a1eeb188526d, Data_science\MachineLearning\DeepLearning\CNN\data\DataBlock.vb"
+﻿#Region "Microsoft.VisualBasic::e981bf4300a1b85633bb9012b35b827b, Data_science\MachineLearning\DeepLearning\CNN\data\DataBlock.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 283
-    '    Code Lines: 156 (55.12%)
-    ' Comment Lines: 85 (30.04%)
-    '    - Xml Docs: 96.47%
+    '   Total Lines: 558
+    '    Code Lines: 254 (45.52%)
+    ' Comment Lines: 231 (41.40%)
+    '    - Xml Docs: 83.98%
     ' 
-    '   Blank Lines: 42 (14.84%)
-    '     File Size: 9.95 KB
+    '   Blank Lines: 73 (13.08%)
+    '     File Size: 24.51 KB
 
 
     '     Class DataBlock
     ' 
-    '         Properties: Depth, Gradients, SX, SY, trace
-    '                     Weights
+    '         Properties: Depth, Grad, Grad2D, Grad4D, Gradients
+    '                     SX, SY, TensorShape4D, trace, Value
+    '                     Value2D, Value4D, Weights
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
@@ -54,7 +55,8 @@
     '                   ToString
     ' 
     '         Sub: addFrom, addFromScaled, (+2 Overloads) addGradient, (+3 Overloads) addImageData, addWeight
-    '              mulGradient, (+3 Overloads) setGradient, (+2 Overloads) setWeight, subGradient
+    '              MarkGradientModified, MarkHostModified, MarkValueModified, mulGradient, (+3 Overloads) setGradient
+    '              SetGradients, SetValues, (+2 Overloads) setWeight, subGradient
     ' 
     ' 
     ' /********************************************************************************/
@@ -80,10 +82,14 @@ Namespace CNN.data
     ''' </summary>
     Public Class DataBlock
 
+        ''' <summary>Gets the width of the block.</summary>
         Public ReadOnly Property SX As Integer
+        ''' <summary>Gets the height of the block.</summary>
         Public ReadOnly Property SY As Integer
+        ''' <summary>Gets the number of channels (depth) of the block.</summary>
         Public ReadOnly Property Depth As Integer
 
+        ''' <summary>Optional diagnostic label that identifies where this block came from.</summary>
         Public Property trace As String
 
         ''' <summary>
@@ -99,11 +105,8 @@ Namespace CNN.data
             End Get
         End Property
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks>get <see cref="dw"/></remarks>
+        ''' <summary>Gets the gradient vector that corresponds one to one with <see cref="Weights"/>.</summary>
+        ''' <remarks>Returns the backing field <see cref="dw"/>.</remarks>
         Public ReadOnly Property Gradients As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -294,27 +297,41 @@ Namespace CNN.data
             If t IsNot Nothing Then Call t.MarkHostModified()
         End Sub
 
+        ''' <summary>Creates an empty block, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a block of the given size with randomly initialized weights.
+        ''' </summary>
+        ''' <param name="sx">Width.</param>
+        ''' <param name="sy">Height.</param>
+        ''' <param name="depth">Number of channels.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(sx As Integer, sy As Integer, depth As Integer)
             Me.New(sx, sy, depth, -1.0)
         End Sub
 
+        ''' <summary>
+        ''' Creates a block from a <see cref="Dimension"/> and a weight initialization value.
+        ''' </summary>
+        ''' <param name="dims">The block dimensions.</param>
+        ''' <param name="depth">Number of channels.</param>
+        ''' <param name="c">The constant used to fill the weights, or <c>-1</c> for random initialization.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(dims As Dimension, depth As Integer, c As Double)
             Call Me.New(dims.x, dims.y, depth, c)
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Creates a block of the given size.
         ''' </summary>
-        ''' <param name="sx"></param>
-        ''' <param name="sy"></param>
-        ''' <param name="depth"></param>
-        ''' <param name="c">use for initialize the weight vector: 
-        ''' weight vector will be filled with the value of this parameter.
+        ''' <param name="sx">Width.</param>
+        ''' <param name="sy">Height.</param>
+        ''' <param name="depth">Number of channels.</param>
+        ''' <param name="c">
+        ''' Constant used to initialize the weight vector; when it equals <c>-1</c> the weights are randomly initialized
+        ''' instead.
         ''' </param>
         Public Sub New(sx As Integer, sy As Integer, depth As Integer, c As Double)
             Dim n = sx * sy * depth
@@ -332,6 +349,8 @@ Namespace CNN.data
             End If
         End Sub
 
+        ''' <summary>Returns a short diagnostic description of the block.</summary>
+        ''' <returns>A text that reports the shape, the trace label and the first few weight values.</returns>
         Public Overrides Function ToString() As String
             Dim sb As String = $"shape(w:{SX}, h:{SY}, channels_depth:{Depth})[{Weights.Length}]"
             Dim njs As String = w.Take(13).JoinBy(", ")
@@ -344,10 +363,10 @@ Namespace CNN.data
         End Function
 
         ''' <summary>
-        ''' prepare the input: get pixels and normalize them
+        ''' Prepares the input by copying the pixels into the weight vector and normalizing them into <c>[-0.5, 0.5]</c>.
         ''' </summary>
-        ''' <param name="imgData"></param>
-        ''' <param name="maxvalue"></param>
+        ''' <param name="imgData">The raw byte pixel data.</param>
+        ''' <param name="maxvalue">The maximum possible channel value, normally 255.</param>
         Public Overridable Sub addImageData(imgData As Byte(), maxvalue As Byte)
             Dim max As Double = maxvalue
 
@@ -359,10 +378,10 @@ Namespace CNN.data
         End Sub
 
         ''' <summary>
-        ''' prepare the input: get pixels and normalize them
+        ''' Prepares the input by copying the pixels into the weight vector and normalizing them into <c>[-0.5, 0.5]</c>.
         ''' </summary>
-        ''' <param name="imgData"></param>
-        ''' <param name="maxvalue"></param>
+        ''' <param name="imgData">The raw pixel data.</param>
+        ''' <param name="maxvalue">The maximum possible channel value.</param>
         Public Overridable Sub addImageData(imgData As Double(), maxvalue As Double)
             For i As Integer = 0 To imgData.Length - 1
                 w(i) = imgData(i) / maxvalue - 0.5 ' normalize image pixels to [-0.5, 0.5]
@@ -372,10 +391,10 @@ Namespace CNN.data
         End Sub
 
         ''' <summary>
-        ''' prepare the input: get pixels and normalize them
+        ''' Prepares the input by copying the pixels into the weight vector and normalizing them into <c>[-0.5, 0.5]</c>.
         ''' </summary>
-        ''' <param name="imgData"></param>
-        ''' <param name="maxvalue"></param>
+        ''' <param name="imgData">The raw integer pixel data.</param>
+        ''' <param name="maxvalue">The maximum possible channel value.</param>
         Public Overridable Sub addImageData(imgData As Integer(), maxvalue As Integer)
             Dim max As Double = maxvalue
 
@@ -396,6 +415,13 @@ Namespace CNN.data
             Return w(ix)
         End Function
 
+        ''' <summary>
+        ''' Gets the weight at the given three dimensional coordinate.
+        ''' </summary>
+        ''' <param name="x">The column index.</param>
+        ''' <param name="y">The row index.</param>
+        ''' <param name="depth">The channel index.</param>
+        ''' <returns>The weight value.</returns>
         Public Overridable Function getWeight(x As Integer, y As Integer, depth As Integer) As Double
             Dim ix = (_SX * y + x) * _Depth + depth
             Return w(ix)
@@ -412,17 +438,38 @@ Namespace CNN.data
             Call MarkValueModified()
         End Sub
 
+        ''' <summary>
+        ''' Sets the weight at the given three dimensional coordinate.
+        ''' </summary>
+        ''' <param name="x">The column index.</param>
+        ''' <param name="y">The row index.</param>
+        ''' <param name="depth">The channel index.</param>
+        ''' <param name="val">The value to store.</param>
         Public Overridable Sub setWeight(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             setWeight(ix, val)
         End Sub
 
+        ''' <summary>
+        ''' Adds a value to the weight at the given three dimensional coordinate.
+        ''' </summary>
+        ''' <param name="x">The column index.</param>
+        ''' <param name="y">The row index.</param>
+        ''' <param name="depth">The channel index.</param>
+        ''' <param name="val">The value to add.</param>
         Public Overridable Sub addWeight(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             w(ix) += val
             Call MarkValueModified()
         End Sub
 
+        ''' <summary>
+        ''' Gets the gradient at the given three dimensional coordinate.
+        ''' </summary>
+        ''' <param name="x">The column index.</param>
+        ''' <param name="y">The row index.</param>
+        ''' <param name="depth">The channel index.</param>
+        ''' <returns>The gradient value.</returns>
         Public Overridable Function getGradient(x As Integer, y As Integer, depth As Integer) As Double
             Dim ix = (_SX * y + x) * _Depth + depth
             Return getGradient(ix)
@@ -441,6 +488,13 @@ Namespace CNN.data
             Return dw(ix)
         End Function
 
+        ''' <summary>
+        ''' Sets the gradient at the given three dimensional coordinate.
+        ''' </summary>
+        ''' <param name="x">The column index.</param>
+        ''' <param name="y">The row index.</param>
+        ''' <param name="depth">The channel index.</param>
+        ''' <param name="val">The value to store.</param>
         Public Overridable Sub setGradient(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             setGradient(ix, val)
@@ -460,23 +514,44 @@ Namespace CNN.data
             Call MarkGradientModified()
         End Sub
 
+        ''' <summary>
+        ''' Replaces the whole gradient vector with the given values.
+        ''' </summary>
+        ''' <param name="val">The new gradient values.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub setGradient(val As Double())
             Array.ConstrainedCopy(val, Scan0, dw, Scan0, dw.Length)
             Call MarkGradientModified()
         End Sub
 
+        ''' <summary>
+        ''' Adds a value to the gradient at the given three dimensional coordinate.
+        ''' </summary>
+        ''' <param name="x">The column index.</param>
+        ''' <param name="y">The row index.</param>
+        ''' <param name="depth">The channel index.</param>
+        ''' <param name="val">The value to add.</param>
         Public Overridable Sub addGradient(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             addGradient(ix, val)
         End Sub
 
+        ''' <summary>
+        ''' Adds a value to the gradient at the given flat index.
+        ''' </summary>
+        ''' <param name="ix">The flat index into the gradient vector.</param>
+        ''' <param name="val">The value to add.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub addGradient(ix As Integer, val As Double)
             dw(ix) += val
             Call MarkGradientModified()
         End Sub
 
+        ''' <summary>
+        ''' Subtracts a value from the gradient at the given flat index.
+        ''' </summary>
+        ''' <param name="ix">The flat index into the gradient vector.</param>
+        ''' <param name="val">The value to subtract.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub subGradient(ix As Integer, val As Double)
             dw(ix) -= val
@@ -492,6 +567,10 @@ Namespace CNN.data
             dw = SIMD.Multiply.f64_scalar_op_multiply_f64(val, dw)
         End Sub
 
+        ''' <summary>
+        ''' Creates a new block with the same shape and trace but with all weights zeroed.
+        ''' </summary>
+        ''' <returns>A zero filled copy of this block.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function cloneAndZero() As DataBlock
             Return New DataBlock(_SX, _SY, _Depth, 0.0) With {.trace = trace}
@@ -520,12 +599,21 @@ Namespace CNN.data
             Return Me
         End Function
 
+        ''' <summary>
+        ''' Copies the weights of another block into this one.
+        ''' </summary>
+        ''' <param name="db">The source block; it must have the same length.</param>
         Public Overridable Sub addFrom(db As DataBlock)
             For i As Integer = 0 To w.Length - 1
                 w(i) = db.w(i)
             Next
         End Sub
 
+        ''' <summary>
+        ''' Copies the weights of another block into this one, scaled by a constant factor.
+        ''' </summary>
+        ''' <param name="db">The source block; it must have the same length.</param>
+        ''' <param name="a">The scale factor applied to every source weight.</param>
         Public Overridable Sub addFromScaled(db As DataBlock, a As Double)
             For i As Integer = 0 To w.Length - 1
                 w(i) = db.w(i) * a

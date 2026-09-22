@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableConversion, Data\DataFrame\DataFrame\NumericTableConversion.vb"
+﻿#Region "Microsoft.VisualBasic::b59495831186a111f208c4c4fea25a3e, Data\DataFrame\DataFrame\NumericTableConversion.vb"
 
     ' Author:
     ' 
@@ -23,17 +23,40 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 57 (53.27%)
+    ' Comment Lines: 35 (32.71%)
+    '    - Xml Docs: 91.43%
+    ' 
+    '   Blank Lines: 15 (14.02%)
+    '     File Size: 4.62 KB
+
+
+    ' Module NumericTableConversion
+    ' 
+    '     Function: AsDataFrame, AsNumericTable, Column
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data
 
 ''' <summary>
 ''' <see cref="NumericTable"/> 与 <see cref="DataFrame"/> 之间的相互转换。
 ''' 
-''' 其中标签列统一以 <see cref="NumericTableIO.DefaultLabelPrefix"/> 作为列名前缀参与转换，
+''' 其中标签列统一以 <see cref="DefaultLabelPrefix"/> 作为列名前缀参与转换，
 ''' 因此 ``table -> dataframe -> table`` 的往返是无损的：行名、特征列、标签列、
 ''' 表名与描述文本都可以完整地还原。
 ''' </summary>
@@ -51,13 +74,13 @@ Public Module NumericTableConversion
     ''' <returns></returns>
     <Extension>
     Public Function AsDataFrame(table As NumericTable,
-                                Optional labelPrefix As String = NumericTableIO.DefaultLabelPrefix) As DataFrame
+                                Optional labelPrefix As String = DefaultLabelPrefix) As DataFrame
 
         If table Is Nothing Then
             Throw New ArgumentNullException(NameOf(table))
         End If
 
-        Dim prefix As String = If(labelPrefix, NumericTableIO.DefaultLabelPrefix)
+        Dim prefix As String = If(labelPrefix, DefaultLabelPrefix)
         Dim featureNames As String() = NumericTableIO.FeatureNameList(table)
         Dim n As Integer = table.nsamples
         Dim columns As New Dictionary(Of String, FeatureVector)
@@ -101,14 +124,14 @@ Public Module NumericTableConversion
     <Extension>
     Public Function AsNumericTable(df As DataFrame,
                                    Optional labels As String() = Nothing,
-                                   Optional labelPrefix As String = NumericTableIO.DefaultLabelPrefix,
+                                   Optional labelPrefix As String = DefaultLabelPrefix,
                                    Optional strict As Boolean = True) As NumericTable
 
         If df Is Nothing Then
             Throw New ArgumentNullException(NameOf(df))
         End If
 
-        Dim prefix As String = If(labelPrefix, NumericTableIO.DefaultLabelPrefix)
+        Dim prefix As String = If(labelPrefix, DefaultLabelPrefix)
         Dim splits = NumericTableIO.SplitColumns(df.featureNames, labels, prefix)
         Dim n As Integer = df.nsamples
         Dim features As Double()() = NumericTableIO.ToMatrix(df, splits.features, n, strict)

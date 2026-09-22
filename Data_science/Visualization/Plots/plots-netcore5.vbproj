@@ -12,15 +12,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>2D and 3D Chart Plotting Library for GDI+ Graphics</Title>
-    <Description>A charting engine for sciBASIC# that renders scatter, line, bar, histogram, box, violin, contour, heatmap, pie, radar, treemap, Venn and 3D plots with configurable axes, legends and themes.</Description>
+    <Description>A 2D and 3D charting engine for sciBASIC# that renders scatter, line, bar, histogram, box, violin, contour, heatmap, pie, radar, treemap, Venn and 3D plots onto GDI+ graphics, with configurable axes, legends and themes as the general chart layer.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.ChartPlots</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;chart;plotting;data-visualization;gdi-plus;graphics</PackageTags>
+    <PackageTags>scibasic;chart;plotting;data-visualization;gdi-plus;graphics;3d-plot;contour;heatmap;barplot;boxplot</PackageTags>
+    <PackageReleaseNotes>A 2D and 3D charting engine for sciBASIC# that renders onto GDI+ graphics. The g namespace provides the chart graphics layer - the canvas abstraction, shared drawing primitives and graphics helpers - together with axes (g.Axis) and legends (g.Legends); the chart families live in their own namespaces: BarPlot with its Data and Histogram variants, BoxPlot, Contour with its HeatMap variant, Fractions and the scatter Plots. Three dimensional charts are covered by Plot3D together with its Device, Model and Impl namespaces. All charts accept configurable axes, legends and themes, so the same data can be restyled for reports and publications without touching the drawing code.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

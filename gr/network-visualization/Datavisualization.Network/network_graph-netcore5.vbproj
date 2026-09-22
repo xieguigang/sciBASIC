@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Network Graph Data Model And Topology Analysis Library</Title>
     <Description>Defines the NetworkGraph node and edge model with dynamic graph tables, and supplies community detection, shortest paths, degree and betweenness centrality. The data layer of the sciBASIC# network visualization stack.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;network-graph;graph-model;graph-analysis;centrality</PackageTags>
+    <PackageTags>scibasic;network-graph;graph-model;graph-analysis;centrality;community-detection;shortest-path</PackageTags>
+    <PackageReleaseNotes>The network graph data model and topology analysis library of sciBASIC#, the data layer of the network visualization stack. Model: the Graph namespace defines the node and edge abstractions (Graph, GraphTree), the abstract Graph.Abstract base types, the graph model data classes, and the mxGraph compatible model namespace used for interchange; Layouts holds the vector types that store node layout coordinates and Graph.EdgeBundling the edge bundling handles. Analysis: the Analysis namespace adds communities, graph embedding, strongly connected components (Kosaraju), PAGA and network statistics, with Analysis.Model providing adjacency and edge sets, directed vertices and traversal policies, and Analysis.SimilarityImpl the connectivity and topology similarity measures. Interchange: FileStream.Generic defines the dynamics table interface through which graphs exchange data with the file stream serialization layer, and TreeAPI exposes hierarchical tree traversal over graph data.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

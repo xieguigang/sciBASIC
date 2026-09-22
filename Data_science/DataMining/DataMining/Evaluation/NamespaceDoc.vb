@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c4c0936ddd8aeecd3741d069e56dbf6, Data_science\DataMining\DataMining\Evaluation\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::, Data_science\DataMining\DataMining\Evaluation\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -34,29 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 8
-    '    Code Lines: 4 (50.00%)
-    ' Comment Lines: 3 (37.50%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 0
+    '    Code Lines: 0 (NaN%)
+    ' Comment Lines: 0 (NaN%)
+    '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 1 (12.50%)
-    '     File Size: 157 B
+    '   Blank Lines: 0 (NaN%)
+    '     File Size: 0 B
 
 
-    '     Module NamespaceDoc
-    ' 
-    ' 
-    ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace Evaluation
 
-    ''' <summary>
-    ''' 模型质量评估工具模块
-    ''' </summary>
-    Module NamespaceDoc
-    End Module
-End Namespace

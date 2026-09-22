@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae3c7b5310b2519bd94e37439e5f69e, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::d8378d07428e6b87a17a8ff508d3342d, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,33 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 226
-    '    Code Lines: 141 (62.39%)
-    ' Comment Lines: 42 (18.58%)
-    '    - Xml Docs: 90.48%
+    '   Total Lines: 321
+    '    Code Lines: 194 (60.44%)
+    ' Comment Lines: 71 (22.12%)
+    '    - Xml Docs: 94.37%
     ' 
-    '   Blank Lines: 43 (19.03%)
-    '     File Size: 8.71 KB
+    '   Blank Lines: 56 (17.45%)
+    '     File Size: 12.20 KB
 
 
     '     Class XmlDocs
     ' 
-    '         Properties: Keywords, Name, Remarks, Summary
+    '         Properties: Keywords, Name, Remarks, Summary, TypeParams
     ' 
-    '         Function: readFieldText
+    '         Function: readFieldText, readTypeParams
     ' 
     '         Sub: LoadFromNode
     ' 
     '     Class ProjectType
     ' 
-    '         Properties: [Namespace]
+    '         Properties: [Namespace], AllEvents, AllFields, AllMethods, AllProperties
     ' 
     '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: EnsureEvent, EnsureField, EnsureMethod, EnsureProperty, GetEvent
     '                   GetField, getInternal, GetMethods, GetProperties, ToString
+    ' 
+    '         Sub: ensureTables
     ' 
     ' 
     ' /********************************************************************************/

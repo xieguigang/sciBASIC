@@ -5,16 +5,17 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.Data.MyersDiff</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>Myers O(ND) Diff Algorithm for Text Comparison</Title>
-    <Description>Implements the Myers O(ND) difference algorithm to compare text files and string sequences, producing shortest edit scripts, structured diff blocks and unified diff output at both line level and character level.</Description>
+    <Description>Implements the Myers O(ND) difference algorithm to compare text files and string sequences, producing shortest edit scripts, structured diff blocks and unified diff output at line level and character level, with a similarity score.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.MyersDiff</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;diff;myers-algorithm;text-comparison;edit-script</PackageTags>
+    <PackageTags>scibasic;diff;myers-algorithm;text-comparison;edit-script;unified-diff;similarity</PackageTags>
+    <PackageReleaseNotes>The Myers O(ND) difference algorithm for sciBASIC#. Algorithm: MyersDiff.Compare computes the shortest edit script between two sequences in O((N+M)D) time using the classic greedy furthest-reaching path search with backtracking; CompareLines compares files or string arrays at line level, CompareFiles wraps that for file paths, and CompareChars performs character level comparison of plain text. Result model: DiffResult carries the full outcome - items, insert and delete counts and a Similarity score - while DiffItem is a single edit (keep, insert or delete) with its old and new index and text value, and DiffBlock groups a run of consecutive same type items; EditType enumerates the operations. Rendering: DiffResult.ToUnifiedDiff produces a unified diff with context lines, ToSideBySide produces a side-by-side view and ToSummary produces a one line summary; DiffUtils offers static convenience wrappers returning diff text or results directly. Typical uses are change detection between generated artefacts, code review tooling and any workflow that has to compare large text sequences quickly.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

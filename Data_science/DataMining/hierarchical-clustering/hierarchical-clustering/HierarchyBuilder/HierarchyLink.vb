@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03eb5c7f92075aa7d4290533873246e8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
+﻿#Region "Microsoft.VisualBasic::719af8bb82d06b412bbea62624e82bc8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 47 (73.44%)
-    ' Comment Lines: 4 (6.25%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 76
+    '    Code Lines: 47 (61.84%)
+    ' Comment Lines: 16 (21.05%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 13 (20.31%)
-    '     File Size: 2.20 KB
+    '   Blank Lines: 13 (17.11%)
+    '     File Size: 2.80 KB
 
 
     '     Class HierarchyLink
@@ -111,14 +111,26 @@ Namespace Hierarchy
             Return hashCodePair(link.Left(), link.Right())
         End Function
 
+        ''' <summary>
+        ''' 由两个簇的唯一整数 <see cref="Cluster.Id"/> 组合出的链接键。
+        ''' 
+        ''' <para>
+        ''' 使用 <c>(min &lt;&lt; 32) | max</c> 的位拼接：两个 ID 均为 &lt; 2^31 的非负整数，
+        ''' 因此不同的簇对所产生的结果必然不同（无哈希冲突）。
+        ''' </para>
+        ''' <para>
+        ''' 相比旧实现基于 <see cref="String.GetHashCode"/> 的簇名哈希 + <c>String.CompareTo</c> 比较，
+        ''' 既消除了每次链接查找的字符串开销，也避免了重名簇共享链接键的风险。
+        ''' </para>
+        ''' </summary>
         Public Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As ULong
-            Dim lName = lCluster.Name.GetHashCode
-            Dim rName = rCluster.Name.GetHashCode
+            Dim lId As ULong = CULng(lCluster.Id)
+            Dim rId As ULong = CULng(rCluster.Id)
 
-            If lCluster.Name.CompareTo(rCluster.Name) < 0 Then
-                Return HashMap.HashCodePair(lName, rName)
+            If lId <= rId Then
+                Return (lId << 32) Or rId
             Else
-                Return HashMap.HashCodePair(rName, lName)
+                Return (rId << 32) Or lId
             End If
         End Function
     End Module

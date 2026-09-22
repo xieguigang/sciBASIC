@@ -15,13 +15,14 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.HiddenMarkovChain</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;hidden-markov-model;viterbi;baum-welch;markov-chain</PackageTags>
+    <PackageTags>scibasic;hidden-markov-model;viterbi;baum-welch;forward-backward;markov-chain;sequence-decoding</PackageTags>
+    <PackageReleaseNotes>Hidden Markov model training and decoding for sciBASIC#. The Models namespace holds the model data structures, the Algorithm namespace provides forward and backward evaluation together with Bayes scoring, the HMMAlgorithm namespace implements Viterbi decoding and Baum-Welch EM re-estimation, and the HMMChainAlgorithm namespace extends the same operations to Markov chains. With these, an observation chain can be scored (how likely is this sequence), the most likely hidden state sequence decoded, and the model parameters re-estimated from unlabelled data - which is the standard workflow for part-of-speech tagging, gene finding and any other sequential labelling task.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

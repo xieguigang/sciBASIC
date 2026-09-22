@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a2287d6603edc3b4688bc31b87af2e, Data_science\MachineLearning\DeepLearning\CNN\Layers\GaussianLayer.vb"
+﻿#Region "Microsoft.VisualBasic::4a932eba0db3f984b7d542307a5860ed, Data_science\MachineLearning\DeepLearning\CNN\Layers\GaussianLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 76 (75.25%)
-    ' Comment Lines: 7 (6.93%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 123
+    '    Code Lines: 76 (61.79%)
+    ' Comment Lines: 29 (23.58%)
+    '    - Xml Docs: 75.86%
     ' 
-    '   Blank Lines: 18 (17.82%)
-    '     File Size: 4.30 KB
+    '   Blank Lines: 18 (14.63%)
+    '     File Size: 5.72 KB
 
 
     '     Class GaussianLayer
@@ -63,9 +63,14 @@ Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace CNN.layers
 
+    ''' <summary>
+    ''' Gaussian activation layer. Each element is transformed by the normal probability density function with a learnable
+    ''' mean and standard deviation, plus a bias: <c>y = N(x; mu, sigma) + b</c>.
+    ''' </summary>
     Public Class GaussianLayer : Inherits DataLink
         Implements Layer
 
+        ''' <summary>Gets the mean, standard deviation and bias parameter blocks of this layer.</summary>
         Public ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 Yield New BackPropResult(mu.w, mu.dw, l1_decay_mul, l2_decay_mul)
@@ -74,6 +79,7 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Gaussian"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Gaussian
@@ -87,6 +93,10 @@ Namespace CNN.layers
         Dim l1_decay_mul As Double = 0.0
         Dim l2_decay_mul As Double = 1.0
 
+        ''' <summary>
+        ''' Creates a Gaussian activation layer with learnable mean, standard deviation and bias.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the layer shape.</param>
         Sub New(def As OutputDefinition)
             w = def.outX
             h = def.outY
@@ -96,6 +106,10 @@ Namespace CNN.layers
             biases = New DataBlock(w, h, depth)
         End Sub
 
+        ''' <summary>
+        ''' Computes the gradients of the loss with respect to the mean, the standard deviation, the bias and the input,
+        ''' applying the chain rule to the Gaussian density.
+        ''' </summary>
         Public Sub backward() Implements Layer.backward
             Dim dL_dy() As Double = out_act.dw ' 上游梯度 ∂L/∂y
             Dim x() As Double = in_act.w
@@ -137,6 +151,12 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>
+        ''' Applies the Gaussian density to every element and adds the bias.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the Gaussian layer behaves the same in both modes.</param>
+        ''' <returns>The transformed activations.</returns>
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             in_act = db
             out_act = db.clone
@@ -154,6 +174,8 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>gaussian()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "gaussian()"
         End Function

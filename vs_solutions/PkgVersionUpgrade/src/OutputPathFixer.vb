@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f66b4d15b60ad37fd7dc495b25664cdf, vs_solutions\PkgVersionUpgrade\OutputPathFixer.vb"
+﻿#Region "Microsoft.VisualBasic::d151fab3fa199df3f07fb958fcf20a54, vs_solutions\PkgVersionUpgrade\src\OutputPathFixer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 231
-    '    Code Lines: 106 (45.89%)
-    ' Comment Lines: 89 (38.53%)
-    '    - Xml Docs: 89.89%
+    '   Total Lines: 238
+    '    Code Lines: 114 (47.90%)
+    ' Comment Lines: 84 (35.29%)
+    '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 36 (15.58%)
-    '     File Size: 10.38 KB
+    '   Blank Lines: 40 (16.81%)
+    '     File Size: 10.78 KB
 
 
     ' Module OutputPathFixer

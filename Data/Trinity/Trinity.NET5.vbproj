@@ -13,15 +13,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Trinity TextRank Keyword Extraction and Text Summarization</Title>
-    <Description>NLP module of sciBASIC#: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, Brill part-of-speech tagging, and HTML article body extraction.</Description>
+    <Description>NLP module of sciBASIC#: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, Brill part-of-speech tagging, HTML article body extraction by text density analysis, and URL normalisation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.TrinityNLP</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;nlp;textrank;keyword-extraction;summarization;pos-tagging</PackageTags>
+    <PackageTags>scibasic;nlp;textrank;pagerank;keyword-extraction;summarization;pos-tagging;html-extraction</PackageTags>
+    <PackageReleaseNotes>The Trinity text mining module of sciBASIC#. Keyword extraction: TextRank.TextRankGraph builds a co-occurrence word graph from sentences and applies PageRank to score keyword significance; the NLPExtensions module exposes KeyWords, Abstract, AbstractFilter and KeyPhrases, the last of which extracts multi word key phrases from text given a keyword set with a minimum occurrence filter. Summarization: TextGraph scores sentences with a weighted PageRank graph to produce an extractive summary or abstract. Article extraction: Html2Article extracts the main article body, title and publish date from an HTML page by text density analysis and returns an Article model (title, content, content with tags and publish date), while UrlUtility normalises relative URLs inside an HTML fragment against a base URL. Tagging: the POSTagger namespace provides BrillTransformationRules and PartOfSpeech for Brill transformation rule based part-of-speech tagging.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

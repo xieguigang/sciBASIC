@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106b42bb647e53951b4cf33124e8acc9, Data_science\MachineLearning\DeepLearning\CNN\Layers\FourierFeatureLayer.vb"
+﻿#Region "Microsoft.VisualBasic::319e3ffd81ebf2e453a6fc6d2bdc2bd6, Data_science\MachineLearning\DeepLearning\CNN\Layers\FourierFeatureLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 58 (59.18%)
-    ' Comment Lines: 26 (26.53%)
-    '    - Xml Docs: 73.08%
+    '   Total Lines: 110
+    '    Code Lines: 58 (52.73%)
+    ' Comment Lines: 38 (34.55%)
+    '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 14 (14.29%)
-    '     File Size: 4.06 KB
+    '   Blank Lines: 14 (12.73%)
+    '     File Size: 5.00 KB
 
 
     '     Class FourierFeatureLayer
@@ -80,12 +80,14 @@ Namespace CNN.layers
     Public Class FourierFeatureLayer : Inherits DataLink
         Implements Layer
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the Fourier feature layer has none.</summary>
         Public ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.FourierFeature"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.FourierFeature
@@ -97,12 +99,12 @@ Namespace CNN.layers
         Dim gaussian_mapping_scale As Double = -1
 
         ''' <summary>
-        ''' 
+        ''' Creates a Fourier feature mapping layer.
         ''' </summary>
-        ''' <param name="def"></param>
+        ''' <param name="def">The shared output definition that carries the input shape.</param>
         ''' <param name="gaussian_mapping_scale">
-        ''' optional - whether to factor in a random number (sampled from a Gaussian)
-        ''' in the mapping or not (defaults to -1, which signifies not to include it)
+        ''' Optional; when positive a random Gaussian factor is included in the mapping. Defaults to <c>-1</c>, which means
+        ''' no random factor is used. The output depth is derived from this value.
         ''' </param>
         Sub New(def As OutputDefinition, Optional gaussian_mapping_scale As Double = -1)
             Me.in_depth = def.depth
@@ -114,12 +116,22 @@ Namespace CNN.layers
             Me.out_sy = in_sy
         End Sub
 
+        ''' <summary>
+        ''' The layer has no parameters, so it only clears the gradient of its input.
+        ''' </summary>
         Public Sub backward() Implements Layer.backward
             ' no parameters, so simply compute gradient wrt data here
             ' zero out gradient wrt data
             Call in_act.clearGradient()
         End Sub
 
+        ''' <summary>
+        ''' Maps the input to a higher dimensional Fourier feature space: the first half of the output channels uses a cosine
+        ''' and the second half a sine of the scaled input.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the mapping behaves the same in both modes.</param>
+        ''' <returns>The mapped features.</returns>
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim mappedFeature As New DataBlock(out_sx, out_sy, out_depth, 0) With {.trace = Me.ToString}
 

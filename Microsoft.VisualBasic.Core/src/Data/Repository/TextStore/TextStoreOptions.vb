@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e9eb2db8f1e3d5d014b42fc0ba706bc, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextStoreOptions.vb"
+﻿#Region "Microsoft.VisualBasic::b7e0ea2fb4ee92f587bc329a9f2ac563, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextStoreOptions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 13 (48.15%)
-    ' Comment Lines: 10 (37.04%)
+    '   Total Lines: 60
+    '    Code Lines: 21 (35.00%)
+    ' Comment Lines: 33 (55.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (14.81%)
-    '     File Size: 1.43 KB
+    '   Blank Lines: 6 (10.00%)
+    '     File Size: 2.98 KB
 
 
+    '     Enum TextStoreLockMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Class TextStoreOptions
     ' 
-    '         Properties: Encoding, FsyncEachWrite, IndexGranularity, LogBufferBytes, MergeBufferBytes
-    '                     NewLine, ReadBufferBytes, RepairTornTail
+    '         Properties: Encoding, FsyncEachWrite, IndexGranularity, LockMode, LockRetryIntervalMs
+    '                     LockWaitTimeoutMs, LogBufferBytes, MergeBufferBytes, NewLine, ReadBufferBytes
+    '                     RepairTornTail
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,6 +64,26 @@
 Imports System.Text
 
 Namespace Data.Repository
+
+    ''' <summary>
+    ''' 数据文件的进程级锁模式。
+    ''' </summary>
+    Public Enum TextStoreLockMode
+        ''' <summary>
+        ''' 独占锁（默认）：同一数据文件同一时刻只允许一个实例打开。
+        ''' 与旧版行为完全一致。
+        ''' </summary>
+        Exclusive = 0
+        ''' <summary>
+        ''' 共享读：多个只读实例可以同时持有该锁；写实例（<see cref="Exclusive"/>）
+        ''' 与所有读者互斥。仅限只读使用，调用方必须保证不写入。
+        ''' </summary>
+        SharedRead = 1
+        ''' <summary>
+        ''' 不使用进程级锁：调用方需自行保证互斥（例如已在外层持锁）。
+        ''' </summary>
+        None = 2
+    End Enum
 
     ''' <summary>
     ''' 与具体行格式无关的纯文本行存储引擎配置。
@@ -78,6 +106,18 @@ Namespace Data.Repository
         Public Property MergeBufferBytes As Integer = 1 << 20
         Public Property LogBufferBytes As Integer = 1 << 16
 
+        ''' <summary>
+        ''' 进程级锁模式。默认 <see cref="TextStoreLockMode.Exclusive"/>，
+        ''' 与旧版行为一致。
+        ''' </summary>
+        Public Property LockMode As TextStoreLockMode = TextStoreLockMode.Exclusive
+        ''' <summary>
+        ''' 获取锁的等待超时（毫秒）。0（默认）= 冲突时立即抛出异常，与旧版行为一致；
+        ''' 大于 0 时按 <see cref="LockRetryIntervalMs"/> 重试直到超时。
+        ''' </summary>
+        Public Property LockWaitTimeoutMs As Integer = 0
+        ''' <summary>锁冲突后的重试间隔（毫秒），仅在 <see cref="LockWaitTimeoutMs"/> &gt; 0 时生效。</summary>
+        Public Property LockRetryIntervalMs As Integer = 50
+
     End Class
 End Namespace
-

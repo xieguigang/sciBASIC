@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaa6b8510e12e20ff05d982a051d88f4, Data_science\MachineLearning\DeepLearning\CNN\Layers\RectifiedLinearUnitsLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9c6e8554472a92d234a92218c01de7c9, Data_science\MachineLearning\DeepLearning\CNN\Layers\RectifiedLinearUnitsLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 47 (58.75%)
-    ' Comment Lines: 18 (22.50%)
-    '    - Xml Docs: 55.56%
+    '   Total Lines: 115
+    '    Code Lines: 60 (52.17%)
+    ' Comment Lines: 34 (29.57%)
+    '    - Xml Docs: 76.47%
     ' 
-    '   Blank Lines: 15 (18.75%)
-    '     File Size: 2.72 KB
+    '   Blank Lines: 21 (18.26%)
+    '     File Size: 4.75 KB
 
 
     '     Class RectifiedLinearUnitsLayer
@@ -77,23 +77,34 @@ Namespace CNN.layers
     Public Class RectifiedLinearUnitsLayer : Inherits DataLink
         Implements Layer
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the ReLU layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.ReLU"/>.</summary>
         Public Overridable ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.ReLU
             End Get
         End Property
 
+        ''' <summary>Values below this threshold are clamped; zero gives the standard ReLU behaviour.</summary>
         Protected threshold As Double = 0.0
 
+        ''' <summary>Creates a rectified linear unit layer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Applies the rectifier element wise. With the default threshold of zero the whole computation is dispatched to the
+        ''' tensor back end.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the activation behaves the same in both modes.</param>
+        ''' <returns>The rectified activations.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             in_act = db
 
@@ -124,6 +135,9 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>
+        ''' Backpropagates the gradient, keeping it only where the input was positive (a Heaviside mask on the tensor back end).
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' zero out gradient wrt data
             Dim V = in_act.clearGradient() ' we need to set dw of this
@@ -151,6 +165,8 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>ReLU()</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"ReLU()"
         End Function

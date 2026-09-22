@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9b9ad573e388ec890898082869ac49b, gr\Drawing-net4.8\Interop\GDIPlusInterop.vb"
+﻿#Region "Microsoft.VisualBasic::f2eeea86debc7415d2217e6e2469b5da, gr\Drawing-net4.8\Interop\GDIPlusInterop.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 36 (81.82%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 57
+    '    Code Lines: 41 (71.93%)
+    ' Comment Lines: 4 (7.02%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (18.18%)
-    '     File Size: 1.95 KB
+    '   Blank Lines: 12 (21.05%)
+    '     File Size: 2.59 KB
 
 
     ' Module GDIPlusInterop

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericRow, Data_science\DataMining\DataMining\Clustering\NumericRow.vb"
+﻿#Region "Microsoft.VisualBasic::85dd8c5ec47d42cf4536e18d3805c895, Data_science\DataMining\DataMining\Clustering\NumericRow.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,35 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 22 (44.90%)
+    ' Comment Lines: 19 (38.78%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 8 (16.33%)
+    '     File Size: 1.58 KB
+
+
+    '     Class NumericRow
+    ' 
+    '         Properties: data, Identity, index
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

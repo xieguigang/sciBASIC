@@ -12,16 +12,17 @@
     <Import>System.Collections.Generic</Import>
     <Import>System.Linq</Import>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release;Debug</Configurations>
     <Title>Bipartite Knowledge Graph with Synonym Disambiguation and Ontology Inference</Title>
-    <Description>Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs permutation tests to merge synonyms, and infers ontology relations.</Description>
+    <Description>Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs degree-preserving permutation tests to merge synonyms, and infers typed ontology relations with confidence scores.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.NLP.Knowledge</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;knowledge-graph;entity-disambiguation;ontology;similarity</PackageTags>
+    <PackageTags>scibasic;knowledge-graph;bipartite-graph;entity-disambiguation;synonym-merge;ontology;similarity;nlp</PackageTags>
+    <PackageReleaseNotes>The bipartite knowledge graph module of the sciBASIC# NLP stack. It stores knowledge as a bipartite graph in which entity nodes connect only to attribute nodes, and then mines that structure to reconcile duplicate knowledge terms and to derive ontology relations. Capabilities: (1) the KnowledgeGraph container with adjacency lists, degree queries, neighbour lookups, shared-attribute queries and category statistics; (2) SimilarityMetrics computing Jaccard, Adamic-Adar, cosine, common-neighbour count and inclusion ratio for an entity pair or for all pairs; (3) StatisticalTest performing degree-preserving random rewiring permutation tests that yield z-scores, p-values and Bonferroni corrections, so that a similarity score is judged against the null model of the very same degree sequence; (4) EntityDisambiguator merging entities that pass the Jaccard and p-value thresholds into SynonymGroup results; (5) OntologyInferer classifying entity pairs as IsA, SiblingOf, HasFunction or RelatedTo with a confidence score. Node kinds are EntityNode (the knowledge term) and AttributeNode (the knowledge attribute), while OntologyRelation carries the inferred relation type together with its scores, shared attributes and confidence.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

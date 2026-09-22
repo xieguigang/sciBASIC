@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99a5a8461cc5f215540a6a6cf7d849ed, Data_science\MachineLearning\MachineLearning\SVM\SVMExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b1a0febc1cf78bd5f024e792e37ea60b, Data_science\MachineLearning\MachineLearning\SVM\SVMExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 54 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 120
+    '    Code Lines: 54 (45.00%)
+    ' Comment Lines: 48 (40.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 18 (25.00%)
-    '     File Size: 2.19 KB
+    '   Blank Lines: 18 (15.00%)
+    '     File Size: 4.51 KB
 
 
     '     Module SVMExtensions
@@ -62,11 +62,28 @@ Namespace SVM
 
         Private Const PRECISION As Double = 1000000.0
 
+        ''' <summary>
+        ''' Truncate the floating point value to a precision of ``1e-6``, so that 
+        ''' the floating point calculation error can be ignored in the equality 
+        ''' comparison.
+        ''' </summary>
+        ''' <param name="x">The value that will be truncated.</param>
+        ''' <returns>The truncated value.</returns>
         <Extension()>
         Public Function Truncate(x As Double) As Double
             Return std.Round(x * PRECISION) / PRECISION
         End Function
 
+        ''' <summary>
+        ''' Compare the two jagged arrays element by element.
+        ''' </summary>
+        ''' <typeparam name="T">The element type of the arrays.</typeparam>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(Of T)(lhs As T()(), rhs As T()()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
@@ -78,6 +95,16 @@ Namespace SVM
             Return True
         End Function
 
+        ''' <summary>
+        ''' Compare the two arrays element by element.
+        ''' </summary>
+        ''' <typeparam name="T">The element type of the arrays.</typeparam>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(Of T)(lhs As T(), rhs As T()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
@@ -89,6 +116,17 @@ Namespace SVM
             Return True
         End Function
 
+        ''' <summary>
+        ''' Compare the two <see cref="Double"/> arrays element by element, the 
+        ''' values are truncated by the <see cref="Truncate"/> function before 
+        ''' the comparison.
+        ''' </summary>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' truncated elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(lhs As Double(), rhs As Double()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
@@ -102,6 +140,16 @@ Namespace SVM
             Return True
         End Function
 
+        ''' <summary>
+        ''' Compare the two jagged <see cref="Double"/> arrays element by element, 
+        ''' the values are truncated before the comparison.
+        ''' </summary>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' truncated elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(lhs As Double()(), rhs As Double()()) As Boolean
             If lhs.Length <> rhs.Length Then Return False

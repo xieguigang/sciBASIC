@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70767063692c5ea0df2a0258fce0b71, Data_science\Visualization\test\ROCplotTest.vb"
+﻿#Region "Microsoft.VisualBasic::17de3618826d5b7e5babaf0eb0331233, Data_science\Visualization\test\ROCplotTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 10 (62.50%)
-    ' Comment Lines: 2 (12.50%)
+    '   Total Lines: 19
+    '    Code Lines: 14 (73.68%)
+    ' Comment Lines: 1 (5.26%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 4 (25.00%)
-    '     File Size: 945 B
+    '   Blank Lines: 4 (21.05%)
+    '     File Size: 1013 B
 
 
     ' Module ROCplotTest
@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.Linq
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.DataMining.Evaluation
@@ -58,11 +59,13 @@ Imports Microsoft.VisualBasic.DataMining.Evaluation
 Module ROCplotTest
 
     Sub Main()
-        ' Dim data = EntityObject.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\ROC\identify.csv").ToArray
-        ' Dim test = Validation.ROC(data, Function(d, p) d!class = "p", Function(d, p) d!score >= p).CreateSerial
-
         Dim data = EntityObject.LoadDataSet("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\duke\out\CHD_20190411_IVD\[ALL-validates]validate-result_4markers.csv").ToArray
-        Dim test = Validation.ROC(data, Function(d, p) d!CHD > 0, Function(d, p) d("CHD(predicted)") >= p).CreateSerial
+        Dim scores As Double() = data.Select(Function(d) d("CHD(predicted)")).ToArray
+        Dim labels As Double() = data.Select(Function(d) If(d!CHD > 0, 1.0, 0.0)).ToArray
+
+        ' 统一评估框架入口：分类结果 → EvaluationReport（含 ROC 曲线与 AUC）
+        Dim report = ModelEvaluation.Evaluate(ClassificationResult.Create(scores, labels, "CHD"))
+        Dim test = report.Curve.Points.CreateSerial
 
         Call ROCPlot.Plot(test).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\ROC\identify_ROC2.png")
     End Sub

@@ -17,12 +17,13 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Description>Encodes raw feature vectors of a data frame into numeric columns for model training: one-hot style encoding for enums and flag bit fields, numeric binning and discretisation, and automatic per-field encoder selection.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.FeatureFrame</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
-    <PackageTags>scibasic;feature-engineering;encoder;dataframe;machine-learning</PackageTags>
+    <PackageTags>scibasic;feature-engineering;encoder;one-hot-encoding;binning;dataframe;machine-learning</PackageTags>
+    <PackageReleaseNotes>Feature vector encoders for numeric machine learning data in sciBASIC#. Encoder is the orchestrator (AddEncodingRule, Encoding(data) plus the shared AutoEncoding and Encode(feature) helpers); FeatureEncoder is the abstract base defining Encode(feature As FeatureVector) and the shared IndexNames helper. Concrete encoders: EnumEncoder expands a string feature into one 0/1 indicator column per distinct factor level, FlagEncoder encodes a boolean feature as a numeric flag column, NumericEncoder passes numeric features (Single, Double, Short, Integer and Long) through unchanged, and NumericBinsEncoder bins a numeric feature into N equal-width levels (built on the Discretizer) and emits one indicator column per bin. Automatic mode inspects each column data type and picks the right encoder, replacing the original column with the generated numeric block, so a data frame with mixed column types can be fed straight into model training.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

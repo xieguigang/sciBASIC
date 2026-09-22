@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::349d392d8758400a9965393d010f4694, Data_science\MachineLearning\MachineLearning\SVM\Solver\ONE_CLASS_Q.vb"
+﻿#Region "Microsoft.VisualBasic::8da962204b9b08d19a1fd7ff9892d088, Data_science\MachineLearning\MachineLearning\SVM\Solver\ONE_CLASS_Q.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 38 (74.51%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 75
+    '    Code Lines: 38 (50.67%)
+    ' Comment Lines: 24 (32.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (25.49%)
-    '     File Size: 1.42 KB
+    '   Blank Lines: 13 (17.33%)
+    '     File Size: 2.66 KB
 
 
     '     Class ONE_CLASS_Q
@@ -60,11 +60,19 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace SVM
 
+    ''' <summary>
+    ''' The one-class SVM formulation of the kernel matrix.
+    ''' </summary>
     Friend Class ONE_CLASS_Q : Inherits Kernel
 
         ReadOnly cache As Cache
         ReadOnly QD As Double()
 
+        ''' <summary>
+        ''' Create the one-class SVM formulation of the kernel matrix.
+        ''' </summary>
+        ''' <param name="prob">The training data.</param>
+        ''' <param name="param">The training parameters.</param>
         Public Sub New(prob As Problem, param As Parameter)
             MyBase.New(prob.count, prob.X, param)
 
@@ -76,6 +84,12 @@ Namespace SVM
             Next
         End Sub
 
+        ''' <summary>
+        ''' Request a column of the kernel matrix.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the target row.</param>
+        ''' <param name="len">The number of the elements that will be requested.</param>
+        ''' <returns>An array which contains the requested elements of the target column.</returns>
         Public Overrides Function GetQ(i As Integer, len As Integer) As Single()
             Dim data As Single() = Nothing
             Dim start As i32 = 0
@@ -90,10 +104,20 @@ Namespace SVM
             Return data
         End Function
 
+        ''' <summary>
+        ''' Gets the diagonal elements of the kernel matrix.
+        ''' </summary>
+        ''' <returns>An array which contains the diagonal elements <i>Q(i, i)</i>.</returns>
         Public Overrides Function GetQD() As Double()
             Return QD
         End Function
 
+        ''' <summary>
+        ''' Swap the position of the two samples in the kernel matrix and the 
+        ''' cached diagonal elements.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the first sample.</param>
+        ''' <param name="j">The zero based index of the second sample.</param>
         Public Overrides Sub SwapIndex(i As Integer, j As Integer)
             cache.SwapIndex(i, j)
             MyBase.SwapIndex(i, j)

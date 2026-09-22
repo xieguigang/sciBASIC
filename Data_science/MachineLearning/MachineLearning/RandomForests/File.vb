@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9eba38c09297b95230c170f2d63c739, Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
+﻿#Region "Microsoft.VisualBasic::9a5398730502b31c9c237c1e894ec358, Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 233
-    '    Code Lines: 153 (65.67%)
-    ' Comment Lines: 56 (24.03%)
-    '    - Xml Docs: 25.00%
+    '   Total Lines: 299
+    '    Code Lines: 153 (51.17%)
+    ' Comment Lines: 121 (40.47%)
+    '    - Xml Docs: 65.29%
     ' 
-    '   Blank Lines: 24 (10.30%)
-    '     File Size: 10.89 KB
+    '   Blank Lines: 25 (8.36%)
+    '     File Size: 14.01 KB
 
 
     '     Enum LF_c
@@ -79,10 +79,26 @@ Namespace RandomForests
     ''' Loss function used for continuous features
     ''' </summary>
     Public Enum LF_c
+        ''' <summary>
+        ''' Split the branch by maximizing the information gain.
+        ''' </summary>
         <Description("Information Gain")> Information_Gain = 1
+        ''' <summary>
+        ''' Split the branch by minimizing the mean squared error (the L2 loss function).
+        ''' </summary>
         <Description("Mean Squared Error (L2 function)")> Mean_Squared_Error = 2
+        ''' <summary>
+        ''' Split the branch by the pseudo Huber loss, which is a smooth 
+        ''' approximation of the L1 loss.
+        ''' </summary>
         <Description("Pseudo Huber")> Pseudo_Huber = 3
+        ''' <summary>
+        ''' Split the branch by a personalized cost function for the category features.
+        ''' </summary>
         <Description("Personalized Cost Function for categories")> Personalized_Cost_Function_for_categories = 4
+        ''' <summary>
+        ''' Split the branch by minimizing the Gini impurity index.
+        ''' </summary>
         <Description("Gini Index")> Gini_Index = 5
     End Enum
 
@@ -91,35 +107,63 @@ Namespace RandomForests
     ''' </summary>
     Public Class Data
 
+        ''' <summary>
+        ''' The unique reference id of each sample.
+        ''' </summary>
+        ''' <returns>An array of the sample id strings.</returns>
         Public Property ID As String()
         ''' <summary>
         ''' the actual label
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the label value of each sample.</returns>
         Public Property phenotype As Double()
+
+        ''' <summary>
+        ''' The feature matrix of the training dataset, in which each row is the 
+        ''' feature vector of one sample.
+        ''' </summary>
+        ''' <returns>A jagged array in layout ``[sample, feature]``.</returns>
         Public Property Genotype As Double()()
 
         ''' <summary>
         ''' the feature names
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>An array of the feature names.</returns>
         Public Property attributeNames As String()
 
+        ''' <summary>
+        ''' The number of the feature attributes in each sample.
+        ''' </summary>
+        ''' <returns>The length of the <see cref="attributeNames"/> array.</returns>
         Public ReadOnly Property N_attributes As Integer
             Get
                 Return attributeNames.Length
             End Get
         End Property
 
+        ''' <summary>
+        ''' The total number of the samples in this training dataset.
+        ''' </summary>
+        ''' <returns>The length of the <see cref="phenotype"/> array.</returns>
         Public ReadOnly Property N_tot As Integer
             Get
                 Return phenotype.Length
             End Get
         End Property
 
+        ''' <summary>
+        ''' Create a new empty training dataset.
+        ''' </summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create the training dataset from a machine learning data frame.
+        ''' </summary>
+        ''' <param name="df">
+        ''' A <see cref="MLDataFrame"/> object; only the first label value of 
+        ''' each sample will be used as the phenotype value.
+        ''' </param>
         Sub New(df As MLDataFrame)
             ID = df.samples.Select(Function(a) a.id).ToArray
             phenotype = df.samples.Select(Function(a) a.labels(0)).ToArray
@@ -129,8 +173,30 @@ Namespace RandomForests
 
     End Class
 
+    ''' <summary>
+    ''' The legacy parameter file reader of the RanFog program.
+    ''' </summary>
+    ''' <remarks>
+    ''' This type is kept for reading the original RanFoG parameter/training 
+    ''' file format, the file streams are declared but not assigned, so this 
+    ''' reader is not functional anymore; use the <see cref="Data"/> class 
+    ''' together with the <see cref="RanFog"/> model instead.
+    ''' </remarks>
     Public Class File
 
+        ''' <summary>
+        ''' Load the RanFoG program parameters from a property dictionary, and 
+        ''' then read the training/testing data files.
+        ''' </summary>
+        ''' <param name="demoProperties">
+        ''' A property dictionary which should contains the keys ``ForestSize``, 
+        ''' ``N_features``, ``mtry``, ``max_branch`` and ``LossFunction``.
+        ''' </param>
+        ''' <remarks>
+        ''' The training and testing <see cref="FileStream"/> objects are declared 
+        ''' but never assigned in the current implementation, so no data will be 
+        ''' loaded at all; only the parameter values are echoed to the console.
+        ''' </remarks>
         Public Shared Function Read(demoProperties As Dictionary(Of String, String))
             'Max number of trees to be constructed
             Dim max_tree = Integer.Parse(demoProperties("ForestSize"))

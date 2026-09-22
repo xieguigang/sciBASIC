@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae30e77ce6c79356fb0c6678e0a65b76, Data_science\MachineLearning\DeepLearning\RNN\math\Random.vb"
+﻿#Region "Microsoft.VisualBasic::8f05f9cd91e6ac6e1d540e8ba88bdca9, Data_science\MachineLearning\DeepLearning\RNN\math\Random.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 27 (50.00%)
-    ' Comment Lines: 17 (31.48%)
-    '    - Xml Docs: 17.65%
+    '   Total Lines: 63
+    '    Code Lines: 27 (42.86%)
+    ' Comment Lines: 26 (41.27%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.83 KB
+    '   Blank Lines: 10 (15.87%)
+    '     File Size: 2.32 KB
 
 
     '     Class Random
@@ -63,34 +63,43 @@ Namespace RNN
 
         ' Random matrix
 
-        ' Returns an MxN matrix filled with numbers drawn from a standard normal
-        ' distribution.
-        ' Requires that M > 0 and N > 0.
+        ''' <summary>
+        ''' Creates an M x N matrix filled with random values.
+        ''' </summary>
+        ''' <param name="M">Number of rows; must be greater than zero.</param>
+        ''' <param name="N">Number of columns; must be greater than zero.</param>
+        ''' <returns>The random matrix.</returns>
         Public Shared Function randn(M As Integer, N As Integer) As Matrix
             Dim lM = Matrix.zeros(M, N)
             lM.apply(Function(d) rand.NextDouble())
             Return lM
         End Function
 
-        ' Returns an k-dimensional vector filled with numbers drawn from a standard
-        ' normal distribution.
-        ' Requires that k > 0.
+        ''' <summary>
+        ''' Creates a k dimensional vector filled with random values.
+        ''' </summary>
+        ''' <param name="k">The vector length; must be greater than zero.</param>
+        ''' <returns>The random vector.</returns>
         Public Shared Function randn(k As Integer) As Matrix
             Return randn(1, k)
         End Function
 
-        ' Returns a matrix shaped like m filled with numbers drawn from a standard
-        ' normal distribution.
-        ' Requires that m != null.
+        ''' <summary>
+        ''' Creates a matrix shaped like <paramref name="m"/> filled with random values.
+        ''' </summary>
+        ''' <param name="m">The template matrix; it must not be <c>Nothing</c>.</param>
+        ''' <returns>The random matrix.</returns>
         Public Shared Function randomLike(m As Matrix) As Matrix
             Return randn(m.M, m.N)
         End Function
 
         ' Random choice 
 
-        ' Samples an index from a random distribution with the given probabilities
-        ' p. Will work properly, if the sum of probabilities is 1.0.
-        ' Requires that p != null.
+        ''' <summary>
+        ''' Samples an index from the discrete distribution given by <paramref name="p"/>.
+        ''' </summary>
+        ''' <param name="p">The probabilities; they should sum up to 1.0.</param>
+        ''' <returns>The sampled index.</returns>
         Public Shared Function randomChoice(p As Double()) As Integer
             Dim random As Double = rand.NextDouble()
             Dim cumulative = 0.0

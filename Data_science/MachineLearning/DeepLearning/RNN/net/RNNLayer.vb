@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215d31e473d1256e9d41f4acf4c25c40, Data_science\MachineLearning\DeepLearning\RNN\net\RNNLayer.vb"
+﻿#Region "Microsoft.VisualBasic::36b9eee47f98a54170bf995ce3592d7c, Data_science\MachineLearning\DeepLearning\RNN\net\RNNLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 441
-    '    Code Lines: 202 (45.80%)
-    ' Comment Lines: 148 (33.56%)
-    '    - Xml Docs: 38.51%
+    '   Total Lines: 445
+    '    Code Lines: 202 (45.39%)
+    ' Comment Lines: 152 (34.16%)
+    '    - Xml Docs: 40.13%
     ' 
-    '   Blank Lines: 91 (20.63%)
-    '     File Size: 14.96 KB
+    '   Blank Lines: 91 (20.45%)
+    '     File Size: 15.29 KB
 
 
     '     Class RNNLayer
@@ -77,9 +77,13 @@ Namespace RNN
 
         ' Defaults
 
+        ''' <summary>Default input vector size.</summary>
         Public Const defaultInputSize As Integer = 50
+        ''' <summary>Default hidden state size.</summary>
         Public Const defaultHiddenSize As Integer = 100
+        ''' <summary>Default output vector size.</summary>
         Public Const defaultOutputSize As Integer = 50
+        ''' <summary>Default learning rate.</summary>
         Public Const defaultLearningRate As Double = 0.1
 
         ' Network state
@@ -125,12 +129,12 @@ Namespace RNN
         End Sub
 
         ''' <summary>
-        ''' Creates a net with custom parameters
+        ''' Creates a net with custom parameters.
         ''' </summary>
-        ''' <param name="inputSize"></param>
-        ''' <param name="hiddenSize"></param>
-        ''' <param name="outputSize"></param>
-        ''' <param name="learningRate"></param>
+        ''' <param name="inputSize">Size of the input vector.</param>
+        ''' <param name="hiddenSize">Size of the hidden state.</param>
+        ''' <param name="outputSize">Size of the output vector.</param>
+        ''' <param name="learningRate">The learning rate.</param>
         Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer, learningRate As Double)
             m_inputSize = inputSize
             m_hiddenSize = hiddenSize

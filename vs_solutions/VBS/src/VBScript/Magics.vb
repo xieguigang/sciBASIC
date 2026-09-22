@@ -1,6 +1,58 @@
-Imports System.Collections.Generic
+﻿#Region "Microsoft.VisualBasic::62b2a35b73b3dd4a1501c4431731dd3e, vs_solutions\VBS\src\VBScript\Magics.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 156 (73.58%)
+    ' Comment Lines: 32 (15.09%)
+    '    - Xml Docs: 71.88%
+    ' 
+    '   Blank Lines: 24 (11.32%)
+    '     File Size: 10.26 KB
+
+
+    '     Module Magics
+    ' 
+    '         Function: Build, Lines, StringArray
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.IO
-Imports System.Linq
 
 Namespace Script
 
@@ -20,8 +72,13 @@ Namespace Script
         ''' </summary>
         ''' <param name="scriptFile">脚本文件的绝对路径</param>
         ''' <param name="metadata">从脚本头部指令解析得到的程序集元数据</param>
-        ''' <param name="imports">#include 所引用的外部程序集绝对路径</param>
-        ''' <param name="searchRoots">与 #include 一致的相对路径搜索目录(按优先级排列)</param>
+        ''' <param name="imports">
+        ''' #include 所引用的全部程序集绝对路径 —— 包括本地 dll、nuget 包解析出的资产
+        ''' 以及被引入脚本转发的依赖
+        ''' </param>
+        ''' <param name="searchRoots">
+        ''' 与 #include 一致的相对路径搜索目录(按优先级排列), nuget 包的解压目录追加在末尾
+        ''' </param>
         Public Function Build(scriptFile As String,
                               metadata As ScriptMetadata,
                               [imports] As IEnumerable(Of String),

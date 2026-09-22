@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83bd69d6cfd51024ea5c96353d5ba9fe, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c4c06f162bcde970afda218690640a27, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 93 (65.03%)
-    ' Comment Lines: 18 (12.59%)
-    '    - Xml Docs: 55.56%
+    '   Total Lines: 298
+    '    Code Lines: 183 (61.41%)
+    ' Comment Lines: 68 (22.82%)
+    '    - Xml Docs: 83.82%
     ' 
-    '   Blank Lines: 32 (22.38%)
-    '     File Size: 5.24 KB
+    '   Blank Lines: 47 (15.77%)
+    '     File Size: 13.11 KB
 
 
     '     Module APIExtensions
     ' 
     '         Properties: Types
     ' 
-    '         Function: __boldParam, __trans, Load, TrimAssemblyDoc
+    '         Function: codeSafe, CrefDisplayName, Load, MakeCrefLink, StripArity
+    '                   transCodeBlock, transCref, transCrefText, transFence, transInlineCode
+    '                   transLangword, transList, transParamRef, transParamRefText, TrimAssemblyDoc
     ' 
     ' 
     ' /********************************************************************************/

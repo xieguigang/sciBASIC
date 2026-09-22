@@ -3,12 +3,13 @@
     <OptionInfer>On</OptionInfer>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <Version>0.6.9753.4776</Version>
+    <Version>0.6.9762.11310</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Product>FeatherDotNet</Product>
-    <Description>A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime. Reads and writes typed and untyped data frames with row/column access, null handling, and categorical or timestamp metadata.</Description>
-    <PackageReleaseNotes>Update to target netcoreapp2.0</PackageReleaseNotes>
+    <Description>A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime: reads and writes typed and untyped data frames with row and column access, null handling, and categorical, date or timestamp metadata.</Description>
+    <PackageTags>scibasic;feather;arrow;columnar;dataframe;flatbuffers;interop</PackageTags>
+    <PackageReleaseNotes>A VB.NET implementation of the Feather columnar data frame file format, built on an embedded FlatBuffers runtime with no native dependency. Data model: the root namespace models typed and untyped data frames - DataFrame and TypedDataFrame, Column and TypedColumn, Row and TypedRow, the proxy variants for lazy access - together with Value and BasisType describing the stored values. Implementation layer: the Impl namespace holds column metadata and specifications, the type and value widening and casting (DataWidener, ValueCaster) and the enum mapping (EnumMapper, SyntheticEnum) that make the typed and untyped views interchangeable. FlatBuffers: Impl.Flatbuffers is a self contained FlatBuffers runtime (ByteBuffer, FlatBufferBuilder, Table, Struct and Offset) used for metadata serialization. Metadata: Impl.FbsMetadata carries the generated FlatBuffers metadata types - Column, Type, Encoding, CategoryMetadata, DateMetadata, TimeMetadata, TimestampMetadata and TimeUnit - so categorical, date and timestamp columns keep their semantics across a round trip. This package is the reader and writer used by the sciBASIC# data framework when a compact columnar file is preferred over CSV.</PackageReleaseNotes>
     <Platforms>AnyCPU;x64</Platforms>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <RootNamespace>Microsoft.VisualBasic.DataStorage.FeatherFormat</RootNamespace>
@@ -19,11 +20,10 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release;CellaLAB-Desktop</Configurations>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Feather Columnar Data Frame File Format Reader and Writer</Title>
     <AssemblyTitle>Microsoft.VisualBasic.DataStorage.FeatherFormat</AssemblyTitle>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;feather;arrow;columnar;dataframe;flatbuffers</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

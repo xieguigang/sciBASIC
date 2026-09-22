@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d4e33708e6ae833dfb7ea9e853afb94, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\SoftMax.vb"
+﻿#Region "Microsoft.VisualBasic::7ce9e90a955f5109d1dad22c4316b179, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\SoftMax.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 34 (75.56%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 61
+    '    Code Lines: 34 (55.74%)
+    ' Comment Lines: 16 (26.23%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (24.44%)
-    '     File Size: 1.32 KB
+    '   Blank Lines: 11 (18.03%)
+    '     File Size: 2.23 KB
 
 
     '     Class SoftMax
@@ -60,19 +60,35 @@ Imports std = System.Math
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Softmax output layer that converts the incoming activations into a probability distribution.
+    ''' </summary>
+    ''' <remarks>
+    ''' The implementation subtracts the maximum activation before exponentiation
+    ''' (<c>exp(x - max) / sum(exp(x - max))</c>) so the exponentials cannot overflow for large logits.
+    ''' </remarks>
     Public Class SoftMax : Inherits Layer
 
+        ''' <summary>Gets the layer kind, always <see cref="CNN.LayerTypes.SoftMax"/>.</summary>
         Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
                 Return CNN.LayerTypes.SoftMax
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a softmax layer.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The dimensions <c>[height, width, classCount]</c> of the input.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(inputTensorDims As Integer())
             Call MyBase.New(inputTensorDims)
         End Sub
 
+        ''' <summary>
+        ''' Applies the numerically stable softmax normalization to the input tensor.
+        ''' </summary>
+        ''' <returns>This layer instance once the probabilities have been written to the next layer.</returns>
         Protected Overrides Function layerFeedNext() As Layer
             Dim max = Single.MinValue
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00e2910b47047f63df86c44e973fe124, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFit.vb"
+﻿#Region "Microsoft.VisualBasic::50279121f431ac56c0bebace33c4f0be, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFit.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 66 (47.48%)
-    ' Comment Lines: 47 (33.81%)
-    '    - Xml Docs: 97.87%
+    '   Total Lines: 203
+    '    Code Lines: 107 (52.71%)
+    ' Comment Lines: 60 (29.56%)
+    '    - Xml Docs: 96.67%
     ' 
-    '   Blank Lines: 26 (18.71%)
-    '     File Size: 4.89 KB
+    '   Blank Lines: 36 (17.73%)
+    '     File Size: 7.74 KB
 
 
     '     Class LassoFit
@@ -50,7 +50,7 @@
     '                     rsquared
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: getWeights, toDataFrame, ToString
+    '         Function: getWeights, toDataFrame, toNumericTable, ToString
     ' 
     ' 
     ' /********************************************************************************/

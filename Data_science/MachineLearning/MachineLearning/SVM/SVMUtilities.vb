@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa22f7ff703b28bdc6b0e829f48723a8, Data_science\MachineLearning\MachineLearning\SVM\SVMUtilities.vb"
+﻿#Region "Microsoft.VisualBasic::ae6437172571488786a80c24bd61b709, Data_science\MachineLearning\MachineLearning\SVM\SVMUtilities.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 83 (74.11%)
-    ' Comment Lines: 10 (8.93%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 147
+    '    Code Lines: 83 (56.46%)
+    ' Comment Lines: 45 (30.61%)
+    '    - Xml Docs: 97.78%
     ' 
-    '   Blank Lines: 19 (16.96%)
-    '     File Size: 4.50 KB
+    '   Blank Lines: 19 (12.93%)
+    '     File Size: 6.64 KB
 
 
     '     Module SVMUtilities
@@ -63,9 +63,27 @@ Namespace SVM
 
         Const SCALE As Double = 100
 
+        ''' <summary>
+        ''' The random seed value which is used for generating the training data.
+        ''' </summary>
         Public Const TRAINING_SEED As Integer = 20080524
+        ''' <summary>
+        ''' The random seed value which is used for generating the testing data.
+        ''' </summary>
         Public Const TESTING_SEED As Integer = 20140407
 
+        ''' <summary>
+        ''' Create a randomized two class classification problem for the demo test.
+        ''' </summary>
+        ''' <param name="count">The total number of the samples.</param>
+        ''' <param name="isTraining">
+        ''' ``True`` to use the <see cref="TRAINING_SEED"/> random seed, 
+        ''' ``False`` to use the <see cref="TESTING_SEED"/> random seed.
+        ''' </param>
+        ''' <returns>
+        ''' A <see cref="Problem"/> object in which the points are located on 
+        ''' either side of the vertical axis.
+        ''' </returns>
         Public Function CreateTwoClassProblem(count As Integer, Optional isTraining As Boolean = True) As Problem
             Dim prob As New Problem() With {
                 .maxIndex = 2
@@ -89,6 +107,19 @@ Namespace SVM
             Return prob
         End Function
 
+        ''' <summary>
+        ''' Create a randomized multiclass classification problem for the demo test.
+        ''' The points of each class are located in one of the eight octants of 
+        ''' the three dimensional space.
+        ''' </summary>
+        ''' <param name="numberOfClasses">The number of the target classes, this value should be less than 8.</param>
+        ''' <param name="count">The total number of the samples.</param>
+        ''' <param name="isTraining">
+        ''' ``True`` to use the <see cref="TRAINING_SEED"/> random seed, 
+        ''' ``False`` to use the <see cref="TESTING_SEED"/> random seed.
+        ''' </param>
+        ''' <returns>A <see cref="Problem"/> object which contains the randomized samples.</returns>
+        ''' <exception cref="ArgumentException">Thrown when the <paramref name="numberOfClasses"/> value is greater than 8.</exception>
         Public Function CreateMulticlassProblem(numberOfClasses As Integer, count As Integer, Optional isTraining As Boolean = True) As Problem
             If numberOfClasses > 8 Then
                 Throw New ArgumentException("Number of classes must be < 8")
@@ -137,11 +168,15 @@ Namespace SVM
         End Function
 
         ''' <summary>
-        ''' SVR
+        ''' Create a randomized support vector regression problem for the demo 
+        ''' test: the label value is calculated as <i>x = 2 * y + z</i>.
         ''' </summary>
-        ''' <param name="count"></param>
-        ''' <param name="isTraining"></param>
-        ''' <returns></returns>
+        ''' <param name="count">The total number of the samples.</param>
+        ''' <param name="isTraining">
+        ''' ``True`` to use the <see cref="TRAINING_SEED"/> random seed, 
+        ''' ``False`` to use the <see cref="TESTING_SEED"/> random seed.
+        ''' </param>
+        ''' <returns>A <see cref="Problem"/> object which contains the randomized samples.</returns>
         Public Function CreateRegressionProblem(count As Integer, Optional isTraining As Boolean = True) As Problem
             Dim prob As New Problem() With {
                 .maxIndex = 2

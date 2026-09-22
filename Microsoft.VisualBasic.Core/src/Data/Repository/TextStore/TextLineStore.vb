@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54a667fb841dace8d3136fc88929393b, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
+﻿#Region "Microsoft.VisualBasic::eccc80ed90f8f2461f49904e1a491fef, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1126
-    '    Code Lines: 956 (84.90%)
-    ' Comment Lines: 61 (5.42%)
-    '    - Xml Docs: 42.62%
+    '   Total Lines: 1234
+    '    Code Lines: 1015 (82.25%)
+    ' Comment Lines: 90 (7.29%)
+    '    - Xml Docs: 53.33%
     ' 
-    '   Blank Lines: 109 (9.68%)
-    '     File Size: 50.53 KB
+    '   Blank Lines: 129 (10.45%)
+    '     File Size: 55.72 KB
 
 
     '     Class TextLineStore
@@ -58,12 +58,14 @@
     '  
     ' 
     '     Properties: BaseLineCount, DataFilePath, FileNewLine, HasPendingChanges, IndexFilePath
-    '                 IndexGranularity, LogFilePath, PendingBufferedLineCount, PendingOperationCount, TotalLines
+    '                 IndexGranularity, IsReadOnlyMode, LogFilePath, PendingBufferedLineCount, PendingOperationCount
+    '                 TotalLines
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: FindLastNewlineOffset, IsAppendOnlyLayout, Materialize, ReadAndRecoverLog, ReadLine
-    '               (+2 Overloads) ReadLines, ReadOriginalLines, SnapshotPieces, TryLoadIndexFile, WriteLineBytes
+    '     Function: AcquireLock, FindLastNewlineOffset, IsAppendOnlyLayout, Materialize, ReadAndRecoverLog
+    '               ReadLine, (+2 Overloads) ReadLines, ReadOriginalLines, SnapshotPieces, TryLoadIndexFile
+    '               TryMerge, WriteLineBytes
     ' 
     '     Sub: AppendLine, AppendLines, ApplySplice, CleanupTempFiles, CloseReader
     '          CoalesceOriginalPieces, DeleteLine, DeleteLines, DetectBomAndNewLine, Dispose
@@ -197,12 +199,8 @@ Namespace Data.Repository
             Dim dir As String = Path.GetDirectoryName(_dataPath)
             If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then Directory.CreateDirectory(dir)
 
-            ' 1) 进程级独占锁：防止多实例同时打开
-            Try
-                _lockStream = New FileStream(_lockPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)
-            Catch ex As IOException
-                Throw New IOException("无法锁定数据库（可能已被另一实例打开）：" & _lockPath, ex)
-            End Try
+            ' 1) 进程级锁：按配置的锁模式获取（默认独占 + 冲突立即失败，与旧版行为一致）
+            _lockStream = AcquireLock()
 
             ' 2) 数据文件（含“合并中途崩溃、数据文件被移走”的补全）
             EnsureDataFileForOpen()
@@ -224,9 +222,9 @@ Namespace Data.Repository
             ' 6) 行索引：加载 / 校验 / 重建
             LoadOrRebuildIndex()
 
-            ' 7) 打开日志，截去被丢弃的尾部
+            ' 7) 打开日志，截去被丢弃的尾部（共享读模式下日志只读，不做截断）
             _wal.Open()
-            _wal.TruncateTo(keepLen)
+            If Not IsReadOnlyMode Then _wal.TruncateTo(keepLen)
 
             ' 8) 初始化虚拟层并重放日志
             _pieces = New List(Of Piece)
@@ -265,6 +263,60 @@ Namespace Data.Repository
             End SyncLock
             _disposed = True
         End Sub
+
+        ''' <summary>
+        ''' 按 <see cref="TextStoreOptions.LockMode"/> 获取数据文件的进程级锁。
+        ''' <para>
+        ''' 默认配置（<see cref="TextStoreLockMode.Exclusive"/> + 超时 0）与旧版行为完全一致：
+        ''' 冲突时立即抛出 <see cref="IOException"/>。当 <see cref="TextStoreOptions.LockWaitTimeoutMs"/>
+        ''' 大于 0 时，按 <see cref="TextStoreOptions.LockRetryIntervalMs"/> 轮询等待直到超时，
+        ''' 从而支持多进程「交替访问」：任一时刻只有一个写者，各进程在语句之间释放并重新获取锁。
+        ''' </para>
+        ''' </summary>
+        Private Function AcquireLock() As FileStream
+            If _opt.LockMode = TextStoreLockMode.None Then
+                Return Nothing
+            End If
+
+            Dim sharedRead As Boolean = (_opt.LockMode = TextStoreLockMode.SharedRead)
+            Dim timeout As Integer = std.Max(0, _opt.LockWaitTimeoutMs)
+            Dim interval As Integer = std.Max(1, _opt.LockRetryIntervalMs)
+            Dim watch As New System.Diagnostics.Stopwatch()
+            Dim attempts As Integer = 0
+
+            watch.Start()
+
+            Do
+                Try
+                    If sharedRead Then
+                        ' 共享读：锁文件可能尚未被任何实例创建，先确保其存在（不受当前读句柄影响）
+                        If Not File.Exists(_lockPath) Then
+                            Try
+                                Using fs As FileStream = File.Open(_lockPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite)
+                                End Using
+                            Catch
+                                ' 并发创建竞争：忽略，下面的打开会给出最终结果
+                            End Try
+                        End If
+
+                        ' FileShare.Read 使多个读者可以共存，同时排斥写者（Exclusive 需要 ReadWrite 访问）
+                        Return New FileStream(_lockPath, FileMode.Open, FileAccess.Read, FileShare.Read)
+                    End If
+
+                    Return New FileStream(_lockPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)
+                Catch ex As IOException
+                    attempts += 1
+                    Dim waited As Long = watch.ElapsedMilliseconds
+
+                    If timeout <= 0 OrElse waited >= timeout Then
+                        Throw New IOException("无法锁定数据库（可能已被另一实例打开）：" & _lockPath &
+                                              "（已等待 " & waited.ToString(Inv) & " ms，" & attempts & " 次尝试）", ex)
+                    End If
+
+                    Thread.Sleep(CInt(std.Min(CLng(interval), CLng(timeout) - waited)))
+                End Try
+            Loop
+        End Function
 
 #End Region
 
@@ -526,6 +578,11 @@ Namespace Data.Repository
             SyncLock _gate
                 EnsureOpen()
 
+                If IsReadOnlyMode Then
+                    ' 只读模式：重放得到的挂起修改由写者实例负责合并，本实例无事可做
+                    Return True
+                End If
+
                 If _activeReaders > 0 Then
                     Return False
                 End If
@@ -548,6 +605,11 @@ Namespace Data.Repository
         Public Sub RebuildLineIndex()
             SyncLock _gate
                 EnsureOpen()
+
+                If IsReadOnlyMode Then
+                    Throw New InvalidOperationException("共享读（只读）模式不支持重建索引文件。")
+                End If
+
                 RebuildIndexCore()
                 WriteIndexFile(_idxPath, _baseLineCount, _idxFileLength, _idxEntries)
                 RaiseEvent Info("行索引已手动重建。")
@@ -701,6 +763,10 @@ Namespace Data.Repository
 
         ' 前置条件：_gate 已持有
         Private Sub DoSplice(pos As Long, delCount As Long, lines As List(Of String))
+            If IsReadOnlyMode Then
+                Throw New InvalidOperationException("共享读（只读）模式不支持写入操作。")
+            End If
+
             If pos < 1 OrElse pos > _virtualCount + 1 Then
                 Throw New ArgumentOutOfRangeException("pos", "行位置越界：有效范围 1 ~ " & (_virtualCount + 1).ToString(Inv) & "。")
             End If
@@ -837,6 +903,16 @@ Namespace Data.Repository
             Return result
         End Function
 
+        ''' <summary>
+        ''' 是否为共享读（只读）模式。该模式下不获取独占锁、不打开写句柄，
+        ''' 也不会修改数据文件 / 索引文件 / 日志文件，因此多个只读实例可以共存。
+        ''' </summary>
+        Private ReadOnly Property IsReadOnlyMode As Boolean
+            Get
+                Return _opt.LockMode = TextStoreLockMode.SharedRead
+            End Get
+        End Property
+
         Private Sub EnsureOpen()
             If _disposed Then Throw New ObjectDisposedException(NameOf(TextLineStore))
             If Not _isOpen Then Throw New InvalidOperationException("必须先调用 Open()。")
@@ -926,7 +1002,12 @@ Namespace Data.Repository
         Private Sub LoadOrRebuildIndex()
             If TryLoadIndexFile() Then Return
             RebuildIndexCore()
-            WriteIndexFile(_idxPath, _baseLineCount, _idxFileLength, _idxEntries)
+
+            ' 只读模式只重建内存索引，不写盘（避免与写者竞争且不允许修改文件）
+            If Not IsReadOnlyMode Then
+                WriteIndexFile(_idxPath, _baseLineCount, _idxFileLength, _idxEntries)
+            End If
+
             RaiseEvent Info("行索引不存在或已失效，已全量重建（" & _idxFileLength.ToString(Inv) & " 字节 / " & _baseLineCount.ToString(Inv) & " 行）。")
         End Sub
 
@@ -1162,6 +1243,11 @@ Namespace Data.Repository
                 _dataEndsWithLf = True
                 Return
             End If
+            If IsReadOnlyMode Then
+                ' 只读模式不得修改数据文件：仅记录状态，不做尾部截断
+                _dataEndsWithLf = False
+                Return
+            End If
             If _skipTailRepair OrElse Not _opt.RepairTornTail Then
                 _dataEndsWithLf = False
                 Return
@@ -1193,6 +1279,10 @@ Namespace Data.Repository
         End Function
 
         Private Sub TruncateDataTo(newLen As Long)
+            If IsReadOnlyMode Then
+                Throw New InvalidOperationException("共享读（只读）模式不支持修改数据文件。")
+            End If
+
             Dim oldLen As Long = _fs.Length
             Using w As New FileStream(_dataPath, FileMode.Open, FileAccess.Write, FileShare.Read Or FileShare.Write)
                 w.SetLength(newLen)
@@ -1225,4 +1315,3 @@ Namespace Data.Repository
     End Class
 
 End Namespace
-

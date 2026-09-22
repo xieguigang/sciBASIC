@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericKMeansCluster, Data_science\DataMining\DataMining\Clustering\KMeans\Models\NumericKMeansCluster.vb"
+﻿#Region "Microsoft.VisualBasic::b0e557e75aa2f2dfce12eded1f1f5316, Data_science\DataMining\DataMining\Clustering\KMeans\Models\NumericKMeansCluster.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,36 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 74 (66.67%)
+    ' Comment Lines: 18 (16.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 19 (17.12%)
+    '     File Size: 3.63 KB
+
+
+    '     Class NumericKMeansCluster
+    ' 
+    '         Properties: Center, ClusterMean, ClusterSum, NumOfEntity
+    ' 
+    '         Function: CalculateKMeansCost, EnumerateAll, GetEnumerator
+    ' 
+    '         Sub: Add, refresh
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

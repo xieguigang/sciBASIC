@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e63e0522ee8c3f7914b1ec4a34cc8f0, Data_science\MachineLearning\DeepLearning\CNN\Layers\InputLayer.vb"
+﻿#Region "Microsoft.VisualBasic::454d2c353ff24dfb7af7843230027494, Data_science\MachineLearning\DeepLearning\CNN\Layers\InputLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 37 (45.68%)
-    ' Comment Lines: 30 (37.04%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 92
+    '    Code Lines: 37 (40.22%)
+    ' Comment Lines: 41 (44.57%)
+    '    - Xml Docs: 95.12%
     ' 
-    '   Blank Lines: 14 (17.28%)
-    '     File Size: 2.91 KB
+    '   Blank Lines: 14 (15.22%)
+    '     File Size: 3.89 KB
 
 
     '     Class InputLayer
@@ -89,30 +89,32 @@ Namespace CNN.layers
         ''' <returns></returns>
         Public ReadOnly Property out_depth As Integer
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the input layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Input"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Input
             End Get
         End Property
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Creates the input layer and updates the shared output definition with the image size.
         ''' </summary>
-        ''' <param name="def"></param>
-        ''' <param name="out_sx">image width</param>
-        ''' <param name="out_sy">image height</param>
+        ''' <param name="def">The shared output definition passed to the next layer.</param>
+        ''' <param name="out_sx">Image width.</param>
+        ''' <param name="out_sy">Image height.</param>
         ''' <param name="out_depth">
-        ''' usually be one channel, color brightness, this parameter value could 
-        ''' be greater than 1, example value 3 probabilty for rgb channels
+        ''' Number of channels; usually one for brightness, but it may be greater than one, for example three for RGB.
         ''' </param>
         Public Sub New(def As OutputDefinition, out_sx As Integer, out_sy As Integer, Optional out_depth As Integer = 1)
             def.outX = out_sx
@@ -123,16 +125,25 @@ Namespace CNN.layers
             Me.out_depth = out_depth
         End Sub
 
+        ''' <summary>
+        ''' Passes the data through unchanged; the input layer performs no computation.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored by the input layer.</param>
+        ''' <returns>The same data block that was passed in.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             in_act = db
             out_act = db
             Return out_act
         End Function
 
+        ''' <summary>Does nothing; the input layer has no parameters to update.</summary>
         Public Overridable Sub backward() Implements Layer.backward
 
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>A text of the form <c>input(dims: ...)</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"input(dims: {dims})"
         End Function

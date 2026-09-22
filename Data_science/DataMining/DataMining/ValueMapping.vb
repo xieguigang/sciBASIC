@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::573f398dc4afe2c7a95526dcb8f851a7, Data_science\DataMining\DataMining\ValueMapping.vb"
+﻿#Region "Microsoft.VisualBasic::5421cd87afb56809bb2ab74dbcea0099, Data_science\DataMining\DataMining\ValueMapping.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 83 (70.34%)
-    ' Comment Lines: 20 (16.95%)
+    '   Total Lines: 122
+    '    Code Lines: 86 (70.49%)
+    ' Comment Lines: 20 (16.39%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 15 (12.71%)
-    '     File Size: 4.39 KB
+    '   Blank Lines: 16 (13.11%)
+    '     File Size: 4.72 KB
 
 
     ' Module ValueMapping

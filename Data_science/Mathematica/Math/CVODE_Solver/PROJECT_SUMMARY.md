@@ -53,7 +53,7 @@ CVODE_Solver/
 ├── CVODEAdvanced.vb        # 高级功能扩展 (~460行)
 ├── CVODEExample.vb         # 使用示例 (~380行)
 ├── Sundials.CVODE.vbproj   # 项目文件
-└── README.md               # 使用文档
+└── PROJECT_SUMMARY.md      # 使用文档（同时作为 NuGet 包的 PackageReadmeFile）
 ```
 
 ## 使用方法
@@ -193,10 +193,34 @@ dotnet run --project Sundials.CVODE.vbproj
 
 ## 许可证
 
-MIT License
+GPL-3.0-or-later
+
+> 说明：本项目的 `Sundials.CVODE.vbproj` 中声明了 `<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>`，因此此处与项目文件保持一致；此前的 "MIT License" 表述已作废。
 
 ## 参考资料
 
 1. SUNDIALS官方文档：https://sundials.readthedocs.io/
 2. Hindmarsh, A. C., et al. "SUNDIALS: Suite of nonlinear and differential/algebraic equation solvers." ACM TOMS 31.3 (2005): 363-396.
 3. Brown, P. N., G. D. Byrne, and A. C. Hindmarsh. "VODE: A variable-coefficient ODE solver." SIAM J. Sci. Stat. Comput. 10.5 (1989): 1038-1051.
+
+---
+
+## NuGet 包信息
+
+本包以 NuGet 形式分发，`Sundials.CVODE.vbproj` 中的相关元数据如下：
+
+| 元素 | 取值 / 说明 |
+|---|---|
+| `PackageId` / `AssemblyName` | `Microsoft.VisualBasic.Math.Sundials.CVODE` |
+| `Title` | Managed CVODE Variable-Order ODE Solver in Pure VB.NET |
+| `TargetFramework` | `net10.0`（`LangVersion=latest`、`OptionStrict=On`、`OptionExplicit=On`） |
+| `Configurations` | `nuget_release;Debug` |
+| `Platforms` | `AnyCPU;x64` |
+| `PackageReadmeFile` | `PROJECT_SUMMARY.md`（即本文档，通过 `<None Include="PROJECT_SUMMARY.md">` + `Pack=True` 打入包内） |
+| `PackageTags` | `scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics` |
+| `PackageLicenseExpression` | `GPL-3.0-or-later` |
+| `PackageIcon` | `logo-knot.png` |
+| `GenerateDocumentationFile` | `true`（随包附带 XML 文档） |
+| `IncludeSymbols` / `SymbolPackageFormat` | `true` / `snupkg` |
+
+在 sciBASIC# 生态中，本包是 `Microsoft.VisualBasic.Math.Calculus`（`ODESolver` / `ODE` 项目）的**刚性求解后端**：`ode` 提供通用的动力学模型与积分接口，而本包提供与之兼容的高阶、变步长变阶数实现。

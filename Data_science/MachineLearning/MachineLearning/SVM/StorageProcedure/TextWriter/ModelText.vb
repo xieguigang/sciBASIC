@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f1aec5cfe8f6859b72205ad8caf0c7, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ModelText.vb"
+﻿#Region "Microsoft.VisualBasic::13b0cba2cfbbfd8ebf7056bad2b60b79, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ModelText.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 82 (68.33%)
-    ' Comment Lines: 6 (5.00%)
-    '    - Xml Docs: 83.33%
+    '   Total Lines: 127
+    '    Code Lines: 82 (64.57%)
+    ' Comment Lines: 13 (10.24%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 32 (26.67%)
-    '     File Size: 4.19 KB
+    '   Blank Lines: 32 (25.20%)
+    '     File Size: 4.50 KB
 
 
     '     Module ModelText
@@ -163,6 +163,13 @@ Namespace SVM
             output.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the model into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="model">The model that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains the model parameters and the support vector data.
+        ''' </returns>
         Public Function ToString(model As Model) As String
             Dim sb As New StringBuilder
 
