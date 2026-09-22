@@ -15,7 +15,7 @@
 
 Imports System.Text
 
-Namespace LLM
+Namespace Agent
 
     ''' <summary>工具的一个参数（JSON Schema 的 property）。</summary>
     Public Class JsonSchemaProperty
