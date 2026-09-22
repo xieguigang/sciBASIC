@@ -15,8 +15,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Signal Data IO: netCDF Reader and Writer for Signals</Title>
     <Description>Reads and writes time-series signal collections with their metadata, chunk indices and measure units to netCDF files, interoperating with R-based signal analysis pipelines. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Signal.IO</AssemblyTitle>

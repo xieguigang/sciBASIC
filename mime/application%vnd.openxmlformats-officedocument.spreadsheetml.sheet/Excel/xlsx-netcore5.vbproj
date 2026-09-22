@@ -23,8 +23,8 @@
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.Excel</AssemblyTitle>
     <PackageTags>scibasic;xlsx;excel;openxml;spreadsheet;biff;workbook;report</PackageTags>
     <PackageReleaseNotes>The Office Open XML (SpreadsheetML) support of sciBASIC#. Reading: XLSX.File opens an xlsx zip package into typed OPC directory parts (content types, relationships, docProps, xl with worksheets, sharedStrings, styles, theme and calcChain) and exposes sheets as table frames (GetTable), worksheets (GetWorksheet) or typed records (LoadDataSet(Of T)). Writing: the XLSX.Writer namespace generates workbooks - Workbook (AddWorksheet, SetCurrentWorksheet, Save / SaveAs / SaveAsStream), the Worksheet cell grid (AddCell, AddCellFormula, column widths, merged cells and the active style) and the typed Cell model with A1/RC address resolution. Styling: fonts, fills, borders, number formats, alignments and a managed style repository applied per cell or per range. Model helpers: XLSX.Model.StoreProcedure and SheetTable convert between worksheets and csv frames. Legacy support: XLS.BIFF.BiffWriter emits BIFF 2.1 record streams (margins, fonts, column widths, headers/footers, protection) for old .xls consumers, and ReportHelper lays out a pre-styled scientific report sheet directly into a workbook.</PackageReleaseNotes>

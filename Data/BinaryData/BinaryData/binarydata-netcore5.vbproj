@@ -18,8 +18,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Low-Level Binary Data Stream Reader and Writer Toolkit</Title>
     <Description>Extends BinaryReader and BinaryWriter with endianness aware primitives, length-prefixed strings, BZip2 and LZW compression, XDR encoding and a Python pickle codec for parsing custom binary file formats, plus a Java style ByteBuffer.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.BinaryData</AssemblyTitle>

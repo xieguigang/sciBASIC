@@ -17,8 +17,8 @@
     <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>ANOVA and Multivariate Analysis Toolkit for VB.NET</Title>
     <Description>One-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with FDR correction, and multivariate methods (PCA, PLS, OPLS-DA) for omics data. Part of the sciBASIC# scientific computing framework.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics.ANOVA</AssemblyTitle>

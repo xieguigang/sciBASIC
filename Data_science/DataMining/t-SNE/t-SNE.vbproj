@@ -12,8 +12,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Barnes-Hut t-SNE Dimensionality Reduction Embedding</Title>
     <Description>t-Distributed Stochastic Neighbor Embedding for sciBASIC#: converts pairwise affinities into joint probabilities at a given perplexity and minimises KL divergence, with a Barnes-Hut SPTree approximation for large data.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.t-SNE</AssemblyTitle>

@@ -5,8 +5,8 @@
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.LLM</AssemblyName>
     <TargetFrameworks>net10.0</TargetFrameworks>
 
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
 
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

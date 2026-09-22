@@ -12,8 +12,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Statistics Toolkit: Distributions, Hypothesis Tests and More</Title>
     <Description>Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics</AssemblyTitle>

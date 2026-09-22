@@ -17,8 +17,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Description>Encodes raw feature vectors of a data frame into numeric columns for model training: one-hot style encoding for enums and flag bit fields, numeric binning and discretisation, and automatic per-field encoder selection.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.FeatureFrame</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>

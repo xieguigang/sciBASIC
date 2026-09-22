@@ -37,8 +37,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Description>A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API, with d3.js style scales, color palettes, heat maps and an isometric 3D engine. The visualization core of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

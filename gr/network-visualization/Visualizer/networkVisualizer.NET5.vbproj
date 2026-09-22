@@ -22,8 +22,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyTitle>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;network-rendering;data-visualization;style-mapping;convex-hull;css;graphics</PackageTags>

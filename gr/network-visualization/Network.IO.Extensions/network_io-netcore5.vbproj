@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Network Graph File IO And Third-Party Format Interop</Title>
     <Description>Reads and writes network graphs as CSV, JSON and VB.NET table sets, and imports or exports Cytoscape, Gephi, GML, Sigma.js and graphology documents. The IO layer of the sciBASIC# network visualization stack.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.IO.Extensions</AssemblyTitle>

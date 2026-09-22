@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Version>1.0.9762.10518</Version>
-    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
+    <Version>1.0.9762.11310</Version>
+    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
     <Title>Random Number Generators and Seeded Samplers Library</Title>
     <Description>Random number generation for sciBASIC#: Mersenne Twister, a fast xorshift-style generator, a thread-safe wrapper and a table-driven RAND randomizer for normal deviates and Monte Carlo simulation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Randomizer</AssemblyTitle>
