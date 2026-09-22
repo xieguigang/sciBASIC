@@ -70,11 +70,11 @@ Namespace GPUTensor
         Private NotInheritable Class HostComparer
             Implements IEqualityComparer(Of Double())
 
-            Public Function Equals(a As Double(), b As Double()) As Boolean Implements IEqualityComparer(Of Double()).Equals
+            Public Overloads Function Equals(a As Double(), b As Double()) As Boolean Implements IEqualityComparer(Of Double()).Equals
                 Return ReferenceEquals(a, b)
             End Function
 
-            Public Function GetHashCode(a As Double()) As Integer Implements IEqualityComparer(Of Double()).GetHashCode
+            Public Overloads Function GetHashCode(a As Double()) As Integer Implements IEqualityComparer(Of Double()).GetHashCode
                 If a Is Nothing Then Return 0
                 Return RuntimeHelpers.GetHashCode(a)
             End Function
