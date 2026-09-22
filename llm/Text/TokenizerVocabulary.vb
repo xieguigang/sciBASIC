@@ -14,123 +14,125 @@
 ' 绝大多数桶会被整体跳过，于是单步代价 ≈ O(合法 token 数 × token 平均长度)。
 ' ---------------------------------------------------------------------------
 
-''' <summary>
-''' 词表的文本视图：把 token id 映射回它实际贡献的文本，并建立首字符倒排索引。
-''' </summary>
-Public Class TokenizerVocabulary
+Namespace Text
 
-    Private ReadOnly _idToText As String()
-    Private ReadOnly _special As Boolean()
-    Private ReadOnly _buckets As New Dictionary(Of Char, List(Of Integer))()
-    Private ReadOnly _firstCharacters As Char()
+    ''' <summary>
+    ''' 词表的文本视图：把 token id 映射回它实际贡献的文本，并建立首字符倒排索引。
+    ''' </summary>
+    Public Class TokenizerVocabulary
 
-    ''' <summary>词表大小。</summary>
-    Public ReadOnly Property Size As Integer
-        Get
-            Return _idToText.Length
-        End Get
-    End Property
+        Private ReadOnly _idToText As String()
+        Private ReadOnly _special As Boolean()
+        Private ReadOnly _buckets As New Dictionary(Of Char, List(Of Integer))()
+        Private ReadOnly _firstCharacters As Char()
 
-    ''' <summary>词表中出现过的不重复首字符（约束解码按它遍历，避免遍历 65536 个字符）。</summary>
-    Public ReadOnly Property FirstCharacters As Char()
-        Get
-            Return _firstCharacters
-        End Get
-    End Property
+        ''' <summary>词表大小。</summary>
+        Public ReadOnly Property Size As Integer
+            Get
+                Return _idToText.Length
+            End Get
+        End Property
 
-    ''' <summary>文本非空、可用于约束解码的 token 个数。</summary>
-    Public ReadOnly Property UsableTokens As Integer
+        ''' <summary>词表中出现过的不重复首字符（约束解码按它遍历，避免遍历 65536 个字符）。</summary>
+        Public ReadOnly Property FirstCharacters As Char()
+            Get
+                Return _firstCharacters
+            End Get
+        End Property
 
-    ''' <summary>特殊 token（角色标记、工具调用标记等）的个数；它们永远不参与约束解码。</summary>
-    Public ReadOnly Property SpecialTokens As Integer
+        ''' <summary>文本非空、可用于约束解码的 token 个数。</summary>
+        Public ReadOnly Property UsableTokens As Integer
 
-    ''' <param name="idToText">
-    ''' 下标为 token id、值为该 token 单独解码后贡献的文本。空字符串表示该 token
-    ''' 无法在约束解码中使用（特殊 token 或上下文相关 token）。
-    ''' </param>
-    ''' <param name="special">
-    ''' 与 <paramref name="idToText"/> 等长的标记数组，True 表示该 id 是保留的特殊 token。
-    ''' </param>
-    Public Sub New(idToText As String(), Optional special As Boolean() = Nothing)
-        If idToText Is Nothing Then Throw New ArgumentNullException(NameOf(idToText))
+        ''' <summary>特殊 token（角色标记、工具调用标记等）的个数；它们永远不参与约束解码。</summary>
+        Public ReadOnly Property SpecialTokens As Integer
 
-        _idToText = idToText
-        _special = special
+        ''' <param name="idToText">
+        ''' 下标为 token id、值为该 token 单独解码后贡献的文本。空字符串表示该 token
+        ''' 无法在约束解码中使用（特殊 token 或上下文相关 token）。
+        ''' </param>
+        ''' <param name="special">
+        ''' 与 <paramref name="idToText"/> 等长的标记数组，True 表示该 id 是保留的特殊 token。
+        ''' </param>
+        Public Sub New(idToText As String(), Optional special As Boolean() = Nothing)
+            If idToText Is Nothing Then Throw New ArgumentNullException(NameOf(idToText))
 
-        Dim usable As Integer = 0
-        Dim specialCount As Integer = 0
-        Dim seen As New HashSet(Of Char)
+            _idToText = idToText
+            _special = special
 
-        For id As Integer = 0 To idToText.Length - 1
-            If _special IsNot Nothing AndAlso id < _special.Length AndAlso _special(id) Then
-                specialCount += 1
-                Continue For
-            End If
+            Dim usable As Integer = 0
+            Dim specialCount As Integer = 0
+            Dim seen As New HashSet(Of Char)
 
-            Dim text = idToText(id)
+            For id As Integer = 0 To idToText.Length - 1
+                If _special IsNot Nothing AndAlso id < _special.Length AndAlso _special(id) Then
+                    specialCount += 1
+                    Continue For
+                End If
 
-            If String.IsNullOrEmpty(text) Then Continue For
+                Dim text = idToText(id)
 
-            Dim c = text(0)
+                If String.IsNullOrEmpty(text) Then Continue For
 
-            If Char.IsControl(c) Then Continue For
+                Dim c = text(0)
 
+                If Char.IsControl(c) Then Continue For
+
+                Dim bucket As List(Of Integer) = Nothing
+
+                If Not _buckets.TryGetValue(c, bucket) Then
+                    bucket = New List(Of Integer)()
+                    _buckets.Add(c, bucket)
+                    Call seen.Add(c)
+                End If
+
+                bucket.Add(id)
+                usable += 1
+            Next
+
+            UsableTokens = usable
+            SpecialTokens = specialCount
+
+            Dim chars(seen.Count - 1) As Char
+            Call seen.CopyTo(chars)
+
+            _firstCharacters = chars
+        End Sub
+
+        ''' <summary>取某个 token 贡献的文本；非法 id 返回空串。</summary>
+        Public Function TextOf(id As Integer) As String
+            If id < 0 OrElse id >= _idToText.Length Then Return String.Empty
+            Return _idToText(id)
+        End Function
+
+        ''' <summary>该 id 是否为保留的特殊 token。</summary>
+        Public Function IsSpecial(id As Integer) As Boolean
+            If _special Is Nothing Then Return False
+            If id < 0 OrElse id >= _special.Length Then Return False
+            Return _special(id)
+        End Function
+
+        ''' <summary>取"以字符 <paramref name="c"/> 开头"的 token 列表；不存在时返回空列表。</summary>
+        Public Function BucketOf(c As Char) As List(Of Integer)
             Dim bucket As List(Of Integer) = Nothing
 
-            If Not _buckets.TryGetValue(c, bucket) Then
-                bucket = New List(Of Integer)()
-                _buckets.Add(c, bucket)
-                Call seen.Add(c)
-            End If
+            If _buckets.TryGetValue(c, bucket) Then Return bucket
 
-            bucket.Add(id)
-            usable += 1
-        Next
+            Return EmptyBucket
+        End Function
 
-        UsableTokens = usable
-        SpecialTokens = specialCount
+        Private Shared ReadOnly EmptyBucket As New List(Of Integer)()
 
-        Dim chars(seen.Count - 1) As Char
-        Call seen.CopyTo(chars)
+        ''' <summary>词表中以给定字符开头的 token 个数（诊断用）。</summary>
+        Public Function BucketSizeOf(c As Char) As Integer
+            Return BucketOf(c).Count
+        End Function
 
-        _firstCharacters = chars
-    End Sub
+        ''' <summary>Returns a short summary of the vocabulary.</summary>
+        ''' <returns>A text that reports the total, usable and special token counts.</returns>
+        Public Overrides Function ToString() As String
+            Return $"vocab[{Size}] usable={UsableTokens}, special={SpecialTokens}, first_chars={_firstCharacters.Length}"
+        End Function
 
-    ''' <summary>取某个 token 贡献的文本；非法 id 返回空串。</summary>
-    Public Function TextOf(id As Integer) As String
-        If id < 0 OrElse id >= _idToText.Length Then Return String.Empty
-        Return _idToText(id)
-    End Function
+    End Class
 
-    ''' <summary>该 id 是否为保留的特殊 token。</summary>
-    Public Function IsSpecial(id As Integer) As Boolean
-        If _special Is Nothing Then Return False
-        If id < 0 OrElse id >= _special.Length Then Return False
-        Return _special(id)
-    End Function
-
-    ''' <summary>取"以字符 <paramref name="c"/> 开头"的 token 列表；不存在时返回空列表。</summary>
-    Public Function BucketOf(c As Char) As List(Of Integer)
-        Dim bucket As List(Of Integer) = Nothing
-
-        If _buckets.TryGetValue(c, bucket) Then Return bucket
-
-        Return EmptyBucket
-    End Function
-
-    Private Shared ReadOnly EmptyBucket As New List(Of Integer)()
-
-    ''' <summary>词表中以给定字符开头的 token 个数（诊断用）。</summary>
-    Public Function BucketSizeOf(c As Char) As Integer
-        Return BucketOf(c).Count
-    End Function
-
-    ''' <summary>Returns a short summary of the vocabulary.</summary>
-    ''' <returns>A text that reports the total, usable and special token counts.</returns>
-    Public Overrides Function ToString() As String
-        Return $"vocab[{Size}] usable={UsableTokens}, special={SpecialTokens}, first_chars={_firstCharacters.Length}"
-    End Function
-
-End Class
-
-
+End Namespace
