@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab5f9e1c9e868a1115846d3a267a3268, gr\Microsoft.VisualBasic.Imaging\d3js\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ebe85953879dd81c34930e1d00a29aab, gr\Microsoft.VisualBasic.Imaging\d3js\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (15.79%)
-    '     File Size: 476 B
+    '     File Size: 474 B
 
 
     '     Module NamespaceDoc
@@ -75,4 +75,3 @@ Namespace d3js.SVG.CSS
     Module NamespaceDoc
     End Module
 End Namespace
-

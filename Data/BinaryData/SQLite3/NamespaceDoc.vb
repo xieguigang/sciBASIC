@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0967c2a9d920cc59e8d320e479f6645, Data\BinaryData\SQLite3\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b705e2cfe43855beb3b257111d65b0c8, Data\BinaryData\SQLite3\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 264 B
+    '     File Size: 262 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

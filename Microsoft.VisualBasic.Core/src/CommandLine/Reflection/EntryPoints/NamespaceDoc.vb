@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4f01666137d90ea843403b4c40b448, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::69cdb37ccd92d043728f0666cae52bf9, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 216 B
+    '     File Size: 214 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CommandLine.Reflection.EntryPoints
     Module NamespaceDoc
     End Module
 End Namespace
-

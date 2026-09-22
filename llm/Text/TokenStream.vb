@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c13ef4ef8649ee9375dbf7abbbd163, llm\Text\TokenStream.vb"
+﻿#Region "Microsoft.VisualBasic::e0c5182405f0c67349f3a04e17fe45eb, llm\Text\TokenStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 68.75%
     ' 
     '   Blank Lines: 23 (15.54%)
-    '     File Size: 6.05 KB
+    '     File Size: 6.04 KB
 
 
     '     Class TokenStream
@@ -206,4 +206,3 @@ Namespace Text
     End Class
 
 End Namespace
-

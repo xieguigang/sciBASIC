@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2287f110d456115650673ce1fec6fbfd, vs_solutions\VBS\src\VBScript\ScriptMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::5b6b9a2d2b93115208f2b64bec6b8eac, vs_solutions\VBS\src\VBScript\ScriptMetadata.vb"
 
     ' Author:
     ' 
@@ -185,4 +185,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

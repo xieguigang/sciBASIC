@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c19d68a81fed36e706c043b8669d55a7, Data_science\DataMining\DynamicProgramming\Knapsack\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::75ae465d25308269629f1efc7a9db4a6, Data_science\DataMining\DynamicProgramming\Knapsack\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 175 B
+    '     File Size: 173 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Knapsack
     Module NamespaceDoc
     End Module
 End Namespace
-

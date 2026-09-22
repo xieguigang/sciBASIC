@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20457c7ddf100a867d4f62927897a7b8, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bff6ae12f1ab5ed052e9417e9a948c9e, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 281 B
+    '     File Size: 279 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Bing.Academic
     Module NamespaceDoc
     End Module
 End Namespace
-

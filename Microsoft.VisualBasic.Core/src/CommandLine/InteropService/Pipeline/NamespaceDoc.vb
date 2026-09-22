@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::888efddff29a12840d8c99c5e49afb45, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::85100f4fb51d5358f00b09688a7e8a42, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 234 B
+    '     File Size: 232 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CommandLine.InteropService.Pipeline
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75a3a87b96b9518da1657cccde50767e, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::945133d087ff27a3d54446090ce67ccf, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 163 B
+    '     File Size: 161 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Hierarchy
     Module NamespaceDoc
     End Module
 End Namespace
-

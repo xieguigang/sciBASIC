@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02ccfafb33e6532e9811dd7c5c008123, Data\DataFrame\StorageProvider\Reflection\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::21c550858dc065ac92c991845cb6ca83, Data\DataFrame\StorageProvider\Reflection\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 307 B
+    '     File Size: 305 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace StorageProvider.Reflection
     Module NamespaceDoc
     End Module
 End Namespace
-

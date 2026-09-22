@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d71bd8e290642db77cfbc32f85279471, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::84e132f28021f46c57135a4a98afdfe6, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 171 B
+    '     File Size: 169 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace FileStream.Json
     Module NamespaceDoc
     End Module
 End Namespace
-

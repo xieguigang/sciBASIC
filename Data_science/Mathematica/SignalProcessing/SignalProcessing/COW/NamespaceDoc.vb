@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05616e8fff5213abe7963e041733f30d, Data_science\Mathematica\SignalProcessing\SignalProcessing\COW\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5abee6b8cdea9c74966af2fc9fb5a961, Data_science\Mathematica\SignalProcessing\SignalProcessing\COW\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 185 B
+    '     File Size: 183 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace COW
     Module NamespaceDoc
     End Module
 End Namespace
-

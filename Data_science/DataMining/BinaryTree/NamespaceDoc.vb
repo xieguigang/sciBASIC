@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4db240e4d44c11a397fe0caab64eddb, Data_science\DataMining\BinaryTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0f39d9ad01c67bf30b5547082bc9ba15, Data_science\DataMining\BinaryTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 213 B
+    '     File Size: 211 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

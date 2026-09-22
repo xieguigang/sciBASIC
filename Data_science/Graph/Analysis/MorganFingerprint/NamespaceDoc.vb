@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d94d65118e6eb058c515055e1e6bd8, Data_science\Graph\Analysis\MorganFingerprint\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::51eb9d5d3c793108df439d0fa695848b, Data_science\Graph\Analysis\MorganFingerprint\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Analysis.MorganFingerprint
     Module NamespaceDoc
     End Module
 End Namespace
-

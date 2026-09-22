@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79a781adfb6c26abdf46f648b9bab2ad, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2284e67de35cca8dbafc296d25590999, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Text.Levenshtein
     Module NamespaceDoc
     End Module
 End Namespace
-

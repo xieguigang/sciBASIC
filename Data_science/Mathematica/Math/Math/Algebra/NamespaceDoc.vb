@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78667092f2a4e81b020309880bc1b4e7, Data_science\Mathematica\Math\Math\Algebra\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::488ac0de03b69f96aee5e7949913adb2, Data_science\Mathematica\Math\Math\Algebra\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 208 B
+    '     File Size: 206 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LinearAlgebra
     Module NamespaceDoc
     End Module
 End Namespace
-

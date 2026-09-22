@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbdde406d770235a3202ce3e369ca084, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8600eca20978ec703762f48ef9b38a30, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 173 B
+    '     File Size: 171 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace nn.rbm
     Module NamespaceDoc
     End Module
 End Namespace
-

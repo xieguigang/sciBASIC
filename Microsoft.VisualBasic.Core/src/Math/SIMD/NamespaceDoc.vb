@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27fa03b017cfd00ad39724f61bb4c2dd, Microsoft.VisualBasic.Core\src\Math\SIMD\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3a3fe52dee5a0b930bb06f5583a994bd, Microsoft.VisualBasic.Core\src\Math\SIMD\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 449 B
+    '     File Size: 447 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace Math.SIMD.Vectorization
     Module NamespaceDoc
     End Module
 End Namespace
-

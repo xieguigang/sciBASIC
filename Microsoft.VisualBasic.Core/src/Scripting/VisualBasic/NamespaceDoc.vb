@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b2bbd84897ac6847772b2d1d0bab43b, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9956897161dfafecc6005e61244c75e2, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 222 B
+    '     File Size: 220 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Scripting.SymbolBuilder.VBLanguage
     Module NamespaceDoc
     End Module
 End Namespace
-

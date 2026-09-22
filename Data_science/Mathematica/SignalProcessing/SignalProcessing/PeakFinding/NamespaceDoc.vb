@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a574a1c046251d07f310edb5f3a218b5, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::889aecf1d71d0476528495f38f3071b1, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 162 B
+    '     File Size: 160 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace PeakFinding
     Module NamespaceDoc
     End Module
 End Namespace
-

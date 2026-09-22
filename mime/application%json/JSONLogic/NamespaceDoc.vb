@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b044bcd83d8d3dcd383439eed51ad21, mime\application%json\JSONLogic\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d7587cac416185cd5ef3f53363a32efd, mime\application%json\JSONLogic\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 241 B
+    '     File Size: 239 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace JSONLogic
     Module NamespaceDoc
     End Module
 End Namespace
-

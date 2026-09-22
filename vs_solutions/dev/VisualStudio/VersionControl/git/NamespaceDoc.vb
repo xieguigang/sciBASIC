@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f511e9d371bd8415ddd7fbcde780596, vs_solutions\dev\VisualStudio\VersionControl\git\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e4e9029b3df0890414350543329b6c10, vs_solutions\dev\VisualStudio\VersionControl\git\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 239 B
+    '     File Size: 237 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace VersionControl.Git
     Module NamespaceDoc
     End Module
 End Namespace
-

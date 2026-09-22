@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c8848e1a12fd8fe72ff427ddf5b35ed, mime\application%json\BSON\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::aaa3b6c701a37b3f45ac94f8560d62c2, mime\application%json\BSON\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 281 B
+    '     File Size: 279 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace BSON
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9a5f4ab532ae285e7dc2b163364dc43, Data\BinaryData\Feather\Impl\Flatbuffers\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b531b556bd6ef525fcf84f2f51b24c15, Data\BinaryData\Feather\Impl\Flatbuffers\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 273 B
+    '     File Size: 271 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace FlatBuffers
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6df5664c9993e6391e1b00d0dda74f7f, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::db1133a14e0b5cfd1edf701d1ffa69b4, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 204 B
+    '     File Size: 202 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LevenbergMarquardt
     Module NamespaceDoc
     End Module
 End Namespace
-

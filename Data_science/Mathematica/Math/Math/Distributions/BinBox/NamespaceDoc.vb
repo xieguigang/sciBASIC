@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2335c5b4d5cd779abc65a6f88b78797e, Data_science\Mathematica\Math\Math\Distributions\BinBox\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2768777865e1260d898d39758713b487, Data_science\Mathematica\Math\Math\Distributions\BinBox\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 190 B
+    '     File Size: 188 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Distributions.BinBox
     Module NamespaceDoc
     End Module
 End Namespace
-

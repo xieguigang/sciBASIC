@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44adbd1abf0e714eaf48b55bca85e57b, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ebfb38656602cde80148eab523c182b4, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 213 B
+    '     File Size: 211 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Serialization.BinaryDumping
     Module NamespaceDoc
     End Module
 End Namespace
-

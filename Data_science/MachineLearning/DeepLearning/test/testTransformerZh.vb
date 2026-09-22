@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db2df0262b06164ac9de32c34f9c16f5, Data_science\MachineLearning\DeepLearning\test\testTransformerZh.vb"
+﻿#Region "Microsoft.VisualBasic::5366f7d3d0892b0b8300626e75faa3ad, Data_science\MachineLearning\DeepLearning\test\testTransformerZh.vb"
 
     ' Author:
     ' 
@@ -381,4 +381,3 @@ Module testTransformerZh
 #End Region
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d98227b1c77eaee7e261a6ccf1806571, cuda\ILCuda\Math\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8ab76b42dca3fa6b26cd12897b73191a, cuda\ILCuda\Math\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 289 B
+    '     File Size: 287 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Math
     Module NamespaceDoc
     End Module
 End Namespace
-

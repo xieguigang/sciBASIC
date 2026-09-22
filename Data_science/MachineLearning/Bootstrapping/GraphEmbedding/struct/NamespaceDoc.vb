@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::706bd94cf65b9be7f80c3748e0227f01, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a5da5465882f121871237278a8033061, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 174 B
+    '     File Size: 172 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace GraphEmbedding.struct
     Module NamespaceDoc
     End Module
 End Namespace
-

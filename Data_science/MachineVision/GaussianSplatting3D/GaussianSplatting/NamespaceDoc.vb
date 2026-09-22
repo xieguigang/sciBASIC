@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::041e07c16bdf3754c602bb8a2a6db4b5, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::677919254431461e80e75332104cdfcd, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 201 B
+    '     File Size: 199 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

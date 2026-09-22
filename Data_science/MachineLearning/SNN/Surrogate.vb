@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9d4189fab40655ae277abb0d00296ef, Data_science\MachineLearning\SNN\Surrogate.vb"
+﻿#Region "Microsoft.VisualBasic::e98bf467aaaf07a6164a4916f34c9251, Data_science\MachineLearning\SNN\Surrogate.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 32 (43.84%)
-    ' Comment Lines: 32 (43.84%)
+    '   Total Lines: 71
+    '    Code Lines: 32 (45.07%)
+    ' Comment Lines: 32 (45.07%)
     '    - Xml Docs: 62.50%
     ' 
-    '   Blank Lines: 9 (12.33%)
+    '   Blank Lines: 7 (9.86%)
     '     File Size: 3.12 KB
 
 
@@ -54,7 +54,6 @@
     ' Module Surrogate
     ' 
     '     Function: Derivative, SmoothSpike, Spike
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -131,6 +130,3 @@ Public Module Surrogate
     End Function
 
 End Module
-
-
-

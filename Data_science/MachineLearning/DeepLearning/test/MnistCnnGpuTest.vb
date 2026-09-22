@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c43ce4f40fbd848fefb98b951f44e90f, Data_science\MachineLearning\DeepLearning\test\MnistCnnGpuTest.vb"
+﻿#Region "Microsoft.VisualBasic::792bcd92ef087d581d472017830f3880, Data_science\MachineLearning\DeepLearning\test\MnistCnnGpuTest.vb"
 
     ' Author:
     ' 
@@ -417,4 +417,3 @@ Public Class MnistCnnGpuTest
     End Sub
 
 End Class
-

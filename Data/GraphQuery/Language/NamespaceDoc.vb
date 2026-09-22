@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::267bfa09bb797262f845c922229a2fa0, Data\GraphQuery\Language\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9c0a877d008f7f8f76424021ce20c503, Data\GraphQuery\Language\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 204 B
+    '     File Size: 202 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Language
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cb5cb4d9a5b8cacd708969629163314, Data_science\MachineLearning\SNN\test\self_test.vb"
+﻿#Region "Microsoft.VisualBasic::f0bb2c6e0ce0f59af14cb8080df1a1e1, Data_science\MachineLearning\SNN\test\self_test.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Module self_test
     End Sub
 
 End Module
-

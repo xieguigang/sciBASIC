@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0f80b63147b1a5f9d2afa5e61109f6f, Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ba86df6a6db55c581e9ce250e600a8d, Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 218 B
+    '     File Size: 216 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace My.JavaScript.ES6
     Module NamespaceDoc
     End Module
 End Namespace
-

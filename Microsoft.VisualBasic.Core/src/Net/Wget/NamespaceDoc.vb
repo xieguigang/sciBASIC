@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b35f2c44fbc47982f32f3812e712809c, Microsoft.VisualBasic.Core\src\Net\Wget\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fad8027d437d3cf57f08b4f6b06b5962, Microsoft.VisualBasic.Core\src\Net\Wget\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Net.WebClient
     Module NamespaceDoc
     End Module
 End Namespace
-

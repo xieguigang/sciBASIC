@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e49458612d54e2afd60b0fe3293fbb70, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::412290ae2d579166294606c06d2576ca, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 203 B
+    '     File Size: 201 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.TagData
     Module NamespaceDoc
     End Module
 End Namespace
-

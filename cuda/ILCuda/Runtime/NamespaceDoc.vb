@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01408eb7df4e1372747ef0923215b054, cuda\ILCuda\Runtime\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8fe2d8eb3396b0699dab1fd80527919f, cuda\ILCuda\Runtime\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 400 B
+    '     File Size: 398 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace Runtime
     Module NamespaceDoc
     End Module
 End Namespace
-

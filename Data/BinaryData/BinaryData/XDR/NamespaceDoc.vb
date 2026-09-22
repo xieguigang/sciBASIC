@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c86e89ccd8ae5a32a298e61d20a72258, Data\BinaryData\BinaryData\XDR\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6ff086172b48d404217b469a04f5acbc, Data\BinaryData\BinaryData\XDR\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 241 B
+    '     File Size: 239 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Xdr
     Module NamespaceDoc
     End Module
 End Namespace
-

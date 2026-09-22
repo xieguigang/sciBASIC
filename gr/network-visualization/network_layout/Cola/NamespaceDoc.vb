@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d78c7ad8139aab95e71a390d76f3af29, gr\network-visualization\network_layout\Cola\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a0f7a8aa512329bb2f7c818aa2785f2c, gr\network-visualization\network_layout\Cola\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 265 B
+    '     File Size: 263 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Cola
     Module NamespaceDoc
     End Module
 End Namespace
-

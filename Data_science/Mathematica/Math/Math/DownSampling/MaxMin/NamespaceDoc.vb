@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3584366f59e01ef872af74720aaac919, Data_science\Mathematica\Math\Math\DownSampling\MaxMin\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e64ba78ef1f8eede899ec797fbae738a, Data_science\Mathematica\Math\Math\DownSampling\MaxMin\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 171 B
+    '     File Size: 169 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DownSampling.MaxMin
     Module NamespaceDoc
     End Module
 End Namespace
-

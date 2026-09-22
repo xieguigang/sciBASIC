@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b554acbbf20b5138ef86961e82583af, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7307a66f8001f777dae835feeb5835e1, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 167 B
+    '     File Size: 165 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace NeuralNetwork
     Module NamespaceDoc
     End Module
 End Namespace
-

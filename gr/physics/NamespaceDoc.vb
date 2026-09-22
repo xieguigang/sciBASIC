@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::857a886a1dc4cb52a459d56becd89a14, gr\physics\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7353fc310ffa035478963b54194197af, gr\physics\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 289 B
+    '     File Size: 287 B
 
 
     ' Class NamespaceDoc
@@ -58,4 +58,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

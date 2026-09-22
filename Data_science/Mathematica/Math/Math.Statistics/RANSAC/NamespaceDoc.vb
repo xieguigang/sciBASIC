@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9ff664501aff1cab64d5ef24e5bd4a4, Data_science\Mathematica\Math\Math.Statistics\RANSAC\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0a583c57ce9f8d36fafa46283a4bc1ff, Data_science\Mathematica\Math\Math.Statistics\RANSAC\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace RANSAC
     Module NamespaceDoc
     End Module
 End Namespace
-

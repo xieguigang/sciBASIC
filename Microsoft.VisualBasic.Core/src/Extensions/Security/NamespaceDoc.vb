@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee90db05c3ebb61524d220d230536a5e, Microsoft.VisualBasic.Core\src\Extensions\Security\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::35c35722e6dbccbed8602bca923a4578, Microsoft.VisualBasic.Core\src\Extensions\Security\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 210 B
+    '     File Size: 208 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace SecurityString
     Module NamespaceDoc
     End Module
 End Namespace
-

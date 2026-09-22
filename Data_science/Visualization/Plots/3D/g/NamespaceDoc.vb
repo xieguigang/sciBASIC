@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5d95eac2606b7883c9d27c9391ea2b1, Data_science\Visualization\Plots\3D\g\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::621b830401bab84c8cb139560621bc2a, Data_science\Visualization\Plots\3D\g\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 159 B
+    '     File Size: 157 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Plot3D.Model
     Module NamespaceDoc
     End Module
 End Namespace
-

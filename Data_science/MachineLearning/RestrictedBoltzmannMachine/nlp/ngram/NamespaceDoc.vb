@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41ab2a6d4810c2083f6f8506e6634d94, Data_science\MachineLearning\RestrictedBoltzmannMachine\nlp\ngram\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::258718d75633d116280b8f78c029a331, Data_science\MachineLearning\RestrictedBoltzmannMachine\nlp\ngram\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 191 B
+    '     File Size: 189 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace nlp.ngram
     Module NamespaceDoc
     End Module
 End Namespace
-

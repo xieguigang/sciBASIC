@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e098f688e044746804f84e085020276d, Data_science\Mathematica\Math\DataFittings\LASSO\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9f423f0af804e2f405c8ad1c250bc283, Data_science\Mathematica\Math\DataFittings\LASSO\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 158 B
+    '     File Size: 156 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LASSO
     Module NamespaceDoc
     End Module
 End Namespace
-

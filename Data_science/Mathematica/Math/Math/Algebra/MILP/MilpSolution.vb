@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7057e8e44a45e2d198a92bee76196566, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpSolution.vb"
+﻿#Region "Microsoft.VisualBasic::c3f6e8d49f9da02658ed47e61b4c94d4, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpSolution.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 63.64%
     ' 
     '   Blank Lines: 28 (16.47%)
-    '     File Size: 7.44 KB
+    '     File Size: 7.43 KB
 
 
     '     Enum MilpStatus
@@ -235,4 +235,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Class
 
 End Namespace
-

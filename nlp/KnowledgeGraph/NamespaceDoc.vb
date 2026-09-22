@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04a561bdd85c44b485f173598a84fdd3, nlp\KnowledgeGraph\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0f5ee682473b0d6d8f1d39ff49614363, nlp\KnowledgeGraph\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 306 B
+    '     File Size: 304 B
 
 
     ' Class NamespaceDoc
@@ -58,4 +58,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

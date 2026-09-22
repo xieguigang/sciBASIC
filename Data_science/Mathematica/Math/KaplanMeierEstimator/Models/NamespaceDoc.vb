@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b200eb3c364b04066a1b2599934b811, Data_science\Mathematica\Math\KaplanMeierEstimator\Models\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::62dfb1099edb1d00afb3aa01a1a2da83, Data_science\Mathematica\Math\KaplanMeierEstimator\Models\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 167 B
+    '     File Size: 165 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Models
     Module NamespaceDoc
     End Module
 End Namespace
-

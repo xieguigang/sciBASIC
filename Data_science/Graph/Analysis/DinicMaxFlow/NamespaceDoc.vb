@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::887cd8be08f1cd6faea96f5c5d909170, Data_science\Graph\Analysis\DinicMaxFlow\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d80d86e93c14c085d28edce8b57b31fc, Data_science\Graph\Analysis\DinicMaxFlow\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 164 B
+    '     File Size: 162 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DinicMaxFlow
     Module NamespaceDoc
     End Module
 End Namespace
-

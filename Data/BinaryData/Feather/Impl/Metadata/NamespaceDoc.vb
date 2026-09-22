@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e7ae294006a17d0456f8f84a51b2b5c, Data\BinaryData\Feather\Impl\Metadata\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2220842cb7cf61e1debcd067c9d80ea9, Data\BinaryData\Feather\Impl\Metadata\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 276 B
+    '     File Size: 274 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Impl.FbsMetadata
     Module NamespaceDoc
     End Module
 End Namespace
-

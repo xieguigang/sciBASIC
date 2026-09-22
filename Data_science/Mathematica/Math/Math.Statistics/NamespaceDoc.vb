@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1537c7fb7c777c1a03f1bfdf9ace4ea8, Data_science\Mathematica\Math\Math.Statistics\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::62f5a8f717f53cde795583e41bbbab3a, Data_science\Mathematica\Math\Math.Statistics\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 179 B
+    '     File Size: 177 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

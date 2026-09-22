@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::007396a3b7a03ce1ab16243ace84214b, Data\BinaryData\DataStorage\XPT\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::23c1e9c883c9dfdf429ad9c843727dc6, Data\BinaryData\DataStorage\XPT\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 463 B
+    '     File Size: 461 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace Xpt.Types
     Module NamespaceDoc
     End Module
 End Namespace
-

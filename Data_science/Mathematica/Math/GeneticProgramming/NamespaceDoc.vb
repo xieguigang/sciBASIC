@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8974ec6b295477390a121a898f366256, Data_science\Mathematica\Math\GeneticProgramming\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7f34793b416c3ab0e51775b191429e0c, Data_science\Mathematica\Math\GeneticProgramming\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 157 B
+    '     File Size: 155 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

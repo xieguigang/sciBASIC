@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f1a70c29f53df286f3152053686761d, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6c83562ef8e2a5f8ee9c0729f46d1528, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Scripting.MathExpression.Impl
     Module NamespaceDoc
     End Module
 End Namespace
-

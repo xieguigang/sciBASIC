@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f6d7bedf3ddb14c7c7560289898a234, Data\DataFrame\IO\ARFFText\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d3ca8fe8f3a09acffd4451e1f2320255, Data\DataFrame\IO\ARFFText\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 191 B
+    '     File Size: 189 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace IO.ArffFile
     Module NamespaceDoc
     End Module
 End Namespace
-

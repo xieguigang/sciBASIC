@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f499a2985fa046b51bb9e1fbdee49e10, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bdafff8ab3fa8102bf2f211488e35fb9, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 185 B
+    '     File Size: 183 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Hypothesis.FishersExact
     Module NamespaceDoc
     End Module
 End Namespace
-

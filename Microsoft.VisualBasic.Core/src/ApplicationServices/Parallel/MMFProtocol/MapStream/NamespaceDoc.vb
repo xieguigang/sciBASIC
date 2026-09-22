@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6595cf4b3971373519c75772f17c5430, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0c2858478d33fb4317a2124ce4766f32, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 222 B
+    '     File Size: 220 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Parallel.MMFProtocol.MapStream
     Module NamespaceDoc
     End Module
 End Namespace
-

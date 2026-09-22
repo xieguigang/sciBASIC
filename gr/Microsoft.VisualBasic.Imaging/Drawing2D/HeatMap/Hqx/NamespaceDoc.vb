@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e3ed2d34b179788a855bb2de70504e0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bf0c46bf984d2b108f063d28b21df80b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 243 B
+    '     File Size: 241 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.HeatMap.hqx
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1414fe8ed34a683374607853a2097409, Data_science\MachineLearning\DeepLearning\Transformer\TensorOps.vb"
+﻿#Region "Microsoft.VisualBasic::3c5404700da9db1bd8155c335dd2f854, Data_science\MachineLearning\DeepLearning\Transformer\TensorOps.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 84.82%
     ' 
     '   Blank Lines: 172 (22.11%)
-    '     File Size: 30.28 KB
+    '     File Size: 30.27 KB
 
 
     '     Module TensorOps
@@ -838,4 +838,3 @@ Namespace Transformer
 
     End Module
 End Namespace
-

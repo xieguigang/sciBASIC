@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9d9676d7cb462b366e90e74732fe7df, Data_science\Graph\Analysis\Community\FastUnfolding\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cd0b27e590425e3f45d7ddcbc84d79dd, Data_science\Graph\Analysis\Community\FastUnfolding\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 200 B
+    '     File Size: 198 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Analysis.FastUnfolding
     Module NamespaceDoc
     End Module
 End Namespace
-

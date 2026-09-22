@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad141d1f3fdef7e7bf8f06d3173f0fe5, Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1de864ba7116fae991a320dc1177cba2, Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 173 B
+    '     File Size: 171 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Net.Http.JsonRPC
     Module NamespaceDoc
     End Module
 End Namespace
-

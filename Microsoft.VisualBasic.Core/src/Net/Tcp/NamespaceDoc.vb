@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5e87be02297514faad13ac6cc858695, Microsoft.VisualBasic.Core\src\Net\Tcp\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bc1122293d3168931129b368ada8b322, Microsoft.VisualBasic.Core\src\Net\Tcp\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 178 B
+    '     File Size: 176 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Net.Tcp
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d60145897656ed384214361d038ce29e, Data_science\Graph\Analysis\Community\Louvain\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::eb35a6d0309d83682235036b9d0c8cc9, Data_science\Graph\Analysis\Community\Louvain\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Analysis.Louvain
     Module NamespaceDoc
     End Module
 End Namespace
-

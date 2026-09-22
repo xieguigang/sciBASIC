@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::100c9db9e14f3b8f9780354c5fe11c2a, Data_science\MachineLearning\MachineLearning\QLearning\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::857609f73279119e53f472a307e5f63b, Data_science\MachineLearning\MachineLearning\QLearning\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (17.65%)
-    '     File Size: 361 B
+    '     File Size: 359 B
 
 
     '     Module NamespaceDoc
@@ -73,4 +73,3 @@ Namespace QLearning.DataModel
     Module NamespaceDoc
     End Module
 End Namespace
-

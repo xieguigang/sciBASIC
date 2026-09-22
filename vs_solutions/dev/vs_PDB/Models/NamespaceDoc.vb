@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d71d4967b4fce91fd9fd5d842dae9321, vs_solutions\dev\vs_PDB\Models\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e1fe691782d7b0fe0d6b9a59b5f2712c, vs_solutions\dev\vs_PDB\Models\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 328 B
+    '     File Size: 326 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace Models
     Module NamespaceDoc
     End Module
 End Namespace
-

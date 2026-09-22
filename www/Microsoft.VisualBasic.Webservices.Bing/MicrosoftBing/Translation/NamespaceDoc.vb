@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80e43fa5235ee832ef63a2f7d1c3b686, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fffabde6c3d4ed60f479fdca6f2acc90, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 261 B
+    '     File Size: 259 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Bing.Translation
     Module NamespaceDoc
     End Module
 End Namespace
-

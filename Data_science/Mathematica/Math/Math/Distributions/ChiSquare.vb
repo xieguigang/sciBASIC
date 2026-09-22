@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::971ceef78ce2456e9566c8b1ede7d2c6, Data_science\Mathematica\Math\Math\Distributions\ChiSquare.vb"
+﻿#Region "Microsoft.VisualBasic::d92457927093c1edc474174787dbe9cb, Data_science\Mathematica\Math\Math\Distributions\ChiSquare.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.84%
     ' 
     '   Blank Lines: 47 (17.09%)
-    '     File Size: 10.72 KB
+    '     File Size: 10.71 KB
 
 
     '     Module ChiSquareDistribution
@@ -327,4 +327,3 @@ Namespace Distributions
         End Function
     End Module
 End Namespace
-

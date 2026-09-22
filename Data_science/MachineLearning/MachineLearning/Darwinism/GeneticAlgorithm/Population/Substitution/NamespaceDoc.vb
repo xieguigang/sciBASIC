@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d64da3c33b23f30e8f020f0b9030066a, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::89280ba2905ac7fa39cddd3d1f1f8a42, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 237 B
+    '     File Size: 235 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
     Module NamespaceDoc
     End Module
 End Namespace
-

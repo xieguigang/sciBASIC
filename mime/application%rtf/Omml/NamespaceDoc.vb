@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97941df021946d05ad6547bd976e8681, mime\application%rtf\Omml\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b1774b37342a8a184041cb23a38cea05, mime\application%rtf\Omml\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 294 B
+    '     File Size: 292 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Omml
     Module NamespaceDoc
     End Module
 End Namespace
-

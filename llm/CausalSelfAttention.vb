@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52598cb5677c5db4b28f74694369fd9, llm\CausalSelfAttention.vb"
+﻿#Region "Microsoft.VisualBasic::017b849040ccc8b642371bc5c52b61d2, llm\CausalSelfAttention.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 560
-    '    Code Lines: 336 (60.00%)
-    ' Comment Lines: 110 (19.64%)
+    '   Total Lines: 558
+    '    Code Lines: 336 (60.22%)
+    ' Comment Lines: 110 (19.71%)
     '    - Xml Docs: 55.45%
     ' 
-    '   Blank Lines: 114 (20.36%)
+    '   Blank Lines: 112 (20.07%)
     '     File Size: 22.77 KB
 
 
@@ -53,7 +53,6 @@
     ' 
     '     Sub: MakeTrainingStep, RegisterParameters, ZeroGradients
     '     Class Cache
-    ' 
     ' 
     ' 
     ' 
@@ -621,6 +620,3 @@ Public Class CausalSelfAttention
 #End Region
 
 End Class
-
-
-

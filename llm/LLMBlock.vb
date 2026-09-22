@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b6fc4f5a6dcfe027b8f25242d6cc614, llm\LLMBlock.vb"
+﻿#Region "Microsoft.VisualBasic::2e977477473de05193cc2f815d8a55a3, llm\LLMBlock.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 298
-    '    Code Lines: 171 (57.38%)
-    ' Comment Lines: 66 (22.15%)
+    '   Total Lines: 296
+    '    Code Lines: 171 (57.77%)
+    ' Comment Lines: 66 (22.30%)
     '    - Xml Docs: 72.73%
     ' 
-    '   Blank Lines: 61 (20.47%)
-    '     File Size: 11.78 KB
+    '   Blank Lines: 59 (19.93%)
+    '     File Size: 11.77 KB
 
 
     ' Class LLMBlock
@@ -53,7 +53,6 @@
     ' 
     '     Sub: MakeTrainingStep, RegisterParameters, ZeroGradients
     '     Class Cache
-    ' 
     ' 
     ' 
     ' 
@@ -359,6 +358,3 @@ Public Class LLMBlock
 #End Region
 
 End Class
-
-
-

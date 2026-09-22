@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32330ee549a79682d53560a2d47a4d57, Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::42b079c8a6e8532720aead36fe8889fb, Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 186 B
+    '     File Size: 184 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Text.Patterns.Validator
     Module NamespaceDoc
     End Module
 End Namespace
-

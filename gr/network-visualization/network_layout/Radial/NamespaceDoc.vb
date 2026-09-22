@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665b1f908f7f7a749b67357f83d9e8b2, gr\network-visualization\network_layout\Radial\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::602c71b3962f4446f47c3aa1e9b52b90, gr\network-visualization\network_layout\Radial\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Radial
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d59e44dfe4277adfb437c915e36f6834, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8b6bb8d7b79902897b5ba6208db48953, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 181 B
+    '     File Size: 179 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CNN.losslayers
     Module NamespaceDoc
     End Module
 End Namespace
-

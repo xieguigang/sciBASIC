@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6a6066ad9086efd92604bf2ea743eb3, Data_science\MachineLearning\xgboost\learner\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7845eb6e5c26ddb982f848a46d0d3fb3, Data_science\MachineLearning\xgboost\learner\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 158 B
+    '     File Size: 156 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace learner
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d874de1352c9facca41f07a3349ddf5b, Data_science\Mathematica\Math\Math\Distributions\Bessel.vb"
+﻿#Region "Microsoft.VisualBasic::355a0efe8e20ae72819545e103d9289a, Data_science\Mathematica\Math\Math\Distributions\Bessel.vb"
 
     ' Author:
     ' 
@@ -273,4 +273,3 @@ Namespace Distributions
         End Function
     End Module
 End Namespace
-

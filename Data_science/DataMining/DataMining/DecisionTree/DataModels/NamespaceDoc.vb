@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a58ca9dbca4d996cc4c800e7ed47bbc2, Data_science\DataMining\DataMining\DecisionTree\DataModels\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::238503e42b268084930e5da7f4ec2288, Data_science\DataMining\DataMining\DecisionTree\DataModels\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 182 B
+    '     File Size: 180 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DecisionTree.Data
     Module NamespaceDoc
     End Module
 End Namespace
-

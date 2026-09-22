@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e6f7d279e16a28deedaf705eb009d84, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::10d64a799009ebffbea1ff305cb5612a, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 192 B
+    '     File Size: 190 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Framework.Optimization.LBFGSB
     Module NamespaceDoc
     End Module
 End Namespace
-

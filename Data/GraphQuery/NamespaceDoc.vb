@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be3f342c51679a94e1a6f5e5961e5bba, Data\GraphQuery\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2947b04ed080b60e9880168d4c78680f, Data\GraphQuery\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 319 B
+    '     File Size: 317 B
 
 
     ' Class NamespaceDoc
@@ -58,4 +58,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

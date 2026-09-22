@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b59e8c2a12c1d1016b150dafa7488854, Data_science\Graph\MST\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4256f56b1ea8d069abf1b537f61d44d4, Data_science\Graph\MST\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 171 B
+    '     File Size: 169 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace MinimumSpanningTree
     Module NamespaceDoc
     End Module
 End Namespace
-

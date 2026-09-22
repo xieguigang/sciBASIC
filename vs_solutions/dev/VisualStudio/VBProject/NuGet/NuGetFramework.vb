@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f180cf5b8f380623a43b79caa17821f7, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetFramework.vb"
+﻿#Region "Microsoft.VisualBasic::0e586816f78af80fb60ccfa21addc605, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetFramework.vb"
 
     ' Author:
     ' 
@@ -258,4 +258,3 @@ Namespace VBProj.NuGet
         End Function
     End Module
 End Namespace
-

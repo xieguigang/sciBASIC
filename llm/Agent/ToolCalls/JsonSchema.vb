@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e5c3468cf238ba9477e8cb76bda7ba7, llm\Agent\ToolCalls\JsonSchema.vb"
+﻿#Region "Microsoft.VisualBasic::4f4a7c180f1f47c34c327e6c62b05e2a, llm\Agent\ToolCalls\JsonSchema.vb"
 
     ' Author:
     ' 
@@ -224,4 +224,3 @@ Namespace Agent.ToolCalls
     End Class
 
 End Namespace
-

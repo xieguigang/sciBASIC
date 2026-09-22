@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5147824bb81aa7794d78bf4f99d0fee, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::75be412ffe2b6cddc4e863497a63aedc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 201 B
+    '     File Size: 199 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Drawing2D.Math2D.PolylineSimplify
     Module NamespaceDoc
     End Module
 End Namespace
-

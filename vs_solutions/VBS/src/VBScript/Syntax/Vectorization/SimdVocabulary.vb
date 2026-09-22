@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55bccc61d2a139841ec8cded7392a03f, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\SimdVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::2623e584f016af4343e72c591d182d85, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\SimdVocabulary.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.42%
     ' 
     '   Blank Lines: 73 (17.38%)
-    '     File Size: 18.97 KB
+    '     File Size: 18.96 KB
 
 
     '     Structure VectorOperand
@@ -478,4 +478,3 @@ Namespace Script
 #End Region
     End Module
 End Namespace
-

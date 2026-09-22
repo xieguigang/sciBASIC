@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ebd541c1f73e169c0732f90c77464da, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetPackage.vb"
+﻿#Region "Microsoft.VisualBasic::2f8b9c0b27fce375e841ca4e49d30956, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetPackage.vb"
 
     ' Author:
     ' 
@@ -199,4 +199,3 @@ Namespace VBProj.NuGet
         End Sub
     End Class
 End Namespace
-

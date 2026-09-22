@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4b8a92f502321e320abdb33f6472ed3, Data_science\MachineLearning\DeepLearning\test\MnistBaseline.vb"
+﻿#Region "Microsoft.VisualBasic::6252fc91d53131c972c12742f9ed6ef2, Data_science\MachineLearning\DeepLearning\test\MnistBaseline.vb"
 
     ' Author:
     ' 
@@ -169,4 +169,3 @@ Public Class MnistBaseline
     End Sub
 
 End Class
-

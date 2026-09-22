@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe7436a751a058ccf75b1b9af83db2b0, llm\Agent\ToolCalls\ToolRegistry.vb"
+﻿#Region "Microsoft.VisualBasic::5b30f7ed831a5430098a500af93276fa, llm\Agent\ToolCalls\ToolRegistry.vb"
 
     ' Author:
     ' 
@@ -241,4 +241,3 @@ Namespace Agent.ToolCalls
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3061f31b0eaea279ecdb7fec5fa400e6, Data_science\Mathematica\Math\Math\Algebra\MILP\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bd4b08dbc04495c79a607906bed11d9d, Data_science\Mathematica\Math\Math\Algebra\MILP\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 188 B
+    '     File Size: 186 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     Module NamespaceDoc
     End Module
 End Namespace
-

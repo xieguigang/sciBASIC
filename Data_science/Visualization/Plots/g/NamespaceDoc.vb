@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86cb86253bf65e4c0e59fc72f3cbfd16, Data_science\Visualization\Plots\g\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::07b5bb0b338b6a1cffc43727255a6334, Data_science\Visualization\Plots\g\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 420 B
+    '     File Size: 418 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace Graphic.Canvas
     Module NamespaceDoc
     End Module
 End Namespace
-

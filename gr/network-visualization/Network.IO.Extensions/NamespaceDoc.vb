@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33d9cb2157b808bb4b7f89215c1dad53, gr\network-visualization\Network.IO.Extensions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::126292f4a30b2171af1d659678aeaf08, gr\network-visualization\Network.IO.Extensions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 247 B
+    '     File Size: 245 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

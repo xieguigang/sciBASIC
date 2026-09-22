@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e753d8dd36c1597effe20d7f87a04d0, vs_solutions\VBS\src\VBScript\Syntax\ScriptRefactor.vb"
+﻿#Region "Microsoft.VisualBasic::db71483f0bafb1ae5b05372b5046e09a, vs_solutions\VBS\src\VBScript\Syntax\ScriptRefactor.vb"
 
     ' Author:
     ' 
@@ -436,4 +436,3 @@ Namespace Script
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e273f5bf00e70066b73fcd63ada75195, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1c06dc5727eea5392c84e812e4066b5c, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 241 B
+    '     File Size: 239 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace PostScript.Elements
     Module NamespaceDoc
     End Module
 End Namespace
-

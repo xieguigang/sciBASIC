@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36de51915682496bc6abca878dcda749, Data_science\Mathematica\Math\MathLambda\Symbolic\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4209abe64ae9abf0de70a67fefedb09d, Data_science\Mathematica\Math\MathLambda\Symbolic\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 206 B
+    '     File Size: 204 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Symbolic
     Module NamespaceDoc
     End Module
 End Namespace
-

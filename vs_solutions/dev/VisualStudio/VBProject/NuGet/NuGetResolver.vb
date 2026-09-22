@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba2702099e0ffd548693ccea97df5b24, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetResolver.vb"
+﻿#Region "Microsoft.VisualBasic::be393c7f0b5bc08cb64296f6f777917a, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetResolver.vb"
 
     ' Author:
     ' 
@@ -584,4 +584,3 @@ Namespace VBProj.NuGet
         End Function
     End Class
 End Namespace
-

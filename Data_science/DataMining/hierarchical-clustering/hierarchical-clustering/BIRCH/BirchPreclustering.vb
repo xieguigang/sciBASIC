@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d18235bc7d6dfd9301e22b5b84f9bff, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\BirchPreclustering.vb"
+﻿#Region "Microsoft.VisualBasic::76da9aae73648059b8eae718ad93b1c8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\BirchPreclustering.vb"
 
     ' Author:
     ' 
@@ -338,4 +338,3 @@ Namespace BIRCH
 
     End Class
 End Namespace
-

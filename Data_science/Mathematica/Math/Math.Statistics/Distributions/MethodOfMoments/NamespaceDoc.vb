@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9c5b12345404dd5e2b68b03a56956ca, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ae8346bb627c543401a54c7d7575a2e4, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 212 B
+    '     File Size: 210 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Distributions.MethodOfMoments
     Module NamespaceDoc
     End Module
 End Namespace
-

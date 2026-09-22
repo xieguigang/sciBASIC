@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a320ecb95ca47eac67673d7d7c99d4b, Data\GraphQuery\TextParser\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cd1115c07be4eded06b8f75b982abfd7, Data\GraphQuery\TextParser\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 261 B
+    '     File Size: 259 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace TextParser
     Module NamespaceDoc
     End Module
 End Namespace
-

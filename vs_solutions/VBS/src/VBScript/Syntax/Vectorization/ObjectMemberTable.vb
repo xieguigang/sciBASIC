@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::669cbbab8eddd277edde384145c595ba, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\ObjectMemberTable.vb"
+﻿#Region "Microsoft.VisualBasic::587d184637174677a15bf21a32d8bcdf, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\ObjectMemberTable.vb"
 
     ' Author:
     ' 
@@ -344,4 +344,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

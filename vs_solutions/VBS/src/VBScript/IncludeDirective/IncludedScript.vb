@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6eac76106ddf4783c3aa6a7e35fde3ba, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludedScript.vb"
+﻿#Region "Microsoft.VisualBasic::6e78156af47265ebefb8f97414f4c416, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludedScript.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (22.22%)
-    '     File Size: 524 B
+    '     File Size: 522 B
 
 
     '     Class IncludedScript
@@ -72,4 +72,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

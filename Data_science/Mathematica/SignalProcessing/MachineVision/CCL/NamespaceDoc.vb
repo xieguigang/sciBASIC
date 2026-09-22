@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d092c4f42a87c8952288ef30a4887c63, Data_science\Mathematica\SignalProcessing\MachineVision\CCL\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::59f83b996f356c36527b9e84d086b039, Data_science\Mathematica\SignalProcessing\MachineVision\CCL\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 151 B
+    '     File Size: 149 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CCL
     Module NamespaceDoc
     End Module
 End Namespace
-

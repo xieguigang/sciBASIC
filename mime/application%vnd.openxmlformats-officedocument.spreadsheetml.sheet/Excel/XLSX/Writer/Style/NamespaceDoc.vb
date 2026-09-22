@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::683e9e97fe4082c9a0cd61e1fcd16c48, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ae2d3fa627dc0725601be05d60d7331, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 285 B
+    '     File Size: 283 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace XLSX.Writer.Styling
     Module NamespaceDoc
     End Module
 End Namespace
-

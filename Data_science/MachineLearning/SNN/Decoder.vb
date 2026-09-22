@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d632703dcf91aebe08b4019718082ea, Data_science\MachineLearning\SNN\Decoder.vb"
+﻿#Region "Microsoft.VisualBasic::d1dde9ab91a36abee0d61d352052315b, Data_science\MachineLearning\SNN\Decoder.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 59.52%
     ' 
     '   Blank Lines: 36 (16.90%)
-    '     File Size: 7.88 KB
+    '     File Size: 7.87 KB
 
 
     ' Module SpikeDecoders
@@ -267,4 +267,3 @@ Public Module SpikeDecoders
 #End Region
 
 End Module
-

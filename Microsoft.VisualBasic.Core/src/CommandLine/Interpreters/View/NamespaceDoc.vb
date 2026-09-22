@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23dad69d48a2a2789c04e209f4653089, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::54ad0cad19f2c202b17b28ddb318a424, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 230 B
+    '     File Size: 228 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CommandLine.ManView
     Module NamespaceDoc
     End Module
 End Namespace
-

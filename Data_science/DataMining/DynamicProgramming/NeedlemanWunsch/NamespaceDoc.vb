@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0c24ade53d98cfebb4b5482a371e7ee, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::04186fa78bf9d062d02f8eaab32c2bfb, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 191 B
+    '     File Size: 189 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace NeedlemanWunsch
     Module NamespaceDoc
     End Module
 End Namespace
-

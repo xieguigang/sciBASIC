@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9d226cb79ef637e12af3dbda68d9d6c, vs_solutions\VBS\src\VBScript\ProjectCodeBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::d07ef39e8fbd9de55b0396dbd85ec165, vs_solutions\VBS\src\VBScript\ProjectCodeBuilder.vb"
 
     ' Author:
     ' 
@@ -545,4 +545,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

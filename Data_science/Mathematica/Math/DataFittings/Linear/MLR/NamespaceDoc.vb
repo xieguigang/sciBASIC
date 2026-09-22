@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a53a9fecbd9963e4cb76232c0278f41, Data_science\Mathematica\Math\DataFittings\Linear\MLR\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c74a774405df0752c996806cafbb5ce5, Data_science\Mathematica\Math\DataFittings\Linear\MLR\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 168 B
+    '     File Size: 166 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Multivariate
     Module NamespaceDoc
     End Module
 End Namespace
-

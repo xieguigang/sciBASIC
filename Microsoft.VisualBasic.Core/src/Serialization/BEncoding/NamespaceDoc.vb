@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88b91f5ccb13cf080a475e9e6c11d1a9, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::29787cfeadf45fa7502d30a59fd1a84c, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 224 B
+    '     File Size: 222 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Serialization.Bencoding
     Module NamespaceDoc
     End Module
 End Namespace
-

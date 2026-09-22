@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbde6dfc0726eca5458c71bfeeb8c3b5, mime\application%rtf\Reader\RtfTextReader.vb"
+﻿#Region "Microsoft.VisualBasic::d85612543c85318d6cc95b38f5197d34, mime\application%rtf\Reader\RtfTextReader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 67.12%
     ' 
     '   Blank Lines: 27 (15.61%)
-    '     File Size: 7.38 KB
+    '     File Size: 7.37 KB
 
 
     ' Class RtfDocumentInfo
@@ -231,4 +231,3 @@ Public Class RtfTextReader
     End Function
 
 End Class
-

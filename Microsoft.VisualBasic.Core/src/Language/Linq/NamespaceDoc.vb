@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::844eedff277cf82f0faf0a2b9c1ff879, Microsoft.VisualBasic.Core\src\Language\Linq\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1a37b74fd0a587391eb63a1c38993604, Microsoft.VisualBasic.Core\src\Language\Linq\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 188 B
+    '     File Size: 186 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Language.LinqAPIHelpers
     Module NamespaceDoc
     End Module
 End Namespace
-

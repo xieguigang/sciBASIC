@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a44b4202239b30305888c1aad0b7cd2e, Data_science\Mathematica\Math\mHG\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::344cf0b2999801413c16ae44a6fc7220, Data_science\Mathematica\Math\mHG\test\Program.vb"
 
     ' Author:
     ' 
@@ -588,4 +588,3 @@ Module Program
 #End Region
 
 End Module
-

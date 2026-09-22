@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c115af42097b3956dc70e65352750f6, Data\BinaryData\SQLite3\Writer\Internal\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::606a5ab38f2955a26ae3305d81c12369, Data\BinaryData\SQLite3\Writer\Internal\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 242 B
+    '     File Size: 240 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Writer.Internal
     Module NamespaceDoc
     End Module
 End Namespace
-

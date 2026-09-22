@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::767dc7501352e726b459acaeb920d2d9, Data_science\Mathematica\Math\Randomizer\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3f6f3e8d0d576fffccfb76f25de7bd33, Data_science\Mathematica\Math\Randomizer\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 123 B
+    '     File Size: 121 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

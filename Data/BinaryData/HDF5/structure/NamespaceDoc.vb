@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4399640a5c6c3b0c2d16199da030770, Data\BinaryData\HDF5\structure\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6bff46b92985d0877c74963a2ef2b9e4, Data\BinaryData\HDF5\structure\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 292 B
+    '     File Size: 290 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace struct
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72f2f5ee5c9754640841dda8daa56397, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCoreApp\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f1c935fed030faa1374baab4e1e52908, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCoreApp\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 306 B
+    '     File Size: 304 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Development.NetCoreApp
     Module NamespaceDoc
     End Module
 End Namespace
-

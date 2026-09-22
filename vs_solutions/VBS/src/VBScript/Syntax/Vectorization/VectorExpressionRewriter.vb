@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83195bbebe609bc7411b5a18d97ed37a, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\VectorExpressionRewriter.vb"
+﻿#Region "Microsoft.VisualBasic::069721af245e5a82d20441ae4a430839, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\VectorExpressionRewriter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.54%
     ' 
     '   Blank Lines: 263 (22.12%)
-    '     File Size: 52.18 KB
+    '     File Size: 52.17 KB
 
 
     '     Class VectorExpressionRewriter
@@ -1253,4 +1253,3 @@ Namespace Script
         End Sub
     End Class
 End Namespace
-

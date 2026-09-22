@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e21bd1200aa5838dcb4cde5539e37f8f, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::247cea24472b68dcc2228276ed10c2a7, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 188 B
+    '     File Size: 186 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Imaging.BitmapImage.FileStream
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcf3a9ca62f31b1c4091b76837c550bd, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludeDirective.vb"
+﻿#Region "Microsoft.VisualBasic::2db15e09e03f60733c6ae7ba8d010dc9, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludeDirective.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (22.86%)
-    '     File Size: 1.20 KB
+    '     File Size: 1.19 KB
 
 
     '     Class IncludeDirective
@@ -90,4 +90,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

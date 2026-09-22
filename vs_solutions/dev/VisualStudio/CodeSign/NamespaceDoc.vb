@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e6b81acb934fc5f9bf72129035a24b9, vs_solutions\dev\VisualStudio\CodeSign\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::149d80f719d0ccdb4ce4eb9f1945b51e, vs_solutions\dev\VisualStudio\CodeSign\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 317 B
+    '     File Size: 315 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace CodeSign
     Module NamespaceDoc
     End Module
 End Namespace
-

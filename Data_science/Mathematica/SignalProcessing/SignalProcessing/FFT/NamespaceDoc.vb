@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e159c3745f9d94547db6fefec0dd020e, Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ad38043fb8d61039f8a82acb0f828d1d, Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace FFT
     Module NamespaceDoc
     End Module
 End Namespace
-

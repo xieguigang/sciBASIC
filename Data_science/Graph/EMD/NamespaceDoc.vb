@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b19e52085b6feace5fcafe0ef60565c, Data_science\Graph\EMD\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7eb9697f30f2cf7be63e8b6d406cb36a, Data_science\Graph\EMD\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 207 B
+    '     File Size: 205 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace EMD
     Module NamespaceDoc
     End Module
 End Namespace
-

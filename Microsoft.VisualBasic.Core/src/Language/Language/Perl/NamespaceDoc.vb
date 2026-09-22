@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::103ed43ae269c8125ad1fafe222562c0, Microsoft.VisualBasic.Core\src\Language\Language\Perl\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e214276bed98a34ca6f5e55785158de7, Microsoft.VisualBasic.Core\src\Language\Language\Perl\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Language.Perl
     Module NamespaceDoc
     End Module
 End Namespace
-

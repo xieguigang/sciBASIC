@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::786a4a4b7642f6ea5f4d8cbef324a98e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::52fb2b02ec7955b4819e0978c2bd4e01, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 313 B
+    '     File Size: 311 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Debugging
     Module NamespaceDoc
     End Module
 End Namespace
-

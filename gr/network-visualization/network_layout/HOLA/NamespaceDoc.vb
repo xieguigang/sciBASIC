@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6ec39d0b40c5e416e4258533b3dc17d, gr\network-visualization\network_layout\HOLA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::156fa6869931f2571c323ebc13d07e00, gr\network-visualization\network_layout\HOLA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Hola
     Module NamespaceDoc
     End Module
 End Namespace
-

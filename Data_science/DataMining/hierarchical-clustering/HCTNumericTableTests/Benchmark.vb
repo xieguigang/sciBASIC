@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::608181087d43e52ad50950e093680dd9, Data_science\DataMining\hierarchical-clustering\HCTNumericTableTests\Benchmark.vb"
+﻿#Region "Microsoft.VisualBasic::e81222b2834ca72f593d36d24917e507, Data_science\DataMining\hierarchical-clustering\HCTNumericTableTests\Benchmark.vb"
 
     ' Author:
     ' 
@@ -277,4 +277,3 @@ Module Benchmark
         Return correct / total
     End Function
 End Module
-

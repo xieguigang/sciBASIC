@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9196c444e141562dcf4006c3998d64fb, gr\Landscape\Max3DS\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0e789f3007912e95270f321a2f944734, gr\Landscape\Max3DS\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 212 B
+    '     File Size: 210 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Max3DS
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbdb2f793b83fd8d8d14ddd7a8ec08f2, Data\BinaryData\msgpack\Constants\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::970b340661d7d775618e6502f58d6f86, Data\BinaryData\msgpack\Constants\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 273 B
+    '     File Size: 271 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Constants
     Module NamespaceDoc
     End Module
 End Namespace
-

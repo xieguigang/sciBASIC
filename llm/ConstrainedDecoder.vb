@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1926a4d4c785aeb7a3004b6a8daedc8c, llm\ConstrainedDecoder.vb"
+﻿#Region "Microsoft.VisualBasic::633867438c30e1b99dc53e9421314858, llm\ConstrainedDecoder.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 789
-    '    Code Lines: 500 (63.37%)
-    ' Comment Lines: 123 (15.59%)
+    '   Total Lines: 787
+    '    Code Lines: 500 (63.53%)
+    ' Comment Lines: 123 (15.63%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 166 (21.04%)
+    '   Blank Lines: 164 (20.84%)
     '     File Size: 28.47 KB
 
 
@@ -70,7 +70,6 @@
     '               HasRequiredFrom, IsCompleteNumber, IsFirstCharacterCandidate, IsNumberPrefix, IsTokenLegal
     ' 
     '     Sub: Commit, Reset, Restore
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -863,6 +862,3 @@ Public Class ConstrainedDecoder
 #End Region
 
 End Class
-
-
-

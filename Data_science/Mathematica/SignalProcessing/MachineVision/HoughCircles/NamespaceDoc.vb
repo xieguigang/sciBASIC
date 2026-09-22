@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfb23079bbaa3d781875b6ae04661b51, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3c7e7380c1b037eaa244787dfb792fcb, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace HoughCircles
     Module NamespaceDoc
     End Module
 End Namespace
-

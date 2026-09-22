@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39df2a54b2ca6f5f504070a63b4f55df, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::480f29dd72da711dd8980515b14224dd, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 236 B
+    '     File Size: 234 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CommandLine.InteropService
     Module NamespaceDoc
     End Module
 End Namespace
-

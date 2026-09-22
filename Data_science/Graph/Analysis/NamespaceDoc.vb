@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08c8aeb2c7afc19f2828b58fd90c08a8, Data_science\Graph\Analysis\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::302ebd9616daa0aabf253d7d7d130b5f, Data_science\Graph\Analysis\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 493 B
+    '     File Size: 491 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace Analysis.ContractionHierarchies
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25fb8fec4a1ee6e73ef7d09ee3c10770, Data_science\DataMining\DataMining\ComponentModel\Encoder\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::760c8131c328043b0571a3a78bd24858, Data_science\DataMining\DataMining\ComponentModel\Encoder\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 228 B
+    '     File Size: 226 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Encoder
     Module NamespaceDoc
     End Module
 End Namespace
-

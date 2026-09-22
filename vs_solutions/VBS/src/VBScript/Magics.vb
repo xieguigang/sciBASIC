@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce839274d1e3e5fce0a22a32f4f8fe35, vs_solutions\VBS\src\VBScript\Magics.vb"
+﻿#Region "Microsoft.VisualBasic::62b2a35b73b3dd4a1501c4431731dd3e, vs_solutions\VBS\src\VBScript\Magics.vb"
 
     ' Author:
     ' 
@@ -264,4 +264,3 @@ Namespace Script
         End Function
     End Module
 End Namespace
-

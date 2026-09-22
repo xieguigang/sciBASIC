@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfce1f20a021241b28e38e0118b98dba, mime\application%rtf\Writer\RtfDocument.vb"
+﻿#Region "Microsoft.VisualBasic::5deae7a2a6a69445d62f3cd0bf5af4a5, mime\application%rtf\Writer\RtfDocument.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 61.95%
     ' 
     '   Blank Lines: 119 (16.19%)
-    '     File Size: 34.70 KB
+    '     File Size: 34.69 KB
 
 
     ' Class RtfDocument
@@ -812,4 +812,3 @@ Public Class RtfWriteMeta
     ''' <summary>生成程序名称。</summary>
     Public Property Creator As String = ""
 End Class
-

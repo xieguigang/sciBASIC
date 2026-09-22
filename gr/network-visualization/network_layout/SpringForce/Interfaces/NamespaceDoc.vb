@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f693dd83f4a49a17ee45dd9426b9fda5, gr\network-visualization\network_layout\SpringForce\Interfaces\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4524f79e855729124800424d6cfc4d68, gr\network-visualization\network_layout\SpringForce\Interfaces\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace SpringForce.Interfaces
     Module NamespaceDoc
     End Module
 End Namespace
-

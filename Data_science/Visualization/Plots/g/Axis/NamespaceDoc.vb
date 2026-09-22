@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99593fb5d4cca3ca9ae2518f4641232, Data_science\Visualization\Plots\g\Axis\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c56080d29e1ebe1a4f64fe70c1e4fbe7, Data_science\Visualization\Plots\g\Axis\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 192 B
+    '     File Size: 190 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Graphic.Axis
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08bcb6941a743519ee76a8f5056b4903, gr\physics\Collision\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ada2bcb2718409b661576b7840ba0ba7, gr\physics\Collision\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 194 B
+    '     File Size: 192 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Collision
     Module NamespaceDoc
     End Module
 End Namespace
-

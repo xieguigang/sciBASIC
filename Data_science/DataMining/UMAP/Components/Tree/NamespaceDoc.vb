@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::017e67d853bd059e6ca88491edce62ed, Data_science\DataMining\UMAP\Components\Tree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::301e999906c5fbeb173799e6d295852e, Data_science\DataMining\UMAP\Components\Tree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 166 B
+    '     File Size: 164 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Tree
     Module NamespaceDoc
     End Module
 End Namespace
-

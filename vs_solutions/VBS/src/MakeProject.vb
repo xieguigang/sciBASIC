@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0613e95e5a8ac3fbb944a586c5f8ab52, vs_solutions\VBS\src\MakeProject.vb"
+﻿#Region "Microsoft.VisualBasic::3ebf589d420ee8e15e093cac050501d6, vs_solutions\VBS\src\MakeProject.vb"
 
     ' Author:
     ' 
@@ -399,4 +399,3 @@ Module MakeProject
         Return rel.Replace("\"c, "/"c)
     End Function
 End Module
-

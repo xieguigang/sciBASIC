@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b135e3a227da22677c93b9acc1ac3e6, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5e53b166dbd2d8ca9d6d2c2cd03c7237, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 208 B
+    '     File Size: 206 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace math.functions
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbc1d50719bebe944e96d9d615254fe5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::133c1880a1c1a5bdf0e4df9e0b586fb2, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 371 B
+    '     File Size: 369 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace ApplicationServices.Terminal
     Module NamespaceDoc
     End Module
 End Namespace
-

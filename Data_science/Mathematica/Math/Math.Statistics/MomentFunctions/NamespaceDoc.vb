@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4f4bc3c61ac0af21f163c2ad102622d, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::daa6a6aefe56c577e8de7b7ea52fd8d9, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 221 B
+    '     File Size: 219 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace MomentFunctions
     Module NamespaceDoc
     End Module
 End Namespace
-

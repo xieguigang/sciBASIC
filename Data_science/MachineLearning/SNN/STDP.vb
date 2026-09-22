@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f525bda0f2ef79b2a5fedd1cb49452a2, Data_science\MachineLearning\SNN\STDP.vb"
+﻿#Region "Microsoft.VisualBasic::7d96ae7abc5f9c3c82416bcf5d52150a, Data_science\MachineLearning\SNN\STDP.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 100 (54.35%)
-    ' Comment Lines: 60 (32.61%)
+    '   Total Lines: 183
+    '    Code Lines: 100 (54.64%)
+    ' Comment Lines: 60 (32.79%)
     '    - Xml Docs: 55.00%
     ' 
-    '   Blank Lines: 24 (13.04%)
+    '   Blank Lines: 23 (12.57%)
     '     File Size: 7.58 KB
 
 
@@ -53,7 +53,6 @@
     '     Function: [Step]
     ' 
     '     Sub: NormalizeWeights, Reset
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -242,5 +241,3 @@ Public Class STDPLayer
     End Function
 
 End Class
-
-

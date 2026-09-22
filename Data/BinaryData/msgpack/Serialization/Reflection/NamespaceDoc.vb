@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea2c938c0ad4acc88080bf8bc4d4c747, Data\BinaryData\msgpack\Serialization\Reflection\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c283bd03c0d505d5122b61f814d73fab, Data\BinaryData\msgpack\Serialization\Reflection\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 250 B
+    '     File Size: 248 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Serialization.Reflection
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b811f131e5c8d26fe1368171280fe0d, Data_science\Mathematica\Math\Math\Spline\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f1b0258b8f16d5bbaec93e0ea5f13ba4, Data_science\Mathematica\Math\Math\Spline\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 153 B
+    '     File Size: 151 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Interpolation
     Module NamespaceDoc
     End Module
 End Namespace
-

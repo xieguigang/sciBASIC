@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::738ade67a1052de57e1197a308af13cd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c15857217ccbc25557bae1d0e25fc141, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 253 B
+    '     File Size: 251 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.Math2D.ConcaveHull
     Module NamespaceDoc
     End Module
 End Namespace
-

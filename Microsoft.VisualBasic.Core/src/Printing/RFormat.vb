@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8940733d1aaec77f86be486d12f491b7, Microsoft.VisualBasic.Core\src\Printing\RFormat.vb"
+﻿#Region "Microsoft.VisualBasic::c2558519c854659bcd55a03ee22b3681, Microsoft.VisualBasic.Core\src\Printing\RFormat.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.80%
     ' 
     '   Blank Lines: 75 (16.67%)
-    '     File Size: 20.41 KB
+    '     File Size: 20.40 KB
 
 
     '     Module RFormat
@@ -505,4 +505,3 @@ Namespace Printing
 
     End Module
 End Namespace
-

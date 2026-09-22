@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afcb1e98c3c2f4a7c0cfcf9c5376022a, mime\text%html\jQuery\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5938de072897dd119eb16451e9c6f9cc, mime\text%html\jQuery\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace HTML.jQuery
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7568a7c1b1b3880c01e1df0c87d7594c, Data_science\Mathematica\Math\Math\Algebra\MILP\BranchAndBound.vb"
+﻿#Region "Microsoft.VisualBasic::6ce9b8babc8b4bf71415ce7cc3f217b2, Data_science\Mathematica\Math\Math\Algebra\MILP\BranchAndBound.vb"
 
     ' Author:
     ' 
@@ -722,4 +722,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Class
 
 End Namespace
-

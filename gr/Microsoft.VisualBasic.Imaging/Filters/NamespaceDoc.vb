@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63902a71d5aa5618ea48b890644e7b76, gr\Microsoft.VisualBasic.Imaging\Filters\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::28218e46422c2c52d90cb98d3bb208e6, gr\Microsoft.VisualBasic.Imaging\Filters\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 250 B
+    '     File Size: 248 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Filters
     Module NamespaceDoc
     End Module
 End Namespace
-

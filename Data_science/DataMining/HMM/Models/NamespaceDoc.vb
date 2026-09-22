@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56adcd085e9a0378a0c08c7c6829640d, Data_science\DataMining\HMM\Models\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8db8cc5b963fdf5db5f8eb3c0aae86ac, Data_science\DataMining\HMM\Models\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 168 B
+    '     File Size: 166 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Models
     Module NamespaceDoc
     End Module
 End Namespace
-

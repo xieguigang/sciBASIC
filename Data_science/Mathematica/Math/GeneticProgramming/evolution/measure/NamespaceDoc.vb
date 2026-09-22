@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85d02d7e0c9f33f36db25c6a166c0373, Data_science\Mathematica\Math\GeneticProgramming\evolution\measure\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6d0b7e894d5895e71af9d4f4ec127aa6, Data_science\Mathematica\Math\GeneticProgramming\evolution\measure\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace evolution.measure
     Module NamespaceDoc
     End Module
 End Namespace
-

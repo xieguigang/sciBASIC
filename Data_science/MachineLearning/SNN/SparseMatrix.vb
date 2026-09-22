@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e40a2e11b1fd30642f1da70c79d04e36, Data_science\MachineLearning\SNN\SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::be95c86909cfce2d33fa285a93ed7a70, Data_science\MachineLearning\SNN\SparseMatrix.vb"
 
     ' Author:
     ' 
@@ -388,4 +388,3 @@ Public Class SparseMatrix
     End Function
 
 End Class
-

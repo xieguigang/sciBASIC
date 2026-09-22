@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a2a8f949d6e9cdf130d17e7e3854e8d, Data\DataFrame.Extensions\Serialize\ObjectSchema\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ae45d6a693ac899dfa9d335bc112a807, Data\DataFrame.Extensions\Serialize\ObjectSchema\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 277 B
+    '     File Size: 275 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Serialize.ObjectSchema
     Module NamespaceDoc
     End Module
 End Namespace
-

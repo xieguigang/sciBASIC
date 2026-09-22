@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78cfef942b525fc299507f1f46786b88, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludeSet.vb"
+﻿#Region "Microsoft.VisualBasic::c6e204b29d365eebe7709546da3c18ce, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludeSet.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

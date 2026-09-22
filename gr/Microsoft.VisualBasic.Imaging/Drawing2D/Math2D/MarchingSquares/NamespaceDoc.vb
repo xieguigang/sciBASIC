@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8a2cbd03d558df34a17a027a29d005, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bd17e689189fb9c6d2c24db61f7a2d61, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 301 B
+    '     File Size: 299 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.Math2D.MarchingSquares
     Module NamespaceDoc
     End Module
 End Namespace
-

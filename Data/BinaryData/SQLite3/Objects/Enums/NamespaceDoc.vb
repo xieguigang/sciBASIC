@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::517e73e93e7c8726fe383480ae44d0a7, Data\BinaryData\SQLite3\Objects\Enums\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f0daad3450dcfe696290f5292e239dcd, Data\BinaryData\SQLite3\Objects\Enums\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 253 B
+    '     File Size: 251 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Core.Objects.Enums
     Module NamespaceDoc
     End Module
 End Namespace
-

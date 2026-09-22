@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4ad4ebe5a0f951c4a4a17d296a42ea1, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ffe591feb5e7c546f7b65018632901a0, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 259 B
+    '     File Size: 257 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace d3js.Layout
     Module NamespaceDoc
     End Module
 End Namespace
-

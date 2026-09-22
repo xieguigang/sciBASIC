@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a1428ef95d027e8a250d61ba15e5fb7, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0611f2103461c9b346c5d706fa5359ea, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Imaging.LayoutModel
     Module NamespaceDoc
     End Module
 End Namespace
-

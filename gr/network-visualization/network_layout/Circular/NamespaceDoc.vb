@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77fc15ee9a1997665982b0fb50c82d30, gr\network-visualization\network_layout\Circular\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e07d0f3c48f9a3c3f0dd133e7607f18f, gr\network-visualization\network_layout\Circular\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 185 B
+    '     File Size: 183 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Circular
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66075786d8846cefb10ad7b9a300f8a3, Data_science\MachineLearning\TensorFlow\Compute\ITensorComputeF.vb"
+﻿#Region "Microsoft.VisualBasic::ad5bc3d68881a85384731823791fb845, Data_science\MachineLearning\TensorFlow\Compute\ITensorComputeF.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.11%
     ' 
     '   Blank Lines: 27 (15.52%)
-    '     File Size: 8.50 KB
+    '     File Size: 8.49 KB
 
 
     '     Interface ITensorComputeF
@@ -235,4 +235,3 @@ Namespace Compute
     End Interface
 
 End Namespace
-

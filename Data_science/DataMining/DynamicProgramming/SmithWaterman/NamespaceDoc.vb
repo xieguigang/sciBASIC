@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df5877cac445e70c56747e0aa9b68869, Data_science\DataMining\DynamicProgramming\SmithWaterman\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b52255275c01d75f0ad09b9283dc3fd3, Data_science\DataMining\DynamicProgramming\SmithWaterman\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 186 B
+    '     File Size: 184 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace SmithWaterman
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78016c0686ae141588b19bd011e97e83, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1b480fdb0983d6852c0f1ff078ab65e5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 285 B
+    '     File Size: 283 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Terminal.ProgressBar
     Module NamespaceDoc
     End Module
 End Namespace
-

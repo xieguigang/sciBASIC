@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3117275cb493c6fb31e16e2f3a7210e4, gr\network-visualization\Network.IO.Extensions\Gephi\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::754082d2ea4b5a5117675362960bcb2b, gr\network-visualization\Network.IO.Extensions\Gephi\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 241 B
+    '     File Size: 239 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Gephi
     Module NamespaceDoc
     End Module
 End Namespace
-

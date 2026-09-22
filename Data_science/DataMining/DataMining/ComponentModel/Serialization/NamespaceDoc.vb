@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a943dd13dd0f16066cdd79abe147ddc, Data_science\DataMining\DataMining\ComponentModel\Serialization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6258395b3c10e7f859fa2b4aaadaffc6, Data_science\DataMining\DataMining\ComponentModel\Serialization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 197 B
+    '     File Size: 195 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Serialization
     Module NamespaceDoc
     End Module
 End Namespace
-

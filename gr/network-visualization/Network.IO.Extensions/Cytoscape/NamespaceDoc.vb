@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c612f7ce2519bf355e28aded067da501, gr\network-visualization\Network.IO.Extensions\Cytoscape\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e4542bf63a5b2794a7df86ca7ec37e2e, gr\network-visualization\Network.IO.Extensions\Cytoscape\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 222 B
+    '     File Size: 220 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace FileStream.Cytoscape
     Module NamespaceDoc
     End Module
 End Namespace
-

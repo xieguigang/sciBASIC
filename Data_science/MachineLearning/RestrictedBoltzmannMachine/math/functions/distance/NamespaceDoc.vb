@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::718e23beea5194320b5ca6fa384fefc5, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\distance\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4d992eabcc5980318f84481633a724c2, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\distance\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 213 B
+    '     File Size: 211 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace math.functions.distance
     Module NamespaceDoc
     End Module
 End Namespace
-

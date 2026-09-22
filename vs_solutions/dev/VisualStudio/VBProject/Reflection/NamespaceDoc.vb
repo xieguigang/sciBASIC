@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b04e41707fb278ea893dceacd31dbcf, vs_solutions\dev\VisualStudio\VBProject\Reflection\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8de4219464a7a5d3e915be25c69cfe3a, vs_solutions\dev\VisualStudio\VBProject\Reflection\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 257 B
+    '     File Size: 255 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace VBProj.Reflection
     Module NamespaceDoc
     End Module
 End Namespace
-

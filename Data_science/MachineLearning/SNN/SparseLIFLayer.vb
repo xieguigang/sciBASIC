@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51eb3f79a57a9944d607e990f95e3b24, Data_science\MachineLearning\SNN\SparseLIFLayer.vb"
+﻿#Region "Microsoft.VisualBasic::97fc2e7834d4529fc24256353875d3ca, Data_science\MachineLearning\SNN\SparseLIFLayer.vb"
 
     ' Author:
     ' 
@@ -234,4 +234,3 @@ Public Class SparseLIFLayer
     End Function
 
 End Class
-

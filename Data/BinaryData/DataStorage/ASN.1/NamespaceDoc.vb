@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8b85e59ee84ed17e396512aa83eda9e, Data\BinaryData\DataStorage\ASN.1\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::25b983e73f99b00f84cd1e37548b91e5, Data\BinaryData\DataStorage\ASN.1\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 257 B
+    '     File Size: 255 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ASN1
     Module NamespaceDoc
     End Module
 End Namespace
-

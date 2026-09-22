@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::270ed4b6b923f475e2d0e6fb2debf5fa, Data_science\MachineLearning\DeepLearning\Transformer\Optimizer.vb"
+﻿#Region "Microsoft.VisualBasic::d99d5e82ce27f0cedb7eef7c24423d01, Data_science\MachineLearning\DeepLearning\Transformer\Optimizer.vb"
 
     ' Author:
     ' 
@@ -140,4 +140,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

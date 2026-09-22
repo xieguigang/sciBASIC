@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb97aa8764e5dbbe5db9d2e4ca9e181, llm\KVCache.vb"
+﻿#Region "Microsoft.VisualBasic::5918b787463b8b5e0ae4ede0d0371d74, llm\KVCache.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 194
-    '    Code Lines: 98 (50.52%)
-    ' Comment Lines: 62 (31.96%)
+    '   Total Lines: 192
+    '    Code Lines: 98 (51.04%)
+    ' Comment Lines: 62 (32.29%)
     '    - Xml Docs: 66.13%
     ' 
-    '   Blank Lines: 34 (17.53%)
+    '   Blank Lines: 32 (16.67%)
     '     File Size: 8.12 KB
 
 
@@ -54,7 +54,6 @@
     '     Function: PrefixView, ToString
     ' 
     '     Sub: Append, Clear, Reset
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -252,6 +251,3 @@ Public Class KVCache
     End Function
 
 End Class
-
-
-

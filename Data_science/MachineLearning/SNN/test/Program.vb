@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::144929e845e1e9690017c7e46cc64fc8, Data_science\MachineLearning\SNN\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::36fd714e0f7bb2180fd76e59b3591ba5, Data_science\MachineLearning\SNN\test\Program.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Module Program
 
 
 End Module
-

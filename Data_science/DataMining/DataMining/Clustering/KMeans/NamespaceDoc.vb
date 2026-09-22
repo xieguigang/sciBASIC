@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0d82a465a68e6f8e744deebe6aea907, Data_science\DataMining\DataMining\Clustering\KMeans\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4e705ce91ada677aaa45bab06921773a, Data_science\DataMining\DataMining\Clustering\KMeans\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 144 B
+    '     File Size: 142 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KMeans
     Module NamespaceDoc
     End Module
 End Namespace
-

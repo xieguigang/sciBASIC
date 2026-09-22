@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b83c7bbfeb404853ee337d8819c3fc9, gr\Landscape\glTF\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e2f91b0999cfa54c539c3ddf752f97b2, gr\Landscape\glTF\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 241 B
+    '     File Size: 239 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Gltf
     Module NamespaceDoc
     End Module
 End Namespace
-

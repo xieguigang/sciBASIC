@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d036e5fb8fef7394e2becc525bf0fc68, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f29bfeffa21c7846cb8e6a529841103a, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 192 B
+    '     File Size: 190 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Text.Parser.HtmlParser
     Module NamespaceDoc
     End Module
 End Namespace
-

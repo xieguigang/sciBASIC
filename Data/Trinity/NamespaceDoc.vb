@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::591ed8c34f61bf7e024759d58a19f2e2, Data\Trinity\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d129535f153dde97b93c7505008f4941, Data\Trinity\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 239 B
+    '     File Size: 237 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

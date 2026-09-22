@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6947b50d469af6f0afb05594d4de39b, Data_science\Mathematica\Math\Math\DownSampling\LargestTriangleBucket\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fbf03efe88cbce5765bf99d07d4c58e3, Data_science\Mathematica\Math\Math\DownSampling\LargestTriangleBucket\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 212 B
+    '     File Size: 210 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DownSampling.LargestTriangleBucket
     Module NamespaceDoc
     End Module
 End Namespace
-

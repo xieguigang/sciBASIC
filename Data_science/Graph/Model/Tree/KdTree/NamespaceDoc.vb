@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04dd14e6f744fbdae2d9dc3708149505, Data_science\Graph\Model\Tree\KdTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2caeba673176361983615776b2057505, Data_science\Graph\Model\Tree\KdTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 152 B
+    '     File Size: 150 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KdTree
     Module NamespaceDoc
     End Module
 End Namespace
-

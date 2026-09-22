@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d4b4fcb06b93190e0553a7548673752, Data_science\DataMining\DataMining\ComponentModel\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7e46daf1813c32a7775be0ec54e97536, Data_science\DataMining\DataMining\ComponentModel\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 257 B
+    '     File Size: 255 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ComponentModel
     Module NamespaceDoc
     End Module
 End Namespace
-

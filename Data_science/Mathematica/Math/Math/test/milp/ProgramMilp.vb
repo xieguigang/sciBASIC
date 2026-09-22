@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68705378dac505febd114e3dfb4e98af, Data_science\Mathematica\Math\Math\test\milp\ProgramMilp.vb"
+﻿#Region "Microsoft.VisualBasic::c0bd1750dd517fd062538b3ddca70820, Data_science\Mathematica\Math\Math\test\milp\ProgramMilp.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 6.25%
     ' 
     '   Blank Lines: 75 (22.52%)
-    '     File Size: 14.60 KB
+    '     File Size: 14.59 KB
 
 
     ' Module ProgramMilp
@@ -388,4 +388,3 @@ Public Module ProgramMilp
     End Function
 
 End Module
-

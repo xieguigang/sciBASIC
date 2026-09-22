@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2395a569d7fb28c0eb9181591ba52367, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fc88532c49e86e6a02fda5b0294a7824, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 323 B
+    '     File Size: 321 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.DynamicInterop
     Module NamespaceDoc
     End Module
 End Namespace
-

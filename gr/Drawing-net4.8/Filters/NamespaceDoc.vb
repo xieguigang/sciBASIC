@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcd533f3a34d75d6f6fb0b105b878d75, gr\Drawing-net4.8\Filters\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4b54d2f78056aa1cfff5d0e47cc605c1, gr\Drawing-net4.8\Filters\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 254 B
+    '     File Size: 252 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Imaging.BitmapImage
     Module NamespaceDoc
     End Module
 End Namespace
-

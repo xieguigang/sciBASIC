@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84167bd388da010508e9b286769a59b5, Data_science\Mathematica\Math\DataFrame\MatrixMarket\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8948a8d3331de6d3ab363f5f1ae2f9dd, Data_science\Mathematica\Math\DataFrame\MatrixMarket\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace MatrixMarket
     Module NamespaceDoc
     End Module
 End Namespace
-

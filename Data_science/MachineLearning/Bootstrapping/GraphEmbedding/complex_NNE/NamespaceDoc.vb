@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01c1b37a59fce0eaebca652818af18e3, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\complex_NNE\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6fa4a535986161de97e7629906bd6056, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\complex_NNE\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 209 B
+    '     File Size: 207 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace GraphEmbedding.complex_NNE
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8bce205dcf35d78a234e6ecc7ce6633, Data\DataFrame\Linq\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::871abd54b1902a98eaf148927a9c47ed, Data\DataFrame\Linq\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 279 B
+    '     File Size: 277 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace IO.Linq
     Module NamespaceDoc
     End Module
 End Namespace
-

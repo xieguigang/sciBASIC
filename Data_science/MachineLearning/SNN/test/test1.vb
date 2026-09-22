@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e55b11f2bbf322ea701b999c191976d, Data_science\MachineLearning\SNN\test\test1.vb"
+﻿#Region "Microsoft.VisualBasic::081e9e173616d5bffc659aff10c49f96, Data_science\MachineLearning\SNN\test\test1.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 7.69%
     ' 
     '   Blank Lines: 24 (11.82%)
-    '     File Size: 8.10 KB
+    '     File Size: 8.09 KB
 
 
     ' Module test1
@@ -256,4 +256,3 @@ Module test1
         Return sb.ToString()
     End Function
 End Module
-

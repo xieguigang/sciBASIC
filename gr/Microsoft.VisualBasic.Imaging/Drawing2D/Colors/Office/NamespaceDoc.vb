@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4ec7eb75516d12ee1498ebfc03d1a8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::26ef234ae33ad630d256bff5b580c30f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 220 B
+    '     File Size: 218 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Drawing2D.Colors.OfficeAccent
     Module NamespaceDoc
     End Module
 End Namespace
-

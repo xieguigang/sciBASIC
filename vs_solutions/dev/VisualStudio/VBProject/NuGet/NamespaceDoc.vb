@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb410711bd609a32a7efecd9b2e29ea5, vs_solutions\dev\VisualStudio\VBProject\NuGet\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ee8ca719f783adb3214ca559c7c0558, vs_solutions\dev\VisualStudio\VBProject\NuGet\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 306 B
+    '     File Size: 304 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace VBProj.NuGet
     Module NamespaceDoc
     End Module
 End Namespace
-

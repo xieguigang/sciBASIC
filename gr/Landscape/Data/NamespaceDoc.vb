@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da5e8fa47a2e1110655868bf25b416ca, gr\Landscape\Data\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5e6dc5365d5e1a9028d07dd43da807ef, gr\Landscape\Data\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 244 B
+    '     File Size: 242 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Data
     Module NamespaceDoc
     End Module
 End Namespace
-

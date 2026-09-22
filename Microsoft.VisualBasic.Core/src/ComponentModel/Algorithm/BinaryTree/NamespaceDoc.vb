@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8331e128aecf5e5728cb29ad6ff72e46, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c02f0a0243779ad111d7415a45bc1094, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 235 B
+    '     File Size: 233 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Algorithm.BinaryTree
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a471b417c40227d139705936901020b8, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\EmGaussian\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7bcaa433567e431d102ebe680534b433, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\EmGaussian\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 186 B
+    '     File Size: 184 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace EmGaussian
     Module NamespaceDoc
     End Module
 End Namespace
-

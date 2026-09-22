@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c662071dfd8925b068a690ae7e1c2dd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::14cd5eee96aae7c14057e65c42a69ec4, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 310 B
+    '     File Size: 308 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
     Module NamespaceDoc
     End Module
 End Namespace
-

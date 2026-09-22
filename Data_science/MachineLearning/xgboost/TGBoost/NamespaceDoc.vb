@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b4297854640270a9b7829b08a4e8a2a, Data_science\MachineLearning\xgboost\TGBoost\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4c527751b3bbf1e699a67d2fbc9ae269, Data_science\MachineLearning\xgboost\TGBoost\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 160 B
+    '     File Size: 158 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace train
     Module NamespaceDoc
     End Module
 End Namespace
-

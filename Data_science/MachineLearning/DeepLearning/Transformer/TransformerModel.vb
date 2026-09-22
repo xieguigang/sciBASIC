@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4504173da1899a8cce8f878358d6f7fd, Data_science\MachineLearning\DeepLearning\Transformer\TransformerModel.vb"
+﻿#Region "Microsoft.VisualBasic::398b607230f8125617f96cb5cc61ca98, Data_science\MachineLearning\DeepLearning\Transformer\TransformerModel.vb"
 
     ' Author:
     ' 
@@ -375,4 +375,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

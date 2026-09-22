@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd02fa7e7d6972bfa10303c7aac369e1, Data_science\DataMining\UMAP\KNN\KDTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::48780d3d543c18393df13ee4e9e44086, Data_science\DataMining\UMAP\KNN\KDTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 186 B
+    '     File Size: 184 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KNN.KDTreeMethod
     Module NamespaceDoc
     End Module
 End Namespace
-

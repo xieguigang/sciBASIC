@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::470e1e8875c7b1359d4fd1b6f02e81d9, gr\Landscape\Wavefront\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0f4124d354b83db9ea53b3366953d3a4, gr\Landscape\Wavefront\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 233 B
+    '     File Size: 231 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Wavefront
     Module NamespaceDoc
     End Module
 End Namespace
-

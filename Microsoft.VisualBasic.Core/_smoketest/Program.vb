@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5363ad6f35ceb993986a47247aa2112, Microsoft.VisualBasic.Core\_smoketest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7a43522195fc01f0845a91570cc50952, Microsoft.VisualBasic.Core\_smoketest\Program.vb"
 
     ' Author:
     ' 
@@ -301,4 +301,3 @@ Module Program
         End If
     End Sub
 End Module
-

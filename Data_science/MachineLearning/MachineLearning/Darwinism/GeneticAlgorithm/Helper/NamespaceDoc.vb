@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5659ab7a66cec9750e4383df4f060a9, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2d40787eb38ba552671276077d0abb5b, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Darwinism.GAF.Helper
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::214b57f98bf0237d43a09550ec4692ae, Data_science\MachineLearning\TensorFlow\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::073fcb40f2495a0300e8af03a39e8f5e, Data_science\MachineLearning\TensorFlow\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 2 (13.33%)
-    '     File Size: 350 B
+    '     File Size: 348 B
 
 
     ' Class NamespaceDoc
@@ -71,4 +71,3 @@ Namespace NumPy
     Module NamespaceDoc
     End Module
 End Namespace
-

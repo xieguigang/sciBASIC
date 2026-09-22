@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3248b7e1d5f050e40a171f0f8aca2f4a, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::efddfbaa7d09e76ca7a380e410f62316, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Emit.Delegates
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::619cf053b7bc674eb9045b88444d53a6, Data_science\Visualization\Plots\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8050f252f64aee1a25ac49b8d8beae9f, Data_science\Visualization\Plots\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 165 B
+    '     File Size: 163 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

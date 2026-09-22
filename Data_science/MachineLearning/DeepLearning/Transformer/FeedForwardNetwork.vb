@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::924f6211f2482ec41e7de78bc8af3b69, Data_science\MachineLearning\DeepLearning\Transformer\FeedForwardNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::fb018a3664a861e30eff1af7165a8ade, Data_science\MachineLearning\DeepLearning\Transformer\FeedForwardNetwork.vb"
 
     ' Author:
     ' 
@@ -206,4 +206,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

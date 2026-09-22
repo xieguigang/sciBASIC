@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46db9b7a854e930dff89737ad7a6bcf6, Data_science\Mathematica\Math\mHG\test\ReferenceImpl.vb"
+﻿#Region "Microsoft.VisualBasic::972df8e72065139eb2f46cdb218d2fc6, Data_science\Mathematica\Math\mHG\test\ReferenceImpl.vb"
 
     ' Author:
     ' 
@@ -367,4 +367,3 @@ Public Module ReferenceImpl
 #End Region
 
 End Module
-

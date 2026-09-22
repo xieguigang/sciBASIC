@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::294dd79674105b8807f75602c5185453, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ac712b2878689ad037b40470ec6242c, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 207 B
+    '     File Size: 205 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace BIRCH
     Module NamespaceDoc
     End Module
 End Namespace
-

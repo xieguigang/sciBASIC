@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4245837f8fb2396651e82b79736fc76e, Microsoft.VisualBasic.Core\src\Serialization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::18b0d7e21a93fe068bc5dd8bfbd58366, Microsoft.VisualBasic.Core\src\Serialization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 219 B
+    '     File Size: 217 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Serialization
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb144dcefede77f7fb1fd1499cbf8137, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e12c0b31880bfe1cbde0abb915571d8c, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 168 B
+    '     File Size: 166 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Logical.FuzzyLogic.Models
     Module NamespaceDoc
     End Module
 End Namespace
-

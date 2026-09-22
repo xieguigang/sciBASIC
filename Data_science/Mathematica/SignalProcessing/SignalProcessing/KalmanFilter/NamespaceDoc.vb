@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0891f2ff8ebe84df14bbe9b70fd37865, Data_science\Mathematica\SignalProcessing\SignalProcessing\KalmanFilter\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9150a9af037c4ee32eddb29d046d7153, Data_science\Mathematica\SignalProcessing\SignalProcessing\KalmanFilter\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (17.65%)
-    '     File Size: 363 B
+    '     File Size: 361 B
 
 
     '     Module NamespaceDoc
@@ -73,4 +73,3 @@ Namespace HungarianAlgorithm
     Module NamespaceDoc
     End Module
 End Namespace
-

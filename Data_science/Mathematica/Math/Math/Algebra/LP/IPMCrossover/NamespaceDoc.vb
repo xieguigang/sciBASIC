@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2a534a1aaac65b7e6b002a7bcb7bc6b, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::faee7ce14efc8cc8f2b2ceb78e88111b, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 227 B
+    '     File Size: 225 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
     Module NamespaceDoc
     End Module
 End Namespace
-

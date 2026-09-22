@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f0b8d27367b826a50edbe7851c9f064, gr\network-visualization\Datavisualization.Network\Analysis\Similarity\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::79a14c51b23417f6ba3715e377f6b165, gr\network-visualization\Datavisualization.Network\Analysis\Similarity\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 245 B
+    '     File Size: 243 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Analysis.SimilarityImpl
     Module NamespaceDoc
     End Module
 End Namespace
-

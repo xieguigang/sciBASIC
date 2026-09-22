@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1109986f75c19f53690af59c3249d88, Microsoft.VisualBasic.Core\src\Drawing\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f6e66bb2eea4d6c10e1419f874460f88, Microsoft.VisualBasic.Core\src\Drawing\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 256 B
+    '     File Size: 254 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Imaging
     Module NamespaceDoc
     End Module
 End Namespace
-

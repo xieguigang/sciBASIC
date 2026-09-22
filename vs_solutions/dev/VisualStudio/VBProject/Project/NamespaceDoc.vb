@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af39a104f3db12a6a013907b8f63ecdc, vs_solutions\dev\VisualStudio\VBProject\Project\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::55024bdd55eec842bed06154001a8879, vs_solutions\dev\VisualStudio\VBProject\Project\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 502 B
+    '     File Size: 500 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace VBProj.ProjectXml
     Module NamespaceDoc
     End Module
 End Namespace
-

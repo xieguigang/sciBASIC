@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::041bb912b43866c7ddd39017903d9df7, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpModel.vb"
+﻿#Region "Microsoft.VisualBasic::e22490f4736517034c3243d94592dbd7, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpModel.vb"
 
     ' Author:
     ' 
@@ -336,4 +336,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Class
 
 End Namespace
-

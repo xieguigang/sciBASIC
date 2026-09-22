@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac468f6581268c81dfa3a476ed0adc35, Data_science\MachineLearning\xgboost\spark\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fb29bd8e81d58c056caacfb90ea26367, Data_science\MachineLearning\xgboost\spark\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 178 B
+    '     File Size: 176 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace spark
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f78e02a310b84dcd28a6eb9f21b0c4f0, Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::17ea7da07f20afe8d0876d668d8a7bbe, Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 297 B
+    '     File Size: 295 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Globalization
     Module NamespaceDoc
     End Module
 End Namespace
-

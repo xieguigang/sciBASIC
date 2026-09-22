@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d75938cc6f91b1bb5fac9f9e161cd190, Data_science\DataMining\Bonsai\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6454e56b52890e6a0c746ff759efd8d3, Data_science\DataMining\Bonsai\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

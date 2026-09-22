@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c149419ad4a2e84ee96b88a4a9ce6f54, Data_science\DataMining\DataMining\Kernel\BayesianBeliefNetwork\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b5194a1ac43f7df3b8cc5e0300c1ddb2, Data_science\DataMining\DataMining\Kernel\BayesianBeliefNetwork\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 182 B
+    '     File Size: 180 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Kernel.BayesianBeliefNetwork
     Module NamespaceDoc
     End Module
 End Namespace
-

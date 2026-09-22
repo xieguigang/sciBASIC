@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e69abe5e26d61a91dab91b608f77f458, Data_science\Mathematica\Math\ODE\Dynamics\Data\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bf334cd34bedf0c04d804c89872c1f1a, Data_science\Mathematica\Math\ODE\Dynamics\Data\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 178 B
+    '     File Size: 176 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Dynamics.Data
     Module NamespaceDoc
     End Module
 End Namespace
-

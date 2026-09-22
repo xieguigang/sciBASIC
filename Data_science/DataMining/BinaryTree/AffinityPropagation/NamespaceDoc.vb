@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c15801504a4801b7f4aa7a9fb0fcc88, Data_science\DataMining\BinaryTree\AffinityPropagation\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0a511aa6ac85e8c3adf35af966ffe445, Data_science\DataMining\BinaryTree\AffinityPropagation\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 170 B
+    '     File Size: 168 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace AffinityPropagation
     Module NamespaceDoc
     End Module
 End Namespace
-

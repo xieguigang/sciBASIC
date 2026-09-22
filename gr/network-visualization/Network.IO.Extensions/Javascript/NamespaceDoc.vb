@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::debc3926873114915df1f7df5fd0fcbd, gr\network-visualization\Network.IO.Extensions\Javascript\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::40b3df79b99e28b917e2a6524cf541ec, gr\network-visualization\Network.IO.Extensions\Javascript\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 188 B
+    '     File Size: 186 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace graphology
     Module NamespaceDoc
     End Module
 End Namespace
-

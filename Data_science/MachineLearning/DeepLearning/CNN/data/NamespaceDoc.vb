@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::905209665d9b04a3af730198d9b2731d, Data_science\MachineLearning\DeepLearning\CNN\data\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d399eb83a5c4ea65ea3bb9272a1090ae, Data_science\MachineLearning\DeepLearning\CNN\data\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 180 B
+    '     File Size: 178 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CNN.data
     Module NamespaceDoc
     End Module
 End Namespace
-

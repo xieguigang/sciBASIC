@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fb971001ae94aff5ecb46acc93c6020, Data_science\MachineLearning\SNN\Network.vb"
+﻿#Region "Microsoft.VisualBasic::de7e00d1b7c23a6fef30ddb54f2f5cf3, Data_science\MachineLearning\SNN\Network.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 453
-    '    Code Lines: 284 (62.69%)
-    ' Comment Lines: 95 (20.97%)
+    '   Total Lines: 451
+    '    Code Lines: 284 (62.97%)
+    ' Comment Lines: 95 (21.06%)
     '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 74 (16.34%)
-    '     File Size: 18.44 KB
+    '   Blank Lines: 72 (15.96%)
+    '     File Size: 18.43 KB
 
 
     ' Structure LossGradient
@@ -66,7 +66,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Accuracy, AddLayer, (+2 Overloads) AddSparseLayer, ComputeGradients, Encode
     '               ForwardSparse, ForwardSpikes, Predict, ScatterInput, TrainStep
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -523,6 +522,3 @@ Public Class SpikingNetwork
     End Function
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffe8a962baac00ff2cdf2c3c1467a63f, Data_science\Mathematica\Math\Math\test\milp\MilpSelfTest.vb"
+﻿#Region "Microsoft.VisualBasic::071ffd8ac7b9094af6e87ada8f5683d2, Data_science\Mathematica\Math\Math\test\milp\MilpSelfTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 21.67%
     ' 
     '   Blank Lines: 157 (24.23%)
-    '     File Size: 26.64 KB
+    '     File Size: 26.63 KB
 
 
     ' Module MilpSelfTest
@@ -705,4 +705,3 @@ Public Module MilpSelfTest
     End Function
 
 End Module
-

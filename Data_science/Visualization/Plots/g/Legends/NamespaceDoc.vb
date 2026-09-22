@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fa169a5d0f90aa0f96ea7723ed80ebb, Data_science\Visualization\Plots\g\Legends\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9c884ec8b07e8fed92c49da467a8a775, Data_science\Visualization\Plots\g\Legends\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 147 B
+    '     File Size: 145 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Graphic.Legend
     Module NamespaceDoc
     End Module
 End Namespace
-

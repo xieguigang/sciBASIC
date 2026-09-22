@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c74c6e667a3aab61fcf2b1113902d60, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5655ccbfe376a4bd0014051d66368a06, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 236 B
+    '     File Size: 234 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Drawing3D.Models.Isometric.Shapes
     Module NamespaceDoc
     End Module
 End Namespace
-

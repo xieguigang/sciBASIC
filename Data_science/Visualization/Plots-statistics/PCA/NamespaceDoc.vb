@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06adba1b217f70b943a9ddca6baf05f2, Data_science\Visualization\Plots-statistics\PCA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4e9d70343381ac463852a85f26ef69f7, Data_science\Visualization\Plots-statistics\PCA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 157 B
+    '     File Size: 155 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace PCA
     Module NamespaceDoc
     End Module
 End Namespace
-

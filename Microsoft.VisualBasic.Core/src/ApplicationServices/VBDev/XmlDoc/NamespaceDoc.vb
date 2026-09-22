@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4939840c0a27c0bc7f0226ab750859e, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cb53490a22ff3c43900f45fb67331d27, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 314 B
+    '     File Size: 312 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     Module NamespaceDoc
     End Module
 End Namespace
-

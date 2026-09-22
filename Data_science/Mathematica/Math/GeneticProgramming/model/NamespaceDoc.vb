@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b184e04f70854f590069896ffd536c98, Data_science\Mathematica\Math\GeneticProgramming\model\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::63d12016b8d537751c87820bbc990640, Data_science\Mathematica\Math\GeneticProgramming\model\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 179 B
+    '     File Size: 177 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace model
     Module NamespaceDoc
     End Module
 End Namespace
-

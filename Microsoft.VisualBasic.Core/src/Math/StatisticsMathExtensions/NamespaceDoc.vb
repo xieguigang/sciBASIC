@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a7e17a51d76f713ce86e8889aab5f42, Microsoft.VisualBasic.Core\src\Math\StatisticsMathExtensions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d9ce153a27c80b139875dc438ce5f06e, Microsoft.VisualBasic.Core\src\Math\StatisticsMathExtensions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Math.Statistics
     Module NamespaceDoc
     End Module
 End Namespace
-

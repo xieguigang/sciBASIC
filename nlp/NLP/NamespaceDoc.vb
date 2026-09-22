@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ae65f0f56371ed7f55a79ada495fb97, nlp\NLP\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::824e4b69b54b84e84e6ed734c1f783ae, nlp\NLP\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 326 B
+    '     File Size: 324 B
 
 
     ' Class NamespaceDoc
@@ -58,4 +58,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

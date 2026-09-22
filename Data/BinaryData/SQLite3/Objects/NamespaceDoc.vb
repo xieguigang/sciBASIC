@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eef9d162eff41856ed7b365cffb31954, Data\BinaryData\SQLite3\Objects\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b8165153e14a9c8f1ddf78467d6a7ff7, Data\BinaryData\SQLite3\Objects\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 246 B
+    '     File Size: 244 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Core.Objects
     Module NamespaceDoc
     End Module
 End Namespace
-

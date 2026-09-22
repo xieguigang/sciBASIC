@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5949cc59c774727204434b23250cf40e, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::92bc4f5de59a02ed3f64c2932b1227a2, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 218 B
+    '     File Size: 216 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     Module NamespaceDoc
     End Module
 End Namespace
-

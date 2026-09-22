@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc9e52f8e99934621a465b24b8f925b4, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9a549778163d0ae34d6a484ec64d56b0, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (19.23%)
-    '     File Size: 567 B
+    '     File Size: 565 B
 
 
     '     Module NamespaceDoc
@@ -86,4 +86,3 @@ Namespace Source.Generators
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1216d11a6de7b81714348bf64906f38d, Data_science\Mathematica\Math\KaplanMeierEstimator\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::72578f6682f818f9a35eed47ff157b93, Data_science\Mathematica\Math\KaplanMeierEstimator\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 117 B
+    '     File Size: 115 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

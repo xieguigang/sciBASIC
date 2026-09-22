@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::453d29dc74246b65323fb98722fe36e8, mime\application%rtf\Reader\RtfLexer.vb"
+﻿#Region "Microsoft.VisualBasic::ba11c24f27c419605c4b76976a9f23e1, mime\application%rtf\Reader\RtfLexer.vb"
 
     ' Author:
     ' 
@@ -635,4 +635,3 @@ Friend Class RtfLexer
     End Function
 
 End Class
-

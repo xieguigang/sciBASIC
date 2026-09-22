@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fb280ae5a0fe9dec3080b652bbe15f9, gr\network-visualization\Datavisualization.Network\Graph\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::254bbb822194383a20fc83afce2de6e3, gr\network-visualization\Datavisualization.Network\Graph\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (17.86%)
-    '     File Size: 691 B
+    '     File Size: 689 B
 
 
     '     Module NamespaceDoc
@@ -88,4 +88,3 @@ Namespace com.mxgraph.model
     Module NamespaceDoc
     End Module
 End Namespace
-

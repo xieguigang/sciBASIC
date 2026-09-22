@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e8d8138ba9c24b4d615ccbd539b62e6, Data_science\MachineLearning\DeepLearning\Transformer\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::254fdaccde764472996daee992f12921, Data_science\MachineLearning\DeepLearning\Transformer\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 234 B
+    '     File Size: 232 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Transformer
     Module NamespaceDoc
     End Module
 End Namespace
-

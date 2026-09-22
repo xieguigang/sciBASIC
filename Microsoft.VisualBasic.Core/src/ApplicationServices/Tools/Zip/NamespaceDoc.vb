@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a08a3a75b75926b4dbf0234e938681c, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5f65f49f6e8b5c4941a9a1ed6f9a1607, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 251 B
+    '     File Size: 249 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Zip
     Module NamespaceDoc
     End Module
 End Namespace
-

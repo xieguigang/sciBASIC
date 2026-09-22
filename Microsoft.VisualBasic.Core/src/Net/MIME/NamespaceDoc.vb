@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b062483923516e0d2533abec661c896, Microsoft.VisualBasic.Core\src\Net\MIME\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8d228fa3077aa59ab87947b96e76ff5e, Microsoft.VisualBasic.Core\src\Net\MIME\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 202 B
+    '     File Size: 200 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Net.Protocols.ContentTypes
     Module NamespaceDoc
     End Module
 End Namespace
-

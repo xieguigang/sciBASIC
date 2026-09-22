@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf7aa3b3f87e654494872c69a97703b5, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::34bf6816a9b9582617344b9a72c66edd, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LinearAlgebra.Matrix.MDSScale
     Module NamespaceDoc
     End Module
 End Namespace
-

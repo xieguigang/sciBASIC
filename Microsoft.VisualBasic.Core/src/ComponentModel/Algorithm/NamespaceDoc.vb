@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d6adeac2777414dc69c64c41b8b9319, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ce64afe76d6f64b2b3d2acfae2f472ba, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 275 B
+    '     File Size: 273 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ComponentModel.Algorithm
     Module NamespaceDoc
     End Module
 End Namespace
-

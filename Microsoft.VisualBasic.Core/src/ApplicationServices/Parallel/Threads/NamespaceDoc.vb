@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39956ba72e556673e92159ae909f95f3, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::993cfaa1c17dc4af3bc4fe4a71101373, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 250 B
+    '     File Size: 248 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Parallel.Threads
     Module NamespaceDoc
     End Module
 End Namespace
-

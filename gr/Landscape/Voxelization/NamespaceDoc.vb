@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::426938123641d511241488c25c99a7a6, gr\Landscape\Voxelization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ee0489eb18f1ec4de04986a2d7f4a97b, gr\Landscape\Voxelization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 286 B
+    '     File Size: 284 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Voxelization
     Module NamespaceDoc
     End Module
 End Namespace
-

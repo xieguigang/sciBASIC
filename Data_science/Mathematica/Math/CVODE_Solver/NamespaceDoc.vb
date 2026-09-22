@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b564da6c6909d6885d3a6bbef3a4cd8f, Data_science\Mathematica\Math\CVODE_Solver\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cc390083bafc03a9b63d55a1927fa150, Data_science\Mathematica\Math\CVODE_Solver\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

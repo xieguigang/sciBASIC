@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ec5200d20ead1e3caefe4a9c6c802bc, Data_science\MachineLearning\SNN\RecurrentLIFLayer.vb"
+﻿#Region "Microsoft.VisualBasic::351b54cb5fb350ac048b69d71dca1131, Data_science\MachineLearning\SNN\RecurrentLIFLayer.vb"
 
     ' Author:
     ' 
@@ -709,4 +709,3 @@ Public Class RecurrentLIFLayer
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f2401e7dcf543eb5f14b813a549864d, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::39746dcfae832611f236da23e5f7e5a8, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 211 B
+    '     File Size: 209 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Language.Vectorization
     Module NamespaceDoc
     End Module
 End Namespace
-

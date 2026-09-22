@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf34c81e152e734abb0ce76caa7908c6, Data_science\MachineLearning\Bootstrapping\Node2Vec\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4c2937bd8bc8d8b52d2b9e4c0b269e18, Data_science\MachineLearning\Bootstrapping\Node2Vec\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 166 B
+    '     File Size: 164 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace node2vec
     Module NamespaceDoc
     End Module
 End Namespace
-

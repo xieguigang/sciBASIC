@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a95498cce4984432a78b9ce04c23799, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::25b58448e82193ce3d67b61855db34f3, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Algorithm.HMMChainAlgorithm
     Module NamespaceDoc
     End Module
 End Namespace
-

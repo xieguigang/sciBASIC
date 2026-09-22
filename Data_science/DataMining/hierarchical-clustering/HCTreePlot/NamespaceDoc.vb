@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4587ab9e9b32369d31470962d59a5f00, Data_science\DataMining\hierarchical-clustering\HCTreePlot\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9d32db07cf0ce1bc2f21970bab8faf71, Data_science\DataMining\hierarchical-clustering\HCTreePlot\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 201 B
+    '     File Size: 199 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

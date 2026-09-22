@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::713caa08fadd401766994dc1d909f3df, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::73a88d0cc5dbfb8e564bea23a5be1411, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 174 B
+    '     File Size: 172 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace WaveletTransform
     Module NamespaceDoc
     End Module
 End Namespace
-

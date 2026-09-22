@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fe6b51fa876e4049c4ed3fb7d3d2926, mime\application%rtf\Writer\RtfBlock.vb"
+﻿#Region "Microsoft.VisualBasic::4aba1b50969991ee96747de3ea8c55db, mime\application%rtf\Writer\RtfBlock.vb"
 
     ' Author:
     ' 
@@ -165,4 +165,3 @@ Public Class RtfBlock
     Public ImagePixelHeight As Integer = 0
 
 End Class
-

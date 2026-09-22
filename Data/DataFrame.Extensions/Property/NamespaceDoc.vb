@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1853b91bf979b02a1d7592d48b3f8084, Data\DataFrame.Extensions\Property\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::678e1795728e518694feb4b83f1bc389, Data\DataFrame.Extensions\Property\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 237 B
+    '     File Size: 235 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace IO.Properties
     Module NamespaceDoc
     End Module
 End Namespace
-

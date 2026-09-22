@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3768f6ec5210d00244b09c4366ddf69, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Parameters\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c683e872e4208bfb99b1f3bc4580157c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Parameters\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 202 B
+    '     File Size: 200 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Emit.Parameters
     Module NamespaceDoc
     End Module
 End Namespace
-

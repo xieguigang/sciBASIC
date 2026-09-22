@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfab9bfab28bdcd28e98cebbc00365ac, Data_science\Graph\KNN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ca37da97d21c15d730f3c45515fc159b, Data_science\Graph\KNN\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 166 B
+    '     File Size: 164 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KNearNeighbors
     Module NamespaceDoc
     End Module
 End Namespace
-

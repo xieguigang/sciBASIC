@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8eb655e61817f0dc5f1881dff94868c, Data_science\Mathematica\Math\Math\Numerics\Optimization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::43c60de18cd904e13ba4c01936e3f448, Data_science\Mathematica\Math\Math\Numerics\Optimization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Framework.Optimization
     Module NamespaceDoc
     End Module
 End Namespace
-

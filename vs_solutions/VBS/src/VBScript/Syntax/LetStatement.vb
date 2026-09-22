@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::050016e923db1656227732c523328b38, vs_solutions\VBS\src\VBScript\Syntax\LetStatement.vb"
+﻿#Region "Microsoft.VisualBasic::0ddbe0efdf768abebff1a6a06aca9e79, vs_solutions\VBS\src\VBScript\Syntax\LetStatement.vb"
 
     ' Author:
     ' 
@@ -170,4 +170,3 @@ Namespace Script
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3acdabc49cd629ba1cb2dce0ef331ae1, Data_science\DataMining\UMAP\KNN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::53ad49103b6e59f76ecb8f0c0fbd24d0, Data_science\DataMining\UMAP\KNN\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 176 B
+    '     File Size: 174 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KNN
     Module NamespaceDoc
     End Module
 End Namespace
-

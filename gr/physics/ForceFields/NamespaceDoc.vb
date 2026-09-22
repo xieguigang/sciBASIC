@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a2e7704ff518c4c4b0197ff44eb8a15, gr\physics\ForceFields\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3d8cd4230704d09c4f694db1ced2c55d, gr\physics\ForceFields\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 210 B
+    '     File Size: 208 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ForceFields
     Module NamespaceDoc
     End Module
 End Namespace
-

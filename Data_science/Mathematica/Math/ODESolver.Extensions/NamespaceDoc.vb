@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b99b93c4013225e6ac8af984b0dc2fe9, Data_science\Mathematica\Math\ODESolver.Extensions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::74a2dd1a34b29324ac94bb6c851747ad, Data_science\Mathematica\Math\ODESolver.Extensions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 146 B
+    '     File Size: 144 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

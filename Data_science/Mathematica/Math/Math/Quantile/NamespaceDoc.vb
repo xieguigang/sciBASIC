@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b474fa3a7729070130c63bb0dba1652d, Data_science\Mathematica\Math\Math\Quantile\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::efdec166980c8af4869cf277322649bc, Data_science\Mathematica\Math\Math\Quantile\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 162 B
+    '     File Size: 160 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Quantile
     Module NamespaceDoc
     End Module
 End Namespace
-

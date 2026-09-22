@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e22d08b780473ae88c5ac1090ed3576f, Microsoft.VisualBasic.Core\src\Data\TypeCast\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f2b615caa3a77f5aef7c35f78fb8a625, Microsoft.VisualBasic.Core\src\Data\TypeCast\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 222 B
+    '     File Size: 220 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.DataSourceModel.TypeCast
     Module NamespaceDoc
     End Module
 End Namespace
-

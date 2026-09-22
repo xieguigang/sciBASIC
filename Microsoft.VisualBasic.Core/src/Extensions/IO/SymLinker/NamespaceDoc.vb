@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c557074b73275b4e8dd83ef0c4642cdf, Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4a5f51037fc4a9e8b946b9fea834a587, Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 181 B
+    '     File Size: 179 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace FileIO.SymLinker
     Module NamespaceDoc
     End Module
 End Namespace
-

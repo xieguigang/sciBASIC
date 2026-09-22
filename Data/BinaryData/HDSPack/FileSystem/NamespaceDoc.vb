@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10415c2daa7c5f4bedf63b42b3f68e61, Data\BinaryData\HDSPack\FileSystem\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::016c7f0c5e0c2a16ea17db284a910a59, Data\BinaryData\HDSPack\FileSystem\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 274 B
+    '     File Size: 272 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace FileSystem
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c405b60d8dd474d7ec722c08cc87618, Data_science\MachineLearning\MachineLearning\SVM\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::510c4e389fa6c9fd559db6e983b758f1, Data_science\MachineLearning\MachineLearning\SVM\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 182 B
+    '     File Size: 180 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace SVM
     Module NamespaceDoc
     End Module
 End Namespace
-

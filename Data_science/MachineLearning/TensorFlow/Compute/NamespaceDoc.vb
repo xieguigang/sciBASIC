@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::200a929aeebe7a64836d3b34f0274893, Data_science\MachineLearning\TensorFlow\Compute\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d6ecc2194afef8a30d19e1896d315edc, Data_science\MachineLearning\TensorFlow\Compute\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 156 B
+    '     File Size: 154 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Compute
     Module NamespaceDoc
     End Module
 End Namespace
-

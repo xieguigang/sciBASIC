@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::468350ef0797122470c8ac2f0f46599e, nlp\NLP\BM25\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::51142b3890be8abe3f9b3a1315159dca, nlp\NLP\BM25\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 307 B
+    '     File Size: 305 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace BM25
     Module NamespaceDoc
     End Module
 End Namespace
-

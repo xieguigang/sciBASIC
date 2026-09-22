@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06cbb43140d27da0c2aa2e60238371b8, gr\network-visualization\Network.IO.Extensions\IO\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b17a10f3d61160baf21359aee9a4d2ce, gr\network-visualization\Network.IO.Extensions\IO\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 476 B
+    '     File Size: 474 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace FileStream.Generic
     Module NamespaceDoc
     End Module
 End Namespace
-

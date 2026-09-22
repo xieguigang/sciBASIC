@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4f765dde653b42eca9e09fc17131389, Data_science\Visualization\Plots\BoxPlot\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e2dfbb6b0dbc42c145a335dd3c24aeda, Data_science\Visualization\Plots\BoxPlot\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 136 B
+    '     File Size: 134 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace BoxPlot
     Module NamespaceDoc
     End Module
 End Namespace
-

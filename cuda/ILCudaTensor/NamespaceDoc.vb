@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc7d84f8cf9615da314f232f6db4c936, cuda\ILCudaTensor\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5536ec90a75ca43cdcfbfa91ef0fdec6, cuda\ILCudaTensor\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 230 B
+    '     File Size: 228 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

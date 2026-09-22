@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adfb844f44a90dc3930b72753a8ae913, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e6bd19d0f08ac4d4a7d5fa4515cc6863, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Filters
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34ac1e7eebc7012f541889df2d28280f, Data_science\DataMining\DensityQuery\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f024fbb196a1e1d110bf8c35188714be, Data_science\DataMining\DensityQuery\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 214 B
+    '     File Size: 212 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

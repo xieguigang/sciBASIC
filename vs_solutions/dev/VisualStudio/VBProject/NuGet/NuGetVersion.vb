@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30cc08700bfff791244d8340e611910d, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetVersion.vb"
+﻿#Region "Microsoft.VisualBasic::3144fc055897ad1ec31ec18220e4b9c4, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetVersion.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.62%
     ' 
     '   Blank Lines: 90 (23.50%)
-    '     File Size: 13.21 KB
+    '     File Size: 13.20 KB
 
 
     '     Class NuGetVersion
@@ -446,4 +446,3 @@ Namespace VBProj.NuGet
         End Function
     End Class
 End Namespace
-

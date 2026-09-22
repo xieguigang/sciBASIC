@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::815cd61f7d427c31019402bccd7cf8c4, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::413cbdf6cbf581ef54f43c2f3dc8a6d0, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Distributions.LinearMoments
     Module NamespaceDoc
     End Module
 End Namespace
-

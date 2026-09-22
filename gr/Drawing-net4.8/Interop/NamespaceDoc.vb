@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70f6abefc0b1015b7119e7a7817f9e54, gr\Drawing-net4.8\Interop\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e8ab05b7d8fd265daecc6f82489bc7e6, gr\Drawing-net4.8\Interop\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 278 B
+    '     File Size: 276 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Interop
     Module NamespaceDoc
     End Module
 End Namespace
-

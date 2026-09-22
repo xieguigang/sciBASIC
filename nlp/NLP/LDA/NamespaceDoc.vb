@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46704ef500a0bdf63bc8839b06b5307, nlp\NLP\LDA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::67cf35739378d232dc2ed6681d4c6402, nlp\NLP\LDA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 329 B
+    '     File Size: 327 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace LDA
     Module NamespaceDoc
     End Module
 End Namespace
-

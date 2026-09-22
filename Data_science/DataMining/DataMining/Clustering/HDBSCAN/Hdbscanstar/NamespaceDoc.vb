@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1468e04e0a6343e5db75caaeb935d0bd, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c6254089a4697c52c5ceffd8ca1f3d33, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 199 B
+    '     File Size: 197 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace HDBSCAN.Hdbscanstar
     Module NamespaceDoc
     End Module
 End Namespace
-

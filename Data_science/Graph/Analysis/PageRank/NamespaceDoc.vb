@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1fa0f76272544e02c0293d74bdac99f, Data_science\Graph\Analysis\PageRank\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2de369781427b943ce2674f2b1d6bda6, Data_science\Graph\Analysis\PageRank\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 170 B
+    '     File Size: 168 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Analysis.PageRank
     Module NamespaceDoc
     End Module
 End Namespace
-

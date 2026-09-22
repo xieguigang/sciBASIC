@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b045fa5b535dcb006d4ade913671c3c6, Data_science\Graph\Analysis\Dijkstra\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::79f1334ea2f10180f64370a0524dcb18, Data_science\Graph\Analysis\Dijkstra\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 166 B
+    '     File Size: 164 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Analysis.Dijkstra
     Module NamespaceDoc
     End Module
 End Namespace
-

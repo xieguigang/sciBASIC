@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2affdcdc8c981ad9ffa57c2311cf17b8, Data_science\MachineLearning\SNN\RegressionLosses.vb"
+﻿#Region "Microsoft.VisualBasic::c82dcfa7c612fbe0c72ae850945cee17, Data_science\MachineLearning\SNN\RegressionLosses.vb"
 
     ' Author:
     ' 
@@ -306,4 +306,3 @@ Public Module RegressionLosses
 #End Region
 
 End Module
-

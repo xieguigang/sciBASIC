@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8260ec9ebd52d14a3e4b8d01a6b24fb7, Data_science\Mathematica\Math\Math\Numerics\Framework\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ede6f31167568dcb25bd68c25a2abad, Data_science\Mathematica\Math\Math\Numerics\Framework\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 163 B
+    '     File Size: 161 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Framework
     Module NamespaceDoc
     End Module
 End Namespace
-

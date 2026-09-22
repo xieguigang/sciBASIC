@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2803ef8b9b2049fff6aea1ef3215204f, Data_science\Visualization\Plots\BarPlot\Histogram\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8ffef17e9f3ae7718b1bdaf70f3d5512, Data_science\Visualization\Plots\BarPlot\Histogram\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 152 B
+    '     File Size: 150 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace BarPlot.Histogram
     Module NamespaceDoc
     End Module
 End Namespace
-

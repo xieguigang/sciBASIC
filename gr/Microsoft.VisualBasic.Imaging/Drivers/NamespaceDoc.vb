@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07a15985b5cd16097d93ca4ba36145e6, gr\Microsoft.VisualBasic.Imaging\Drivers\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e47c45e3a969dc9167b8c2057ec05114, gr\Microsoft.VisualBasic.Imaging\Drivers\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 388 B
+    '     File Size: 386 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace Driver
     Module NamespaceDoc
     End Module
 End Namespace
-

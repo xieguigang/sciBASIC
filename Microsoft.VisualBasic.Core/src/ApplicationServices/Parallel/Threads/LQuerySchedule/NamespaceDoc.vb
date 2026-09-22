@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d215c5a2bcc73c14a5e54cedfb7c81e, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9f887459d3c114aad2fe44334b86f1e7, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Parallel.Linq
     Module NamespaceDoc
     End Module
 End Namespace
-

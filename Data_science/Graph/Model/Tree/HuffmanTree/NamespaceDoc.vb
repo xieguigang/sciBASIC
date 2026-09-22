@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b16147f24e2e55ebe0940a8408a2ee4, Data_science\Graph\Model\Tree\HuffmanTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6a7282dce4898d83bd3c3407eacc70aa, Data_science\Graph\Model\Tree\HuffmanTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace HuffmanTree
     Module NamespaceDoc
     End Module
 End Namespace
-

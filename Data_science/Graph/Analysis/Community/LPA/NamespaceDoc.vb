@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb12744ba61ed9222acf10b975cbfbd0, Data_science\Graph\Analysis\Community\LPA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3d0f21c3d9055bcfc728aeec2e36b674, Data_science\Graph\Analysis\Community\LPA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 175 B
+    '     File Size: 173 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Analysis.LPA
     Module NamespaceDoc
     End Module
 End Namespace
-

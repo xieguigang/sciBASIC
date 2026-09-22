@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d79453a0122e289b8e43175b67e2ac1, llm\Text\TextCodec.vb"
+﻿#Region "Microsoft.VisualBasic::2acf0fd6165d2cf231f65589aa5030f6, llm\Text\TextCodec.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Namespace Text
     End Interface
 
 End Namespace
-

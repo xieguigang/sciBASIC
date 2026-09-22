@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac2af66f93060fde28ce113c64f2a5d, gr\network-visualization\network_layout\Orthogonal\optimization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e08d5f7a09024a233f13ea39f582ff28, gr\network-visualization\network_layout\Orthogonal\optimization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 197 B
+    '     File Size: 195 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Orthogonal.optimization
     Module NamespaceDoc
     End Module
 End Namespace
-

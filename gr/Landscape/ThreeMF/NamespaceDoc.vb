@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8e45a0d4d7785e89b5dd9c4dbfc0eea, gr\Landscape\ThreeMF\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::33694cb8bb94f340e004b6b3d31991f5, gr\Landscape\ThreeMF\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 213 B
+    '     File Size: 211 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ThreeMF
     Module NamespaceDoc
     End Module
 End Namespace
-

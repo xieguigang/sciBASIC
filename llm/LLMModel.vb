@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b5508d3f0cd51a758caecc539644b04, llm\LLMModel.vb"
+﻿#Region "Microsoft.VisualBasic::9a45d3530a09485fafb0ac03d30a7401, llm\LLMModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 751
-    '    Code Lines: 434 (57.79%)
-    ' Comment Lines: 159 (21.17%)
+    '   Total Lines: 749
+    '    Code Lines: 434 (57.94%)
+    ' Comment Lines: 159 (21.23%)
     '    - Xml Docs: 81.76%
     ' 
-    '   Blank Lines: 158 (21.04%)
-    '     File Size: 30.43 KB
+    '   Blank Lines: 156 (20.83%)
+    '     File Size: 30.42 KB
 
 
     ' Class LLMModel
@@ -58,7 +58,6 @@
     ' 
     '     Sub: Backward, ResetCaches, ResetMoELifetimeLoad, ResetMoELoadStatistics, Save
     '     Class ForwardCache
-    ' 
     ' 
     ' 
     ' 
@@ -817,6 +816,3 @@ Public Class LLMModel
 #End Region
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05d86906dcf90526af6da9f02bd3b9ce, Data_science\DataMining\DataMining\ComponentModel\EntityModels\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7efaecef8f7c057e783bd5a0663910de, Data_science\DataMining\DataMining\ComponentModel\EntityModels\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 201 B
+    '     File Size: 199 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.EntityModels
     Module NamespaceDoc
     End Module
 End Namespace
-

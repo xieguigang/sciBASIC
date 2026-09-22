@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f8afc15fc79d3f6cee1a616a4fa4493, Data_science\MachineLearning\SNN\LIFLayer.vb"
+﻿#Region "Microsoft.VisualBasic::ba14473607d8ae287ca7e5d9f5ad66e8, Data_science\MachineLearning\SNN\LIFLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 246
-    '    Code Lines: 128 (52.03%)
-    ' Comment Lines: 68 (27.64%)
+    '   Total Lines: 244
+    '    Code Lines: 128 (52.46%)
+    ' Comment Lines: 68 (27.87%)
     '    - Xml Docs: 60.29%
     ' 
-    '   Blank Lines: 50 (20.33%)
-    '     File Size: 9.24 KB
+    '   Blank Lines: 48 (19.67%)
+    '     File Size: 9.23 KB
 
 
     ' Enum LIFResetMode
@@ -62,7 +62,6 @@
     '     Function: BackwardTime, ForwardStep
     ' 
     '     Sub: ResetState
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -312,6 +311,3 @@ Public Class LIFLayer
 #End Region
 
 End Class
-
-
-

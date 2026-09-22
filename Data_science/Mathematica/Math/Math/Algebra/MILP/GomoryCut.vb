@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d831bace0ef08d7829f2ddad51917e8, Data_science\Mathematica\Math\Math\Algebra\MILP\GomoryCut.vb"
+﻿#Region "Microsoft.VisualBasic::d1f83bb6c5a69d1d9e8a1ab8bdf0c9fd, Data_science\Mathematica\Math\Math\Algebra\MILP\GomoryCut.vb"
 
     ' Author:
     ' 
@@ -264,4 +264,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Module
 
 End Namespace
-

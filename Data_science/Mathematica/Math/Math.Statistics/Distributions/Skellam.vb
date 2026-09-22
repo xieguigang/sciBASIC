@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57ae440c928bec7057b6bb33f3351d8a, Data_science\Mathematica\Math\Math.Statistics\Distributions\Skellam.vb"
+﻿#Region "Microsoft.VisualBasic::51a8a620d0c74bfe0b68b11e8bb157a6, Data_science\Mathematica\Math\Math.Statistics\Distributions\Skellam.vb"
 
     ' Author:
     ' 
@@ -405,4 +405,3 @@ Namespace Distributions
         End Function
     End Module
 End Namespace
-

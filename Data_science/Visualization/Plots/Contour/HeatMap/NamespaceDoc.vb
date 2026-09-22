@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17f4c965ebf19067a391c663e65f265b, Data_science\Visualization\Plots\Contour\HeatMap\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::196917a195bbbab425cae6664e3831f6, Data_science\Visualization\Plots\Contour\HeatMap\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 161 B
+    '     File Size: 159 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Contour.HeatMap
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caacfabdbaa4b51ea095d7faa5c51149, Data_science\Visualization\DataPlot\Engine\GgplotTheme\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2a0ba1277d27ae0d331464f86d48c5cf, Data_science\Visualization\DataPlot\Engine\GgplotTheme\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 190 B
+    '     File Size: 188 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace GgplotTheme
     Module NamespaceDoc
     End Module
 End Namespace
-

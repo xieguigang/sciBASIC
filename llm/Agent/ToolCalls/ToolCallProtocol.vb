@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::788edaa1b8c78854cc3410f31d28c823, llm\Agent\ToolCalls\ToolCallProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::281b83328e132caadbbd8c281a191f46, llm\Agent\ToolCalls\ToolCallProtocol.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 62.00%
     ' 
     '   Blank Lines: 105 (23.70%)
-    '     File Size: 18.49 KB
+    '     File Size: 18.48 KB
 
 
     '     Module ToolCallProtocol
@@ -500,4 +500,3 @@ Namespace Agent.ToolCalls
     End Module
 
 End Namespace
-

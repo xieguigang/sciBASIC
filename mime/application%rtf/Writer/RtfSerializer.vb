@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb868d2b1c4e6407dea512d869c8e497, mime\application%rtf\Writer\RtfSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::d713545cabccf397f82229400c74f8c6, mime\application%rtf\Writer\RtfSerializer.vb"
 
     ' Author:
     ' 
@@ -855,4 +855,3 @@ Public Class RtfSerializer
     End Class
 
 End Class
-

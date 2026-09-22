@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86cd9b2c3551c27129ad22a81a577389, llm\Trainer\LMBatch.vb"
+﻿#Region "Microsoft.VisualBasic::0a3e35d29a7a5194b9b0c1f7a4fee566, llm\Trainer\LMBatch.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 63 (53.39%)
-    ' Comment Lines: 27 (22.88%)
+    '   Total Lines: 117
+    '    Code Lines: 63 (53.85%)
+    ' Comment Lines: 27 (23.08%)
     '    - Xml Docs: 96.30%
     ' 
-    '   Blank Lines: 28 (23.73%)
-    '     File Size: 4.73 KB
+    '   Blank Lines: 27 (23.08%)
+    '     File Size: 4.72 KB
 
 
     '     Class LMBatch
@@ -172,5 +172,3 @@ Namespace Trainer
     End Class
 
 End Namespace
-
-

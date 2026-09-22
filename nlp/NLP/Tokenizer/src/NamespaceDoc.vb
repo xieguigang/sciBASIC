@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e3f1e7ef76fcfa8ce383b32906680e2, nlp\NLP\Tokenizer\src\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d01d842dd31b46aa5fe10175fdbefbcf, nlp\NLP\Tokenizer\src\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 308 B
+    '     File Size: 306 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ChineseTokenizer
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19994fc4432d0d0f20434ee99e2f7cb8, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9ca30c51458393b9393fbbf119795047, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 155 B
+    '     File Size: 153 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace FuzzyCMeans
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91980abe4b1b5b72f1cf53e21de6e674, Microsoft.VisualBasic.Core\src\Scripting\MetaData\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::aab23671c3770ad903ae26a07214fda8, Microsoft.VisualBasic.Core\src\Scripting\MetaData\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 247 B
+    '     File Size: 245 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Scripting.MetaData
     Module NamespaceDoc
     End Module
 End Namespace
-

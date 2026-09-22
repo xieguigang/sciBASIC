@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f43f647fb06fdc3ba3d996b77438229f, Data_science\Graph\Model\Tree\KdTree\ApproximateNearNeighbor\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2d75a282a741240a18333f2a68b1349b, Data_science\Graph\Model\Tree\KdTree\ApproximateNearNeighbor\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 214 B
+    '     File Size: 212 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KdTree.ApproximateNearNeighbor
     Module NamespaceDoc
     End Module
 End Namespace
-

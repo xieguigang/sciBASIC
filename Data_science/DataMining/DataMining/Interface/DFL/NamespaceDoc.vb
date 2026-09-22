@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29eb36326aeb4a38b72ad914c3bbc734, Data_science\DataMining\DataMining\Interface\DFL\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ca0fd77c93197d72a0ee0ad4f99c4b92, Data_science\DataMining\DataMining\Interface\DFL\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DFL_Driver
     Module NamespaceDoc
     End Module
 End Namespace
-

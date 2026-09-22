@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bc52a872a0185bce38c2facb6ba27f2, Data_science\Graph\Model\GridGraph\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3ac40ad403ab2a6059c8d5e25df0ecf3, Data_science\Graph\Model\GridGraph\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 149 B
+    '     File Size: 147 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace GridGraph
     Module NamespaceDoc
     End Module
 End Namespace
-

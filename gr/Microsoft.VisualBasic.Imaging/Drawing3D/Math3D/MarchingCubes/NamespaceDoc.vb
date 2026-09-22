@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04cdbff7f33bb2424df2e1280830831, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\MarchingCubes\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::471958a5857d3f2cf72e01c8a5f72703, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\MarchingCubes\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 261 B
+    '     File Size: 259 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing3D.Math3D.MarchingCubes
     Module NamespaceDoc
     End Module
 End Namespace
-

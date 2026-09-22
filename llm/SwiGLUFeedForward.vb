@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95ef0fc33a7a8de21301fda5bba7a02d, llm\SwiGLUFeedForward.vb"
+﻿#Region "Microsoft.VisualBasic::694b6ec9d6e6d00ec8dca70be39abc28, llm\SwiGLUFeedForward.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 223
-    '    Code Lines: 126 (56.50%)
-    ' Comment Lines: 52 (23.32%)
+    '   Total Lines: 221
+    '    Code Lines: 126 (57.01%)
+    ' Comment Lines: 52 (23.53%)
     '    - Xml Docs: 46.15%
     ' 
-    '   Blank Lines: 45 (20.18%)
+    '   Blank Lines: 43 (19.46%)
     '     File Size: 8.63 KB
 
 
@@ -53,7 +53,6 @@
     ' 
     '     Sub: MakeTrainingStep, RegisterParameters, ZeroGradients
     '     Class Cache
-    ' 
     ' 
     ' 
     ' 
@@ -284,6 +283,3 @@ Public Class SwiGLUFeedForward
     End Sub
 
 End Class
-
-
-

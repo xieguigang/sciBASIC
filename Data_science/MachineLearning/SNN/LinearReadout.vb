@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e78162c80ba5c05bc891d89509b1e9ba, Data_science\MachineLearning\SNN\LinearReadout.vb"
+﻿#Region "Microsoft.VisualBasic::f7af78b46169f474f61e7b53ee34d159, Data_science\MachineLearning\SNN\LinearReadout.vb"
 
     ' Author:
     ' 
@@ -269,4 +269,3 @@ Public Class LinearReadout
     End Function
 
 End Class
-

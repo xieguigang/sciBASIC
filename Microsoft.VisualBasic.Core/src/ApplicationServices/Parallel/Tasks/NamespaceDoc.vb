@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dab18b4281e886fdf36723572478c1fb, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1754ebc6cce9965a59a2469ef206cd3d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 246 B
+    '     File Size: 244 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Parallel.Tasks
     Module NamespaceDoc
     End Module
 End Namespace
-

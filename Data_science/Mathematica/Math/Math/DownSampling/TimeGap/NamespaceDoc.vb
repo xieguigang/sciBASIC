@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9964cc41b6945566ff8700b1b11abbfc, Data_science\Mathematica\Math\Math\DownSampling\TimeGap\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fe6e4b2bf8aad48310656c56a92d7cfd, Data_science\Mathematica\Math\Math\DownSampling\TimeGap\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 168 B
+    '     File Size: 166 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DownSampling.TimeGap
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d0bbc61f77c85781205c83906bd91dd, llm\ParameterSet.vb"
+﻿#Region "Microsoft.VisualBasic::91409e67f9ccef1439eed61babda67ea, llm\ParameterSet.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 138 (49.11%)
-    ' Comment Lines: 98 (34.88%)
+    '   Total Lines: 279
+    '    Code Lines: 138 (49.46%)
+    ' Comment Lines: 98 (35.13%)
     '    - Xml Docs: 86.73%
     ' 
-    '   Blank Lines: 45 (16.01%)
+    '   Blank Lines: 43 (15.41%)
     '     File Size: 11.21 KB
 
 
@@ -57,7 +57,6 @@
     '         Properties: Gradient, Name, Optimizer, Value
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    ' 
     ' 
     ' 
     ' 
@@ -344,6 +343,3 @@ Public Class ParameterSet
     End Function
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1687952b332088b1a4104d0afddfaa7e, vs_solutions\PkgVersionUpgrade\CliOptions.vb"
+﻿#Region "Microsoft.VisualBasic::b347080c5f3019b22cf261edea978dfd, vs_solutions\PkgVersionUpgrade\CliOptions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 12 (44.44%)
-    ' Comment Lines: 13 (48.15%)
+    '   Total Lines: 26
+    '    Code Lines: 12 (46.15%)
+    ' Comment Lines: 13 (50.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (7.41%)
-    '     File Size: 1.73 KB
+    '   Blank Lines: 1 (3.85%)
+    '     File Size: 1.72 KB
 
 
     ' Class CliOptions
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8baa5f86ca7a1c670db178228f1361c, Data_science\MachineLearning\SNN\test\test2.vb"
+﻿#Region "Microsoft.VisualBasic::638a67d0a0fba771fe92cb6fe73dc919, Data_science\MachineLearning\SNN\test\test2.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Module test2
         Console.WriteLine()
     End Sub
 End Module
-

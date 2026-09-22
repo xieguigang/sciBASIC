@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0b09afea2ba729764306b1dbe89e2bd, mime\text%markdown\JSONSchema\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4233b2721fbacf79608affb062e5a4b0, mime\text%markdown\JSONSchema\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 239 B
+    '     File Size: 237 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace JSONSchema
     Module NamespaceDoc
     End Module
 End Namespace
-

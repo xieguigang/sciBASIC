@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd6cb55788e4a90e69d7a6f4c19f3dd2, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1e06f9bd28c76f0abbf3e9f573702b56, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 210 B
+    '     File Size: 208 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Discretion
     Module NamespaceDoc
     End Module
 End Namespace
-

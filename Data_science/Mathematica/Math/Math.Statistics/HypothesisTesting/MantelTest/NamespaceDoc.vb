@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cce6e2e5ea50412b4c8c91fd5a725acd, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4470fc9138d8879bb5a5784a19f3c764, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 194 B
+    '     File Size: 192 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Hypothesis.Mantel
     Module NamespaceDoc
     End Module
 End Namespace
-

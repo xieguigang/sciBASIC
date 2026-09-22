@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c8d414800ccbc71e8645b0bf49aa0b6, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ac844e6ca18faa513844c63a7315b7f, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 182 B
+    '     File Size: 180 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace NDtw
     Module NamespaceDoc
     End Module
 End Namespace
-

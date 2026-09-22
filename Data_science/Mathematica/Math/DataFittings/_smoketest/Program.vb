@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71343edb836dfb3de22c6d6137fe40fc, Data_science\Mathematica\Math\DataFittings\_smoketest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::aca6ae657385903ebebe2bb32732a7a5, Data_science\Mathematica\Math\DataFittings\_smoketest\Program.vb"
 
     ' Author:
     ' 
@@ -294,4 +294,3 @@ Module Program
         End Try
     End Function
 End Module
-

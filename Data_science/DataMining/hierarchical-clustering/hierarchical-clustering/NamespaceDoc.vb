@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3973bb9b0b41a0f3b3ec69fa19685368, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5b0cd970dbcf287bbfc895107a9f3ca9, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

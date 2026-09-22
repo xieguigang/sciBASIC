@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61f1b70607966cf328895e1978721b6c, Data_science\MachineLearning\SNN\TensorHelper.vb"
+﻿#Region "Microsoft.VisualBasic::24d28ff7b0bf2d2d91838c69088be712, Data_science\MachineLearning\SNN\TensorHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 3 (13.04%)
-    '     File Size: 764 B
+    '     File Size: 762 B
 
 
     ' Module TensorHelper
@@ -74,4 +74,3 @@ Public Module TensorHelper
         Return BatchTensor(d.features, idx, 0, n)
     End Function
 End Module
-

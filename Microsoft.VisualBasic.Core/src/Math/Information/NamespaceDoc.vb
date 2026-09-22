@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6120c0e2cf910ad60ccf674be89c9457, Microsoft.VisualBasic.Core\src\Math\Information\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::98ba47278f806fde159f7f6bbc6b8690, Microsoft.VisualBasic.Core\src\Math\Information\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 212 B
+    '     File Size: 210 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Math.Information
     Module NamespaceDoc
     End Module
 End Namespace
-

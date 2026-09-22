@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::233cef38b5af5b26b165ee06ab2967db, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::841be7650a2aac8f02456bd2492f6142, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 200 B
+    '     File Size: 198 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Text.Similarity
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1856669207a9201b748aaf5dee3c8b14, gr\network-visualization\Datavisualization.Network\TreeAPI\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d89d16f8aa35ad5ff53f4f98dea12bf5, gr\network-visualization\Datavisualization.Network\TreeAPI\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 214 B
+    '     File Size: 212 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace TreeAPI
     Module NamespaceDoc
     End Module
 End Namespace
-

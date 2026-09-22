@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e368ae81febca2096d6adf01dfe0c37f, Data\MyersDiff\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::68dbf4f236885430400f26e4d3e4471c, Data\MyersDiff\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 256 B
+    '     File Size: 254 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

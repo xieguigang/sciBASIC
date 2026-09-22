@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a327f2f1dd028f3af1f993bb0e4b92, Data_science\Mathematica\Math\ANOVA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4dd809186e4abbfa454126149dcbc88e, Data_science\Mathematica\Math\ANOVA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 2 (14.29%)
-    '     File Size: 319 B
+    '     File Size: 317 B
 
 
     ' Class NamespaceDoc
@@ -70,4 +70,3 @@ Namespace stats
     Module NamespaceDoc
     End Module
 End Namespace
-

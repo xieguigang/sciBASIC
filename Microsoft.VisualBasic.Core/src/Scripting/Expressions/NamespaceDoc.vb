@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88b09c637f03b2e94f29b424b79ca938, Microsoft.VisualBasic.Core\src\Scripting\Expressions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::dc640470d9a7772e44470de21c08c675, Microsoft.VisualBasic.Core\src\Scripting\Expressions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 205 B
+    '     File Size: 203 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Scripting.Expressions
     Module NamespaceDoc
     End Module
 End Namespace
-

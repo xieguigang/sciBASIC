@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53fd451c0a11118a71ca6a6975993541, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f46ecb050ee21023893157099cbb1a13, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace LinearAlgebra.Matrix
     Module NamespaceDoc
     End Module
 End Namespace
-

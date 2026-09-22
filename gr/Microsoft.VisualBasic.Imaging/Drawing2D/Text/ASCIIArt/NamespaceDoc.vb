@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bf6f5d011d2d9fca62d8293b82366df, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1932256811d03c16211c2c584bae4e22, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 256 B
+    '     File Size: 254 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.Text.ASCIIArt
     Module NamespaceDoc
     End Module
 End Namespace
-

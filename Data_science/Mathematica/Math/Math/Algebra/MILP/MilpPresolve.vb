@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18e89714e2db31b884d7222798f8f788, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpPresolve.vb"
+﻿#Region "Microsoft.VisualBasic::7a4514a1fdca608d24c8d9f9be5d844c, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpPresolve.vb"
 
     ' Author:
     ' 
@@ -1037,4 +1037,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Module
 
 End Namespace
-

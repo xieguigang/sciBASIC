@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9137c6def9992222d6df7a1781d6601f, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8e7d954bea0f789cda6af25085438afc, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 277 B
+    '     File Size: 275 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace CommandLine.InteropService.SharedORM
     Module NamespaceDoc
     End Module
 End Namespace
-

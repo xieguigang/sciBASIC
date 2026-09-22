@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09c713b3b25fa991ccab9c4860963165, Data_science\MachineLearning\DeepLearning\CNN\CNNLayerArguments.vb"
+﻿#Region "Microsoft.VisualBasic::8affcef75644cb078717a6df2a5760fd, Data_science\MachineLearning\DeepLearning\CNN\CNNLayerArguments.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Namespace CNN
 
     End Class
 End Namespace
-

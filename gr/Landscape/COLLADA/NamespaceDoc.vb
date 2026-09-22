@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13dca5b88dae44f7777f8240d2dd998a, gr\Landscape\COLLADA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::88cc9f7bffe024944666f3a374d2a74c, gr\Landscape\COLLADA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 217 B
+    '     File Size: 215 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Collada
     Module NamespaceDoc
     End Module
 End Namespace
-

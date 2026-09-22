@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afc2fd111555f1714986af0930c47738, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::617e8bcd842e0399c09410fcf5173ad1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 308 B
+    '     File Size: 306 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.Text.Nudge
     Module NamespaceDoc
     End Module
 End Namespace
-

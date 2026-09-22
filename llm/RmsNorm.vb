@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f0b58102d158607450fce97a35e9a80, llm\RmsNorm.vb"
+﻿#Region "Microsoft.VisualBasic::1f35c5ab8f5e1ecbd24740fca3491578, llm\RmsNorm.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 119 (54.84%)
-    ' Comment Lines: 56 (25.81%)
+    '   Total Lines: 215
+    '    Code Lines: 119 (55.35%)
+    ' Comment Lines: 56 (26.05%)
     '    - Xml Docs: 67.86%
     ' 
-    '   Blank Lines: 42 (19.35%)
+    '   Blank Lines: 40 (18.60%)
     '     File Size: 7.92 KB
 
 
@@ -53,7 +53,6 @@
     ' 
     '     Sub: MakeTrainingStep, RegisterParameters, ZeroGradients
     '     Class Cache
-    ' 
     ' 
     ' 
     ' 
@@ -278,6 +277,3 @@ Public Class RmsNorm
     End Sub
 
 End Class
-
-
-

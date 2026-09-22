@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e3530705bfbec178193336a95e8ac7b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::09f273f9e86317f847998baf345cead5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 361 B
+    '     File Size: 359 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
     Module NamespaceDoc
     End Module
 End Namespace
-

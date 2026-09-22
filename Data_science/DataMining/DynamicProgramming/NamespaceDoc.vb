@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8da44a9b179d41235455386670e7075e, Data_science\DataMining\DynamicProgramming\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::561e4433078c0c434a525d967b77ba86, Data_science\DataMining\DynamicProgramming\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 164 B
+    '     File Size: 162 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a405a7b768dc8b26544828f4328bb1e, Data\BinaryData\BinaryData\PickleSerializer\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9c4e8f1fedf9a1c95bbf2448026d04ba, Data\BinaryData\BinaryData\PickleSerializer\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 303 B
+    '     File Size: 301 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Pickle
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f37cdda787727ecf297be2f94191588, gr\network-visualization\Datavisualization.Network\Analysis\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::051983348603b9faa7446a290fb9babe, gr\network-visualization\Datavisualization.Network\Analysis\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 294 B
+    '     File Size: 292 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Analysis
     Module NamespaceDoc
     End Module
 End Namespace
-

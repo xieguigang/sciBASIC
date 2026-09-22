@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e209a3e0a77e17c846d0aef489dce782, mime\text%html\Parser\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::62fb07b2bbcdcd0cb8ade251e487ed73, mime\text%html\Parser\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 271 B
+    '     File Size: 269 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Language
     Module NamespaceDoc
     End Module
 End Namespace
-

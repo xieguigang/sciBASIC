@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e436183f2040ef1f77cc60f2d4bd5b4f, llm\MoE\MoELayer.vb"
+﻿#Region "Microsoft.VisualBasic::03a9ce4c9d465af879e1aaac72aac16f, llm\MoE\MoELayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 867
-    '    Code Lines: 515 (59.40%)
-    ' Comment Lines: 167 (19.26%)
+    '   Total Lines: 865
+    '    Code Lines: 515 (59.54%)
+    ' Comment Lines: 167 (19.31%)
     '    - Xml Docs: 56.29%
     ' 
-    '   Blank Lines: 185 (21.34%)
-    '     File Size: 33.79 KB
+    '   Blank Lines: 183 (21.16%)
+    '     File Size: 33.78 KB
 
 
     ' Class MoELayer
@@ -60,7 +60,6 @@
     ' 
     ' 
     '     Class Cache
-    ' 
     ' 
     ' 
     ' 
@@ -935,6 +934,3 @@ Public Class MoELayer
 #End Region
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e984ac26964e7431d4ec0361549b6f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8f2ecd23f7f8f76ba8cd443b5be7f237, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 281 B
+    '     File Size: 279 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Terminal.LineEdit
     Module NamespaceDoc
     End Module
 End Namespace
-

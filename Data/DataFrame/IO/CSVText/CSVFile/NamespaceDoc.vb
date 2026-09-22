@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b04a845cbc8e6e400b2743460218453c, Data\DataFrame\IO\CSVText\CSVFile\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::beea3dcd0baf3bf874afc49e7d8ccb27, Data\DataFrame\IO\CSVText\CSVFile\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 253 B
+    '     File Size: 251 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace IO.CSVFile
     Module NamespaceDoc
     End Module
 End Namespace
-

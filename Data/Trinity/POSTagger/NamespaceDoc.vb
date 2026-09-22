@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e0423fe7e8736d083b2a5a5c08af9c, Data\Trinity\POSTagger\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f71d8006271cba7fd7078a17bfd8bcd1, Data\Trinity\POSTagger\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 232 B
+    '     File Size: 230 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace POSTagger
     Module NamespaceDoc
     End Module
 End Namespace
-

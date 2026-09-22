@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b441153ce960052b11f9012ac8795e26, Data_science\MachineLearning\MachineLearning\test\svm\SVMDemo.vb"
+﻿#Region "Microsoft.VisualBasic::22e2e27e4ab49945211d1386c8ab5ef5, Data_science\MachineLearning\MachineLearning\test\svm\SVMDemo.vb"
 
     ' Author:
     ' 
@@ -205,4 +205,3 @@ Namespace SVMDemo
 
     End Module
 End Namespace
-

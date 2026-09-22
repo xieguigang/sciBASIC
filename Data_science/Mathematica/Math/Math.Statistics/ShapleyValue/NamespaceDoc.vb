@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a86218c89869666d70a6b74bc85982e2, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3018c599cd06196920057b6edc67328b, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 181 B
+    '     File Size: 179 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ShapleyValue
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8efa7d7f15174540682b33bb35f6e7b, Data_science\Mathematica\SignalProcessing\Signal.IO\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bacd03682970a84b8068ab6c67bc36a1, Data_science\Mathematica\SignalProcessing\Signal.IO\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 126 B
+    '     File Size: 124 B
 
 
     ' Class NamespaceDoc
@@ -56,4 +56,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

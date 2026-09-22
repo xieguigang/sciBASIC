@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faa2fb48fc6785644e0a34c294e3df3e, cuda\ILCudaTensor\GPUTensor\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::90af0415c74de86ab57b8f6702d5d9bb, cuda\ILCudaTensor\GPUTensor\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 294 B
+    '     File Size: 292 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace GPUTensor
     Module NamespaceDoc
     End Module
 End Namespace
-

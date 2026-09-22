@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20e78c821dad9a6ccf995cc39458c3a2, gr\physics\Particles2D\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7504e45d1b2e9790d80f18ff92a303fa, gr\physics\Particles2D\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 172 B
+    '     File Size: 170 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Particles2D
     Module NamespaceDoc
     End Module
 End Namespace
-

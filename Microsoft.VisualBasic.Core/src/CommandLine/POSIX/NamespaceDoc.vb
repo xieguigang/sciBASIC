@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a038a86e46014fdf6d38ad8d74a9b0, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cf58e1ac3568f0e7641cdc3a71399269, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 185 B
+    '     File Size: 183 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace CommandLine.POSIX
     Module NamespaceDoc
     End Module
 End Namespace
-

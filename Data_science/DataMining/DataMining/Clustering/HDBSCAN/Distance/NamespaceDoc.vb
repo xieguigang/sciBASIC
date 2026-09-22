@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a306be5bf103c11b5fe47792ccd3163e, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c2b6b825ea6ed914d278f1ec0c8344b9, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace HDBSCAN.Distance
     Module NamespaceDoc
     End Module
 End Namespace
-

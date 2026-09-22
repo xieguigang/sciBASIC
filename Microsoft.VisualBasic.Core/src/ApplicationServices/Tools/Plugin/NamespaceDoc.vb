@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98b12a029650b9499441de3d79b96a31, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a04d0e6e850704bb4154cfe6aa6b31ba, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 285 B
+    '     File Size: 283 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Plugin
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5856a19107b62b8264bebc10b40b07c3, gr\Microsoft.VisualBasic.Imaging\SVG\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::181ab5603b7bc22a504b1e21a4ea38da, gr\Microsoft.VisualBasic.Imaging\SVG\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 245 B
+    '     File Size: 243 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace SVG
     Module NamespaceDoc
     End Module
 End Namespace
-

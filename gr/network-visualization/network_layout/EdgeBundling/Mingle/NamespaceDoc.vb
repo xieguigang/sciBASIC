@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83b47359192eeadf5450dbc9aa269686, gr\network-visualization\network_layout\EdgeBundling\Mingle\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6c460d36e6808b077038f7ebdb4069ed, gr\network-visualization\network_layout\EdgeBundling\Mingle\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 217 B
+    '     File Size: 215 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace EdgeBundling.Mingle
     Module NamespaceDoc
     End Module
 End Namespace
-

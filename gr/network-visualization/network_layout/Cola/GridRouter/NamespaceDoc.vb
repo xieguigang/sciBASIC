@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::655ab5ac170d40a9716334244b9596d5, gr\network-visualization\network_layout\Cola\GridRouter\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9c8bef47c56ed4ee602b4e843135e0f0, gr\network-visualization\network_layout\Cola\GridRouter\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 192 B
+    '     File Size: 190 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Cola.GridRouter
     Module NamespaceDoc
     End Module
 End Namespace
-

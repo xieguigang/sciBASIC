@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fb2fc40d59de46434496ba0078e18cf, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpHeuristics.vb"
+﻿#Region "Microsoft.VisualBasic::572b09575486c79e27a448e0fe1da704, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpHeuristics.vb"
 
     ' Author:
     ' 
@@ -296,4 +296,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Module
 
 End Namespace
-

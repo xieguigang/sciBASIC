@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09a02908df0dfc9f14fdf650920faa1e, Microsoft.VisualBasic.Core\src\Serialization\JSON\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0b761c853aaa5b3849a83412d02a5370, Microsoft.VisualBasic.Core\src\Serialization\JSON\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (17.65%)
-    '     File Size: 437 B
+    '     File Size: 435 B
 
 
     '     Module NamespaceDoc
@@ -73,4 +73,3 @@ Namespace Serialization.JSON.Formatter
     Module NamespaceDoc
     End Module
 End Namespace
-

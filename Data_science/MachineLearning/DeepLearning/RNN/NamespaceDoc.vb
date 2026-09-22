@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3203a5bd388fbdc48e957b25b0bba4dc, Data_science\MachineLearning\DeepLearning\RNN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f369747ce33ff1f701e1e4435fdfb57b, Data_science\MachineLearning\DeepLearning\RNN\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 198 B
+    '     File Size: 196 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace RNN
     Module NamespaceDoc
     End Module
 End Namespace
-

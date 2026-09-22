@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0eb54d7b60c5ffb9369d52f3837a9c2f, Data_science\Mathematica\Math\Math\Algebra\MILP\BoundedSimplex.vb"
+﻿#Region "Microsoft.VisualBasic::045be13124cfc82914059e72701acbf5, Data_science\Mathematica\Math\Math\Algebra\MILP\BoundedSimplex.vb"
 
     ' Author:
     ' 
@@ -975,4 +975,3 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Class
 
 End Namespace
-

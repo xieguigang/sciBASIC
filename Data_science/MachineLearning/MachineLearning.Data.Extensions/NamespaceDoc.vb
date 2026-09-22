@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::905f704820edeebf35e0280cdb8d43a1, Data_science\MachineLearning\MachineLearning.Data.Extensions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::355d8b12e822e02e3820ab456dbeebce, Data_science\MachineLearning\MachineLearning.Data.Extensions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

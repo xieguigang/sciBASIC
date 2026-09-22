@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93e3a4e721bf00b4bf827974187cd2a3, vs_solutions\VBS\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8210be7fe1c425041e0a4ba0af666c18, vs_solutions\VBS\Program.vb"
 
     ' Author:
     ' 
@@ -91,4 +91,3 @@ Module Program
         Call Console.WriteLine("vbs make-project </path/to/script.vb> [--verbose] [--no-build] [--force] [--no-vectorize]")
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::996cc22bce0477f3e25566b5451c133c, gr\Microsoft.VisualBasic.Imaging\d3js\scale\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1ec28a667f86d34ee550a33033c484b5, gr\Microsoft.VisualBasic.Imaging\d3js\scale\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 285 B
+    '     File Size: 283 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace d3js.scale
     Module NamespaceDoc
     End Module
 End Namespace
-

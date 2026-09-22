@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cb683f1d8dbc8465ea1dd074b737b3d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::195a670e354b0c961932cb50188c4db5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 198 B
+    '     File Size: 196 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
     Module NamespaceDoc
     End Module
 End Namespace
-

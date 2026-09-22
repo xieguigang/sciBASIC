@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b3c9f808690eb568dbe36c17be20901, llm\AdamW.vb"
+﻿#Region "Microsoft.VisualBasic::dcdd4428674f9b6fef4d8c7e86f3b253, llm\AdamW.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 83 (41.50%)
-    ' Comment Lines: 81 (40.50%)
+    '   Total Lines: 198
+    '    Code Lines: 83 (41.92%)
+    ' Comment Lines: 81 (40.91%)
     '    - Xml Docs: 72.84%
     ' 
-    '   Blank Lines: 36 (18.00%)
+    '   Blank Lines: 34 (17.17%)
     '     File Size: 8.35 KB
 
 
@@ -52,7 +52,6 @@
     '     Function: GradientNorm, TryDeviceStep
     ' 
     '     Sub: MakeTrainingStep, ZeroGrad
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -256,6 +255,3 @@ Public Class AdamW
     End Sub
 
 End Class
-
-
-

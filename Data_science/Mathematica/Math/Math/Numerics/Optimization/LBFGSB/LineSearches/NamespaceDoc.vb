@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00d6219ec46697e2cdb1d2f527b2228e, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::78e6f6bc14e54a14b93aaa5ba23029b7, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 215 B
+    '     File Size: 213 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
     Module NamespaceDoc
     End Module
 End Namespace
-

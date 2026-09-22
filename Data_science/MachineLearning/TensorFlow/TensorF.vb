@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60cf23a4bf3af201dd7fd667a7b6a967, Data_science\MachineLearning\TensorFlow\TensorF.vb"
+﻿#Region "Microsoft.VisualBasic::b58bb16340c467fbc941471af1a008a8, Data_science\MachineLearning\TensorFlow\TensorF.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.76%
     ' 
     '   Blank Lines: 66 (17.41%)
-    '     File Size: 13.46 KB
+    '     File Size: 13.45 KB
 
 
     ' Class TensorF
@@ -439,4 +439,3 @@ Public Class TensorF : Implements ICloneable, IDisposable
     End Function
 
 End Class
-

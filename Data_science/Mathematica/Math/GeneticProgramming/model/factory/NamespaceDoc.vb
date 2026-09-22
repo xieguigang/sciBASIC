@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1b26c4ae20f7b39bfd165ad10e5e3f3, Data_science\Mathematica\Math\GeneticProgramming\model\factory\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a9dd58fd2f74c2782c6e3963c40c1951, Data_science\Mathematica\Math\GeneticProgramming\model\factory\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace model.factory
     Module NamespaceDoc
     End Module
 End Namespace
-

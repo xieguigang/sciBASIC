@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee59701d1846519b7937c5b95fa8d2a9, Data_science\Visualization\Plots\BarPlot\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::410242f80d2d6b6ae0634de12b2a5943, Data_science\Visualization\Plots\BarPlot\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 142 B
+    '     File Size: 140 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace BarPlot
     Module NamespaceDoc
     End Module
 End Namespace
-

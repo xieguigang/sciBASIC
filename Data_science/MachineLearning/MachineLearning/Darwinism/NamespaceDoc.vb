@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c292c9fb566f4233af5f8559102d425a, Data_science\MachineLearning\MachineLearning\Darwinism\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::517ba1d15983be425e18f7e69dce721a, Data_science\MachineLearning\MachineLearning\Darwinism\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 175 B
+    '     File Size: 173 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Darwinism
     Module NamespaceDoc
     End Module
 End Namespace
-

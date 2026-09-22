@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de134b3edc69081b91110ab06a2ece55, Data_science\DataMining\HMM\Algorithm\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3dc1fb52df42e86694d57e64bae2d3ea, Data_science\DataMining\HMM\Algorithm\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 177 B
+    '     File Size: 175 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Algorithm
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34f9c6aee761455ba549f8004ebe7fc5, Microsoft.VisualBasic.Core\src\Extensions\IO\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ddd448e1178a30ded2c63d9b0cdbe37e, Microsoft.VisualBasic.Core\src\Extensions\IO\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 189 B
+    '     File Size: 187 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace FileIO
     Module NamespaceDoc
     End Module
 End Namespace
-

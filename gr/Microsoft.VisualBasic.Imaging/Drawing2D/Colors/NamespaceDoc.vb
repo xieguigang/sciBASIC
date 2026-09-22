@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e32dc837a4c668fc146170aee4d6604c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::05acedcb9f68275418de38b84742e1a6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 298 B
+    '     File Size: 296 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.Colors
     Module NamespaceDoc
     End Module
 End Namespace
-

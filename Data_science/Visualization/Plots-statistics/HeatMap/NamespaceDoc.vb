@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d9d643ea84cdfb679ab94fe13e28967, Data_science\Visualization\Plots-statistics\HeatMap\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::74a5ed4379cdb4e3bbf673415ba446a0, Data_science\Visualization\Plots-statistics\HeatMap\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 141 B
+    '     File Size: 139 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Heatmap
     Module NamespaceDoc
     End Module
 End Namespace
-

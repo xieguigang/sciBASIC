@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d21cd72717fc5ef884467d4d14a9e93, Data_science\Visualization\Plots\Fractions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::61814305679bc35582f6cf586ebe68f8, Data_science\Visualization\Plots\Fractions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 164 B
+    '     File Size: 162 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Fractions
     Module NamespaceDoc
     End Module
 End Namespace
-

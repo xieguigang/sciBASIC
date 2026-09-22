@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30768ebea00b890507492765fd912f9a, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::82aa6baafe967c626f245473fe47edd0, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 194 B
+    '     File Size: 192 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace SVM.StorageProcedure
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::855f41068d75200c39d7b5862d0c5428, gr\network-visualization\Visualizer\Styling\Expression\Brush\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::043aadc7ffd3b3cff6974c192257ec92, gr\network-visualization\Visualizer\Styling\Expression\Brush\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 207 B
+    '     File Size: 205 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Styling.FillBrushes
     Module NamespaceDoc
     End Module
 End Namespace
-

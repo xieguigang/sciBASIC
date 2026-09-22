@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9fda4813d3af713d6e5206a35b985b, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\FileSystem\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::163e5d0fb448dd3413423379e870e888, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\FileSystem\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 212 B
+    '     File Size: 210 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Language.UnixBash.FileSystem
     Module NamespaceDoc
     End Module
 End Namespace
-

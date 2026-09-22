@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ead537a4a51ae356c7f4b1edb4a52e00, vs_solutions\VBS\src\VBScript\Syntax\DefaultParameterExpression.vb"
+﻿#Region "Microsoft.VisualBasic::711d977c1bf22849de760fd7ed8289f1, vs_solutions\VBS\src\VBScript\Syntax\DefaultParameterExpression.vb"
 
     ' Author:
     ' 
@@ -1010,4 +1010,3 @@ Namespace Script
         End Function
     End Module
 End Namespace
-

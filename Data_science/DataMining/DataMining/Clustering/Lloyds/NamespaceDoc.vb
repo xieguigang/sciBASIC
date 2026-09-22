@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cde2ab21bab47c1e5f36625a3ba98c6c, Data_science\DataMining\DataMining\Clustering\Lloyds\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::fc8d109b687ed461da03e51b9094808e, Data_science\DataMining\DataMining\Clustering\Lloyds\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 172 B
+    '     File Size: 170 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Lloyds
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0276830c25417b8a72e8c9c11ce2473f, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cd1824afea47ddeaaa1fab3a65f93571, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 196 B
+    '     File Size: 194 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Collection.Deque
     Module NamespaceDoc
     End Module
 End Namespace
-

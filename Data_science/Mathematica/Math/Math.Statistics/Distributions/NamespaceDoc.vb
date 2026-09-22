@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de2bd10de61e281f0e5f2506ad2f33ee, Data_science\Mathematica\Math\Math.Statistics\Distributions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::24aac502363b4eeea8d164940487a4fb, Data_science\Mathematica\Math\Math.Statistics\Distributions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 189 B
+    '     File Size: 187 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Distributions
     Module NamespaceDoc
     End Module
 End Namespace
-

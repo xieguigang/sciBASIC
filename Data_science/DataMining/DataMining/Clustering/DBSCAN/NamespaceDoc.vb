@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20a76621df86e938da8782b19d67eb0c, Data_science\DataMining\DataMining\Clustering\DBSCAN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7282c7726bbc58e6492a63b0cdd62e9c, Data_science\DataMining\DataMining\Clustering\DBSCAN\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 194 B
+    '     File Size: 192 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DBSCAN
     Module NamespaceDoc
     End Module
 End Namespace
-

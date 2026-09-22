@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f03ee55a4adf00566b53988c2c621cd5, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2d4b4257c7be9283ce67112394b2f38d, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 199 B
+    '     File Size: 197 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace SplitStrategies
     Module NamespaceDoc
     End Module
 End Namespace
-

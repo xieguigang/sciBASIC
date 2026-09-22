@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a88d5fb18a0fd5f49b53e0bdf010daf5, vs_solutions\dev\VisualStudio\sourceMap\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::139e2e059a045fc8b5eece7bff97fa82, vs_solutions\dev\VisualStudio\sourceMap\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 271 B
+    '     File Size: 269 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace SourceMap
     Module NamespaceDoc
     End Module
 End Namespace
-

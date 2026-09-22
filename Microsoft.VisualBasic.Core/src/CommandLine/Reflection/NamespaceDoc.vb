@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd024d947ceacfaef78f678b2783da0b, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1f9ee1c23c11e0d00122c505e2c14e00, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 278 B
+    '     File Size: 276 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace CommandLine.Reflection
     Module NamespaceDoc
     End Module
 End Namespace
-

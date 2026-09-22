@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea61effcc77c074aab2dedd9d2400246, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::211d0fc8c37a573f6360038207d52c69, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 196 B
+    '     File Size: 194 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Activations
     Module NamespaceDoc
     End Module
 End Namespace
-

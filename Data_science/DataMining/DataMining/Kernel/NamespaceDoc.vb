@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8855bf54f45c38ce2f07fd04f0ce65ce, Data_science\DataMining\DataMining\Kernel\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d00cb5f7917909c41872e2f825dc5cea, Data_science\DataMining\DataMining\Kernel\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 175 B
+    '     File Size: 173 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Kernel.Classifier
     Module NamespaceDoc
     End Module
 End Namespace
-

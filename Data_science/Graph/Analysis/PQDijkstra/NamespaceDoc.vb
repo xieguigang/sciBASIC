@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b079759d544cfbaf228994bf91e741f2, Data_science\Graph\Analysis\PQDijkstra\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6fa60bc5d4de9e14f2ed84ab7c478244, Data_science\Graph\Analysis\PQDijkstra\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 189 B
+    '     File Size: 187 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Dijkstra.PQDijkstra
     Module NamespaceDoc
     End Module
 End Namespace
-

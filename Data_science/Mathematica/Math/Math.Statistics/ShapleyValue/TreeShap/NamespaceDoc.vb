@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d61228ef0f9d5c5731da64d59ce39e66, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1a8c96d812adae99d3e8235b2b2b424d, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 213 B
+    '     File Size: 211 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ShapleyValue.TreeShap
     Module NamespaceDoc
     End Module
 End Namespace
-

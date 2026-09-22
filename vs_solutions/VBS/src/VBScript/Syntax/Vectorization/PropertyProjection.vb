@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b318db41d73d9ece59fb6c5d8af9d95, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\PropertyProjection.vb"
+﻿#Region "Microsoft.VisualBasic::a35ec991a957cc0143c0ae78ede00753, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\PropertyProjection.vb"
 
     ' Author:
     ' 
@@ -393,4 +393,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

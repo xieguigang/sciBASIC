@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3147a53a2db889cfd18b3c00d687fc09, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::db8bc3cf3d4f1c2730cf1f06e0e13020, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 313 B
+    '     File Size: 311 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace VBProj.CodeDOM.Syntax
     Module NamespaceDoc
     End Module
 End Namespace
-

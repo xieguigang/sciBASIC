@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b67754ce546152cf4d7f997207cb2b36, Data\BinaryData\BinaryData\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a65f7ea7112aac0fbf04936752566c26, Data\BinaryData\BinaryData\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 2 (12.50%)
-    '     File Size: 492 B
+    '     File Size: 490 B
 
 
     ' Class NamespaceDoc
@@ -72,4 +72,3 @@ Namespace LZW
     Module NamespaceDoc
     End Module
 End Namespace
-

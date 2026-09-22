@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69b1c3df6893cdb0293d2e4897f70372, Data\DataFrame\StorageProvider\DataFrame\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9fa4cad144825d7745537563da47037e, Data\DataFrame\StorageProvider\DataFrame\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 299 B
+    '     File Size: 297 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace StorageProvider
     Module NamespaceDoc
     End Module
 End Namespace
-

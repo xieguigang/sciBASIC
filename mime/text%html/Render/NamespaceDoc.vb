@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0238ccc5d7ab9e760d5c867bdc238a55, mime\text%html\Render\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ca5e43b4945e482ede2f0822e9dc00c0, mime\text%html\Render\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 268 B
+    '     File Size: 266 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Render
     Module NamespaceDoc
     End Module
 End Namespace
-

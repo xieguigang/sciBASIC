@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4a486d93e3a378f54ab9f27736ffd02, Data_science\Mathematica\Math\mHG\HG_row_n\HG_row_ncalc.vb"
+﻿#Region "Microsoft.VisualBasic::b37c27bee3b0864129d05b834e7c0b50, Data_science\Mathematica\Math\mHG\HG_row_n\HG_row_ncalc.vb"
 
     ' Author:
     ' 
@@ -215,4 +215,3 @@ Public Class HG_row_ncalc
         Return HG_row_m
     End Function
 End Class
-

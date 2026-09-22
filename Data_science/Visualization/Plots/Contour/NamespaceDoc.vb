@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f98b17a82eae7b4baacebc4cf345df6c, Data_science\Visualization\Plots\Contour\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1f69f3e820cfb38fd900dbea1bc6d541, Data_science\Visualization\Plots\Contour\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 140 B
+    '     File Size: 138 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Contour
     Module NamespaceDoc
     End Module
 End Namespace
-

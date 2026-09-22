@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05d897ba2fbde94681b0ff747af022e8, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::70f58677b6d877038ae126a5cfad00b5, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 171 B
+    '     File Size: 169 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Hypothesis
     Module NamespaceDoc
     End Module
 End Namespace
-

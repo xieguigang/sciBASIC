@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be399b31c238407a2c9964b7ec235129, mime\application%rdf+xml\Turtle\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e0db046cc13978f8e2172cdb4294f309, mime\application%rdf+xml\Turtle\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 252 B
+    '     File Size: 250 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Turtle
     Module NamespaceDoc
     End Module
 End Namespace
-

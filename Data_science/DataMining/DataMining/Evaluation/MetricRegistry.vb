@@ -1,54 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::56ceb9a4319409fe11b0cb13a4d1122f, Data_science\DataMining\DataMining\Evaluation\MetricRegistry.vb"
+﻿#Region "Microsoft.VisualBasic::5df3050bafb36155a25b6f1c5db096ad, Data_science\DataMining\DataMining\Evaluation\MetricRegistry.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 42
-'    Code Lines: 29 (69.05%)
-' Comment Lines: 3 (7.14%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 10 (23.81%)
-'     File Size: 1.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'  
-' 
-'     Function: BinaryLabels, External, MatthewsCorrelationCoefficient, Silhouette
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 351
+    '    Code Lines: 264 (75.21%)
+    ' Comment Lines: 49 (13.96%)
+    '    - Xml Docs: 95.92%
+    ' 
+    '   Blank Lines: 38 (10.83%)
+    '     File Size: 15.53 KB
+
+
+    '     Class NamedMetric
+    ' 
+    '         Properties: Description, Evaluate, Kind, Name
+    ' 
+    '     Class MetricRegistry
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: BinaryLabels, ClassificationMetrics, ClusteringMetrics, Compute, External
+    '                   MatthewsCorrelationCoefficient, Metrics, Names, RegressionMetrics, Silhouette
+    ' 
+    '         Sub: (+2 Overloads) Register
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -403,4 +412,3 @@ Namespace Evaluation
     End Class
 
 End Namespace
-

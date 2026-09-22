@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28a8fa01fba5cb0be33fea8060f29eb8, Microsoft.VisualBasic.Core\src\Data\Trinity\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::26f18f6949f7371cc186162ffb90b1fa, Microsoft.VisualBasic.Core\src\Data\Trinity\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (16.67%)
-    '     File Size: 462 B
+    '     File Size: 460 B
 
 
     '     Module NamespaceDoc
@@ -74,4 +74,3 @@ Namespace Data.Trinity.NLP
     Module NamespaceDoc
     End Module
 End Namespace
-

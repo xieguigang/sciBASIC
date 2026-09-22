@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11f2410a850b23095da3383c651f6e5c, nlp\word2vec\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a7778ac02987f147d30341f49d340fd5, nlp\word2vec\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 307 B
+    '     File Size: 305 B
 
 
     ' Class NamespaceDoc
@@ -58,4 +58,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

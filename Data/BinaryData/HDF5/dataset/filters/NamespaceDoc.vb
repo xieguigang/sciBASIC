@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11cb071e92bee1f06da151a6c13de862, Data\BinaryData\HDF5\dataset\filters\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2d3b0986f3e486febe3d7d07991dfb02, Data\BinaryData\HDF5\dataset\filters\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 267 B
+    '     File Size: 265 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace dataset.filters
     Module NamespaceDoc
     End Module
 End Namespace
-

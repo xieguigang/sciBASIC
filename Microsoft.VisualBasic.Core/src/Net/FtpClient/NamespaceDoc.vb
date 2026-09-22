@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a03428be41342b13e48cfb1d55e1ecfc, Microsoft.VisualBasic.Core\src\Net\FtpClient\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b2784a095def4bd4224cd244e095f69f, Microsoft.VisualBasic.Core\src\Net\FtpClient\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 150 B
+    '     File Size: 148 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Net.FTP
     Module NamespaceDoc
     End Module
 End Namespace
-

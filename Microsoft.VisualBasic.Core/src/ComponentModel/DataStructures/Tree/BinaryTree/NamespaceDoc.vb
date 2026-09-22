@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d95d73a2b894fda8ef178fba4757178, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3c32e8df7b21332ee65ab8984e68b1dd, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.DataStructures.BinaryTree
     Module NamespaceDoc
     End Module
 End Namespace
-

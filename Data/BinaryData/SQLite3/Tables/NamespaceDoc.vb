@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6db6f398d6178f3862aa2922a88bccb, Data\BinaryData\SQLite3\Tables\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7e3757ba032d58516f982f1e2a5e82ec, Data\BinaryData\SQLite3\Tables\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 201 B
+    '     File Size: 199 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Core.Tables
     Module NamespaceDoc
     End Module
 End Namespace
-

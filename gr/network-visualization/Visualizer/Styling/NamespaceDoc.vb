@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b93ddd82391cff7e9af50285015f1ccc, gr\network-visualization\Visualizer\Styling\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::414e8d7e76d6d399a464ff8aeeeb64f6, gr\network-visualization\Visualizer\Styling\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 255 B
+    '     File Size: 253 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Styling
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bc74fe8e482f1d9fd426ee369894a1c, Data_science\Mathematica\Math\Math\Numerics\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::02c0aa476f0d95a8e7378d71902c1917, Data_science\Mathematica\Math\Math\Numerics\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (17.65%)
-    '     File Size: 370 B
+    '     File Size: 368 B
 
 
     '     Module NamespaceDoc
@@ -73,4 +73,3 @@ Namespace Scripting.Rscript
     Module NamespaceDoc
     End Module
 End Namespace
-

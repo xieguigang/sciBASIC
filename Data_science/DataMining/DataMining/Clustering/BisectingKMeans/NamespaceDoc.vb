@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c041c7c4667bc6f650f1e83452a9e77, Data_science\DataMining\DataMining\Clustering\BisectingKMeans\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cbf82dff11228f6e8a4bb9f96b3a3688, Data_science\DataMining\DataMining\Clustering\BisectingKMeans\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 164 B
+    '     File Size: 162 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace KMeans.Bisecting
     Module NamespaceDoc
     End Module
 End Namespace
-

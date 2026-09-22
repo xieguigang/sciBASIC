@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6ef985adddb7bf057ddffa087ec097f, mime\application%xml\MathML\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d3e2a0a7454378fe893578871acb89ea, mime\application%xml\MathML\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 307 B
+    '     File Size: 305 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace MathML
     Module NamespaceDoc
     End Module
 End Namespace
-

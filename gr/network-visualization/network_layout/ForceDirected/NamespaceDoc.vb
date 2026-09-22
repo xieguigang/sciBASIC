@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39a3f6b5d26a654d8ef72f527e9a00cf, gr\network-visualization\network_layout\ForceDirected\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::cd3000cb38b5f48e6de420030a4f15cb, gr\network-visualization\network_layout\ForceDirected\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 164 B
+    '     File Size: 162 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ForceDirected
     Module NamespaceDoc
     End Module
 End Namespace
-

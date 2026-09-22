@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8086b6402bfcd349109434d2b553af66, Microsoft.VisualBasic.Core\src\Math\Correlations\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::25bff8b7a02c6d5568341d966bf79b8e, Microsoft.VisualBasic.Core\src\Math\Correlations\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 209 B
+    '     File Size: 207 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Math.Correlations
     Module NamespaceDoc
     End Module
 End Namespace
-

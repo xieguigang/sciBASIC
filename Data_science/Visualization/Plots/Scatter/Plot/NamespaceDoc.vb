@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c26ea96c778b25210ae9c6f68e8f5a9, Data_science\Visualization\Plots\Scatter\Plot\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::16350d54a6c6491855d3177496b60b72, Data_science\Visualization\Plots\Scatter\Plot\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 147 B
+    '     File Size: 145 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Plots
     Module NamespaceDoc
     End Module
 End Namespace
-

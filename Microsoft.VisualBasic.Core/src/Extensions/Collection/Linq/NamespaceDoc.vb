@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ea3f7e4498335dd1aeaa4f245ada988, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::21c3dc5c63dd780d84807e1f83b827c9, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 246 B
+    '     File Size: 244 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Linq
     Module NamespaceDoc
     End Module
 End Namespace
-

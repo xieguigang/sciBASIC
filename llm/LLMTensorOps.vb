@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf1a42e502b377ea9428e9c89a892759, llm\LLMTensorOps.vb"
+﻿#Region "Microsoft.VisualBasic::0faa0887e66b256ae20df97bb4463d59, llm\LLMTensorOps.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 319
-    '    Code Lines: 152 (47.65%)
-    ' Comment Lines: 100 (31.35%)
+    '   Total Lines: 317
+    '    Code Lines: 152 (47.95%)
+    ' Comment Lines: 100 (31.55%)
     '    - Xml Docs: 84.00%
     ' 
-    '   Blank Lines: 67 (21.00%)
+    '   Blank Lines: 65 (20.50%)
     '     File Size: 12.33 KB
 
 
@@ -49,7 +49,6 @@
     '               MaskedCrossEntropyHost, ZerosLike
     ' 
     '     Sub: Accumulate, ScaleInPlace, ScatterAddRows, ZeroInPlace
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -372,6 +371,3 @@ Public Module LLMTensorOps
 #End Region
 
 End Module
-
-
-

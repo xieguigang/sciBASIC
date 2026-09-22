@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::363adefb4305772726b424e6ae7734b4, Data\BinaryData\DataStorage\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::832d4b738bdbae27b2fe233a69a76e08, Data\BinaryData\DataStorage\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 232 B
+    '     File Size: 230 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

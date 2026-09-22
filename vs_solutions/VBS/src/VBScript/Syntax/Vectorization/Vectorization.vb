@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::482392746c4c3975737772d00b37b5fd, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\Vectorization.vb"
+﻿#Region "Microsoft.VisualBasic::f5f4e433ee1992bdfc21eabae16fa0fd, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\Vectorization.vb"
 
     ' Author:
     ' 
@@ -240,4 +240,3 @@ Namespace Script
         End Function
     End Module
 End Namespace
-

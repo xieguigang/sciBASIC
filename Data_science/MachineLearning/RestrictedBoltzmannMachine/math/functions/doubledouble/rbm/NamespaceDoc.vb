@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03dc070035f2ede353abd17366d6039f, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\doubledouble\rbm\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::390d685441bf44ff73ac014e96fa09e9, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\doubledouble\rbm\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 221 B
+    '     File Size: 219 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace math.functions.doubledouble.rbm
     Module NamespaceDoc
     End Module
 End Namespace
-

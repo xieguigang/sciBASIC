@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db2f5d17e956b463db11b40c50406b45, mime\application%json\LenientParser\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::34aa1a439a31c15e320d2a3f7ed79531, mime\application%json\LenientParser\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 298 B
+    '     File Size: 296 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace LenientJson
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2e65942c5d1cfe303f71a3369a1ff51, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b4e64de4f8590ba73b308f55de478d3c, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 184 B
+    '     File Size: 182 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.DataStructures.Tree
     Module NamespaceDoc
     End Module
 End Namespace
-

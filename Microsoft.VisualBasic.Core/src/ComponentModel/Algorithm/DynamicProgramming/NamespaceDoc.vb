@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51d9f29f2963e829c45ae6a509739e3d, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b182839938b5942b3fd1c43e2bfd7294, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 193 B
+    '     File Size: 191 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29819f1a8abdd6b5546124f876d443fa, Microsoft.VisualBasic.Core\src\Math\Parallel\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1a8f757af3c76df1d8e656c26c6fa24a, Microsoft.VisualBasic.Core\src\Math\Parallel\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 179 B
+    '     File Size: 177 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Math.Parallel
     Module NamespaceDoc
     End Module
 End Namespace
-

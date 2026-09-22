@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2633212804b5e6d39cc60b0b3dc102a, Data_science\Mathematica\Math\DataFittings\Logistic\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ce7d552739df42007a367605f5db1cdc, Data_science\Mathematica\Math\DataFittings\Logistic\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 147 B
+    '     File Size: 145 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Logistic
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbddff9328c558dc5e45f5b049d835b8, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::61eb42423ff4b4c99d2bfbe8999b3761, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 234 B
+    '     File Size: 232 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
     Module NamespaceDoc
     End Module
 End Namespace
-

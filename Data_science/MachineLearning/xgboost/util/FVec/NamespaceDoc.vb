@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a28d799db2f22b0829cd250ecc28b19, Data_science\MachineLearning\xgboost\util\FVec\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6e777c240a9926f663f7ccd87db7bb7f, Data_science\MachineLearning\xgboost\util\FVec\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 192 B
+    '     File Size: 190 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace util.FVecArray
     Module NamespaceDoc
     End Module
 End Namespace
-

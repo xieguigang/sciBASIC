@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70af94e287f168d043933c1661e6a1e1, mime\application%rtf\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::aec3c3ebc98c4d457fc1ef9cd7691b84, mime\application%rtf\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 7.89%
     ' 
     '   Blank Lines: 55 (19.10%)
-    '     File Size: 13.85 KB
+    '     File Size: 13.84 KB
 
 
     ' Module Program
@@ -341,4 +341,3 @@ Module Program
     End Function
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2fbe75d527d25fbb55058cf6e851226, Data_science\DataMining\DataMining\ComponentModel\Normalizer\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::576c6bbaec98bbb5a9889facedc5aeb2, Data_science\DataMining\DataMining\ComponentModel\Normalizer\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 209 B
+    '     File Size: 207 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Normalizer
     Module NamespaceDoc
     End Module
 End Namespace
-

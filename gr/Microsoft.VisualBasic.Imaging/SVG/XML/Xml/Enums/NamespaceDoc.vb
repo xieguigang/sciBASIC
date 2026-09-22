@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9fe2884712809f0e6103f3c9701d3a5, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::736ee1311a93abc83eaa19226810975c, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 284 B
+    '     File Size: 282 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace SVG.XML.Enums
     Module NamespaceDoc
     End Module
 End Namespace
-

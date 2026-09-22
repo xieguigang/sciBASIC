@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24fc3172dc058c927e655bef5dfa049d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bef0bfade74a74005beb1d54745fc15b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 239 B
+    '     File Size: 237 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.DataSourceModel.Repository
     Module NamespaceDoc
     End Module
 End Namespace
-

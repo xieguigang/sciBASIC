@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9df0f8400d273abc2693a01c568550d8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b2d9356e1eab777ff85701dfcaa29ba0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 282 B
+    '     File Size: 280 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing2D.Colors.Scaler
     Module NamespaceDoc
     End Module
 End Namespace
-

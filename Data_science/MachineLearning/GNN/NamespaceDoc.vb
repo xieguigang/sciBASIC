@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdaeecb63cb23362a77cdad02e5e6947, Data_science\MachineLearning\GNN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::161843cfe8768c8bb6fd4b7622d00487, Data_science\MachineLearning\GNN\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 205 B
+    '     File Size: 203 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

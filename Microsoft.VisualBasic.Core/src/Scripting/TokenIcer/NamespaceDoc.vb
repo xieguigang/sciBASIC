@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6880b127dbe9fb84b918771ff373ec33, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3c095fb8681a99f45e33e7f7ef00bfa3, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 187 B
+    '     File Size: 185 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Scripting.TokenIcer
     Module NamespaceDoc
     End Module
 End Namespace
-

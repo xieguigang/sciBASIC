@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0ac00770c5fc8397d368b574b521a57, Data\BinaryData\Feather\Impl\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::09108b5623976e95e8c015bce0e1747a, Data\BinaryData\Feather\Impl\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 300 B
+    '     File Size: 298 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Impl
     Module NamespaceDoc
     End Module
 End Namespace
-

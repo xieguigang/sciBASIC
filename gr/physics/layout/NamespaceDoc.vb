@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9ff6397b5e69f393cb85abde3b9ee54, gr\physics\layout\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::eed9aef7cb6a4619f20a3a3597702d3f, gr\physics\layout\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 175 B
+    '     File Size: 173 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace layout
     Module NamespaceDoc
     End Module
 End Namespace
-

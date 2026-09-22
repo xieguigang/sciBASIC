@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1aabd7866da2977e6fab35e2fe83d7aa, vs_solutions\dev\VisualStudio\Resource\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::417e864d03b70f8cecf7aa8beee141ae, vs_solutions\dev\VisualStudio\Resource\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 280 B
+    '     File Size: 278 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Resource
     Module NamespaceDoc
     End Module
 End Namespace
-

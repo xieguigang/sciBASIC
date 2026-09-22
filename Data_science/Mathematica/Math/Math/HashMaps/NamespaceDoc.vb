@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bbecb5a8c650e7d439177ecd9054d5f, Data_science\Mathematica\Math\Math\HashMaps\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6d9fdf69d8414d3cd4913e76b5db3323, Data_science\Mathematica\Math\Math\HashMaps\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 174 B
+    '     File Size: 172 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace HashMaps
     Module NamespaceDoc
     End Module
 End Namespace
-

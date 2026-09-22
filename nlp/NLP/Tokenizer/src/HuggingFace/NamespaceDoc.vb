@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55389b91a5a2c000c70cf4c1062a35e, nlp\NLP\Tokenizer\src\HuggingFace\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4a4b39d139fce5b9cd739301608fe065, nlp\NLP\Tokenizer\src\HuggingFace\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (10.00%)
-    '     File Size: 366 B
+    '     File Size: 364 B
 
 
     '     Module NamespaceDoc
@@ -62,4 +62,3 @@ Namespace ChineseTokenizer.HuggingFace
     Module NamespaceDoc
     End Module
 End Namespace
-

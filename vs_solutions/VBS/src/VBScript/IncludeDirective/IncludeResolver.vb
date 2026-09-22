@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb32a526932f1242e5610a22810fa6c5, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludeResolver.vb"
+﻿#Region "Microsoft.VisualBasic::c3a385f1b29e3bef0fc64c3bedec5565, vs_solutions\VBS\src\VBScript\IncludeDirective\IncludeResolver.vb"
 
     ' Author:
     ' 
@@ -449,4 +449,3 @@ Namespace Script
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af975f9aa37a6f3d7e002f3f26d87e03, Data_science\Visualization\Visualization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::06df1980ebeefb0805d95ea2cbadc952, Data_science\Visualization\Visualization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 2 (13.33%)
-    '     File Size: 361 B
+    '     File Size: 359 B
 
 
     ' Class NamespaceDoc
@@ -71,4 +71,3 @@ Namespace KMeans
     Module NamespaceDoc
     End Module
 End Namespace
-

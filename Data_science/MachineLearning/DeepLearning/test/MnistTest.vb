@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f3fa125d156733b7be063da88366e6f, Data_science\MachineLearning\DeepLearning\test\MnistTest.vb"
+﻿#Region "Microsoft.VisualBasic::a5ef9d71c943ef382cbbf1ace3fe2449, Data_science\MachineLearning\DeepLearning\test\MnistTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 131 (64.22%)
-    ' Comment Lines: 38 (18.63%)
+    '   Total Lines: 201
+    '    Code Lines: 131 (65.17%)
+    ' Comment Lines: 38 (18.91%)
     '    - Xml Docs: 15.79%
     ' 
-    '   Blank Lines: 35 (17.16%)
-    '     File Size: 8.62 KB
+    '   Blank Lines: 32 (15.92%)
+    '     File Size: 8.61 KB
 
 
     ' Class MnistTest
@@ -49,11 +49,9 @@
     ' 
     '     Sub: Main, printPredictions
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -256,6 +254,3 @@ Public Class MnistTest
         Console.WriteLine(sb2.ToString())
     End Sub
 End Class
-
-
-

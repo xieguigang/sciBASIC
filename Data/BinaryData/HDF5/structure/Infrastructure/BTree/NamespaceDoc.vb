@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c343b59c413f6d6d5120161530fef30, Data\BinaryData\HDF5\structure\Infrastructure\BTree\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ce482178ddd65dd21a9802b9143e9c50, Data\BinaryData\HDF5\structure\Infrastructure\BTree\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 207 B
+    '     File Size: 205 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace struct.BTree
     Module NamespaceDoc
     End Module
 End Namespace
-

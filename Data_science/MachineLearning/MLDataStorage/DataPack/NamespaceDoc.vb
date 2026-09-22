@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f1c4ea0c365d306b7a38d80bf67e1c7, Data_science\MachineLearning\MLDataStorage\DataPack\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b894a13cd64cbb401d9620c027ebbb1b, Data_science\MachineLearning\MLDataStorage\DataPack\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace DataPack
     Module NamespaceDoc
     End Module
 End Namespace
-

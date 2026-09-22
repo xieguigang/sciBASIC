@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3629ee71b5138024e282638f436b2f3f, gr\Landscape\PLY\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2ac39c8ed3ffe8bd0e4c8cdc75e0f064, gr\Landscape\PLY\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 255 B
+    '     File Size: 253 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Ply
     Module NamespaceDoc
     End Module
 End Namespace
-

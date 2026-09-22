@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de6cf3b5a906092e3f9fe0d8155d0835, llm\RotaryEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::90ebf234806cdd2115735f51a44eacf1, llm\RotaryEmbedding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 194
-    '    Code Lines: 102 (52.58%)
-    ' Comment Lines: 57 (29.38%)
+    '   Total Lines: 192
+    '    Code Lines: 102 (53.12%)
+    ' Comment Lines: 57 (29.69%)
     '    - Xml Docs: 56.14%
     ' 
-    '   Blank Lines: 35 (18.04%)
-    '     File Size: 7.66 KB
+    '   Blank Lines: 33 (17.19%)
+    '     File Size: 7.65 KB
 
 
     ' Class RotaryEmbedding
@@ -49,7 +49,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Sub: Apply, ApplyInverse, Rotate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -247,6 +246,3 @@ Public Class RotaryEmbedding
     End Sub
 
 End Class
-
-
-

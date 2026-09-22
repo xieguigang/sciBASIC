@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28670bc33ccc6b3373814359b88411d0, llm\LLMModelConfig.vb"
+﻿#Region "Microsoft.VisualBasic::f00d3d453bdef83c125394f5aa51f280, llm\LLMModelConfig.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
-    '    Code Lines: 101 (52.60%)
-    ' Comment Lines: 47 (24.48%)
+    '   Total Lines: 190
+    '    Code Lines: 101 (53.16%)
+    ' Comment Lines: 47 (24.74%)
     '    - Xml Docs: 76.60%
     ' 
-    '   Blank Lines: 44 (22.92%)
+    '   Blank Lines: 42 (22.11%)
     '     File Size: 8.15 KB
 
 
@@ -54,7 +54,6 @@
     '     Function: AlignUp, IsMoELayer, ToString
     ' 
     '     Sub: Validate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -250,6 +249,3 @@ Public Class LLMModelConfig
 #End Region
 
 End Class
-
-
-

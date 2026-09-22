@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe353473a85df4a3e4ba3eefdae88846, vs_solutions\VBS\src\VBScript\ScriptStructure.vb"
+﻿#Region "Microsoft.VisualBasic::e17412c764e6e3a91329bfffe731c7f5, vs_solutions\VBS\src\VBScript\ScriptStructure.vb"
 
     ' Author:
     ' 
@@ -639,4 +639,3 @@ Namespace Script
         End Function
     End Class
 End Namespace
-

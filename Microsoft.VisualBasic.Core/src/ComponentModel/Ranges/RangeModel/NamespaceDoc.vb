@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7e766035e5cc4622057ba626f550b7a, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f9130bb7f0240f7af7c8f3008c958bf4, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 210 B
+    '     File Size: 208 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace ComponentModel.Ranges.Model
     Module NamespaceDoc
     End Module
 End Namespace
-

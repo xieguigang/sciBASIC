@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ae6a47c7a9e3d9f460991d0bf698ee1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::59e93d51d509a13477e25837ddc515bb, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 261 B
+    '     File Size: 259 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Drawing3D.Math3D
     Module NamespaceDoc
     End Module
 End Namespace
-

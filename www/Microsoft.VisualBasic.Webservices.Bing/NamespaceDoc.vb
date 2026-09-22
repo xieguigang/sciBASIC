@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::948b0e2847bda599e6b38a254fd3be37, www\Microsoft.VisualBasic.Webservices.Bing\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c32177ec0aad581b54733301e2060a9b, www\Microsoft.VisualBasic.Webservices.Bing\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 276 B
+    '     File Size: 274 B
 
 
     ' Class NamespaceDoc
@@ -58,4 +58,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

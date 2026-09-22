@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7f9d682cb8f144e3b06903c83114636, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5c2d2644d4da3cd2df09c6cb70f18866, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 183 B
+    '     File Size: 181 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Emit.Marshal
     Module NamespaceDoc
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cff1f6e1807bf51785ffb6a90eaba6ca, mime\text%html\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c2b1b75cdae1620278407eac2e7ebb2b, mime\text%html\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 230 B
+    '     File Size: 228 B
 
 
     ' Class NamespaceDoc
@@ -57,4 +57,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

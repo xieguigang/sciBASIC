@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb9ae9b916aead55d99343e00b9e992d, Data\BinaryData\BinaryData\Bzip2\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4e3739c35cb6983a8d21f054f8fb7797, Data\BinaryData\BinaryData\Bzip2\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 280 B
+    '     File Size: 278 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace Bzip2
     Module NamespaceDoc
     End Module
 End Namespace
-

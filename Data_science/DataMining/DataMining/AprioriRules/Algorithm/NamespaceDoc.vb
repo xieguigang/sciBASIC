@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9482c2dbb7533a0a0c6a08c49ac73a5f, Data_science\DataMining\DataMining\AprioriRules\Algorithm\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0635c6fd5269f604c40138ce7989eade, Data_science\DataMining\DataMining\AprioriRules\Algorithm\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 246 B
+    '     File Size: 244 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace AprioriRules.Entities
     Module NamespaceDoc
     End Module
 End Namespace
-

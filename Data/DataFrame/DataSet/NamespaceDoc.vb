@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1ba18edbb148a1dcd8c3ffd931a7c04, Data\DataFrame\DataSet\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::807f51166c8883da8aa4addb10f3f5e1, Data\DataFrame\DataSet\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 272 B
+    '     File Size: 270 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace DataSetExtensions
     Module NamespaceDoc
     End Module
 End Namespace
-

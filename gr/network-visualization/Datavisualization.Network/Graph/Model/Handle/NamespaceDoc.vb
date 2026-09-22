@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c8b2f8bd0508d87036ecdb4fee92df5, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::bde9074af4c9e33916138422046d5f1a, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 214 B
+    '     File Size: 212 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Graph.EdgeBundling
     Module NamespaceDoc
     End Module
 End Namespace
-

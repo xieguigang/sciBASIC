@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bb741d68a8f11ff20ebb6a55dfe13b8, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8783e5e339e48b59c7631e08a8fc145a, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (11.11%)
-    '     File Size: 259 B
+    '     File Size: 257 B
 
 
     '     Module NamespaceDoc
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Terminal.STDIO__
     Module NamespaceDoc
     End Module
 End Namespace
-

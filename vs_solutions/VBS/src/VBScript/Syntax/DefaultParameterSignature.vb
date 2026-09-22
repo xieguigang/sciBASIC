@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21d409851dd979f084bbbdf0f27e45fe, vs_solutions\VBS\src\VBScript\Syntax\DefaultParameterSignature.vb"
+﻿#Region "Microsoft.VisualBasic::d1fd495a98ad70d2da41a26aa21548cc, vs_solutions\VBS\src\VBScript\Syntax\DefaultParameterSignature.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.54%
     ' 
     '   Blank Lines: 146 (21.16%)
-    '     File Size: 28.90 KB
+    '     File Size: 28.89 KB
 
 
     '     Class DefaultParameterItem
@@ -761,4 +761,3 @@ Namespace Script
         End Function
     End Module
 End Namespace
-

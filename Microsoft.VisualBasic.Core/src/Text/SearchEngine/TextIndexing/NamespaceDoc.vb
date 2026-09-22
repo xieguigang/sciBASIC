@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f64df1600a78828cd4e823eebba8e55d, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c9fcb05f8f166595e7fa81a4c0ee62ab, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 198 B
+    '     File Size: 196 B
 
 
     '     Module NamespaceDoc
@@ -60,4 +60,3 @@ Namespace Text.Search
     Module NamespaceDoc
     End Module
 End Namespace
-
