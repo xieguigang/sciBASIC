@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableDataSet, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\NumericTableDataSet.vb"
+﻿#Region "Microsoft.VisualBasic::ef0c61fadf81f85135f2fb5af13e8c19, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\NumericTableDataSet.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,31 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 77 (51.33%)
+    ' Comment Lines: 51 (34.00%)
+    '    - Xml Docs: 86.27%
+    ' 
+    '   Blank Lines: 22 (14.67%)
+    '     File Size: 6.20 KB
+
+
+    ' Module NumericTableDataSet
+    ' 
+    '     Function: AsStatisticsObject, FeatureNamesOrDefault, GetResponseName, GetResponseVector
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

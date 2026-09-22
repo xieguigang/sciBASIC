@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc9fd9d9cf5d36f692a3977c2a36949, Data_science\MachineLearning\DeepLearning\CNN\Layers\FullyConnectedLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9d17fe8d577b14d41c9d3e9c40124844, Data_science\MachineLearning\DeepLearning\CNN\Layers\FullyConnectedLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 99 (68.28%)
-    ' Comment Lines: 11 (7.59%)
-    '    - Xml Docs: 63.64%
+    '   Total Lines: 195
+    '    Code Lines: 103 (52.82%)
+    ' Comment Lines: 53 (27.18%)
+    '    - Xml Docs: 77.36%
     ' 
-    '   Blank Lines: 35 (24.14%)
-    '     File Size: 5.08 KB
+    '   Blank Lines: 39 (20.00%)
+    '     File Size: 8.46 KB
 
 
     '     Class FullyConnectedLayer
@@ -49,20 +49,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: forward, ToString
+    '         Function: forward, PackWeights, ToString
     ' 
     '         Sub: backward
-    '         Class ForwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    '         Class BackwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::109fa2e9a395f60c6559d6d5014e7f58, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
+﻿#Region "Microsoft.VisualBasic::40b8815b9390fa86abecbf5b3f30b0bf, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,36 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 657
-    '    Code Lines: 509 (77.47%)
-    ' Comment Lines: 19 (2.89%)
-    '    - Xml Docs: 47.37%
+    '   Total Lines: 1333
+    '    Code Lines: 980 (73.52%)
+    ' Comment Lines: 81 (6.08%)
+    '    - Xml Docs: 59.26%
     ' 
-    '   Blank Lines: 129 (19.63%)
-    '     File Size: 26.34 KB
+    '   Blank Lines: 272 (20.41%)
+    '     File Size: 56.04 KB
 
 
     '     Class TensorComputeBase
     ' 
-    '         Function: Abs, Add, AddScalar, ArgGlobal, ArgMax
-    '                   ArgMin, Clip, Cos, Divide, DivideScalar
-    '                   Elu, Exp, Gelu, HuberLoss, L2Loss
-    '                   L2Norm, LeakyRelu, Log, LogSoftmax, MapBinary
-    '                   MapUnary, MatMul, Max, Maximum, Mean
-    '                   MeanAll, Min, Minimum, MseLoss, Multiply
-    '                   MultiplyScalar, Negate, Pow, Prod, Reciprocal
-    '                   ReduceAlongAxis, ReduceArgAxis, ReduceGlobal, Relu, Sigmoid
-    '                   SigmoidCrossEntropyWithLogits, Sin, Softmax, Sqrt, Square
-    '                   StdDev, Subtract, Sum, SumAll, Swish
-    '                   Tanh, Transpose, Wrap
+    '         Properties: PinnedDeviceBytes, SupportsDeviceResidency
     ' 
-    '         Sub: RequireSameShape
+    '         Function: Abs, Add, AddScalar, ArgGlobal, ArgMax
+    '                   ArgMin, Clip, Concat, Conv2D, Conv2DBackwardBias
+    '                   Conv2DBackwardFilter, Conv2DBackwardInput, ConvOutSize, Cos, Divide
+    '                   DivideScalar, Elu, Exp, Gelu, Heaviside
+    '                   HuberLoss, IsDevicePinned, L2Loss, L2Norm, LeakyRelu
+    '                   Log, LogSoftmax, MapBinary, MapUnary, MaskedCrossEntropy
+    '                   MatMul, Max, Maximum, MaxPool2D, MaxPool2DBackward
+    '                   Mean, MeanAll, Min, Minimum, MseLoss
+    '                   Multiply, MultiplyScalar, Negate, NormalizeAxis, PinDevice
+    '                   Pow, Prod, Reciprocal, ReduceAlongAxis, ReduceArgAxis
+    '                   ReduceGlobal, Relu, Sigmoid, SigmoidCrossEntropyWithLogits, Sin
+    '                   Slice, Softmax, SpMM, Sqrt, Square
+    '                   StdDev, Subtract, Sum, SumAll, Swish
+    '                   SyncFromDevice, Tanh, TopK, Transpose, TryAdamWStep
+    '                   UnpinDevice, Wrap
+    ' 
+    '         Sub: AxisLayout, RequireRank4, RequireSameShape
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e573300fb4960ea5f45f8ed5b86b5237, vs_solutions\VBS\src\VBScript\TupleDestructuring.vb"
+﻿#Region "Microsoft.VisualBasic::2fe84017046c8a77d06870cd8dd38526, vs_solutions\VBS\src\VBScript\Syntax\TupleDestructuring.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 97 (66.44%)
-    '   Comment Lines: 22 (15.07%)
-    '    - Xml Docs: 68.18%
+    '   Total Lines: 339
+    '    Code Lines: 188 (55.46%)
+    ' Comment Lines: 85 (25.07%)
+    '    - Xml Docs: 68.24%
     ' 
-    '   Blank Lines: 27 (18.49%)
-    '     File Size: 5.59 KB
+    '   Blank Lines: 66 (19.47%)
+    '     File Size: 13.01 KB
 
 
     '     Module TupleDestructuring
     ' 
-    '         Function: Expand, HasTopLevelComma, NextTempName, TryExpandDeclaration, TryExpandForEach,
-    '                   TryParseForEach, FindTopLevelAs, IndexOfComment, SplitTopLevel
+    '         Function: Expand, FindTopLevelAs, HasTopLevelComma, IndexOfComment, NextTempName
+    '                   SplitTopLevel, TryExpandDeclaration, TryExpandForEach, TryParseForEach
     ' 
     '         Sub: ExpandNames, SplitLine
     ' 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableExtensions, Microsoft.VisualBasic.Core\src\Data\NumericTableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a2e5ad90b454fc2164e36be382059fdd, Microsoft.VisualBasic.Core\src\Data\NumericTableExtensions.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,43 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 565
+    '    Code Lines: 318 (56.28%)
+    ' Comment Lines: 161 (28.50%)
+    '    - Xml Docs: 92.55%
+    ' 
+    '   Blank Lines: 86 (15.22%)
+    '     File Size: 23.34 KB
+
+
+    '     Module NumericTableExtensions
+    ' 
+    '         Function: ClusterLabels, ColumnNames, ColumnVectors, dataframe, ElementType
+    '                   EmptyTable, EncodeColumn, EncodeFactor, EnumerateColumn, FillNaN
+    '                   GroupByLabel, IsScalarType, LabelMatrix, LevelToken, name
+    '                   NumericRows, RowIds, SingleColumn, TakeColumns, TakeRows
+    '                   ToEmbeddingTable, ToNumeric, Transpose, WithCluster
+    ' 
+    '         Sub: CheckDuplicated
+    '         Structure EncodedColumn
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

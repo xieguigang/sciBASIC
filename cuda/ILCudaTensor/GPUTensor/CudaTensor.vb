@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bc9807cb311066dccc3d8cbe561e839, cuda\ILCudaTensor\GPUTensor\CudaTensor.vb"
+﻿#Region "Microsoft.VisualBasic::b1fb646fdf8d8ec49d3ba41d742a4727, cuda\ILCudaTensor\GPUTensor\CudaTensor.vb"
 
     ' Author:
     ' 
@@ -34,34 +34,40 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 615
-    '    Code Lines: 409 (66.50%)
-    ' Comment Lines: 66 (10.73%)
-    '    - Xml Docs: 62.12%
+    '   Total Lines: 1532
+    '    Code Lines: 883 (57.64%)
+    ' Comment Lines: 329 (21.48%)
+    '    - Xml Docs: 76.90%
     ' 
-    '   Blank Lines: 140 (22.76%)
-    '     File Size: 25.40 KB
+    '   Blank Lines: 320 (20.89%)
+    '     File Size: 70.08 KB
 
 
     '     Class CudaTensor
     ' 
     '         Properties: Current, Engine, KernelFailures, LastError, MaxStageBlocks
-    '                     MinGemmElements, MinGpuElements, Name
+    '                     MinGemmElements, MinGpuElements, MinSparseNnz, Name, PinnedDeviceBytes
+    '                     Resident, SupportsDeviceResidency, UseFp32Gemm, UseResidentStore
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Abs, Add, AddScalar, ArgMax, ArgMin
-    '                   Clip, Cos, Device, Divide, DivideScalar
+    '         Function: Abs, AdaptiveCacheBytes, Add, AddScalar, ArgMax
+    '                   ArgMin, Clip, Conv2D, Conv2DBackwardBias, Conv2DBackwardFilter
+    '                   Conv2DBackwardInput, ConvOutSize, Cos, DescribeDevice, DescribeKernels
+    '                   Device, DeviceF32, Divide, DivideScalar, ElementCount
     '                   Elu, EwBinary, EwUnary, Exp, Gelu
-    '                   IsLastAxis, LeakyRelu, Log, LogSoftmax, MatMul
-    '                   Max, Mean, MeanAll, Min, Multiply
-    '                   MultiplyScalar, Negate, OnGpu, Pow, Reciprocal
-    '                   ReducedShape, ReduceGlobal, Register, Relu, RowReduce
-    '                   RowSoftmax, Sigmoid, Sin, Softmax, Sqrt
-    '                   Square, Subtract, Sum, SumAll, Swish
-    '                   Tanh, Transpose
+    '                   Heaviside, IsDevicePinned, IsLastAxis, LeakyRelu, Log
+    '                   LogSoftmax, MaskedCrossEntropy, MaskedCrossEntropyFp32Core, MatMul, MatMulFp32
+    '                   Max, MaxPool2D, MaxPool2DBackward, Mean, MeanAll
+    '                   Min, Multiply, MultiplyScalar, Negate, OnGpu
+    '                   PinDevice, Pow, Reciprocal, ReducedShape, ReduceGlobal
+    '                   Register, Relu, RowReduce, RowSoftmax, Sigmoid
+    '                   Sin, Softmax, SpMM, Sqrt, Square
+    '                   Subtract, Sum, SumAll, Swish, SyncFromDevice
+    '                   Tanh, Transpose, TryAccumulateFp32, TryAdamWStep, TryKernel
+    '                   UnpinDevice, ZeroBias
     ' 
-    '         Sub: Dispose, LaunchRow, Unregister
+    '         Sub: Dispose, EnsureDeviceCount, LaunchRow, SyncIfPinned, Unregister
     ' 
     ' 
     ' /********************************************************************************/
@@ -1600,4 +1606,3 @@ Namespace GPUTensor
     End Class
 
 End Namespace
-

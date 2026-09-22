@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::019197557ceab25216ec29d882a3720e, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\MatrixDotProduct.vb"
+﻿#Region "Microsoft.VisualBasic::e57a58ba28ec806770d5e5c730356aa3, Microsoft.VisualBasic.Core\src\Math\Parallel\MatrixDotProduct.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 37 (72.55%)
-    ' Comment Lines: 5 (9.80%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 56
+    '    Code Lines: 32 (57.14%)
+    ' Comment Lines: 15 (26.79%)
+    '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 9 (17.65%)
-    '     File Size: 1.85 KB
+    '   Blank Lines: 9 (16.07%)
+    '     File Size: 2.25 KB
 
 
     '     Class MatrixDotProduct

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d29a1a39eb185295c790c8f7d28b8b11, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
+﻿#Region "Microsoft.VisualBasic::50c2248f0b3baf07e52451d1fa9b51d8, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 704
-    '    Code Lines: 550 (78.12%)
-    ' Comment Lines: 72 (10.23%)
-    '    - Xml Docs: 69.44%
+    '   Total Lines: 732
+    '    Code Lines: 569 (77.73%)
+    ' Comment Lines: 77 (10.52%)
+    '    - Xml Docs: 66.23%
     ' 
-    '   Blank Lines: 82 (11.65%)
-    '     File Size: 33.88 KB
+    '   Blank Lines: 86 (11.75%)
+    '     File Size: 35.30 KB
 
 
     '     Class VBProject
     ' 
     '         Properties: AssemblyName, AssemblyVersion, CompileExcludes, CompileFiles, Configurations
     '                     FilePath, IsDotNetCoreSDK, Metadata, MimeType, NuGet
-    '                     OutputType, PackageReferences, ProjectReferences, RootNamespace, Sdk
+    '                     OutputType, PackageReferences, ProjectReferences, References, RootNamespace
+    '                     Sdk
     ' 
     '         Function: [GetType], CleanName, ElementValue, ExtractImports, FindByLastName
     '                   FindInContainer, Generate, GetCompileFiles, IsNuGetProperty, Load

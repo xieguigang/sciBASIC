@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a50c718c7c61fd0df9ad5896f955a16, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\Model.vb"
+﻿#Region "Microsoft.VisualBasic::3eb8c8077260d3769dd80dce1e4eb1bd, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\Model.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 41 (73.21%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 121
+    '    Code Lines: 41 (33.88%)
+    ' Comment Lines: 65 (53.72%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (26.79%)
-    '     File Size: 1.58 KB
+    '   Blank Lines: 15 (12.40%)
+    '     File Size: 4.52 KB
 
 
     '     Class RangeTransformModel

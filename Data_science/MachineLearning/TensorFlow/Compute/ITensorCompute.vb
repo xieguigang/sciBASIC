@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e41c7b88cf35cbc15f1fb42d3f63814d, Data_science\MachineLearning\TensorFlow\Compute\ITensorCompute.vb"
+﻿#Region "Microsoft.VisualBasic::bf2804ff491fac69e4c4405f0db5553d, Data_science\MachineLearning\TensorFlow\Compute\ITensorCompute.vb"
 
     ' Author:
     ' 
@@ -34,29 +34,32 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 63 (54.31%)
-    ' Comment Lines: 29 (25.00%)
-    '    - Xml Docs: 58.62%
+    '   Total Lines: 379
+    '    Code Lines: 99 (26.12%)
+    ' Comment Lines: 229 (60.42%)
+    '    - Xml Docs: 83.84%
     ' 
-    '   Blank Lines: 24 (20.69%)
-    '     File Size: 4.90 KB
+    '   Blank Lines: 51 (13.46%)
+    '     File Size: 20.36 KB
 
 
     '     Interface ITensorCompute
     ' 
-    '         Properties: Name
+    '         Properties: Name, PinnedDeviceBytes, SupportsDeviceResidency
     ' 
     '         Function: Abs, Add, AddScalar, ArgMax, ArgMin
-    '                   Clip, Cos, Divide, DivideScalar, Elu
-    '                   Exp, Gelu, HuberLoss, L2Loss, L2Norm
-    '                   LeakyRelu, Log, LogSoftmax, MatMul, Max
-    '                   Maximum, Mean, MeanAll, Min, Minimum
-    '                   MseLoss, Multiply, MultiplyScalar, Negate, Pow
-    '                   Prod, Reciprocal, Relu, Sigmoid, SigmoidCrossEntropyWithLogits
-    '                   Sin, Softmax, Sqrt, Square, StdDev
-    '                   Subtract, Sum, SumAll, Swish, Tanh
-    '                   Transpose
+    '                   Clip, Concat, Conv2D, Conv2DBackwardBias, Conv2DBackwardFilter
+    '                   Conv2DBackwardInput, Cos, Divide, DivideScalar, Elu
+    '                   Exp, Gelu, Heaviside, HuberLoss, IsDevicePinned
+    '                   L2Loss, L2Norm, LeakyRelu, Log, LogSoftmax
+    '                   MaskedCrossEntropy, MatMul, Max, Maximum, MaxPool2D
+    '                   MaxPool2DBackward, Mean, MeanAll, Min, Minimum
+    '                   MseLoss, Multiply, MultiplyScalar, Negate, PinDevice
+    '                   Pow, Prod, Reciprocal, Relu, Sigmoid
+    '                   SigmoidCrossEntropyWithLogits, Sin, Slice, Softmax, SpMM
+    '                   Sqrt, Square, StdDev, Subtract, Sum
+    '                   SumAll, Swish, SyncFromDevice, Tanh, TopK
+    '                   Transpose, TryAdamWStep, UnpinDevice
     ' 
     ' 
     ' /********************************************************************************/

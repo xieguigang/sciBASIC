@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::c70cff3cf25a8135048b59e77548ef90, Data_science\MachineLearning\TensorFlow\Compute\SIMDTensorF.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 319
+    '    Code Lines: 226 (70.85%)
+    ' Comment Lines: 39 (12.23%)
+    '    - Xml Docs: 74.36%
+    ' 
+    '   Blank Lines: 54 (16.93%)
+    '     File Size: 12.34 KB
+
+
+    '     Class SIMDTensorF
+    ' 
+    '         Properties: [Default], Name, VectorWidth
+    ' 
+    '         Function: Abs, Add, AddScalar, Clip, Divide
+    '                   DivideScalar, MaxAll, Maximum, MinAll, Minimum
+    '                   Multiply, MultiplyScalar, Negate, Sqrt, Square
+    '                   Subtract, SumAll, VecBinary, VecScalar, VecUnary
+    ' 
+    '         Sub: Register
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' 单精度张量的默认计算后端：基于 System.Numerics.Vector(Of Single) 的 SIMD CPU 实现
 '
@@ -317,3 +378,4 @@ Namespace Compute
     End Class
 
 End Namespace
+

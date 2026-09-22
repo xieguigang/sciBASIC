@@ -1,69 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::d247ddeb1767da2e3a8e7c12214ad5e5, sciBASIC#\Data_science\Mathematica\Math\mHG\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::5d66195de51ba36a3991b13fe26039d7, Data_science\Mathematica\Math\mHG\mHGtest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 470
-'    Code Lines: 196
-' Comment Lines: 220
-'   Blank Lines: 54
-'     File Size: 23.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Module1
-' 
-'     Function: HG_row_ncalc, mHGpvalcalc, mHGstatisticcalc, mHGtest, pi_rcalc
-'               R_separation_linecalc
-' 
-'     Sub: Main
-'     Structure HG_row_n
-' 
-'         Function: d_ratio, v_ratio
-'         Delegate Function
-' 
-' 
-'         Structure calc
-' 
-'             Function: iter, recur
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 401
+    '    Code Lines: 165 (41.15%)
+    ' Comment Lines: 193 (48.13%)
+    '    - Xml Docs: 65.80%
+    ' 
+    '   Blank Lines: 43 (10.72%)
+    '     File Size: 18.95 KB
+
+
+    ' Module mHGtest
+    ' 
+    '     Function: d_ratio, HG_row_ncalc_func, mHGpvalcalc, mHGstatisticcalc, mHGtest
+    '               pi_rcalc, R_separation_linecalc, sumFirst, (+2 Overloads) v_ratio
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

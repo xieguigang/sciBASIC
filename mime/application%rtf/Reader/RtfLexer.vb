@@ -1,3 +1,72 @@
+﻿#Region "Microsoft.VisualBasic::453d29dc74246b65323fb98722fe36e8, mime\application%rtf\Reader\RtfLexer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 568
+    '    Code Lines: 385 (67.78%)
+    ' Comment Lines: 68 (11.97%)
+    '    - Xml Docs: 39.71%
+    ' 
+    '   Blank Lines: 115 (20.25%)
+    '     File Size: 20.01 KB
+
+
+    ' Module RtfCodePage
+    ' 
+    '     Function: EncodeChar, EncodeText, GetEncoding
+    ' 
+    ' Class RtfLexer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Ascii, CanEmitBody, DecodePending, GetInfo, GetParagraphs
+    '               GetText, HandleControlWord, HexValue, IsAlpha, IsDigit
+    '               MetaBuffer, MetaValue, ParseControl, SkipFallback
+    ' 
+    '     Sub: AddPending, EmitChar, EmitText, EndParagraph, FlushText
+    '          Parse
+    '     Structure GroupState
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' RtfLexer.vb - RTF 词法 / 分组解析器（单遍扫描）
 '
@@ -566,3 +635,4 @@ Friend Class RtfLexer
     End Function
 
 End Class
+

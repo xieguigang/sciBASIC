@@ -1,3 +1,77 @@
+﻿#Region "Microsoft.VisualBasic::0fb971001ae94aff5ecb46acc93c6020, Data_science\MachineLearning\SNN\Network.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 453
+    '    Code Lines: 284 (62.69%)
+    ' Comment Lines: 95 (20.97%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 74 (16.34%)
+    '     File Size: 18.44 KB
+
+
+    ' Structure LossGradient
+    ' 
+    ' 
+    ' 
+    ' Module Losses
+    ' 
+    '     Function: SoftmaxCrossEntropy
+    ' 
+    ' Class AdamOptimizer
+    ' 
+    '     Properties: Beta1, Beta2, ClipNorm, Epsilon, LearningRate
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Update
+    ' 
+    ' Class SpikingNetwork
+    ' 
+    '     Properties: Encoding, Layers, Rng, SparseInputMap, SparseLayer
+    '                 TimeSteps
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Accuracy, AddLayer, (+2 Overloads) AddSparseLayer, ComputeGradients, Encode
+    '               ForwardSparse, ForwardSpikes, Predict, ScatterInput, TrainStep
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' Network.vb — SNN 网络模型 + 损失函数 + Adam 优化器
 '
@@ -449,5 +523,6 @@ Public Class SpikingNetwork
     End Function
 
 End Class
+
 
 

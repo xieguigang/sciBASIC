@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a783cd4baba1874d8f63291bcefcea2b, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFitGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e1fcfd266d22399a11244b2d2180f272, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFitGenerator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 348
-    '    Code Lines: 251 (72.13%)
-    ' Comment Lines: 48 (13.79%)
-    '    - Xml Docs: 29.17%
+    '   Total Lines: 351
+    '    Code Lines: 253 (72.08%)
+    ' Comment Lines: 49 (13.96%)
+    '    - Xml Docs: 28.57%
     ' 
-    '   Blank Lines: 49 (14.08%)
-    '     File Size: 16.58 KB
+    '   Blank Lines: 49 (13.96%)
+    '     File Size: 16.75 KB
 
 
     '     Class LassoFitGenerator

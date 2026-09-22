@@ -1,3 +1,68 @@
+﻿#Region "Microsoft.VisualBasic::30cc08700bfff791244d8340e611910d, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetVersion.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 383
+    '    Code Lines: 261 (68.15%)
+    ' Comment Lines: 32 (8.36%)
+    '    - Xml Docs: 90.62%
+    ' 
+    '   Blank Lines: 90 (23.50%)
+    '     File Size: 13.21 KB
+
+
+    '     Class NuGetVersion
+    ' 
+    '         Properties: FolderName, IsPrerelease, Major, Minor, OriginalString
+    '                     Patch, ReleaseLabel, Revision
+    ' 
+    '         Function: CompareRelease, (+2 Overloads) CompareTo, (+2 Overloads) Equals, GetHashCode, NormalizedString
+    '                   Parse, ToString, TryParse
+    ' 
+    '     Class VersionRange
+    ' 
+    '         Properties: All, IsExact, IsMaxInclusive, IsMinInclusive, MaxVersion
+    '                     MinVersion, OriginalString
+    ' 
+    '         Function: Parse, Satisfies, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.Text
@@ -381,3 +446,4 @@ Namespace VBProj.NuGet
         End Function
     End Class
 End Namespace
+

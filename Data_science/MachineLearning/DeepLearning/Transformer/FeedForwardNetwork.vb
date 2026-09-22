@@ -1,4 +1,69 @@
-﻿' ---------------------------------------------------------------------------
+﻿#Region "Microsoft.VisualBasic::924f6211f2482ec41e7de78bc8af3b69, Data_science\MachineLearning\DeepLearning\Transformer\FeedForwardNetwork.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 66 (46.15%)
+    ' Comment Lines: 52 (36.36%)
+    '    - Xml Docs: 73.08%
+    ' 
+    '   Blank Lines: 25 (17.48%)
+    '     File Size: 6.57 KB
+
+
+    '     Class FeedForwardNetwork
+    ' 
+    '         Properties: LastCache
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Backward, FeedForward
+    ' 
+    '         Sub: MakeTrainingStep, ZeroGradients
+    '         Class Cache
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ---------------------------------------------------------------------------
 ' FeedForwardNetwork —— 位置前馈网络（两层全连接 + ReLU）
 '
 ' 迁移到 TensorFlow\Tensor.vb 后不再有自动微分，因此前向阶段需要缓存
@@ -141,3 +206,4 @@ Namespace Transformer
 
     End Class
 End Namespace
+

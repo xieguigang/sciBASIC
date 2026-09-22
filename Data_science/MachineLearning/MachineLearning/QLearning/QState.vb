@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38db7f194f62b5cf3172d0da708b2383, Data_science\MachineLearning\MachineLearning\QLearning\QState.vb"
+﻿#Region "Microsoft.VisualBasic::a7523a95ebd9f5c59c1a765c693dfccb, Data_science\MachineLearning\MachineLearning\QLearning\QState.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 35 (49.30%)
-    ' Comment Lines: 23 (32.39%)
-    '    - Xml Docs: 95.65%
+    '   Total Lines: 126
+    '    Code Lines: 35 (27.78%)
+    ' Comment Lines: 78 (61.90%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (18.31%)
-    '     File Size: 2.86 KB
+    '   Blank Lines: 13 (10.32%)
+    '     File Size: 5.40 KB
 
 
     '     Interface IQStateFeatureSet

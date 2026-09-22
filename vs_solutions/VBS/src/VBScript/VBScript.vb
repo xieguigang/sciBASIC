@@ -1,4 +1,60 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::9ff6b7c2b23b0d51fa59920df2102186, vs_solutions\VBS\src\VBScript\VBScript.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 109 (70.32%)
+    ' Comment Lines: 18 (11.61%)
+    '    - Xml Docs: 61.11%
+    ' 
+    '   Blank Lines: 28 (18.06%)
+    '     File Size: 7.61 KB
+
+
+    '     Module VBScript
+    ' 
+    '         Function: ParseScript
+    ' 
+    '         Sub: PrintDefaultParameters, PrintVectorization
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 
 Namespace Script
 
@@ -153,3 +209,4 @@ Namespace Script
         End Sub
     End Module
 End Namespace
+

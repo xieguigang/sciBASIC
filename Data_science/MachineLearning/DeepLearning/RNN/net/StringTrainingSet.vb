@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d920974f5052252f933dff3d333599, Data_science\MachineLearning\DeepLearning\RNN\net\StringTrainingSet.vb"
+﻿#Region "Microsoft.VisualBasic::437f576d5c6b4a7b024133259c7a70ce, Data_science\MachineLearning\DeepLearning\RNN\net\StringTrainingSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 51 (60.00%)
-    ' Comment Lines: 17 (20.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 99
+    '    Code Lines: 51 (51.52%)
+    ' Comment Lines: 31 (31.31%)
+    '    - Xml Docs: 80.65%
     ' 
-    '   Blank Lines: 17 (20.00%)
-    '     File Size: 2.35 KB
+    '   Blank Lines: 17 (17.17%)
+    '     File Size: 3.29 KB
 
 
     ' 	Class StringTrainingSet

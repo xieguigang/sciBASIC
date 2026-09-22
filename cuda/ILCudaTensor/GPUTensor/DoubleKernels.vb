@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff851bf44d1c24f945185361ef05254a, cuda\ILCudaTensor\GPUTensor\DoubleKernels.vb"
+﻿#Region "Microsoft.VisualBasic::dced7c0e5711bbec00c894dfd40812d5, cuda\ILCudaTensor\GPUTensor\DoubleKernels.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 298
-    '    Code Lines: 216 (72.48%)
-    ' Comment Lines: 29 (9.73%)
-    '    - Xml Docs: 51.72%
+    '   Total Lines: 312
+    '    Code Lines: 225 (72.12%)
+    ' Comment Lines: 32 (10.26%)
+    '    - Xml Docs: 56.25%
     ' 
-    '   Blank Lines: 53 (17.79%)
-    '     File Size: 12.10 KB
+    '   Blank Lines: 55 (17.63%)
+    '     File Size: 12.57 KB
 
 
     '     Module DoubleKernels
@@ -49,8 +49,8 @@
     '                   DDiv, DDivScalar, DElu, DExp, DGelu
     '                   DLeakyRelu, DLog, DMul, DNeg, DPow
     '                   DRecip, DRelu, DScale, DSigmoid, DSin
-    '                   DSqrt, DSquare, DSub, DSwish, DTanh
-    '                   DTranspose
+    '                   DSqrt, DSquare, DStep, DSub, DSwish
+    '                   DTanh, DTranspose
     ' 
     '     Module DoubleKernelRegistry
     ' 
@@ -377,4 +377,3 @@ Namespace GPUTensor
     End Module
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9eba38c09297b95230c170f2d63c739, Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
+﻿#Region "Microsoft.VisualBasic::9a5398730502b31c9c237c1e894ec358, Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 233
-    '    Code Lines: 153 (65.67%)
-    ' Comment Lines: 56 (24.03%)
-    '    - Xml Docs: 25.00%
+    '   Total Lines: 299
+    '    Code Lines: 153 (51.17%)
+    ' Comment Lines: 121 (40.47%)
+    '    - Xml Docs: 65.29%
     ' 
-    '   Blank Lines: 24 (10.30%)
-    '     File Size: 10.89 KB
+    '   Blank Lines: 25 (8.36%)
+    '     File Size: 14.01 KB
 
 
     '     Enum LF_c

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c959d801678d18a1c85e6b1f32c95c, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\EliteReplacement.vb"
+﻿#Region "Microsoft.VisualBasic::52a4e12811c62750103635df6a32a816, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\EliteReplacement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 26 (50.00%)
-    ' Comment Lines: 17 (32.69%)
-    '    - Xml Docs: 76.47%
+    '   Total Lines: 59
+    '    Code Lines: 26 (44.07%)
+    ' Comment Lines: 24 (40.68%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 9 (17.31%)
-    '     File Size: 2.00 KB
+    '   Blank Lines: 9 (15.25%)
+    '     File Size: 2.47 KB
 
 
     '     Class EliteReplacement

@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::cf6a98e393de6bb4cd0cc5e6a0420fb9, Data_science\Mathematica\Math\Math\test\VectorMatrixSimdTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 799
+    '    Code Lines: 565 (70.71%)
+    ' Comment Lines: 59 (7.38%)
+    '    - Xml Docs: 28.81%
+    ' 
+    '   Blank Lines: 175 (21.90%)
+    '     File Size: 34.00 KB
+
+
+    ' Module VectorMatrixSimdTest
+    ' 
+    '     Function: ArraysEqual, Fresh, MatrixBinary, MatrixBinaryHelper, MatrixEquals
+    '               RunAll, SampleData, SampleMatrix, ScalarAdd, ScalarCholeskySolve
+    '               ScalarDot, ScalarMatMul, ScalarNegate
+    ' 
+    '     Sub: Check, CheckClose, CheckRelative, Section, TestMatrixElementwise
+    '          TestMatrixHelpers, TestMatrixInPlace, TestMatrixMultiply, TestMatrixReductions, TestMatrixShapeAndNorms
+    '          TestScalarFallback, TestSolversAndDecompositions, TestVectorBroadcast, TestVectorComparisons, TestVectorDotAndNorms
+    '          TestVectorElementwise
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' VectorMatrixSimdTest.vb — Vector / NumericMatrix 的 SIMD 重构正确性验证
 ' ----------------------------------------------------------------------------
@@ -797,3 +857,4 @@ Public Module VectorMatrixSimdTest
 #End Region
 
 End Module
+

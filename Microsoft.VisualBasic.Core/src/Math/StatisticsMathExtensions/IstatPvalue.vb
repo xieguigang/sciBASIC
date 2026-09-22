@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84796e74042cc8fafd8687b2a91ee6a0, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\IstatPvalue.vb"
+﻿#Region "Microsoft.VisualBasic::84796e74042cc8fafd8687b2a91ee6a0, Microsoft.VisualBasic.Core\src\Math\StatisticsMathExtensions\IstatPvalue.vb"
 
     ' Author:
     ' 

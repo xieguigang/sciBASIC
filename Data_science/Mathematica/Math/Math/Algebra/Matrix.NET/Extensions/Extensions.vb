@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1184d3353a4c405a07610cdc885e4a, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e08bb0c34896e1990fd07ae08dae5459, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 325
-    '    Code Lines: 212 (65.23%)
-    ' Comment Lines: 76 (23.38%)
-    '    - Xml Docs: 76.32%
+    '   Total Lines: 330
+    '    Code Lines: 214 (64.85%)
+    ' Comment Lines: 78 (23.64%)
+    '    - Xml Docs: 74.36%
     ' 
-    '   Blank Lines: 37 (11.38%)
-    '     File Size: 12.71 KB
+    '   Blank Lines: 38 (11.52%)
+    '     File Size: 13.10 KB
 
 
     '     Module Extensions

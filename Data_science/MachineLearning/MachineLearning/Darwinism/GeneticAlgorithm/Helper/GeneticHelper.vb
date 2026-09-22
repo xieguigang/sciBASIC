@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::035cd8204f413a8fc5e4233fc7ea1cea, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::9750c7963f8b2ce70cfd280af474fc5d, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 88 (46.32%)
-    ' Comment Lines: 77 (40.53%)
-    '    - Xml Docs: 53.25%
+    '   Total Lines: 230
+    '    Code Lines: 88 (38.26%)
+    ' Comment Lines: 117 (50.87%)
+    '    - Xml Docs: 69.23%
     ' 
-    '   Blank Lines: 25 (13.16%)
-    '     File Size: 7.24 KB
+    '   Blank Lines: 25 (10.87%)
+    '     File Size: 10.36 KB
 
 
     '     Module GeneticHelper

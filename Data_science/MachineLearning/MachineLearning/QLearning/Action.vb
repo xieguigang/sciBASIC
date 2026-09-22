@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e447eb813cb5c104a66868b83d7eb59b, Data_science\MachineLearning\MachineLearning\QLearning\Action.vb"
+﻿#Region "Microsoft.VisualBasic::349c20bbbd39b44f1c960f41bf9eb341, Data_science\MachineLearning\MachineLearning\QLearning\Action.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 10 (32.26%)
-    ' Comment Lines: 16 (51.61%)
+    '   Total Lines: 37
+    '    Code Lines: 10 (27.03%)
+    ' Comment Lines: 22 (59.46%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (16.13%)
-    '     File Size: 1.10 KB
+    '   Blank Lines: 5 (13.51%)
+    '     File Size: 1.49 KB
 
 
     '     Class Action

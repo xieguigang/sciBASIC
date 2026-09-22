@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcb5f2f07118e8e50c04db0f82336bfc, cuda\ILCudaTensor\GPUTensor\TensorKernels.vb"
+﻿#Region "Microsoft.VisualBasic::3dbcf5f9be3446c6838aa8cf351d7e26, cuda\ILCudaTensor\GPUTensor\TensorKernels.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 19 (40.43%)
-    ' Comment Lines: 22 (46.81%)
-    '    - Xml Docs: 68.18%
+    '   Total Lines: 73
+    '    Code Lines: 30 (41.10%)
+    ' Comment Lines: 35 (47.95%)
+    '    - Xml Docs: 74.29%
     ' 
-    '   Blank Lines: 6 (12.77%)
-    '     File Size: 2.47 KB
+    '   Blank Lines: 8 (10.96%)
+    '     File Size: 4.37 KB
 
 
     '     Module TensorKernelNames
@@ -125,4 +125,3 @@ Namespace GPUTensor
     End Module
 
 End Namespace
-

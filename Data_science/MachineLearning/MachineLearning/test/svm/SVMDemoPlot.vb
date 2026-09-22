@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::76065f5ca04f1bc5ad7d5af7299a4132, Data_science\MachineLearning\MachineLearning\test\svm\SVMDemoPlot.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 533
+    '    Code Lines: 322 (60.41%)
+    ' Comment Lines: 112 (21.01%)
+    '    - Xml Docs: 72.32%
+    ' 
+    '   Blank Lines: 99 (18.57%)
+    '     File Size: 23.24 KB
+
+
+    '     Module SVMDemoPlot
+    ' 
+    '         Function: buildPalette, classColor, className, dataBounds, dataToPixel
+    '                   lighten, pixelToDatum
+    ' 
+    '         Sub: drawBoundary, drawLayout, drawSamples, drawSupportVectors, fillRegions
+    '              PlotResult
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '   GDI+ renderer of the SVM demo test.
@@ -531,3 +589,4 @@ Namespace SVMDemo
 
     End Module
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1c1c50955ba92516cfc23eb9ed9c312, Data_science\MachineLearning\DeepLearning\CeNiN\SaveModel.vb"
+﻿#Region "Microsoft.VisualBasic::e72d8c87257c65a1ed7bf28b45c3b6a0, Data_science\MachineLearning\DeepLearning\CeNiN\SaveModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 90 (81.08%)
-    ' Comment Lines: 4 (3.60%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 121
+    '    Code Lines: 90 (74.38%)
+    ' Comment Lines: 14 (11.57%)
+    '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 17 (15.32%)
-    '     File Size: 3.80 KB
+    '   Blank Lines: 17 (14.05%)
+    '     File Size: 4.35 KB
 
 
     '     Module SaveModel

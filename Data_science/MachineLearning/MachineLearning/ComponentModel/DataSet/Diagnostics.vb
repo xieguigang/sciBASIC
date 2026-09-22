@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86e5842a7551ad7168d944ebd4c360a2, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
+﻿#Region "Microsoft.VisualBasic::5da6765a50eaeecf6014c730654327d0, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 55 (84.62%)
-    ' Comment Lines: 2 (3.08%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 94
+    '    Code Lines: 55 (58.51%)
+    ' Comment Lines: 31 (32.98%)
+    '    - Xml Docs: 93.55%
     ' 
-    '   Blank Lines: 8 (12.31%)
-    '     File Size: 2.69 KB
+    '   Blank Lines: 8 (8.51%)
+    '     File Size: 4.14 KB
 
 
     '     Module Diagnostics

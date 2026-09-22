@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f9b7db01651fa1311d8bcd009c229cb, Data\BinaryData\SQLite3\test\WriterTests.vb"
+﻿#Region "Microsoft.VisualBasic::45a4f708cceb075cd8ce91d15f1c14d4, Data\BinaryData\SQLite3\test\WriterTests.vb"
 
     ' Author:
     ' 
@@ -336,4 +336,3 @@ Module WriterTests
     End Sub
 
 End Module
-

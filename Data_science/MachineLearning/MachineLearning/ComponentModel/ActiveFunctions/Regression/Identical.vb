@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19aec2692bc715cc6b610a086cca0f58, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\Identical.vb"
+﻿#Region "Microsoft.VisualBasic::f33f3b6125749e94c6b3aa35cadf7c3d, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\Identical.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 21 (80.77%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 54
+    '    Code Lines: 21 (38.89%)
+    ' Comment Lines: 28 (51.85%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (19.23%)
-    '     File Size: 759 B
+    '   Blank Lines: 5 (9.26%)
+    '     File Size: 2.04 KB
 
 
     '     Class Identical

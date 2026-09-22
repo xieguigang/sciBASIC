@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54ca1db4c44bd0022554f3d4d772b92b, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\HdbscanAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::942e7d4ab5db29611384992f7bc4751d, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\HdbscanAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 550
-    '    Code Lines: 349 (63.45%)
-    ' Comment Lines: 115 (20.91%)
+    '   Total Lines: 558
+    '    Code Lines: 355 (63.62%)
+    ' Comment Lines: 115 (20.61%)
     '    - Xml Docs: 61.74%
     ' 
-    '   Blank Lines: 86 (15.64%)
-    '     File Size: 30.39 KB
+    '   Blank Lines: 88 (15.77%)
+    '     File Size: 30.63 KB
 
 
     '     Class HdbscanAlgorithm

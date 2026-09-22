@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ff2c2041da66ee8061460dfc0e7115, Data_science\MachineLearning\DeepLearning\CNN\trainers\SGDTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::5d42265a5a98c2f2b160dc91954a128b, Data_science\MachineLearning\DeepLearning\CNN\trainers\SGDTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 17 (51.52%)
-    ' Comment Lines: 11 (33.33%)
-    '    - Xml Docs: 63.64%
+    '   Total Lines: 46
+    '    Code Lines: 17 (36.96%)
+    ' Comment Lines: 24 (52.17%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 5 (15.15%)
-    '     File Size: 1.29 KB
+    '   Blank Lines: 5 (10.87%)
+    '     File Size: 2.12 KB
 
 
     '     Class SGDTrainer

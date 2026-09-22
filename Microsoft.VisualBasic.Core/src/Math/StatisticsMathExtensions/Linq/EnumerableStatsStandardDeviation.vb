@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b372c2532cd689aef33e95c3099ec8a8, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsStandardDeviation.vb"
+﻿#Region "Microsoft.VisualBasic::b372c2532cd689aef33e95c3099ec8a8, Microsoft.VisualBasic.Core\src\Math\StatisticsMathExtensions\Linq\EnumerableStatsStandardDeviation.vb"
 
     ' Author:
     ' 

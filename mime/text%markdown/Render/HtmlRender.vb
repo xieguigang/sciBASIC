@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf99c40758ebafcb9fa613d63ccbccfe, mime\text%markdown\Render\HtmlRender.vb"
+﻿#Region "Microsoft.VisualBasic::22e27cb32615300f47f2b8ce98e01688, mime\text%markdown\Render\HtmlRender.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 21 (15.56%)
-    '     File Size: 4.54 KB
+    '     File Size: 4.51 KB
 
 
     ' Class HtmlRender

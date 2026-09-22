@@ -1,3 +1,59 @@
+﻿#Region "Microsoft.VisualBasic::eb2e70b41132e815fd587b318dab51f1, Data_science\Mathematica\Math\Math\test\SimdBenchmark.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 244
+    '    Code Lines: 157 (64.34%)
+    ' Comment Lines: 31 (12.70%)
+    '    - Xml Docs: 48.39%
+    ' 
+    '   Blank Lines: 56 (22.95%)
+    '     File Size: 9.77 KB
+
+
+    ' Module SimdBenchmark
+    ' 
+    '     Function: BenchVersus, BestOf, Checksum, ChecksumFromMatrix, ChecksumFromVector
+    '               Fill, FillSquare, RunAll, SimdParallelWithParallelism
+    ' 
+    '     Sub: BenchApi
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' SimdBenchmark.vb — Vector / NumericMatrix 的标量 vs SIMD 加速比基准
 ' ----------------------------------------------------------------------------
@@ -242,3 +298,4 @@ Public Module SimdBenchmark
 #End Region
 
 End Module
+

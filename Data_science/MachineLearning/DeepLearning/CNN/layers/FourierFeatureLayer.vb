@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106b42bb647e53951b4cf33124e8acc9, Data_science\MachineLearning\DeepLearning\CNN\Layers\FourierFeatureLayer.vb"
+﻿#Region "Microsoft.VisualBasic::319e3ffd81ebf2e453a6fc6d2bdc2bd6, Data_science\MachineLearning\DeepLearning\CNN\Layers\FourierFeatureLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 58 (59.18%)
-    ' Comment Lines: 26 (26.53%)
-    '    - Xml Docs: 73.08%
+    '   Total Lines: 110
+    '    Code Lines: 58 (52.73%)
+    ' Comment Lines: 38 (34.55%)
+    '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 14 (14.29%)
-    '     File Size: 4.06 KB
+    '   Blank Lines: 14 (12.73%)
+    '     File Size: 5.00 KB
 
 
     '     Class FourierFeatureLayer

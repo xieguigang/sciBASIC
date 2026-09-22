@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f69e31964a3352beab8ee66583c0d76, Data_science\MachineLearning\DeepLearning\RNN\net\BasicRNN.vb"
+﻿#Region "Microsoft.VisualBasic::2da1f98b1791d7f3e146faf7a8aa2275, Data_science\MachineLearning\DeepLearning\RNN\net\BasicRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 6 (46.15%)
-    ' Comment Lines: 5 (38.46%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 15
+    '    Code Lines: 6 (40.00%)
+    ' Comment Lines: 7 (46.67%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (15.38%)
-    '     File Size: 387 B
+    '   Blank Lines: 2 (13.33%)
+    '     File Size: 506 B
 
 
     '     Class BasicRNN

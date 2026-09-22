@@ -1,3 +1,71 @@
+﻿#Region "Microsoft.VisualBasic::d9836fe6b6a81196be60965203df86c0, cuda\ILCudaTensor\GPUTensor\SparseCsrCache.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 124 (65.61%)
+    ' Comment Lines: 32 (16.93%)
+    '    - Xml Docs: 40.62%
+    ' 
+    '   Blank Lines: 33 (17.46%)
+    '     File Size: 7.76 KB
+
+
+    '     Class SparseCsrCache
+    ' 
+    '         Properties: Bytes, Count
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ByteSizeOf, GetBuffers
+    ' 
+    '         Sub: Clear, Dispose, Evict
+    '         Class Entry
+    ' 
+    '             Properties: ByteSize, Ticks
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Finalize, Release
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' SparseCsrCache —— CSR 稀疏矩阵的显存驻留缓存（LRU）
 '
@@ -187,3 +255,4 @@ Namespace GPUTensor
     End Class
 
 End Namespace
+

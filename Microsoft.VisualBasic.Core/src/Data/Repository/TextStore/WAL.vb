@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83bb095b4a0396cb0118c78e791ed7d2, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\WAL.vb"
+﻿#Region "Microsoft.VisualBasic::1f2f18f7271960ccdf452e35031b8b5d, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\WAL.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 449
-    '    Code Lines: 337 (75.06%)
-    ' Comment Lines: 56 (12.47%)
-    '    - Xml Docs: 78.57%
+    '   Total Lines: 466
+    '    Code Lines: 345 (74.03%)
+    ' Comment Lines: 63 (13.52%)
+    '    - Xml Docs: 80.95%
     ' 
-    '   Blank Lines: 56 (12.47%)
-    '     File Size: 19.43 KB
+    '   Blank Lines: 58 (12.45%)
+    '     File Size: 20.24 KB
 
 
     '     Class WAL
@@ -70,8 +70,8 @@
     '               ReadLongTok, ReadRecords, TryParseRecord
     ' 
     '     Sub: AppendMergeBegin, AppendMergeDone, AppendSplice, BeginReplay, ClearLog
-    '          Dispose, EndReplay, EnsureOpen, Flush, IncrementOperationCount
-    '          Open, ResetPendingState, TruncateTo, WriteLogBytes
+    '          Dispose, EndReplay, EnsureOpen, EnsureWritable, Flush
+    '          IncrementOperationCount, Open, ResetPendingState, TruncateTo, WriteLogBytes
     ' 
     ' 
     ' /********************************************************************************/
@@ -544,4 +544,3 @@ Namespace Data.Repository
     End Class
 
 End Namespace
-

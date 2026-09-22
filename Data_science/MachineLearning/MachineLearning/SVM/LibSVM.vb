@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93a172c904a317663d2712285efb0fc2, Data_science\MachineLearning\MachineLearning\SVM\LibSVM.vb"
+﻿#Region "Microsoft.VisualBasic::b69ba4e4ac35918f3c3eac583e24357e, Data_science\MachineLearning\MachineLearning\SVM\LibSVM.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 18 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 42
+    '    Code Lines: 18 (42.86%)
+    ' Comment Lines: 18 (42.86%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (25.00%)
-    '     File Size: 733 B
+    '   Blank Lines: 6 (14.29%)
+    '     File Size: 1.67 KB
 
 
     '     Class LibSVM

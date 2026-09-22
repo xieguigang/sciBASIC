@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::8ccd55df7aee55142df92182b826cafa, Microsoft.VisualBasic.Core\src\Math\SIMD\Vectorized.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 590
+    '    Code Lines: 320 (54.24%)
+    ' Comment Lines: 157 (26.61%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 113 (19.15%)
+    '     File Size: 26.16 KB
+
+
+    '     Module Vectorized
+    ' 
+    '         Function: ScalarZipMap, VecAbs, VecAdd, VecAddScalar, (+2 Overloads) VecCeiling
+    '                   VecConvert, VecCount, (+2 Overloads) VecDivide, (+2 Overloads) VecDivideScalar, (+2 Overloads) VecExp
+    '                   (+2 Overloads) VecFloor, (+2 Overloads) VecIntegerDivide, (+2 Overloads) VecIntegerDivideScalar, (+3 Overloads) VecLog, VecMap
+    '                   (+5 Overloads) VecMax, (+4 Overloads) VecMean, (+5 Overloads) VecMin, (+4 Overloads) VecModulo, (+4 Overloads) VecModuloScalar
+    '                   VecMultiply, VecMultiplyScalar, VecNegate, VecPower, VecPowerScalar
+    '                   (+5 Overloads) VecProduct, (+2 Overloads) VecReciprocal, (+2 Overloads) VecScalarDivide, (+2 Overloads) VecScalarIntegerDivide, (+4 Overloads) VecScalarModulo
+    '                   VecScalarPower, VecScalarSubtract, (+2 Overloads) VecSign, (+2 Overloads) VecSqrt, VecSquare
+    '                   VecSubtract, VecSubtractScalar, (+5 Overloads) VecSum, (+2 Overloads) VecTruncate, ZipMap
+    '                   ZipScalarMap
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Linq
 
 Namespace Math.SIMD.Vectorization
@@ -588,3 +650,4 @@ Namespace Math.SIMD.Vectorization
 #End Region
     End Module
 End Namespace
+

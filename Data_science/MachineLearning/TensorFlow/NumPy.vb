@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9605c6a9ec2456263fbf22501e73c4c, Data_science\MachineLearning\TensorFlow\NumPy.vb"
+﻿#Region "Microsoft.VisualBasic::5eae9eaed8ef8bf8c884f0368237adc8, Data_science\MachineLearning\TensorFlow\NumPy.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 732
-    '    Code Lines: 411 (56.15%)
-    ' Comment Lines: 200 (27.32%)
-    '    - Xml Docs: 91.50%
+    '   Total Lines: 757
+    '    Code Lines: 417 (55.09%)
+    ' Comment Lines: 217 (28.67%)
+    '    - Xml Docs: 92.17%
     ' 
-    '   Blank Lines: 121 (16.53%)
-    '     File Size: 25.66 KB
+    '   Blank Lines: 123 (16.25%)
+    '     File Size: 27.02 KB
 
 
     '     Module NumPyModule
@@ -52,9 +52,10 @@
     '                   less, linspace, log, logspace, matmul
     '                   max, maximum, mean, min, minimum
     '                   ndim, ones, power, prod, reshape
-    '                   shape, sin, size, split, sqrt
-    '                   square, squeeze, stack, std, sum
-    '                   tanh, transpose, vstack, zeros
+    '                   shape, sin, size, slice, split
+    '                   sqrt, square, squeeze, stack, std
+    '                   sum, tanh, topk, transpose, vstack
+    '                   zeros
     '         Class RandomState
     ' 
     '             Function: rand, randint, randn

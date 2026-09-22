@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c04acc43871b352f3eab711d4db50b03, Data_science\MachineLearning\DeepLearning\CNN\SaveModelCNN.vb"
+﻿#Region "Microsoft.VisualBasic::59b3bc2795095440e851fbe7c5832523, Data_science\MachineLearning\DeepLearning\CNN\SaveModelCNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 29 (74.36%)
-    ' Comment Lines: 3 (7.69%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 48
+    '    Code Lines: 29 (60.42%)
+    ' Comment Lines: 12 (25.00%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 7 (17.95%)
-    '     File Size: 1.29 KB
+    '   Blank Lines: 7 (14.58%)
+    '     File Size: 1.71 KB
 
 
     '     Module SaveModelCNN

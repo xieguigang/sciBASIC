@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22b7b7dadb4ea218029ff9342eb54b85, Data_science\MachineLearning\MachineLearning\SVM\Solver\SolutionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6e4dda3676e40c917b02951fb547566b, Data_science\MachineLearning\MachineLearning\SVM\Solver\SolutionInfo.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 13 (54.17%)
-    ' Comment Lines: 6 (25.00%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 48
+    '    Code Lines: 13 (27.08%)
+    ' Comment Lines: 30 (62.50%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 678 B
+    '   Blank Lines: 5 (10.42%)
+    '     File Size: 1.84 KB
 
 
     '     Class SolutionInfo

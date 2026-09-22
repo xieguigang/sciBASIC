@@ -1,4 +1,59 @@
-﻿Imports System
+﻿#Region "Microsoft.VisualBasic::608181087d43e52ad50950e093680dd9, Data_science\DataMining\hierarchical-clustering\HCTNumericTableTests\Benchmark.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 224
+    '    Code Lines: 143 (63.84%)
+    ' Comment Lines: 31 (13.84%)
+    '    - Xml Docs: 87.10%
+    ' 
+    '   Blank Lines: 50 (22.32%)
+    '     File Size: 7.54 KB
+
+
+    ' Module Benchmark
+    ' 
+    '     Function: purity, SyntheticTable
+    ' 
+    '     Sub: report, RunAll, RunApproximate, RunExact
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System
 Imports System.Diagnostics
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
@@ -222,3 +277,4 @@ Module Benchmark
         Return correct / total
     End Function
 End Module
+

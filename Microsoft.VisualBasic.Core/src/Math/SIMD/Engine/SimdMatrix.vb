@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::a17c2f0d4b8e44f2a6d9e1c73b5f820c, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::b5a50bd4a048ed91e9608ccb3829d9ed, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdMatrix.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,43 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 694
+    '    Code Lines: 354 (51.01%)
+    ' Comment Lines: 194 (27.95%)
+    '    - Xml Docs: 98.97%
+    ' 
+    '   Blank Lines: 146 (21.04%)
+    '     File Size: 26.94 KB
+
+
+    '     Class SimdMatrix
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Abs, Add, AddInPlace, AddScalar, Binary
+    '                   BinaryInPlace, CheckNull, ColumnCount, Divide, DivideInPlace
+    '                   DivideScalar, DivideZeroSafe, DivideZeroSafeInPlace, Dot, Exp
+    '                   ExtractColumn, Log, MatrixVector, MaxIndex, MinIndex
+    '                   Multiply, MultiplyInPlace, MultiplyRows, MultiplyScalar, MultiplyScalarInPlace
+    '                   Negate, NewMatrix, Norm1, NormF, NormInf
+    '                   Pow, PowScalar, RowCount, RowLength, ScalarDivide
+    '                   ScalarOp, ScalarSubtract, Sqrt, Square, Subtract
+    '                   SubtractInPlace, SubtractScalar, Trace, Transpose, Unary
+    ' 
+    '         Sub: AxpyInPlace, CheckAgree, Rank1Update
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

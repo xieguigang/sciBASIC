@@ -1,3 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::cf1a42e502b377ea9428e9c89a892759, llm\LLMTensorOps.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 319
+    '    Code Lines: 152 (47.65%)
+    ' Comment Lines: 100 (31.35%)
+    '    - Xml Docs: 84.00%
+    ' 
+    '   Blank Lines: 67 (21.00%)
+    '     File Size: 12.33 KB
+
+
+    ' Module LLMTensorOps
+    ' 
+    '     Function: ClipGlobalNorm, CloneTensor, GatherRows, HeNormalInit, MaskedCrossEntropy
+    '               MaskedCrossEntropyHost, ZerosLike
+    ' 
+    '     Sub: Accumulate, ScaleInPlace, ScatterAddRows, ZeroInPlace
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' LLMTensorOps —— LLM 模块共用的张量算子与手写反向传播辅助
 '
@@ -315,5 +372,6 @@ Public Module LLMTensorOps
 #End Region
 
 End Module
+
 
 

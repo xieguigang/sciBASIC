@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::071ba879b853e83d31a344eee042f44a, Data_science\DataMining\DataMining\Evaluation\RegressionClassify.vb"
+﻿#Region "Microsoft.VisualBasic::90a973ea734f7fdf75ad70af5d64a848, Data_science\DataMining\DataMining\Evaluation\RegressionClassify.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 16 (55.17%)
-    ' Comment Lines: 7 (24.14%)
+    '   Total Lines: 53
+    '    Code Lines: 29 (54.72%)
+    ' Comment Lines: 15 (28.30%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (20.69%)
-    '     File Size: 780 B
+    '   Blank Lines: 9 (16.98%)
+    '     File Size: 1.84 KB
 
 
     '     Class RegressionClassify
     ' 
     '         Properties: actual, errors, predicts, sampleID
     ' 
-    '         Function: ToString
+    '         Function: ToResult, ToString
     ' 
     ' 
     ' /********************************************************************************/

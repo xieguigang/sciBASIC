@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::cbde6dfc0726eca5458c71bfeeb8c3b5, mime\application%rtf\Reader\RtfTextReader.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 73 (42.20%)
+    ' Comment Lines: 73 (42.20%)
+    '    - Xml Docs: 67.12%
+    ' 
+    '   Blank Lines: 27 (15.61%)
+    '     File Size: 7.38 KB
+
+
+    ' Class RtfDocumentInfo
+    ' 
+    '     Properties: Author, Comments, Company, Generator, Keywords
+    '                 Subject, Title
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class RtfTextReader
+    ' 
+    '     Function: (+2 Overloads) ExtractMetadata, (+2 Overloads) ExtractParagraphs, (+2 Overloads) ExtractText, (+2 Overloads) GetText, ReadAllBytes
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' RtfTextReader.vb - RTF 文本 / 元数据读取器
 '
@@ -171,3 +231,4 @@ Public Class RtfTextReader
     End Function
 
 End Class
+

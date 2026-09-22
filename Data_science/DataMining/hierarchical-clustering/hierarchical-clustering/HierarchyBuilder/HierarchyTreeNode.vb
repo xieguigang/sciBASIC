@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::878e7ea137c955bcbd5b5b69699990f4, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::165febde72287eb5b091e453b57c4704, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 68 (56.67%)
-    ' Comment Lines: 29 (24.17%)
+    '   Total Lines: 119
+    '    Code Lines: 67 (56.30%)
+    ' Comment Lines: 29 (24.37%)
     '    - Xml Docs: 34.48%
     ' 
-    '   Blank Lines: 23 (19.17%)
-    '     File Size: 4.05 KB
+    '   Blank Lines: 23 (19.33%)
+    '     File Size: 4.12 KB
 
 
     '     Class HierarchyTreeNode

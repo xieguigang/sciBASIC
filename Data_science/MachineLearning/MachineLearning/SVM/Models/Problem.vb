@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::699d191daf55f0dbc4851fc04ed40a8f, Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
+﻿#Region "Microsoft.VisualBasic::558c2eecf22c298160f0996de0b78328, Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 33 (34.74%)
-    ' Comment Lines: 49 (51.58%)
-    '    - Xml Docs: 67.35%
+    '   Total Lines: 115
+    '    Code Lines: 33 (28.70%)
+    ' Comment Lines: 69 (60.00%)
+    '    - Xml Docs: 76.81%
     ' 
-    '   Blank Lines: 13 (13.68%)
-    '     File Size: 3.34 KB
+    '   Blank Lines: 13 (11.30%)
+    '     File Size: 4.31 KB
 
 
     '     Class Problem

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef390c40e02c10d42dfe8f7ac8f7378c, Data_science\MachineLearning\DeepLearning\RNN\math\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::3c32318ac6860bd46e238c2a9991aba2, Data_science\MachineLearning\DeepLearning\RNN\math\Utils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 32 (65.31%)
-    ' Comment Lines: 8 (16.33%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 61
+    '    Code Lines: 32 (52.46%)
+    ' Comment Lines: 20 (32.79%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 9 (18.37%)
-    '     File Size: 1.25 KB
+    '   Blank Lines: 9 (14.75%)
+    '     File Size: 1.84 KB
 
 
     ' 	Class Utils

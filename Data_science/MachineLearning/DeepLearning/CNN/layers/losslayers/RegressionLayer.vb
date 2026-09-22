@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa310086233f718b006971cb9e68e0ac, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\RegressionLayer.vb"
+﻿#Region "Microsoft.VisualBasic::22be07d4d0dfbd51064eb177cab19e71, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\RegressionLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 41 (62.12%)
-    ' Comment Lines: 10 (15.15%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 90
+    '    Code Lines: 41 (45.56%)
+    ' Comment Lines: 34 (37.78%)
+    '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 15 (22.73%)
-    '     File Size: 2.18 KB
+    '   Blank Lines: 15 (16.67%)
+    '     File Size: 3.57 KB
 
 
     '     Class RegressionLayer

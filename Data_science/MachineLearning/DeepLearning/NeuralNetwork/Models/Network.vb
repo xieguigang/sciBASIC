@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1720ebb5c7ce23f91a6b4c839286f047, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::ac5374c94ed5ba8f648b7521104e41f8, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Network.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 440
-    '    Code Lines: 229 (52.05%)
-    ' Comment Lines: 153 (34.77%)
-    '    - Xml Docs: 90.85%
+    '   Total Lines: 439
+    '    Code Lines: 229 (52.16%)
+    ' Comment Lines: 152 (34.62%)
+    '    - Xml Docs: 90.79%
     ' 
-    '   Blank Lines: 58 (13.18%)
-    '     File Size: 18.57 KB
+    '   Blank Lines: 58 (13.21%)
+    '     File Size: 19.82 KB
 
 
     '     Class Network

@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::c62a638dbd83824db13a041a0653ed72, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeFBase.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 437
+    '    Code Lines: 296 (67.73%)
+    ' Comment Lines: 62 (14.19%)
+    '    - Xml Docs: 74.19%
+    ' 
+    '   Blank Lines: 79 (18.08%)
+    '     File Size: 19.02 KB
+
+
+    '     Class TensorComputeFBase
+    ' 
+    '         Function: Abs, Add, AddScalar, AdvectTrilinear, Clip
+    '                   Divide, DivideScalar, Exp, JacobiStencil7, Laplacian7
+    '                   Log, MapBinary, MapUnary, MatMul, MaxAll
+    '                   Maximum, MeanAll, MinAll, Minimum, Multiply
+    '                   MultiplyScalar, Negate, Reciprocal, Relu, Sigmoid
+    '                   Sqrt, Square, Subtract, SumAll, Tanh
+    '                   TrilinearAt, Wrap
+    ' 
+    '         Sub: ApplyMask, RequireSameShape
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' ITensorComputeF 的标量兜底实现
 '
@@ -435,3 +497,4 @@ Namespace Compute
     End Class
 
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93caa221f2bfa3367d522d3577acebe1, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdEngine.vb"
+﻿#Region "Microsoft.VisualBasic::fab51b1a9395a6f57c16accf8ad3d932, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 715
-    '    Code Lines: 427 (59.72%)
-    ' Comment Lines: 142 (19.86%)
-    '    - Xml Docs: 97.18%
+    '   Total Lines: 950
+    '    Code Lines: 576 (60.63%)
+    ' Comment Lines: 184 (19.37%)
+    '    - Xml Docs: 96.74%
     ' 
-    '   Blank Lines: 146 (20.42%)
-    '     File Size: 27.44 KB
+    '   Blank Lines: 190 (20.00%)
+    '     File Size: 36.90 KB
 
 
     '     Class SimdEngine
@@ -53,14 +53,15 @@
     ' 
     '             Constructor: (+1 Overloads) Sub New
     ' 
-    '             Function: Add, AddInPlace, AddScalar, AddScalarInPlace, CanVectorize
-    '                       CheckArgument, Compute, (+2 Overloads) Divide, (+2 Overloads) DivideScalar, DivideZeroSafe
-    '                       InPlace, InPlaceScalar, Max, Min, Multiply
-    '                       MultiplyInPlace, MultiplyScalar, MultiplyScalarInPlace, NewArray, ScalarCompute
-    '                       (+2 Overloads) ScalarDivide, ScalarLane, ScalarSubtract, Subtract, SubtractInPlace
-    '                       SubtractScalar
+    '             Function: Add, AddAbsInPlace, AddInPlace, AddScalar, AddScalarInPlace
+    '                       CanVectorize, CheckArgument, Compute, (+2 Overloads) Divide, DivideInPlace
+    '                       (+2 Overloads) DivideScalar, (+2 Overloads) DivideZeroSafe, DivideZeroSafeInPlace, InPlace, InPlaceScalar
+    '                       Max, MaxScalar, Min, MinScalar, Multiply
+    '                       MultiplyInPlace, MultiplyScalar, MultiplyScalarInPlace, MultiplyZeroSafe, NewArray
+    '                       ScalarCompute, (+2 Overloads) ScalarDivide, ScalarLane, ScalarSubtract, Subtract
+    '                       SubtractInPlace, SubtractScalar
     ' 
-    '             Sub: DivideZeroSafeBlock
+    '             Sub: DivideZeroSafeBlock, DivideZeroSafeBlockSingle, MultiplyZeroSafeBlock
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e7435048d4f160e39a0fbc649ed4ca8, Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::350d73068e978b3cf74cd6aa6a305d38, Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 500
-    '    Code Lines: 310 (62.00%)
-    ' Comment Lines: 126 (25.20%)
-    '    - Xml Docs: 82.54%
+    '   Total Lines: 511
+    '    Code Lines: 315 (61.64%)
+    ' Comment Lines: 131 (25.64%)
+    '    - Xml Docs: 79.39%
     ' 
-    '   Blank Lines: 64 (12.80%)
-    '     File Size: 20.14 KB
+    '   Blank Lines: 65 (12.72%)
+    '     File Size: 20.69 KB
 
 
     ' Module XmlExtensions

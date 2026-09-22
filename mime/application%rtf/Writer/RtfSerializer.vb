@@ -1,3 +1,73 @@
+﻿#Region "Microsoft.VisualBasic::cb868d2b1c4e6407dea512d869c8e497, mime\application%rtf\Writer\RtfSerializer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 787
+    '    Code Lines: 548 (69.63%)
+    ' Comment Lines: 85 (10.80%)
+    '    - Xml Docs: 37.65%
+    ' 
+    '   Blank Lines: 154 (19.57%)
+    '     File Size: 34.23 KB
+
+
+    ' Class RtfSerializer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: AlignmentToken, BuildDocument, CharProps, ComputeColumnWidths, EscapeText
+    '               InfoGroup, Measure, ParagraphProps, Signed16, ToTwips
+    ' 
+    '     Sub: AppendBorder, AppendHex, AppendInfoField, CollectHeadings, Render
+    '          RenderBlock, Save, WriteDefinitionListItem, WriteHorizontalRule, WriteImage
+    '          WriteListItem, WritePageBreak, WriteParagraphCore, WriteTable, WriteTableRow
+    '          WriteTaskListItem, WriteToc
+    '     Class FontTable
+    ' 
+    '         Function: HasNonAscii, Lookup, ToRtf
+    ' 
+    '     Class ColorTable
+    ' 
+    '         Function: Lookup, ParseHex, ToRtf
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' RtfSerializer.vb - RTF 1.x 序列化器
 '
@@ -785,3 +855,4 @@ Public Class RtfSerializer
     End Class
 
 End Class
+

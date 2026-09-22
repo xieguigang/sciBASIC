@@ -1,4 +1,69 @@
-﻿' ---------------------------------------------------------------------------
+﻿#Region "Microsoft.VisualBasic::f64365fdc7ccc74f44ea67285cd76482, Data_science\MachineLearning\DeepLearning\Transformer\OutputLayer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 47 (41.96%)
+    ' Comment Lines: 45 (40.18%)
+    '    - Xml Docs: 84.44%
+    ' 
+    '   Blank Lines: 20 (17.86%)
+    '     File Size: 5.27 KB
+
+
+    '     Class OutputLayer
+    ' 
+    '         Properties: LastCache
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Backward, Output
+    ' 
+    '         Sub: MakeTrainingStep, ZeroGradients
+    '         Class Cache
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ---------------------------------------------------------------------------
 ' OutputLayer —— 输出层：把解码器输出投影到词表维度并做 softmax
 '
 ' 迁移要点：前向需要缓存「压平后的输入」（用于计算 Wo 的梯度）与输入原始形状
@@ -110,3 +175,4 @@ Namespace Transformer
 
     End Class
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ab9db360a5ece14b5fcb326fbbdfc37, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdMath.vb"
+﻿#Region "Microsoft.VisualBasic::f50cfe15cd3094849ed8077ac75227ca, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdMath.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 353
-    '    Code Lines: 192 (54.39%)
-    ' Comment Lines: 85 (24.08%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 461
+    '    Code Lines: 241 (52.28%)
+    ' Comment Lines: 129 (27.98%)
+    '    - Xml Docs: 99.22%
     ' 
-    '   Blank Lines: 76 (21.53%)
-    '     File Size: 13.44 KB
+    '   Blank Lines: 91 (19.74%)
+    '     File Size: 18.54 KB
 
 
     '     Class SimdMath
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Abs, Clamp, (+2 Overloads) Exp, (+2 Overloads) Log, Negate
-    '                   Pow, PowScalar, (+2 Overloads) Reciprocal, (+2 Overloads) Sqrt, Square
-    '                   Unary
+    '         Function: Abs, (+2 Overloads) Ceiling, Clamp, (+2 Overloads) Exp, (+2 Overloads) Floor
+    '                   (+3 Overloads) Log, Negate, Pow, PowScalar, (+2 Overloads) Reciprocal
+    '                   (+2 Overloads) Sign, SignBlock, SignBlockSingle, (+2 Overloads) Sqrt, Square
+    '                   (+2 Overloads) Truncate, Unary
     ' 
     ' 
     ' /********************************************************************************/

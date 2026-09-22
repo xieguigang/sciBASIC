@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::051f97cb403a58668588554d00fa186e, Data_science\MachineLearning\MachineLearning\Darwinism\Models\GeneralFitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::8e855f54616437e2c60ebe4eb228e517, Data_science\MachineLearning\MachineLearning\Darwinism\Models\GeneralFitnessPool.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 113
-    '    Code Lines: 69 (61.06%)
-    ' Comment Lines: 25 (22.12%)
-    '    - Xml Docs: 84.00%
+    '   Total Lines: 141
+    '    Code Lines: 69 (48.94%)
+    ' Comment Lines: 53 (37.59%)
+    '    - Xml Docs: 92.45%
     ' 
-    '   Blank Lines: 19 (16.81%)
-    '     File Size: 4.22 KB
+    '   Blank Lines: 19 (13.48%)
+    '     File Size: 5.72 KB
 
 
     '     Class GeneralFitnessPool

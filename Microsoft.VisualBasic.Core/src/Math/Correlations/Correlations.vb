@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85e2e64319d5d68ba4613d3fd63db67f, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::85e2e64319d5d68ba4613d3fd63db67f, Microsoft.VisualBasic.Core\src\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 

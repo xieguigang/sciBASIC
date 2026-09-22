@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4781baf8d1c0e4246eb5cd33fca020fc, Data_science\MachineLearning\DeepLearning\CNN\Layers\ConvolutionLayer.vb"
+﻿#Region "Microsoft.VisualBasic::dcebd11c5b16796e57c65b8aafdc535c, Data_science\MachineLearning\DeepLearning\CNN\Layers\ConvolutionLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
-    '    Code Lines: 156 (71.89%)
-    ' Comment Lines: 20 (9.22%)
-    '    - Xml Docs: 30.00%
+    '   Total Lines: 249
+    '    Code Lines: 134 (53.82%)
+    ' Comment Lines: 73 (29.32%)
+    '    - Xml Docs: 71.23%
     ' 
-    '   Blank Lines: 41 (18.89%)
-    '     File Size: 8.76 KB
+    '   Blank Lines: 42 (16.87%)
+    '     File Size: 11.42 KB
 
 
     '     Class ConvolutionLayer
@@ -49,20 +49,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: forward, ToString
+    '         Function: forward, PackFilters, ToString
     ' 
-    '         Sub: backward
-    '         Class ForwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    '         Class BackwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    ' 
+    '         Sub: backward, UnpackFilterGradients
     ' 
     ' 
     ' /********************************************************************************/

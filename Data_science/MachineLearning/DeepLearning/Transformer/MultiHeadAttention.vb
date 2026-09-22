@@ -1,4 +1,69 @@
-﻿' ---------------------------------------------------------------------------
+﻿#Region "Microsoft.VisualBasic::2e232c04bf0eac140f3f0e1e36231f31, Data_science\MachineLearning\DeepLearning\Transformer\MultiHeadAttention.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 302
+    '    Code Lines: 178 (58.94%)
+    ' Comment Lines: 74 (24.50%)
+    '    - Xml Docs: 77.03%
+    ' 
+    '   Blank Lines: 50 (16.56%)
+    '     File Size: 14.71 KB
+
+
+    '     Class MultiHeadAttention
+    ' 
+    '         Properties: LastCache
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Backward, CalculateScaledMultiHeadedAttention, (+2 Overloads) Update
+    ' 
+    '         Sub: (+2 Overloads) ApplyLinearInputFilters, InitalizeOptimizers, InitializeLinearFilters, MakeTrainingStep, ZeroGradients
+    '         Class Cache
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ---------------------------------------------------------------------------
 ' MultiHeadAttention —— 多头缩放点积注意力（迁移到 TensorFlow\Tensor.vb）
 '
 ' 迁移前依赖 AD 张量的 N 维 MatMul/Concat/Softmax/Mask 与自动微分；
@@ -300,3 +365,4 @@ Namespace Transformer
 
     End Class
 End Namespace
+

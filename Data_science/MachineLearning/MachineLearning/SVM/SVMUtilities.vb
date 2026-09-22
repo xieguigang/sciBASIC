@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa22f7ff703b28bdc6b0e829f48723a8, Data_science\MachineLearning\MachineLearning\SVM\SVMUtilities.vb"
+﻿#Region "Microsoft.VisualBasic::ae6437172571488786a80c24bd61b709, Data_science\MachineLearning\MachineLearning\SVM\SVMUtilities.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 83 (74.11%)
-    ' Comment Lines: 10 (8.93%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 147
+    '    Code Lines: 83 (56.46%)
+    ' Comment Lines: 45 (30.61%)
+    '    - Xml Docs: 97.78%
     ' 
-    '   Blank Lines: 19 (16.96%)
-    '     File Size: 4.50 KB
+    '   Blank Lines: 19 (12.93%)
+    '     File Size: 6.64 KB
 
 
     '     Module SVMUtilities

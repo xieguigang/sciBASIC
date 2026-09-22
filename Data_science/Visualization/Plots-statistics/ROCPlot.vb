@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8feeeca223b4dc4d3111d58d1941c39, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::559efc6c6ae2b5adaba4d6e2b68c5d36, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 108 (73.97%)
-    ' Comment Lines: 24 (16.44%)
-    '    - Xml Docs: 95.83%
+    '   Total Lines: 147
+    '    Code Lines: 108 (73.47%)
+    ' Comment Lines: 25 (17.01%)
+    '    - Xml Docs: 92.00%
     ' 
-    '   Blank Lines: 14 (9.59%)
-    '     File Size: 5.72 KB
+    '   Blank Lines: 14 (9.52%)
+    '     File Size: 5.80 KB
 
 
     ' Module ROCPlot

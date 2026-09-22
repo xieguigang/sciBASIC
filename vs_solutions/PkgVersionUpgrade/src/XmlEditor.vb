@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3b883acfe481c64e9ef0df28f21337f, vs_solutions\PkgVersionUpgrade\XmlEditor.vb"
+﻿#Region "Microsoft.VisualBasic::f3b883acfe481c64e9ef0df28f21337f, vs_solutions\PkgVersionUpgrade\src\XmlEditor.vb"
 
     ' Author:
     ' 

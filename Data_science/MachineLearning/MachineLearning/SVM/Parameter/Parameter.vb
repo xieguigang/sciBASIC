@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::73b51cedab0c6dd4a41622550af321fa, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 98 (49.49%)
-    ' Comment Lines: 74 (37.37%)
-    '    - Xml Docs: 78.38%
+    '   Total Lines: 218
+    '    Code Lines: 98 (44.95%)
+    ' Comment Lines: 94 (43.12%)
+    '    - Xml Docs: 82.98%
     ' 
-    '   Blank Lines: 26 (13.13%)
-    '     File Size: 6.87 KB
+    '   Blank Lines: 26 (11.93%)
+    '     File Size: 7.90 KB
 
 
     '     Class Parameter

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableExtensionsTest, Microsoft.VisualBasic.Core\test\test\NumericTableExtensionsTest.vb"
+﻿#Region "Microsoft.VisualBasic::f380dece3690bb86286d77d7ff834310, Microsoft.VisualBasic.Core\test\test\NumericTableExtensionsTest.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,40 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 144 (64.00%)
+    ' Comment Lines: 36 (16.00%)
+    '    - Xml Docs: 94.44%
+    ' 
+    '   Blank Lines: 45 (20.00%)
+    '     File Size: 8.93 KB
+
+
+    ' Module NumericTableExtensionsTest
+    ' 
+    ' 
+    '     Enum TestColor
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Sub: AssertRow, AssertThrows, AssertTrue, Run, TestCharFactor
+    '          TestDateAndTimeSpan, TestDocumentExample, TestEmptyInput, TestEnumColumn, TestErrorCases
+    '          TestLabelEncoding, TestSequenceInput
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d543155fe16ecea3b2d889a417a9c03b, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\MemoryDump.vb"
+﻿#Region "Microsoft.VisualBasic::63b47c8806b535cfe281c14f1f718171, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\MemoryDump.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 38 (58.46%)
-    ' Comment Lines: 14 (21.54%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 93
+    '    Code Lines: 38 (40.86%)
+    ' Comment Lines: 42 (45.16%)
+    '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 13 (20.00%)
-    '     File Size: 2.44 KB
+    '   Blank Lines: 13 (13.98%)
+    '     File Size: 3.76 KB
 
 
     '     Class Memory

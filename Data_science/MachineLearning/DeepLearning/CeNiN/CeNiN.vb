@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc602bd6d391740238553221fa55d26c, Data_science\MachineLearning\DeepLearning\CeNiN\CeNiN.vb"
+﻿#Region "Microsoft.VisualBasic::890eb49fb980cd6750d5ff15d7a232ff, Data_science\MachineLearning\DeepLearning\CeNiN\CeNiN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 148 (71.15%)
-    ' Comment Lines: 11 (5.29%)
+    '   Total Lines: 238
+    '    Code Lines: 148 (62.18%)
+    ' Comment Lines: 41 (17.23%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 49 (23.56%)
-    '     File Size: 6.84 KB
+    '   Blank Lines: 49 (20.59%)
+    '     File Size: 8.84 KB
 
 
     '     Class CeNiN

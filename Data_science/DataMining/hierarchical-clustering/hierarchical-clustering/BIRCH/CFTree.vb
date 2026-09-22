@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80f6676ac55316b1e167c274ae77fd0d, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFTree.vb"
+﻿#Region "Microsoft.VisualBasic::4f99b3cd157937a7e15895a98d68b31f, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFTree.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 615
-    '    Code Lines: 276 (44.88%)
-    ' Comment Lines: 243 (39.51%)
-    '    - Xml Docs: 74.90%
+    '    Code Lines: 273 (44.39%)
+    ' Comment Lines: 247 (40.16%)
+    '    - Xml Docs: 73.68%
     ' 
-    '   Blank Lines: 96 (15.61%)
-    '     File Size: 26.02 KB
+    '   Blank Lines: 95 (15.45%)
+    '     File Size: 26.19 KB
 
 
     '     Class CFTree

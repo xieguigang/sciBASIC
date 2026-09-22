@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd786f444aa1a1a78435a1eeb188526d, Data_science\MachineLearning\DeepLearning\CNN\data\DataBlock.vb"
+﻿#Region "Microsoft.VisualBasic::e981bf4300a1b85633bb9012b35b827b, Data_science\MachineLearning\DeepLearning\CNN\data\DataBlock.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 283
-    '    Code Lines: 156 (55.12%)
-    ' Comment Lines: 85 (30.04%)
-    '    - Xml Docs: 96.47%
+    '   Total Lines: 558
+    '    Code Lines: 254 (45.52%)
+    ' Comment Lines: 231 (41.40%)
+    '    - Xml Docs: 83.98%
     ' 
-    '   Blank Lines: 42 (14.84%)
-    '     File Size: 9.95 KB
+    '   Blank Lines: 73 (13.08%)
+    '     File Size: 24.51 KB
 
 
     '     Class DataBlock
     ' 
-    '         Properties: Depth, Gradients, SX, SY, trace
-    '                     Weights
+    '         Properties: Depth, Grad, Grad2D, Grad4D, Gradients
+    '                     SX, SY, TensorShape4D, trace, Value
+    '                     Value2D, Value4D, Weights
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
@@ -54,7 +55,8 @@
     '                   ToString
     ' 
     '         Sub: addFrom, addFromScaled, (+2 Overloads) addGradient, (+3 Overloads) addImageData, addWeight
-    '              mulGradient, (+3 Overloads) setGradient, (+2 Overloads) setWeight, subGradient
+    '              MarkGradientModified, MarkHostModified, MarkValueModified, mulGradient, (+3 Overloads) setGradient
+    '              SetGradients, SetValues, (+2 Overloads) setWeight, subGradient
     ' 
     ' 
     ' /********************************************************************************/

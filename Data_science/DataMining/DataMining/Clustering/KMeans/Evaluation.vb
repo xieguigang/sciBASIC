@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a89be92ce534f0eafd446851f4ab446, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::aebe24e278886cac529ffdd7e174bfd7, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
 
     ' Author:
     ' 
@@ -34,37 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 497
-    '    Code Lines: 342 (68.81%)
-    ' Comment Lines: 76 (15.29%)
-    '    - Xml Docs: 82.89%
+    '   Total Lines: 274
+    '    Code Lines: 164 (59.85%)
+    ' Comment Lines: 79 (28.83%)
+    '    - Xml Docs: 89.87%
     ' 
-    '   Blank Lines: 79 (15.90%)
-    '     File Size: 19.35 KB
+    '   Blank Lines: 31 (11.31%)
+    '     File Size: 11.48 KB
 
 
     '     Module Evaluation
     ' 
-    '         Function: AverageDistance, CalcMaxInDist, CalcMinOutDist, calcularAverageBetweenClusterDistance, calcularAverageDistance
-    '                   calcularDavidBouldin, CalcularMaximumDiameter, calcularMinimumDistance, (+2 Overloads) CalinskiHarabasz, (+2 Overloads) Dunn
-    '                   (+2 Overloads) Silhouette, SquaredDistance
-    '         Class CalcMaxInDistTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '             Function: GetMax
-    ' 
-    '             Sub: Solve
-    ' 
-    '         Class CalcMinOutDistTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '             Function: GetMin
-    ' 
-    '             Sub: Solve
-    ' 
-    ' 
+    '         Function: calcularAverageBetweenClusterDistance, calcularAverageDistance, calcularDavidBouldin, CalcularMaximumDiameter, calcularMinimumDistance
+    '                   (+2 Overloads) CalinskiHarabasz, (+2 Overloads) Dunn, (+2 Overloads) Silhouette, SquaredDistance, ToIndicesInput
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,3 +1,66 @@
+﻿#Region "Microsoft.VisualBasic::66075786d8846cefb10ad7b9a300f8a3, Data_science\MachineLearning\TensorFlow\Compute\ITensorComputeF.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 52 (29.89%)
+    ' Comment Lines: 95 (54.60%)
+    '    - Xml Docs: 82.11%
+    ' 
+    '   Blank Lines: 27 (15.52%)
+    '     File Size: 8.50 KB
+
+
+    '     Interface ITensorComputeF
+    ' 
+    '         Properties: Name
+    ' 
+    '         Function: Abs, Add, AddScalar, AdvectTrilinear, Clip
+    '                   Divide, DivideScalar, Exp, JacobiStencil7, Laplacian7
+    '                   Log, MatMul, MaxAll, Maximum, MeanAll
+    '                   MinAll, Minimum, Multiply, MultiplyScalar, Negate
+    '                   Reciprocal, Relu, Sigmoid, Sqrt, Square
+    '                   Subtract, SumAll, Tanh
+    ' 
+    '         Sub: ApplyMask
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' 单精度张量计算的"可插拔后端"契约
 '
@@ -172,3 +235,4 @@ Namespace Compute
     End Interface
 
 End Namespace
+

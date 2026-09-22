@@ -1,3 +1,75 @@
+﻿#Region "Microsoft.VisualBasic::e436183f2040ef1f77cc60f2d4bd5b4f, llm\MoE\MoELayer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 867
+    '    Code Lines: 515 (59.40%)
+    ' Comment Lines: 167 (19.26%)
+    '    - Xml Docs: 56.29%
+    ' 
+    '   Blank Lines: 185 (21.34%)
+    '     File Size: 33.79 KB
+
+
+    ' Class MoELayer
+    ' 
+    '     Properties: ActiveParametersPerToken, LastCache, LastRouteInfo, NumRoutedExperts, NumSharedExperts
+    '                 TopK, TotalParameters
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Backward, BuildBuckets, BuildRouteInfo, CountOf, Forward
+    '               GateWeightOf, LifetimeLoad, SumLengths, UpdateBalanceBias
+    ' 
+    '     Sub: AccumulateLoad, ApplyNodeLimitedRouting, MakeTrainingStep, RegisterParameters, ResetLifetimeLoad
+    '          ResetLoadStatistics, ScatterAddRowsInto, ZeroGradients
+    '     Class RouteInfo
+    ' 
+    ' 
+    ' 
+    '     Class Cache
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' MoELayer —— DeepSeek 风格的混合专家层
 '
@@ -863,5 +935,6 @@ Public Class MoELayer
 #End Region
 
 End Class
+
 
 

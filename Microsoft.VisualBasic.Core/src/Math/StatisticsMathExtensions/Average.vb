@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9445de19ccd4768291fcfea87f1295f, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Average.vb"
+﻿#Region "Microsoft.VisualBasic::c9445de19ccd4768291fcfea87f1295f, Microsoft.VisualBasic.Core\src\Math\StatisticsMathExtensions\Average.vb"
 
     ' Author:
     ' 

@@ -1,3 +1,70 @@
+﻿#Region "Microsoft.VisualBasic::ba2702099e0ffd548693ccea97df5b24, vs_solutions\dev\VisualStudio\VBProject\NuGet\NuGetResolver.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 519
+    '    Code Lines: 339 (65.32%)
+    ' Comment Lines: 68 (13.10%)
+    '    - Xml Docs: 80.88%
+    ' 
+    '   Blank Lines: 112 (21.58%)
+    '     File Size: 23.18 KB
+
+
+    '     Class NuGetResolver
+    ' 
+    '         Properties: AllowPrerelease, Client, TargetFramework
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: EnumerateAssemblies, FindBestFrameworkFolder, FindChild, HasPrereleaseBound, IsUnconstrained
+    '                   LoadPackage, ParseNuspec, ReadDependencies, Resolve, ResolvePackages
+    '                   SelectDependencyGroup, SelectVersion
+    ' 
+    '         Sub: AddAssembly, EnqueueRequirement, FillAssets
+    '         Class NuspecDescriptor
+    ' 
+    '             Properties: DependencyGroups, Id, Version
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
@@ -517,3 +584,4 @@ Namespace VBProj.NuGet
         End Function
     End Class
 End Namespace
+

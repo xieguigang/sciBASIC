@@ -1,3 +1,70 @@
+﻿#Region "Microsoft.VisualBasic::0ec5200d20ead1e3caefe4a9c6c802bc, Data_science\MachineLearning\SNN\RecurrentLIFLayer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 644
+    '    Code Lines: 352 (54.66%)
+    ' Comment Lines: 194 (30.12%)
+    '    - Xml Docs: 67.53%
+    ' 
+    '   Blank Lines: 98 (15.22%)
+    '     File Size: 26.43 KB
+
+
+    ' Structure RecurrentGradients
+    ' 
+    ' 
+    ' 
+    ' Class RecurrentLIFLayer
+    ' 
+    '     Properties: Alpha, Beta, HLast, Mask, MembraneState
+    '                 Name, ResetMode, SHistory, SmoothForward, SprevHistory
+    '                 SurrogateType, Threshold, TimeSteps, Trainable, UHistory
+    '                 ULast, Units, Weight, WeightGrad
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: AddTensor, BackwardTime, Diagnose, EmptySpikeGradients, ForwardSequence
+    '               ForwardStep, HasFrozenSynapses, MaskedWeightGrad, ToString
+    ' 
+    '     Sub: ApplyMaskToWeight, AssertSquare, ResetState
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' RecurrentLIFLayer.vb — 可训练的递归 LIF 层（含 BPTT + 代理梯度）
 '
@@ -642,3 +709,4 @@ Public Class RecurrentLIFLayer
     End Function
 
 End Class
+

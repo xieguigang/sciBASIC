@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca29c7949833a75d56174d47a78f5e6f, Data_science\MachineLearning\DeepLearning\CNN\Layers\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::580fa6488565b1f10f5fcded80bb4bf8, Data_science\MachineLearning\DeepLearning\CNN\Layers\Layer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 10 (34.48%)
-    ' Comment Lines: 13 (44.83%)
-    '    - Xml Docs: 92.31%
+    '   Total Lines: 35
+    '    Code Lines: 10 (28.57%)
+    ' Comment Lines: 19 (54.29%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 6 (20.69%)
-    '     File Size: 975 B
+    '   Blank Lines: 6 (17.14%)
+    '     File Size: 1.44 KB
 
 
     '     Interface Layer

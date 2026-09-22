@@ -1,3 +1,59 @@
+﻿#Region "Microsoft.VisualBasic::db2df0262b06164ac9de32c34f9c16f5, Data_science\MachineLearning\DeepLearning\test\testTransformerZh.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 327
+    '    Code Lines: 214 (65.44%)
+    ' Comment Lines: 36 (11.01%)
+    '    - Xml Docs: 44.44%
+    ' 
+    '   Blank Lines: 77 (23.55%)
+    '     File Size: 13.95 KB
+
+
+    ' Module testTransformerZh
+    ' 
+    '     Function: BuildChineseTokenizer, ChineseSentence, CloneSentences, CountDistinctTokens, LocateCorpus
+    '               TokenizeChinese, TokenizeEnglish, TranslateWithModel
+    ' 
+    '     Sub: Evaluate, LoadCorpus, run
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' testTransformerZh —— 基于 Transformer 的英译中翻译 demo
 '
@@ -325,3 +381,4 @@ Module testTransformerZh
 #End Region
 
 End Module
+

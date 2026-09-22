@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58fc4291569317b0f816a29bbe38e838, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdReduce.vb"
+﻿#Region "Microsoft.VisualBasic::a228b25eb1fc088956029eb6a12b14df, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdReduce.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 591
-    '    Code Lines: 382 (64.64%)
-    ' Comment Lines: 75 (12.69%)
+    '   Total Lines: 645
+    '    Code Lines: 412 (63.88%)
+    ' Comment Lines: 85 (13.18%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 134 (22.67%)
-    '     File Size: 22.90 KB
+    '   Blank Lines: 148 (22.95%)
+    '     File Size: 24.86 KB
 
 
     '     Class SimdReduce
@@ -48,8 +48,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: ArgMax, ArgMin, (+2 Overloads) Dot, (+2 Overloads) L1Norm, L2Norm
-    '                   (+3 Overloads) Max, (+2 Overloads) Mean, (+2 Overloads) Min, (+2 Overloads) Sum, SumScalar
-    '                   SumSquares, SumTail
+    '                   (+3 Overloads) Max, (+2 Overloads) MaxAbs, (+2 Overloads) Mean, (+2 Overloads) Min, (+2 Overloads) Sum
+    '                   SumScalar, SumSquares, SumTail
     ' 
     '         Sub: CheckAgree, CheckEmpty, CheckNull, CheckRange
     ' 

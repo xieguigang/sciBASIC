@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::f5c13ef4ef8649ee9375dbf7abbbd163, llm\Text\TokenStream.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 77 (52.03%)
+    ' Comment Lines: 48 (32.43%)
+    '    - Xml Docs: 68.75%
+    ' 
+    '   Blank Lines: 23 (15.54%)
+    '     File Size: 6.05 KB
+
+
+    '     Class TokenStream
+    ' 
+    '         Properties: CacheBytes, Context, CurrentLogits, IsCached, Model
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Create
+    ' 
+    '         Sub: Accept, Fill, OverrideLogits
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' TokenStream —— 自回归生成的"下一个 token"流
 '
@@ -146,3 +206,4 @@ Namespace Text
     End Class
 
 End Namespace
+

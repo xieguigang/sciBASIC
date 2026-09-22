@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTablePrediction, Data_science\Mathematica\Math\DataFittings\NumericTablePrediction.vb"
+﻿#Region "Microsoft.VisualBasic::7c3cc7cf3bea3ac275311ab8a7ff02b9, Data_science\Mathematica\Math\DataFittings\NumericTablePrediction.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,31 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 60 (54.05%)
+    ' Comment Lines: 34 (30.63%)
+    '    - Xml Docs: 97.06%
+    ' 
+    '   Blank Lines: 17 (15.32%)
+    '     File Size: 4.70 KB
+
+
+    ' Module NumericTablePrediction
+    ' 
+    '     Function: ObservedVector, PredictTable, SetPrediction
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

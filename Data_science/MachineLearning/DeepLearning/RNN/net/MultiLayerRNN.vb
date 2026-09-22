@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d131bf08d4d73ff1f9f529a760560f8, Data_science\MachineLearning\DeepLearning\RNN\net\MultiLayerRNN.vb"
+﻿#Region "Microsoft.VisualBasic::497ecc20e571fb0b8d38b2d52cfd187d, Data_science\MachineLearning\DeepLearning\RNN\net\MultiLayerRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 113 (55.67%)
-    ' Comment Lines: 50 (24.63%)
-    '    - Xml Docs: 34.00%
+    '   Total Lines: 213
+    '    Code Lines: 113 (53.05%)
+    ' Comment Lines: 61 (28.64%)
+    '    - Xml Docs: 78.69%
     ' 
-    '   Blank Lines: 40 (19.70%)
-    '     File Size: 5.22 KB
+    '   Blank Lines: 39 (18.31%)
+    '     File Size: 6.55 KB
 
 
     ' 	Class MultiLayerRNN

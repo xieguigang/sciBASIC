@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35bb224562562acc1939b990f81b3a43, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Pool.vb"
+﻿#Region "Microsoft.VisualBasic::d857f0bb058689ead2425589616677ea, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Pool.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 66 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 112
+    '    Code Lines: 66 (58.93%)
+    ' Comment Lines: 24 (21.43%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (25.00%)
-    '     File Size: 2.76 KB
+    '   Blank Lines: 22 (19.64%)
+    '     File Size: 4.24 KB
 
 
     '     Class Pool

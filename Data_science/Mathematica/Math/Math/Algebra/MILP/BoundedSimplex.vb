@@ -1,3 +1,83 @@
+﻿#Region "Microsoft.VisualBasic::0eb54d7b60c5ffb9369d52f3837a9c2f, Data_science\Mathematica\Math\Math\Algebra\MILP\BoundedSimplex.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 897
+    '    Code Lines: 582 (64.88%)
+    ' Comment Lines: 111 (12.37%)
+    '    - Xml Docs: 38.74%
+    ' 
+    '   Blank Lines: 204 (22.74%)
+    '     File Size: 33.44 KB
+
+
+    '     Enum BsStatus
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class BsResult
+    ' 
+    '         Properties: AtUpper, Basis, IsOptimal, Iters, Objective
+    '                     ReducedCosts, Status, StatusText, X, Y
+    ' 
+    '     Class BoundedSimplex
+    ' 
+    '         Properties: Factorization
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ArtCost, BasicLower, BasicUpper, BasisColumn, BasisMatrix
+    '                   CurrentX, LoadWarmStart, MakeResult, NonbasicBoundValue, NonbasicValue
+    '                   ObjectiveValue, Phase1, Refresh, RunDual, RunPrimal
+    '                   Solve, SolveWithBasis, StatusMessage, UnitVector, WorkCost
+    ' 
+    '         Sub: BasicBounds, InitializeArtificialSigns, ResetState
+    '         Class DualCandidate
+    ' 
+    '             Properties: dist, g, j, ratio, sigma
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' BoundedSimplex.vb — 有界变量修订单纯形（MILP 节点 LP 引擎）
 ' ----------------------------------------------------------------------------
@@ -895,3 +975,4 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Class
 
 End Namespace
+

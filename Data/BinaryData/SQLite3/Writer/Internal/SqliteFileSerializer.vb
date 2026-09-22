@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61a76cd948c43933a8181d8620348740, Data\BinaryData\SQLite3\Writer\Internal\SqliteFileSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::3f79473565616671377382d060793372, Data\BinaryData\SQLite3\Writer\Internal\SqliteFileSerializer.vb"
 
     ' Author:
     ' 
@@ -302,4 +302,3 @@ Namespace Writer.Internal
     End Class
 
 End Namespace
-

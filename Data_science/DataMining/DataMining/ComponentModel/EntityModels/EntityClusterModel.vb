@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::397e9fef68cabbe71763f3de8cb1e331, Data_science\DataMining\DataMining\ComponentModel\EntityModels\EntityClusterModel.vb"
+﻿#Region "Microsoft.VisualBasic::63602a74522a79a178fcea9ec3a08a06, Data_science\DataMining\DataMining\ComponentModel\EntityModels\EntityClusterModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 59 (70.24%)
-    ' Comment Lines: 16 (19.05%)
+    '   Total Lines: 85
+    '    Code Lines: 60 (70.59%)
+    ' Comment Lines: 16 (18.82%)
     '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 9 (10.71%)
-    '     File Size: 3.51 KB
+    '   Blank Lines: 9 (10.59%)
+    '     File Size: 3.67 KB
 
 
     '     Class EntityClusterModel

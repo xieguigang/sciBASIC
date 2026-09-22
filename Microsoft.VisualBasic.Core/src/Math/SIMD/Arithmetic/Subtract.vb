@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f638e11c520415f196826c30e23e1c84, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::f638e11c520415f196826c30e23e1c84, Microsoft.VisualBasic.Core\src\Math\SIMD\Arithmetic\Subtract.vb"
 
     ' Author:
     ' 

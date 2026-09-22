@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b1fa5ec442f4b6eac8630a98a642988, Data_science\MachineLearning\DeepLearning\CNN\Layers\LeakyReluLayer.vb"
+﻿#Region "Microsoft.VisualBasic::e6faf6cdf2e56326bd13560702cb7751, Data_science\MachineLearning\DeepLearning\CNN\Layers\LeakyReluLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 46 (69.70%)
-    ' Comment Lines: 6 (9.09%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 87
+    '    Code Lines: 46 (52.87%)
+    ' Comment Lines: 27 (31.03%)
+    '    - Xml Docs: 77.78%
     ' 
-    '   Blank Lines: 14 (21.21%)
-    '     File Size: 2.09 KB
+    '   Blank Lines: 14 (16.09%)
+    '     File Size: 3.39 KB
 
 
     '     Class LeakyReluLayer

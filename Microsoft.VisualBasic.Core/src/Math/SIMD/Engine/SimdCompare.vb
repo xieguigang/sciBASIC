@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ebc226423f2b23d1c84dcc583bbb3c6, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Engine\SimdCompare.vb"
+﻿#Region "Microsoft.VisualBasic::4d348bd4f86df316f9b37cfe678fc909, Microsoft.VisualBasic.Core\src\Math\SIMD\Engine\SimdCompare.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 327
-    '    Code Lines: 192 (58.72%)
-    ' Comment Lines: 68 (20.80%)
-    '    - Xml Docs: 98.53%
+    '   Total Lines: 421
+    '    Code Lines: 245 (58.19%)
+    ' Comment Lines: 93 (22.09%)
+    '    - Xml Docs: 98.92%
     ' 
-    '   Blank Lines: 67 (20.49%)
-    '     File Size: 13.53 KB
+    '   Blank Lines: 83 (19.71%)
+    '     File Size: 17.64 KB
 
 
     '     Class SimdCompare
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) [Select], All, Any, Compare, CountTrue
-    '                   Equal, GreaterThan, GreaterThanOrEqual, LaneTrue, LessThan
-    '                   LessThanOrEqual, NotEqual, Where
+    '         Function: (+2 Overloads) [Select], All, Any, Compare, CompareScalar
+    '                   CountTrue, (+2 Overloads) Equal, (+2 Overloads) GreaterThan, (+2 Overloads) GreaterThanOrEqual, LaneTrue
+    '                   (+2 Overloads) LessThan, (+2 Overloads) LessThanOrEqual, (+2 Overloads) NotEqual, Where
     ' 
-    '         Sub: CompareBlock
+    '         Sub: CompareBlock, CompareScalarBlock
     ' 
     ' 
     ' /********************************************************************************/

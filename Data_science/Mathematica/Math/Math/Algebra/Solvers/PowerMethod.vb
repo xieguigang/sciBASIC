@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42db24606205dc81dd7e9a8fdc15b37d, Data_science\Mathematica\Math\Math\Algebra\Solvers\PowerMethod.vb"
+﻿#Region "Microsoft.VisualBasic::505ecc8063b9f781e3d9b0b01f52dde3, Data_science\Mathematica\Math\Math\Algebra\Solvers\PowerMethod.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 105 (83.33%)
-    ' Comment Lines: 6 (4.76%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 119
+    '    Code Lines: 94 (78.99%)
+    ' Comment Lines: 7 (5.88%)
+    '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 15 (11.90%)
-    '     File Size: 4.07 KB
+    '   Blank Lines: 18 (15.13%)
+    '     File Size: 3.99 KB
 
 
     '     Class PowerMethod

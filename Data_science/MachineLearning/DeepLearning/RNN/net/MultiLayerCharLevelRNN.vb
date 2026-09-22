@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe472601b9af1ab3255b76663dc8be10, Data_science\MachineLearning\DeepLearning\RNN\net\MultiLayerCharLevelRNN.vb"
+﻿#Region "Microsoft.VisualBasic::d82fbe50cd35a5640c595cd7e174eb70, Data_science\MachineLearning\DeepLearning\RNN\net\MultiLayerCharLevelRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 48 (40.34%)
-    ' Comment Lines: 55 (46.22%)
-    '    - Xml Docs: 70.91%
+    '   Total Lines: 128
+    '    Code Lines: 48 (37.50%)
+    ' Comment Lines: 64 (50.00%)
+    '    - Xml Docs: 95.31%
     ' 
-    '   Blank Lines: 16 (13.45%)
-    '     File Size: 3.33 KB
+    '   Blank Lines: 16 (12.50%)
+    '     File Size: 4.29 KB
 
 
     ' 	Class MultiLayerCharLevelRNN

@@ -1,29 +1,68 @@
-#Region "Microsoft.VisualBasic::NumericTable, Microsoft.VisualBasic.Core\src\Data\NumericTable.vb"
+﻿#Region "Microsoft.VisualBasic::e24892d91f5c7c8982e87452081b587e, Microsoft.VisualBasic.Core\src\Data\NumericTable.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 728
+    '    Code Lines: 423 (58.10%)
+    ' Comment Lines: 182 (25.00%)
+    '    - Xml Docs: 96.70%
+    ' 
+    '   Blank Lines: 123 (16.90%)
+    '     File Size: 27.07 KB
+
+
+    '     Class NumericTable
+    ' 
+    '         Properties: description, featureNames, features, isEmpty, labelNames
+    '                     labels, name, nfeatures, nlabels, nsamples
+    '                     rowNames
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: [Select], ArrayPack, Clone, ColumnsToMatrix, CopyArray
+    '                   CopyMatrix, CreateMatrix, EnumerateAll, Feature, FeatureIndex
+    '                   FeatureWidth, FromColumns, FromRows, GetClassLabel, GetEnumerator
+    '                   (+2 Overloads) GetLabel, GetLabels, GetRowName, HasFeature, HasLabel
+    '                   IndexOfName, LabelIndex, (+2 Overloads) LoadBinary, RemoveLabel, RequireFeatureIndex
+    '                   RequireLabelIndex, Row, RowNamesOrDefault, (+2 Overloads) SetLabel, Slice
+    '                   ToString, TryGetLabel
+    ' 
+    '         Sub: AppendLabelColumn, Validate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

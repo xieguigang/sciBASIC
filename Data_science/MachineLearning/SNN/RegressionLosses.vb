@@ -1,3 +1,59 @@
+﻿#Region "Microsoft.VisualBasic::2affdcdc8c981ad9ffa57c2311cf17b8, Data_science\MachineLearning\SNN\RegressionLosses.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 252
+    '    Code Lines: 149 (59.13%)
+    ' Comment Lines: 65 (25.79%)
+    '    - Xml Docs: 67.69%
+    ' 
+    '   Blank Lines: 38 (15.08%)
+    '     File Size: 10.23 KB
+
+
+    ' Module RegressionLosses
+    ' 
+    '     Function: L1Gradient, L1Sum, L2Gradient, L2Sum, MaskedDeviationPenalty
+    '               MeanAbsoluteError, MeanSquaredError, Normalizer, Sign
+    ' 
+    '     Sub: AddScaledGradientInPlace, AssertSameShape
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' RegressionLosses.vb — 回归任务的损失函数与前向结构正则原语
 '
@@ -250,3 +306,4 @@ Public Module RegressionLosses
 #End Region
 
 End Module
+

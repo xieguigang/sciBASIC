@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableRegressions, Data_science\Mathematica\Math\DataFittings\NumericTableRegressions.vb"
+﻿#Region "Microsoft.VisualBasic::683510b77a669b97d1d5f2d10ca27c7e, Data_science\Mathematica\Math\DataFittings\NumericTableRegressions.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,34 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 601
+    '    Code Lines: 286 (47.59%)
+    ' Comment Lines: 230 (38.27%)
+    '    - Xml Docs: 89.57%
+    ' 
+    '   Blank Lines: 85 (14.14%)
+    '     File Size: 28.68 KB
+
+
+    ' Module NumericTableRegressions
+    ' 
+    '     Function: AsFitInputs, AutoPointDeletion, BayesianCurveFit, FeatureMatrix, FeatureNameList
+    '               FeatureProjection, GaussNewtonFit, LassoRegression, LinearFit, LoessFit
+    '               LogisticRegression, Lowess, MapRemovedRows, MultipleLinearRegression, Nnls
+    '               PolyFit, ResponseVector, SingleFeature, StandardCurveFit, WeightedLinearFit
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

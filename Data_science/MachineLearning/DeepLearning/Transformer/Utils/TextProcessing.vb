@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5da4fc8b6ebc32bc9dd5f121880ce2f, Data_science\MachineLearning\DeepLearning\Transformer\Utils\TextProcessing.vb"
+﻿#Region "Microsoft.VisualBasic::1506b383b896ec3aaa0ddc0beb16ea55, Data_science\MachineLearning\DeepLearning\Transformer\Utils\TextProcessing.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 90 (81.82%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 160
+    '    Code Lines: 90 (56.25%)
+    ' Comment Lines: 50 (31.25%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (18.18%)
-    '     File Size: 5.14 KB
+    '   Blank Lines: 20 (12.50%)
+    '     File Size: 8.38 KB
 
 
     '     Module TextProcessing

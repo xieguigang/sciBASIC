@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::326cb29fe10c9b0c046c8d0018dbdbac, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
+﻿#Region "Microsoft.VisualBasic::271f7198b4ce787cae2dd96afccbd67c, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1451
-    '    Code Lines: 1067 (73.54%)
-    ' Comment Lines: 100 (6.89%)
-    '    - Xml Docs: 65.00%
+    '   Total Lines: 1569
+    '    Code Lines: 1067 (68.01%)
+    ' Comment Lines: 218 (13.89%)
+    '    - Xml Docs: 84.40%
     ' 
-    '   Blank Lines: 284 (19.57%)
-    '     File Size: 52.76 KB
+    '   Blank Lines: 284 (18.10%)
+    '     File Size: 60.18 KB
 
 
     '     Module Procedures

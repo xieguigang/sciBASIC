@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cf8a9e96d1abb20c06de205d37d33a6, Data_science\MachineLearning\DeepLearning\CNN\data\BackPropResult.vb"
+﻿#Region "Microsoft.VisualBasic::df646f6919b4656555721eb4b95f00b2, Data_science\MachineLearning\DeepLearning\CNN\data\BackPropResult.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 36 (67.92%)
-    ' Comment Lines: 7 (13.21%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 91
+    '    Code Lines: 43 (47.25%)
+    ' Comment Lines: 35 (38.46%)
+    '    - Xml Docs: 97.14%
     ' 
-    '   Blank Lines: 10 (18.87%)
-    '     File Size: 1.65 KB
+    '   Blank Lines: 13 (14.29%)
+    '     File Size: 4.14 KB
 
 
     '     Class BackPropResult
     ' 
-    '         Properties: Gradients, L1DecayMul, L2DecayMul, Weights
+    '         Properties: Gradients, L1DecayMul, L2DecayMul, ModifiedHandler, Weights
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
+    ' 
+    '         Sub: NotifyModified
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b049b3ee3b51a8682534cdf96635719, Data_science\MachineLearning\MachineLearning\SVM\Cache\Cache.vb"
+﻿#Region "Microsoft.VisualBasic::cd1f4150c467808e199931fe7761aba9, Data_science\MachineLearning\MachineLearning\SVM\Cache\Cache.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 82 (58.16%)
-    ' Comment Lines: 37 (26.24%)
-    '    - Xml Docs: 48.65%
+    '   Total Lines: 155
+    '    Code Lines: 82 (52.90%)
+    ' Comment Lines: 51 (32.90%)
+    '    - Xml Docs: 62.75%
     ' 
-    '   Blank Lines: 22 (15.60%)
-    '     File Size: 4.51 KB
+    '   Blank Lines: 22 (14.19%)
+    '     File Size: 5.55 KB
 
 
     '     Class Cache

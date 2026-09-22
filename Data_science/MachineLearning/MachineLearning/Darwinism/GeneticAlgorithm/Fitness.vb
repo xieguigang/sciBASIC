@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c05dd4022cf3a90a6bdd4db51a101a2, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::4d93f62c02a18af39dab2b7b03a4ee0c, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 7 (10.00%)
-    ' Comment Lines: 58 (82.86%)
-    '    - Xml Docs: 62.07%
+    '   Total Lines: 74
+    '    Code Lines: 7 (9.46%)
+    ' Comment Lines: 62 (83.78%)
+    '    - Xml Docs: 64.52%
     ' 
-    '   Blank Lines: 5 (7.14%)
-    '     File Size: 2.86 KB
+    '   Blank Lines: 5 (6.76%)
+    '     File Size: 3.08 KB
 
 
     '     Interface Fitness

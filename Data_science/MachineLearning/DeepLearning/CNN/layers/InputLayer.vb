@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e63e0522ee8c3f7914b1ec4a34cc8f0, Data_science\MachineLearning\DeepLearning\CNN\Layers\InputLayer.vb"
+﻿#Region "Microsoft.VisualBasic::454d2c353ff24dfb7af7843230027494, Data_science\MachineLearning\DeepLearning\CNN\Layers\InputLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 37 (45.68%)
-    ' Comment Lines: 30 (37.04%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 92
+    '    Code Lines: 37 (40.22%)
+    ' Comment Lines: 41 (44.57%)
+    '    - Xml Docs: 95.12%
     ' 
-    '   Blank Lines: 14 (17.28%)
-    '     File Size: 2.91 KB
+    '   Blank Lines: 14 (15.22%)
+    '     File Size: 3.89 KB
 
 
     '     Class InputLayer

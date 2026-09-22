@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94271ae1918ed479406563de0991b91e, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCAData.vb"
+﻿#Region "Microsoft.VisualBasic::c88c11b0d785881c10b96a3044e71115, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCAData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 47 (71.21%)
-    ' Comment Lines: 8 (12.12%)
+    '   Total Lines: 68
+    '    Code Lines: 49 (72.06%)
+    ' Comment Lines: 8 (11.76%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 11 (16.67%)
-    '     File Size: 2.16 KB
+    '   Blank Lines: 11 (16.18%)
+    '     File Size: 2.32 KB
 
 
     ' Module PCAData

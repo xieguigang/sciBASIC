@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4373ab2fcdb134e1c67f2b7401925b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::140383d8bb8fc80010911ab59187cbcc, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Multiply.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 28 (52.83%)
-    ' Comment Lines: 16 (30.19%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 48
+    '    Code Lines: 23 (47.92%)
+    ' Comment Lines: 18 (37.50%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 9 (16.98%)
-    '     File Size: 1.76 KB
+    '   Blank Lines: 7 (14.58%)
+    '     File Size: 1.89 KB
 
 
     '     Module Multiply

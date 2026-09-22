@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82425df8f9ac5aed02641be5d166f397, Data_science\MachineLearning\MachineLearning\SVM\Parameter\GridSquare.vb"
+﻿#Region "Microsoft.VisualBasic::5df1559ce757ab82b7e57c987d85a745, Data_science\MachineLearning\MachineLearning\SVM\Parameter\GridSquare.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 10 (40.00%)
-    ' Comment Lines: 12 (48.00%)
+    '   Total Lines: 30
+    '    Code Lines: 10 (33.33%)
+    ' Comment Lines: 17 (56.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (12.00%)
-    '     File Size: 638 B
+    '   Blank Lines: 3 (10.00%)
+    '     File Size: 871 B
 
 
     '     Class GridSquare

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f62c980aa4c7c0294b0b34381e96c7bb, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\JsonlStoreOptions.vb"
+﻿#Region "Microsoft.VisualBasic::7b7c06119a091022890b793f87a5ea52, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\JsonlStoreOptions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (25.00%)
-    '     File Size: 344 B
+    '     File Size: 342 B
 
 
     '     Class JsonlStoreOptions
@@ -64,4 +64,3 @@ Namespace Data.Repository
     End Class
 
 End Namespace
-

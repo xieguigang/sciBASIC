@@ -1,4 +1,69 @@
-﻿' ---------------------------------------------------------------------------
+﻿#Region "Microsoft.VisualBasic::da3798bea63d1f05fe98a886d64c04d3, Data_science\MachineLearning\DeepLearning\Transformer\EncoderLayer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 207
+    '    Code Lines: 104 (50.24%)
+    ' Comment Lines: 63 (30.43%)
+    '    - Xml Docs: 82.54%
+    ' 
+    '   Blank Lines: 40 (19.32%)
+    '     File Size: 10.06 KB
+
+
+    '     Class EncoderLayer
+    ' 
+    '         Properties: LastCache
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Backward, Encode
+    ' 
+    '         Sub: MakeTrainingStep, SetDropoutNodes, ZeroGradients
+    '         Class Cache
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ---------------------------------------------------------------------------
 ' EncoderLayer —— 编码器单层：多头自注意力 + 前馈网络（均带残差 + LayerNorm）
 '
 ' 迁移要点：前向阶段缓存两个 AddNorm 的统计量（均值 / 逆标准差）与两条子层
@@ -205,3 +270,4 @@ Namespace Transformer
 
     End Class
 End Namespace
+

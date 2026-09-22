@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a90cecc3f09fa1dee719093c04d4a42, Data_science\MachineLearning\MachineLearning\RandomForests\Branch.vb"
+﻿#Region "Microsoft.VisualBasic::c641c89934f670955c71d35f77c8d8a2, Data_science\MachineLearning\MachineLearning\RandomForests\Branch.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 52 (61.18%)
-    ' Comment Lines: 25 (29.41%)
-    '    - Xml Docs: 92.00%
+    '   Total Lines: 142
+    '    Code Lines: 52 (36.62%)
+    ' Comment Lines: 81 (57.04%)
+    '    - Xml Docs: 97.53%
     ' 
-    '   Blank Lines: 8 (9.41%)
-    '     File Size: 2.90 KB
+    '   Blank Lines: 9 (6.34%)
+    '     File Size: 5.83 KB
 
 
     '     Class Branch

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c140077c775b770478a50e45a92f18d, Data\BinaryData\SQLite3\Writer\Internal\RecordEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::01aed29179f1f57222971898f95dfa1b, Data\BinaryData\SQLite3\Writer\Internal\RecordEncoder.vb"
 
     ' Author:
     ' 
@@ -285,4 +285,3 @@ Namespace Writer.Internal
     End Module
 
 End Namespace
-

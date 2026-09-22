@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd642958c4ea83d9c52b8c0076669875, Data_science\DataMining\DataMining\ComponentModel\EntityBase.vb"
+﻿#Region "Microsoft.VisualBasic::8fd47a81e7bef1415b70bbba8e4bc98c, Data_science\DataMining\DataMining\ComponentModel\EntityBase.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 27 (54.00%)
-    ' Comment Lines: 17 (34.00%)
+    '   Total Lines: 51
+    '    Code Lines: 28 (54.90%)
+    ' Comment Lines: 17 (33.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (12.00%)
-    '     File Size: 1.60 KB
+    '   Blank Lines: 6 (11.76%)
+    '     File Size: 1.77 KB
 
 
     '     Class EntityBase

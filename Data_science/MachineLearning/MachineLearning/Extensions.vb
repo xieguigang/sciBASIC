@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f3caf295bab8dfaf0b14a4b68b46a87, Data_science\MachineLearning\MachineLearning\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e1c0dd8aec353b8d354c8b357c725ca2, Data_science\MachineLearning\MachineLearning\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 42 (50.60%)
-    ' Comment Lines: 32 (38.55%)
-    '    - Xml Docs: 96.88%
+    '   Total Lines: 93
+    '    Code Lines: 42 (45.16%)
+    ' Comment Lines: 42 (45.16%)
+    '    - Xml Docs: 97.62%
     ' 
-    '   Blank Lines: 9 (10.84%)
-    '     File Size: 3.18 KB
+    '   Blank Lines: 9 (9.68%)
+    '     File Size: 3.81 KB
 
 
     ' Module Extensions

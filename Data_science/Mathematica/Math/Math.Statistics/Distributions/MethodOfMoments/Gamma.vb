@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e8412f640e1a73de07d4e5f89194975, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::7aa0bec4b1de0e3587c519e9427994bf, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gamma.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 41 (64.06%)
-    ' Comment Lines: 11 (17.19%)
-    '    - Xml Docs: 27.27%
+    '   Total Lines: 99
+    '    Code Lines: 57 (57.58%)
+    ' Comment Lines: 21 (21.21%)
+    '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 12 (18.75%)
-    '     File Size: 2.27 KB
+    '   Blank Lines: 21 (21.21%)
+    '     File Size: 3.50 KB
 
 
     '     Class Gamma

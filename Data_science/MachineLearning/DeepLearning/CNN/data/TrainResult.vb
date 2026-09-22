@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b6ad84a20bf49c36fd0a3bb8ce3f8a, Data_science\MachineLearning\DeepLearning\CNN\data\TrainResult.vb"
+﻿#Region "Microsoft.VisualBasic::582fe9c7a3b7de28f4667b34f18c4e39, Data_science\MachineLearning\DeepLearning\CNN\data\TrainResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 34 (72.34%)
-    ' Comment Lines: 3 (6.38%)
+    '   Total Lines: 60
+    '    Code Lines: 34 (56.67%)
+    ' Comment Lines: 16 (26.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (21.28%)
-    '     File Size: 1.34 KB
+    '   Blank Lines: 10 (16.67%)
+    '     File Size: 2.21 KB
 
 
     '     Class TrainResult

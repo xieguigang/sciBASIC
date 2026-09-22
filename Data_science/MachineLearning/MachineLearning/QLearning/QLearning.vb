@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec615370fabe2d6d3c29922c58c25ebd, Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
+﻿#Region "Microsoft.VisualBasic::c206bd74392ae02f802675cbe8afc5ab, Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 35 (41.67%)
-    ' Comment Lines: 34 (40.48%)
-    '    - Xml Docs: 88.24%
+    '   Total Lines: 123
+    '    Code Lines: 35 (28.46%)
+    ' Comment Lines: 73 (59.35%)
+    '    - Xml Docs: 94.52%
     ' 
-    '   Blank Lines: 15 (17.86%)
-    '     File Size: 2.86 KB
+    '   Blank Lines: 15 (12.20%)
+    '     File Size: 4.95 KB
 
 
     '     Class QLearning

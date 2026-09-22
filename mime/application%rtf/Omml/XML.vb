@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c6161d6997c7beb669113adbb8da1d, sciBASIC#\mime\application%rtf\Omml\XML.vb"
+﻿#Region "Microsoft.VisualBasic::91c6161d6997c7beb669113adbb8da1d, mime\application%rtf\Omml\XML.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 159
-    '    Code Lines: 136
-    ' Comment Lines: 0
-    '   Blank Lines: 23
+    '    Code Lines: 136 (85.53%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 23 (14.47%)
     '     File Size: 6.42 KB
 
 

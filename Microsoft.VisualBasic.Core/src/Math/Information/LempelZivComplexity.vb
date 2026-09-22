@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da8d7406b3156d7b3257ed8fea61d173, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\LempelZivComplexity.vb"
+﻿#Region "Microsoft.VisualBasic::da8d7406b3156d7b3257ed8fea61d173, Microsoft.VisualBasic.Core\src\Math\Information\LempelZivComplexity.vb"
 
     ' Author:
     ' 

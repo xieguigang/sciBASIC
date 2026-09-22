@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7a8cfbae2c451f8a143de383a1b4d38, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::fd6353a9239b6d3af34afaf1cdc6acd7, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 275
-    '    Code Lines: 169 (61.45%)
+    '    Code Lines: 168 (61.09%)
     ' Comment Lines: 65 (23.64%)
     '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 41 (14.91%)
-    '     File Size: 9.56 KB
+    '   Blank Lines: 42 (15.27%)
+    '     File Size: 9.67 KB
 
 
     '     Class Decomposition

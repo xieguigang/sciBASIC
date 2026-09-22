@@ -1,3 +1,82 @@
+﻿#Region "Microsoft.VisualBasic::18e89714e2db31b884d7222798f8f788, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpPresolve.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 960
+    '    Code Lines: 636 (66.25%)
+    ' Comment Lines: 135 (14.06%)
+    '    - Xml Docs: 45.19%
+    ' 
+    '   Blank Lines: 189 (19.69%)
+    '     File Size: 37.72 KB
+
+
+    '     Class PresolveStats
+    ' 
+    '         Properties: FixedVariables, InfeasibleReason, IsInfeasible, PropagationRounds, RedundantRows
+    '                     TightenedBounds
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class MilpLpForm
+    ' 
+    '         Properties: A, b, c, Cols, ColumnNames
+    '                     ColumnOriginal, ColumnShift, ColumnSign, ColumnTypes, FixedValue
+    '                     IntegerVariables, IsFixed, l, ObjOffset, OriginalVariableCount
+    '                     RowRhs, Rows, RowTypes, Sigma, SlackColumn
+    '                     Stats, u, VariableColumns, VariableNames, VariableShift
+    '                     VariableTypes
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AddCutRowWork, GetOriginalBounds, InternalObjective, IsIntegerColumn, ToOriginalObjective
+    '                   ToOriginalSolution, ToString, WorkBoundsFor
+    ' 
+    '         Sub: SetOriginalBounds
+    ' 
+    '     Module MilpPresolve
+    ' 
+    '         Function: NormalizeOp, Run
+    ' 
+    '         Sub: AccumulateActivity, BuildShell, FoldFixed, MarkInfeasible, PresolveCore
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' MilpPresolve.vb — 预处理 + 节点 LP 工作形式（bounded-variable work form）
 ' ----------------------------------------------------------------------------
@@ -958,3 +1037,4 @@ Namespace LinearAlgebra.LinearProgramming.MILP
     End Module
 
 End Namespace
+

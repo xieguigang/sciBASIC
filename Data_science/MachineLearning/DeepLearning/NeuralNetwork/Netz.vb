@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e116651a1bda3e8f9a73dd04a51a51, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
+﻿#Region "Microsoft.VisualBasic::61e207b86b6b755ff12c0eed08cf019e, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 308
-    '    Code Lines: 199 (64.61%)
-    ' Comment Lines: 55 (17.86%)
-    '    - Xml Docs: 72.73%
+    '   Total Lines: 355
+    '    Code Lines: 199 (56.06%)
+    ' Comment Lines: 102 (28.73%)
+    '    - Xml Docs: 85.29%
     ' 
-    '   Blank Lines: 54 (17.53%)
-    '     File Size: 12.15 KB
+    '   Blank Lines: 54 (15.21%)
+    '     File Size: 15.11 KB
 
 
     '     Class Netz

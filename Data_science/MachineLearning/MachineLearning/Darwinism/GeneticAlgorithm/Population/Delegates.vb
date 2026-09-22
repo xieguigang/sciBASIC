@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa4b2a20b2c6976283a0a5b218159771, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Delegates.vb"
+﻿#Region "Microsoft.VisualBasic::9bf832764196311677efadf4f5df3c2b, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Delegates.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 9 (36.00%)
-    ' Comment Lines: 8 (32.00%)
+    '   Total Lines: 37
+    '    Code Lines: 9 (24.32%)
+    ' Comment Lines: 20 (54.05%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (32.00%)
-    '     File Size: 779 B
+    '   Blank Lines: 8 (21.62%)
+    '     File Size: 1.49 KB
 
 
     '     Delegate Function

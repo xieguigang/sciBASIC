@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::a44b4202239b30305888c1aad0b7cd2e, Data_science\Mathematica\Math\mHG\test\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 532
+    '    Code Lines: 363 (68.23%)
+    ' Comment Lines: 64 (12.03%)
+    '    - Xml Docs: 84.38%
+    ' 
+    '   Blank Lines: 105 (19.74%)
+    '     File Size: 22.06 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: piRDiagonalOnes, vec, zeros
+    ' 
+    '     Sub: checkBruteForce, checkCase, checkDouble, checkHGRow, checkInt
+    '          checkPiR, checkPValue, checkTrue, Main, runBruteForcePValueTests
+    '          runEnrichmentDemo, runHGRowTests, runPiRTests, runPValueGoldenTests, runRandomStatisticTests
+    '          runRatioTests, runSeparationLineTests, runStatisticGoldenTests, section
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System
 Imports System.Collections.Generic
 Imports System.Diagnostics
@@ -530,3 +588,4 @@ Module Program
 #End Region
 
 End Module
+

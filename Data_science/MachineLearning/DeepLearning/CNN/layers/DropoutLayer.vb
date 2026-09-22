@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7762fe2d9983295f6318d7bfb1feabc, Data_science\MachineLearning\DeepLearning\CNN\Layers\DropoutLayer.vb"
+﻿#Region "Microsoft.VisualBasic::bf8c0a64a3a8c5282f07adc1bef1e731, Data_science\MachineLearning\DeepLearning\CNN\Layers\DropoutLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 63 (66.32%)
-    ' Comment Lines: 13 (13.68%)
-    '    - Xml Docs: 38.46%
+    '   Total Lines: 115
+    '    Code Lines: 63 (54.78%)
+    ' Comment Lines: 33 (28.70%)
+    '    - Xml Docs: 75.76%
     ' 
-    '   Blank Lines: 19 (20.00%)
-    '     File Size: 2.99 KB
+    '   Blank Lines: 19 (16.52%)
+    '     File Size: 4.31 KB
 
 
     '     Class DropoutLayer

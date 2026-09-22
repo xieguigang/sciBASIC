@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d08199cf5b438f3e7d87767f686ee50, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkViews.vb"
+﻿#Region "Microsoft.VisualBasic::deccc2f6b362f0a7b47a55a17e00ee00, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkViews.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 55 (52.38%)
-    ' Comment Lines: 35 (33.33%)
-    '    - Xml Docs: 94.29%
+    '   Total Lines: 108
+    '    Code Lines: 55 (50.93%)
+    ' Comment Lines: 38 (35.19%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (14.29%)
-    '     File Size: 3.62 KB
+    '   Blank Lines: 15 (13.89%)
+    '     File Size: 4.24 KB
 
 
     '     Class NetworkLayerView

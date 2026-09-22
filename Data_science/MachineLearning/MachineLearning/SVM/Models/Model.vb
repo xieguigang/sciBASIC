@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e91ebeaa2d6bb270b917c8e60474c2bb, Data_science\MachineLearning\MachineLearning\SVM\Models\Model.vb"
+﻿#Region "Microsoft.VisualBasic::a287df5c40b91590c255e3ac1c16abbf, Data_science\MachineLearning\MachineLearning\SVM\Models\Model.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 52 (40.62%)
-    ' Comment Lines: 53 (41.41%)
-    '    - Xml Docs: 67.92%
+    '   Total Lines: 153
+    '    Code Lines: 52 (33.99%)
+    ' Comment Lines: 78 (50.98%)
+    '    - Xml Docs: 78.21%
     ' 
-    '   Blank Lines: 23 (17.97%)
-    '     File Size: 4.52 KB
+    '   Blank Lines: 23 (15.03%)
+    '     File Size: 5.69 KB
 
 
     '     Class Model

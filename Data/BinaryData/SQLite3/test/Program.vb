@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fded4fc6fcacc1a41cbdbaa53eba785d, Data\BinaryData\SQLite3\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d5346ff1e3cad04ee49cfb76a880422b, Data\BinaryData\SQLite3\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 43.01%
     ' 
     '   Blank Lines: 140 (13.08%)
-    '     File Size: 54.43 KB
+    '     File Size: 54.42 KB
 
 
     ' Module Program
@@ -1154,4 +1154,3 @@ Friend Class IssueRecord
     Public Property Status As String
     Public Property VerifyTest As String
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eae2d154be54c53871d9ef5a5415be1b, cuda\ILCudaTensor\GPUTensor\DeviceCache.vb"
+﻿#Region "Microsoft.VisualBasic::94359f453e5b41d365990ff975e057b3, cuda\ILCudaTensor\GPUTensor\DeviceCache.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 105 (61.76%)
-    ' Comment Lines: 31 (18.24%)
-    '    - Xml Docs: 38.71%
+    '   Total Lines: 195
+    '    Code Lines: 108 (55.38%)
+    ' Comment Lines: 50 (25.64%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 34 (20.00%)
-    '     File Size: 6.70 KB
+    '   Blank Lines: 37 (18.97%)
+    '     File Size: 8.21 KB
 
 
     '     Class DeviceCache
@@ -265,4 +265,3 @@ Namespace GPUTensor
     End Class
 
 End Namespace
-

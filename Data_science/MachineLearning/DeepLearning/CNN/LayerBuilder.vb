@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4303da61e875f9cbd160a934ea3bcad8, Data_science\MachineLearning\DeepLearning\CNN\LayerBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::f24d52aacea9e0195499477fbebfaf92, Data_science\MachineLearning\DeepLearning\CNN\LayerBuilder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 75 (68.81%)
-    ' Comment Lines: 9 (8.26%)
+    '   Total Lines: 230
+    '    Code Lines: 93 (40.43%)
+    ' Comment Lines: 108 (46.96%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (22.94%)
-    '     File Size: 4.05 KB
+    '   Blank Lines: 29 (12.61%)
+    '     File Size: 11.15 KB
 
 
     '     Class LayerBuilder
@@ -52,6 +52,7 @@
     '                   buildGaussian, buildInputLayer, buildLeakyReLULayer, buildLocalResponseNormalizationLayer, buildMaxoutLayer
     '                   buildPoolLayer, buildRegressionLayer, buildReLULayer, buildSigmoidLayer, buildSoftmaxLayer
     '                   buildTanhLayer, ToString
+    '         Operators: (+2 Overloads) +
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::110445d2014662bced6ed131fd33209a, Data_science\MachineLearning\MachineLearning\ComponentModel\Status0.vb"
+﻿#Region "Microsoft.VisualBasic::0b66649c7e03eb9480d133565a9b1788, Data_science\MachineLearning\MachineLearning\ComponentModel\Status0.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 50 (74.63%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 160
+    '    Code Lines: 50 (31.25%)
+    ' Comment Lines: 93 (58.13%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (25.37%)
-    '     File Size: 2.05 KB
+    '   Blank Lines: 17 (10.62%)
+    '     File Size: 6.50 KB
 
 
     '     Class Status0

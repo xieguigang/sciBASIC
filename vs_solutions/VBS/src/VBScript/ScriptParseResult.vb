@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54f255fd3b5c0536cf00264b0806e45f, vs_solutions\VBS\src\VBScript\ScriptParseResult.vb"
+﻿#Region "Microsoft.VisualBasic::22baa22e1f23cf74651a9a57c4a62ebc, vs_solutions\VBS\src\VBScript\ScriptParseResult.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 9 (40.91%)
-    ' Comment Lines: 7 (31.82%)
+    '   Total Lines: 75
+    '    Code Lines: 24 (32.00%)
+    ' Comment Lines: 35 (46.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (27.27%)
-    '     File Size: 763 B
+    '   Blank Lines: 16 (21.33%)
+    '     File Size: 3.26 KB
 
 
     '     Class ScriptParseResult
     ' 
-    '         Properties: [Imports], CommandLine, GeneratedCode, ScriptFile
+    '         Properties: [Imports], CommandLine, GeneratedCode, IncludeWarnings, Metadata
+    '                     NuGetPackages, PreprocessedCode, Projections, ResolvedAssemblies, ScriptFile
+    '                     ScriptIncludes, SearchRoots, Vectorized, VectorizeEnabled
     ' 
     ' 
     ' /********************************************************************************/

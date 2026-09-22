@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ea07254fcd17d5d62577fa94709261a, Data_science\MachineLearning\DeepLearning\CNN\Layers\TanhLayer.vb"
+﻿#Region "Microsoft.VisualBasic::788340dc30176aa758f5288b4d973b4e, Data_science\MachineLearning\DeepLearning\CNN\Layers\TanhLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 41 (69.49%)
-    ' Comment Lines: 7 (11.86%)
-    '    - Xml Docs: 71.43%
+    '   Total Lines: 73
+    '    Code Lines: 41 (56.16%)
+    ' Comment Lines: 21 (28.77%)
+    '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 11 (18.64%)
-    '     File Size: 1.86 KB
+    '   Blank Lines: 11 (15.07%)
+    '     File Size: 2.74 KB
 
 
     '     Class TanhLayer

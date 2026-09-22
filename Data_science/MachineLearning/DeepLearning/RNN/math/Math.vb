@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25fe64a5b418ec83f75f2b81caddf23, Data_science\MachineLearning\DeepLearning\RNN\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::2f998b0d6366104e807fea8874bd8df5, Data_science\MachineLearning\DeepLearning\RNN\math\Math.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 31 (55.36%)
-    ' Comment Lines: 15 (26.79%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 71
+    '    Code Lines: 31 (43.66%)
+    ' Comment Lines: 30 (42.25%)
+    '    - Xml Docs: 96.67%
     ' 
-    '   Blank Lines: 10 (17.86%)
-    '     File Size: 1.59 KB
+    '   Blank Lines: 10 (14.08%)
+    '     File Size: 2.58 KB
 
 
     ' 	Class Math

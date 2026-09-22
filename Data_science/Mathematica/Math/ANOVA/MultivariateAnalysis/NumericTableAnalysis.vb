@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableAnalysis, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\NumericTableAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::beea32fbed7821673441776e6413dc0c, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\NumericTableAnalysis.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,33 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 41 (39.42%)
+    ' Comment Lines: 50 (48.08%)
+    '    - Xml Docs: 92.00%
+    ' 
+    '   Blank Lines: 13 (12.50%)
+    '     File Size: 5.09 KB
+
+
+    ' Module NumericTableAnalysis
+    ' 
+    '     Function: oplsda, pca, plsda
+    ' 
+    '     Sub: RequireResponse
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

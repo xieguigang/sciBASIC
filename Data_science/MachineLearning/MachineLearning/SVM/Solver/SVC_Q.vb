@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::311dba9ca782428ac4b336abcc1e9bf5, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVC_Q.vb"
+﻿#Region "Microsoft.VisualBasic::f9512931dcb2415890198d4f6d019ebb, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVC_Q.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 44 (74.58%)
-    ' Comment Lines: 3 (5.08%)
+    '   Total Lines: 83
+    '    Code Lines: 44 (53.01%)
+    ' Comment Lines: 27 (32.53%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (20.34%)
-    '     File Size: 1.74 KB
+    '   Blank Lines: 12 (14.46%)
+    '     File Size: 3.18 KB
 
 
     '     Class SVC_Q

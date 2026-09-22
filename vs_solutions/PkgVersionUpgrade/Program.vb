@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c660b54c692d68bfd2bd2f1efdb7c53, vs_solutions\PkgVersionUpgrade\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d9c4ad3463a1b85a78aea75f9206ef84, vs_solutions\PkgVersionUpgrade\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 510
-    '    Code Lines: 362 (70.98%)
-    ' Comment Lines: 65 (12.75%)
-    '    - Xml Docs: 89.23%
+    '   Total Lines: 463
+    '    Code Lines: 330 (71.27%)
+    ' Comment Lines: 63 (13.61%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 83 (16.27%)
-    '     File Size: 21.08 KB
+    '   Blank Lines: 70 (15.12%)
+    '     File Size: 20.55 KB
 
 
     ' Module Program
@@ -49,11 +49,6 @@
     '               RelativePath, Validate
     ' 
     '     Sub: Main, PrintSummary, PrintUsage, ReportProject, SaveDocument
-    '     Class CliOptions
-    ' 
-    '         Properties: [Error], DryRun, FixOutputPath, MakeClean, NamespacePrefix
-    '                     OutputDir, ShowHelp, Slnx, Version
-    ' 
     '     Class ProjectResult
     ' 
     '         Properties: [Error], Changed, Changes, FilePath, OutputPath

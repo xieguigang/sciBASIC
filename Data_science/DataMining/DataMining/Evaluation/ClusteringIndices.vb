@@ -1,109 +1,56 @@
-#Region "Microsoft.VisualBasic::ClusteringIndices, Data_science\DataMining\DataMining\Evaluation\ClusteringIndices.vb"
+﻿#Region "Microsoft.VisualBasic::7b34ec856f484b1f237e2b27307f9856, Data_science\DataMining\DataMining\Evaluation\ClusteringIndices.vb"
 
-Imports System.Linq
-Imports std = System.Math
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Namespace Evaluation
 
-    ''' <summary>
-    ''' 聚类质量指标的**唯一实现**。
-    ''' 
-    ''' 输入统一为「行主序特征矩阵 + 整数簇标签」，不依赖任何具体的聚类算法模型
-    ''' （避免耦合已经标记为 ``Obsolete`` 的 ``ClusterEntity`` / ``KMeans.Bisecting.Cluster``）。
-    ''' 
-    ''' 提供两类指标：
-    ''' 
-    ''' + **内部指标**（不需要真值标签）：<see cref="Silhouette"/>、<see cref="Dunn"/>、
-    '''   <see cref="DaviesBouldin"/>、<see cref="CalinskiHarabasz"/>、<see cref="MaximumDiameter"/>
-    ''' + **外部指标**（需要真值标签）：<see cref="Purity"/>、<see cref="AdjustedRandIndex"/>、
-    '''   <see cref="NormalizedMutualInformation"/>
-    ''' </summary>
-    Public Module ClusteringIndices
 
-#Region "distance && grouping helpers"
+    ' /********************************************************************************/
 
-        ''' <summary>
-        ''' 欧氏距离。
-        ''' </summary>
-        Public Function Distance(a As Double(), b As Double()) As Double
-            Dim sum As Double = 0
-            Dim n As Integer = std.Min(a.Length, b.Length)
+    ' Summaries:
 
-            For i As Integer = 0 To n - 1
-                Dim d As Double = a(i) - b(i)
-                sum += d * d
-            Next
 
-            Return std.Sqrt(sum)
-        End Function
+    ' Code Statistics:
 
-        ''' <summary>
-        ''' 计算每一个簇的质心。
-        ''' </summary>
-        Public Function Centroids(features As Double()(), labels As Integer()) As Dictionary(Of Integer, Double())
-            Dim groups As Dictionary(Of Integer, List(Of Integer)) = GroupIndices(labels)
-            Dim result As New Dictionary(Of Integer, Double())()
+    '   Total Lines: 504
+    '    Code Lines: 340 (67.46%)
+    ' Comment Lines: 43 (8.53%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 121 (24.01%)
+    '     File Size: 18.32 KB
 
-            For Each cluster As KeyValuePair(Of Integer, List(Of Integer)) In groups
-                Dim dims As Integer = features(cluster.Value(0)).Length
-                Dim centroid As Double() = New Double(dims - 1) {}
 
-                For Each index As Integer In cluster.Value
-                    For j As Integer = 0 To dims - 1
-                        centroid(j) += features(index)(j)
-                    Next
-                Next
-
-                For j As Integer = 0 To dims - 1
-                    centroid(j) /= cluster.Value.Count
-                Next
-
-                result(cluster.Key) = centroid
-            Next
-
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' 把簇标签转换为「簇编号 → 样本下标列表」的分组。
-        ''' </summary>
-        Public Function GroupIndices(labels As Integer()) As Dictionary(Of Integer, List(Of Integer))
-            Dim groups As New Dictionary(Of Integer, List(Of Integer))()
-
-            For i As Integer = 0 To labels.Length - 1
-                Dim key As Integer = labels(i)
-
-                If Not groups.ContainsKey(key) Then
-                    groups(key) = New List(Of Integer)()
-                End If
-
-                groups(key).Add(i)
-            Next
-
-            Return groups
-        End Function
-
-        ''' <summary>
-        ''' 当样本数量过大时，返回等间距抽样之后的下标序列（用于 O(n^2) 指标的近似计算）。
-        ''' </summary>
-        Private Function SampleIndices(n As Integer, maxPoints As Integer) As Integer()
-            If maxPoints <= 0 OrElse n <= maxPoints Then
-                Return Enumerable.Range(0, n).ToArray
-            End If
-
-            Dim stride As Double = n / maxPoints
-            Dim result As New List(Of Integer)()
-
-            For i As Integer = 0 To maxPoints - 1
-                Dim index As Integer = CInt(std.Floor(i * stride))
-
-                If index < n Then
-                    result.Add(index)
-                End If
-            Next
-
-            Return result.Distinct().OrderBy(Function(i) i).ToArray
-        End Function
+    '  
+    ' 
+    '     Function: AdjustedRandIndex, CalinskiHarabasz, Combinations, ContingencyTable, DaviesBouldin
+    '               Dunn, Entropy, MaximumDiameter, NormalizedMutualInformation, Purity
+    '               Silhouette
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

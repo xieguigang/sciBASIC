@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::401d8861dd1ce1d3ca3cb55f2cc0ed55, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Divide.vb"
+﻿#Region "Microsoft.VisualBasic::401d8861dd1ce1d3ca3cb55f2cc0ed55, Microsoft.VisualBasic.Core\src\Math\SIMD\Arithmetic\Divide.vb"
 
     ' Author:
     ' 

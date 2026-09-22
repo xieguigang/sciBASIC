@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e30489689be61313da887d4ddbc8a00a, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
+﻿#Region "Microsoft.VisualBasic::b89d6d4e057dd4ed128cca9c5ce636c9, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 411
-    '    Code Lines: 222 (54.01%)
-    ' Comment Lines: 157 (38.20%)
-    '    - Xml Docs: 36.31%
+    '   Total Lines: 527
+    '    Code Lines: 256 (48.58%)
+    ' Comment Lines: 223 (42.31%)
+    '    - Xml Docs: 51.12%
     ' 
-    '   Blank Lines: 32 (7.79%)
-    '     File Size: 21.16 KB
+    '   Blank Lines: 48 (9.11%)
+    '     File Size: 26.82 KB
 
 
     '     Class RanFog
     ' 
     '         Properties: false_negative_cost, false_positive_cost, LF_c, max_branch, max_tree
-    '                     mtry, Selected, VI
+    '                     mtry, Selected, Trees, VI
     ' 
-    '         Function: Run, Tree
+    '         Function: Predict, Run, Tree
     ' 
     '     Class Result
     ' 

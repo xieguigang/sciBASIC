@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70767063692c5ea0df2a0258fce0b71, Data_science\Visualization\test\ROCplotTest.vb"
+﻿#Region "Microsoft.VisualBasic::17de3618826d5b7e5babaf0eb0331233, Data_science\Visualization\test\ROCplotTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 10 (62.50%)
-    ' Comment Lines: 2 (12.50%)
+    '   Total Lines: 19
+    '    Code Lines: 14 (73.68%)
+    ' Comment Lines: 1 (5.26%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 4 (25.00%)
-    '     File Size: 945 B
+    '   Blank Lines: 4 (21.05%)
+    '     File Size: 1013 B
 
 
     ' Module ROCplotTest

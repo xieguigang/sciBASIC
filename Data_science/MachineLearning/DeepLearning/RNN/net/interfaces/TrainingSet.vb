@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9361aeca5d03b8f144a21a49213446b4, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\TrainingSet.vb"
+﻿#Region "Microsoft.VisualBasic::8a6ceac8691056e6d8d1b12b9255fe18, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\TrainingSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 7 (41.18%)
-    ' Comment Lines: 6 (35.29%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 24
+    '    Code Lines: 7 (29.17%)
+    ' Comment Lines: 13 (54.17%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (23.53%)
-    '     File Size: 444 B
+    '   Blank Lines: 4 (16.67%)
+    '     File Size: 873 B
 
 
     ' 	Interface TrainingSet

@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::f525bda0f2ef79b2a5fedd1cb49452a2, Data_science\MachineLearning\SNN\STDP.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 184
+    '    Code Lines: 100 (54.35%)
+    ' Comment Lines: 60 (32.61%)
+    '    - Xml Docs: 55.00%
+    ' 
+    '   Blank Lines: 24 (13.04%)
+    '     File Size: 7.58 KB
+
+
+    ' Class STDPLayer
+    ' 
+    '     Properties: AdaptDecay, AdaptRate, AMinus, APlus, Beta
+    '                 NormalizeSum, Threshold, TraceDecay, Weight, WMax
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: [Step]
+    ' 
+    '     Sub: NormalizeWeights, Reset
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' STDP.vb — 脉冲时序依赖可塑性（Spike-Timing-Dependent Plasticity）
 '
@@ -181,4 +242,5 @@ Public Class STDPLayer
     End Function
 
 End Class
+
 

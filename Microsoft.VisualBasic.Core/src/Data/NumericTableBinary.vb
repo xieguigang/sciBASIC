@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableBinary, Microsoft.VisualBasic.Core\src\Data\NumericTableBinary.vb"
+﻿#Region "Microsoft.VisualBasic::c85e474494df137faf2a30703c942472, Microsoft.VisualBasic.Core\src\Data\NumericTableBinary.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,37 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 402
+    '    Code Lines: 237 (58.96%)
+    ' Comment Lines: 86 (21.39%)
+    '    - Xml Docs: 90.70%
+    ' 
+    '   Blank Lines: 79 (19.65%)
+    '     File Size: 16.59 KB
+
+
+    '     Module NumericTableBinary
+    ' 
+    '         Function: Compress, Decompress, Expand, Flatten, (+2 Overloads) LoadBinary
+    '                   MagicBytes, ReadBlock, ReadExactly, ReadInt32, ReadString
+    '                   ReadStrings, WriteBinary
+    ' 
+    '         Sub: WriteBinary, WriteBlock, WriteBytes, WriteInt32, WriteString
+    '              WriteStrings
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

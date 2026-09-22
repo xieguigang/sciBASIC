@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e9eb2db8f1e3d5d014b42fc0ba706bc, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextStoreOptions.vb"
+﻿#Region "Microsoft.VisualBasic::b7e0ea2fb4ee92f587bc329a9f2ac563, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextStoreOptions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 13 (48.15%)
-    ' Comment Lines: 10 (37.04%)
+    '   Total Lines: 60
+    '    Code Lines: 21 (35.00%)
+    ' Comment Lines: 33 (55.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (14.81%)
-    '     File Size: 1.43 KB
+    '   Blank Lines: 6 (10.00%)
+    '     File Size: 2.98 KB
 
 
+    '     Enum TextStoreLockMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Class TextStoreOptions
     ' 
-    '         Properties: Encoding, FsyncEachWrite, IndexGranularity, LogBufferBytes, MergeBufferBytes
-    '                     NewLine, ReadBufferBytes, RepairTornTail
+    '         Properties: Encoding, FsyncEachWrite, IndexGranularity, LockMode, LockRetryIntervalMs
+    '                     LockWaitTimeoutMs, LogBufferBytes, MergeBufferBytes, NewLine, ReadBufferBytes
+    '                     RepairTornTail
     ' 
     ' 
     ' /********************************************************************************/
@@ -113,4 +121,3 @@ Namespace Data.Repository
 
     End Class
 End Namespace
-

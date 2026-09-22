@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9591d64384ccf462256fd63e332873e2, Data_science\Mathematica\Math\DataFittings\Logistic\Logistic.vb"
+﻿#Region "Microsoft.VisualBasic::e37abdef0d33d2ebf9373ab41b81b0da, Data_science\Mathematica\Math\DataFittings\Logistic\Logistic.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 59 (57.84%)
-    ' Comment Lines: 24 (23.53%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 131
+    '    Code Lines: 78 (59.54%)
+    ' Comment Lines: 29 (22.14%)
+    '    - Xml Docs: 82.76%
     ' 
-    '   Blank Lines: 19 (18.63%)
-    '     File Size: 3.86 KB
+    '   Blank Lines: 24 (18.32%)
+    '     File Size: 4.97 KB
 
 
     '     Class Logistic

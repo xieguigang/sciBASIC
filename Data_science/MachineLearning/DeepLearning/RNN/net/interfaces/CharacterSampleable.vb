@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcd7eaf3088e1c4069cfc5de1785a5b2, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\CharacterSampleable.vb"
+﻿#Region "Microsoft.VisualBasic::7a5d6cf02489deba5e2ff402853d2718, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\CharacterSampleable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 6 (33.33%)
-    ' Comment Lines: 10 (55.56%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 28
+    '    Code Lines: 6 (21.43%)
+    ' Comment Lines: 20 (71.43%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (11.11%)
-    '     File Size: 802 B
+    '   Blank Lines: 2 (7.14%)
+    '     File Size: 1.65 KB
 
 
     ' 	Interface CharacterSampleable

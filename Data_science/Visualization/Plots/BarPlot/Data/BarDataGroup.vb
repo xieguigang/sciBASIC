@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b99895a0ac91782c3f4f712a48fbf4f, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::062a369060f91830fd36ab4dc7f57a00, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.47%
     ' 
     '   Blank Lines: 14 (12.73%)
-    '     File Size: 4.14 KB
+    '     File Size: 4.15 KB
 
 
     '     Class BarDataGroup

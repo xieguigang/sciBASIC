@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac24885edf64e343051027db8519ca9a, Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::7a1a35d34cac77b832b866a03c97d39b, Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 12 (70.59%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 42
+    '    Code Lines: 12 (28.57%)
+    ' Comment Lines: 25 (59.52%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (29.41%)
-    '     File Size: 425 B
+    '   Blank Lines: 5 (11.90%)
+    '     File Size: 1.55 KB
 
 
     '     Structure SVMPrediction

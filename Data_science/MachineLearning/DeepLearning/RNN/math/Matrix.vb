@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04c4431efe585be74de6824ba373ce45, Data_science\MachineLearning\DeepLearning\RNN\math\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::a0007061efa18dcad48292152512fe10, Data_science\MachineLearning\DeepLearning\RNN\math\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 443
-    '    Code Lines: 304 (68.62%)
-    ' Comment Lines: 72 (16.25%)
-    '    - Xml Docs: 11.11%
+    '   Total Lines: 569
+    '    Code Lines: 304 (53.43%)
+    ' Comment Lines: 198 (34.80%)
+    '    - Xml Docs: 91.92%
     ' 
-    '   Blank Lines: 67 (15.12%)
-    '     File Size: 15.60 KB
+    '   Blank Lines: 67 (11.78%)
+    '     File Size: 22.49 KB
 
 
     '     Class Matrix

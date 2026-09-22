@@ -1,3 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::9e9b4f68fb0e2f403a4e05631a5d1b04, llm\Sampler\LLMSampler.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 236
+    '    Code Lines: 135 (57.20%)
+    ' Comment Lines: 51 (21.61%)
+    '    - Xml Docs: 43.14%
+    ' 
+    '   Blank Lines: 50 (21.19%)
+    '     File Size: 8.70 KB
+
+
+    '     Class LLMSampler
+    ' 
+    '         Properties: Config, LastCandidateCount, LastEntropy
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: BuildProbabilities, Sample
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' Sampler —— 从 logits 到下一个 token 的采样策略
 '
@@ -234,3 +291,4 @@ Namespace Sampler
     End Class
 
 End Namespace
+

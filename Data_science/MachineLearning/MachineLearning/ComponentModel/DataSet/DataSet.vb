@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73b3d6e670ff635929112a2133a7e93d, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::ebf6d94f88bac98721a6ba7667081f96, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 99 (65.56%)
-    ' Comment Lines: 33 (21.85%)
+    '   Total Lines: 187
+    '    Code Lines: 99 (52.94%)
+    ' Comment Lines: 69 (36.90%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (12.58%)
-    '     File Size: 5.80 KB
+    '   Blank Lines: 19 (10.16%)
+    '     File Size: 8.02 KB
 
 
     '     Class DataSet

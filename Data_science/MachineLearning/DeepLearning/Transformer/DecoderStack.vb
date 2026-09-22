@@ -1,4 +1,64 @@
-﻿' ---------------------------------------------------------------------------
+﻿#Region "Microsoft.VisualBasic::6f1eae8ae11ef433f7548437b83eac98, Data_science\MachineLearning\DeepLearning\Transformer\DecoderStack.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 51 (43.22%)
+    ' Comment Lines: 48 (40.68%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 19 (16.10%)
+    '     File Size: 5.58 KB
+
+
+    '     Class DecoderStack
+    ' 
+    '         Properties: LastCaches
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Backward, Decode
+    ' 
+    '         Sub: MakeTrainingStep, SetDropoutNodes, ZeroGradients
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ---------------------------------------------------------------------------
 ' DecoderStack —— 解码器堆叠（Nx 层）
 '
 ' 解码按词逐步推进，每一步都会覆盖各层的前向缓存，因此 <see cref="Decode"/> 会把
@@ -116,3 +176,4 @@ Namespace Transformer
 
     End Class
 End Namespace
+

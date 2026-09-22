@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c05213e2e579f274491f78d88e79b431, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::ae770809cd381eaa168557168c6d1b84, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 199
-    '    Code Lines: 150 (75.38%)
-    ' Comment Lines: 24 (12.06%)
-    '    - Xml Docs: 12.50%
+    '   Total Lines: 213
+    '    Code Lines: 155 (72.77%)
+    ' Comment Lines: 32 (15.02%)
+    '    - Xml Docs: 31.25%
     ' 
-    '   Blank Lines: 25 (12.56%)
-    '     File Size: 7.91 KB
+    '   Blank Lines: 26 (12.21%)
+    '     File Size: 8.54 KB
 
 
     '     Class TreeNode
+    ' 
+    '         Properties: leafValue
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 

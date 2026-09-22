@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableExtensions, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\NumericTableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::696a1a06f277c1e2a3a2f48dd2c333f8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\NumericTableExtensions.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,35 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 490
+    '    Code Lines: 264 (53.88%)
+    ' Comment Lines: 154 (31.43%)
+    '    - Xml Docs: 90.26%
+    ' 
+    '   Blank Lines: 72 (14.69%)
+    '     File Size: 21.23 KB
+
+
+    ' Module HierarchicalClusteringTableExtensions
+    ' 
+    '     Function: assertFeatureRows, assertUniqueNames, centroidDistanceMatrix, collectLeafs, cutTree
+    '               distanceMatrix, hca, hcaApprox, (+2 Overloads) hcut, (+2 Overloads) hcutApprox
+    '               performApproxHca, writeClusterLabels, writePreclusterLabels
+    ' 
+    '     Sub: assertDistanceMatrix
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

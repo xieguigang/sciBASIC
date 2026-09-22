@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableConversion, Data\DataFrame\DataFrame\NumericTableConversion.vb"
+﻿#Region "Microsoft.VisualBasic::b59495831186a111f208c4c4fea25a3e, Data\DataFrame\DataFrame\NumericTableConversion.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,31 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 57 (53.27%)
+    ' Comment Lines: 35 (32.71%)
+    '    - Xml Docs: 91.43%
+    ' 
+    '   Blank Lines: 15 (14.02%)
+    '     File Size: 4.62 KB
+
+
+    ' Module NumericTableConversion
+    ' 
+    '     Function: AsDataFrame, AsNumericTable, Column
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

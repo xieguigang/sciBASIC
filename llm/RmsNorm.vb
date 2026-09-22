@@ -1,3 +1,68 @@
+﻿#Region "Microsoft.VisualBasic::9f0b58102d158607450fce97a35e9a80, llm\RmsNorm.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 217
+    '    Code Lines: 119 (54.84%)
+    ' Comment Lines: 56 (25.81%)
+    '    - Xml Docs: 67.86%
+    ' 
+    '   Blank Lines: 42 (19.35%)
+    '     File Size: 7.92 KB
+
+
+    ' Class RmsNorm
+    ' 
+    '     Properties: GammaOptimizer, LastCache, Parameters
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Backward, Forward
+    ' 
+    '     Sub: MakeTrainingStep, RegisterParameters, ZeroGradients
+    '     Class Cache
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' RmsNorm —— 均方根归一化（Root Mean Square Layer Normalization）
 '
@@ -213,5 +278,6 @@ Public Class RmsNorm
     End Sub
 
 End Class
+
 
 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableResult, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\NumericTableResult.vb"
+﻿#Region "Microsoft.VisualBasic::e80eb9164a59d661d90afd7e94e87616, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\NumericTableResult.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,34 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 217
+    '    Code Lines: 130 (59.91%)
+    ' Comment Lines: 49 (22.58%)
+    '    - Xml Docs: 95.92%
+    ' 
+    '   Blank Lines: 38 (17.51%)
+    '     File Size: 8.54 KB
+
+
+    ' Module NumericTableResult
+    ' 
+    '     Function: AnalysisName, IsOplsResult, LoadingTable, SampleNames, ScoreTable
+    '               TransposeComponents, VariableNames
+    ' 
+    '     Sub: AppendComponents, WriteLabels
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a2f741ede55c751dd1bb9c990c791a1, Data\BinaryData\SQLite3\Writer\Internal\BTreeWriter.vb"
+﻿#Region "Microsoft.VisualBasic::dce0d5a4a2379a40b0472d0eb4b6a3ee, Data\BinaryData\SQLite3\Writer\Internal\BTreeWriter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 45 (18.44%)
-    '     File Size: 9.38 KB
+    '     File Size: 9.37 KB
 
 
     '     Structure LeafEntry
@@ -313,4 +313,3 @@ Namespace Writer.Internal
     End Class
 
 End Namespace
-

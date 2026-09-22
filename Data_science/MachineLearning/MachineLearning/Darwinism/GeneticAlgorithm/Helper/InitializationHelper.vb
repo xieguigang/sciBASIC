@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3461f5a5c8b28b7785574cdc181b9a48, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\InitializationHelper.vb"
+﻿#Region "Microsoft.VisualBasic::701639f8bda658c668b06efd7c8142a9, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\InitializationHelper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 51 (54.26%)
-    ' Comment Lines: 33 (35.11%)
-    '    - Xml Docs: 75.76%
+    '   Total Lines: 124
+    '    Code Lines: 51 (41.13%)
+    ' Comment Lines: 63 (50.81%)
+    '    - Xml Docs: 87.30%
     ' 
-    '   Blank Lines: 10 (10.64%)
-    '     File Size: 4.86 KB
+    '   Blank Lines: 10 (8.06%)
+    '     File Size: 6.99 KB
 
 
     '     Module InitializationHelper

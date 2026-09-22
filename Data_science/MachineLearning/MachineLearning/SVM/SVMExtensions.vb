@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99a5a8461cc5f215540a6a6cf7d849ed, Data_science\MachineLearning\MachineLearning\SVM\SVMExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b1a0febc1cf78bd5f024e792e37ea60b, Data_science\MachineLearning\MachineLearning\SVM\SVMExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 54 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 120
+    '    Code Lines: 54 (45.00%)
+    ' Comment Lines: 48 (40.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 18 (25.00%)
-    '     File Size: 2.19 KB
+    '   Blank Lines: 18 (15.00%)
+    '     File Size: 4.51 KB
 
 
     '     Module SVMExtensions

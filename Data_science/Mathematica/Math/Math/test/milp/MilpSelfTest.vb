@@ -1,3 +1,62 @@
+﻿#Region "Microsoft.VisualBasic::ffe8a962baac00ff2cdf2c3c1467a63f, Data_science\Mathematica\Math\Math\test\milp\MilpSelfTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 648
+    '    Code Lines: 431 (66.51%)
+    ' Comment Lines: 60 (9.26%)
+    '    - Xml Docs: 21.67%
+    ' 
+    '   Blank Lines: 157 (24.23%)
+    '     File Size: 26.64 KB
+
+
+    ' Module MilpSelfTest
+    ' 
+    '     Function: AssignmentModel, BruteForce, FacilityModel, IsIntegral, Knapsack30Data
+    '               Knapsack30Model, KnapsackDPExact, KnapsackModel, KnapsackModelOf, MixedModel
+    '               ProductionModel, RunAll
+    ' 
+    '     Sub: Check, T1, T10, T11, T12
+    '          T2, T3, T4, T5, T6
+    '          T7, T8, T9
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' MilpSelfTest.vb — MILP 求解器内置自检
 ' ----------------------------------------------------------------------------
@@ -646,3 +705,4 @@ Public Module MilpSelfTest
     End Function
 
 End Module
+

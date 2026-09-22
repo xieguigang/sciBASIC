@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9798f53ed94de306a556e3e3c3f54a1f, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkKernel.vb"
+﻿#Region "Microsoft.VisualBasic::589e44767ec64d9ab271544f7a0e5171, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkKernel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 43 (49.43%)
-    ' Comment Lines: 33 (37.93%)
-    '    - Xml Docs: 87.88%
+    '   Total Lines: 94
+    '    Code Lines: 43 (45.74%)
+    ' Comment Lines: 40 (42.55%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 11 (12.64%)
-    '     File Size: 4.19 KB
+    '   Blank Lines: 11 (11.70%)
+    '     File Size: 4.71 KB
 
 
     '     Module NetworkKernel

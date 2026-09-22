@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5254c004c4f4b7fd4196a2b41f5f9fe3, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::5254c004c4f4b7fd4196a2b41f5f9fe3, Microsoft.VisualBasic.Core\src\Math\Parallel\Environment.vb"
 
     ' Author:
     ' 

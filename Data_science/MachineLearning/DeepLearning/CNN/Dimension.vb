@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16664688b37c6530f12a4000d3e9f4c5, Data_science\MachineLearning\DeepLearning\CNN\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::f310c7cbbc71e7b19e15e8a6f0ee97d1, Data_science\MachineLearning\DeepLearning\CNN\Dimension.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 33 (58.93%)
-    ' Comment Lines: 12 (21.43%)
+    '   Total Lines: 78
+    '    Code Lines: 33 (42.31%)
+    ' Comment Lines: 34 (43.59%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (19.64%)
-    '     File Size: 1.59 KB
+    '   Blank Lines: 11 (14.10%)
+    '     File Size: 2.94 KB
 
 
     '     Class Dimension

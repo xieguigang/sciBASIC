@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::9b318db41d73d9ece59fb6c5d8af9d95, vs_solutions\VBS\src\VBScript\Syntax\Vectorization\PropertyProjection.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 340
+    '    Code Lines: 199 (58.53%)
+    ' Comment Lines: 75 (22.06%)
+    '    - Xml Docs: 74.67%
+    ' 
+    '   Blank Lines: 66 (19.41%)
+    '     File Size: 14.27 KB
+
+
+    '     Class PropertyProjection
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ExpandLine, MaskLiterals, MatchingBrace, ParseMemberList, SkipSpaces
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Text
 Imports System.Text.RegularExpressions
 
@@ -338,3 +393,4 @@ Namespace Script
         End Function
     End Class
 End Namespace
+

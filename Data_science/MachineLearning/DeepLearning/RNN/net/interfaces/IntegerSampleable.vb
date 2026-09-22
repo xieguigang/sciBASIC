@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97f53272e58f1a2881a84bd30d751d92, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\IntegerSampleable.vb"
+﻿#Region "Microsoft.VisualBasic::d8dc463bfadc1fbb0f106b8cb7e15f10, Data_science\MachineLearning\DeepLearning\RNN\net\interfaces\IntegerSampleable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 6 (35.29%)
-    ' Comment Lines: 9 (52.94%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 26
+    '    Code Lines: 6 (23.08%)
+    ' Comment Lines: 18 (69.23%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (11.76%)
-    '     File Size: 706 B
+    '   Blank Lines: 2 (7.69%)
+    '     File Size: 1.36 KB
 
 
     ' 	Interface IntegerSampleable

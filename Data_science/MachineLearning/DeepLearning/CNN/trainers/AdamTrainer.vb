@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9315edb46629db5567ea7898a444e5d4, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdamTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::b3e85d60ba40422d77d9100d18fce33e, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdamTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 32 (68.09%)
-    ' Comment Lines: 6 (12.77%)
-    '    - Xml Docs: 83.33%
+    '   Total Lines: 67
+    '    Code Lines: 32 (47.76%)
+    ' Comment Lines: 26 (38.81%)
+    '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 9 (19.15%)
-    '     File Size: 1.98 KB
+    '   Blank Lines: 9 (13.43%)
+    '     File Size: 3.40 KB
 
 
     '     Class AdamTrainer

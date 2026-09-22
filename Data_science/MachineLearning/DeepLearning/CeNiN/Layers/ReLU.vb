@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d62f9b6808894d5d1534bff8df22064, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::f308daf1a697ded08a5cc3321e2064a5, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\ReLU.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 37 (72.55%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 63
+    '    Code Lines: 37 (58.73%)
+    ' Comment Lines: 12 (19.05%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (27.45%)
-    '     File Size: 1.42 KB
+    '   Blank Lines: 14 (22.22%)
+    '     File Size: 2.06 KB
 
 
     '     Class ReLU

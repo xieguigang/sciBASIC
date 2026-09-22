@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18efb640df84f6d2df6f5ff3d7a00bd0, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
+﻿#Region "Microsoft.VisualBasic::55d0ac46bedb9dfbe93288d5d83d3628, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 108 (68.35%)
-    ' Comment Lines: 20 (12.66%)
-    '    - Xml Docs: 95.00%
+    '   Total Lines: 337
+    '    Code Lines: 195 (57.86%)
+    ' Comment Lines: 81 (24.04%)
+    '    - Xml Docs: 82.72%
     ' 
-    '   Blank Lines: 30 (18.99%)
-    '     File Size: 5.06 KB
+    '   Blank Lines: 61 (18.10%)
+    '     File Size: 12.58 KB
 
 
     '     Class DistanceMap
@@ -49,10 +49,16 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Add, Dequeue, FindByCodePair, (+2 Overloads) Remove, RemoveFirst
-    '                   ToList, ToString
+    '         Function: Add, compareLink, FindByCodePair, PopMin, (+2 Overloads) Remove
+    '                   RemoveFirst, ToList, ToString
     ' 
-    '         Sub: Enqueue, Sort
+    '         Sub: CleanStale, Compact, Heapify, PopRoot, Push
+    '              SiftDown, Sort, swap
+    '         Class LinkKeyComparer
+    ' 
+    '             Function: Equals, GetHashCode
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

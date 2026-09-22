@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8c67a02e8a413d7afc1b96f69ac38e9, Data_science\MachineLearning\MachineLearning\SVM\Logging.vb"
+﻿#Region "Microsoft.VisualBasic::0814ac8525c80a704b4c09627622b906, Data_science\MachineLearning\MachineLearning\SVM\Logging.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 19 (67.86%)
-    ' Comment Lines: 3 (10.71%)
+    '   Total Lines: 39
+    '    Code Lines: 19 (48.72%)
+    ' Comment Lines: 14 (35.90%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (21.43%)
-    '     File Size: 764 B
+    '   Blank Lines: 6 (15.38%)
+    '     File Size: 1.24 KB
 
 
     '     Class Logging

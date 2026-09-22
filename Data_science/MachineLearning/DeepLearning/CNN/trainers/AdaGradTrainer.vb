@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80984e9213c8d04f63180e720b91907d, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaGradTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::7e579a4485c763ccd04843e448b6ab2d, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaGradTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 19 (61.29%)
-    ' Comment Lines: 7 (22.58%)
-    '    - Xml Docs: 71.43%
+    '   Total Lines: 45
+    '    Code Lines: 19 (42.22%)
+    ' Comment Lines: 21 (46.67%)
+    '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 5 (16.13%)
-    '     File Size: 1.06 KB
+    '   Blank Lines: 5 (11.11%)
+    '     File Size: 2.00 KB
 
 
     '     Class AdaGradTrainer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c66403b43f07766086c5d2925b464c61, Data_science\MachineLearning\DeepLearning\CNN\Layers\Conv2DTransposeLayer.vb"
+﻿#Region "Microsoft.VisualBasic::59c3f77ded045424999aaeb94aab8717, Data_science\MachineLearning\DeepLearning\CNN\Layers\Conv2DTransposeLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 182 (77.45%)
-    ' Comment Lines: 15 (6.38%)
-    '    - Xml Docs: 33.33%
+    '   Total Lines: 262
+    '    Code Lines: 182 (69.47%)
+    ' Comment Lines: 42 (16.03%)
+    '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 38 (16.17%)
-    '     File Size: 10.12 KB
+    '   Blank Lines: 38 (14.50%)
+    '     File Size: 12.14 KB
 
 
     '     Class Conv2DTransposeLayer

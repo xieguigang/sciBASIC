@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b62438d4bcd653b5f3a6212110858da, Data_science\DataMining\DataMining\Evaluation\RegressionROC.vb"
+﻿#Region "Microsoft.VisualBasic::aba9750cd64240a57fd5aaec1c7f542e, Data_science\DataMining\DataMining\Evaluation\RegressionROC.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,28 @@
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 73 (77.66%)
-    ' Comment Lines: 7 (7.45%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 116
+    '    Code Lines: 76 (65.52%)
+    ' Comment Lines: 24 (20.69%)
+    '    - Xml Docs: 95.83%
     ' 
-    '   Blank Lines: 14 (14.89%)
-    '     File Size: 3.48 KB
+    '   Blank Lines: 16 (13.79%)
+    '     File Size: 4.52 KB
 
 
-
+    '     Module RegressionROC
+    ' 
+    '         Function: (+2 Overloads) ROC
+    '         Class RegressionHelper
+    ' 
+    '             Function: label, predict
+    ' 
+    ' 
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

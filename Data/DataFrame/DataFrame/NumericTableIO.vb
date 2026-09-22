@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::NumericTableIO, Data\DataFrame\DataFrame\NumericTableIO.vb"
+﻿#Region "Microsoft.VisualBasic::519c55fb824c6c7358c2de7d4222b6bd, Data\DataFrame\DataFrame\NumericTableIO.vb"
 
     ' Author:
     ' 
@@ -23,7 +23,36 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 560
+    '    Code Lines: 343 (61.25%)
+    ' Comment Lines: 124 (22.14%)
+    '    - Xml Docs: 91.13%
+    ' 
+    '   Blank Lines: 93 (16.61%)
+    '     File Size: 23.15 KB
+
+
+    ' Module NumericTableIO
+    ' 
+    '     Function: BuildMatrix, FeatureNameList, FormatValue, IsDeclaredLabel, IsNaNToken
+    '               IsSelected, ParseText, ParseValue, (+2 Overloads) ReadCsv, ReadDelimited
+    '               ReadLines, (+2 Overloads) ReadTsv, SplitColumns, StripPrefix, ToMatrix
+    '               WriteCsv, WriteDelimited, WriteTsv
+    ' 
+    '     Sub: WriteCsv, WriteDelimited, WriteTsv
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

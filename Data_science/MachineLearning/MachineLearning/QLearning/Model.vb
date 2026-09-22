@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c079a3366665f8e118f16ab3b051ea84, Data_science\MachineLearning\MachineLearning\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::397674fe1181eb73cb1da81b3b365031, Data_science\MachineLearning\MachineLearning\QLearning\Model.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 38 (70.37%)
-    ' Comment Lines: 6 (11.11%)
+    '   Total Lines: 116
+    '    Code Lines: 38 (32.76%)
+    ' Comment Lines: 68 (58.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.73 KB
+    '   Blank Lines: 10 (8.62%)
+    '     File Size: 4.48 KB
 
 
     '     Interface IQTable

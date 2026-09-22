@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7be5dc6114764537639233a7cf51c9eb, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
+﻿#Region "Microsoft.VisualBasic::f86e9e58212725392b76f114ff5f182a, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 116 (77.33%)
-    ' Comment Lines: 1 (0.67%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 177
+    '    Code Lines: 116 (65.54%)
+    ' Comment Lines: 28 (15.82%)
+    '    - Xml Docs: 96.43%
     ' 
-    '   Blank Lines: 33 (22.00%)
-    '     File Size: 5.37 KB
+    '   Blank Lines: 33 (18.64%)
+    '     File Size: 7.21 KB
 
 
     '     Class Convolution

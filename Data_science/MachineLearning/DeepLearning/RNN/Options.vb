@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bfbd0f94c67c665da0f711658450fcc, Data_science\MachineLearning\DeepLearning\RNN\Options.vb"
+﻿#Region "Microsoft.VisualBasic::d248d5717f6d336a21538306f1c43ef3, Data_science\MachineLearning\DeepLearning\RNN\Options.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 17 (34.69%)
-    ' Comment Lines: 10 (20.41%)
-    '    - Xml Docs: 30.00%
+    '   Total Lines: 60
+    '    Code Lines: 17 (28.33%)
+    ' Comment Lines: 21 (35.00%)
+    '    - Xml Docs: 80.95%
     ' 
-    '   Blank Lines: 22 (44.90%)
-    '     File Size: 1.42 KB
+    '   Blank Lines: 22 (36.67%)
+    '     File Size: 1.83 KB
 
 
     ' 	Class Options

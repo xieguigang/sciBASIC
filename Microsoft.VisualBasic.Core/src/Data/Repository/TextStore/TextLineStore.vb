@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54a667fb841dace8d3136fc88929393b, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
+﻿#Region "Microsoft.VisualBasic::eccc80ed90f8f2461f49904e1a491fef, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1126
-    '    Code Lines: 956 (84.90%)
-    ' Comment Lines: 61 (5.42%)
-    '    - Xml Docs: 42.62%
+    '   Total Lines: 1234
+    '    Code Lines: 1015 (82.25%)
+    ' Comment Lines: 90 (7.29%)
+    '    - Xml Docs: 53.33%
     ' 
-    '   Blank Lines: 109 (9.68%)
-    '     File Size: 50.53 KB
+    '   Blank Lines: 129 (10.45%)
+    '     File Size: 55.72 KB
 
 
     '     Class TextLineStore
@@ -58,12 +58,14 @@
     '  
     ' 
     '     Properties: BaseLineCount, DataFilePath, FileNewLine, HasPendingChanges, IndexFilePath
-    '                 IndexGranularity, LogFilePath, PendingBufferedLineCount, PendingOperationCount, TotalLines
+    '                 IndexGranularity, IsReadOnlyMode, LogFilePath, PendingBufferedLineCount, PendingOperationCount
+    '                 TotalLines
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: FindLastNewlineOffset, IsAppendOnlyLayout, Materialize, ReadAndRecoverLog, ReadLine
-    '               (+2 Overloads) ReadLines, ReadOriginalLines, SnapshotPieces, TryLoadIndexFile, WriteLineBytes
+    '     Function: AcquireLock, FindLastNewlineOffset, IsAppendOnlyLayout, Materialize, ReadAndRecoverLog
+    '               ReadLine, (+2 Overloads) ReadLines, ReadOriginalLines, SnapshotPieces, TryLoadIndexFile
+    '               TryMerge, WriteLineBytes
     ' 
     '     Sub: AppendLine, AppendLines, ApplySplice, CleanupTempFiles, CloseReader
     '          CoalesceOriginalPieces, DeleteLine, DeleteLines, DetectBomAndNewLine, Dispose
@@ -1313,4 +1315,3 @@ Namespace Data.Repository
     End Class
 
 End Namespace
-

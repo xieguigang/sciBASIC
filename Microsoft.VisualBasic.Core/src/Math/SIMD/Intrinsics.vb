@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41ef72abb6c48bf171e0fade525dbf9d, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Intrinsics.vb"
+﻿#Region "Microsoft.VisualBasic::d76d6383463af150f60a0b79ab20a7a2, Microsoft.VisualBasic.Core\src\Math\SIMD\Intrinsics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
-    '    Code Lines: 176 (58.47%)
-    ' Comment Lines: 74 (24.58%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 400
+    '    Code Lines: 230 (57.50%)
+    ' Comment Lines: 108 (27.00%)
+    '    - Xml Docs: 97.22%
     ' 
-    '   Blank Lines: 51 (16.94%)
-    '     File Size: 11.84 KB
+    '   Blank Lines: 62 (15.50%)
+    '     File Size: 17.20 KB
 
 
     '     Class SIMDIntrinsics
@@ -50,7 +50,7 @@
     '         Function: Axpy, (+2 Overloads) DotFma, HorizontalSum4, HorizontalSum8, Load4
     '                   Load8, MultiplyAdd, SumSquaresFma, (+2 Overloads) VectorAddAvx, (+2 Overloads) VectorAddAvx2
     ' 
-    '         Sub: Store4
+    '         Sub: AxpyInPlace, Store4
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7aee119c62904e9c7c6105ba85e09d3, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\UncheckHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::d7aee119c62904e9c7c6105ba85e09d3, Microsoft.VisualBasic.Core\src\Math\Information\UncheckHelpers.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d848f28b675369d279c8dee7943af086, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::b8ae25e8a760d68f97896de860f81989, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1146
-    '    Code Lines: 489 (42.67%)
-    ' Comment Lines: 498 (43.46%)
-    '    - Xml Docs: 74.10%
+    '   Total Lines: 1126
+    '    Code Lines: 467 (41.47%)
+    ' Comment Lines: 506 (44.94%)
+    '    - Xml Docs: 72.92%
     ' 
-    '   Blank Lines: 159 (13.87%)
-    '     File Size: 41.78 KB
+    '   Blank Lines: 153 (13.59%)
+    '     File Size: 41.95 KB
 
 
     '     Class Vector

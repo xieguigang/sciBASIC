@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::984725eeaf753ec0c852975f22b168d1, Data\Trinity\Test\graphQueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::08f34339fd7389e12ca9f1916a70e176, Data\GraphQuery\test\graphQueryTest.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 74 (63.79%)
-    ' Comment Lines: 3 (2.59%)
+    '   Total Lines: 156
+    '    Code Lines: 114 (73.08%)
+    ' Comment Lines: 2 (1.28%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 39 (33.62%)
-    '     File Size: 3.39 KB
+    '   Blank Lines: 40 (25.64%)
+    '     File Size: 4.59 KB
 
 
     ' Module graphQueryTest
     ' 
-    '     Sub: BookTest, complextest, Main, simpleArrayTest, simpleParserTest
-    '          SimpleTest
+    '     Sub: BookTest, Main, simpleArrayTest, simpleParserTest, SimpleTest
     ' 
     ' Class QueryData
     ' 

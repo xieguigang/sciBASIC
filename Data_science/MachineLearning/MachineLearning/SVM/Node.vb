@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::994c6216f326e715dcc8cc270c61120a, Data_science\MachineLearning\MachineLearning\SVM\Node.vb"
+﻿#Region "Microsoft.VisualBasic::adc432be3220cc6777232a700bfb73fc, Data_science\MachineLearning\MachineLearning\SVM\Node.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 37 (38.95%)
-    ' Comment Lines: 43 (45.26%)
-    '    - Xml Docs: 62.79%
+    '   Total Lines: 117
+    '    Code Lines: 37 (31.62%)
+    ' Comment Lines: 65 (55.56%)
+    '    - Xml Docs: 75.38%
     ' 
-    '   Blank Lines: 15 (15.79%)
-    '     File Size: 3.40 KB
+    '   Blank Lines: 15 (12.82%)
+    '     File Size: 4.52 KB
 
 
     '     Class Node

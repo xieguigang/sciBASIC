@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11b3127a85e844332b5155f9840a1f87, Data_science\MachineLearning\DeepLearning\CNN\trainers\NesterovTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::1fe523b6f917a881dc44e2398d1e1f38, Data_science\MachineLearning\DeepLearning\CNN\trainers\NesterovTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 14 (58.33%)
-    ' Comment Lines: 5 (20.83%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 36
+    '    Code Lines: 14 (38.89%)
+    ' Comment Lines: 17 (47.22%)
+    '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 812 B
+    '   Blank Lines: 5 (13.89%)
+    '     File Size: 1.57 KB
 
 
     '     Class NesterovTrainer

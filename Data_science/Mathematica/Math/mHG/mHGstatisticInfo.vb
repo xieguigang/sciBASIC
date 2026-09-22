@@ -1,55 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::a6942910f23bbb1dd6479d47c9df6249, sciBASIC#\Data_science\Mathematica\Math\mHG\DATA.vb"
+﻿#Region "Microsoft.VisualBasic::7a3ad188b8e7ab4a71d6612515e050b2, Data_science\Mathematica\Math\mHG\mHGstatisticInfo.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 45
-'    Code Lines: 12
-' Comment Lines: 28
-'   Blank Lines: 5
-'     File Size: 1.06 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class htest
-' 
-'     Properties: b, n, parameters, pvalue, statistic
-' 
-' Class mHGstatisticInfo
-' 
-'     Properties: b, mHG, n
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 5 (14.29%)
+    ' Comment Lines: 28 (80.00%)
+    '    - Xml Docs: 82.14%
+    ' 
+    '   Blank Lines: 2 (5.71%)
+    '     File Size: 785 B
+
+
+    ' Class mHGstatisticInfo
+    ' 
+    '     Properties: b, mHG, n
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

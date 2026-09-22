@@ -1,4 +1,59 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::9e55b11f2bbf322ea701b999c191976d, Data_science\MachineLearning\SNN\test\test1.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 166 (81.77%)
+    ' Comment Lines: 13 (6.40%)
+    '    - Xml Docs: 7.69%
+    ' 
+    '   Blank Lines: 24 (11.82%)
+    '     File Size: 8.10 KB
+
+
+    ' Module test1
+    ' 
+    '     Function: MakeData, SampleClass, Sparkline
+    ' 
+    '     Sub: PrintRaster, SupervisedDemo, VizInference
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
 Imports Microsoft.VisualBasic.Linq
@@ -201,3 +256,4 @@ Module test1
         Return sb.ToString()
     End Function
 End Module
+

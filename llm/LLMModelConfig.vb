@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::28670bc33ccc6b3373814359b88411d0, llm\LLMModelConfig.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 192
+    '    Code Lines: 101 (52.60%)
+    ' Comment Lines: 47 (24.48%)
+    '    - Xml Docs: 76.60%
+    ' 
+    '   Blank Lines: 44 (22.92%)
+    '     File Size: 8.15 KB
+
+
+    ' Class LLMModelConfig
+    ' 
+    '     Properties: BalanceBiasRate, DenseFfnHidden, DModel, EffectiveDenseHidden, EffectiveExpertHidden
+    '                 EffectiveHeadDim, EffectiveKvHeads, ExpertHidden, HeadDim, MaxNodesPerToken
+    '                 MaxSeqLen, MoEStartLayer, NodeGroups, NumHeads, NumKvHeads
+    '                 NumLayers, NumRoutedExperts, NumSharedExperts, RopeTheta, TopKExperts
+    '                 UseMoE, VocabSize
+    ' 
+    '     Function: AlignUp, IsMoELayer, ToString
+    ' 
+    '     Sub: Validate
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' LLMModelConfig —— decoder-only 语言模型的超参
 '
@@ -188,5 +250,6 @@ Public Class LLMModelConfig
 #End Region
 
 End Class
+
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a4961ba3cd85a31d7f7560e7ed1ae02, Data_science\MachineLearning\DeepLearning\CNN\Layers\PoolingLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9fa4dad3d0cd36463e3a836f29fb357a, Data_science\MachineLearning\DeepLearning\CNN\Layers\PoolingLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 238
-    '    Code Lines: 158 (66.39%)
-    ' Comment Lines: 31 (13.03%)
-    '    - Xml Docs: 29.03%
+    '   Total Lines: 132
+    '    Code Lines: 61 (46.21%)
+    ' Comment Lines: 48 (36.36%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 49 (20.59%)
-    '     File Size: 8.67 KB
+    '   Blank Lines: 23 (17.42%)
+    '     File Size: 5.99 KB
 
 
     '     Class PoolingLayer
@@ -51,23 +51,7 @@
     ' 
     '         Function: forward, ToString
     ' 
-    '         Sub: backward, initSwitchMaps
-    '         Class SwitchMap
-    ' 
-    '             Constructor: (+2 Overloads) Sub New
-    '             Function: ToString
-    ' 
-    '         Class ForwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    '         Class BackwardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    ' 
+    '         Sub: backward
     ' 
     ' 
     ' /********************************************************************************/

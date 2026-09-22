@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0735ea838aec62a89685c20ab7b7f3a6, Data_science\MachineLearning\DeepLearning\RNN\CharRNN.vb"
+﻿#Region "Microsoft.VisualBasic::0f215c21a13f28622265bd37eea14083, Data_science\MachineLearning\DeepLearning\RNN\CharRNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 101 (54.89%)
-    ' Comment Lines: 51 (27.72%)
-    '    - Xml Docs: 50.98%
+    '   Total Lines: 186
+    '    Code Lines: 101 (54.30%)
+    ' Comment Lines: 53 (28.49%)
+    '    - Xml Docs: 69.81%
     ' 
-    '   Blank Lines: 32 (17.39%)
-    '     File Size: 7.52 KB
+    '   Blank Lines: 32 (17.20%)
+    '     File Size: 8.39 KB
 
 
     '     Class CharRNN

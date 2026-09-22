@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d555c5b3cb7be5ee5bb896831cb8f2, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::70d555c5b3cb7be5ee5bb896831cb8f2, Microsoft.VisualBasic.Core\src\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 

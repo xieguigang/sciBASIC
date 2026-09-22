@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4da5806c01cb4fc0ec41cdcdce2c65aa, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\TransformText.vb"
+﻿#Region "Microsoft.VisualBasic::f5680d3a583c2cd99d3a6922425b84dc, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\TransformText.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 28 (65.12%)
-    ' Comment Lines: 5 (11.63%)
+    '   Total Lines: 51
+    '    Code Lines: 28 (54.90%)
+    ' Comment Lines: 13 (25.49%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (23.26%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 10 (19.61%)
+    '     File Size: 1.66 KB
 
 
     '     Module TransformText

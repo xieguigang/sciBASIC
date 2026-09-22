@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd1fd096074adc0bce4a572658264dcb, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::06268d1aa644d11bb13da8898f484cae, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Layer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 81 (64.80%)
-    ' Comment Lines: 20 (16.00%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 179
+    '    Code Lines: 81 (45.25%)
+    ' Comment Lines: 74 (41.34%)
+    '    - Xml Docs: 86.49%
     ' 
-    '   Blank Lines: 24 (19.20%)
-    '     File Size: 4.46 KB
+    '   Blank Lines: 24 (13.41%)
+    '     File Size: 8.13 KB
 
 
     '     Class Layer

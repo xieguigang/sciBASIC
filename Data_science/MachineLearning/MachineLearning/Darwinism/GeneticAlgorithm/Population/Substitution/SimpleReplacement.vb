@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc0775901ddb816844768b0bf5dc3adb, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\SimpleReplacement.vb"
+﻿#Region "Microsoft.VisualBasic::5a74edf789c312427df8edd87f0d9c89, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\SimpleReplacement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 16 (43.24%)
-    ' Comment Lines: 15 (40.54%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 41
+    '    Code Lines: 16 (39.02%)
+    ' Comment Lines: 19 (46.34%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 6 (16.22%)
-    '     File Size: 1.57 KB
+    '   Blank Lines: 6 (14.63%)
+    '     File Size: 1.94 KB
 
 
     '     Structure SimpleReplacement

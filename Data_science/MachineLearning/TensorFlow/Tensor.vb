@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5222c9ee568ee315aa85d234a23a058a, Data_science\MachineLearning\TensorFlow\Tensor.vb"
+﻿#Region "Microsoft.VisualBasic::46b02d96ffa5162d8f706ddc7951d8c8, Data_science\MachineLearning\TensorFlow\Tensor.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 942
-    '    Code Lines: 493 (52.34%)
-    ' Comment Lines: 298 (31.63%)
-    '    - Xml Docs: 94.97%
+    '   Total Lines: 1065
+    '    Code Lines: 533 (50.05%)
+    ' Comment Lines: 366 (34.37%)
+    '    - Xml Docs: 95.08%
     ' 
-    '   Blank Lines: 151 (16.03%)
-    '     File Size: 29.49 KB
+    '   Blank Lines: 166 (15.59%)
+    '     File Size: 35.15 KB
 
 
     ' Class Tensor
     ' 
-    '     Properties: computeKernel, Data, Dimensions, Gradient, IsVariable
-    '                 Length, Rank, Shape, TotalLength, Version
+    '     Properties: computeKernel, Data, DeviceEpoch, Dimensions, Gradient
+    '                 IsVariable, Length, Rank, Shape, TotalLength
+    '                 Version
     ' 
-    '     Constructor: (+4 Overloads) Sub New
+    '     Constructor: (+5 Overloads) Sub New
     ' 
     '     Function: (+2 Overloads) Apply, BroadcastedAddition, Clone, DimsEqual, ElementwiseMultiply
     '               Filled, From2DArray, Get1DInd, GetColumn, GetFlatIndex
@@ -56,10 +57,11 @@
     '               L2Norm, MatMul, (+2 Overloads) Mean, MultAll, Ones
     '               Random, RandomNormal, Range, Reshape, Scalar
     '               Sum, To2DArray, To2DArrayDouble, ToArray, ToDoubleArray
-    '               ToString, TotalSum, Transpose, Variable, XavierInit
-    '               Zeros
+    '               ToString, TotalSum, ToTensorF, Transpose, Variable
+    '               (+2 Overloads) Wrap, XavierInit, Zeros
     ' 
-    '     Sub: Dispose, Finalize, Print, SetValue, UpdateDimProds
+    '     Sub: Dispose, Finalize, InvalidateAllDeviceCaches, MarkHostModified, Print
+    '          SetValue, UpdateDimProds
     ' 
     '     Operators: (+2 Overloads) -, (+2 Overloads) *, /, (+2 Overloads) +
     ' 

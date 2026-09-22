@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae30e77ce6c79356fb0c6678e0a65b76, Data_science\MachineLearning\DeepLearning\RNN\math\Random.vb"
+﻿#Region "Microsoft.VisualBasic::8f05f9cd91e6ac6e1d540e8ba88bdca9, Data_science\MachineLearning\DeepLearning\RNN\math\Random.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 27 (50.00%)
-    ' Comment Lines: 17 (31.48%)
-    '    - Xml Docs: 17.65%
+    '   Total Lines: 63
+    '    Code Lines: 27 (42.86%)
+    ' Comment Lines: 26 (41.27%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.83 KB
+    '   Blank Lines: 10 (15.87%)
+    '     File Size: 2.32 KB
 
 
     '     Class Random

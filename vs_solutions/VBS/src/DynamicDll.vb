@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc720b27851a5025dbf341c684a152dd, vs_solutions\VBS\src\DynamicDll.vb"
+﻿#Region "Microsoft.VisualBasic::d107dd63353241ef35ad290b6c5c24dd, vs_solutions\VBS\src\DynamicDll.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
-    '    Code Lines: 81 (55.10%)
-    ' Comment Lines: 39 (26.53%)
-    '    - Xml Docs: 38.46%
+    '   Total Lines: 187
+    '    Code Lines: 106 (56.68%)
+    ' Comment Lines: 44 (23.53%)
+    '    - Xml Docs: 34.09%
     ' 
-    '   Blank Lines: 27 (18.37%)
-    '     File Size: 6.11 KB
+    '   Blank Lines: 37 (19.79%)
+    '     File Size: 7.98 KB
 
 
     ' Module DynamicDll

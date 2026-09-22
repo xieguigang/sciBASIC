@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7a0e75360c457b7918d168374ce624, Data_science\DataMining\DataMining\Evaluation\Validation.vb"
+﻿#Region "Microsoft.VisualBasic::3e339734d11457ad2a405bbd3fd625f6, Data_science\DataMining\DataMining\Evaluation\Validation.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,26 @@
 
     ' Summaries:
 
+
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 132 (60.55%)
-    ' Comment Lines: 64 (29.36%)
-    '    - Xml Docs: 81.25%
+    '   Total Lines: 261
+    '    Code Lines: 136 (52.11%)
+    ' Comment Lines: 93 (35.63%)
+    '    - Xml Docs: 87.10%
     ' 
-    '   Blank Lines: 22 (10.09%)
-    '     File Size: 8.46 KB
+    '   Blank Lines: 32 (12.26%)
+    '     File Size: 10.51 KB
 
 
-
+    '     Structure Validation
+    ' 
+    '         Properties: F1Score, FbetaScore, FPR, NPV
+    ' 
+    '         Function: AUC, Calc, FromConfusion, ROC, ToDataSet
+    '                   ToString
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
