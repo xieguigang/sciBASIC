@@ -1330,12 +1330,15 @@
       <BuildType Solution="mzkit_win32|*" Project="Release" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Release" />
       <BuildType Solution="Publish|*" Project="Release" />
       <BuildType Solution="RsharpDev|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|*" Project="Release" />
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
     </Project>
   </Folder>
   <Folder Name="/packages/math.dll/">
