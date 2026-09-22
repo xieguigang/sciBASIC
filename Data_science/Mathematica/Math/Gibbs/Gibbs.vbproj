@@ -12,8 +12,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>Gibbs Sampling and Metropolis-Hastings Samplers</Title>
     <Description>Gibbs sampling for repeated motif discovery in biological sequences, plus a Metropolis-Hastings sampler over Markov bases for contingency table and chi-square analysis. Part of the sciBASIC# statistics stack.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.GibbsSampling</AssemblyTitle>
@@ -95,6 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'">
     <DefineTrace>True</DefineTrace>
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <OutputPath>../../../../.nuget/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="imgs\**" />

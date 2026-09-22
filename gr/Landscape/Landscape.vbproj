@@ -20,8 +20,8 @@
 		<UseApplicationFramework>True</UseApplicationFramework>
 
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Version>1.0.9758.20045</Version>
-		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+		<Version>1.0.9762.10518</Version>
+		<AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 		<Title>3D Mesh Model Parsers And Voxelization Toolkit</Title>
 		<Description>Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation, as part of the sciBASIC# imaging stack.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.Imaging.Landscape</AssemblyTitle>

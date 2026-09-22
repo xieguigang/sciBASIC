@@ -13,8 +13,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Description>Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by metadata reflection, decodes IL into syntax trees and resolves source maps for sciBASIC# code tooling.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

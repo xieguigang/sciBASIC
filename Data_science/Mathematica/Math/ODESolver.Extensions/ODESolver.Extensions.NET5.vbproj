@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9758.20045</Version>
+		<Version>5.0.9762.10518</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -17,7 +17,7 @@
 		<Description>Extension helpers that turn ODE integration output into data frames and CSV files, reload them, and compute Pearson or Spearman correlations between the modelled variables. Part of sciBASIC#.</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;nuget_release</Configurations>
 		<RepositoryType>git</RepositoryType>
-		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 		<Title>ODE Solver Extensions: Result Export and Correlation Analysis</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyTitle>
 		<PackageTags>scibasic;ode-solver;data-frame;correlation;pearson;spearman;csv-export</PackageTags>

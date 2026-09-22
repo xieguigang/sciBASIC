@@ -12,14 +12,19 @@
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <OutputPath>../../.nuget</OutputPath>
    
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 
     <Title>GPU Tensor Types and CUDA Kernels for the ILCuda Runtime</Title>
     <Description>GPU tensor extension for the ILCuda framework of sciBASIC#: device resident dense and CSR sparse tensor storage with device/host caches, plus hand written double precision CUDA kernels for GEMM, softmax, reductions, convolution and pooling.</Description>
     <PackageTags>scibasic;cuda;gpu-tensor;sparse-matrix;csr;nvrtc;cuda-kernel;deep-learning</PackageTags>
     <PackageReleaseNotes>ILCudaTensor extends the sciBASIC# ILCuda compute framework with device resident tensor types and ready to use CUDA kernels. Capabilities: (1) CudaTensor, a full double precision ITensorCompute implementation for CUDA derived from the TensorFlow TensorComputeBase, so any operator without a GPU kernel automatically falls back to the CPU implementation; (2) the element wise, activation, linear algebra, normalization and reduction operator set - Add, Multiply, Exp, Log, Clip, Relu, Gelu, Sigmoid, Tanh, MatMul, Transpose, Softmax, LogSoftmax, Sum, Mean, Max, ArgMax, RowReduce and ReduceGlobal; (3) DeviceCache and SparseCsrCache for explicit device memory residency, avoiding the leaks caused by ILCuda having no finalizer, with a default 1 GiB cache budget; (4) hand written double precision CUDA kernels shipped as embedded resources and injected into the NVRTC compile unit by CudaTensor.Register - tensor.cu (last axis softmax, reductions, arg min max), gemm.cu (tiled GEMM), spmm.cu (row parallel CSR x dense with atomicAdd(double), the core operator when loading real connectomes such as FlyWire), conv.cu and pool.cu (NHWC forward and backward); (5) a two stage global reduction plus a MinGpuElements threshold (default 4096) that keeps small tensors on the CPU. Targets x64 only.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

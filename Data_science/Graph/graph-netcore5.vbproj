@@ -23,8 +23,8 @@
     <PackageReleaseNotes>The core graph theory package of sciBASIC#: generic graph models together with a broad algorithm library. Data models: the abstract Graph (V, E) container, the generic NetworkGraph(Of Node, Edge) with node degree and edge metadata, scientific and sparse graph types, plus 2D/3D spatial grid graphs and index trees (KD-tree, Huffman tree, Trie, PQ-tree). Routing and search: object oriented Dijkstra (DijkstraRouter), priority queue Dijkstra (DijkstraFast / PQDijkstra), contraction hierarchies with bidirectional search, A-star over grid graphs, and KD-tree plus HNSW structures for exact and approximate k nearest neighbour queries. Community detection: Louvain fast unfolding, Leiden refinement that guarantees intra-community connectivity, and label propagation (LPA), with modularity evaluation helpers. Network algorithms: Dinic maximum flow, Kruskal minimum spanning tree, Ullmann subgraph isomorphism, bipartite matching, PageRank and weighted PageRank, and Morgan fingerprints, with cosine and Earth Mover's distance measures. The package is the algorithmic foundation reused by the network visualization stack (layouts and rendering) and by the data mining modules.</PackageReleaseNotes>
     <IncludeSymbols>True</IncludeSymbols>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.Data.GraphTheory</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>

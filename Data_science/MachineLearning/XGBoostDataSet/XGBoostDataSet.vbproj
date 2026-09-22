@@ -12,8 +12,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>CSV Tabular Data Loader for XGBoost Training Sets</Title>
     <Description>Training data preparation for sciBASIC# XGBoost: two-pass CSV readers for test and validation tables, and converters building labelled TrainData with categorical columns and missing value indexes.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet</AssemblyTitle>

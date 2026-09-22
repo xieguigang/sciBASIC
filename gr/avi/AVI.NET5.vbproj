@@ -10,8 +10,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>AVI Video Encoder For Uncompressed RGB Frame Streams</Title>
     <Description>A dependency-free AVI (RIFF) writer that assembles main/stream headers and appends bitmap frames into a playable video file, ideal for exporting rendered animation frames from the sciBASIC# imaging pipeline.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging.AVIMedia</AssemblyTitle>

@@ -18,11 +18,16 @@
     <PackageTags>scibasic;statistics;hypothesis-testing;minimum-hypergeometric;gene-set-enrichment;ranked-list;bioinformatics</PackageTags>
     <PackageReleaseNotes>mHG implements the minimum hypergeometric test, the statistical backbone of ranked list enrichment analysis widely used for gene set enrichment in genomics and for feature enrichment in general. The package exposes: (1) Module mHGtest with the test entry points that scan a ranked list of items and locate the threshold k which minimizes the hypergeometric tail probability; (2) Class htest holding a single hypergeometric test result; (3) Class mHGstatisticInfo carrying the computed minimum statistic together with the associated information - the optimal cutoff, the observed counts and the resulting p-value - so callers can report and post-process the outcome. Exact combinatorial probabilities are evaluated in log space to keep the computation numerically stable for long lists and large gene sets. Unlike a fixed cutoff KS style test, the mHG test searches over all prefixes of the ranked list and therefore reports the genuinely optimal enrichment point; the caller can apply an additional multiple testing correction on top of the returned p-value.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 
   
   </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../../.nuget/</OutputPath>
+	</PropertyGroup>
 
 	<ItemGroup>
 	  <Compile Remove="test\**" />

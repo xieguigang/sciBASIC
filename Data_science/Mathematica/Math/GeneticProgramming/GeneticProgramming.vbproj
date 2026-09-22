@@ -12,8 +12,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Symbolic Regression via Genetic Programming and GA</Title>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Description>Evolves mathematical expressions and polynomial models with genetic programming and genetic algorithms, using pluggable expression trees and error objectives such as MSE, MAE, SSE and SAE. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

@@ -18,8 +18,8 @@
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>Tabular Frame Serialization with SAS XPORT and ASN.1 Readers</Title>
     <Description>Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader and writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file with column-level seeking.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Storage</AssemblyTitle>

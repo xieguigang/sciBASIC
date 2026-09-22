@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DeepLearning</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>6.0.9758.20045</Version>
+		<Version>6.0.9762.10518</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -19,7 +19,7 @@
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<DocumentationFile>Microsoft.VisualBasic.DeepLearning.xml</DocumentationFile>
-		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 		<Title>Deep Learning Framework: CNN, RNN, Transformer and ANN Models</Title>
 		<Description>Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.DeepLearning</AssemblyTitle>

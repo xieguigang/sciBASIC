@@ -14,8 +14,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>Hierarchical Clustering with BIRCH and Linkage Strategies</Title>
     <Description>Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.HierarchicalClustering</AssemblyTitle>

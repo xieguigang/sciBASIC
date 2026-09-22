@@ -13,8 +13,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>Markdown Parser, Block Model and Multi-Format Renderer</Title>
     <Description>A markdown processor for sciBASIC#: a two-phase recursive block and inline parser that renders markdown to HTML or plain text, a typed block model with markdown and HTML renderers driven by JSON documents, plus nested table-of-contents generation from ATX headers.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.text.markdown</AssemblyTitle>

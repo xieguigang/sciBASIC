@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.MachineLearning.Debugger</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9758.20045</Version>
+		<Version>5.0.9762.10518</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -15,7 +15,7 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
-		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 		<Title>Machine Learning Debugger: Error Curves, ROC and Sample Frame Exports</Title>
 		<Description>Diagnostics helpers for sciBASIC# neural network training: builds demo sample sets, converts XML datasets to tabular rows, extracts fitness and neuron value frames from training netCDF logs, and computes ROC validation curves.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Debugger</AssemblyTitle>

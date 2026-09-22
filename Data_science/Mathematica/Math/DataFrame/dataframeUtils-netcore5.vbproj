@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9758.20045</Version>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Version>1.0.9762.10518</Version>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>Labelled Data Matrix, Correlation and Distance Utilities</Title>
     <Description>Labelled numeric matrix model with pairwise correlation and distance matrix builders, missing-value imputation, scaling and centering transforms, and Matrix Market MTX/RUA file IO. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Matrix</AssemblyTitle>

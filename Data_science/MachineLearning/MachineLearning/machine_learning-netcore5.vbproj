@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.MachineLearning</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9758.20045</Version>
+		<Version>5.0.9762.10518</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -17,7 +17,7 @@
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+		<AssemblyVersion>1.0.9762.10518</AssemblyVersion>
 		<Title>Classical Machine Learning: Random Forest, SVM, GA and Q-Learning</Title>
 		<Description>Classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port, genetic algorithms and differential evolution, Q-learning tables, activation functions and normalised sample datasets.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning</AssemblyTitle>

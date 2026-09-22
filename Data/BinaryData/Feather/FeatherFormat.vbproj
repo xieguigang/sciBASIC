@@ -3,7 +3,7 @@
     <OptionInfer>On</OptionInfer>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <Version>0.6.9758.20045</Version>
+    <Version>0.6.9762.10518</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Product>FeatherDotNet</Product>
@@ -20,7 +20,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release;CellaLAB-Desktop</Configurations>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Title>Feather Columnar Data Frame File Format Reader and Writer</Title>
     <AssemblyTitle>Microsoft.VisualBasic.DataStorage.FeatherFormat</AssemblyTitle>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

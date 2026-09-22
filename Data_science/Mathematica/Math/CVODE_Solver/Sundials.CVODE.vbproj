@@ -14,7 +14,7 @@
       
     <!-- 包信息 -->
     <PackageId></PackageId>
-    <Version>1.0.9758.20045</Version>
+    <Version>1.0.9762.10518</Version>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Description>A pure managed VB.NET re-implementation of the CVODE solver API with no native P/Invoke, offering variable-step variable-order Adams and BDF integration plus dense and banded linear solvers. Part of sciBASIC#.</Description>
     <PackageTags>scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics</PackageTags>
@@ -25,7 +25,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
-    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <AssemblyVersion>1.0.9762.10518</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>Managed CVODE Variable-Order ODE Solver in Pure VB.NET</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>
