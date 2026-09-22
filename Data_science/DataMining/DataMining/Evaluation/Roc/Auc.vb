@@ -1,7 +1,5 @@
 #Region "Microsoft.VisualBasic::Auc, Data_science\DataMining\DataMining\Evaluation\Roc\Auc.vb"
 
-Imports System.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Evaluation
