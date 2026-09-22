@@ -74,10 +74,26 @@ Imports PixelFormat = Microsoft.VisualBasic.Imaging.PixelFormat
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Provides the bitmap resizing strategies used to fit an arbitrary input image into the fixed
+    ''' spatial size expected by the network's input layer.
+    ''' </summary>
     Public Class ImageProcessor
 
+        ''' <summary>
+        ''' Specifies how a source bitmap is mapped onto the network input size.
+        ''' </summary>
         Public Enum ResizingMethod
+
+            ''' <summary>
+            ''' Rescale the bitmap ignoring the original aspect ratio so that it exactly fills the input size.
+            ''' </summary>
             Stretch
+
+            ''' <summary>
+            ''' Rescale the bitmap preserving the original aspect ratio and center it on a zero padded canvas
+            ''' of the input size.
+            ''' </summary>
             ZeroPad
         End Enum
 

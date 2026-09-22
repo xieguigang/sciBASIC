@@ -1,44 +1,51 @@
-# Dynamic Programming Sequence Alignment and Knapsack Solvers
+# 动态规划：序列比对与背包问题
 
-Dynamic programming kernels for sciBASIC#, covering global and local sequence alignment plus a 0-1 knapsack solver.
+## 引言
 
-## Overview
-- Needleman-Wunsch global alignment over a generic symbol type, with a scored substitution matrix, linear gap costs and traceback producing one or more `GlobalAlign` results.
-- Smith-Waterman local alignment (`GSW(Of T)`) with a full DP score/direction matrix, HSP match extraction, best-HSP query and simple chaining of local matches.
-- Performance and scale helpers: a k-banded global alignment heuristic (`KBandSearch`) and a three-phase center-star multiple sequence alignment driver with edit-distance centre selection.
-- A classic 0-1 knapsack solver with value/weight items, plus generic sequence and symbol abstractions so the kernels work on characters, residues or any custom alphabet.
+动态规划的精髓在于**把指数级的枚举换成表填充**。本包提供两组经典问题的实现：
 
-## Key Types
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch.NeedlemanWunsch(Of T)` — global alignment engine; `Compute()` fills the matrix and returns itself for traceback.
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch.Workspace(Of T)` — shared alignment state: aligned sequence pairs, score and `NumberOfAlignments`.
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch.ScoreMatrix(Of T)` — match/mismatch scoring with gap and mismatch penalties.
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch.GlobalAlign(Of T)` — one alignment result with `query`, `subject`, `score` and `Identities`.
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman.GSW(Of T)` — generic Smith-Waterman kernel: `BuildMatrix`, `AlignmentScore`, `Matches`, `GetBestHSP`.
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman.SimpleChaining` — chains local HSP matches into larger alignments.
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.KBandSearch` — k-banded Needleman-Wunsch reducing O(l1*l2) to O(l1*min(l2, 2k)).
-- `Microsoft.VisualBasic.DataMining.DynamicProgramming.Knapsack.KnapsackSolver` — `Solve(items, capacity)` returning a `KnapsackSolution`.
+- **序列比对**：全局（Needleman-Wunsch）与局部（Smith-Waterman）比对，以及多序列比对的中心星法；
+- **背包问题**：0-1 背包求解。
 
-## Quick Start
+这两类问题贯穿生物信息学（基因 / 蛋白序列比对）与资源分配（预算与容量约束），实现上都基于同一套「表 + 回溯」范式。
+
+## 设计目标
+
+- **通用内核**：算法作用于泛型元素序列，因此比对对象可以是核苷酸、氨基酸、文本 token 或任意可比较元素；
+- **可扩展检索**：局部比对支持 HSP（高分片段对）连接，把零散的高分片段串成完整对齐；
+- **可加速**：提供 k-banded 搜索，在「预期相似度高」的场景下把搜索空间从 O(n·m) 降到 O(k·n)。
+
+## 核心能力
+
+| 命名空间 | 算法 | 说明 |
+|---|---|---|
+| `...DynamicProgramming.NeedlemanWunsch` | 全局比对 | 两端都要求对齐，适合同源全长比较 |
+| `...DynamicProgramming.SmithWaterman` | 局部比对 | 只保留得分最高的局部片段，适合包含无关区段的比较；含 HSP 连接、k-banded 搜索与中心星多序列比对 |
+| `...DynamicProgramming.Knapsack` | 0-1 背包 | 容量约束下的最优价值选择 |
+
+## 快速上手
+
 ```vbnet
-Imports Microsoft.VisualBasic.DataMining.DynamicProgramming
-Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
+Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman
 
-Dim symbol As GenericSymbol(Of Char) = GetGeneralCharSymbol()
-Dim score As New ScoreMatrix(Of Char)(symbol)
-Dim nw As New NeedlemanWunsch(Of Char)("GATTACA", "GCATGCU", score, symbol)
+' 1. 局部比对，得到高分片段对
+Dim hsps = SmithWaterman.Align(query, subject)
 
-For Each align As GlobalAlign(Of Char) In nw.Compute().PopulateAlignments()
-    Console.WriteLine(align.ToString())
-Next
+' 2. 把 HSP 串接成完整对齐（含 k-banded 加速）
+Dim alignment = SmithWaterman.Chain(hsps, bandWidth:=16)
 
-' 0-1 knapsack
-Dim best As KnapsackSolution = Knapsack.KnapsackSolver.Solve(items, capacity:=50)
+Console.WriteLine(alignment.Score)
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.DataMining.DynamicProgramming`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **全局 vs 局部的本质差别**：全局比对从 (0,0) 走到 (n,m)，惩罚「悬空」的序列两端；局部比对允许从任意位置起始与结束，且分数不会降到负值（触底归零）。一字之差决定了「是同源吗」与「哪一段同源」这两种不同问题。
+- **HSP 连接的必要性**：局部比对一次只给出一个高分片段，但两个长序列的同源区往往被插入 / 缺失打断成多个片段；把这些片段按顺序连接起来才能得到生物学意义上的对齐。
+- **k-banded 的适用条件**：当两条序列高度相似时，最优路径必然靠近对角线；限制搜索带宽 k 带来的加速非常可观，但相似度低时会漏掉最优解。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.DataMining.DynamicProgramming`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch;knapsack;hsp-chaining;multiple-alignment`
+- 许可：GPL-3.0-or-later

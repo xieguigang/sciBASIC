@@ -125,28 +125,55 @@ Namespace Logistic
 
         Public Function train(instances As IEnumerable(Of Instance)) As LogisticFit
             Dim raw As Instance() = instances.ToArray
-            Dim values As New Vector(raw.Select(Function(r) r.label))
-            Dim size As Integer = values.Length
-            Dim features As New NumericMatrix(raw.Length, raw(Scan0).featureSize)
-            Dim theta As NumericMatrix = NumericMatrix.Zero(1, features.ColumnDimension)
+            Dim size As Integer = raw.Length
+            Dim dims As Integer = raw(Scan0).featureSize
+            Dim features As Double()() = New Double(size - 1)() {}
+            Dim labels As Double() = New Double(size - 1) {}
+            Dim weights As Double() = New Double(dims - 1) {}
+            Dim gradient As Double() = New Double(dims - 1) {}
+            Dim hypothesis As Double() = New Double(size - 1) {}
 
-            For i As Integer = 0 To raw.Length - 1
-                features.Array(i) = raw(i).x
+            For i As Integer = 0 To size - 1
+                features(i) = raw(i).x
+                labels(i) = raw(i).label
             Next
 
-            For i As Integer = 0 To ITERATIONS - 1
-                Dim featuresTranspose As NumericMatrix = DirectCast(features.Transpose, NumericMatrix)
-                ' 注意：NumericMatrix 的 * 运算符是逐元素乘法，
-                ' 这里需要的是矩阵乘积，因此必须使用 DotProduct
-                Dim hx As NumericMatrix = sigmoid(DirectCast(features.DotProduct(theta), NumericMatrix))
-                Dim A As NumericMatrix = DirectCast(featuresTranspose.DotProduct(hx), NumericMatrix)
-                Dim B = (featuresTranspose * values) / size
-                Dim delta = A - B
+            ' 标准的批量梯度下降：
+            '   theta := theta - alpha * X^T (sigmoid(X * theta) - y) / m
+            ' 
+            ' 这里使用普通的 Double 数组直接计算，避免依赖 NumericMatrix 的
+            ' 运算符语义（其 ``*`` 运算符为逐元素乘法，直接用于 X^T*y 会出错）。
+            For iteration As Integer = 0 To ITERATIONS - 1
+                For i As Integer = 0 To size - 1
+                    Dim z As Double = 0
+                    Dim xi As Double() = features(i)
 
-                theta = theta - (delta * ALPHA)
+                    For j As Integer = 0 To dims - 1
+                        z += xi(j) * weights(j)
+                    Next
+
+                    hypothesis(i) = sigmoid(z)
+                Next
+
+                For j As Integer = 0 To dims - 1
+                    gradient(j) = 0
+                Next
+
+                For i As Integer = 0 To size - 1
+                    Dim delta As Double = hypothesis(i) - labels(i)
+                    Dim xi As Double() = features(i)
+
+                    For j As Integer = 0 To dims - 1
+                        gradient(j) += delta * xi(j)
+                    Next
+                Next
+
+                For j As Integer = 0 To dims - 1
+                    weights(j) -= ALPHA * gradient(j) / size
+                Next
             Next
 
-            Me.theta = theta.ColumnVector(0)
+            Me.theta = New Vector(weights)
 
             Return LogisticFit.CreateFit(Me, raw)
         End Function

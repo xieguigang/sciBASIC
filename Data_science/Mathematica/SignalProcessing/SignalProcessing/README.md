@@ -1,57 +1,78 @@
-# Signal Processing: FFT, Wavelets, Filters and Peak Detection
+# 信号处理：FFT、小波、滤波与峰值检测
 
-A one-dimensional signal processing toolkit for sciBASIC#, covering transforms, filtering, peak detection, alignment and signal synthesis.
+## 引言
 
-## Overview
-- Fourier analysis through `FFT.FourierTransform` (DFT/FFT, 1-D and 2-D, real and complex) and multi-level wavelet transforms with Daubechies, Symlet and Coiflet bases.
-- Smoothing and conditioning: Savitzky-Golay filtering, trend removal (de-trend/re-trend), zero elimination, Ramer-Douglas-Peucker decimation and mean/continuous padding.
-- Peak detection via the accumulated-elevation algorithm with quantile baseline estimation, plus EM-Gaussian mixture fitting and 1-D/2-D Kalman filtering.
-- Signal comparison and alignment: dynamic time warping (DTW) with pluggable preprocessors, correlation optimized warping (COW), resampling and interpolation.
-- Composable synthesis from basis functions (sine, damped sine, Gaussian, Lorentzian, Ricker, log-normal, trends, thresholds, noise) and ready-made presets such as ECG, vibration and weather.
+一维信号处理虽然方法众多，但目标不外乎四类：
 
-## Key Types
-- `Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal` — the core x/y signal tuple (`Measures` vs `Strength`) with reference id, metadata, range slicing and point enumeration.
-- `Microsoft.VisualBasic.Math.SignalProcessing.FFT.FourierTransform` — static `DFT`/`FFT` entry points for `Complex()` and 2-D complex buffers, forward or inverse.
-- `Microsoft.VisualBasic.Math.SignalProcessing.WaveletTransform.Transform` — multi-level forward/inverse wavelet transform plus detail and scaling coefficient extraction.
-- `Microsoft.VisualBasic.Math.SignalProcessing.Filters.SGFilter` — Savitzky-Golay smoothing with coefficient computation, padding and chainable preprocessors.
-- `Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding.ElevationAlgorithm` — detects peaks from the accumulated elevation line of a signal.
-- `Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Dtw` — dynamic time warping distance between two sequences with selectable distance measure.
-- `Microsoft.VisualBasic.Math.SignalProcessing.COW.CowAlignment` — correlation optimized warping and linear alignment of chromatographic traces.
-- `Microsoft.VisualBasic.Math.SignalProcessing.Source.SignalGenerator` — builds composite signals from basis functions and samples them onto an arbitrary grid.
+1. **换域**：从时域变到频域 / 时频域，看清成分（FFT、小波）；
+2. **去噪**：抑制不需要的成分（滤波、Kalman）；
+3. **找特征**：定位关键点（峰值检测）；
+4. **对齐**：把两条或多条信号对齐（DTW、COW）。
 
-## Quick Start
+本包为这四类目标各自提供实现，并且都建立在同一套信号数据结构之上。
+
+## 核心能力
+
+### 换域
+
+| 命名空间 | 方法 |
+|---|---|
+| `...SignalProcessing.FFT` | 快速傅里叶变换与频谱分析 |
+| `...SignalProcessing.WaveletTransform` | 小波变换（时频局部化，适合非平稳信号） |
+
+### 去噪与估计
+
+| 命名空间 | 方法 |
+|---|---|
+| `...SignalProcessing.Filters` | 数字滤波，含 Savitzky-Golay 平滑（保形保峰） |
+| `...SignalProcessing.KalmanFilter` | Kalman 状态估计 |
+| `...SignalProcessing.HungarianAlgorithm` | 最优分配（用于信号匹配） |
+
+### 特征与对齐
+
+| 命名空间 | 方法 |
+|---|---|
+| `...SignalProcessing.PeakFinding` | 峰值检测 |
+| `...SignalProcessing.NDtw`（+ `Preprocessing`） | 动态时间规整（DTW）及其预处理 |
+| `...SignalProcessing.COW` | 相关优化规整（色谱类信号对齐） |
+| （根） | 基线校正、重采样与归一化 |
+| `...SignalProcessing.Sampler.EmGaussian` | EM 高斯混合采样 |
+| `...SignalProcessing.Source`（+ `Arithmetic` / `Generators`） | 信号源：算术运算与波形 / 噪声发生器 |
+
+## 快速上手
+
 ```vbnet
 Imports Microsoft.VisualBasic.Math.SignalProcessing
-Imports Microsoft.VisualBasic.Math.SignalProcessing.Filters
-Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
-Imports Microsoft.VisualBasic.Math.SignalProcessing.Source
 
-' synthesise: linear trend + sine + a Gaussian peak
-Dim gen As New SignalGenerator() _
-    .Add(Basis.Linear(amp:=0.01, center:=0, scale:=1)) _
-    .Add(Basis.Sine(amp:=1, center:=0, scale:=50)) _
-    .Add(Basis.Gaussian(amp:=3, center:=200, sigma:=10))
+' 1. 谱分析
+Dim spectrum = FFT.Forward(signal)
 
-Dim x As Double() = Enumerable.Range(0, 1000).Select(Function(i) CDbl(i)).ToArray()
-Dim signal As New GeneralSignal With {
-    .reference = "demo",
-    .Measures = x,
-    .Strength = gen.Sample(x)
-}
+' 2. 保形平滑（Savitzky-Golay 不会把峰抹平）
+Dim smoothed = Filters.SavitzkyGolay(signal, window:=11, order:=3)
 
-' Savitzky-Golay smoothing
-Dim sg As New SGFilter(5, 5)
-Dim coeffs As Double() = SGFilter.computeSGCoefficients(5, 5, 4)
-Dim smoothed As Double() = sg.smooth(signal.Strength, coeffs)
+' 3. 峰值检测
+Dim peaks = PeakFinding.Detect(smoothed, minHeight:=0.1)
 
-' peak detection
-Dim peaks = New ElevationAlgorithm(angle:=30, baselineQuantile:=0.25).FindAllSignalPeaks(signal)
+' 4. 两条信号对齐（含基线校正预处理）
+Dim aligned = NDtw.Align(Preprocessing.BaselineCorrect(a), Preprocessing.BaselineCorrect(b))
+
+' 5. 色谱式对齐
+Dim warped = COW.Align(reference, sample, segments:=20)
+
+' 6. 生成测试信号
+Dim test = Source.Generators.Sine(frequency:=5, sampleRate:=100, length:=1000)
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.Math.SignalProcessing`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;signal-processing;fft;wavelet;peak-detection;filtering`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **FFT vs 小波的选择**：FFT 给出**全局**频率成分，但丢失"何时出现"的信息；小波在时间与频率上同时局部化，适合瞬态与突变（如心电的 R 波）。
+- **Savitzky-Golay 为什么适合光谱**：它在滑动窗口内做**多项式最小二乘拟合**，因此能平滑噪声同时保留峰高与峰宽——普通移动平均会把峰抹低、抹宽。
+- **DTW 与 COW 的分工**：DTW 通过允许时间轴非线性伸缩来对齐形状相似的信号（适合语音、心电）；COW 通过分段线性伸缩对齐**峰位置**（适合色谱、光谱），更符合仪器漂移的物理模型。
+- **基线校正为何要在对齐之前**：基线偏移会严重干扰相似度度量，导致对齐结果偏离；先校正基线再对齐是标准顺序。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.Math.SignalProcessing`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;signal-processing;fft;wavelet;peak-detection;filtering;savitzky-golay;kalman-filter;dtw;cow-alignment`
+- 许可：GPL-3.0-or-later

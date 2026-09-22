@@ -137,13 +137,33 @@ Namespace SVM
         ''' Number of support vectors per class.
         ''' </summary>
         Public Property numberOfSVPerClass As Integer()
+        ''' <summary>
+        ''' The names of the feature dimensions of the training data.
+        ''' </summary>
+        ''' <returns>An array of the dimension names.</returns>
         Public Property dimensionNames As String()
 
+        ''' <summary>
+        ''' The number of the samples which was used for training this model.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> value.</returns>
         Public Property trainingSize As Integer
 
+        ''' <summary>
+        ''' Create a new empty model object.
+        ''' </summary>
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Compares this model with another object.
+        ''' </summary>
+        ''' <param name="obj">The object that will be compared with this model.</param>
+        ''' <returns>
+        ''' ``True`` when the <paramref name="obj"/> is a <see cref="Model"/> object 
+        ''' which has the same class labels, support vectors, coefficients and 
+        ''' parameters, otherwise ``False``.
+        ''' </returns>
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim test As Model = TryCast(obj, Model)
 
@@ -171,6 +191,11 @@ Namespace SVM
             Return same
         End Function
 
+        ''' <summary>
+        ''' Gets the hash code of this model, which is combined by the hash code 
+        ''' of all of its coefficients and labels.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> hash code value.</returns>
         Public Overrides Function GetHashCode() As Integer
             Return classLabels.ComputeHashcode() +
                 numberOfClasses.GetHashCode() +

@@ -55,17 +55,24 @@
 Namespace RNN
 
 
-	' Training set for sequences.
+	''' <summary>
+	''' Training set for sequences.
+	''' </summary>
 	Public Interface TrainingSet
-		' Extracts out.length indices starting at index.
-		' ix - input sequence
-		' iy - expected output sequence (shifted by 1)
+		''' <summary>
+		''' Extracts a training pair starting at the given position.
+		''' </summary>
+		''' <param name="lowerBound">Index of the first symbol of the sequence.</param>
+		''' <param name="ix">Receives the input sequence indices.</param>
+		''' <param name="iy">Receives the expected output sequence indices, shifted by one symbol.</param>
 		Sub extract(lowerBound As Integer, ix As Integer(), iy As Integer())
 
-		' Returns the data size.
+		''' <summary>Returns the data size.</summary>
+		''' <returns>The number of symbols in the training data.</returns>
 		Function size() As Integer
 
-		' Returns the max index + 1.
+		''' <summary>Returns the vocabulary size.</summary>
+		''' <returns>The maximum index plus one.</returns>
 		Function vocabularySize() As Integer
 	End Interface
 End Namespace

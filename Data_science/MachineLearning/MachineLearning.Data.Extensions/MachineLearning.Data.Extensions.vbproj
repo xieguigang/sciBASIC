@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.MachineLearning.Data.Extensions</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9758.20045</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -19,11 +19,12 @@
 		<DocumentationFile />
 		<PublishDocumentationFile>True</PublishDocumentationFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
 		<Title>Q-Learning and Labelled Dataset Serialization Extensions</Title>
 		<Description>Helpers for sciBASIC# machine learning data: export a trained Q-table with state features to netCDF, record Q-value curves per iteration to CSV, and save or load labelled clustering matrices in a compact binary format.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Data.Extensions</AssemblyTitle>
-		<PackageTags>scibasic;machine-learning;q-learning;dataset;serialization</PackageTags>
+		<PackageTags>scibasic;machine-learning;q-learning;q-table;dataset;serialization;netcdf;binary-format</PackageTags>
+    <PackageReleaseNotes>Data serialization helpers for the sciBASIC# machine learning stack. They export a trained Q table together with its state features to netCDF, so the learned value function can be inspected and compared across runs; record the Q value curve per iteration to CSV for convergence diagnostics; and save or load labelled clustering matrices in a compact binary format, which keeps the cluster assignments and their labels together and avoids the size and precision loss of a plain CSV round trip.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

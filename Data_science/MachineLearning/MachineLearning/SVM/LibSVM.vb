@@ -57,11 +57,29 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 
 Namespace SVM
 
+    ''' <summary>
+    ''' The LibSVM style high level api for training a support vector machine 
+    ''' model from a raw problem definition.
+    ''' </summary>
+    ''' <remarks>
+    ''' This api applies the range transform (data normalization) on the input 
+    ''' problem automatically, so that the returned <see cref="SVMModel"/> object 
+    ''' is ready for prediction directly.
+    ''' </remarks>
     Public NotInheritable Class LibSVM
 
         Private Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Train a support vector machine model from a raw problem definition.
+        ''' </summary>
+        ''' <param name="problem">The training data, which contains the feature vectors and the label values.</param>
+        ''' <param name="par">The training parameters of the support vector machine.</param>
+        ''' <returns>
+        ''' A <see cref="SVMModel"/> object which contains the trained model, the 
+        ''' range transform and the label encoder.
+        ''' </returns>
         Public Shared Function getSvmModel(problem As Problem, par As Parameter) As SVMModel
             Dim transform As RangeTransform = RangeTransform.Compute(problem)
             Dim scale = transform.Scale(problem)

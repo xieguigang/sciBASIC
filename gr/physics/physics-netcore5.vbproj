@@ -15,15 +15,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>2D Rigid Body Physics Engine With Particle And Fluid Solvers</Title>
     <Description>A fixed-step 2D physics world with rigid bodies, broad and narrow phase collision, revolute, prismatic, spring and weld joints, force fields, SPH fluids and boids flocking, plus force-driven label placement for sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging.Physics</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;physics-engine;rigid-body;collision-detection;particle-system</PackageTags>
+    <PackageTags>scibasic;physics-engine;rigid-body;collision-detection;particle-system;sph;boids;joints</PackageTags>
+    <PackageReleaseNotes>A fixed step 2D physics engine for sciBASIC#. Simulation: a deterministic world advances rigid bodies with fixed time steps, and the RigidBody namespace models bodies together with their properties. Collision: broad and narrow phase collision detection is implemented in Collision, providing shapes, overlap tests and contact resolution. Constraints: Joints implements revolute, prismatic, spring and weld joints between bodies, while ForceFields applies gravity and other force fields. Particles and fluids: Particles2D implements an SPH based fluid solver, Boids implements flocking behaviour, and Particles holds the general particle system. Layout: the layout namespace applies the same force driven approach to label placement, pushing overlapping labels apart in 2D scenes. Typical uses are physical simulation for visualization, animation of network layout evolution, and simulation based data generation.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

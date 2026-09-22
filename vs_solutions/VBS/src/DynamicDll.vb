@@ -105,24 +105,54 @@ Module DynamicDll
 
         Call trees.Add(VisualBasicSyntaxTree.ParseText(script.GeneratedCode, parseOptions))
 
-        ' ---- Step2: 收集编译引用(去重) ----
+        ' ---- Step2: 收集编译引用(按程序集简单名去重) ----
         Dim references As New List(Of MetadataReference)
         Dim added As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
 
-        Dim AddRef = Sub(path As String)
-                         If Not String.IsNullOrEmpty(path) AndAlso
-                             File.Exists(path) AndAlso
-                             added.Add(path) Then
+        ' 已经加载到当前 AppDomain 的程序集(引擎依赖与共享框架程序集)。
+        ' 当某个 #include(nuget 包中的资产尤其常见)指向的是同名程序集的另一个副本时,
+        ' 优先复用已经加载的版本, 否则同一程序集的两个副本同时作为 MetadataReference
+        ' 会造成重复类型定义的编译错误。
+        Dim loaded As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
 
-                             Call references.Add(MetadataReference.CreateFromFile(path))
+        For Each asm As Assembly In AppDomain.CurrentDomain.GetAssemblies()
+            Dim location As String = asm.Location
+            Dim simple As String = asm.GetName().Name
+
+            If String.IsNullOrEmpty(location) OrElse String.IsNullOrEmpty(simple) Then
+                Continue For
+            End If
+
+            If Not loaded.ContainsKey(simple) Then
+                loaded(simple) = location
+            End If
+        Next
+
+        Dim AddRef = Sub(dllPath As String)
+                         If String.IsNullOrEmpty(dllPath) OrElse Not File.Exists(dllPath) Then
+                             Exit Sub
+                         End If
+
+                         Dim target As String = dllPath
+                         Dim simple As String = Path.GetFileNameWithoutExtension(target)
+                         Dim loadedPath As String = Nothing
+
+                         If loaded.TryGetValue(simple, loadedPath) Then
+                             target = loadedPath
+                             simple = Path.GetFileNameWithoutExtension(target)
+                         End If
+
+                         If added.Add(simple) Then
+                             Call references.Add(MetadataReference.CreateFromFile(target))
                          End If
                      End Sub
 
-        ' 2.1 #include 所引用的外部程序集
+        ' 2.1 #include 所引用的外部程序集(dll / nuget 资产 / 脚本引用转发的依赖)
         For Each dll As String In script.Imports
             If Not File.Exists(dll) Then
                 Throw New FileNotFoundException($"#include所引用的程序集不存在: {dll}", dll)
             End If
+
             Call AddRef(dll)
         Next
 

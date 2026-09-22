@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Solvers
 
@@ -125,12 +126,14 @@ Namespace LinearAlgebra.Solvers
             Next
 
             ' Gaussian Elimination Core
+            ' 行消元就是 BLAS-1 的 AXPY：第 i 行整行累减 TMP 倍的第 k 行，
+            ' 直接走 FMA 的就地 AXPY 内核（整行含增广列一起更新）
+            Dim data As Double()() = Ab.ArrayPack(deepcopy:=False)
+
             For k As Integer = 0 To n - 2
                 For i As Integer = k + 1 To n - 1
-                    TMP = Ab(i, k) / Ab(k, k)
-                    For j As Integer = 0 To n
-                        Ab(i, j) = Ab(i, j) - TMP * Ab(k, j)
-                    Next
+                    TMP = data(i)(k) / data(k)(k)
+                    Call SIMDIntrinsics.AxpyInPlace(-TMP, data(k), data(i))
                 Next
             Next
 

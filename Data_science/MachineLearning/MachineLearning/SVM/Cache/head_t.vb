@@ -60,6 +60,10 @@ Namespace SVM
 
         Dim m_enclosingInstance As Cache
 
+        ''' <summary>
+        ''' The <see cref="Cache"/> object which owns this entry.
+        ''' </summary>
+        ''' <returns>A <see cref="Cache"/> object.</returns>
         Public ReadOnly Property EnclosingInstance As Cache
             Get
                 Return m_enclosingInstance
@@ -76,6 +80,10 @@ Namespace SVM
         Friend data As Single()
         Friend len As Integer
 
+        ''' <summary>
+        ''' Create a new cache entry.
+        ''' </summary>
+        ''' <param name="enclosingInstance">The <see cref="Cache"/> object which owns this entry.</param>
         Public Sub New(enclosingInstance As Cache)
             m_enclosingInstance = enclosingInstance
         End Sub

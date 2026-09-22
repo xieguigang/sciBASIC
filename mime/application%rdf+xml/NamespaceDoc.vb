@@ -52,12 +52,16 @@
 #End Region
 
 ''' <summary>
+''' RDF/XML serialization models for the ``application/rdf+xml`` MIME type: RDF description, bag
+''' and DCMI metadata objects that can be read from and written to RDF/XML documents.
+''' </summary>
+''' <remarks>
 ''' 在进行RDF反序列化读取操作的时候似乎存在一个BUG
 ''' 不可以将元素的命名空间设置为RDF的命名空间，即元素
 ''' 的命名空间不应该和根元素的命名空间保持一致，否则
 ''' 无法读取出注释数据
 ''' 所以这个也是在当前模块之中将元素类型的命名空间设置
 ''' 为``NA``字符串值的原因
-''' </summary>
+''' </remarks>
 Module NamespaceDoc
 End Module

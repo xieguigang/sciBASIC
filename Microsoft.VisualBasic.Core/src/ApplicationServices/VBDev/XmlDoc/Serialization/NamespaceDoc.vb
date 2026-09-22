@@ -95,4 +95,11 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Return annotations
         End Function
     End Module
+
+    ''' <summary>
+    ''' Serialization helpers of the assembly XML documentation model, including the scanning of
+    ''' NamespaceDoc annotations from the documentation object graph.
+    ''' </summary>
+    Module NamespaceDoc
+    End Module
 End Namespace

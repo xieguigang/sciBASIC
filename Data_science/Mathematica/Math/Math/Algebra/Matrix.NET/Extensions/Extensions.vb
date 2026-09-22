@@ -63,6 +63,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Text
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
+Imports SimdMatrix = Microsoft.VisualBasic.Math.SIMD.SimdMatrix
+Imports SimdParallel = Microsoft.VisualBasic.Math.SIMD.SimdParallel
 Imports rand2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra.Matrix
@@ -93,7 +96,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         <Extension>
         Public Function ColumnVector(matrix As GeneralMatrix, i%) As Vector
-            Return New Vector(matrix({i}).ArrayPack.Select(Function(r) r(Scan0)))
+            ' 直接把第 i 列抽取成连续数组
+            Return New Vector(SimdMatrix.ExtractColumn(matrix.ArrayPack(deepcopy:=False), i))
         End Function
 
         Public Function size(M As GeneralMatrix, d%) As Integer
@@ -135,14 +139,15 @@ Namespace LinearAlgebra.Matrix
         ''' </summary>
         <Extension>
         Public Function CenterNormalize(m As GeneralMatrix) As GeneralMatrix
-            Dim input = m.ArrayPack
+            Dim input As Double()() = m.ArrayPack(deepcopy:=False)
             Dim out As Double()() = RectangularArray.Matrix(Of Double)(input.Length, input(0).Length)
 
             For i As Integer = 0 To input.Length - 1
-                Dim meanValue As Double = input(i).Average
-                For j As Integer = 0 To input(i).Length - 1
-                    out(i)(j) = input(i)(j) - meanValue
-                Next
+                Dim row As Double() = input(i)
+                Dim meanValue As Double = SimdParallel.Sum(row) / row.Length
+
+                ' 逐行减去该行均值（行内走向量化标量减法）
+                out(i) = SimdEngine.SubtractScalar(Of Double)(row, meanValue)
             Next
 
             Return New NumericMatrix(out)

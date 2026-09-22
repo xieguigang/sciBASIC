@@ -1,48 +1,63 @@
-# WAV Audio File Reader, Writer and Voiceprint Extractor
+# WAV 音频文件读写与声纹特征提取
 
-Reads and writes RIFF/WAVE audio files and extracts fixed-dimension mel-filterbank voiceprint vectors, as part of sciBASIC#.
+## 引言
 
-## Overview
-- Parses the RIFF/WAVE container: `RIFF`/`WAVE` magic, the `fmt ` sub-chunk (format, channels, sample rate, byte rate, block align, bit depth, WAVE_FORMAT_EXTENSIBLE sub-format) and the `data` sub-chunk.
-- Decodes 8/16/24/32/64-bit PCM, 32/64-bit IEEE float and G.711 A-law/μ-law frames into per-channel samples normalized to [-1.0, 1.0], either eagerly or lazily streamed.
-- Writes WAV files from normalized sample data for PCM, IEEE float and G.711 encodings at 8/16/24/32/64 bits per sample.
-- Pure-DSP voiceprint pipeline: pre-emphasis, framing, Hamming window, FFT, mel filterbank, DCT, delta and delta-delta coefficients, CMVN and L2 normalisation.
+音频分析的完整链路是：
 
-## Key Types
-- `Microsoft.VisualBasic.Data.Wave.WaveFile` — the WAV file model; `Open` reads the header, `fmt` and `data` sub-chunks, with an optional lazy streaming mode.
-- `Microsoft.VisualBasic.Data.Wave.FMTSubChunk` — the `fmt ` sub-chunk: audio format, channel count, sample rate, block align, bit depth and extensible-format fields.
-- `Microsoft.VisualBasic.Data.Wave.DataSubChunk` / `LazyDataChunk` — eager and streaming `data` sub-chunk implementations exposing `LoadSamples`.
-- `Microsoft.VisualBasic.Data.Wave.Sample` — one sample frame holding per-channel values; `left` and `right` give the stereo channels.
-- `Microsoft.VisualBasic.Data.Wave.WaveWriter` — static writer producing PCM, IEEE float and A-law/μ-law WAV files from normalized samples.
-- `Microsoft.VisualBasic.Data.Wave.VoicePrintExtractor` — the voiceprint pipeline (`Extract`, `ExtractDetailed`) working on a normalized sample array.
-- `Microsoft.VisualBasic.Data.Wave.VoicePrintOptions` — extraction parameters: target dimension, mel filter count, frame size/hop, delta flags, CMVN and L2 normalisation.
-- `Microsoft.VisualBasic.Data.Wave.WavVoicePrintReader` — one-call extraction from a WAV path with channel selection, time-window cropping and `GetWavInfo`.
-
-## Quick Start
-```vbnet
-Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Data.Wave
-
-' open a RIFF/WAVE file (lazy: samples are decoded on demand)
-Using reader As New BinaryDataReader(File.OpenRead("audio.wav"))
-    Using wav As WaveFile = WaveFile.Open(reader, lazy:=True)
-        Console.WriteLine($"{wav.fmt.SampleRate} Hz, {wav.fmt.channels} ch, {wav.fmt.BitsPerSample} bit")
-
-        Dim frames As Sample() = wav.data.LoadSamples(0, 4096).ToArray()
-        Console.WriteLine(frames(0).left)
-    End Using
-End Using
-
-' extract a mel-filterbank voiceprint vector for the first 30 seconds
-Dim result As VoicePrintResult = VoicePrint.Extract("audio.wav", startTime:=0, endTime:=30, targetDim:=192)
-Dim vector As Double() = result.Vector
+```text
+.wav 文件 ─► 采样数据 ─► 帧化 ─► 频域特征（Mel 滤波器组）─► 归一化 ─► 特征向量
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.Data.Wave`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;wav;audio;voiceprint;mfcc;riff`
+本包同时覆盖两端：
 
-## License
-GPL-3.0-or-later
+- **读**：解析 RIFF/WAVE 容器，拿到采样率、通道数、位深与原始采样缓冲；
+- **取特征**：把采样数据转换为适合机器学习模型输入的声纹特征向量。
+
+## 核心能力
+
+### WAVE 容器解析与写出
+
+- 直接访问 `FMT` 与 `data` 子块（sub-chunk）；
+- 获取采样率、通道数、位深与 PCM 采样数据；
+- 支持写出 WAVE 文件。
+
+### 声纹特征提取
+
+| 步骤 | 说明 |
+|---|---|
+| **Mel 滤波器组** | 把线性频谱映射到 Mel 刻度（更接近人耳感知） |
+| **Delta 系数** | 描述特征的**变化率**，捕捉动态信息 |
+| **CMVN** | 倒谱均值方差归一化，消除信道与录音条件差异 |
+| **L2 归一化** | 把特征向量投影到单位球面，使距离度量更稳定 |
+
+## 快速上手
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.Wave
+
+' 1. 读取 WAV 文件
+Using wav As WaveFile = WaveFile.Open("./audio.wav")
+    Console.WriteLine($"rate={wav.SampleRate}, channels={wav.Channels}, bits={wav.BitsPerSample}")
+
+    ' 2. 提取声纹特征（Mel 滤波器组 + delta + CMVN + L2）
+    Dim features = wav.ExtractVoiceprint()
+    Console.WriteLine(features.Dimensions)
+End Using
+
+' 3. 写出 WAVE 文件
+Call WaveFile.Write("./copy.wav", samples, sampleRate:=16000, channels:=1)
+```
+
+## 实现要点
+
+- **为什么用 Mel 刻度**：人耳对低频的分辨能力远高于高频；Mel 刻度正是对这一感知特性的近似。用 Mel 滤波器组可以把"人听起来相似"的信号映射到特征空间中相近的位置。
+- **CMVN 解决什么问题**：同一句话用不同麦克风录制，得到的原始特征会有系统性的均值 / 方差偏移；CMVN 通过减去均值、除以标准差把这种偏移消除，显著提升跨设备泛化能力。
+- **delta 系数的价值**：静态特征描述"当前是什么音"，delta 特征描述"音在怎么变"；两者结合才能刻画语音的动态过程。
+- **L2 归一化的作用**：在高维特征上，向量的**模长**往往由录音音量决定，而非内容；归一化到单位球面后，余弦相似度只反映方向（内容）差异。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.Data.Wave`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;wav;audio;voiceprint;mfcc;mel-filterbank;cmvn;riff`
+- 许可：GPL-3.0-or-later

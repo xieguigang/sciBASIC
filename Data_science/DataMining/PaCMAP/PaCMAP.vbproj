@@ -8,17 +8,18 @@
     <RootNamespace>Microsoft.VisualBasic.DataMining.PaCMAP</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.DataMining.PaCMAP</AssemblyName>
     <Description>PaCMAP dimensionality reduction for sciBASIC#: preserves local and global structure by optimising neighbour, mid-near and further point pairs with a three-phase loss and an Adagrad optimiser over tensor data.</Description>
-    <Version>1.0.9753.4776</Version>
+    <Version>1.0.9758.20045</Version>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <Platforms>AnyCPU;x64</Platforms>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Configurations>nuget_release;Rsharp_app_release;Debug</Configurations>
     <Title>PaCMAP Pairwise Controlled Manifold Approximation Embedding</Title>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.PaCMAP</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;pacmap;dimensionality-reduction;manifold-learning;visualization</PackageTags>
+    <PackageTags>scibasic;pacmap;dimensionality-reduction;manifold-learning;pairwise-controlled;visualization</PackageTags>
+    <PackageReleaseNotes>PaCMAP (Pairwise Controlled Manifold Approximation and Projection) for sciBASIC#. It preserves both local and global structure by optimising three kinds of point pairs - nearest neighbours, mid-near pairs and further pairs - against a three phase loss, where the phase weights shift during optimisation so that the embedding first forms local clusters and afterwards separates global groups. The optimisation runs with an Adagrad optimiser over tensor data, and Euclidean and Normalized distance metrics are provided together with numeric table and tensor extension helpers. Compared with UMAP and t-SNE, the explicit mid-near pairs are what keep relative positions of clusters meaningful, which matters when the embedding is used for interpretation rather than display alone.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

@@ -57,7 +57,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     ''' <summary>
     ''' Rewrite of the Algorithm 2 from [1].
@@ -82,7 +82,7 @@ Namespace ShapleyValue.TreeShape
     ''' https://github.com/pkozelka/treeshap
     ''' </remarks>
     Public Class ShapAlgo2
-        Friend Shared DEBUG As Boolean = True
+        Public Shared DEBUG As Boolean = False
         Private indent As String = ""
 
         Private ReadOnly phi As Double()

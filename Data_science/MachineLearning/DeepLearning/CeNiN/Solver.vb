@@ -87,8 +87,26 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' High level inference helpers that run a loaded <see cref="CeNiN"/> network over an image and
+    ''' return the ranked class predictions.
+    ''' </summary>
     Public Module Solver
 
+        ''' <summary>
+        ''' Feeds a bitmap through the network and returns the predicted class probabilities ranked from the
+        ''' most to the least likely class.
+        ''' </summary>
+        ''' <param name="cnn">The loaded convolutional network to evaluate.</param>
+        ''' <param name="image">The source image; it is resized to the network input size before inference.</param>
+        ''' <param name="resize">The resizing strategy applied to <paramref name="image"/>.</param>
+        ''' <param name="dev">
+        ''' Optional progress writer. When omitted, progress is written to the standard output stream.
+        ''' </param>
+        ''' <returns>
+        ''' An array of name/value pairs in which each name is a class label and the value is the probability
+        ''' assigned to that class by the network output layer.
+        ''' </returns>
         <Extension>
         Public Function DetectObject(cnn As CeNiN,
                                      image As Bitmap,

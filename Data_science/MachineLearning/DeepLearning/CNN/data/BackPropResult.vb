@@ -71,24 +71,28 @@ Namespace CNN.data
         Dim w As Double()
         Dim dw As Double()
 
+        ''' <summary>Multiplier applied to the L1 regularization term of this parameter block.</summary>
         Public Overridable ReadOnly Property L1DecayMul As Double
             Get
                 Return l1_decay_mul
             End Get
         End Property
 
+        ''' <summary>Multiplier applied to the L2 regularization term of this parameter block.</summary>
         Public Overridable ReadOnly Property L2DecayMul As Double
             Get
                 Return l2_decay_mul
             End Get
         End Property
 
+        ''' <summary>Gets the parameter values (weights and biases) of this block.</summary>
         Public Overridable ReadOnly Property Weights As Double()
             Get
                 Return w
             End Get
         End Property
 
+        ''' <summary>Gets the gradients that correspond one to one with <see cref="Weights"/>.</summary>
         Public Overridable ReadOnly Property Gradients As Double()
             Get
                 Return dw
@@ -96,16 +100,25 @@ Namespace CNN.data
         End Property
 
         ''' <summary>
-        ''' 训练器就地改写 <see cref="Weights"/> / <see cref="Gradients"/> 之后调用的回调。
+        ''' Callback invoked after the trainer has written <see cref="Weights"/> / <see cref="Gradients"/> in place.
         ''' </summary>
         ''' <remarks>
-        ''' 这两个数组往往就是某个 <c>DataBlock</c> 的底层存储，而 CUDA 后端会把它们缓存到显存；
-        ''' 训练器绕过 Tensor 索引器直接写数组，Tensor 自身无从感知，必须由本回调显式声明失效，
-        ''' 否则 GPU 侧会一直复用旧副本，造成静默的数值错误。
-        ''' 为 <c>Nothing</c> 表示该参数块不涉及设备端缓存。
+        ''' These arrays are usually the backing storage of a <c>DataBlock</c>, and the CUDA back end caches them in device
+        ''' memory. Because the trainer writes the arrays directly, bypassing the Tensor indexer, the Tensor itself cannot
+        ''' notice the change; this callback must declare the cache stale, otherwise the GPU side keeps reusing the old copy
+        ''' and silently produces wrong numbers. A value of <c>Nothing</c> means that this parameter block has no device-side
+        ''' cache.
         ''' </remarks>
         Public Property ModifiedHandler As Action
 
+        ''' <summary>
+        ''' Creates a back propagation result for one parameter block.
+        ''' </summary>
+        ''' <param name="w">The parameter values.</param>
+        ''' <param name="dw">The gradients corresponding to <paramref name="w"/>.</param>
+        ''' <param name="l1_decay_mul">Multiplier of the L1 regularization term.</param>
+        ''' <param name="l2_decay_mul">Multiplier of the L2 regularization term.</param>
+        ''' <param name="modifiedHandler">Optional callback used to invalidate device-side caches after an in-place write.</param>
         Public Sub New(w As Double(), dw As Double(), l1_decay_mul As Double, l2_decay_mul As Double,
                        Optional modifiedHandler As Action = Nothing)
             Me.w = w
@@ -115,13 +128,18 @@ Namespace CNN.data
             Me.ModifiedHandler = modifiedHandler
         End Sub
 
-        ''' <summary>由训练器在就地改写参数/梯度之后调用，声明设备端缓存副本已经失效</summary>
+        ''' <summary>
+        ''' Called by the trainer after writing the parameters or gradients in place, declaring the device-side cached copies
+        ''' stale.
+        ''' </summary>
         Public Sub NotifyModified()
             Dim handler = ModifiedHandler
 
             If handler IsNot Nothing Then Call handler()
         End Sub
 
+        ''' <summary>Returns a short diagnostic description of this parameter block.</summary>
+        ''' <returns>A text that reports the block length, the decay multipliers and the first few weight and gradient values.</returns>
         Public Overrides Function ToString() As String
             Return $"[len:{w.Length}] l1_decay_mul:{l1_decay_mul}, l2_decay_mul:{l2_decay_mul}; w:{w.Take(13).JoinBy(", ")}...; dw:{dw.Take(13).JoinBy(", ")}..."
         End Function

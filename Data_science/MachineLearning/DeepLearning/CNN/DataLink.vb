@@ -57,14 +57,17 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
 Namespace CNN
 
+    ''' <summary>
+    ''' Base class for layer links that hold the input and output <see cref="DataBlock"/> of a layer.
+    ''' </summary>
     Public MustInherit Class DataLink
 
         ''' <summary>
-        ''' the input and output
+        ''' The input and output activations of the layer.
         ''' </summary>
         ''' <remarks>
-        ''' data object at here for link the current layer and the next layer
-        ''' no needs for save into the model file
+        ''' These data objects link the current layer to the next layer and therefore do not need to be persisted into
+        ''' the model file.
         ''' </remarks>
         <IgnoreDataMember> Protected in_act As DataBlock
         <IgnoreDataMember> Protected out_act As DataBlock

@@ -76,11 +76,24 @@ Namespace RNN
         Public MustOverride ReadOnly Property Alphabet As Alphabet
 
 		''' <summary>
-		''' * Sample ** </summary>
+		''' Samples a string of the given length, advancing the hidden state.
+		''' </summary>
+		''' <param name="length">Number of characters to sample.</param>
+		''' <param name="seed">The seed text used to warm up the hidden state.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <returns>The sampled text.</returns>
 		Public Overridable Function sampleString(length As Integer, seed As String, temp As Double) As String Implements CharacterSampleable.sampleString
 			Return sampleString(length, seed, temp, True)
 		End Function
 
+		''' <summary>
+		''' Samples a string of the given length.
+		''' </summary>
+		''' <param name="length">Number of characters to sample.</param>
+		''' <param name="seed">The seed text used to warm up the hidden state.</param>
+		''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+		''' <returns>The sampled text.</returns>
 		Public Overridable Function sampleString(length As Integer, seed As String, temp As Double, advance As Boolean) As String Implements CharacterSampleable.sampleString
 			Dim seedIndices = Alphabet.charsToIndices(seed)
             Dim sampledIndices = sampleIndices(length, seedIndices, temp, advance)

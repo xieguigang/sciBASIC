@@ -121,7 +121,10 @@ Namespace Darwinism.Models
         ''' <summary>
         ''' 突变的变异程度，这个值应该是位于(0, 1)闭区间内的
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The mutation probability of each gene of this chromosome, the value 
+        ''' should be located in the interval ``(0, 1)``.
+        ''' </returns>
         Property MutationRate As Double
 
         ''' <summary>
@@ -132,7 +135,10 @@ Namespace Darwinism.Models
         ''' child solution from them. There are methods for selection of the chromosomes.
         ''' </summary>
         ''' <param name="another">The another chromosome.</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A sequence of the child chromosomes which are produced by the 
+        ''' crossover between this chromosome and the <paramref name="another"/> one.
+        ''' </returns>
         Function Crossover(another As Chr) As IEnumerable(Of Chr)
 
         ''' <summary>
@@ -159,7 +165,7 @@ Namespace Darwinism.Models
         ''' the population In generating the Next but rather a random (Or semi-random) selection 
         ''' With a weighting toward those that are fitter.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A new chromosome which contains the mutated genes.</returns>
         Function Mutate() As Chr
     End Interface
 End Namespace

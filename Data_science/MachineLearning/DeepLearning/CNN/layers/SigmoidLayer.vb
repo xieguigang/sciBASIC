@@ -74,21 +74,30 @@ Namespace CNN.layers
     Public Class SigmoidLayer : Inherits DataLink
         Implements Layer
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the sigmoid layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Sigmoid"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Sigmoid
             End Get
         End Property
 
+        ''' <summary>Creates a sigmoid activation layer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Applies the logistic sigmoid element wise.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the activation behaves the same in both modes.</param>
+        ''' <returns>The activated data block.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim V2 As DataBlock = db.cloneAndZero()
             Dim N = db.Weights.Length
@@ -112,6 +121,9 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>
+        ''' Backpropagates the gradient, multiplying it by the sigmoid derivative <c>y * (1 - y)</c>.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' we need to set dw of this
             ' zero out gradient wrt data
@@ -130,6 +142,8 @@ Namespace CNN.layers
             Call V.setGradient(V_dw)
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>sigmoid()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "sigmoid()"
         End Function

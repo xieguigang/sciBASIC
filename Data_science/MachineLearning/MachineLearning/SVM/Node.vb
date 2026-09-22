@@ -115,6 +115,15 @@ Namespace SVM
             Return String.Format("{0}:{1}", _index, _value.Truncate())
         End Function
 
+        ''' <summary>
+        ''' Compares this node with another object.
+        ''' </summary>
+        ''' <param name="obj">The object that will be compared with this node.</param>
+        ''' <returns>
+        ''' ``True`` when the <paramref name="obj"/> is a <see cref="Node"/> object 
+        ''' which has the same <see cref="index"/> and the same truncated 
+        ''' <see cref="value"/>, otherwise ``False``.
+        ''' </returns>
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other As Node = TryCast(obj, Node)
             If other Is Nothing Then Return False
@@ -122,6 +131,11 @@ Namespace SVM
             Return _index = other._index AndAlso _value.Truncate() = other._value.Truncate()
         End Function
 
+        ''' <summary>
+        ''' Gets the hash code of this node, which is combined by the hash code 
+        ''' of both the <see cref="index"/> and the <see cref="value"/>.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> hash code value.</returns>
         Public Overrides Function GetHashCode() As Integer
             Return _index.GetHashCode() + _value.GetHashCode()
         End Function
@@ -139,6 +153,14 @@ Namespace SVM
 
 #End Region
 
+        ''' <summary>
+        ''' Create a copy of a <see cref="Node"/> data collection.
+        ''' </summary>
+        ''' <param name="dataset">The source node collection.</param>
+        ''' <returns>
+        ''' A lazy evaluated sequence of the new <see cref="Node"/> objects which 
+        ''' have the same index and value as the source collection.
+        ''' </returns>
         Public Shared Function Copy(dataset As IEnumerable(Of Node)) As IEnumerable(Of Node)
             Return dataset _
                 .Select(Function(d)

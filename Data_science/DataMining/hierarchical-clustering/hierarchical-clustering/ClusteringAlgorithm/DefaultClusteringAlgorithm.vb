@@ -233,20 +233,25 @@ Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
     ''' linkages between clusters.</returns>
     Private Function createLinkages(distances As Double()(), clusters As IList(Of Cluster)) As DistanceMap
         If clusters.Count < 100 Then
-            Dim linkages As New DistanceMap
+            ' 批量构建全部链接后一次性建堆（O(m)），
+            ' 避免旧实现中每 Add 一条链接就对整张链接表做一次全量 Sort()（约 O(n^4 log n)）
+            Dim linkages As New List(Of HierarchyTreeNode)
+
             For col As Integer = 0 To clusters.Count - 1
+                Dim lCluster As Cluster = clusters(col)
+
                 For row As Integer = col + 1 To clusters.Count - 1
-                    Dim link As New HierarchyTreeNode
-                    Dim lCluster As Cluster = clusters(col)
-                    Dim rCluster As Cluster = clusters(row)
-                    link.LinkageDistance = distances(col)(row)
-                    link.Left =(lCluster)
-                    link.Right =(rCluster)
-                    linkages.Add(link)
+                    Dim link As New HierarchyTreeNode With {
+                        .LinkageDistance = distances(col)(row),
+                        .Left = lCluster,
+                        .Right = clusters(row)
+                    }
+
+                    Call linkages.Add(link)
                 Next
             Next
 
-            Return linkages
+            Return New DistanceMap(linkages)
         Else
             '当数量很大的时候，这里也是一个限速步骤，需要使用并行
             Dim copy As Cluster() = clusters.ToArray

@@ -111,14 +111,26 @@ Namespace Hierarchy
             Return hashCodePair(link.Left(), link.Right())
         End Function
 
+        ''' <summary>
+        ''' 由两个簇的唯一整数 <see cref="Cluster.Id"/> 组合出的链接键。
+        ''' 
+        ''' <para>
+        ''' 使用 <c>(min &lt;&lt; 32) | max</c> 的位拼接：两个 ID 均为 &lt; 2^31 的非负整数，
+        ''' 因此不同的簇对所产生的结果必然不同（无哈希冲突）。
+        ''' </para>
+        ''' <para>
+        ''' 相比旧实现基于 <see cref="String.GetHashCode"/> 的簇名哈希 + <c>String.CompareTo</c> 比较，
+        ''' 既消除了每次链接查找的字符串开销，也避免了重名簇共享链接键的风险。
+        ''' </para>
+        ''' </summary>
         Public Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As ULong
-            Dim lName = lCluster.Name.GetHashCode
-            Dim rName = rCluster.Name.GetHashCode
+            Dim lId As ULong = CULng(lCluster.Id)
+            Dim rId As ULong = CULng(rCluster.Id)
 
-            If lCluster.Name.CompareTo(rCluster.Name) < 0 Then
-                Return HashMap.HashCodePair(lName, rName)
+            If lId <= rId Then
+                Return (lId << 32) Or rId
             Else
-                Return HashMap.HashCodePair(rName, lName)
+                Return (rId << 32) Or lId
             End If
         End Function
     End Module

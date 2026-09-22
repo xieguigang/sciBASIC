@@ -60,6 +60,7 @@
 #End Region
 
 Imports __std = System.Math
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Matrix
 
@@ -308,23 +309,22 @@ Namespace LinearAlgebra.Matrix
             Dim Xmat As GeneralMatrix = B.GetMatrix(piv, 0, nx - 1)
             Dim X As Double()() = Xmat.ArrayPack
 
-            ' Solve L*Y = B(piv,:)
+            ' Solve L*Y = B(piv,:)：前代等价于逐行 AXPY（X(i) -= LU(i)(k) * X(k)）
             For k As Integer = 0 To n - 1
                 For i As Integer = k + 1 To n - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * LU(i)(k)
-                    Next
+                    Call SIMDIntrinsics.AxpyInPlace(-LU(i)(k), X(k), X(i))
                 Next
             Next
             ' Solve U*X = Y;
             For k As Integer = n - 1 To 0 Step -1
+                Dim rowK As Double() = X(k)
+                Dim pivot As Double = LU(k)(k)
+
                 For j As Integer = 0 To nx - 1
-                    X(k)(j) /= LU(k)(k)
+                    rowK(j) /= pivot
                 Next
                 For i As Integer = 0 To k - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * LU(i)(k)
-                    Next
+                    Call SIMDIntrinsics.AxpyInPlace(-LU(i)(k), rowK, X(i))
                 Next
             Next
             Return Xmat

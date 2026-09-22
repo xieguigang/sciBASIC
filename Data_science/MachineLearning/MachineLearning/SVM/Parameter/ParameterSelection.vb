@@ -121,7 +121,7 @@ Namespace SVM
         ''' <param name="minPower">The minimum power of 2</param>
         ''' <param name="maxPower">The maximum power of 2</param>
         ''' <param name="iteration">The iteration size to use in powers</param>
-        ''' <returns></returns>
+        ''' <returns>A list of the values ``2 ^ p`` for each power ``p`` in the requested range.</returns>
         Public Function GetList(minPower As Double, maxPower As Double, iteration As Double) As List(Of Double)
             Dim list As List(Of Double) = New List(Of Double)()
             Dim d = minPower

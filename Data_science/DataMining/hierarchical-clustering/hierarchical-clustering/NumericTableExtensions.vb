@@ -30,6 +30,7 @@
 Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.BIRCH
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 
@@ -221,6 +222,122 @@ Public Module HierarchicalClusteringTableExtensions
         Return writeClusterLabels(source, flat)
     End Function
 
+#Region "BIRCH 近似通道"
+
+    ''' <summary>
+    ''' 面向大规模数据集的**近似**层次聚类入口（BIRCH 预聚类 + 凝聚层次聚类）。
+    ''' 
+    ''' <para>
+    ''' 与 <see cref="hca"/> 不同，这里接收的是**特征矩阵**（而非距离矩阵），并且
+    ''' **不会构造 n×n 距离矩阵**：先用 BIRCH CF-tree 把 n 个样本压缩成 m 个子簇
+    ''' （m 由 <see cref="BirchOptions.targetSubclusters"/> 控制），再对子簇质心执行
+    ''' 凝聚层次聚类。因此适用于 2 万样本以上的大数据集。
+    ''' </para>
+    ''' 
+    ''' ```vb
+    ''' Dim tree = x.hcaApprox()
+    ''' ```
+    ''' </summary>
+    ''' <param name="source">特征矩阵形式的二维表（每一行为一个样本，每一列为一个特征）</param>
+    ''' <param name="options">BIRCH 预聚类参数，缺省使用 <see cref="BirchOptions"/> 的默认值</param>
+    ''' <returns>以子簇为叶节点的层次聚类树（dendrogram）</returns>
+    <Extension>
+    Public Function hcaApprox(source As NumericTable,
+                              Optional options As BirchOptions = Nothing) As Cluster
+
+        Dim pre As BirchPreclustering = Nothing
+
+        Return performApproxHca(source, If(options, New BirchOptions()), pre)
+    End Function
+
+    ''' <summary>
+    ''' 面向大规模数据集的**近似**层次聚类并按目标簇数量 <paramref name="k"/> 切分，
+    ''' 将得到的类编号写入 ``cluster`` 标签列之后返回原表。
+    ''' 
+    ''' <para>
+    ''' 输入为**特征矩阵**，内部使用 BIRCH 预聚类，**不会构造 n×n 距离矩阵**。
+    ''' 注意：<paramref name="k"/> 的上限是 BIRCH 实际产生的子簇数量 m；
+    ''' 若 <paramref name="k"/> 大于 m，则最多只能切分出 m 个簇。
+    ''' </para>
+    ''' </summary>
+    ''' <param name="source">特征矩阵形式的二维表（每一行为一个样本，每一列为一个特征）</param>
+    ''' <param name="k">目标簇数量</param>
+    ''' <param name="options">BIRCH 预聚类参数，缺省使用 <see cref="BirchOptions"/> 的默认值</param>
+    ''' <returns>写入 ``cluster`` 标签之后的原表对象</returns>
+    <Extension>
+    Public Function hcutApprox(source As NumericTable,
+                               k As Integer,
+                               Optional options As BirchOptions = Nothing) As NumericTable
+
+        If source Is Nothing Then
+            Throw New ArgumentNullException(NameOf(source))
+        End If
+        If k < 1 Then
+            Throw New ArgumentOutOfRangeException(NameOf(k), "the cluster number k must be a positive value")
+        End If
+        If k > source.nsamples Then
+            Throw New ArgumentOutOfRangeException(NameOf(k), $"the cluster number k({k}) can not be greater than the sample size {source.nsamples}!")
+        End If
+
+        Dim opt As BirchOptions = If(options, New BirchOptions())
+        Dim pre As BirchPreclustering = Nothing
+        Dim root As Cluster = performApproxHca(source, opt, pre)
+
+        Return writePreclusterLabels(source, cutTree(root, k), pre.Members)
+    End Function
+
+    ''' <summary>
+    ''' 面向大规模数据集的**近似**层次聚类并按距离阈值切分，将类编号写入 ``cluster`` 标签列后返回原表。
+    ''' 
+    ''' <para>
+    ''' 输入为**特征矩阵**，内部使用 BIRCH 预聚类，**不会构造 n×n 距离矩阵**。
+    ''' 注意：此处的阈值作用于**子簇质心之间**的连接距离，与原始样本距离的尺度不同。
+    ''' </para>
+    ''' </summary>
+    ''' <param name="source">特征矩阵形式的二维表（每一行为一个样本，每一列为一个特征）</param>
+    ''' <param name="threshold">子簇质心之间的距离阈值</param>
+    ''' <param name="options">BIRCH 预聚类参数，缺省使用 <see cref="BirchOptions"/> 的默认值</param>
+    ''' <returns>写入 ``cluster`` 标签之后的原表对象</returns>
+    <Extension>
+    Public Function hcutApprox(source As NumericTable,
+                               threshold As Double,
+                               Optional options As BirchOptions = Nothing) As NumericTable
+
+        If source Is Nothing Then
+            Throw New ArgumentNullException(NameOf(source))
+        End If
+        If threshold <= 0 Then
+            Throw New ArgumentOutOfRangeException(NameOf(threshold), "the distance threshold must be a positive value")
+        End If
+
+        Dim opt As BirchOptions = If(options, New BirchOptions())
+        Dim pre As BirchPreclustering = BirchPreclustering.Precluster(assertFeatureRows(source, "hcutApprox"), opt)
+        Dim algorithm As New DefaultClusteringAlgorithm With {.Silent = opt.silent}
+        Dim flat As IList(Of Cluster) = algorithm.performFlatClustering(
+            distances:=centroidDistanceMatrix(pre.Centroids),
+            clusterNames:=pre.Names,
+            linkageStrategy:=If(opt.linkage, New AverageLinkageStrategy()),
+            threshold:=threshold)
+
+        Return writePreclusterLabels(source, flat, pre.Members)
+    End Function
+
+    ''' <summary>
+    ''' 在子簇质心上执行（优化后的）凝聚层次聚类
+    ''' </summary>
+    Private Function performApproxHca(source As NumericTable, options As BirchOptions, ByRef pre As BirchPreclustering) As Cluster
+        pre = BirchPreclustering.Precluster(assertFeatureRows(source, "hcaApprox"), options)
+
+        Dim algorithm As New DefaultClusteringAlgorithm With {.Silent = options.silent}
+
+        Return algorithm.performClustering(
+            distances:=centroidDistanceMatrix(pre.Centroids),
+            clusterNames:=pre.Names,
+            linkageStrategy:=If(options.linkage, New AverageLinkageStrategy()))
+    End Function
+
+#End Region
+
 #Region "Helpers"
 
     ''' <summary>
@@ -332,6 +449,69 @@ Public Module HierarchicalClusteringTableExtensions
                 Next
             Next
         End If
+    End Function
+
+    ''' <summary>
+    ''' 校验并获取特征矩阵（近似通道的输入是特征矩阵，而不是距离矩阵）
+    ''' </summary>
+    Private Function assertFeatureRows(source As NumericTable, caller As String) As Double()()
+        If source Is Nothing Then
+            Throw New ArgumentNullException(NameOf(source))
+        End If
+        If source.nsamples = 0 OrElse source.nfeatures = 0 Then
+            Throw New InvalidConstraintException($"the source table has no sample/feature data for the '{caller}' hierarchical clustering!")
+        End If
+
+        Return source.NumericRows()
+    End Function
+
+    ''' <summary>
+    ''' 计算子簇质心之间的对称欧氏距离矩阵（m x m，m 为子簇数量，远小于样本数 n）
+    ''' </summary>
+    Private Function centroidDistanceMatrix(centroids As Double()()) As Double()()
+        Dim n As Integer = centroids.Length
+        Dim matrix As Double()() = New Double(n - 1)() {}
+
+        For i As Integer = 0 To n - 1
+            matrix(i) = New Double(n - 1) {}
+        Next
+
+        For i As Integer = 0 To n - 1
+            For j As Integer = i + 1 To n - 1
+                Dim d As Double = DistanceMethods.EuclideanDistance(centroids(i), centroids(j))
+
+                matrix(i)(j) = d
+                matrix(j)(i) = d
+            Next
+        Next
+
+        Return matrix
+    End Function
+
+    ''' <summary>
+    ''' 将子簇级别的扁平簇结果展开回原始样本，写入 ``cluster`` 标签列
+    ''' </summary>
+    Private Function writePreclusterLabels(source As NumericTable,
+                                           clusters As IEnumerable(Of Cluster),
+                                           members As Dictionary(Of String, Integer())) As NumericTable
+        Dim labels As Integer() = New Integer(source.nsamples - 1) {}
+        Dim classId As Integer = 0
+
+        For Each c As Cluster In clusters
+            classId += 1
+
+            For Each leaf As String In collectLeafs(c)
+                Dim rows As Integer() = Nothing
+
+                If members.TryGetValue(leaf, rows) Then
+                    For Each idx As Integer In rows
+                        labels(idx) = classId
+                    Next
+                End If
+            Next
+        Next
+
+        Return source.SetLabel("cluster", labels)
     End Function
 
 #End Region

@@ -61,8 +61,25 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.Activations
 
+    ''' <summary>
+    ''' The rectified linear unit (ReLU) activation function: the input value 
+    ''' which is less than the threshold will be clipped as the threshold value.
+    ''' </summary>
+    ''' <remarks>
+    ''' ReLU is the default activation function of the modern neural network
+    ''' models, as its derivative is cheap to calculate and it does not suffer 
+    ''' from the vanishing gradient problem on the positive half-axis.
+    ''' </remarks>
     Public Class ReLU : Inherits IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this ReLU function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``ReLU``, and the ``threshold`` value is stored as 
+        ''' its only argument.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -77,15 +94,36 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' The clip threshold value, all of the input values which are less 
+        ''' than this threshold will be clipped as this threshold value.
+        ''' </summary>
         ReadOnly threshold# = 0
 
+        ''' <summary>
+        ''' Create a standard ReLU function with the default threshold value ``0``.
+        ''' </summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a ReLU function with a specific clipping threshold value.
+        ''' </summary>
+        ''' <param name="threshold">The clipping threshold value.</param>
         Sub New(threshold As Double)
             Me.threshold = threshold
         End Sub
 
+        ''' <summary>
+        ''' Calculates the ReLU function value: the value which is less than the 
+        ''' threshold will be clipped as the threshold value.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' The function output value; the output will be truncated by the 
+        ''' <see cref="IActivationFunction.Truncate"/> limitation when the 
+        ''' <paramref name="x"/> value is greater than the threshold.
+        ''' </returns>
         Public Overrides Function [Function](x As Double) As Double
             If x < threshold Then
                 Return threshold
@@ -96,6 +134,14 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        ''' <summary>
+        ''' The standard ReLU function: the negative value will be clipped as zero.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' ``0`` when <paramref name="x"/> is a negative value, otherwise the 
+        ''' <paramref name="x"/> value itself.
+        ''' </returns>
         Public Shared Function ReLU(x As Double) As Double
             If x < 0 Then
                 Return 0
@@ -104,6 +150,14 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        ''' <summary>
+        ''' Apply the standard ReLU function on each element of the given vector.
+        ''' </summary>
+        ''' <param name="x">A <see cref="Vector"/> of the function input values.</param>
+        ''' <returns>
+        ''' The <paramref name="x"/> vector itself, in which all of the negative 
+        ''' elements have been clipped as zero (the vector is modified in place).
+        ''' </returns>
         Public Shared Function ReLU(x As Vector) As Vector
             x(x < 0.0) = Vector.Zero
             Return x
@@ -112,8 +166,13 @@ Namespace ComponentModel.Activations
         ''' <summary>
         ''' ReLU activator function will clip the negative value as zero
         ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
+        ''' <param name="x">
+        ''' An array of the function input values, this array will be modified in place.
+        ''' </param>
+        ''' <returns>
+        ''' The <paramref name="x"/> array itself, in which all of the negative 
+        ''' elements have been clipped as zero.
+        ''' </returns>
         Public Shared Function ReLU(x As Double()) As Double()
             For i As Integer = 0 To x.Length - 1
                 If x(i) < 0 Then
@@ -124,6 +183,12 @@ Namespace ComponentModel.Activations
             Return x
         End Function
 
+        ''' <summary>
+        ''' Calculates the derivative of this ReLU function: ``1`` when the input 
+        ''' value is not less than the threshold, otherwise the threshold value.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The derivative value.</returns>
         Public Overrides Function CalculateDerivative(x As Double) As Double
             If x < threshold Then
                 Return threshold
@@ -132,6 +197,12 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        ''' <summary>
+        ''' Calculates the derivative of this ReLU function: ``1`` when the input 
+        ''' value is not less than the threshold, otherwise the threshold value.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The derivative value.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function Derivative(x As Double) As Double
             If x < threshold Then
@@ -141,6 +212,10 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``ReLU()``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(ReLU)}()"
         End Function

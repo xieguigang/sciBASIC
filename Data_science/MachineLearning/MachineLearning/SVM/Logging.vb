@@ -58,6 +58,9 @@ Imports System.IO
 
 Namespace SVM
 
+    ''' <summary>
+    ''' The console logging helper of the LibSVM port.
+    ''' </summary>
     Public Class Logging
 
         ''' <summary>
@@ -67,12 +70,20 @@ Namespace SVM
 
         Shared svm_print_stdout As TextWriter = Console.Out
 
+        ''' <summary>
+        ''' Flush the buffered logging content into the output writer.
+        ''' </summary>
         Public Shared Sub flush()
             SyncLock svm_print_stdout
                 Call svm_print_stdout.Flush()
             End SyncLock
         End Sub
 
+        ''' <summary>
+        ''' Write a message into the logging output; nothing will happen when the 
+        ''' <see cref="IsVerbose"/> flag is not enabled.
+        ''' </summary>
+        ''' <param name="s">The message text that will be written.</param>
         Public Shared Sub info(s As String)
             If _IsVerbose Then
                 SyncLock svm_print_stdout

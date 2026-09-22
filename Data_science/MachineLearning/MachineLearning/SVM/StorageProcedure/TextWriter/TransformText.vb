@@ -86,6 +86,14 @@ Namespace SVM
             output.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the range transform into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="transform">The transform that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains the dimension count, the input start values, 
+        ''' the input scale values and the output start/scale values.
+        ''' </returns>
         Public Function ToString(transform As RangeTransform) As String
             Dim sb As New StringBuilder
 

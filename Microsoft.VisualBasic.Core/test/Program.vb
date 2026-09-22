@@ -84,6 +84,13 @@ Module Program
             Return
         End If
 
+        ' runs the NumericTable dataframe(...) builder regression checks only:
+        '   test.exe --numeric-table
+        If args.Length > 0 AndAlso args(0) = "--numeric-table" Then
+            Call NumericTableExtensionsTest.Run()
+            Return
+        End If
+
         Call qgramTestSearch.Run()
         Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()

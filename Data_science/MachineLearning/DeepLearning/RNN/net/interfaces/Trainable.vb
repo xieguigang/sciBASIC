@@ -59,14 +59,12 @@ Namespace RNN
     ''' </summary>
     Public Interface Trainable
 
-        ' 
-        ' 			Performs a forward-backward pass for the given indices.
-        ' 	
-        ' 			ix.length and iy.length lengths must match.
-        ' 			All indices must be less than the vocabulary size.
-        ' 	
-        ' 			Returns the cross-entropy loss.
-        ' 		
+        ''' <summary>
+        ''' Performs a forward-backward pass for the given indices.
+        ''' </summary>
+        ''' <param name="ix">The input indices; its length must match <paramref name="iy"/>.</param>
+        ''' <param name="iy">The target indices; every index must be smaller than the vocabulary size.</param>
+        ''' <returns>The cross-entropy loss.</returns>
         Function forwardBackward(ix As Integer(), iy As Integer()) As Double
 
     End Interface

@@ -14,15 +14,16 @@
     <UseSystemDrawing>true</UseSystemDrawing>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyTitle>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</AssemblyTitle>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>3D Gaussian Splatting Scene Reconstruction and Rendering</Title>
     <Description>3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision</PackageTags>
+    <PackageTags>scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;novel-view-synthesis;computer-vision;adam-optimizer</PackageTags>
+    <PackageReleaseNotes>3D Gaussian splatting scene reconstruction and rendering for sciBASIC#. The scene is represented by a set of anisotropic Gaussian ellipsoids, each carrying a position, scale, rotation, opacity and colour: GaussianModel holds this representation, ImageLoader reads the multi view input images, Camera defines the projection used for rasterisation, GradientCalculator computes the gradients of the image loss with respect to every Gaussian parameter, Optimizer updates them with Adam, and SplatRenderer rasterises the Gaussians into an image. The package is intended for novel view synthesis and for converting multi view captures into a renderable 3D representation, and complements the mesh and voxel tooling of the Landscape package.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

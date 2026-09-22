@@ -76,15 +76,31 @@ Namespace ComponentModel.Activations
     ''' </remarks>
     Public MustInherit Class IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this activation function, so 
+        ''' that the function object can be stored into a xml document.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which can be serialized 
+        ''' into a xml document.
+        ''' </returns>
         Public MustOverride ReadOnly Property Store As ActiveFunction
 
         ''' <summary>
         ''' 因为激活函数在求导之后,结果值可能会出现无穷大
         ''' 所以可以利用这个值来限制求导之后的结果最大值
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The absolute value limitation of the derivative value; a value that 
+        ''' is not a positive number means no truncation will be applied.
+        ''' </returns>
         Public Property Truncate As Double = 10000
 
+        ''' <summary>
+        ''' Evaluate the activation function value at the specific point.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The function output value <i>f(x)</i>.</returns>
         Default Public ReadOnly Property Evaluate(x As Double) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -92,6 +108,14 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Evaluate the activation function value for each element in a given vector.
+        ''' </summary>
+        ''' <param name="a">A <see cref="Vector"/> of the function input values.</param>
+        ''' <returns>
+        ''' A new <see cref="Vector"/> in which each element is the function 
+        ''' output value of the corresponding element in <paramref name="a"/>.
+        ''' </returns>
         Default Public ReadOnly Property Evaluate(a As Vector) As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -99,6 +123,16 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Calculates the derivative value of this activation function at the 
+        ''' specific point, and the result will be truncated by the 
+        ''' <see cref="Truncate"/> limitation.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' The derivative value <i>f'(x)</i>; the infinite value will be 
+        ''' replaced by ``±100000`` and the ``NaN`` value will be replaced by ``1``.
+        ''' </returns>
         Public Overridable Function CalculateDerivative(x As Double) As Double
             Dim val As Double
 
@@ -142,7 +176,10 @@ Namespace ComponentModel.Activations
         ''' <summary>
         ''' 必须要重写这个函数来将函数对象序列化为表达式字符串文本
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The text expression of this activation function, which can be parsed 
+        ''' back by the <see cref="ActiveFunction.Parse"/> function.
+        ''' </returns>
         Public MustOverride Overrides Function ToString() As String
 
     End Class

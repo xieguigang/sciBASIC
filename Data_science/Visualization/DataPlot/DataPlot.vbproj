@@ -4,8 +4,8 @@
     <RootNamespace>Microsoft.VisualBasic.Data.Plots</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <AssemblyName>Microsoft.VisualBasic.Data.DataPlot</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -20,7 +20,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization</PackageTags>
+    <PackageTags>scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization;boxplot;violin-plot;heatmap;sankey;treemap</PackageTags>
+    <PackageReleaseNotes>DataPlot is a standalone GDI+ charting engine for sciBASIC#. It renders scatter, line, bar, histogram, box, violin, jitter, bubble, pie, radar, rose, heatmap, chord, Sankey and treemap plots onto a bitmap using ggplot2 style theme units - theme elements such as axis, plot background, grid and legend are described as composable units and combined into a theme - with automatic pixel layout so that axes, labels and legends are positioned without manual coordinates. The GgplotTheme namespace holds the theme definitions, and because the engine is independent of the other plotting packages it works both as a general charting library and as the rendering backend for higher level statistics oriented plot packages.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

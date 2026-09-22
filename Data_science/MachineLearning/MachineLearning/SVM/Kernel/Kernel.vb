@@ -71,9 +71,25 @@ Namespace SVM
         Private _gamma As Double
         Private _coef0 As Double
 
+        ''' <summary>
+        ''' Request a column of the kernel matrix with a given length.
+        ''' </summary>
+        ''' <param name="column">The zero based index of the target row of the kernel matrix.</param>
+        ''' <param name="len">The number of the elements that will be requested.</param>
+        ''' <returns>An array which contains the first <paramref name="len"/> elements of the target column.</returns>
         Public MustOverride Function GetQ(column As Integer, len As Integer) As Single() Implements IQMatrix.GetQ
+
+        ''' <summary>
+        ''' Gets the diagonal elements of the kernel matrix.
+        ''' </summary>
+        ''' <returns>An array which contains the diagonal elements <i>Q(i, i)</i>.</returns>
         Public MustOverride Function GetQD() As Double() Implements IQMatrix.GetQD
 
+        ''' <summary>
+        ''' Swap the position of the two samples in the kernel matrix.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the first sample.</param>
+        ''' <param name="j">The zero based index of the second sample.</param>
         Public Overridable Sub SwapIndex(i As Integer, j As Integer) Implements IQMatrix.SwapIndex
             _x.Swap(i, j)
 
@@ -95,6 +111,13 @@ Namespace SVM
             Return ret
         End Function
 
+        ''' <summary>
+        ''' Evaluate the kernel function value between the two samples which are 
+        ''' specified by their indices in the training data.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the first sample.</param>
+        ''' <param name="j">The zero based index of the second sample.</param>
+        ''' <returns>The kernel function value <i>K(x_i, x_j)</i>.</returns>
         Public Function KernelFunction(i As Integer, j As Integer) As Double
             Select Case _kernelType
                 Case KernelType.LINEAR
@@ -112,6 +135,12 @@ Namespace SVM
             End Select
         End Function
 
+        ''' <summary>
+        ''' Create the kernel matrix from the training data and the parameters.
+        ''' </summary>
+        ''' <param name="l">The number of the training samples.</param>
+        ''' <param name="x_">The feature matrix of the training data, each row is the sparse vector of one sample.</param>
+        ''' <param name="param">The training parameters, which provides the kernel type and its coefficients.</param>
         Public Sub New(l As Integer, x_ As Node()(), param As Parameter)
             _kernelType = param.kernelType
             _degree = param.degree
@@ -246,6 +275,13 @@ Namespace SVM
             Return sum
         End Function
 
+        ''' <summary>
+        ''' Evaluate the kernel function value between two sparse feature vectors.
+        ''' </summary>
+        ''' <param name="x">The first sparse feature vector.</param>
+        ''' <param name="y">The second sparse feature vector.</param>
+        ''' <param name="param">The training parameters, which provides the kernel type and its coefficients.</param>
+        ''' <returns>The kernel function value <i>K(x, y)</i>.</returns>
         Public Shared Function KernelFunction(x As Node(), y As Node(), param As Parameter) As Double
             Select Case param.kernelType
                 Case KernelType.LINEAR

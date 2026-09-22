@@ -69,6 +69,12 @@ Namespace SVM
         Private ReadOnly cache As Cache
         Private ReadOnly QD As Double()
 
+        ''' <summary>
+        ''' Create the C-SVC / nu-SVC formulation of the kernel matrix.
+        ''' </summary>
+        ''' <param name="prob">The training data.</param>
+        ''' <param name="param">The training parameters.</param>
+        ''' <param name="y_">The signed class label (+1/-1) of each training sample.</param>
         Public Sub New(prob As Problem, param As Parameter, y_ As SByte())
             MyBase.New(prob.count, prob.X, param)
             y = CType(y_.Clone(), SByte())
@@ -80,6 +86,13 @@ Namespace SVM
             Next
         End Sub
 
+        ''' <summary>
+        ''' Request a column of the kernel matrix, the value is multiplied by 
+        ''' the sign of the class labels: <i>Q(i, j) = y_i * y_j * K(x_i, x_j)</i>.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the target row.</param>
+        ''' <param name="len">The number of the elements that will be requested.</param>
+        ''' <returns>An array which contains the first <paramref name="len"/> elements of the target column.</returns>
         Public Overrides Function GetQ(i As Integer, len As Integer) As Single()
             Dim data As Single() = Nothing
             Dim start As i32 = 0, j As Integer
@@ -93,10 +106,21 @@ Namespace SVM
             Return data
         End Function
 
+        ''' <summary>
+        ''' Gets the diagonal elements of the kernel matrix.
+        ''' </summary>
+        ''' <returns>An array which contains the diagonal elements <i>Q(i, i)</i>.</returns>
         Public Overrides Function GetQD() As Double()
             Return QD
         End Function
 
+        ''' <summary>
+        ''' Swap the position of the two samples in the kernel matrix, the cached 
+        ''' columns, the class labels and the diagonal elements are swapped at 
+        ''' the same time.
+        ''' </summary>
+        ''' <param name="i">The zero based index of the first sample.</param>
+        ''' <param name="j">The zero based index of the second sample.</param>
         Public Overrides Sub SwapIndex(i As Integer, j As Integer)
             cache.SwapIndex(i, j)
             MyBase.SwapIndex(i, j)

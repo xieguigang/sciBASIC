@@ -31,7 +31,6 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Text
 
@@ -54,11 +53,6 @@ Imports Microsoft.VisualBasic.Text
 ''' 否则无法保证读写的往返一致性。
 ''' </summary>
 Public Module NumericTableIO
-
-    ''' <summary>
-    ''' 标签列在文本文件之中的缺省列名前缀
-    ''' </summary>
-    Public Const DefaultLabelPrefix As String = "label:"
 
 #Region "write"
 

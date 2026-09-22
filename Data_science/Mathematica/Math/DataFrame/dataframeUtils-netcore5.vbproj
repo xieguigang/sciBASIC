@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>Labelled Data Matrix, Correlation and Distance Utilities</Title>
     <Description>Labelled numeric matrix model with pairwise correlation and distance matrix builders, missing-value imputation, scaling and centering transforms, and Matrix Market MTX/RUA file IO. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Matrix</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation</PackageTags>
+    <PackageTags>scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation;scaling;centering</PackageTags>
+    <PackageReleaseNotes>Labelled data matrix utilities for sciBASIC#. The root namespace provides the labelled numeric matrix model together with pairwise correlation and distance matrix builders, missing value imputation, and the scaling and centering transforms that prepare a matrix for multivariate analysis. The MatrixMarket namespace reads and writes the Matrix Market MTX and RUA file formats so matrices can be exchanged with external numerical tools. This package is the bridge between tabular data frames and the linear algebra routines of the Math package: labels travel with the matrix, so correlation and distance results stay readable in terms of sample and feature names.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

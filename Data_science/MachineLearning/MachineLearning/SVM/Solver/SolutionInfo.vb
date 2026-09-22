@@ -60,19 +60,43 @@ Namespace SVM
 
     ' java: information about solution except alpha,
     ' because we cannot return multiple values otherwise...
+    ''' <summary>
+    ''' The solution information of the support vector machine solver, which 
+    ''' contains everything of the solution except the alpha coefficients.
+    ''' </summary>
     Public Class SolutionInfo
 
+        ''' <summary>
+        ''' The value of the objective function which was minimized.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property obj As Double
+        ''' <summary>
+        ''' The bias term of the decision function.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property rho As Double
+        ''' <summary>
+        ''' The upper bound value of the positive side lagrange multiplier.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property upper_bound_p As Double
+        ''' <summary>
+        ''' The upper bound value of the negative side lagrange multiplier.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property upper_bound_n As Double
 
         ''' <summary>
         ''' for Solver_NU
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The <i>r</i> value which is only used by the nu solver.</returns>
         Public Property r As Double
 
+        ''' <summary>
+        ''' Display this solution information as a json string.
+        ''' </summary>
+        ''' <returns>A json text which describes this solution information.</returns>
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

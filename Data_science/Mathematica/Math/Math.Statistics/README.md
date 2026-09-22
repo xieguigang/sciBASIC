@@ -1,96 +1,75 @@
-# statistics
+# 统计工具箱：分布、假设检验与更多
 
-> [USACE-MMC/statistics](https://github.com/USACE-MMC/statistics): a simple statistics library to support data analysis and monte carlo
+## 引言
 
-statistics is a library, original written in java and was translated into VB.NET, indended to allow data to be fitted to analytical distributions using MOM or Linear moments.
+本包是 `sciBASIC#` 的**统计中枢**：分布建模、假设检验、描述统计与几类高级方法（ICA、RANSAC、Shapley 值）都集中在这里，供数据挖掘、机器学习与绘图包共同调用。
 
-The resulting distributions can then be accessed using ``GetPDF``, ``GetCDF``, and ``GetInvCDF``.  This allows programmers to create simple monte carlo programs without having a math library that solves all of the problems in the world.
+## 核心能力
 
-To produce MOM statistics there are a few options, BasicProductMoments utilizes an inline algorithm for calculating count, min, max, mean, and variance.  BasicProductMomentsHistogram extends BasicProductMoments to include a histogram that is created based on a bin width. This histogram is also developed using an inline algorithm.  ProductMoments requires storing the data or passing the entire array into the object at one time, but gives the programmer access to skew and kurtosis.
+### 概率分布（`Distributions`）
 
-The library is split into two major packages ``Distributions`` and ``MomentFunctions``.
+- 常见概率分布模型与密度函数；
+- **参数估计**：矩估计（`MethodOfMoments`）与 L-矩估计（`LinearMoments`）。
 
-## Distributions
-Distributions is a repository for implementations of the abstract class ContinuousDistribution. Each continuous distribution produces the CDF, PDF, and Inverse CDF functions. There are two packages under distributions, LinearMoments, and MethodOfMoments.  These packages have similar distributions, but the fitting methods when using the constructors that consume arrays of double data are based on the package they are in.
+### 假设检验（`Hypothesis`）
 
-Under LinearMoments the following distributions appear:
+- 常用参数检验（t 检验、F 检验、卡方检验等）；
+- **Fisher 精确检验**（`FishersExact`）：小样本列联表；
+- **Mantel 检验**（`Mantel`）：两个距离矩阵之间的相关性检验。
 
-  * Exponential
-  * Generalized Extreme Value
-  * Gumbel
-  * LogPearson type III
-  * Logistic
-  * Pareto
+### 描述统计（`MomentFunctions`）
 
-Under MethodOfMoments the following distributions appear:
+均值、方差、偏度、峰度等矩统计量。
 
-  * Beta
-  * Exponential
-  * Generalized Extreme Value
-  * Gamma
-  * Gumbel
-  * LogNormal
-  * LogPearson type III
-  * Normal
-  * Rayleigh
-  * Triangular
-  * Uniform
+### 高级方法
 
-## MomentFunctions
-MomentFunctions is a repository for classes that perform operations on data arrays or streams that describe the data with various typical statistics like mean standard deviation etc.  Not only are method of moments utilized but also Linear moments.  BasicProductMoments (and BasicProductMomentsHistogram) utilize an inline algorithm for mean and standard deviation for method of moments (we use the moniker product moments to refer to traditional method of moments, to differentiate between MOM and linear moments...). ProductMoments requires the entire dataset to be supplied to the constructor, it loops through the data twice, but it also calculates Skew and Kurtosis.
+| 命名空间 | 方法 | 用途 |
+|---|---|---|
+| `ShapleyValue` | Shapley 值归因 | 公平分配特征贡献 |
+| `ShapleyValue.TreeShap` | TreeSHAP | 树模型预测的精确归因 |
+| `FastICA` | 独立成分分析 | 盲源分离（如去除生理噪声） |
+| `RANSAC` | 随机采样一致性 | 含离群点时的稳健模型拟合 |
 
-## SpecialFunctions
-Special functions is a static class that computes functions that are necessary for various operations in the special extreme distributions included in this package. Most of the methods are based off of existing algorithims from Cephes or other similar sources.
+## 命名空间地图
 
-## Example Code
+| 命名空间 | 职责 |
+|---|---|
+| `Microsoft.VisualBasic.Math.Statistics`（根） | 统计入口与共享类型 |
+| `....Statistics.Distributions`（+ `LinearMoments` / `MethodOfMoments`） | 分布与参数估计 |
+| `....Statistics.HypothesisTesting`（+ `FishersExact` / `MantelTest`） | 假设检验 |
+| `....Statistics.MomentFunctions` | 矩统计量 |
+| `....Statistics.ShapleyValue`（+ `TreeShap`） | Shapley 值归因 |
+| `....Statistics.RANSAC` | 稳健拟合 |
 
-The following codeblock is an example of how to create a monte carlo with the standard normal distribution
+## 快速上手
 
 ```vbnet
-Public Module ExampleMonteCarlo
+Imports Microsoft.VisualBasic.Math.Statistics
 
-    Sub Main()
-        Call MonteCarlo()
-        Call Pause()
-    End Sub
+' 1. 描述统计
+Dim moments = MomentFunctions.Compute(values)
 
-    Public Sub MonteCarlo()
-        ' this Is a very trivial example of creating a monte carlo using a
-        ' standard normal distribution
-        Dim sn As New Distributions.MethodOfMoments.Normal()
+' 2. 假设检验（如 t 检验 / Fisher 精确检验）
+Dim t = HypothesisTesting.TTest(groupA, groupB)
+Dim fisher = FishersExact.Test(table2x2)
 
-        ' output now contains 10000 random normally distributed values.
-        Dim output As Vector = sn.GetInvCDF(rand(10000))
+' 3. 分布参数估计
+Dim fit = Distributions.MethodOfMoments.Fit(values, DistributionKind.Normal)
 
-        ' to evaluate the mean And standard deviation of the output
-        ' you can use Basic Product Moment Stats
-        Dim BPM As New MomentFunctions.BasicProductMoments(output)
-
-        Call println("Mean: %s", BPM.Mean())
-        Call println("StDev: %s", BPM.StDev())
-        Call println("Sample Size: %s", BPM.SampleSize())
-        Call println("Minimum: %s", BPM.Min())
-        Call println("Maximum: %s", BPM.Max())
-    End Sub
-End Module
+' 4. Shapley 值归因（TreeSHAP 面向树模型）
+Dim shap = ShapleyValue.TreeShap.Explain(treeModel, instance)
 ```
 
-Exchanging:
+## 实现要点
 
-```vbnet
-Dim SN As New Distributions.MethodOfMoments.Normal()
-```
-with the following:
-```vbnet
-Dim SN As New Distributions.MethodOfMoments.Normal(5,3)
-```
-will create a normal distribution with a mean of 5 and a standard deviation of 3. The result will be seen in the output to the debug window.
+- **为什么需要多种参数估计方法**：矩估计简单但受离群点影响大；L-矩（线性矩）基于有序统计量，对小样本与重尾分布更稳健——这正是水文学、极值分析等领域偏爱它的原因。
+- **参数检验 vs 精确检验**：卡方检验依赖大样本近似；当期望频数过小时必须改用 Fisher 精确检验。
+- **Shapley 值的代价**：原始定义需要枚举全部特征子集（指数级），因此实践中使用 TreeSHAP 这类针对树模型的多项式算法。
+- **FastICA 与 PCA 的分工**：PCA 找的是**不相关**的成分（二阶统计量），FastICA 找的是**统计独立**的成分（高阶统计量）；后者更适合「多个独立信号线性混合」的场景。
 
-As you can see in the previous example, we used the normal distribution from the MethodofMoments package. The major difference between the MethodOfMoments package and the LinearMoments package is in the way that the distributions are fitted to data.
+## 包信息
 
-To fit a distribution to data use the constructor that accepts an argument of ``Double()`` or ``Vector`` type in VisualBasic.
-```vbnet
-Dim data#() = {1.0, 3.2, 4.9, 7.4, 2.4, 2.2}
-Dim Norm As New Distributions.MethodOfMoments.Normal(data)
-```
-This example will calculate the mean and standard of deviation for the resulting normal distribution Norm, based on the input data, and the output of the monte carlo will be based on that computed mean and standard of deviation.
+- Assembly：`Microsoft.VisualBasic.Math.Statistics`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;statistics;hypothesis-testing;distribution;moment-functions;fastica;ransac;shapley-value;treeshap`
+- 许可：GPL-3.0-or-later

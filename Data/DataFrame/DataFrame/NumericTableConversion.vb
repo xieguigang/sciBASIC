@@ -28,12 +28,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data
 
 ''' <summary>
 ''' <see cref="NumericTable"/> 与 <see cref="DataFrame"/> 之间的相互转换。
 ''' 
-''' 其中标签列统一以 <see cref="NumericTableIO.DefaultLabelPrefix"/> 作为列名前缀参与转换，
+''' 其中标签列统一以 <see cref="DefaultLabelPrefix"/> 作为列名前缀参与转换，
 ''' 因此 ``table -> dataframe -> table`` 的往返是无损的：行名、特征列、标签列、
 ''' 表名与描述文本都可以完整地还原。
 ''' </summary>
@@ -51,13 +50,13 @@ Public Module NumericTableConversion
     ''' <returns></returns>
     <Extension>
     Public Function AsDataFrame(table As NumericTable,
-                                Optional labelPrefix As String = NumericTableIO.DefaultLabelPrefix) As DataFrame
+                                Optional labelPrefix As String = DefaultLabelPrefix) As DataFrame
 
         If table Is Nothing Then
             Throw New ArgumentNullException(NameOf(table))
         End If
 
-        Dim prefix As String = If(labelPrefix, NumericTableIO.DefaultLabelPrefix)
+        Dim prefix As String = If(labelPrefix, DefaultLabelPrefix)
         Dim featureNames As String() = NumericTableIO.FeatureNameList(table)
         Dim n As Integer = table.nsamples
         Dim columns As New Dictionary(Of String, FeatureVector)
@@ -101,14 +100,14 @@ Public Module NumericTableConversion
     <Extension>
     Public Function AsNumericTable(df As DataFrame,
                                    Optional labels As String() = Nothing,
-                                   Optional labelPrefix As String = NumericTableIO.DefaultLabelPrefix,
+                                   Optional labelPrefix As String = DefaultLabelPrefix,
                                    Optional strict As Boolean = True) As NumericTable
 
         If df Is Nothing Then
             Throw New ArgumentNullException(NameOf(df))
         End If
 
-        Dim prefix As String = If(labelPrefix, NumericTableIO.DefaultLabelPrefix)
+        Dim prefix As String = If(labelPrefix, DefaultLabelPrefix)
         Dim splits = NumericTableIO.SplitColumns(df.featureNames, labels, prefix)
         Dim n As Integer = df.nsamples
         Dim features As Double()() = NumericTableIO.ToMatrix(df, splits.features, n, strict)

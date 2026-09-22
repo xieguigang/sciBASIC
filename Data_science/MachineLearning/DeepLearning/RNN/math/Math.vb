@@ -64,26 +64,33 @@ Namespace RNN
 	''' </summary>
 	Public Class Math
 
+		''' <summary>Default epsilon used by the approximate floating point comparisons.</summary>
 		Public Const compareEpsilon As Double = 0.000001
 
 		''' <summary>
-		''' Double epsilon compare 
+		''' Compares two doubles using the default epsilon.
 		''' </summary>
-		''' <param name="a"></param>
-		''' <param name="b"></param>
-		''' <returns></returns>
-		''' 
+		''' <param name="a">First value.</param>
+		''' <param name="b">Second value.</param>
+		''' <returns><c>True</c> when the two values differ by at most <see cref="compareEpsilon"/>.</returns>
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Shared Function close(a As Double, b As Double) As Boolean
 			Return std.Abs(a - b) <= compareEpsilon
 		End Function
 
+		''' <summary>
+		''' Compares two doubles using an explicit epsilon.
+		''' </summary>
+		''' <param name="a">First value.</param>
+		''' <param name="b">Second value.</param>
+		''' <param name="eps">The tolerance to use.</param>
+		''' <returns><c>True</c> when the two values differ by at most <paramref name="eps"/>.</returns>
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Shared Function close(a As Double, b As Double, eps As Double) As Boolean
 			Return std.Abs(a - b) <= eps
 		End Function
 
-		' return the comparison epsilon
+		''' <summary>Gets the default comparison epsilon.</summary>
 		Public Shared ReadOnly Property eps() As Double
 			<MethodImpl(MethodImplOptions.AggressiveInlining)>
 			Get
@@ -93,15 +100,23 @@ Namespace RNN
 
 		' Useful Matrix functions 
 
-		' Applies the softmax function with temperature = 1.0
+		''' <summary>
+		''' Applies the softmax function with temperature 1.0.
+		''' </summary>
+		''' <param name="yAtt">The input matrix, interpreted as a score vector.</param>
+		''' <returns>The normalized probability matrix.</returns>
 		Public Shared Function softmax(yAtt As Matrix) As Matrix
 			Dim e_to_x As Matrix = (New Matrix(yAtt)).exp()
 			e_to_x = e_to_x.div(e_to_x.sum())
 			Return e_to_x
 		End Function
 
-		' Applies the softmax function with the given temperature.
-		' Temperature can't be close to 0.
+		''' <summary>
+		''' Applies the softmax function with the given temperature.
+		''' </summary>
+		''' <param name="yAtt">The input matrix, interpreted as a score vector.</param>
+		''' <param name="temperature">The temperature; it must not be close to zero.</param>
+		''' <returns>The normalized probability matrix.</returns>
 		Public Shared Function softmax(yAtt As Matrix, temperature As Double) As Matrix
 			Dim e_to_x As Matrix = (New Matrix(yAtt)).div(temperature).exp()
 			e_to_x = e_to_x.div(e_to_x.sum())

@@ -55,6 +55,10 @@
 
 Namespace Evaluation
 
+    ''' <summary>
+    ''' 混淆矩阵在排序扫描过程之中的一个变化点（SVM.NET 评估器内部使用）。
+    ''' </summary>
+    <Obsolete("该类型仅服务于旧的 PerformanceEvaluator，请改用统一的 Validation/RocCurve。", False)>
     Friend Class ChangePoint
 
         Public Sub New(tp As Integer, fp As Integer, tn As Integer, fn As Integer)

@@ -93,6 +93,13 @@ Namespace ComponentModel.Activations
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this threshold function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``Threshold`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -116,6 +123,12 @@ Namespace ComponentModel.Activations
             Return If((x >= 0), 1, 0)
         End Function
 
+        ''' <summary>
+        ''' The threshold function is not differentiable, so that this method 
+        ''' always returns zero.
+        ''' </summary>
+        ''' <param name="x">Function input value.</param>
+        ''' <returns>Always returns ``0``.</returns>
         Public Overrides Function CalculateDerivative(x As Double) As Double
             Return 0
         End Function
@@ -135,6 +148,10 @@ Namespace ComponentModel.Activations
             Return 0
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``Threshold()``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(Threshold)}()"
         End Function

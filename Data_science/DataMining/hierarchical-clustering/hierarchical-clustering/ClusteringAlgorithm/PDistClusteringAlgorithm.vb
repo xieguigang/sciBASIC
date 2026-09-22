@@ -116,29 +116,32 @@ Public Class PDistClusteringAlgorithm
     End Function
 
     Private Function createLinkages(distances As Double()(), clusters As IList(Of Cluster)) As DistanceMap
-        Dim linkages As New DistanceMap
+        ' 批量构建全部链接后一次性建堆，避免逐条 Add 触发的全量排序
+        Dim linkages As New List(Of HierarchyTreeNode)
 
         For col As Integer = 0 To clusters.Count - 1
             Dim cluster_col As Cluster = clusters(col)
             For row As Integer = col + 1 To clusters.Count - 1
-                Dim link As New HierarchyTreeNode
                 Dim d As Double = distances(0)(accessFunction(row, col, clusters.Count))
-                link.LinkageDistance = d
-                link.Left = (cluster_col)
-                link.Right = (clusters(row))
-                linkages.Add(link)
+                Dim link As New HierarchyTreeNode With {
+                    .LinkageDistance = d,
+                    .Left = cluster_col,
+                    .Right = clusters(row)
+                }
+
+                Call linkages.Add(link)
             Next
         Next
 
-        Return linkages
+        Return New DistanceMap(linkages)
     End Function
 
     Private Function createClusters(clusterNames As String()) As IList(Of Cluster)
         Dim clusters As New List(Of Cluster)
 
         For Each clusterName As String In clusterNames
+            ' 叶节点的 LeafNames 由 Cluster 惰性计算为 [Name]，无需在此重复添加
             Dim cluster As New Cluster(clusterName)
-            cluster.AddLeafName(clusterName)
             clusters.Add(cluster)
         Next
 

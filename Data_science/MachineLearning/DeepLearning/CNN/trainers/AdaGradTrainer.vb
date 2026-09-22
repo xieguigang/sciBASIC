@@ -68,10 +68,22 @@ Namespace CNN.trainers
     ''' </summary>
     Public Class AdaGradTrainer : Inherits TrainerAlgorithm
 
+        ''' <summary>
+        ''' Creates an AdaGrad trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)
         End Sub
 
+        ''' <summary>
+        ''' Applies one AdaGrad update step, scaling the step size by the accumulated squared gradient.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi As Double() = gsum(i)
             Dim dx As Double
@@ -82,6 +94,8 @@ Namespace CNN.trainers
             p(j) += dx
         End Sub
 
+        ''' <summary>Returns a short description of this update rule.</summary>
+        ''' <returns>A text that reports the batch size, the L2 decay and the learning rate.</returns>
         Public Overrides Function ToString() As String
             Return $"ada_grad(batch_size:{batch_size}, l2_decay:{l2_decay})"
         End Function

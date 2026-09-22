@@ -16,14 +16,26 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spiking Neural Network  ·  LIF + SurrogateGrad + STDP</Title>
-    <PackageTags>deep learning;spiking Neural Network;LIF;Surrogate-grad;STDP;tensor;tensorflow</PackageTags>
+    <PackageTags>scibasic;deep-learning;spiking-neural-network;lif;surrogate-gradient;stdp;recurrent;sparse;tensor</PackageTags>
+    <Description>Spiking neural network toolkit for sciBASIC#: leaky integrate and fire (LIF) and recurrent/sparse LIF layers, population and rate encoders and decoders, surrogate gradient training and STDP plasticity on the tensor runtime.</Description>
+    <PackageReleaseNotes>SNN implements biologically inspired spiking neural networks on top of the sciBASIC# tensor runtime. Component overview: (1) neuron layers - LIFLayer, RecurrentLIFLayer and SparseLIFLayer model leaky integrate and fire dynamics with membrane time constants, thresholds and reset, where the sparse variant consumes real connectomes stored as CSR matrices (SparseMatrix, with the GPU accelerated sparse x dense path provided by ILCudaTensor); (2) coding - Encoder and Decoder convert continuous data to and from spike trains using population and rate coding; (3) learning - STDP provides spike timing dependent plasticity for local unsupervised learning, Surrogate supplies differentiable surrogate gradient functions so the discrete spike emission can be trained by back propagation, and RegressionLosses adds regression oriented objectives; (4) composition - Network assembles the layers and LinearReadout performs the final readout, while TensorHelper provides shared reshaping and tensor utilities. The bundled README walks through the LIF membrane equation, the surrogate gradient derivation and the STDP weight update rule.</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <OutputPath>../../../.nuget/</OutputPath>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

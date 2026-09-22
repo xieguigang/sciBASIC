@@ -74,24 +74,39 @@ Namespace CNN
         ''' </summary>
         Public ReadOnly y As Integer
 
+        ''' <summary>Gets a 1 x 1 dimension.</summary>
         Public Shared ReadOnly Property One As Dimension
             Get
                 Return New Dimension(1, 1)
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a dimension with the given width and height.
+        ''' </summary>
+        ''' <param name="x">The width.</param>
+        ''' <param name="y">The height.</param>
         Public Sub New(x As Integer, y As Integer)
             Me.x = x
             Me.y = y
         End Sub
 
+        ''' <summary>Creates an empty (0 x 0) dimension, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>Returns a readable description of the dimension.</summary>
+        ''' <returns>A text of the form <c>size[x:W, y:H]</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"size[x:{x}, y:{y}]"
         End Function
 
+        ''' <summary>
+        ''' Divides this dimension by another one component wise, for example to compute the output size of a pooling
+        ''' layer.
+        ''' </summary>
+        ''' <param name="scaleSize">The divisor dimension.</param>
+        ''' <returns>The component wise quotient. A warning is logged when the division is not exact.</returns>
         Public Overridable Function divide(scaleSize As Dimension) As Dimension
             Dim x As Integer = Me.x / scaleSize.x
             Dim y As Integer = Me.y / scaleSize.y
@@ -103,6 +118,13 @@ Namespace CNN
             Return New Dimension(x, y)
         End Function
 
+        ''' <summary>
+        ''' Subtracts another dimension component wise and adds <paramref name="append"/> to both components, following
+        ''' the convolution output size formula.
+        ''' </summary>
+        ''' <param name="size">The dimension to subtract, for example the filter window size.</param>
+        ''' <param name="append">A constant added to both components, normally 1.</param>
+        ''' <returns>The resulting dimension.</returns>
         Public Overridable Function subtract(size As Dimension, append As Integer) As Dimension
             Dim x = Me.x - size.x + append
             Dim y = Me.y - size.y + append

@@ -81,6 +81,14 @@ Namespace SVM
             output.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the problem into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="problem">The problem that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains one line for each sample, in the layout 
+        ''' ``label index:value index:value ...``.
+        ''' </returns>
         Public Function ToString(problem As Problem) As String
             Dim sb As New StringBuilder
 

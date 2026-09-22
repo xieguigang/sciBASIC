@@ -69,30 +69,53 @@ Namespace QLearning
 
         Protected ReadOnly _stat As QState(Of T)
 
+        ''' <summary>
+        ''' The state-action value table of this Q-learning engine.
+        ''' </summary>
+        ''' <returns>A <see cref="QTable(Of T)"/> object.</returns>
         Public ReadOnly Property Q As QTable(Of T)
         ''' <summary>
         ''' 目标达成所得到的奖励
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A positive reward value of reaching the goal, the default value is ``10``.</returns>
         Public Property GoalRewards As Integer = 10
         ''' <summary>
         ''' 目标没有达成的罚分
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A negative penalty value of not reaching the goal, the default value is ``-100``.</returns>
         Public Property GoalPenalty As Integer = -100
         ''' <summary>
         ''' The size of the <see cref="QTable"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The number of the possible actions of each environment state.</returns>
         Public MustOverride ReadOnly Property ActionRange As Integer
 
+        ''' <summary>
+        ''' Does the agent have already reached the goal of the current environment?
+        ''' </summary>
+        ''' <returns>
+        ''' ``True`` when the goal has been reached; the learning loop will then 
+        ''' reset the environment and start a new episode.
+        ''' </returns>
         Public MustOverride ReadOnly Property GoalReached As Boolean
 
+        ''' <summary>
+        ''' Create the Q-learning engine with a specific environment state model 
+        ''' and a Q table provider.
+        ''' </summary>
+        ''' <param name="state">The environment state model.</param>
+        ''' <param name="provider">
+        ''' The provider function of the <see cref="QTable(Of T)"/>, it will be 
+        ''' invoked with the <see cref="ActionRange"/> value.
+        ''' </param>
         Sub New(state As QState(Of T), provider As Func(Of Integer, QTable(Of T)))
             _stat = state
             Q = provider(ActionRange)
         End Sub
 
+        ''' <summary>
+        ''' Initialize the environment state before the learning loop starts.
+        ''' </summary>
         Protected MustOverride Sub initialize()
 
         ''' <summary>
@@ -106,6 +129,19 @@ Namespace QLearning
         ''' <param name="i">机器学习的当前的迭代次数</param>
         Protected MustOverride Sub reset(i As Integer)
 
+        ''' <summary>
+        ''' Run the Q-learning training loop for a given number of the episodes.
+        ''' </summary>
+        ''' <param name="n">
+        ''' The number of the training episodes (a episode is one complete trial 
+        ''' which starts from the initial state until the goal is reached); a 
+        ''' value that is not greater than zero means no limitation.
+        ''' </param>
+        ''' <remarks>
+        ''' Each episode is rewarded with <see cref="GoalRewards"/> when the 
+        ''' <see cref="GoalReached"/> condition becomes true, otherwise it is 
+        ''' penalized with <see cref="GoalPenalty"/>.
+        ''' </remarks>
         Public Sub RunLearningLoop(n As Integer)
             If n <= 0 Then
                 n = Integer.MaxValue
@@ -134,6 +170,9 @@ Namespace QLearning
         ''' <summary>
         ''' You can save you Q table by overrides at here.
         ''' </summary>
+        ''' <remarks>
+        ''' This method is invoked when the whole learning loop is terminated.
+        ''' </remarks>
         Protected Overridable Sub finishQLearn()
 
         End Sub

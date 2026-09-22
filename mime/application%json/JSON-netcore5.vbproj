@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>JSON and BSON Parser, Serializer and JavaScript Object Model</Title>
-    <Description>A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, plus BSON binary encoding and object serialization.</Description>
+    <Description>A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, a JSON writer and formatter, BSON binary encoding, a jsonLogic rule engine and reflection based object serialization.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.json</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;json;bson;serialization;json-parser</PackageTags>
+    <PackageTags>scibasic;json;bson;json-parser;json-serializer;lenient-json;jsonlogic;object-serialization;llm-output</PackageTags>
+    <PackageReleaseNotes>The JSON and BSON toolkit of sciBASIC#. Text processing: a streaming JSON tokenizer and parser (JsonParser, Token, TokenIcer) for large documents, a JSON writer together with a configurable pretty print formatter built from pluggable single character strategies, and serializer options for round tripping .NET objects. Lenient parsing: the LenientJson parser tolerates and repairs malformed JSON - such as fragments emitted by large language models - by tracking the string context while scanning, so truncated or single quoted payloads can still be recovered. Object model: the Javascript namespace provides the JSON / BSON object model (JsonElement and friends) used across the framework. BSON: binary encoding and decoding (BSONValue, Encoder, Decoder, ValueType) including ObjectId and the other extended BSON value types. Rule engine: the JSONLogic namespace builds and evaluates jsonLogic expression trees over JSON data. Serialization helpers: the Serializer namespace maps .NET objects to JSON through reflection, with an extended dictionary serializer able to round trip dynamic objects that derive from Dictionary(Of String, T) while preserving the extra CLR properties.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

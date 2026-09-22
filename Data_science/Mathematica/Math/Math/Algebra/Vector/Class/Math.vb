@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports sys = System.Math
 
@@ -75,7 +76,7 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Sqrt(x As Vector) As Vector
-            Return New Vector(From n In x Select sys.Sqrt(n))
+            Return New Vector(SimdMath.Sqrt(x.buffer))
         End Function
 
         ''' <summary>
@@ -91,7 +92,8 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Exp(x As Vector) As Vector
-            Return New Vector(From n As Double In x Select sys.Exp(n))
+            ' Exp 无硬件指令，这里保持标量内核，但省掉 LINQ 的逐元素委托调用开销
+            Return New Vector(SimdMath.Exp(x.buffer))
         End Function
 
         ''' <summary>
@@ -106,13 +108,7 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Exp() As Vector
-            Dim vexp As Double() = New Double([Dim] - 1) {}
-
-            For i As Integer = 0 To vexp.Length - 1
-                vexp(i) = sys.Exp(buffer(i))
-            Next
-
-            Return New Vector(vexp)
+            Return New Vector(SimdMath.Exp(buffer))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -147,7 +143,8 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Log(x As Vector, Optional base As Double = sys.E) As Vector
-            Return New Vector(From n As Double In x Select sys.Log(n, base))
+            ' 对数本身无硬件指令，但换算底数的除法可以向量化
+            Return New Vector(SimdMath.Log(x.buffer, base))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -161,36 +158,32 @@ Namespace LinearAlgebra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Max(x As Vector) As Double
-            Return x.Max
+            Return SimdParallel.Max(x.buffer)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Max(x As Vector, y#) As Vector
-            Return x.Select(Function(xi) sys.Max(xi, y)).AsVector
+            Return New Vector(SimdEngine.MaxScalar(Of Double)(x.buffer, y))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Max(x As Vector, y As Vector) As Vector
-            Return x.SeqIterator _
-                .Select(Function(i) sys.Max(i.value, y(i))) _
-                .AsVector
+            Return New Vector(SimdEngine.Max(Of Double)(x.buffer, y.buffer))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Min(x As Vector) As Double
-            Return x.Min
+            Return SimdParallel.Min(x.buffer)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Min(x As Vector, y#) As Vector
-            Return x.Select(Function(xi) sys.Min(xi, y)).AsVector
+            Return New Vector(SimdEngine.MinScalar(Of Double)(x.buffer, y))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Min(x As Vector, y As Vector) As Vector
-            Return x.SeqIterator _
-                .Select(Function(i) sys.Min(i.value, y(i))) _
-                .AsVector
+            Return New Vector(SimdEngine.Min(Of Double)(x.buffer, y.buffer))
         End Function
 
         ''' <summary>
@@ -201,17 +194,17 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Trunc(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf sys.Truncate))
+            Return New Vector(SimdMath.Truncate(x.buffer))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Abs(x As Vector) As Vector
-            Return New Vector(From d As Double In x Select sys.Abs(d))
+            Return New Vector(SimdMath.Abs(Of Double)(x.buffer))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Abs(x As IEnumerable(Of Double)) As Vector
-            Return New Vector(From d As Double In x Select sys.Abs(d))
+            Return New Vector(SimdMath.Abs(Of Double)(x.ToArray))
         End Function
 
         ''' <summary>
@@ -248,7 +241,7 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Floor")>
         Public Shared Function floor(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf sys.Floor))
+            Return New Vector(SimdMath.Floor(x.buffer))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -266,7 +259,7 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Sign")>
         Public Shared Function Sign(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf sys.Sign))
+            Return New Vector(SimdMath.Sign(x.buffer))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

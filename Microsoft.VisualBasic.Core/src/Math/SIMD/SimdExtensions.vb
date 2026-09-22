@@ -409,5 +409,65 @@ Namespace Math.SIMD
         End Function
 
 #End Region
+
+#Region "matrix"
+
+        ''' <summary>
+        ''' 矩阵逐元素相加，等价于 <see cref="SimdMatrix.Add(Double()(), Double()())"/>。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixAdd(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Add(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵逐元素相减。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixSubtract(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Subtract(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵逐元素相乘。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixMultiply(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Multiply(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵逐元素相除（分子为零则结果置零）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixDivideZeroSafe(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.DivideZeroSafe(a, b)
+        End Function
+
+        ''' <summary>
+        ''' 数乘矩阵。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixScale(a As Double()(), scalar As Double) As Double()()
+            Return SimdMatrix.MultiplyScalar(a, scalar)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵转置（分块）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixTranspose(a As Double()()) As Double()()
+            Return SimdMatrix.Transpose(a)
+        End Function
+
+        ''' <summary>
+        ''' 矩阵乘积 <c>A * B</c>（行方向并行 + 行内 FMA 点积）。
+        ''' </summary>
+        <Extension>
+        Public Function SimdMatrixDot(a As Double()(), b As Double()()) As Double()()
+            Return SimdMatrix.Dot(a, b)
+        End Function
+
+#End Region
     End Module
 End Namespace

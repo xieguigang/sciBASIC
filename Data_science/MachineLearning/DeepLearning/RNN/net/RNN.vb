@@ -60,8 +60,31 @@ Namespace RNN
     <Serializable> Public MustInherit Class RNN
         Implements IntegerSampleable, Trainable
 
+        ''' <summary>
+        ''' Runs one forward and backward pass over a training sequence.
+        ''' </summary>
+        ''' <param name="ix">The input token indices.</param>
+        ''' <param name="iy">The target token indices.</param>
+        ''' <returns>The loss of this sequence.</returns>
         Public MustOverride Function forwardBackward(ix As Integer(), iy As Integer()) As Double Implements Trainable.forwardBackward
+
+        ''' <summary>
+        ''' Samples a sequence of indices from the network.
+        ''' </summary>
+        ''' <param name="n">Number of indices to sample.</param>
+        ''' <param name="seed">The seed indices used to warm up the hidden state.</param>
+        ''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+        ''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
+        ''' <returns>The sampled indices.</returns>
 		Public MustOverride Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer() Implements IntegerSampleable.sampleIndices
+
+        ''' <summary>
+        ''' Samples a sequence of indices from the network, advancing the hidden state.
+        ''' </summary>
+        ''' <param name="n">Number of indices to sample.</param>
+        ''' <param name="seed">The seed indices used to warm up the hidden state.</param>
+        ''' <param name="temp">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+        ''' <returns>The sampled indices.</returns>
 		Public MustOverride Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer() Implements IntegerSampleable.sampleIndices
 
         ' * Get ** 

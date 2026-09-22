@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>Network Graph File IO And Third-Party Format Interop</Title>
     <Description>Reads and writes network graphs as CSV, JSON and VB.NET table sets, and imports or exports Cytoscape, Gephi, GML, Sigma.js and graphology documents. The IO layer of the sciBASIC# network visualization stack.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.IO.Extensions</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;network-io;cytoscape;gephi;file-format</PackageTags>
+    <PackageTags>scibasic;network-io;cytoscape;gephi;gml;sigma-js;graphology;file-format</PackageTags>
+    <PackageReleaseNotes>The network graph I/O layer of sciBASIC#. Native formats: the FileStream namespace reads and writes network graphs as tabular data (StreamTable, TabularCreator, ModelLoader and ModelExtensions) with full JSON support (FileStream.Json) and a generic entry point (FileStream.Generic). Third party interop: the Gephi namespace reads GML graph documents together with their node, edge and graphics attributes; the Cytoscape namespace reads Cytoscape network files through CytoscapeTableLoader; and the Javascript namespace emits Sigma.js and graphology documents for browser side visualization. The root namespace ties the formats together, so a graph loaded from one format can be written out in any other.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

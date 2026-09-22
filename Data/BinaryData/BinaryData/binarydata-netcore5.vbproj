@@ -18,15 +18,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>Low-Level Binary Data Stream Reader and Writer Toolkit</Title>
-    <Description>Extends BinaryReader and BinaryWriter with endianness-aware primitives, length-prefixed strings, BZip2/LZW compression, XDR encoding and a Python pickle codec, for parsing custom binary file formats in sciBASIC#.</Description>
+    <Description>Extends BinaryReader and BinaryWriter with endianness aware primitives, length-prefixed strings, BZip2 and LZW compression, XDR encoding and a Python pickle codec for parsing custom binary file formats, plus a Java style ByteBuffer.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.BinaryData</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;binary-data;binary-reader;endianness;compression;pickle</PackageTags>
+    <PackageTags>scibasic;binary-data;binary-reader;endianness;bzip2;lzw;xdr;pickle;byte-buffer</PackageTags>
+    <PackageReleaseNotes>The low level binary I/O toolkit of sciBASIC#. Reader and writer: BinaryDataReader and BinaryDataWriter extend BinaryReader and BinaryWriter with a switchable ByteOrder, the BinaryStringFormat string encodings (ByteLengthPrefix, WordLengthPrefix, DwordLengthPrefix, UInt32LengthPrefix and ZeroTerminated) and the BinaryDateTimeFormat date encodings, plus writer helpers such as ReserveOffset and TemporarySeek for back-patching offsets. Buffers: ByteBuffer implements Java style position / limit / flip / compact semantics with relative and absolute get and put, while BufferRegion describes a span inside a buffer. Compression: a fully managed BZip2 implementation (block compressor and decompressor, Huffman stages, MTF+RLE2, DivSufSort and CRC32) together with LZW Encoder and Decoder. Encodings: the Xdr namespace implements XDR (RFC 4506) packing and unpacking. Python interop: the Pickle namespace provides MinimalPicklePickler and MinimalPickleUnpickler which map Python tuple, set, complex and generic object graphs onto .NET types. These pieces are the foundation the other sciBASIC# binary format readers (HDF5, netCDF, SQLite3, HDSPack and Feather) are built on.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

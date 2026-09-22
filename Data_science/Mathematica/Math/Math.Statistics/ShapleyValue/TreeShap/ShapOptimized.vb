@@ -65,11 +65,16 @@
 Imports System.Text
 Imports std = System.Math
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     Public Class ShapOptimized
 
-        Friend Shared DEBUG As Boolean = True
+        ''' <summary>
+        ''' toggles the verbose tracing output of the recursion.
+        ''' it is disabled by default because the tracing also crashes on the
+        ''' root recursion level (the parent feature index is negative there).
+        ''' </summary>
+        Public Shared DEBUG As Boolean = False
         Private indent As String = ""
 
         Private ReadOnly data As Double()

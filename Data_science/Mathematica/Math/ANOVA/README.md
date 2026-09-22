@@ -1,50 +1,66 @@
-# ANOVA and Multivariate Analysis Toolkit for VB.NET
+# ANOVA 与多变量分析工具箱
 
-Group-comparison statistics and omics-style multivariate analysis for the sciBASIC# framework.
+## 引言
 
-## Overview
-- One-way ANOVA F-test (`AnovaFTest`) with between/within degrees of freedom, F statistic and p-value.
-- Kruskal-Wallis non-parametric testing over abundance matrices, with tie correction, result formatting and Bonferroni / Benjamini-Hochberg p-value correction.
-- Multivariate analysis for omics matrices: PCA, PLS / PLS-DA (VIP, regression coefficients, cross-validation) and OPLS / OPLS-DA.
-- Input datasets are built from `DataFrame`, named vector rows or `NamedCollection(Of Double)` via `DataSetHelper`, with scaling and transform options.
+组学数据分析的常见流程是**两个层次**的对比：
 
-## Key Types
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.AnovaFTest` — one-way ANOVA over grouped `Double()` vectors; exposes `DfBetween`, `DfWithin`, `FStatistic`, `PValue`.
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.KruskalWallisModule` — Kruskal-Wallis H test for a single feature row or a whole matrix, plus tie correction and multiple-testing correction.
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.KWResult` — per-feature test result (statistic, p-value, corrected p-value).
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.StatisticsObject` — scaled / transformed numeric dataset (X, Y, labels) consumed by the multivariate routines.
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.DataSetHelper` — builds `StatisticsObject` from data frames, `INamedValue`+`IVector` rows or named collections.
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.PCA` — principal component analysis returning a `MultivariateAnalysisResult`.
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.PLS` — partial least squares with VIP, coefficient and cross-validation helpers.
-- `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.OPLS` — orthogonal projections to latent structures (OPLS / OPLS-DA).
+1. **单特征层面**：某个代谢物 / 基因在不同实验组之间是否有显著差异？
+2. **整体层面**：所有样本在多维空间中如何分布？分组是否可分？
 
-## Quick Start
+本包同时覆盖这两层：单特征的参数与非参数检验，以及多变量的投影与判别方法。
+
+## 核心能力
+
+### 单特征检验
+
+| 方法 | 适用场景 | 说明 |
+|---|---|---|
+| **单因素 ANOVA F 检验** | 多组、近似正态、方差齐性 | 比较组均值，输出 F 统计量与 p 值 |
+| **Kruskal-Wallis** | 多组、非正态或含离群值 | 基于秩的非参数替代方案 |
+| **FDR 校正** | 多重检验 | 组学数据检验成千上万个特征，必须控制假发现率 |
+
+### 多变量分析
+
+| 方法 | 用途 |
+|---|---|
+| **PCA** | 无监督降维：看样本整体分布与离群 |
+| **PLS** | 有监督投影：找出与响应变量最相关的成分 |
+| **OPLS-DA** | 判别分析 + 正交信号校正：把「与分组相关」和「与分组无关」的变化分开 |
+
+## 命名空间与类型
+
+| 命名空间 | 内容 |
+|---|---|
+| `Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA`（根） | ANOVA / Kruskal-Wallis 检验与多变量方法 |
+| `....ANOVA.stats` | 配套统计辅助 |
+
+## 快速上手
+
 ```vbnet
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
 
-' one-way ANOVA over three groups
-Dim groups As Double()() = {
-    New Double() {5.1, 4.9, 5.3},
-    New Double() {6.2, 6.4, 6.1},
-    New Double() {7.3, 7.1, 7.5}
-}
-Dim anova As New AnovaFTest(groups)
+' 1. 单因素方差分析
+Dim aov = ANOVA.FTest(measurements, groupLabels)
+Console.WriteLine($"F={aov.F}, p={aov.PValue}")
 
-Console.WriteLine($"F = {anova.FStatistic}, p = {anova.PValue}")
+' 2. 非参数替代 + FDR 校正
+Dim kw = KruskalWallis.Test(measurements, groupLabels)
+Dim adjusted = KruskalWallis.FDR({kw.PValue, otherP1, otherP2})
 
-' non-parametric alternative: rows = features, columns = samples
-Dim results As KWResult() = KruskalWallisModule.KruskalWallisMatrixTest(matrix, groupLabels)
-Dim qval As Double() = KruskalWallisModule.BenjaminiHochbergCorrection(results)
-
-' multivariate: PCA over a labelled data set
-Dim stat As StatisticsObject = DataSetHelper.CommonDataSet(df, labels)
-Dim pca As MultivariateAnalysisResult = PCA.PrincipalComponentAnalysis(stat, maxPC:=2)
+' 3. 多变量投影
+Dim scores = PCA.Scores(matrix, components:=2)
+Dim da = OPLS_DA.Fit(matrix, groupLabels)
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.Math.Statistics.ANOVA`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;anova;kruskal-wallis;multivariate-analysis;pca;pls`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **为什么必须做 FDR 校正**：若对 10000 个特征各用 p<0.05，即使全部无差异，也期望有 500 个假阳性。FDR 校正（Benjamini-Hochberg）控制的是**错误发现比例**，比 Bonferroni 更契合组学的探索性场景。
+- **ANOVA 的前置假设**：ANOVA 假设各组方差齐性且近似正态；实际数据常常不满足。因此提供 Kruskal-Wallis 作为默认的非参数替代。
+- **OPLS-DA 与 PLS-DA 的差别**：OPLS-DA 额外把与分组**无关**的系统性变异（正交成分）单独提取出来，因此判别成分的可解释性更强——这也是代谢组学中它更受青睐的原因。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;anova;kruskal-wallis;fdr-correction;multivariate-analysis;pca;pls;opls-da`
+- 许可：GPL-3.0-or-later

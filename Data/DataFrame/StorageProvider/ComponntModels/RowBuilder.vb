@@ -190,7 +190,7 @@ Namespace StorageProvider.ComponentModels
 
                 Call "Schema has meta dictionary property...".debug(mute:=silent)
 
-                For Each name In NonIndexed.Keys.ToArray
+                For Each name As String In NonIndexed.Keys
                     ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
                     If Not schema.GetField(name) Is Nothing Then
                         Call NonIndexed.Remove(name)

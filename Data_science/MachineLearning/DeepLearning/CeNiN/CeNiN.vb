@@ -73,14 +73,24 @@ Namespace Convolutional
 
         Friend Const CeNiN_FILE_HEADER As String = "CeNiN NEURAL NETWORK FILE"
 
+        ''' <summary>Number of layers stored in the model file, excluding the implicit input and output layers.</summary>
         Public layerCount As Integer
+        ''' <summary>Number of output classes read from the trailing softmax layer.</summary>
         Public classCount As Integer
+        ''' <summary>Total number of convolution weights loaded from the model file.</summary>
         Public totalWeightCount As Integer
+        ''' <summary>Total number of convolution bias values loaded from the model file.</summary>
         Public totalBiasCount As Integer
+        ''' <summary>All loaded layers, ordered from the input layer through to the output layer.</summary>
         Public layers As Layer()
+        ''' <summary>The input layer of the loaded network.</summary>
         Public inputLayer As Input
+        ''' <summary>The output layer, exposing the class labels and their predicted probabilities.</summary>
         Public outputLayer As Output
 
+        ''' <summary>
+        ''' Gets the spatial size <c>[height, width, depth]</c> declared by the network's input layer.
+        ''' </summary>
         Public ReadOnly Property inputSize As Integer()
             Get
                 Return inputLayer.inputSize
@@ -91,9 +101,12 @@ Namespace Convolutional
         End Sub
 
         ''' <summary>
-        ''' read file and construct a CNN model
+        ''' Reads a CeNiN model file and constructs the corresponding network.
         ''' </summary>
-        ''' <param name="path"></param>
+        ''' <param name="path">
+        ''' Path of the binary model file. The file must start with the <c>CeNiN NEURAL NETWORK FILE</c>
+        ''' header followed by the serialized layer chain.
+        ''' </param>
         Public Sub New(path As String)
             Using f As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
                 br As New BinaryReader(f, Encoding.ASCII, False)
@@ -243,6 +256,11 @@ Namespace Convolutional
             Return Me
         End Function
 
+        ''' <summary>
+        ''' Loads a CeNiN model from a binary stream positioned at the beginning of the model data.
+        ''' </summary>
+        ''' <param name="file">The stream that contains a serialized CeNiN model.</param>
+        ''' <returns>The deserialized <see cref="CeNiN"/> model.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadFile(file As Stream) As CeNiN
             Using br = New BinaryReader(file, Encoding.ASCII, False)
@@ -250,11 +268,23 @@ Namespace Convolutional
             End Using
         End Function
 
+        ''' <summary>
+        ''' Loads a CeNiN model from an already opened binary reader.
+        ''' </summary>
+        ''' <param name="br">The reader positioned at the beginning of the serialized model data.</param>
+        ''' <returns>The deserialized <see cref="CeNiN"/> model.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadFile(br As BinaryReader) As CeNiN
             Return New CeNiN().loadModel(br)
         End Function
 
+        ''' <summary>
+        ''' Returns a short human readable summary of the loaded network.
+        ''' </summary>
+        ''' <returns>
+        ''' A multi-line text that reports the number of layers, weights and biases, followed by the
+        ''' description of the output layer.
+        ''' </returns>
         Public Overrides Function ToString() As String
             Return layerCount & "+2 layers, " _
                 & totalWeightCount & " weights and " _

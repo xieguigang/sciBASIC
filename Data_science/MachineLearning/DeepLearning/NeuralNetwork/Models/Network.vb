@@ -72,38 +72,32 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Namespace NeuralNetwork
 
     ''' <summary>
-    ''' 人工神经网络计算用的对象模型。
-    ''' 
-    ''' 本类以 CNN 的 <see cref="ConvolutionalNN"/> 全连接网络为统一的内部计算内核：
-    ''' 前向传播与反向传播（含参数更新）均由 CNN 内核完成；
-    ''' 对外公开的 <see cref="InputLayer"/> / <see cref="HiddenLayer"/> / <see cref="OutputLayer"/> /
-    ''' <see cref="Activations"/> 等以只读视图（<see cref="NetworkLayerView"/> / <see cref="HiddenLayersView"/>）形式保留，
-    ''' 不再维护任何遗留的 Layer/Neuron/Synapse 数据图。
+    ''' Object model for artificial neural network computation.
     ''' </summary>
     ''' <remarks>
-    ''' > https://github.com/trentsartain/Neural-Network
+    ''' The class uses a fully connected <see cref="ConvolutionalNN"/> as its unified internal compute kernel:
+    ''' forward and backward propagation (including parameter updates) are performed by the CNN kernel. The
+    ''' public members <see cref="InputLayer"/>, <see cref="HiddenLayer"/>, <see cref="OutputLayer"/> and
+    ''' <see cref="Activations"/> are kept as read-only views (<see cref="NetworkLayerView"/> /
+    ''' <see cref="HiddenLayersView"/>) and no legacy Layer/Neuron/Synapse data graph is maintained any more.
+    ''' 
+    ''' https://github.com/trentsartain/Neural-Network
     ''' </remarks>
     Public Class Network : Inherits Model
 
 #Region "-- Properties --"
+        ''' <summary>Learning rate applied by the online trainer.</summary>
         Public Property LearnRate As Double
+        ''' <summary>Momentum factor applied by the online trainer.</summary>
         Public Property Momentum As Double
+        ''' <summary>Truncation threshold kept for compatibility with the legacy API.</summary>
         Public Property Truncate As Double = -1
 
-        ''' <summary>
-        ''' 输入层的只读视图（从 CNN 内核派生规模与输出）
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Read-only view of the input layer, its size and output derived from the CNN kernel.</summary>
         Public Property InputLayer As NetworkLayerView
-        ''' <summary>
-        ''' 隐藏层集合的只读视图
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Read-only view over the collection of hidden layers.</summary>
         Public Property HiddenLayer As HiddenLayersView
-        ''' <summary>
-        ''' 输出层的只读视图（从 CNN 内核派生规模与输出）
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Read-only view of the output layer, its size and output derived from the CNN kernel.</summary>
         Public Property OutputLayer As NetworkLayerView
 
         ''' <summary>
@@ -111,10 +105,7 @@ Namespace NeuralNetwork
         ''' </summary>
         Dim remains As Double
 
-        ''' <summary>
-        ''' 学习率的衰减速率
-        ''' </summary>
-        ''' <returns></returns>
+        ''' <summary>Decay rate applied to <see cref="LearnRate"/> after each backward pass.</summary>
         Public Property LearnRateDecay As Double
             Get
                 Return 1 - remains
@@ -125,9 +116,9 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>
-        ''' 激活函数配置（仅作为元数据保留，无实际计算功能；计算由 CNN 激活层完成）
+        ''' Activation function configuration retained as metadata only; the actual computation is performed by
+        ''' the CNN activation layers.
         ''' </summary>
-        ''' <returns></returns>
         Public Property Activations As IReadOnlyDictionary(Of String, String)
 #End Region
 
@@ -194,25 +185,25 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 根据网络规模构造一个以 CNN 全连接网络为内核的 <see cref="Network"/>。
+        ''' Creates a <see cref="Network"/> backed by a fully connected CNN kernel.
         ''' </summary>
-        ''' <param name="inputSize">``>=2``</param>
-        ''' <param name="hiddenSize">``>=2``</param>
-        ''' <param name="outputSize">``>=1``</param>
-        ''' <param name="learnRate"></param>
-        ''' <param name="momentum"></param>
+        ''' <param name="inputSize">Number of input nodes; must be at least two.</param>
+        ''' <param name="hiddenSize">Node count of each hidden layer; each value must be at least two.</param>
+        ''' <param name="outputSize">Number of output nodes; must be at least one.</param>
+        ''' <param name="learnRate">Initial learning rate.</param>
+        ''' <param name="momentum">Momentum factor.</param>
         ''' <param name="active">
-        ''' 隐藏层/输出层所使用的激活函数名称，可取值：``sigmoid``（默认）、``relu``、``tanh``、``leakyrelu``。
+        ''' Name of the activation function used by the hidden and output layers. Accepted values are
+        ''' <c>sigmoid</c> (the default), <c>relu</c>, <c>tanh</c> and <c>leakyrelu</c>.
         ''' </param>
         ''' <param name="dropOutRate">
-        ''' [0,1) 的 DropOut 比率；当大于 0 时会在每个全连接层之后插入 DropoutLayer。
+        ''' Dropout rate in <c>[0, 1)</c>; when greater than zero a DropoutLayer is inserted after every fully
+        ''' connected layer.
         ''' </param>
         ''' <param name="weightInit">
-        ''' （保留以兼容旧接口）权重初始化由 CNN 内核负责，此参数不再被使用。
+        ''' Retained for compatibility with the legacy API; weight initialization is handled by the CNN kernel
+        ''' and this parameter is ignored.
         ''' </param>
-        ''' <remarks>
-        ''' 会在创建的时候赋值一个 guid
-        ''' </remarks>
         Public Sub New(inputSize%, hiddenSize%(), outputSize%,
                        Optional learnRate# = 0.1,
                        Optional momentum# = 0.9,
@@ -289,22 +280,22 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 随机失活隐藏层之中的一部分神经元节点（DropOut 正则化）。
+        ''' Enables dropout regularization for the hidden layers.
         ''' </summary>
-        ''' <param name="percentage">
-        ''' [0,1] 之间，表示被随机删除的节点数量百分比。
-        ''' </param>
+        ''' <param name="percentage">Fraction of nodes to drop, in <c>[0, 1]</c>.</param>
         ''' <remarks>
-        ''' 真正的 DropOut 通过在构造期传入 <paramref name="percentage"/> 参数、
-        ''' 在 CNN 内核之中插入 <see cref="Microsoft.VisualBasic.MachineLearning.CNN.layers.DropoutLayer"/> 实现
-        ''' （训练时生效，推理时自动关闭）。本方法保留为兼容接口：运行时调用仅更新比率标记，
-        ''' 需要在构造期配置方能在后续训练中生效。
+        ''' The effective dropout is implemented by passing the rate to the constructor, which inserts a
+        ''' <see cref="Microsoft.VisualBasic.MachineLearning.CNN.layers.DropoutLayer"/> into the CNN kernel
+        ''' (active during training, disabled during inference). This method is kept for compatibility: a runtime
+        ''' call only updates the rate flag, so it takes effect only when configured at construction time.
         ''' </remarks>
         Public Sub DoDropOut(Optional percentage As Double = 0.5)
             m_dropOutMode = percentage > 0
             m_dropOutRate = percentage
         End Sub
 
+        ''' <summary>Returns a multi-line summary of the network configuration and layer sizes.</summary>
+        ''' <returns>A human readable description of the network.</returns>
         Public Overrides Function ToString() As String
             Dim summary As New StringBuilder
 
@@ -335,15 +326,13 @@ Namespace NeuralNetwork
 #Region "ANN compute"
 
         ''' <summary>
-        ''' 这个函数会返回<see cref="OutputLayer"/>。
+        ''' Runs a forward pass and fills the read-only layer views with the activations of every layer.
         ''' </summary>
         ''' <param name="inputs">
-        ''' 神经网路的输入层的输入数据,应该都是被归一化为[0,1]或者[-1,1]这两个区间内了的
+        ''' The input vector; values are expected to be normalized into <c>[0, 1]</c> or <c>[-1, 1]</c>.
         ''' </param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' this function just calculate the network value
-        ''' </remarks>
+        ''' <param name="parallel">Reserved for compatibility; the current kernel runs the pass sequentially.</param>
+        ''' <returns>The <see cref="OutputLayer"/> view after the forward pass.</returns>
         Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As NetworkLayerView
             If cnn Is Nothing Then
                 Return OutputLayer
@@ -375,12 +364,13 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' adjust neuron weight based on the error.(反向传播)
+        ''' Performs one online backward pass and updates the network weights from the prediction error.
         ''' </summary>
-        ''' <param name="targets"></param>
+        ''' <param name="targets">The expected (target) output vector.</param>
+        ''' <param name="parallel">Reserved for compatibility; the current kernel runs the pass sequentially.</param>
         ''' <remarks>
-        ''' 在反向传播之后,网络只会修改节点之间的突触边链接的权重值以及节点
-        ''' 的梯度值,没有修改节点的输出值.
+        ''' After the backward pass only the synapse weights and the gradients are modified; the neuron output
+        ''' values are left unchanged.
         ''' </remarks>
         Public Sub BackPropagate(targets As Double(), parallel As Boolean)
             If cnn Is Nothing Then
@@ -421,11 +411,14 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' Compute result output for the neuron network <paramref name="inputs"/>.
-        ''' (请注意ANN的输出值是在0-1之间的，所以还需要进行额外的编码和解码)
+        ''' Computes the network output for the given <paramref name="inputs"/>.
         ''' </summary>
-        ''' <param name="inputs"></param>
-        ''' <returns></returns>
+        ''' <param name="inputs">The input vector.</param>
+        ''' <returns>The output vector of the network.</returns>
+        ''' <remarks>
+        ''' Note that the ANN output typically lies in <c>[0, 1]</c>, so additional encoding and decoding may be
+        ''' required by the caller.
+        ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Compute(ParamArray inputs As Double()) As Double()
@@ -433,15 +426,15 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 批量训练入口：以 <paramref name="maxLoops"/> 轮（epoch）遍历 <paramref name="samples"/>，
-        ''' 复用与在线训练相同的 <see cref="SGDTrainer"/>（batch_size=1）逐样本更新权重；
-        ''' 在线的逐样本训练请见 <see cref="BackPropagate"/>。
-        ''' 这里直接驱动 <see cref="SGDTrainer"/> 而非 <see cref="CNN.Trainer"/>，
-        ''' 以避免 <see cref="CNN.Trainer"/> 在训练时向控制台输出进度（在重定向/非控制台宿主下
-        ''' 会抛出 "The handle is invalid" 等 IO 异常）。
+        ''' Batch training entry point: iterates <paramref name="samples"/> for <paramref name="maxLoops"/> epochs
+        ''' and reuses the same online (batch_size = 1) weight update as <see cref="BackPropagate"/>.
         ''' </summary>
-        ''' <param name="samples">训练样本集合，元素为 (输入向量, 目标向量) 元组</param>
-        ''' <param name="maxLoops">批量训练的迭代（轮）数上限</param>
+        ''' <param name="samples">Training samples, each a tuple of (input vector, target vector).</param>
+        ''' <param name="maxLoops">Maximum number of training epochs.</param>
+        ''' <remarks>
+        ''' The loop drives the trainer directly instead of <see cref="CNN.Trainer"/> so that no progress is written
+        ''' to the console, which would fail with an "handle is invalid" IO exception on redirected or non-console hosts.
+        ''' </remarks>
         Public Sub TrainBatch(samples As (input As Double(), target As Double())(), maxLoops As Integer)
             If cnn Is Nothing Then
                 Return
@@ -465,8 +458,9 @@ Namespace NeuralNetwork
 #Region "-- Persistence (CNN binary format) --"
 
         ''' <summary>
-        ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存
+        ''' Persists the underlying CNN kernel model to a file in the CNN binary format.
         ''' </summary>
+        ''' <param name="path">Destination file path.</param>
         Public Overridable Sub Save(path As String)
             Using file As Stream = New FileStream(path, FileMode.Create, FileAccess.Write)
                 Call Save(file)
@@ -474,8 +468,9 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 将当前的 CNN 内核模型以 CNN 二进制格式保存到流
+        ''' Persists the underlying CNN kernel model to a stream in the CNN binary format.
         ''' </summary>
+        ''' <param name="stream">Destination stream.</param>
         Public Overridable Sub Save(stream As Stream)
             If Not cnn Is Nothing Then
                 Call SaveModelCNN.Write(cnn, stream)
@@ -483,8 +478,10 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 从 CNN 二进制模型文件之中加载 NeuralNetwork 模型
+        ''' Loads a Network model from a CNN binary model file.
         ''' </summary>
+        ''' <param name="path">Path of the CNN binary model file.</param>
+        ''' <returns>The reconstructed <see cref="Network"/> model.</returns>
         Public Shared Function Load(path As String) As Network
             Using file As Stream = New FileStream(path, FileMode.Open, FileAccess.Read)
                 Return Load(file)
@@ -492,8 +489,10 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 从流之中加载 CNN 二进制模型并还原为 NeuralNetwork 模型
+        ''' Loads a Network model from a stream that contains a CNN binary model.
         ''' </summary>
+        ''' <param name="stream">Stream that contains a serialized CNN model.</param>
+        ''' <returns>The reconstructed <see cref="Network"/> model.</returns>
         Public Shared Function Load(stream As Stream) As Network
             Return New Network(ReadModelCNN.Read(stream))
         End Function

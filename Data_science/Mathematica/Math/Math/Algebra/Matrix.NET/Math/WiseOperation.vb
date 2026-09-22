@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+Imports SimdParallel = Microsoft.VisualBasic.Math.SIMD.SimdParallel
 
 Namespace LinearAlgebra.Matrix
 
@@ -63,7 +64,14 @@ Namespace LinearAlgebra.Matrix
         Public ReadOnly Property matrix_wise As Vector()
 
         Public Function Sum() As Vector
-            Return matrix_wise.Select(Function(xi) xi.Sum).AsVector
+            Dim out As Double() = New Double(matrix_wise.Length - 1) {}
+
+            ' 每一行/列直接走 SIMD 归约求和
+            For i As Integer = 0 To matrix_wise.Length - 1
+                out(i) = SimdParallel.Sum(matrix_wise(i).Array)
+            Next
+
+            Return New Vector(out)
         End Function
 
         Public Iterator Function ScaleX(Optional center As Boolean = True, Optional scale As Boolean = True) As IEnumerable(Of Vector)

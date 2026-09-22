@@ -7,15 +7,16 @@
     <RootNamespace>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>PDB Debug Symbol File Reader For Classic And Portable Formats</Title>
-    <Description>Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and type records into one uniform model for sciBASIC# tooling.</Description>
+    <Description>Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and CodeView type records into one uniform model, with GitHub URL rebasing, for sciBASIC# tooling.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;pdb;debug-symbols;portable-pdb;source-mapping</PackageTags>
+    <PackageTags>scibasic;pdb;debug-symbols;portable-pdb;msf;codeview;source-mapping;stack-trace</PackageTags>
+    <PackageReleaseNotes>The PDB debug symbol reader of sciBASIC#. It reads both debug symbol container formats and decodes them into one uniform model. Format auto-detection in PDB.Open recognises classic MSF containers (SuperBlock magic) and Portable PDB files (PE MZ header or a standalone BSJB metadata root). Classic MSF path: MSFReader performs page based container and stream access, DbiReader parses the DBI stream (modules, source documents and line numbers), TpiReader decodes CodeView LF_* type records from the TPI stream, and PublicSymbolReader parses the public symbol stream (S_PUB32 and friends). Portable PDB path: PortablePdbReader walks the PE / COR20 / metadata root, reads the #Pdb custom stream and decodes the document table and sequence points. The unified result exposes source documents with checksums and language GUIDs, line-number mappings, symbols and type records through the Models namespace, plus a GitHub URL rebasing helper that turns local build paths into repository permalinks. Typical uses are resolving symbols for stack traces, mapping IL offsets back to source lines, and building documentation from compiled assemblies.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

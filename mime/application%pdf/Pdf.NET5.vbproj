@@ -8,8 +8,8 @@
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;gcmodeller_desktop;nuget_release</Configurations>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <Version>1.1.9753.4776</Version>
-    <FileVersion>1.1.9753.4776</FileVersion>
+    <Version>1.1.9758.20045</Version>
+    <FileVersion>1.1.9758.20045</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -18,14 +18,15 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>PDF Document Reader, Text Extractor and Writer Library</Title>
-    <Description>Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text via ToUnicode CMaps, while a streaming generator lays out text, tables and images.</Description>
+    <Description>Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text through ToUnicode CMaps, while a streaming generator lays out headings, text, tables and images via the shared IDocumentWriter contract.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.pdf</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;pdf;pdf-reader;text-extraction;pdf-writer</PackageTags>
+    <PackageTags>scibasic;pdf;pdf-reader;text-extraction;pdf-writer;document-generation;flate-decode</PackageTags>
+    <PackageReleaseNotes>The pure managed PDF library of sciBASIC#. Reading: the PdfReader namespace provides a lexer (PdfLexer) and an object parser producing the full PdfObject family (PdfDictionary, PdfArray, PdfStream, PdfIndirectObject, ...), resolves cross reference tables and indirect references, decodes stream filters (Flate/deflate, ASCII85 and predictors) and enumerates page dictionaries through the page tree. Text extraction rebuilds readable text for a page from its content streams, mapping character codes back to Unicode through ToUnicode CMaps and the associated font information (TextExtractor, ToUnicodeCMap, FontInfo). Writing: PdfDocument implements the shared IDocumentWriter contract with a fluent Heading / Paragraph / Table / Image API, PdfLayoutEngine paginates the collected blocks into pages, and PdfWriter serializes objects, content streams, the xref table and the trailer into a standards conforming file; PdfFontResource, PdfImageXObject and PdfColor cover font metrics and encoding, image XObject encoding and RGB colour operators. Because the writer implements IDocumentWriter, code written against the WordDocument surface can emit PDF output without source changes.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

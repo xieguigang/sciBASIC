@@ -65,6 +65,12 @@ Namespace Darwinism.Models
     ''' </remarks>
     Public Class FitnessPool(Of Individual As {Class, Chromosome(Of Individual)}) : Inherits GeneralFitnessPool(Of Individual)
 
+        ''' <summary>
+        ''' Create a fitness calculation pool which uses the 
+        ''' <see cref="Chromosome(Of T).Identity"/> value as the cache key.
+        ''' </summary>
+        ''' <param name="cacl">The fitness evaluation function.</param>
+        ''' <param name="capacity">The maximum number of the cached fitness results.</param>
         Sub New(cacl As Fitness(Of Individual), capacity%)
             Call MyBase.New(cacl, capacity, Function(a) a.Identity)
         End Sub

@@ -7,7 +7,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Description>Serializes and deserializes .NET objects to and from the MessagePack binary format, with reflection based member schemas, MessagePackMember attributes, nil implication handling and typed collection support.</Description>
+    <Description>Serializes and deserializes .NET objects to and from the MessagePack binary format, with reflection based member schemas, MessagePackMember attributes, nil implication handling and typed collection support, in either compact array or named map layout.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
  
@@ -19,14 +19,15 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>MessagePack Binary Object Serialization Implementation</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO.MessagePack</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;msgpack;messagepack;serialization;binary-format;deserialization</PackageTags>
+    <PackageTags>scibasic;msgpack;messagepack;serialization;binary-format;deserialization;reflection</PackageTags>
+    <PackageReleaseNotes>The MessagePack binary serialization implementation of sciBASIC#. Object model: MsgPackSerializer (SerializeObject, Deserialize(Of T), DeserializeObject) reads and writes whole object graphs, backed by a cached reflection schema (TypeInfo, SerializableProperty) so that member discovery is paid only once per type. Wire layouts: SerializationContext.SerializationMethod selects between the compact array layout - driven by MessagePackMemberAttribute ids on annotated members - and the named map layout over all public read/write properties, which makes the payload self describing at the cost of size. Format constants: the Constants namespace documents the MessagePack format byte ranges (FixedInteger, FixedString, FixedArray, FixedMap and Bool) including str8/16/32, array16/32 and map16/32, with MagicBytes and MsgPackFormats providing the byte values. Nil handling: NilImplication controls how a nil value maps onto a member (for example keeping the default value or throwing). Collections: typed lists and dictionaries are supported out of the box, and ObjectExtensions adds the ToMsgPack() convenience extension.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

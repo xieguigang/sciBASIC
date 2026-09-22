@@ -13,14 +13,15 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
-    <Description>Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by reflection and decodes IL and source maps for sciBASIC# code tooling.</Description>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+    <Description>Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by metadata reflection, decodes IL into syntax trees and resolves source maps for sciBASIC# code tooling.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;visual-studio;solution-parser;code-analysis;vbnet</PackageTags>
+    <PackageTags>scibasic;visual-studio;solution-parser;slnx;vbproj;code-analysis;vbnet;il-decompiler;source-map;reflection</PackageTags>
+    <PackageReleaseNotes>The Visual Studio and VB.NET source code analysis toolkit of sciBASIC#. Solution handling: Solution.Load / Save parse and write both the classic text .sln format and the new XML .slnx format, exposing project trees, folders, configurations and solution workspaces with a dedicated parser and writer per format. Source analysis: VBProj.CodeDOM.Syntax provides a scanner plus a recursive descent parser that turns VB.NET source text into a symbol tree of namespaces, types, members and variables, while VBProj.Project models the .vbproj file itself (documents, references, build configurations and NuGet metadata). Compiled asset analysis: VBProj.Reflection.AssemblySymbolLoader maps an assembly into the same symbol model through read-only metadata reflection; the IL namespace adds instruction and method body readers, and a decompiler that recovers control flow graphs, SSA form and structured syntax; the SourceMap namespace decodes and encodes source maps (base64 VLQ mappings). Tooling: CodeSign offers code statistics, license banner insertion/removal and VB code signature extraction, the Resource namespace models resx/xsd content, and VersionControl provides git and svn log and diff parsing. This package is the foundation of the sciBASIC# code generation and documentation pipelines.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

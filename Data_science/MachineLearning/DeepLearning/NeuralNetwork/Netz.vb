@@ -74,16 +74,18 @@ Imports std = System.Math
 Namespace NeuralNetwork
 
     ''' <summary>
-    ''' Neural Network for regression analysis.
-    ''' 
-    ''' 本类已重构为 CNN 的 <see cref="ConvolutionalNN"/> 全连接网络门面：
-    ''' 所有前向传播与反向传播计算均由 CNN 内核完成，对外公开的接口保持不变。
+    ''' Feed forward neural network used for regression analysis.
     ''' </summary>
     ''' <remarks>
+    ''' This class is a facade over a fully connected <see cref="ConvolutionalNN"/>: forward and backward
+    ''' propagation are both performed by the CNN kernel while the public API of the legacy Netz type is kept
+    ''' unchanged.
+    ''' 
     ''' https://github.com/brokkoli71/NeuralNetwork
     ''' </remarks>
     Public Class Netz : Inherits Model
 
+        ''' <summary>The learning rate used by the online trainer.</summary>
         Public LERNRATE As Double = 0.01
 
         Private ReadOnly m_INPUTNEURONCOUNT As Integer
@@ -110,6 +112,16 @@ Namespace NeuralNetwork
         ''' </summary>
         Private ReadOnly m_activate As Func(Of Double, Double)
 
+        ''' <summary>
+        ''' Creates a fully connected regression network with the given topology.
+        ''' </summary>
+        ''' <param name="inputNeurons">Number of input nodes.</param>
+        ''' <param name="hiddenNeurons">Number of nodes in every hidden layer.</param>
+        ''' <param name="hiddenLayers">Number of hidden layers; may be zero.</param>
+        ''' <param name="outputNeurons">Number of output nodes.</param>
+        ''' <param name="activate">
+        ''' Legacy activation delegate, kept for compatibility; the CNN ReLU layer is actually used.
+        ''' </param>
         Public Sub New(inputNeurons As Integer, hiddenNeurons As Integer, hiddenLayers As Integer, outputNeurons As Integer, activate As Func(Of Double, Double))
             m_INPUTNEURONCOUNT = inputNeurons
             m_HIDDENNEURONCOUNT = hiddenNeurons
@@ -190,6 +202,10 @@ Namespace NeuralNetwork
             m_lastInput = input
         End Sub
 
+        ''' <summary>
+        ''' Runs a forward pass for one input sample and stores the result in <see cref="Output"/>.
+        ''' </summary>
+        ''' <param name="input">The input vector.</param>
         Public Overridable Sub run(input As Double())
             Call addInput(input)
 
@@ -197,17 +213,29 @@ Namespace NeuralNetwork
             m_output = cnn.forward(db, training:=Nothing).Weights
         End Sub
 
+        ''' <summary>Gets a copy of the output vector produced by the most recent forward pass.</summary>
         Public Overridable ReadOnly Property Output As Double()
             Get
                 Return m_output.Clone
             End Get
         End Property
 
+        ''' <summary>
+        ''' Convenience wrapper that runs a forward pass and returns the predicted output vector.
+        ''' </summary>
+        ''' <param name="input">The input vector.</param>
+        ''' <returns>The network output for <paramref name="input"/>.</returns>
         Public Overridable Function predict(input As Double()) As Double()
             Call run(input)
             Return Output
         End Function
 
+        ''' <summary>
+        ''' Performs one online training step (forward pass, loss evaluation and weight update) for a single
+        ''' input/target pair.
+        ''' </summary>
+        ''' <param name="input">The input vector.</param>
+        ''' <param name="goodOutput">The expected (target) output vector.</param>
         Public Overridable Sub train(input As Double(), goodOutput As Double())
             Call addInput(input)
 
@@ -243,6 +271,9 @@ Namespace NeuralNetwork
             Return raw
         End Function
 
+        ''' <summary>
+        ''' Gets the loss (error) computed by the most recent <see cref="train"/> call.
+        ''' </summary>
         Public Overridable ReadOnly Property TotalError As Double
             Get
                 ' 以最后一次训练样本的前向误差作为公开的总误差（与旧 Netz 的语义一致：Output 反映本次输入的前向值）
@@ -258,6 +289,7 @@ Namespace NeuralNetwork
             Next
         End Function
 
+        ''' <summary>Gets all synapse weights of the fully connected layers, biases excluded.</summary>
         Public Overridable ReadOnly Property Weights As List(Of Double)
             Get
                 Dim allWeights As New List(Of Double)()
@@ -275,12 +307,14 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        ''' <summary>Gets the output activations of the network as a mutable list.</summary>
         Public Overridable ReadOnly Property Neurons As List(Of Double)
             Get
                 Return New List(Of Double)(m_output)
             End Get
         End Property
 
+        ''' <summary>Gets the bias values of all fully connected layers.</summary>
         Public Overridable ReadOnly Property Bias As List(Of Double)
             Get
                 Dim allBias As New List(Of Double)()
@@ -295,30 +329,37 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        ''' <summary>Gets the number of hidden layers.</summary>
         Public Overridable ReadOnly Property HiddenLayerCount As Integer
             Get
                 Return m_HIDDENLAYERCOUNT
             End Get
         End Property
 
+        ''' <summary>Gets the number of input neurons.</summary>
         Public Overridable ReadOnly Property InputNeuronCount As Integer
             Get
                 Return m_INPUTNEURONCOUNT
             End Get
         End Property
 
+        ''' <summary>Gets the number of neurons in each hidden layer.</summary>
         Public Overridable ReadOnly Property HiddenNeuronCount As Integer
             Get
                 Return m_HIDDENNEURONCOUNT
             End Get
         End Property
 
+        ''' <summary>Gets the number of output neurons.</summary>
         Public Overridable ReadOnly Property OutputNeuronCount As Integer
             Get
                 Return m_OUTPUTNEURONCOUNT
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the index of the output neuron with the largest activation in the most recent forward pass.
+        ''' </summary>
         Public Overridable ReadOnly Property MaxOutputNeuronIndex As Integer
             Get
                 Dim output = m_output
@@ -335,8 +376,9 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>
-        ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存
+        ''' Persists the underlying CNN kernel model to a file in the CNN binary format.
         ''' </summary>
+        ''' <param name="path">Destination file path.</param>
         Public Overridable Sub Save(path As String)
             Using file As Stream = New FileStream(path, FileMode.Create, FileAccess.Write)
                 Call Save(file)
@@ -344,15 +386,18 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存到流
+        ''' Persists the underlying CNN kernel model to a stream in the CNN binary format.
         ''' </summary>
+        ''' <param name="stream">Destination stream.</param>
         Public Overridable Sub Save(stream As Stream)
             Call SaveModelCNN.Write(cnn, stream)
         End Sub
 
         ''' <summary>
-        ''' 从 CNN 二进制模型文件之中加载 NeuralNetwork 模型
+        ''' Loads a Netz model from a CNN binary model file.
         ''' </summary>
+        ''' <param name="path">Path of the CNN binary model file.</param>
+        ''' <returns>The reconstructed <see cref="Netz"/> model.</returns>
         Public Shared Function Load(path As String) As Netz
             Using file As Stream = New FileStream(path, FileMode.Open, FileAccess.Read)
                 Return Load(file)
@@ -360,8 +405,10 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 从流之中加载 CNN 二进制模型并还原为 NeuralNetwork 模型
+        ''' Loads a Netz model from a stream that contains a CNN binary model.
         ''' </summary>
+        ''' <param name="stream">Stream that contains a serialized CNN model.</param>
+        ''' <returns>The reconstructed <see cref="Netz"/> model.</returns>
         Public Shared Function Load(stream As Stream) As Netz
             Return New Netz(ReadModelCNN.Read(stream))
         End Function

@@ -77,9 +77,13 @@ Namespace RNN
 
         ' Defaults
 
+        ''' <summary>Default input vector size.</summary>
         Public Const defaultInputSize As Integer = 50
+        ''' <summary>Default hidden state size.</summary>
         Public Const defaultHiddenSize As Integer = 100
+        ''' <summary>Default output vector size.</summary>
         Public Const defaultOutputSize As Integer = 50
+        ''' <summary>Default learning rate.</summary>
         Public Const defaultLearningRate As Double = 0.1
 
         ' Network state
@@ -125,12 +129,12 @@ Namespace RNN
         End Sub
 
         ''' <summary>
-        ''' Creates a net with custom parameters
+        ''' Creates a net with custom parameters.
         ''' </summary>
-        ''' <param name="inputSize"></param>
-        ''' <param name="hiddenSize"></param>
-        ''' <param name="outputSize"></param>
-        ''' <param name="learningRate"></param>
+        ''' <param name="inputSize">Size of the input vector.</param>
+        ''' <param name="hiddenSize">Size of the hidden state.</param>
+        ''' <param name="outputSize">Size of the output vector.</param>
+        ''' <param name="learningRate">The learning rate.</param>
         Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer, learningRate As Double)
             m_inputSize = inputSize
             m_hiddenSize = hiddenSize

@@ -62,17 +62,33 @@ Imports std = System.Math
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Max pooling layer of a CeNiN network: each output value is the maximum activation inside a
+    ''' <c>pool x pool</c> window of the input feature map.
+    ''' </summary>
+    ''' <remarks>
+    ''' Pooling reduces the spatial resolution while keeping the strongest responses, which makes the
+    ''' downstream layers cheaper and the representation more translation tolerant.
+    ''' </remarks>
     Public Class Pool : Inherits Layer
 
+        ''' <summary>The pooling window size <c>[poolHeight, poolWidth]</c>.</summary>
         Public pool As Integer()
+        ''' <summary>The vertical and horizontal stride <c>[strideY, strideX]</c> of the pooling window.</summary>
         Public stride As Integer()
 
+        ''' <summary>Gets the layer kind, always <see cref="CNN.LayerTypes.Pool"/>.</summary>
         Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
                 Return CNN.LayerTypes.Pool
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a max pooling layer.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The unpadded dimensions <c>[height, width, channels]</c> of the input.</param>
+        ''' <param name="pad">The padding <c>[top, bottom, left, right]</c> applied to the input borders.</param>
         Public Sub New(inputTensorDims As Integer(), pad As Integer())
             Call MyBase.New(inputTensorDims, pad)
 
@@ -80,6 +96,10 @@ Namespace Convolutional
             stride = New Integer(1) {}
         End Sub
 
+        ''' <summary>
+        ''' Computes the pooled output dimensions <c>[outHeight, outWidth, channels]</c> from the input size
+        ''' and the stride.
+        ''' </summary>
         Public Overloads Sub setOutputDims()
             outputDims = New Integer(2) {
                 CInt(std.Floor(inputTensorDims(0) / stride(0))),
@@ -88,6 +108,10 @@ Namespace Convolutional
             }
         End Sub
 
+        ''' <summary>
+        ''' Runs the max pooling operation, writing the maximum of each window into the next layer.
+        ''' </summary>
+        ''' <returns>This layer instance once the pooled map has been written.</returns>
         Protected Overrides Function layerFeedNext() As Layer
             Dim inputHeight = inputTensorDims(0)
             Dim inputWidth = inputTensorDims(1)

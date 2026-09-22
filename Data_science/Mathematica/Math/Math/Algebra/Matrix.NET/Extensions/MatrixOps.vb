@@ -55,6 +55,8 @@
 
 #End Region
 
+Imports SimdMatrix = Microsoft.VisualBasic.Math.SIMD.SimdMatrix
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 Imports stdf = System.Math
 
 Namespace LinearAlgebra.Matrix
@@ -66,20 +68,44 @@ Namespace LinearAlgebra.Matrix
     Public Module MatrixOps
 
         ''' <summary>矩阵乘法 C = A × B</summary>
+        ''' <remarks>
+        ''' 先把两个矩形数组压平成 jagged 的连续行（这是走向量化点积的必要前提），
+        ''' 再交给「右矩阵预转置 + 行方向并行 + 行内 FMA 点积」的内核；
+        ''' O(n³) 的计算量足以摊薄这次 O(n²) 的拷贝开销。
+        ''' </remarks>
         Public Function Multiply(a As Double(,), b As Double(,)) As Double(,)
             Dim rowsA = a.GetLength(0)
             Dim colsA = a.GetLength(1)
             Dim colsB = b.GetLength(1)
-            Dim result(rowsA - 1, colsB - 1) As Double
+
+            Dim ja As Double()() = New Double(rowsA - 1)() {}
             For i = 0 To rowsA - 1
+                Dim row As Double() = New Double(colsA - 1) {}
+                For k = 0 To colsA - 1
+                    row(k) = a(i, k)
+                Next
+                ja(i) = row
+            Next
+
+            Dim jb As Double()() = New Double(colsA - 1)() {}
+            For k = 0 To colsA - 1
+                Dim row As Double() = New Double(colsB - 1) {}
                 For j = 0 To colsB - 1
-                    Dim sum = 0.0
-                    For k = 0 To colsA - 1
-                        sum += a(i, k) * b(k, j)
-                    Next
-                    result(i, j) = sum
+                    row(j) = b(k, j)
+                Next
+                jb(k) = row
+            Next
+
+            Dim jc As Double()() = SimdMatrix.Dot(ja, jb)
+            Dim result(rowsA - 1, colsB - 1) As Double
+
+            For i = 0 To rowsA - 1
+                Dim row As Double() = jc(i)
+                For j = 0 To colsB - 1
+                    result(i, j) = row(j)
                 Next
             Next
+
             Return result
         End Function
 
@@ -136,17 +162,24 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>矩阵向量乘法 y = A × x</summary>
+        ''' <remarks>
+        ''' 复用同一个行缓冲把矩形数组的每一行拷成连续内存，再走 FMA 点积内核，
+        ''' 避免为每一行单独分配数组。
+        ''' </remarks>
         Public Function MultiplyVec(a As Double(,), x As Double()) As Double()
             Dim rows = a.GetLength(0)
             Dim cols = a.GetLength(1)
             Dim result(rows - 1) As Double
+            Dim row As Double() = New Double(cols - 1) {}
+
             For i = 0 To rows - 1
-                Dim sum = 0.0
                 For j = 0 To cols - 1
-                    sum += a(i, j) * x(j)
+                    row(j) = a(i, j)
                 Next
-                result(i) = sum
+
+                result(i) = SIMDIntrinsics.DotFma(row, x)
             Next
+
             Return result
         End Function
 

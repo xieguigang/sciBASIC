@@ -233,7 +233,7 @@ Public Class Rtf
 
         Dim MetaBuilder As StringBuilder = New StringBuilder(__metaData)
         Call MetaBuilder.Replace("%cl_meta%", String.Join(" ", (From cl As Color In _colorMetas Select Font.FontColorToString(cl.R, cl.G, cl.B))).ToArray)
-        Call MetaBuilder.Replace("%version%", My.Application.Info.Version.ToString)
+        Call MetaBuilder.Replace("%version%", "1.0")
         Call MetaBuilder.Replace("%font_meta%", String.Join("", (From ffName As String In _fontMetas Select FontToken.Replace("%font.name%", ffName)).ToArray))
 
         Return MetaBuilder.ToString

@@ -77,8 +77,8 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
+Imports ClusteringIndices = Microsoft.VisualBasic.DataMining.Evaluation.ClusteringIndices
 
 Namespace KMeans
 
@@ -166,50 +166,42 @@ Namespace KMeans
             Return averageDistance
         End Function
 
+        ''' <summary>
+        ''' Davies–Bouldin 指数（越小越好）。
+        ''' 
+        ''' 已重构为委托统一实现 <see cref="ClusteringIndices.DaviesBouldin(Double()(), Integer())"/>。
+        ''' </summary>
+        ''' <param name="clusters"></param>
+        ''' <returns></returns>
         Public Function calcularDavidBouldin(clusters As Bisecting.Cluster()) As Double
-            Dim numberOfClusters = clusters.Length
-            Dim david As Double = 0.0
+            Dim data = ToIndicesInput(clusters)
+            Return ClusteringIndices.DaviesBouldin(data.features, data.labels)
+        End Function
 
-            If numberOfClusters = 1 Then
-                Call "Impossible to evaluate Davies-Bouldin index over a single cluster".warning
-                Return 0
+        ''' <summary>
+        ''' 把聚类模型转换为统一指标模块所需的「特征矩阵 + 整数簇标签」输入。
+        ''' </summary>
+        ''' <param name="clusters"></param>
+        ''' <returns></returns>
+        Private Function ToIndicesInput(clusters As Bisecting.Cluster()) As (features As Double()(), labels As Integer())
+            If clusters Is Nothing Then
+                Return (New Double()() {}, New Integer() {})
             End If
 
-            ' counting distances within
-            Dim withinClusterDistance = New Double(numberOfClusters - 1) {}
-            Dim i = 0
+            Dim features As New List(Of Double())()
+            Dim labels As New List(Of Integer)()
+            Dim clusterId As Integer = 0
 
-            For Each cluster In clusters
-                For Each punto In cluster
-                    withinClusterDistance(i) += punto.DistanceTo(cluster)
+            For Each cluster As Bisecting.Cluster In clusters
+                For Each point As ClusterEntity In cluster
+                    features.Add(point.entityVector)
+                    labels.Add(clusterId)
                 Next
-                withinClusterDistance(i) /= cluster.Size
-                i += 1
+
+                clusterId += 1
             Next
 
-            Dim result = 0.0
-            Dim max = Double.NegativeInfinity
-
-            For i = 0 To numberOfClusters - 1
-                'if the cluster is null
-                If clusters(i).centroid IsNot Nothing Then
-
-                    For j = 0 To numberOfClusters - 1
-                        'if the cluster is null
-                        If i <> j AndAlso clusters(j).centroid IsNot Nothing Then
-                            Dim val = (withinClusterDistance(i) + withinClusterDistance(j)) / clusters(i).DistanceTo(clusters(j))
-                            If val > max Then
-                                max = val
-                            End If
-                        End If
-                    Next
-                End If
-                result = result + max
-            Next
-
-            david = result / numberOfClusters
-
-            Return david
+            Return (features.ToArray, labels.ToArray)
         End Function
 
         <Extension>
@@ -252,56 +244,30 @@ Namespace KMeans
                 .CalinskiHarabasz
         End Function
 
-        <Extension>
-        Public Function CalinskiHarabasz(clusters As Bisecting.Cluster()) As Double
-            Dim calinski As Double = 0.0
-            Dim squaredInterCluter As Double = 0
-            Dim aux As Double
-            Dim cont As Double = 0
-
-            For Each cluster In clusters
-                For Each cluster2 In clusters
-                    If cluster Is cluster2 Then
-                        Continue For
-                    End If
-
-                    ' get cluster centroid distance
-                    aux = cluster.DistanceTo(cluster2)
-                    squaredInterCluter += aux ^ 2
-                    cont += 1
-                Next
-            Next
-
-            calinski = SquaredDistance(clusters) / (squaredInterCluter / cont)
-
-            Return calinski
-        End Function
-
         ''' <summary>
-        ''' Diámetro máximo entre dos puntos que pertenecen al mismo cluster.
+        ''' Calinski–Harabasz 指数（越大越好）。
+        ''' 
+        ''' 已重构为委托统一实现 <see cref="ClusteringIndices.CalinskiHarabasz(Double()(), Integer())"/>。
         ''' </summary>
         ''' <param name="clusters"></param>
         ''' <returns></returns>
+        <Extension>
+        Public Function CalinskiHarabasz(clusters As Bisecting.Cluster()) As Double
+            Dim data = ToIndicesInput(clusters)
+            Return ClusteringIndices.CalinskiHarabasz(data.features, data.labels)
+        End Function
+
+        ''' <summary>
+        ''' 最大簇内直径。
         ''' 
+        ''' 已重构为委托统一实现 <see cref="ClusteringIndices.MaximumDiameter(Double()(), Integer())"/>。
+        ''' </summary>
+        ''' <param name="clusters"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CalcularMaximumDiameter(clusters As Bisecting.Cluster()) As Double
-            Dim maximumDiameter As Double = 0
-            Dim aux As Double
-
-            For Each cluster In clusters
-                For Each punto In cluster
-                    For Each punto2 In cluster
-                        If Not punto Is punto2 Then
-                            aux = punto.DistanceTo(punto2)
-                            If aux > maximumDiameter Then
-                                maximumDiameter = aux
-                            End If
-                        End If
-                    Next
-                Next
-            Next
-
-            Return maximumDiameter
+            Dim data = ToIndicesInput(clusters)
+            Return ClusteringIndices.MaximumDiameter(data.features, data.labels)
         End Function
 
         ''' <summary>
@@ -347,42 +313,8 @@ Namespace KMeans
         ''' </remarks>
         <Extension>
         Public Function Silhouette(clusters As Bisecting.Cluster()) As Double
-            Dim clusterInDist As Double = 0
-            Dim clusterOutDist As Double = 0
-            Dim cluster As Bisecting.Cluster
-            Dim nextCluster As Bisecting.Cluster
-
-            For c As Integer = 0 To clusters.Length - 1
-                cluster = clusters(c)
-
-                If c + 1 >= clusters.Length Then
-                    nextCluster = clusters(Scan0)
-                Else
-                    nextCluster = clusters(c + 1)
-                End If
-
-                clusterInDist += AverageDistance(cluster, cluster)
-                clusterOutDist += AverageDistance(cluster, nextCluster)
-            Next
-
-            clusterInDist /= clusters.Length
-            clusterOutDist /= clusters.Length
-
-            Dim maxDist As Double = std.Max(clusterInDist, clusterOutDist)
-            Dim SI As Double = (clusterOutDist - clusterInDist) / maxDist
-
-            Return SI
-        End Function
-
-        Private Function AverageDistance(a As Bisecting.Cluster, b As Bisecting.Cluster) As Double
-            Dim factor As Double = a.Size
-            Dim clusterAvgInDist As Double =
-                Aggregate individual1 As ClusterEntity
-                In a.AsParallel
-                Let sumInDist = b.Select(Function(individual2) individual1.DistanceTo(individual2)).Sum
-                Into Sum(sumInDist / factor)
-
-            Return clusterAvgInDist / factor
+            Dim data = ToIndicesInput(clusters)
+            Return ClusteringIndices.Silhouette(data.features, data.labels)
         End Function
 
         ''' <summary>
@@ -400,171 +332,16 @@ Namespace KMeans
         End Function
 
         ''' <summary>
-        ''' Dunn Index
+        ''' Dunn 指数（越大越好）。
+        ''' 
+        ''' 已重构为委托统一实现 <see cref="ClusteringIndices.Dunn(Double()(), Integer())"/>。
         ''' </summary>
         ''' <param name="clusters">A multiple cluster result</param>
         ''' <returns></returns>
         Public Function Dunn(clusters As Bisecting.Cluster()) As Double
-            Dim minOutDist As Double = clusters _
-                .Select(Function(cluster) cluster.CalcMinOutDist(clusters)) _
-                .Min
-            Dim maxInDist As Double = clusters _
-                .Select(Function(cluster) cluster.CalcMaxInDist()) _
-                .Max
-            Dim Di As Double = minOutDist / maxInDist
-
-            Return Di
+            Dim data = ToIndicesInput(clusters)
+            Return ClusteringIndices.Dunn(data.features, data.labels)
         End Function
 
-        Const InternalParallelWorks As Integer = 30
-
-        ''' <summary>
-        ''' evaluate internal a cluster
-        ''' </summary>
-        ''' <param name="cluster"></param>
-        ''' <returns></returns>
-        <Extension>
-        Private Function CalcMaxInDist(cluster As Bisecting.Cluster) As Double
-            Dim maxInDist As Double = Double.MinValue
-
-            If cluster.Size > VectorTask.n_threads * InternalParallelWorks Then
-                Dim eval As New CalcMaxInDistTask(cluster)
-
-                eval.Run()
-                maxInDist = eval.GetMax
-            Else
-                For Each individual1 In cluster
-                    For Each individual2 In cluster
-                        If Not individual1 Is individual2 Then
-                            Dim dist As Double = individual1.entityVector.EuclideanDistance(individual2.entityVector)
-
-                            ' evaluate the max distance internal a cluster
-                            If dist > maxInDist Then
-                                maxInDist = dist
-                            End If
-                        End If
-                    Next
-                Next
-            End If
-
-            Return maxInDist
-        End Function
-
-        Private Class CalcMaxInDistTask : Inherits VectorTask
-
-            Dim cluster As ClusterEntity()
-            Dim maxInDist As Double()
-            Dim centroid As Double()
-
-            Sub New(cluster As Bisecting.Cluster)
-                Call MyBase.New(cluster.Size)
-
-                Me.centroid = cluster.centroid
-                Me.cluster = cluster.ToArray
-                Me.maxInDist = Allocate(Of Double)(all:=False)
-            End Sub
-
-            Public Function GetMax() As Double
-                Return maxInDist.Max
-            End Function
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim max_dist As Double = Double.MinValue
-
-                For i As Integer = start To ends
-                    Dim individual1 As IVector = cluster(i)
-
-                    For Each individual2 As ClusterEntity In cluster
-                        If Not individual1 Is individual2 Then
-                            Dim dist As Double = individual1.DistanceTo(individual2)
-
-                            ' evaluate the max distance internal a cluster
-                            If dist > max_dist Then
-                                max_dist = dist
-                            End If
-                        End If
-                    Next
-                Next
-
-                maxInDist(cpu_id) = max_dist
-            End Sub
-        End Class
-
-        ''' <summary>
-        ''' evaluate between two clusters
-        ''' </summary>
-        ''' <param name="cluster"></param>
-        ''' <param name="clusters"></param>
-        ''' <returns></returns>
-        <Extension>
-        Private Function CalcMinOutDist(cluster As Bisecting.Cluster, clusters As Bisecting.Cluster()) As Double
-            Dim minOutDist = Double.MaxValue
-
-            If cluster.Size > CalcMinOutDistTask.n_threads * InternalParallelWorks Then
-                Dim eval As New CalcMinOutDistTask(cluster, clusters)
-
-                eval.Run()
-                minOutDist = eval.GetMin
-            Else
-                For Each individual1 In cluster
-                    For Each cluster2 In clusters
-                        If Not cluster Is cluster2 Then
-                            For Each individual2 In cluster2
-                                Dim dist As Double = individual1.DistanceTo(individual2)
-
-                                ' evaluate the min distance between the clusters
-                                If dist < minOutDist Then
-                                    minOutDist = dist
-                                End If
-                            Next
-                        End If
-                    Next
-                Next
-            End If
-
-            Return minOutDist
-        End Function
-
-        Private Class CalcMinOutDistTask : Inherits VectorTask
-
-            Dim cluster As Bisecting.Cluster
-            Dim clusters As Bisecting.Cluster()
-            Dim minOutDist As Double()
-
-            Sub New(cluster As Bisecting.Cluster, clusters As Bisecting.Cluster())
-                Call MyBase.New(cluster.Size)
-
-                Me.minOutDist = Allocate(Of Double)(all:=False)
-                Me.cluster = cluster
-                Me.clusters = clusters
-            End Sub
-
-            Public Function GetMin() As Double
-                Return minOutDist.Min
-            End Function
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim min_dist As Double = Double.MaxValue
-
-                For i As Integer = start To ends
-                    Dim individual1 As IVector = cluster(i)
-
-                    For Each cluster2 In clusters
-                        If Not cluster Is cluster2 Then
-                            For Each individual2 In cluster2
-                                Dim dist As Double = individual1.DistanceTo(individual2)
-
-                                ' evaluate the min distance between the clusters
-                                If dist < min_dist Then
-                                    min_dist = dist
-                                End If
-                            Next
-                        End If
-                    Next
-                Next
-
-                minOutDist(cpu_id) = min_dist
-            End Sub
-        End Class
     End Module
 End Namespace

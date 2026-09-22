@@ -1,6 +1,4 @@
-Imports System.Collections.Generic
 Imports System.IO
-Imports System.Linq
 
 Namespace Script
 
@@ -20,8 +18,13 @@ Namespace Script
         ''' </summary>
         ''' <param name="scriptFile">脚本文件的绝对路径</param>
         ''' <param name="metadata">从脚本头部指令解析得到的程序集元数据</param>
-        ''' <param name="imports">#include 所引用的外部程序集绝对路径</param>
-        ''' <param name="searchRoots">与 #include 一致的相对路径搜索目录(按优先级排列)</param>
+        ''' <param name="imports">
+        ''' #include 所引用的全部程序集绝对路径 —— 包括本地 dll、nuget 包解析出的资产
+        ''' 以及被引入脚本转发的依赖
+        ''' </param>
+        ''' <param name="searchRoots">
+        ''' 与 #include 一致的相对路径搜索目录(按优先级排列), nuget 包的解压目录追加在末尾
+        ''' </param>
         Public Function Build(scriptFile As String,
                               metadata As ScriptMetadata,
                               [imports] As IEnumerable(Of String),

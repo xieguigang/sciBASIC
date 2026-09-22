@@ -72,21 +72,30 @@ Namespace CNN.layers
     Public Class TanhLayer : Inherits DataLink
         Implements Layer
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the tanh layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Tanh"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Tanh
             End Get
         End Property
 
+        ''' <summary>Creates a tanh activation layer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Applies the hyperbolic tangent element wise.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the activation behaves the same in both modes.</param>
+        ''' <returns>The activated data block.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim V2 As DataBlock = db.cloneAndZero()
             Dim N = db.Weights.Length
@@ -100,6 +109,9 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>
+        ''' Backpropagates the gradient, multiplying it by the tanh derivative <c>1 - y^2</c>.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             Dim V = in_act ' we need to set dw of this
             Dim V2 = out_act
@@ -111,6 +123,8 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>tanh()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "tanh()"
         End Function

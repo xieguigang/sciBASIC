@@ -22,11 +22,12 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyTitle>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;network-rendering;data-visualization;style-mapping;convex-hull</PackageTags>
+    <PackageTags>scibasic;network-rendering;data-visualization;style-mapping;convex-hull;css;graphics</PackageTags>
+    <PackageReleaseNotes>The network graph rendering engine of sciBASIC#. It renders a laid out NetworkGraph into bitmap or vector images, drawing nodes, edges, arrowheads, labels and convex hull groups, and supports both single image output and the animation frames consumed by NetworkCanvas. Styling: the Styling namespace implements a CSS like map expression language that maps data values onto colours, shapes and sizes - style rules and expressions are described in Styling, fill brushes produced by the expression language live in Styling.FillBrushes, numeric styling expressions in Styling.Numeric, and the CSS rule model in Styling.CSS. Rendering: the Render namespace provides the renderer together with convex hull grouping utilities. Because styling is data driven, the same graph can be re-styled for different reports without changing rendering code.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

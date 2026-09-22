@@ -240,3 +240,270 @@ def simulate_T_steps(inputs, W1, W2, T, beta, threshold):
 **ANN-to-SNN 转换的替代路径**：若不想手写替代梯度，可以先用 TF 训练一个 ReLU ANN，再通过权重归一化将其转换为 SNN，这在 TF 下实现门槛更低，但推理延迟较长。
 **XLA 加速**：对图模式下使用 `tf.while_loop` 的实现，可以启用 `jit_compile=True` 让 XLA 编译器融合算子，显著提升时间步循环的执行效率。
 总体而言，TF 下实现 SNN 的推荐路径是：**Eager 模式 + Python for 循环 + `@tf.custom_gradient` 替代梯度 + Keras Layer 封装**，这套组合在开发效率与性能之间取得较好平衡，代码结构也最接近 snnTorch 的使用习惯，便于后续迁移到 PyTorch 生态。
+
+---
+
+# 稀疏自定义连接：加载真实突触连接组（FlyWire 风格）
+
+前面各模块中，`SpikingNetwork.AddLayer()` 构建的是**全连接** LIF 层（稠密权重矩阵 `[in, units]`），适合手写的小规模网络。但要仿真真实大脑（例如 FlyWire 果蝇脑，十万级神经元、千万级突触），稠密矩阵在内存与算力上都完全不可行——真实连接组是**高度稀疏**的：每个神经元平均只与数百个神经元相连。
+
+为此，本库新增了稀疏自定义连接能力：神经元之间的连接关系与强度完全由用户给定的**稀疏突触矩阵**决定，网络在同一层的神经元之间（含**循环连接**与**自反馈**）按生物突触结构逐时间步传播脉冲。
+
+## 一、稀疏连接的数据模型（CSR）
+
+新增 `SparseMatrix`（`SparseMatrix.vb`），采用 **CSR（Compressed Sparse Row）** 存储：
+
+- 约定 `W[pre, post]`：**行 = 突触前神经元（pre）**，**列 = 突触后神经元（post）**；
+- 内部存储 `rowPtr / colIdx / values` 三个数组，仅保存非零边；
+- `FromTriplets(pre[], post[], weight[], rows, columns)` 由三元组建矩阵。它采用**两次稳定计数排序**（先按列、再按行）得到 `(row, col)` 字典序，再线性合并重复边——相同 `(pre, post)` 的边**按权重累加**。整体复杂度 `O(nnz + rows + columns)`，不使用哈希字典，避免千万级突触下巨大的内存开销；
+- `SpMM(dense)` 计算稀疏 × 稠密：`X[batch, Rows] · W[Rows, Columns] → [batch, Columns]`，热路径直接操作底层 `Double()` 数组，并对 0/1 脉冲输入跳过零源以进一步加速。
+
+## 二、权重归一化
+
+真实连接组的权重通常是**突触计数**（syn_count），量级随神经元扇入/扇出剧烈变化，直接使用会导致膜电位尺度过大或过小。`SparseNormalization` 提供四种处理方式：
+
+| 方式 | 含义 | 适用场景 |
+|------|------|---------|
+| `None` | 保留原始突触计数 | 需要保留绝对强度、自行控制阈值时 |
+| `FanIn` | 按列（突触后）归一化：每个突触后神经元的入边权重和为 1 | **默认值**，最常用的 SNN 归一化 |
+| `FanOut` | 按行（突触前）归一化：每个突触前神经元的出边权重和为 1 | 关注发放守恒时 |
+| `GlobalMax` | 按全局最大（绝对）权重缩放 | 保持相对比例的整体缩放 |
+
+## 三、单层稀疏递归仿真
+
+新增 `SparseLIFLayer`（`SparseLIFLayer.vb`），复用与稠密 `LIFLayer` 完全相同的 LIF 四阶段动态，只是把输入电流改成**递归形式**：
+
+```
+I_rec[t] = W · S[t−1]          递归输入：上一时刻脉冲经稀疏矩阵回灌（含循环连接与自反馈）
+I[t]     = I_ext[t] + I_rec[t] 叠加外部注入电流
+U[t]     = β·H[t−1] + I[t]     泄漏积分
+S[t]     = Θ(U[t] − U_thr)     阈值触发（二值脉冲）
+H[t]     = 复位(U[t], S[t])    发放后复位
+```
+
+由于 `S[t−1]` 作为跨时间步状态，本层天然是一个脉冲递归网络，对连接矩阵中存在的循环连接与自反馈均正确建模——这正是真实连接组仿真的核心。
+
+## 四、用法示例
+
+```vb
+Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+
+' 1) 准备 FlyWire 风格三元组：pre / post 为神经元索引，weight 为突触计数
+Dim pre() As Integer = {0, 1, 2, 5, 5, ...}
+Dim post() As Integer = {3, 3, 7, 9, 9, ...}
+Dim weight() As Double = {12.0, 4.0, 8.0, 3.0, 6.0, ...}
+
+Dim N = 140000            ' 神经元总数
+Dim T = 50                ' 仿真时间步
+
+' 2) 构建网络并配置单层稀疏层（自动完成三元组→CSR + 扇入归一化）
+Dim net As New SpikingNetwork(N, T, SpikeEncoding.RateCoding)
+net.AddSparseLayer(pre, post, weight, N,
+                   normalization:=SparseNormalization.FanIn,
+                   beta:=0.9, threshold:=1.0)
+
+' 3) 前向仿真：输入经频率编码后注入，返回各神经元在 T 步内的脉冲计数
+Dim x = New Tensor(inputVec, 1, N)          ' 输入维度需等于 N（或提供 inputMap）
+Dim counts = net.ForwardSpikes(x)           ' counts: [1, N]
+
+' 4) 读取轨迹：每个时间步的输出脉冲 [batch, N]
+Dim sHist = net.SparseLayer.SHistory
+```
+
+### 输入注入映射（inputMap）
+
+当编码特征的维度小于神经元总数时，可用 `inputMap` 把第 `f` 个特征注入到指定神经元：
+
+```vb
+' 8 个输入特征 → 注入到神经元 4..11
+Dim inputMap() As Integer = {4, 5, 6, 7, 8, 9, 10, 11}
+Dim net As New SpikingNetwork(8, 30, SpikeEncoding.RateCoding)
+net.AddSparseLayer(pre, post, weight, N, inputMap:=inputMap)
+```
+
+若省略 `inputMap`，则要求 `inputSize = N`（特征与神经元 1:1 对应）。
+
+## 五、内存与性能
+
+- 复杂度：`SpMM` 为 `O(nnz × batch)`/步，整段仿真 `O(T × nnz × batch)`；
+- 内存：`O(nnz + 逐步中间张量)`。以 FlyWire 量级（nnz ≈ 千万）为例，CSR 仅需约 `nnz×(4+4+8) ≈ 160 MB`，而稠密矩阵将需要 `140000² × 8 ≈ 157 TB`——CSR 是唯一可行选择；
+- 建议：仿真前固定 `batch`，并尽量使用 `SpikeEncoding.LatencyCoding`（每特征至多 1 个脉冲）以降低注入量。
+
+## 六、限制与兼容性
+
+- 稀疏连接层**仅支持前向仿真**（权重固定）。对稀疏网络调用 `TrainStep` / `ComputeGradients` 会抛出 `NotSupportedException`，明确提示"稀疏连接层当前仅支持前向仿真"，避免静默给出错误梯度；
+- 稀疏层与全连接层**互斥**：已调用 `AddSparseLayer` 后不能再 `AddLayer`，反之亦然；
+- 原有全连接多层网络的构建、BPTT 训练与推理行为**完全不变**（见 `test/test1.vb`、`self_test.vb` 仍通过）；
+- 稀疏连接矩阵必须为**方阵**（pre/post 为同一神经元群）。
+
+`test/test3.vb` 提供了完整可运行示例：包含 `SparseMatrix.SpMM` 与稠密 `MatMul` 的对拍自检、单层稀疏递归网络（含自反馈）的脉冲动力学仿真，以及 `inputMap` 注入演示。
+
+---
+
+# CUDA 加速：让稀疏连接组仿真跑在 GPU 上
+
+前面的稀疏仿真默认在 CPU 上执行。当连接组规模达到 FlyWire 量级（十万级神经元、千万级突触）时，可以通过 GPU 加速。
+
+## 一、设计：把稀疏乘法接入可插拔后端
+
+`Tensor` 本就有一套**可插拔计算后端**机制：`Tensor.computeKernel`（契约 `ITensorCompute`）默认是 SIMD CPU 实现，`CudaTensor.Register()` 会一次性切换为 CUDA GPU 实现。
+
+为此我们为后端契约补上了**稀疏算子**：
+
+| 组件 | 位置 | 作用 |
+|------|------|------|
+| `SparseCsr` | `TensorFlow/Compute/SparseCsr.vb` | CSR 稀疏矩阵载体（行指针 / 列索引 / 权重 + 版本号），跨后端传输与显存缓存的依据 |
+| `ITensorCompute.SpMM(csr, dense)` | `TensorFlow/Compute/ITensorCompute.vb` | 稀疏 × 稠密算子契约 |
+| `TensorComputeBase.SpMM` | `TensorFlow/Compute/TensorComputeBase.vb` | 默认主机实现（SIMD / CUDA / 标量后端自动继承） |
+| `CudaTensor.SpMM` + `spmm.cu` | `cuda/ILCudaTensor/` | CUDA 内核：按 `(batch, row)` 行并行，输出 `atomicAdd` 累加 |
+
+`SparseMatrix.SpMM` 本身不含计算逻辑，只是**委托**给当前后端：
+
+```vb
+Return Tensor.computeKernel.SpMM(_csr, dense)
+```
+
+因此 CPU ↔ GPU 的切换对上层完全透明。
+
+> 注意：**SNN 主库不依赖 CUDA**（依赖方向仍是 CUDA → TensorFlow）。只有需要 GPU 的调用方（驱动/测试工程）才引用 `ILCudaTensor`。
+
+## 二、用法
+
+```vb
+Imports Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
+
+' 1) 构建稀疏网络（与 CPU 用法完全一致）
+Dim net As New SpikingNetwork(N, T, SpikeEncoding.RateCoding)
+net.AddSparseLayer(pre, post, weight, N,
+                   normalization:=SparseNormalization.FanIn,
+                   beta:=0.9, threshold:=1.0)
+
+' 2) 尝试切换到 CUDA 后端；失败则保持 CPU（不会抛异常）
+If CudaTensor.Register() Then
+    Console.WriteLine($"后端 = {Tensor.computeKernel.Name}")   ' → CUDA
+End If
+
+' 3) 之后同样的调用就自动走 GPU 的稀疏内核
+Dim counts = net.ForwardSpikes(x)
+
+' 4) 用完可切回 CPU
+CudaTensor.Unregister()
+```
+
+## 三、阈值与回退策略
+
+| 属性 | 默认 | 含义 |
+|------|------|------|
+| `CudaTensor.MinSparseNnz` | 65536 | 稀疏矩阵非零数小于此值时 SpMM 回退 CPU（避免显存往返倒挂） |
+| `CudaTensor.MinGpuElements` | 4096 | 逐元素算子走 GPU 的最小元素数 |
+
+**只把 SpMM 放 GPU、LIF 留在 CPU**：把 `MinGpuElements` 调到极大（如 `Integer.MaxValue`），逐元素算子（泄漏积分、复位、注入）就会回退 CPU，只有稀疏 SpMM 走 GPU，从而避免每步逐元素算子的 PCIe 往返：
+
+```vb
+Dim saved = CudaTensor.MinGpuElements
+CudaTensor.MinGpuElements = Integer.MaxValue   ' LIF 留在 CPU
+CudaTensor.MinSparseNnz = 1                    ' 让 SpMM 走 GPU
+' ... 仿真 ...
+CudaTensor.MinGpuElements = saved
+```
+
+内核不可用（如 `atomicAdd(double)` 需要 sm_60+，或 NVRTC 编译失败）时，`CudaTensor` 会检测不到内核并**自动回退 CPU**，不会中断仿真。
+
+## 四、缓存失效契约（务必遵守）
+
+GPU 后端以「**主机数组引用 + 版本号**」缓存显存副本。任何**绕过 `Tensor` 索引器**的就地写入都必须声明失效，否则设备端会继续复用旧副本（静默错误）：
+
+| 场景 | 需要调用 |
+|------|---------|
+| 就地修改 `Tensor.Data` | `tensor.MarkHostModified()`（或全局 `Tensor.InvalidateAllDeviceCaches()`） |
+| 就地修改 `SparseCsr.Values` / `SparseMatrix.Normalize` | `SparseCsr.MarkModified()`（`Normalize` 内部已自动调用） |
+
+SNN 内部已按此契约处理：`Network.ForwardSparse` 的计数累加与 `ScatterInput` 的注入散射在写完后都会 `MarkHostModified()`。
+
+## 五、性能与显存
+
+- **显存占用**：CSR 三数组为 `nnz × (4 + 4 + 8)` 字节；FlyWire 量级（nnz ≈ 千万）约 160 MB。CSR 会**常驻显存**（按引用 + 版本缓存，LRU，容量上限 `DefaultCacheBytes` = 1 GiB），并**显式释放**（ILCuda 显存无终结器）。
+- **每步传输**：上传 `S`（`batch × N × 8`）+ 回读结果（`batch × Columns × 8`）。`N = 14万, batch = 1` 时约 1.1 MB/次。
+- **一个重要的性能事实**：脉冲输入**高度稀疏**，CPU 的 SpMM 会**跳过零源**（`xv = 0`），因此在中低发放率下 CPU 相当有竞争力；GPU 每次调用有固定开销（内核启动 + 显存往返，约 0.6 ~ 1 ms/步），需要足够大的「每步非零计算量」（**高发放率 × 大规模 nnz**）才能摊薄。
+  - 裸内核基准（`ILCudaTensor/test`）：`nnz = 1.28M`、稠密输入时 SpMM 加速约 **4.7×**；
+  - 端到端（`SNN/test` Part 4）：小/中规模、稀疏发放时 GPU 未必更快 —— 这是预期行为，建议按实际发放率实测后再决定是否启用。
+
+## 六、验证
+
+| 测试 | 内容 |
+|------|------|
+| `cuda/ILCudaTensor/test/Program.vb` | 稀疏 SpMM 的 CPU vs CUDA 逐元素对拍、`MarkModified` 后显存缓存同步、稀疏 SpMM 性能参考 |
+| `SNN/test/test4.vb` | 同一稀疏网络的 CPU / GPU 端到端前向对拍（`LatencyCoding` 确定性编码保证输入一致），并在无 CUDA 时安全跳过 |
+
+两者均未破坏既有断言与演示（全连接训练、`SparseDemo` 等照常通过）。
+
+---
+
+# 附：项目代码结构、关键 API 与快速上手
+
+> 以上正文解释了 SNN 的数学原理与算法细节；本节从**代码实现**的角度说明 `Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork` 这个程序集的组织方式与使用入口。
+
+## 项目结构与模块地图
+
+程序集 `Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork`（根命名空间同名）由以下类型构成：
+
+| 分类 | 类型 | 职责 |
+|---|---|---|
+| 神经元层 | `LIFLayer` | 基础漏位积分—触发层（膜电位积分、阈值触发、复位与不应期） |
+| | `RecurrentLIFLayer` | 带递归连接的 LIF 层，用于循环 / 时序拓扑 |
+| | `SparseLIFLayer` | 稀疏连接 LIF 层，突触权重以 CSR（`SparseMatrix`）存储 |
+| 编解码 | `Encoder` | 把连续值编码为脉冲序列（群体编码 / 速率编码 / 延迟编码） |
+| | `Decoder` | 把脉冲序列还原为连续输出（速率读出等） |
+| 学习规则 | `STDP` | 脉冲时序依赖可塑性，用于无监督的局部学习 |
+| | `Surrogate` | 代理梯度（surrogate gradient），使离散脉冲发射可反向传播 |
+| | `RegressionLosses` | 面向回归任务的损失函数 |
+| 网络装配 | `Network` | 组装各层并驱动前向传播（含 `ForwardSparse`） |
+| | `LinearReadout` | 最终线性读出层 |
+| 基础设施 | `SparseMatrix` | CSR 稀疏矩阵容器（行指针 / 列索引 / 值） |
+| | `TensorHelper` | 张量形状变换与共享工具方法 |
+
+依赖关系：`Microsoft.VisualBasic.Core`（基础库）、`Math`（数值与统计）、`TensorFlow`（张量运行时）；稀疏路径在启用 GPU 时会走 `ILCudaTensor` 提供的 `spmm` 内核。
+
+## 快速上手
+
+```vbnet
+Imports Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
+
+' 1. 搭建网络：编码器 → LIF 层 → 线性读出
+Dim net As New Network()
+' ...（按需添加 LIFLayer / SparseLIFLayer / LinearReadout 等层）
+
+' 2. 把连续输入编码成脉冲序列
+'    Encoder 支持速率编码、群体编码与延迟编码等多种方案
+Dim spikes = Encoder.Rate(x, steps:=T)
+
+' 3. 前向传播（稀疏连接时走 ForwardSparse）
+Dim y = net.Forward(spikes)
+
+' 4. 训练：代理梯度负责反向传播，STDP 负责局部无监督学习
+```
+
+## 显存与缓存的正确用法
+
+本实现在「主机张量」与「设备张量」之间采用**显式失效**契约：
+
+| 场景 | 需要调用的方法 |
+|---|---|
+| 就地修改 `Tensor.Data` | `tensor.MarkHostModified()`（或全局 `Tensor.InvalidateAllDeviceCaches()`） |
+| 就地修改 `SparseCsr.Values` / `SparseMatrix.Normalize` | `SparseCsr.MarkModified()`（`Normalize` 内部已自动调用） |
+
+`Network.ForwardSparse` 的计数累加与 `ScatterInput` 的注入散射在写完后都会自动调用 `MarkHostModified()`，因此正常使用无需手工干预。
+
+## 何时启用 GPU
+
+脉冲输入天然高度稀疏，CPU 侧 SpMM 会跳过零源，因此在中低发放率下 CPU 往往更有竞争力；GPU 每次调用存在固定开销（内核启动 + 显存往返，约 0.6 ~ 1 ms/步）。经验结论是：需要足够大的「每步非零计算量」（**高发放率 × 大规模 nnz**）才能摊薄开销。建议按实际发放率实测后再决定是否启用。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork`
+- 目标框架：`net10.0`；平台：`AnyCPU;x64`
+- 关键属性：`OptionStrict=Off`、`OptionExplicit=On`、`ImplicitUsings=enable`
+- 许可：GPL-3.0-or-later

@@ -79,6 +79,13 @@ Namespace CNN
         Dim action As Action(Of Integer, ConvolutionalNN)
         Dim precision_cutoff As Double = 0.05
 
+        ''' <summary>
+        ''' Creates a trainer that runs the given training algorithm.
+        ''' </summary>
+        ''' <param name="alg">The algorithm (SGD, AdaGrad, Adam, ...) used to update the weights.</param>
+        ''' <param name="log">Optional log sink; when omitted messages are written through the debugger output.</param>
+        ''' <param name="action">Optional callback invoked after every epoch with the epoch index and the current network.</param>
+        ''' <param name="verbose">When <c>True</c> a progress bar with the running loss is displayed.</param>
         <DebuggerStepThrough>
         Sub New(alg As TrainerAlgorithm,
                 Optional log As Action(Of String) = Nothing,
@@ -150,11 +157,16 @@ Namespace CNN
         End Sub
 
         ''' <summary>
-        ''' Run CNN trainer
+        ''' Runs the training loop for at most <paramref name="max_loops"/> epochs.
         ''' </summary>
-        ''' <param name="trainset"></param>
-        ''' <param name="max_loops"></param>
-        ''' <returns></returns>
+        ''' <param name="trainset">
+        ''' The training samples; invalid NaN samples are dropped and the set is normalized in place.
+        ''' </param>
+        ''' <param name="max_loops">Maximum number of training epochs.</param>
+        ''' <returns>The trained network.</returns>
+        ''' <exception cref="InvalidProgramException">
+        ''' Thrown when no network has been attached to the trainer algorithm; call <c>SetKernel</c> first.
+        ''' </exception>
         Public Function train(trainset As SampleData(), max_loops As Integer) As ConvolutionalNN
             Dim t As Integer = 0
             Dim stopTrain As Boolean

@@ -97,13 +97,18 @@ Namespace Math.Parallel
             Next
         End Sub
 
+        ''' <summary>
+        ''' 并行矩阵乘法入口。
+        ''' </summary>
+        ''' <remarks>
+        ''' 内部已经委托给 <see cref="SIMD.SimdParallel.MatrixDot(Double()(), Double()())"/>：
+        ''' 后者会先对右矩阵做一次转置，使内层内积变成两段连续内存的
+        ''' <c>SIMDIntrinsics.DotFma</c>，再按行并行 —— 相比这里逐列拷贝 <c>Bcolj</c>
+        ''' 的旧实现，既省掉了每一列重复的拷贝，也用上了 FMA 融合乘加。
+        ''' 这个函数保留下来只是为了不破坏既有调用点的源码兼容性。
+        ''' </remarks>
         Public Shared Function Resolve(a As Double()(), b As Double()()) As Double()()
-            Dim nrowA As Integer = a.Length
-            Dim ncolB As Integer = b(0).Length
-            Dim c As Double()() = RectangularArray.Matrix(Of Double)(nrowA, ncolB)
-            Dim solver As New MatrixDotProduct(a, b, c, ncolB)
-            Call solver.Run()
-            Return c
+            Return SIMD.SimdParallel.MatrixDot(a, b)
         End Function
     End Class
 End Namespace

@@ -115,6 +115,10 @@ Namespace SVM
             Return total_correct / problem.count
         End Function
 
+        ''' <summary>
+        ''' Set the random seed value which is used by the training procedure.
+        ''' </summary>
+        ''' <param name="seed">The random seed value.</param>
         Public Sub SetRandomSeed(seed As Integer)
             Procedures.setRandomSeed(seed)
         End Sub

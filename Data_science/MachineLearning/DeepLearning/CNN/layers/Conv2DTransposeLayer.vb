@@ -65,7 +65,8 @@ Imports std = System.Math
 Namespace CNN.layers
 
     ''' <summary>
-    ''' 
+    ''' Transposed (de)convolution layer: it upsamples a feature map back to a larger spatial size by scattering each input
+    ''' value over the receptive field of every filter.
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/TrevorBlythe/MentisJS/blob/main/src/layers/DeconvLayer.js
@@ -73,12 +74,14 @@ Namespace CNN.layers
     Public Class Conv2DTransposeLayer : Inherits DataLink
         Implements Layer
 
+        ''' <summary>Gets the filter parameter block of this layer.</summary>
         Public ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 Yield New BackPropResult(filterw, filterws, l1_decay_mul, l2_decay_mul)
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Conv2DTranspose"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Conv2DTranspose
@@ -105,9 +108,22 @@ Namespace CNN.layers
         Dim fWIH As Integer
         Dim fWIHID As Integer
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a transposed convolution layer and validates that the declared output shape matches the filter geometry.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the produced shape.</param>
+        ''' <param name="output">The definition describing the input shape of this layer.</param>
+        ''' <param name="filter">The filter window size.</param>
+        ''' <param name="filters">Number of filters.</param>
+        ''' <param name="stride">Stride used when scattering the inputs.</param>
+        ''' <param name="useBias">When <c>True</c> a learnable bias vector is added to the output.</param>
+        ''' <exception cref="InvalidProgramException">
+        ''' Thrown when the input shape does not match the filter geometry, or when a filter is larger than the input.
+        ''' </exception>
         Public Sub New(def As OutputDefinition,
                        output As OutputDefinition,
                        filter As Dimension,
@@ -201,6 +217,9 @@ Namespace CNN.layers
             out_act = New DataBlock(in_sx, in_sy, in_depth) With {.trace = Me.ToString}
         End Sub
 
+        ''' <summary>
+        ''' Computes the gradients with respect to the filters, the bias and the input of this layer.
+        ''' </summary>
         Public Sub backward() Implements Layer.backward
             Dim costs As Double() = in_act.clearGradient().Gradients
             Dim err As Double() = out_act.Gradients
@@ -236,6 +255,12 @@ Namespace CNN.layers
             Next
         End Sub
 
+        ''' <summary>
+        ''' Upsamples the input by scattering every input value over the filter receptive field of each output channel.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the layer behaves the same in both modes.</param>
+        ''' <returns>The upsampled feature maps.</returns>
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim outData As Double()
 
@@ -288,6 +313,8 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>conv2d_transpose()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "conv2d_transpose()"
         End Function

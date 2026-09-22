@@ -52,7 +52,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     ''' <summary>
     ''' Path element for use in <seealso cref="ShapAlgo2"/>

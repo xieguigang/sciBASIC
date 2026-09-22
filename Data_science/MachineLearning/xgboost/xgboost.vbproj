@@ -20,14 +20,15 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>XGBoost Model Predictor and Gradient Boosting Tree Trainer</Title>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.XGBoost</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;xgboost;gradient-boosting;decision-tree;predictor</PackageTags>
+    <PackageTags>scibasic;xgboost;gradient-boosting;gbtree;gblinear;dart;decision-tree;predictor;classifier</PackageTags>
+    <PackageReleaseNotes>Gradient boosting for sciBASIC#. On the inference side the GBTree, GBLinear and Dart boosters read and score XGBoost model files, so a model trained elsewhere can be evaluated inside a .NET process without any native dependency - the tree structure, split conditions and leaf values are all decoded from the model file. On the training side the package trains ternary gradient boosting trees with explicit handling of categorical columns and missing values, using the TGBoost trainer with its learning rate, subsampling and regularisation parameters. The utility and configuration namespaces hold the supporting helpers and the parameter model, and a Spark oriented namespace is included for distributed style workflows.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

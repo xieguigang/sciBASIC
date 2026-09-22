@@ -157,6 +157,97 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 逐元素向下取整（<see cref="Double"/>）：<c>out(i) = Floor(v(i))</c>
+        ''' </summary>
+        ''' <remarks>
+        ''' <c>Vector.Floor</c> 会由 JIT 映射到 SSE4.1 的 <c>roundpd</c> / AVX 的
+        ''' <c>vroundpd</c>，或者 ARM64 的 <c>frintm</c>，语义与
+        ''' <see cref="System.Math.Floor(Double)"/> 完全一致。
+        ''' </remarks>
+        Public Shared Function Floor(v As Double()) As Double()
+            Return Unary(Of Double)(v, Function(a) Vector.Floor(a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素向下取整（<see cref="Single"/>）。
+        ''' </summary>
+        Public Shared Function Floor(v As Single()) As Single()
+            Return Unary(Of Single)(v, Function(a) Vector.Floor(a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素向上取整（<see cref="Double"/>）：<c>out(i) = Ceiling(v(i))</c>
+        ''' </summary>
+        Public Shared Function Ceiling(v As Double()) As Double()
+            Return Unary(Of Double)(v, Function(a) Vector.Ceiling(a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素向上取整（<see cref="Single"/>）。
+        ''' </summary>
+        Public Shared Function Ceiling(v As Single()) As Single()
+            Return Unary(Of Single)(v, Function(a) Vector.Ceiling(a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素截断取整（<see cref="Double"/>）：<c>out(i) = Truncate(v(i))</c>
+        ''' </summary>
+        Public Shared Function Truncate(v As Double()) As Double()
+            Return Unary(Of Double)(v, Function(a) Vector.Truncate(a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素截断取整（<see cref="Single"/>）。
+        ''' </summary>
+        Public Shared Function Truncate(v As Single()) As Single()
+            Return Unary(Of Single)(v, Function(a) Vector.Truncate(a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素符号函数（<see cref="Double"/>）：
+        ''' <c>out(i) = If(v(i) &gt; 0, 1, If(v(i) &lt; 0, -1, v(i)))</c>
+        ''' </summary>
+        ''' <remarks>
+        ''' “既不大于零也不小于零”的通道直接输出原始值，因此 <c>+0.0</c> / <c>-0.0</c>
+        ''' 与 <see cref="Double.NaN"/> 的返回值与 <see cref="System.Math.Sign(Double)"/>
+        ''' 保持一致（<c>NaN</c> 输入得到 <c>NaN</c>，而不是被静默变成 <c>0</c>）。
+        ''' </remarks>
+        Public Shared Function Sign(v As Double()) As Double()
+            Return Unary(Of Double)(v, AddressOf SignBlock)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function SignBlock(a As Vector(Of Double)) As Vector(Of Double)
+            Dim zero As Vector(Of Double) = Vector(Of Double).Zero
+            Dim positive As Vector(Of Double) = Vector.GreaterThan(Of Double)(a, zero)
+            Dim negative As Vector(Of Double) = Vector.LessThan(Of Double)(a, zero)
+
+            Return Vector.ConditionalSelect(Of Double)(
+                positive,
+                New Vector(Of Double)(1.0),
+                Vector.ConditionalSelect(Of Double)(negative, New Vector(Of Double)(-1.0), a))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素符号函数（<see cref="Single"/>）。
+        ''' </summary>
+        Public Shared Function Sign(v As Single()) As Single()
+            Return Unary(Of Single)(v, AddressOf SignBlockSingle)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function SignBlockSingle(a As Vector(Of Single)) As Vector(Of Single)
+            Dim zero As Vector(Of Single) = Vector(Of Single).Zero
+            Dim positive As Vector(Of Single) = Vector.GreaterThan(Of Single)(a, zero)
+            Dim negative As Vector(Of Single) = Vector.LessThan(Of Single)(a, zero)
+
+            Return Vector.ConditionalSelect(Of Single)(
+                positive,
+                New Vector(Of Single)(1.0F),
+                Vector.ConditionalSelect(Of Single)(negative, New Vector(Of Single)(-1.0F), a))
+        End Function
+
+        ''' <summary>
         ''' 逐元素倒数（<see cref="Double"/>）：<c>out(i) = 1 / v(i)</c>
         ''' </summary>
         Public Shared Function Reciprocal(v As Double()) As Double()
@@ -403,6 +494,23 @@ Namespace Math.SIMD
             Next
 
             Return out
+        End Function
+
+        ''' <summary>
+        ''' 逐元素以 <paramref name="base"/> 为底的对数：<c>out(i) = Log(v(i), base)</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 等价于 <c>Log(v(i)) / Log(base)</c>，与
+        ''' <see cref="System.Math.Log(Double, Double)"/> 的实现方式一致。
+        ''' 其中除法部分可以向量化，对数的预算仍然是标量（无硬件指令）。
+        ''' </remarks>
+        Public Shared Function Log(v As Double(), base As Double) As Double()
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+
+            ' 底数为 E 时可直接跳过这次除法（与 Math.Log(x, E) 的结果一致）
+            If base = std.E Then Return Log(v)
+
+            Return SimdEngine.DivideScalar(Log(v), std.Log(base))
         End Function
 
 #End Region

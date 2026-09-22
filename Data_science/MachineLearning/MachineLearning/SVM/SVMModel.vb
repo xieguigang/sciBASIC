@@ -73,16 +73,35 @@ Namespace SVM
     <KnownType(GetType(GaussianTransform))>
     Public Class SVMModel : Inherits MachineLearning.Model
 
+        ''' <summary>
+        ''' The trained LibSVM model object which contains the support vectors 
+        ''' and the decision coefficients.
+        ''' </summary>
+        ''' <returns>A <see cref="SVM.Model"/> object.</returns>
         Public Property model As Model
+        ''' <summary>
+        ''' The range transform which is used for normalizing the input data 
+        ''' before the prediction.
+        ''' </summary>
+        ''' <returns>An <see cref="IRangeTransform"/> object.</returns>
         Public Property transform As IRangeTransform
 
         ''' <summary>
         ''' use for get <see cref="ColorClass"/> based on 
         ''' the prediction result value
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A <see cref="ClassEncoder"/> object which maps the prediction result to the class label.</returns>
         Public Property factors As ClassEncoder
 
+        ''' <summary>
+        ''' Does this model is a support vector regression (SVR) model?
+        ''' The SVR model is selected when the <see cref="Parameter.svmType"/> 
+        ''' is either <see cref="SvmType.EPSILON_SVR"/> or <see cref="SvmType.NU_SVR"/>.
+        ''' </summary>
+        ''' <returns>
+        ''' ``True`` when this model is a regression model, otherwise ``False`` 
+        ''' for a classification model.
+        ''' </returns>
         Public ReadOnly Property SVR As Boolean
             Get
                 Dim type = model.parameter.svmType
@@ -92,12 +111,20 @@ Namespace SVM
             End Get
         End Property
 
+        ''' <summary>
+        ''' The names of the feature dimensions of this model.
+        ''' </summary>
+        ''' <returns>An array of the dimension names.</returns>
         Public ReadOnly Property dimensionNames As String()
             Get
                 Return model.dimensionNames
             End Get
         End Property
 
+        ''' <summary>
+        ''' Display the dimension names of this model as a json string.
+        ''' </summary>
+        ''' <returns>A json text which contains the dimension names.</returns>
         Public Overrides Function ToString() As String
             Return dimensionNames.GetJson
         End Function
@@ -109,9 +136,28 @@ Namespace SVM
     ''' </summary>
     Public Class SVMMultipleSet
 
+        ''' <summary>
+        ''' The names of the feature dimensions of this multiple model set.
+        ''' </summary>
+        ''' <returns>An array of the dimension names.</returns>
         Public Property dimensionNames As String()
+
+        ''' <summary>
+        ''' The trained support vector machine models, the dictionary key is the 
+        ''' name of the target class.
+        ''' </summary>
+        ''' <returns>A dictionary which maps the class name to its <see cref="SVMModel"/>.</returns>
         Public Property topics As Dictionary(Of String, SVMModel)
 
+        ''' <summary>
+        ''' Gets the number of the training samples which was used by the models 
+        ''' in this multiple model set.
+        ''' </summary>
+        ''' <returns>The number of the training samples.</returns>
+        ''' <exception cref="InvalidDataContractException">
+        ''' Thrown when the models in this set were not trained with the same 
+        ''' number of the training samples.
+        ''' </exception>
         Public Function trainingSize() As Integer
             Dim sizeList = topics.Values.Select(Function(a) a.model.trainingSize).ToArray
 

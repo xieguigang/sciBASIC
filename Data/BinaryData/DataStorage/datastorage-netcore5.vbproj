@@ -18,15 +18,16 @@
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>Tabular Frame Serialization with SAS XPORT and ASN.1 Readers</Title>
-    <Description>Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.</Description>
+    <Description>Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader and writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file with column-level seeking.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Storage</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;data-storage;sas-xport;asn1;dataframe;binary-serialization</PackageTags>
+    <PackageTags>scibasic;data-storage;sas-xport;xpt;asn1;dataframe;binary-serialization;frame</PackageTags>
+    <PackageReleaseNotes>Binary storage of tabular data for sciBASIC#. Frame format: FrameWriter.WriteFrame stores a magic header, per-column data blocks and a JSON schema trailer, and FrameReader.ReadFrame restores a DataFrame by seeking directly to each column offset recorded in the schema - so one file holds both the data and its layout description, and individual columns can be read without scanning the whole file. Schema: Schema and VectorSchema record the column name, ordinal, TypeCode, element count, scalar flag, stream offset and attributes. SAS import: the Xpt namespace decodes SAS XPORT (XPT) transport files - SASXportConverter converts an XPT file into tabular data, SASXportFileIterator streams the datasets it contains, and XPTReaderUtils implements the low level primitives (IBM/IEEE floating point conversion, date parsing and missing value handling) with ReadstatType describing the column types. ASN.1: the ASN1 namespace (StreamReader, Index) inspects tag-length-value encoded byte streams.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

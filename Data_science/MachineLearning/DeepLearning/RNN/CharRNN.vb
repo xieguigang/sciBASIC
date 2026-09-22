@@ -59,7 +59,7 @@ Imports System.IO
 Namespace RNN
 
     ''' <summary>
-    ''' 
+    ''' Command line helpers for training, sampling and snapshotting a character level recurrent network.
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/garstka/char-rnn-java
@@ -67,10 +67,12 @@ Namespace RNN
     Public Class CharRNN
 
         ''' <summary>
-        ''' 01. Initialize a network for training.
+        ''' Creates a network configured from the given options: a single layer network when
+        ''' <see cref="Options.useSingleLayerNet"/> is set, otherwise a multi layer network with the requested layer
+        ''' count.
         ''' </summary>
-        ''' <param name="options"></param>
-        ''' <returns></returns>
+        ''' <param name="options">The application options that describe the network.</param>
+        ''' <returns>The new, not yet initialized network.</returns>
         Public Shared Function initialize(options As Options) As CharLevelRNN
             If options.useSingleLayerNet Then
                 ' legacy network, single layer only
@@ -94,11 +96,12 @@ Namespace RNN
         End Function
 
         ''' <summary>
-        ''' Trains the network.
+        ''' Trains the network on the data set referenced by the options, sampling and snapshotting at the configured
+        ''' intervals.
         ''' </summary>
-        ''' <param name="options"></param>
-        ''' <param name="net"></param>
-        ''' <param name="snapshotName"></param>
+        ''' <param name="options">The training options.</param>
+        ''' <param name="net">The network to train.</param>
+        ''' <param name="snapshotName">Base name used for the snapshot files.</param>
         Public Shared Sub train(options As Options, net As CharLevelRNN, snapshotName As String)
             ' Load the training set.
 
@@ -164,10 +167,10 @@ Namespace RNN
         End Sub
 
         ''' <summary>
-        ''' Saves a network snapshot with this name to file.
+        ''' Saves a network snapshot under the given name.
         ''' </summary>
-        ''' <param name="name"></param>
-        ''' <param name="net"></param>
+        ''' <param name="name">Base name of the snapshot file.</param>
+        ''' <param name="net">The network to snapshot.</param>
         Public Shared Sub saveASnapshot(name As String, net As CharLevelRNN)
             ' Take a snapshot
             Try
@@ -184,10 +187,10 @@ Namespace RNN
         End Sub
 
         ''' <summary>
-        ''' 02. Loads a network snapshot with this name from file.
+        ''' Loads a network snapshot with the given name.
         ''' </summary>
-        ''' <param name="name"></param>
-        ''' <returns></returns>
+        ''' <param name="name">Base name of the snapshot file.</param>
+        ''' <returns>The restored network.</returns>
         Public Shared Function loadASnapshot(name As String) As CharLevelRNN
             Dim net As CharLevelRNN = Nothing
 
@@ -205,14 +208,13 @@ Namespace RNN
         End Function
 
 
-        ' 
-        ' 		    Samples the net for n characters and prints the result.
-        ' 		    Requirements:
-        ' 		     - n >= 1,
-        ' 		     - seed != null
-        ' 		     - net != null, must be initialized
-        ' 		     - temperature in (0.0,1.0]
-        ' 		 
+        ''' <summary>
+        ''' Samples the network for <paramref name="n"/> characters and prints the result to the console.
+        ''' </summary>
+        ''' <param name="n">Number of characters to sample; it must be at least 1.</param>
+        ''' <param name="seed">The seed text; it must not be <c>Nothing</c>.</param>
+        ''' <param name="temperature">Sampling temperature in <c>(0.0, 1.0]</c>.</param>
+        ''' <param name="net">The network to sample from; it must be initialized.</param>
         Public Shared Sub sample(n As Integer, seed As String, temperature As Double, net As CharLevelRNN)
             If n < 1 Then
                 Throw New ArgumentException("n must be at least 1")

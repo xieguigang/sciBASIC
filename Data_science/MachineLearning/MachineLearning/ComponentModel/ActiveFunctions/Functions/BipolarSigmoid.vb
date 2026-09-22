@@ -109,6 +109,14 @@ Namespace ComponentModel.Activations
         ''' 
         Public Property Alpha As Double = 2.0R
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this bipolar sigmoid function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``BipolarSigmoid``, and the <see cref="Alpha"/> value 
+        ''' is stored as its only argument.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -164,6 +172,10 @@ Namespace ComponentModel.Activations
             Return (_Alpha * (1 - x * x) / 2)
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``BipolarSigmoid(alpha:=2)``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(BipolarSigmoid)}(alpha:={Alpha})"
         End Function

@@ -68,25 +68,42 @@ Namespace CNN.losslayers
     ''' </summary>
     Public Class RegressionLayer : Inherits LossLayer
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Regression"/>.</summary>
         Public Overrides ReadOnly Property Type As LayerTypes
             Get
                 Return LayerTypes.Regression
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates the regression loss layer.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the last layer shape.</param>
         Public Sub New(def As OutputDefinition)
             MyBase.New(def)
         End Sub
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Passes the raw scores through unchanged; the regression layer applies no activation.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the loss layer behaves the same in both modes.</param>
+        ''' <returns>The raw scores.</returns>
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             in_act = db
             out_act = db ' nothing to do, output raw scores
             Return db
         End Function
 
+        ''' <summary>
+        ''' Computes the squared error loss and its gradient for a continuous target vector.
+        ''' </summary>
+        ''' <param name="y">The target output vector.</param>
+        ''' <returns>The per element loss vector.</returns>
         Public Overrides Function backward(y As Double()) As Double()
             ' compute and accumulate gradient wrt weights and bias of this layer
             Dim x = in_act.clearGradient() ' zero out the gradient of input Vol
@@ -102,6 +119,11 @@ Namespace CNN.losslayers
             Return loss
         End Function
 
+        ''' <summary>
+        ''' Computes the squared error loss and its gradient for a single regressed value.
+        ''' </summary>
+        ''' <param name="y">The target value.</param>
+        ''' <returns>The loss value.</returns>
         Public Overrides Function backward(y As Integer) As Double
             ' compute and accumulate gradient wrt weights and bias of this layer
             Dim x = in_act.clearGradient() ' zero out the gradient of input Vol
@@ -115,6 +137,8 @@ Namespace CNN.losslayers
             Return loss
         End Function
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>regression()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "regression()"
         End Function

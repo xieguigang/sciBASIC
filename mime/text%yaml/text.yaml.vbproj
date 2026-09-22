@@ -14,14 +14,15 @@
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.text.yaml</AssemblyTitle>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>YAML to JSON Object Model Parser and Front Matter Reader</Title>
-    <Description>Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader.</Description>
+    <Description>Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader and typed deserialization helpers.</Description>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;yaml;parser;json;front-matter</PackageTags>
+    <PackageTags>scibasic;yaml;yaml-parser;front-matter;json;configuration;deserialization</PackageTags>
+    <PackageReleaseNotes>The YAML reader of sciBASIC#. It turns YAML text into the shared JsonElement model from Microsoft.VisualBasic.MIME.application.json, so YAML and JSON documents share one object model. Parsing: YamlParser.Parse handles YAML text while YamlParser.ParseFile reads a file; block mappings, block sequences and nested structures are supported, and a pre-processing pass (YamlLine, MultiLineState) handles flow collections, block scalars with | or &gt; style and +/- chomping indicators, and multi line quoted scalars. YAML features: anchors (&amp;name), aliases (*name) and merge keys (&lt;&lt;: *name) are resolved through a per parser anchor table, comments are stripped outside quoted strings, and scalar types are inferred automatically. Deserialization: the Serialization module provides LoadYAML and LoadYAMLDocument that map a YAML file or string straight onto a .NET class. Front matter: YamlFrontMatterParser.Parse extracts the --- delimited front matter block at the top of a document into a dictionary, and StripFrontMatter returns the body only - useful for static site generators and markdown tooling.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

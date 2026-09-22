@@ -15,15 +15,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>Signal Data IO: netCDF Reader and Writer for Signals</Title>
     <Description>Reads and writes time-series signal collections with their metadata, chunk indices and measure units to netCDF files, interoperating with R-based signal analysis pipelines. Part of sciBASIC#.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Signal.IO</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;signal-io;netcdf;time-series;data-exchange;file-format</PackageTags>
+    <PackageTags>scibasic;signal-io;netcdf;time-series;chunk-index;measure-units;data-exchange;file-format</PackageTags>
+    <PackageReleaseNotes>Signal data I/O for sciBASIC#. The package reads and writes collections of time series signals to netCDF files, carrying the signal metadata, the chunk indices that describe how the series are split, and the physical measure units of each channel. Because netCDF is a standard array container understood by R, Python and the usual scientific toolchain, this makes signal data exchangeable with R based signal analysis pipelines: a signal written here can be processed elsewhere and read back without any loss of units or segmentation information. It is the persistence layer of the signal processing stack.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

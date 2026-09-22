@@ -72,6 +72,11 @@ Namespace SVM
         ''' </summary>
         Public Score As Double
 
+        ''' <summary>
+        ''' Display the grid square as a whitespace delimited text line in 
+        ''' the layout ``C Gamma Score``.
+        ''' </summary>
+        ''' <returns>A whitespace delimited text line.</returns>
         Public Overrides Function ToString() As String
             Return String.Format("{0} {1} {2}", C, Gamma, Score)
         End Function

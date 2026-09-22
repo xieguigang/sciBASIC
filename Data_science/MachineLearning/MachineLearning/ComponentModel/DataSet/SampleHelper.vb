@@ -56,15 +56,21 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.StoreProcedure
 
+    ''' <summary>
+    ''' The projection helpers of the sample data collection.
+    ''' </summary>
     <HideModuleName>
     Public Module SampleHelper
 
         ''' <summary>
         ''' get feature dimension
         ''' </summary>
-        ''' <param name="samples"></param>
-        ''' <param name="[dim]"></param>
-        ''' <returns></returns>
+        ''' <param name="samples">A collection of the <see cref="SampleData"/> objects.</param>
+        ''' <param name="[dim]">The zero based index of the target feature dimension.</param>
+        ''' <returns>
+        ''' A sequence of the feature values which are projected from the 
+        ''' <paramref name="[dim]"/> dimension of each sample.
+        ''' </returns>
         <Extension>
         Public Function dimension(samples As IEnumerable(Of SampleData), [dim] As Integer) As IEnumerable(Of Double)
             Return samples.Select(Function(si) si.features([dim]))

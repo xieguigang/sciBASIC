@@ -57,19 +57,31 @@
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Terminal layer of a CeNiN network. It does not compute activations; it exposes the class labels
+    ''' together with the probabilities produced by the preceding softmax layer.
+    ''' </summary>
     Public Class Output : Inherits Layer
 
         Friend ReadOnly m_classes As String()
 
+        ''' <summary>Class labels sorted by descending probability after a call to <see cref="getDecision"/>.</summary>
         Public ReadOnly Property sortedClasses As String()
+        ''' <summary>Probabilities that correspond one to one with <see cref="sortedClasses"/>.</summary>
         Public ReadOnly Property probabilities As Single()
 
+        ''' <summary>Gets the layer kind, always <see cref="CNN.LayerTypes.Output"/>.</summary>
         Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
                 Return CNN.LayerTypes.Output
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates the output layer.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The dimensions <c>[height, width, classCount]</c> of the incoming tensor.</param>
+        ''' <param name="classes">The class labels in the order used by the network's training set.</param>
         Public Sub New(inputTensorDims As Integer(), classes As String())
             Call MyBase.New(inputTensorDims)
 
@@ -79,9 +91,9 @@ Namespace Convolutional
         End Sub
 
         ''' <summary>
-        ''' get a class label which its probability is the highest value.
+        ''' Sorts the class probabilities in descending order and returns the most likely class label.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The label of the class with the highest predicted probability.</returns>
         Public Function getDecision() As String
             If inputTensor.data IsNot Nothing Then
                 Call Array.Copy(m_classes, sortedClasses, m_classes.Length)
@@ -96,14 +108,22 @@ Namespace Convolutional
             Return sortedClasses(0)
         End Function
 
+        ''' <summary>
+        ''' Always throws because the output layer is the end of the network and cannot feed another layer.
+        ''' </summary>
+        ''' <returns>This method never returns.</returns>
         Protected Overrides Function layerFeedNext() As Layer
             Throw New InvalidOperationException("the output layer cann't be feed to next layer!")
         End Function
 
+        ''' <summary>Advances the output layer; this terminates the forward pass.</summary>
+        ''' <returns>This method never returns.</returns>
         Public Overrides Function feedNext() As Layer
             Return layerFeedNext()
         End Function
 
+        ''' <summary>Returns a short description of the class labels held by this layer.</summary>
+        ''' <returns>A text that lists the class count and the first few class labels.</returns>
         Public Overrides Function ToString() As String
             Return $"{m_classes.Length} class tags: [{m_classes.Take(6).JoinBy("; ")}...]"
         End Function

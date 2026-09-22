@@ -12,14 +12,27 @@
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <OutputPath>../../.nuget</OutputPath>
    
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+
+    <Title>GPU Tensor Types and CUDA Kernels for the ILCuda Runtime</Title>
+    <Description>GPU tensor extension for the ILCuda framework of sciBASIC#: device resident dense and CSR sparse tensor storage with device/host caches, plus hand written double precision CUDA kernels for GEMM, softmax, reductions, convolution and pooling.</Description>
+    <PackageTags>scibasic;cuda;gpu-tensor;sparse-matrix;csr;nvrtc;cuda-kernel;deep-learning</PackageTags>
+    <PackageReleaseNotes>ILCudaTensor extends the sciBASIC# ILCuda compute framework with device resident tensor types and ready to use CUDA kernels. Capabilities: (1) CudaTensor, a full double precision ITensorCompute implementation for CUDA derived from the TensorFlow TensorComputeBase, so any operator without a GPU kernel automatically falls back to the CPU implementation; (2) the element wise, activation, linear algebra, normalization and reduction operator set - Add, Multiply, Exp, Log, Clip, Relu, Gelu, Sigmoid, Tanh, MatMul, Transpose, Softmax, LogSoftmax, Sum, Mean, Max, ArgMax, RowReduce and ReduceGlobal; (3) DeviceCache and SparseCsrCache for explicit device memory residency, avoiding the leaks caused by ILCuda having no finalizer, with a default 1 GiB cache budget; (4) hand written double precision CUDA kernels shipped as embedded resources and injected into the NVRTC compile unit by CudaTensor.Register - tensor.cu (last axis softmax, reductions, arg min max), gemm.cu (tiled GEMM), spmm.cu (row parallel CSR x dense with atomicAdd(double), the core operator when loading real connectomes such as FlyWire), conv.cu and pool.cu (NHWC forward and backward); (5) a two stage global reduction plus a MinGpuElements threshold (default 4096) that keeps small tensors on the CPU. Targets x64 only.</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -31,11 +44,21 @@
     <EmbeddedResource Include="Kernels\tensor.cu" />
     <EmbeddedResource Include="Kernels\gemm.cu" />
     <!--
+      CSR 稀疏 × 稠密内核（double）：脉冲神经网络加载真实突触连接组
+      （FlyWire 等）时的核心算子，行并行 + atomicAdd(double)。
+    -->
+    <EmbeddedResource Include="Kernels\spmm.cu" />
+    <!--
       手写卷积 / 池化内核（double, NHWC）：前向 + 反向（gradInput / gradFilter /
       gradBias / pool argMax 散射）。同样以内嵌资源分发并在 Register 时注入。
     -->
     <EmbeddedResource Include="Kernels\conv.cu" />
     <EmbeddedResource Include="Kernels\pool.cu" />
+    <!--
+      手写训练内核（float）：AdamW 原地更新、梯度累加、融合掩码交叉熵。
+      IL2Cuda 无法表达"多输出数组"与"块内共享内存归约"，因此与 gemm.cu 一样手写。
+    -->
+    <EmbeddedResource Include="Kernels\train.cu" />
   </ItemGroup>
 
   <ItemGroup>

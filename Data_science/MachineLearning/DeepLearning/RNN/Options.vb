@@ -65,41 +65,52 @@ Namespace RNN
 
 		' * Model parameters ** 
 
-		Public Property hiddenSize As Integer = 100 ' Size of a single RNN layer hidden state.
+		''' <summary>Size of a single RNN layer hidden state.</summary>
+		Public Property hiddenSize As Integer = 100
 
-		Public Property layers As Integer = 2 ' How many layers in a net?
+		''' <summary>How many layers the network has.</summary>
+		Public Property layers As Integer = 2
 
 
 		' * Training parameters ** 
 
-		Public Property sequenceLength As Integer = 50 ' How many steps to unroll during training?
+		''' <summary>How many steps the network is unrolled during training.</summary>
+		Public Property sequenceLength As Integer = 50
 
-		Public Property learningRate As Double = 0.1 ' The network learning rate.
+		''' <summary>The network learning rate.</summary>
+		Public Property learningRate As Double = 0.1
 
 
 		' * Sampling parameters **
 
-		' Sampling temperature (0.0, 1.0]. Lower
-		' temperature means more conservative
-		' predictions.
+		''' <summary>
+		''' Sampling temperature in <c>(0.0, 1.0]</c>. A lower temperature yields more conservative predictions.
+		''' </summary>
 		Public Property samplingTemp As Double = 1.0
 
 		' * Other options ** 
 
-		Public Property printOptions As Boolean = True ' Print options at the start.
+		''' <summary>When <c>True</c> the options are printed at the start of the run.</summary>
+		Public Property printOptions As Boolean = True
 
-		Public Property trainingSampleLength As Integer = 400 ' Length of a sample during training.
+		''' <summary>Length of a sample drawn from the training data.</summary>
+		Public Property trainingSampleLength As Integer = 400
 
-		Public Property snapshotEveryNSamples As Integer = 50 ' Take a network's snapshot every N samples.
+		''' <summary>Take a network snapshot every N samples.</summary>
+		Public Property snapshotEveryNSamples As Integer = 50
 
-		Public Property loopAroundTimes As Integer = 0 ' Loop around the training data this many times.
+		''' <summary>How many times the training data is traversed.</summary>
+		Public Property loopAroundTimes As Integer = 0
 
 
-		Public Property sampleEveryNSteps As Integer = 100 ' Take a sample during training every N steps.
+		''' <summary>Take a sample during training every N steps.</summary>
+		Public Property sampleEveryNSteps As Integer = 100
 
-		Public Property inputFile As String = "input.txt" ' The training data.
+		''' <summary>Path of the training data file.</summary>
+		Public Property inputFile As String = "input.txt"
 
-		Public Property useSingleLayerNet As Boolean = False ' Use the simple, single layer net.
+		''' <summary>When <c>True</c> the simple single layer network is used.</summary>
+		Public Property useSingleLayerNet As Boolean = False
 
 	End Class
 End Namespace

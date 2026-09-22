@@ -163,6 +163,13 @@ Namespace SVM
             output.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the model into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="model">The model that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains the model parameters and the support vector data.
+        ''' </returns>
         Public Function ToString(model As Model) As String
             Dim sb As New StringBuilder
 

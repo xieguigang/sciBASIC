@@ -69,18 +69,16 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         <Extension>
         Public Function RowSubtraction(v As Vector, m As GeneralMatrix) As GeneralMatrix
+            ' 注意：这里保留了历史可观察行为 —— 原实现从未读取 m 的元素值，
+            ' 结果矩阵的每一行 j 都被整体填充为 v(j)（疑似历史缺陷）。
+            ' 本次只做向量化/块写入改造，不改变可观察行为。
             Dim m2 As New NumericMatrix(m.RowDimension, m.ColumnDimension)
-            Dim buffer = m2.Array
-            Dim v2 As Vector
+            Dim C As Double()() = m2.Array
+            Dim values As Double() = v.Array
 
-            For i As Integer = 0 To m2.ColumnDimension - 1
-                v2 = m2.ColumnVector(i)
-                v2 = v - v2
-
-                For j As Integer = 0 To buffer.Length - 1
-                    Dim x = buffer(j)
-                    x(i) = v2(j)
-                Next
+            For j As Integer = 0 To m.RowDimension - 1
+                ' Array.Fill 走 Span.Fill 的向量化填充，取代逐元素赋值
+                Call System.Array.Fill(C(j), values(j))
             Next
 
             Return m2

@@ -1,4 +1,73 @@
-# The NetCDF Classic Format Specification
+# netCDF 科学数组数据文件读写器
+
+## 引言
+
+netCDF（network Common Data Form）是气象、海洋与地球科学领域的标准数据格式。它解决的问题很具体：**多维数组 + 命名维度 + 变量 + 属性**，并且要求文件可以跨平台随机访问。
+
+与本仓库的 HDF5 读取器类似，本包采用**纯托管实现**，不依赖任何原生 netCDF 库。
+
+## 设计目标
+
+- **纯托管**：零原生依赖，跨平台行为一致；
+- **保留维度语义**：netCDF 的「维度」既是数组形状，也是语义单位（时间、经纬度…），其中还有一个特殊的**记录维（record dimension / unlimited）**，实现必须显式建模；
+- **类型化向量**：不同数据类型各有专用向量类型，避免统一装箱带来的开销。
+
+## 核心特性
+
+- **文件骨架模型**：头部、维度与维度列表、记录维、变量与属性，以及描述类型化向量契约的 `ICDFDataVector`；
+- **数据解析**：netCDF 数据类型定义、二进制数据读取器与结构解析器，以及变长（VLen）值处理，另含 XML 投影辅助；
+- **类型化向量**：字节、字符、短整、整型、长整、单精度与双精度各自的向量类型；
+- **读写入口**：`netCDFReader` 读取文件，`CDFWriter` 创建文件。
+
+## 命名空间地图
+
+| 命名空间 | 职责 |
+|---|---|
+| `Microsoft.VisualBasic.DataStorage.netCDF`（根） | `netCDFReader`、`CDFWriter` 与读写工具 |
+| `....netCDF.Components` | 文件骨架：`Header`、`Dimension`、`DimensionList`、`recordDimension`、`variable`、`attribute` |
+| `....netCDF.Data` | 数据类型、二进制读取器、结构解析器、`VLen` 与 XML 投影 |
+| `....netCDF.DataVector` | 各数据类型的向量实现 |
+
+## 关键类型与 API
+
+- `...netCDF.Components.Header` —— 文件头：维度数量、全局属性数量与记录维信息；
+- `...netCDF.Components.Dimension` / `DimensionList` / `recordDimension` —— 命名维度与记录维；
+- `...netCDF.Components.variable` / `attribute` —— 变量定义与属性；
+- `...netCDF.Components.ICDFDataVector` —— 类型化向量契约；
+- `...netCDF.Data.CDFDataTypes` / `DataReader` / `StructureParser` —— 数据类型与解析；
+- `...netCDF.DataVector.bytes` / `chars` / `shorts` / `integers` / `longs` / `floats` / `doubles` —— 具体向量类型；
+- `...netCDF.netCDFReader` / `...netCDF.CDFWriter` —— 读 / 写入口。
+
+## 快速上手
+
+```vbnet
+Imports Microsoft.VisualBasic.DataStorage.netCDF
+
+Using reader As New netCDFReader("sample.nc")
+    For Each v In reader.Variables
+        Console.WriteLine($"{v.Name} ({v.Dimensions.Length} dims)")
+    Next
+End Using
+```
+
+## 记录维的特殊性
+
+netCDF 的**记录维（record dimension）**又称无限维：它是文件中唯一允许在追加时增长的维度。为提升追加效率，记录维的数据在物理上与其他维度**分块交错存储**。本包在 `Components.recordDimension` 与读取路径中显式处理这一布局，因此追加写入的记录能够被正确读出。
+
+## 与 sciBASIC# 生态的关系
+
+netCDF 与 HDF5 在本仓库的科学数据栈中扮演同一角色（多维数组容器），实际选型通常取决于上游仪器或模型输出的格式。二者之上均可接入 `DataFrame` 与 `Data.Plots` 做进一步分析。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.DataStorage.netCDF`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;netcdf;scientific-data;array-data;dimensions;variables;record-dimension;reader`
+- 许可：GPL-3.0-or-later
+
+---
+
+# 附录：NetCDF 经典格式规范（原文保留）
 
 > https://www.unidata.ucar.edu/software/netcdf/docs/file_format_specifications.html
 

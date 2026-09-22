@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>XML Toolkit with XSD Models, MathML and XPath Queries</Title>
-    <Description>XML helpers for sciBASIC#: an XSD element data model, MathML expression builders, a lightweight XPath query engine, and a generic XmlElement tree with reflection-based graph loading.</Description>
+    <Description>XML helpers for sciBASIC#: an XSD schema element data model, MathML content markup parsed into expression objects, a lightweight XPath query engine, and a generic XmlElement tree with reflection based object graph loading, plus a code generator.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.xml</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;xml;xsd;mathml;xpath</PackageTags>
+    <PackageTags>scibasic;xml;xsd;mathml;xpath;xml-parser;code-generator</PackageTags>
+    <PackageReleaseNotes>General purpose XML helpers for sciBASIC#. Element tree: XmlParser parses XML text into the generic XmlElement tree, where each node carries its name, namespace, attributes, child elements, text and comments. XPath: XPath.XPath and XPathParser turn a path expression into a selector chain (child, root, current node, parent and attribute selectors), and XPathQuery executes it with QuerySingle / QueryAll over any IXmlDocumentTree implementation. MathML: the MathML namespace parses content markup - LambdaExpression, BinaryExpression, SymbolExpression and MathFunctionExpression - with ContentBuilder converting MathML XML into expression objects and a ToString renderer printing them back out. XSD: the xsd namespace models a schema document (schema, element, complexType, simpleType, attribute, sequence and restriction) so that XSD files map onto serializable classes. Object graph loading: XmlGeneric.GraphWriter hydrates plain .NET objects from XML by reflection (Load, LoadXml(Of T)). A code generator helper is also included at the namespace root.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

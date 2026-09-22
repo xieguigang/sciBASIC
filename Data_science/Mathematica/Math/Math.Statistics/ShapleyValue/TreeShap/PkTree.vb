@@ -56,7 +56,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     Public Class PkTree
 

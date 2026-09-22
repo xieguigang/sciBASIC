@@ -108,21 +108,31 @@ Namespace CNN.layers
         <IgnoreDataMember>
         Dim argMaxIndex As Tensor
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the pooling layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Pool"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Pool
             End Get
         End Property
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a max pooling layer and derives the output size from the input size, the window size and the padding.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the input size.</param>
+        ''' <param name="sx">Side length of the square pooling window.</param>
+        ''' <param name="stride">Sliding stride of the pooling window.</param>
+        ''' <param name="padding">Zero padding applied around the input.</param>
         Public Sub New(def As OutputDefinition, sx As Integer, stride As Integer, padding As Integer)
             Me.sx = sx
             Me.stride = stride
@@ -146,6 +156,12 @@ Namespace CNN.layers
 
         End Sub
 
+        ''' <summary>
+        ''' Runs max pooling over the input and records the argmax positions for the backward pass.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the pooling layer behaves the same in both modes.</param>
+        ''' <returns>The pooled feature maps.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(out_sx, out_sy, out_depth, 0.0) With {.trace = Me.ToString}
 
@@ -167,6 +183,9 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>
+        ''' Scatters the upstream gradients back to the input positions recorded during the forward pass.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' pooling layers have no parameters, so simply compute gradient wrt data here
             Dim v As DataBlock = in_act.clearGradient()
@@ -179,6 +198,8 @@ Namespace CNN.layers
             Call v.SetGradients(dx.Data)
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>pooling()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "pooling()"
         End Function

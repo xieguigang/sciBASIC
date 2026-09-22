@@ -31,7 +31,6 @@
 
     ' Summaries:
 
-
     ' Code Statistics:
 
     '   Total Lines: 94
@@ -43,16 +42,7 @@
     '     File Size: 3.48 KB
 
 
-    '     Module RegressionROC
-    ' 
-    '         Function: (+2 Overloads) ROC
-    '         Class RegressionHelper
-    ' 
-    '             Function: label, predict
-    ' 
-    ' 
-    ' 
-    ' 
+
     ' /********************************************************************************/
 
 #End Region
@@ -63,12 +53,29 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace Evaluation
 
+    ''' <summary>
+    ''' 回归模型的 ROC 评估。
+    ''' 
+    ''' 通过把连续真值按照阈值切分为二分类问题，从而为回归结果构造 ROC 曲线。
+    ''' 曲线的生成统一委托到 <see cref="RocBuilder.SweepThresholds(Of T)"/>，
+    ''' 本模块只保留「如何把回归误差转换为二分类判定」的业务逻辑。
+    ''' </summary>
     Public Module RegressionROC
 
+        ''' <summary>
+        ''' 由 ``(预测值, 真值)`` 序列构建回归 ROC 曲线。
+        ''' </summary>
+        ''' <param name="predicts"></param>
+        ''' <param name="labels"></param>
+        ''' <param name="range">真值的取值范围（为空时自动推断）</param>
+        ''' <param name="eps">判定「命中」的误差容差</param>
+        ''' <param name="n">阈值扫描步数</param>
+        ''' <returns></returns>
         Public Function ROC(predicts As Double(), labels As Double(),
                                      Optional range As DoubleRange = Nothing,
                                      Optional eps As Double = 0.1,
                                      Optional n As Integer = 25) As IEnumerable(Of Validation)
+
             Return predicts _
                 .Select(Function(fx, i)
                             Return New RegressionClassify With {
@@ -85,13 +92,14 @@ Namespace Evaluation
         ''' </summary>
         ''' <param name="test"></param>
         ''' <param name="range">the value range of the label</param>
+        ''' <param name="eps">判定「命中」的误差容差</param>
         ''' <param name="n"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function ROC(test As IEnumerable(Of RegressionClassify),
-                                     Optional range As DoubleRange = Nothing,
-                                     Optional eps As Double = 0.1,
-                                     Optional n As Integer = 25) As IEnumerable(Of Validation)
+        Public Function ROC(test As IEnumerable(Of RegressionClassify),
+                            Optional range As DoubleRange = Nothing,
+                            Optional eps As Double = 0.1,
+                            Optional n As Integer = 25) As IEnumerable(Of Validation)
 
             Dim allTest As RegressionClassify() = test.ToArray
 
@@ -103,20 +111,24 @@ Namespace Evaluation
                 Throw New InvalidConstraintException("label value range can not be empty!")
             End If
 
-            Dim d As Double = 1 / n
+            Dim steps As Integer = If(n <= 0, 25, n)
+            Dim d As Double = 1 / steps
+            Dim cutoffs As New List(Of Double)()
             Dim i As Double = 0
-            Dim validate As New RegressionHelper With {.allTest = allTest, .eps = eps}
 
             Do While i <= 1.0
-                Yield Validation.Calc(
-                    entity:=allTest,
-                    getValidate:=Function(any) validate.label(any, i),
-                    getPredict:=Function(any) validate.predict(any, i),
-                    percentile:=i
-                )
-
+                cutoffs.Add(i)
                 i += d
             Loop
+
+            Dim validate As New RegressionHelper With {.allTest = allTest, .eps = eps}
+
+            Return RocBuilder.SweepThresholds(
+                entity:=allTest,
+                getValidate:=Function(any, cutoff) validate.label(any, cutoff),
+                getPredict:=Function(any, cutoff) validate.predict(any, cutoff),
+                cutoffs:=cutoffs
+            )
         End Function
 
         Private Class RegressionHelper

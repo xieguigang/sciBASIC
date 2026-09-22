@@ -98,17 +98,25 @@ Namespace Convolutional
     ''' </summary>
     Public Class Input : Inherits Layer
 
+        ''' <summary>The required image size <c>[height, width, depth]</c> of this input layer.</summary>
         Public inputSize As Integer()
+        ''' <summary>Per channel mean pixel values subtracted from the raw image before feeding it forward.</summary>
         Public avgPixel As Single()
 
+        ''' <summary>Gets the layer kind, always <see cref="CNN.LayerTypes.Input"/>.</summary>
         Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
                 Return CNN.LayerTypes.Input
             End Get
         End Property
 
+        ''' <summary>Gets the source image after it has been resized to <see cref="inputSize"/>.</summary>
         Public ReadOnly Property resizedInputBmp As Bitmap
 
+        ''' <summary>
+        ''' Creates the image input layer for the given image size.
+        ''' </summary>
+        ''' <param name="inputTensorDims">The required image size <c>[height, width, depth]</c>.</param>
         Public Sub New(inputTensorDims As Integer())
             MyBase.New(New Integer() {0, 0, 0})
 
@@ -116,11 +124,19 @@ Namespace Convolutional
             avgPixel = New Single(2) {}
         End Sub
 
+        ''' <summary>Sets the output dimensions of this layer to the configured input image size.</summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Sub setOutputDims()
             outputDims = CType(inputSize.Clone(), Integer())
         End Sub
 
+        ''' <summary>
+        ''' Resizes the given bitmap to the network input size and prepares it as the source of the next
+        ''' forward pass.
+        ''' </summary>
+        ''' <param name="input">The source image to classify.</param>
+        ''' <param name="resizingMethod">The strategy used to fit the image into <see cref="inputSize"/>.</param>
+        ''' <returns>This input layer, allowing the caller to continue the chain.</returns>
         Public Function setInput(input As Bitmap, resizingMethod As ResizingMethod) As Input
             Using iBitmap As Bitmap = CType(input.Clone(), Bitmap)
                 outputTensorMemAlloc()
@@ -131,17 +147,17 @@ Namespace Convolutional
         End Function
 
         ''' <summary>
-        ''' do nothing in the image input layer
+        ''' Performs no computation; the input layer only holds the resized image.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>This layer instance.</returns>
         Protected Overrides Function layerFeedNext() As Layer
             Return Me
         End Function
 
         ''' <summary>
-        ''' load test bitmap image data
+        ''' Loads the resized bitmap pixel data into the input tensor, subtracting the per channel mean values.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>This layer instance once the pixel data has been loaded.</returns>
         Public Overrides Function feedNext() As Layer
             Dim fullImage As New Rectangle(0, 0, inputSize(1), inputSize(0))
             Dim bmpData As BitmapBuffer = BitmapBuffer.FromBitmap(_resizedInputBmp)

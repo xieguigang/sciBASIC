@@ -56,8 +56,22 @@
 
 Namespace ComponentModel.Activations
 
+    ''' <summary>
+    ''' The identity activation function: <i>f(x) = x</i>.
+    ''' </summary>
+    ''' <remarks>
+    ''' This activation function is usually used by the regression model, in 
+    ''' which the output of the neuron node should not be transformed.
+    ''' </remarks>
     Public Class Identical : Inherits IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this identity function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``Identical`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -67,14 +81,28 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Returns the input value itself: <i>f(x) = x</i>.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The <paramref name="x"/> value itself.</returns>
         Public Overrides Function [Function](x As Double) As Double
             Return x
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>The text expression of this identity function.</returns>
         Public Overrides Function ToString() As String
             Return Store.ToString
         End Function
 
+        ''' <summary>
+        ''' The derivative of the identity function is the constant ``1``.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The constant value ``1``.</returns>
         Protected Overrides Function Derivative(x As Double) As Double
             Return 1
         End Function

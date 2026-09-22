@@ -60,22 +60,34 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF.Population
 
+    ''' <summary>
+    ''' The delegate function for creates a new empty chromosome collection object.
+    ''' </summary>
+    ''' <typeparam name="Chr">The chromosome type of the genetic algorithm.</typeparam>
+    ''' <returns>A new <see cref="PopulationCollection(Of Chr)"/> object.</returns>
     Public Delegate Function PopulationCollectionCreator(Of Chr As {Class, Chromosome(Of Chr)})() As PopulationCollection(Of Chr)
 
+    ''' <summary>
+    ''' The abstract model of the genetic algorithm population.
+    ''' </summary>
+    ''' <typeparam name="Chr">The chromosome type of the genetic algorithm.</typeparam>
     Public MustInherit Class IPopulation(Of Chr As {Class, Chromosome(Of Chr)})
 
+        ''' <summary>
+        ''' The chromosome collection of the current population.
+        ''' </summary>
         Protected chromosomes As PopulationCollection(Of Chr)
 
         ''' <summary>
         ''' 种群的容量上限大小
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>The maximum size of this population.</returns>
         Public Overridable Property capacitySize As Integer
 
         ''' <summary>
         ''' Add chromosome
         ''' </summary>
-        ''' <param name="chromosome"></param>
+        ''' <param name="chromosome">The chromosome object that will be added into the current population.</param>
         Public MustOverride Sub Add(chromosome As Chr)
 
     End Class

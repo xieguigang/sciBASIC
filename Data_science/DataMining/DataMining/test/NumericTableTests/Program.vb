@@ -72,6 +72,9 @@ Module Program
             Call failures.Add("calinskiHarabasz: expected a positive score")
         End If
 
+        ' 统一评估框架（ROC/AUC 唯一核心 + 三类结果适配器）的数值一致性回归测试
+        Call EvaluationConsistencyTest.Run(failures)
+
         If failures.Count > 0 Then
             Console.WriteLine("FAILED:")
 

@@ -60,8 +60,10 @@ Namespace RNN
     <Serializable>
     Public MustInherit Class BasicRNN : Inherits RNN
 
-        ' Initializes the net for this vocabulary size.
-        ' Requires vocabularySize > 0.
+        ''' <summary>
+        ''' Initializes the network for the given vocabulary size.
+        ''' </summary>
+        ''' <param name="vocabularySize">The vocabulary size; it must be greater than zero.</param>
         Public MustOverride Sub initialize(vocabularySize As Integer)
 	End Class
 End Namespace

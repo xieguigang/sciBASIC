@@ -59,8 +59,17 @@ Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace CNN
 
+    ''' <summary>
+    ''' Serializes a <see cref="ConvolutionalNN"/> into the CNN binary model format that is read back by
+    ''' <see cref="ReadModelCNN"/>.
+    ''' </summary>
     Public Module SaveModelCNN
 
+        ''' <summary>
+        ''' Writes the given network to a binary stream.
+        ''' </summary>
+        ''' <param name="cnn">The network to serialize.</param>
+        ''' <param name="file">The destination stream.</param>
         Public Sub Write(cnn As ConvolutionalNN, file As Stream)
             Using writer As New BinaryWriter(file, Encoding.ASCII)
                 Call Write(cnn, writer)

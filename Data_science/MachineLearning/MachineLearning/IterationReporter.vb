@@ -70,19 +70,45 @@ Public MustInherit Class IterationReporter(Of T As Model)
 
     Protected reporter As DoReport
 
+    ''' <summary>
+    ''' The delegate callback for reports the training progress and status 
+    ''' of a iteration based machine learning algorithm.
+    ''' </summary>
+    ''' <param name="iteration">The current iteration number.</param>
+    ''' <param name="error">
+    ''' The training error (or the loss value) which is evaluated at the 
+    ''' current <paramref name="iteration"/>.
+    ''' </param>
+    ''' <param name="model">
+    ''' The model object instance which is currently under training.
+    ''' </param>
     Public Delegate Sub DoReport(iteration%, error#, model As T)
 
     ''' <summary>
-    ''' Attach the delegate function DoReport(iteration%, error#, model As <typeparamref name="T"/>)
+    ''' Attach the delegate function <see cref="DoReport"/> for reports the 
+    ''' training progress of the current model.
     ''' </summary>
-    ''' <param name="reporter"></param>
-    ''' <returns></returns>
+    ''' <param name="reporter">
+    ''' A <see cref="DoReport"/> delegate callback, ``Nothing`` means no 
+    ''' progress report is required.
+    ''' </param>
+    ''' <returns>
+    ''' Returns the model itself, so that this function can be used in a 
+    ''' method chaining expression.
+    ''' </returns>
     <DebuggerStepThrough>
     Public Function AttachReporter(reporter As DoReport) As IterationReporter(Of T)
         Me.reporter = reporter
         Return Me
     End Function
 
+    ''' <summary>
+    ''' Run the model training task.
+    ''' </summary>
+    ''' <param name="parallel">
+    ''' Whether the training procedure should be run in parallel mode? 
+    ''' The default value of this parameter is ``False``.
+    ''' </param>
     Public MustOverride Sub Train(Optional parallel As Boolean = False)
 
 End Class

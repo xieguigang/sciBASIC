@@ -52,7 +52,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
 
     ''' <summary>
     ''' See https://arxiv.org/pdf/1802.03888.pdf - Chapter 3.1, Algorithm 1.

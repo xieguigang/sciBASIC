@@ -74,18 +74,36 @@ Namespace CNN.trainers
         Private ReadOnly beta1 As Double = 0.9
         Private ReadOnly beta2 As Double = 0.999
 
+        ''' <summary>
+        ''' Creates an Adam trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
+        ''' <param name="beta1">Exponential decay rate of the first moment estimate, normally 0.9.</param>
+        ''' <param name="beta2">Exponential decay rate of the second moment estimate, normally 0.999.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single, Optional beta1 As Double = 0.9, Optional beta2 As Double = 0.999)
             MyBase.New(batch_size, l2_decay)
             Me.beta1 = beta1
             Me.beta2 = beta2
         End Sub
 
+        ''' <summary>
+        ''' Allocates the zero initialized second moment accumulator for the given parameter block.
+        ''' </summary>
+        ''' <param name="bpr">The parameter block that is about to be trained for the first time.</param>
         Public Overrides Sub initTrainData(bpr As BackPropResult)
             Dim newXSumArr = New Double(bpr.Weights.Length - 1) {}
             newXSumArr.fill(0)
             xsum.Add(newXSumArr)
         End Sub
 
+        ''' <summary>
+        ''' Applies one Adam update step with bias correction of the first and second moment estimates.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
             Dim xsumi = xsum(i)
@@ -97,6 +115,8 @@ Namespace CNN.trainers
             p(j) += dx
         End Sub
 
+        ''' <summary>Returns a short description of this update rule.</summary>
+        ''' <returns>A text that reports the batch size, the L2 decay and both moment decay rates.</returns>
         Public Overrides Function ToString() As String
             Return $"adam(batch_size:{batch_size}, l2_decay:{l2_decay}, beta1:{beta1}, beta2:{beta2})"
         End Function

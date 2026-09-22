@@ -1,0 +1,27 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM32" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <BuildType Solution="Debug|ARM32" Project="CellaLAB-Desktop" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="Debug|ARM32" Project="x64" />
+      <Platform Solution="Release|ARM32" Project="ARM32" />
+    </Project>
+    <Project Path="Math.Statistics/stats-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="mHG/mHG.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="mHG/test/test.vbproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+</Solution>

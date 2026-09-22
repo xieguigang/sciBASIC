@@ -61,8 +61,22 @@ Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 Namespace ComponentModel.StoreProcedure
 
+    ''' <summary>
+    ''' The diagnostic helpers of the training <see cref="DataSet"/> object.
+    ''' </summary>
     Public Module Diagnostics
 
+        ''' <summary>
+        ''' Check the data integrity of a training dataset: whether the input 
+        ''' vector size and the output vector size of each sample is consistent 
+        ''' with the dataset definition.
+        ''' </summary>
+        ''' <param name="data">The target <see cref="DataSet"/> object that will be checked.</param>
+        ''' <returns>
+        ''' A sequence of the <see cref="LogEntry"/> objects, each one describes a 
+        ''' problem that was found in the <paramref name="data"/>; an empty 
+        ''' sequence means the dataset is valid.
+        ''' </returns>
         <Extension>
         Public Iterator Function CheckDataSet(data As DataSet) As IEnumerable(Of LogEntry)
             Dim nSamples = data.DataSamples.size
@@ -103,6 +117,21 @@ Namespace ComponentModel.StoreProcedure
             Next
         End Function
 
+        ''' <summary>
+        ''' Extract one property column from the sample matrix, and then evaluate 
+        ''' the distribution of that column.
+        ''' </summary>
+        ''' <param name="matrix">
+        ''' The sample matrix, in which each row is the input vector of one sample.
+        ''' </param>
+        ''' <param name="index">The column index of the target property.</param>
+        ''' <param name="estimateQuantile">
+        ''' Whether the quantile value of the distribution should be estimated?
+        ''' </param>
+        ''' <returns>
+        ''' A <see cref="SampleDistribution"/> object which describes the 
+        ''' distribution of the target property column.
+        ''' </returns>
         <Extension>
         Friend Function ProjectData(matrix As Double()(), index As Integer, estimateQuantile As Boolean) As SampleDistribution
             ' 遍历每一列的数据,将每一列的数据都执行归一化

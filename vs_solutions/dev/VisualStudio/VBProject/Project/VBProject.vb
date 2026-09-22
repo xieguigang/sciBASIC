@@ -100,6 +100,8 @@ Namespace VBProj
         Public Property ProjectReferences As VBProjectReference()
         ''' <summary>nuget package references</summary>
         Public Property PackageReferences As VBPackageReference()
+        ''' <summary>external assembly references (dll + HintPath)</summary>
+        Public Property References As VBReference()
         ''' <summary>Compile Remove patterns collected from the vbproj</summary>
         Public Property CompileExcludes As String()
 
@@ -629,7 +631,11 @@ Namespace VBProj
             Dim mainPg As New XElement("PropertyGroup")
             AddIf(mainPg, "TargetFramework", Metadata?.TargetFramework)
             AddIf(mainPg, "TargetFrameworks", Metadata?.TargetFrameworks)
-            AddIf(mainPg, "RootNamespace", RootNamespace)
+            ' RootNamespace: Nothing => 不输出(沿用 SDK 默认); "" => 显式输出空元素,
+            ' 用于关闭 "以项目名作为根命名空间" 的默认行为。
+            If RootNamespace IsNot Nothing Then
+                mainPg.Add(New XElement(mainPg.Name.Namespace + "RootNamespace", RootNamespace))
+            End If
             AddIf(mainPg, "AssemblyName", AssemblyName)
             AddIf(mainPg, "OutputType", OutputType)
             AddIf(mainPg, "Platforms", Metadata?.Platforms)
@@ -706,6 +712,28 @@ Namespace VBProj
                     Next
                 End If
                 root.Add(ig)
+            End If
+
+            ' external assembly references (only emitted when the model declares them,
+            ' so the output of every existing caller stays byte-identical).
+            If References IsNot Nothing AndAlso References.Length > 0 Then
+                Dim refGroup As New XElement("ItemGroup")
+
+                For Each reference In References
+                    If String.IsNullOrWhiteSpace(reference.Include) Then
+                        Continue For
+                    End If
+
+                    Dim el As New XElement("Reference", New XAttribute("Include", reference.Include))
+                    AddAttrIf(el, "Condition", reference.Condition)
+                    AddIf(el, "HintPath", reference.HintPath)
+                    AddIf(el, "Private", reference.Private)
+                    refGroup.Add(el)
+                Next
+
+                If refGroup.Elements().Any() Then
+                    root.Add(refGroup)
+                End If
             End If
 
             ' Project / package references.

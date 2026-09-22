@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9758.20045</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -21,9 +21,10 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Bonsai Diffusion Tree Layout for High-Dimensional Data</Title>
 		<IncludeSymbols>True</IncludeSymbols>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
 		<AssemblyTitle>Microsoft.VisualBasic.DataMining.Bonsai</AssemblyTitle>
-		<PackageTags>scibasic;bonsai;dimensionality-reduction;diffusion-tree;visualization</PackageTags>
+		<PackageTags>scibasic;bonsai;dimensionality-reduction;diffusion-tree;felsenstein-likelihood;visualization</PackageTags>
+    <PackageReleaseNotes>Bonsai reconstructs a diffusion tree from high dimensional observations for sciBASIC#. BonsaiTree builds and holds the tree, Likelihood evaluates a Felsenstein style tree likelihood over the observations, and Optimizer adjusts every branch length and internal node coordinate against that likelihood; PointSet holds the observations and Layout produces the 2D coordinates used for visualisation, while BonsaiApi and BonsaiNode expose the tree for inspection and traversal. Unlike classical dimensionality reduction that only preserves pairwise distances, Bonsai fits an explicit branching structure, so the resulting embedding can be read as a phylogeny-like tree of the data - which makes it useful for detecting hierarchical cluster structure in single cell or multi-omics datasets.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>

@@ -69,11 +69,24 @@ Namespace CNN.trainers
 
         Private ReadOnly ro As Double = 0.95
 
+        ''' <summary>
+        ''' Creates a windowed gradient trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
+        ''' <param name="ro">Decay factor of the moving window average, normally 0.95.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single, Optional ro As Double = 0.95)
             MyBase.New(batch_size, l2_decay)
             Me.ro = ro
         End Sub
 
+        ''' <summary>
+        ''' Applies one windowed average update step to a single parameter.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
 

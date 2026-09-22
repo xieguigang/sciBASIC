@@ -81,6 +81,8 @@ Namespace GPUTensor
         Public Const RowArgMin As String = "tensorRowArgMinKernel"
         ''' <summary>双精度分块矩阵乘 C(m x n) = A(m x k) * B(k x n)</summary>
         Public Const GemmDouble As String = "tensorGemmDoubleKernel"
+        ''' <summary>CSR 稀疏 × 稠密（Kernels\spmm.cu）</summary>
+        Public Const SpmmCsr As String = "tensorSpmmCsrKernel"
 
         ' ---- 卷积与池化（Kernels\conv.cu / Kernels\pool.cu）----
         ''' <summary>卷积前向（NHWC）</summary>
@@ -95,6 +97,16 @@ Namespace GPUTensor
         Public Const MaxPool2DForward As String = "tensorMaxPool2DForwardKernel"
         ''' <summary>最大池化反向（按 argMax 散射）</summary>
         Public Const MaxPool2DBackward As String = "tensorMaxPool2DBackwardKernel"
+
+        ' ---- 训练内核（Kernels\train.cu，单精度 FP32）----
+        ''' <summary>二维转置（单精度，可直读设备常驻权重）</summary>
+        Public Const TrainTranspose As String = "tensorTransposeFp32Kernel"
+        ''' <summary>AdamW 原地更新参数与一阶/二阶矩，并清零梯度累加器</summary>
+        Public Const TrainAdamW As String = "tensorAdamWFp32Kernel"
+        ''' <summary>梯度累加：<c>accum += alpha * src</c></summary>
+        Public Const TrainAccumulate As String = "tensorAccumulateFp32Kernel"
+        ''' <summary>融合掩码交叉熵：softmax + NLL + <c>d(logits) = (softmax − onehot) / count</c></summary>
+        Public Const TrainMaskedCrossEntropy As String = "tensorMaskedCrossEntropyFp32Kernel"
 
         ' ---- 两段式全局归约 ----
         ''' <summary>全局求和 - 阶段一（部分结果）</summary>

@@ -65,6 +65,13 @@ Namespace ComponentModel.Activations
     ''' </summary>
     Public NotInheritable Class SigmoidFunction : Inherits IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this sigmoid function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``SigmoidFunction`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -74,20 +81,49 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Calculates the derivative of the sigmoid function, the input value is 
+        ''' assumed to be the function output value: <i>f'(x) = x * (1 - x)</i>.
+        ''' </summary>
+        ''' <param name="x">
+        ''' The function output value <i>f(x)</i> instead of the raw input value.
+        ''' </param>
+        ''' <returns>The derivative value <i>f'(x) = x * (1 - x)</i>.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function Derivative(x As Double) As Double
             Return x * (1 - x)
         End Function
 
+        ''' <summary>
+        ''' Calculates the logistic sigmoid function value: <i>f(x) = 1 / (1 + e ^ -x)</i>.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' The function output value which is limited in the interval ``[0, 1]``; 
+        ''' the input value is clipped on the interval ``[-45, 45]`` so that the 
+        ''' exponential term will never overflow.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function [Function](x As Double) As Double
             Return If(x < -45.0, 0.0, If(x > 45.0, 1.0, 1.0 / (1.0 + std.Exp(-x))))
         End Function
 
+        ''' <summary>
+        ''' Apply the logistic sigmoid function on each element of the given vector.
+        ''' </summary>
+        ''' <param name="x">A <see cref="Vector"/> of the function input values.</param>
+        ''' <returns>
+        ''' A new <see cref="Vector"/> in which each element is limited in the 
+        ''' interval ``[0, 1]``.
+        ''' </returns>
         Public Shared Function Sigmoid(x As Vector) As Vector
             Return 1 / (1 + (-x).Exp)
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>A text expression in format like ``SigmoidFunction()``.</returns>
         Public Overrides Function ToString() As String
             Return $"{NameOf(SigmoidFunction)}()"
         End Function

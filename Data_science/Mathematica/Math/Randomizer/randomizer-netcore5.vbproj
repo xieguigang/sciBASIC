@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>Random Number Generators and Seeded Samplers Library</Title>
     <Description>Random number generation for sciBASIC#: Mersenne Twister, a fast xorshift-style generator, a thread-safe wrapper and a table-driven RAND randomizer for normal deviates and Monte Carlo simulation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Randomizer</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;random;mersenne-twister;monte-carlo;pseudorandom;sampling</PackageTags>
+    <PackageTags>scibasic;random;mersenne-twister;xorshift;monte-carlo;pseudorandom;normal-deviates;sampling</PackageTags>
+    <PackageReleaseNotes>Random number generation for sciBASIC#. The package provides the Mersenne Twister generator with its long period and good equidistribution, a fast xorshift style generator for throughput sensitive loops, a thread safe wrapper for concurrent use, and a table driven RAND randomizer. It covers both uniform and normal deviates - the latter needed for Monte Carlo simulation and for stochastic algorithms such as simulated annealing and bootstrapping - and being a dedicated package it centralises seeding so that experiments remain reproducible.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

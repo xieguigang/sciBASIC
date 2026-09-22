@@ -53,6 +53,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
+Imports SimdMatrix = Microsoft.VisualBasic.Math.SIMD.SimdMatrix
 
 Namespace LinearAlgebra.Matrix
 
@@ -68,19 +70,10 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         <Extension>
         Public Function RowMultiply(m As GeneralMatrix, v As Vector) As GeneralMatrix
-            Dim X As New NumericMatrix(m.RowDimension, m.ColumnDimension)
-            Dim C As Double()() = X.Array
-            Dim buffer As Double()() = m.ArrayPack
+            ' 第 i 行整体乘上标量 v(i)：逐行走向量化标量乘法
+            Dim data As Double()() = SimdMatrix.MultiplyRows(m.ArrayPack(deepcopy:=False), v.Array)
 
-            For i As Integer = 0 To X.RowDimension - 1
-                Dim vi As Double = v(i)
-
-                For j As Integer = 0 To X.ColumnDimension - 1
-                    C(i)(j) = vi * buffer(i)(j)
-                Next
-            Next
-
-            Return X
+            Return New NumericMatrix(data, m.RowDimension, m.ColumnDimension)
         End Function
 
         ''' <summary>
@@ -95,10 +88,12 @@ Namespace LinearAlgebra.Matrix
         Public Function ColumnMultiply(m As GeneralMatrix, v As Vector) As GeneralMatrix
             Dim X As New NumericMatrix(m.RowDimension, m.ColumnDimension)
             Dim C As Double()() = X.Array
-            Dim rows = m.RowVectors.ToArray
+            Dim rows As Double()() = m.ArrayPack(deepcopy:=False)
+            Dim values As Double() = v.Array
 
+            ' 每一行与向量 v 做逐元素相乘（行内走 SIMD 乘法）
             For i As Integer = 0 To m.RowDimension - 1
-                C(i) = rows(i) * v
+                C(i) = SimdEngine.Multiply(Of Double)(rows(i), values)
             Next
 
             Return X

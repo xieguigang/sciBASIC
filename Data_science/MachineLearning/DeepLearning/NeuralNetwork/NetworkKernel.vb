@@ -62,32 +62,34 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
 Namespace NeuralNetwork
 
     ''' <summary>
-    ''' 以 CNN 的 <see cref="ConvolutionalNN"/> 全连接网络作为 NeuralNetwork 的统一计算内核。
-    ''' 本模块通过 <see cref="LayerBuilder"/> 构建等价的 CNN 全连接网络，
-    ''' 供 <see cref="Netz"/> 与 <see cref="Network"/> 两个公开类作为内部计算内核使用。
+    ''' Uses a fully connected <see cref="ConvolutionalNN"/> as the single compute kernel of the
+    ''' NeuralNetwork namespace.
     ''' </summary>
     ''' <remarks>
-    ''' 旧的前向/反向/权重更新计算代码（Layer/Neuron/Synapse 等）已彻底移除，
-    ''' 所有数值计算均由 CNN 内核完成，对外公开接口保持不变。
+    ''' The module builds an equivalent fully connected CNN through <see cref="LayerBuilder"/> so that
+    ''' <see cref="Netz"/> and <see cref="Network"/> share one numerical back end. The legacy
+    ''' forward/backward/weight-update code (Layer/Neuron/Synapse) has been removed entirely; all numeric
+    ''' work is performed by the CNN kernel while the public API stays unchanged.
     ''' </remarks>
     Public Module NetworkKernel
 
         ''' <summary>
-        ''' 根据网络规模构建以全连接层为主体的 CNN 网络，作为统一计算内核。
+        ''' Builds a CNN network made of fully connected layers, used as the unified compute kernel.
         ''' </summary>
-        ''' <param name="inputSize">输入节点的数量</param>
-        ''' <param name="hiddenSize">每一个隐藏层的节点数量</param>
-        ''' <param name="outputSize">输出节点的数量</param>
-        ''' <param name="hiddenAct">隐藏层所使用的 CNN 激活层</param>
-        ''' <param name="outputAct">输出层所使用的 CNN 激活层</param>
+        ''' <param name="inputSize">Number of input nodes.</param>
+        ''' <param name="hiddenSize">Number of nodes of each hidden layer.</param>
+        ''' <param name="outputSize">Number of output nodes.</param>
+        ''' <param name="hiddenAct">The CNN activation layer applied in the hidden layers.</param>
+        ''' <param name="outputAct">The CNN activation layer applied in the output layer.</param>
         ''' <param name="regression">
-        ''' 目标为连续数值回归（默认）时使用 <see cref="RegressionLayer"/>；
-        ''' 若为分类问题，则改用 <see cref="SoftMaxLayer"/>。
+        ''' When <c>True</c> (the default) a <see cref="RegressionLayer"/> is appended for continuous
+        ''' regression targets; when <c>False</c> a <see cref="SoftMaxLayer"/> is appended for classification.
         ''' </param>
         ''' <param name="dropOutRate">
-        ''' [0,1) 的 DropOut 比率；当大于 0 时，会在每个全连接层之后插入
-        ''' <see cref="DropoutLayer"/> 以进行正则化。
+        ''' Dropout rate in <c>[0, 1)</c>. When greater than zero a <see cref="DropoutLayer"/> is inserted
+        ''' after every fully connected layer for regularization.
         ''' </param>
+        ''' <returns>The constructed fully connected network.</returns>
         Public Function BuildCNN(inputSize%,
                                hiddenSize%(),
                                outputSize%,
@@ -129,9 +131,14 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 将原始输入样本写入 <see cref="DataBlock"/> 的权重向量，不做图像归一化
-        ''' （避免 -0.5 偏移，从而与旧 Netz/Network 对原始实数的输入语义保持一致）。
+        ''' Wraps a raw input sample into a <see cref="DataBlock"/> weight vector without image normalization.
         ''' </summary>
+        ''' <param name="inputs">The raw input values of one sample.</param>
+        ''' <returns>A data block whose weights hold <paramref name="inputs"/>.</returns>
+        ''' <remarks>
+        ''' No normalization is applied so the values keep the plain real-number semantics of the legacy
+        ''' Netz/Network input, avoiding the <c>-0.5</c> offset introduced by image normalization.
+        ''' </remarks>
         Public Function BuildDataBlock(inputs As Double()) As DataBlock
             Dim db As New DataBlock(inputs.Length, 1, 1, 0)
             Call Array.ConstrainedCopy(inputs, 0, db.w, 0, inputs.Length)

@@ -55,7 +55,7 @@
 
 #End Region
 
-Namespace ShapleyValue.TreeShape
+Namespace ShapleyValue.TreeShap
     Public Class PkNode
         ''' <summary>
         ''' (v) Leaf value. If not leaf, contains NAN.

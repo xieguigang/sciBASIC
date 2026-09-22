@@ -76,8 +76,24 @@ Imports std = System.Math
 
 Namespace Darwinism
 
+    ''' <summary>
+    ''' The individual model of the differential evolution: a chromosome which 
+    ''' exposes its gene values as a indexable real valued vector.
+    ''' </summary>
     Public Interface IIndividual : Inherits Chromosome(Of IIndividual), ICloneable
+
+        ''' <summary>
+        ''' Read the gene value at a specific dimension of this individual.
+        ''' </summary>
+        ''' <param name="i%">The zero based index of the target gene dimension.</param>
+        ''' <returns>The gene value at the <paramref name="i%"/> dimension.</returns>
         Function Yield(i%) As Double
+
+        ''' <summary>
+        ''' Write a gene value into a specific dimension of this individual.
+        ''' </summary>
+        ''' <param name="i%">The zero based index of the target gene dimension.</param>
+        ''' <param name="value#">The new gene value.</param>
         Sub Put(i%, value#)
     End Interface
 
@@ -107,6 +123,13 @@ Namespace Darwinism
     ''' </summary>
     Public Module DifferentialEvolution
 
+        ''' <summary>
+        ''' The delegate function for creates a new (usually randomized) 
+        ''' <see cref="IIndividual"/> object.
+        ''' </summary>
+        ''' <typeparam name="Individual">The individual type of the differential evolution.</typeparam>
+        ''' <param name="seed">The random number generator.</param>
+        ''' <returns>A new individual object.</returns>
         Public Delegate Function [New](Of Individual As IIndividual)(seed As Random) As Individual
 
         ReadOnly randfSeed As New [Default](Of IRandomSeeds)(Function() randf.seeds)
@@ -115,9 +138,11 @@ Namespace Darwinism
         ''' Initialize population with individuals that have been initialized with uniform random noise
         ''' uniform noise means random value inside your search space
         ''' </summary>
-        ''' <param name="newIndividual"></param>
-        ''' <param name="popSize%"></param>
-        ''' <returns></returns>
+        ''' <typeparam name="Individual">The individual type of the differential evolution.</typeparam>
+        ''' <param name="newIndividual">The factory function which creates the new individual objects.</param>
+        ''' <param name="popSize%">The expected size of the initial population, the default value is ``20``.</param>
+        ''' <param name="randf">The random number generator; the shared global generator will be used when this parameter is ``Nothing``.</param>
+        ''' <returns>A sequence of the randomized initial individuals.</returns>
         ''' 
         <Extension>
         Public Iterator Function GetPopulation(Of Individual As IIndividual)(newIndividual As [New](Of Individual), Optional popSize% = 20, Optional randf As IRandomSeeds = Nothing) As IEnumerable(Of Individual)
@@ -131,18 +156,25 @@ Namespace Darwinism
         Const MaxIteratesReach$ = "Max iterates number was reached, Darwinism.DE fitting loop exit..."
 
         ''' <summary>
-        ''' 
+        ''' Run the differential evolution optimization on the given target function.
         ''' </summary>
-        ''' <typeparam name="Individual"></typeparam>
-        ''' <param name="target"></param>
+        ''' <typeparam name="Individual">The individual type of the differential evolution.</typeparam>
+        ''' <param name="target">The objective function which is evaluated on each candidate solution (smaller value is better).</param>
         ''' <param name="[new]">How to creates a new <typeparamref name="Individual"/></param>
         ''' <param name="N%">dimensionality of problem, means how many variables problem has.</param>
-        ''' <param name="threshold#"></param>
-        ''' <param name="maxIterations%"></param>
+        ''' <param name="threshold#">The target fitness value; the optimization loop will be terminated when the best fitness value is not greater than this threshold.</param>
+        ''' <param name="maxIterations%">The maximum number of the evolution iterations.</param>
         ''' <param name="F">differential weight [0,2]</param>
         ''' <param name="CR">crossover probability [0,1]</param>
-        ''' <param name="PopulationSize%"></param>
-        ''' <returns></returns>
+        ''' <param name="PopulationSize%">The size of the candidate solution population.</param>
+        ''' <param name="iteratePrints">
+        ''' An optional callback which is invoked whenever a better candidate 
+        ''' solution was found; when it is ``Nothing`` the iteration report will 
+        ''' be written to the console instead.
+        ''' </param>
+        ''' <param name="parallel">Whether the evolution loop should be run in parallel mode?</param>
+        ''' <param name="seed">The random number generator; the shared global generator will be used when this parameter is ``Nothing``.</param>
+        ''' <returns>The best candidate solution which was found by the differential evolution.</returns>
         Public Function Evolution(Of Individual As {Class, IIndividual})(
                                          target As Func(Of Individual, Double),
                                           [new] As [New](Of Individual),
@@ -252,18 +284,26 @@ Namespace Darwinism
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Evolve one sub population of the differential evolution for a single 
+        ''' iteration, this function is designed to be executed in parallel.
         ''' </summary>
-        ''' <typeparam name="Individual"></typeparam>
-        ''' <param name="population"></param>
-        ''' <param name="F#"></param>
-        ''' <param name="N%"></param>
-        ''' <param name="CR#"></param>
-        ''' <param name="bestFit#"></param>
-        ''' <param name="iterates%">i</param>
-        ''' <param name="iteratePrints"></param>
-        ''' <param name="fitnessFunction"></param>
-        ''' <returns></returns>
+        ''' <typeparam name="Individual">The individual type of the differential evolution.</typeparam>
+        ''' <param name="population">The sub population which will be evolved in place.</param>
+        ''' <param name="F#">The differential weight of the mutation.</param>
+        ''' <param name="N%">The dimensionality of the optimization problem.</param>
+        ''' <param name="CR#">The crossover probability of the mutation.</param>
+        ''' <param name="bestFit#">The best fitness value which was found so far.</param>
+        ''' <param name="iterates%">The current iteration number.</param>
+        ''' <param name="iteratePrints">
+        ''' The optional callback which is invoked whenever a better candidate 
+        ''' solution was found.
+        ''' </param>
+        ''' <param name="fitnessFunction">The fitness evaluation function of the candidate solutions.</param>
+        ''' <param name="random">The random number generator which is shared by the sub tasks.</param>
+        ''' <returns>
+        ''' A tagged sub population, in which the tag is the best fitness value 
+        ''' which was found by this sub population.
+        ''' </returns>
         <Extension>
         Private Function subPopulationEvolute(Of Individual As IIndividual)(
                                                    population As Individual(),

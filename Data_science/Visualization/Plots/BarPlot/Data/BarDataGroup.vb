@@ -125,7 +125,7 @@ Namespace BarPlot.Data
                               Function(x) x.i)
             Dim newOrders As New List(Of SeqValue(Of String))
 
-            For Each name In orders
+            For Each name As String In orders
                 newOrders += New SeqValue(Of String) With {
                     .i = oldOrders(name),
                     .value = name

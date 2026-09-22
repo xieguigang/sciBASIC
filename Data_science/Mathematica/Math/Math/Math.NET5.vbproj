@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9758.20045</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -22,9 +22,10 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.Core</AssemblyTitle>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
 		<Description>Core math for sciBASIC#: dense and sparse matrices, SVD and linear solvers, simplex linear programming, BigDecimal arithmetic, splines, quantiles, distributions, fuzzy logic and an expression scripting engine.</Description>
-		<PackageTags>scibasic;mathematics;linear-algebra;numerics;linear-programming;spline</PackageTags>
+		<PackageTags>scibasic;mathematics;linear-algebra;sparse-matrix;svd;numerics;linear-programming;bigdecimal;spline;quantile;expression-scripting</PackageTags>
+    <PackageReleaseNotes>The core mathematics library of sciBASIC#. Linear algebra: the LinearAlgebra namespace provides dense and sparse matrices, SVD and other decompositions, and linear system solvers (Solvers); LinearAlgebra.LinearProgramming implements the simplex method with the IPMCrossover and MILP (mixed integer) variants. Numerics: the Numerics namespace covers general numerical routines with the Framework.Optimization abstraction and the L-BFGS-B bounded quasi-Newton optimizer including its line searches, while Quantile adds quantile and percentile estimation and Interpolation adds spline interpolation. Data and statistics: the Distributions namespace models probability distributions with binning (BinBox) and summary helpers, and DownSampling provides time series reduction (largest triangle three buckets, min/max preserving, mixed and time gap strategies). Symbolic and scripting: the Scripting namespace provides expression parsing with the MathExpression model and its implementations plus a BasicR bridge. Other: HashMaps with MinHash approximate set similarity, BigDecimal arithmetic, fuzzy logic under Logical.FuzzyLogic, and a broad set of numeric helper types at the root namespace.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

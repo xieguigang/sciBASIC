@@ -63,34 +63,43 @@ Namespace RNN
 
         ' Random matrix
 
-        ' Returns an MxN matrix filled with numbers drawn from a standard normal
-        ' distribution.
-        ' Requires that M > 0 and N > 0.
+        ''' <summary>
+        ''' Creates an M x N matrix filled with random values.
+        ''' </summary>
+        ''' <param name="M">Number of rows; must be greater than zero.</param>
+        ''' <param name="N">Number of columns; must be greater than zero.</param>
+        ''' <returns>The random matrix.</returns>
         Public Shared Function randn(M As Integer, N As Integer) As Matrix
             Dim lM = Matrix.zeros(M, N)
             lM.apply(Function(d) rand.NextDouble())
             Return lM
         End Function
 
-        ' Returns an k-dimensional vector filled with numbers drawn from a standard
-        ' normal distribution.
-        ' Requires that k > 0.
+        ''' <summary>
+        ''' Creates a k dimensional vector filled with random values.
+        ''' </summary>
+        ''' <param name="k">The vector length; must be greater than zero.</param>
+        ''' <returns>The random vector.</returns>
         Public Shared Function randn(k As Integer) As Matrix
             Return randn(1, k)
         End Function
 
-        ' Returns a matrix shaped like m filled with numbers drawn from a standard
-        ' normal distribution.
-        ' Requires that m != null.
+        ''' <summary>
+        ''' Creates a matrix shaped like <paramref name="m"/> filled with random values.
+        ''' </summary>
+        ''' <param name="m">The template matrix; it must not be <c>Nothing</c>.</param>
+        ''' <returns>The random matrix.</returns>
         Public Shared Function randomLike(m As Matrix) As Matrix
             Return randn(m.M, m.N)
         End Function
 
         ' Random choice 
 
-        ' Samples an index from a random distribution with the given probabilities
-        ' p. Will work properly, if the sum of probabilities is 1.0.
-        ' Requires that p != null.
+        ''' <summary>
+        ''' Samples an index from the discrete distribution given by <paramref name="p"/>.
+        ''' </summary>
+        ''' <param name="p">The probabilities; they should sum up to 1.0.</param>
+        ''' <returns>The sampled index.</returns>
         Public Shared Function randomChoice(p As Double()) As Integer
             Dim random As Double = rand.NextDouble()
             Dim cumulative = 0.0

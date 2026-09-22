@@ -59,44 +59,59 @@ Imports System.ComponentModel
 
 Namespace CNN
 
+    ''' <summary>
+    ''' Identifies the kind of a CNN layer; the <see cref="DescriptionAttribute"/> value is the tag persisted in the
+    ''' model file.
+    ''' </summary>
     Public Enum LayerTypes As Integer
 
-        ''' <summary>
-        ''' conv
-        ''' </summary>
+        ''' <summary>Convolution layer (<c>conv</c>).</summary>
         <Description("conv")> Convolution
-        ''' <summary>
-        ''' input
-        ''' </summary>
+        ''' <summary>Input layer (<c>input</c>).</summary>
         <Description("input")> Input
-        ''' <summary>
-        ''' output
-        ''' </summary>
+        ''' <summary>Output layer (<c>output</c>).</summary>
         <Description("output")> Output
+        ''' <summary>Max pooling layer (<c>pool</c>).</summary>
         <Description("pool")> Pool
+        ''' <summary>Rectified linear unit activation (<c>relu</c>).</summary>
         <Description("relu")> ReLU
+        ''' <summary>Softmax activation (<c>softmax</c>).</summary>
         <Description("softmax")> SoftMax
+        ''' <summary>Sigmoid activation (<c>sigmoid</c>).</summary>
         <Description("sigmoid")> Sigmoid
+        ''' <summary>Hyperbolic tangent activation (<c>tanh</c>).</summary>
         <Description("tanh")> Tanh
+        ''' <summary>Maxout activation (<c>maxout</c>).</summary>
         <Description("maxout")> Maxout
+        ''' <summary>Local response normalization (<c>lrn</c>).</summary>
         <Description("lrn")> LRN
+        ''' <summary>Dropout regularization (<c>dropout</c>).</summary>
         <Description("dropout")> Dropout
 
         ''' <summary>
-        ''' linear activation kind
+        ''' Fully connected (linear) layer (<c>fully_connect</c>).
         ''' </summary>
         ''' <remarks>
-        ''' 在神经网络中，Linear 层指的就是 Fully Connected 层（全连接层，常简称为 FC 层）。这一层的数学本质是一个线性变换，公式为 y=Wx+b。因为没有非线性激活函数（虽然后面通常会接一个激活函数如 ReLU），它执行的是纯粹的线性映射，因此称为“线性层”。
+        ''' In a neural network the linear layer is the fully connected layer (often abbreviated to FC layer). Its
+        ''' mathematical nature is a linear transformation <c>y = Wx + b</c>: because it applies no non-linear activation
+        ''' of its own, it performs a purely linear mapping and is therefore called a "linear layer".
         ''' </remarks>
         <Description("fully_connect")> FullyConnected
 
+        ''' <summary>Regression loss layer (<c>regression</c>).</summary>
         <Description("regression")> Regression
+        ''' <summary>Support vector machine loss layer (<c>svm</c>).</summary>
         <Description("svm")> SVM
+        ''' <summary>Transposed (de)convolution layer (<c>conv_transpose</c>).</summary>
         <Description("conv_transpose")> Conv2DTranspose
+        ''' <summary>Fourier feature mapping layer (<c>fourier_feature</c>).</summary>
         <Description("fourier_feature")> FourierFeature
+        ''' <summary>Leaky ReLU activation (<c>leaky_relu</c>).</summary>
         <Description("leaky_relu")> LeakyReLU
+        ''' <summary>Gaussian activation (<c>gaussian</c>).</summary>
         <Description("gaussian")> Gaussian
 
+        ''' <summary>Alias of <see cref="FullyConnected"/> (<c>linear</c>).</summary>
         <Description("linear")> Linear = FullyConnected
     End Enum
 End Namespace

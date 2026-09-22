@@ -59,10 +59,26 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace Darwinism.GAF.Helper
 
+    ''' <summary>
+    ''' Dump the genetic algorithm evolution process into a text table file, 
+    ''' so that the optimization procedure can be reviewed afterwards.
+    ''' </summary>
+    ''' <remarks>
+    ''' The output file is a tabular delimited text file which contains the 
+    ''' columns ``Time``, ``iteration``, ``fitness`` and ``chromosome``.
+    ''' </remarks>
     Public Class Memory : Implements IDisposable
 
         Dim writer As StreamWriter
 
+        ''' <summary>
+        ''' Open the dump file for appending the evolution records.
+        ''' </summary>
+        ''' <param name="file">The path of the dump file.</param>
+        ''' <remarks>
+        ''' The column header line will only be written when the target file 
+        ''' does not exists yet.
+        ''' </remarks>
         Sub New(file As String)
             Dim writeHeader As Boolean = Not file.FileExists
 
@@ -73,11 +89,20 @@ Namespace Darwinism.GAF.Helper
             End If
         End Sub
 
+        ''' <summary>
+        ''' Append one evolution record into the dump file.
+        ''' </summary>
+        ''' <param name="iter">The current iteration number.</param>
+        ''' <param name="fit">The best fitness value of the current iteration.</param>
+        ''' <param name="chromosome">The gene values of the best individual of the current iteration.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(iter%, fit#, chromosome As IEnumerable(Of Double))
             Call writer.WriteLine(New String() {Now.ToString, iter, fit, chromosome.JoinBy(", ")}.JoinBy(ASCII.TAB))
         End Sub
 
+        ''' <summary>
+        ''' Flush the buffered content into the dump file.
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Flush()
             Call writer.Flush()
@@ -109,6 +134,9 @@ Namespace Darwinism.GAF.Helper
         'End Sub
 
         ' This code added by Visual Basic to correctly implement the disposable pattern.
+        ''' <summary>
+        ''' Flush the buffered content and then close the dump file.
+        ''' </summary>
         Public Sub Dispose() Implements IDisposable.Dispose
             ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(True)

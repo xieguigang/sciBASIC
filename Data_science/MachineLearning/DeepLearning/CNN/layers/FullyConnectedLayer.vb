@@ -96,6 +96,7 @@ Namespace CNN.layers
         Private filters As DataBlock()
         Private biases As DataBlock
 
+        ''' <summary>Gets the weight and bias parameter blocks of this layer.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 For i As Integer = 0 To out_depth - 1
@@ -116,15 +117,22 @@ Namespace CNN.layers
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.FullyConnected"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.FullyConnected
             End Get
         End Property
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a fully connected layer with the given number of neurons.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the flattened input size.</param>
+        ''' <param name="num_neurons">Number of neurons, i.e. the number of outputs of this layer.</param>
         Public Sub New(def As OutputDefinition, num_neurons As Integer)
             out_depth = num_neurons
 
@@ -158,6 +166,12 @@ Namespace CNN.layers
         <IgnoreDataMember>
         Private weightsPacked As Tensor
 
+        ''' <summary>
+        ''' Runs the affine transformation <c>y = Wx + b</c> of this layer.
+        ''' </summary>
+        ''' <param name="db">The input data block, interpreted as a column vector.</param>
+        ''' <param name="training">Ignored; the fully connected layer behaves the same in both modes.</param>
+        ''' <returns>The output activations.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(1, 1, out_depth, 0.0) With {.trace = Me.ToString}
 
@@ -197,6 +211,9 @@ Namespace CNN.layers
             Return dst
         End Function
 
+        ''' <summary>
+        ''' Computes the gradients with respect to the weights, the biases and the input of this layer.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             Dim v As DataBlock = in_act.clearGradient()
 
@@ -239,6 +256,8 @@ Namespace CNN.layers
             Call v.SetGradients(gradX.Data)
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>A text of the form <c>full_connected(N)</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"full_connected({out_depth})"
         End Function

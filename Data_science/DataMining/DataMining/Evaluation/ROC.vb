@@ -31,7 +31,6 @@
 
     ' Summaries:
 
-
     ' Code Statistics:
 
     '   Total Lines: 151
@@ -43,11 +42,7 @@
     '     File Size: 5.60 KB
 
 
-    '     Module ROC
-    ' 
-    '         Function: (+3 Overloads) AUC, BestThreshold, SimpleAUC
-    ' 
-    ' 
+
     ' /********************************************************************************/
 
 #End Region
@@ -55,86 +50,68 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Evaluation
 
     ''' <summary>
-    ''' The ROC math module
+    ''' ROC / AUC 的兼容薄封装层。
+    ''' 
+    ''' 本模块不再包含任何独立的 ROC 曲线或 AUC 计算逻辑，
+    ''' 全部委托到统一核心 <see cref="RocBuilder"/>（曲线构建）与 <see cref="Auc"/>（面积计算）。
     ''' </summary>
     Public Module ROC
 
         ''' <summary>
-        ''' 使用梯形面积法计算AUC的结果值
+        ''' 由 ROC 曲线点集计算曲线下面积（梯形法）。
         ''' </summary>
         ''' <param name="validates"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' https://blog.revolutionanalytics.com/2016/11/calculating-auc.html
-        ''' 
-        ''' ```r
-        ''' simple_auc &lt;- function(TPR, FPR){
-        '''    # inputs already sorted, best scores first 
-        '''    dFPR &lt;- c(diff(FPR), 0)
-        '''    dTPR &lt;- c(diff(TPR), 0)
-        '''    sum(TPR * dFPR) + sum(dTPR * dFPR) / 2;
-        ''' }
-        '''
-        ''' with(roc_df, simple_auc(TPR, FPR))
-        ''' ```
-        ''' </remarks>
         <Extension>
         Public Function AUC(validates As IEnumerable(Of Validation)) As Double
-            With validates.OrderBy(Function(x) x.Sensibility).ToArray
-                Dim TPR As Vector = .Select(Function(v) v.Sensibility).AsVector
-                Dim FPR As Vector = .Select(Function(v) v.FPR).AsVector
-
-                Return SimpleAUC(TPR, FPR)
-            End With
+            Return RocAuc.Trapezoid(validates)
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 由已经按照 FPR 升序排序的 ``(TPR, FPR)`` 序列计算曲线下面积。
         ''' </summary>
         ''' <param name="TPR"></param>
         ''' <param name="FPR"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' two input vector must be sorted
-        ''' </remarks>
         Public Function SimpleAUC(TPR As Vector, FPR As Vector) As Double
-            Dim auc As Double = 0.0
+            If TPR Is Nothing OrElse FPR Is Nothing Then
+                Return Double.NaN
+            End If
 
-            For i As Integer = 1 To FPR.Length - 1
-                auc += (FPR(i) - FPR(i - 1)) * (TPR(i) + TPR(i - 1)) / 2.0
-            Next
-
-            Return auc
+            Return RocAuc.Trapezoid(TPR.Array, FPR.Array)
         End Function
 
         ''' <summary>
-        ''' get the index of best threshold 
+        ''' 由 ``(分数, 标签)`` 直接计算精确的秩和 AUC。
         ''' </summary>
-        ''' <param name="TPR">sensibility</param>
-        ''' <param name="FPR"></param>
+        ''' <param name="predicts"></param>
+        ''' <param name="actuals"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' Calculate the distance to the ideal point (0,1) for each row
-        ''' We use the euclidean distance: sqrt((1-TPR)^2 + (FPR)^2)
-        ''' 
-        ''' NA value will be ignored from this function automatically.
-        ''' </remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function BestThreshold(TPR As Vector, FPR As Vector) As Integer
-            Return which.Min(Vector.Sqrt((1 - TPR) ^ 2 + (FPR) ^ 2).Select(Function(vi) If(vi.IsNaNImaginary, Double.MaxValue, vi)))
+        Public Function AUC(predicts As Double(), actuals As Double()) As Double
+            Return RocAuc.RankAUC(predicts, actuals)
         End Function
 
         ''' <summary>
-        ''' Rank排序法计算AUC面积
+        ''' 获取最靠近理想点 ``(FPR=0, TPR=1)`` 的曲线点下标。
+        ''' </summary>
+        ''' <param name="TPR">真阳性率序列</param>
+        ''' <param name="FPR">假阳性率序列</param>
+        ''' <returns></returns>
+        <Obsolete("请改用 RocAuc.BestThreshold(curve As IEnumerable(Of Validation))。")>
+        Public Function BestThreshold(TPR As Vector, FPR As Vector) As Integer
+            Return RocAuc.BestThreshold(TPR, FPR)
+        End Function
+
+        ''' <summary>
+        ''' 多输出维度结果的 AUC（每一个输出维度产生一个命名指标）。
         ''' </summary>
         ''' <param name="validates"></param>
+        ''' <param name="names"></param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function AUC(validates As IEnumerable(Of Validate), Optional names$() = Nothing) As IEnumerable(Of NamedValue(Of Double))
@@ -147,59 +124,17 @@ Namespace Evaluation
                     .ToArray
             End If
 
-            Dim predicts As Double()
-            Dim actuals As Double()
-            Dim aucValue As Double
-
 #Disable Warning
             For i As Integer = 0 To width - 1
-                predicts = validateVector.Select(Function(test) test.predicts(i)).ToArray
-                actuals = validateVector.Select(Function(test) test.actuals(i)).ToArray
-                aucValue = AUC(predicts, actuals)
+                Dim predicts As Double() = validateVector.Select(Function(test) test.predicts(i)).ToArray
+                Dim actuals As Double() = validateVector.Select(Function(test) test.actuals(i)).ToArray
 
                 Yield New NamedValue(Of Double) With {
                     .Name = names(i),
-                    .Value = aucValue
+                    .Value = RocAuc.RankAUC(predicts, actuals)
                 }
             Next
 #Enable Warning
-        End Function
-
-        Public Function AUC(predicts As Double(), actuals As Double()) As Double
-            ' 创建一个包含预测值、标签和索引的元组数组
-            ' 按预测值降序排序
-            Dim labeledPredictions = Enumerable.Range(0, predicts.Length) _
-                .Select(Function(i) (prediction:=predicts(i), label:=actuals(i) > 0, i)) _
-                .OrderByDescending(Function(a) a.prediction) _
-                .ToArray()
-
-            ' 计算TPR和FPR
-            Dim aucVal As Double = 0
-            Dim prevFPR As Double = 0
-            Dim tprSum As Double = 0
-            Dim fprSum As Double = 0
-            Dim posCount As Double = labeledPredictions.Count(Function(l) l.label)
-            Dim negCount = actuals.Length - posCount
-
-            For i As Integer = 0 To labeledPredictions.Length - 1
-                If labeledPredictions(i).label Then ' 真阳性
-                    tprSum += 1 ' 假阳性
-                Else
-                    fprSum += 1
-                End If
-
-                Dim tpr = tprSum / posCount
-                Dim fpr = fprSum / negCount
-
-                ' 累加面积
-                aucVal += (tpr + prevFPR) * (fpr - prevFPR) / 2
-                prevFPR = fpr
-            Next
-
-            ' 处理最后一个点（FPR=0）
-            aucVal += tprSum / posCount * prevFPR / 2
-
-            Return aucVal
         End Function
     End Module
 End Namespace

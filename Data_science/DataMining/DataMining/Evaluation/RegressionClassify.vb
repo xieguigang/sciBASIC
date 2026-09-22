@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.Linq
 Imports std = System.Math
 
 Namespace Evaluation
@@ -76,6 +77,29 @@ Namespace Evaluation
                 Return std.Abs(predicts - actual)
             End Get
         End Property
+
+        ''' <summary>
+        ''' 把一组回归分类样本转换为统一评估框架的 <see cref="RegressionResult"/>。
+        ''' </summary>
+        ''' <param name="test"></param>
+        ''' <param name="name"></param>
+        ''' <param name="eps"></param>
+        ''' <param name="steps"></param>
+        ''' <returns></returns>
+        Public Shared Function ToResult(test As IEnumerable(Of RegressionClassify),
+                                        Optional name As String = Nothing,
+                                        Optional eps As Double = 0.1,
+                                        Optional steps As Integer = 25) As RegressionResult
+
+            Dim data As RegressionClassify() = test.ToArray
+
+            Return RegressionResult.Create(
+                predictions:=data.Select(Function(t) t.predicts).ToArray,
+                actuals:=data.Select(Function(t) t.actual).ToArray,
+                name:=name,
+                eps:=eps,
+                sweepSteps:=steps)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{sampleID}] {errors} = |{actual} - {predicts}|"

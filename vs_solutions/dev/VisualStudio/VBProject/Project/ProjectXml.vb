@@ -48,6 +48,10 @@
     '         Properties: [Include], [Private], Aliases, Condition, ReferenceOutputAssembly
     '                     SetTargetFramework
     ' 
+    '     Class VBReference
+    ' 
+    '         Properties: Condition, HintPath, [Include], [Private]
+    ' 
     '     Class VBPackageReference
     ' 
     '         Properties: Condition, ExcludeAssets, Id, IncludeAssets, PrivateAssets
@@ -89,6 +93,25 @@ Namespace VBProj.ProjectXml
         Public Property [Private] As String
         Public Property SetTargetFramework As String
         Public Property ReferenceOutputAssembly As String
+
+    End Class
+
+    ''' <summary>
+    ''' external assembly reference: a <c>Reference</c> item carrying a <c>HintPath</c>.
+    ''' </summary>
+    Public Class VBReference
+
+        ''' <summary>assembly simple name (the Include attribute)</summary>
+        Public Property [Include] As String
+
+        ''' <summary>path of the referenced dll (relative to the project file or absolute)</summary>
+        Public Property HintPath As String
+
+        ''' <summary>whether the referenced assembly should be copied into the output folder</summary>
+        Public Property [Private] As String
+
+        ''' <summary>optional Condition attribute</summary>
+        Public Property Condition As String
 
     End Class
 

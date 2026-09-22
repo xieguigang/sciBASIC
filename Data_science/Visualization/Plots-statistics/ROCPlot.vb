@@ -85,8 +85,9 @@ Public Module ROCPlot
         points += New PointData(0, 0)
         points += testData _
             .Select(Function(pct)
-                        Dim x! = (100 - pct.Specificity) / 100
-                        Dim y! = pct.Sensibility / 100
+                        ' 统一评估框架之中 Validation 的比率字段均为 [0, 1] 的分数
+                        Dim x! = 1 - pct.Specificity
+                        Dim y! = pct.Sensibility
 
                         Return New PointData(x, y)
                     End Function)

@@ -84,21 +84,31 @@ Namespace CNN.data
         ''' <returns></returns>
         Public Property depth As Integer
 
+        ''' <summary>Gets the total number of values, i.e. <c>outX * outY * depth</c>.</summary>
         Public ReadOnly Property len As Integer
             Get
                 Return outX * outY * depth
             End Get
         End Property
 
+        ''' <summary>Creates an empty definition, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a definition with the given size.
+        ''' </summary>
+        ''' <param name="w">The width.</param>
+        ''' <param name="h">The height.</param>
+        ''' <param name="depth">The number of channels.</param>
         Sub New(w As Integer, h As Integer, depth As Integer)
             Me.outX = w
             Me.outY = h
             Me.depth = depth
         End Sub
 
+        ''' <summary>Returns a readable description of the definition.</summary>
+        ''' <returns>A text of the form <c>w:W;h:H;d:D;len=N</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"w:{outX};h:{outY};d:{depth};len={len}"
         End Function

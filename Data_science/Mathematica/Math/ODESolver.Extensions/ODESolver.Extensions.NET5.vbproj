@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9753.4776</Version>
+		<Version>5.0.9758.20045</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -17,10 +17,11 @@
 		<Description>Extension helpers that turn ODE integration output into data frames and CSV files, reload them, and compute Pearson or Spearman correlations between the modelled variables. Part of sciBASIC#.</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;nuget_release</Configurations>
 		<RepositoryType>git</RepositoryType>
-		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+		<AssemblyVersion>1.0.9758.20045</AssemblyVersion>
 		<Title>ODE Solver Extensions: Result Export and Correlation Analysis</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyTitle>
-		<PackageTags>scibasic;ode-solver;data-frame;correlation;csv-export;pearson</PackageTags>
+		<PackageTags>scibasic;ode-solver;data-frame;correlation;pearson;spearman;csv-export</PackageTags>
+    <PackageReleaseNotes>Extension helpers for the ODE solver stack of sciBASIC#. They turn the raw integration output into analysis ready artefacts: the per step variable values are exported as a data frame and as CSV files, the same files can be reloaded back into a data frame, and Pearson or Spearman correlations between the modelled variables are computed directly over the integration result. This closes the loop between simulation and analysis - a dynamic model can be integrated, exported, re-loaded, statistically compared and finally plotted with the charting packages, without writing any glue code.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IncludeSymbols>True</IncludeSymbols>

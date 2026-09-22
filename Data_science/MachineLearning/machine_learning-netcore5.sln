@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.7.11919.86 stable
+VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "machine_learning-netcore5", "MachineLearning\machine_learning-netcore5.vbproj", "{6A84DE4B-AC7E-5232-FCF2-0A0464AE1FD0}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "MachineLearning\test\test.vbproj", "{3E1122C1-25C9-47E0-8697-004D353C75FD}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dataframework-netcore5", "..\..\Data\DataFrame\dataframework-netcore5.vbproj", "{D410907F-A387-B1C5-6417-66B7623D41BE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "stats-netcore5", "..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{8B29EB24-E1C5-5A41-B249-6FBD390386AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,6 +231,38 @@ Global
 		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Debug|x64.ActiveCfg = Debug|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Debug|x64.Build.0 = Debug|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.LipidSearch|x64.Build.0 = LipidSearch|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit_win32|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit_win32|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit_win32|x64.ActiveCfg = Rsharp_app_release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit_win32|x64.Build.0 = Rsharp_app_release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit|x64.ActiveCfg = mzkit|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.mzkit|x64.Build.0 = mzkit|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.nuget_release|Any CPU.ActiveCfg = nuget_release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.nuget_release|Any CPU.Build.0 = nuget_release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.nuget_release|x64.Build.0 = nuget_release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Release|x64.ActiveCfg = Release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Release|x64.Build.0 = Release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,6 +272,7 @@ Global
 		{1F356EAC-7669-E13D-2D5F-D6A927649811} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FD46AC2D-4388-5E74-AF98-78CE0CDE896E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D410907F-A387-B1C5-6417-66B7623D41BE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8B29EB24-E1C5-5A41-B249-6FBD390386AE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CD70265-4CE4-4B23-8CAD-1060601A3D30}

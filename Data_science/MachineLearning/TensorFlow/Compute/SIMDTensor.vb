@@ -212,7 +212,12 @@ Namespace Compute
             Dim k = a.Shape(1)
             Dim n = b.Shape(1)
 
-            If m * k * n < MatrixDotThreshold Then
+            ' 注意必须用 Long 计算规模：语言模型的输出层是 [N, d_model] × [d_model, vocab]，
+            ' 在 10 万级词表下 m*k*n 轻松超过 Int32 上限（约 21.5 亿），
+            ' 用 Int32 会直接抛 OverflowException。
+            Dim totalOps As Long = CLng(m) * k * n
+
+            If totalOps < MatrixDotThreshold Then
                 Return MyBase.MatMul(a, b)
             End If
 

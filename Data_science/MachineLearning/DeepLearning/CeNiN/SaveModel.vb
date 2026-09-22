@@ -60,8 +60,18 @@ Imports System.Text
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' Serializes a <see cref="CeNiN"/> model back into the CeNiN binary file format, the reverse of
+    ''' loading a model with <c>LoadFile</c>.
+    ''' </summary>
     Public Module SaveModel
 
+        ''' <summary>
+        ''' Writes the given model to a binary stream in the CeNiN file format.
+        ''' </summary>
+        ''' <param name="model">The model to serialize.</param>
+        ''' <param name="file">The destination stream.</param>
+        ''' <returns><c>True</c> if the model was written successfully; otherwise <c>False</c>.</returns>
         <Extension>
         Public Function Save(model As CeNiN, file As Stream) As Boolean
             Using writer As New BinaryWriter(file, Encoding.ASCII)

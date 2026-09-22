@@ -58,8 +58,23 @@ Imports std = System.Math
 
 Namespace ComponentModel.Activations
 
+    ''' <summary>
+    ''' A quadratic-linear activation function: <i>f(x) = ln(x ^ 2)</i> when 
+    ''' <i>x &gt;= 1</i>, otherwise zero.
+    ''' </summary>
+    ''' <remarks>
+    ''' The output of this function is flat (zero) on the interval 
+    ''' <i>(-inf, 1)</i> and grows logarithmically outside of that interval.
+    ''' </remarks>
     Public Class QLinear : Inherits IActivationFunction
 
+        ''' <summary>
+        ''' Gets the XML serializable data model of this quadratic-linear function.
+        ''' </summary>
+        ''' <returns>
+        ''' A <see cref="ActiveFunction"/> data model which its function name is 
+        ''' ``QLinear`` and no argument is required.
+        ''' </returns>
         Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
@@ -69,6 +84,12 @@ Namespace ComponentModel.Activations
             End Get
         End Property
 
+        ''' <summary>
+        ''' Calculates the function value: <i>ln(x ^ 2)</i> when <i>x &gt;= 1</i>, 
+        ''' otherwise ``0``.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>The function output value.</returns>
         Public Overrides Function [Function](x As Double) As Double
             If x < 1 Then
                 Return 0
@@ -77,10 +98,23 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        ''' <summary>
+        ''' Display this activation function as a text expression.
+        ''' </summary>
+        ''' <returns>The text expression of this quadratic-linear function.</returns>
         Public Overrides Function ToString() As String
             Return Store.ToString
         End Function
 
+        ''' <summary>
+        ''' Calculates the derivative: <i>f'(x) = 1 / (2 * x)</i>.
+        ''' </summary>
+        ''' <param name="x">The function input value.</param>
+        ''' <returns>
+        ''' The derivative value; a large constant value ``10000`` will be 
+        ''' returned when <paramref name="x"/> is zero, so that the derivative 
+        ''' value will never be infinite.
+        ''' </returns>
         Protected Overrides Function Derivative(x As Double) As Double
             If x = 0.0 Then
                 Return 10000

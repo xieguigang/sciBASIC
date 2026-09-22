@@ -66,10 +66,23 @@ Namespace CNN.trainers
 
     Public Class SGDTrainer : Inherits TrainerAlgorithm
 
+        ''' <summary>
+        ''' Creates a stochastic gradient descent trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)
         End Sub
 
+        ''' <summary>
+        ''' Applies one gradient descent step to a single parameter, using momentum when
+        ''' <see cref="TrainerAlgorithm.momentum"/> is greater than zero.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
             ' assume SGD

@@ -69,12 +69,23 @@ Namespace CNN.data
 
         Dim m_loss As Double
 
+        ''' <summary>Gets the total loss reported by this training step.</summary>
         Public Overridable ReadOnly Property Loss As Double
             Get
                 Return m_loss
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a training step result.
+        ''' </summary>
+        ''' <param name="fwd_time">Elapsed time of the forward pass, in ticks.</param>
+        ''' <param name="bwd_time">Elapsed time of the backward pass, in ticks.</param>
+        ''' <param name="l1_decay_loss">L1 regularization loss component.</param>
+        ''' <param name="l2_decay_loss">L2 regularization loss component.</param>
+        ''' <param name="cost_loss">Data (cost) loss component.</param>
+        ''' <param name="softmax_loss">Softmax loss component.</param>
+        ''' <param name="loss">The total loss.</param>
         Public Sub New(fwd_time As Long,
                        bwd_time As Long,
                        l1_decay_loss As Double,
@@ -93,6 +104,8 @@ Namespace CNN.data
             m_loss = loss
         End Sub
 
+        ''' <summary>Returns a short description of the training result.</summary>
+        ''' <returns>A text of the form <c>loss: N</c>.</returns>
         Public Overrides Function ToString() As String
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("loss: ")

@@ -63,6 +63,7 @@ Namespace RNN
 	Public Class RNNTrainer
 		' Defaults
 
+		''' <summary>Default number of steps the network is unrolled during training.</summary>
 		Public Const defaultSequenceLength As Integer = 50
 
 		Private net As Trainable

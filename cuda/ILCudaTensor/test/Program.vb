@@ -147,6 +147,30 @@ Module Program
         }
     End Function
 
+    ''' <summary>
+    ''' 构造一个 CSR 稀疏矩阵：每行固定 fanIn 条边，列索引随机（允许重复与乱序，
+    ''' 用于同时检验重复边的累加与乱序行的处理）。
+    ''' </summary>
+    Private Function BuildRandomCsr(rng As Random, rows As Integer, columns As Integer,
+                                    fanIn As Integer) As tfCompute.SparseCsr
+        Dim nnz = rows * fanIn
+        Dim rowPtr(rows) As Integer
+        Dim colIdx(nnz - 1) As Integer
+        Dim values(nnz - 1) As Double
+
+        For r As Integer = 0 To rows - 1
+            rowPtr(r) = r * fanIn
+            For k As Integer = 0 To fanIn - 1
+                Dim idx = r * fanIn + k
+                colIdx(idx) = rng.Next(columns)
+                values(idx) = 0.1 + rng.NextDouble()
+            Next
+        Next
+
+        rowPtr(rows) = nnz
+        Return New tfCompute.SparseCsr(rows, columns, rowPtr, colIdx, values)
+    End Function
+
     Sub Main(args As String())
         Console.WriteLine("=== ILCudaTensor demo test：SIMD CPU vs CUDA GPU（全 double）===")
         Console.WriteLine($"默认后端 : {tf.Tensor.computeKernel.Name}")
@@ -234,6 +258,15 @@ Module Program
 
         ' ---- 真实网络规模的探针（N=1, padding=2, inC=32, outC=64）----
         Dim netProbeCpu = NetShapeProbe()
+
+        ' ---- 稀疏 SpMM 的 CPU 参考（ScalarProbe 纯主机实现）----
+        Dim csrSmall = BuildRandomCsr(New Random(101), 16, 32, 4)
+        Dim denseSmall = tf.Tensor.Random({3, 16}, 0.0, 1.0, seed:=41)
+        Dim spmmSmallCpu = probe.SpMM(csrSmall, denseSmall)
+
+        Dim csrBig = BuildRandomCsr(New Random(202), 4096, 4096, 32)
+        Dim denseBig = tf.Tensor.Random({2, 4096}, 0.0, 1.0, seed:=42)
+        Dim spmmBigCpu = probe.SpMM(csrBig, denseBig)
 
         Dim sw = Stopwatch.StartNew()
         Dim bigSumCpu = tfMath.reduce_sum(big).Data(0)
@@ -426,6 +459,41 @@ Module Program
               std.Abs(sumBefore - 10.0) < 1.0E-12 AndAlso std.Abs(sumAfter - 109.0) < 1.0E-12,
               $"before={sumBefore}, after={sumAfter}")
 
+        ' ---- 稀疏 SpMM（Kernels\spmm.cu）----
+        ' 小规模：临时下调 MinSparseNnz 以确实命中 GPU 内核（否则会静默回退 CPU 造成“假通过”）
+        Dim savedMinNnz = gpu.CudaTensor.MinSparseNnz
+        gpu.CudaTensor.MinSparseNnz = 1
+        Dim spmmSmallGpu = tf.Tensor.computeKernel.SpMM(csrSmall, denseSmall)
+        gpu.CudaTensor.MinSparseNnz = savedMinNnz
+
+        ' 大规模：nnz 超过默认阈值，自然走 GPU
+        Dim spmmBigGpu = tf.Tensor.computeKernel.SpMM(csrBig, denseBig)
+
+        Dim spmmSmallErr = MaxDiff(spmmSmallCpu.Data, spmmSmallGpu.Data)
+        Dim spmmBigErr = MaxDiff(spmmBigCpu.Data, spmmBigGpu.Data)
+
+        ' 输出走 atomicAdd 累加，求和顺序与 CPU 的顺次累加不同 → 只容许舍入级差异
+        Check("SpMM 稀疏(小规模/强制GPU) == CPU", spmmSmallErr < 1.0E-12, $"maxdiff={spmmSmallErr:E3}")
+        Check("SpMM 稀疏(nnz 超过阈值) == CPU", spmmBigErr < 1.0E-12, $"maxdiff={spmmBigErr:E3}")
+
+        ' ---- 稀疏权重就地修改 + MarkModified：GPU 必须取到新权重 ----
+        Dim csrMut = BuildRandomCsr(New Random(303), 16, 16, 4)
+        Dim denseMut = tf.Tensor.Random({2, 16}, 0.0, 1.0, seed:=43)
+
+        gpu.CudaTensor.MinSparseNnz = 1
+        Dim mutBefore = tf.Tensor.computeKernel.SpMM(csrMut, denseMut)   ' 先让 CSR 进入显存缓存
+        For i As Integer = 0 To csrMut.Values.Length - 1
+            csrMut.Values(i) *= 2.0
+        Next
+        csrMut.MarkModified()
+        Dim mutAfter = tf.Tensor.computeKernel.SpMM(csrMut, denseMut)
+        gpu.CudaTensor.MinSparseNnz = savedMinNnz
+
+        Dim mutRef = probe.SpMM(csrMut, denseMut)
+        Dim mutErr = MaxDiff(mutRef.Data, mutAfter.Data)
+        ' 若 MarkModified 未生效，设备端会复用旧权重，误差将是 O(1) 的结构性偏差
+        Check("SparseCsr.MarkModified 后 GPU 权重已同步", mutErr < 1.0E-12, $"maxdiff={mutErr:E3}")
+
         Dim rowSums = tfMath.reduce_sum(smGpu, axis:=1)
         Dim rowErr As Double = 0
         For i As Integer = 0 To rowSums.Length - 1
@@ -440,6 +508,31 @@ Module Program
 
         If gpuBigMs > 0 Then
             Console.WriteLine($"    加速比: {cpuBigMs / gpuBigMs:F2} x")
+        End If
+
+        ' ---- 稀疏 SpMM 性能参考（SNN 加载连接组的核心算子）----
+        Dim csrPerf = BuildRandomCsr(New Random(404), 20000, 20000, 64)
+        Dim densePerf = tf.Tensor.Random({1, 20000}, 0.0, 1.0, seed:=44)
+
+        Dim swSparse As Stopwatch = Stopwatch.StartNew()
+        Dim perfCpu = probe.SpMM(csrPerf, densePerf)
+        swSparse.Stop()
+        Dim cpuSparseMs = swSparse.Elapsed.TotalMilliseconds
+
+        gpu.CudaTensor.MinSparseNnz = 1
+        ' 预热一次：把 CSR 与 dense 上传到显存（后续调用复用驻留缓冲）
+        Call tf.Tensor.computeKernel.SpMM(csrPerf, densePerf)
+        swSparse.Restart()
+        Dim perfGpu = tf.Tensor.computeKernel.SpMM(csrPerf, densePerf)
+        swSparse.Stop()
+        Dim gpuSparseMs = swSparse.Elapsed.TotalMilliseconds
+        gpu.CudaTensor.MinSparseNnz = savedMinNnz
+
+        Dim perfErr = MaxDiff(perfCpu.Data, perfGpu.Data)
+        Console.WriteLine($"    稀疏 SpMM nnz={csrPerf.NonZeros:N0}   SIMD {cpuSparseMs,8:F3} ms   CUDA {gpuSparseMs,8:F3} ms   maxdiff={perfErr:E3}")
+
+        If gpuSparseMs > 0 Then
+            Console.WriteLine($"    稀疏 SpMM 加速比: {cpuSparseMs / gpuSparseMs:F2} x")
         End If
 
         ' ---------------- 收尾 ----------------

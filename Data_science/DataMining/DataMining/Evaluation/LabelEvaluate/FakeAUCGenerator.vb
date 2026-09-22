@@ -60,6 +60,10 @@ Imports std = System.Math
 
 Namespace Evaluation
 
+    ''' <summary>
+    ''' 依据目标 AUC 反向生成「假」的预测向量，用于构造测试数据。
+    ''' </summary>
+    <Obsolete("该工具仅用于测试数据构造，AUC 计算已统一委托到 Auc.RankAUC。", False)>
     Public Module FakeAUCGenerator
 
         ''' <summary>
@@ -120,7 +124,7 @@ Namespace Evaluation
                     End If
                 Next
 
-                Dim eval As Double = Evaluation.AUC(out, labels)
+                Dim eval As Double = RocAuc.RankAUC(out, labels)
                 Dim delta = std.Abs(eval - auc)
 
                 Call bar.SetLabel($"auc: {eval }")

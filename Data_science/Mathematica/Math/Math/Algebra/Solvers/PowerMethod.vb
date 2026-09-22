@@ -58,6 +58,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 Imports std = System.Math
 
 Namespace LinearAlgebra.Solvers
@@ -108,9 +110,7 @@ Namespace LinearAlgebra.Solvers
         End Sub
 
         Private Sub newPrevX()
-            For i = 0 To n - 1
-                prevX(i) = curX(i)
-            Next
+            Call System.Array.Copy(curX, prevX, n)
         End Sub
         Private Sub newPrevLambda()
             prevLambda = curLambda
@@ -141,29 +141,22 @@ Namespace LinearAlgebra.Solvers
 
         Private Function multiply(matr As Double()(), vector As Double()) As Double()
             Dim result = New Double(n - 1) {}
+
+            ' 每一行与向量做 FMA 点积（matr 为 n x n，vector 长度为 n）
             For i = 0 To n - 1
-                result(i) = 0
-                For j = 0 To n - 1
-                    result(i) += matr(i)(j) * vector(j)
-                Next
+                result(i) = SIMDIntrinsics.DotFma(matr(i), vector)
             Next
+
             Return result
         End Function
 
 
         Private Function multiply(vector As Double(), lambda As Double) As Double()
-            Dim result = New Double(n - 1) {}
-            For i = 0 To n - 1
-                result(i) = vector(i) * lambda
-            Next
-            Return result
+            Return SimdEngine.MultiplyScalar(Of Double)(lambda, vector)
         End Function
+
         Private Function minus(vectorA As Double(), vectorB As Double()) As Double()
-            Dim result = New Double(n - 1) {}
-            For i = 0 To n - 1
-                result(i) = vectorA(i) - vectorB(i)
-            Next
-            Return result
+            Return SimdEngine.Subtract(Of Double)(vectorA, vectorB)
         End Function
 
         Public Overridable Sub printVectorDiscrepancy()

@@ -349,9 +349,9 @@ Namespace BIRCH
             ' updates the root
             root = newRoot
 
-            ' frees some memory by deleting the nodes in the tree that had to be split
-            GC.Collect()
-
+            ' 注：此处不再调用 GC.Collect()。
+            ' 旧实现每次根分裂都会触发一次阻塞式全量 GC，在大规模数据插入时会明显拖慢预聚类；
+            ' 被替换掉的节点会在后续由 GC 正常回收。
         End Sub
 
         ''' <summary>
@@ -480,8 +480,8 @@ Namespace BIRCH
             Dim oldLeavesList = leafListStartField.NextLeaf ' remember: the node this.leafListStart is a dummy node (place holder for beginning of leaf list)
 
             If discardOldTree Then
+                ' 释放旧树引用（仅保留旧的叶节点），不再强制 GC.Collect()
                 root = Nothing
-                GC.Collect() ' removes the old tree. Only the old leaves will be kept
             End If
 
             Dim leaf = oldLeavesList
@@ -501,8 +501,8 @@ Namespace BIRCH
             End While
 
             If discardOldTree Then
+                ' 释放旧的叶节点链表引用，不再强制 GC.Collect()
                 leafListStartField = Nothing
-                GC.Collect() ' removes the old list of leaves
             End If
 
             Return newTree

@@ -71,11 +71,21 @@ Namespace CNN.trainers
 
         Dim ro As Double = 0.95
 
+        ''' <summary>
+        ''' Creates an AdaDelta trainer.
+        ''' </summary>
+        ''' <param name="batch_size">Number of samples accumulated before the weights are updated.</param>
+        ''' <param name="l2_decay">L2 regularization strength.</param>
+        ''' <param name="ro">Decay factor of the running averages, normally 0.95.</param>
         Public Sub New(batch_size As Integer, l2_decay As Single, Optional ro As Double = 0.95)
             MyBase.New(batch_size, l2_decay)
             Me.ro = ro
         End Sub
 
+        ''' <summary>
+        ''' Allocates the zero initialized accumulator of the squared updates for the given parameter block.
+        ''' </summary>
+        ''' <param name="bpr">The parameter block that is about to be trained for the first time.</param>
         Public Overrides Sub initTrainData(bpr As BackPropResult)
             Dim newXSumArr = New Double(bpr.Weights.Length - 1) {}
 
@@ -83,6 +93,13 @@ Namespace CNN.trainers
             Call xsum.Add(newXSumArr)
         End Sub
 
+        ''' <summary>
+        ''' Applies one AdaDelta update step to a single parameter.
+        ''' </summary>
+        ''' <param name="i">Index of the parameter block inside the network.</param>
+        ''' <param name="j">Index of the parameter inside the block.</param>
+        ''' <param name="gij">The raw batch gradient of that parameter.</param>
+        ''' <param name="p">The parameter vector that is updated in place.</param>
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
             Dim xsumi = xsum(i)
@@ -96,6 +113,8 @@ Namespace CNN.trainers
             p(j) += dx
         End Sub
 
+        ''' <summary>Returns a short description of this update rule.</summary>
+        ''' <returns>A text of the form <c>ada_delta(ro:0.95)</c>.</returns>
         Public Overrides Function ToString() As String
             Return $"ada_delta(ro:{ro})"
         End Function

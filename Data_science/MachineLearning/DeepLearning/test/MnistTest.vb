@@ -44,6 +44,15 @@ Public Class MnistTest
             Return
         End If
 
+        ' --transformer-zh [--corpus=path]
+        ' Transformer 英译中翻译 demo：读取内置英中平行语料，用 NLP 包的中文分词器切词，
+        ' 训练完成后打印若干测试句的模型译文与参考译文
+        If args.Any(Function(a) String.Equals(a, "--transformer-zh", StringComparison.OrdinalIgnoreCase)) Then
+            Call testTransformerZh.run(ArgValue(args, "--corpus", CType(Nothing, String)))
+
+            Return
+        End If
+
         Dim layers As New LayerBuilder
 
         '        Reader mr = new MnistReader("mnist/train-labels-idx1-ubyte", "mnist/train-images-idx3-ubyte");
@@ -147,6 +156,17 @@ Public Class MnistTest
         For Each arg As String In args
             If arg.StartsWith(name & "=", StringComparison.OrdinalIgnoreCase) Then
                 Return CInt(Val(arg.Substring(name.Length + 1)))
+            End If
+        Next
+
+        Return defaultValue
+    End Function
+
+    ' 字符串版本：用于 --corpus=path 这类文本参数
+    Private Shared Function ArgValue(args As String(), name As String, defaultValue As String) As String
+        For Each arg As String In args
+            If arg.StartsWith(name & "=", StringComparison.OrdinalIgnoreCase) Then
+                Return arg.Substring(name.Length + 1)
             End If
         Next
 

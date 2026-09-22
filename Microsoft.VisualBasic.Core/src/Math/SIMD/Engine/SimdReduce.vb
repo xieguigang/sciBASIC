@@ -499,6 +499,60 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
+        ''' 绝对值最大值：<c>MAX(|v(i)|)</c>。空数组返回 0。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这个内核用于数值稳定算法中的缩放因子探测（例如 Frobenius 范数的抗上溢处理），
+        ''' 与 <c>Max(Abs(v))</c> 的组合写法相比省掉了一整个临时数组的分配与读写。
+        ''' </remarks>
+        Public Shared Function MaxAbs(v As Double()) As Double
+            CheckNull(v, NameOf(v))
+
+            If v.Length = 0 Then Return 0.0
+
+            Return MaxAbs(v, 0, v.Length)
+        End Function
+
+        ''' <summary>
+        ''' 求 <c>[start, ends)</c> 区间（前闭后开）的绝对值最大值。空区间返回 0。
+        ''' </summary>
+        Public Shared Function MaxAbs(v As Double(), start As Integer, ends As Integer) As Double
+            CheckNull(v, NameOf(v))
+
+            If start >= ends Then Return 0.0
+
+            CheckRange(v.Length, start, ends)
+
+            Dim count As Integer = Vector(Of Double).Count
+            Dim i As Integer = start
+            Dim m As Double = 0
+
+            If SIMDEnvironment.IsEnabled AndAlso ends - start >= count Then
+                Dim acc As Vector(Of Double) = Vector.Abs(Of Double)(New Vector(Of Double)(v, start))
+                Dim last As Integer = ends - count
+
+                i = start + count
+
+                Do While i <= last
+                    acc = Vector.Max(Of Double)(acc, Vector.Abs(Of Double)(New Vector(Of Double)(v, i)))
+                    i += count
+                Loop
+
+                m = acc.GetElement(0)
+
+                For k As Integer = 1 To count - 1
+                    m = std.Max(m, acc.GetElement(k))
+                Next
+            End If
+
+            For k As Integer = i To ends - 1
+                m = std.Max(m, std.Abs(v(k)))
+            Next
+
+            Return m
+        End Function
+
+        ''' <summary>
         ''' 最大值。空数组会抛出 <see cref="ArgumentException"/>。
         ''' </summary>
         Public Shared Function Max(v As Single()) As Single

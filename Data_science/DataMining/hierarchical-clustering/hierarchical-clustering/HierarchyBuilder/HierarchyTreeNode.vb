@@ -138,10 +138,6 @@ Namespace Hierarchy
                 .Distance = New Distance(LinkageDistance)
             }
 
-            ' New clusters will track their children's leaf names; 
-            ' i.e.each cluster knows what part of the original data it contains
-            cluster.AppendLeafNames(Left.LeafNames)
-            cluster.AppendLeafNames(Right.LeafNames)
             cluster.AddChild(Left)
             cluster.AddChild(Right)
 
@@ -149,6 +145,9 @@ Namespace Hierarchy
             Right.Parent = cluster
 
             cluster.Distance.Weight = Left.WeightValue + Right.WeightValue
+            ' 叶名不再在每次合并时 eager 拷贝（原实现累计 O(n^2) 时间与内存，且 LeafNames 极少被使用，
+            ' 现改为首次访问时惰性计算）；这里改为增量维护叶节点数量缓存，使 Leafs 为 O(1) 读取
+            cluster.LeafCount = Left.Leafs + Right.Leafs
 
             Return cluster
         End Function

@@ -71,6 +71,10 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
         ''' </summary>
         ReadOnly top As Double = 0.65
 
+        ''' <summary>
+        ''' The <see cref="Strategies.EliteCrossbreed"/> strategy identifier.
+        ''' </summary>
+        ''' <returns>Always returns <see cref="Strategies.EliteCrossbreed"/>.</returns>
         Public ReadOnly Property type As Strategies Implements IStrategy(Of Chr).type
             Get
                 Return Strategies.EliteCrossbreed
@@ -80,9 +84,12 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
         ''' <summary>
         ''' 只保留10%的个体,然后这些个体杂交补充到种群的大小
         ''' </summary>
-        ''' <param name="newPop"></param>
-        ''' <param name="GA"></param>
-        ''' <returns></returns>
+        ''' <param name="newPop">The new population which contains the offspring individuals.</param>
+        ''' <param name="GA">The genetic algorithm driver of the current evolution process.</param>
+        ''' <returns>
+        ''' The population of the next generation, which contains the elite 
+        ''' individuals and their offspring.
+        ''' </returns>
         Public Function newPopulation(newPop As Population(Of Chr), GA As GeneticAlgorithm(Of Chr)) As Population(Of Chr) Implements IStrategy(Of Chr).newPopulation
             Dim x, y As Chr
 

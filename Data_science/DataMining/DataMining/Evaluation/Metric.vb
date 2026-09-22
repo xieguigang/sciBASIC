@@ -31,7 +31,6 @@
 
     ' Summaries:
 
-
     ' Code Statistics:
 
     '   Total Lines: 155
@@ -43,37 +42,12 @@
     '     File Size: 5.17 KB
 
 
-    '     Enum Metrics
-    ' 
-    '         [error], acc, auc, mae, mse
-    '         none
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class Metric
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: [error], accuracy, auc, crossEntropyLoss, GetMetric
-    '                   mean_absolute_error, mean_square_error, Parse
-    '         Class labelComparer
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: compare
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
+
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports System.Linq
 Imports std = System.Math
 
 Namespace Evaluation
@@ -102,8 +76,22 @@ Namespace Evaluation
         auc
     End Enum
 
+    ''' <summary>
+    ''' 统一的「``(预测值, 标签)`` → 指标值」委托。
+    ''' 该签名属于公开契约（例如 ``xgboost`` 项目通过 <see cref="Metric.GetMetric"/> 使用），
+    ''' 因此在本轮重构之中保持不变。
+    ''' </summary>
+    ''' <param name="pred"></param>
+    ''' <param name="label"></param>
+    ''' <returns></returns>
     Public Delegate Function IMetric(pred As Double(), label As Double()) As Double
 
+    ''' <summary>
+    ''' 经典模型评估指标的兼容入口。
+    ''' 
+    ''' 数值实现全部委托到统一核心（<see cref="Auc"/> 等），本类型只负责名称解析与
+    ''' 保持既有的公开签名不变。
+    ''' </summary>
     Public NotInheritable Class Metric
 
         Private Sub New()
@@ -160,6 +148,10 @@ Namespace Evaluation
             Return sum / pred.Length
         End Function
 
+        Public Shared Function root_mean_square_error(pred As Double(), label As Double()) As Double
+            Return std.Sqrt(mean_square_error(pred, label))
+        End Function
+
         Public Shared Function mean_absolute_error(pred As Double(), label As Double()) As Double
             Dim sum = 0.0
 
@@ -170,58 +162,53 @@ Namespace Evaluation
             Return sum / pred.Length
         End Function
 
-        Public Shared Function auc(pred As Double(), label As Double()) As Double
-            Dim n_pos As Double = 0
-
-            For Each v In label
-                n_pos += v
-            Next
-
-            Dim n_neg = pred.Length - n_pos
-            Dim label_pred As Double()() = RectangularArray.Matrix(Of Double)(pred.Length, 2)
+        ''' <summary>
+        ''' 决定系数 R²：``1 - SSE / SST``。
+        ''' </summary>
+        Public Shared Function r2_score(pred As Double(), label As Double()) As Double
+            Dim mean As Double = label.Average()
+            Dim sse As Double = 0
+            Dim sst As Double = 0
 
             For i = 0 To pred.Length - 1
-                label_pred(i)(0) = label(i)
-                label_pred(i)(1) = pred(i)
+                sse += std.Pow(pred(i) - label(i), 2.0)
+                sst += std.Pow(label(i) - mean, 2.0)
             Next
 
-            Array.Sort(label_pred, New Metric.labelComparer())
-            Dim accumulated_neg As Double = 0
-            Dim satisfied_pair As Double = 0
-
-            For i = 0 To label_pred.Length - 1
-
-                If label_pred(i)(0) = 1 Then
-                    satisfied_pair += accumulated_neg
-                Else
-                    accumulated_neg += 1
-                End If
-            Next
-
-            Return satisfied_pair / n_neg / n_pos
+            If sst = 0 Then
+                Return 0
+            Else
+                Return 1.0 - sse / sst
+            End If
         End Function
 
-        Private Class labelComparer : Implements IComparer(Of Double())
+        ''' <summary>
+        ''' 精确的秩和 AUC（委托到统一核心 <see cref="RocAuc.RankAUC(Double(), Double(), Double)"/>）。
+        ''' </summary>
+        Public Shared Function auc(pred As Double(), label As Double()) As Double
+            Return RocAuc.RankAUC(pred, label)
+        End Function
 
-            Public Sub New()
-            End Sub
-
-            Public Overridable Function compare(a As Double(), b As Double()) As Integer Implements IComparer(Of Double()).Compare
-                Return a(1).CompareTo(b(1))
-            End Function
-        End Class
-
+        ''' <summary>
+        ''' 交叉熵损失。
+        ''' 
+        ''' 与旧实现不同，本函数**不会**修改调用方传入的 <paramref name="predictions"/> 数组。
+        ''' </summary>
         Public Shared Function crossEntropyLoss(predictions As Double(), labels As Double()) As Double
             Dim loss As Double = 0
+            Dim epsilon As Double = 0.000000000000001
 
             For i As Integer = 0 To predictions.Length - 1
-                If predictions(i) = 0.0 Then
-                    predictions(i) = 0.000000000000001
-                ElseIf predictions(i) = 1.0 Then
-                    predictions(i) = 1 - 0.000000000000001
+                ' 使用局部变量做数值截断，避免破坏调用方的输入数据
+                Dim p As Double = predictions(i)
+
+                If p = 0.0 Then
+                    p = epsilon
+                ElseIf p = 1.0 Then
+                    p = 1 - epsilon
                 End If
 
-                loss -= labels(i) * std.Log(predictions(i)) + (1 - labels(i)) * std.Log(1 - predictions(i))
+                loss -= labels(i) * std.Log(p) + (1 - labels(i)) * std.Log(1 - p)
             Next
 
             Return loss / predictions.Length

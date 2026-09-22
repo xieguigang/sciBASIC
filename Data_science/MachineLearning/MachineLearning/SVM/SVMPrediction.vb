@@ -58,13 +58,38 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SVM
 
+    ''' <summary>
+    ''' The prediction result of a support vector machine model.
+    ''' </summary>
     Public Structure SVMPrediction
 
+        ''' <summary>
+        ''' The predicted class label.
+        ''' </summary>
+        ''' <returns>An <see cref="Integer"/> class index.</returns>
         Public Property [class] As Integer
+        ''' <summary>
+        ''' The decision value of the predicted class.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property score As Double
+        ''' <summary>
+        ''' The unified decision value, which is the sum of the pairwise 
+        ''' decision values of the predicted class.
+        ''' </summary>
+        ''' <returns>A <see cref="Double"/> value.</returns>
         Public Property unifyValue As Double
+        ''' <summary>
+        ''' The vote value of each class, which is produced by the one-versus-one 
+        ''' voting procedure of the multi-class classifier.
+        ''' </summary>
+        ''' <returns>An array of the vote value of each class.</returns>
         Public Property vote As Double()
 
+        ''' <summary>
+        ''' Display this prediction result as a json string.
+        ''' </summary>
+        ''' <returns>A json text which describes this prediction result.</returns>
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

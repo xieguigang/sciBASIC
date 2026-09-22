@@ -204,7 +204,27 @@ Namespace GPUTensor
             End SyncLock
         End Function
 
-        ''' <summary>按 LRU 淘汰直到腾出需要的空间</summary>
+        ''' <summary>
+        ''' 淘汰时受到保护、不参与释放的"最近使用"条目数。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这不是性能优化，而是<b>正确性要求</b>。
+        ''' <para>
+        ''' 一个算子往往会连续取多个显存缓冲（二元算子取 a、b；GEMM 取 A、B）。
+        ''' 如果第二次取缓冲触发的淘汰把第一次刚拿到的缓冲释放掉，
+        ''' 调用方就持有一段<b>已释放的显存</b>，内核读到的将是垃圾数据 ——
+        ''' 在小模型上因为容量充裕而从未触发，一旦模型放大到缓冲条目本身就有数百 MB，
+        ''' 淘汰就会频繁发生，表现为 loss 突然变成 NaN（实测：2 亿参数档）。
+        ''' </para>
+        ''' <para>
+        ''' 保护最近若干个条目可以从结构上消除这个竞态：刚被取用的条目必定
+        ''' 不在被释放之列。代价是容量可能被少量突破，这是有意的取舍 ——
+        ''' 宁可多用一点显存，也不能让内核读到已释放的缓冲。
+        ''' </para>
+        ''' </remarks>
+        Private Const ProtectedRecentEntries As Integer = 8
+
+        ''' <summary>按 LRU 淘汰直到腾出需要的空间（最近使用过的若干条目受保护）</summary>
         Private Sub Evict(needBytes As Long)
             If _capacity <= 0 Then Return
             If _bytes + needBytes <= _capacity Then Return
@@ -212,8 +232,13 @@ Namespace GPUTensor
             Dim snapshot = _map.ToArray()
             Array.Sort(snapshot, Function(x, y) x.Value.Ticks.CompareTo(y.Value.Ticks))
 
-            For Each pair In snapshot
+            ' 只允许淘汰"除了最近使用的前 ProtectedRecentEntries 个"之外的条目
+            Dim victimLimit = System.Math.Max(0, snapshot.Length - ProtectedRecentEntries)
+
+            For i As Integer = 0 To victimLimit - 1
                 If _bytes + needBytes <= _capacity Then Exit For
+
+                Dim pair = snapshot(i)
 
                 _map.Remove(pair.Key)
                 _bytes -= CLng(pair.Value.Buffer.Count) * CLng(pair.Value.Buffer.ElementSize)

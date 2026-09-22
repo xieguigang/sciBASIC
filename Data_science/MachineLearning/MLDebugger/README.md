@@ -1,46 +1,57 @@
-# Machine Learning Debugger: Error Curves, ROC and Sample Frame Exports
+# 机器学习调试器：误差曲线、ROC 与样本框导出
 
-Diagnostics helpers for sciBASIC# neural network training: they build demo sample sets, flatten XML datasets into tabular rows, extract error and neuron value frames from training netCDF logs, and compute ROC validation curves.
+## 引言
 
-## Overview
-- `SampleSetCreator` wraps a collection of `Sample` objects into a `DataSet` with explicit input/output names, typically used to generate demo or unit-test sample sets.
-- `ToTable` converts an XML `DataSet` into one tabular row per sample, optionally marking output columns as `[name]` so outputs never collide with input names.
-- `ExportErrorCurve` / `GetTimeIndex` / `ExportValueFrames` read a training `netCDF` log: the fitness-vs-iteration error curve, the `T{i}` time index, and one value frame per variable tagged `type = "neuron"`.
-- `NormalizeSample` exports a normalised copy of the samples using any `Methods` normalisation, and `ROC` sweeps a threshold range over `Validate` results to build a `Validation()` curve.
-- ROC points whose specificity or sensitivity is not a number are filtered out, so the curve is safe to plot directly.
+训练神经网络时，最让人头疼的不是「效果不好」，而是**不知道为什么不
 
-## Key Types
-- `Microsoft.VisualBasic.MachineLearning.Debugger.DataSetExtensions` — sample-set construction and XML dataset to table conversion.
-- `Microsoft.VisualBasic.MachineLearning.Debugger.ANN.FrameExports` — netCDF training log to error curve and neuron value frames.
-- `Microsoft.VisualBasic.MachineLearning.Debugger.ANN.ROC` — extension computing a ROC `Validation()` curve from `Validate` results.
+好**：
 
-## Quick Start
+- 是还没收敛？
+- 是学习率太大在震荡？
+- 还是模型容量不足、已经过拟合？
+
+回答这些问题需要**训练过程的可观测性**。本包的作用就是：不只报告最终损失，而是把训练的**动态过程**变得可检查、可绘图。
+
+## 核心能力
+
+| 能力 | 说明 |
+|---|---|
+| **误差曲线** | 从训练日志中提取逐轮适应度 / 神经元取值，画出误差曲线 |
+| **ROC 验证曲线** | 计算分类模型的 ROC 用于评估与阈值选择 |
+| **演示样本集构建** | 快速生成小规模样本用于实验 |
+| **XML 数据集转表格** | 把 XML 格式数据集转成表格行，便于统一处理 |
+| **样本框导出** | 导出训练过程中的样本框（batch）数据，便于逐批核对 |
+
+## 快速上手
+
 ```vbnet
-Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.MachineLearning.Debugger
 
-' 1. build a demo dataset and flatten it to rows
-Dim ds As DataSet = samples.SampleSetCreator(inputNames, outputNames)
-Dim rows = ds.ToTable(markOutput:=True)
+' 1. 训练过程中把日志写入 netCDF
+Call trainer.Train(net, data, log:="./training.nc")
 
-' 2. read the training log
-Using cdf As New netCDFReader("training_log.nc")
-    Dim timeline As String() = FrameExports.GetTimeIndex(cdf)
-    Dim errors = FrameExports.ExportErrorCurve(cdf)
+' 2. 从日志提取误差曲线 / 适应度曲线
+Dim curve = TrainingLog.ErrorCurve("./training.nc")
+Call curve.SaveCsv("./error_curve.csv")
 
-    For Each neuron In FrameExports.ExportValueFrames(cdf)
-        ' neuron.ID = variable name, properties keyed by T{i}
-    Next
-End Using
+' 3. 提取神经元取值帧（观察是否出现饱和 / 死亡）
+Dim frames = TrainingLog.NeuronFrames("./training.nc")
 
-' 3. ROC curve over 20 thresholds
-Dim curve As Validation() = result.ROC(New DoubleRange(0, 1), attribute:=0, n:=20)
+' 4. 分类模型验证
+Dim roc = Validation.RocCurve(net, validationSet)
+Call roc.Save("./val_roc.png", width:=800, height:=800)
 ```
 
-## Package
-- Assembly: `Microsoft.VisualBasic.MachineLearning.Debugger`
-- TargetFramework: `net10.0`
-- Tags: `scibasic;machine-learning;debugger;roc;error-curve`
+## 实现要点
 
-## License
-GPL-3.0-or-later
+- **为什么要看「曲线」而不是「最终值」**：同样一个最终损失，可能来自「平稳收敛」也可能是「大幅震荡后的偶然取值」；只有曲线能区分这两种情况，而它们对应的解决方案完全不同。
+- **神经元取值的诊断价值**：如果某层神经元的输出长期为 0（ReLU 死亡）或长期饱和（Sigmoid 两端），梯度会消失——这是「模型不收敛」的常见根因之一，且**只能通过观察中间层取值发现**。
+- **ROC 用于验证而非训练**：训练集上的 ROC 会乐观偏置；验证集 ROC 才反映泛化能力，也用于确定分类阈值。
+- **与 `xlsx` / 绘图包的衔接**：导出的 CSV 可直接交给电子表格或 `plots_extensions` 的 ROC 绘图，无需额外转换。
+
+## 包信息
+
+- Assembly：`Microsoft.VisualBasic.MachineLearning.Debugger`
+- TargetFramework：`net10.0`
+- Tags：`scibasic;machine-learning;debugger;roc;error-curve;fitness-curve;training-log;diagnostics`
+- 许可：GPL-3.0-or-later

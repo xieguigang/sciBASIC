@@ -62,7 +62,7 @@
 '*****************************************************************************
 ' Copyright 2013 Lars Behnke
 ' 
-' Licensed under the Apache License, Version 2.0 (the "License");
+' Licensed under the c, Version 2.0 (the "License");
 ' you may not use this file except in compliance with the License.
 ' You may obtain a copy of the License at
 ' 
@@ -154,60 +154,62 @@ Namespace Hierarchy
             If minDistLink Is Nothing Then
                 Return
             Else
-                Call Clusters.Remove(minDistLink.Right())
-                Call Clusters.Remove(minDistLink.Left())
+                Call removeCluster(minDistLink.Right())
+                Call removeCluster(minDistLink.Left())
             End If
 
             Dim oldClusterL As Cluster = minDistLink.Left()
             Dim oldClusterR As Cluster = minDistLink.Right()
             Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
-            Dim eval = Clusters.AsParallel _
-                .Select(Function(i)
-                            Return evaluateDistance(newCluster, i, oldClusterL, oldClusterR, linkageStrategy)
-                        End Function) _
-                .ToArray
 
-            For Each i As (removes As List(Of HierarchyTreeNode), newLinkage As HierarchyTreeNode) In eval
-                Call Distances.Remove(i.removes)
-                Call Distances.Add(i.newLinkage, direct:=True)
+            ' 顺序原地更新：对每个存活簇，移除指向 L/R 的两条旧链接，并推入一条指向新簇的新链接。
+            ' 
+            ' 旧实现每一轮都会开启一次 PLINQ（AsParallel + ToArray），并为每个簇分配一个
+            ' List(Of HierarchyTreeNode)，在中小规模数据上并行调度与临时对象分配的开销远大于计算本身；
+            ' 且每轮结束还要对整张链接表做一次全量排序。这里改为单次顺序循环，配合 DistanceMap 的
+            ' 最小堆结构（插入即维护堆序），彻底移除每轮排序。
+            Dim n As Integer = Clusters.Count
+
+            For idx As Integer = 0 To n - 1
+                Dim i As Cluster = Clusters(idx)
+                Dim link1 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterL)
+                Dim link2 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterR)
+                Dim d1 As Distance = Nothing
+                Dim d2 As Distance = Nothing
+
+                If link1 IsNot Nothing Then
+                    d1 = New Distance(link1.LinkageDistance, link1.GetOtherCluster(i).WeightValue)
+                    Call Distances.Remove(link1)
+                End If
+
+                If link2 IsNot Nothing Then
+                    d2 = New Distance(link2.LinkageDistance, link2.GetOtherCluster(i).WeightValue)
+                    Call Distances.Remove(link2)
+                End If
+
+                Dim newLinkage As New HierarchyTreeNode With {
+                    .Left = i,
+                    .Right = newCluster,
+                    .LinkageDistance = linkageStrategy.CalculateDistance(d1, d2)
+                }
+
+                Call Distances.Add(newLinkage, direct:=True)
             Next
 
-            Call Distances.Sort()
             Call Clusters.Add(newCluster)
         End Sub
 
-        Private Function evaluateDistance(newCluster As Cluster,
-                                          i As Cluster,
-                                          oldClusterL As Cluster, oldClusterR As Cluster,
-                                          linkageStrategy As LinkageStrategy) As (removes As List(Of HierarchyTreeNode), newLinkage As HierarchyTreeNode)
-
-            Dim link1 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterL)
-            Dim link2 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterR)
-            Dim d1 As Distance = Nothing
-            Dim d2 As Distance = Nothing
-            Dim removes As New List(Of HierarchyTreeNode)
-
-            If link1 IsNot Nothing Then
-                Dim distVal As Double = link1.LinkageDistance
-                Dim weightVal As Double = link1.GetOtherCluster(i).WeightValue
-                d1 = New Distance(distVal, weightVal)
-                removes.Add(link1)
-            End If
-
-            If link2 IsNot Nothing Then
-                Dim distVal As Double = link2.LinkageDistance
-                Dim weightVal As Double = link2.GetOtherCluster(i).WeightValue
-                d2 = New Distance(distVal, weightVal)
-                removes.Add(link2)
-            End If
-
-            Dim newLinkage As New HierarchyTreeNode With {
-                .Left = i,
-                .Right = newCluster,
-                .LinkageDistance = linkageStrategy.CalculateDistance(d1, d2)
-            }
-
-            Return (removes, newLinkage)
-        End Function
+        ''' <summary>
+        ''' 按引用（而非 <see cref="Cluster.Equals(Object)"/> 基于名称的比较）从 <see cref="Clusters"/> 中移除指定簇，
+        ''' 避免每次合并都进行 O(n) 次字符串比较。
+        ''' </summary>
+        Private Sub removeCluster(cluster As Cluster)
+            For i As Integer = 0 To Clusters.Count - 1
+                If Clusters(i) Is cluster Then
+                    Call Clusters.RemoveAt(i)
+                    Return
+                End If
+            Next
+        End Sub
     End Class
 End Namespace

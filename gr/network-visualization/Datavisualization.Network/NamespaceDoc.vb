@@ -57,3 +57,13 @@
 Friend Class NamespaceDoc
 
 End Class
+
+Namespace FileStream.Generic
+
+    ''' <summary>
+    ''' Generic network stream I/O: the dynamics table interface used to exchange network graph data
+    ''' with the file stream serialization layer.
+    ''' </summary>
+    Module NamespaceDoc
+    End Module
+End Namespace

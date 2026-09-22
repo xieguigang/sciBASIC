@@ -15,15 +15,16 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Title>netCDF Scientific Array Data File Reader and Writer</Title>
-    <Description>Reads and writes netCDF files for array oriented scientific data, handling dimensions, record dimensions, global and variable attributes, and typed data vectors over byte, short, integer, float and double.</Description>
+    <Description>Reads and writes netCDF files for array oriented scientific data, handling dimensions, the record dimension, global and variable attributes, and typed data vectors over byte, char, short, integer, long, float and double.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataStorage.netCDF</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;netcdf;scientific-data;array-data;dimensions;variables</PackageTags>
+    <PackageTags>scibasic;netcdf;scientific-data;array-data;dimensions;variables;record-dimension;reader</PackageTags>
+    <PackageReleaseNotes>The netCDF reader and writer of sciBASIC#, targeting array oriented scientific data. File model: the Components namespace models the file skeleton - header, dimensions and their lists, the record (unlimited) dimension, variables and attributes - with ICDFDataVector describing the typed vector contract. Data layer: the Data namespace holds the netCDF data type definitions, the binary data reader, the structure parser and variable length (VLen) value handling, along with an XML projection helper. Typed vectors: the DataVector namespace provides concrete vectors for bytes, characters, shorts, integers, longs, floats and doubles. Entry points: netCDFReader reads a file, CDFWriter creates one, and the root namespace utilities cover the remaining marshalling details. Because netCDF and HDF5 play the same role in the sciBASIC# scientific data stack, the two readers are normally chosen by whichever format the upstream instrument or model already emits.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

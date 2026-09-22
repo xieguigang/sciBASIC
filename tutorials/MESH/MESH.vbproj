@@ -24,19 +24,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>G:\GCModeller\src\runtime\sciBASIC#\tools</OutputPath>
+    <OutputPath>../../tools/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutputPath>G:\GCModeller\src\runtime\sciBASIC#\tools</OutputPath>
+    <OutputPath>../../tools/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>G:\GCModeller\src\runtime\sciBASIC#\tools</OutputPath>
+    <OutputPath>../../tools/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutputPath>G:\GCModeller\src\runtime\sciBASIC#\tools</OutputPath>
+    <OutputPath>../../tools/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

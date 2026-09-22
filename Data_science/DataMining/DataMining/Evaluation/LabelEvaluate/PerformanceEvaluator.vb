@@ -76,6 +76,7 @@
 ' * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.Drawing
+Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Evaluation
@@ -83,6 +84,11 @@ Namespace Evaluation
     ''' <summary>
     ''' Class which evaluates an SVM model using several standard techniques.
     ''' </summary>
+    ''' <remarks>
+    ''' 该类型来源于 SVM.NET，当前在仓库内没有调用方。其 ROC/AUC 计算已经统一
+    ''' 委托到 <see cref="RocBuilder"/> / <see cref="Auc"/> 核心实现，保留该类仅为向后兼容。
+    ''' </remarks>
+    <Obsolete("该评估器已并入统一评估框架（ModelEvaluation/EvaluationReport），建议改用 ClassificationResult + ModelEvaluation.Evaluate。", False)>
     Public Class PerformanceEvaluator
 
         Dim _data As List(Of RankPair)
@@ -219,29 +225,23 @@ Namespace Evaluation
             End If
         End Function
 
+        ''' <summary>
+        ''' 计算 ROC 曲线与曲线下面积。
+        ''' 
+        ''' 已重构为委托统一核心 <see cref="RocBuilder.FromScores(Double(), Boolean())"/> 与
+        ''' <see cref="Auc"/>，不再保留独立的梯形积分实现。
+        ''' </summary>
         Private Sub computeRoC()
-            Dim tpr = computeTPR(_changes(0))
-            Dim fpr = computeFPR(_changes(0))
+            Dim scores As Double() = _data.Select(Function(p) p.Score).ToArray
+            Dim labels As Boolean() = _data.Select(Function(p) p.Label = 1).ToArray
+            Dim curve As RocCurve = RocBuilder.FromScores(scores, labels)
 
+            _AuC = curve.AUC
             _ROCCurve = New List(Of PointF)()
-            _ROCCurve.Add(New PointF(0, 0))
-            _ROCCurve.Add(New PointF(fpr, tpr))
-            _AuC = 0
 
-            For i = 1 To _changes.Count - 1
-                Dim newTPR = computeTPR(_changes(i))
-                Dim newFPR = computeFPR(_changes(i))
-
-                If _changes(i).TP > _changes(i - 1).TP Then
-                    _AuC += tpr * (newFPR - fpr) + 0.5 * (newTPR - tpr) * (newFPR - fpr)
-                    tpr = newTPR
-                    fpr = newFPR
-                    _ROCCurve.Add(New PointF(fpr, tpr))
-                End If
+            For Each point As Validation In curve.Points
+                _ROCCurve.Add(New PointF(CSng(point.FPR), CSng(point.Sensibility)))
             Next
-
-            _ROCCurve.Add(New PointF(1, 1))
-            _AuC += tpr * (1 - fpr) + 0.5 * (1 - tpr) * (1 - fpr)
         End Sub
     End Class
 End Namespace

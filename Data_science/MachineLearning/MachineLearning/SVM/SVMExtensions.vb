@@ -62,11 +62,28 @@ Namespace SVM
 
         Private Const PRECISION As Double = 1000000.0
 
+        ''' <summary>
+        ''' Truncate the floating point value to a precision of ``1e-6``, so that 
+        ''' the floating point calculation error can be ignored in the equality 
+        ''' comparison.
+        ''' </summary>
+        ''' <param name="x">The value that will be truncated.</param>
+        ''' <returns>The truncated value.</returns>
         <Extension()>
         Public Function Truncate(x As Double) As Double
             Return std.Round(x * PRECISION) / PRECISION
         End Function
 
+        ''' <summary>
+        ''' Compare the two jagged arrays element by element.
+        ''' </summary>
+        ''' <typeparam name="T">The element type of the arrays.</typeparam>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(Of T)(lhs As T()(), rhs As T()()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
@@ -78,6 +95,16 @@ Namespace SVM
             Return True
         End Function
 
+        ''' <summary>
+        ''' Compare the two arrays element by element.
+        ''' </summary>
+        ''' <typeparam name="T">The element type of the arrays.</typeparam>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(Of T)(lhs As T(), rhs As T()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
@@ -89,6 +116,17 @@ Namespace SVM
             Return True
         End Function
 
+        ''' <summary>
+        ''' Compare the two <see cref="Double"/> arrays element by element, the 
+        ''' values are truncated by the <see cref="Truncate"/> function before 
+        ''' the comparison.
+        ''' </summary>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' truncated elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(lhs As Double(), rhs As Double()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
@@ -102,6 +140,16 @@ Namespace SVM
             Return True
         End Function
 
+        ''' <summary>
+        ''' Compare the two jagged <see cref="Double"/> arrays element by element, 
+        ''' the values are truncated before the comparison.
+        ''' </summary>
+        ''' <param name="lhs">The first array.</param>
+        ''' <param name="rhs">The second array.</param>
+        ''' <returns>
+        ''' ``True`` when the two arrays have the same size and all of their 
+        ''' truncated elements are equal to each other.
+        ''' </returns>
         <Extension()>
         Public Function IsEqual(lhs As Double()(), rhs As Double()()) As Boolean
             If lhs.Length <> rhs.Length Then Return False

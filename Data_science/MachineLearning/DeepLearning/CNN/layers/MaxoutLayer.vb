@@ -79,21 +79,28 @@ Namespace CNN.layers
         Private ReadOnly group_size As Integer = 2
         Private switches As Integer()
 
+        ''' <summary>Gets the parameter and gradient blocks of this layer; the maxout layer has none.</summary>
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
             End Get
         End Property
 
+        ''' <summary>Gets the kind of this layer, always <see cref="LayerTypes.Maxout"/>.</summary>
         Public ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.Maxout
             End Get
         End Property
 
+        ''' <summary>Creates an empty layer, used by the deserializer.</summary>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates a maxout layer; the input depth is divided by the group size.
+        ''' </summary>
+        ''' <param name="def">The shared output definition that carries the input shape.</param>
         Public Sub New(def As OutputDefinition)
             ' computed
             out_sx = def.outX
@@ -104,6 +111,12 @@ Namespace CNN.layers
             switches.fill(0)
         End Sub
 
+        ''' <summary>
+        ''' Computes the maximum inside every group and records which element won, so the gradient can be routed back.
+        ''' </summary>
+        ''' <param name="db">The input data block.</param>
+        ''' <param name="training">Ignored; the activation behaves the same in both modes.</param>
+        ''' <returns>The grouped maxima.</returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             in_act = db
             Dim lN = out_depth
@@ -154,6 +167,9 @@ Namespace CNN.layers
             Return out_act
         End Function
 
+        ''' <summary>
+        ''' Routes the upstream gradient back through the group members that produced the maxima.
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             Dim V = in_act ' we need to set dw of this
             Dim V2 = out_act
@@ -181,6 +197,8 @@ Namespace CNN.layers
             End If
         End Sub
 
+        ''' <summary>Returns a short description of this layer.</summary>
+        ''' <returns>The constant text <c>maxout()</c>.</returns>
         Public Overrides Function ToString() As String
             Return "maxout()"
         End Function

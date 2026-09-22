@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting.Rscript
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
@@ -182,7 +183,8 @@ Namespace LinearAlgebra
         Public ReadOnly Property [Mod] As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return (Me ^ 2).Sum
+                ' 平方和直接走 FMA 融合乘加内核，避免原先 (Me ^ 2) 产生的整段临时数组
+                Return SIMDIntrinsics.SumSquaresFma(buffer)
             End Get
         End Property
 
@@ -199,7 +201,7 @@ Namespace LinearAlgebra
         Public ReadOnly Property SumMagnitude As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return std.Sqrt(Me.Mod)
+                Return std.Sqrt(SIMDIntrinsics.SumSquaresFma(buffer))
             End Get
         End Property
 
@@ -389,9 +391,8 @@ Namespace LinearAlgebra
         ''' <param name="destination">The array to receive a copy of the vector values.</param>
         ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
         Public Sub CopyTo(ByRef destination As Double(), startIndex As Integer)
-            For id As Integer = 0 To buffer.Length - 1
-                destination(id + startIndex) = buffer(id)
-            Next
+            ' 同类型连续内存的搬运走运行时的 block copy，比标量循环少一个逐元素下标计算
+            Call System.Array.Copy(buffer, 0, destination, startIndex, buffer.Length)
         End Sub
 
         ''' <summary>
@@ -423,9 +424,7 @@ Namespace LinearAlgebra
         ''' <param name="startIndex">the start index of the data in current vector</param>
         ''' <param name="count">the number of the data elements copy from the source data</param>
         Public Sub CopyFrom(ByRef source As Double(), startIndex As Integer, count As Integer)
-            For i As Integer = 0 To count - 1
-                buffer(i + startIndex) = source(i)
-            Next
+            Call System.Array.Copy(source, 0, buffer, startIndex, count)
         End Sub
 
 #Region "Operators"
@@ -448,11 +447,11 @@ Namespace LinearAlgebra
             End If
 
             If v1.Length = 1 Then
-                output = SIMD.Add.f64_op_add_f64_scalar(v2.buffer, v1(Scan0))
+                output = SimdEngine.AddScalar(Of Double)(v2.buffer, v1(Scan0))
             ElseIf v2.Length = 1 Then
-                output = SIMD.Add.f64_op_add_f64_scalar(v1.buffer, v2(Scan0))
+                output = SimdEngine.AddScalar(Of Double)(v1.buffer, v2(Scan0))
             Else
-                output = SIMD.Add.f64_op_add_f64(v1.buffer, v2.buffer)
+                output = SimdEngine.Add(Of Double)(v1.buffer, v2.buffer)
             End If
 
             Return New Vector(output)
@@ -474,11 +473,11 @@ Namespace LinearAlgebra
             'Next
             'Return v3
 
-            Return New Vector(SIMD.Subtract.f64_op_subtract_f64(v1.buffer, v2.buffer))
+            Return New Vector(SimdEngine.Subtract(Of Double)(v1.buffer, v2.buffer))
         End Operator
 
         Public Overloads Shared Operator *(x As IVector, y As Vector) As Vector
-            Return New Vector(SIMD.Multiply.f64_op_multiply_f64(x.Data, y.Array))
+            Return New Vector(SimdEngine.Multiply(Of Double)(x.Data, y.Array))
         End Operator
 
         Public Overloads Shared Operator *(data As IEnumerable(Of Double), x As Vector) As Vector
@@ -509,21 +508,8 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(v1 As Vector, v2#()) As Vector
-            Dim N0 As Integer = v1.[Dim]
-            Dim v3 As New Vector(N0)
-
-            ' 0 * Inf = NaN
-            ' 零乘上任意数应该都是零的?
-
-            For j As Integer = 0 To N0 - 1
-                If (v1(j) = 0R OrElse v2(j) = 0R) Then
-                    v3(j) = 0
-                Else
-                    v3(j) = v1(j) * v2(j)
-                End If
-            Next
-
-            Return v3
+            ' 0 * Inf = NaN，零乘上任意数应该都是零的：改用带零安全语义的向量化乘法内核
+            Return New Vector(SimdEngine.MultiplyZeroSafe(v1.buffer, v2))
         End Operator
 
         ''' <summary>
@@ -536,7 +522,7 @@ Namespace LinearAlgebra
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator *(v1 As Vector, v2 As Vector) As Vector
-            Return New Vector(SIMD.Multiply.f64_op_multiply_f64(v1.buffer, v2.buffer))
+            Return New Vector(SimdEngine.Multiply(Of Double)(v1.buffer, v2.buffer))
         End Operator
 
         ''' <summary>
@@ -554,7 +540,7 @@ Namespace LinearAlgebra
             '    v3(j) = v1(j) / v2(j)
             'Next
             'Return v3
-            Return New Vector(SIMD.Divide.f64_op_divide_f64(v1.buffer, v2.buffer))
+            Return New Vector(SimdEngine.DivideZeroSafe(v1.buffer, v2.buffer))
         End Operator
 
         ''' <summary>
@@ -573,7 +559,7 @@ Namespace LinearAlgebra
             '    v2(j) = v1(j) + a
             'Next
             'Return v2
-            Return New Vector(SIMD.Add.f64_op_add_f64_scalar(v1.buffer, a))
+            Return New Vector(SimdEngine.AddScalar(Of Double)(v1.buffer, a))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -600,7 +586,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Subtract.f64_op_subtract_f64_scalar(v1.buffer, a))
+            Return New Vector(SimdEngine.SubtractScalar(Of Double)(v1.buffer, a))
         End Operator
 
         ''' <summary>
@@ -621,7 +607,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Multiply.f64_scalar_op_multiply_f64(a, v1.buffer))
+            Return New Vector(SimdEngine.MultiplyScalar(Of Double)(a, v1.buffer))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -647,7 +633,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Divide.f64_op_divide_f64_scalar(v1.buffer, a))
+            Return New Vector(SimdEngine.DivideScalar(v1.buffer, a))
         End Operator
 
         Public Shared Operator /(x As Double, v As Vector) As Vector
@@ -659,7 +645,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Divide.f64_scalar_op_divide_f64(x, v.buffer))
+            Return New Vector(SimdEngine.ScalarDivide(x, v.buffer))
         End Operator
 
         ''' <summary>
@@ -680,7 +666,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Add.f64_op_add_f64_scalar(v1.buffer, a))
+            Return New Vector(SimdEngine.AddScalar(Of Double)(v1.buffer, a))
         End Operator
 
         ''' <summary>
@@ -699,7 +685,7 @@ Namespace LinearAlgebra
             '    v2(j) = a - v1(j)
             'Next
             'Return v2
-            Return New Vector(SIMD.Subtract.f64_scalar_op_subtract_f64(a, v1.buffer))
+            Return New Vector(SimdEngine.ScalarSubtract(Of Double)(a, v1.buffer))
         End Operator
 
         ''' <summary>
@@ -718,7 +704,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Multiply.f64_scalar_op_multiply_f64(a, v1.buffer))
+            Return New Vector(SimdEngine.MultiplyScalar(Of Double)(a, v1.buffer))
         End Operator
 
         ''' <summary>
@@ -744,10 +730,9 @@ Namespace LinearAlgebra
             '    sum = sum + v1(j) * v2(j)
             'Next
             'Return sum
-            Dim dot As Double() = SIMD.Multiply.f64_op_multiply_f64(v1.buffer, v2.buffer)
-            Dim sum As Double = dot.Sum
-
-            Return sum
+            ' 直接调用 SIMD 点积内核：原先会先物化一整个乘积数组再用 LINQ 求和，
+            ' 在长向量上白白多出一整趟内存分配与读写
+            Return SimdParallel.Dot(v1.buffer, v2.buffer)
         End Operator
 
         ''' <summary>
@@ -769,11 +754,8 @@ Namespace LinearAlgebra
 
             Dim vvmat As New NumericMatrix(N0, N0)
 
-            For i As Integer = 0 To N0 - 1
-                For j As Integer = 0 To N0 - 1
-                    vvmat(i, j) = v1(i) * v2(j)
-                Next
-            Next
+            ' 外积等价于在零矩阵上做一次秩一更新，逐行走 FMA/AXPY 内核
+            Call SimdMatrix.Rank1Update(vvmat.Array, v1.buffer, v2.buffer, 1.0)
 
             '返回外积矩阵
             Return vvmat
@@ -794,7 +776,7 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Subtract.f64_scalar_op_subtract_f64(0, v1.buffer))
+            Return New Vector(SimdMath.Negate(Of Double)(v1.buffer))
         End Operator
 
         ''' <summary>
@@ -822,7 +804,7 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(x As Vector, n As Double) As BooleanVector
             ' 不可以缺少这一对括号，否则会被当作为匿名类型的属性d，而非值比较
-            Return New BooleanVector(From d As Double In x Select (d = n))
+            Return New BooleanVector(SimdCompare.Equal(x.buffer, n))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -838,7 +820,8 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(v As Vector, n As Double) As Vector
-            Return New Vector(From d As Double In v Select d ^ n)
+            ' 指数为 2/3/4/0.5 时会走向量化的快速路径，其余指数自动退回标量 ^
+            Return New Vector(SimdMath.PowScalar(v.buffer, n))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -862,17 +845,17 @@ Namespace LinearAlgebra
             'Next
 
             'Return v2
-            Return New Vector(SIMD.Exponent.f64_op_exponent_f64(x.buffer, p.buffer))
+            Return New Vector(SimdMath.Pow(x.buffer, p.buffer))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator >(x As Vector, n As Double) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d > n)
+            Return New BooleanVector(SimdCompare.GreaterThan(x.buffer, n))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <(x As Vector, n As Double) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d < n)
+            Return New BooleanVector(SimdCompare.LessThan(x.buffer, n))
         End Operator
 
         ''' <summary>
@@ -883,7 +866,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >=(x As Vector, n As Double) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d >= n)
+            Return New BooleanVector(SimdCompare.GreaterThanOrEqual(x.buffer, n))
         End Operator
 
         ''' <summary>
@@ -894,22 +877,23 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d <= n)
+            Return New BooleanVector(SimdCompare.LessThanOrEqual(x.buffer, n))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >=(x As Vector, y As Vector) As BooleanVector
-            Return New BooleanVector(From a In x.SeqIterator Select a.value >= y.buffer(a))
+            Return New BooleanVector(SimdCompare.GreaterThanOrEqual(x.buffer, y.buffer))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x As Vector, y As Vector) As BooleanVector
-            Return New BooleanVector(From a In x.SeqIterator Select a.value <= y.buffer(a))
+            Return New BooleanVector(SimdCompare.LessThanOrEqual(x.buffer, y.buffer))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x#, y As Vector) As BooleanVector
-            Return New BooleanVector(From a In y Select x <= a)
+            ' 语义是 x <= y(i)，等价于内核里的 y(i) >= x
+            Return New BooleanVector(SimdCompare.GreaterThanOrEqual(y.buffer, x))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -1054,10 +1038,8 @@ Namespace LinearAlgebra
             'Next
 
             'Return sum
-            Dim prod As Double() = SIMD.Multiply.f64_op_multiply_f64(lhs, rhs)
-            Dim sum As Double = prod.Sum
-
-            Return sum
+            ' 直接走并行 SIMD 点积内核，省掉原先物化整个乘积数组的开销
+            Return SimdParallel.Dot(lhs, rhs)
         End Function
 
         ''' <summary>
@@ -1067,10 +1049,8 @@ Namespace LinearAlgebra
         ''' <param name="rhs"></param>
         ''' <returns></returns>
         Public Shared Function dot(ByRef lhs As Single(), ByRef rhs As Single()) As Double
-            Dim prod As Single() = SIMD.Multiply.f32_op_multiply_f32(lhs, rhs)
-            Dim sum As Double = prod.Sum
-
-            Return sum
+            ' FMA 融合乘加，并以 Double 累加，降低长向量的累积误差
+            Return SIMDIntrinsics.DotFma(lhs, rhs)
         End Function
 
         ''' <summary>

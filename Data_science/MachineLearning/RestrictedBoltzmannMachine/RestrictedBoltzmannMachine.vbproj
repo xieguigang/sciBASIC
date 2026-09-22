@@ -11,8 +11,8 @@
     <RootNamespace>Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>1.0.9753.4776</Version>
-    <AssemblyVersion>1.0.9753.4776</AssemblyVersion>
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>Restricted Boltzmann Machines with Contrastive Divergence Training</Title>
     <Description>Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.</Description>
@@ -20,7 +20,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;rbm;contrastive-divergence;deep-learning;unsupervised</PackageTags>
+    <PackageTags>scibasic;rbm;restricted-boltzmann-machine;contrastive-divergence;deep-belief-network;double-double-precision;unsupervised</PackageTags>
+    <PackageReleaseNotes>Restricted Boltzmann machines for sciBASIC#. The nn.rbm namespace provides single Bernoulli and Gaussian RBM models; nn.rbm.deep stacks them into deep belief style networks; nn.rbm.learn implements contrastive divergence with its Gibbs sampling steps as well as back error propagation based training, nn.rbm.factory builds networks from configuration and nn.rbm.save serialises trained weights. The math namespace supplies the activation and transfer functions, the distance functions, and a double-double precision arithmetic layer used to keep the partition function estimates stable - the reason that layer exists is that the log likelihood of an RBM involves a log-sum-exp over an exponentially large space. The nlp namespace with its encode and ngram children turns text into bag of words style input, and the utils namespace holds the remaining helpers.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

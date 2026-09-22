@@ -77,6 +77,14 @@ Namespace SVM
             Call stream.Flush()
         End Sub
 
+        ''' <summary>
+        ''' Renders the gaussian transform into the LibSVM text format.
+        ''' </summary>
+        ''' <param name="transform">The transform that will be rendered.</param>
+        ''' <returns>
+        ''' A string which contains the dimension count followed by the mean value
+        ''' and the standard deviation value of each dimension.
+        ''' </returns>
         Public Function ToString(transform As GaussianTransform) As String
             Dim sb As New StringBuilder
 

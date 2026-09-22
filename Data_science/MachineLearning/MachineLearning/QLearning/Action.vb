@@ -67,18 +67,24 @@ Namespace QLearning
         ''' <summary>
         ''' The environment variables state as inputs for the machine.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>A string expression which uniquely describes the environment state.</returns>
         Public Property EnvirState As String Implements INamedValue.Key
         ''' <summary>
         ''' Actions for the current state.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The accumulated Q-value of each possible action which is taken on 
+        ''' the current environment state.
+        ''' </returns>
         Public Property Qvalues As Single()
 
         ''' <summary>
         ''' Environment -> actions' Q-values
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A string in format like ``[ state ] \t--> [ q1 \t q2 \t ... ]``, in 
+        ''' which the Q-values are displayed with a precision of 4 decimal places.
+        ''' </returns>
         Public Overrides Function ToString() As String
             Return $"[ {EnvirState} ] {vbTab}--> [{Qvalues.Select(Function(di) di.ToString("F4")).JoinBy(vbTab)}]"
         End Function

@@ -60,6 +60,11 @@ Namespace Evaluation
     ''' <summary>
     ''' Class encoding a member of a ranked set of labels.
     ''' </summary>
+    ''' <remarks>
+    ''' 保留仅用于兼容旧的 <see cref="PerformanceEvaluator"/>；新代码请直接使用
+    ''' <see cref="ClassificationResult"/>（分数 + 标签）。
+    ''' </remarks>
+    <Obsolete("请改用 ClassificationResult（分数 + 标签）配合 ModelEvaluation.Evaluate 进行统一评估。", False)>
     Public Class RankPair : Implements IComparable(Of RankPair)
 
         ''' <summary>

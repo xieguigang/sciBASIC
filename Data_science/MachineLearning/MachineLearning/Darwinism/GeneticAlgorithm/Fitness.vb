@@ -88,7 +88,10 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 这个计算模块是否会缓存计算结果?
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' ``True`` when the fitness calculation result can be cached, otherwise 
+        ''' ``False``.
+        ''' </returns>
         ''' <remarks>
         ''' the result is cached by the unique id of the target chr
         ''' </remarks>
@@ -118,6 +121,7 @@ Namespace Darwinism.GAF
         ''' 1. 如果外部调用这个计算函数是并行的,那么这个parallel参数应该设置为false
         ''' 2. 如果是单线程的外部代码调用这个计算函数,那么这个parallel参数可以是true,即在函数的内部实现并行化
         ''' </param>
+        ''' <returns>The fitness value of the given <paramref name="chromosome"/>.</returns>
         ''' <remarks>
         ''' smaller value is better
         ''' </remarks>

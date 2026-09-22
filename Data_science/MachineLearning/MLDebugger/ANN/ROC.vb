@@ -62,12 +62,13 @@ Public Module ROC
     <Extension>
     Public Function ROC(result As IEnumerable(Of Validate), range As DoubleRange, attribute%, Optional n% = 20) As Validation()
         Dim thresholdSeq As New Sequence With {.n = n, .range = range}
+        Dim data As Validate() = result.ToArray
 
-        Return Validation.ROC(Of Validate)(
-            entity:=result,
-            getValidate:=Function(x, threshold) x.actuals(attribute) >= threshold,
-            getPredict:=Function(x, threshold) x.predicts(attribute) >= threshold,
-            threshold:=thresholdSeq
+        Return RocBuilder.SweepThresholds(
+            entity:=data,
+            getValidate:=Function(x, cutoff) x.actuals(attribute) >= cutoff,
+            getPredict:=Function(x, cutoff) x.predicts(attribute) >= cutoff,
+            cutoffs:=thresholdSeq.ToArray()
         ).Where(Function(threshold)
                     Return Not threshold.Specificity.IsNaNImaginary AndAlso
                         Not threshold.Sensibility.IsNaNImaginary

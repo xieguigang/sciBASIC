@@ -91,11 +91,15 @@ Namespace Darwinism.GAF.Helper
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
         ''' </summary>
-        ''' <param name="v#"></param>
-        ''' <param name="random"></param>
+        ''' <param name="v#">The target gene vector which will be mutated in place.</param>
+        ''' <param name="random">The random number generator which is used for the mutation.</param>
         ''' <param name="index">
         ''' + 如果这个坐标参数大于等于零,则会直接按照这个坐标值对指定位置的目标进行突变
         ''' + 反之小于零的时候,则是随机选取一个位置的目标进行突变
+        ''' </param>
+        ''' <param name="rate">
+        ''' The ratio of the mutation delta relative to the data range of the 
+        ''' <paramref name="v#"/> vector, the default value is ``0.1``.
         ''' </param>
         ''' <remarks>
         ''' 在进行突变的时候应该是按照给定的范围来进行突变的
@@ -121,6 +125,22 @@ Namespace Darwinism.GAF.Helper
             End If
         End Sub
 
+        ''' <summary>
+        ''' Returns clone of current chromosome, which is mutated a bit.
+        ''' </summary>
+        ''' <param name="v">The target <see cref="SparseVector"/> gene vector which will be mutated in place.</param>
+        ''' <param name="random">The random number generator which is used for the mutation.</param>
+        ''' <param name="index">
+        ''' + 如果这个坐标参数大于等于零,则会直接按照这个坐标值对指定位置的目标进行突变
+        ''' + 反之小于零的时候,则是随机选取一个位置的目标进行突变
+        ''' </param>
+        ''' <param name="rate">
+        ''' The ratio of the mutation delta relative to the data range of the 
+        ''' <paramref name="v"/> vector, the default value is ``0.1``.
+        ''' </param>
+        ''' <remarks>
+        ''' This function is designed for the very large gene system.
+        ''' </remarks>
         <Extension>
         Public Sub Mutate(ByRef v As SparseVector, random As Random, Optional index% = -1000, Optional rate# = 0.1)
             Dim delta# = (v.Max - v.Min) * rate
@@ -142,6 +162,19 @@ Namespace Darwinism.GAF.Helper
             End If
         End Sub
 
+        ''' <summary>
+        ''' Returns clone of current chromosome, which is mutated a bit.
+        ''' </summary>
+        ''' <param name="v">The target <see cref="HalfVector"/> gene vector which will be mutated in place.</param>
+        ''' <param name="random">The random number generator which is used for the mutation.</param>
+        ''' <param name="index">
+        ''' + 如果这个坐标参数大于等于零,则会直接按照这个坐标值对指定位置的目标进行突变
+        ''' + 反之小于零的时候,则是随机选取一个位置的目标进行突变
+        ''' </param>
+        ''' <param name="rate">
+        ''' The ratio of the mutation delta relative to the data range of the 
+        ''' <paramref name="v"/> vector, the default value is ``0.1``.
+        ''' </param>
         <Extension>
         Public Sub Mutate(ByRef v As HalfVector, random As Random, Optional index% = -1000, Optional rate# = 0.1)
             Dim delta# = (v.Max - v.Min) * rate
@@ -167,8 +200,8 @@ Namespace Darwinism.GAF.Helper
         ''' <summary>
         ''' 这个函数不是数值变化，而是位值的变化，原来的某位数值为1，则突变后为零，原来某位数值为0，则突变之后为1
         ''' </summary>
-        ''' <param name="v%"></param>
-        ''' <param name="random"></param>
+        ''' <param name="v%">The target byte array which will be mutated in place.</param>
+        ''' <param name="random">The random number generator which is used for selecting the mutation position.</param>
         <Extension>
         Public Sub ByteMutate(ByRef v%(), random As Random)
             Dim index = random.Next(v.Length)
@@ -187,9 +220,9 @@ Namespace Darwinism.GAF.Helper
         ''' 
         ''' (两个向量的长度必须要一致, 输入的两个数组参数会被同时修改值)
         ''' </summary>
-        ''' <param name="random"></param>
-        ''' <param name="v1"></param>
-        ''' <param name="v2"></param>
+        ''' <param name="random">The random number generator which is used for selecting the crossover position.</param>
+        ''' <param name="v1">The first parent gene vector, it will be modified in place.</param>
+        ''' <param name="v2">The second parent gene vector, it will be modified in place.</param>
         ''' <remarks>
         ''' the size of <paramref name="v1"/> and <paramref name="v2"/> should be equals to each other!
         ''' </remarks>
@@ -208,6 +241,13 @@ Namespace Darwinism.GAF.Helper
             Next
         End Sub
 
+        ''' <summary>
+        ''' Cross over the two gene vectors with the shared global random 
+        ''' number generator (<see cref="Microsoft.VisualBasic.Math.RandomExtensions.seeds"/>).
+        ''' </summary>
+        ''' <typeparam name="T">The type of the gene value.</typeparam>
+        ''' <param name="v1">The first parent gene vector, it will be modified in place.</param>
+        ''' <param name="v2">The second parent gene vector, it will be modified in place.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Crossover(Of T)(ByRef v1 As T(), ByRef v2 As T())
@@ -221,9 +261,9 @@ Namespace Darwinism.GAF.Helper
         ''' 
         ''' (两个向量的长度必须要一致, 输入的两个数组参数会被同时修改值)
         ''' </summary>
-        ''' <param name="random"></param>
-        ''' <param name="v1#"></param>
-        ''' <param name="v2#"></param>
+        ''' <param name="random">The random number generator which is used for selecting the crossover position.</param>
+        ''' <param name="v1">The first parent <see cref="HalfVector"/>, it will be modified in place.</param>
+        ''' <param name="v2">The second parent <see cref="HalfVector"/>, it will be modified in place.</param>
         <Extension>
         Public Sub Crossover(random As Random, ByRef v1 As HalfVector, ByRef v2 As HalfVector)
             ' 在这里减掉1是为了防止两个变量被全部替换掉
