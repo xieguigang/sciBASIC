@@ -2,18 +2,61 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.DeepLearning</RootNamespace>
-    <TargetFramework>net10.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <AssemblyName>Microsoft.VisualBasic.DeepLearning.LLM</AssemblyName>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+
+    <Version>1.0.9758.20045</Version>
+    <AssemblyVersion>1.0.9758.20045</AssemblyVersion>
+
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;nuget_release</Configurations>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <Title>Decoder-only LLM Engine: DeepSeekMoE, KV Cache and Function Calling</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.LLM</AssemblyTitle>
+    <Description>Pure managed decoder-only language model engine for sciBASIC#: DeepSeek-style mixture-of-experts with isolated shared experts and node-limited routing, prefill/incremental decoding KV cache with GQA/MQA, RoPE, RMSNorm and SwiGLU decoder blocks, AdamW training with masked cross-entropy, and schema-constrained function calling driven by a multi-turn agent loop.</Description>
+    <PackageTags>scibasic;llm;decoder-only;transformer;mixture-of-experts;deepseek-moe;kv-cache;rope;rmsnorm;swiglu;gqa;mqa;function-calling;constrained-decoding;tool-calling;agent-loop;adamw;language-model</PackageTags>
+    <PackageReleaseNotes>The decoder-only language model engine of sciBASIC#. It complements the existing encoder-decoder Transformer namespace and deliberately keeps the same engineering conventions: every component exposes a LastCache/Cache snapshot, backward passes are hand written against the cached forward values, gradients accumulate in place into a same-shaped tensor, and MakeTrainingStep applies the update and clears gradients. The model stack is a token embedding, a stack of decoder blocks each running RMSNorm, causal self attention and either a dense SwiGLU feed forward or a mixture of experts, a final RMSNorm and a weight tied output projection. RoPE supplies rotary position encoding. Mixture of experts follows DeepSeekMoE: fine grained expert segmentation with isolated shared experts, sigmoid Top-K routing with renormalised gate weights, auxiliary-loss-free load balancing through a bias update, and node limited routing. The KV cache supports prefill plus incremental decoding with GQA/MQA through nKvHeads, cutting the per-step attention cost from O(t^2) to O(t); an uncached full-sequence path is kept as a correctness reference. Training is provided by LMTrainer and AdamW with decoupled weight decay, masked cross entropy that excludes tool-result tokens during SFT, global L2 gradient clipping through LLMTensorOps, and parameter persistence through Save/Load. Function calling is covered end to end by JsonSchema, a ConstrainedDecoder that compiles the schema into a finite state machine and masks illegal logits with -inf, ToolCallProtocol, ToolRegistry and an AgentLoop that drives the multi-turn call, execute and refill cycle. TokenizerVocabulary, TokenStream and TextCodec handle tokenisation, and the runtime is the pure managed Microsoft.VisualBasic.MachineLearning.TensorFlow engine, whose CUDA backend can be registered at runtime for acceleration.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data_science\MachineLearning\DeepLearning\DeepLearning.NET6.vbproj" />
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Data_science\MachineLearning\TensorFlow\TensorFlow.vbproj" />
-    <ProjectReference Include="..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Data_science\MachineLearning\DeepLearning\DeepLearning.NET6.vbproj" />
   </ItemGroup>
 
 </Project>
