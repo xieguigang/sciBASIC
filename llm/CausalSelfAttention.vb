@@ -23,6 +23,7 @@
 ' 不关心旋转的具体形式，方便替换为 ALiBi 或正弦编码做对比实验。
 ' ---------------------------------------------------------------------------
 
+Imports Microsoft.VisualBasic.MachineLearning
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 

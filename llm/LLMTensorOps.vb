@@ -13,6 +13,8 @@
 ' 两者互不依赖，避免改动既有算子而影响翻译 demo 的行为。
 ' ---------------------------------------------------------------------------
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
@@ -78,6 +80,8 @@ Namespace LLM
         End Sub
 
         ''' <summary>深拷贝张量（同一个梯度要分发给两个分支时必须各自持有独立副本）。</summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CloneTensor(t As Tensor) As Tensor
             Return CType(t.Clone(), Tensor)
         End Function
@@ -100,6 +104,8 @@ Namespace LLM
         ''' 直接复用 <c>Transformer.TensorOps.HeNormalInit</c>，从而与既有 Transformer 共享
         ''' 同一个随机序列；配合 <c>Transformer.TensorOps.Seed</c> 即可让整次训练可复现。
         ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function HeNormalInit(shape As Integer()) As Tensor
             Return Transformer.TensorOps.HeNormalInit(shape)
         End Function

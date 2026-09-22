@@ -47,6 +47,7 @@
 '     其余专家的选择打分置为 -inf，再在剩余范围内做 Top-K。
 ' ---------------------------------------------------------------------------
 
+Imports Microsoft.VisualBasic.MachineLearning
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 

@@ -17,6 +17,7 @@
 ' 本类同时被"稠密 FFN"与"MoE 的单个专家"复用 —— 两者只是调用方的组织方式不同。
 ' ---------------------------------------------------------------------------
 
+Imports Microsoft.VisualBasic.MachineLearning
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
