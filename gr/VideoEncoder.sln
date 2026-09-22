@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.9.12128.139 oobstable
+VisualStudioVersion = 18.9.12128.139
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "avi\test\test.vbproj", "{2861FC46-7770-4BC1-B408-B9C4C6DECF38}"
 EndProject
@@ -674,8 +674,8 @@ Global
 		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Biostack-Debug|x86.Build.0 = Release|Any CPU
 		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|x64.Build.0 = Debug|Any CPU
+		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|x64.ActiveCfg = Debug|x64
+		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|x64.Build.0 = Debug|x64
 		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{6FB172EE-7439-4BB4-B721-46F8F482316C}.Debug|x86.Build.0 = Debug|Any CPU
 		{6FB172EE-7439-4BB4-B721-46F8F482316C}.DEMO|Any CPU.ActiveCfg = Release|Any CPU
