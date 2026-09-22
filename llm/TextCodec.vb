@@ -10,31 +10,28 @@
 '     构建好后注入，算法层不必知道 BPE / WordPiece / byte-level 的差别。
 ' ---------------------------------------------------------------------------
 
-Imports System.Collections.Generic
 
-Namespace LLM
+''' <summary>文本与 token 之间的编解码接口。</summary>
+Public Interface ITextCodec
 
-    ''' <summary>文本与 token 之间的编解码接口。</summary>
-    Public Interface ITextCodec
+    ''' <summary>
+    ''' 把文本编码为 token 序列。
+    ''' </summary>
+    ''' <remarks>
+    ''' 实现方<b>不应</b>自动追加 BOS / EOS：prompt 里的角色标记与工具调用标记都是
+    ''' 显式写出来的，自动追加会破坏协议。
+    ''' </remarks>
+    Function Encode(text As String) As Integer()
 
-        ''' <summary>
-        ''' 把文本编码为 token 序列。
-        ''' </summary>
-        ''' <remarks>
-        ''' 实现方<b>不应</b>自动追加 BOS / EOS：prompt 里的角色标记与工具调用标记都是
-        ''' 显式写出来的，自动追加会破坏协议。
-        ''' </remarks>
-        Function Encode(text As String) As Integer()
+    ''' <summary>把 token 序列解码为文本。</summary>
+    Function Decode(ids As IEnumerable(Of Integer)) As String
 
-        ''' <summary>把 token 序列解码为文本。</summary>
-        Function Decode(ids As IEnumerable(Of Integer)) As String
+    ''' <summary>查询标记对应的 token id；词表中不存在时返回 -1。</summary>
+    Function TokenIdOf(marker As String) As Integer
 
-        ''' <summary>查询标记对应的 token id；词表中不存在时返回 -1。</summary>
-        Function TokenIdOf(marker As String) As Integer
+    ''' <summary>词表的文本视图（约束解码使用）。</summary>
+    ReadOnly Property Vocabulary As TokenizerVocabulary
 
-        ''' <summary>词表的文本视图（约束解码使用）。</summary>
-        ReadOnly Property Vocabulary As TokenizerVocabulary
+End Interface
 
-    End Interface
 
-End Namespace
