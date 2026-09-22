@@ -30,6 +30,10 @@
 ' ---------------------------------------------------------------------------
 
 Imports System.Text
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Agent.ToolCalls
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Generator
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Sampler
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Text
 
 ''' <summary>
 ''' 按 JSON Schema 约束 logits 的解码器：保证生成的参数对象在语法上<b>必然</b>合法。
@@ -719,7 +723,7 @@ Public Class ConstrainedDecoder
     ''' <param name="sampler">采样器</param>
     ''' <param name="maxTokens">最多生成的 token 数</param>
     ''' <returns>本次新生成的 token 序列（已追加到 <paramref name="stream"/> 的上下文）</returns>
-    Public Function Generate(stream As TokenStream, sampler As Sampler, maxTokens As Integer) As List(Of Integer)
+    Public Function Generate(stream As TokenStream, sampler As LLMSampler, maxTokens As Integer) As List(Of Integer)
         If stream Is Nothing Then Throw New ArgumentNullException(NameOf(stream))
         If sampler Is Nothing Then Throw New ArgumentNullException(NameOf(sampler))
 

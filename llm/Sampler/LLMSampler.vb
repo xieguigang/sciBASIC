@@ -25,7 +25,7 @@ Namespace Sampler
     ''' <summary>
     ''' 采样器：把 <c>logits</c> 变成概率分布，再按配置选出一个 token。
     ''' </summary>
-    Public Class Sampler
+    Public Class LLMSampler
 
         Private ReadOnly _random As Random
 

@@ -25,7 +25,10 @@
 ' ---------------------------------------------------------------------------
 
 Imports System.Text
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Agent.ToolCalls
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Text
 Imports Diagnostics = System.Diagnostics
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Sampler
 
 Namespace Agent
 
@@ -120,7 +123,7 @@ Namespace Agent
             }
 
             Dim stream = TokenStream.Create(_model, promptIds, opt.UseCache)
-            Dim sampler As New Sampler(opt.Sampling)
+            Dim sampler As New LLMSampler(opt.Sampling)
 
             If opt.Verbose Then
                 Call Console.WriteLine($"[agent] prompt tokens = {promptIds.Length}, path = {If(opt.UseCache, "KV Cache", "recompute")}")
@@ -279,7 +282,7 @@ Namespace Agent
         ''' 更聪明的增量解码，是因为保留标记（如 <c>&lt;｜tool▁calls▁begin｜&gt;</c>）在
         ''' 分词上可能被切成多个 token，逐 token 解码无法保证标记的完整性。
         ''' </remarks>
-        Private Function GenerateFree(stream As TokenStream, sampler As Sampler,
+        Private Function GenerateFree(stream As TokenStream, sampler As LLMSampler,
                                       opt As AgentLoopOptions, record As AgentRound) As List(Of Integer)
 
             Dim produced As New List(Of Integer)()

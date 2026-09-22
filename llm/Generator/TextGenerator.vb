@@ -20,6 +20,7 @@
 ' 输出不同，那一定是 KV Cache 的实现有 bug。
 ' ---------------------------------------------------------------------------
 
+Imports Microsoft.VisualBasic.DeepLearning.LLM.Sampler
 Imports Diagnostics = System.Diagnostics
 
 Namespace Generator
@@ -37,18 +38,18 @@ Namespace Generator
         End Property
 
         ''' <summary>采样器。</summary>
-        Public Property Sampler As Sampler
+        Public Property Sampler As LLMSampler
 
         ''' <summary>
         ''' Creates a text generator.
         ''' </summary>
         ''' <param name="model">The language model used for generation.</param>
         ''' <param name="sampler">Optional sampler; a default sampler is created when omitted.</param>
-        Public Sub New(model As LLMModel, Optional sampler As Sampler = Nothing)
+        Public Sub New(model As LLMModel, Optional sampler As LLMSampler = Nothing)
             If model Is Nothing Then Throw New ArgumentNullException(NameOf(model))
 
             _model = model
-            Me.Sampler = If(sampler, New Sampler())
+            Me.Sampler = If(sampler, New LLMSampler())
         End Sub
 
         ''' <summary>自回归生成。</summary>

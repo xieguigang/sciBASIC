@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.DeepLearning.LLM.LLM
+﻿Imports Microsoft.VisualBasic.DeepLearning.LLM.Sampler
 
 Namespace Agent
 

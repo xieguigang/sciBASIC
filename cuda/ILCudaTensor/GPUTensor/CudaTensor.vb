@@ -1230,18 +1230,12 @@ Namespace GPUTensor
         ''' 之所以不用 <c>Boolean()</c>：内核按 <c>int</c> 读取，显式用 <c>Integer()</c>
         ''' 可以避免 .NET 布尔数组的跨语言尺寸歧义。
         ''' </param>
-        ''' <param name="inv"><c>1 / count</c>，其中 count 是真正计入损失的行数（由调用方统计）</param>
         ''' <param name="dLogits">输出：形状同 <paramref name="logits"/> 的梯度</param>
-        ''' <param name="rowLoss">输出：逐行损失（未计入的行记 0），调用方求和即得总损失</param>
         ''' <returns>内核不可用时返回 <c>False</c>，由调用方回退主机实现</returns>
         ''' <remarks>
         ''' 这是训练步里最重的一处主机循环：12.8 万词表下 <c>[rows, vocab]</c> 是
         ''' 3300 万次 <c>exp</c>，搬到 GPU 后由"每行一个 block + 共享内存树形归约"完成。
-        ''' </remarks>
-        ''' <summary>
-        ''' 带损失掩码的 softmax 交叉熵（GPU 融合内核）。
-        ''' </summary>
-        ''' <remarks>
+        ''' 
         ''' 只在计数完成后调用 <see cref="MaskedCrossEntropyFp32Core"/>。
         ''' 内核不可用时回退 <see cref="tfCompute.TensorComputeBase.MaskedCrossEntropy"/>，
         ''' 保证"任何后端切换都不会让某个算子失效"。
