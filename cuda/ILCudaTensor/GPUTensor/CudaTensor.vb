@@ -1848,6 +1848,32 @@ Namespace GPUTensor
         End Function
 
         ''' <summary>
+        ''' 指定名称的内核当前是否可用。
+        ''' </summary>
+        ''' <remarks>
+        ''' 内核不可用（NVRTC 编译失败 / 驱动不匹配）时相关算子会静默回退 CPU，
+        ''' 调用方在"汇报是否真的用上了 GPU"之前应当先问一下这里，
+        ''' 否则很容易把"算得慢"误报成"GPU 有效果"。
+        ''' </remarks>
+        Public Function IsKernelAvailable(kernelName As String) As Boolean
+            Return TryKernel(kernelName) IsNot Nothing
+        End Function
+
+        ''' <summary>融合 LIF 单步内核（双精度档）是否可用。</summary>
+        Public ReadOnly Property IsFusedLifAvailable As Boolean
+            Get
+                Return TryKernel(TensorKernelNames.LifUpdateDouble) IsNot Nothing
+            End Get
+        End Property
+
+        ''' <summary>稀疏 SpMM 内核是否可用。</summary>
+        Public ReadOnly Property IsSparseSpmmAvailable As Boolean
+            Get
+                Return TryKernel(TensorKernelNames.SpmmCsr) IsNot Nothing
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 关键内核的可用性快照，用于诊断"训练步到底有没有走上 GPU"。
         ''' </summary>
         ''' <remarks>
