@@ -45,6 +45,14 @@
 
     '     Module TensorKernelNames
     ' 
+    '         Fields: Conv2DBackwardBias, Conv2DBackwardFilter, Conv2DBackwardInput, Conv2DForward
+    '                 FinalMax, FinalMin, FinalSum, GemmDouble
+    '                 LifUpdateDouble, LifUpdateFp32, MaxPool2DBackward, MaxPool2DForward
+    '                 PartialMax, PartialMin, PartialSum, RowArgMax
+    '                 RowArgMin, RowLogSoftmax, RowMax, RowMean
+    '                 RowMin, RowSoftmax, RowSum, SpmmCsr
+    '                 TrainAccumulate, TrainAdamW, TrainMaskedCrossEntropy, TrainTranspose
+    ' 
     ' 
     ' 
     ' 
@@ -107,6 +115,12 @@ Namespace GPUTensor
         Public Const TrainAccumulate As String = "tensorAccumulateFp32Kernel"
         ''' <summary>融合掩码交叉熵：softmax + NLL + <c>d(logits) = (softmax − onehot) / count</c></summary>
         Public Const TrainMaskedCrossEntropy As String = "tensorMaskedCrossEntropyFp32Kernel"
+
+        ' ---- 脉冲网络融合内核（Kernels\lif.cu）----
+        ''' <summary>融合的递归 LIF 单步（双精度状态，就地更新 H / S / counts）</summary>
+        Public Const LifUpdateDouble As String = "tensorLifUpdateDoubleKernel"
+        ''' <summary>融合的递归 LIF 单步（单精度 H / counts，脉冲仍为双精度）</summary>
+        Public Const LifUpdateFp32 As String = "tensorLifUpdateFp32Kernel"
 
         ' ---- 两段式全局归约 ----
         ''' <summary>全局求和 - 阶段一（部分结果）</summary>

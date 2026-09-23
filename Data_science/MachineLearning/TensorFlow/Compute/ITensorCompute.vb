@@ -51,11 +51,11 @@
     '                   Clip, Concat, Conv2D, Conv2DBackwardBias, Conv2DBackwardFilter
     '                   Conv2DBackwardInput, Cos, Divide, DivideScalar, Elu
     '                   Exp, Gelu, Heaviside, HuberLoss, IsDevicePinned
-    '                   L2Loss, L2Norm, LeakyRelu, Log, LogSoftmax
+    '                   L2Loss, L2Norm, LeakyRelu, LifStep, Log, LogSoftmax
     '                   MaskedCrossEntropy, MatMul, Max, Maximum, MaxPool2D
     '                   MaxPool2DBackward, Mean, MeanAll, Min, Minimum
     '                   MseLoss, Multiply, MultiplyScalar, Negate, PinDevice
-    '                   Pow, Prod, Reciprocal, Relu, Sigmoid
+    '                   PinDevice64, Pow, Prod, Reciprocal, Relu, Sigmoid
     '                   SigmoidCrossEntropyWithLogits, Sin, Slice, Softmax, SpMM
     '                   Sqrt, Square, StdDev, Subtract, Sum
     '                   SumAll, Swish, SyncFromDevice, Tanh, TopK
@@ -169,6 +169,61 @@ Namespace Compute
         ''' 的核心算子：稠密矩阵在此规模下不可行，必须走稀疏路径。
         ''' </remarks>
         Function SpMM(csr As SparseCsr, dense As Tensor) As Tensor
+
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步：一次调用完成整步脉冲动力学，并<b>就地</b>更新状态张量。
+        ''' </summary>
+        ''' <param name="synapses">突触连接矩阵 <c>W[Units, Units]</c>（行 = 突触前，列 = 突触后）</param>
+        ''' <param name="sPrev">上一时间步的输出脉冲 <c>S[t−1]</c>（只读）</param>
+        ''' <param name="externalCurrent">
+        ''' 外部注入电流 <c>I_ext[t]</c>（只读）；<c>Nothing</c> 表示本步无外部刺激。
+        ''' </param>
+        ''' <param name="h">膜电位 <c>H[t−1]</c>，返回时被就地改写为 <c>H[t]</c></param>
+        ''' <param name="s">输出参数：本步脉冲 <c>S[t]</c>（就地写入 0/1）</param>
+        ''' <param name="counts">
+        ''' 输出参数：脉冲计数累加器（就地累加 <c>S[t]</c>）。
+        ''' <b>调用方必须在使用前清零</b>，且整个仿真窗内保持同一个张量即可获得
+        ''' <c>Σ_t S[t]</c>——这消除了主机侧的 O(T·N) 累加循环。
+        ''' </param>
+        ''' <param name="beta">膜电位衰减系数 β ∈ (0,1)</param>
+        ''' <param name="threshold">发放阈值 <c>U_thr</c></param>
+        ''' <param name="subtractThreshold">
+        ''' 复位模式：<c>True</c> 表示 <c>H[t] = U[t] − S[t]·U_thr</c>；
+        ''' <c>False</c> 表示 <c>H[t] = U[t]·(1 − S[t])</c>（发放即清零）。
+        ''' </param>
+        ''' <returns>
+        ''' <c>True</c> 表示整步已由本后端完成（调用方不得再走逐算子路径）；
+        ''' <c>False</c> 表示本后端不提供该能力，由调用方回退。
+        ''' </returns>
+        ''' <remarks>
+        ''' 语义与逐算子写法完全等价：
+        ''' <code>
+        '''   I[t] = W · S[t−1] + I_ext[t]
+        '''   U[t] = β·H[t−1] + I[t]
+        '''   S[t] = Θ(U[t] − U_thr)
+        '''   H[t] = 复位(U[t], S[t])
+        '''   counts += S[t]
+        ''' </code>
+        ''' 之所以把它做成<b>一个</b>算子而不是让调用方串起 SpMM / Add / MultiplyScalar / Heaviside，
+        ''' 是因为逐算子写法在十万级神经元规模下会为每步分配 6 个 <c>[batch, Units]</c> 中间张量，
+        ''' 并在 GPU 后端下产生 6~12 次显存往返（每次约 1.1 MB），
+        ''' 往返开销会把内核的计算收益整个吃掉 —— 这是脉冲网络与稠密训练最本质的差异：
+        ''' 它的状态张量只有 <c>[1, N]</c>，而依赖的是每步都要回灌的稀疏连接。
+        ''' <para>
+        ''' 就地更新意味着<b>设备为主副本</b>：后端若把状态留在显存里，主机数组会陈旧，
+        ''' 调用方读主机内容之前必须调用 <see cref="SyncFromDevice"/>（或
+        ''' <see cref="IsDevicePinned"/> 为 <c>False</c> 时按普通张量读取）。
+        ''' </para>
+        ''' </remarks>
+        Function LifStep(synapses As SparseCsr,
+                         sPrev As Tensor,
+                         externalCurrent As Tensor,
+                         h As Tensor,
+                         s As Tensor,
+                         counts As Tensor,
+                         beta As Double,
+                         threshold As Double,
+                         subtractThreshold As Boolean) As Boolean
 
 #End Region
 
@@ -304,7 +359,28 @@ Namespace Compute
         ''' <returns>钉住成功返回 <c>True</c>；后端不支持时返回 <c>False</c></returns>
         Function PinDevice(t As Tensor, label As String, zeroFill As Boolean) As Boolean
 
-        ''' <summary>解除钉住并立即释放对应的显存。</summary>
+        ''' <summary>
+        ''' 把张量钉成<b>双精度</b>设备常驻缓冲。
+        ''' </summary>
+        ''' <remarks>
+        ''' <see cref="PinDevice"/> 钉出的是单精度缓冲（消费级显卡的 FP64 吞吐只有 FP32 的
+        ''' 1/64，训练场景下矩阵乘占 95% 以上的浮点运算，因此设备侧统一降精度）。
+        ''' 但脉冲网络的膜电位是<b>逐时间步累积</b>的递归状态：单精度舍入会改变阈值判定，
+        ''' 让个别神经元在仿真窗内多发或少发一次脉冲，从而破坏「CPU / GPU 对拍」这类
+        ''' 需要逐比特一致性的验收场景。需要这种保真度的调用方应当改用本方法，
+        ''' 让状态张量以双精度留在显存里，同时仍然享受「零往返」。
+        ''' <para>
+        ''' 默认实现返回 <c>False</c>（CPU 后端不需要这个概念）；
+        ''' 后端不支持时调用方应退回 <see cref="PinDevice"/> 或普通逐算子路径。
+        ''' </para>
+        ''' </remarks>
+        ''' <param name="t">要被钉住的张量（其底层数组作为键）</param>
+        ''' <param name="label">诊断用标签，例如 <c>lif.H</c></param>
+        ''' <param name="zeroFill">是否用 0 初始化（累加器用 <c>True</c>）</param>
+        ''' <returns>钉住成功返回 <c>True</c>；后端不支持时返回 <c>False</c></returns>
+        Function PinDevice64(t As Tensor, label As String, zeroFill As Boolean) As Boolean
+
+        ''' <summary>解除钉住并立即释放对应的显存（双精度 / 单精度通道一并解除）。</summary>
         Function UnpinDevice(t As Tensor) As Boolean
 
         ''' <summary>该张量当前是否已被钉住。</summary>

@@ -506,6 +506,132 @@ Module Program
         Next
         Check("softmax 行和 = 1", rowErr < 1.0E-14, $"maxerr={rowErr:E3}")
 
+        ' ---- 融合 LIF 单步（Kernels\lif.cu）：设备常驻状态 + 就地更新 ----
+        ' 这是脉冲网络的核心算子：把「稀疏输入 → 泄漏积分 → 阈值触发 → 复位 → 计数累加」
+        ' 压成一次调用，状态张量钉在显存里跨时间步复用（每步零主机往返）。
+        ' 判据：与 CPU 标量实现<b>逐位一致</b>——脉冲计数是整数，任何舍入差异都会放大成计数偏差。
+        Const lifN As Integer = 4096
+        Const lifSteps As Integer = 8
+        Const lifBeta As Double = 0.9
+        Const lifThreshold As Double = 1.0
+
+        Dim lifCsr = BuildRandomCsr(New Random(505), lifN, lifN, 32)
+        Dim lifExt(lifSteps - 1) As tf.Tensor
+
+        For t As Integer = 0 To lifSteps - 1
+            lifExt(t) = tf.Tensor.Random({1, lifN}, -0.2, 0.6, seed:=600 + t)
+        Next
+
+        ' ---- CPU 参考（标量实现，与逐算子路径逐比特等价）----
+        Dim cpuH = New tf.Tensor(1, lifN)
+        Dim cpuS = New tf.Tensor(1, lifN)
+        Dim cpuCounts = New tf.Tensor(1, lifN)
+        Dim cpuPrev = New tf.Tensor(1, lifN)
+        Dim cpuAllFused As Boolean = True
+
+        For t As Integer = 0 To lifSteps - 1
+            cpuAllFused = cpuAllFused AndAlso probe.LifStep(
+                lifCsr, cpuPrev, lifExt(t), cpuH, cpuS, cpuCounts, lifBeta, lifThreshold, False)
+
+            ' 交换双缓冲：本步的输出脉冲成为下一步的递归输入（零拷贝）
+            Dim swapS = cpuPrev
+
+            cpuPrev = cpuS
+            cpuS = swapS
+        Next
+
+        Check("LifStep CPU 标量实现可用", cpuAllFused, $"counts.sum={cpuCounts.Data.Sum():F0}")
+
+        ' ---- GPU 双精度档：h / s / counts 全部钉成双精度常驻 ----
+        Dim cuda = gpu.CudaTensor.Current
+        Dim gpuH = New tf.Tensor(1, lifN)
+        Dim gpuS = New tf.Tensor(1, lifN)
+        Dim gpuCounts = New tf.Tensor(1, lifN)
+        Dim gpuPrev = New tf.Tensor(1, lifN)
+
+        Call cuda.PinDevice64(gpuH, "lif.H", zeroFill:=False)
+        Call cuda.PinDevice64(gpuS, "lif.S", zeroFill:=False)
+        Call cuda.PinDevice64(gpuCounts, "lif.counts", zeroFill:=True)
+        Call cuda.PinDevice64(gpuPrev, "lif.S_prev", zeroFill:=False)
+
+        Dim fusedSteps As Integer = 0
+
+        For t As Integer = 0 To lifSteps - 1
+            If tf.Tensor.computeKernel.LifStep(lifCsr, gpuPrev, lifExt(t), gpuH, gpuS, gpuCounts,
+                                               lifBeta, lifThreshold, False) Then
+                fusedSteps += 1
+            End If
+
+            Dim swapS = gpuPrev
+
+            gpuPrev = gpuS
+            gpuS = swapS
+        Next
+
+        ' 设备为主副本：读主机内容之前必须显式同步
+        Call cuda.SyncFromDevice(gpuH)
+        Call cuda.SyncFromDevice(gpuPrev)
+        Call cuda.SyncFromDevice(gpuCounts)
+
+        Dim lifHErr = MaxDiff(cpuH.Data, gpuH.Data)
+        Dim lifSErr = MaxDiff(cpuPrev.Data, gpuPrev.Data)
+        Dim lifCountsErr = MaxDiff(cpuCounts.Data, gpuCounts.Data)
+
+        Check("融合 LIF 确实走了 GPU 内核", fusedSteps = lifSteps, $"fused={fusedSteps}/{lifSteps}")
+        Check("融合 LIF 膜电位 == CPU", lifHErr = 0.0, $"maxdiff={lifHErr:E3}")
+        Check("融合 LIF 脉冲 == CPU", lifSErr = 0.0, $"maxdiff={lifSErr:E3}")
+        Check("融合 LIF 脉冲计数 == CPU", lifCountsErr = 0.0, $"maxdiff={lifCountsErr:E3}")
+
+        ' ---- 单精度档（最快档）：h / counts 钉单精度，脉冲仍双精度 ----
+        Dim f32H = New tf.Tensor(1, lifN)
+        Dim f32S = New tf.Tensor(1, lifN)
+        Dim f32Counts = New tf.Tensor(1, lifN)
+        Dim f32Prev = New tf.Tensor(1, lifN)
+
+        Call cuda.PinDevice64(f32S, "lif.f32.S", zeroFill:=False)
+        Call cuda.PinDevice64(f32Prev, "lif.f32.S_prev", zeroFill:=False)
+        Call cuda.PinDevice(f32H, "lif.f32.H", zeroFill:=False)
+        Call cuda.PinDevice(f32Counts, "lif.f32.counts", zeroFill:=True)
+
+        Dim f32FusedSteps As Integer = 0
+
+        For t As Integer = 0 To lifSteps - 1
+            If tf.Tensor.computeKernel.LifStep(lifCsr, f32Prev, lifExt(t), f32H, f32S, f32Counts,
+                                               lifBeta, lifThreshold, False) Then
+                f32FusedSteps += 1
+            End If
+
+            Dim swapS = f32Prev
+
+            f32Prev = f32S
+            f32S = swapS
+        Next
+
+        Call cuda.SyncFromDevice(f32H)
+        Call cuda.SyncFromDevice(f32Prev)
+        Call cuda.SyncFromDevice(f32Counts)
+
+        Dim f32HErr = MaxDiff(cpuH.Data, f32H.Data)
+        Dim f32CountsErr = MaxDiff(cpuCounts.Data, f32Counts.Data)
+        Dim f32DiffNeurons As Integer = 0
+
+        For i As Integer = 0 To f32Counts.Length - 1
+            If f32Counts.Data(i) <> cpuCounts.Data(i) Then f32DiffNeurons += 1
+        Next
+
+        Check("融合 LIF 单精度档确实走了 GPU 内核", f32FusedSteps = lifSteps, $"fused={f32FusedSteps}/{lifSteps}")
+        ' 单精度档是"最快档"：这里如实报告偏差，不作硬断言（精度受控档是上面的双精度通道）
+        Console.WriteLine($"    单精度档参考：膜电位 maxdiff={f32HErr:E3}  计数 maxdiff={f32CountsErr:F0}  " &
+                          $"计数不同神经元={f32DiffNeurons}/{lifN}")
+
+        ' 释放常驻缓冲（不释放会一直占着显存，直到后端 Dispose）
+        For Each t In {gpuH, gpuS, gpuCounts, gpuPrev, f32H, f32S, f32Counts, f32Prev}
+            Call cuda.UnpinDevice(t)
+        Next
+
+        Check("常驻缓冲已全部释放", cuda.IsDevicePinned(gpuH) = False AndAlso cuda.PinnedDeviceBytes = 0,
+              $"pinned={cuda.PinnedDeviceBytes} bytes")
+
         ' ---------------- 4) 性能参考 ----------------
         Console.WriteLine()
         Console.WriteLine(">> 4) 性能参考")
@@ -538,6 +664,85 @@ Module Program
 
         If gpuSparseMs > 0 Then
             Console.WriteLine($"    稀疏 SpMM 加速比: {cpuSparseMs / gpuSparseMs:F2} x")
+        End If
+
+        ' ---- 融合 LIF 单步性能参考（脉冲网络的真实负载形态）----
+        ' 每步：稀疏输入 + 泄漏积分 + 阈值触发 + 复位 + 计数累加；状态跨步复用。
+        Const perfLifSteps As Integer = 30
+        Dim perfCsr = BuildRandomCsr(New Random(606), 20000, 20000, 64)
+        Dim perfExt(perfLifSteps - 1) As tf.Tensor
+
+        For t As Integer = 0 To perfLifSteps - 1
+            perfExt(t) = tf.Tensor.Random({1, 20000}, -0.2, 0.6, seed:=700 + t)
+        Next
+
+        ' CPU：标量融合实现
+        Dim perfCpuH = New tf.Tensor(1, 20000)
+        Dim perfCpuS = New tf.Tensor(1, 20000)
+        Dim perfCpuCounts = New tf.Tensor(1, 20000)
+        Dim perfCpuPrev = New tf.Tensor(1, 20000)
+
+        Dim swLif As Stopwatch = Stopwatch.StartNew()
+
+        For t As Integer = 0 To perfLifSteps - 1
+            Call probe.LifStep(perfCsr, perfCpuPrev, perfExt(t), perfCpuH, perfCpuS, perfCpuCounts,
+                               0.9, 1.0, False)
+
+            Dim swapS = perfCpuPrev
+
+            perfCpuPrev = perfCpuS
+            perfCpuS = swapS
+        Next
+
+        swLif.Stop()
+        Dim cpuLifMs = swLif.Elapsed.TotalMilliseconds
+
+        ' GPU：设备常驻 + 融合内核（每步零往返，只有外部电流需要上传）
+        Dim perfGpuH = New tf.Tensor(1, 20000)
+        Dim perfGpuS = New tf.Tensor(1, 20000)
+        Dim perfGpuCounts = New tf.Tensor(1, 20000)
+        Dim perfGpuPrev = New tf.Tensor(1, 20000)
+
+        Call cuda.PinDevice64(perfGpuH, "perf.H", zeroFill:=False)
+        Call cuda.PinDevice64(perfGpuS, "perf.S", zeroFill:=False)
+        Call cuda.PinDevice64(perfGpuCounts, "perf.counts", zeroFill:=True)
+        Call cuda.PinDevice64(perfGpuPrev, "perf.S_prev", zeroFill:=False)
+
+        ' 预热：让 CSR 与状态先上传一次（正式计时只反映稳态）
+        Call tf.Tensor.computeKernel.LifStep(perfCsr, perfGpuPrev, perfExt(0), perfGpuH, perfGpuS,
+                                            perfGpuCounts, 0.9, 1.0, False)
+
+        swLif.Restart()
+
+        For t As Integer = 0 To perfLifSteps - 1
+            Call tf.Tensor.computeKernel.LifStep(perfCsr, perfGpuPrev, perfExt(t), perfGpuH, perfGpuS,
+                                                 perfGpuCounts, 0.9, 1.0, False)
+
+            Dim swapS = perfGpuPrev
+
+            perfGpuPrev = perfGpuS
+            perfGpuS = swapS
+        Next
+
+        swLif.Stop()
+        Dim gpuLifMs = swLif.Elapsed.TotalMilliseconds
+
+        Call cuda.SyncFromDevice(perfGpuPrev)
+        Call cuda.SyncFromDevice(perfGpuCounts)
+
+        Dim perfLifErr = MaxDiff(perfCpuPrev.Data, perfGpuPrev.Data)
+        Dim perfLifCountsErr = MaxDiff(perfCpuCounts.Data, perfGpuCounts.Data)
+
+        For Each t In {perfGpuH, perfGpuS, perfGpuCounts, perfGpuPrev}
+            Call cuda.UnpinDevice(t)
+        Next
+
+        Console.WriteLine($"    融合 LIF {perfLifSteps} 步  N=20,000 nnz={perfCsr.NonZeros:N0}   " &
+                          $"CPU {cpuLifMs,8:F3} ms   CUDA {gpuLifMs,8:F3} ms   " &
+                          $"maxdiff={perfLifErr:E3}/{perfLifCountsErr:E3}")
+
+        If gpuLifMs > 0 Then
+            Console.WriteLine($"    融合 LIF 加速比: {cpuLifMs / gpuLifMs:F2} x")
         End If
 
         ' ---------------- 收尾 ----------------

@@ -342,6 +342,160 @@ Namespace Compute
             Return result
         End Function
 
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步（主机标量实现，就地更新状态张量）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与「SpMM + Add + MultiplyScalar + Heaviside + ElementwiseMultiply」这条逐算子路径
+        ''' <b>逐比特等价</b>（相同的循环次序、相同的运算结合次序、相同的 β/θ 单精度舍入），
+        ''' 但把每步 6 个 <c>[batch, Units]</c> 中间张量的分配与 5 次全量遍历压缩为
+        ''' 1 个累加缓冲 + 1 次融合遍历：
+        ''' <list type="bullet">
+        '''   <item>递归输入按 CSR 行并行累加到 <c>I</c>（跳过零源，与 <see cref="SpMM"/> 同序）；</item>
+        '''   <item>泄漏积分 / 阈值触发 / 复位 / 计数累加在同一个循环内完成，全部就地写回。</item>
+        ''' </list>
+        ''' 这正是十万级神经元规模下主机侧的主要开销来源，GPU 后端覆写本方法后可进一步
+        ''' 把状态留在显存中（见 <see cref="ITensorCompute.PinDevice64"/>）。
+        ''' </remarks>
+        Public Overridable Function LifStep(synapses As SparseCsr,
+                                            sPrev As Tensor,
+                                            externalCurrent As Tensor,
+                                            h As Tensor,
+                                            s As Tensor,
+                                            counts As Tensor,
+                                            beta As Double,
+                                            threshold As Double,
+                                            subtractThreshold As Boolean) As Boolean Implements ITensorCompute.LifStep
+
+            If synapses Is Nothing Then Throw New ArgumentNullException(NameOf(synapses))
+            If sPrev Is Nothing Then Throw New ArgumentNullException(NameOf(sPrev))
+            If h Is Nothing Then Throw New ArgumentNullException(NameOf(h))
+            If s Is Nothing Then Throw New ArgumentNullException(NameOf(s))
+            If counts Is Nothing Then Throw New ArgumentNullException(NameOf(counts))
+
+            If sPrev.Rank <> 2 OrElse sPrev.Shape(1) <> synapses.Rows Then
+                Throw New ArgumentException(
+                    $"LifStep 的 sPrev 形状应为 [batch, {synapses.Rows}]，实际 [{String.Join(",", sPrev.Shape)}]")
+            End If
+            If h.Shape(0) <> sPrev.Shape(0) OrElse h.Shape(1) <> synapses.Columns OrElse
+               Not h.Shape.SequenceEqual(s.Shape) OrElse Not h.Shape.SequenceEqual(counts.Shape) Then
+                Throw New ArgumentException(
+                    $"LifStep 的 h/s/counts 形状应同为 [{sPrev.Shape(0)}, {synapses.Columns}]，" &
+                    $"实际 h=[{String.Join(",", h.Shape)}] s=[{String.Join(",", s.Shape)}] counts=[{String.Join(",", counts.Shape)}]")
+            End If
+            If externalCurrent IsNot Nothing AndAlso Not externalCurrent.Shape.SequenceEqual(h.Shape) Then
+                Throw New ArgumentException(
+                    $"LifStep 的 externalCurrent 形状应为 [{String.Join(",", h.Shape)}]，" &
+                    $"实际 [{String.Join(",", externalCurrent.Shape)}]")
+            End If
+
+            Dim batch = sPrev.Shape(0)
+            Dim cols = synapses.Columns
+            Dim ed As Double() = If(externalCurrent Is Nothing, Nothing, externalCurrent.Data)
+
+            ' 递归输入累加缓冲：I[batch, cols]（唯一的一次分配）
+            Dim I = New Double(batch * cols - 1) {}
+
+            Call LifRecurrentInput(synapses, sPrev.Data, batch, I)
+
+            ' 泄漏积分 → 阈值触发 → 复位 → 计数累加（全部就地）
+            Call LifUpdateInPlace(I, ed, h.Data, s.Data, counts.Data,
+                                  CDbl(CSng(beta)), threshold, CDbl(CSng(threshold)),
+                                  subtractThreshold)
+
+            ' 三个状态张量都是就地写入：声明设备端缓存副本失效
+            Call h.MarkHostModified()
+            Call s.MarkHostModified()
+            Call counts.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 融合单步的第一阶段：<c>I[b, c] = Σ_r W[r, c]·S_prev[b, r]</c>。
+        ''' </summary>
+        ''' <param name="synapses">CSR 连接矩阵（行 = 突触前，列 = 突触后）</param>
+        ''' <param name="sPrev">上一时刻脉冲的主机数组 <c>[batch, Rows]</c></param>
+        ''' <param name="batch">批大小</param>
+        ''' <param name="synapticInput">输出缓冲 <c>[batch, columns]</c>，调用前必须为零</param>
+        ''' <remarks>
+        ''' 累加次序与 <see cref="SpMM"/> 完全一致（batch → 行 → 非零元），
+        ''' 因此在 CPU 后端下本方法的输出与 <c>SpMM</c> 逐比特相同；
+        ''' 外部电流由 <see cref="LifUpdateInPlace"/> 在同样的运算次序下叠加。
+        ''' </remarks>
+        Protected Overridable Sub LifRecurrentInput(synapses As SparseCsr,
+                                                    sPrev As Double(),
+                                                    batch As Integer,
+                                                    synapticInput As Double())
+
+            Dim rows = synapses.Rows
+            Dim cols = synapses.Columns
+            Dim rp = synapses.RowPointers
+            Dim ci = synapses.ColumnIndices
+            Dim vv = synapses.Values
+
+            For b As Integer = 0 To batch - 1
+                Dim bo = b * cols
+                Dim ro = b * rows
+
+                For r As Integer = 0 To rows - 1
+                    Dim xv = sPrev(ro + r)
+                    Dim k = rp(r)
+                    Dim kEnd = rp(r + 1)
+
+                    ' 脉冲输入高度稀疏：零源直接跳过（与 SpMM 的快速路径一致）
+                    If xv <> 0.0 Then
+                        While k < kEnd
+                            synapticInput(bo + ci(k)) += xv * vv(k)
+                            k += 1
+                        End While
+                    End If
+                Next
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 融合单步的第二阶段（逐元素，可就地更新）：泄漏积分 → 阈值触发 → 复位 → 计数累加。
+        ''' </summary>
+        ''' <param name="synapticInput">突触输入 <c>[batch, columns]</c>（只读）</param>
+        ''' <param name="externalCurrent">外部电流主机数组，可为 <c>Nothing</c></param>
+        ''' <param name="h">膜电位，就地更新为 <c>H[t]</c></param>
+        ''' <param name="s">输出脉冲，就地写入 0/1</param>
+        ''' <param name="counts">计数累加器，就地累加</param>
+        ''' <param name="beta32">已按单精度舍入的 β（与 <c>Tensor * CSng(β)</c> 一致）</param>
+        ''' <param name="threshold">发放阈值（判定用，全精度）</param>
+        ''' <param name="thr32">已按单精度舍入的阈值（复位减法用）</param>
+        ''' <param name="subtractThreshold">复位模式，见 <see cref="ITensorCompute.LifStep"/></param>
+        ''' <remarks>
+        ''' 逐元素运算彼此独立，因此本方法是<b>可安全向量化</b>的扩展点
+        ''' （<see cref="SIMDTensor"/> 用 <c>System.Numerics.Vector</c> 覆写了它）。
+        ''' </remarks>
+        Protected Overridable Sub LifUpdateInPlace(synapticInput As Double(),
+                                                   externalCurrent As Double(),
+                                                   h As Double(),
+                                                   s As Double(),
+                                                   counts As Double(),
+                                                   beta32 As Double,
+                                                   threshold As Double,
+                                                   thr32 As Double,
+                                                   subtractThreshold As Boolean)
+
+            For i As Integer = 0 To synapticInput.Length - 1
+                Dim pre = synapticInput(i)
+
+                If externalCurrent IsNot Nothing Then
+                    pre += externalCurrent(i)
+                End If
+
+                Dim u = pre + h(i) * beta32
+                Dim sp = If(u - threshold > 0.0, 1.0, 0.0)
+
+                s(i) = sp
+                h(i) = If(subtractThreshold, u - sp * thr32, u * (1.0 - sp))
+                counts(i) += sp
+            Next
+        End Sub
+
         Public Overridable Function Transpose(t As Tensor) As Tensor Implements ITensorCompute.Transpose
             If t.Rank <> 2 Then
                 Throw New ArgumentException("只支持二维张量转置")
@@ -669,6 +823,11 @@ Namespace Compute
 
         ''' <summary>默认后端不支持钉住，直接返回 <c>False</c>。</summary>
         Public Overridable Function PinDevice(t As Tensor, label As String, zeroFill As Boolean) As Boolean Implements ITensorCompute.PinDevice
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有双精度常驻缓冲，返回 <c>False</c>。</summary>
+        Public Overridable Function PinDevice64(t As Tensor, label As String, zeroFill As Boolean) As Boolean Implements ITensorCompute.PinDevice64
             Return False
         End Function
 

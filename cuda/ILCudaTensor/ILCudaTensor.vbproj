@@ -64,6 +64,11 @@
       IL2Cuda 无法表达"多输出数组"与"块内共享内存归约"，因此与 gemm.cu 一样手写。
     -->
     <EmbeddedResource Include="Kernels\train.cu" />
+    <!--
+      融合的递归 LIF 单步内核：把「稀疏输入 + 泄漏积分 + 阈值触发 + 复位 + 计数累加」
+      压成一次调用，配合设备常驻状态实现每步零主机往返。double 与 float 两个变体。
+    -->
+    <EmbeddedResource Include="Kernels\lif.cu" />
   </ItemGroup>
 
   <ItemGroup>

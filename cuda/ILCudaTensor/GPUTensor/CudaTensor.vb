@@ -183,6 +183,52 @@ Namespace GPUTensor
         ''' <summary>设备常驻缓冲注册表（权重 / 梯度 / 优化器状态的长期落脚点）。</summary>
         Private ReadOnly _resident As New DeviceResidentStore()
 
+        ''' <summary>
+        ''' 是否让 <see cref="PinDevice64"/> 生效，即是否允许把张量钉成<b>双精度</b>常驻缓冲。
+        ''' </summary>
+        ''' <remarks>
+        ''' 默认 <c>False</c>：既有调用方（稠密训练）只使用单精度常驻通道，
+        ''' 不因为本特性多占显存。脉冲网络需要"零往返 + 双精度保真"时应显式打开，
+        ''' 见 <see cref="PinDevice64"/> 的说明。
+        ''' </remarks>
+        Public Property UseFp64Residency As Boolean = False
+
+        ''' <summary>双精度设备常驻缓冲注册表（脉冲网络的递归状态）。</summary>
+        Private ReadOnly _resident64 As New DeviceResidentStore64()
+
+        ''' <summary>
+        ''' 融合 LIF 单步的跨时间步工作区（键 = 膜电位张量的主机数组引用）：
+        ''' 复用突触输入缓冲 <c>I</c>，避免每步 <c>cuMemAlloc</c> 一次 1.1 MB。
+        ''' </summary>
+        Private ReadOnly _lifWorkspaces As New Dictionary(Of Double(), LifWorkspace)()
+        Private ReadOnly _lifSync As New Object()
+
+        ''' <summary>
+        ''' 融合 LIF 单步的工作区：一片跨步复用的突触输入缓冲。
+        ''' </summary>
+        ''' <remarks>
+        ''' 稀疏内核是"按行散射 + atomicAdd"，输出必须预先清零；把缓冲留在本对象里
+        ''' 而不是每步新建，可以省掉一次分配 / 释放（在十万神经元规模下即 1.1 MB）。
+        ''' </remarks>
+        Private NotInheritable Class LifWorkspace
+            Implements IDisposable
+
+            ''' <summary>突触输入 <c>I[batch, columns]</c>（内核用 atomicAdd 累加，启动前必须清零）</summary>
+            Public ReadOnly Input As ILCudaRuntime.DeviceBuffer(Of Double)
+
+            ''' <summary>缓冲的元素数（形状变化时需要重建）</summary>
+            Public ReadOnly Elements As Integer
+
+            Public Sub New(elements As Integer)
+                Input = New ILCudaRuntime.DeviceBuffer(Of Double)(elements)
+                Me.Elements = elements
+            End Sub
+
+            Public Sub Dispose() Implements IDisposable.Dispose
+                Input.Dispose()
+            End Sub
+        End Class
+
         Public Sub New(engine As ILCudaRuntime.CudaEngine, Optional cacheBytes As Long = 0)
             If engine Is Nothing Then Throw New ArgumentNullException(NameOf(engine))
 
@@ -342,6 +388,14 @@ Namespace GPUTensor
         ''' </remarks>
         Private Sub SyncIfPinned(t As tf.Tensor)
             If t Is Nothing Then Return
+
+            ' 双精度通道优先：它承载的是脉冲网络的递归状态，主机副本一定是最陈旧的
+            If _resident64.IsPinned(t.Data) Then
+                Call SyncFromDevice(t)
+
+                Return
+            End If
+
             If Not UseResidentStore Then Return
             If Not _resident.IsPinned(t.Data) Then Return
 
@@ -371,6 +425,29 @@ Namespace GPUTensor
             End If
 
             Return _fp32.GetBuffer(_engine, t.Data, t.Version, AddressOf DeviceResidentStore.ToSingle)
+        End Function
+
+        ''' <summary>
+        ''' 取张量对应的<b>双精度</b>显存缓冲，查找顺序同样是「常驻表 → LRU 缓存」。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与 <see cref="Device"/> 的唯一差别是它会先查双精度常驻表（<see cref="PinDevice64"/>）。
+        ''' 这一点是脉冲网络能"零往返"的关键：被钉住的膜电位 / 脉冲 / 计数累加器
+        ''' 跳过版本校验，内核直接原地读写同一片显存，主机数组只在需要时同步一次。
+        ''' <para>
+        ''' 反之，若用 <see cref="Device"/> 去读一个被钉住的张量，就会从<b>陈旧的主机副本</b>
+        ''' 重新上传（LRU 缓存只看数组引用 + 版本号），静默算错 —— 所以凡是消费
+        ''' 递归状态的算子里都必须用本方法取缓冲。
+        ''' </para>
+        ''' </remarks>
+        Private Function Device64(t As tf.Tensor) As ILCudaRuntime.DeviceBuffer(Of Double)
+            If UseFp64Residency Then
+                Dim pinned As ILCudaRuntime.DeviceBuffer(Of Double) = Nothing
+
+                If _resident64.TryGet(t.Data, pinned) Then Return pinned
+            End If
+
+            Return _cache.GetBuffer(_engine, t.Data, t.Version, Function(d) d)
         End Function
 
         ''' <summary>逐元素二元（纯标量内核：两个输入数组）</summary>
@@ -864,6 +941,186 @@ Namespace GPUTensor
                 Return Wrap(dOut.Read(), New Integer() {batch, columns})
             End Using
         End Function
+
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步（GPU）：先由 <c>tensorSpmmCsrKernel</c> 把递归输入
+        ''' 散射进<b>跨步复用</b>的显存缓冲 <c>I</c>，再由 <c>tensorLifUpdate*Kernel</c>
+        ''' 就地更新膜电位 / 脉冲 / 计数累加器。
+        ''' </summary>
+        ''' <remarks>
+        ''' 本覆写相对基类（主机标量实现）的差别只有"数据放在哪里"：
+        ''' <list type="bullet">
+        '''   <item>递归状态以<b>设备为主副本</b>，跨时间步常驻显存，全程零主机往返；</item>
+        '''   <item><c>I</c> 缓冲按膜电位张量的引用身份缓存，只分配一次。</item>
+        ''' </list>
+        ''' 因此本覆写<b>要求状态张量已通过</b> <see cref="PinDevice64"/>（双精度档）或
+        ''' <see cref="PinDevice"/>（单精度档）<b>钉住</b>：内核是就地写入的，
+        ''' 若状态只存在于 LRU 缓存里，调用方就再也无法把结果同步回主机数组
+        ''' （<see cref="SyncFromDevice"/> 只认常驻表）。任一前提不满足时返回 <c>False</c>，
+        ''' 由调用方回退到逐算子路径 —— 语义完全一致，只是慢一些。
+        ''' <para>
+        ''' 档位选择：<c>h</c> 与 <c>counts</c> 双双钉在双精度表 → 走全双精度内核
+        ''' （与 CPU 逐位一致）；钉在单精度表 → 走混合内核（<c>H</c>/<c>counts</c> 单精度，
+        ''' 但脉冲 <c>S</c> 仍写双精度，以便下一步直接复用双精度的稀疏内核，
+        ''' 而 0/1 在两种精度下都是精确值）。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function LifStep(synapses As tfCompute.SparseCsr,
+                                          sPrev As tf.Tensor,
+                                          externalCurrent As tf.Tensor,
+                                          h As tf.Tensor,
+                                          s As tf.Tensor,
+                                          counts As tf.Tensor,
+                                          beta As Double,
+                                          threshold As Double,
+                                          subtractThreshold As Boolean) As Boolean
+
+            If synapses Is Nothing Then Throw New ArgumentNullException(NameOf(synapses))
+            If sPrev Is Nothing Then Throw New ArgumentNullException(NameOf(sPrev))
+            If h Is Nothing Then Throw New ArgumentNullException(NameOf(h))
+            If s Is Nothing Then Throw New ArgumentNullException(NameOf(s))
+            If counts Is Nothing Then Throw New ArgumentNullException(NameOf(counts))
+
+            If sPrev.Rank <> 2 OrElse sPrev.Shape(1) <> synapses.Rows Then
+                Throw New ArgumentException(
+                    $"LifStep 的 sPrev 形状应为 [batch, {synapses.Rows}]，实际 [{String.Join(",", sPrev.Shape)}]")
+            End If
+            If h.Shape(0) <> sPrev.Shape(0) OrElse h.Shape(1) <> synapses.Columns OrElse
+               Not h.Shape.SequenceEqual(s.Shape) OrElse Not h.Shape.SequenceEqual(counts.Shape) Then
+                Throw New ArgumentException(
+                    $"LifStep 的 h/s/counts 形状应同为 [{sPrev.Shape(0)}, {synapses.Columns}]，" &
+                    $"实际 h=[{String.Join(",", h.Shape)}] s=[{String.Join(",", s.Shape)}] counts=[{String.Join(",", counts.Shape)}]")
+            End If
+            If externalCurrent IsNot Nothing AndAlso Not externalCurrent.Shape.SequenceEqual(h.Shape) Then
+                Throw New ArgumentException(
+                    $"LifStep 的 externalCurrent 形状应为 [{String.Join(",", h.Shape)}]，" &
+                    $"实际 [{String.Join(",", externalCurrent.Shape)}]")
+            End If
+
+            ' ---- 能力前提：状态必须常驻 + 两个内核都必须可用 ----
+            Dim fp64State As Boolean = UseFp64Residency AndAlso
+                                       _resident64.IsPinned(h.Data) AndAlso
+                                       _resident64.IsPinned(counts.Data)
+
+            ' 脉冲在每个时间步都会被改写，因此必须走双精度常驻表：
+            ' 下一步的 tensorSpmmCsrKernel 的 dense 输入就是它（double）
+            If Not _resident64.IsPinned(sPrev.Data) OrElse Not _resident64.IsPinned(s.Data) Then
+                Return False
+            End If
+
+            If Not fp64State AndAlso Not (_resident.IsPinned(h.Data) AndAlso _resident.IsPinned(counts.Data)) Then
+                Return False
+            End If
+
+            ' 规模过小时显存拷贝 / 启动开销会倒挂（同时避免空缓冲）
+            If synapses.NonZeros <= 0 OrElse synapses.NonZeros < MinSparseNnz Then
+                Return False
+            End If
+
+            Dim lifKernel = TryKernel(If(fp64State, TensorKernelNames.LifUpdateDouble, TensorKernelNames.LifUpdateFp32))
+            If lifKernel Is Nothing Then Return False
+
+            Dim spmmKernel = TryKernel(TensorKernelNames.SpmmCsr)
+            If spmmKernel Is Nothing Then Return False
+
+            Dim batch = sPrev.Shape(0)
+            Dim rows = synapses.Rows
+            Dim columns = synapses.Columns
+            Dim elements As Long = CLng(batch) * columns
+
+            Call EnsureDeviceCount(elements, "LifStep 的突触输入")
+            Call EnsureDeviceCount(CLng(batch) * rows, "LifStep 的稀疏输入行数")
+
+            Dim workspace = Me.GetLifWorkspace(h.Data, CInt(elements))
+            Dim csrBuf = _csrCache.GetBuffers(_engine, synapses)
+
+            ' 1) 稀疏递归输入：I = W · S_prev（atomicAdd 累加型内核，启动前必须清零）
+            workspace.Input.Fill(0.0)
+
+            spmmKernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(batch * rows, 256),
+                              csrBuf.RowPtr, csrBuf.ColIdx, csrBuf.Values,
+                              Device64(sPrev), workspace.Input, rows, columns, batch)
+
+            ' 2) 泄漏积分 → 阈值触发 → 复位 → 计数累加（就地）
+            '    β 与复位阈值都按单精度舍入后传入，与 Tensor * CSng(x) 的语义一致
+            Dim extBuffer As Object = Nothing
+
+            If externalCurrent IsNot Nothing Then
+                extBuffer = If(fp64State, CObj(Device64(externalCurrent)), CObj(DeviceF32(externalCurrent)))
+            End If
+
+            Dim n As Integer = CInt(elements)
+            Dim subtractFlag As Integer = If(subtractThreshold, 1, 0)
+
+            If fp64State Then
+                lifKernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(n, 256),
+                                 workspace.Input, extBuffer,
+                                 Device64(h), Device64(s), Device64(counts),
+                                 n, CDbl(CSng(beta)), threshold, CDbl(CSng(threshold)), subtractFlag)
+            Else
+                lifKernel.Launch(ILCudaRuntime.LaunchPlanner.For1D(n, 256),
+                                 workspace.Input, extBuffer,
+                                 DeviceF32(h), Device64(s), DeviceF32(counts),
+                                 n, CSng(beta), CSng(threshold), CSng(threshold), subtractFlag)
+            End If
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 取（或按需创建）某个膜电位张量对应的融合 LIF 工作区。
+        ''' </summary>
+        ''' <remarks>
+        ''' 键是主机 <c>Double()</c> 数组的引用身份：同一层在同一个仿真窗里每步复用的是
+        ''' 同一个张量对象，因此整段仿真只会分配一次 <c>I</c> 缓冲；
+        ''' 神经元数量或批大小变化（<c>ResetState</c> 之后）时按元素数重建。
+        ''' </remarks>
+        Private Function GetLifWorkspace(key As Double(), elements As Integer) As LifWorkspace
+            If elements <= 0 Then Throw New ArgumentException("融合 LIF 工作区的元素数必须为正", NameOf(elements))
+
+            SyncLock _lifSync
+                Dim workspace As LifWorkspace = Nothing
+
+                If _lifWorkspaces.TryGetValue(key, workspace) Then
+                    If workspace.Elements = elements Then Return workspace
+
+                    ' 形状变了：释放旧缓冲后重建
+                    _lifWorkspaces.Remove(key)
+                    workspace.Dispose()
+                End If
+
+                Dim created As New LifWorkspace(elements)
+
+                _lifWorkspaces(key) = created
+
+                Return created
+            End SyncLock
+        End Function
+
+        ''' <summary>释放某个张量对应的融合 LIF 工作区（未占用时返回 <c>False</c>）。</summary>
+        Private Function ReleaseLifWorkspace(key As Double()) As Boolean
+            If key Is Nothing Then Return False
+
+            SyncLock _lifSync
+                Dim workspace As LifWorkspace = Nothing
+
+                If Not _lifWorkspaces.TryGetValue(key, workspace) Then Return False
+
+                _lifWorkspaces.Remove(key)
+                workspace.Dispose()
+            End SyncLock
+
+            Return True
+        End Function
+
+        ''' <summary>当前缓存的融合 LIF 工作区个数（诊断用）。</summary>
+        Public ReadOnly Property LifWorkspaceCount As Integer
+            Get
+                SyncLock _lifSync
+                    Return _lifWorkspaces.Count
+                End SyncLock
+            End Get
+        End Property
 
         ''' <summary>
         ''' 二维转置：由 IL2Cuda 生成的 Grid2D double 内核完成，
@@ -1493,24 +1750,72 @@ Namespace GPUTensor
             Return True
         End Function
 
-        ''' <summary>解除钉住并立即释放显存。</summary>
+        ''' <summary>
+        ''' 把张量钉成<b>双精度</b>设备常驻缓冲（脉冲网络的递归状态专用）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与 <see cref="PinDevice"/> 的区别只在于缓冲元素类型：这里是
+        ''' <c>DeviceBuffer(Of Double)</c>，不经过任何降精度转换。
+        ''' 典型用法（<see cref="LifStep"/> 的前提条件）：
+        ''' <code>
+        '''   backend.UseFp64Residency = True
+        '''   backend.PinDevice64(h,      "lif.H",      zeroFill:=False)
+        '''   backend.PinDevice64(sPrev,  "lif.S_prev", zeroFill:=False)
+        '''   backend.PinDevice64(s,      "lif.S",      zeroFill:=False)
+        '''   backend.PinDevice64(counts, "lif.counts", zeroFill:=True)
+        ''' </code>
+        ''' <para>
+        ''' 注意双精度常驻缓冲<b>不参与</b> LRU 容量核算（与单精度通道一样独立计数），
+        ''' 因此仿真结束后应调用 <see cref="UnpinDevice"/> 及时释放。
+        ''' 打开本通道后 <see cref="TryAdamWStep"/> 仍只认单精度通道，
+        ''' 若同时需要 AdamW 请对参数张量另行调用 <see cref="PinDevice"/>。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function PinDevice64(t As tf.Tensor, label As String, zeroFill As Boolean) As Boolean
+            If t Is Nothing Then Return False
+            If t.Length <= 0 Then Return False
+
+            Call _resident64.Pin(_engine, t.Data, label, zeroFill)
+
+            ' 打开常驻表开关后，Device64 才会优先查询它
+            UseFp64Residency = True
+
+            Return True
+        End Function
+
+        ''' <summary>解除钉住并立即释放显存（单精度 / 双精度两个通道一并解除）。</summary>
+        ''' <remarks>
+        ''' 同时释放该张量对应的融合 LIF 工作区：否则一次 <c>ResetState</c> 之后
+        ''' 旧的 <c>I</c> 缓冲会一直挂着（键是主机数组引用，GC 无法回收显存）。
+        ''' </remarks>
         Public Overrides Function UnpinDevice(t As tf.Tensor) As Boolean
             If t Is Nothing Then Return False
 
-            Return _resident.Unpin(t.Data)
+            Dim fp32 = _resident.Unpin(t.Data)
+            Dim fp64 = _resident64.Unpin(t.Data)
+            Dim workspace = Me.ReleaseLifWorkspace(t.Data)
+
+            Return fp32 OrElse fp64 OrElse workspace
         End Function
 
-        ''' <summary>该张量当前是否已被钉住。</summary>
+        ''' <summary>该张量当前是否已被钉住（任一精度通道命中即视为已钉住）。</summary>
         Public Overrides Function IsDevicePinned(t As tf.Tensor) As Boolean
             If t Is Nothing Then Return False
 
-            Return _resident.IsPinned(t.Data)
+            Return _resident.IsPinned(t.Data) OrElse _resident64.IsPinned(t.Data)
         End Function
 
-        ''' <summary>当前钉住的显存总字节数。</summary>
+        ''' <summary>当前钉住的显存总字节数（单精度 + 双精度两个通道之和）。</summary>
         Public Overrides ReadOnly Property PinnedDeviceBytes As Long
             Get
-                Return _resident.TotalBytes
+                Return _resident.TotalBytes + _resident64.TotalBytes
+            End Get
+        End Property
+
+        ''' <summary>双精度常驻缓冲占用的字节数（诊断用）。</summary>
+        Public ReadOnly Property PinnedDeviceBytes64 As Long
+            Get
+                Return _resident64.TotalBytes
             End Get
         End Property
 
@@ -1525,7 +1830,13 @@ Namespace GPUTensor
         Public Overrides Function SyncFromDevice(t As tf.Tensor) As Boolean
             If t Is Nothing Then Return False
 
-            Dim host = _resident.Download(t.Data)
+            ' 双精度通道优先：同一张量理论上只会在一个通道里被钉住，
+            ' 但先查它可以让"混合档位"（脉冲双精度 + 膜电位单精度）的同步行为保持确定
+            Dim host = _resident64.Download(t.Data)
+
+            If host Is Nothing Then
+                host = _resident.Download(t.Data)
+            End If
 
             If host Is Nothing Then Return False
             If host.Length <> t.Data.Length Then Return False
@@ -1551,7 +1862,10 @@ Namespace GPUTensor
                 TensorKernelNames.TrainTranspose,
                 TensorKernelNames.TrainMaskedCrossEntropy,
                 TensorKernelNames.TrainAdamW,
-                TensorKernelNames.TrainAccumulate
+                TensorKernelNames.TrainAccumulate,
+                TensorKernelNames.SpmmCsr,
+                TensorKernelNames.LifUpdateDouble,
+                TensorKernelNames.LifUpdateFp32
             }
 
             Dim sb As New System.Text.StringBuilder()
@@ -1595,6 +1909,17 @@ Namespace GPUTensor
             ' 常驻缓冲由本类显式持有，必须先于引擎释放：
             ' ILCuda 的显存没有终结器，漏掉这一步会让 cuMemAlloc 出来的显存永不归还
             _resident.Dispose()
+            _resident64.Dispose()
+
+            ' 融合 LIF 的跨步工作区同样持有显存
+            SyncLock _lifSync
+                For Each workspace In _lifWorkspaces.Values
+                    workspace.Dispose()
+                Next
+
+                _lifWorkspaces.Clear()
+            End SyncLock
+
             _csrCache.Dispose()
             _fp32.Dispose()
             _cache.Dispose()
