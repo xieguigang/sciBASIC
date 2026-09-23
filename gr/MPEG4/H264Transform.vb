@@ -151,40 +151,73 @@ Friend NotInheritable Class H264Transform
     ''' <param name="levels">量化输出（长度 16）</param>
     ''' <param name="qp">量化参数</param>
     ''' <param name="intra">是否按帧内编码的舍入偏移</param>
+    ''' <summary>
+    ''' 反量化基数表（ffmpeg <c>ff_h264_dequant4_coeff_init</c>，h264data.c:152），
+    ''' 行按 <c>qp Mod 6</c>、列按位置类别索引
+    ''' </summary>
+    Private Shared ReadOnly dequantInit As Integer()() = {
+        New Integer() {10, 13, 16},
+        New Integer() {11, 14, 18},
+        New Integer() {13, 16, 20},
+        New Integer() {14, 18, 23},
+        New Integer() {16, 20, 25},
+        New Integer() {18, 23, 29}
+    }
+
+    ''' <summary>
+    ''' 4x4 块内的位置类别，与 ffmpeg 的 <c>(x &amp; 1) + ((x &gt;&gt; 2) &amp; 1)</c> 完全一致
+    ''' （x 为块内光栅下标；该表达式对行列转置对称，因此 ffmpeg 存储时做的转置不影响取到的类别）
+    ''' </summary>
+    Friend Shared Function quantClass(i As Integer) As Integer
+        Return (i And 1) + ((i >> 2) And 1)
+    End Function
+
+    ''' <summary>
+    ''' 亮度 DC 的 Hadamard 输出位置到宏块内 4x4 块序号的映射
+    ''' （ffmpeg <c>h264_mb.c:712</c> 的 <c>dc_mapping</c>，恰为一组对换，故自逆）
+    ''' </summary>
+    Friend Shared ReadOnly lumaDcMapping As Integer() = {
+        0, 1, 4, 5, 2, 3, 6, 7,
+        8, 9, 12, 13, 10, 11, 14, 15
+    }
+
+    ''' <summary>
+    ''' 解码器使用的反量化系数：<c>level * qmul</c> 即为逆变换（带 <c>&gt;&gt; 6</c>）的输入
+    ''' </summary>
+    Friend Shared Function qmul(qp As Integer, i As Integer) As Integer
+        Return dequantInit(qp Mod 6)(quantClass(i)) << (qp \ 6 + 2)
+    End Function
+
+    ''' <summary>
+    ''' 量化：正向变换与解码器逆变换的精确逆运算
+    ''' </summary>
+    ''' <remarks>
+    ''' 解码器对每个系数执行 <c>d = level * qmul</c>，随后逆变换整体 <c>&gt;&gt; 6</c>。
+    ''' 由于 4x4 正向变换对平坦块的 DC 增益为 16，要让逆变换还原出残差就需要
+    ''' <c>level * qmul = 64 * W</c>，即 <c>level = 4 * W / qmul</c>；
+    ''' 这里用 <c>scale = 4 * 2^qbits / qmul</c> 与常量舍入偏移 <c>f</c> 实现该除法。
+    ''' </remarks>
     Friend Shared Sub quantize(coeff As Integer(), levels As Integer(), qp As Integer, Optional intra As Boolean = True)
         Dim qbits As Integer = 15 + (qp \ 6)
         Dim f As Integer = If(intra, (1 << qbits) \ 3, (1 << qbits) \ 6)
-        Dim scale As Integer() = normAdjust(qp Mod 6)
+        Dim numerator As Integer = 4 << qbits
 
         For i As Integer = 0 To 15
             Dim c As Integer = coeff(i)
             Dim magnitude As Integer = If(c < 0, -c, c)
-            Dim level As Integer = (magnitude * scale(positionClass(i)) + f) >> qbits
+            Dim scale As Integer = numerator \ qmul(qp, i)
+            Dim level As Integer = (magnitude * scale + f) >> qbits
 
             levels(i) = If(c < 0, -level, level)
         Next
     End Sub
 
     ''' <summary>
-    ''' 反量化：把量化系数还原为变换系数（供重建帧使用）
+    ''' 反量化：严格镜像解码器的 <c>d = level * qmul</c>（时长整数按 16 位钳制，与解码器一致）
     ''' </summary>
-    ''' <remarks>
-    ''' 逆标度表由正向表推导：<c>invScale = round(2^17 / normAdjust)</c>。
-    ''' 推导依据是"正向变换的 DC 增益为 16、解码器逆变换的 DC 增益为 1/64"这一对关系：
-    ''' 
-    ''' 平坦块 <c>a</c> 经 4x4 正向变换得到 <c>W = 16a</c>，量化后
-    ''' <c>level = 16a * normAdjust / 2^(15 + qp\6)</c>；反量化再乘以
-    ''' <c>2^17 / normAdjust</c> 就恰好得到 <c>64a</c>，逆变换的 <c>&gt;&gt; 6</c> 后精确还原为 <c>a</c>。
-    ''' 这样正向、反向与解码器（ffmpeg <c>ff_h264_idct_add</c>）三者严格自洽，重建不会产生漂移。
-    ''' </remarks>
     Friend Shared Sub dequantize(levels As Integer(), coeff As Integer(), qp As Integer)
-        Dim shift As Integer = qp \ 6
-        Dim inverse As Integer() = inverseNormAdjust(qp Mod 6)
-
         For i As Integer = 0 To 15
-            Dim v As Long = CLng(levels(i)) * inverse(positionClass(i))
-
-            If shift > 0 Then v <<= shift
+            Dim v As Long = CLng(levels(i)) * qmul(qp, i)
 
             If v > 32767L Then v = 32767L
             If v < -32768L Then v = -32768L
@@ -192,27 +225,6 @@ Friend NotInheritable Class H264Transform
             coeff(i) = CInt(v)
         Next
     End Sub
-
-    ''' <summary>
-    ''' 由正向标度表推导出的逆向标度表：<c>round(2^17 / normAdjust)</c>
-    ''' </summary>
-    Private Shared ReadOnly inverseNormAdjust As Integer()() = buildInverseNormAdjust()
-
-    Private Shared Function buildInverseNormAdjust() As Integer()()
-        Dim table As Integer()() = New Integer(5)() {}
-
-        For q As Integer = 0 To 5
-            Dim row As Integer() = New Integer(2) {}
-
-            For c As Integer = 0 To 2
-                row(c) = (131072 + normAdjust(q)(c) \ 2) \ normAdjust(q)(c)
-            Next
-
-            table(q) = row
-        Next
-
-        Return table
-    End Function
 
 #End Region
 
@@ -275,11 +287,13 @@ Friend NotInheritable Class H264Transform
             Dim d0 As Integer = tmp(i) - tmp(8 + i)
             Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
 
-            ' 归一化 ÷16：Hadamard 的 DC 增益为 16，输出需要落到"4x4 逆变换所需的 DC 系数"这一量纲上
-            dst(i) = (s0 + s1 + 8) >> 4
-            dst(4 + i) = (d0 + d1 + 8) >> 4
-            dst(8 + i) = (s0 - s1 + 8) >> 4
-            dst(12 + i) = (d0 - d1 + 8) >> 4
+            ' 镜像解码器 ff_h264_luma_dc_dequant_idct：Hadamard【不做归一化】，
+            ' 随后 (x + 128) >> 8 落在"×64 域"上（该值再经逆变换的 >> 6 得到残差 DC），
+            ' 并按 dc_mapping 把结果分发到宏块内的 4x4 块。
+            dst(lumaDcMapping(i)) = (s0 + s1 + 128) >> 8
+            dst(lumaDcMapping(4 + i)) = (d0 + d1 + 128) >> 8
+            dst(lumaDcMapping(8 + i)) = (s0 - s1 + 128) >> 8
+            dst(lumaDcMapping(12 + i)) = (d0 - d1 + 128) >> 8
         Next
     End Sub
 
@@ -302,12 +316,11 @@ Friend NotInheritable Class H264Transform
         Dim c As Integer = src(2)
         Dim d As Integer = src(3)
 
-        ' 归一化 ÷4：2x2 Hadamard 的 DC 增益为 4（与亮度 DC 的 16 不同），
-        ' 归一化后同样落到"4x4 逆变换所需的 DC 系数"量纲上
-        dst(0) = (a + b + c + d + 2) >> 2
-        dst(1) = (a - b + c - d + 2) >> 2
-        dst(2) = (a + b - c - d + 2) >> 2
-        dst(3) = (a - b - c + d + 2) >> 2
+        ' 镜像解码器 ff_h264_chroma_dc_dequant_idct：2x2 Hadamard【不归一化】，随后 >> 7
+        dst(0) = (a + b + c + d) >> 7
+        dst(1) = (a - b + c - d) >> 7
+        dst(2) = (a + b - c - d) >> 7
+        dst(3) = (a - b - c + d) >> 7
     End Sub
 
 #End Region
@@ -316,30 +329,27 @@ Friend NotInheritable Class H264Transform
     ''' DC 系数（Hadamard 的输出）的量化：所有位置统一使用 (0,0) 位置的标度
     ''' </summary>
     Friend Shared Sub quantizeDc(coeff As Integer(), levels As Integer(), count As Integer, qp As Integer, intra As Boolean)
-        Dim qbits As Integer = 15 + (qp \ 6)
-        Dim f As Integer = If(intra, (1 << qbits) \ 3, (1 << qbits) \ 6)
-        Dim scale As Integer = normAdjust(qp Mod 6)(0)
+        ' 解码器对 DC 的逆变换是【不归一化】的 Hadamard 后接 (x*qmul + 128) >> 8（亮度）
+        ' 或 (x*qmul) >> 7（色度），最终经 >> 6 得到残差 DC。由此反解出前向应有的倍数：
+        '   亮度：levels = 16 * H(每块 DC 的量化值)
+        '   色度：levels = 32 * X(每块 DC 的量化值)
+        ' 这两个倍数与 qmul 无关，因此 DC 通路在第二级是精确无损的（量化误差只来自第一级）。
+        Dim k As Integer = If(count = 16, 16, 32)
 
         For i As Integer = 0 To count - 1
-            Dim c As Integer = coeff(i)
-            Dim magnitude As Integer = If(c < 0, -c, c)
-            Dim level As Integer = (magnitude * scale + f) >> qbits
-
-            levels(i) = If(c < 0, -level, level)
+            levels(i) = coeff(i) * k
         Next
     End Sub
 
     ''' <summary>
-    ''' DC 系数的反量化（供重建使用），与 <see cref="quantizeDc"/> 严格配对
+    ''' DC 系数的反量化：与解码器一致，乘以 DC 位置（类别 0）的 <c>qmul</c>
     ''' </summary>
     Friend Shared Sub dequantizeDc(levels As Integer(), coeff As Integer(), count As Integer, qp As Integer)
-        Dim shift As Integer = qp \ 6
-        Dim inverse As Integer = inverseNormAdjust(qp Mod 6)(0)
+        Dim scale As Integer = qmul(qp, 0)
 
         For i As Integer = 0 To count - 1
-            Dim v As Long = CLng(levels(i)) * inverse
+            Dim v As Long = CLng(levels(i)) * scale
 
-            If shift > 0 Then v <<= shift
             If v > 32767L Then v = 32767L
             If v < -32768L Then v = -32768L
 

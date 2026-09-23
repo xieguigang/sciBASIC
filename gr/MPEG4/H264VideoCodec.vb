@@ -257,7 +257,8 @@ Friend Class H264VideoCodec
                 Call H264Transform.forwardTransform(resBlock, blockCoef)
                 Call H264Transform.quantize(blockCoef, blockLevels, qp, True)
 
-                lumaDcIn(blockIdx) = blockLevels(0)
+                ' 解码器的亮度 DC 逆变换按 dc_mapping 分发结果，前向侧需做同一置换
+                lumaDcIn(H264Transform.lumaDcMapping(blockIdx)) = blockLevels(0)
 
                 Dim ac As Integer() = lumaAcLevels(blockIdx)
 
