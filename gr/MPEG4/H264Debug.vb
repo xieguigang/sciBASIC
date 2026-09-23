@@ -59,4 +59,9 @@ Public NotInheritable Class H264Debug
         If Enabled Then Values.Add($"{name}={value}")
     End Sub
 
+    ''' <summary>
+    ''' 【临时诊断】大于 0 时强制使用该 QP 编码，用于判定解码器实际使用的 QP
+    ''' </summary>
+    Public Shared ForceQp As Integer = 0
+
 End Class

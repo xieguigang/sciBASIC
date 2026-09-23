@@ -129,7 +129,7 @@ Friend Class H264VideoCodec
     Friend Sub New(width As Integer, height As Integer, fps As Integer, quality As Integer)
         Me.frameWidth = width
         Me.frameHeight = height
-        Me.qp = mapQuality(quality)
+        Me.qp = If(H264Debug.ForceQp > 0, H264Debug.ForceQp, mapQuality(quality))
         Me.codec = New H264SpsPps(width, height)
     End Sub
 
@@ -478,6 +478,17 @@ Friend Class H264VideoCodec
                 Next
             Next
         Next
+
+        ' 【临时诊断】首个宏块的预测与重建结果（用于与解码器输出逐一对照）
+        If H264Debug.Enabled AndAlso x0 = 0 AndAlso y0 = 0 Then
+            Call H264Debug.note("pred0", pred(0))
+
+            For by As Integer = 0 To 3
+                For bx As Integer = 0 To 3
+                    Call H264Debug.note($"reconY_{bx}_{by}", recon.y.at(bx * 4, by * 4))
+                Next
+            Next
+        End If
     End Sub
 
     ''' <summary>
