@@ -57,10 +57,12 @@
 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
+
+' 父命名空间 Microsoft.VisualBasic.Imaging 下存在同名的 Bitmap 类型，这里使用显式别名
+Imports Bitmap = System.Drawing.Bitmap
+Imports Color = System.Drawing.Color
 
 Public Class AVIStream
 
@@ -69,29 +71,64 @@ Public Class AVIStream
     Public Property height As Short
     Public Property frames As New List(Of FrameStream)
 
+    ''' <summary>
+    ''' 本视频流所使用的压缩方式。
+    ''' </summary>
+    Public ReadOnly Property codecType As AviCodec
+
+    ''' <summary>
+    ''' 本视频流所使用的编解码器实例，帧数据与流头部描述都由它产生。
+    ''' </summary>
+    Public ReadOnly Property codec As AviVideoCodec
+
     ReadOnly temp$
 
+    ''' <summary>
+    ''' 创建一个视频流，默认使用 <see cref="AviCodec.MJPEG"/> 压缩。
+    ''' </summary>
     Sub New(fps%, width As Short, height As Short)
+        Call Me.New(fps, width, height, AviCodec.MJPEG)
+    End Sub
+
+    ''' <summary>
+    ''' 创建一个指定压缩方式的视频流。
+    ''' </summary>
+    ''' <param name="fps">帧率</param>
+    ''' <param name="width">画面宽度</param>
+    ''' <param name="height">画面高度</param>
+    ''' <param name="codec">
+    ''' 压缩方式；传入 <see cref="AviCodec.DIB"/> 可以继续得到与旧版本一致的未压缩输出。
+    ''' </param>
+    ''' <param name="quality">压缩画质（0 - 100）</param>
+    Sub New(fps%, width As Short, height As Short, codec As AviCodec, Optional quality% = AviVideoCodecs.DefaultQuality)
         Me.fps = fps
         Me.width = width
         Me.height = height
-        Me.temp = TempFileSystem.GetAppSysTempFile(".rgb_frames", App.PID, prefix:=GetHashCode.ToHexString)
+        Me.codecType = codec
+        Me.codec = AviVideoCodecs.Create(codec, fps, CInt(width), CInt(height), quality)
+        Me.temp = TempFileSystem.GetAppSysTempFile(".avi_frames", App.PID, prefix:=GetHashCode.ToHexString)
     End Sub
 
+    ''' <summary>
+    ''' 把一个位图帧添加到帧列表末尾。
+    ''' </summary>
     Public Sub addFrame(image As Bitmap)
-        Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image)
-            Call addFrame(bitmap.AsEnumerable.ToArray)
-        End Using
+        Dim payload As Byte() = codec.Encode(image)
+
+        If frames.Count = 0 Then
+            payload = prepend(payload, codec.CodecPrivate)
+        End If
+
+        frames.Add(New FrameStream(temp, payload))
     End Sub
 
+    ''' <summary>
+    ''' 把一帧按行优先展开的像素添加到帧列表末尾。
+    ''' </summary>
     Public Sub addFrame(imagePixels As Color())
-        Dim bytes As New List(Of Byte)
-
-        For Each pixel In imagePixels
-            bytes.AddRange({pixel.R, pixel.G, pixel.B, pixel.A})
-        Next
-
-        Call addRGBFrame(bytes.ToArray)
+        Using bitmap As Bitmap = PixelData.FromColors(imagePixels, width, height)
+            Call addFrame(bitmap)
+        End Using
     End Sub
 
     ''' <summary>
@@ -101,15 +138,26 @@ Public Class AVIStream
     ''' the data of an image; a flat array containing ``(r, g, b, a)`` values.
     ''' </param>
     Public Sub addRGBFrame(imgData As Byte())
-        Dim frame As Byte() = New Byte(imgData.Length - 1) {}
-        For i As Integer = 0 To frame.Length - 1 Step 4
-            frame(i) = imgData(i + 2)
-            frame(i + 1) = imgData(i + 1)
-            frame(i + 2) = imgData(i)
-        Next
-
-        frames.Add(New FrameStream(temp, frame))
+        Using bitmap As Bitmap = PixelData.FromRgbaBytes(imgData, width, height)
+            Call addFrame(bitmap)
+        End Using
     End Sub
+
+    ''' <summary>
+    ''' 把编解码器私有数据（例如 MPEG-4 的 VOL 头）拼接到首个视频帧之前。
+    ''' </summary>
+    Private Shared Function prepend(payload As Byte(), header As Byte()) As Byte()
+        If header Is Nothing OrElse header.Length = 0 Then
+            Return payload
+        End If
+
+        Dim buf As Byte() = New Byte(header.Length + payload.Length - 1) {}
+
+        Call Buffer.BlockCopy(header, Scan0, buf, Scan0, header.Length)
+        Call Buffer.BlockCopy(payload, Scan0, buf, header.Length, payload.Length)
+
+        Return buf
+    End Function
 
     ''' <summary>
     ''' Writes the avi header to a buffer.
@@ -129,7 +177,7 @@ Public Class AVIStream
         stream.writeString(12, "strh")
         stream.writeInt(16, 56)
         stream.writeString(20, "vids")    ' fourCC
-        stream.writeString(24, "DIB ")    ' Uncompressed
+        stream.writeString(24, codec.FourCC) ' 视频的压缩方式
         stream.writeInt(28, 0)            ' Flags
         stream.writeShort(32, 1)          ' Priority
         stream.writeShort(34, 0)          ' Language
@@ -138,7 +186,7 @@ Public Class AVIStream
         stream.writeInt(44, fps)          ' Rate
         stream.writeInt(48, 0)            ' Startdelay
         stream.writeInt(52, frames.Count) ' Length
-        stream.writeInt(56, CInt(width) * CInt(height) * 4 + 8) ' suggested buffer size
+        stream.writeInt(56, codec.SuggestedBufferSize) ' suggested buffer size
         stream.writeInt(60, -1)       ' quality
         stream.writeInt(64, 0)        ' sampleSize
         stream.writeShort(68, 0)      ' Rect left
@@ -150,11 +198,11 @@ Public Class AVIStream
         stream.writeInt(80, 40)
         stream.writeInt(84, 40)      ' struct size
         stream.writeInt(88, width)   ' width
-        stream.writeInt(92, -height) ' height
+        stream.writeInt(92, CInt(height) * codec.HeightSign) ' height：仅未压缩 DIB 使用负值表示 top-down
         stream.writeShort(96, 1)     ' planes
-        stream.writeShort(98, 32)    ' bits per pixel
-        stream.writeInt(100, 0)      ' compression
-        stream.writeInt(104, 0)      ' image size
+        stream.writeShort(98, codec.BitCount) ' bits per pixel
+        stream.writeInt(100, AviVideoCodecs.FourCC(codec.FourCC)) ' compression
+        stream.writeInt(104, codec.SuggestedBufferSize) ' image size
         stream.writeInt(108, 0)      ' x pixels per meter
         stream.writeInt(112, 0)      ' y pixels per meter
         stream.writeInt(116, 0)      ' colortable used
@@ -176,7 +224,8 @@ Public Class AVIStream
             stream.writeLong(156 + i * 8, offset)              ' offset
             stream.writeInt(160 + i * 8, frames(i).length + 8) ' size
 
-            offset += Me.frames(i).length + 8
+            ' 偏移量必须包含 word 对齐的填充字节，否则压缩帧（长度常为奇数）会导致索引错位
+            offset += Me.frames(i).chunkSize
         Next
 
         Return 156 + Me.frames.Count * 4 * 2
@@ -200,6 +249,12 @@ Public Class AVIStream
             buf.writeBytes(len + 8, frames(i))
 
             len += frames(i).length + 8
+
+            ' RIFF 要求 chunk 按 word 边界对齐：奇数长度的帧数据需要补一个填充字节
+            If frames(i).length Mod 2 = 1 Then
+                buf.writeBytes(len, New Byte() {0})
+                len += 1
+            End If
         Next
 
         Return len
