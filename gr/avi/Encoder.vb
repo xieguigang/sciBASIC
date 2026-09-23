@@ -144,13 +144,16 @@ Public Class Encoder
             frameLen * 4 * 2
     End Function
 
+    ''' <summary>
+    ''' 计算一条视频流的帧数据在 <c>movi</c> 列表中占用的总字节数（包含 chunk 头与 word 对齐填充）。
+    ''' </summary>
     Public Shared Function getVideoDataLength(stream As AVIStream) As Long
         Dim len& = 0
         Dim frames = stream.frames
 
         For i As Integer = 0 To frames.Count - 1
             ' Pad if chunk Not in word boundary
-            len += 8 + frames(i).length + If(frames(i).length Mod 2 = 0, 0, 1)
+            len += frames(i).chunkSize
         Next
 
         Return len

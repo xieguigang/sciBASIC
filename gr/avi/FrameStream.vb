@@ -60,6 +60,20 @@ Public Class FrameStream
 
     Public ReadOnly Property length As Integer
 
+    ''' <summary>
+    ''' 该帧在 <c>movi</c> 列表中所占用的字节数：8 字节 chunk 头 + 帧数据 + word 对齐填充。
+    ''' </summary>
+    ''' <remarks>
+    ''' RIFF 要求每个 chunk 按 word（2 字节）边界对齐，奇数长度的帧数据后面必须补一个字节。
+    ''' 索引表中的偏移量、以及 <c>movi</c> 的字节遍历都必须使用本属性，否则索引会与
+    ''' 实际的数据布局错位（未压缩帧长度恒为偶数，因此旧版本从未暴露该问题）。
+    ''' </remarks>
+    Public ReadOnly Property chunkSize As Long
+        Get
+            Return length + 8 + If(length Mod 2 = 0, 0, 1)
+        End Get
+    End Property
+
     ReadOnly temp$
     ReadOnly begin As Long
 

@@ -66,15 +66,59 @@ Public Class AVIMainHeader
     ''' <returns></returns>
     Public Property cb As Integer = 56
     ''' <summary>
-    ''' 视频帧间隔时间（以毫秒为单位）
+    ''' 文件含有索引块的全局标记（<c>AVIF_HASINDEX</c>）
     ''' </summary>
-    ''' <returns></returns>
-    Public Property dwMicroSecPerFrame As Integer = 66665
+    Public Const AVIF_HASINDEX As Integer = &H10
+
     ''' <summary>
-    ''' 这个AVI文件的最大数据率
+    ''' 视频帧间隔时间（以微秒为单位），由第一条视频流的帧率推导。
     ''' </summary>
     ''' <returns></returns>
-    Public Property dwMaxBytesPerSec As Integer = 0
+    Public ReadOnly Property dwMicroSecPerFrame As Integer
+        Get
+            Dim video = getPrimaryVideoStream()
+
+            If video Is Nothing OrElse video.fps <= 0 Then
+                Return 66665
+            End If
+
+            Return CInt(1000000.0 / video.fps)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 这个AVI文件的最大数据率（字节/秒），按所有视频流的总数据量与总时长估算。
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property dwMaxBytesPerSec As Integer
+        Get
+            Dim video = getPrimaryVideoStream()
+            Dim totalBytes& = 0
+            Dim totalFrames& = 0
+
+            For Each buffer In encoder.streams
+                totalBytes += Encoder.getVideoDataLength(buffer)
+                totalFrames += buffer.frames.Count
+            Next
+
+            If video Is Nothing OrElse video.fps <= 0 OrElse totalFrames = 0 Then
+                Return 0
+            End If
+
+            Return CInt(totalBytes * video.fps / totalFrames)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 第一条视频流，用于推导整个文件的时间基准；不存在视频流时返回 Nothing。
+    ''' </summary>
+    Private Function getPrimaryVideoStream() As AVIStream
+        If encoder.streams Is Nothing OrElse encoder.streams.Count = 0 Then
+            Return Nothing
+        End If
+
+        Return encoder.streams(0)
+    End Function
     ''' <summary>
     ''' 数据填充的粒度
     ''' </summary>
@@ -83,8 +127,12 @@ Public Class AVIMainHeader
     ''' <summary>
     ''' AVI文件的全局标记，比如是否含有索引块等
     ''' </summary>
+    ''' <remarks>
+    ''' 由于 <see cref="Encoder.WriteBuffer"/> 总是会写出 <c>indx</c> 索引块，这里默认置位
+    ''' <see cref="AVIF_HASINDEX"/>，否则部分播放器会忽略文件里的索引信息。
+    ''' </remarks>
     ''' <returns></returns>
-    Public Property dwFlags As Integer = 0
+    Public Property dwFlags As Integer = AVIF_HASINDEX
     ''' <summary>
     ''' 总帧数
     ''' </summary>
@@ -111,10 +159,28 @@ Public Class AVIMainHeader
     End Property
 
     ''' <summary>
-    ''' 建议读取本文件的缓存大小（应能容纳最大的块）
+    ''' 建议读取本文件的缓存大小（应能容纳最大的块），按实际最大的帧数据块推导。
     ''' </summary>
     ''' <returns></returns>
-    Public Property dwSuggestedBufferSize As Integer = 0
+    Public ReadOnly Property dwSuggestedBufferSize As Integer
+        Get
+            Dim maxSize% = 0
+
+            For Each video In encoder.streams
+                For Each frame In video.frames
+                    If frame.length > maxSize Then
+                        maxSize = frame.length
+                    End If
+                Next
+            Next
+
+            If maxSize = 0 Then
+                Return 0
+            End If
+
+            Return maxSize + 8
+        End Get
+    End Property
     ''' <summary>
     ''' 视频图像的宽（以像素为单位）
     ''' </summary>
