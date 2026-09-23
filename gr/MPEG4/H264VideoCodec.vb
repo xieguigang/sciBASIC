@@ -348,9 +348,11 @@ Friend Class H264VideoCodec
         Call cabac.encodeBin(60, 0)
 
         ' ---- 7. 残差系数 ----
+        ' 邻居不可用时必须按「有系数」参与上下文推导（ffmpeg 用 left_cbp/top_cbp = 0x7CF 表示），
+        ' 否则紧随其后的宏块会因为上下文状态不一致而立刻错位
         Dim dcCtx As Integer = H264Residual.cbfBaseCtx(0) +
-            If(left IsNot Nothing AndAlso (left.cbp And &H100) <> 0, 1, 0) +
-            If(top IsNot Nothing AndAlso (top.cbp And &H100) <> 0, 2, 0)
+            If(left Is Nothing OrElse (left.cbp And &H100) <> 0, 1, 0) +
+            If(top Is Nothing OrElse (top.cbp And &H100) <> 0, 2, 0)
 
         Dim lumaDcCount As Integer = H264Residual.writeBlock(cabac, lumaDcLevels, 0, H264Residual.zigZag, dcCtx)
 
@@ -372,9 +374,10 @@ Friend Class H264VideoCodec
 
         If chromaCbp <> 0 Then
             For c As Integer = 0 To 1
+                ' 与亮度 DC 同理：邻居不可用时按「有系数」处理
                 Dim dcCtxChroma As Integer = H264Residual.cbfBaseCtx(3) +
-                    If(left IsNot Nothing AndAlso ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
-                    If(top IsNot Nothing AndAlso ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
+                    If(left Is Nothing OrElse ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
+                    If(top Is Nothing OrElse ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
 
                 Dim count As Integer = H264Residual.writeBlock(cabac, chromaDcLevels(c), 3, H264Residual.chromaDcScan, dcCtxChroma)
 
@@ -523,12 +526,17 @@ Friend Class H264VideoCodec
             nza = nnzOf(info, by * span + bx - 1, chroma, plane)
         ElseIf left IsNot Nothing Then
             nza = nnzOf(left, by * span + (span - 1), chroma, plane)
+        Else
+            ' 邻居不可用：解码器把这类邻居记为「非零」（ffmpeg 用 64 作为该标记）
+            nza = 64
         End If
 
         If by > 0 Then
             nzb = nnzOf(info, (by - 1) * span + bx, chroma, plane)
         ElseIf top IsNot Nothing Then
             nzb = nnzOf(top, (span - 1) * span + bx, chroma, plane)
+        Else
+            nzb = 64
         End If
 
         Return If(nza > 0, 1, 0) + If(nzb > 0, 2, 0)

@@ -145,7 +145,9 @@ Friend Class H264Yuv420
                 Dim g As Integer = bgra(p + 1)
                 Dim r As Integer = bgra(p + 2)
 
-                Call y.setAt(i, j, clip((66 * r + 129 * g + 25 * b + 128) >> 8) + 16)
+                ' 注意：必须先加上偏移量再钳位。若写成 clip(delta) + 16，负的 delta 会被截断成 0，
+                ' 整幅画面会被系统性抬高（色度同理，会直接毁掉色度）
+                Call y.setAt(i, j, clip(((66 * r + 129 * g + 25 * b + 128) >> 8) + 16))
             Next
         Next
 
@@ -174,8 +176,9 @@ Friend Class H264Yuv420
                 Dim gAvg As Integer = sumG \ n
                 Dim rAvg As Integer = sumR \ n
 
-                Call u.setAt(i, j, clip((-38 * rAvg - 74 * gAvg + 112 * bAvg + 128) >> 8) + 128)
-                Call v.setAt(i, j, clip((112 * rAvg - 94 * gAvg - 18 * bAvg + 128) >> 8) + 128)
+                ' 同上：偏移量要参与钳位，否则所有负的色度差都会被截成 0
+                Call u.setAt(i, j, clip(((-38 * rAvg - 74 * gAvg + 112 * bAvg + 128) >> 8) + 128))
+                Call v.setAt(i, j, clip(((112 * rAvg - 94 * gAvg - 18 * bAvg + 128) >> 8) + 128))
             Next
         Next
 
