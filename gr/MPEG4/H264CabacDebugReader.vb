@@ -96,55 +96,73 @@ Public Class H264CabacDebugReader
             bit = (s And 1) Xor 1
         End If
 
-        ' 归一化：与解码器的 norm_shift 表等价，并且低位耗尽时补 2 字节
-        Dim shift As Integer = 0
-
+        ' 归一化：与解码器的 ff_h264_norm_shift[range] 等价
         While rangeValue < &H100
             rangeValue <<= 1
             lowValue <<= 1
-            shift += 1
         End While
 
-        If shift > 0 AndAlso (lowValue And &HFFFF) = 0 Then
-            If bytePos + 1 < data.Length Then
-                lowValue += (CInt(data(bytePos)) << 9) + (CInt(data(bytePos + 1)) << 1)
-                bytePos += 2
-            End If
-        End If
+        ' get_cabac_inline 在归一化之后无条件检查低位是否耗尽，耗尽则走 refill2
+        If (lowValue And &HFFFF) = 0 Then Call refill2()
 
         Return bit
     End Function
 
-    ''' <summary>编码器使用的 CABAC 终止位（end_of_slice_flag）读取</summary>
+    ''' <summary>
+    ''' 普通补字节：镜像解码器的 <c>refill</c>，注意末尾要减去 CABAC_MASK（0xFFFF）的借位修正
+    ''' </summary>
+    Private Sub refill()
+        If bytePos + 1 >= data.Length Then Return
+
+        lowValue += (CInt(data(bytePos)) << 9) + (CInt(data(bytePos + 1)) << 1)
+        lowValue -= &HFFFF
+
+        bytePos += 2
+    End Sub
+
+    ''' <summary>
+    ''' 上下文位用的补字节：镜像解码器的 <c>refill2</c>，新比特按 <c>ctz(low) - 16</c> 左移放置
+    ''' </summary>
+    Private Sub refill2()
+        If bytePos + 1 >= data.Length Then Return
+
+        Dim i As Integer = trailingZeros(lowValue) - 16
+        Dim x As Integer = -&HFFFF + (CInt(data(bytePos)) << 9) + (CInt(data(bytePos + 1)) << 1)
+
+        lowValue += x << i
+
+        bytePos += 2
+    End Sub
+
+    Private Shared Function trailingZeros(value As Integer) As Integer
+        Dim n As Integer = 0
+
+        While n < 31 AndAlso ((value >> n) And 1) = 0
+            n += 1
+        End While
+
+        Return n
+    End Function
+
+    ''' <summary>
+    ''' CABAC 终止位（end_of_slice_flag）读取，镜像解码器的 <c>get_cabac_terminate</c>：
+    ''' 低位为 0 时做一次归一化并补字节；为 1 时解码器直接结束切片、不再改动状态
+    ''' </summary>
     Public Function readTerminate() As Integer
         rangeValue -= 2
 
-        Dim value As Integer
-
-        If lowValue < (rangeValue << 17) Then
-            value = 0
-        Else
-            lowValue -= rangeValue << 17
-            rangeValue = 2
-            value = 1
+        If lowValue >= (rangeValue << 17) Then
+            Return 1
         End If
 
-        Dim shift As Integer = 0
-
-        While rangeValue < &H100
+        If rangeValue < &H100 Then
             rangeValue <<= 1
             lowValue <<= 1
-            shift += 1
-        End While
-
-        If shift > 0 AndAlso (lowValue And &HFFFF) = 0 Then
-            If bytePos + 1 < data.Length Then
-                lowValue += (CInt(data(bytePos)) << 9) + (CInt(data(bytePos + 1)) << 1)
-                bytePos += 2
-            End If
         End If
 
-        Return value
+        If (lowValue And &HFFFF) = 0 Then Call refill()
+
+        Return 0
     End Function
 
 End Class
