@@ -44,4 +44,9 @@ Public NotInheritable Class H264Debug
     ''' </summary>
     Public Shared ReadOnly Property Bins As List(Of String) = New List(Of String)
 
+    ''' <summary>
+    ''' 每个 bin 编码完成（含归一化）之后的区间宽度，与解码器侧完全同域，可逐 bin 对账
+    ''' </summary>
+    Public Shared ReadOnly Property Ranges As List(Of Integer) = New List(Of Integer)
+
 End Class

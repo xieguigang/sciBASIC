@@ -124,6 +124,8 @@ Friend Class H264Cabac
         End If
 
         Call renorm()
+
+        If H264Debug.Enabled Then H264Debug.Ranges.Add(rangeValue)
     End Sub
 
     ''' <summary>
@@ -168,6 +170,9 @@ Friend Class H264Cabac
 
         If bit = 0 Then
             Call renorm()
+
+            If H264Debug.Enabled Then H264Debug.Ranges.Add(rangeValue)
+
             Return
         End If
 

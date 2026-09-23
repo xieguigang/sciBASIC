@@ -74,6 +74,13 @@ Public Class H264CabacDebugReader
     ''' <summary>
     ''' 读取一位，上下文状态由调用方按期望的语法元素给出
     ''' </summary>
+    ''' <summary>归一化之后的区间宽度，用于与编码器逐 bin 对账</summary>
+    Public ReadOnly Property range As Integer
+        Get
+            Return rangeValue
+        End Get
+    End Property
+
     Public Function readBin(ctx As Integer) As Integer
         Dim s As Integer = states(ctx)
         Dim lps As Integer = H264CabacTables.lpsRange(2 * (rangeValue And &HC0) + s)
