@@ -275,10 +275,11 @@ Friend NotInheritable Class H264Transform
             Dim d0 As Integer = tmp(i) - tmp(8 + i)
             Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
 
-            dst(i) = (s0 + s1 + 32) >> 6
-            dst(4 + i) = (d0 + d1 + 32) >> 6
-            dst(8 + i) = (s0 - s1 + 32) >> 6
-            dst(12 + i) = (d0 - d1 + 32) >> 6
+            ' 归一化 ÷16：Hadamard 的 DC 增益为 16，输出需要落到"4x4 逆变换所需的 DC 系数"这一量纲上
+            dst(i) = (s0 + s1 + 8) >> 4
+            dst(4 + i) = (d0 + d1 + 8) >> 4
+            dst(8 + i) = (s0 - s1 + 8) >> 4
+            dst(12 + i) = (d0 - d1 + 8) >> 4
         Next
     End Sub
 
@@ -301,13 +302,50 @@ Friend NotInheritable Class H264Transform
         Dim c As Integer = src(2)
         Dim d As Integer = src(3)
 
-        dst(0) = (a + b + c + d + 32) >> 6
-        dst(1) = (a - b + c - d + 32) >> 6
-        dst(2) = (a + b - c - d + 32) >> 6
-        dst(3) = (a - b - c + d + 32) >> 6
+        ' 归一化 ÷4：2x2 Hadamard 的 DC 增益为 4（与亮度 DC 的 16 不同），
+        ' 归一化后同样落到"4x4 逆变换所需的 DC 系数"量纲上
+        dst(0) = (a + b + c + d + 2) >> 2
+        dst(1) = (a - b + c - d + 2) >> 2
+        dst(2) = (a + b - c - d + 2) >> 2
+        dst(3) = (a - b - c + d + 2) >> 2
     End Sub
 
 #End Region
+
+    ''' <summary>
+    ''' DC 系数（Hadamard 的输出）的量化：所有位置统一使用 (0,0) 位置的标度
+    ''' </summary>
+    Friend Shared Sub quantizeDc(coeff As Integer(), levels As Integer(), count As Integer, qp As Integer, intra As Boolean)
+        Dim qbits As Integer = 15 + (qp \ 6)
+        Dim f As Integer = If(intra, (1 << qbits) \ 3, (1 << qbits) \ 6)
+        Dim scale As Integer = normAdjust(qp Mod 6)(0)
+
+        For i As Integer = 0 To count - 1
+            Dim c As Integer = coeff(i)
+            Dim magnitude As Integer = If(c < 0, -c, c)
+            Dim level As Integer = (magnitude * scale + f) >> qbits
+
+            levels(i) = If(c < 0, -level, level)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' DC 系数的反量化（供重建使用），与 <see cref="quantizeDc"/> 严格配对
+    ''' </summary>
+    Friend Shared Sub dequantizeDc(levels As Integer(), coeff As Integer(), count As Integer, qp As Integer)
+        Dim shift As Integer = qp \ 6
+        Dim inverse As Integer = inverseNormAdjust(qp Mod 6)(0)
+
+        For i As Integer = 0 To count - 1
+            Dim v As Long = CLng(levels(i)) * inverse
+
+            If shift > 0 Then v <<= shift
+            If v > 32767L Then v = 32767L
+            If v < -32768L Then v = -32768L
+
+            coeff(i) = CInt(v)
+        Next
+    End Sub
 
     ' 变换使用的临时缓冲（每帧复用，避免逐块分配）
     <ThreadStatic>

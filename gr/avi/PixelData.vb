@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' 并不是同一个类型。这里统一通过 <see cref="BitmapBuffer"/> 的像素枚举访问数据，
 ''' 因此不需要任何 GDI+ 依赖，也保证与旧版本写入的未压缩画面逐字节一致。
 ''' </remarks>
-Friend NotInheritable Class PixelData
+Public NotInheritable Class PixelData
 
     Private Sub New()
     End Sub
