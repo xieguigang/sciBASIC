@@ -300,13 +300,43 @@ Friend Class H264VideoCodec
         Next
 
         ' ---- 6. 宏块语法 ----
-        Dim mbType As Integer = 1 + predMode + 4 * CHROMA_CBP + 12 * If(LUMA_CBP <> 0, 1, 0)
+        ' CodedBlockPattern 必须如实反映「是否存在非零系数」（H.264 7.4.5）：
+        ' 声称某块有系数、而该块 coded_block_flag 又写 0 属于非法码流，
+        ' 且会让后续宏块从本方 cbp 推导的上下文与解码器不一致。
+        Dim lumaCbp As Integer = 0
+
+        For i As Integer = 0 To 15
+            If hasCoeff(lumaAcLevels(i)) Then
+                lumaCbp = 15
+                Exit For
+            End If
+        Next
+
+        Dim chromaDcPresent As Boolean = False
+        Dim chromaAcPresent As Boolean = False
+
+        For c As Integer = 0 To 1
+            If hasCoeff(chromaDcLevels(c)) Then chromaDcPresent = True
+
+            For i As Integer = 0 To 3
+                If hasCoeff(chromaAcLevels(c)(i)) Then chromaAcPresent = True
+            Next
+        Next
+
+        ' I_16x16 的色度 CBP 只能取 0 / 1 / 2：解码器用 (cbp And &H30) 判色度 DC、用 (cbp And &H20) 判色度 AC
+        Dim chromaCbp As Integer = If(chromaAcPresent, 2, If(chromaDcPresent, 1, 0))
 
         Call cabac.encodeBin(3 + If(leftAvailable, 1, 0) + If(topAvailable, 1, 0), 1) ' 不是 I_4x4
         Call cabac.encodeTerminate(0)                                               ' 不是 I_PCM
-        Call cabac.encodeBin(6, 1)                                                  ' 亮度 CBP != 0
-        Call cabac.encodeBin(7, 1)                                                  ' 色度 CBP != 0
-        Call cabac.encodeBin(8, If(CHROMA_CBP = 2, 1, 0))                           ' 色度 CBP == 2
+        Call cabac.encodeBin(6, If(lumaCbp <> 0, 1, 0))                             ' 亮度 CBP != 0
+        ' 解码器只在「色度 CBP != 0」时才继续读下一位（h264_cabac.c:1329-1330）：
+        '   if (get_cabac(&state[2])) { mb_type += 4 + 4 * get_cabac(&state[2+intra_slice]); }
+        ' 因此色度 CBP 为 0 时绝对不能写出 bin8，否则后面所有语法元素都会错位。
+        Call cabac.encodeBin(7, If(chromaCbp <> 0, 1, 0))                           ' 色度 CBP != 0
+
+        If chromaCbp <> 0 Then
+            Call cabac.encodeBin(8, If(chromaCbp = 2, 1, 0))                        ' 色度 CBP == 2
+        End If
         ' 亮度预测模式隐含在 mb_type 的低 2 位里
         Call cabac.encodeBin(9, (predMode >> 1) And 1)
         Call cabac.encodeBin(10, predMode And 1)
@@ -324,46 +354,64 @@ Friend Class H264VideoCodec
 
         Dim lumaDcCount As Integer = H264Residual.writeBlock(cabac, lumaDcLevels, 0, H264Residual.zigZag, dcCtx)
 
-        For i4x4 As Integer = 0 To 15
-            Dim bx As Integer = ((i4x4 >> 2) And 1) * 2 + (i4x4 And 1)
-            Dim by As Integer = ((i4x4 >> 3) And 1) * 2 + ((i4x4 >> 1) And 1)
-            Dim ctx As Integer = H264Residual.cbfBaseCtx(1) + acNeighborCtx(left, top, info, bx, by, False, 0)
+        ' 亮度 CBP 为 0 时 16 个 AC 块整体不参与编码（解码器同样按 (cbp And 15) 跳过）
+        If lumaCbp <> 0 Then
+            For i4x4 As Integer = 0 To 15
+                Dim bx As Integer = ((i4x4 >> 2) And 1) * 2 + (i4x4 And 1)
+                Dim by As Integer = ((i4x4 >> 3) And 1) * 2 + ((i4x4 >> 1) And 1)
+                Dim ctx As Integer = H264Residual.cbfBaseCtx(1) + acNeighborCtx(left, top, info, bx, by, False, 0)
 
-            info.lumaAcNnz(by * 4 + bx) = H264Residual.writeBlock(cabac, lumaAcLevels(by * 4 + bx), 1, H264Residual.acScan, ctx)
-        Next
+                info.lumaAcNnz(by * 4 + bx) = H264Residual.writeBlock(cabac, lumaAcLevels(by * 4 + bx), 1, H264Residual.acScan, ctx)
+            Next
+        End If
 
         ' 色度块的顺序必须与解码器一致（ffmpeg h264_cabac.c:2467-2482）：
         ' 先两个平面的 DC（Cb、Cr），再两个平面的 AC（Cb 的 4 个、Cr 的 4 个）。
         ' 若写成「Cb DC -> Cb AC -> Cr DC -> Cr AC」就会与解码器错位。
         Dim chromaDcBits As Integer = 0
 
-        For c As Integer = 0 To 1
-            Dim dcCtxChroma As Integer = H264Residual.cbfBaseCtx(3) +
-                If(left IsNot Nothing AndAlso ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
-                If(top IsNot Nothing AndAlso ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
+        If chromaCbp <> 0 Then
+            For c As Integer = 0 To 1
+                Dim dcCtxChroma As Integer = H264Residual.cbfBaseCtx(3) +
+                    If(left IsNot Nothing AndAlso ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
+                    If(top IsNot Nothing AndAlso ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
 
-            Dim count As Integer = H264Residual.writeBlock(cabac, chromaDcLevels(c), 3, H264Residual.chromaDcScan, dcCtxChroma)
+                Dim count As Integer = H264Residual.writeBlock(cabac, chromaDcLevels(c), 3, H264Residual.chromaDcScan, dcCtxChroma)
 
-            If count > 0 Then chromaDcBits = chromaDcBits Or (1 << (6 + c))
-        Next
-
-        For c As Integer = 0 To 1
-            For i As Integer = 0 To 3
-                Dim cx As Integer = i And 1
-                Dim cy As Integer = (i >> 1) And 1
-                Dim ctx As Integer = H264Residual.cbfBaseCtx(4) + acNeighborCtx(left, top, info, cx, cy, True, c)
-
-                info.chromaAcNnz(c)(i) = H264Residual.writeBlock(cabac, chromaAcLevels(c)(i), 4, H264Residual.acScan, ctx)
+                If count > 0 Then chromaDcBits = chromaDcBits Or (1 << (6 + c))
             Next
-        Next
+        End If
 
-        info.cbp = LUMA_CBP Or (CHROMA_CBP << 4) Or chromaDcBits Or If(lumaDcCount > 0, &H100, 0)
+        If chromaCbp = 2 Then
+            For c As Integer = 0 To 1
+                For i As Integer = 0 To 3
+                    Dim cx As Integer = i And 1
+                    Dim cy As Integer = (i >> 1) And 1
+                    Dim ctx As Integer = H264Residual.cbfBaseCtx(4) + acNeighborCtx(left, top, info, cx, cy, True, c)
+
+                    info.chromaAcNnz(c)(i) = H264Residual.writeBlock(cabac, chromaAcLevels(c)(i), 4, H264Residual.acScan, ctx)
+                Next
+            Next
+        End If
+
+        info.cbp = lumaCbp Or (chromaCbp << 4) Or chromaDcBits Or If(lumaDcCount > 0, &H100, 0)
         curRow(mbX) = info
 
         ' ---- 8. 重建（供后续宏块预测与后续帧参考）----
         Call reconstructLuma(recon, predLuma, x0, y0)
         Call reconstructChroma(recon, predChroma, ux, uy)
     End Sub
+
+    ''' <summary>
+    ''' 判断一个系数块里是否存在非零量化系数（用于推导 CodedBlockPattern）
+    ''' </summary>
+    Private Shared Function hasCoeff(levels As Integer()) As Boolean
+        For i As Integer = 0 To levels.Length - 1
+            If levels(i) <> 0 Then Return True
+        Next
+
+        Return False
+    End Function
 
     ''' <summary>
     ''' 亮度残差：原始样点减去预测
