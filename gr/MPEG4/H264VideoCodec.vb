@@ -571,7 +571,8 @@ Friend Class H264VideoCodec
                 Next
             Next
 
-            If sse < bestSse Then
+            ' 同分时优先 DC：DC 的信号代价最低、且不依赖上/左邻的完整可用性，更稳健
+            If sse < bestSse OrElse (sse = bestSse AndAlso mode = CInt(H264IntraMode.DC)) Then
                 bestSse = sse
                 bestMode = mode
             End If
