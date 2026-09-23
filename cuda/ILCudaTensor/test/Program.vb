@@ -106,6 +106,28 @@ Module Program
         Return m
     End Function
 
+    ''' <summary>
+    ''' 逐元素相对偏差的最大值：<c>max |a−b| / max(|a|, |b|)</c>。
+    ''' </summary>
+    ''' <remarks>
+    ''' 用于"取值量级很大、只要求量化误差级一致"的场合（典型例子：FP32 内核 vs 双精度参照）。
+    ''' 这类张量的量级可达 1e6 以上，单精度的表示误差会表现为 O(1) 的<b>绝对</b>偏差 ——
+    ''' 只有相对偏差才是有意义的判据（否则会把正常的量化误差误报成结构性错误）。
+    ''' </remarks>
+    Private Function RelMaxDiff(x As Double(), y As Double()) As Double
+        Dim m As Double = 0
+
+        For i As Integer = 0 To x.Length - 1
+            Dim a = std.Abs(x(i))
+            Dim b = std.Abs(y(i))
+            Dim scale = std.Max(std.Max(a, b), 1.0E-300)
+
+            m = std.Max(m, std.Abs(x(i) - y(i)) / scale)
+        Next
+
+        Return m
+    End Function
+
     Private Function RelErr(got As Double, expected As Double) As Double
         Dim d = std.Abs(got - expected)
         Return If(std.Abs(expected) > 0.0, d / std.Abs(expected), d)
@@ -319,6 +341,18 @@ Module Program
         Dim rsGpu = tfMath.reduce_sum(logits, axis:=1)
         Dim amGpu = tfMath.argmax(logits, axis:=1)
 
+        ' ---- 全双精度档位的参照值 ----
+        ' 默认 UseFp32Gemm = True 会让矩阵乘 / 转置走单精度内核（消费级显卡的 FP64 只有 FP32 的
+        ' 1/64，这是训练场景里最主要的加速来源）；而这里的随机张量量级很大（~1e6），
+        ' 单精度的表示与累加误差本来就在 1e-7 量级上 —— 用"逐位一致 / 1e-13"去卡 FP32 的结果
+        ' 必然误报成失败。因此下面按档位分别校验：FP64 档要求逐位一致，FP32 档只要求量化误差级一致。
+        Dim fp32GemmSaved As Boolean = gpu.CudaTensor.Current.UseFp32Gemm
+
+        gpu.CudaTensor.Current.UseFp32Gemm = False
+        Dim trFp64 = mat.Transpose()
+        Dim sumFp64 = tfMath.reduce_sum(a * b)
+        gpu.CudaTensor.Current.UseFp32Gemm = fp32GemmSaved
+
         ' Heaviside 阶跃算子（GPU）
         Dim hvGpu = tf.Tensor.computeKernel.Heaviside(x)
 
@@ -425,8 +459,13 @@ Module Program
         Dim maxErr = RelErr(bigMaxGpu, bigMaxCpu)
         Dim minErr = RelErr(bigMinGpu, bigMinCpu)
 
+        ' 转置的两档校验：FP64 档必须逐位一致；FP32 档受表示精度限制，只看相对量化误差
+        Dim trFp64Err = MaxDiff(trCpu.Data, trFp64.Data)
+        Dim trFp32Rel = RelMaxDiff(trCpu.Data, trGpu.Data)
+
         Check("P2 逐元素链", ewErr < 1.0E-12, $"maxdiff={ewErr:E3}")
-        Check("P2 转置", trErr = 0.0, $"maxdiff={trErr:E3}")
+        Check("P2 转置 (fp64 档)", trFp64Err = 0.0, $"maxdiff={trFp64Err:E3}")
+        Check("P2 转置 (fp32 档) 量化误差级", trFp32Rel < 1.0E-5, $"relmaxdiff={trFp32Rel:E3}")
         Check("P3 softmax", smErr < 1.0E-14, $"maxdiff={smErr:E3}")
         Check("P3 log_softmax", lsErr < 1.0E-13, $"maxdiff={lsErr:E3}")
         Check("P3 末轴求和", rsErr < 1.0E-12, $"maxdiff={rsErr:E3}")
@@ -437,7 +476,11 @@ Module Program
         Dim actualOnes = hvCpu.Data.Sum()
         Check("P2 Heaviside 阶跃", hvErr = 0.0 AndAlso Math.Abs(actualOnes - expectOnes) < 0.5,
               $"maxdiff={hvErr:E3} ones={actualOnes}/{expectOnes}")
-        Check("double GEMM", gemmErr < 1.0E-13, $"relerr={gemmErr:E3}")
+        ' 归约 / 乘法的两档校验（同上：FP32 档不满足双精度级阈值，但必须落在量化误差量级内）
+        Dim gemmFp64Err = RelErr(sumFp64.Data(0), matCpu.Data(0))
+
+        Check("P2 归约 (fp64 档)", gemmFp64Err < 1.0E-13, $"relerr={gemmFp64Err:E3}")
+        Check("P2 归约 (fp32 档) 量化误差级", gemmErr < 1.0E-5, $"relerr={gemmErr:E3}")
         Check("两段式全局 sum", sumErr < 1.0E-13, $"relerr={sumErr:E3}")
         Check("两段式全局 max", maxErr < 1.0E-15, $"relerr={maxErr:E3}")
         Check("两段式全局 min", minErr < 1.0E-15, $"relerr={minErr:E3}")
