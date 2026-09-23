@@ -182,13 +182,14 @@ Friend Class H264VideoCodec
         ' 在定位并验证之前，本开关保持 False，编码器只产出已验证的 I 帧，绝不产出无法播放的文件。
         ' 定位方法：用 `ffmpeg -v debug` 对比同内容的 x264 参考流（本机无软件编码器时，
         ' 可先用 `-v trace` 看 slice header 的解析停在哪个字段）。
-        ' 【验收未过，暂不启用】P 帧（P_L0_16x16 + mvd + inter 残差）已实现并修掉两处真实缺陷：
-        '   1) P 切片的 mb_type 需要三个 0 bin（ctx 14/15/16），原先只写了一个；
-        '   2) mb_skip_flag 的上下文是「左/上邻存在且未跳过则 +1」（基址 11），原先写反了。
-        ' 但解码仍在若干宏块后失步（bytestream overread，位置随内容漂移，非固定宏块），
-        ' 说明固定语法仍有一处与解码器不一致。已用二分法排除：残差路径（ForceNoResidual 仍失败）、
-        ' 运动向量路径（ForceZeroMv 仍失败），并已 A/B 验证过 CBP 上下文填充（0x7CF 优于 0）。
-        ' 在定位前保持关闭，绝不产出无法播放的文件。
+        ' 【验收未过，暂不启用】P 帧已完成实现，本轮又修掉两处根因（均已实测验证）：
+        '   1) mb_qp_delta 只在 cbp != 0 或宏块为 I_16x16 时才写（原先无条件写，逐宏块多一位，
+        '      表现为「同一行若干宏块后 bytestream overread」）；
+        '   2) inter 的 coded_block_flag 上下文里，不可用邻居的 nnz 记 0（intra 才记 16）。
+        ' 现状：静止内容全部零错误、PSNR 78 dB、体积较全 I 帧下降约 48%；
+        ' 运动内容多为零错误但 PSNR 仅 19-25 dB（低于全 I 帧的约 41 dB），128x96 仍有报错。
+        ' 因「合法码流 + 预测差」的特征指向运动向量中值预测与解码器不一致，尚需定位；
+        ' 在质量达标前保持关闭，绝不产出劣于上一已通过阶段的文件。
         Dim pFrame As Boolean = False AndAlso (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
         Dim bits As New BitStreamWriter(1 << 16)
 
@@ -606,9 +607,20 @@ Friend Class H264VideoCodec
 
         Call writeCbpLuma(cabac, lumaCbp, leftCbp, topCbp)
         Call writeCbpChroma(cabac, chromaCbp, leftCbp, topCbp)
-        Call cabac.encodeBin(60, 0)                                     ' mb_qp_delta = 0
+
+        ' mb_qp_delta 只在 cbp != 0 或宏块为 I_16x16 时才存在（ffmpeg: if (cbp || IS_INTRA16x16(mb_type))）。
+        ' 本路径是 inter，故 cbp 为 0 时【绝不能】写这一位——多写一位会逐宏块累积，
+        ' 表现为「同一行若干个宏块之后突然 bytestream overread」。
+        If (lumaCbp Or chromaCbp) <> 0 Then
+            Call cabac.encodeBin(60, 0)
+        End If
 
         ' ---- 7. 残差系数 ----
+        ' inter 的 coded_block_flag 上下文与 intra 不同：不可用邻居的 nnz 记 0（intra 才是记 16），
+        ' 因此这里传入「零 nnz 的占位宏块信息」而不是 Nothing。
+        Dim acLeft As H264MbInfo = If(left, New H264MbInfo)
+        Dim acTop As H264MbInfo = If(top, New H264MbInfo)
+
         If lumaCbp <> 0 Then
             For i4x4 As Integer = 0 To 15
                 Dim bx As Integer = ((i4x4 >> 2) And 1) * 2 + (i4x4 And 1)
@@ -616,7 +628,7 @@ Friend Class H264VideoCodec
 
                 If ((lumaCbp >> ((by \ 2) * 2 + (bx \ 2))) And 1) = 0 Then Continue For
 
-                Dim ctx As Integer = H264Residual.cbfBaseCtx(2) + acNeighborCtx(left, top, info, bx, by, False, 0)
+                Dim ctx As Integer = H264Residual.cbfBaseCtx(2) + acNeighborCtx(acLeft, acTop, info, bx, by, False, 0)
 
                 info.lumaAcNnz(by * 4 + bx) = H264Residual.writeBlock(cabac, lumaAcLevels(by * 4 + bx), 2, H264Residual.zigZag, ctx)
             Next
