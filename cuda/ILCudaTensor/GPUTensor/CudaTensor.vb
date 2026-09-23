@@ -1190,6 +1190,274 @@ Namespace GPUTensor
 
 #End Region
 
+#Region "批量细胞管线融合算子（手写内核：Kernels\cellaccel.cu）"
+
+        ''' <summary>融合内核允许的最大线程数（blockDim.x 的 CUDA 上限）。</summary>
+        Private Const MaxCellKernelThreads As Integer = 1024
+
+        ''' <summary>
+        ''' 融合内核的图卷积层线程数：输出特征维度不超过 32，用 32 线程覆盖。
+        ''' </summary>
+        Private Const CellGraphLayerBlockSize As Integer = 32
+
+        ''' <summary>
+        ''' 确保张量已钉成<b>双精度</b>设备常驻缓冲——本组融合内核全部就地写入状态，
+        ''' 只有常驻表里的缓冲才能被 <see cref="SyncFromDevice"/> 同步回主机数组。
+        ''' </summary>
+        ''' <returns>张量已在常驻表中时返回 True；无法钉住时返回 False（调用方回退 CPU）</returns>
+        Private Function EnsureResident64(t As tf.Tensor, label As String, zeroFill As Boolean) As Boolean
+            If t Is Nothing OrElse t.Length <= 0 Then Return False
+            If IsDevicePinned(t) Then Return True
+            If Not SupportsDeviceResidency Then Return False
+
+            Return PinDevice64(t, label, zeroFill)
+        End Function
+
+        ''' <summary>
+        ''' 液态时间常数网络（LTC / LNN）批量 RK4 积分（GPU）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 整批细胞的状态 <c>[B, m]</c> 常驻显存，<c>subSteps</c> 个子步在内核里一次跑完：
+        ''' 一次内核启动服务全部细胞，且没有任何主机往返（对比：逐算子写法每步需要
+        ''' 十几次 GEMM + 逐元素调用，每次都要上传/回读）。
+        ''' <para>
+        ''' 任一前提不满足（内核缺失 / 形状不支持 / 状态无法钉住 / 可选权重缺失）时
+        ''' 直接走基类的标量实现，语义完全等价，只是慢一些。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function LtcRk4Batch(state As tf.Tensor, input As tf.Tensor,
+                                              weightRecurrent As tf.Tensor, weightInput As tf.Tensor, bias As tf.Tensor,
+                                              weightGate As tf.Tensor, weightGateInput As tf.Tensor, biasGate As tf.Tensor,
+                                              tauEff As tf.Tensor, dt As Double, subSteps As Integer,
+                                              activation As Integer) As Boolean
+
+            Dim kernel = TryKernel(TensorKernelNames.CellLtcRk4)
+
+            If kernel Is Nothing OrElse state Is Nothing OrElse input Is Nothing OrElse
+               weightRecurrent Is Nothing OrElse weightInput Is Nothing OrElse tauEff Is Nothing Then
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+            If state.Rank <> 2 OrElse input.Rank <> 2 OrElse weightRecurrent.Rank <> 2 OrElse
+               weightInput.Rank <> 2 OrElse tauEff.Length <> state.Shape(1) Then
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+
+            Dim batch As Integer = state.Shape(0)
+            Dim units As Integer = state.Shape(1)
+            Dim nIn As Integer = input.Shape(1)
+
+            If batch <= 0 OrElse units <= 0 OrElse nIn <= 0 Then
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+            If units > MaxCellKernelThreads OrElse input.Shape(0) <> batch Then
+                ' blockDim 用单元数铺满：超过上限时内核无法按"一线程一单元"映射
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+            If Not EnsureResident64(state, "cell.ltc.state", zeroFill:=False) Then
+                Return MyBase.LtcRk4Batch(state, input, weightRecurrent, weightInput, bias,
+                                          weightGate, weightGateInput, biasGate, tauEff, dt, subSteps, activation)
+            End If
+
+            Dim hasGate As Boolean = weightGate IsNot Nothing AndAlso weightGateInput IsNot Nothing
+            Dim sharedBytes As Integer = 6 * units * 8
+
+            kernel.Launch(batch, 1, units, 1, sharedBytes,
+                          Device64(state), Device64(input),
+                          Device64(weightRecurrent), Device64(weightInput),
+                          If(bias Is Nothing, Nothing, Device64(bias)),
+                          If(hasGate, Device64(weightGate), Nothing),
+                          If(hasGate, Device64(weightGateInput), Nothing),
+                          If(hasGate AndAlso biasGate IsNot Nothing, Device64(biasGate), Nothing),
+                          Device64(tauEff),
+                          units, nIn, dt, System.Math.Max(1, subSteps), If(hasGate, 1, 0), activation)
+
+            ' 就地写入：主机副本此刻是陈旧的，读主机数组之前必须 SyncFromDevice
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 图卷积批量层（GPU）：自身分支 + CSR 邻居聚合 + 偏置 + 激活。
+        ''' </summary>
+        ''' <remarks>
+        ''' 拓扑与系数对全部细胞共享，因此一份 CSR 常驻显存即可服务整个 batch；
+        ''' 节点特征按 <c>[B·n, inF]</c> 行优先布局，邻居行号 = 批内基址 + 源节点号。
+        ''' <c>edges</c> 为空（解码器等无邻居层）时内核退化为普通全连接层。
+        ''' </remarks>
+        Public Overrides Function GraphLayerBatch(x As tf.Tensor, wSelf As tf.Tensor, wRel As tf.Tensor,
+                                                  selfW As tf.Tensor, bias As tf.Tensor, edges As tfCompute.SparseCsr,
+                                                  out As tf.Tensor, activation As Integer) As Boolean
+
+            Dim kernel = TryKernel(TensorKernelNames.CellGraphLayer)
+
+            If kernel Is Nothing OrElse x Is Nothing OrElse wSelf Is Nothing OrElse out Is Nothing Then
+                Return MyBase.GraphLayerBatch(x, wSelf, wRel, selfW, bias, edges, out, activation)
+            End If
+            If x.Rank <> 2 OrElse out.Rank <> 2 OrElse x.Shape(0) <> out.Shape(0) Then
+                Return MyBase.GraphLayerBatch(x, wSelf, wRel, selfW, bias, edges, out, activation)
+            End If
+
+            Dim rows As Integer = x.Shape(0)
+            Dim inF As Integer = x.Shape(1)
+            Dim outF As Integer = out.Shape(1)
+            Dim nodes As Integer = If(edges IsNot Nothing, edges.Rows,
+                                      If(selfW IsNot Nothing, selfW.Length, rows))
+
+            If rows <= 0 OrElse inF <= 0 OrElse outF <= 0 OrElse nodes <= 0 Then
+                Return MyBase.GraphLayerBatch(x, wSelf, wRel, selfW, bias, edges, out, activation)
+            End If
+            If Not EnsureResident64(out, "cell.graph.out", zeroFill:=False) Then
+                Return MyBase.GraphLayerBatch(x, wSelf, wRel, selfW, bias, edges, out, activation)
+            End If
+
+            Dim csr = If(edges Is Nothing, Nothing, _csrCache.GetBuffers(_engine, edges))
+            Dim rowPtr As Object = If(csr Is Nothing, Nothing, csr.RowPtr)
+            Dim colIdx As Object = If(csr Is Nothing, Nothing, csr.ColIdx)
+            Dim coeff As Object = If(csr Is Nothing, Nothing, csr.Values)
+
+            kernel.Launch(rows, 1, CellGraphLayerBlockSize, 1, 0,
+                          Device64(x), Device64(wSelf),
+                          If(wRel Is Nothing, Nothing, Device64(wRel)),
+                          If(selfW Is Nothing, Nothing, Device64(selfW)),
+                          If(bias Is Nothing, Nothing, Device64(bias)),
+                          rowPtr, colIdx, coeff,
+                          Device64(out),
+                          nodes, inF, outF, activation)
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 节点特征拼装（GPU）：<c>[B·n, 2+2d] ← [x̄ ‖ p ‖ e_i ‖ z_pert]</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 纯数据搬移，一次内核完成；输入中的逐节点向量按行索引取，扰动向量按批索引取。
+        ''' 该拼装如果没有内核支撑，在主机侧就是 <c>B·n·dims</c> 次带索引的写入
+        ''' （实测占 GRN 前向可观的一部分），因此同样做成融合算子。
+        ''' </remarks>
+        Public Overrides Function GraphFeatureBatch(xNorm As tf.Tensor, flag As tf.Tensor, embed As tf.Tensor,
+                                                    zPert As tf.Tensor, out As tf.Tensor,
+                                                    n As Integer, d As Integer) As Boolean
+
+            Dim kernel = TryKernel(TensorKernelNames.CellGraphFeature)
+
+            If kernel Is Nothing OrElse xNorm Is Nothing OrElse flag Is Nothing OrElse
+               embed Is Nothing OrElse zPert Is Nothing OrElse out Is Nothing Then
+                Return MyBase.GraphFeatureBatch(xNorm, flag, embed, zPert, out, n, d)
+            End If
+            If n <= 0 OrElse d <= 0 OrElse embed.Length <> n * d Then
+                Return MyBase.GraphFeatureBatch(xNorm, flag, embed, zPert, out, n, d)
+            End If
+
+            Dim rows As Integer = xNorm.Length
+            Dim dims As Integer = 2 + 2 * d
+
+            If rows <= 0 OrElse rows Mod n <> 0 OrElse out.Length <> rows * dims Then
+                Return MyBase.GraphFeatureBatch(xNorm, flag, embed, zPert, out, n, d)
+            End If
+            If Not EnsureResident64(out, "cell.graph.features", zeroFill:=False) Then
+                Return MyBase.GraphFeatureBatch(xNorm, flag, embed, zPert, out, n, d)
+            End If
+
+            Dim total As Integer = rows * dims
+            Dim grid As Integer = (total + 255) \ 256
+
+            kernel.Launch(grid, 1, 256, 1, 0,
+                          Device64(xNorm), Device64(flag), Device64(embed), Device64(zPert),
+                          Device64(out), rows, n, d)
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 通量读取头批量计算（GPU）：<c>v = e ⊙ gsat([h ‖ u]·Wv + bv)</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 输出必须落在常驻缓冲里（内核直接写显存），因此这里对 <paramref name="output"/>
+        ''' 调用 <see cref="EnsureResident64"/>；调用方读主机数组之前需要
+        ''' <see cref="SyncFromDevice"/>。
+        ''' </remarks>
+        Public Overrides Function FluxHeadBatch(h As tf.Tensor, u As tf.Tensor, wFlux As tf.Tensor,
+                                                fluxBias As tf.Tensor, reversible As tf.Tensor,
+                                                output As tf.Tensor) As Boolean
+
+            Dim kernel = TryKernel(TensorKernelNames.CellFluxHead)
+
+            If kernel Is Nothing OrElse h Is Nothing OrElse u Is Nothing OrElse wFlux Is Nothing OrElse output Is Nothing Then
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+            If h.Rank <> 2 OrElse u.Rank <> 2 OrElse output.Rank <> 2 OrElse wFlux.Rank <> 2 Then
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+
+            Dim batch As Integer = h.Shape(0)
+            Dim m As Integer = h.Shape(1)
+            Dim nIn As Integer = u.Shape(1)
+            Dim r As Integer = output.Shape(1)
+
+            If batch <= 0 OrElse m <= 0 OrElse nIn <= 0 OrElse r <= 0 Then
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+            If wFlux.Shape(0) <> m + nIn OrElse wFlux.Shape(1) <> r OrElse output.Shape(0) <> batch Then
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+            If Not EnsureResident64(output, "cell.flux", zeroFill:=False) Then
+                Return MyBase.FluxHeadBatch(h, u, wFlux, fluxBias, reversible, output)
+            End If
+
+            kernel.Launch(batch, 1, 64, 1, 0,
+                          Device64(h), Device64(u), Device64(wFlux),
+                          If(fluxBias Is Nothing, Nothing, Device64(fluxBias)),
+                          If(reversible Is Nothing, Nothing, Device64(reversible)),
+                          Device64(output), m, nIn, r)
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 系统时间常数批量计算（GPU）：<c>τ^sys = 1/(1/τ_eff + σ(h·Wgate + u·WgateIn + bg))</c>。
+        ''' </summary>
+        Public Overrides Function SystemTauBatch(h As tf.Tensor, u As tf.Tensor, weightGate As tf.Tensor,
+                                                 weightGateInput As tf.Tensor, biasGate As tf.Tensor,
+                                                 tauEff As tf.Tensor, output As tf.Tensor) As Boolean
+
+            Dim kernel = TryKernel(TensorKernelNames.CellSysTau)
+
+            If kernel Is Nothing OrElse h Is Nothing OrElse u Is Nothing OrElse tauEff Is Nothing OrElse output Is Nothing Then
+                Return MyBase.SystemTauBatch(h, u, weightGate, weightGateInput, biasGate, tauEff, output)
+            End If
+            If h.Rank <> 2 OrElse u.Rank <> 2 OrElse output.Rank <> 2 Then
+                Return MyBase.SystemTauBatch(h, u, weightGate, weightGateInput, biasGate, tauEff, output)
+            End If
+
+            Dim batch As Integer = h.Shape(0)
+            Dim m As Integer = h.Shape(1)
+            Dim nIn As Integer = u.Shape(1)
+            Dim hasGate As Boolean = weightGate IsNot Nothing AndAlso weightGateInput IsNot Nothing
+
+            If batch <= 0 OrElse m <= 0 OrElse nIn <= 0 OrElse output.Length <> batch * m Then
+                Return MyBase.SystemTauBatch(h, u, weightGate, weightGateInput, biasGate, tauEff, output)
+            End If
+            If Not EnsureResident64(output, "cell.systau", zeroFill:=False) Then
+                Return MyBase.SystemTauBatch(h, u, weightGate, weightGateInput, biasGate, tauEff, output)
+            End If
+
+            kernel.Launch(batch, 1, 64, 1, 0,
+                          Device64(h), Device64(u),
+                          If(hasGate, Device64(weightGate), Nothing),
+                          If(hasGate, Device64(weightGateInput), Nothing),
+                          If(hasGate AndAlso biasGate IsNot Nothing, Device64(biasGate), Nothing),
+                          Device64(tauEff), Device64(output),
+                          m, nIn, If(hasGate, 1, 0))
+
+            Return True
+        End Function
+
+#End Region
+
 #Region "卷积与池化（手写内核：Kernels\conv.cu / Kernels\pool.cu）"
 
         ''' <summary>卷积/池化的输出边长: (input + 2*padding - kernel) / stride + 1</summary>
@@ -1898,7 +2166,10 @@ Namespace GPUTensor
                 TensorKernelNames.TrainAccumulate,
                 TensorKernelNames.SpmmCsr,
                 TensorKernelNames.LifUpdateDouble,
-                TensorKernelNames.LifUpdateFp32
+                TensorKernelNames.LifUpdateFp32,
+                TensorKernelNames.CellLtcRk4,
+                TensorKernelNames.CellGraphLayer,
+                TensorKernelNames.CellGraphFeature
             }
 
             Dim sb As New System.Text.StringBuilder()

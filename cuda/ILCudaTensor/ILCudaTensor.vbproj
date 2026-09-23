@@ -69,6 +69,12 @@
       压成一次调用，配合设备常驻状态实现每步零主机往返。double 与 float 两个变体。
     -->
     <EmbeddedResource Include="Kernels\lif.cu" />
+    <!--
+      Cella 批量细胞管线融合内核：把「同一步的全部细胞」当作一个 batch，
+      为液态网络 RK4 积分（LNN）与先验调控图消息传递（GNN）各提供一次内核完成，
+      配合设备常驻状态消除逐算子往返。
+    -->
+    <EmbeddedResource Include="Kernels\cellaccel.cu" />
   </ItemGroup>
 
   <ItemGroup>

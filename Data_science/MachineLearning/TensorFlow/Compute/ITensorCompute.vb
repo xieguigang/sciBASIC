@@ -227,6 +227,133 @@ Namespace Compute
 
 #End Region
 
+#Region "批量细胞管线融合算子（Cella）"
+
+        ' ------------------------------------------------------------------
+        ' 这一组算子存在的理由：类器官 / 多细胞仿真里，每个细胞每步都要跑
+        ' 一次「液态代谢网络 RK4 积分」与「先验调控图消息传递」。
+        '
+        ' 逐细胞调用时（1×122、339×34）规模低于 GPU 后端的回退阈值，
+        ' 全部被判为"小算子"而落到 CPU；即使强行上 GPU，逐算子写法也会为
+        ' 每步产生几十次显存往返，往返开销把计算收益吃光。
+        '
+        ' 因此把「同一步的全部存活细胞」当作 batch 维（峰值数千），
+        ' 每个子网络压成一到两次内核启动，状态在显存里原地更新，
+        ' 主机往返次数从"每细胞几十次"降到"每批几次"。
+        '
+        ' 约定与 LifStep 一致：返回 True 表示整步（或整个算子）已由本后端完成，
+        ' 调用方不得再走逐算子路径；返回 False 时调用方回退到标量实现，
+        ' 语义完全等价，只是慢一些。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>
+        ''' 融合的液态时间常数网络（LTC / LNN）批量 RK4 积分：<b>就地</b>推进状态。
+        ''' </summary>
+        ''' <param name="state">状态张量 <c>[B, m]</c>；返回时被就地改写为推进 <c>dt</c> 之后的状态</param>
+        ''' <param name="input">区间内恒定的驱动输入 <c>[B, nIn]</c></param>
+        ''' <param name="weightRecurrent">递归权重 <c>[m, m]</c></param>
+        ''' <param name="weightInput">输入权重 <c>[nIn, m]</c></param>
+        ''' <param name="bias">偏置 <c>[m]</c>；<c>Nothing</c> 表示无偏置</param>
+        ''' <param name="weightGate">门控递归权重 <c>[m, m]</c>；<c>Nothing</c> 表示无门控（CT_RNN 模式）</param>
+        ''' <param name="weightGateInput">门控输入权重 <c>[nIn, m]</c></param>
+        ''' <param name="biasGate">门控偏置 <c>[m]</c></param>
+        ''' <param name="tauEff">有效时间常数 <c>[m]</c>（已应用边界约束）</param>
+        ''' <param name="dt">本次推进的总时长</param>
+        ''' <param name="subSteps">子步数：每子步执行一次 RK4 步，子步长 = dt / subSteps</param>
+        ''' <param name="activation">激活函数编码：0 线性 / 1 tanh / 2 sigmoid / 3 relu</param>
+        ''' <returns><c>True</c> 表示整步已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        ''' <remarks>
+        ''' 语义与 CPU 参考实现完全等价：
+        ''' <code>
+        '''   A     = act(h·Wrec + u·Win + b)
+        '''   f     = σ(h·Wgate + u·WgateIn + bg)      （无门控时 f ≡ 0）
+        '''   dh/dt = (1/τ_eff + f) ⊙ (A − h)
+        ''' </code>
+        ''' 就地更新意味着<b>设备为主副本</b>：调用方读主机数组之前必须调用
+        ''' <see cref="SyncFromDevice"/>（或该张量未被钉住时按普通张量读取）。
+        ''' </remarks>
+        Function LtcRk4Batch(state As Tensor, input As Tensor,
+                             weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
+                             weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
+                             tauEff As Tensor, dt As Double, subSteps As Integer,
+                             activation As Integer) As Boolean
+
+        ''' <summary>
+        ''' 融合的图卷积批量层（GEARS 消息传递；解码器等无邻居层复用同一算子）。
+        ''' </summary>
+        ''' <param name="x">节点特征 <c>[B·n, inF]</c>（批内第 b 个细胞的第 i 个节点 = 行 b·n+i）</param>
+        ''' <param name="wSelf">自身分支权重 <c>[inF, outF]</c></param>
+        ''' <param name="wRel">邻居分支权重 <c>[inF, outF]</c>；<c>Nothing</c> 表示忽略邻居项</param>
+        ''' <param name="selfW">逐节点自身缩放 <c>[n]</c>；<c>Nothing</c> 表示全部取 1</param>
+        ''' <param name="bias">偏置 <c>[outF]</c>；<c>Nothing</c> 表示无偏置</param>
+        ''' <param name="edges">
+        ''' 入边邻接（CSR）：<c>RowPointers[i]..RowPointers[i+1]</c> 给出节点 i 的入边，
+        ''' <c>ColumnIndices</c> = 邻居（源）节点号，<c>Values</c> = 该边的合成系数。
+        ''' 拓扑与系数对全部细胞共享，因此同一份 CSR 可服务整个 batch。
+        ''' <c>Nothing</c> 表示无邻居（退化为全连接层）。
+        ''' </param>
+        ''' <param name="output">输出张量 <c>[B·n, outF]</c>（由本算子写入，可为未初始化张量）</param>
+        ''' <param name="activation">激活函数编码：0 线性 / 1 tanh / 2 sigmoid / 3 relu</param>
+        ''' <returns><c>True</c> 表示整层已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        ''' <remarks>
+        ''' 计算式（与 GEARSConvLayer.Forward 的标量实现逐项对应）：
+        ''' <code>
+        '''   out[row, j] = act( selfW[i]·Σ_k x[row, k]·wSelf[k, j] + bias[j]
+        '''                      + Σ_e coeff[e]·Σ_k x[src_e, k]·wRel[k, j] )
+        ''' </code>
+        ''' </remarks>
+        Function GraphLayerBatch(x As Tensor, wSelf As Tensor, wRel As Tensor,
+                                 selfW As Tensor, bias As Tensor, edges As SparseCsr,
+                                 output As Tensor, activation As Integer) As Boolean
+
+        ''' <summary>
+        ''' 融合的节点特征拼装：<c>[x̄ ‖ p ‖ e_i ‖ z_pert]</c>。
+        ''' </summary>
+        ''' <param name="xNorm">逐节点控制表达 <c>[B·n]</c>（行优先）</param>
+        ''' <param name="flag">逐节点扰动标记 <c>[B·n]</c></param>
+        ''' <param name="embed">基因身份嵌入表 <c>[n, d]</c></param>
+        ''' <param name="zPert">逐细胞的全局扰动向量 <c>[B, d]</c></param>
+        ''' <param name="output">输出特征 <c>[B·n, 2+2d]</c></param>
+        ''' <param name="n">节点数（基因数）</param>
+        ''' <param name="d">嵌入维度</param>
+        ''' <returns><c>True</c> 表示已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        Function GraphFeatureBatch(xNorm As Tensor, flag As Tensor, embed As Tensor, zPert As Tensor,
+                                  output As Tensor, n As Integer, d As Integer) As Boolean
+
+        ''' <summary>
+        ''' 融合的通量读取头批量计算：<c>v[b, j] = e[b, j] ⊙ gsat([h ‖ u][b] · Wv[:, j] + bv[j])</c>。
+        ''' </summary>
+        ''' <param name="h">隐藏状态 <c>[B, m]</c>（代谢物浓度）</param>
+        ''' <param name="u">网络输入 <c>[B, nIn]</c>（前 r 项为逐反应酶水平，其后为边界浓度）</param>
+        ''' <param name="wFlux">读取权重 <c>[m+nIn, r]</c></param>
+        ''' <param name="fluxBias">读取偏置 <c>[r]</c>；<c>Nothing</c> 表示无偏置</param>
+        ''' <param name="reversible">逐反应可逆标记 <c>[r]</c>（非 0 表示可逆）；<c>Nothing</c> 表示全部不可逆</param>
+        ''' <param name="output">输出通量 <c>[B, r]</c></param>
+        ''' <returns><c>True</c> 表示已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        ''' <remarks>
+        ''' 不可逆反应取 <c>σ(·)</c>，可逆反应取 <c>2σ(·)−1</c>（允许负通量表示逆向流动）；
+        ''' 预激活按 ±30 夹断以避免 <c>exp</c> 溢出（与 CPU 侧 Clamp 一致）。
+        ''' </remarks>
+        Function FluxHeadBatch(h As Tensor, u As Tensor, wFlux As Tensor, fluxBias As Tensor,
+                               reversible As Tensor, output As Tensor) As Boolean
+
+        ''' <summary>
+        ''' 融合的系统时间常数批量计算：<c>τ^sys = 1 / (1/τ_eff + f)</c>，
+        ''' <c>f = σ(h·Wgate + u·WgateIn + bg)</c>（无门控时 <c>f ≡ 0</c>，退化为 τ_eff）。
+        ''' </summary>
+        ''' <param name="h">隐藏状态 <c>[B, m]</c></param>
+        ''' <param name="u">网络输入 <c>[B, nIn]</c></param>
+        ''' <param name="weightGate">门控递归权重 <c>[m, m]</c>；<c>Nothing</c> 表示无门控</param>
+        ''' <param name="weightGateInput">门控输入权重 <c>[nIn, m]</c></param>
+        ''' <param name="biasGate">门控偏置 <c>[m]</c></param>
+        ''' <param name="tauEff">有效时间常数 <c>[m]</c></param>
+        ''' <param name="output">系统时间常数 <c>[B, m]</c></param>
+        ''' <returns><c>True</c> 表示已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        Function SystemTauBatch(h As Tensor, u As Tensor, weightGate As Tensor, weightGateInput As Tensor,
+                                biasGate As Tensor, tauEff As Tensor, output As Tensor) As Boolean
+
+#End Region
+
 #Region "形状变换与选择"
 
         ''' <summary>
