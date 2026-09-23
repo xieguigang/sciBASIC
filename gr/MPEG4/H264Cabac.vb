@@ -154,10 +154,15 @@ Friend Class H264Cabac
     ''' <summary>
     ''' 编码一个旁路位表示的正负号：<paramref name="value"/> 的符号由 1 个旁路位承载
     ''' </summary>
+    ''' <remarks>
+    ''' 解码器写的是 <c>get_cabac_bypass_sign(CC, -coeff_abs)</c>，而该函数的实现是
+    ''' <c>mask = (low - range) &gt;&gt; 31; return (val ^ mask) - mask;</c>：
+    ''' 位为 0 时 <c>mask = -1</c>，返回 <c>-val</c>（即 <b>正</b>）；位为 1 时 <c>mask = 0</c>，
+    ''' 返回 <c>val</c>（即 <b>负</b>）。因此<b>位 0 表示正、位 1 表示负</b>。
+    ''' 写反会让整幅画面的系数符号全部颠倒（全零残差不受影响，因此只会在有系数时暴露）。
+    ''' </remarks>
     Friend Sub encodeBypassSign(value As Integer)
-        ' 解码侧为 get_cabac_bypass_sign(CC, -magnitude)：
-        ' 位为 0 → 负；位为 1 → 正
-        Call encodeBypass(If(value >= 0, 1, 0))
+        Call encodeBypass(If(value >= 0, 0, 1))
     End Sub
 
     ''' <summary>

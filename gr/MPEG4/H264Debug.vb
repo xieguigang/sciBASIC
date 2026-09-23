@@ -49,4 +49,14 @@ Public NotInheritable Class H264Debug
     ''' </summary>
     Public Shared ReadOnly Property Ranges As List(Of Integer) = New List(Of Integer)
 
+    ''' <summary>
+    ''' 供 DC 通路标定使用的数值记录（<c>名称=值</c>）
+    ''' </summary>
+    Public Shared ReadOnly Property Values As List(Of String) = New List(Of String)
+
+    ''' <summary>记录一个标定数值</summary>
+    Public Shared Sub note(name As String, value As Integer)
+        If Enabled Then Values.Add($"{name}={value}")
+    End Sub
+
 End Class

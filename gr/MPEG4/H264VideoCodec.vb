@@ -452,6 +452,12 @@ Friend Class H264VideoCodec
         Call H264Transform.dequantizeDc(lumaDcLevels, lumaDcOut, 16, qp)
         Call H264Transform.inverseLumaDcTransform(lumaDcOut, dcMap)
 
+        ' 【临时诊断】DC 通路标定
+        Call H264Debug.note("lumaDcLevel0", lumaDcLevels(0))
+        Call H264Debug.note("lumaDcOut0", lumaDcOut(0))
+        Call H264Debug.note("dcMap0", dcMap(0))
+        Call H264Debug.note("qmulDc", H264Transform.qmul(qp, 0))
+
         For by As Integer = 0 To 3
             For bx As Integer = 0 To 3
                 Dim blockIdx As Integer = by * 4 + bx

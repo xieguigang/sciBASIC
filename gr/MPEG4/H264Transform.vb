@@ -347,13 +347,11 @@ Friend NotInheritable Class H264Transform
     Friend Shared Sub dequantizeDc(levels As Integer(), coeff As Integer(), count As Integer, qp As Integer)
         Dim scale As Integer = qmul(qp, 0)
 
+        ' 注意：这里【不能】做 16 位钳位。解码器的 DC 通路（ff_h264_luma_dc_dequant_idct /
+        ' ff_h264_chroma_dc_dequant_idct）全程用 int 计算，只有 level 本身存成 int16；
+        ' 而 AC 通路才是 int16_t block[i] = src[i] * qmul[i]（因此 AC 侧保留钳位）。
         For i As Integer = 0 To count - 1
-            Dim v As Long = CLng(levels(i)) * scale
-
-            If v > 32767L Then v = 32767L
-            If v < -32768L Then v = -32768L
-
-            coeff(i) = CInt(v)
+            coeff(i) = CInt(CLng(levels(i)) * scale)
         Next
     End Sub
 
