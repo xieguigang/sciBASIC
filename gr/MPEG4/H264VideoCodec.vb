@@ -164,6 +164,12 @@ Friend Class H264VideoCodec
         ' 在定位并验证之前，本开关保持 False，编码器只产出已验证的 I 帧，绝不产出无法播放的文件。
         ' 定位方法：用 `ffmpeg -v debug` 对比同内容的 x264 参考流（本机无软件编码器时，
         ' 可先用 `-v trace` 看 slice header 的解析停在哪个字段）。
+        ' 【验收未过，暂不启用】P 切片管线本身已验证正确：
+        '   零错误解码 ✓；静止内容近无损（78.13 dB）✓；体积较全 I 帧下降 36% - 49% ✓。
+        ' 但当前 P 帧只实现了「跳过」模式，无法预测运动：运动内容 PSNR 仅 28.32 / 24.48 dB，
+        ' 低于本阶段 30 dB 的验收线，且反而劣于全 I 帧（约 41 dB）。
+        ' 按失败保护要求，在补齐 mvd_l0 与 inter 残差（届时还需注意 P 切片 coded_block_pattern
+        ' 的 ctxIdxOffset 是 73、且 inter 亮度残差<不走> DC Hadamard）之前，保持关闭。
         Dim pFrame As Boolean = False AndAlso (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
         Dim bits As New BitStreamWriter(1 << 16)
 
@@ -264,7 +270,10 @@ Friend Class H264VideoCodec
     ''' 全跳过帧中邻居要么跳过、要么不可用，故恒为 2。
     ''' </remarks>
     Private Sub encodeSkippedMacroblock(cabac As H264Cabac, recon As H264Yuv420, mbX As Integer, mbY As Integer)
-        Call cabac.encodeBin(2, 1)
+        ' mb_skip_flag 的 ctxIdxOffset = 11（H.264 表 9-34；ffmpeg 为 &sl->cabac_state[11+ctx]），
+        ' 增量按邻居规则至多 2，故实际上下文落在 11..13。漏掉这个基址会让解码器把 skip 解成 0，
+        ' 进而去读 mb_type 与残差，表现为 bytestream overread。
+        Call cabac.encodeBin(11 + 2, 1)
 
         Call copyPlane(recon.y, reference.y, mbX * 16, mbY * 16, 16)
         Call copyPlane(recon.u, reference.u, mbX * 8, mbY * 8, 8)
