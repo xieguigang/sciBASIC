@@ -70,7 +70,8 @@ Friend NotInheritable Class H264SliceHeader
                             Optional cabacInitIdc As Integer = 0,
                             Optional numRefIdxOverride As Boolean = False,
                             Optional numRefIdxL0Minus1 As Integer = 0,
-                            Optional numRefIdxL1Minus1 As Integer = 0)
+                            Optional numRefIdxL1Minus1 As Integer = 0,
+                            Optional isReference As Boolean = True)
 
         Call w.writeUe(0)                                               ' first_mb_in_slice
         Call w.writeUe(CInt(sliceType))                                 ' slice_type
@@ -111,12 +112,16 @@ Friend NotInheritable Class H264SliceHeader
             End If
         End If
 
-        ' dec_ref_pic_marking（nal_ref_idc != 0 时存在）
-        If isIdr Then
-            Call w.writeBit(0)                                          ' no_output_of_prior_pics_flag
-            Call w.writeBit(0)                                          ' long_term_reference_flag
-        Else
-            Call w.writeBit(0)                                          ' adaptive_ref_pic_marking_mode_flag
+        ' dec_ref_pic_marking 只在 nal_ref_idc != 0（即参考图像）时存在。
+        ' B 帧是非参考图像，若仍写出这一位，解码器会把紧随其后的 cabac_init_idc 读错位
+        ' （表现为 "cabac_init_idc 3 overflow"）。
+        If isReference Then
+            If isIdr Then
+                Call w.writeBit(0)                                      ' no_output_of_prior_pics_flag
+                Call w.writeBit(0)                                      ' long_term_reference_flag
+            Else
+                Call w.writeBit(0)                                      ' adaptive_ref_pic_marking_mode_flag
+            End If
         End If
 
         If sliceType <> H264SliceType.I Then

@@ -330,7 +330,8 @@ Friend Class H264VideoCodec
                                    cabacInitIdc:=If(isB, 1, 0),
                                    numRefIdxOverride:=isB,
                                    numRefIdxL0Minus1:=1,
-                                   numRefIdxL1Minus1:=1)
+                                   numRefIdxL1Minus1:=1,
+                                   isReference:=Not isB)
 
         Dim cabac As New H264Cabac(bits)
 
@@ -377,7 +378,10 @@ Friend Class H264VideoCodec
 
         Dim rbsp As Byte() = bits.toArray
         ' 采样中的 NAL 不带起始码，只带 NAL 头（AVCC 封装）
-        Dim nal As Byte() = BitStreamWriter.nalUnit(rbsp, 3, If(isIdr, 5, 1), annexB:=False)
+        ' nal_ref_idc：B 帧是【非参考图像】，必须为 0——写成非 0 会让解码器把 B 帧放进 DPB 的
+        ' 短参考列表，它与「沿用前一个参考的 frame_num」叠加就会触发
+        ' 「illegal short term buffer state detected」，同时污染后续帧的参考列表内容。
+        Dim nal As Byte() = BitStreamWriter.nalUnit(rbsp, If(isB, 0, 3), If(isIdr, 5, 1), annexB:=False)
         Dim sample As Byte() = New Byte(nal.Length + 3) {}
 
         sample(0) = CByte((nal.Length >> 24) And &HFF)
