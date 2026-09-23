@@ -64,4 +64,10 @@ Public NotInheritable Class H264Debug
     ''' </summary>
     Public Shared ForceQp As Integer = 0
 
+    ''' <summary>
+    ''' 【临时诊断】大于 0 时把亮度 DC 块的 level 强制为「首系数 = 该值、其余 = 0」，
+    ''' 用于把 DC 第二级增益单独测出来
+    ''' </summary>
+    Public Shared ForceDcLevel As Integer = 0
+
 End Class

@@ -273,6 +273,11 @@ Friend Class H264VideoCodec
         Call H264Transform.forwardLumaDcTransform(lumaDcIn, lumaDcCoeff)
         Call H264Transform.quantizeDc(lumaDcCoeff, lumaDcLevels, 16, qp, True)
 
+        If H264Debug.ForceDcLevel > 0 Then
+            Call Array.Clear(lumaDcLevels, 0, 16)
+            lumaDcLevels(0) = H264Debug.ForceDcLevel
+        End If
+
         ' ---- 5. 色度残差 → 变换量化 + 2x2 Hadamard ----
         For c As Integer = 0 To 1
             Dim plane As H264Plane = If(c = 0, source.u, source.v)

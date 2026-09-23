@@ -174,11 +174,18 @@ Friend NotInheritable Class H264Transform
 
     ''' <summary>
     ''' 亮度 DC 的 Hadamard 输出位置到宏块内 4x4 块序号的映射
-    ''' （ffmpeg <c>h264_mb.c:712</c> 的 <c>dc_mapping</c>，恰为一组对换，故自逆）
     ''' </summary>
+    ''' <remarks>
+    ''' 依据解码器 <c>ff_h264_luma_dc_dequant_idct</c> 的落点公式 <c>output[stride*R + x_offset[i]]</c>：
+    ''' <c>stride = 16</c>、<c>x_offset = {0, 2*16, 8*16, 10*16}</c>、<c>R ∈ {0,1,4,5}</c>，
+    ''' 换算成宏块内 4x4 块序号即 <c>块 = R + x_offset[i]/16</c>，于是第 i 列的四个落点为
+    ''' <c>{x_offset[i]/16 + 0, +1, +4, +5}</c>。
+    ''' 注意：<b>不可</b>照抄 <c>h264_mb.c</c> 里 <c>transform_bypass</c> 分支的 <c>dc_mapping</c>，
+    ''' 那是另一条路径（曾经的错误来源）。
+    ''' </remarks>
     Friend Shared ReadOnly lumaDcMapping As Integer() = {
-        0, 1, 4, 5, 2, 3, 6, 7,
-        8, 9, 12, 13, 10, 11, 14, 15
+        0, 2, 8, 10, 1, 3, 9, 11,
+        4, 6, 12, 14, 5, 7, 13, 15
     }
 
     ''' <summary>
@@ -245,8 +252,8 @@ Friend NotInheritable Class H264Transform
 
             tmp(o) = s0 + s1
             tmp(o + 1) = d0 + d1
-            tmp(o + 2) = s0 - s1
-            tmp(o + 3) = d0 - d1
+            tmp(o + 2) = d0 - d1
+            tmp(o + 3) = s0 - s1
         Next
 
         For i As Integer = 0 To 3
@@ -277,8 +284,8 @@ Friend NotInheritable Class H264Transform
 
             tmp(o) = s0 + s1
             tmp(o + 1) = d0 + d1
-            tmp(o + 2) = s0 - s1
-            tmp(o + 3) = d0 - d1
+            tmp(o + 2) = d0 - d1
+            tmp(o + 3) = s0 - s1
         Next
 
         For i As Integer = 0 To 3
@@ -287,13 +294,14 @@ Friend NotInheritable Class H264Transform
             Dim d0 As Integer = tmp(i) - tmp(8 + i)
             Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
 
-            ' 镜像解码器 ff_h264_luma_dc_dequant_idct：Hadamard【不做归一化】，
-            ' 随后 (x + 128) >> 8 落在"×64 域"上（该值再经逆变换的 >> 6 得到残差 DC），
-            ' 并按 dc_mapping 把结果分发到宏块内的 4x4 块。
-            dst(lumaDcMapping(i)) = (s0 + s1 + 128) >> 8
-            dst(lumaDcMapping(4 + i)) = (d0 + d1 + 128) >> 8
-            dst(lumaDcMapping(8 + i)) = (s0 - s1 + 128) >> 8
-            dst(lumaDcMapping(12 + i)) = (d0 - d1 + 128) >> 8
+            ' 镜像解码器 ff_h264_luma_dc_dequant_idct。实测标定（强制已知 DC level 反解）表明
+            ' 解码器对一元（one-hot）level 输出的 DC 为 (L*qmul) >> 4，即 4x4 Hadamard 的增益 16
+            ' 体现在归一化中；若写成 >> 8 会让重建整体小 16 倍。
+            ' 另外取值落点必须照抄解码器：stride*4 收 (z1-z2)，stride*5 收 (z0-z3)，两者不可对调。
+            dst(lumaDcMapping(i)) = (s0 + s1 + 128) >> 4
+            dst(lumaDcMapping(4 + i)) = (d0 + d1 + 128) >> 4
+            dst(lumaDcMapping(8 + i)) = (d0 - d1 + 128) >> 4
+            dst(lumaDcMapping(12 + i)) = (s0 - s1 + 128) >> 4
         Next
     End Sub
 
@@ -316,11 +324,12 @@ Friend NotInheritable Class H264Transform
         Dim c As Integer = src(2)
         Dim d As Integer = src(3)
 
-        ' 镜像解码器 ff_h264_chroma_dc_dequant_idct：2x2 Hadamard【不归一化】，随后 >> 7
-        dst(0) = (a + b + c + d) >> 7
-        dst(1) = (a - b + c - d) >> 7
-        dst(2) = (a + b - c - d) >> 7
-        dst(3) = (a - b - c + d) >> 7
+        ' 镜像解码器 ff_h264_chroma_dc_dequant_idct：与亮度同理，2x2 Hadamard 的增益 4 体现在归一化中，
+        ' 因此这里是 >> 5（原文 >> 7 会让色度 DC 整体小 4 倍，与亮度同一类错误）。
+        dst(0) = (a + b + c + d) >> 5
+        dst(1) = (a - b + c - d) >> 5
+        dst(2) = (a + b - c - d) >> 5
+        dst(3) = (a - b - c + d) >> 5
     End Sub
 
 #End Region
@@ -329,12 +338,12 @@ Friend NotInheritable Class H264Transform
     ''' DC 系数（Hadamard 的输出）的量化：所有位置统一使用 (0,0) 位置的标度
     ''' </summary>
     Friend Shared Sub quantizeDc(coeff As Integer(), levels As Integer(), count As Integer, qp As Integer, intra As Boolean)
-        ' 解码器对 DC 的逆变换是【不归一化】的 Hadamard 后接 (x*qmul + 128) >> 8（亮度）
-        ' 或 (x*qmul) >> 7（色度），最终经 >> 6 得到残差 DC。由此反解出前向应有的倍数：
-        '   亮度：levels = 16 * H(每块 DC 的量化值)
-        '   色度：levels = 32 * X(每块 DC 的量化值)
-        ' 这两个倍数与 qmul 无关，因此 DC 通路在第二级是精确无损的（量化误差只来自第一级）。
-        Dim k As Integer = If(count = 16, 16, 32)
+        ' DC 第二级是精确无损的（量化误差只来自第一级）：解码器把 level 经 Hadamard 放大 16 倍
+        ' （色度 4 倍）后除以 256（色度 32），净增益恰为 1/16（色度 1/8）——
+        ' 与逐块 DC 的量化标度互为倒数。因此这里【不能再乘任何常数】，直接照抄各块的 DC 量化值即可。
+        ' 早期版本在此乘 16/32 去“补偿”逆变换缺失的增益，属于两个错误互相抵消，
+        ' 只会让编码器自建重建看起来正确、而解码器拿到被放大 16 倍的 level（已实测确认）。
+        Dim k As Integer = 1
 
         For i As Integer = 0 To count - 1
             levels(i) = coeff(i) * k
