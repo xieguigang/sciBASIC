@@ -85,6 +85,12 @@ Public NotInheritable Class H264Debug
     ''' <summary>【临时诊断】编码器自建重建帧的亮度平面（用于与解码器逐样点比对）</summary>
     Public Shared ReconY As Byte() = Nothing
 
+    ''' <summary>【临时诊断】编码器自建重建帧的 U 平面</summary>
+    Public Shared ReconU As Byte() = Nothing
+
+    ''' <summary>【临时诊断】编码器自建重建帧的 V 平面</summary>
+    Public Shared ReconV As Byte() = Nothing
+
     ''' <summary>【临时诊断】重建帧宽度</summary>
     Public Shared ReconWidth As Integer = 0
 

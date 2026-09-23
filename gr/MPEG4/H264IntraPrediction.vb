@@ -230,7 +230,9 @@ Friend NotInheritable Class H264IntraPrediction
 
             dcs(1) = (sumTopRight + 2) >> 2
             dcs(2) = (sumLeftBottom + 2) >> 2
-            dcs(3) = (dcs(1) + dcs(2) + 4) >> 3
+            ' 右下子块用的是右上 4 样点与左下 4 样点的【原始和】，不是已取整的 dcs(1)/dcs(2)：
+            ' 解码器 pred8x8_dc（h264pred_template.c:638）为 (dc1 + dc2 + 4) >> 3，其中 dc1/dc2 是 sum。
+            dcs(3) = (sumTopRight + sumLeftBottom + 4) >> 3
         ElseIf leftAvailable Then
             Dim sumLeftTop%, sumLeftBottom%
 

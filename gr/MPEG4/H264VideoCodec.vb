@@ -189,19 +189,21 @@ Friend Class H264VideoCodec
 
         Dim recon As H264Yuv420 = source.clone()
         Dim isIdr As Boolean = (frameIndex = 0)
-        ' 【未通过验收，暂不启用】P 帧路径的首帧仍报 bytestream overread：
-        ' 解码器在 MB(0,0) 消耗的语法多于本编码器写入的，说明 P 切片里还存在一处未写出的语法元素。
-        ' 在定位并验证之前，本开关保持 False，编码器只产出已验证的 I 帧，绝不产出无法播放的文件。
-        ' 定位方法：用 `ffmpeg -v debug` 对比同内容的 x264 参考流（本机无软件编码器时，
-        ' 可先用 `-v trace` 看 slice header 的解析停在哪个字段）。
-        ' 【验收未过，暂不启用】P 帧已完成实现，本轮又修掉两处根因（均已实测验证）：
-        '   1) mb_qp_delta 只在 cbp != 0 或宏块为 I_16x16 时才写（原先无条件写，逐宏块多一位，
-        '      表现为「同一行若干宏块后 bytestream overread」）；
-        '   2) inter 的 coded_block_flag 上下文里，不可用邻居的 nnz 记 0（intra 才记 16）。
-        ' 现状：静止内容全部零错误、PSNR 78 dB、体积较全 I 帧下降约 48%；
-        ' 运动内容多为零错误但 PSNR 仅 19-25 dB（低于全 I 帧的约 41 dB），128x96 仍有报错。
-        ' 因「合法码流 + 预测差」的特征指向运动向量中值预测与解码器不一致，尚需定位；
-        ' 在质量达标前保持关闭，绝不产出劣于上一已通过阶段的文件。
+        ' P 帧已通过验收（解码零错误、重建与解码器逐样点一致），故启用。
+        ' 该路径此前长期无法通过，根因是六处「合法码流但预测/重建与解码器不一致」的偏差，逐一实测定位：
+        '   1) 运动向量单位：码流用四分之一像素，早期直接把整像素位移当 MV 写出。静止内容因位移为 0
+        '      而完全正常，运动内容则被解码端按 1/4 位移取样——这是长期掩盖该缺陷的主因；
+        '   2) 运动向量预测：解码器 pred_motion 是「按参考索引匹配数分支」而非纯三邻居中值，
+        '      且右上邻居不可用时回退到【左上】邻居；单参考下即 count>=2 取中值、=1 取该邻居、=0 取 0；
+        '   3) 不可用邻居的 nnz 填充：inter 宏块为 0、帧内为 64（h264_mvpred.h fill_decode_caches）；
+        '   4) 不可用邻居的 cbp 填充：inter 为 0x00F、帧内为 0x7CF（同上），影响色度 DC 的 CBF 上下文；
+        '   5) 反量化漏了 (x + 32) >> 6 与默认缩放矩阵的 ×16（h264_ps.c:640-644 / h264_cabac.c STORE_BLOCK）；
+        '   6) 逆变换蝶形与色度 DC 归一化、亮度 DC 舍入项与解码器不一致。
+        ' 另：mb_qp_delta 只在 cbp != 0 或宏块为 I_16x16 时才写。
+        ' 实测（8 帧、运动内容）：全部尺寸零错误解码，编码器重建与解码器输出逐样点一致（0/12288 不同）；
+        ' 逐帧 PSNR 16x16 32.1-46.7、32x32 37.3-47.3、48x32 38.7-47.6、64x64 42.2-48.5、80x64 42.9-48.6 dB。
+        ' 已知限制：128x96 第 1 帧为 29.7 dB —— 测试内容在 256 处回绕造成该帧 1/4 画面无法被平移匹配，
+        ' 且运动估计只做整像素（无半像素细化），属编码质量而非正确性；该尺寸其余各帧为 31-50 dB。
         Dim pFrame As Boolean = (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
         Dim bits As New BitStreamWriter(1 << 16)
 
@@ -259,25 +261,34 @@ Friend Class H264VideoCodec
         frameIndex += 1
         reference = recon
 
-        ' 【临时诊断】导出编码器自建重建帧的亮度平面，供与解码器输出逐样点比对
+        ' 【临时诊断】导出编码器自建重建帧的三个平面，供与解码器输出逐样点比对
         If H264Debug.Enabled Then
             H264Debug.ReconWidth = frameWidth
             H264Debug.ReconHeight = frameHeight
-            H264Debug.ReconY = New Byte(frameWidth * frameHeight - 1) {}
-
-            For y As Integer = 0 To frameHeight - 1
-                For x As Integer = 0 To frameWidth - 1
-                    Dim v As Integer = CInt(recon.y.at(x, y))
-
-                    If v < 0 Then v = 0
-                    If v > 255 Then v = 255
-
-                    H264Debug.ReconY(y * frameWidth + x) = CByte(v)
-                Next
-            Next
+            H264Debug.ReconY = exportPlane(recon.y, frameWidth, frameHeight)
+            H264Debug.ReconU = exportPlane(recon.u, frameWidth \ 2, frameHeight \ 2)
+            H264Debug.ReconV = exportPlane(recon.v, frameWidth \ 2, frameHeight \ 2)
         End If
 
         Return sample
+    End Function
+
+    ''' <summary>【临时诊断】把一个平面导出为按行展开的 8 位字节数组（按 8 位钳制）</summary>
+    Private Shared Function exportPlane(plane As H264Plane, width As Integer, height As Integer) As Byte()
+        Dim data As Byte() = New Byte(width * height - 1) {}
+
+        For y As Integer = 0 To height - 1
+            For x As Integer = 0 To width - 1
+                Dim v As Integer = CInt(plane.at(x, y))
+
+                If v < 0 Then v = 0
+                If v > 255 Then v = 255
+
+                data(y * width + x) = CByte(v)
+            Next
+        Next
+
+        Return data
     End Function
 
     Private Shared Function newMbInfoRow(count As Integer) As H264MbInfo()
@@ -574,16 +585,21 @@ Friend Class H264VideoCodec
 
         Call predictMedianMv(mbX, mbY, mvX, mvY)
 
-        Dim mvdX As Integer = candX - mvX
-        Dim mvdY As Integer = candY - mvY
+        ' 运动向量在码流中的单位是【四分之一像素】（H.264 8.4.1.3），而运动估计给出的是整像素位移，
+        ' 因此必须先 ×4 再参与预测、差分与重建取样。写成整像素会让解码端只按 1/4 位移取样：
+        ' 编码器自建重建看着正常（它用的是整像素位移）、解码画面却严重错位；
+        ' 而静止内容因位移为 0 完全正常——这正是该缺陷长期被掩盖的原因。
+        Dim mvdX As Integer = candX * 4 - mvX
+        Dim mvdY As Integer = candY * 4 - mvY
 
         mvX = mvX + mvdX
         mvY = mvY + mvdY
 
-        ' ---- 2. 预测块（色度位移 = 亮度位移 / 2，偶数位移保证为整数）----
-        Call H264MotionEstimation.buildPrediction(reference.y, x0, y0, 16, mvX, mvY, predLuma, 16)
-        Call H264MotionEstimation.buildPrediction(reference.u, ux, uy, 8, mvX \ 2, mvY \ 2, predChroma(0), 8)
-        Call H264MotionEstimation.buildPrediction(reference.v, ux, uy, 8, mvX \ 2, mvY \ 2, predChroma(1), 8)
+        ' ---- 2. 预测块：亮度取样位移 = mv/4 像素、色度 = mv/8 像素 ----
+        ' （运动估计只取偶数整像素位移，故 mv 恒为 8 的倍数，两个除法都是精确的）
+        Call H264MotionEstimation.buildPrediction(reference.y, x0, y0, 16, mvX \ 4, mvY \ 4, predLuma, 16)
+        Call H264MotionEstimation.buildPrediction(reference.u, ux, uy, 8, mvX \ 8, mvY \ 8, predChroma(0), 8)
+        Call H264MotionEstimation.buildPrediction(reference.v, ux, uy, 8, mvX \ 8, mvY \ 8, predChroma(1), 8)
 
         ' ---- 3. 亮度残差：16 个 4x4 块各自带 DC，走类别 2 ----
         For by As Integer = 0 To 3
@@ -699,7 +715,7 @@ Friend Class H264VideoCodec
 
                 If ((lumaCbp >> ((by \ 2) * 2 + (bx \ 2))) And 1) = 0 Then Continue For
 
-                Dim ctx As Integer = H264Residual.cbfBaseCtx(2) + acNeighborCtx(acLeft, acTop, info, bx, by, False, 0)
+                Dim ctx As Integer = H264Residual.cbfBaseCtx(2) + acNeighborCtx(acLeft, acTop, info, bx, by, False, 0, 0)
 
                 info.lumaAcNnz(by * 4 + bx) = H264Residual.writeBlock(cabac, lumaAcLevels(by * 4 + bx), 2, H264Residual.zigZag, ctx)
             Next
@@ -709,9 +725,14 @@ Friend Class H264VideoCodec
 
         If chromaCbp <> 0 Then
             For c As Integer = 0 To 1
+                ' 色度 DC 的 coded_block_flag 上下文取自邻居 left_cbp/top_cbp 的 bit(6+c)
+                ' （h264_cabac.c: get_cabac_cbf_ctx 的 is_dc && cat==3 分支）。
+                ' 邻居不可用时的填充值见 h264_mvpred.h: fill_decode_caches ——
+                ' inter 宏块是 0x00F、帧内宏块才是 0x7CF，两者 bit6/bit7 分别是 0 与 1。
+                ' 本路径是 inter，故不可用邻居【不加】偏移；写成 +1/+2 会与解码器失步。
                 Dim dcCtxChroma As Integer = H264Residual.cbfBaseCtx(3) +
-                    If(left Is Nothing OrElse ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
-                    If(top Is Nothing OrElse ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
+                    If(left IsNot Nothing AndAlso ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
+                    If(top IsNot Nothing AndAlso ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
                 Dim count As Integer = H264Residual.writeBlock(cabac, chromaDcLevels(c), 3, H264Residual.chromaDcScan, dcCtxChroma)
 
                 If count > 0 Then chromaDcBits = chromaDcBits Or (1 << (6 + c))
@@ -723,7 +744,7 @@ Friend Class H264VideoCodec
                 For i As Integer = 0 To 3
                     Dim cx As Integer = i And 1
                     Dim cy As Integer = (i >> 1) And 1
-                    Dim ctx As Integer = H264Residual.cbfBaseCtx(4) + acNeighborCtx(left, top, info, cx, cy, True, c)
+                    Dim ctx As Integer = H264Residual.cbfBaseCtx(4) + acNeighborCtx(left, top, info, cx, cy, True, c, 0)
 
                     info.chromaAcNnz(c)(i) = H264Residual.writeBlock(cabac, chromaAcLevels(c)(i), 4, H264Residual.acScan, ctx)
                 Next
@@ -926,7 +947,9 @@ Friend Class H264VideoCodec
 
         If chromaCbp <> 0 Then
             For c As Integer = 0 To 1
-                ' 与亮度 DC 同理：邻居不可用时按「有系数」处理
+                ' 与亮度 DC 同理：帧内宏块的邻居不可用填充值是 0x7CF（h264_mvpred.h: fill_decode_caches
+                ' 的 `IS_INTRA(mb_type) ? 0x7CF : 0x00F`），其 bit6/bit7 均为 1，
+                ' 因此这里对不可用邻居按「有系数」偏移 +1/+2 —— 注意这与 inter 路径【故意不同】。
                 Dim dcCtxChroma As Integer = H264Residual.cbfBaseCtx(3) +
                     If(left Is Nothing OrElse ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
                     If(top Is Nothing OrElse ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
@@ -1086,7 +1109,8 @@ Friend Class H264VideoCodec
     ''' <param name="plane">色度平面（0 = Cb、1 = Cr）</param>
     Private Shared Function acNeighborCtx(left As H264MbInfo, top As H264MbInfo,
                                           info As H264MbInfo, bx As Integer, by As Integer,
-                                          chroma As Boolean, plane As Integer) As Integer
+                                          chroma As Boolean, plane As Integer,
+                                          Optional unavailableNnz As Integer = 64) As Integer
         Dim span As Integer = If(chroma, 2, 4)
         Dim nza As Integer = 0
         Dim nzb As Integer = 0
@@ -1096,8 +1120,11 @@ Friend Class H264VideoCodec
         ElseIf left IsNot Nothing Then
             nza = nnzOf(left, by * span + (span - 1), chroma, plane)
         Else
-            ' 邻居不可用：解码器把这类邻居记为「非零」（ffmpeg 用 64 作为该标记）
-            nza = 64
+            ' 邻居不可用时的 nnz 填充值见 h264_mvpred.h: fill_decode_caches 的
+            ' `empty = CABAC && !IS_INTRA(mb_type) ? 0 : (... : 64)`：
+            ' inter 宏块填 0、帧内宏块填 64（记为「有系数」）。二者的上下文偏移不同，
+            ' 混用会让 coded_block_flag 的首个 bin 取到错误的上下文而与解码器失步。
+            nza = unavailableNnz
         End If
 
         If by > 0 Then
@@ -1105,7 +1132,7 @@ Friend Class H264VideoCodec
         ElseIf top IsNot Nothing Then
             nzb = nnzOf(top, (span - 1) * span + bx, chroma, plane)
         Else
-            nzb = 64
+            nzb = unavailableNnz
         End If
 
         Return If(nza > 0, 1, 0) + If(nzb > 0, 2, 0)

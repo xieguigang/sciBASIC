@@ -117,30 +117,56 @@ Friend NotInheritable Class H264Transform
     ''' <summary>
     ''' 4x4 逆向变换（输入的系数已经完成反量化，输出残差样点）
     ''' </summary>
+    ''' <summary>
+    ''' 4x4 逆向变换（输入的系数已完成反量化，输出残差样点）
+    ''' </summary>
+    ''' <remarks>
+    ''' 严格镜像解码器 <c>ff_h264_idct_add</c>（h264idct_template.c:33-67）：
+    ''' 第一级按<b>列</b>、第二级按<b>行</b>（与规范 8.5.12.2 的行/列次序互为转置，二者等价），
+    ''' 舍入写成「先给 <c>src(0)</c> 加 32，再在第二级做纯 <c>&gt;&gt; 6</c>」，
+    ''' 与解码器逐位一致（规范写成四个输出各加 32，对该蝶形等价，但必须与解码器一致）。
+    ''' 
+    ''' <para>
+    ''' <b>注意本函数会修改 <paramref name="src"/>(0)</b>（与解码器的 <c>block[0] += 32</c> 相同），
+    ''' 调用方每次都重新装填该缓冲，因此无需额外保护。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' 早期版本用了一组与解码器<b>不同</b>的蝶形（例如把 <c>⌊b1/2⌋ - b3</c> 摊进不同的输出），
+    ''' 它对纯 DC 块恰好一致，因此在平坦内容上无法暴露；对含 AC 的块则系统性偏离，
+    ''' 表现为「块内均值≈0、块内极差数个样点」——已由逐样点比对实测确认。
+    ''' </para>
+    ''' </remarks>
     Friend Shared Sub inverseTransform(src As Integer(), dst As Integer())
         Dim tmp As Integer() = tmpBuffer
 
-        For i As Integer = 0 To 3
-            Dim o As Integer = i * 4
-            Dim t0 As Integer = src(o) + src(o + 2)
-            Dim t1 As Integer = src(o) - src(o + 2)
-            Dim t2 As Integer = (src(o + 1) >> 1) - src(o + 3)
+        src(0) += 32
 
-            tmp(o) = t0 + src(o + 1) + t2
-            tmp(o + 1) = t0 - src(o + 1) - t2
-            tmp(o + 2) = t1 + src(o + 3) + (src(o + 1) >> 1)
-            tmp(o + 3) = t1 - src(o + 3) - (src(o + 1) >> 1)
+        ' 第一级：按列（i 为列号，行跨度 4）
+        For i As Integer = 0 To 3
+            Dim z0 As Integer = src(i) + src(8 + i)
+            Dim z1 As Integer = src(i) - src(8 + i)
+            Dim z2 As Integer = (src(4 + i) >> 1) - src(12 + i)
+            Dim z3 As Integer = src(4 + i) + (src(12 + i) >> 1)
+
+            tmp(i) = z0 + z3
+            tmp(4 + i) = z1 + z2
+            tmp(8 + i) = z1 - z2
+            tmp(12 + i) = z0 - z3
         Next
 
+        ' 第二级：按行（o 为行首下标）
         For i As Integer = 0 To 3
-            Dim t0 As Integer = tmp(i) + tmp(8 + i)
-            Dim t1 As Integer = tmp(i) - tmp(8 + i)
-            Dim t2 As Integer = (tmp(4 + i) >> 1) - tmp(12 + i)
+            Dim o As Integer = i * 4
+            Dim z0 As Integer = tmp(o) + tmp(o + 2)
+            Dim z1 As Integer = tmp(o) - tmp(o + 2)
+            Dim z2 As Integer = (tmp(o + 1) >> 1) - tmp(o + 3)
+            Dim z3 As Integer = tmp(o + 1) + (tmp(o + 3) >> 1)
 
-            dst(i) = (t0 + tmp(4 + i) + t2 + 32) >> 6
-            dst(4 + i) = (t0 - tmp(4 + i) - t2 + 32) >> 6
-            dst(8 + i) = (t1 + tmp(12 + i) + (tmp(4 + i) >> 1) + 32) >> 6
-            dst(12 + i) = (t1 - tmp(12 + i) - (tmp(4 + i) >> 1) + 32) >> 6
+            dst(o) = (z0 + z3) >> 6
+            dst(o + 1) = (z1 + z2) >> 6
+            dst(o + 2) = (z1 - z2) >> 6
+            dst(o + 3) = (z0 - z3) >> 6
         Next
     End Sub
 
@@ -189,10 +215,24 @@ Friend NotInheritable Class H264Transform
     }
 
     ''' <summary>
-    ''' 解码器使用的反量化系数：<c>level * qmul</c> 即为逆变换（带 <c>&gt;&gt; 6</c>）的输入
+    ''' 量化除法使用的标度：等于解码器 <c>dequant4_coeff</c> 的 <b>1/16</b>
     ''' </summary>
+    ''' <remarks>
+    ''' 解码器的系数表（h264_ps.c:640-644）是
+    ''' <c>dequant4_coeff_init[qp%6][class] * scaling_matrix4(默认 16) &lt;&lt; (qp/6 + 2)</c>；
+    ''' 本函数刻意不含默认缩放矩阵的 ×16，使 <see cref="quantize"/> 里 <c>4 * 2^qbits / qmul</c>
+    ''' 恰好还原为 <c>64 * W / dequant4_coeff</c>，与解码器的 <c>(level * qmul + 32) &gt;&gt; 6</c> 精确互逆。
+    ''' 反量化侧务必用 <see cref="dequantScale"/>，不可直接使用本函数。
+    ''' </remarks>
     Friend Shared Function qmul(qp As Integer, i As Integer) As Integer
         Return dequantInit(qp Mod 6)(quantClass(i)) << (qp \ 6 + 2)
+    End Function
+
+    ''' <summary>
+    ''' 解码器 <c>dequant4_coeff</c> 本身：含默认缩放矩阵（全 16）的 ×16
+    ''' </summary>
+    Friend Shared Function dequantScale(qp As Integer, i As Integer) As Integer
+        Return dequantInit(qp Mod 6)(quantClass(i)) << (qp \ 6 + 6)
     End Function
 
     ''' <summary>
@@ -220,11 +260,20 @@ Friend NotInheritable Class H264Transform
     End Sub
 
     ''' <summary>
-    ''' 反量化：严格镜像解码器的 <c>d = level * qmul</c>（时长整数按 16 位钳制，与解码器一致）
+    ''' 反量化：严格镜像解码器的 <c>block[j] = (level[j] * qmul[j] + 32) &gt;&gt; 6</c>
     ''' </summary>
+    ''' <remarks>
+    ''' 解码器这条语句出现在 h264_cabac.c 的 <c>STORE_BLOCK</c> 宏里（非 DC 类别），
+    ''' 其中 <c>qmul</c> 即含默认缩放矩阵的 <see cref="dequantScale"/>，条目存进 <c>int16_t block[]</c>。
+    ''' 
+    ''' <para>
+    ''' 这里<b>两处都不能省</b>：省略 <c>+ 32 &gt;&gt; 6</c> 会让逆变换的输入整体大 4 倍，
+    ''' 而平滑内容上只表现为块内数个单位的偏差，很容易被误判为「舍入差异」。
+    ''' </para>
+    ''' </remarks>
     Friend Shared Sub dequantize(levels As Integer(), coeff As Integer(), qp As Integer)
         For i As Integer = 0 To 15
-            Dim v As Long = CLng(levels(i)) * qmul(qp, i)
+            Dim v As Long = (CLng(levels(i)) * dequantScale(qp, i) + 32) >> 6
 
             If v > 32767L Then v = 32767L
             If v < -32768L Then v = -32768L
@@ -320,21 +369,27 @@ Friend NotInheritable Class H264Transform
     ''' I_16x16 亮度 DC 的逆向变换（输出的样点为 DC 值，后续按 (x+32)&gt;&gt;6 还原）
     ''' </summary>
     ''' <remarks>
-    ''' 直接按实测矩阵做乘加：<c>dst[j] = (Σ_k M[k][j]·src[k] + 128) >> 4</c>，
-    ''' 其中 <c>src</c> 为已反量化的 level（<c>level * qmul</c>），归一化 16 体现在 <c>&gt;&gt; 4</c> 中。
+    ''' 直接按实测矩阵做乘加：<c>dst[j] = (Σ_k M[k][j]·src[k] + 8) >> 4</c>，
+    ''' 其中 <c>src</c> 为已反量化的 level（<c>level * qmul/16</c>），归一化 16 体现在 <c>&gt;&gt; 4</c> 中。
+    ''' 
+    ''' <para>
+    ''' 舍入项必须是 <b>8</b> 而不是 128：解码器是 <c>(z*qmul + 128) &gt;&gt; 8</c>
+    ''' （h264idct_template.c:318-319），乘除各缩 16 倍后正是 <c>(z*qmul/16 + 8) &gt;&gt; 4</c>。
+    ''' 写成 128 会让每个 4x4 块的 DC 系统性偏高约 7.5，经 <c>&gt;&gt; 6</c> 后表现为 ±1 的亮度偏差，
+    ''' 并在 P 帧的参考链里逐帧放大。
+    ''' </para>
     ''' </remarks>
     Friend Shared Sub inverseLumaDcTransform(src As Integer(), dst As Integer())
         Dim sign As Integer()() = lumaDcSignTable()
 
         For j As Integer = 0 To 15
             Dim sum As Integer = 0
-            Dim row As Integer() = sign(j)
 
             For k As Integer = 0 To 15
                 sum += sign(k)(j) * src(k)
             Next
 
-            dst(j) = (sum + 128) >> 4
+            dst(j) = (sum + 8) >> 4
         Next
     End Sub
 
@@ -357,12 +412,16 @@ Friend NotInheritable Class H264Transform
         Dim c As Integer = src(2)
         Dim d As Integer = src(3)
 
-        ' 镜像解码器 ff_h264_chroma_dc_dequant_idct：与亮度同理，2x2 Hadamard 的增益 4 体现在归一化中，
-        ' 因此这里是 >> 5（原文 >> 7 会让色度 DC 整体小 4 倍，与亮度同一类错误）。
-        dst(0) = (a + b + c + d) >> 5
-        dst(1) = (a - b + c - d) >> 5
-        dst(2) = (a + b - c - d) >> 5
-        dst(3) = (a - b - c + d) >> 5
+        ' 镜像解码器 ff_h264_chroma_dc_dequant_idct（h264idct_template.c:340-343）：
+        '   block[0] = ((a + c) * qmul) >> 7   （a、c 为 2x2 Hadamard 的一级和）
+        ' 其中 qmul 即 dequant4_coeff（含默认缩放矩阵的 ×16）。本函数的输入已由
+        ' dequantizeDc 乘过 qmul/16，故净移位必须是 7 - 4 = 3：
+        '   (a+b+c+d) * (qmul/16) >> 3  ==  (a+b+c+d) * qmul >> 7
+        ' 写成 >> 5 会让色度 DC 整体小 4 倍（实测 U 平面最大差 111，正是该倍率的表现）。
+        dst(0) = (a + b + c + d) >> 3
+        dst(1) = (a - b + c - d) >> 3
+        dst(2) = (a + b - c - d) >> 3
+        dst(3) = (a - b - c + d) >> 3
     End Sub
 
 #End Region
