@@ -70,4 +70,13 @@ Public NotInheritable Class H264Debug
     ''' </summary>
     Public Shared ForceDcLevel As Integer = 0
 
+    ''' <summary>【临时诊断】编码器自建重建帧的亮度平面（用于与解码器逐样点比对）</summary>
+    Public Shared ReconY As Byte() = Nothing
+
+    ''' <summary>【临时诊断】重建帧宽度</summary>
+    Public Shared ReconWidth As Integer = 0
+
+    ''' <summary>【临时诊断】重建帧高度</summary>
+    Public Shared ReconHeight As Integer = 0
+
 End Class

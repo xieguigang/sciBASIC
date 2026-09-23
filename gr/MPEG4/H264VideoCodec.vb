@@ -207,6 +207,24 @@ Friend Class H264VideoCodec
         frameIndex += 1
         reference = recon
 
+        ' 【临时诊断】导出编码器自建重建帧的亮度平面，供与解码器输出逐样点比对
+        If H264Debug.Enabled Then
+            H264Debug.ReconWidth = frameWidth
+            H264Debug.ReconHeight = frameHeight
+            H264Debug.ReconY = New Byte(frameWidth * frameHeight - 1) {}
+
+            For y As Integer = 0 To frameHeight - 1
+                For x As Integer = 0 To frameWidth - 1
+                    Dim v As Integer = CInt(recon.y.at(x, y))
+
+                    If v < 0 Then v = 0
+                    If v > 255 Then v = 255
+
+                    H264Debug.ReconY(y * frameWidth + x) = CByte(v)
+                Next
+            Next
+        End If
+
         Return sample
     End Function
 

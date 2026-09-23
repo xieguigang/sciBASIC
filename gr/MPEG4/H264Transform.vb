@@ -184,8 +184,8 @@ Friend NotInheritable Class H264Transform
     ''' 那是另一条路径（曾经的错误来源）。
     ''' </remarks>
     Friend Shared ReadOnly lumaDcMapping As Integer() = {
-        0, 2, 8, 10, 1, 3, 9, 11,
-        4, 6, 12, 14, 5, 7, 13, 15
+        0, 1, 4, 5, 2, 3, 6, 7,
+        8, 9, 12, 13, 10, 11, 14, 15
     }
 
     ''' <summary>
@@ -252,10 +252,12 @@ Friend NotInheritable Class H264Transform
 
             tmp(o) = s0 + s1
             tmp(o + 1) = d0 + d1
-            tmp(o + 2) = d0 - d1
-            tmp(o + 3) = s0 - s1
+            tmp(o + 2) = s0 - s1
+            tmp(o + 3) = d0 - d1
         Next
 
+        ' 逆向侧的两级蝶形落点已按解码器实测行为修正（见 inverseLumaDcTransform），
+        ' 正向必须与它逐位互逆，否则编码器的重建参考帧会与解码器漂移。
         For i As Integer = 0 To 3
             Dim s0 As Integer = tmp(i) + tmp(8 + i)
             Dim s1 As Integer = tmp(4 + i) + tmp(12 + i)
@@ -264,8 +266,8 @@ Friend NotInheritable Class H264Transform
 
             dst(i) = s0 + s1
             dst(4 + i) = d0 + d1
-            dst(8 + i) = s0 - s1
-            dst(12 + i) = d0 - d1
+            dst(8 + i) = d0 - d1
+            dst(12 + i) = s0 - s1
         Next
     End Sub
 
@@ -284,8 +286,8 @@ Friend NotInheritable Class H264Transform
 
             tmp(o) = s0 + s1
             tmp(o + 1) = d0 + d1
-            tmp(o + 2) = d0 - d1
-            tmp(o + 3) = s0 - s1
+            tmp(o + 2) = s0 - s1
+            tmp(o + 3) = d0 - d1
         Next
 
         For i As Integer = 0 To 3
