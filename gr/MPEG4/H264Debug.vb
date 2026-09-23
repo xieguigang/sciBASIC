@@ -76,6 +76,12 @@ Public NotInheritable Class H264Debug
     ''' </summary>
     Public Shared ForceDcIndex As Integer = 0
 
+    ''' <summary>【临时诊断】为真时把所有运动向量强制为 (0,0)，用于把「运动向量/mvd 路径」与「inter 残差路径」分开定位</summary>
+    Public Shared ForceZeroMv As Boolean = False
+
+    ''' <summary>【临时诊断】为真时 P 宏块的 CBP 恒为 0（不写任何残差），用于隔离固定语法</summary>
+    Public Shared ForceNoResidual As Boolean = False
+
     ''' <summary>【临时诊断】编码器自建重建帧的亮度平面（用于与解码器逐样点比对）</summary>
     Public Shared ReconY As Byte() = Nothing
 
