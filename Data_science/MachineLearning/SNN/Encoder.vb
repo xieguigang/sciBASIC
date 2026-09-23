@@ -157,9 +157,18 @@ Public Module SpikeEncoders
     ''' <param name="x">连续输入 [batch, features]，取值范围建议 [0,1]</param>
     ''' <param name="T">仿真时间步数</param>
     ''' <param name="iMax">电流上限（缩放系数），默认 1.0 表示直接使用输入值</param>
-    ''' <returns>T 个时间步的输入电流张量序列（每个形状与 x 相同，内容为 x·iMax 的独立副本）</returns>
+    ''' <param name="shareBuffer">
+    ''' 是否让所有时间步共享同一份电流缓冲（默认 <c>False</c>，保持"每步独立副本"的既有语义）。
+    ''' <para>
+    ''' 置为 <c>True</c> 可省掉 T 份 <c>[batch, features]</c> 的分配与拷贝
+    ''' （T=30 时为 30 次分配），代价是调用方<b>不得再对返回的张量就地写入</b>
+    ''' （恒流注入场景下每步内容本就完全相同，且融合算子只读该输入）。
+    ''' </para>
+    ''' </param>
+    ''' <returns>T 个时间步的输入电流张量序列（每个形状与 x 相同，内容为 x·iMax）</returns>
     Public Function DirectCurrentEncode(x As Tensor, T As Integer,
-                                        Optional iMax As Double = 1.0) As List(Of Tensor)
+                                        Optional iMax As Double = 1.0,
+                                        Optional shareBuffer As Boolean = False) As List(Of Tensor)
         If x Is Nothing Then
             Throw New ArgumentNullException(NameOf(x))
         End If
@@ -167,8 +176,19 @@ Public Module SpikeEncoders
             Throw New ArgumentOutOfRangeException(NameOf(T), "仿真步数必须为正整数")
         End If
 
-        Dim scaled = If(iMax = 1.0, x.Data, x.Data.Select(Function(v) v * iMax).ToArray())
+        Dim scaled = If(iMax = 1.0, x.Data, MapScale(x.Data, iMax))
         Dim seq As New List(Of Tensor)()
+
+        If shareBuffer Then
+            ' 恒流：所有时间步的电流完全相同，一份缓冲即可（下游只读）
+            Dim currentBuffer = Tensor.Wrap(scaled, x.Shape)
+
+            For n = 1 To T
+                seq.Add(currentBuffer)
+            Next
+
+            Return seq
+        End If
 
         For n = 1 To T
             ' 每步一份独立副本：避免下游就地写入（如扰动注入）时相互污染
@@ -176,6 +196,17 @@ Public Module SpikeEncoders
         Next
 
         Return seq
+    End Function
+
+    ''' <summary>逐元素缩放（与 <c>LINQ Select</c> 等价，但避免中间迭代器与装箱开销）。</summary>
+    Private Function MapScale(src As Double(), factor As Double) As Double()
+        Dim dst(src.Length - 1) As Double
+
+        For i As Integer = 0 To src.Length - 1
+            dst(i) = src(i) * factor
+        Next
+
+        Return dst
     End Function
 
 End Module

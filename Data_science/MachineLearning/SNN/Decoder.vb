@@ -102,6 +102,25 @@ Public Module SpikeDecoders
     End Function
 
     ''' <summary>
+    ''' 方案 B（推荐）：直接使用 <see cref="SparseLIFLayer"/> 内部维护的计数累加器。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与 <c>SpikeCounts(sHistory)</c> 的结果完全一致，但既不需要保留 T 个脉冲张量，
+    ''' 也不需要 O(T·N) 的主机求和 —— 融合算子路径下计数是在设备端逐步累加出来的
+    ''' （GPU 后端下本函数会隐式同步一次设备副本）。
+    ''' <para>
+    ''' 全脑规模（十万级神经元 / T=30）下这是唯一推荐的解码入口。
+    ''' </para>
+    ''' </remarks>
+    Public Function SpikeCounts(layer As SparseLIFLayer) As Tensor
+        If layer Is Nothing Then Throw New ArgumentNullException(NameOf(layer))
+
+        Call layer.SyncFromDevice()
+
+        Return CType(layer.Counts.Clone(), Tensor)
+    End Function
+
+    ''' <summary>
     ''' 方案 B：平均发放率 (Σ_t S[t]) / T（形状 [batch, Units]，取值 [0,1]）。
     ''' </summary>
     Public Function FiringRate(sHistory As List(Of Tensor)) As Tensor

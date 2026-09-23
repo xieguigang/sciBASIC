@@ -396,24 +396,21 @@ Public Class SpikingNetwork
 
         SparseLayer.ResetState(batch)
 
-        Dim counts = New Tensor(batch, units)
-        Dim cd = counts.Data
-
+        ' 计数由层内的累加器维护：融合路径下它在<b>设备端</b>累加，
+        ' 逐算子路径下由层内主机循环累加。于是这里不再需要每步回读 [batch, N] 脉冲张量，
+        ' 也不再需要 O(T·N) 的主机求和循环 —— 后者在十万神经元 / T=30 下是 400 万次加法，
+        ' 并且会强制 GPU 后端每步做一次显存回读。
         For t = 0 To TimeSteps - 1
             Dim ext = ScatterInput(seq(t), batch, units)
-            Dim s = SparseLayer.ForwardStep(ext)
-            Dim sd = s.Data
 
-            ' 就地累加，避免每步分配 [batch, N] 新张量
-            For i = 0 To cd.Length - 1
-                cd(i) += sd(i)
-            Next
+            Call SparseLayer.ForwardStep(ext)
         Next
 
-        ' 绕过索引器就地写入：声明主机数据已修改，使设备端缓存失效
-        counts.MarkHostModified()
+        ' 设备为主副本：整段仿真只需在结束时同步一次
+        Call SparseLayer.SyncFromDevice()
 
-        Return counts
+        ' 返回独立副本：避免调用方就地修改层内累加器（下一轮 ResetState 会重新分配）
+        Return CType(SparseLayer.Counts.Clone(), Tensor)
     End Function
 
     ''' <summary>
