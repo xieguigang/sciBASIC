@@ -235,6 +235,22 @@ Friend Class H264VideoCodec
         Dim result As New List(Of H264EncodedFrame)
         Dim display As Integer = displayIndex
 
+        If Not bFrameEnabled Then
+            ' B 帧路径尚未通过验收：只使用 B_L0_16x16 时零错误，但启用双向（列表 1）后
+            ' 仍有一处解码器报 bytestream overread，说明列表 1 的语法或上下文尚有一处未对齐。
+            ' 在定位并验证之前不产出 B 帧——回退到已验证的「显示序 = 解码序、逐帧为 I/P」形态，
+            ' 这样输出的码流与上一阶段完全等价（ctts 偏移全为 0，封装层不会写出该 box）。
+            Dim isI As Boolean = (display = 0)
+            Dim isRefresh As Boolean = (display > 0) AndAlso (display Mod gopSize) = 0
+
+            result.Add(encodePicture(bgra, pixelWidth,
+                                     If(isI OrElse isRefresh, H264SliceType.I, H264SliceType.P),
+                                     isI, display, (display * 2) And 255, display))
+            displayIndex += 1
+
+            Return result
+        End If
+
         If display = 0 Then
             ' 首个锚点用 IDR
             result.Add(encodePicture(bgra, pixelWidth, H264SliceType.I, True, 0, 0, display))
@@ -398,9 +414,10 @@ Friend Class H264VideoCodec
             reference = recon
         End If
 
-        ' ctts 的合成时间偏移 = 显示时间 − 解码时间；编码器整体给显示时间平移 1 帧使其恒为非负
-        ' （ctts 的 0 版本条目是无符号的）。平移等价于给整条视频轨加一个固定延迟，不影响播放顺序。
-        Dim encoded As New H264EncodedFrame(sample, (display + 1) - frameIndex)
+        ' ctts 的合成时间偏移 = 显示时间 − 解码时间；启用 B 帧时整体给显示时间平移 1 帧使其恒为非负
+        ' （ctts 的 0 版本条目是无符号的）。平移等价于给整条视频轨加一个固定延迟，不影响播放顺序；
+        ' 未启用 B 帧时平移为 0，偏移恒为 0，封装层不会写出 ctts（与上一阶段等价）。
+        Dim encoded As New H264EncodedFrame(sample, (display + compositionShift) - frameIndex)
 
         frameIndex += 1
 
@@ -446,6 +463,20 @@ Friend Class H264VideoCodec
 
     ''' <summary>GOP 长度：帧 0 为 IDR，其后每 gopSize 帧一个非 IDR I 帧，其余为 P 帧</summary>
     Private Const gopSize As Integer = 30
+
+    ''' <summary>
+    ''' 是否启用 B 帧（双向预测帧）。
+    ''' </summary>
+    ''' <remarks>
+    ''' <b>尚未通过验收，保持关闭。</b>现状：GOP 结构（锚点 + 夹在其间的 B）、解码顺序重排、
+    ''' 非参考图像的 <c>nal_ref_idc = 0</c> 与切片头、<c>ctts</c> 合成时间偏移、以及
+    ''' <c>B_L0_16x16</c> 的完整语法都已实测零错误（把每个 B 宏块限制为只用列表 0 时，
+    ''' 3 / 8 帧用例全部零错误解码）；但一旦宏块带上<b>列表 1</b>（双向）就会出现
+    ''' <c>bytestream overread</c>，说明列表 1 的语法或上下文仍有未对齐之处。
+    ''' 按失败保护，未验证的路径不得对外产出，故此处为 False——
+    ''' 输出与上一已通过阶段（纯 I/P、无重排序）完全等价。
+    ''' </remarks>
+    Private Const bFrameEnabled As Boolean = False
 
     ''' <summary>
     ''' 编码一个 P 切片的「跳过」宏块（<c>mb_skip_flag = 1</c>）
