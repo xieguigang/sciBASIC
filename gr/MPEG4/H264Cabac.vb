@@ -50,17 +50,6 @@ Friend Class H264Cabac
     Private outstandingCount As Integer
     Private firstBit As Boolean
 
-    ''' <summary>
-    ''' 【开发期诊断】置为 True 时把每个 bin 记录到 <see cref="debugBins"/>，默认关闭（关闭时零开销）。
-    ''' </summary>
-    Public Shared debugEnabled As Boolean
-
-    ''' <summary>
-    ''' 【开发期诊断】已编码的 bin 序列：<c>c{ctx}={bin}</c> 表示上下文位、<c>t{bin}</c> 终止位、
-    ''' <c>b{bin}</c> 旁路位。用于与解码器逐 bin 对账。
-    ''' </summary>
-    Public Shared ReadOnly debugBins As New List(Of String)
-
     Friend Sub New(bits As BitStreamWriter)
         Me.bits = bits
         Me.states = New Byte(1023) {}
@@ -114,7 +103,7 @@ Friend Class H264Cabac
     ''' 编码一个使用上下文模型的语法元素位（bin）
     ''' </summary>
     Friend Sub encodeBin(ctx As Integer, bin As Integer)
-        If debugEnabled Then debugBins.Add($"c{ctx}={bin}")
+        If H264Debug.Enabled Then H264Debug.Bins.Add($"c{ctx}={bin}")
 
         Dim s As Integer = states(ctx)
         Dim lps As Integer = H264CabacTables.lpsRange(2 * (rangeValue And &HC0) + s)
@@ -141,7 +130,7 @@ Friend Class H264Cabac
     ''' 编码一个旁路（bypass）位：区间固定对半分，不使用上下文模型
     ''' </summary>
     Friend Sub encodeBypass(bit As Integer)
-        If debugEnabled Then debugBins.Add($"b{bit}")
+        If H264Debug.Enabled Then H264Debug.Bins.Add($"b{bit}")
 
         lowValue += lowValue
 
@@ -173,7 +162,7 @@ Friend Class H264Cabac
     ''' 编码终止位（end_of_slice_flag）；<paramref name="bit"/> 为 1 时结束切片数据
     ''' </summary>
     Friend Sub encodeTerminate(bit As Integer)
-        If debugEnabled Then debugBins.Add($"t{bit}")
+        If H264Debug.Enabled Then H264Debug.Bins.Add($"t{bit}")
 
         rangeValue -= 2
 
