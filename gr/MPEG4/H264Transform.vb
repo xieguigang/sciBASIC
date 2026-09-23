@@ -184,8 +184,8 @@ Friend NotInheritable Class H264Transform
     ''' 那是另一条路径（曾经的错误来源）。
     ''' </remarks>
     Friend Shared ReadOnly lumaDcMapping As Integer() = {
-        0, 1, 4, 5, 2, 3, 6, 7,
-        8, 9, 12, 13, 10, 11, 14, 15
+        0, 2, 8, 10, 1, 3, 9, 11,
+        4, 6, 12, 14, 5, 7, 13, 15
     }
 
     ''' <summary>
@@ -244,30 +244,41 @@ Friend NotInheritable Class H264Transform
         Dim tmp As Integer() = tmpBuffer
 
         For i As Integer = 0 To 3
-            Dim o As Integer = i * 4
-            Dim s0 As Integer = src(o) + src(o + 2)
-            Dim s1 As Integer = src(o + 1) + src(o + 3)
-            Dim d0 As Integer = src(o) - src(o + 2)
-            Dim d1 As Integer = src(o + 1) - src(o + 3)
+            ' 第一步：按列取样并施加解码器输出端的 σ（第 1、3 位对换），再做 T
+            ' （src 为「块光栅序号」下的各块 DC；列 i 的四个块是 c_i + {0,1,4,5}）
+            Dim c As Integer = lumaDcMapping(i)
+            Dim u0 As Integer = src(c)
+            Dim u1 As Integer = src(c + 5)      ' σ：与第 3 位对换
+            Dim u2 As Integer = src(c + 4)
+            Dim u3 As Integer = src(c + 1)      ' σ：与第 1 位对换
+            Dim s0 As Integer = u0 + u2
+            Dim s1 As Integer = u1 + u3
+            Dim d0 As Integer = u0 - u2
+            Dim d1 As Integer = u1 - u3
 
-            tmp(o) = s0 + s1
-            tmp(o + 1) = d0 + d1
-            tmp(o + 2) = s0 - s1
-            tmp(o + 3) = d0 - d1
+            tmp(i) = s0 + s1
+            tmp(4 + i) = d0 + d1
+            tmp(8 + i) = d0 - d1
+            tmp(12 + i) = s0 - s1
         Next
 
-        ' 逆向侧的两级蝶形落点已按解码器实测行为修正（见 inverseLumaDcTransform），
-        ' 正向必须与它逐位互逆，否则编码器的重建参考帧会与解码器漂移。
-        For i As Integer = 0 To 3
-            Dim s0 As Integer = tmp(i) + tmp(8 + i)
-            Dim s1 As Integer = tmp(4 + i) + tmp(12 + i)
-            Dim d0 As Integer = tmp(i) - tmp(8 + i)
-            Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
+        ' 第二步：对每个连续四元组做 T，得到 Hadamard 域系数（即写进码流的 DC level）。
+        ' T 的增益是 4，两级合计 16，恰好抵消解码器 DC 通路的 1/16，无需再乘任何常数。
+        For g As Integer = 0 To 3
+            Dim o As Integer = g * 4
+            Dim u0 As Integer = tmp(o)
+            Dim u1 As Integer = tmp(o + 1)
+            Dim u2 As Integer = tmp(o + 2)
+            Dim u3 As Integer = tmp(o + 3)
+            Dim s0 As Integer = u0 + u2
+            Dim s1 As Integer = u1 + u3
+            Dim d0 As Integer = u0 - u2
+            Dim d1 As Integer = u1 - u3
 
-            dst(i) = s0 + s1
-            dst(4 + i) = d0 + d1
-            dst(8 + i) = d0 - d1
-            dst(12 + i) = s0 - s1
+            dst(o) = s0 + s1
+            dst(o + 1) = d0 + d1
+            dst(o + 2) = d0 - d1
+            dst(o + 3) = s0 - s1
         Next
     End Sub
 
@@ -284,10 +295,11 @@ Friend NotInheritable Class H264Transform
             Dim d0 As Integer = src(o) - src(o + 2)
             Dim d1 As Integer = src(o + 1) - src(o + 3)
 
+            ' 第一级的输出必须按 T0,T1,T2,T3 原序写回（与 ffmpeg 一致）
             tmp(o) = s0 + s1
             tmp(o + 1) = d0 + d1
-            tmp(o + 2) = s0 - s1
-            tmp(o + 3) = d0 - d1
+            tmp(o + 2) = d0 - d1
+            tmp(o + 3) = s0 - s1
         Next
 
         For i As Integer = 0 To 3
@@ -296,14 +308,14 @@ Friend NotInheritable Class H264Transform
             Dim d0 As Integer = tmp(i) - tmp(8 + i)
             Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
 
-            ' 镜像解码器 ff_h264_luma_dc_dequant_idct。实测标定（强制已知 DC level 反解）表明
-            ' 解码器对一元（one-hot）level 输出的 DC 为 (L*qmul) >> 4，即 4x4 Hadamard 的增益 16
-            ' 体现在归一化中；若写成 >> 8 会让重建整体小 16 倍。
-            ' 另外取值落点必须照抄解码器：stride*4 收 (z1-z2)，stride*5 收 (z0-z3)，两者不可对调。
+            ' 严格镜像 ff_h264_luma_dc_dequant_idct：
+            '   归一化取 >> 4（4x4 Hadamard 的增益 16 体现在此，写成 >> 8 会让重建整体小 16 倍），
+            '   落点按解码器的 stride*{0,1,4,5} ← (T0,T3,T2,T1)，
+            '   即块 (c_i+0, c_i+1, c_i+4, c_i+5) 依次收 T0、T3、T2、T1。
             dst(lumaDcMapping(i)) = (s0 + s1 + 128) >> 4
-            dst(lumaDcMapping(4 + i)) = (d0 + d1 + 128) >> 4
+            dst(lumaDcMapping(4 + i)) = (s0 - s1 + 128) >> 4
             dst(lumaDcMapping(8 + i)) = (d0 - d1 + 128) >> 4
-            dst(lumaDcMapping(12 + i)) = (s0 - s1 + 128) >> 4
+            dst(lumaDcMapping(12 + i)) = (d0 + d1 + 128) >> 4
         Next
     End Sub
 
