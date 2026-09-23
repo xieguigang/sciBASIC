@@ -410,6 +410,33 @@ CudaTensor.MinSparseNnz = 1                    ' 让 SpMM 走 GPU
 CudaTensor.MinGpuElements = saved
 ```
 
+### 三之二、融合单步 + 设备常驻（推荐做法）
+
+上面那个"拆开跑"的技巧解决的是**症状**：逐算子写法每步要分配 6 个 `[batch, Units]` 中间张量、并在 GPU 后端下产生 6~12 次显存往返（每次约 1.1 MB）。真正的解法是把整步压成**一次调用**：
+
+```vb
+' 契约：ITensorCompute.LifStep（ITensorCompute.vb）
+'   I = W·S_prev + I_ext → U = β·H + I → S = Θ(U − U_thr) → H = 复位(U,S) → counts += S
+Function LifStep(synapses, sPrev, externalCurrent, h, s, counts, beta, threshold, subtractThreshold) As Boolean
+```
+
+`SparseLIFLayer` 已经自动使用它（`UseFusedStep = True` 默认开启），无需调用方干预：
+
+| 属性 | 默认 | 含义 |
+|------|------|------|
+| `SparseLIFLayer.UseFusedStep` | `True` | 优先走融合算子；置 `False` 强制逐算子路径（唯一区别是能拿到 `UHistory`） |
+| `SparseLIFLayer.KeepHistory` | `True` | 是否逐步回读并保存 `SHistory`；置 `False` 后只维护设备端计数累加器（`Counts`），整段仿真零逐步回读 |
+| `SparseLIFLayer.ResidentPrecision` | `Double64` | 设备常驻状态的精度档位（`Double64` = 与 CPU 逐位一致；`Single32` = 最快档，仅膜电位降精度） |
+| `SparseLIFLayer.Counts` | — | `Σ_t S[t]`，融合路径下由**设备内核**累加；读之前需 `SyncFromDevice()` |
+| `SparseLIFLayer.LastStepPath` / `FallbackSteps` | — | 诊断：最近一步走的路径（`Fused` / `OpByOp`）与回退步数 |
+
+要点：
+
+- **融合路径与逐算子路径数值等价**（相同的循环次序与结合次序），`Double64` 档下已实测**逐位一致**（`maxdiff = 0`）；
+- 后端不支持常驻（CPU）时，融合实现直接就地写主机数组，同样省掉 5 个中间张量；GPU 下则把 `H`/`S_prev`/`S`/`counts` 钉成常驻缓冲，每步**零主机往返**；
+- 任一前提不满足（显存不足、内核不可用、`nnz < MinSparseNnz`）时自动退回逐算子路径，功能不受影响；
+- 解算计数时优先用 `SpikeDecoders.SpikeCounts(sparseLayer)` / `net.ForwardSpikes(x)`，它们直接读取层内累加器，不再需要 O(T·N) 的主机求和。
+
 内核不可用（如 `atomicAdd(double)` 需要 sm_60+，或 NVRTC 编译失败）时，`CudaTensor` 会检测不到内核并**自动回退 CPU**，不会中断仿真。
 
 ## 四、缓存失效契约（务必遵守）
@@ -425,20 +452,22 @@ SNN 内部已按此契约处理：`Network.ForwardSparse` 的计数累加与 `Sc
 
 ## 五、性能与显存
 
-- **显存占用**：CSR 三数组为 `nnz × (4 + 4 + 8)` 字节；FlyWire 量级（nnz ≈ 千万）约 160 MB。CSR 会**常驻显存**（按引用 + 版本缓存，LRU，容量上限 `DefaultCacheBytes` = 1 GiB），并**显式释放**（ILCuda 显存无终结器）。
-- **每步传输**：上传 `S`（`batch × N × 8`）+ 回读结果（`batch × Columns × 8`）。`N = 14万, batch = 1` 时约 1.1 MB/次。
-- **一个重要的性能事实**：脉冲输入**高度稀疏**，CPU 的 SpMM 会**跳过零源**（`xv = 0`），因此在中低发放率下 CPU 相当有竞争力；GPU 每次调用有固定开销（内核启动 + 显存往返，约 0.6 ~ 1 ms/步），需要足够大的「每步非零计算量」（**高发放率 × 大规模 nnz**）才能摊薄。
-  - 裸内核基准（`ILCudaTensor/test`）：`nnz = 1.28M`、稠密输入时 SpMM 加速约 **4.7×**；
-  - 端到端（`SNN/test` Part 4）：小/中规模、稀疏发放时 GPU 未必更快 —— 这是预期行为，建议按实际发放率实测后再决定是否启用。
+- **显存占用**：CSR 三数组为 `nnz × (4 + 4 + 8)` 字节；FlyWire 量级（nnz ≈ 千万）约 160 MB。CSR 会**常驻显存**（按引用 + 版本缓存，LRU，容量上限 `DefaultCacheBytes` = 1 GiB），并**显式释放**（ILCuda 显存无终结器）。融合算子的状态常驻缓冲（`H`/`S_prev`/`S`/`counts`）为 `4 × batch × N × 8` 字节（`N = 14万` 时约 4.5 MB），另有一片跨步复用的 `I` 缓冲同量级。
+- **每步传输**（融合 + 常驻路径）：只有外部电流需要上传（`batch × N × 8`，恒流场景可用 `DirectCurrentEncode(..., shareBuffer:=True)` 复用同一份缓冲）；若 `KeepHistory = True` 则每步回读一次脉冲（`batch × N × 8`），`KeepHistory = False` 时**整段仿真零逐步回读**，只在结束时同步一次计数。
+- **实测（本机 RTX A4000 / sm_86）**：
+  - 融合 LIF 单步内核基准（`ILCudaTensor/test`，`N = 20,000`、`nnz = 1.28M`、30 步、每步含外部电流上传）：CPU 77.7 ms vs CUDA 5.84 ms ≈ **13.3×**，且最大偏差 `0.00E+000`（逐位一致）；
+  - 稀疏 SpMM 裸内核（`nnz = 1.28M`、稠密输入）：约 **4.3×**；
+  - 端到端（`SNN/test` Part 4）：小/中规模、中低发放率下 GPU 未必更快 —— 这是**预期**行为（见下）。
+- **一个重要的性能事实**：脉冲输入**高度稀疏**，CPU 的 SpMM 会**跳过零源**（`xv = 0`），因此在中低发放率下 CPU 相当有竞争力；GPU 每次调用有固定开销（内核启动 + 显存往返），需要足够大的「每步非零计算量」（**高发放率 × 大规模 nnz**）才能摊薄。经验做法：先用 `SparseLIFLayer.LastStepPath` 确认走的确实是融合路径，再按实际发放率实测后决定是否启用。
 
 ## 六、验证
 
 | 测试 | 内容 |
 |------|------|
-| `cuda/ILCudaTensor/test/Program.vb` | 稀疏 SpMM 的 CPU vs CUDA 逐元素对拍、`MarkModified` 后显存缓存同步、稀疏 SpMM 性能参考 |
+| `cuda/ILCudaTensor/test/Program.vb` | 稀疏 SpMM 的 CPU vs CUDA 逐元素对拍、`MarkModified` 后显存缓存同步、**融合 LIF 单步的双精度 / 单精度档对拍与性能参考** |
 | `SNN/test/test4.vb` | 同一稀疏网络的 CPU / GPU 端到端前向对拍（`LatencyCoding` 确定性编码保证输入一致），并在无 CUDA 时安全跳过 |
 
-两者均未破坏既有断言与演示（全连接训练、`SparseDemo` 等照常通过）。
+两者均未破坏既有断言与演示（全连接训练、`SparseDemo`、`RecurrentLayerSelfCheck` 等照常通过）。
 
 ---
 
