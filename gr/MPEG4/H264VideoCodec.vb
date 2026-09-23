@@ -103,7 +103,16 @@ Friend Class H264VideoCodec
     Private ReadOnly mvMagX1 As Integer()
     Private ReadOnly mvMagY1 As Integer()
 
+    ''' <summary>已编码（已输出）的采样数，即解码顺序上的序号</summary>
     Private frameIndex As Integer
+
+    ''' <summary>已接收的显示序帧数</summary>
+    Private displayIndex As Integer
+
+    ''' <summary>等待未来锚点的 B 帧原始像素及其行宽</summary>
+    Private pendingBgra As Byte()
+    Private pendingPixelWidth As Integer
+
     Private reference As H264Yuv420
 
     ''' <summary>
@@ -222,13 +231,77 @@ Friend Class H264VideoCodec
     ''' </summary>
     ''' <param name="bgra">扁平的 BGRA 像素字节</param>
     ''' <param name="pixelWidth">像素行的实际宽度（可能大于可见宽度）</param>
-    Friend Function encodeFrame(bgra As Byte(), pixelWidth As Integer) As Byte()
+    Friend Function encodeFrame(bgra As Byte(), pixelWidth As Integer) As List(Of H264EncodedFrame)
+        Dim result As New List(Of H264EncodedFrame)
+        Dim display As Integer = displayIndex
+
+        If display = 0 Then
+            ' 首个锚点用 IDR
+            result.Add(encodePicture(bgra, pixelWidth, H264SliceType.I, True, 0, 0, display))
+        ElseIf (display And 1) = 1 Then
+            ' B 候选：显示序为奇数的帧夹在两个锚点之间，必须先拿到【未来】锚点才能编码，
+            ' 因此这里只缓存像素，等下一个锚点到齐时一并输出。
+            pendingBgra = bgra
+            pendingPixelWidth = pixelWidth
+        Else
+            ' 锚点（显示序偶数）：周期性插入 I 帧做刷新，其余为 P 帧
+            Dim isRefresh As Boolean = (display Mod gopSize) = 0
+
+            result.Add(encodePicture(bgra, pixelWidth,
+                                     If(isRefresh, H264SliceType.I, H264SliceType.P),
+                                     False, display \ 2, (display * 2) And 255, display))
+
+            ' 未来锚点已就绪 → 立刻把缓存的 B 帧按解码顺序编在它之后
+            If pendingBgra IsNot Nothing Then
+                result.Add(encodePicture(pendingBgra, pendingPixelWidth, H264SliceType.B,
+                                         False, display \ 2, ((display - 1) * 2) And 255, display - 1))
+                pendingBgra = Nothing
+            End If
+        End If
+
+        displayIndex += 1
+
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 输出缓冲中剩余的帧。
+    ''' </summary>
+    ''' <remarks>
+    ''' 若总帧数为奇数，最后一帧是「没有未来锚点的 B」——此时改按 P 帧编出（引用最近的锚点），
+    ''' 仍是合法且可播放的码流，不会因为缺少未来参考而丢帧。
+    ''' </remarks>
+    Friend Function flush() As List(Of H264EncodedFrame)
+        Dim result As New List(Of H264EncodedFrame)
+
+        If pendingBgra IsNot Nothing Then
+            Dim display As Integer = displayIndex - 1
+
+            result.Add(encodePicture(pendingBgra, pendingPixelWidth, H264SliceType.P,
+                                     False, (display + 1) \ 2, (display * 2) And 255, display))
+            pendingBgra = Nothing
+        End If
+
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 按指定的切片类型编码一帧，并在解码顺序上推进参考帧与计数器。
+    ''' </summary>
+    ''' <param name="sliceType">切片类型（I / P / B）</param>
+    ''' <param name="frameNum">frame_num（参考图像按解码顺序递增，非参考图像沿用前一个参考图像的取值）</param>
+    ''' <param name="pocLsb">pic_order_cnt_lsb（= 显示序 × 2，保证 B 帧的 POC 落在两个锚点之间）</param>
+    ''' <param name="display">本帧的显示序（用于推导 ctts 的合成时间偏移）</param>
+    Private Function encodePicture(bgra As Byte(), pixelWidth As Integer,
+                                   sliceType As H264SliceType, isIdr As Boolean,
+                                   frameNum As Integer, pocLsb As Integer,
+                                   display As Integer) As H264EncodedFrame
         Dim source As New H264Yuv420(codec.codedWidth, codec.codedHeight, frameWidth, frameHeight)
 
         Call source.loadBgra(bgra, pixelWidth)
 
         Dim recon As H264Yuv420 = source.clone()
-        Dim isIdr As Boolean = (frameIndex = 0)
+        Dim isI As Boolean = (sliceType = H264SliceType.I)
         ' P 帧已通过验收（解码零错误、重建与解码器逐样点一致），故启用。
         ' 该路径此前长期无法通过，根因是六处「合法码流但预测/重建与解码器不一致」的偏差，逐一实测定位：
         '   1) 运动向量单位：码流用四分之一像素，早期直接把整像素位移当 MV 写出。静止内容因位移为 0
@@ -244,37 +317,52 @@ Friend Class H264VideoCodec
         ' 逐帧 PSNR 16x16 32.1-46.7、32x32 37.3-47.3、48x32 38.7-47.6、64x64 42.2-48.5、80x64 42.9-48.6 dB。
         ' 已知限制：128x96 第 1 帧为 29.7 dB —— 测试内容在 256 处回绕造成该帧 1/4 画面无法被平移匹配，
         ' 且运动估计只做整像素（无半像素细化），属编码质量而非正确性；该尺寸其余各帧为 31-50 dB。
-        Dim pFrame As Boolean = (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
+        Dim isB As Boolean = (sliceType = H264SliceType.B)
         Dim bits As New BitStreamWriter(1 << 16)
 
         ' slice_qp_delta 是相对 PPS 的 pic_init_qp_minus26(= 0) 的偏移，因此实际 QP = 26 + delta
-        Call H264SliceHeader.write(bits, If(pFrame, H264SliceType.P, H264SliceType.I), isIdr,
-                                   frameNum:=(frameIndex And 255),
-                                   picOrderCntLsb:=((frameIndex * 2) And 255),
-                                   sliceQpDelta:=(qp - 26))
+        ' B 切片用 num_ref_idx_active_override 把两条列表的活动参考数都抬到 2：
+        ' 列表 0 按 PicNum 降序，故 ref 0 = 未来锚点、ref 1 = 过去锚点，列表 1 默认与列表 0 同序。
+        Call H264SliceHeader.write(bits, sliceType, isIdr,
+                                   frameNum:=frameNum,
+                                   picOrderCntLsb:=pocLsb,
+                                   sliceQpDelta:=(qp - 26),
+                                   cabacInitIdc:=If(isB, 1, 0),
+                                   numRefIdxOverride:=isB,
+                                   numRefIdxL0Minus1:=1,
+                                   numRefIdxL1Minus1:=1)
 
         Dim cabac As New H264Cabac(bits)
 
         Call cabac.begin()
-        ' I 切片用 I 表初始化上下文，P 切片用 PB 表（索引 0 即 P）
-        Call cabac.initStates(Not pFrame, 0, qp)
+        ' I 切片用 I 表；P 用 PB[0]、B 用 PB[1]，必须与切片头写出的 cabac_init_idc 一致
+        Call cabac.initStates(isI, If(isB, 1, 0), qp)
 
         Dim mbCols As Integer = codec.widthInMbs
         Dim mbRows As Integer = codec.heightInMapUnits
         Dim prevRow As H264MbInfo() = newMbInfoRow(mbCols)
         Dim curRow As H264MbInfo() = newMbInfoRow(mbCols)
 
-        ' 逐帧重置 inter 标记：上一帧的 inter 邻居不能影响本帧的运动向量预测
+        ' 逐帧重置 inter 标记与两列表簿记：上一帧的邻居信息不能影响本帧的运动向量预测。
+        ' refL0/refL1 的「未使用」哨兵值是 -1 而【不是 0】——0 表示「使用该列表且参考索引为 0」，
+        ' 用作默认值会让 B 切片把尚未编码/不使用该列表的邻居误判为匹配。
         Call Array.Clear(Me.interMb, 0, Me.interMb.Length)
+
+        For i As Integer = 0 To Me.refL0.Length - 1
+            Me.refL0(i) = -1
+            Me.refL1(i) = -1
+        Next
 
         For mbY As Integer = 0 To mbRows - 1
             For mbX As Integer = 0 To mbCols - 1
                 Dim isLast As Boolean = (mbY = mbRows - 1) AndAlso (mbX = mbCols - 1)
 
-                If pFrame Then
-                    Call encodeInterMacroblock(cabac, source, recon, mbX, mbY, prevRow, curRow)
-                Else
+                If isB Then
+                    Call encodeBInterMacroblock(cabac, source, recon, mbX, mbY, prevRow, curRow)
+                ElseIf isI Then
                     Call encodeMacroblock(cabac, source, recon, mbX, mbY, prevRow, curRow)
+                Else
+                    Call encodeInterMacroblock(cabac, source, recon, mbX, mbY, prevRow, curRow)
                 End If
                 ' 每个宏块之后都要写 end_of_slice_flag，只有最后一个宏块为 1（同时完成算术编码收尾）
                 Call cabac.encodeTerminate(If(isLast, 1, 0))
@@ -298,8 +386,19 @@ Friend Class H264VideoCodec
         sample(3) = CByte(nal.Length And &HFF)
         Call Array.Copy(nal, 0, sample, 4, nal.Length)
 
+        ' 参考图像只在 I/P 帧推进：B 帧不作为参考，若把它的重建写进 reference，
+        ' 后续帧的预测就会引用一个解码器并未标记为参考的图像。
+        ' referencePast 保留上一个锚点，供紧随其后的 B 帧作为「过去锚点」（列表 1 的 ref_idx 1）。
+        If Not isB Then
+            referencePast = reference
+            reference = recon
+        End If
+
+        ' ctts 的合成时间偏移 = 显示时间 − 解码时间；编码器整体给显示时间平移 1 帧使其恒为非负
+        ' （ctts 的 0 版本条目是无符号的）。平移等价于给整条视频轨加一个固定延迟，不影响播放顺序。
+        Dim encoded As New H264EncodedFrame(sample, (display + 1) - frameIndex)
+
         frameIndex += 1
-        reference = recon
 
         ' 【临时诊断】导出编码器自建重建帧的三个平面，供与解码器输出逐样点比对
         If H264Debug.Enabled Then
@@ -310,7 +409,7 @@ Friend Class H264VideoCodec
             H264Debug.ReconV = exportPlane(recon.v, frameWidth \ 2, frameHeight \ 2)
         End If
 
-        Return sample
+        Return encoded
     End Function
 
     ''' <summary>【临时诊断】把一个平面导出为按行展开的 8 位字节数组（按 8 位钳制）</summary>
@@ -879,9 +978,355 @@ Friend Class H264VideoCodec
         mvStoreY(mbIndex) = mvY
         mvMagX(mbIndex) = Math.Abs(mvdX)
         mvMagY(mbIndex) = Math.Abs(mvdY)
+        ' P 切片的宏块恒为列表 0、参考索引 0（列表 1 不使用 → 哨兵 -1）
+        refL0(mbIndex) = 0
+        refL1(mbIndex) = -1
         interMb(mbIndex) = True
 
         ' ---- 8. 重建 ----
+        Call reconstructInterLuma(recon, predLuma, x0, y0)
+        Call reconstructChroma(recon, predChroma, ux, uy)
+    End Sub
+
+    ''' <summary>
+    ''' 在某参考平面上做有界整像素搜索；位移限制为偶数以保证色度位移为整数
+    ''' </summary>
+    Private Function searchBestMv(refPlane As H264Plane, sourcePlane As H264Plane,
+                                  x0 As Integer, y0 As Integer,
+                                  ByRef bestX As Integer, ByRef bestY As Integer) As Long
+        Dim bestSad As Long = Long.MaxValue
+
+        For oy As Integer = -H264MotionEstimation.searchRadius To H264MotionEstimation.searchRadius Step 2
+            For ox As Integer = -H264MotionEstimation.searchRadius To H264MotionEstimation.searchRadius Step 2
+                Dim cost As Long = H264MotionEstimation.sad(refPlane, sourcePlane, x0, y0, 16, ox, oy)
+
+                If cost < bestSad Then
+                    bestSad = cost
+                    bestX = ox
+                    bestY = oy
+                End If
+            Next
+        Next
+
+        If H264Debug.ForceZeroMv Then
+            bestX = 0
+            bestY = 0
+        End If
+
+        Return bestSad
+    End Function
+
+    ''' <summary>
+    ''' 编码一个 B 切片的 16x16 宏块（<c>B_L0_16x16</c> / <c>B_L1_16x16</c> / <c>B_Bi_16x16</c> 三选一）
+    ''' </summary>
+    ''' <remarks>
+    ''' 参考列表按解码器的默认初始化（不做参考重排序，8.2.4.2.4）：列表 1 默认与列表 0 同序，
+    ''' 而列表 0 按 PicNum 降序，故 <c>L0[0] / L1[0]</c> 是<b>较新</b>参考（本帧的未来锚点 =
+    ''' <see cref="reference"/>）、<c>L0[1] / L1[1]</c> 是<b>较旧</b>参考（过去锚点 =
+    ''' <see cref="referencePast"/>）。因此固定取 <c>ref_idx_l0 = 0</c>（未来）与
+    ''' <c>ref_idx_l1 = 1</c>（过去），双向宏块即「未来 + 过去」的平均，是真正的双向预测。
+    ''' 
+    ''' <para>
+    ''' 语法顺序（ffmpeg <c>ff_h264_decode_mb_cabac</c> 的 B 分支）：
+    ''' <c>mb_skip_flag</c>（基址 11，B 切片再 +13）→ <c>mb_type</c>（基址 27）→
+    ''' <c>ref_idx_l0</c> / <c>ref_idx_l1</c>（基址 54，仅在本宏块使用该列表时写出）→
+    ''' <c>mvd_l0</c> / <c>mvd_l1</c>（x 基址 40、y 基址 47，两条列表共用同一段上下文）→
+    ''' <c>coded_block_pattern</c>（亮度 73 / 色度 77）→ <c>mb_qp_delta</c>(60) → 残差。
+    ''' </para>
+    ''' </remarks>
+    Private Sub encodeBInterMacroblock(cabac As H264Cabac,
+                                       source As H264Yuv420, recon As H264Yuv420,
+                                       mbX As Integer, mbY As Integer,
+                                       prevRow As H264MbInfo(), curRow As H264MbInfo())
+        Dim mbCols As Integer = codec.widthInMbs
+        Dim mbIndex As Integer = mbY * mbCols + mbX
+        Dim x0 As Integer = mbX * 16
+        Dim y0 As Integer = mbY * 16
+        Dim ux As Integer = mbX * 8
+        Dim uy As Integer = mbY * 8
+        Dim leftAvailable As Boolean = mbX > 0
+        Dim topAvailable As Boolean = mbY > 0
+        Dim left As H264MbInfo = If(leftAvailable, curRow(mbX - 1), Nothing)
+        Dim top As H264MbInfo = If(topAvailable, prevRow(mbX), Nothing)
+        Dim info As New H264MbInfo
+
+        ' ---- 1. 两条列表各自做运动估计（L0 = 未来锚点、L1 = 过去锚点）----
+        Dim candX0 As Integer = 0, candY0 As Integer = 0
+        Dim candX1 As Integer = 0, candY1 As Integer = 0
+        Dim sadL0 As Long = searchBestMv(reference.y, source.y, x0, y0, candX0, candY0)
+        Dim sadL1 As Long = searchBestMv(referencePast.y, source.y, x0, y0, candX1, candY1)
+
+        ' ---- 2. 各自的运动向量预测与最终 MV（码流单位 = 四分之一像素）----
+        Dim predX0 As Integer, predY0 As Integer, predX1 As Integer, predY1 As Integer
+
+        Call predictListMv(0, 0, mbX, mbY, predX0, predY0)
+        Call predictListMv(1, 1, mbX, mbY, predX1, predY1)
+
+        Dim mvd0X As Integer = candX0 * 4 - predX0
+        Dim mvd0Y As Integer = candY0 * 4 - predY0
+        Dim mvd1X As Integer = candX1 * 4 - predX1
+        Dim mvd1Y As Integer = candY1 * 4 - predY1
+        Dim mv0X As Integer = predX0 + mvd0X
+        Dim mv0Y As Integer = predY0 + mvd0Y
+        Dim mv1X As Integer = predX1 + mvd1X
+        Dim mv1Y As Integer = predY1 + mvd1Y
+
+        ' ---- 3. 三选一：按「源与预测的平方误差」比较 L0 / L1 / 双向平均 ----
+        Call H264MotionEstimation.buildPrediction(reference.y, x0, y0, 16, mv0X \ 4, mv0Y \ 4, predLuma, 16)
+        Call H264MotionEstimation.buildPrediction(referencePast.y, x0, y0, 16, mv1X \ 4, mv1Y \ 4, predLumaB, 16)
+
+        Dim sadBi As Long = 0
+
+        For yy As Integer = 0 To 15
+            For xx As Integer = 0 To 15
+                Dim avg As Integer = (predLuma(yy * 16 + xx) + predLumaB(yy * 16 + xx) + 1) >> 1
+                Dim diff As Integer = CInt(source.y.at(x0 + xx, y0 + yy)) - avg
+
+                sadBi += CLng(diff) * diff
+            Next
+        Next
+
+        Dim isBi As Boolean = False
+        Dim useL0 As Boolean
+        Dim useL1 As Boolean
+
+        If sadBi <= sadL0 AndAlso sadBi <= sadL1 Then
+            isBi = True
+            useL0 = True
+            useL1 = True
+        ElseIf sadL0 <= sadL1 Then
+            useL0 = True
+            useL1 = False
+        Else
+            useL0 = False
+            useL1 = True
+        End If
+
+        ' ---- 4. 按选择构造最终的亮度/色度预测 ----
+        If isBi Then
+            Call averagePrediction(predLuma, predLumaB, predLuma, 256)
+        ElseIf useL1 Then
+            Call Array.Copy(predLumaB, predLuma, 256)
+        End If
+
+        If useL1 Then
+            Call H264MotionEstimation.buildPrediction(referencePast.u, ux, uy, 8, mv1X \ 8, mv1Y \ 8, predChromaB(0), 8)
+            Call H264MotionEstimation.buildPrediction(referencePast.v, ux, uy, 8, mv1X \ 8, mv1Y \ 8, predChromaB(1), 8)
+        End If
+
+        Call H264MotionEstimation.buildPrediction(reference.u, ux, uy, 8, mv0X \ 8, mv0Y \ 8, predChroma(0), 8)
+        Call H264MotionEstimation.buildPrediction(reference.v, ux, uy, 8, mv0X \ 8, mv0Y \ 8, predChroma(1), 8)
+
+        If isBi Then
+            Call averagePrediction(predChroma(0), predChromaB(0), predChroma(0), 64)
+            Call averagePrediction(predChroma(1), predChromaB(1), predChroma(1), 64)
+        ElseIf useL1 Then
+            Call Array.Copy(predChromaB(0), predChroma(0), 64)
+            Call Array.Copy(predChromaB(1), predChroma(1), 64)
+        End If
+
+        ' ---- 5. 亮度残差：16 个 4x4 块各自带 DC，走类别 2 ----
+        For by As Integer = 0 To 3
+            For bx As Integer = 0 To 3
+                Call loadLumaResidual(source.y, predLuma, x0, y0, bx, by, resBlock)
+                Call H264Transform.forwardTransform(resBlock, blockCoef)
+                Call H264Transform.quantize(blockCoef, blockLevels, qp, False)
+                Call Array.Copy(blockLevels, lumaAcLevels(by * 4 + bx), 16)
+            Next
+        Next
+
+        ' ---- 6. 色度残差：DC 收集到 2x2 Hadamard，其余走 AC ----
+        For c As Integer = 0 To 1
+            Dim plane As H264Plane = If(c = 0, source.u, source.v)
+
+            For by As Integer = 0 To 1
+                For bx As Integer = 0 To 1
+                    Dim blockIdx As Integer = by * 2 + bx
+
+                    Call loadChromaResidual(plane, predChroma(c), ux, uy, bx, by, resBlock)
+                    Call H264Transform.forwardTransform(resBlock, blockCoef)
+                    Call H264Transform.quantize(blockCoef, blockLevels, qp, False)
+
+                    chromaDcIn(c)(blockIdx) = blockLevels(0)
+
+                    Dim ac As Integer() = chromaAcLevels(c)(blockIdx)
+
+                    ac(0) = 0
+                    For i As Integer = 1 To 15
+                        ac(i) = blockLevels(i)
+                    Next
+                Next
+            Next
+
+            Call H264Transform.forwardChromaDcTransform(chromaDcIn(c)(0), chromaDcIn(c)(1), chromaDcIn(c)(2), chromaDcIn(c)(3), chromaDcCoeff)
+            Call H264Transform.quantizeDc(chromaDcCoeff, chromaDcLevels(c), 4, qp, False)
+        Next
+
+        ' ---- 7. CBP ----
+        Dim lumaCbp As Integer = 0
+
+        For by As Integer = 0 To 3
+            For bx As Integer = 0 To 3
+                If hasCoeff(lumaAcLevels(by * 4 + bx)) Then
+                    lumaCbp = lumaCbp Or (1 << ((by \ 2) * 2 + (bx \ 2)))
+                End If
+            Next
+        Next
+
+        Dim chromaDcPresent As Boolean = False
+        Dim chromaAcPresent As Boolean = False
+
+        For c As Integer = 0 To 1
+            If hasCoeff(chromaDcLevels(c)) Then chromaDcPresent = True
+
+            For i As Integer = 0 To 3
+                If hasCoeff(chromaAcLevels(c)(i)) Then chromaAcPresent = True
+            Next
+        Next
+
+        Dim chromaCbp As Integer = If(chromaAcPresent, 2, If(chromaDcPresent, 1, 0))
+
+        If H264Debug.ForceNoResidual Then
+            lumaCbp = 0
+            chromaCbp = 0
+        End If
+
+        ' ---- 8. 宏块语法 ----
+        ' mb_skip_flag：基址 11，B 切片再 +13（h264_cabac.c:1368-1370）。本实现不产生跳过宏块，
+        ' 故邻居只要可用就 +1。
+        Call cabac.encodeBin(24 + If(leftAvailable, 1, 0) + If(topAvailable, 1, 0), 0)
+
+        ' mb_type：首 bin 的上下文 = 「非 Direct 的左邻 + 非 Direct 的上邻」。本实现不使用 B_Direct，
+        ' 因此可用邻居都算「非 Direct」（h264_cabac.c:1968-1999）。
+        Dim typeCtx As Integer = If(leftAvailable, 1, 0) + If(topAvailable, 1, 0)
+
+        Call cabac.encodeBin(27 + typeCtx, 1)
+
+        If isBi Then
+            ' B_Bi_16x16 = 3：bin2 = 1（非 L0/L1_16x16），随后 4 个 0 → bits = 0 < 8 → mb_type = 3
+            Call cabac.encodeBin(30, 1)
+            Call cabac.encodeBin(31, 0)
+            Call cabac.encodeBin(32, 0)
+            Call cabac.encodeBin(32, 0)
+            Call cabac.encodeBin(32, 0)
+        Else
+            ' B_L0_16x16 = 1 / B_L1_16x16 = 2：bin2 = 0，再由 ctx 32 的一位区分
+            Call cabac.encodeBin(30, 0)
+            Call cabac.encodeBin(32, If(useL0, 0, 1))
+        End If
+
+        ' ref_idx：活动参考数为 2（B 切片用 override 抬到 2），故使用中的列表都要写参考索引；
+        ' 未使用的列表【不写】（规范：MbPartPredMode != Pred_L0 时无 ref_idx_l0）。
+        If useL0 Then
+            Dim ctxL0 As Integer = If(leftAvailable AndAlso refL0(mbIndex - 1) > 0, 1, 0) +
+                                   If(topAvailable AndAlso refL0(mbIndex - mbCols) > 0, 2, 0)
+
+            Call cabac.encodeBin(54 + ctxL0, 0)                             ' ref_idx_l0 = 0
+        End If
+
+        If useL1 Then
+            Dim ctxL1 As Integer = If(leftAvailable AndAlso refL1(mbIndex - 1) > 0, 1, 0) +
+                                   If(topAvailable AndAlso refL1(mbIndex - mbCols) > 0, 2, 0)
+
+            ' ref_idx_l1 = 1：先写一个 1 bin，再写一个 0 bin；第二个 bin 的上下文为 (ctx >> 2) + 4
+            ' （h264_cabac.c: decode_cabac_mb_ref 的 while 循环与 ctx 更新）
+            Call cabac.encodeBin(54 + ctxL1, 1)
+            Call cabac.encodeBin(54 + ((ctxL1 >> 2) + 4), 0)
+        End If
+
+        ' mvd：两条列表共用上下文 40（x）/ 47（y），amvd 用各列表自己的邻居 mvd 幅值之和
+        If useL0 Then
+            Dim amvdX As Integer = If(leftAvailable, mvMagX(mbIndex - 1), 0) + If(topAvailable, mvMagX(mbIndex - mbCols), 0)
+            Dim amvdY As Integer = If(leftAvailable, mvMagY(mbIndex - 1), 0) + If(topAvailable, mvMagY(mbIndex - mbCols), 0)
+
+            Call writeMvd(cabac, 40, mvd0X, amvdX)
+            Call writeMvd(cabac, 47, mvd0Y, amvdY)
+        End If
+
+        If useL1 Then
+            Dim amvdX As Integer = If(leftAvailable, mvMagX1(mbIndex - 1), 0) + If(topAvailable, mvMagX1(mbIndex - mbCols), 0)
+            Dim amvdY As Integer = If(leftAvailable, mvMagY1(mbIndex - 1), 0) + If(topAvailable, mvMagY1(mbIndex - mbCols), 0)
+
+            Call writeMvd(cabac, 40, mvd1X, amvdX)
+            Call writeMvd(cabac, 47, mvd1Y, amvdY)
+        End If
+
+        Dim leftCbp As Integer = If(leftAvailable AndAlso left IsNot Nothing, left.cbp, &H0F)
+        Dim topCbp As Integer = If(topAvailable AndAlso top IsNot Nothing, top.cbp, &H0F)
+
+        Call writeCbpLuma(cabac, lumaCbp, leftCbp, topCbp)
+        Call writeCbpChroma(cabac, chromaCbp, leftCbp, topCbp)
+
+        ' mb_qp_delta 只在 cbp != 0 或宏块为 I_16x16 时才存在；本路径是 inter，故 cbp = 0 时不写
+        If (lumaCbp Or chromaCbp) <> 0 Then
+            Call cabac.encodeBin(60, 0)
+        End If
+
+        ' ---- 9. 残差系数（与 P 路径完全一致）----
+        Dim acLeft As H264MbInfo = If(left, New H264MbInfo)
+        Dim acTop As H264MbInfo = If(top, New H264MbInfo)
+
+        If lumaCbp <> 0 Then
+            For i4x4 As Integer = 0 To 15
+                Dim bx As Integer = ((i4x4 >> 2) And 1) * 2 + (i4x4 And 1)
+                Dim by As Integer = ((i4x4 >> 3) And 1) * 2 + ((i4x4 >> 1) And 1)
+
+                If ((lumaCbp >> ((by \ 2) * 2 + (bx \ 2))) And 1) = 0 Then Continue For
+
+                Dim ctx As Integer = H264Residual.cbfBaseCtx(2) + acNeighborCtx(acLeft, acTop, info, bx, by, False, 0, 0)
+
+                info.lumaAcNnz(by * 4 + bx) = H264Residual.writeBlock(cabac, lumaAcLevels(by * 4 + bx), 2, H264Residual.zigZag, ctx)
+            Next
+        End If
+
+        Dim chromaDcBits As Integer = 0
+
+        If chromaCbp <> 0 Then
+            For c As Integer = 0 To 1
+                Dim dcCtxChroma As Integer = H264Residual.cbfBaseCtx(3) +
+                    If(left IsNot Nothing AndAlso ((left.cbp >> (6 + c)) And 1) <> 0, 1, 0) +
+                    If(top IsNot Nothing AndAlso ((top.cbp >> (6 + c)) And 1) <> 0, 2, 0)
+                Dim count As Integer = H264Residual.writeBlock(cabac, chromaDcLevels(c), 3, H264Residual.chromaDcScan, dcCtxChroma)
+
+                If count > 0 Then chromaDcBits = chromaDcBits Or (1 << (6 + c))
+            Next
+        End If
+
+        If chromaCbp = 2 Then
+            For c As Integer = 0 To 1
+                For i As Integer = 0 To 3
+                    Dim cx As Integer = i And 1
+                    Dim cy As Integer = (i >> 1) And 1
+                    Dim ctx As Integer = H264Residual.cbfBaseCtx(4) + acNeighborCtx(left, top, info, cx, cy, True, c, 0)
+
+                    info.chromaAcNnz(c)(i) = H264Residual.writeBlock(cabac, chromaAcLevels(c)(i), 4, H264Residual.acScan, ctx)
+                Next
+            Next
+        End If
+
+        info.cbp = lumaCbp Or (chromaCbp << 4) Or chromaDcBits
+        curRow(mbX) = info
+
+        ' ---- 10. 逐列表簿记（供后续宏块的预测使用）----
+        refL0(mbIndex) = If(useL0, 0, -1)
+        refL1(mbIndex) = If(useL1, 1, -1)
+        interMb(mbIndex) = True
+
+        If useL0 Then
+            mvStoreX(mbIndex) = mv0X
+            mvStoreY(mbIndex) = mv0Y
+            mvMagX(mbIndex) = Math.Abs(mvd0X)
+            mvMagY(mbIndex) = Math.Abs(mvd0Y)
+        End If
+
+        If useL1 Then
+            mvStoreX1(mbIndex) = mv1X
+            mvStoreY1(mbIndex) = mv1Y
+            mvMagX1(mbIndex) = Math.Abs(mvd1X)
+            mvMagY1(mbIndex) = Math.Abs(mvd1Y)
+        End If
+
+        ' ---- 11. 重建 ----
         Call reconstructInterLuma(recon, predLuma, x0, y0)
         Call reconstructChroma(recon, predChroma, ux, uy)
     End Sub

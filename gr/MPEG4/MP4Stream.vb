@@ -52,6 +52,16 @@ Public Class MP4Stream
     Friend ReadOnly Property samples As MP4SampleStore
 
     ''' <summary>
+    ''' 每个采样的合成时间偏移（<c>ctts</c>）：显示时间 − 解码时间，单位为帧。
+    ''' </summary>
+    ''' <remarks>
+    ''' 采样按<b>解码顺序</b>追加（B 帧需要此顺序才能引用未来的锚点），
+    ''' 而播放顺序由本列表还原——封装层把它写成 <c>ctts</c>。
+    ''' 全部为 0 时（只含 I/P 帧）封装层不会写出该 box。
+    ''' </remarks>
+    Friend ReadOnly Property compositionOffsets As New List(Of Integer)
+
+    ''' <summary>
     ''' 创建一条 H.264 视频轨
     ''' </summary>
     ''' <param name="fps">帧率</param>
@@ -126,10 +136,28 @@ Public Class MP4Stream
                 $"the frame data ({bgra.Length} bytes, row width {pixelWidth}) does not match the canvas size ({width} x {height}) of this mp4 video stream!")
         End If
 
-        Dim data As Byte() = codec.encodeFrame(bgra, pixelWidth)
+        ' 一次 addFrame 可能产出 0 - 2 个采样：B 帧要等「未来锚点」到达后才随锚点一起按解码顺序输出
+        Call appendEncoded(codec.encodeFrame(bgra, pixelWidth))
+    End Sub
 
-        ' 首帧为 IDR（关键帧）
-        Call samples.add(data, isKeyFrame:=(samples.count = 0))
+    ''' <summary>
+    ''' 输出缓冲中剩余的采样。
+    ''' </summary>
+    ''' <remarks>
+    ''' 由 <see cref="MP4Encoder.WriteBuffer"/> 在封装前调用：总帧数为奇数时最后一帧是
+    ''' 「没有未来锚点的 B」，编码器会把它改按 P 帧编出，因此这里仍会有采样产出。
+    ''' </remarks>
+    Friend Sub flush()
+        Call appendEncoded(codec.flush())
+    End Sub
+
+    Private Sub appendEncoded(frames As List(Of H264EncodedFrame))
+        For Each frame As H264EncodedFrame In frames
+            ' 首帧为 IDR（关键帧）
+            Call samples.add(frame.data, isKeyFrame:=(samples.count = 0))
+            ' 采样按解码顺序追加，显示顺序由 ctts 还原
+            Call compositionOffsets.Add(frame.compositionOffset)
+        Next
     End Sub
 
     Public Sub Dispose() Implements IDisposable.Dispose

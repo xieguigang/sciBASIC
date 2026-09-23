@@ -70,7 +70,14 @@ Public Class MP4Encoder
         Dim tracks As New List(Of MP4TrackSource)
 
         For Each stream As MP4Stream In streams
-            tracks.Add(New MP4TrackSource(stream.fps, stream.width, stream.height, stream.codec.codec, stream.samples))
+            ' 先把编码器缓冲里剩余的采样取出来（总帧数为奇数时最后还有一个 B 帧候选）
+            Call stream.flush()
+
+            Dim track As New MP4TrackSource(stream.fps, stream.width, stream.height, stream.codec.codec, stream.samples) With {
+                .compositionOffsets = stream.compositionOffsets
+            }
+
+            tracks.Add(track)
         Next
 
         Using muxer As New MP4Muxer(settings.width, settings.height)
