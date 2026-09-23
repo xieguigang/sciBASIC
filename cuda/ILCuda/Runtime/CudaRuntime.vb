@@ -84,9 +84,6 @@ Namespace Runtime
         ''' <c>cuCtxSetCurrent</c>。因此可以放心地放在每一个底层驱动调用之前。
         ''' </remarks>
         Friend Shared Sub EnsureCurrent()
-            ' ==== 临时对照实验：整体禁用自动绑定（验证 CUDA_ERROR_INVALID_CONTEXT 的成因）====
-            Return
-
             Dim context As CudaContext = _default
 
             If context Is Nothing OrElse context.IsDisposed Then Return

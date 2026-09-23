@@ -82,8 +82,7 @@ Namespace Runtime
 
             ' 当前上下文是线程局部状态：先把本线程绑到活跃上下文上，
             ' 否则在线程池线程里分配显存会得到 CUDA_ERROR_INVALID_CONTEXT (201)
-            ' ==== 临时对照实验：禁用自动绑定，验证 CUDA_ERROR_INVALID_CONTEXT 的成因 ====
-            ' CudaRuntime.EnsureCurrent()
+            CudaRuntime.EnsureCurrent()
 
             CudaDriverApi.Check(CudaDriverApi.cuMemAlloc_v2(_pointer, bytes), "cuMemAlloc_v2")
             _byteSize = bytes
