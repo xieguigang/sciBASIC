@@ -424,8 +424,8 @@ Public Class SpikingNetwork
         ' 恒流编码下各步的外部电流相同：散射一次后复用，避免每步重新分配与重新上传。
         Dim sharedExt = If(IsConstantSequence(seq), ScatterInput(seq(0), batch, units), Nothing)
 
-        For t = 0 To TimeSteps - 1
-            Dim ext
+        For t As Integer = 0 To TimeSteps - 1
+            Dim ext As Tensor
 
             If sharedExt IsNot Nothing Then
                 ext = sharedExt
