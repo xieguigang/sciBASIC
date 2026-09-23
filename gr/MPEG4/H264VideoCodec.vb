@@ -99,6 +99,10 @@ Friend Class H264VideoCodec
     Private ReadOnly mvMagX As Integer()
     Private ReadOnly mvMagY As Integer()
 
+    ''' <summary>列表 1 写进码流的 mvd 幅值（供 L1 的 mvd 首 bin 上下文使用）</summary>
+    Private ReadOnly mvMagX1 As Integer()
+    Private ReadOnly mvMagY1 As Integer()
+
     Private frameIndex As Integer
     Private reference As H264Yuv420
 
@@ -132,6 +136,9 @@ Friend Class H264VideoCodec
     ' ---- 复用的临时缓冲：避免逐宏块/逐块分配造成 GC 抖动 ----
     Private ReadOnly predLuma As Integer() = New Integer(255) {}
     Private ReadOnly predChroma As Integer()() = {New Integer(63) {}, New Integer(63) {}}
+    ''' <summary>B 切片第二路预测（用于双向平均与候选比较）</summary>
+    Private ReadOnly predLumaB As Integer() = New Integer(255) {}
+    Private ReadOnly predChromaB As Integer()() = {New Integer(63) {}, New Integer(63) {}}
     Private ReadOnly resBlock As Integer() = New Integer(15) {}
     Private ReadOnly blockCoef As Integer() = New Integer(15) {}
     Private ReadOnly blockLevels As Integer() = New Integer(15) {}
@@ -189,6 +196,8 @@ Friend Class H264VideoCodec
         Me.mvStoreY1 = New Integer(mbCount - 1) {}
         Me.mvMagX = New Integer(mbCount - 1) {}
         Me.mvMagY = New Integer(mbCount - 1) {}
+        Me.mvMagX1 = New Integer(mbCount - 1) {}
+        Me.mvMagY1 = New Integer(mbCount - 1) {}
         Me.interMb = New Boolean(mbCount - 1) {}
         Me.refL0 = New Integer(mbCount - 1) {}
         Me.refL1 = New Integer(mbCount - 1) {}
