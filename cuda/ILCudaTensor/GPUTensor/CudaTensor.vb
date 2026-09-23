@@ -1154,10 +1154,17 @@ Namespace GPUTensor
                     Dim dx32 = DeviceF32(t)
 
                     Using dOut32 As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(elements))
-                        ' 手写内核的形参顺序是 (x, y, rows, cols)，
-                        ' rows / cols 描述的是<b>输入</b>形状
+                        ' 手写内核的形参顺序是 (x, y, rows, cols)，rows / cols 描述的是<b>输入</b>形状；
+                        ' 内核里 j = blockIdx.x·blockDim.x + threadIdx.x 索引输入的列、i = blockIdx.y… 索引行。
+                        '
+                        ' 因此这里必须用 For2D(rows, cols)：For2D 的<b>第一个参数映射到 gridY</b>、
+                        ' 第二个映射到 gridX（见 LaunchPlanner.For2D 的实现）。
+                        ' 早先误写为 For2D(cols, rows)，gridX 便按 rows 计算 ——
+                        ' 非方阵（rows ≠ cols）时 i 只覆盖到 cols 行，输出里有一半元素根本没被写入，
+                        ' 表现为"FP32 转置结果里混着未初始化的垃圾值"（方阵下恰好看不出问题，
+                        ' 因为两种写法的 grid 覆盖范围一致）。
                         fp32Kernel.Launch(
-                            ILCudaRuntime.LaunchPlanner.For2D(cols, rows, 16, 16),
+                            ILCudaRuntime.LaunchPlanner.For2D(rows, cols, 16, 16),
                             dx32, dOut32, rows, cols)
 
                         Return Wrap(DeviceResidentStore.ToDouble(dOut32.Read()), New Integer() {cols, rows})
