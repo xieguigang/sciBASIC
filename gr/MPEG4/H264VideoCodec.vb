@@ -332,6 +332,9 @@ Friend Class H264VideoCodec
             info.lumaAcNnz(by * 4 + bx) = H264Residual.writeBlock(cabac, lumaAcLevels(by * 4 + bx), 1, H264Residual.acScan, ctx)
         Next
 
+        ' 色度块的顺序必须与解码器一致（ffmpeg h264_cabac.c:2467-2482）：
+        ' 先两个平面的 DC（Cb、Cr），再两个平面的 AC（Cb 的 4 个、Cr 的 4 个）。
+        ' 若写成「Cb DC -> Cb AC -> Cr DC -> Cr AC」就会与解码器错位。
         Dim chromaDcBits As Integer = 0
 
         For c As Integer = 0 To 1
@@ -342,7 +345,9 @@ Friend Class H264VideoCodec
             Dim count As Integer = H264Residual.writeBlock(cabac, chromaDcLevels(c), 3, H264Residual.chromaDcScan, dcCtxChroma)
 
             If count > 0 Then chromaDcBits = chromaDcBits Or (1 << (6 + c))
+        Next
 
+        For c As Integer = 0 To 1
             For i As Integer = 0 To 3
                 Dim cx As Integer = i And 1
                 Dim cy As Integer = (i >> 1) And 1

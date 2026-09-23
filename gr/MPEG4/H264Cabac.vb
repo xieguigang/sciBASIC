@@ -115,7 +115,10 @@ Friend Class H264Cabac
             ' LPS 分支：走上半个区间
             lowValue += rangeValue
             rangeValue = lps
-            states(ctx) = H264CabacTables.mlpsState(s Xor 1)
+            ' 解码器写的是 state = (mlps_state + 128)[s ^ -1]，即 *(mlps_state + 127 - s)，
+            ' 因此 LPS 的后继状态来自表的另一半（lpsState）并按 127 - s 反向索引。
+            ' 注意不能写成 mlpsState(s Xor 1)：MPS 概率不占优的位会立刻与解码器失去同步。
+            states(ctx) = H264CabacTables.lpsState(127 - s)
         End If
 
         Call renorm()

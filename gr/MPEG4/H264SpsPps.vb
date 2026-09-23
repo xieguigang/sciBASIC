@@ -74,10 +74,22 @@ Friend NotInheritable Class H264SpsPps
     ''' <summary>PPS 的原始字节（含 NAL 头，Annex-B 起始码）</summary>
     Friend ReadOnly Property pps As Byte()
 
-    ''' <summary>SPS/PPS 的 RBSP 净荷（不含起始码与 NAL 头），用于写进 MP4 的 avcC</summary>
+    ''' <summary>SPS/PPS 的 RBSP 净荷（不含起始码与 NAL 头）</summary>
     Friend ReadOnly Property spsRbsp As Byte()
 
     Friend ReadOnly Property ppsRbsp As Byte()
+
+    ''' <summary>
+    ''' 写进 MP4 的 <c>avcC</c> 所需的 SPS 字节：<b>含 NAL 头</b>、不含起始码。
+    ''' </summary>
+    ''' <remarks>
+    ''' avcC 里的参数集是"长度前缀 + NAL 单元（含 NAL 头）"，
+    ''' 且 <c>AVCProfileIndication</c>/<c>profile_compatibility</c>/<c>AVCLevelIndication</c>
+    ''' 依次取该字节串的第 1、2、3 个字节（第 0 字节是 NAL 头）。
+    ''' </remarks>
+    Friend ReadOnly Property spsPayload As Byte()
+
+    Friend ReadOnly Property ppsPayload As Byte()
 
     Sub New(width As Integer, height As Integer, Optional maxNumRefFrames As Integer = 2, Optional levelIdc As Integer = 0)
         Me.width = width
@@ -94,6 +106,9 @@ Friend NotInheritable Class H264SpsPps
         Me.ppsRbsp = buildPps()
         Me.sps = BitStreamWriter.nalUnit(Me.spsRbsp, 3, 7)
         Me.pps = BitStreamWriter.nalUnit(Me.ppsRbsp, 3, 8)
+        ' annexB:=False 返回「NAL 头 + 防竞争处理后的 RBSP」，正是 avcC 需要的形态
+        Me.spsPayload = BitStreamWriter.nalUnit(Me.spsRbsp, 3, 7, annexB:=False)
+        Me.ppsPayload = BitStreamWriter.nalUnit(Me.ppsRbsp, 3, 8, annexB:=False)
     End Sub
 
     ''' <summary>裁剪后的显示宽度（像素）</summary>

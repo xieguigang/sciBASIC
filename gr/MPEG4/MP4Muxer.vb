@@ -470,8 +470,9 @@ Friend Class MP4Muxer
     ''' avcC：configurationVersion + profile/compat/level（直接抄 SPS 的字节）+ SPS/PPS 列表
     ''' </summary>
     Private Shared Sub writeAvcc(w As Mp4BoxWriter, track As MP4TrackSource)
-        Dim sps As Byte() = track.codec.spsRbsp
-        Dim pps As Byte() = track.codec.ppsRbsp
+        ' avcC 中的参数集必须是「含 NAL 头」的形态（第 0 字节是 NAL 头，第 1/2/3 字节依次是 profile/兼容位/level）
+        Dim sps As Byte() = track.codec.spsPayload
+        Dim pps As Byte() = track.codec.ppsPayload
 
         Call w.box("avcC",
                    Sub(a)

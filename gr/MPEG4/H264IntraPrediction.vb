@@ -130,31 +130,25 @@ Friend NotInheritable Class H264IntraPrediction
     ''' <summary>
     ''' I_16x16 的 plane 模式
     ''' </summary>
+    ''' <remarks>
+    ''' 按规范 8.3.2.2.1：<c>H = Σ(i+1)*(top[8+i] - top[6-i])</c>、<c>V = Σ(i+1)*(left[8+i] - left[6-i])</c>，
+    ''' 其中 <c>i = 0..7</c>。注意 <c>6-i</c> 在 <c>i = 7</c> 时等于 -1，取的是<b>左上角样点</b>
+    ''' <c>p[-1,-1]</c>，因此不能只准备 16 个上邻/左邻样点（这里通过 <see cref="topAt"/> 与
+    ''' <see cref="leftAt"/> 统一处理越界到角落的情况）。
+    ''' </remarks>
     Private Shared Sub predictPlane16x16(plane As H264Plane, x0 As Integer, y0 As Integer, pred As Integer())
-        Dim top As Integer() = New Integer(15) {}
-        Dim left As Integer() = New Integer(15) {}
+        Dim h As Integer = 0
+        Dim v As Integer = 0
 
-        For i As Integer = 0 To 15
-            top(i) = plane.at(x0 + i, y0 - 1)
-            left(i) = plane.at(x0 - 1, y0 + i)
-        Next
-
-        Dim h As Integer = top(8) - top(6)
-
-        For k As Integer = 2 To 8
-            h += k * (top(7 + k) - top(7 - k))
-        Next
-
-        Dim v As Integer = left(8) - left(6)
-
-        For k As Integer = 2 To 8
-            v += k * (left(8 + k) - left(6 - k))
+        For i As Integer = 0 To 7
+            h += (i + 1) * (topAt(plane, x0, y0, 8 + i) - topAt(plane, x0, y0, 6 - i))
+            v += (i + 1) * (leftAt(plane, x0, y0, 8 + i) - leftAt(plane, x0, y0, 6 - i))
         Next
 
         h = (5 * h + 32) >> 6
         v = (5 * v + 32) >> 6
 
-        Dim a0 As Integer = 16 * (left(15) + top(15) + 1) - 7 * (v + h)
+        Dim a0 As Integer = 16 * (plane.at(x0 - 1, y0 + 15) + plane.at(x0 + 15, y0 - 1) + 1) - 7 * (v + h)
 
         For y As Integer = 0 To 15
             For x As Integer = 0 To 15
@@ -162,6 +156,20 @@ Friend NotInheritable Class H264IntraPrediction
             Next
         Next
     End Sub
+
+    ''' <summary>取上邻样点；x 为 -1 时取左上角样点</summary>
+    Private Shared Function topAt(plane As H264Plane, x0 As Integer, y0 As Integer, x As Integer) As Integer
+        If x < 0 Then Return plane.at(x0 - 1, y0 - 1)
+
+        Return plane.at(x0 + x, y0 - 1)
+    End Function
+
+    ''' <summary>取左邻样点；y 为 -1 时取左上角样点</summary>
+    Private Shared Function leftAt(plane As H264Plane, x0 As Integer, y0 As Integer, y As Integer) As Integer
+        If y < 0 Then Return plane.at(x0 - 1, y0 - 1)
+
+        Return plane.at(x0 - 1, y0 + y)
+    End Function
 
     ''' <summary>
     ''' 生成色度 8x8 的预测样点
@@ -264,30 +272,18 @@ Friend NotInheritable Class H264IntraPrediction
     ''' 色度 plane 模式（系数为 17/16 与 3，与亮度的 5/6 与 7 不同）
     ''' </summary>
     Private Shared Sub predictPlane8x8(plane As H264Plane, x0 As Integer, y0 As Integer, pred As Integer())
-        Dim top As Integer() = New Integer(7) {}
-        Dim left As Integer() = New Integer(7) {}
+        Dim h As Integer = 0
+        Dim v As Integer = 0
 
-        For i As Integer = 0 To 7
-            top(i) = plane.at(x0 + i, y0 - 1)
-            left(i) = plane.at(x0 - 1, y0 + i)
-        Next
-
-        Dim h As Integer = top(4) - top(2)
-
-        For k As Integer = 2 To 4
-            h += k * (top(3 + k) - top(3 - k))
-        Next
-
-        Dim v As Integer = left(4) - left(2)
-
-        For k As Integer = 2 To 4
-            v += k * (left(4 + k) - left(2 - k))
+        For i As Integer = 0 To 3
+            h += (i + 1) * (topAt(plane, x0, y0, 4 + i) - topAt(plane, x0, y0, 2 - i))
+            v += (i + 1) * (leftAt(plane, x0, y0, 4 + i) - leftAt(plane, x0, y0, 2 - i))
         Next
 
         h = (17 * h + 16) >> 5
         v = (17 * v + 16) >> 5
 
-        Dim a0 As Integer = 16 * (left(7) + top(7) + 1) - 3 * (v + h)
+        Dim a0 As Integer = 16 * (plane.at(x0 - 1, y0 + 7) + plane.at(x0 + 7, y0 - 1) + 1) - 3 * (v + h)
 
         For y As Integer = 0 To 7
             For x As Integer = 0 To 7
