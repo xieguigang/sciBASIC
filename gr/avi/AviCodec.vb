@@ -36,10 +36,18 @@ Public Enum AviCodec
     ''' <summary>
     ''' MPEG-4 Part 2 ASP，使用 DivX 标识（fourCC <c>'DIVX'</c>）。
     ''' </summary>
+    ''' <remarks>
+    ''' 目前尚未实现，选择该方式会抛出 <see cref="NotSupportedException"/>，请改用
+    ''' <see cref="MJPEG"/> 或 <see cref="DIB"/>。
+    ''' </remarks>
     DivX = 2
     ''' <summary>
     ''' MPEG-4 Part 2 ASP，使用 XviD 标识（fourCC <c>'XVID'</c>）。
     ''' </summary>
+    ''' <remarks>
+    ''' 目前尚未实现，选择该方式会抛出 <see cref="NotSupportedException"/>，请改用
+    ''' <see cref="MJPEG"/> 或 <see cref="DIB"/>。
+    ''' </remarks>
     XviD = 3
 End Enum
 
@@ -75,6 +83,13 @@ Public NotInheritable Class AviVideoCodecs
                 Return New DibCodec(fps, width, height)
             Case AviCodec.MJPEG
                 Return New MjpegCodec(fps, width, height, quality)
+            Case AviCodec.DivX, AviCodec.XviD
+                ' MPEG-4 Part 2 (ASP) 的宏块层依赖 ISO/IEC 14496-2 的 VLC 码表，
+                ' 这些码表不在本仓库中，也无法可靠地重建，因此在完成并验证之前不提供该方式，
+                ' 避免写出任何播放器都无法解码的文件
+                Throw New NotSupportedException(
+                    $"the MPEG-4 Part 2 (ASP) encoder for codec '{type}' is not available yet, " &
+                    $"please use '{NameOf(AviCodec.MJPEG)}' or '{NameOf(AviCodec.DIB)}' instead!")
             Case Else
                 Throw New ArgumentException($"unsupported avi video codec: {type}", NameOf(type))
         End Select

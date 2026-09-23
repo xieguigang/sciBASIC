@@ -12,14 +12,14 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Version>1.0.9762.11310</Version>
     <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
-    <Title>AVI Video Encoder For Uncompressed RGB Frame Streams</Title>
-    <Description>A dependency-free AVI (RIFF) writer that assembles main/stream headers and appends bitmap frames into a playable video file, ideal for exporting rendered animation frames from the sciBASIC# imaging pipeline.</Description>
+    <Title>AVI Video Encoder With MJPEG Compression</Title>
+    <Description>A dependency-free AVI (RIFF) writer that compresses rendered animation frames into MJPEG or uncompressed DIB video streams, with per-stream codec selection, configurable JPEG quality and no external codec dependency. Ideal for exporting rendered animation frames from the sciBASIC# imaging pipeline.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging.AVIMedia</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;avi;video-encoder;riff;animation;bitmap;frame-stream</PackageTags>
-    <PackageReleaseNotes>The AVI (RIFF) video encoder of sciBASIC#. It assembles the RIFF main header and the stream headers (AVIMainHeader, AVIStreamHeader, AVIStream) and then appends uncompressed RGB bitmap frames through FrameStream into a playable .avi file - no codec and no native dependency is required. Encoder drives the whole process from a Settings object (frame rate, frame size, codec tags and stream metadata), while UInt8Array provides the byte buffer used while writing frames. The primary use case is exporting rendered animation frames from the sciBASIC# imaging pipeline - for example the force directed layout animation recorded by NetworkCanvas - where a lossless, dependency free container is preferred over a compressed codec.</PackageReleaseNotes>
+    <PackageTags>scibasic;avi;video-encoder;riff;animation;mjpeg;bitmap;frame-stream</PackageTags>
+    <PackageReleaseNotes>The AVI (RIFF) video encoder of sciBASIC#. It assembles the RIFF main header and the stream headers (AVIMainHeader, AVIStreamHeader, AVIStream) and then appends the encoded frames through FrameStream into a playable .avi file - no external codec and no native dependency is required. Every video stream selects its own compression method (AviCodec): MJPEG by default, uncompressed 32bpp DIB to keep the previous lossless output, and the DivX/XviD fourCC tags are reserved for the MPEG-4 Part 2 encoder that is still under construction. The codec descriptor drives fccHandler, biCompression, biBitCount, the biHeight sign and the suggested buffer size, and chunk padding together with the indx offsets is kept consistent for odd sized (compressed) frames. Encoder drives the whole process from a Settings object (frame rate, frame size, codec tags and stream metadata), while UInt8Array provides the byte buffer used while writing frames. The primary use case is exporting rendered animation frames from the sciBASIC# imaging pipeline - for example the force directed layout animation recorded by NetworkCanvas.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

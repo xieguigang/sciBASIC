@@ -1,70 +1,97 @@
-# AVI 视频编码器：从 RGB 帧序列到可播放视频
+# AVI Video Encoder With Per-Stream Video Codecs
 
-## 引言
+A dependency-free AVI (RIFF) writer that turns a stream of rendered frames into a playable `.avi` file, with a pluggable video codec layer for each video stream.
 
-当我们把一组渲染出来的画面导出为视频时，通常面临两个选择：
+## Overview
 
-- 使用带压缩的编解码器（H.264 等）——体积小，但要引入原生库与授权问题；
-- 使用**无压缩容器**——体积大，但**零依赖、无损、易于调试与逐帧校验**。
+- Assembles the RIFF/AVI container by hand: the `RIFF`/`AVI ` header, the `hdrl` list, per-stream `strl`/`strh`/`strf`/`indx` chunks and the `movi` data list.
+- Frames are accepted as a `Bitmap`, as a `Color()` pixel row array, or as a flat RGBA byte array; each frame is buffered to a temp file, so long sequences do not have to be held in memory.
+- Every video stream owns its own `AviVideoCodec` instance, so different streams inside one file may use different compression methods.
+- `strh.fccHandler`, `strf.biCompression`, `biBitCount`, `biHeight` sign and the suggested buffer size are all driven by the codec descriptor instead of being hard coded.
+- Chunk padding is applied consistently: odd sized frame payloads are padded to the RIFF word boundary, and the `indx` offsets account for that padding, so compressed frames (whose sizes are usually odd) stay indexable.
 
-本包选择后者：直接把 RGB 位图帧写进 **AVI（RIFF）** 容器。对科研可视化而言，这往往正是想要的——导出的动画要与渲染结果**逐像素一致**。
+## Video Codecs
 
-## 设计目标
+| `AviCodec` | fourCC | Description |
+| --- | --- | --- |
+| `MJPEG` *(default)* | `MJPG` | Every frame is a standard JPEG image, encoded with the GDI+ JPEG encoder. Frame independent, so any frame can be decoded on its own. The JPEG quality is configurable (`0` - `100`, default `90`). |
+| `DIB` | `DIB ` | Uncompressed 32bpp top-down bitmap, i.e. the very same output as the pre-codec versions of this library. Use it to keep the previous behaviour (much larger files). |
+| `DivX` / `XviD` | `DIVX` / `XVID` | MPEG-4 Part 2 (ASP). **Not available yet**: selecting it throws a `NotSupportedException`, see "Known Limitations". |
 
-- **零依赖**：不引入编解码器与原生库；
-- **无损**：帧数据原样写入，便于校验与后续再处理；
-- **简单可控**：帧率、尺寸、流元数据都由一个 `Settings` 集中描述。
+## Key Types
 
-## 核心特性
+- `Microsoft.VisualBasic.Imaging.AVIMedia.Encoder` — top-level container writer; owns the settings, the main header and the stream list, and emits the final file.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.Settings` — the video canvas size (`width`/`height`) shared by all streams.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.AVIStream` — one video track (fps/size/codec) with its `FrameStream` list and `addFrame` / `addRGBFrame` methods.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.AviCodec` — the compression method selected per stream.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.AviVideoCodec` — the codec contract (`FourCC`, `BitCount`, `HeightSign`, `SuggestedBufferSize`, `CodecPrivate`, `Encode`).
+- `Microsoft.VisualBasic.Imaging.AVIMedia.DibCodec` / `MjpegCodec` — the built-in implementations.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.PixelData` — bitmap/pixel buffer conversions shared by the codecs.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.AVIMainHeader` — the `avih` chunk: frame interval derived from the stream fps, total frame count, stream count and suggested buffer size.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.AVIStreamHeader` — the `strh` chunk model plus the `StreamTypes` enum.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.FrameStream` — a single frame payload with its byte length and padded chunk size.
+- `Microsoft.VisualBasic.Imaging.AVIMedia.UInt8Array` — low-level resizable byte buffer with `writeInt`, `writeLong`, `writeString` and `subarray`.
 
-- **RIFF 头组装**：`AVIMainHeader`、`AVIStreamHeader` 与 `AVIStream` 负责构造 AVI 的主头与流头；
-- **帧写入**：`FrameStream` 负责把位图帧追加到流中；
-- **流程编排**：`Encoder` 依据 `Settings`（帧率、帧尺寸、编解码标签与流元数据）驱动整个写出过程；
-- **字节缓冲**：`UInt8Array` 提供写帧时使用的字节缓冲。
+## Quick Start
 
-## 命名空间与关键类型
-
-全部类型位于根命名空间 `Microsoft.VisualBasic.Imaging.AVIMedia`：
-
-| 类型 | 职责 |
-|---|---|
-| `AVIMainHeader` | RIFF 主头（文件级元信息与流数量） |
-| `AVIStreamHeader` | 流头（帧率、帧尺寸、编解码标签） |
-| `AVIStream` | 流对象（帧数据的组织与写出） |
-| `FrameStream` | 帧写入：把位图帧追加到视频流 |
-| `Encoder` | 编码器入口：组装头部并驱动帧写入 |
-| `Settings` | 编码参数集合（帧率、尺寸、元数据） |
-| `UInt8Array` | 写帧用的字节缓冲 |
-
-## 快速上手
+Default (MJPEG) output:
 
 ```vbnet
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.AVIMedia
 
-Dim settings As New Settings With {
-    .FrameRate = 25,
-    .Width = 1280,
-    .Height = 720
-}
+Dim encoder As New Encoder(New Settings With {.width = 800, .height = 600})
+Dim video As New AVIStream(25, 800, 600)   ' AviCodec.MJPEG is the default
 
-Using encoder As New Encoder("animation.avi", settings)
-    For Each frame As Bitmap In renderedFrames
-        Call encoder.AddFrame(frame)
-    Next
+For Each frame As Bitmap In renderedFrames
+    Call video.addFrame(frame)
+Next
 
-    Call encoder.Flush()
-End Using
+encoder.streams.Add(video)
+Call encoder.WriteBuffer("animation.avi")
 ```
 
-## 实现要点
+MJPEG with an explicit JPEG quality:
 
-- **RIFF 是「箱子套箱子」**：AVI 文件由 RIFF 块（chunk）嵌套组成，主头声明流的数量与索引位置，流头声明帧格式；顺序写错就会导致播放器无法识别。
-- **为什么需要索引（idx1）**：AVI 靠索引块记录每一帧在文件中的偏移；播放器据此随机访问帧——这正是 `Encoder` 在收尾阶段必须完成的工作。
-- **无压缩的取舍**：体积约为压缩方案的一个数量级，但换来「任何环境都能写出、任何播放器都能播放」，并且帧内容可被逐像素比对。
+```vbnet
+Dim video As New AVIStream(25, 800, 600, AviCodec.MJPEG, quality:=75)
+```
 
-## 包信息
+Uncompressed output, i.e. the pre-codec behaviour:
 
-- Assembly：`Microsoft.VisualBasic.Imaging.AVIMedia`
-- TargetFramework：`net10.0`
-- Tags：`scibasic;avi;video-encoder;riff;animation;bitmap;frame-stream`
-- 许可：GPL-3.0-or-later
+```vbnet
+Dim video As New AVIStream(25, 800, 600, AviCodec.DIB)
+```
+
+Different codecs for different streams:
+
+```vbnet
+Dim encoder As New Encoder(New Settings With {.width = 800, .height = 600})
+Call encoder.streams.Add(New AVIStream(25, 800, 600, AviCodec.MJPEG, quality:=90))
+Call encoder.streams.Add(New AVIStream(25, 800, 600, AviCodec.DIB))
+Call encoder.WriteBuffer("mixed.avi")
+```
+
+Frames may also be pushed as raw pixels instead of a bitmap:
+
+```vbnet
+Call video.addFrame(pixels)      ' pixels As Color(), row major
+Call video.addRGBFrame(rgba)     ' rgba As Byte(), flat (r, g, b, a) quadruples
+```
+
+## Known Limitations
+
+- **DivX/XviD (`AviCodec.DivX` / `AviCodec.XviD`) is not implemented.** Building a real MPEG-4 Part 2 (ASP) encoder requires the ISO/IEC 14496-2 macroblock layer VLC tables (MCBPC, CBPY, intra DC size, TCOEFF and motion vector tables). Those tables are not part of this repository, and writing them down from memory cannot be validated, so selecting these codecs throws a `NotSupportedException` instead of producing a file that no player can decode.
+- `AviCodec.MJPEG` needs GDI+ for the JPEG encoding step, therefore it is Windows only. The uncompressed `AviCodec.DIB` path is pure managed.
+- The frame size must match the canvas size a video stream was created with; a mismatch throws an `ArgumentException` instead of writing a broken file.
+- Blast radius of the default change: `New AVIStream(fps, width, height)` now produces MJPEG instead of uncompressed frames. Pass `AviCodec.DIB` explicitly to restore the previous output.
+
+## Package
+
+- Assembly: `Microsoft.VisualBasic.Imaging.AVIMedia`
+- TargetFramework: `net10.0`
+- Tags: `scibasic;avi;video-encoder;riff;animation;mjpeg`
+
+## License
+
+GPL-3.0-or-later
