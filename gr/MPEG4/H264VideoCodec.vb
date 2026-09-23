@@ -102,6 +102,33 @@ Friend Class H264VideoCodec
     Private frameIndex As Integer
     Private reference As H264Yuv420
 
+    ''' <summary>
+    ''' 上一个参考图像（B 切片的「过去锚点」）。
+    ''' </summary>
+    ''' <remarks>
+    ''' B 切片有两条列表。在 <c>max_num_ref_frames = 2</c> 且不做参考重排序时，解码器的
+    ''' 列表 1 默认与列表 0 同序（8.2.4.2.4），而列表 0 按 PicNum 降序初始化，
+    ''' 于是 <c>L0[0] / L1[0]</c> 是较新的参考（本帧的「未来」锚点）、
+    ''' <c>L0[1] / L1[1]</c> 是较旧的参考（「过去」锚点）。
+    ''' 因此 <see cref="reference"/> 即未来锚点、本字段即过去锚点。
+    ''' </remarks>
+    Private referencePast As H264Yuv420
+
+    ''' <summary>
+    ''' 各宏块在列表 0 / 列表 1 中使用的参考索引，<c>-1</c> 表示该宏块不使用该列表。
+    ''' </summary>
+    ''' <remarks>
+    ''' B 切片的运动向量预测要求「邻居在该列表上使用了相同参考索引」才参与中值，
+    ''' 因此必须逐宏块逐列表记录（解码器用 <c>ref_cache[list][..]</c> 表达同一信息）。
+    ''' P 切片的宏块恒为列表 0、参考索引 0。
+    ''' </remarks>
+    Private ReadOnly refL0 As Integer()
+    Private ReadOnly refL1 As Integer()
+
+    ''' <summary>列表 1 的运动向量（四分之一像素单位），布局与 <see cref="mvStoreX"/> 相同</summary>
+    Private ReadOnly mvStoreX1 As Integer()
+    Private ReadOnly mvStoreY1 As Integer()
+
     ' ---- 复用的临时缓冲：避免逐宏块/逐块分配造成 GC 抖动 ----
     Private ReadOnly predLuma As Integer() = New Integer(255) {}
     Private ReadOnly predChroma As Integer()() = {New Integer(63) {}, New Integer(63) {}}
@@ -158,9 +185,13 @@ Friend Class H264VideoCodec
 
         Me.mvStoreX = New Integer(mbCount - 1) {}
         Me.mvStoreY = New Integer(mbCount - 1) {}
+        Me.mvStoreX1 = New Integer(mbCount - 1) {}
+        Me.mvStoreY1 = New Integer(mbCount - 1) {}
         Me.mvMagX = New Integer(mbCount - 1) {}
         Me.mvMagY = New Integer(mbCount - 1) {}
         Me.interMb = New Boolean(mbCount - 1) {}
+        Me.refL0 = New Integer(mbCount - 1) {}
+        Me.refL1 = New Integer(mbCount - 1) {}
     End Sub
 
     ''' <summary>
@@ -437,6 +468,87 @@ Friend Class H264VideoCodec
     Private Shared Function medianOf3(a As Integer, b As Integer, c As Integer) As Integer
         Return Math.Max(Math.Min(a, b), Math.Min(Math.Max(a, b), c))
     End Function
+
+    ''' <summary>
+    ''' B 切片的逐列表运动向量预测（镜像解码器 <c>pred_motion</c> 在指定 list/refIdx 下的分支）
+    ''' </summary>
+    ''' <param name="list">参考列表（0 或 1）</param>
+    ''' <param name="refIdx">本宏块在该列表上使用的参考索引</param>
+    ''' <remarks>
+    ''' 与 P 用的逐图中值预测唯一不同之处是筛选条件：解码器只把「在<b>同一列表</b>上使用了
+    ''' <b>相同参考索引</b>」的邻居计入匹配数（<c>ref_cache[list][nb] == ref</c>），
+    ''' 帧内邻居、不使用该列表的邻居、参考索引不同的邻居都不参与。
+    ''' 几何位置与「右上不可用时回退到左上 D」的规则与 P 切片完全一致，故逐行沿用。
+    ''' </remarks>
+    Private Sub predictListMv(list As Integer, refIdx As Integer,
+                              mbX As Integer, mbY As Integer,
+                              ByRef px As Integer, ByRef py As Integer)
+        Dim mbCols As Integer = codec.widthInMbs
+        Dim storeX As Integer() = If(list = 0, mvStoreX, mvStoreX1)
+        Dim storeY As Integer() = If(list = 0, mvStoreY, mvStoreY1)
+        Dim refs As Integer() = If(list = 0, refL0, refL1)
+        Dim ax As Integer = 0, ay As Integer = 0, bx As Integer = 0, by As Integer = 0
+        Dim cx As Integer = 0, cy As Integer = 0
+        Dim aMatch As Boolean = False, bMatch As Boolean = False, cMatch As Boolean = False
+
+        If mbX > 0 Then
+            Dim i As Integer = mbY * mbCols + mbX - 1
+
+            aMatch = (refs(i) = refIdx)
+
+            If aMatch Then ax = storeX(i) : ay = storeY(i)
+        End If
+
+        If mbY > 0 Then
+            Dim i As Integer = (mbY - 1) * mbCols + mbX
+
+            bMatch = (refs(i) = refIdx)
+
+            If bMatch Then bx = storeX(i) : by = storeY(i)
+
+            If mbX + 1 < mbCols Then
+                Dim j As Integer = (mbY - 1) * mbCols + mbX + 1
+
+                cMatch = (refs(j) = refIdx)
+
+                If cMatch Then cx = storeX(j) : cy = storeY(j)
+            ElseIf mbX > 0 Then
+                ' 右上不可用（画面右边界）→ 回退到左上邻居 D（与解码器 fetch_diagonal_mv 一致）
+                Dim j As Integer = (mbY - 1) * mbCols + mbX - 1
+
+                cMatch = (refs(j) = refIdx)
+
+                If cMatch Then cx = storeX(j) : cy = storeY(j)
+            End If
+        End If
+
+        ' refs 的初值是 -1（表示「不使用该列表」），因此 refIdx = -1 不会误匹配到邻居
+        Dim count As Integer = If(aMatch, 1, 0) + If(bMatch, 1, 0) + If(cMatch, 1, 0)
+
+        If count >= 2 Then
+            px = medianOf3(ax, bx, cx)
+            py = medianOf3(ay, by, cy)
+        ElseIf count = 1 Then
+            If aMatch Then
+                px = ax : py = ay
+            ElseIf bMatch Then
+                px = bx : py = by
+            Else
+                px = cx : py = cy
+            End If
+        Else
+            px = 0 : py = 0
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 双向预测的平均：解码器在等权默认下为 <c>(p0 + p1 + 1) &gt;&gt; 1</c>
+    ''' </summary>
+    Private Shared Sub averagePrediction(a As Integer(), b As Integer(), dst As Integer(), count As Integer)
+        For i As Integer = 0 To count - 1
+            dst(i) = (a(i) + b(i) + 1) >> 1
+        Next
+    End Sub
 
     ''' <summary>
     ''' 写一个 mvd 分量（严格镜像解码器 <c>decode_cabac_mb_mvd</c>）
