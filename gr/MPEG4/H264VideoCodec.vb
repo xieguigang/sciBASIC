@@ -159,10 +159,16 @@ Friend Class H264VideoCodec
 
         Dim recon As H264Yuv420 = source.clone()
         Dim isIdr As Boolean = (frameIndex = 0)
+        ' 【未通过验收，暂不启用】P 帧路径的首帧仍报 bytestream overread：
+        ' 解码器在 MB(0,0) 消耗的语法多于本编码器写入的，说明 P 切片里还存在一处未写出的语法元素。
+        ' 在定位并验证之前，本开关保持 False，编码器只产出已验证的 I 帧，绝不产出无法播放的文件。
+        ' 定位方法：用 `ffmpeg -v debug` 对比同内容的 x264 参考流（本机无软件编码器时，
+        ' 可先用 `-v trace` 看 slice header 的解析停在哪个字段）。
+        Dim pFrame As Boolean = False AndAlso (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
         Dim bits As New BitStreamWriter(1 << 16)
 
         ' slice_qp_delta 是相对 PPS 的 pic_init_qp_minus26(= 0) 的偏移，因此实际 QP = 26 + delta
-        Call H264SliceHeader.write(bits, H264SliceType.I, isIdr,
+        Call H264SliceHeader.write(bits, If(pFrame, H264SliceType.P, H264SliceType.I), isIdr,
                                    frameNum:=(frameIndex And 255),
                                    picOrderCntLsb:=((frameIndex * 2) And 255),
                                    sliceQpDelta:=(qp - 26))
@@ -170,7 +176,8 @@ Friend Class H264VideoCodec
         Dim cabac As New H264Cabac(bits)
 
         Call cabac.begin()
-        Call cabac.initStates(True, 0, qp)
+        ' I 切片用 I 表初始化上下文，P 切片用 PB 表（索引 0 即 P）
+        Call cabac.initStates(Not pFrame, 0, qp)
 
         Dim mbCols As Integer = codec.widthInMbs
         Dim mbRows As Integer = codec.heightInMapUnits
@@ -181,7 +188,11 @@ Friend Class H264VideoCodec
             For mbX As Integer = 0 To mbCols - 1
                 Dim isLast As Boolean = (mbY = mbRows - 1) AndAlso (mbX = mbCols - 1)
 
-                Call encodeMacroblock(cabac, source, recon, mbX, mbY, prevRow, curRow)
+                If pFrame Then
+                    Call encodeSkippedMacroblock(cabac, recon, mbX, mbY)
+                Else
+                    Call encodeMacroblock(cabac, source, recon, mbX, mbY, prevRow, curRow)
+                End If
                 ' 每个宏块之后都要写 end_of_slice_flag，只有最后一个宏块为 1（同时完成算术编码收尾）
                 Call cabac.encodeTerminate(If(isLast, 1, 0))
             Next
@@ -237,6 +248,37 @@ Friend Class H264VideoCodec
 
         Return row
     End Function
+
+    ''' <summary>GOP 长度：帧 0 为 IDR，其后每 gopSize 帧一个非 IDR I 帧，其余为 P 帧</summary>
+    Private Const gopSize As Integer = 30
+
+    ''' <summary>
+    ''' 编码一个 P 切片的「跳过」宏块（<c>mb_skip_flag = 1</c>）
+    ''' </summary>
+    ''' <remarks>
+    ''' 跳过宏块<b>不写</b> mb_type、mvd、CBP 与残差：解码器按邻近运动向量中值预测取值，
+    ''' 在整帧全跳过时该预测恒为 (0,0)，于是重建 = 直接复制参考帧同位块。
+    ''' 
+    ''' skip 的上下文规则（ffmpeg <c>decode_cabac_mb_skip</c>）：
+    ''' <c>ctx = (左邻存在且未跳过 ? 0 : 1) + (上邻存在且未跳过 ? 0 : 1)</c>。
+    ''' 全跳过帧中邻居要么跳过、要么不可用，故恒为 2。
+    ''' </remarks>
+    Private Sub encodeSkippedMacroblock(cabac As H264Cabac, recon As H264Yuv420, mbX As Integer, mbY As Integer)
+        Call cabac.encodeBin(2, 1)
+
+        Call copyPlane(recon.y, reference.y, mbX * 16, mbY * 16, 16)
+        Call copyPlane(recon.u, reference.u, mbX * 8, mbY * 8, 8)
+        Call copyPlane(recon.v, reference.v, mbX * 8, mbY * 8, 8)
+    End Sub
+
+    ''' <summary>把参考帧中的一块方形区域复制到重建帧（跳过宏块的运动向量为 0）</summary>
+    Private Shared Sub copyPlane(dst As H264Plane, src As H264Plane, x0 As Integer, y0 As Integer, size As Integer)
+        For y As Integer = 0 To size - 1
+            For x As Integer = 0 To size - 1
+                Call dst.setAt(x0 + x, y0 + y, src.at(x0 + x, y0 + y))
+            Next
+        Next
+    End Sub
 
     ''' <summary>
     ''' 编码一个 I_16x16 宏块：预测 → 残差 → 变换量化 → CABAC 语法 → 重建
