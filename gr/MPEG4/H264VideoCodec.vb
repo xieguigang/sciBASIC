@@ -1094,17 +1094,16 @@ Friend Class H264VideoCodec
         Dim useL0 As Boolean
         Dim useL1 As Boolean
 
-        If sadBi <= sadL0 AndAlso sadBi <= sadL1 Then
-            isBi = True
-            useL0 = True
-            useL1 = True
-        ElseIf sadL0 <= sadL1 Then
-            useL0 = True
-            useL1 = False
-        Else
-            useL0 = False
-            useL1 = True
-        End If
+        ' 全部宏块都使用 B_Bi_16x16（两条列表都参与，取「未来 + 过去」的平均）。
+        ' 这里不只是画质取舍，也是<b>语法一致性</b>的要求：列表 1 的 ref_idx 上下文来自邻居的
+        ' ref_cache[1]，而解码器只给「使用该列表」的宏块写入该缓存（h264_cabac.c 的 16x16 分支
+        ' 没有 else 分支），不使用列表 1 的宏块在参考解码器里留下的是陈旧值，
+        ' 编码器无法复现——实测「只写列表 0」零错误、一旦有宏块写列表 1 就出现
+        ' 「Reference N >= 2」。让每个宏块都在两条列表上各带一个参考，上下文即为确定值。
+        ' 两条列表的运动向量仍然各自取「分别搜索最近邻」的结果，因此这仍是真正的双向预测。
+        isBi = True
+        useL0 = True
+        useL1 = True
 
         ' ---- 4. 按选择构造最终的亮度/色度预测 ----
         If isBi Then
@@ -1219,13 +1218,23 @@ Friend Class H264VideoCodec
             Call cabac.encodeBin(32, If(useL0, 0, 1))
         End If
 
-        ' ref_idx：活动参考数为 2（B 切片用 override 抬到 2），故使用中的列表都要写参考索引；
-        ' 未使用的列表【不写】（规范：MbPartPredMode != Pred_L0 时无 ref_idx_l0）。
+        ' ref_idx 与 mvd 必须按【列表】交错写出：解码器对 16x16 的 B 宏块是
+        ' 「ref_idx_l0 → mvd_l0(x,y) → ref_idx_l1 → mvd_l1(x,y)」
+        ' （h264_cabac.c:2235-2252 的 list 循环内先 decode_cabac_mb_ref 再 DECODE_CABAC_MB_MVD）。
+        ' 先把两条列表的 ref_idx 都写完、再统一写 mvd 会让第二个列表整体错位。
+        ' 活动参考数为 2（B 切片用 override 抬到 2），未使用的列表【不写】其 ref_idx。
         If useL0 Then
             Dim ctxL0 As Integer = If(leftAvailable AndAlso refL0(mbIndex - 1) > 0, 1, 0) +
                                    If(topAvailable AndAlso refL0(mbIndex - mbCols) > 0, 2, 0)
 
             Call cabac.encodeBin(54 + ctxL0, 0)                             ' ref_idx_l0 = 0
+
+            ' mvd_l0：两条列表共用上下文 40（x）/ 47（y），amvd 用各列表自己的邻居 mvd 幅值之和
+            Dim amvdX As Integer = If(leftAvailable, mvMagX(mbIndex - 1), 0) + If(topAvailable, mvMagX(mbIndex - mbCols), 0)
+            Dim amvdY As Integer = If(leftAvailable, mvMagY(mbIndex - 1), 0) + If(topAvailable, mvMagY(mbIndex - mbCols), 0)
+
+            Call writeMvd(cabac, 40, mvd0X, amvdX)
+            Call writeMvd(cabac, 47, mvd0Y, amvdY)
         End If
 
         If useL1 Then
@@ -1236,18 +1245,7 @@ Friend Class H264VideoCodec
             ' （h264_cabac.c: decode_cabac_mb_ref 的 while 循环与 ctx 更新）
             Call cabac.encodeBin(54 + ctxL1, 1)
             Call cabac.encodeBin(54 + ((ctxL1 >> 2) + 4), 0)
-        End If
 
-        ' mvd：两条列表共用上下文 40（x）/ 47（y），amvd 用各列表自己的邻居 mvd 幅值之和
-        If useL0 Then
-            Dim amvdX As Integer = If(leftAvailable, mvMagX(mbIndex - 1), 0) + If(topAvailable, mvMagX(mbIndex - mbCols), 0)
-            Dim amvdY As Integer = If(leftAvailable, mvMagY(mbIndex - 1), 0) + If(topAvailable, mvMagY(mbIndex - mbCols), 0)
-
-            Call writeMvd(cabac, 40, mvd0X, amvdX)
-            Call writeMvd(cabac, 47, mvd0Y, amvdY)
-        End If
-
-        If useL1 Then
             Dim amvdX As Integer = If(leftAvailable, mvMagX1(mbIndex - 1), 0) + If(topAvailable, mvMagX1(mbIndex - mbCols), 0)
             Dim amvdY As Integer = If(leftAvailable, mvMagY1(mbIndex - 1), 0) + If(topAvailable, mvMagY1(mbIndex - mbCols), 0)
 

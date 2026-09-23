@@ -82,6 +82,9 @@ Public NotInheritable Class H264Debug
     ''' <summary>【临时诊断】为真时 P 宏块的 CBP 恒为 0（不写任何残差），用于隔离固定语法</summary>
     Public Shared ForceNoResidual As Boolean = False
 
+    ''' <summary>【临时诊断】只用 B_L0_16x16，用于把 B 语法的失步定位到基础部分还是列表 1 部分</summary>
+    Public Shared ForceBL0 As Boolean = False
+
     ''' <summary>【临时诊断】编码器自建重建帧的亮度平面（用于与解码器逐样点比对）</summary>
     Public Shared ReconY As Byte() = Nothing
 
