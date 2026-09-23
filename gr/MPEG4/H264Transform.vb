@@ -243,63 +243,98 @@ Friend NotInheritable Class H264Transform
     Friend Shared Sub forwardLumaDcTransform(src As Integer(), dst As Integer())
         Dim tmp As Integer() = tmpBuffer
 
-        For i As Integer = 0 To 3
-            Dim o As Integer = i * 4
-            Dim s0 As Integer = src(o) + src(o + 2)
-            Dim s1 As Integer = src(o + 1) + src(o + 3)
-            Dim d0 As Integer = src(o) - src(o + 2)
-            Dim d1 As Integer = src(o + 1) - src(o + 3)
+        ' 与逆向严格互逆：dst[k] = Σ_j M[k][j]·src[j]（M 为实测矩阵）。
+        ' 由于 M 是 16x16 的 ±1 正交矩阵（M·Mᵗ = 16·I），据此得到的 level 经解码器
+        ' 反变换后恰好还原为各块 DC，且两级增益与解码器的 1/16 精确抵消，无需额外常数。
+        Dim sign As Integer()() = lumaDcSignTable()
 
-            tmp(o) = s0 + s1
-            tmp(o + 1) = d0 + d1
-            tmp(o + 2) = s0 - s1
-            tmp(o + 3) = d0 - d1
-        Next
+        For k As Integer = 0 To 15
+            Dim sum As Integer = 0
+            Dim row As Integer() = sign(k)
 
-        For i As Integer = 0 To 3
-            Dim s0 As Integer = tmp(i) + tmp(8 + i)
-            Dim s1 As Integer = tmp(4 + i) + tmp(12 + i)
-            Dim d0 As Integer = tmp(i) - tmp(8 + i)
-            Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
+            For j As Integer = 0 To 15
+                sum += row(j) * src(j)
+            Next
 
-            dst(i) = s0 + s1
-            dst(4 + i) = d0 + d1
-            dst(8 + i) = d0 - d1
-            dst(12 + i) = s0 - s1
+            dst(k) = sum
         Next
     End Sub
 
     ''' <summary>
-    ''' I_16x16 亮度 DC 的 4x4 Hadamard 逆向变换（输出的样点为 DC 值，后续按 (x+32)&gt;&gt;6 还原）
+    ''' 解码器亮度 DC 通路的落点表 —— <b>实测所得，不要改写成推导式</b>
     ''' </summary>
+    ''' <remarks>
+    ''' 第 k 个字符串（k = 0..15）的 16 个字符，依次对应宏块内 16 个 4x4 块（光栅序号）的
+    ''' DC 符号：<c>'+'</c> 表示该块得到正 DC、<c>'-'</c> 表示负 DC。
+    ''' 
+    ''' 获取方式（可复现）：用平坦 130 帧（Y = 128，与边界 DC 预测相等，故自然残差恒为 0），
+    ''' 把亮度 DC 块的 level 强制成「仅在第 k 个系数上取 256、其余为 0」（见
+    ''' <c>H264Debug.ForceDcLevel</c> / <c>ForceDcIndex</c>），逐 k 编码后用解码器解出，
+    ''' 读每个 4x4 块左上角：128+26 为 <c>'+'</c>、128-26 为 <c>'-'</c>。
+    ''' 
+    ''' 这样得到的表即为解码器 DC 变换的有效矩阵 M（16x16，元素 ±1），
+    ''' 它替代了此前靠 <c>x_offset</c>/<c>stride</c> 反推的做法——
+    ''' 那一版反复出现「两处转置错误互相抵消」的假象，实测表从根上避免了该问题。
+    ''' </remarks>
+    Private Shared ReadOnly lumaDcSignText As String() = {
+        "++++++++++++++++",
+        "++--++--++--++--",
+        "+--++--++--++--+",
+        "+-+-+-+-+-+-+-+-",
+        "++++++++--------",
+        "++--++----++--++",
+        "+--++--+-++--++-",
+        "+-+-+-+--+-+-+-+",
+        "++++--------++++",
+        "++----++--++++--",
+        "+--+-++--++-+--+",
+        "+-+--+-+-+-++-+-",
+        "++++----++++----",
+        "++----++++----++",
+        "+--+-++-+--+-++-",
+        "+-+--+-++-+--+-+"
+    }
+
+    Private Shared lumaDcSignCache As Integer()()
+
+    ''' <summary>把实测符号表解析成 ±1 的 16x16 矩阵（惰性缓存）</summary>
+    Private Shared Function lumaDcSignTable() As Integer()()
+        If lumaDcSignCache Is Nothing Then
+            Dim table As Integer()() = New Integer(15)() {}
+
+            For k As Integer = 0 To 15
+                table(k) = New Integer(15) {}
+
+                For j As Integer = 0 To 15
+                    table(k)(j) = If(lumaDcSignText(k)(j) = "+"c, 1, -1)
+                Next
+            Next
+
+            lumaDcSignCache = table
+        End If
+
+        Return lumaDcSignCache
+    End Function
+
+    ''' <summary>
+    ''' I_16x16 亮度 DC 的逆向变换（输出的样点为 DC 值，后续按 (x+32)&gt;&gt;6 还原）
+    ''' </summary>
+    ''' <remarks>
+    ''' 直接按实测矩阵做乘加：<c>dst[j] = (Σ_k M[k][j]·src[k] + 128) >> 4</c>，
+    ''' 其中 <c>src</c> 为已反量化的 level（<c>level * qmul</c>），归一化 16 体现在 <c>&gt;&gt; 4</c> 中。
+    ''' </remarks>
     Friend Shared Sub inverseLumaDcTransform(src As Integer(), dst As Integer())
-        Dim tmp As Integer() = tmpBuffer
+        Dim sign As Integer()() = lumaDcSignTable()
 
-        For i As Integer = 0 To 3
-            Dim o As Integer = i * 4
-            Dim s0 As Integer = src(o) + src(o + 2)
-            Dim s1 As Integer = src(o + 1) + src(o + 3)
-            Dim d0 As Integer = src(o) - src(o + 2)
-            Dim d1 As Integer = src(o + 1) - src(o + 3)
+        For j As Integer = 0 To 15
+            Dim sum As Integer = 0
+            Dim row As Integer() = sign(j)
 
-            tmp(o) = s0 + s1
-            tmp(o + 1) = d0 + d1
-            tmp(o + 2) = s0 - s1
-            tmp(o + 3) = d0 - d1
-        Next
+            For k As Integer = 0 To 15
+                sum += sign(k)(j) * src(k)
+            Next
 
-        For i As Integer = 0 To 3
-            Dim s0 As Integer = tmp(i) + tmp(8 + i)
-            Dim s1 As Integer = tmp(4 + i) + tmp(12 + i)
-            Dim d0 As Integer = tmp(i) - tmp(8 + i)
-            Dim d1 As Integer = tmp(4 + i) - tmp(12 + i)
-
-            ' 镜像解码器 ff_h264_luma_dc_dequant_idct：归一化取 >> 4（4x4 Hadamard 增益 16 体现在此），
-            ' 并按 lumaDcMapping 把结果分发到宏块内的 4x4 块。
-            dst(lumaDcMapping(i)) = (s0 + s1 + 128) >> 4
-            dst(lumaDcMapping(4 + i)) = (d0 + d1 + 128) >> 4
-            dst(lumaDcMapping(8 + i)) = (d0 - d1 + 128) >> 4
-            dst(lumaDcMapping(12 + i)) = (s0 - s1 + 128) >> 4
+            dst(j) = (sum + 128) >> 4
         Next
     End Sub
 
