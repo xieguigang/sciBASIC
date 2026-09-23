@@ -21,8 +21,7 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' 父命名空间 Microsoft.VisualBasic.Imaging 下存在同名的 Bitmap 类型，这里使用显式别名
-Imports Bitmap = System.Drawing.Bitmap
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 ''' <summary>
 ''' AVI 视频流编解码器契约。
@@ -93,5 +92,17 @@ Public MustInherit Class AviVideoCodec
     ''' 把一帧画面编码为写入 <c>movi</c> 的原始载荷字节。
     ''' </summary>
     Public MustOverride Function Encode(bitmap As Bitmap) As Byte()
+
+    ''' <summary>
+    ''' 校验待编码帧的尺寸与流声明的画布尺寸一致。
+    ''' </summary>
+    Protected Sub validateFrameSize(bitmap As Bitmap)
+        Dim buffer As BitmapBuffer = bitmap.MemoryBuffer
+
+        If buffer.Width <> width OrElse buffer.Height <> height Then
+            Throw New ArgumentException(
+                $"the frame size ({buffer.Width} x {buffer.Height}) does not match the canvas size ({width} x {height}) of the current video stream!")
+        End If
+    End Sub
 
 End Class

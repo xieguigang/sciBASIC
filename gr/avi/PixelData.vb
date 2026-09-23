@@ -21,26 +21,18 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-Imports System.Runtime.InteropServices
-
-' 本命名空间的父命名空间（Microsoft.VisualBasic.Imaging）下存在一个同名的 Bitmap 类型，
-' 因此这里统一使用显式别名，保证解析到 GDI+ 的类型
-Imports Bitmap = System.Drawing.Bitmap
-Imports BitmapData = System.Drawing.Imaging.BitmapData
-Imports ImageLockMode = System.Drawing.Imaging.ImageLockMode
-Imports PixelFormat = System.Drawing.Imaging.PixelFormat
-Imports Graphics = System.Drawing.Graphics
-Imports Point = System.Drawing.Point
-Imports Rectangle = System.Drawing.Rectangle
-Imports Color = System.Drawing.Color
+Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' 位图与原始像素字节流之间的转换辅助函数。
 ''' </summary>
 ''' <remarks>
-''' 所有函数统一使用 32bppArgb 作为交换格式：该格式在 GDI+ 下每一行的步长恒等于
-''' <c>width * 4</c>，因此可以得到紧凑且无行填充的像素缓冲，正好满足 AVI 未压缩
-''' DIB 帧的布局要求。
+''' 本命名空间下的 <see cref="Bitmap"/> 是 Core 项目提供的跨平台内存位图
+''' （<c>Microsoft.VisualBasic.Imaging.Bitmap</c>），与 GDI+ 的 <c>System.Drawing.Bitmap</c>
+''' 并不是同一个类型。这里统一通过 <see cref="BitmapBuffer"/> 的像素枚举访问数据，
+''' 因此不需要任何 GDI+ 依赖，也保证与旧版本写入的未压缩画面逐字节一致。
 ''' </remarks>
 Friend NotInheritable Class PixelData
 
@@ -48,43 +40,22 @@ Friend NotInheritable Class PixelData
     End Sub
 
     ''' <summary>
-    ''' 把位图读取为 top-down 的 BGRA 字节流（每像素 4 字节）。
+    ''' 读取一帧位图的像素数据，返回 top-down、行优先的 BGRA 字节流（每像素 4 字节）。
     ''' </summary>
     Public Shared Function ToBgraBytes(bitmap As Bitmap) As Byte()
-        Dim source As Bitmap = bitmap
-        Dim allocated As Boolean = False
+        Dim buffer As BitmapBuffer = bitmap.MemoryBuffer
+        Dim bytes As Byte() = New Byte(buffer.Width * buffer.Height * 4 - 1) {}
+        Dim i As Integer = 0
 
-        If bitmap.PixelFormat <> PixelFormat.Format32bppArgb Then
-            ' GDI+ 只允许在少数格式之间直接 LockBits，所以先统一转换到 32bppArgb
-            source = New Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb)
-            allocated = True
+        For Each pixel As Color In buffer.AsEnumerable
+            bytes(i) = pixel.B
+            bytes(i + 1) = pixel.G
+            bytes(i + 2) = pixel.R
+            bytes(i + 3) = pixel.A
+            i += 4
+        Next
 
-            Using g As Graphics = Graphics.FromImage(source)
-                Call g.DrawImageUnscaled(bitmap, New Point)
-            End Using
-        End If
-
-        Try
-            Dim data As BitmapData = source.LockBits(New Rectangle(0, Scan0, source.Width, source.Height),
-                                                     ImageLockMode.ReadOnly,
-                                                     PixelFormat.Format32bppArgb)
-
-            Try
-                Dim bytes As Byte() = New Byte(source.Width * source.Height * 4 - 1) {}
-                Dim line As Byte() = New Byte(data.Stride - 1) {}
-
-                For y As Integer = 0 To source.Height - 1
-                    Call Marshal.Copy(IntPtr.Add(data.Scan0, y * data.Stride), line, Scan0, line.Length)
-                    Call Buffer.BlockCopy(line, Scan0, bytes, y * source.Width * 4, source.Width * 4)
-                Next
-
-                Return bytes
-            Finally
-                Call source.UnlockBits(data)
-            End Try
-        Finally
-            If allocated Then Call source.Dispose()
-        End Try
+        Return bytes
     End Function
 
     ''' <summary>
@@ -98,35 +69,15 @@ Friend NotInheritable Class PixelData
             Throw New ArgumentException($"frame data is too small for a {width}x{height} image: {rgba.Length} bytes", NameOf(rgba))
         End If
 
-        Dim bitmap As New Bitmap(width, height, PixelFormat.Format32bppArgb)
-        Dim data As BitmapData = bitmap.LockBits(New Rectangle(0, Scan0, width, height),
-                                                 ImageLockMode.WriteOnly,
-                                                 PixelFormat.Format32bppArgb)
+        Dim pixels As Color() = New Color(width * height - 1) {}
 
-        Try
-            Dim line As Byte() = New Byte(width * 4 - 1) {}
+        For i As Integer = 0 To pixels.Length - 1
+            Dim p As Integer = i * 4
+            ' 输入顺序为 r/g/b/a
+            pixels(i) = Color.FromArgb(rgba(p + 3), rgba(p), rgba(p + 1), rgba(p + 2))
+        Next
 
-            For y As Integer = 0 To height - 1
-                Dim offset As Integer = y * width * 4
-
-                For x As Integer = 0 To width - 1
-                    Dim p As Integer = offset + x * 4
-                    Dim i As Integer = x * 4
-
-                    ' 内存中的像素顺序为 BGRA，而输入数据为 RGBA
-                    line(i) = rgba(p + 2)
-                    line(i + 1) = rgba(p + 1)
-                    line(i + 2) = rgba(p)
-                    line(i + 3) = rgba(p + 3)
-                Next
-
-                Call Marshal.Copy(line, Scan0, IntPtr.Add(data.Scan0, y * data.Stride), line.Length)
-            Next
-        Finally
-            Call bitmap.UnlockBits(data)
-        End Try
-
-        Return bitmap
+        Return FromColors(pixels, width, height)
     End Function
 
     ''' <summary>
@@ -140,32 +91,9 @@ Friend NotInheritable Class PixelData
             Throw New ArgumentException($"frame data is too small for a {width}x{height} image: {pixels.Length} pixels", NameOf(pixels))
         End If
 
-        Dim bitmap As New Bitmap(width, height, PixelFormat.Format32bppArgb)
-        Dim data As BitmapData = bitmap.LockBits(New Rectangle(0, Scan0, width, height),
-                                                 ImageLockMode.WriteOnly,
-                                                 PixelFormat.Format32bppArgb)
+        Dim buffer As New BitmapBuffer(pixels, New Size(width, height))
 
-        Try
-            Dim line As Byte() = New Byte(width * 4 - 1) {}
-
-            For y As Integer = 0 To height - 1
-                For x As Integer = 0 To width - 1
-                    Dim pixel As Color = pixels(y * width + x)
-                    Dim i As Integer = x * 4
-
-                    line(i) = pixel.B
-                    line(i + 1) = pixel.G
-                    line(i + 2) = pixel.R
-                    line(i + 3) = pixel.A
-                Next
-
-                Call Marshal.Copy(line, Scan0, IntPtr.Add(data.Scan0, y * data.Stride), line.Length)
-            Next
-        Finally
-            Call bitmap.UnlockBits(data)
-        End Try
-
-        Return bitmap
+        Return New Bitmap(buffer)
     End Function
 
 End Class

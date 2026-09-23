@@ -22,14 +22,12 @@
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 
-Imports Bitmap = System.Drawing.Bitmap
-Imports ImageCodecInfo = System.Drawing.Imaging.ImageCodecInfo
-Imports ImageFormat = System.Drawing.Imaging.ImageFormat
-Imports EncoderParameter = System.Drawing.Imaging.EncoderParameter
-Imports EncoderParameters = System.Drawing.Imaging.EncoderParameters
-
-' 本命名空间下也存在名为 Encoder 的类型，且 Microsoft.VisualBasic.Math 会覆盖 System.Math
+' MJPEG 的 JPEG 编码使用项目已经引用的 GDI+（System.Drawing.Common）。
+' 由于本命名空间下存在同名的跨平台位图类型与 Encoder 类型，这里通过别名词根进行限定调用。
+Imports GdiDrawing = System.Drawing
+Imports GdiImaging = System.Drawing.Imaging
 Imports std = System.Math
 
 ''' <summary>
@@ -37,17 +35,20 @@ Imports std = System.Math
 ''' </summary>
 ''' <remarks>
 ''' 帧间不共享信息，因此任意一帧都可以独立解码，容错性最好；压缩比则由 JPEG 画质参数控制。
-''' 视频流中的 MJPEG 帧必须是"裸" JPEG 字节流（JFIF/EXIF 头都可以），这里直接使用
-''' <see cref="System.Drawing.Common"/> 自带的 JPEG 编码器，所以不引入新的依赖。
+''' 视频流中的 MJPEG 帧必须是"裸"的 JPEG 字节流，这里直接使用 GDI+ 自带的 JPEG 编码器，
+''' 因此不引入任何新的依赖。
+''' 
+''' 注意：JPEG 编码步骤需要 GDI+，所以 <see cref="AviCodec.MJPEG"/> 只在 Windows 上可用；
+''' 未压缩的 <see cref="AviCodec.DIB"/> 与 MPEG-4 两条链路都是纯托管的。
 ''' </remarks>
 Public Class MjpegCodec : Inherits AviVideoCodec
 
     ''' <summary>
-    ''' JPEG 画质，取值范围 0 - 100，数值越小压缩比越高。
+    ''' JPEG 画质，取值范围 0 - 100，数值越小压缩比越高、画面损失越大。
     ''' </summary>
     Public Property Quality As Integer
 
-    ReadOnly jpeg As ImageCodecInfo
+    ReadOnly jpeg As GdiImaging.ImageCodecInfo
 
     Sub New(fps As Integer, width As Integer, height As Integer, Optional quality As Integer = AviVideoCodecs.DefaultQuality)
         MyBase.New(fps, width, height)
@@ -78,20 +79,36 @@ Public Class MjpegCodec : Inherits AviVideoCodec
     End Property
 
     Public Overrides Function Encode(bitmap As Bitmap) As Byte()
-        Using ms As New MemoryStream
-            Using parameters As New EncoderParameters(1)
-                ' 注意：这里必须写全称，本命名空间下也存在一个名为 Encoder 的类型
-                parameters.Param(0) = New EncoderParameter(System.Drawing.Imaging.Encoder.Quality, CLng(Quality))
-                Call bitmap.Save(ms, jpeg, parameters)
-            End Using
+        Call validateFrameSize(bitmap)
 
-            Return ms.ToArray
+        Dim bgra As Byte() = PixelData.ToBgraBytes(bitmap)
+
+        Using image As New GdiDrawing.Bitmap(width, height, GdiImaging.PixelFormat.Format32bppArgb)
+            Dim data As GdiImaging.BitmapData = image.LockBits(New GdiDrawing.Rectangle(0, 0, width, height),
+                                                               GdiImaging.ImageLockMode.WriteOnly,
+                                                               GdiImaging.PixelFormat.Format32bppArgb)
+
+            Try
+                ' 跨平台位图的像素缓冲就是 top-down 的 BGRA，和 GDI+ 的 32bppArgb 内存布局完全一致
+                Call Marshal.Copy(bgra, 0, data.Scan0, bgra.Length)
+            Finally
+                Call image.UnlockBits(data)
+            End Try
+
+            Using ms As New MemoryStream
+                Using parameters As New GdiImaging.EncoderParameters(1)
+                    parameters.Param(0) = New GdiImaging.EncoderParameter(GdiImaging.Encoder.Quality, CLng(Quality))
+                    Call image.Save(ms, jpeg, parameters)
+                End Using
+
+                Return ms.ToArray
+            End Using
         End Using
     End Function
 
-    Private Shared Function getJpegEncoder() As ImageCodecInfo
-        For Each codec As ImageCodecInfo In ImageCodecInfo.GetImageEncoders()
-            If codec.FormatID = ImageFormat.Jpeg.Guid Then
+    Private Shared Function getJpegEncoder() As GdiImaging.ImageCodecInfo
+        For Each codec As GdiImaging.ImageCodecInfo In GdiImaging.ImageCodecInfo.GetImageEncoders()
+            If codec.FormatID = GdiImaging.ImageFormat.Jpeg.Guid Then
                 Return codec
             End If
         Next

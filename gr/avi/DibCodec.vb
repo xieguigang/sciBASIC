@@ -21,9 +21,6 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' 父命名空间 Microsoft.VisualBasic.Imaging 下存在同名的 Bitmap 类型，这里使用显式别名
-Imports Bitmap = System.Drawing.Bitmap
-
 ''' <summary>
 ''' 未压缩的 32 位 top-down DIB 编码器（fourCC <c>'DIB '</c>）。
 ''' </summary>
@@ -65,6 +62,8 @@ Public Class DibCodec : Inherits AviVideoCodec
     End Property
 
     Public Overrides Function Encode(bitmap As Bitmap) As Byte()
+        Call validateFrameSize(bitmap)
+
         Return PixelData.ToBgraBytes(bitmap)
     End Function
 

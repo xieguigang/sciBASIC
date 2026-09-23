@@ -60,8 +60,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Linq
 
-' 父命名空间 Microsoft.VisualBasic.Imaging 下存在同名的 Bitmap 类型，这里使用显式别名
-Imports Bitmap = System.Drawing.Bitmap
+' 本命名空间下的 Bitmap 是 Core 提供的跨平台内存位图，Color 则来自 System.Drawing.Primitives
 Imports Color = System.Drawing.Color
 
 Public Class AVIStream
