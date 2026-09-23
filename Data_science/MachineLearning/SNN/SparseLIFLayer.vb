@@ -453,7 +453,7 @@ Public Class SparseLIFLayer
             _Sprev = S
             _lastPath = LifStepPath.Fused
 
-            Call RecordStep(S)
+            Call RecordStep(S, fused:=True)
 
             Return S
         End If
@@ -521,23 +521,28 @@ Public Class SparseLIFLayer
     ''' <summary>
     ''' 记录一个时间步的脉冲轨迹（<see cref="KeepHistory"/> 关闭时不做任何事）。
     ''' </summary>
+    ''' <param name="S">本步的输出脉冲张量</param>
+    ''' <param name="fused">
+    ''' 该张量是否来自融合路径。融合路径下 <c>S</c> 的缓冲会<b>跨步复用</b>（双缓冲），
+    ''' 且 GPU 后端下以设备为主副本；逐算子路径每步都产生一个全新的主机张量。
+    ''' </param>
     ''' <remarks>
-    ''' 融合路径下 <c>S</c> 的缓冲会跨步复用，且以设备为主副本，因此这里在同步之后
-    ''' <b>拷贝</b>一份快照 —— 与逐算子路径"每步一个独立张量"的既有语义保持一致，
-    ''' 这样 <c>Decoder</c> 的统计函数无需感知路径差异。
+    ''' 正因为融合路径复用了缓冲，这里必须同步之后<b>拷贝</b>一份快照 ——
+    ''' 否则 <see cref="SHistory"/> 里会挂着同一片被反复改写的缓冲
+    ''' （<c>Decoder</c> 的统计与栅格图会把最后一步的脉冲重复计入）。
     ''' </remarks>
-    Private Sub RecordStep(S As Tensor)
+    Private Sub RecordStep(S As Tensor, fused As Boolean)
         If Not KeepHistory Then Return
 
-        Dim backend = Tensor.computeKernel
-        Dim snapshot = S
+        If Not fused Then
+            ' 逐算子路径：S 是每步新建的主机张量，直接引用即可
+            _S.Add(S)
 
-        If backend.IsDevicePinned(S) Then
-            Call backend.SyncFromDevice(S)
-            snapshot = CType(S.Clone(), Tensor)
+            Return
         End If
 
-        _S.Add(snapshot)
+        Call Tensor.computeKernel.SyncFromDevice(S)
+        _S.Add(CType(S.Clone(), Tensor))
     End Sub
 
     ''' <summary>就地累加计数累加器：<c>counts += S</c>（主机循环，仅逐算子路径使用）。</summary>

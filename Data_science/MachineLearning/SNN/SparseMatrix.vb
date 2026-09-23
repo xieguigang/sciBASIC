@@ -167,10 +167,14 @@ Public Class SparseMatrix
     ''' CSR 计算载体（零拷贝包装 <c>RowPointers/ColumnIndices/Values</c>）。
     ''' </summary>
     ''' <remarks>
-    ''' 供同程序集内的融合算子（<c>SparseLIFLayer</c>）直接传给
-    ''' <c>ITensorCompute.LifStep</c>，避免为了取 <see cref="SparseCsr"/> 而多一次包装。
+    ''' <c>SparseLIFLayer</c> 用它把稀疏结构直接交给 <c>ITensorCompute.LifStep</c>；
+    ''' 需要自行编写稀疏算子（或做性能分解）的调用方也可以直接用：
+    ''' <code>
+    '''   Tensor.computeKernel.LifStep(matrix.Csr, sPrev, ext, h, s, counts, beta, threshold, False)
+    ''' </code>
+    ''' 注意它包装的就是本类的三个数组，因此 <see cref="MarkModified"/> 的契约同样适用。
     ''' </remarks>
-    Friend ReadOnly Property Csr As SparseCsr
+    Public ReadOnly Property Csr As SparseCsr
         Get
             Return _csr
         End Get
