@@ -96,6 +96,8 @@ Namespace Runtime
         Public Sub New(Optional flags As CudaEventFlags = CudaEventFlags.DefaultEvent)
             Dim handle As IntPtr = IntPtr.Zero
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuEventCreate(handle, CUInt(flags)), "cuEventCreate")
 
@@ -115,6 +117,8 @@ Namespace Runtime
 
             Dim streamHandle = If(stream Is Nothing, IntPtr.Zero, stream.Handle)
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuEventRecord(_handle, streamHandle), "cuEventRecord")
         End Sub
@@ -122,12 +126,14 @@ Namespace Runtime
         ''' <summary>阻塞等待该事件完成</summary>
         Public Sub Synchronize()
             ThrowIfDisposed()
+            CudaRuntime.EnsureCurrent()
             CudaDriverApi.Check(CudaDriverApi.cuEventSynchronize(_handle), "cuEventSynchronize")
         End Sub
 
         ''' <summary>查询该事件是否已完成（未完成返回 False，其它错误照常抛出）</summary>
         Public Function Query() As Boolean
             ThrowIfDisposed()
+            CudaRuntime.EnsureCurrent()
 
             Dim status = CudaDriverApi.cuEventQuery(_handle)
 

@@ -123,6 +123,8 @@ Namespace Runtime
             Dim free As ULong = 0
             Dim total As ULong = 0
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(CudaDriverApi.cuMemGetInfo_v2(free, total), "cuMemGetInfo_v2")
 
             Return New MemoryInfo(free, total)

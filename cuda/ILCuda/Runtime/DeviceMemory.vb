@@ -79,12 +79,19 @@ Namespace Runtime
 
         Protected Sub Allocate(bytes As ULong)
             If bytes = 0 Then Throw New ArgumentOutOfRangeException(NameOf(bytes), "分配的字节数必须大于 0")
+
+            ' 当前上下文是线程局部状态：先把本线程绑到活跃上下文上，
+            ' 否则在线程池线程里分配显存会得到 CUDA_ERROR_INVALID_CONTEXT (201)
+            ' ==== 临时对照实验：禁用自动绑定，验证 CUDA_ERROR_INVALID_CONTEXT 的成因 ====
+            ' CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(CudaDriverApi.cuMemAlloc_v2(_pointer, bytes), "cuMemAlloc_v2")
             _byteSize = bytes
         End Sub
 
         Public Sub Clear()
             ThrowIfDisposed()
+            CudaRuntime.EnsureCurrent()
             CudaDriverApi.Check(CudaDriverApi.cuMemsetD8_v2(_pointer, 0, _byteSize), "cuMemsetD8_v2")
         End Sub
 
@@ -95,6 +102,10 @@ Namespace Runtime
         Protected Overridable Sub Release()
             If _pointer <> 0 Then
                 Try
+                    ' 这里可能从终结器线程进来：绑定失败不能被抛出，
+                    ' 否则 Dispose 会带着异常结束（下面的 Catch 只保护释放本身）
+                    CudaRuntime.EnsureCurrent()
+
                     CudaDriverApi.Check(CudaDriverApi.cuMemFree_v2(_pointer), "cuMemFree_v2")
                 Catch
                 End Try

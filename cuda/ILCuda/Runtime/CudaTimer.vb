@@ -76,6 +76,8 @@ Namespace Runtime
             Dim a As IntPtr = IntPtr.Zero
             Dim b As IntPtr = IntPtr.Zero
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(CudaDriverApi.cuEventCreate(a, 0UI), "cuEventCreate")
             CudaDriverApi.Check(CudaDriverApi.cuEventCreate(b, 0UI), "cuEventCreate")
 
@@ -84,11 +86,15 @@ Namespace Runtime
         End Sub
 
         Public Sub Start()
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(CudaDriverApi.cuEventRecord(_start, IntPtr.Zero), "cuEventRecord")
         End Sub
 
         ''' <summary>记录结束事件并等待其完成，返回毫秒数</summary>
         Public Function Finish() As Double
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(CudaDriverApi.cuEventRecord(_end, IntPtr.Zero), "cuEventRecord")
             CudaDriverApi.Check(CudaDriverApi.cuEventSynchronize(_end), "cuEventSynchronize")
 
@@ -102,10 +108,14 @@ Namespace Runtime
             _disposed = True
 
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(CudaDriverApi.cuEventDestroy_v2(_start), "cuEventDestroy_v2")
             Catch
             End Try
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(CudaDriverApi.cuEventDestroy_v2(_end), "cuEventDestroy_v2")
             Catch
             End Try

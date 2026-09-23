@@ -114,6 +114,8 @@ Namespace Runtime
 
             Dim pin = GCHandle.Alloc(data, GCHandleType.Pinned)
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(
                     CudaDriverApi.cuMemcpyHtoD_v2(_pointer, pin.AddrOfPinnedObject(), _byteSize), "cuMemcpyHtoD_v2")
             Finally
@@ -128,6 +130,8 @@ Namespace Runtime
             Dim result(_count - 1) As T
             Dim pin = GCHandle.Alloc(result, GCHandleType.Pinned)
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(
                     CudaDriverApi.cuMemcpyDtoH_v2(pin.AddrOfPinnedObject(), _pointer, _byteSize), "cuMemcpyDtoH_v2")
             Finally
@@ -152,6 +156,8 @@ Namespace Runtime
                 Throw New ArgumentException($"页锁定缓冲区长度 {source.Count} 与显存缓冲区长度 {_count} 不一致")
             End If
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuMemcpyHtoDAsync_v2(_pointer, source.Pointer, _byteSize, StreamHandle(stream)),
                 "cuMemcpyHtoDAsync_v2")
@@ -166,6 +172,8 @@ Namespace Runtime
             If target.Count <> _count Then
                 Throw New ArgumentException($"页锁定缓冲区长度 {target.Count} 与显存缓冲区长度 {_count} 不一致")
             End If
+
+            CudaRuntime.EnsureCurrent()
 
             CudaDriverApi.Check(
                 CudaDriverApi.cuMemcpyDtoHAsync_v2(target.Pointer, _pointer, _byteSize, StreamHandle(stream)),
@@ -193,6 +201,8 @@ Namespace Runtime
             If other.Count <> _count Then
                 Throw New ArgumentException($"目标缓冲区长度 {other.Count} 与源长度 {_count} 不一致")
             End If
+
+            CudaRuntime.EnsureCurrent()
 
             If useAsync Then
                 CudaDriverApi.Check(

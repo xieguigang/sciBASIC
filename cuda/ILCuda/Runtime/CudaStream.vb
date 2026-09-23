@@ -92,6 +92,8 @@ Namespace Runtime
         Public Sub New(Optional flags As CudaStreamFlags = CudaStreamFlags.DefaultStream)
             Dim handle As IntPtr = IntPtr.Zero
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuStreamCreate(handle, CUInt(flags)), "cuStreamCreate")
 
@@ -108,6 +110,7 @@ Namespace Runtime
         ''' <summary>阻塞等待本流上已提交的全部任务完成</summary>
         Public Sub Synchronize()
             ThrowIfDisposed()
+            CudaRuntime.EnsureCurrent()
             CudaDriverApi.Check(CudaDriverApi.cuStreamSynchronize(_handle), "cuStreamSynchronize")
         End Sub
 
@@ -117,6 +120,7 @@ Namespace Runtime
         ''' </summary>
         Public Function Query() As Boolean
             ThrowIfDisposed()
+            CudaRuntime.EnsureCurrent()
 
             Dim status = CudaDriverApi.cuStreamQuery(_handle)
 
@@ -132,6 +136,8 @@ Namespace Runtime
             ThrowIfDisposed()
             If evt Is Nothing Then Throw New ArgumentNullException(NameOf(evt))
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuStreamWaitEvent(_handle, evt.Handle, 0UI), "cuStreamWaitEvent")
         End Sub
@@ -146,6 +152,8 @@ Namespace Runtime
 
             If _handle <> IntPtr.Zero Then
                 Try
+                    CudaRuntime.EnsureCurrent()
+
                     CudaDriverApi.Check(CudaDriverApi.cuStreamDestroy_v2(_handle), "cuStreamDestroy_v2")
                 Catch
                 End Try
