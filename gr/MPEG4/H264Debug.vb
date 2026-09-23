@@ -70,6 +70,12 @@ Public NotInheritable Class H264Debug
     ''' </summary>
     Public Shared ForceDcLevel As Integer = 0
 
+    ''' <summary>
+    ''' 【临时诊断】强制 DC level 落在 Hadamard 域的第几个索引（0 - 15），
+    ''' 配合 <see cref="ForceDcLevel"/> 可逐点激励出解码器的 DC 落点表
+    ''' </summary>
+    Public Shared ForceDcIndex As Integer = 0
+
     ''' <summary>【临时诊断】编码器自建重建帧的亮度平面（用于与解码器逐样点比对）</summary>
     Public Shared ReconY As Byte() = Nothing
 

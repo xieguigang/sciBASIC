@@ -293,7 +293,7 @@ Friend Class H264VideoCodec
 
         If H264Debug.ForceDcLevel > 0 Then
             Call Array.Clear(lumaDcLevels, 0, 16)
-            lumaDcLevels(0) = H264Debug.ForceDcLevel
+            lumaDcLevels(H264Debug.ForceDcIndex) = H264Debug.ForceDcLevel
         End If
 
         ' ---- 5. 色度残差 → 变换量化 + 2x2 Hadamard ----
