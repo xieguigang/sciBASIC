@@ -479,6 +479,11 @@ Friend Class H264VideoCodec
     Private Const bFrameEnabled As Boolean = False
 
     ''' <summary>
+    ''' 合成时间偏移的整体平移（帧）：启用 B 帧时为 1（使偏移恒非负），否则为 0。
+    ''' </summary>
+    Private Const compositionShift As Integer = If(bFrameEnabled, 1, 0)
+
+    ''' <summary>
     ''' 编码一个 P 切片的「跳过」宏块（<c>mb_skip_flag = 1</c>）
     ''' </summary>
     ''' <remarks>
