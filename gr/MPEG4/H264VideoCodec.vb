@@ -276,9 +276,7 @@ Friend Class H264VideoCodec
                 Call H264Transform.quantize(blockCoef, blockLevels, qp, True)
 
                 ' 解码器的亮度 DC 逆变换按 dc_mapping 分发结果，前向侧需做同一置换
-                ' 这里必须按「块光栅序号」原样装填：置换只在正向/逆向变换内部进行，
-        ' 若在这里再套一次 lumaDcMapping，会与变换内部的置换叠加，造成整块 DC 错位。
-        lumaDcIn(blockIdx) = blockLevels(0)
+                lumaDcIn(H264Transform.lumaDcMapping(blockIdx)) = blockLevels(0)
 
                 Dim ac As Integer() = lumaAcLevels(blockIdx)
 
