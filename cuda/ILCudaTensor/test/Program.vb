@@ -708,9 +708,20 @@ Module Program
         Call cuda.PinDevice64(perfGpuCounts, "perf.counts", zeroFill:=True)
         Call cuda.PinDevice64(perfGpuPrev, "perf.S_prev", zeroFill:=False)
 
-        ' 预热：让 CSR 与状态先上传一次（正式计时只反映稳态）
+        ' 预热：让 CSR / 内核 / 显存缓冲先就位（这些一次性开销不应计入稳态计时）
         Call tf.Tensor.computeKernel.LifStep(perfCsr, perfGpuPrev, perfExt(0), perfGpuH, perfGpuS,
                                             perfGpuCounts, 0.9, 1.0, False)
+
+        ' 预热会推进状态，因此重新钉一遍（等同清零），保证与 CPU 参考从同一初始状态出发；
+        ' 注意 CSR 缓存的键是 CSR 对象，重新钉状态不会让它失效，预热收益仍然保留
+        For Each t In {perfGpuH, perfGpuS, perfGpuCounts, perfGpuPrev}
+            Call cuda.UnpinDevice(t)
+        Next
+
+        Call cuda.PinDevice64(perfGpuH, "perf.H", zeroFill:=False)
+        Call cuda.PinDevice64(perfGpuS, "perf.S", zeroFill:=False)
+        Call cuda.PinDevice64(perfGpuCounts, "perf.counts", zeroFill:=True)
+        Call cuda.PinDevice64(perfGpuPrev, "perf.S_prev", zeroFill:=False)
 
         swLif.Restart()
 

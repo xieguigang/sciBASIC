@@ -163,6 +163,33 @@ Public Class SparseMatrix
         End Get
     End Property
 
+    ''' <summary>
+    ''' CSR 计算载体（零拷贝包装 <c>RowPointers/ColumnIndices/Values</c>）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 供同程序集内的融合算子（<c>SparseLIFLayer</c>）直接传给
+    ''' <c>ITensorCompute.LifStep</c>，避免为了取 <see cref="SparseCsr"/> 而多一次包装。
+    ''' </remarks>
+    Friend ReadOnly Property Csr As SparseCsr
+        Get
+            Return _csr
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 声明 <see cref="Values"/> 已被就地修改，使设备端（GPU）缓存的 CSR 副本失效。
+    ''' </summary>
+    ''' <remarks>
+    ''' 凡是在本类之外就地改过 <see cref="Values"/> 的调用方（典型例子：连接组的增益标定
+    ''' <c>SynapseTriplets.ApplyGain</c>）都必须调用本方法。
+    ''' 不调用的话，GPU 会继续复用显存里的旧权重 —— 表现为「CPU 与 GPU 结果不同，
+    ''' 且差异无法从数据上解释」这类最难定位的伪 bug。
+    ''' <see cref="Normalize"/> 内部已自行调用。
+    ''' </remarks>
+    Public Sub MarkModified()
+        _csr.MarkModified()
+    End Sub
+
     Private Sub New(rows As Integer, columns As Integer,
                     rowPtr As Integer(), colIdx As Integer(), values As Double())
         _rows = rows
