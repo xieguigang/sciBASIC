@@ -288,6 +288,13 @@ Namespace IO.Linq
         Private Iterator Function BufferProvider() As IEnumerable(Of String)
             Call _file.BaseStream.Seek(Scan0, SeekOrigin.Begin)
 
+            ' 20260923 the StreamReader is a buffered reader, so that after the base stream
+            ' was seek back to the beginning, the text lines that already buffered inside
+            ' the reader memory will still be returned by the next ReadLine call. Such data
+            ' will causes the head lines of the file being read twice. So we needs to discard
+            ' the buffered data after the base stream seek operation for avoid this bug.
+            Call _file.DiscardBufferedData()
+
             If _skip > 0 Then
                 For i As Integer = 0 To _skip
                     Call _file.ReadLine()
@@ -449,7 +456,18 @@ Namespace IO.Linq
         Protected Overridable Overloads Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    ' TODO: dispose managed state (managed objects).
+                    ' 20260923 close the inner file reader, otherwise the csv file handle
+                    ' will always be occupied by this data stream object, and any further
+                    ' open operation of the same file will be failed with the IOException
+                    ' of file is in use by another process.
+                    If Not _file Is Nothing Then
+                        Try
+                            Call _file.Dispose()
+                        Catch ex As Exception
+                            Call ex.Message.debug
+                        End Try
+                    End If
+
                     Call FlushMemory()
                 End If
 
