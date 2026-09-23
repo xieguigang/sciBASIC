@@ -82,6 +82,17 @@ Friend Class H264VideoCodec
     Private ReadOnly mvStoreY As Integer()
 
     ''' <summary>
+    ''' 各宏块是否为 inter 编码（按宏块光栅序号索引，逐帧重置）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 中值预测必须区分「邻居是 inter 且存在」与「邻居是 intra / 不可用」：解码器用参考索引
+    ''' <c>LIST_NOT_USED = -1</c>（帧内）与 <c>PART_NOT_AVAILABLE = -2</c>（画面外或异切片）
+    ''' 来表示后两者，且它们的运动向量按 0 参与运算。缺了这一信息就只能退回纯中值，
+    ''' 在「只有一个邻居是 inter」时给出 0，而解码器取该邻居的运动向量——表现为画面错位。
+    ''' </remarks>
+    Private ReadOnly interMb As Boolean()
+
+    ''' <summary>
     ''' 各宏块写进码流的运动向量差幅值（供 mvd 首 bin 的上下文使用）。
     ''' 只在写出 mvd 时更新——解码器同样只在读到 mvd 时写它的 mvd_cache。
     ''' </summary>
@@ -149,6 +160,7 @@ Friend Class H264VideoCodec
         Me.mvStoreY = New Integer(mbCount - 1) {}
         Me.mvMagX = New Integer(mbCount - 1) {}
         Me.mvMagY = New Integer(mbCount - 1) {}
+        Me.interMb = New Boolean(mbCount - 1) {}
     End Sub
 
     ''' <summary>
@@ -190,7 +202,7 @@ Friend Class H264VideoCodec
         ' 运动内容多为零错误但 PSNR 仅 19-25 dB（低于全 I 帧的约 41 dB），128x96 仍有报错。
         ' 因「合法码流 + 预测差」的特征指向运动向量中值预测与解码器不一致，尚需定位；
         ' 在质量达标前保持关闭，绝不产出劣于上一已通过阶段的文件。
-        Dim pFrame As Boolean = False AndAlso (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
+        Dim pFrame As Boolean = (frameIndex > 0) AndAlso (frameIndex Mod gopSize) <> 0
         Dim bits As New BitStreamWriter(1 << 16)
 
         ' slice_qp_delta 是相对 PPS 的 pic_init_qp_minus26(= 0) 的偏移，因此实际 QP = 26 + delta
@@ -209,6 +221,9 @@ Friend Class H264VideoCodec
         Dim mbRows As Integer = codec.heightInMapUnits
         Dim prevRow As H264MbInfo() = newMbInfoRow(mbCols)
         Dim curRow As H264MbInfo() = newMbInfoRow(mbCols)
+
+        ' 逐帧重置 inter 标记：上一帧的 inter 邻居不能影响本帧的运动向量预测
+        Call Array.Clear(Me.interMb, 0, Me.interMb.Length)
 
         For mbY As Integer = 0 To mbRows - 1
             For mbX As Integer = 0 To mbCols - 1
@@ -310,46 +325,102 @@ Friend Class H264VideoCodec
     End Sub
 
     ''' <summary>
-    ''' 16x16 分区的运动向量中值预测（H.264 8.4.1.3）
+    ''' 16x16 分区的运动向量预测（H.264 8.4.1.3）
     ''' </summary>
     ''' <remarks>
-    ''' A = 左邻、B = 上邻、C = 右上邻；右上邻不可用时 C 取 B（B 也不可用时取 A）。
-    ''' 注意：预测值若与解码器不一致<b>不会</b>造成语法失步，只会让解码端重建的运动向量与
-    ''' 编码端不同，表现为画面错位——因此必须严格按规范取值。
+    ''' 邻居取法：A = 左邻、B = 上邻、C = 右上邻。
+    ''' 
+    ''' <para>
+    ''' 解码器 <c>h264_mvpred.h: pred_motion</c> 的规则<b>不是</b>简单的三邻居中值，而是先按
+    ''' <c>match_count</c> 分支——统计 A/B/C 中有几个「存在且使用与当前分区相同的参考索引」
+    ''' （本编码器只用一个参考帧，故等价于「存在且为 inter」）：
+    ''' </para>
+    ''' <list type="bullet">
+    '''   <item><c>match_count &gt;= 2</c>：取 <c>mid_pred(A, B, C)</c>，其中帧内/不可用邻居按其 0 参与；</item>
+    '''   <item><c>match_count = 1</c>：直接取那唯一匹配邻居的运动向量，<b>不再取中值</b>；</item>
+    '''   <item><c>match_count = 0</c>：取 0。</item>
+    ''' </list>
+    ''' 
+    ''' <para>
+    ''' 三态参考索引用 <c>h264pred.h</c> 的 <c>PART_NOT_AVAILABLE = -2</c>（画面外或异切片）与
+    ''' <c>h264dec.h</c> 的 <c>LIST_NOT_USED = -1</c>（帧内）表示，两者都不等于当前 ref(=0)，
+    ''' 故单参考下都归入「不匹配」，且其运动向量按 0 参与中值。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' C 不可用时按 <c>fetch_diagonal_mv</c> 的 else 分支取 <c>mv_cache[i - 8 - 1]</c>，
+    ''' 即<b>左上</b>邻居 D（规范 Figure 8-6 的 D），<b>不是</b>上方邻居 B——这一点最易写错。
+    ''' </para>
+    ''' 
+    ''' <para>
+    ''' 预测值若与解码器不一致<b>不会</b>造成语法失步，只会让解码端重建的运动向量与编码端不同，
+    ''' 表现为整帧错位并随后续帧累积发散（零错误解码但 PSNR 极低），因此必须逐字对齐。
+    ''' </para>
     ''' </remarks>
     Private Sub predictMedianMv(mbX As Integer, mbY As Integer, ByRef px As Integer, ByRef py As Integer)
         Dim mbCols As Integer = codec.widthInMbs
         Dim ax As Integer = 0, ay As Integer = 0
         Dim bx As Integer = 0, by As Integer = 0
         Dim cx As Integer = 0, cy As Integer = 0
-        Dim aOk As Boolean = mbX > 0
-        Dim bOk As Boolean = mbY > 0
-        Dim cOk As Boolean = bOk AndAlso (mbX + 1 < mbCols)
+        Dim aInter As Boolean = False
+        Dim bInter As Boolean = False
+        Dim cInter As Boolean = False
 
-        If aOk Then
+        If mbX > 0 Then
             Dim i As Integer = mbY * mbCols + mbX - 1
 
-            ax = mvStoreX(i) : ay = mvStoreY(i)
+            aInter = interMb(i)
+
+            If aInter Then
+                ax = mvStoreX(i) : ay = mvStoreY(i)
+            End If
         End If
 
-        If bOk Then
+        If mbY > 0 Then
             Dim i As Integer = (mbY - 1) * mbCols + mbX
 
-            bx = mvStoreX(i) : by = mvStoreY(i)
+            bInter = interMb(i)
+
+            If bInter Then
+                bx = mvStoreX(i) : by = mvStoreY(i)
+            End If
+
+            If mbX + 1 < mbCols Then
+                Dim j As Integer = (mbY - 1) * mbCols + mbX + 1
+
+                cInter = interMb(j)
+
+                If cInter Then
+                    cx = mvStoreX(j) : cy = mvStoreY(j)
+                End If
+            ElseIf mbX > 0 Then
+                ' 右上不可用（画面右边界）→ 回退到左上邻居 D（与解码器 fetch_diagonal_mv 一致）
+                Dim j As Integer = (mbY - 1) * mbCols + mbX - 1
+
+                cInter = interMb(j)
+
+                If cInter Then
+                    cx = mvStoreX(j) : cy = mvStoreY(j)
+                End If
+            End If
         End If
 
-        If cOk Then
-            Dim i As Integer = (mbY - 1) * mbCols + mbX + 1
+        Dim count As Integer = If(aInter, 1, 0) + If(bInter, 1, 0) + If(cInter, 1, 0)
 
-            cx = mvStoreX(i) : cy = mvStoreY(i)
-        ElseIf bOk Then
-            cx = bx : cy = by
+        If count >= 2 Then
+            px = medianOf3(ax, bx, cx)
+            py = medianOf3(ay, by, cy)
+        ElseIf count = 1 Then
+            If aInter Then
+                px = ax : py = ay
+            ElseIf bInter Then
+                px = bx : py = by
+            Else
+                px = cx : py = cy
+            End If
         Else
-            cx = ax : cy = ay
+            px = 0 : py = 0
         End If
-
-        px = medianOf3(ax, bx, cx)
-        py = medianOf3(ay, by, cy)
     End Sub
 
     Private Shared Function medianOf3(a As Integer, b As Integer, c As Integer) As Integer
@@ -666,6 +737,7 @@ Friend Class H264VideoCodec
         mvStoreY(mbIndex) = mvY
         mvMagX(mbIndex) = Math.Abs(mvdX)
         mvMagY(mbIndex) = Math.Abs(mvdY)
+        interMb(mbIndex) = True
 
         ' ---- 8. 重建 ----
         Call reconstructInterLuma(recon, predLuma, x0, y0)
