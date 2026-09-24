@@ -411,7 +411,14 @@ Friend Module MsgPackArrayIO
     Friend Function TryReadList(collection As IList, numElements As Integer, reader As BinaryDataReader) As Boolean
         If numElements <= 0 Then Return False
 
-        Dim elementType As Type = collection.GetType().GetGenericArguments()(0)
+        ' AddRange 只对真正的 List(Of T) 成立；别的 IList 实现（或不是 List(Of T) 的容器）继续走通用路径
+        Dim listType As Type = collection.GetType()
+
+        If Not listType.IsGenericType OrElse listType.GetGenericTypeDefinition() IsNot GetType(List(Of)) Then
+            Return False
+        End If
+
+        Dim elementType As Type = listType.GetGenericArguments()(0)
 
         If Not IsPrimitiveElement(elementType) Then Return False
 
