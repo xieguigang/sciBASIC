@@ -90,6 +90,11 @@ Module MsgPackIO
     Friend Sub DeserializeArray(array As Array, numElements As Integer, reader As BinaryDataReader)
         Dim elementType As Type = array.GetType().GetElementType()
 
+        ' 基础类型数组走整块快路径：不逐元素分配、不装箱（wire 格式不变）
+        If MsgPackArrayIO.TryReadArray(array, numElements, reader) Then
+            Return
+        End If
+
         For i = 0 To numElements - 1
             Dim o = DeserializeValue(elementType, reader, NilImplication.Null)
             Dim safeVal As Object = Nothing
@@ -118,6 +123,11 @@ Module MsgPackIO
 
         If numElements >= 0 Then
             isNull = False
+
+            ' List(Of Double) 之类：先整块读成数组再 AddRange，省掉百万级的逐元素 Add
+            If MsgPackArrayIO.TryReadList(collection, numElements, reader) Then
+                Return False
+            End If
 
             For i = 0 To numElements - 1
                 Dim o = DeserializeValue(elementType, reader, NilImplication.Null)
@@ -801,6 +811,10 @@ Module MsgPackIO
 
                 If array Is Nothing Then
                     writer.Write(MsgPackFormats.NIL)
+
+                    ' 基础类型数组：整块编码 + 整块写盘（省掉逐元素的函数调用、分配与流调用）
+                ElseIf MsgPackArrayIO.TryWriteArray(array, writer) Then
+                    ' 已经写完了
                 Else
 
                     If array.Length <= 15 Then
