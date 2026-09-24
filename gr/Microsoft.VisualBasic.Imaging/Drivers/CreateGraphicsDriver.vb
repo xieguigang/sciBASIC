@@ -124,7 +124,7 @@ Namespace Driver
 #If WINDOWS Then
 
         ''' <summary>
-        ''' register the default System.Drawing.Common graphics driver for .net 4.8 runtime
+        ''' register the default System.Drawing.Common graphics driver for .net4.8/.net-windows runtime
         ''' </summary>
         Public Sub Register()
             Static gfx As System.Drawing.Graphics = System.Drawing.Graphics.FromImage(New System.Drawing.Bitmap(10, 10))
