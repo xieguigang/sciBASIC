@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="out.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\FeatherFormat.vbproj" />
