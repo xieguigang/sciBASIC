@@ -58,7 +58,9 @@
 
 #End Region
 
+Imports System.Collections.Concurrent
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Parallel
@@ -245,6 +247,16 @@ Namespace LDA
         Public Property Workers As Integer = 0
 
         ''' <summary>
+        ''' 两次全局同步之间所运行的采样轮数。
+        ''' </summary>
+        ''' <returns>
+        ''' 1 表示每一轮采样之后都与其它工作线程同步一次（最精确）。增大这个值可以
+        ''' 减少 barrier 同步与私有行缓存重建的开销，从而进一步提高加速比，代价是
+        ''' 每个工作线程看到的全局计数会滞后最多这么多个轮次。
+        ''' </returns>
+        Public Property SyncInterval As Integer = 1
+
+        ''' <summary>
         ''' 采样所使用的随机数种子。
         ''' </summary>
         ''' <returns>
@@ -332,6 +344,33 @@ Namespace LDA
                 End If
 
                 Return lPhi
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 归入各个主题的词语总数
+        ''' </summary>
+        ''' <returns>
+        ''' 该值恒等于语料的词语总数。并行采样一旦丢失了计数更新，这个值就会小于
+        ''' 语料的词语总数，所以它可以作为并行实现的一项自检指标。
+        ''' </returns>
+        Public ReadOnly Property TopicTokenTotal As Long
+            Get
+                If nwsumP Is Nothing Then
+                    Return 0
+                End If
+
+                ' note: do NOT name the loop variable "k" here, VB is case 
+                ' insensitive so that it would shadow the K property and the 
+                ' loop would end up as "For k = 0 To k - 1"
+                Dim stride As Integer = SamplingState.CACHE_LINE_INTS
+                Dim acc As Long = 0L
+
+                For topic As Integer = 0 To K - 1
+                    acc += nwsumP(topic * stride)
+                Next
+
+                Return acc
             End Get
         End Property
 
@@ -504,7 +543,8 @@ Namespace LDA
             Dim parallelMode As Boolean = blocks.Length > 1
 
             For b As Integer = 0 To blocks.Length - 1
-                states(b) = New SamplingState(K, alpha, beta, V, nw, nwsumP, nd, docs, docOff, docLen, z)
+                states(b) = New SamplingState(K, alpha, beta, V, nw, nwsumP, nd, docs, docOff, docLen, z,
+                                              useRowCache:=parallelMode)
             Next
 
             Call println($"* Sampling {ITERATIONS} iterations with burn-in of {BURN_IN} unique temp var.")
@@ -512,58 +552,151 @@ Namespace LDA
             Call println($"* corpus: {nDocs} documents, {docs.Length} tokens, vocabulary={V}, topics={K}")
             Call VBDebugger.WaitOutput()
 
+            Call RunSweeps(blocks, states, rng, parallelMode)
+        End Sub
+
+        ''' <summary>
+        ''' 运行 <see cref="ITERATIONS"/> 轮采样迭代
+        ''' </summary>
+        ''' <remarks>
+        ''' 并行模式下这里使用的是一组常驻工作线程加上一个 <see cref="Barrier"/>，
+        ''' 而不是每一轮迭代都调用一次 Parallel.For：每轮迭代的工作量在多线程
+        ''' 之下只有百微秒量级，而一次 Parallel.For 的派发与汇合开销与之相当，
+        ''' 用常驻线程可以把这部分开销压到一次 barrier 同步的成本上。
+        ''' </remarks>
+        Private Sub RunSweeps(blocks As DocBlock(), states As SamplingState(), rng As LdaRng(), parallelMode As Boolean)
             ' z is initialized after initialState is called
             Dim t0 As Date = Now
             Dim t1 As Date = Now
             Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each i As Integer In Tqdm.Range(0, ITERATIONS, bar:=bar, wrap_console:=App.EnableTqdm)
-                Call counter.Set()
+            If Not parallelMode Then
+                For Each i As Integer In Tqdm.Range(0, ITERATIONS, bar:=bar, wrap_console:=App.EnableTqdm)
+                    Call counter.Set()
 
-                ' for all z_i
-                If parallelMode Then
-                    Call System.Threading.Tasks.Parallel.For(
-                        fromInclusive:=0,
-                        toExclusive:=blocks.Length,
-                        body:=Sub(bi As Integer)
-                                  Call SampleBlock(blocks(bi), states(bi), rng(bi))
-                              End Sub)
-                Else
                     For bi As Integer = 0 To blocks.Length - 1
                         Call SampleBlock(blocks(bi), states(bi), rng(bi))
                     Next
-                End If
 
-                Call counter.Mark("sampling")
+                    Call AfterSweep(i, t0, bar)
+                Next
 
-                ' the progress bar is only created when wrap_console is TRUE,
-                ' so that it can be Nothing here.
-                If bar IsNot Nothing Then
-                    If i < BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                        t1 = Now
-                        bar.SetLabel($"BURN_IN ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
-                    End If
+                Return
+            End If
 
-                    ' display progress
-                    If i > BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                        t1 = Now
-                        bar.SetLabel($" ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
-                    End If
-                End If
+            Dim errors As New ConcurrentQueue(Of Exception)
+            Dim iterDone As Integer = -1
+            Dim interval As Integer = Me.SyncInterval
 
-                ' get statistics after burn-in
-                If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
-                    t1 = Now
+            If interval < 1 Then
+                interval = 1
+            End If
 
-                    Call counter.Mark("...")
-                    Call update_params()
-                    Call counter.Mark("update_pars")
+            ' 每 interval 轮采样才同步一次：barrier 与私有行缓存重建的开销被摊薄，
+            ' 代价是各线程看到的全局计数最多滞后 interval 轮
+            Dim rounds As Integer = (ITERATIONS + interval - 1) \ interval
 
-                    If bar IsNot Nothing Then
-                        Call bar.SetLabel($"get statistics after burn-in! {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
-                    End If
-                End If
+            ' the post phase action runs after every worker has finished the 
+            ' current sweep and before any of them is released, so that the 
+            ' statistics can be collected without racing with the next sweep.
+            Dim sync As New Barrier(blocks.Length + 1, Sub(b As Barrier)
+                                                           iterDone += 1
+                                                           Call AfterSweep(System.Math.Min((iterDone + 1) * interval, ITERATIONS) - 1, t0, bar)
+                                                       End Sub)
+            Dim threads As Thread() = New Thread(blocks.Length - 1) {}
+
+            For b As Integer = 0 To blocks.Length - 1
+                Dim bi As Integer = b
+
+                threads(bi) = New Thread(Sub()
+                                             Dim done As Integer = 0
+
+                                             Try
+                                                 For round As Integer = 0 To rounds - 1
+                                                     Dim sweeps As Integer = interval
+
+                                                     If round = rounds - 1 Then
+                                                         sweeps = ITERATIONS - round * interval
+                                                     End If
+
+                                                     Call SampleBlock(blocks(bi), states(bi), rng(bi), sweeps)
+                                                     Call sync.SignalAndWait()
+                                                     done += 1
+                                                 Next
+                                             Catch ex As Exception
+                                                 Call errors.Enqueue(ex)
+
+                                                 ' keep the barrier balanced, otherwise 
+                                                 ' the caller would dead lock
+                                                 While done < rounds
+                                                     Try
+                                                         Call sync.SignalAndWait()
+                                                     Catch ignore As Exception
+                                                         Exit While
+                                                     End Try
+
+                                                     done += 1
+                                                 End While
+                                             End Try
+                                         End Sub)
+
+                threads(bi).IsBackground = True
+                threads(bi).Name = $"lda-gibbs-{bi}"
+
+                Call threads(bi).Start()
             Next
+
+            For Each round As Integer In Tqdm.Range(0, rounds, bar:=bar, wrap_console:=App.EnableTqdm)
+                Call sync.SignalAndWait()
+            Next
+
+            For Each t As Thread In threads
+                Call t.Join()
+            Next
+
+            sync.Dispose()
+
+            Dim failure As Exception = Nothing
+
+            If errors.TryPeek(failure) Then
+                Throw failure
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 一轮采样迭代结束之后的统计与进度更新
+        ''' </summary>
+        Private Sub AfterSweep(i As Integer, t0 As Date, bar As Tqdm.ProgressBar)
+            Call counter.Mark("sampling")
+
+            ' the progress bar is only created when wrap_console is TRUE,
+            ' so that it can be Nothing here.
+            If bar IsNot Nothing Then
+                Dim t1 As Date = Now
+
+                If i < BURN_IN Then
+                    If i Mod THIN_INTERVAL = 0 Then
+                        Call bar.SetLabel($"BURN_IN ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
+                    End If
+                Else
+                    If i Mod THIN_INTERVAL = 0 Then
+                        Call bar.SetLabel($" ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
+                    End If
+                End If
+            End If
+
+            ' get statistics after burn-in
+            If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
+                Call counter.Mark("...")
+                Call update_params()
+                Call counter.Mark("update_pars")
+
+                If bar IsNot Nothing Then
+                    Dim t1 As Date = Now
+
+                    Call bar.SetLabel($"get statistics after burn-in! {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
+                End If
+            End If
         End Sub
 
         ''' <summary>
@@ -623,7 +756,8 @@ Namespace LDA
         '''                             for use a time based random seed. </param>
         Public Function configure(iterations As Integer, burnIn As Integer, thinInterval As Integer, sampleLag As Integer,
                                   Optional workers As Integer = 0,
-                                  Optional seed As Integer = -1) As LdaGibbsSampler
+                                  Optional seed As Integer = -1,
+                                  Optional syncInterval As Integer = 1) As LdaGibbsSampler
 
             LdaGibbsSampler.ITERATIONS = iterations
             BURN_IN = burnIn
@@ -632,6 +766,7 @@ Namespace LDA
 
             Me.Workers = workers
             Me.RandomSeed = seed
+            Me.SyncInterval = syncInterval
 
             Return Me
         End Function
