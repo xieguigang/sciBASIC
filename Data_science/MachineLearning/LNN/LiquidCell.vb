@@ -86,6 +86,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports std = System.Math
 
 ''' <summary>
@@ -653,6 +654,98 @@ Public Class LiquidCell : Implements IDisposable
         End If
 
         Return _State
+    End Function
+
+    ''' <summary>
+    ''' 批量前向：就地推进 <c>[B, HiddenSize]</c> 的状态矩阵，一次调用完成 <paramref name="subSteps"/> 个子步。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与逐样本 <see cref="Forward"/> 的关系：<b>数学上等价</b>（同样的 A/f/τ_eff 与 RK4 合成次序），
+    ''' 但把「同一步的全部细胞」当作 batch 维，使单次算子的元素数从 <c>1×m</c> 提升到 <c>B×m</c>：
+    ''' 既越过了 GPU 后端的小算子回退阈值（<c>MinGemmElements</c>），
+    ''' 也让融合内核 <c>tcCellLtcRk4DoubleKernel</c> 把全部子步压成一次内核启动、零主机往返。
+    ''' <para>
+    ''' 只覆盖 LTC 模式的显式积分（Euler / Heun / RK4 的 RK4 语义在融合内核里统一实现）；
+    ''' CfC 闭式解与 CT_RNN 的导数形式不同，调用方应继续走逐样本 <see cref="Forward"/>；
+    ''' 训练期的步记录（<c>_records</c>）也只由逐样本路径产生。
+    ''' </para>
+    ''' <para>
+    ''' 与 <see cref="LifStep"/> 一样，批量路径下状态以<b>设备为主副本</b>：
+    ''' 后端支持设备常驻时，<paramref name="batchState"/> 的主机数组在同步之前是陈旧的。
+    ''' </para>
+    ''' </remarks>
+    ''' <param name="batchState">状态矩阵 <c>[B, HiddenSize]</c>，就地更新</param>
+    ''' <param name="batchInput">输入矩阵 <c>[B, InputSize]</c></param>
+    ''' <param name="dt">本次推进的总时长</param>
+    ''' <param name="subSteps">子步数（&lt;1 时按 1 处理）</param>
+    ''' <returns>实际执行的子步数（反向传播需要同样多步的逆序回传）</returns>
+    Public Function ForwardBatch(batchState As Tensor, batchInput As Tensor, dt As Double,
+                                 Optional subSteps As Integer = 1) As Integer
+        If batchState Is Nothing OrElse batchInput Is Nothing Then
+            Throw New ArgumentNullException(NameOf(batchState))
+        End If
+        If Mode = LiquidMode.CFC Then
+            Throw New NotSupportedException("CfC 闭式解没有批量实现，请使用逐样本 Forward 或改用 LTC 模式")
+        End If
+        If Mode = LiquidMode.CT_RNN Then
+            Throw New NotSupportedException("CT_RNN 的导数形式（-x/τ + A）与 LTC 不同，没有批量实现")
+        End If
+        If batchState.Rank <> 2 OrElse batchState.Shape(1) <> HiddenSize Then
+            Throw New ArgumentException(
+                $"ForwardBatch 的批量状态形状应为 [B, {HiddenSize}]，实际 [{String.Join(",", batchState.Shape)}]")
+        End If
+        If batchInput.Rank <> 2 OrElse batchInput.Shape(1) <> InputSize Then
+            Throw New ArgumentException(
+                $"ForwardBatch 的批量输入形状应为 [B, {InputSize}]，实际 [{String.Join(",", batchInput.Shape)}]")
+        End If
+        If batchState.Shape(0) <> batchInput.Shape(0) Then
+            Throw New ArgumentException($"ForwardBatch 的状态/输入批大小不一致：{batchState.Shape(0)} vs {batchInput.Shape(0)}")
+        End If
+
+        Dim steps As Integer = std.Max(1, subSteps)
+        Dim gateWeight As Tensor = If(HasGate, _WeightGate, Nothing)
+        Dim gateInput As Tensor = If(HasGate, _WeightGateInput, Nothing)
+        Dim gateBias As Tensor = If(HasGate, _BiasGate, Nothing)
+
+        ' 后端支持时走融合内核（设备常驻 + 一次内核完成全部子步）；
+        ' 不支持时由基类的标量实现兜底 —— 两条路径的数学语义一致，因此调用方无需分支。
+        Call Tensor.computeKernel.LtcRk4Batch(batchState, batchInput, _WeightRecurrent, _WeightInput, _Bias,
+                                             gateWeight, gateInput, gateBias, EffectiveTauVector, dt, steps,
+                                             BatchActivationCode())
+
+        Return steps
+    End Function
+
+    ''' <summary>
+    ''' 有效时间常数向量（已应用边界约束），长度 <see cref="HiddenSize"/>。
+    ''' </summary>
+    ''' <remarks>
+    ''' 批量算子需要把 τ 作为独立张量传入（GPU 内核从显存读取），因此这里把它公开出来；
+    ''' 它只依赖单元自身参数，与批内细胞无关，可以在整个仿真窗内复用。
+    ''' </remarks>
+    Public ReadOnly Property EffectiveTauVector As Tensor
+        Get
+            Return EffectiveTau()
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 批量融合内核支持的激活函数编码；不支持的激活函数（含 leaky_relu）会抛出，
+    ''' 由调用方回退到逐样本路径。
+    ''' </summary>
+    Private Function BatchActivationCode() As Integer
+        Select Case If(ActivationType, "tanh").Trim().ToLowerInvariant()
+            Case "tanh"
+                Return CellActivation.Tanh
+            Case "sigmoid"
+                Return CellActivation.Sigmoid
+            Case "relu"
+                Return CellActivation.ReLU
+            Case "none", "linear"
+                Return CellActivation.Linear
+            Case Else
+                Throw New NotSupportedException($"激活函数 {ActivationType} 没有批量融合内核实现")
+        End Select
     End Function
 
     ''' <summary>

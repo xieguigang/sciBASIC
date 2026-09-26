@@ -95,6 +95,11 @@ Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
         MyBase.New(width, height, theme)
     End Sub
 
+    ''' <summary>直接在外部提供的绘图设备上绘制（例如 DirectX 的 GPU 画布）。</summary>
+    Protected Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
+    End Sub
+
     Public MustOverride Sub Plot(seriesList As IList(Of Series))
 
 End Class
@@ -110,6 +115,15 @@ Public Class PlotEngine : Implements IDisposable
     Protected _width As Integer
     Protected _height As Integer
     Protected _bitmap As Microsoft.VisualBasic.Imaging.Bitmap = Nothing
+
+    ''' <summary>
+    ''' 画布是否由本对象创建（决定 <see cref="Dispose"/> 时要不要把它一起释放）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 外部注入画布时（例如 DirectX 的 GPU 画布）必须为 False：
+    ''' 那块画布属于宿主控件，绘图引擎把它 Dispose 掉会让宿主下一帧直接崩掉。
+    ''' </remarks>
+    Private _ownsGraphics As Boolean = True
 
     ' ---------- 主题 ----------
     Public Property Theme As PlotTheme
@@ -172,13 +186,52 @@ Public Class PlotEngine : Implements IDisposable
         ApplyQuality(_g)
     End Sub
 
+    ''' <summary>
+    ''' 直接在<b>外部提供</b>的绘图设备上绘制。
+    ''' </summary>
+    ''' <param name="g">
+    ''' 已经绑定到目标表面的绘图设备。除了默认的 GDI+ 位图，任何 <c>IGraphics</c> 实现都可用 ——
+    ''' 例如 <c>Microsoft.VisualBasic.Drawing.DirectX.DxGraphics</c>（Direct2D/D3D11 GPU 画布），
+    ''' 于是图表可以直接画在 WinForms 控件上而不需要中间位图。
+    ''' </param>
+    ''' <param name="theme">主题（省略时用浅色主题）</param>
+    ''' <remarks>
+    ''' <b>画布的所有权归调用方</b>：<see cref="Dispose"/> 不会释放外部注入的设备，
+    ''' 因此可以安全地写成 <c>Using plot ... End Using</c>（宿主画布不会被连带关闭）。
+    ''' 
+    ''' 画布尺寸从 <c>g.Size</c> 取，控件尺寸变化后需要重新构造本对象才能按新尺寸排版。
+    ''' </remarks>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        If g Is Nothing Then Throw New ArgumentNullException(NameOf(g))
+
+        _width = g.Size.Width
+        _height = g.Size.Height
+        _Theme = If(theme, PlotTheme.Light())
+        _g = g
+        _ownsGraphics = False
+        ApplyQuality(_g)
+    End Sub
+
     ''' <summary>取回底层绘图位图（若由 New(bmp) 构造则有值，否则为 Nothing）。</summary>
     Public Function ToBitmap() As Microsoft.VisualBasic.Imaging.Bitmap
         Return _bitmap
     End Function
 
+    ''' <summary>底层绘图设备（外部注入时就是宿主的画布本身）。</summary>
+    Public ReadOnly Property GraphicsDevice As IGraphics
+        Get
+            Return _g
+        End Get
+    End Property
+
     Public Sub Dispose() Implements IDisposable.Dispose
-        _g?.Dispose()
+        ' 只释放自己创建的画布：外部注入的画布属于宿主（例如控件的 GPU 画布），
+        ' 释放它会让宿主在下一帧绘制时直接失败
+        If _ownsGraphics Then
+            _g?.Dispose()
+        End If
+
+        _g = Nothing
     End Sub
 
     ' ========================================================

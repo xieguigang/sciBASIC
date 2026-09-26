@@ -45,6 +45,14 @@
 
     '     Module TensorKernelNames
     ' 
+    '         Fields: Conv2DBackwardBias, Conv2DBackwardFilter, Conv2DBackwardInput, Conv2DForward
+    '                 FinalMax, FinalMin, FinalSum, GemmDouble
+    '                 LifUpdateDouble, LifUpdateFp32, MaxPool2DBackward, MaxPool2DForward
+    '                 PartialMax, PartialMin, PartialSum, RowArgMax
+    '                 RowArgMin, RowLogSoftmax, RowMax, RowMean
+    '                 RowMin, RowSoftmax, RowSum, SpmmCsr
+    '                 TrainAccumulate, TrainAdamW, TrainMaskedCrossEntropy, TrainTranspose
+    ' 
     ' 
     ' 
     ' 
@@ -107,6 +115,24 @@ Namespace GPUTensor
         Public Const TrainAccumulate As String = "tensorAccumulateFp32Kernel"
         ''' <summary>融合掩码交叉熵：softmax + NLL + <c>d(logits) = (softmax − onehot) / count</c></summary>
         Public Const TrainMaskedCrossEntropy As String = "tensorMaskedCrossEntropyFp32Kernel"
+
+        ' ---- 脉冲网络融合内核（Kernels\lif.cu）----
+        ''' <summary>融合的递归 LIF 单步（双精度状态，就地更新 H / S / counts）</summary>
+        Public Const LifUpdateDouble As String = "tensorLifUpdateDoubleKernel"
+        ''' <summary>融合的递归 LIF 单步（单精度 H / counts，脉冲仍为双精度）</summary>
+        Public Const LifUpdateFp32 As String = "tensorLifUpdateFp32Kernel"
+
+        ' ---- Cella 批量细胞管线融合内核（Kernels\cellaccel.cu）----
+        ''' <summary>液态时间常数网络（LNN）批量 RK4 积分：状态 [B, m] 就地推进若干子步</summary>
+        Public Const CellLtcRk4 As String = "tcCellLtcRk4DoubleKernel"
+        ''' <summary>图卷积批量层：自身分支 + CSR 邻居聚合 + 偏置 + 激活（decoder 复用空 CSR 形态）</summary>
+        Public Const CellGraphLayer As String = "tcCellGraphLayerDoubleKernel"
+        ''' <summary>节点特征拼装：[B·n, 2+2d] ← [x̄ ‖ p ‖ e_i ‖ z_pert]</summary>
+        Public Const CellGraphFeature As String = "tcCellGraphFeatureDoubleKernel"
+        ''' <summary>通量读取头批量计算：v = e ⊙ gsat([h ‖ u]·Wv + bv)（含可逆开关）</summary>
+        Public Const CellFluxHead As String = "tcCellFluxHeadDoubleKernel"
+        ''' <summary>系统时间常数批量计算：τ^sys = 1/(1/τ_eff + σ(h·Wg + u·Wgi + bg))</summary>
+        Public Const CellSysTau As String = "tcCellSysTauDoubleKernel"
 
         ' ---- 两段式全局归约 ----
         ''' <summary>全局求和 - 阶段一（部分结果）</summary>

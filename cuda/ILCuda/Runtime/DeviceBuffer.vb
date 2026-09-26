@@ -114,6 +114,8 @@ Namespace Runtime
 
             Dim pin = GCHandle.Alloc(data, GCHandleType.Pinned)
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(
                     CudaDriverApi.cuMemcpyHtoD_v2(_pointer, pin.AddrOfPinnedObject(), _byteSize), "cuMemcpyHtoD_v2")
             Finally
@@ -128,6 +130,8 @@ Namespace Runtime
             Dim result(_count - 1) As T
             Dim pin = GCHandle.Alloc(result, GCHandleType.Pinned)
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(
                     CudaDriverApi.cuMemcpyDtoH_v2(pin.AddrOfPinnedObject(), _pointer, _byteSize), "cuMemcpyDtoH_v2")
             Finally
@@ -152,6 +156,8 @@ Namespace Runtime
                 Throw New ArgumentException($"页锁定缓冲区长度 {source.Count} 与显存缓冲区长度 {_count} 不一致")
             End If
 
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuMemcpyHtoDAsync_v2(_pointer, source.Pointer, _byteSize, StreamHandle(stream)),
                 "cuMemcpyHtoDAsync_v2")
@@ -166,6 +172,8 @@ Namespace Runtime
             If target.Count <> _count Then
                 Throw New ArgumentException($"页锁定缓冲区长度 {target.Count} 与显存缓冲区长度 {_count} 不一致")
             End If
+
+            CudaRuntime.EnsureCurrent()
 
             CudaDriverApi.Check(
                 CudaDriverApi.cuMemcpyDtoHAsync_v2(target.Pointer, _pointer, _byteSize, StreamHandle(stream)),
@@ -194,6 +202,8 @@ Namespace Runtime
                 Throw New ArgumentException($"目标缓冲区长度 {other.Count} 与源长度 {_count} 不一致")
             End If
 
+            CudaRuntime.EnsureCurrent()
+
             If useAsync Then
                 CudaDriverApi.Check(
                     CudaDriverApi.cuMemcpyDtoDAsync_v2(other.Pointer, _pointer, _byteSize, streamHandle), apiName)
@@ -204,8 +214,26 @@ Namespace Runtime
         End Sub
 
         ''' <summary>用同一个标量填满整段显存</summary>
+        ''' <summary>
+        ''' 用标量值填充整段显存。
+        ''' </summary>
+        ''' <remarks>
+        ''' <b>零填充走设备端 memset</b>：清零出现在每个 atomicAdd 型内核的启动前
+        ''' （稀疏乘法的输出、融合 LIF 的突触输入缓冲等），属于算子的热路径。
+        ''' 而"建一个主机数组 → 逐元素赋值 → 整体 H2D 拷贝"的写法要为每次调用付出
+        ''' 一次托管分配 + 一次全量拷贝 —— 十万级张量下即 1.1 MB/次，
+        ''' 足以吃掉内核本身的计算收益（实测中它曾是每步耗时里最大的一项）。
+        ''' </remarks>
         Public Sub Fill(value As T)
             ThrowIfDisposed()
+
+            Dim zero As T = Nothing
+
+            If System.Collections.Generic.EqualityComparer(Of T).Default.Equals(value, zero) Then
+                Call MyBase.Clear()
+
+                Return
+            End If
 
             Dim data(_count - 1) As T
 

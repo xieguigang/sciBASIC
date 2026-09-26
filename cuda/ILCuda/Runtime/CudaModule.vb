@@ -106,6 +106,10 @@ Namespace Runtime
             Dim pin = GCHandle.Alloc(data, GCHandleType.Pinned)
             Try
                 Dim handle As IntPtr = IntPtr.Zero
+
+                ' 模块加载是上下文作用域的：本线程必须先绑定上下文
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(
                     CudaDriverApi.cuModuleLoadData(handle, pin.AddrOfPinnedObject()), "cuModuleLoadData")
                 Return New CudaModule(handle)
@@ -155,6 +159,9 @@ Namespace Runtime
             If _kernels.TryGetValue(name, cached) Then Return cached
 
             Dim hfunc As IntPtr = IntPtr.Zero
+
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuModuleGetFunction(hfunc, _handle, name), $"cuModuleGetFunction({name})")
 
@@ -167,6 +174,8 @@ Namespace Runtime
             If _handle = IntPtr.Zero Then Return
             _kernels.Clear()
             Try
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(CudaDriverApi.cuModuleUnload(_handle), "cuModuleUnload")
             Catch
             End Try

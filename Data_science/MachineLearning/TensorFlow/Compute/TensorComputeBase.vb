@@ -342,6 +342,530 @@ Namespace Compute
             Return result
         End Function
 
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步（主机标量实现，就地更新状态张量）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与「SpMM + Add + MultiplyScalar + Heaviside + ElementwiseMultiply」这条逐算子路径
+        ''' <b>逐比特等价</b>（相同的循环次序、相同的运算结合次序、相同的 β/θ 单精度舍入），
+        ''' 但把每步 6 个 <c>[batch, Units]</c> 中间张量的分配与 5 次全量遍历压缩为
+        ''' 1 个累加缓冲 + 1 次融合遍历：
+        ''' <list type="bullet">
+        '''   <item>递归输入按 CSR 行并行累加到 <c>I</c>（跳过零源，与 <see cref="SpMM"/> 同序）；</item>
+        '''   <item>泄漏积分 / 阈值触发 / 复位 / 计数累加在同一个循环内完成，全部就地写回。</item>
+        ''' </list>
+        ''' 这正是十万级神经元规模下主机侧的主要开销来源，GPU 后端覆写本方法后可进一步
+        ''' 把状态留在显存中（见 <see cref="ITensorCompute.PinDevice64"/>）。
+        ''' </remarks>
+        Public Overridable Function LifStep(synapses As SparseCsr,
+                                            sPrev As Tensor,
+                                            externalCurrent As Tensor,
+                                            h As Tensor,
+                                            s As Tensor,
+                                            counts As Tensor,
+                                            beta As Double,
+                                            threshold As Double,
+                                            subtractThreshold As Boolean) As Boolean Implements ITensorCompute.LifStep
+
+            If synapses Is Nothing Then Throw New ArgumentNullException(NameOf(synapses))
+            If sPrev Is Nothing Then Throw New ArgumentNullException(NameOf(sPrev))
+            If h Is Nothing Then Throw New ArgumentNullException(NameOf(h))
+            If s Is Nothing Then Throw New ArgumentNullException(NameOf(s))
+            If counts Is Nothing Then Throw New ArgumentNullException(NameOf(counts))
+
+            If sPrev.Rank <> 2 OrElse sPrev.Shape(1) <> synapses.Rows Then
+                Throw New ArgumentException(
+                    $"LifStep 的 sPrev 形状应为 [batch, {synapses.Rows}]，实际 [{String.Join(",", sPrev.Shape)}]")
+            End If
+            If h.Shape(0) <> sPrev.Shape(0) OrElse h.Shape(1) <> synapses.Columns OrElse
+               Not h.Shape.SequenceEqual(s.Shape) OrElse Not h.Shape.SequenceEqual(counts.Shape) Then
+                Throw New ArgumentException(
+                    $"LifStep 的 h/s/counts 形状应同为 [{sPrev.Shape(0)}, {synapses.Columns}]，" &
+                    $"实际 h=[{String.Join(",", h.Shape)}] s=[{String.Join(",", s.Shape)}] counts=[{String.Join(",", counts.Shape)}]")
+            End If
+            If externalCurrent IsNot Nothing AndAlso Not externalCurrent.Shape.SequenceEqual(h.Shape) Then
+                Throw New ArgumentException(
+                    $"LifStep 的 externalCurrent 形状应为 [{String.Join(",", h.Shape)}]，" &
+                    $"实际 [{String.Join(",", externalCurrent.Shape)}]")
+            End If
+
+            Dim batch = sPrev.Shape(0)
+            Dim cols = synapses.Columns
+            Dim ed As Double() = If(externalCurrent Is Nothing, Nothing, externalCurrent.Data)
+
+            ' 递归输入累加缓冲：I[batch, cols]（唯一的一次分配）
+            Dim I = New Double(batch * cols - 1) {}
+
+            Call LifRecurrentInput(synapses, sPrev.Data, batch, I)
+
+            ' 泄漏积分 → 阈值触发 → 复位 → 计数累加（全部就地）
+            Call LifUpdateInPlace(I, ed, h.Data, s.Data, counts.Data,
+                                  CDbl(CSng(beta)), threshold, CDbl(CSng(threshold)),
+                                  subtractThreshold)
+
+            ' 三个状态张量都是就地写入：声明设备端缓存副本失效
+            Call h.MarkHostModified()
+            Call s.MarkHostModified()
+            Call counts.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 融合单步的第一阶段：<c>I[b, c] = Σ_r W[r, c]·S_prev[b, r]</c>。
+        ''' </summary>
+        ''' <param name="synapses">CSR 连接矩阵（行 = 突触前，列 = 突触后）</param>
+        ''' <param name="sPrev">上一时刻脉冲的主机数组 <c>[batch, Rows]</c></param>
+        ''' <param name="batch">批大小</param>
+        ''' <param name="synapticInput">输出缓冲 <c>[batch, columns]</c>，调用前必须为零</param>
+        ''' <remarks>
+        ''' 累加次序与 <see cref="SpMM"/> 完全一致（batch → 行 → 非零元），
+        ''' 因此在 CPU 后端下本方法的输出与 <c>SpMM</c> 逐比特相同；
+        ''' 外部电流由 <see cref="LifUpdateInPlace"/> 在同样的运算次序下叠加。
+        ''' </remarks>
+        Protected Overridable Sub LifRecurrentInput(synapses As SparseCsr,
+                                                    sPrev As Double(),
+                                                    batch As Integer,
+                                                    synapticInput As Double())
+
+            Dim rows = synapses.Rows
+            Dim cols = synapses.Columns
+            Dim rp = synapses.RowPointers
+            Dim ci = synapses.ColumnIndices
+            Dim vv = synapses.Values
+
+            For b As Integer = 0 To batch - 1
+                Dim bo = b * cols
+                Dim ro = b * rows
+
+                For r As Integer = 0 To rows - 1
+                    Dim xv = sPrev(ro + r)
+                    Dim k = rp(r)
+                    Dim kEnd = rp(r + 1)
+
+                    ' 脉冲输入高度稀疏：零源直接跳过（与 SpMM 的快速路径一致）
+                    If xv <> 0.0 Then
+                        While k < kEnd
+                            synapticInput(bo + ci(k)) += xv * vv(k)
+                            k += 1
+                        End While
+                    End If
+                Next
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 融合单步的第二阶段（逐元素，可就地更新）：泄漏积分 → 阈值触发 → 复位 → 计数累加。
+        ''' </summary>
+        ''' <param name="synapticInput">突触输入 <c>[batch, columns]</c>（只读）</param>
+        ''' <param name="externalCurrent">外部电流主机数组，可为 <c>Nothing</c></param>
+        ''' <param name="h">膜电位，就地更新为 <c>H[t]</c></param>
+        ''' <param name="s">输出脉冲，就地写入 0/1</param>
+        ''' <param name="counts">计数累加器，就地累加</param>
+        ''' <param name="beta32">已按单精度舍入的 β（与 <c>Tensor * CSng(β)</c> 一致）</param>
+        ''' <param name="threshold">发放阈值（判定用，全精度）</param>
+        ''' <param name="thr32">已按单精度舍入的阈值（复位减法用）</param>
+        ''' <param name="subtractThreshold">复位模式，见 <see cref="ITensorCompute.LifStep"/></param>
+        ''' <remarks>
+        ''' 逐元素运算彼此独立，因此本方法是<b>可安全向量化</b>的扩展点
+        ''' （<see cref="SIMDTensor"/> 用 <c>System.Numerics.Vector</c> 覆写了它）。
+        ''' </remarks>
+        Protected Overridable Sub LifUpdateInPlace(synapticInput As Double(),
+                                                   externalCurrent As Double(),
+                                                   h As Double(),
+                                                   s As Double(),
+                                                   counts As Double(),
+                                                   beta32 As Double,
+                                                   threshold As Double,
+                                                   thr32 As Double,
+                                                   subtractThreshold As Boolean)
+
+            For i As Integer = 0 To synapticInput.Length - 1
+                Dim pre = synapticInput(i)
+
+                If externalCurrent IsNot Nothing Then
+                    pre += externalCurrent(i)
+                End If
+
+                Dim u = pre + h(i) * beta32
+                Dim sp = If(u - threshold > 0.0, 1.0, 0.0)
+
+                s(i) = sp
+                h(i) = If(subtractThreshold, u - sp * thr32, u * (1.0 - sp))
+                counts(i) += sp
+            Next
+        End Sub
+
+#Region "批量细胞管线融合算子（CPU 参考实现）"
+
+        ''' <summary>
+        ''' 液态时间常数网络批量 RK4 积分（CPU 参考实现，就地推进状态）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 运算次序与 <c>LiquidCell.ComputeDerivative</c> + <c>ODESolver.RK4Step</c> 的
+        ''' 逐样本写法完全一致（自身递归项 → 输入项 → 门控项 → 激活 → 斜率合成），
+        ''' 因此 CPU 后端下的结果与逐细胞路径逐比特相同；
+        ''' GPU 后端的差异只来自浮点归约顺序（见 <c>cellaccel.cu</c>）。
+        ''' </remarks>
+        Public Overridable Function LtcRk4Batch(state As Tensor, input As Tensor,
+                                                weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
+                                                weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
+                                                tauEff As Tensor, dt As Double, subSteps As Integer,
+                                                activation As Integer) As Boolean Implements ITensorCompute.LtcRk4Batch
+
+            If state Is Nothing OrElse input Is Nothing Then Throw New ArgumentNullException(NameOf(state))
+            If weightRecurrent Is Nothing OrElse weightInput Is Nothing Then
+                Throw New ArgumentNullException(NameOf(weightRecurrent))
+            End If
+            If tauEff Is Nothing Then Throw New ArgumentNullException(NameOf(tauEff))
+            If state.Rank <> 2 OrElse input.Rank <> 2 Then
+                Throw New ArgumentException($"LtcRk4Batch 要求 state/input 为二维张量，" &
+                                            $"实际 state=[{String.Join(",", state.Shape)}] input=[{String.Join(",", input.Shape)}]")
+            End If
+
+            Dim batch As Integer = state.Shape(0)
+            Dim m As Integer = state.Shape(1)
+            Dim nIn As Integer = input.Shape(1)
+
+            If input.Shape(0) <> batch Then
+                Throw New ArgumentException($"LtcRk4Batch 的 state/input 批大小不一致：{batch} vs {input.Shape(0)}")
+            End If
+            If subSteps < 1 Then subSteps = 1
+
+            Dim h As Double() = state.Data
+            Dim u As Double() = input.Data
+            Dim wrec As Double() = weightRecurrent.Data
+            Dim win As Double() = weightInput.Data
+            Dim bd As Double() = If(bias Is Nothing, Nothing, bias.Data)
+            Dim wg As Double() = If(weightGate Is Nothing, Nothing, weightGate.Data)
+            Dim wgi As Double() = If(weightGateInput Is Nothing, Nothing, weightGateInput.Data)
+            Dim bg As Double() = If(biasGate Is Nothing, Nothing, biasGate.Data)
+            Dim tau As Double() = tauEff.Data
+            Dim hasGate As Boolean = wg IsNot Nothing AndAlso wgi IsNot Nothing
+
+            Dim dtStep As Double = dt / subSteps
+            Dim half As Double = 0.5 * dtStep
+            Dim sw As Double() = New Double(m - 1) {}
+            Dim sh As Double() = New Double(m - 1) {}
+            Dim sk As Double() = New Double(4 * m - 1) {}
+            Dim invTau As Double() = New Double(m - 1) {}
+
+            For i As Integer = 0 To m - 1
+                invTau(i) = 1.0 / tau(i)
+            Next
+
+            For b As Integer = 0 To batch - 1
+                Dim rowOff As Integer = b * m
+
+                For i As Integer = 0 To m - 1
+                    sh(i) = h(rowOff + i)
+                Next
+
+                For s As Integer = 1 To subSteps
+                    For i As Integer = 0 To m - 1
+                        sw(i) = sh(i)
+                    Next
+
+                    For stage As Integer = 0 To 3
+                        For i As Integer = 0 To m - 1
+                            Dim z As Double = If(bd Is Nothing, 0.0, bd(i))
+                            Dim zg As Double = If(bg Is Nothing, 0.0, bg(i))
+
+                            For k As Integer = 0 To m - 1
+                                Dim hv As Double = sw(k)
+
+                                z += hv * wrec(k * m + i)
+
+                                If hasGate Then
+                                    zg += hv * wg(k * m + i)
+                                End If
+                            Next
+
+                            For j As Integer = 0 To nIn - 1
+                                Dim uv As Double = u(b * nIn + j)
+
+                                z += uv * win(j * m + i)
+
+                                If hasGate Then
+                                    zg += uv * wgi(j * m + i)
+                                End If
+                            Next
+
+                            Dim decay As Double = invTau(i)
+
+                            If hasGate Then
+                                decay += 1.0 / (1.0 + std.Exp(-zg))
+                            End If
+
+                            sk(stage * m + i) = decay * (CellActivation.Apply(z, activation) - sw(i))
+                        Next
+
+                        If stage < 3 Then
+                            Dim scale As Double = If(stage = 2, dtStep, half)
+
+                            For i As Integer = 0 To m - 1
+                                sw(i) = sh(i) + scale * sk(stage * m + i)
+                            Next
+                        End If
+                    Next
+
+                    For i As Integer = 0 To m - 1
+                        sh(i) += (dtStep / 6.0) * (sk(i) + 2.0 * sk(m + i) + 2.0 * sk(2 * m + i) + sk(3 * m + i))
+                    Next
+                Next
+
+                For i As Integer = 0 To m - 1
+                    h(rowOff + i) = sh(i)
+                Next
+            Next
+
+            Call state.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 图卷积批量层（CPU 参考实现）：自身分支 + CSR 邻居聚合 + 偏置 + 激活。
+        ''' </summary>
+        Public Overridable Function GraphLayerBatch(x As Tensor, wSelf As Tensor, wRel As Tensor,
+                                                    selfW As Tensor, bias As Tensor, edges As SparseCsr,
+                                                    output As Tensor, activation As Integer) As Boolean Implements ITensorCompute.GraphLayerBatch
+
+            If x Is Nothing OrElse wSelf Is Nothing OrElse output Is Nothing Then
+                Throw New ArgumentNullException(NameOf(x))
+            End If
+            If x.Rank <> 2 Then
+                Throw New ArgumentException($"GraphLayerBatch 要求节点特征为二维张量，实际 [{String.Join(",", x.Shape)}]")
+            End If
+
+            Dim rows As Integer = x.Shape(0)
+            Dim inF As Integer = x.Shape(1)
+            Dim outF As Integer = output.Shape(1)
+
+            If output.Shape(0) <> rows Then
+                Throw New ArgumentException($"GraphLayerBatch 的输入/输出行数不一致：{rows} vs {output.Shape(0)}")
+            End If
+
+            Dim xd As Double() = x.Data
+            Dim ws As Double() = wSelf.Data
+            Dim wr As Double() = If(wRel Is Nothing, Nothing, wRel.Data)
+            Dim swD As Double() = If(selfW Is Nothing, Nothing, selfW.Data)
+            Dim bd As Double() = If(bias Is Nothing, Nothing, bias.Data)
+            Dim od As Double() = output.Data
+            Dim rp As Integer() = If(edges Is Nothing, Nothing, edges.RowPointers)
+            Dim ci As Integer() = If(edges Is Nothing, Nothing, edges.ColumnIndices)
+            Dim vv As Double() = If(edges Is Nothing, Nothing, edges.Values)
+
+            ' 节点数：优先取邻接矩阵的行数（= 基因数），其次取逐节点缩放的规模；
+            ' 两者都缺省时说明本层没有邻居项也没有逐节点缩放（解码器形态），此时节点数无关紧要。
+            Dim nodes As Integer = rows
+
+            If edges IsNot Nothing Then
+                nodes = edges.Rows
+            ElseIf swD IsNot Nothing Then
+                nodes = swD.Length
+            End If
+
+            For row As Integer = 0 To rows - 1
+                Dim nodeIdx As Integer = row Mod nodes
+                Dim baseRow As Integer = row - nodeIdx
+                Dim orow As Integer = row * outF
+
+                For j As Integer = 0 To outF - 1
+                    Dim acc As Double = If(bd Is Nothing, 0.0, bd(j))
+                    Dim scale As Double = If(swD Is Nothing, 1.0, swD(nodeIdx))
+                    Dim selfSum As Double = 0.0
+
+                    For k As Integer = 0 To inF - 1
+                        selfSum += xd(row * inF + k) * ws(k * outF + j)
+                    Next
+
+                    acc += scale * selfSum
+
+                    If rp IsNot Nothing AndAlso wr IsNot Nothing Then
+                        For e As Integer = rp(nodeIdx) To rp(nodeIdx + 1) - 1
+                            Dim c As Double = vv(e)
+
+                            If c = 0.0 Then
+                                Continue For
+                            End If
+
+                            Dim srcRow As Integer = baseRow + ci(e)
+                            Dim edgeSum As Double = 0.0
+
+                            For k As Integer = 0 To inF - 1
+                                edgeSum += xd(srcRow * inF + k) * wr(k * outF + j)
+                            Next
+
+                            acc += c * edgeSum
+                        Next
+                    End If
+
+                    od(orow + j) = CellActivation.Apply(acc, activation)
+                Next
+            Next
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 节点特征拼装（CPU 参考实现）：<c>[x̄ ‖ p ‖ e_i ‖ z_pert]</c>。
+        ''' </summary>
+        Public Overridable Function GraphFeatureBatch(xNorm As Tensor, flag As Tensor, embed As Tensor, zPert As Tensor,
+                                                      output As Tensor, n As Integer, d As Integer) As Boolean Implements ITensorCompute.GraphFeatureBatch
+
+            If xNorm Is Nothing OrElse flag Is Nothing OrElse embed Is Nothing OrElse zPert Is Nothing OrElse output Is Nothing Then
+                Throw New ArgumentNullException(NameOf(xNorm))
+            End If
+
+            Dim rows As Integer = xNorm.Length
+            Dim dims As Integer = 2 + 2 * d
+            Dim xd As Double() = xNorm.Data
+            Dim fd As Double() = flag.Data
+            Dim ed As Double() = embed.Data
+            Dim zd As Double() = zPert.Data
+            Dim od As Double() = output.Data
+
+            For row As Integer = 0 To rows - 1
+                Dim i As Integer = row Mod n
+                Dim b As Integer = row \ n
+                Dim off As Integer = row * dims
+
+                od(off) = xd(row)
+                od(off + 1) = fd(row)
+
+                For k As Integer = 0 To d - 1
+                    od(off + 2 + k) = ed(i * d + k)
+                    od(off + 2 + d + k) = zd(b * d + k)
+                Next
+            Next
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 通量读取头批量计算（CPU 参考实现）：<c>v = e ⊙ gsat([h ‖ u]·Wv + bv)</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 逐项对应 <c>MetabolicLiquidNetwork.ComputeFlux</c>：同样的夹断 ±30、
+        ''' 同样的可逆开关（可逆取 2σ−1，不可逆取 σ）、同样的酶水平乘子 <c>u(j)</c>。
+        ''' </remarks>
+        Public Overridable Function FluxHeadBatch(h As Tensor, u As Tensor, wFlux As Tensor, fluxBias As Tensor,
+                                                  reversible As Tensor, output As Tensor) As Boolean Implements ITensorCompute.FluxHeadBatch
+
+            If h Is Nothing OrElse u Is Nothing OrElse wFlux Is Nothing OrElse output Is Nothing Then
+                Throw New ArgumentNullException(NameOf(h))
+            End If
+
+            Dim batch As Integer = h.Shape(0)
+            Dim m As Integer = h.Shape(1)
+            Dim nIn As Integer = u.Shape(1)
+            Dim r As Integer = output.Shape(1)
+
+            If wFlux.Shape(0) <> m + nIn OrElse wFlux.Shape(1) <> r Then
+                Throw New ArgumentException($"FluxHeadBatch 的 Wv 形状应为 [{m + nIn}, {r}]，实际 [{String.Join(",", wFlux.Shape)}]")
+            End If
+
+            Dim hd As Double() = h.Data
+            Dim ud As Double() = u.Data
+            Dim wd As Double() = wFlux.Data
+            Dim bd As Double() = If(fluxBias Is Nothing, Nothing, fluxBias.Data)
+            Dim rd As Double() = If(reversible Is Nothing, Nothing, reversible.Data)
+            Dim od As Double() = output.Data
+
+            For b As Integer = 0 To batch - 1
+                Dim hOff As Integer = b * m
+                Dim uOff As Integer = b * nIn
+                Dim oOff As Integer = b * r
+
+                For j As Integer = 0 To r - 1
+                    Dim z As Double = If(bd Is Nothing, 0.0, bd(j))
+
+                    For i As Integer = 0 To m - 1
+                        z += hd(hOff + i) * wd(i * r + j)
+                    Next
+
+                    For i As Integer = 0 To nIn - 1
+                        z += ud(uOff + i) * wd((m + i) * r + j)
+                    Next
+
+                    If z > 30.0 Then
+                        z = 30.0
+                    ElseIf z < -30.0 Then
+                        z = -30.0
+                    End If
+
+                    Dim sat As Double = 1.0 / (1.0 + std.Exp(-z))
+                    Dim reversibleFlag As Boolean = rd IsNot Nothing AndAlso rd(j) <> 0.0
+
+                    od(oOff + j) = ud(uOff + j) * If(reversibleFlag, 2.0 * sat - 1.0, sat)
+                Next
+            Next
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 系统时间常数批量计算（CPU 参考实现）：<c>τ^sys = 1/(1/τ_eff + f)</c>。
+        ''' </summary>
+        Public Overridable Function SystemTauBatch(h As Tensor, u As Tensor, weightGate As Tensor,
+                                                   weightGateInput As Tensor, biasGate As Tensor,
+                                                   tauEff As Tensor, output As Tensor) As Boolean Implements ITensorCompute.SystemTauBatch
+
+            If h Is Nothing OrElse u Is Nothing OrElse tauEff Is Nothing OrElse output Is Nothing Then
+                Throw New ArgumentNullException(NameOf(h))
+            End If
+
+            Dim batch As Integer = h.Shape(0)
+            Dim m As Integer = h.Shape(1)
+            Dim nIn As Integer = u.Shape(1)
+            Dim hasGate As Boolean = weightGate IsNot Nothing AndAlso weightGateInput IsNot Nothing
+            Dim hd As Double() = h.Data
+            Dim ud As Double() = u.Data
+            Dim wg As Double() = If(hasGate, weightGate.Data, Nothing)
+            Dim wgi As Double() = If(hasGate, weightGateInput.Data, Nothing)
+            Dim bg As Double() = If(hasGate, If(biasGate Is Nothing, Nothing, biasGate.Data), Nothing)
+            Dim td As Double() = tauEff.Data
+            Dim od As Double() = output.Data
+
+            For b As Integer = 0 To batch - 1
+                Dim hOff As Integer = b * m
+                Dim uOff As Integer = b * nIn
+
+                For i As Integer = 0 To m - 1
+                    Dim decay As Double = 1.0 / td(i)
+
+                    If hasGate Then
+                        Dim zg As Double = If(bg Is Nothing, 0.0, bg(i))
+
+                        For k As Integer = 0 To m - 1
+                            zg += hd(hOff + k) * wg(k * m + i)
+                        Next
+
+                        For j As Integer = 0 To nIn - 1
+                            zg += ud(uOff + j) * wgi(j * m + i)
+                        Next
+
+                        decay += 1.0 / (1.0 + std.Exp(-zg))
+                    End If
+
+                    od(hOff + i) = 1.0 / decay
+                Next
+            Next
+
+            Call output.MarkHostModified()
+
+            Return True
+        End Function
+
+#End Region
+
         Public Overridable Function Transpose(t As Tensor) As Tensor Implements ITensorCompute.Transpose
             If t.Rank <> 2 Then
                 Throw New ArgumentException("只支持二维张量转置")
@@ -669,6 +1193,11 @@ Namespace Compute
 
         ''' <summary>默认后端不支持钉住，直接返回 <c>False</c>。</summary>
         Public Overridable Function PinDevice(t As Tensor, label As String, zeroFill As Boolean) As Boolean Implements ITensorCompute.PinDevice
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有双精度常驻缓冲，返回 <c>False</c>。</summary>
+        Public Overridable Function PinDevice64(t As Tensor, label As String, zeroFill As Boolean) As Boolean Implements ITensorCompute.PinDevice64
             Return False
         End Function
 

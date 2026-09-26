@@ -80,6 +80,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
+Imports std = System.Math
 
 Namespace Drawing2D.Colors
 
@@ -584,6 +585,18 @@ Namespace Drawing2D.Colors
         End Function
 
         ''' <summary>
+        ''' 适用于热图颜色谱的生成
+        ''' </summary>
+        ''' <param name="scale"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FromSchema(scale As ScalerPalette, n As Integer) As Color()
+            Return GetColors(scale.Description, n)
+        End Function
+
+        ''' <summary>
         ''' **<see cref="ColorCube.GetColorSequence"/>**
         ''' 
         ''' Some useful color tables for images and tools to handle them.
@@ -677,29 +690,14 @@ Namespace Drawing2D.Colors
             Dim out As New List(Of Color)
 
             For f! = 0 To 1.0! Step delta!
-                Dim r% = rangeConstraint(x.GetPoint(f))
-                Dim g% = rangeConstraint(y.GetPoint(f))
-                Dim b% = rangeConstraint(z.GetPoint(f))
+                Dim r% = std.Clamp(x.GetPoint(f), 0, 255)
+                Dim g% = std.Clamp(y.GetPoint(f), 0, 255)
+                Dim b% = std.Clamp(z.GetPoint(f), 0, 255)
 
                 out += Color.FromArgb(alpha, r, g, b)
             Next
 
             Return out
-        End Function
-
-        ''' <summary>
-        ''' Limit <see cref="CubicSpline"/> result in range [0, 255]
-        ''' </summary>
-        ''' <param name="x!"></param>
-        ''' <returns></returns>
-        Private Function rangeConstraint(x!) As Integer
-            If x < 0! Then
-                x = 0!
-            ElseIf x > 255.0! Then
-                x = 255.0!
-            End If
-
-            Return x
         End Function
     End Module
 End Namespace

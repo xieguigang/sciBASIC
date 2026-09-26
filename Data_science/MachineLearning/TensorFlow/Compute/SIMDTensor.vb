@@ -244,6 +244,99 @@ Namespace Compute
             Return jagged
         End Function
 
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步：递归输入用标量散射（与 <see cref="TensorComputeBase.SpMM"/> 同序，
+        ''' 保证与逐算子路径逐比特一致），逐元素部分用 <c>System.Numerics.Vector</c> 向量化。
+        ''' </summary>
+        ''' <remarks>
+        ''' 向量化只加速「泄漏积分 → 阈值触发 → 复位 → 计数累加」这一段：它对每个元素
+        ''' 独立运算，因此与标量版本结果逐比特相同（逐元素 IEEE 运算的结合次序未变）。
+        ''' 散射段（<c>I(bo + colIdx) += …</c>）存在跨元素的累加依赖，无法向量化，
+        ''' 但它已经带稀疏零源跳过，在脉冲输入下远比逐元素段轻。
+        ''' </remarks>
+        Public Overrides Function LifStep(synapses As SparseCsr,
+                                         sPrev As Tensor,
+                                         externalCurrent As Tensor,
+                                         h As Tensor,
+                                         s As Tensor,
+                                         counts As Tensor,
+                                         beta As Double,
+                                         threshold As Double,
+                                         subtractThreshold As Boolean) As Boolean
+
+            ' 形状校验 / 状态失效声明 / 循环次序全部沿用基类实现，
+            ' 只把它拆出的逐元素阶段换成向量化版本（见 LifUpdateInPlace）
+            Return MyBase.LifStep(synapses, sPrev, externalCurrent, h, s, counts,
+                                  beta, threshold, subtractThreshold)
+        End Function
+
+        ''' <summary>
+        ''' 向量化的逐元素阶段：泄漏积分 → 阈值触发 → 复位 → 计数累加。
+        ''' </summary>
+        Protected Overrides Sub LifUpdateInPlace(synapticInput As Double(),
+                                                 externalCurrent As Double(),
+                                                 h As Double(),
+                                                 s As Double(),
+                                                 counts As Double(),
+                                                 beta32 As Double,
+                                                 threshold As Double,
+                                                 thr32 As Double,
+                                                 subtractThreshold As Boolean)
+
+            Dim width = nv.Vector(Of Double).Count
+            Dim vBeta = New nv.Vector(Of Double)(beta32)
+            Dim vThreshold = New nv.Vector(Of Double)(threshold)
+            Dim vThr32 = New nv.Vector(Of Double)(thr32)
+            Dim vOne = New nv.Vector(Of Double)(1.0)
+            Dim vZero = nv.Vector(Of Double).Zero
+
+            Dim i As Integer = 0
+            Dim vectorLimit = synapticInput.Length - width
+
+            While i <= vectorLimit
+                Dim vU = New nv.Vector(Of Double)(synapticInput, i)
+
+                If externalCurrent IsNot Nothing Then
+                    vU += New nv.Vector(Of Double)(externalCurrent, i)
+                End If
+
+                vU += New nv.Vector(Of Double)(h, i) * vBeta
+
+                ' S = Θ(U − U_thr)：GreaterThan 与标量的 (u - thr > 0) 在 NaN 上语义一致（均为 False）
+                Dim vS = nv.Vector.ConditionalSelect(nv.Vector.GreaterThan(vU - vThreshold, vZero), vOne, vZero)
+
+                vS.CopyTo(s, i)
+
+                Dim vNewH = If(subtractThreshold, vU - vS * vThr32, vU * (vOne - vS))
+
+                vNewH.CopyTo(h, i)
+
+                Dim vCounts = New nv.Vector(Of Double)(counts, i) + vS
+
+                vCounts.CopyTo(counts, i)
+
+                i += width
+            End While
+
+            ' 尾部不足一个向量的部分走标量（与基类实现完全相同）
+            While i < synapticInput.Length
+                Dim pre = synapticInput(i)
+
+                If externalCurrent IsNot Nothing Then
+                    pre += externalCurrent(i)
+                End If
+
+                Dim u = pre + h(i) * beta32
+                Dim sp = If(u - threshold > 0.0, 1.0, 0.0)
+
+                s(i) = sp
+                h(i) = If(subtractThreshold, u - sp * thr32, u * (1.0 - sp))
+                counts(i) += sp
+
+                i += 1
+            End While
+        End Sub
+
 #End Region
 
 #Region "卷积与池化"

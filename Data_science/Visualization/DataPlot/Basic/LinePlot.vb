@@ -69,6 +69,27 @@ Public Class LinePlot
         MyBase.New(bmp)
     End Sub
 
+    ''' <summary>
+    ''' 直接在外部绘图设备上绘制 —— 例如 DirectX 的 GPU 画布
+    ''' （<c>Microsoft.VisualBasic.Drawing.DirectX.DxGraphics</c>）。
+    ''' </summary>
+    ''' <param name="g">
+    ''' 目标绘图设备。<c>DxCanvas</c> 控件的 <c>Graphics</c> 属性、
+    ''' 或者它的 <c>Render</c> 事件参数 <c>e.Graphics</c> 就是可直接传入的实例 ——
+    ''' 也就是说曲线图会<b>直接画在控件上</b>，不需要中间位图。
+    ''' </param>
+    ''' <param name="theme">主题（省略时用浅色主题）</param>
+    ''' <remarks>
+    ''' 用这种方式构造时，画布所有权仍归调用方（<see cref="PlotEngine.Dispose"/> 不会释放它），
+    ''' 因此可以放心写成 <c>Using plot ... End Using</c>。
+    ''' 
+    ''' 注意画布尺寸取自 <c>g.Size</c>：控件尺寸变化后要重新构造本对象，否则排版仍按旧尺寸。
+    ''' </remarks>
+    Public Sub New(g As Microsoft.VisualBasic.Imaging.IGraphics,
+                   Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
+    End Sub
+
     Public Overrides Sub Plot(seriesList As IList(Of Series))
         ' 折线图默认不显示标记
         For Each s In seriesList

@@ -154,6 +154,9 @@ Namespace Runtime
             End If
 
             Try
+                ' 内核启动要求当前线程绑定了本内核所属的上下文
+                CudaRuntime.EnsureCurrent()
+
                 CudaDriverApi.Check(
                     CudaDriverApi.cuLaunchKernel(_function,
                                                  CUInt(gridX), CUInt(gridY), 1UI,

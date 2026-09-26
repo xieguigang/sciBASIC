@@ -102,6 +102,9 @@ Namespace Runtime
             Dim bytes = CLng(count) * CLng(_elementSize)
             Dim handle As IntPtr = IntPtr.Zero
 
+            ' 页锁定内存的分配同样需要当前线程绑定上下文（详见 CudaRuntime）
+            CudaRuntime.EnsureCurrent()
+
             CudaDriverApi.Check(
                 CudaDriverApi.cuMemAllocHost_v2(handle, CULng(bytes)), "cuMemAllocHost_v2")
 
@@ -225,6 +228,8 @@ Namespace Runtime
 
             If _pointer <> IntPtr.Zero Then
                 Try
+                    CudaRuntime.EnsureCurrent()
+
                     CudaDriverApi.Check(CudaDriverApi.cuMemFreeHost(_pointer), "cuMemFreeHost")
                 Catch
                 End Try

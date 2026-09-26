@@ -123,6 +123,10 @@ Namespace Runtime
 
                 context = New CudaContext(device)
 
+                ' 登记到进程级登记表：此后任何线程在使用本引擎之前都会先把自己绑到
+                ' 这个上下文上（CUDA 的当前上下文是线程局部状态，见 CudaRuntime）
+                CudaRuntime.Register(context)
+
                 Dim image As KernelImage = Nothing
                 Dim cudaModule As CudaModule = Nothing
 
@@ -180,12 +184,33 @@ Namespace Runtime
         End Function
 
         Public Sub Synchronize()
+            CudaRuntime.EnsureCurrent()
             _context.Synchronize()
         End Sub
+
+        ''' <summary>
+        ''' 把本引擎的上下文绑定到<b>当前线程</b>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 底层接口已经会在需要时自动绑定（<see cref="CudaRuntime.EnsureCurrent"/>），
+        ''' 这个方法供调用方"显式声明"：例如在一条新线程上开始 GPU 工作之前先绑定一次，
+        ''' 或者在多引擎场景下把上下文切换到自己要用的那一个。
+        ''' </remarks>
+        Public Sub MakeCurrent()
+            _context.MakeCurrent()
+        End Sub
+
+        ''' <summary>当前线程是否已经绑定了本引擎的上下文？</summary>
+        Public Function IsCurrent() As Boolean
+            Return _context.IsCurrent()
+        End Function
 
         Public Sub Dispose() Implements IDisposable.Dispose
             If _disposed Then Return
             _disposed = True
+
+            ' 先从登记表里摘掉：否则其它线程会继续尝试绑定到一个正在被销毁的上下文
+            CudaRuntime.Unregister(_context)
 
             Try
                 If _defaultStream IsNot Nothing Then _defaultStream.Dispose()

@@ -187,6 +187,8 @@ Namespace Runtime
 
             Try
                 If device IsNot Nothing AndAlso kernel IsNot Nothing Then
+                    CudaRuntime.EnsureCurrent()
+
                     Dim status = CudaDriverApi.cuOccupancyMaxPotentialBlockSize(
                         minGrid, suggested, kernel.Handle, IntPtr.Zero, 0UI, maxBlock)
 

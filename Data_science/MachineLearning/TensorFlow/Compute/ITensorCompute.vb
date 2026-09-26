@@ -51,11 +51,11 @@
     '                   Clip, Concat, Conv2D, Conv2DBackwardBias, Conv2DBackwardFilter
     '                   Conv2DBackwardInput, Cos, Divide, DivideScalar, Elu
     '                   Exp, Gelu, Heaviside, HuberLoss, IsDevicePinned
-    '                   L2Loss, L2Norm, LeakyRelu, Log, LogSoftmax
+    '                   L2Loss, L2Norm, LeakyRelu, LifStep, Log, LogSoftmax
     '                   MaskedCrossEntropy, MatMul, Max, Maximum, MaxPool2D
     '                   MaxPool2DBackward, Mean, MeanAll, Min, Minimum
     '                   MseLoss, Multiply, MultiplyScalar, Negate, PinDevice
-    '                   Pow, Prod, Reciprocal, Relu, Sigmoid
+    '                   PinDevice64, Pow, Prod, Reciprocal, Relu, Sigmoid
     '                   SigmoidCrossEntropyWithLogits, Sin, Slice, Softmax, SpMM
     '                   Sqrt, Square, StdDev, Subtract, Sum
     '                   SumAll, Swish, SyncFromDevice, Tanh, TopK
@@ -169,6 +169,188 @@ Namespace Compute
         ''' 的核心算子：稠密矩阵在此规模下不可行，必须走稀疏路径。
         ''' </remarks>
         Function SpMM(csr As SparseCsr, dense As Tensor) As Tensor
+
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步：一次调用完成整步脉冲动力学，并<b>就地</b>更新状态张量。
+        ''' </summary>
+        ''' <param name="synapses">突触连接矩阵 <c>W[Units, Units]</c>（行 = 突触前，列 = 突触后）</param>
+        ''' <param name="sPrev">上一时间步的输出脉冲 <c>S[t−1]</c>（只读）</param>
+        ''' <param name="externalCurrent">
+        ''' 外部注入电流 <c>I_ext[t]</c>（只读）；<c>Nothing</c> 表示本步无外部刺激。
+        ''' </param>
+        ''' <param name="h">膜电位 <c>H[t−1]</c>，返回时被就地改写为 <c>H[t]</c></param>
+        ''' <param name="s">输出参数：本步脉冲 <c>S[t]</c>（就地写入 0/1）</param>
+        ''' <param name="counts">
+        ''' 输出参数：脉冲计数累加器（就地累加 <c>S[t]</c>）。
+        ''' <b>调用方必须在使用前清零</b>，且整个仿真窗内保持同一个张量即可获得
+        ''' <c>Σ_t S[t]</c>——这消除了主机侧的 O(T·N) 累加循环。
+        ''' </param>
+        ''' <param name="beta">膜电位衰减系数 β ∈ (0,1)</param>
+        ''' <param name="threshold">发放阈值 <c>U_thr</c></param>
+        ''' <param name="subtractThreshold">
+        ''' 复位模式：<c>True</c> 表示 <c>H[t] = U[t] − S[t]·U_thr</c>；
+        ''' <c>False</c> 表示 <c>H[t] = U[t]·(1 − S[t])</c>（发放即清零）。
+        ''' </param>
+        ''' <returns>
+        ''' <c>True</c> 表示整步已由本后端完成（调用方不得再走逐算子路径）；
+        ''' <c>False</c> 表示本后端不提供该能力，由调用方回退。
+        ''' </returns>
+        ''' <remarks>
+        ''' 语义与逐算子写法完全等价：
+        ''' <code>
+        '''   I[t] = W · S[t−1] + I_ext[t]
+        '''   U[t] = β·H[t−1] + I[t]
+        '''   S[t] = Θ(U[t] − U_thr)
+        '''   H[t] = 复位(U[t], S[t])
+        '''   counts += S[t]
+        ''' </code>
+        ''' 之所以把它做成<b>一个</b>算子而不是让调用方串起 SpMM / Add / MultiplyScalar / Heaviside，
+        ''' 是因为逐算子写法在十万级神经元规模下会为每步分配 6 个 <c>[batch, Units]</c> 中间张量，
+        ''' 并在 GPU 后端下产生 6~12 次显存往返（每次约 1.1 MB），
+        ''' 往返开销会把内核的计算收益整个吃掉 —— 这是脉冲网络与稠密训练最本质的差异：
+        ''' 它的状态张量只有 <c>[1, N]</c>，而依赖的是每步都要回灌的稀疏连接。
+        ''' <para>
+        ''' 就地更新意味着<b>设备为主副本</b>：后端若把状态留在显存里，主机数组会陈旧，
+        ''' 调用方读主机内容之前必须调用 <see cref="SyncFromDevice"/>（或
+        ''' <see cref="IsDevicePinned"/> 为 <c>False</c> 时按普通张量读取）。
+        ''' </para>
+        ''' </remarks>
+        Function LifStep(synapses As SparseCsr,
+                         sPrev As Tensor,
+                         externalCurrent As Tensor,
+                         h As Tensor,
+                         s As Tensor,
+                         counts As Tensor,
+                         beta As Double,
+                         threshold As Double,
+                         subtractThreshold As Boolean) As Boolean
+
+#End Region
+
+#Region "批量细胞管线融合算子（Cella）"
+
+        ' ------------------------------------------------------------------
+        ' 这一组算子存在的理由：类器官 / 多细胞仿真里，每个细胞每步都要跑
+        ' 一次「液态代谢网络 RK4 积分」与「先验调控图消息传递」。
+        '
+        ' 逐细胞调用时（1×122、339×34）规模低于 GPU 后端的回退阈值，
+        ' 全部被判为"小算子"而落到 CPU；即使强行上 GPU，逐算子写法也会为
+        ' 每步产生几十次显存往返，往返开销把计算收益吃光。
+        '
+        ' 因此把「同一步的全部存活细胞」当作 batch 维（峰值数千），
+        ' 每个子网络压成一到两次内核启动，状态在显存里原地更新，
+        ' 主机往返次数从"每细胞几十次"降到"每批几次"。
+        '
+        ' 约定与 LifStep 一致：返回 True 表示整步（或整个算子）已由本后端完成，
+        ' 调用方不得再走逐算子路径；返回 False 时调用方回退到标量实现，
+        ' 语义完全等价，只是慢一些。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>
+        ''' 融合的液态时间常数网络（LTC / LNN）批量 RK4 积分：<b>就地</b>推进状态。
+        ''' </summary>
+        ''' <param name="state">状态张量 <c>[B, m]</c>；返回时被就地改写为推进 <c>dt</c> 之后的状态</param>
+        ''' <param name="input">区间内恒定的驱动输入 <c>[B, nIn]</c></param>
+        ''' <param name="weightRecurrent">递归权重 <c>[m, m]</c></param>
+        ''' <param name="weightInput">输入权重 <c>[nIn, m]</c></param>
+        ''' <param name="bias">偏置 <c>[m]</c>；<c>Nothing</c> 表示无偏置</param>
+        ''' <param name="weightGate">门控递归权重 <c>[m, m]</c>；<c>Nothing</c> 表示无门控（CT_RNN 模式）</param>
+        ''' <param name="weightGateInput">门控输入权重 <c>[nIn, m]</c></param>
+        ''' <param name="biasGate">门控偏置 <c>[m]</c></param>
+        ''' <param name="tauEff">有效时间常数 <c>[m]</c>（已应用边界约束）</param>
+        ''' <param name="dt">本次推进的总时长</param>
+        ''' <param name="subSteps">子步数：每子步执行一次 RK4 步，子步长 = dt / subSteps</param>
+        ''' <param name="activation">激活函数编码：0 线性 / 1 tanh / 2 sigmoid / 3 relu</param>
+        ''' <returns><c>True</c> 表示整步已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        ''' <remarks>
+        ''' 语义与 CPU 参考实现完全等价：
+        ''' <code>
+        '''   A     = act(h·Wrec + u·Win + b)
+        '''   f     = σ(h·Wgate + u·WgateIn + bg)      （无门控时 f ≡ 0）
+        '''   dh/dt = (1/τ_eff + f) ⊙ (A − h)
+        ''' </code>
+        ''' 就地更新意味着<b>设备为主副本</b>：调用方读主机数组之前必须调用
+        ''' <see cref="SyncFromDevice"/>（或该张量未被钉住时按普通张量读取）。
+        ''' </remarks>
+        Function LtcRk4Batch(state As Tensor, input As Tensor,
+                             weightRecurrent As Tensor, weightInput As Tensor, bias As Tensor,
+                             weightGate As Tensor, weightGateInput As Tensor, biasGate As Tensor,
+                             tauEff As Tensor, dt As Double, subSteps As Integer,
+                             activation As Integer) As Boolean
+
+        ''' <summary>
+        ''' 融合的图卷积批量层（GEARS 消息传递；解码器等无邻居层复用同一算子）。
+        ''' </summary>
+        ''' <param name="x">节点特征 <c>[B·n, inF]</c>（批内第 b 个细胞的第 i 个节点 = 行 b·n+i）</param>
+        ''' <param name="wSelf">自身分支权重 <c>[inF, outF]</c></param>
+        ''' <param name="wRel">邻居分支权重 <c>[inF, outF]</c>；<c>Nothing</c> 表示忽略邻居项</param>
+        ''' <param name="selfW">逐节点自身缩放 <c>[n]</c>；<c>Nothing</c> 表示全部取 1</param>
+        ''' <param name="bias">偏置 <c>[outF]</c>；<c>Nothing</c> 表示无偏置</param>
+        ''' <param name="edges">
+        ''' 入边邻接（CSR）：<c>RowPointers[i]..RowPointers[i+1]</c> 给出节点 i 的入边，
+        ''' <c>ColumnIndices</c> = 邻居（源）节点号，<c>Values</c> = 该边的合成系数。
+        ''' 拓扑与系数对全部细胞共享，因此同一份 CSR 可服务整个 batch。
+        ''' <c>Nothing</c> 表示无邻居（退化为全连接层）。
+        ''' </param>
+        ''' <param name="output">输出张量 <c>[B·n, outF]</c>（由本算子写入，可为未初始化张量）</param>
+        ''' <param name="activation">激活函数编码：0 线性 / 1 tanh / 2 sigmoid / 3 relu</param>
+        ''' <returns><c>True</c> 表示整层已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        ''' <remarks>
+        ''' 计算式（与 GEARSConvLayer.Forward 的标量实现逐项对应）：
+        ''' <code>
+        '''   out[row, j] = act( selfW[i]·Σ_k x[row, k]·wSelf[k, j] + bias[j]
+        '''                      + Σ_e coeff[e]·Σ_k x[src_e, k]·wRel[k, j] )
+        ''' </code>
+        ''' </remarks>
+        Function GraphLayerBatch(x As Tensor, wSelf As Tensor, wRel As Tensor,
+                                 selfW As Tensor, bias As Tensor, edges As SparseCsr,
+                                 output As Tensor, activation As Integer) As Boolean
+
+        ''' <summary>
+        ''' 融合的节点特征拼装：<c>[x̄ ‖ p ‖ e_i ‖ z_pert]</c>。
+        ''' </summary>
+        ''' <param name="xNorm">逐节点控制表达 <c>[B·n]</c>（行优先）</param>
+        ''' <param name="flag">逐节点扰动标记 <c>[B·n]</c></param>
+        ''' <param name="embed">基因身份嵌入表 <c>[n, d]</c></param>
+        ''' <param name="zPert">逐细胞的全局扰动向量 <c>[B, d]</c></param>
+        ''' <param name="output">输出特征 <c>[B·n, 2+2d]</c></param>
+        ''' <param name="n">节点数（基因数）</param>
+        ''' <param name="d">嵌入维度</param>
+        ''' <returns><c>True</c> 表示已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        Function GraphFeatureBatch(xNorm As Tensor, flag As Tensor, embed As Tensor, zPert As Tensor,
+                                  output As Tensor, n As Integer, d As Integer) As Boolean
+
+        ''' <summary>
+        ''' 融合的通量读取头批量计算：<c>v[b, j] = e[b, j] ⊙ gsat([h ‖ u][b] · Wv[:, j] + bv[j])</c>。
+        ''' </summary>
+        ''' <param name="h">隐藏状态 <c>[B, m]</c>（代谢物浓度）</param>
+        ''' <param name="u">网络输入 <c>[B, nIn]</c>（前 r 项为逐反应酶水平，其后为边界浓度）</param>
+        ''' <param name="wFlux">读取权重 <c>[m+nIn, r]</c></param>
+        ''' <param name="fluxBias">读取偏置 <c>[r]</c>；<c>Nothing</c> 表示无偏置</param>
+        ''' <param name="reversible">逐反应可逆标记 <c>[r]</c>（非 0 表示可逆）；<c>Nothing</c> 表示全部不可逆</param>
+        ''' <param name="output">输出通量 <c>[B, r]</c></param>
+        ''' <returns><c>True</c> 表示已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        ''' <remarks>
+        ''' 不可逆反应取 <c>σ(·)</c>，可逆反应取 <c>2σ(·)−1</c>（允许负通量表示逆向流动）；
+        ''' 预激活按 ±30 夹断以避免 <c>exp</c> 溢出（与 CPU 侧 Clamp 一致）。
+        ''' </remarks>
+        Function FluxHeadBatch(h As Tensor, u As Tensor, wFlux As Tensor, fluxBias As Tensor,
+                               reversible As Tensor, output As Tensor) As Boolean
+
+        ''' <summary>
+        ''' 融合的系统时间常数批量计算：<c>τ^sys = 1 / (1/τ_eff + f)</c>，
+        ''' <c>f = σ(h·Wgate + u·WgateIn + bg)</c>（无门控时 <c>f ≡ 0</c>，退化为 τ_eff）。
+        ''' </summary>
+        ''' <param name="h">隐藏状态 <c>[B, m]</c></param>
+        ''' <param name="u">网络输入 <c>[B, nIn]</c></param>
+        ''' <param name="weightGate">门控递归权重 <c>[m, m]</c>；<c>Nothing</c> 表示无门控</param>
+        ''' <param name="weightGateInput">门控输入权重 <c>[nIn, m]</c></param>
+        ''' <param name="biasGate">门控偏置 <c>[m]</c></param>
+        ''' <param name="tauEff">有效时间常数 <c>[m]</c></param>
+        ''' <param name="output">系统时间常数 <c>[B, m]</c></param>
+        ''' <returns><c>True</c> 表示已由本后端完成；<c>False</c> 表示调用方回退</returns>
+        Function SystemTauBatch(h As Tensor, u As Tensor, weightGate As Tensor, weightGateInput As Tensor,
+                                biasGate As Tensor, tauEff As Tensor, output As Tensor) As Boolean
 
 #End Region
 
@@ -304,7 +486,28 @@ Namespace Compute
         ''' <returns>钉住成功返回 <c>True</c>；后端不支持时返回 <c>False</c></returns>
         Function PinDevice(t As Tensor, label As String, zeroFill As Boolean) As Boolean
 
-        ''' <summary>解除钉住并立即释放对应的显存。</summary>
+        ''' <summary>
+        ''' 把张量钉成<b>双精度</b>设备常驻缓冲。
+        ''' </summary>
+        ''' <remarks>
+        ''' <see cref="PinDevice"/> 钉出的是单精度缓冲（消费级显卡的 FP64 吞吐只有 FP32 的
+        ''' 1/64，训练场景下矩阵乘占 95% 以上的浮点运算，因此设备侧统一降精度）。
+        ''' 但脉冲网络的膜电位是<b>逐时间步累积</b>的递归状态：单精度舍入会改变阈值判定，
+        ''' 让个别神经元在仿真窗内多发或少发一次脉冲，从而破坏「CPU / GPU 对拍」这类
+        ''' 需要逐比特一致性的验收场景。需要这种保真度的调用方应当改用本方法，
+        ''' 让状态张量以双精度留在显存里，同时仍然享受「零往返」。
+        ''' <para>
+        ''' 默认实现返回 <c>False</c>（CPU 后端不需要这个概念）；
+        ''' 后端不支持时调用方应退回 <see cref="PinDevice"/> 或普通逐算子路径。
+        ''' </para>
+        ''' </remarks>
+        ''' <param name="t">要被钉住的张量（其底层数组作为键）</param>
+        ''' <param name="label">诊断用标签，例如 <c>lif.H</c></param>
+        ''' <param name="zeroFill">是否用 0 初始化（累加器用 <c>True</c>）</param>
+        ''' <returns>钉住成功返回 <c>True</c>；后端不支持时返回 <c>False</c></returns>
+        Function PinDevice64(t As Tensor, label As String, zeroFill As Boolean) As Boolean
+
+        ''' <summary>解除钉住并立即释放对应的显存（双精度 / 单精度通道一并解除）。</summary>
         Function UnpinDevice(t As Tensor) As Boolean
 
         ''' <summary>该张量当前是否已被钉住。</summary>

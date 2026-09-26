@@ -26,8 +26,8 @@
     <PackageReleaseNotes>The Windows GDI+ back end of the sciBASIC# graphics engine. Canvas: the Graphics namespace wraps a GDI+ drawing surface (GDICanvas, Graphics2D and Wmf) with a CSS interop bridge, so rendering code written against the driver based IGraphics API can target GDI+ unchanged. Encoders: the FileEncoder namespace provides the GIF and TIFF writers together with the image format enumeration. Interop: the Interop namespace holds the P/Invoke bindings and managed images (GDIPlusInterop, GDIPlusImage, DrawingInterop and BitmapBuffer) that marshal between sciBASIC# graphics models and System.Drawing types. Images and filters: Imager and the Filters namespace (Effects, ImageExtensions and Utils) apply bitmap effects inside the same pipeline. Text: the Text namespace provides font metrics (FontMetrics), graphics text drawing and the text layout model. The project targets the .NET Framework and is therefore Windows only.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <Version>1.0.9762.11310</Version>
-    <AssemblyVersion>1.0.9762.11310</AssemblyVersion>
+    <Version>1.0.9762.29476</Version>
+    <AssemblyVersion>1.0.9762.29476</AssemblyVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -71,7 +71,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <OutputPath>../../.nuget/</OutputPath>
+    <OutputPath>../../../../../../Microsoft.VisualBasic.Drawing/.nuget/</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 

@@ -63,6 +63,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 
 ''' <summary>
 ''' 液态神经网络模块 (Liquid Neural Networks, LNN)
@@ -367,6 +368,72 @@ Public Class LiquidNeuralNetwork : Implements IDisposable
         End Select
 
         Return output
+    End Function
+
+    ''' <summary>
+    ''' 批量输出层：<c>c[b] = h[b] · OutputWeight + OutputBias</c>，结果就地写入 <paramref name="output"/>。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与 <see cref="ComputeOutputFrom"/> 的逐样本版本逐项对应（矩阵乘 → 加偏置 → 输出激活），
+    ''' 差别只在于把 batch 维交给后端：融合内核一次完成整批的 GEMM + 偏置 +
+    ''' 激活（<c>tcCellGraphLayerDoubleKernel</c> 的"无邻居"形态），避免每细胞一次往返。
+    ''' <para>
+    ''' 不写入 <c>_lastHidden</c> / <c>_lastOutput</c> 前向缓存 —— 批量路径服务于推理侧
+    ''' 仿真，trainer 的 BPTT 仍走逐样本路径。
+    ''' </para>
+    ''' </remarks>
+    ''' <param name="hiddenBatch">隐藏状态矩阵 <c>[B, HiddenSize]</c></param>
+    ''' <param name="output">输出矩阵 <c>[B, OutputSize]</c>，由本方法写入</param>
+    Public Sub ComputeOutputFromBatch(hiddenBatch As Tensor, output As Tensor)
+        If hiddenBatch Is Nothing OrElse output Is Nothing Then
+            Throw New ArgumentNullException(NameOf(hiddenBatch))
+        End If
+        If hiddenBatch.Rank <> 2 OrElse hiddenBatch.Shape(1) <> HiddenSize Then
+            Throw New ArgumentException(
+                $"ComputeOutputFromBatch 的隐藏状态形状应为 [B, {HiddenSize}]，实际 [{String.Join(",", hiddenBatch.Shape)}]")
+        End If
+        If output.Rank <> 2 OrElse output.Shape(1) <> OutputSize OrElse output.Shape(0) <> hiddenBatch.Shape(0) Then
+            Throw New ArgumentException(
+                $"ComputeOutputFromBatch 的输出形状应为 [{hiddenBatch.Shape(0)}, {OutputSize}]，实际 [{String.Join(",", output.Shape)}]")
+        End If
+
+        Dim code As Integer
+
+        Select Case If(OutputActivation, "none").Trim().ToLowerInvariant()
+            Case "none", "linear", ""
+                code = CellActivation.Linear
+            Case "tanh"
+                code = CellActivation.Tanh
+            Case "sigmoid"
+                code = CellActivation.Sigmoid
+            Case Else
+                Throw New NotSupportedException($"输出激活 {OutputActivation} 没有批量融合内核实现")
+        End Select
+
+        Call Tensor.computeKernel.GraphLayerBatch(hiddenBatch, _OutputWeight, Nothing, Nothing, _OutputBias,
+                                                 Nothing, output, code)
+    End Sub
+
+    ''' <summary>
+    ''' 批量前向：把 <c>[B, InputSize]</c> 输入矩阵推进 <paramref name="dt"/>，
+    ''' <b>就地</b>更新 <c>[B, HiddenSize]</c> 状态矩阵。
+    ''' </summary>
+    ''' <remarks>
+    ''' 多液态层堆叠时逐层串行推进（第 i 层的输出即第 i+1 层的输入），
+    ''' 与逐样本 <see cref="Forward"/> 的层间顺序完全一致。
+    ''' </remarks>
+    ''' <param name="batchState">状态矩阵 <c>[B, HiddenSize]</c>，就地更新</param>
+    ''' <param name="batchInput">输入矩阵 <c>[B, InputSize]</c></param>
+    ''' <param name="dt">本次推进的总时长</param>
+    ''' <param name="subSteps">子步数（&lt;1 时按 1 处理）</param>
+    ''' <returns>实际执行的子步数</returns>
+    Public Function ForwardBatch(batchState As Tensor, batchInput As Tensor, dt As Double,
+                                 Optional subSteps As Integer = 1) As Integer
+        If LiquidLayer Is Nothing OrElse LiquidLayer.Cells Is Nothing OrElse LiquidLayer.Cells.Count = 0 Then
+            Throw New InvalidOperationException("液态网络没有可用的液态层，无法执行批量前向")
+        End If
+
+        Return LiquidLayer.Cells(0).ForwardBatch(batchState, batchInput, dt, subSteps)
     End Function
 
     ''' <summary>
