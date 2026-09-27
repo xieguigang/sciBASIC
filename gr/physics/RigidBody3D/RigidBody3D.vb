@@ -70,6 +70,13 @@ Public Class RigidBody3D
     Private ForceAccum As Vector3 = Vector3.Zero
     Private TorqueAccum As Vector3 = Vector3.Zero
 
+    ''' <summary>当前的力累加器（只读快照，供调试 / 观测使用）。</summary>
+    Public ReadOnly Property ForceAccumulator As Vector3
+        Get
+            Return ForceAccum
+        End Get
+    End Property
+
     ''' <summary>是否产生过接触（供上层判断"脚是否踩到地面"）。</summary>
     Public Property HadContact As Boolean = False
 

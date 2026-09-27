@@ -30,6 +30,16 @@ Namespace Joints3D
         Public Property Baumgarte As Double = 0.15
 
         ''' <summary>
+        ''' 位置修正速度的上限（m/s）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 起跳 / 着地瞬间关节会在一两帧内被拉开几厘米，<c>β/dt·误差</c> 会给出
+        ''' 几十 m/s 的修正速度，把整个人弹飞。这里夹住上限，误差靠
+        ''' <see cref="SolvePosition"/> 在多个子步里慢慢收敛。
+        ''' </remarks>
+        Public Property BiasSpeedLimit As Double = 2.0
+
+        ''' <summary>
         ''' 锥角限位（弧度）。设为 ≥ π 表示不限位。
         ''' 限制 B 的 <see cref="limitAxisB"/> 相对 A 的 <see cref="limitAxisA"/> 的最大偏角，
         ''' 用于防止膝盖/肘关节反折。
@@ -100,7 +110,7 @@ Namespace Joints3D
             If k < 1.0E-12 Then Return
 
             Dim vn As Double = Vector3Math.Dot(v, axis)
-            Dim bias As Double = Baumgarte / dt * Vector3Math.Dot(err, axis)
+            Dim bias As Double = ClampBias(Baumgarte / dt * Vector3Math.Dot(err, axis))
             Dim j As Double = (-vn - bias) * (1.0 / k)
             Dim P As Vector3 = axis * j
 
@@ -138,7 +148,7 @@ Namespace Joints3D
             If k < 1.0E-12 Then Return
 
             ' 绕 u 正向转动会把 axisB 拉向 axisA
-            Dim j As Double = (Baumgarte / dt * excess - c) * (1.0 / k)
+            Dim j As Double = (ClampBias(Baumgarte / dt * excess) - c) * (1.0 / k)
             Dim torque As Vector3 = u * j
 
             A.AngularVelocity = A.AngularVelocity - invIA.MultiplyLeft(torque)
@@ -158,5 +168,13 @@ Namespace Joints3D
             A.Position = A.Position + corr * (A.InvMass / invSum)
             B.Position = B.Position - corr * (B.InvMass / invSum)
         End Sub
+        ''' <summary>把 Baumgarte 修正速度夹在 <see cref="BiasSpeedLimit"/> 以内。</summary>
+        Private Function ClampBias(bias As Double) As Double
+            If BiasSpeedLimit <= 0.0 Then
+                Return bias
+            End If
+
+            Return std.Min(BiasSpeedLimit, std.Max(-BiasSpeedLimit, bias))
+        End Function
     End Class
 End Namespace
