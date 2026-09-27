@@ -44,6 +44,12 @@ Public Class PhysicsWorld3D
     ''' <summary>允许的穿透容差，避免接触抖动。</summary>
     Public Property Slop As Double = 0.01
 
+    ''' <summary>
+    ''' 子步钩子：每个子步都会被调用一次，用于施加"持续存在"的外部力
+    ''' （平衡反射、步态驱动等）。见 <see cref="IStepHook"/>。
+    ''' </summary>
+    Public ReadOnly Property Hooks As New List(Of IStepHook)()
+
     ''' <summary>最近一次求解得到的接触流形（供上层查询"脚是否踩到地面"）。</summary>
     Public ReadOnly Property Contacts As New List(Of Manifold3D)()
 
@@ -67,6 +73,11 @@ Public Class PhysicsWorld3D
     ''' <summary>添加力场。</summary>
     Public Sub Add(f As ForceField3D)
         ForceFields.Add(f)
+    End Sub
+
+    ''' <summary>注册一个子步钩子。</summary>
+    Public Sub Add(h As IStepHook)
+        Hooks.Add(h)
     End Sub
 
     ''' <summary>
@@ -105,6 +116,11 @@ Public Class PhysicsWorld3D
         ' 1. 角度马达（必须在力场之前，否则会被本子步末尾的清力操作吞掉）
         For Each m In Motors
             Call m.ApplyTorques(dt)
+        Next
+
+        ' 1.5 子步钩子：外部控制器补充持续力
+        For Each h In Hooks
+            Call h.BeforeSubstep(dt)
         Next
 
         ' 2. 全局重力 + 力场

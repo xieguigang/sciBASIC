@@ -43,7 +43,7 @@ Namespace Joints3D
         ''' 比躯干大 100 倍的角加速度，显式积分下会立刻发散。
         ''' 用角加速度限幅而不是固定扭矩上限，可以让增益与质量 / 尺寸解耦。
         ''' </remarks>
-        Public Property MaxAlpha As Double = 1200.0
+        Public Property MaxAlpha As Double = 2500.0
 
         ''' <summary>
         ''' 反作用扭矩施加到父刚体时的角加速度上限（rad/s²）；0 表示不限幅。
