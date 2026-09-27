@@ -25,13 +25,11 @@ Namespace Collision3D
             Dim ka As ShapeKind3D = a.Shape.Kind
             Dim kb As ShapeKind3D = b.Shape.Kind
 
-            ' 规范化顺序，减少需要实现的组合数量
+            ' 规范化顺序，减少需要实现的组合数量。
+            ' 注意：交换后流形的 A/B 也随之交换，其法向本来就是 A→B，
+            ' 因此这里不能再取反——取反会让求解器把物体往穿透方向推。
             If CInt(ka) > CInt(kb) Then
-                Dim m As Manifold3D = CollideSorted(b, a)
-                If m IsNot Nothing Then
-                    m.Normal = m.Normal * -1.0
-                End If
-                Return m
+                Return CollideSorted(b, a)
             End If
 
             Return CollideSorted(a, b)

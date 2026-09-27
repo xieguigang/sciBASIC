@@ -4,16 +4,23 @@ Imports std = System.Math
 
 Namespace Collision3D
 
-    ''' <summary>3D 碰撞体的形状种类。</summary>
+    ''' <summary>
+    ''' 3D 碰撞体的形状种类。
+    ''' </summary>
+    ''' <remarks>
+    ''' 枚举值的顺序同时也是窄相位的"规范顺序"：<see cref="NarrowPhase3D"/> 只实现
+    ''' 前者小于后者的组合，因此顺序必须与已实现的分支一致
+    ''' （球 &lt; 胶囊 &lt; 盒 &lt; 平面）。
+    ''' </remarks>
     Public Enum ShapeKind3D
         ''' <summary>球体，用于头部、关节端点。</summary>
-        Sphere
-        ''' <summary>轴对齐长方体（随刚体旋转成为 OBB），用于台阶、障碍等静态几何。</summary>
-        Box
+        Sphere = 0
         ''' <summary>胶囊体（线段 + 半径），用于四肢与躯干。</summary>
-        Capsule
+        Capsule = 1
+        ''' <summary>轴对齐长方体（随刚体旋转成为 OBB），用于台阶、障碍等静态几何。</summary>
+        Box = 2
         ''' <summary>无限平面，用于地面。</summary>
-        Plane
+        Plane = 3
     End Enum
 
     ''' <summary>
