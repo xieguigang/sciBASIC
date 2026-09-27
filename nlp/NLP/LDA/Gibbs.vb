@@ -1,219 +1,444 @@
-﻿#Region "Microsoft.VisualBasic::9c44b9ca561d9c896174a313bb919d84, nlp\NLP\LDA\Gibbs.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 156
-    '    Code Lines: 109 (69.87%)
-    ' Comment Lines: 23 (14.74%)
-    '    - Xml Docs: 52.17%
-    ' 
-    '   Blank Lines: 24 (15.38%)
-    '     File Size: 5.85 KB
-
-
-    '     Class GibbsSamplingTask
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: gibbs_sampling
-    ' 
-    '         Sub: Solve
-    '         Structure gibbs_pars
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports Microsoft.VisualBasic.Parallel
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports System.Threading
 
 Namespace LDA
 
-    Friend Class GibbsSamplingTask : Inherits VectorTask
+    ''' <summary>
+    ''' The shared state of the gibbs sampling kernel.
+    ''' </summary>
+    ''' <remarks>
+    ''' All of the worker threads share the same count vectors, but each of them 
+    ''' owns one instance of this state object, so that the scratch buffers are 
+    ''' thread local and are reused by every token.
+    ''' 
+    ''' The ownership of the count vectors is:
+    ''' 
+    ''' + ``nd`` (M * K) is owned by the worker thread that owns the document, 
+    '''   a document is never split across two blocks, so that no synchronization 
+    '''   is required here.
+    ''' + ``ndsum`` does not exist at all: the very same topic is removed and 
+    '''   then added back for one token, so the token count of a document is a 
+    '''   constant during the whole sampling.
+    ''' + ``nw`` (V * K) and ``nwsum`` are global. They are read during the sweep 
+    '''   and they are only written at the end of the sweep, through the private 
+    '''   delta buffers <see cref="rowDelta"/> and <see cref="nwsumDelta"/>.
+    ''' 
+    ''' Reading a cache line that nobody writes is cheap on every core, whilst 
+    ''' writing it makes the line bounce between the cores. This is why the 
+    ''' global counters must never be written from inside the sweep: once the 
+    ''' model starts to converge, the writes concentrate on a few hot (word, topic) 
+    ''' pairs and the bouncing makes the parallel sampler *slower* than the 
+    ''' sequential one.
+    ''' </remarks>
+    Friend NotInheritable Class SamplingState
 
-        ReadOnly v As Integer()
-        ReadOnly zi As Integer
-        ReadOnly gibbs As LdaGibbsSampler
-        ReadOnly K As Integer
-        ReadOnly beta As Double
-        ReadOnly alpha As Double
-        ReadOnly voca_size As Integer
+        ''' <summary>
+        ''' the padding width of the <see cref="nwsumP"/> vector, given in the 
+        ''' number of the Int32 elements: 16 * 4 bytes = 64 bytes = one cache 
+        ''' line on x86 and x64.
+        ''' </summary>
+        Friend Const CACHE_LINE_INTS As Integer = 16
 
-        Sub New(ByRef v As Integer(), zi As Integer, ByRef gibbs As LdaGibbsSampler)
-            Call MyBase.New(v.Length)
+        ''' <summary>
+        ''' the initial capacity of the word slot buffer, given in the number of 
+        ''' the words
+        ''' </summary>
+        Private Const INIT_SLOTS As Integer = 256
 
-            Me.alpha = gibbs.alpha
-            Me.beta = gibbs.beta
-            Me.K = gibbs.K
-            Me.v = v
-            Me.zi = zi
-            Me.gibbs = gibbs
-            Me.voca_size = gibbs.V
+        Friend ReadOnly K As Integer
+        Friend ReadOnly alpha As Double
+        Friend ReadOnly beta As Double
+        Friend ReadOnly Vbeta As Double
+
+        ''' <summary>
+        ''' number of instances of the word w assigned to the topic k, indexed 
+        ''' by ``w * K + k``. Shared by all of the worker threads, only written 
+        ''' at the end of a sweep.
+        ''' </summary>
+        Friend ReadOnly nw As Integer()
+
+        ''' <summary>
+        ''' total number of the words assigned to the topic k, indexed by 
+        ''' ``k * CACHE_LINE_INTS``. Shared by all of the worker threads, only 
+        ''' written at the end of a sweep.
+        ''' </summary>
+        Friend ReadOnly nwsumP As Integer()
+
+        ''' <summary>
+        ''' number of the words of the document m assigned to the topic k, 
+        ''' indexed by ``m * K + k``. Exclusive to the owner worker thread.
+        ''' </summary>
+        Friend ReadOnly nd As Integer()
+
+        ''' <summary>
+        ''' all of the documents of the corpus, concatenated into one single vector
+        ''' </summary>
+        Friend ReadOnly docs As Integer()
+
+        ''' <summary>
+        ''' the offset of the document m inside <see cref="docs"/>, the vector 
+        ''' has M + 1 elements so that ``docOff(m + 1) - docOff(m)`` is the 
+        ''' token count of the document m.
+        ''' </summary>
+        Friend ReadOnly docOff As Integer()
+
+        ''' <summary>
+        ''' the token count of the document m
+        ''' </summary>
+        Friend ReadOnly docLen As Integer()
+
+        ''' <summary>
+        ''' the topic assignment of every token, aligned with <see cref="docs"/>
+        ''' </summary>
+        Friend ReadOnly z As Integer()
+
+        ''' <summary>
+        ''' a scratch buffer of the topic probability, one buffer per worker thread
+        ''' </summary>
+        Friend ReadOnly pBuf As Double()
+
+        ''' <summary>
+        ''' 每个工作线程私有的主题计数视图，其值为 ``nwsum(k) + V * beta``
+        ''' </summary>
+        Friend ReadOnly nwsumLocal As Double()
+
+        ''' <summary>
+        ''' 本轮 sweep 之中当前线程对全局主题计数的累计增量
+        ''' </summary>
+        Friend ReadOnly nwsumDelta As Integer()
+
+        ''' <summary>
+        ''' 词 w 在本轮 sweep 之中所占用的增量槽位（槽位下标 + 1），0 表示尚未分配。
+        ''' 长度为 V，每个工作线程一份。
+        ''' </summary>
+        Friend ReadOnly rowSlot As Integer()
+
+        ''' <summary>
+        ''' 槽位下标到词 id 的映射
+        ''' </summary>
+        Friend slotWord As Integer()
+
+        ''' <summary>
+        ''' 词槽位分配时从全局 ``nw`` 拷贝而来的私有快照，索引为 ``slot * K + k``。
+        ''' 用于在 sweep 结束时计算净增量。
+        ''' </summary>
+        Friend rowSnap As Integer()
+
+        ''' <summary>
+        ''' 本轮 sweep 之中当前线程私有的 ``nw`` 行副本，索引为 ``slot * K + k``。
+        ''' 采样内层循环只读这个副本，因此不会触碰任何被其它线程写入的 cache line。
+        ''' </summary>
+        Friend rowCur As Integer()
+
+        ''' <summary>
+        ''' 已经分配出去的槽位数量
+        ''' </summary>
+        Friend slotCount As Integer
+
+        ''' <summary>
+        ''' 当前 <see cref="slotWord"/> / <see cref="rowSnap"/> / <see cref="rowCur"/> 
+        ''' 的容量（以词为单位）
+        ''' </summary>
+        Friend slotCapacity As Integer
+
+        ''' <summary>
+        ''' 是否启用私有行缓存。串行模式下没有其它线程会写 nw，此时绕过缓存可以
+        ''' 省掉每轮 sweep 重建缓存的开销。
+        ''' </summary>
+        Friend ReadOnly useRowCache As Boolean
+
+        Friend Sub New(K As Integer, alpha As Double, beta As Double, V As Integer,
+                       nw As Integer(), nwsumP As Integer(), nd As Integer(),
+                       docs As Integer(), docOff As Integer(), docLen As Integer(),
+                       z As Integer(), useRowCache As Boolean)
+
+            Me.K = K
+            Me.useRowCache = useRowCache
+            Me.alpha = alpha
+            Me.beta = beta
+            Me.Vbeta = V * beta
+            Me.nw = nw
+            Me.nwsumP = nwsumP
+            Me.nd = nd
+            Me.docs = docs
+            Me.docOff = docOff
+            Me.docLen = docLen
+            Me.z = z
+            Me.pBuf = If(K > 0, New Double(K - 1) {}, New Double() {})
+            Me.nwsumLocal = If(K > 0, New Double(K - 1) {}, New Double() {})
+            Me.nwsumDelta = If(K > 0, New Integer(K - 1) {}, New Integer() {})
+            Me.rowSlot = If(useRowCache AndAlso V > 0, New Integer(V - 1) {}, New Integer() {})
+            Me.slotCapacity = If(useRowCache AndAlso V > 0, System.Math.Min(V, INIT_SLOTS), 0)
+            Me.slotWord = If(slotCapacity > 0, New Integer(slotCapacity - 1) {}, New Integer() {})
+            Me.rowSnap = If(slotCapacity > 0, New Integer(slotCapacity * K - 1) {}, New Integer() {})
+            Me.rowCur = If(slotCapacity > 0, New Integer(slotCapacity * K - 1) {}, New Integer() {})
+            Me.slotCount = 0
         End Sub
 
-        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-            Dim nw As Integer()
-            Dim nd As Integer()
-            Dim nwsum As Integer()
-            Dim ndsum As Integer()
-            Dim topic As Integer
-            Dim pars As New gibbs_pars With {
-                .alpha = alpha,
-                .beta = beta,
-                .K = K,
-                .voca_size = voca_size
-            }
+        ''' <summary>
+        ''' 为词 w 分配（或者取得已有的）增量槽位
+        ''' </summary>
+        ''' <returns>槽位下标，该值乘以 K 即为 <see cref="rowDelta"/> 的起始下标</returns>
+        Friend Function GetSlot(w As Integer) As Integer
+            Dim slot As Integer = rowSlot(w) - 1
 
-            ' get value
-            nwsum = gibbs.nwsum
-            ndsum = gibbs.ndsum
-            nd = gibbs.nd(zi)
-            nw = Nothing
-
-            Dim nwcopy As Integer() = Nothing
-            Dim ndcopy As Integer() = Nothing
-            Dim nwsumcopy As Integer() = Nothing
-            Dim ndsumcopy As Integer() = Nothing
-
-            If Not sequenceMode Then
-                nwcopy = New Integer(K - 1) {}
-                ndcopy = New Integer(K - 1) {}
-                nwsumcopy = New Integer(K - 1) {}
-                ndsumcopy = New Integer(gibbs.ndsum.Length - 1) {}
+            If slot >= 0 Then
+                Return slot
             End If
 
-            For n As Integer = start To ends
-                topic = v(n)
-                nw = gibbs.nw(gibbs.documents(zi)(n))
+            slot = slotCount
 
-                ' remove z_i from the count variables
-                ' 先将这个词从计数器中抹掉
-                nw(topic) -= 1
-                nd(topic) -= 1
-                nwsum(topic) -= 1
-                ndsum(zi) -= 1
+            If slot >= slotCapacity Then
+                ' grow the slot buffers
+                Dim capacity As Integer = If(slotCapacity > 0, slotCapacity * 2, INIT_SLOTS)
+                Dim words As Integer() = New Integer(capacity - 1) {}
+                Dim snap As Integer() = New Integer(capacity * K - 1) {}
+                Dim cur As Integer() = New Integer(capacity * K - 1) {}
+                Dim used As Integer = slotCount * K
 
-                If sequenceMode Then
-                    nwcopy = nw
-                    ndcopy = nd
-                    nwsumcopy = nwsum
-                    ndsumcopy = ndsum
-                Else
-                    If nw(topic) < 1 Then nw(topic) = 1
-                    If nd(topic) < 1 Then nd(topic) = 1
-                    If nwsum(topic) < 1 Then nwsum(topic) = 1
-                    If ndsum(zi) < 1 Then ndsum(zi) = 1
+                Call Array.Copy(slotWord, Scan0, words, Scan0, slotCount)
+                Call Array.Copy(rowSnap, Scan0, snap, Scan0, used)
+                Call Array.Copy(rowCur, Scan0, cur, Scan0, used)
 
-                    Call Array.ConstrainedCopy(nw, Scan0, nwcopy, Scan0, nw.Length)
-                    Call Array.ConstrainedCopy(nd, Scan0, ndcopy, Scan0, nd.Length)
-                    Call Array.ConstrainedCopy(nwsum, Scan0, nwsumcopy, Scan0, nwsum.Length)
-                    Call Array.ConstrainedCopy(ndsum, Scan0, ndsumcopy, Scan0, ndsum.Length)
-                End If
+                slotWord = words
+                rowSnap = snap
+                rowCur = cur
+                slotCapacity = capacity
+            End If
 
-                ' (z_i = z[m][n])
-                ' sample from p(z_i|z_-i, w)
-                topic = gibbs_sampling(topic, zi, nwcopy, ndcopy, nwsumcopy, ndsumcopy, pars)
-                v(n) = topic
+            ' take a private snapshot of the global nw row of this word; the slot 
+            ' is recycled between two sweeps, so the row has to be re-read here
+            Call Array.Copy(nw, w * K, rowSnap, slot * K, K)
+            Call Array.Copy(nw, w * K, rowCur, slot * K, K)
 
-                ' add newly estimated z_i to count variables
-                ' 将重新估计的该词语加入计数器
-                gibbs.nw(gibbs.documents(zi)(n))(topic) += 1
-                gibbs.nd(zi)(topic) += 1
-                gibbs.nwsum(topic) += 1
-                gibbs.ndsum(zi) += 1
+            slotWord(slot) = w
+            rowSlot(w) = slot + 1
+            slotCount = slot + 1
+
+            Return slot
+        End Function
+
+        ''' <summary>
+        ''' 释放本轮 sweep 分配出去的全部槽位
+        ''' </summary>
+        Friend Sub ResetSlots()
+            For s As Integer = 0 To slotCount - 1
+                rowSlot(slotWord(s)) = 0
+            Next
+
+            slotCount = 0
+        End Sub
+    End Class
+
+    ''' <summary>
+    ''' The gibbs sampling kernel that runs on the flattened (CSR) corpus layout.
+    ''' </summary>
+    ''' <remarks>
+    ''' Replaces the old <c>GibbsSamplingTask</c>, which was creating a parallel 
+    ''' schedule for each single document and was copying the whole ``ndsum`` 
+    ''' vector (the length of that vector is the document count of the corpus!) 
+    ''' for every single token.
+    ''' </remarks>
+    Friend Module LdaSamplingKernel
+
+        ''' <summary>
+        ''' 在 sweep 开始时刷新本线程私有的计数视图
+        ''' </summary>
+        Friend Sub BeginSweep(st As SamplingState)
+            Dim stride As Integer = SamplingState.CACHE_LINE_INTS
+            Dim nTopics As Integer = st.K
+            Dim Vbeta As Double = st.Vbeta
+
+            Call st.ResetSlots()
+
+            For k As Integer = 0 To nTopics - 1
+                st.nwsumLocal(k) = st.nwsumP(k * stride) + Vbeta
+                st.nwsumDelta(k) = 0
             Next
         End Sub
 
         ''' <summary>
-        ''' Sample a topic z_i from the full conditional distribution: p(z_i = j |
-        ''' z_-i, w) = (n_-i,j(w_i) + beta)/(n_-i,j(.) + W * beta) * (n_-i,j(d_i) +
-        ''' alpha)/(n_-i,.(d_i) + K * alpha) 
+        ''' 在 sweep 结束时将本线程累计的计数增量一次性合并回全局计数
         ''' </summary>
-        ''' <param name="m"> document </param>
-        ''' <returns>
-        ''' sampling and assign new topic index
-        ''' </returns>
-        ''' <remarks>
-        ''' 根据上述公式计算文档m中第n个词语的主题的完全条件分布，输出最可能的主题
-        ''' </remarks>
-        Private Shared Function gibbs_sampling(topic As Integer, m As Integer,
-                                               ByRef nw As Integer(), ByRef nd As Integer(),
-                                               ByRef nwsum As Integer(), ByRef ndsum As Integer(),
-                                               ByRef gibbs_pars As gibbs_pars) As Integer
+        Friend Sub EndSweep(st As SamplingState)
+            Dim nTopics As Integer = st.K
+            Dim nw As Integer() = st.nw
 
-            ' do multinomial sampling via cumulative method: 通过多项式方法采样多项式分布
-            Dim p = New Double(gibbs_pars.K - 1) {}
+            If Not st.useRowCache Then
+                ' the kernel has been writing into nw directly
+                Call EndSweepNwSum(st)
+                Return
+            End If
 
-            For K As Integer = 0 To gibbs_pars.K - 1
-                p(K) = (nw(K) + gibbs_pars.beta) / (nwsum(K) +
-                    gibbs_pars.voca_size * gibbs_pars.beta) * (nd(K) + gibbs_pars.alpha) /
-                    (ndsum(m) + gibbs_pars.K * gibbs_pars.alpha)
+            Dim rowSnap As Integer() = st.rowSnap
+            Dim rowCur As Integer() = st.rowCur
+            Dim slotWord As Integer() = st.slotWord
+
+            ' 合并主题词计数：只有净增量不为零的 (词, 主题) 对才需要写回，
+            ' 同一个词在同一轮 sweep 之内反复来回切换主题时其净增量为零，
+            ' 于是这部分原子写操作被自然地消除掉了。
+            For s As Integer = 0 To st.slotCount - 1
+                Dim w As Integer = slotWord(s)
+                Dim baseNw As Integer = w * nTopics
+                Dim baseRow As Integer = s * nTopics
+
+                For k As Integer = 0 To nTopics - 1
+                    Dim delta As Integer = rowCur(baseRow + k) - rowSnap(baseRow + k)
+
+                    If delta <> 0 Then
+                        Call Interlocked.Add(nw(baseNw + k), delta)
+                    End If
+                Next
             Next
 
-            ' cumulate multinomial parameters
-            ' 累加多项式分布的参数
-            For K As Integer = 1 To p.Length - 1
-                p(K) += p(K - 1)
-            Next
+            Call EndSweepNwSum(st)
+        End Sub
 
-            ' scaled sample because of unnormalised p[] 正则化
-            Dim u As Double = randf.NextDouble * p(gibbs_pars.K - 1)
+        ''' <summary>
+        ''' 将本线程累计的主题计数增量合并回全局计数
+        ''' </summary>
+        Private Sub EndSweepNwSum(st As SamplingState)
+            Dim stride As Integer = SamplingState.CACHE_LINE_INTS
+            Dim nTopics As Integer = st.K
 
-            topic = 0
+            For k As Integer = 0 To nTopics - 1
+                Dim delta As Integer = st.nwsumDelta(k)
 
-            Do While topic < p.Length - 1
-                If u < p(topic) Then
-                    Exit Do
-                Else
-                    topic += 1
+                If delta <> 0 Then
+                    Call Interlocked.Add(st.nwsumP(k * stride), delta)
+
+                    st.nwsumDelta(k) = 0
                 End If
-            Loop
+            Next
+        End Sub
 
-            Return topic
-        End Function
+        ''' <summary>
+        ''' Run one gibbs sampling sweep over all of the documents of the block.
+        ''' </summary>
+        ''' <param name="block">the continuous block of documents that is owned 
+        ''' by the current worker thread.</param>
+        ''' <param name="st">the shared sampling state.</param>
+        ''' <param name="rng">the thread local random generator.</param>
+        ''' <param name="sweeps">
+        ''' the number of the sweeps that is run before the private state is 
+        ''' synchronized with the other worker threads.
+        ''' </param>
+        Friend Sub SampleBlock(block As DocBlock, st As SamplingState, rng As LdaRng, Optional sweeps As Integer = 1)
+            Dim nTopics As Integer = st.K
+            Dim alpha As Double = st.alpha
+            Dim beta As Double = st.beta
+            Dim nwsumLocal As Double() = st.nwsumLocal
+            Dim nwsumDelta As Integer() = st.nwsumDelta
 
-        Private Structure gibbs_pars
-            Dim K As Integer
-            Dim beta As Double
-            Dim voca_size As Integer
-            Dim alpha As Double
-        End Structure
-    End Class
+            If sweeps < 1 Then
+                sweeps = 1
+            End If
+
+            Call BeginSweep(st)
+
+            Try
+                Dim nd As Integer() = st.nd
+                Dim docs As Integer() = st.docs
+                Dim docOff As Integer() = st.docOff
+                Dim docLen As Integer() = st.docLen
+                Dim z As Integer() = st.z
+                Dim p As Double() = st.pBuf
+                Dim useCache As Boolean = st.useRowCache
+                Dim nw As Integer() = st.nw
+                Dim k As Integer
+
+                If nTopics <= 0 OrElse docs Is Nothing Then
+                    Return
+                End If
+
+                For sweep As Integer = 1 To sweeps
+                    For m As Integer = block.docStart To block.docEnd
+                        Dim len As Integer = docLen(m)
+
+                        If len <= 0 Then
+                            ' an empty document has nothing to sample
+                            Continue For
+                        End If
+
+                        Dim off As Integer = docOff(m)
+                        Dim ndBase As Integer = m * nTopics
+
+                        For n As Integer = 0 To len - 1
+                            Dim w As Integer = docs(off + n)
+                            Dim row As Integer()
+                            Dim rowBase As Integer
+                            Dim oldTopic As Integer = z(off + n)
+
+                            If useCache Then
+                                ' the private copy of the nw row of this word, so that 
+                                ' no cache line that is used by another thread is ever 
+                                ' written from inside the sweep
+                                rowBase = st.GetSlot(w) * nTopics
+                                row = st.rowCur
+                            Else
+                                ' sequential mode: nobody else touches nw
+                                rowBase = w * nTopics
+                                row = nw
+                            End If
+
+                            ' remove z_i from the count variables
+                            nd(ndBase + oldTopic) -= 1
+                            row(rowBase + oldTopic) -= 1
+                            nwsumLocal(oldTopic) -= 1
+                            nwsumDelta(oldTopic) -= 1
+
+                            ' sample from p(z_i | z_-i, w):
+                            '
+                            '   p(k) = (nw(w,k) + beta) / (nwsum(k) + V * beta)
+                            '        * (nd(m,k) + alpha) / (ndsum(m) + K * alpha)
+                            '
+                            ' the factor 1 / (ndsum(m) + K * alpha) does not depend 
+                            ' on the topic, so that it cancels out in the comparison 
+                            ' of the cumulative distribution below and is skipped 
+                            ' here.
+                            '
+                            ' nwsumLocal already contains the V * beta offset and it 
+                            ' is private to this thread, so that reading it here 
+                            ' never touches a cache line that is owned by another 
+                            ' thread.
+                            Dim total As Double = 0.0R
+
+                            For k = 0 To nTopics - 1
+                                Dim q As Double = (row(rowBase + k) + beta) *
+                                                  (nd(ndBase + k) + alpha) / nwsumLocal(k)
+
+                                p(k) = q
+                                total += q
+                            Next
+
+                            ' do the multinomial sampling via the cumulative method
+                            Dim u As Double = rng.NextDouble() * total
+                            Dim acc As Double = 0.0R
+                            Dim newTopic As Integer = nTopics - 1
+
+                            For k = 0 To nTopics - 1
+                                acc += p(k)
+
+                                If u < acc Then
+                                    newTopic = k
+                                    Exit For
+                                End If
+                            Next
+
+                            z(off + n) = newTopic
+
+                            ' add the newly estimated z_i to the count variables
+                            nd(ndBase + newTopic) += 1
+                            row(rowBase + newTopic) += 1
+                            nwsumLocal(newTopic) += 1
+                            nwsumDelta(newTopic) += 1
+                        Next
+                    Next
+                Next
+            Finally
+                ' merge the accumulated deltas back, so that the other worker 
+                ' threads can see them on the next sweep
+                Call EndSweep(st)
+            End Try
+        End Sub
+    End Module
 End Namespace

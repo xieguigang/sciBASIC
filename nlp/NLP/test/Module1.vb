@@ -59,8 +59,29 @@ Imports Microsoft.VisualBasic.Math.Correlations
 
 Module Module1
 
-    Sub Main()
-        Call testtfidf()
+    Sub Main(args As String())
+        If args IsNot Nothing AndAlso args.Length > 0 AndAlso args(0).Trim.ToLower = "lda" Then
+            ' run the parallel gibbs LDA benchmark:
+            '   dotnet run -c Release -- lda [iterations]
+            Dim iterations As Integer = 200
+            Dim repeats As Integer = 3
+
+            If args.Length > 1 Then
+                Call Integer.TryParse(args(1), iterations)
+            End If
+            Dim syncInterval As Integer = 1
+
+            If args.Length > 2 Then
+                Call Integer.TryParse(args(2), repeats)
+            End If
+            If args.Length > 3 Then
+                Call Integer.TryParse(args(3), syncInterval)
+            End If
+
+            Call RunLdaBenchmark(iterations, repeats, syncInterval)
+        Else
+            Call testtfidf()
+        End If
     End Sub
 
     Sub testtfidf()
