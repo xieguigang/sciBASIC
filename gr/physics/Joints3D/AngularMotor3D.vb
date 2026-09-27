@@ -43,7 +43,7 @@ Namespace Joints3D
         ''' 比躯干大 100 倍的角加速度，显式积分下会立刻发散。
         ''' 用角加速度限幅而不是固定扭矩上限，可以让增益与质量 / 尺寸解耦。
         ''' </remarks>
-        Public Property MaxAlpha As Double = 3000.0
+        Public Property MaxAlpha As Double = 1200.0
 
         ''' <summary>
         ''' 反作用扭矩施加到父刚体时的角加速度上限（rad/s²）；0 表示不限幅。
@@ -52,7 +52,7 @@ Namespace Joints3D
         ''' 髋关节的反作用扭矩落在骨盆（惯量只有大腿的 1/5 左右）上，
         ''' 若不限制会把骨盆甩飞；这里把反作用限制在一个安全的角加速度内。
         ''' </remarks>
-        Public Property MaxReactionAlpha As Double = 300.0
+        Public Property MaxReactionAlpha As Double = 600.0
 
         ''' <summary>关闭后马达不产生任何扭矩（关节变成完全被动）。</summary>
         Public Property Enabled As Boolean = True
