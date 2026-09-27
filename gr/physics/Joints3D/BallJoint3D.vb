@@ -23,8 +23,11 @@ Namespace Joints3D
         ''' <summary>物体 B 局部坐标系下的锚点（相对质心）。</summary>
         Public anchorB As Vector3
 
-        ''' <summary>位置修正强度（Baumgarte 系数）。</summary>
-        Public Property Baumgarte As Double = 0.2
+        ''' <summary>
+        ''' 位置修正强度（Baumgarte 系数）。
+        ''' 修正速度 = <c>β/dt·误差</c>，子步很小时需要相应调小。
+        ''' </summary>
+        Public Property Baumgarte As Double = 0.15
 
         ''' <summary>
         ''' 锥角限位（弧度）。设为 ≥ π 表示不限位。

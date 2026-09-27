@@ -38,6 +38,12 @@ Namespace Collision3D
         ''' <summary>恢复（弹性）目标速度。</summary>
         Friend restitutionBias As Double
 
+        ''' <summary>
+        ''' Baumgarte 位置修正速度的上限（m/s）。
+        ''' 子步很小时 <c>β/dt·穿透</c> 会给出极大的弹开速度，必须夹住。
+        ''' </summary>
+        Friend Const MaxBiasSpeed As Double = 3.0
+
         ''' <summary>接触处的两条切线（与法向构成正交基）。</summary>
         Friend tangent1 As Vector3
         ''' <summary>接触处的第二条切线。</summary>
@@ -112,7 +118,8 @@ Namespace Collision3D
                 c.tangentMass1 = 1.0 / EffectiveMass(A, B, invIA, invIB, c.rA, c.rB, t1)
                 c.tangentMass2 = 1.0 / EffectiveMass(A, B, invIA, invIB, c.rA, c.rB, t2)
 
-                c.bias = baumgarte / dt * std.Max(0.0, c.Penetration - slop)
+                ' 位置修正速度同时受"最大修正速度"限制，避免深穿透时产生爆炸式冲量
+                c.bias = std.Min(ContactPoint3D.MaxBiasSpeed, baumgarte / dt * std.Max(0.0, c.Penetration - slop))
 
                 ' 恢复只在接近速度足够大时才生效，避免静止物体的持续抖动
                 Dim rv As Vector3 = RelativeVelocity(c.rA, c.rB)

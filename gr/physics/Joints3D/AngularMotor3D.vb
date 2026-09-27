@@ -35,6 +35,25 @@ Namespace Joints3D
         ''' <summary>扭矩上限；0 表示不限幅。</summary>
         Public Property MaxTorque As Double = 0.0
 
+        ''' <summary>
+        ''' 施加到子刚体的扭矩所对应的角加速度上限（rad/s²）；0 表示不限幅。
+        ''' </summary>
+        ''' <remarks>
+        ''' 各刚体的转动惯量相差两个数量级，同样的扭矩施加在脚掌上会产生
+        ''' 比躯干大 100 倍的角加速度，显式积分下会立刻发散。
+        ''' 用角加速度限幅而不是固定扭矩上限，可以让增益与质量 / 尺寸解耦。
+        ''' </remarks>
+        Public Property MaxAlpha As Double = 3000.0
+
+        ''' <summary>
+        ''' 反作用扭矩施加到父刚体时的角加速度上限（rad/s²）；0 表示不限幅。
+        ''' </summary>
+        ''' <remarks>
+        ''' 髋关节的反作用扭矩落在骨盆（惯量只有大腿的 1/5 左右）上，
+        ''' 若不限制会把骨盆甩飞；这里把反作用限制在一个安全的角加速度内。
+        ''' </remarks>
+        Public Property MaxReactionAlpha As Double = 300.0
+
         ''' <summary>关闭后马达不产生任何扭矩（关节变成完全被动）。</summary>
         Public Property Enabled As Boolean = True
 
@@ -84,16 +103,44 @@ Namespace Joints3D
             Dim torque As Vector3 = axis * (angle * Stiffness) - wRel * Damping
 
             If MaxTorque > 0.0 Then
-                Dim mag As Double = Vector3Math.Length(torque)
-                If mag > MaxTorque Then
-                    torque = torque * (MaxTorque / mag)
-                End If
+                torque = ClampTorque(torque, MaxTorque)
             End If
 
-            ' 等大反向，保持角动量守恒
-            Call A.ApplyTorque(torque * -1.0)
+            ' 子刚体：限制角加速度，避免轻小部件被瞬间甩飞
+            If MaxAlpha > 0.0 Then
+                torque = ClampTorque(torque, MaxAlpha * InertiaScale(B.InertiaWorld()))
+            End If
+
+            ' 父刚体：反作用扭矩同样要限制（骨盆 / 颈部惯量很小）
+            Dim reaction As Vector3 = torque * -1.0
+
+            If MaxReactionAlpha > 0.0 Then
+                reaction = ClampTorque(reaction, MaxReactionAlpha * InertiaScale(A.InertiaWorld()))
+            End If
+
+            Call A.ApplyTorque(reaction)
             Call B.ApplyTorque(torque)
         End Sub
+
+        ''' <summary>把扭矩的模长限制在 <paramref name="limit"/> 以内（limit &lt;= 0 时原样返回）。</summary>
+        Private Shared Function ClampTorque(torque As Vector3, limit As Double) As Vector3
+            If limit <= 0.0 Then
+                Return torque
+            End If
+
+            Dim mag As Double = Vector3Math.Length(torque)
+
+            If mag > limit Then
+                Return torque * (limit / mag)
+            End If
+
+            Return torque
+        End Function
+
+        ''' <summary>用惯性张量的最大对角元作为标量惯量估计。</summary>
+        Private Shared Function InertiaScale(m As Matrix3x3) As Double
+            Return std.Max(std.Max(m.m11, m.m22), m.m33)
+        End Function
 
         ''' <summary>由欧拉角（弧度，按 X→Y→Z 内旋顺序）设置目标相对姿态。</summary>
         Public Sub SetTargetEuler(pitchX As Double, yawY As Double, rollZ As Double)
