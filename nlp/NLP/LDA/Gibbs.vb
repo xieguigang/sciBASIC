@@ -20,7 +20,7 @@ Namespace LDA
     '''   constant during the whole sampling.
     ''' + ``nw`` (V * K) and ``nwsum`` are global. They are read during the sweep 
     '''   and they are only written at the end of the sweep, through the private 
-    '''   delta buffers <see cref="rowDelta"/> and <see cref="nwsumDelta"/>.
+    '''   delta buffers "rowDelta" and <see cref="nwsumDelta"/>.
     ''' 
     ''' Reading a cache line that nobody writes is cheap on every core, whilst 
     ''' writing it makes the line bounce between the cores. This is why the 
@@ -177,7 +177,7 @@ Namespace LDA
         ''' <summary>
         ''' 为词 w 分配（或者取得已有的）增量槽位
         ''' </summary>
-        ''' <returns>槽位下标，该值乘以 K 即为 <see cref="rowDelta"/> 的起始下标</returns>
+        ''' <returns>槽位下标，该值乘以 K 即为 "rowDelta" 的起始下标</returns>
         Friend Function GetSlot(w As Integer) As Integer
             Dim slot As Integer = rowSlot(w) - 1
 

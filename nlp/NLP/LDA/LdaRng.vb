@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.Math
+
 Namespace LDA
 
     ''' <summary>
@@ -12,7 +14,7 @@ Namespace LDA
     '''    ``New Random(Now.Millisecond * Now.Second + 1)``, so that all of the 
     '''    worker threads, which are created almost at the same time, gets a 
     '''    highly correlated random seed.
-    ''' 2. the <see cref="ThreadLocal(Of T)"/> lookup adds overheads on the hot 
+    ''' 2. the "ThreadLocal(Of T)" lookup adds overheads on the hot 
     '''    path of the sampling loop, and the result is not reproducible.
     ''' 
     ''' This generator only depends on shift and xor operations, so that it 
