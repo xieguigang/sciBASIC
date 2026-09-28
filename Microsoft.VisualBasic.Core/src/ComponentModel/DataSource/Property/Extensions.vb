@@ -104,5 +104,26 @@ Namespace ComponentModel.DataSourceModel
                 .Distinct _
                 .ToArray
         End Function
+
+
+        ''' <summary>
+        ''' Gets the union collection of the keys from <see cref="IDynamicMeta(Of T).Properties"/>.
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' (包含所有的已经去除重复了的属性名称)
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PropertyNames(Of T)(list As IEnumerable(Of IDynamicMeta(Of T))) As String()
+            Return (From a As IDynamicMeta(Of T)
+                    In list.SafeQuery
+                    Where Not (a Is Nothing OrElse a.Properties Is Nothing)
+                    Select a.Properties.Keys
+            ).IteratesALL _
+            .Distinct _
+            .ToArray
+        End Function
     End Module
 End Namespace
