@@ -58,6 +58,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="PROJECT_SUMMARY.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
