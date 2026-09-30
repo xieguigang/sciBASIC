@@ -260,7 +260,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <Folder Include="LZStream\" />
   </ItemGroup>
 
 </Project>
