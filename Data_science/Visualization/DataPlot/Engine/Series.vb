@@ -53,10 +53,14 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>图表数据系列</summary>
 Public Class Series
+
     Public Property Name As String = ""
     Public Property Color As Color? = Nothing
     Public Property X As Double() = {}
@@ -64,4 +68,27 @@ Public Class Series
     Public Property MarkerShape As MarkerShape = MarkerShape.Circle
     Public Property LineStyle As DashStyle = DashStyle.Solid
     Public Property Visible As Boolean = True
+
+    Public Overrides Function ToString() As String
+        Return $"{Name} {CType(Color, Color).ToHtmlColor}"
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function FromPoints(pts As IEnumerable(Of Point), color As String, title As String) As Series
+        Return FromPoints(pts.PointF, color, title)
+    End Function
+
+    Public Shared Function FromPoints(pts As IEnumerable(Of PointF), color As String, title As String) As Series
+        Dim ptVec = pts.SafeQuery.ToArray
+
+        Return New Series With {
+            .Color = color.TranslateColor,
+            .LineStyle = DashStyle.Solid,
+            .MarkerShape = MarkerShape.Circle,
+            .Name = title,
+            .Visible = True,
+            .X = ptVec.X,
+            .Y = ptVec.Y
+        }
+    End Function
 End Class

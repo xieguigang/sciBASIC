@@ -58,6 +58,7 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.Math.Sundials.CVODE
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace CVODEExamples
 
@@ -114,7 +115,7 @@ Namespace CVODEExamples
             Console.WriteLine("-"c, 60)
 
             ' 定义右端函数
-            Dim rhsFunc As RHSFunction = Sub(t As Double, y As NVector, ydot As NVector)
+            Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
                                              ydot(0) = y(1)          ' y1' = y2
                                              ydot(1) = -y(0)         ' y2' = -y1
                                          End Sub
@@ -129,7 +130,7 @@ Namespace CVODEExamples
 
             Using solver As New CVODESolver(CVODEMethod.Adams, rhsFunc, 2, options)
                 ' 初始化
-                Dim y0 As New NVector(New Double() {1.0, 0.0})
+                Dim y0 As New Vector(New Double() {1.0, 0.0})
                 Dim status As CVODEStatus = solver.Initialize(0.0, y0)
 
                 If status <> CVODEStatus.Success Then
@@ -146,7 +147,7 @@ Namespace CVODEExamples
 
                 ' 积分
                 Dim tOut As Double = 0.0
-                Dim y As New NVector(2)
+                Dim y As New Vector(2)
                 For i As Integer = 1 To 10
                     tOut = i * 0.5
                     status = solver.Integrate(tOut, y)
@@ -198,7 +199,7 @@ Namespace CVODEExamples
             Const beta As Double = 8.0 / 3.0
 
             ' 定义右端函数
-            Dim rhsFunc As RHSFunction = Sub(t As Double, y As NVector, ydot As NVector)
+            Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
                                              ydot(0) = sigma * (y(1) - y(0))
                                              ydot(1) = y(0) * (rho - y(2)) - y(1)
                                              ydot(2) = y(0) * y(1) - beta * y(2)
@@ -213,7 +214,7 @@ Namespace CVODEExamples
 
             Using solver As New CVODESolver(CVODEMethod.BDF, rhsFunc, 3, options)
                 ' 初始条件
-                Dim y0 As New NVector(New Double() {1.0, 1.0, 1.0})
+                Dim y0 As New Vector(New Double() {1.0, 1.0, 1.0})
                 Dim status As CVODEStatus = solver.Initialize(0.0, y0)
 
                 If status <> CVODEStatus.Success Then
@@ -230,7 +231,7 @@ Namespace CVODEExamples
 
                 ' 积分
                 Dim tOut As Double = 0.0
-                Dim y As New NVector(3)
+                Dim y As New Vector(3)
                 For i As Integer = 1 To 20
                     tOut = i * 0.5
                     status = solver.Integrate(tOut, y)
@@ -273,7 +274,7 @@ Namespace CVODEExamples
             Console.WriteLine("-"c, 60)
 
             ' 定义右端函数
-            Dim rhsFunc As RHSFunction = Sub(t As Double, y As NVector, ydot As NVector)
+            Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
                                              Dim y1 As Double = y(0)
                                              Dim y2 As Double = y(1)
                                              Dim y3 As Double = y(2)
@@ -293,10 +294,10 @@ Namespace CVODEExamples
 
             Using solver As New CVODESolver(CVODEMethod.BDF, rhsFunc, 3, options)
                 ' 设置分量绝对误差（y2需要更小的容差）
-                solver.SetAbsoluteTolerance(New NVector(New Double() {0.000001, 0.0000000001, 0.000001}))
+                solver.SetAbsoluteTolerance(New Vector(New Double() {0.000001, 0.0000000001, 0.000001}))
 
                 ' 初始条件
-                Dim y0 As New NVector(New Double() {1.0, 0.0, 0.0})
+                Dim y0 As New Vector(New Double() {1.0, 0.0, 0.0})
                 Dim status As CVODEStatus = solver.Initialize(0.0, y0)
 
                 If status <> CVODEStatus.Success Then
@@ -312,7 +313,7 @@ Namespace CVODEExamples
                     0.0, y0(0), y0(1), y0(2), 0)
 
                 ' 积分（使用对数时间步）
-                Dim y As New NVector(3)
+                Dim y As New Vector(3)
                 Dim tValues As Double() = {0.0, 0.4, 4.0, 40.0, 400.0, 4000.0, 40000.0, 400000.0, 4000000.0, 40000000.0, 400000000.0, 4000000000.0, 40000000000.0}
 
                 For i As Integer = 1 To tValues.Length - 1
@@ -361,13 +362,13 @@ Namespace CVODEExamples
             Const mu As Double = 1000.0
 
             ' 定义右端函数
-            Dim rhsFunc As RHSFunction = Sub(t As Double, y As NVector, ydot As NVector)
+            Dim rhsFunc As RHSFunction = Sub(t As Double, y As Vector, ydot As Vector)
                                              ydot(0) = y(1)
                                              ydot(1) = mu * (1.0 - y(0) * y(0)) * y(1) - y(0)
                                          End Sub
 
             ' 定义Jacobian函数（可选，提高效率）
-            Dim jacFunc As JacobianFunction = Sub(t As Double, y As NVector, fy As NVector, J As DenseMatrix)
+            Dim jacFunc As JacobianFunction = Sub(t As Double, y As Vector, fy As Vector, J As DenseMatrix)
                                                   J(0, 0) = 0.0
                                                   J(0, 1) = 1.0
                                                   J(1, 0) = -2.0 * mu * y(0) * y(1) - 1.0
@@ -387,7 +388,7 @@ Namespace CVODEExamples
                 solver.SetJacobianFunction(jacFunc)
 
                 ' 初始条件
-                Dim y0 As New NVector(New Double() {2.0, 0.0})
+                Dim y0 As New Vector(New Double() {2.0, 0.0})
                 Dim status As CVODEStatus = solver.Initialize(0.0, y0)
 
                 If status <> CVODEStatus.Success Then
@@ -403,7 +404,7 @@ Namespace CVODEExamples
                     0.0, y0(0), y0(1), 0)
 
                 ' 积分
-                Dim y As New NVector(2)
+                Dim y As New Vector(2)
                 Dim tOut As Double = 0.0
                 For i As Integer = 1 To 10
                     tOut = i * 300.0

@@ -56,6 +56,7 @@
 #End Region
 
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ' ============================================================================
 ' LinearSolver.vb - 线性求解器
@@ -210,7 +211,7 @@ Public Class BandLinearSolver
     ''' <summary>
     ''' 求解带状线性方程组
     ''' </summary>
-    Public Function Solve(b As NVector, x As NVector) As LinearSolverResult
+    Public Function Solve(b As Vector, x As Vector) As LinearSolverResult
         If Not _isFactored Then
             Throw New InvalidOperationException("必须先进行LU分解")
         End If

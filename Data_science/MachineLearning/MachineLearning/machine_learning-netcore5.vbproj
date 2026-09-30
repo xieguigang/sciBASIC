@@ -42,16 +42,10 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1</DefineConstants>
+
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1</DefineConstants>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
-	</PropertyGroup>
+
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>

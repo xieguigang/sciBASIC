@@ -1,66 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::d7a013403ec76b21c5f7de652b68bdbd, Data_science\Mathematica\Math\CVODE_Solver\DenseMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 464
-    '    Code Lines: 311 (67.03%)
-    ' Comment Lines: 103 (22.20%)
-    '    - Xml Docs: 94.17%
-    ' 
-    '   Blank Lines: 50 (10.78%)
-    '     File Size: 14.03 KB
+' Summaries:
 
 
-    ' Class DenseMatrix
-    ' 
-    '     Properties: Columns, Data, IsSquare, Rows
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: Add, Clone, Diagonal, FrobeniusNorm, GetColumn
-    '               GetRow, Identity, InfinityNorm, Multiply, MultiplyVector
-    '               Norm1, Ones, Scale, Subtract, ToString
-    '               Transpose, Zeros
-    ' 
-    '     Sub: AddInPlace, CopyFrom, ScaleInPlace, SetColumn, SetConstant
-    '          SetDiagonal, SetRow
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 464
+'    Code Lines: 311 (67.03%)
+' Comment Lines: 103 (22.20%)
+'    - Xml Docs: 94.17%
+' 
+'   Blank Lines: 50 (10.78%)
+'     File Size: 14.03 KB
+
+
+' Class DenseMatrix
+' 
+'     Properties: Columns, Data, IsSquare, Rows
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: Add, Clone, Diagonal, FrobeniusNorm, GetColumn
+'               GetRow, Identity, InfinityNorm, Multiply, MultiplyVector
+'               Norm1, Ones, Scale, Subtract, ToString
+'               Transpose, Zeros
+' 
+'     Sub: AddInPlace, CopyFrom, ScaleInPlace, SetColumn, SetConstant
+'          SetDiagonal, SetRow
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Text
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
 
 ' ============================================================================
@@ -217,7 +219,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 创建对角矩阵
     ''' </summary>
-    Public Shared Function Diagonal(diag As NVector) As DenseMatrix
+    Public Shared Function Diagonal(diag As Vector) As DenseMatrix
         Dim n As Integer = diag.Length
         Dim m As New DenseMatrix(n, n)
         For i As Integer = 0 To n - 1
@@ -298,11 +300,11 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 矩阵-向量乘法：y = A * x
     ''' </summary>
-    Public Shared Function MultiplyVector(A As DenseMatrix, x As NVector) As NVector
+    Public Shared Function MultiplyVector(A As DenseMatrix, x As Vector) As Vector
         If A.Columns <> x.Length Then
             Throw New ArgumentException("矩阵列数与向量长度不匹配")
         End If
-        Dim y As New NVector(A.Rows)
+        Dim y As New Vector(A.Rows)
         For i As Integer = 0 To A.Rows - 1
             Dim sum As Double = 0.0
             For j As Integer = 0 To A.Columns - 1
@@ -389,7 +391,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 设置指定列
     ''' </summary>
-    Public Sub SetColumn(colIndex As Integer, v As NVector)
+    Public Sub SetColumn(colIndex As Integer, v As Vector)
         If colIndex < 0 OrElse colIndex >= _cols Then
             Throw New IndexOutOfRangeException("列索引超出范围")
         End If
@@ -404,11 +406,11 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 获取指定列
     ''' </summary>
-    Public Function GetColumn(colIndex As Integer) As NVector
+    Public Function GetColumn(colIndex As Integer) As Vector
         If colIndex < 0 OrElse colIndex >= _cols Then
             Throw New IndexOutOfRangeException("列索引超出范围")
         End If
-        Dim v As New NVector(_rows)
+        Dim v As New Vector(_rows)
         For i As Integer = 0 To _rows - 1
             v(i) = _data(i, colIndex)
         Next
@@ -418,7 +420,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 设置指定行
     ''' </summary>
-    Public Sub SetRow(rowIndex As Integer, v As NVector)
+    Public Sub SetRow(rowIndex As Integer, v As Vector)
         If rowIndex < 0 OrElse rowIndex >= _rows Then
             Throw New IndexOutOfRangeException("行索引超出范围")
         End If
@@ -433,11 +435,11 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 获取指定行
     ''' </summary>
-    Public Function GetRow(rowIndex As Integer) As NVector
+    Public Function GetRow(rowIndex As Integer) As Vector
         If rowIndex < 0 OrElse rowIndex >= _rows Then
             Throw New IndexOutOfRangeException("行索引超出范围")
         End If
-        Dim v As New NVector(_cols)
+        Dim v As New Vector(_cols)
         For j As Integer = 0 To _cols - 1
             v(j) = _data(rowIndex, j)
         Next
@@ -504,7 +506,7 @@ Public Class DenseMatrix : Implements ICloneable
     End Function
 
     Public Overrides Function ToString() As String
-        Dim sb As New Text.StringBuilder()
+        Dim sb As New StringBuilder()
         sb.AppendLine($"DenseMatrix({_rows}x{_cols}):")
         Const maxDisplay As Integer = 6
         Dim displayRows As Integer = std.Min(_rows, maxDisplay)

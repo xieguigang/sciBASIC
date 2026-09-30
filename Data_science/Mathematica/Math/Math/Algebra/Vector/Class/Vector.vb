@@ -427,6 +427,333 @@ Namespace LinearAlgebra
             Call System.Array.Copy(source, 0, buffer, startIndex, count)
         End Sub
 
+        ''' <summary>
+        ''' Make data copy from the given <paramref name="source"/> array to current vector object
+        ''' </summary>
+        ''' <param name="source">the source data array, its length must be equals to current vector size</param>
+        Public Sub CopyFrom(source As Double())
+            If source Is Nothing Then
+                Throw New ArgumentNullException(NameOf(source))
+            ElseIf buffer.Length <> source.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            Else
+                Call System.Array.Copy(source, buffer, buffer.Length)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Make data copy from the given <paramref name="source"/> vector to current vector object
+        ''' </summary>
+        ''' <param name="source">the source vector, its size must be equals to current vector size</param>
+        Public Sub CopyFrom(source As Vector)
+            If source Is Nothing Then
+                Throw New ArgumentNullException(NameOf(source))
+            ElseIf buffer.Length <> source.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            Else
+                Call System.Array.Copy(source.buffer, buffer, buffer.Length)
+            End If
+        End Sub
+
+#Region "In-place Operations"
+
+        ''' <summary>
+        ''' 原地加法：``this = this + c``
+        ''' </summary>
+        ''' <param name="c">标量常量</param>
+        Public Sub AddConstant(c As Double)
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) += c
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地向量加法：``this = this + v``
+        ''' </summary>
+        ''' <param name="v">参与加法的另一个向量</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值，向量加法运算请使用 ``+`` 运算符
+        ''' </remarks>
+        Public Sub AddVector(v As Vector)
+            If buffer.Length <> v.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) += v.buffer(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地向量减法：``this = this - v``
+        ''' </summary>
+        ''' <param name="v">参与减法的另一个向量</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值，向量减法运算请使用 ``-`` 运算符
+        ''' </remarks>
+        Public Sub SubtractVector(v As Vector)
+            If buffer.Length <> v.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) -= v.buffer(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地线性组合：``this = a * x + this``
+        ''' </summary>
+        ''' <param name="a">标量系数</param>
+        ''' <param name="x">向量</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值
+        ''' </remarks>
+        Public Sub LinearSumInPlace(a As Double, x As Vector)
+            If buffer.Length <> x.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) = a * x.buffer(i) + buffer(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地线性组合：``this = a * x + b * y``
+        ''' </summary>
+        ''' <param name="a">第一个标量系数</param>
+        ''' <param name="x">第一个向量</param>
+        ''' <param name="b">第二个标量系数</param>
+        ''' <param name="y">第二个向量</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值
+        ''' </remarks>
+        Public Sub LinearSumInPlace(a As Double, x As Vector, b As Double, y As Vector)
+            If x.buffer.Length <> y.buffer.Length OrElse buffer.Length <> x.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) = a * x.buffer(i) + b * y.buffer(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地标量乘法：``this = c * this``
+        ''' </summary>
+        ''' <param name="c">标量系数</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值，标量乘法运算请使用 ``*`` 运算符
+        ''' </remarks>
+        Public Sub ScaleInPlace(c As Double)
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) *= c
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地逐元素乘法：``this = this .* v``，相当于MATLAB中的``.*``运算
+        ''' </summary>
+        ''' <param name="v">参与逐元素乘法的另一个向量</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值，逐元素乘法运算请使用 ``*`` 运算符
+        ''' </remarks>
+        Public Sub MultiplyElementWiseInPlace(v As Vector)
+            If buffer.Length <> v.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) *= v.buffer(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 原地逐元素除法：``this = this ./ v``，相当于MATLAB中的``./``运算
+        ''' </summary>
+        ''' <param name="v">参与逐元素除法的另一个向量</param>
+        ''' <remarks>
+        ''' 这个方法会修改当前向量对象内部的值，逐元素除法运算请使用 ``/`` 运算符
+        ''' </remarks>
+        Public Sub DivideElementWiseInPlace(v As Vector)
+            If buffer.Length <> v.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                If std.Abs(v.buffer(i)) < Double.Epsilon Then
+                    Throw New DivideByZeroException($"向量v在索引{i}处为零")
+                End If
+
+                buffer(i) /= v.buffer(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 设置当前向量的所有元素的值为指定的常量
+        ''' </summary>
+        ''' <param name="value">常量值</param>
+        Public Sub SetConstant(value As Double)
+            For i As Integer = 0 To buffer.Length - 1
+                buffer(i) = value
+            Next
+        End Sub
+
+#End Region
+
+#Region "Norms"
+
+        ''' <summary>
+        ''' L2范数（欧几里得范数）：``||x||2 = sqrt(sum(xi^2))``
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function L2Norm() As Double
+            Return SumMagnitude
+        End Function
+
+        ''' <summary>
+        ''' L1范数（绝对值之和）：``||x||1 = sum(|xi|)``
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function L1Norm() As Double
+            Dim sum As Double = 0.0
+
+            For i As Integer = 0 To buffer.Length - 1
+                sum += std.Abs(buffer(i))
+            Next
+
+            Return sum
+        End Function
+
+        ''' <summary>
+        ''' 无穷范数（最大绝对值）：``||x||inf = max(|xi|)``
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function InfinityNorm() As Double
+            Dim maxVal As Double = 0.0
+
+            For i As Integer = 0 To buffer.Length - 1
+                Dim absVal As Double = std.Abs(buffer(i))
+
+                If absVal > maxVal Then
+                    maxVal = absVal
+                End If
+            Next
+
+            Return maxVal
+        End Function
+
+        ''' <summary>
+        ''' 比较两个向量是否逐元素相等（在给定的容差范围之内）
+        ''' </summary>
+        ''' <param name="other">另一个参与比较的向量</param>
+        ''' <param name="tolerance">逐元素比较所允许的最大误差</param>
+        ''' <returns>
+        ''' 当两个向量长度不相同或者其中的任何一对元素值之差的绝对值超过
+        ''' <paramref name="tolerance"/> 的时候，返回false
+        ''' </returns>
+        Public Function EqualsApprox(other As Vector, tolerance As Double) As Boolean
+            If other Is Nothing OrElse buffer.Length <> other.buffer.Length Then
+                Return False
+            End If
+
+            For i As Integer = 0 To buffer.Length - 1
+                If std.Abs(buffer(i) - other.buffer(i)) > tolerance Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 查找当前向量中的最大值及其所在的元素位置
+        ''' </summary>
+        ''' <returns>位置和值的键值对</returns>
+        Public Function MaxElement() As SeqValue(Of Double)
+            Dim maxVal As Double = buffer(0)
+            Dim maxIdx As Integer = Scan0
+
+            For i As Integer = 1 To buffer.Length - 1
+                If buffer(i) > maxVal Then
+                    maxVal = buffer(i)
+                    maxIdx = i
+                End If
+            Next
+
+            Return New SeqValue(Of Double)(maxIdx, maxVal)
+        End Function
+
+        ''' <summary>
+        ''' 查找当前向量中的最小值及其所在的元素位置
+        ''' </summary>
+        ''' <returns>位置和值的键值对</returns>
+        Public Function MinElement() As SeqValue(Of Double)
+            Dim minVal As Double = buffer(0)
+            Dim minIdx As Integer = Scan0
+
+            For i As Integer = 1 To buffer.Length - 1
+                If buffer(i) < minVal Then
+                    minVal = buffer(i)
+                    minIdx = i
+                End If
+            Next
+
+            Return New SeqValue(Of Double)(minIdx, minVal)
+        End Function
+
+        ''' <summary>
+        ''' 查找当前向量中的最大绝对值及其所在的元素位置
+        ''' </summary>
+        ''' <returns>位置和值的键值对</returns>
+        Public Function MaxAbs() As SeqValue(Of Double)
+            Dim maxVal As Double = std.Abs(buffer(0))
+            Dim maxIdx As Integer = Scan0
+
+            For i As Integer = 1 To buffer.Length - 1
+                Dim absVal As Double = std.Abs(buffer(i))
+
+                If absVal > maxVal Then
+                    maxVal = absVal
+                    maxIdx = i
+                End If
+            Next
+
+            Return New SeqValue(Of Double)(maxIdx, maxVal)
+        End Function
+
+        ''' <summary>
+        ''' 元素级平方根运算，生成一个新的向量对象，不会修改当前向量的值
+        ''' </summary>
+        ''' <returns>
+        ''' 一个新的向量对象，其中的每一个元素值为当前向量对应元素的平方根；
+        ''' 当元素值为负数的时候将会抛出异常
+        ''' </returns>
+        Public Function Sqrt() As Vector
+            Dim result As New Vector(buffer.Length)
+
+            For i As Integer = 0 To buffer.Length - 1
+                If buffer(i) < 0 Then
+                    Throw New ArgumentException($"向量在索引{i}处为负数，无法计算平方根")
+                End If
+
+                result.buffer(i) = std.Sqrt(buffer(i))
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 克隆当前向量对象（深度复制内部数据）
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Clone() As Vector
+            Return New Vector(Me.ToArray)
+        End Function
+
+#End Region
+
 #Region "Operators"
         ''' <summary>
         ''' 两个向量加法算符重载，分量分别相加
@@ -1142,6 +1469,80 @@ Namespace LinearAlgebra
 
             For i As Integer = 0 To result.Count - 1
                 result(i) = 1.0
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 创建全零向量
+        ''' </summary>
+        ''' <param name="n">向量长度</param>
+        ''' <returns></returns>
+        Public Shared Function Zeros(n As Integer) As Vector
+            Return New Vector(n)
+        End Function
+
+        ''' <summary>
+        ''' 创建所有元素值都为指定常量的向量
+        ''' </summary>
+        ''' <param name="n">向量长度</param>
+        ''' <param name="value">常量值</param>
+        ''' <returns></returns>
+        Public Shared Function Constant(n As Integer, value As Double) As Vector
+            Dim result As New Vector(n)
+
+            For i As Integer = 0 To result.Count - 1
+                result(i) = value
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 创建线性等间隔向量：从<paramref name="start"/>到<paramref name="end"/>一共<paramref name="count"/>个元素
+        ''' </summary>
+        ''' <param name="start">起始值</param>
+        ''' <param name="end">结束值（包含在内）</param>
+        ''' <param name="count">元素数量</param>
+        ''' <returns></returns>
+        Public Shared Function LinSpace(start As Double, [end] As Double, count As Integer) As Vector
+            If count <= 0 Then
+                Throw New ArgumentException("元素数量必须为正数", NameOf(count))
+            End If
+
+            Dim result As New Vector(count)
+
+            If count = 1 Then
+                result(Scan0) = start
+            Else
+                Dim [step] As Double = ([end] - start) / (count - 1)
+
+                For i As Integer = 0 To count - 1
+                    result(i) = start + i * [step]
+                Next
+            End If
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 线性组合：``result = a * x + b * y``，生成一个新的向量对象，不会修改参与运算的向量
+        ''' </summary>
+        ''' <param name="a">第一个标量系数</param>
+        ''' <param name="x">第一个向量</param>
+        ''' <param name="b">第二个标量系数</param>
+        ''' <param name="y">第二个向量</param>
+        ''' <returns></returns>
+        Public Shared Function LinearSum(a As Double, x As Vector, b As Double, y As Vector) As Vector
+            If x.buffer.Length <> y.buffer.Length Then
+                Throw New ArgumentException("向量长度不匹配")
+            End If
+
+            Dim result As New Vector(x.buffer.Length)
+
+            For i As Integer = 0 To x.buffer.Length - 1
+                result.buffer(i) = a * x.buffer(i) + b * y.buffer(i)
             Next
 
             Return result
