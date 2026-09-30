@@ -1,67 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::f948289575ecd0752cdca3fbcb20fa4b, gr\Landscape\Data\ModelLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 156
-    '    Code Lines: 76 (48.72%)
-    ' Comment Lines: 62 (39.74%)
-    '    - Xml Docs: 90.32%
-    ' 
-    '   Blank Lines: 18 (11.54%)
-    '     File Size: 6.36 KB
+' Summaries:
 
 
-    '     Enum ModelFormat
-    ' 
-    '         _3DS, _3MF, DAE, GLB, GLTF
-    '         OBJ, STL, Unknown
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Module ModelLoader
-    ' 
-    '         Function: DetectFormat, LoadModel, (+2 Overloads) VoxelizeForCFD
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 156
+'    Code Lines: 76 (48.72%)
+' Comment Lines: 62 (39.74%)
+'    - Xml Docs: 90.32%
+' 
+'   Blank Lines: 18 (11.54%)
+'     File Size: 6.36 KB
+
+
+'     Enum ModelFormat
+' 
+'         _3DS, _3MF, DAE, GLB, GLTF
+'         OBJ, STL, Unknown
+' 
+'  
+' 
+' 
+' 
+'     Module ModelLoader
+' 
+'         Function: DetectFormat, LoadModel, (+2 Overloads) VoxelizeForCFD
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.ComponentModel
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Landscape.Collada
@@ -73,37 +72,6 @@ Imports Microsoft.VisualBasic.Imaging.Landscape.Voxelization
 Imports Microsoft.VisualBasic.Imaging.Landscape.Wavefront
 
 Namespace Data
-
-    ''' <summary>
-    ''' 支持的 3D 模型文件格式枚举
-    ''' </summary>
-    Public Enum ModelFormat
-        ''' <summary>未知或不支持的格式</summary>
-        Unknown
-
-        ''' <summary>Stereolithography (STL) — ASCII 或 Binary</summary>
-        STL
-
-        ''' <summary>glTF 2.0 文本格式 (.gltf)</summary>
-        GLTF
-
-        ''' <summary>glTF 2.0 二进制格式 (.glb)</summary>
-        GLB
-
-        ''' <summary>Wavefront OBJ (.obj)</summary>
-        OBJ
-
-        ''' <summary>COLLADA Digital Asset Exchange (.dae)</summary>
-        DAE
-
-        ''' <summary>3D-Studio Max (.3ds)</summary>
-        <Description("3DS")>
-        _3DS
-
-        ''' <summary>3D Manufacturing Format (.3mf)</summary>
-        <Description("3MF")>
-        _3MF
-    End Enum
 
     ''' <summary>
     ''' 三维模型统一加载器。
