@@ -2,6 +2,7 @@ Option Strict On
 Option Explicit On
 
 Imports System.IO
+Imports std = System.Math
 
 Namespace LZ77Stream
 
@@ -240,7 +241,7 @@ Namespace LZ77Stream
             Dim i = dstOffset
             Dim remaining = count
             While remaining > 0
-                Dim chunk = Math.Min(remaining, n - p)
+                Dim chunk = std.Min(remaining, n - p)
                 Array.Copy(_dict, p, dst, i, chunk)
                 p = 0
                 i += chunk

@@ -2,6 +2,7 @@ Option Strict On
 Option Explicit On
 
 Imports System.IO
+Imports std = System.Math
 
 Namespace LZ77Stream
 
@@ -135,7 +136,7 @@ Namespace LZ77Stream
                 available = _decoder.TotalProduced - _consumed
             Loop
 
-            Dim n = CInt(Math.Min(CULng(count), available))
+            Dim n = CInt(std.Min(CULng(count), available))
             _decoder.CopyOut(_consumed, buffer, offset, n)
             _consumed += CULng(n)
             Return n

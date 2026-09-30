@@ -2,6 +2,8 @@ Option Strict On
 Option Explicit On
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.Repository
+Imports std = System.Math
 
 Namespace LZ77Stream
 
@@ -89,7 +91,7 @@ Namespace LZ77Stream
                 End If
             Loop
 
-            Dim n = Math.Min(count, _blockLen - _served)
+            Dim n = std.Min(count, _blockLen - _served)
             Array.Copy(_out, _blockStart + _served, buffer, offset, n)
             If _contentChecksum Then _contentHash.Update(buffer, offset, n)
             _served += n
@@ -282,7 +284,7 @@ Namespace LZ77Stream
             If _prevTail Is Nothing OrElse _prevTail.Length < WindowSize Then
                 _prevTail = New Byte(WindowSize - 1) {}
             End If
-            Dim t = Math.Min(WindowSize, _blockLen)
+            Dim t = std.Min(WindowSize, _blockLen)
             Buffer.BlockCopy(_out, _blockStart + _blockLen - t, _prevTail, 0, t)
             _prevTailLen = t
         End Sub
@@ -356,7 +358,7 @@ Namespace LZ77Stream
             Dim scratch(4095) As Byte
             Dim remaining As ULong = CULng(count)
             Do While remaining > 0UL
-                Dim c = CInt(Math.Min(remaining, CULng(scratch.Length)))
+                Dim c = CInt(std.Min(remaining, CULng(scratch.Length)))
                 ReadExactlyInto(scratch, c)
                 remaining -= CULng(c)
             Loop
