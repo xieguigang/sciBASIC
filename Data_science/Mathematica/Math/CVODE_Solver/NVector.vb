@@ -63,6 +63,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 ' ============================================================================
@@ -548,7 +549,7 @@ Public Class NVector : Implements ICloneable
     ''' <summary>
     ''' 查找最大值及其索引
     ''' </summary>
-    Public Function Max() As (value As Double, index As Integer)
+    Public Function Max() As SeqValue(Of Double)
         Dim maxVal As Double = _data(0)
         Dim maxIdx As Integer = 0
         For i As Integer = 1 To _length - 1
@@ -557,13 +558,13 @@ Public Class NVector : Implements ICloneable
                 maxIdx = i
             End If
         Next
-        Return (maxVal, maxIdx)
+        Return New SeqValue(Of Double)(maxIdx, maxVal)
     End Function
 
     ''' <summary>
     ''' 查找最小值及其索引
     ''' </summary>
-    Public Function Min() As (value As Double, index As Integer)
+    Public Function Min() As SeqValue(Of Double)
         Dim minVal As Double = _data(0)
         Dim minIdx As Integer = 0
         For i As Integer = 1 To _length - 1
@@ -572,13 +573,13 @@ Public Class NVector : Implements ICloneable
                 minIdx = i
             End If
         Next
-        Return (minVal, minIdx)
+        Return New SeqValue(Of Double)(minIdx, minVal)
     End Function
 
     ''' <summary>
     ''' 查找最大绝对值及其索引
     ''' </summary>
-    Public Function MaxAbs() As (value As Double, index As Integer)
+    Public Function MaxAbs() As SeqValue(Of Double)
         Dim maxVal As Double = std.Abs(_data(0))
         Dim maxIdx As Integer = 0
         For i As Integer = 1 To _length - 1
@@ -588,7 +589,7 @@ Public Class NVector : Implements ICloneable
                 maxIdx = i
             End If
         Next
-        Return (maxVal, maxIdx)
+        Return New SeqValue(Of Double)(maxIdx, maxVal)
     End Function
 
 #End Region

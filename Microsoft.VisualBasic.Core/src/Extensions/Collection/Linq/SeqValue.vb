@@ -101,6 +101,11 @@ Namespace Linq
             End Get
         End Property
 
+        ''' <summary>
+        ''' Create value with oridinal index
+        ''' </summary>
+        ''' <param name="i">the oridinal index</param>
+        ''' <param name="x">target tagged value</param>
         <DebuggerStepThrough>
         Sub New(i%, x As T)
             Me.i = i
