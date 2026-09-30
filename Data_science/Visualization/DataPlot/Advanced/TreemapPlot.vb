@@ -304,9 +304,19 @@ Public Class TreemapPlot
     End Sub
 
     ''' <summary>容器节点扣除标题条与内边距之后，留给子节点的内容区</summary>
+    ''' <remarks>
+    ''' 一个很小的容器负担不起标题条和内边距：它们会把整个矩形吃光，导致子节点
+    ''' 拿不到任何面积。因此这里按容器的实际尺寸自适应地收缩，深层次的树图在
+    ''' 有限的画布上仍然能保留住每一级的内容区。
+    ''' </remarks>
     Private Function InnerRect(r As RectangleF) As RectangleF
-        Dim pad As Single = GroupPadding
-        Dim header As Single = HeaderHeight
+        Dim pad As Single = If(r.Width > 20.0F AndAlso r.Height > 20.0F, GroupPadding, 0.0F)
+        Dim header As Single = 0.0F
+
+        If r.Height > 36.0F Then
+            header = std.Min(HeaderHeight, r.Height * 0.3F)
+        End If
+
         Dim w As Single = r.Width - pad * 2.0F
         Dim h As Single = r.Height - header - pad
 
