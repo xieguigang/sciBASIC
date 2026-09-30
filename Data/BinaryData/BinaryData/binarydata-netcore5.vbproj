@@ -236,8 +236,11 @@
 
   <ItemGroup>
     <Compile Remove="Properties\**" />
+    <Compile Remove="test\**" />
     <EmbeddedResource Remove="Properties\**" />
+    <EmbeddedResource Remove="test\**" />
     <None Remove="Properties\**" />
+    <None Remove="test\**" />
     <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
