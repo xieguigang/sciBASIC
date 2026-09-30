@@ -671,7 +671,7 @@ Namespace LinearAlgebra
         ''' 查找当前向量中的最大值及其所在的元素位置
         ''' </summary>
         ''' <returns>位置和值的键值对</returns>
-        Public Function Max() As SeqValue(Of Double)
+        Public Function MaxElement() As SeqValue(Of Double)
             Dim maxVal As Double = buffer(0)
             Dim maxIdx As Integer = Scan0
 
@@ -689,7 +689,7 @@ Namespace LinearAlgebra
         ''' 查找当前向量中的最小值及其所在的元素位置
         ''' </summary>
         ''' <returns>位置和值的键值对</returns>
-        Public Function Min() As SeqValue(Of Double)
+        Public Function MinElement() As SeqValue(Of Double)
             Dim minVal As Double = buffer(0)
             Dim minIdx As Integer = Scan0
 
