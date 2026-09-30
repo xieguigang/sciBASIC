@@ -51,6 +51,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
 ''' <summary>
 ''' 根查找结果
 ''' </summary>
@@ -73,5 +75,5 @@ Public Class RootFindingResult
     ''' <summary>
     ''' 根处的状态
     ''' </summary>
-    Public Property State As NVector
+    Public Property State As Vector
 End Class

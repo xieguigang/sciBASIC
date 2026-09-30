@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' 常微分方程求解结果
@@ -63,14 +64,14 @@ Imports System.Text
 Public Class ODESolution
 
     Private _times As New List(Of Double)()
-    Private _states As New List(Of NVector)()
+    Private _states As New List(Of Vector)()
 
     ''' <summary>
     ''' 添加一个解点
     ''' </summary>
-    Public Sub AddPoint(t As Double, y As NVector)
+    Public Sub AddPoint(t As Double, y As Vector)
         _times.Add(t)
-        _states.Add(New NVector(y))
+        _states.Add(New Vector(y))
     End Sub
 
     ''' <summary>
@@ -94,7 +95,7 @@ Public Class ODESolution
     ''' <summary>
     ''' 获取指定索引的状态
     ''' </summary>
-    Default Public ReadOnly Property Item(index As Integer) As NVector
+    Default Public ReadOnly Property Item(index As Integer) As Vector
         Get
             Return _states(index)
         End Get

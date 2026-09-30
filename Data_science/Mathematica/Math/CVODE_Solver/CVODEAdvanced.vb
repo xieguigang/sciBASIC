@@ -56,6 +56,7 @@
 #End Region
 
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ' ============================================================================
 ' CVODEAdvanced.vb - CVODE高级功能扩展
@@ -112,7 +113,7 @@ Public Class CVODESolverEx : Inherits CVODESolver
     ''' <param name="tOut">目标时间</param>
     ''' <param name="yOut">输出状态</param>
     ''' <returns>根查找结果</returns>
-    Public Function IntegrateWithRootFinding(tOut As Double, yOut As NVector) As RootFindingResult
+    Public Function IntegrateWithRootFinding(tOut As Double, yOut As Vector) As RootFindingResult
         Dim result As New RootFindingResult()
 
         If _rootFunc Is Nothing Then
@@ -152,7 +153,7 @@ Public Class CVODESolverEx : Inherits CVODESolver
                     result.Found = True
                     result.RootTime = rootTime
                     result.RootIndex = i
-                    result.State = New NVector(CurrentState)
+                    result.State = New Vector(CurrentState)
 
                     ' 更新输出
                     If yOut IsNot Nothing Then
@@ -201,7 +202,7 @@ Public Class CVODESolverEx : Inherits CVODESolver
         Const MAX_ITER As Integer = 20
         Const TOL As Double = 0.0000000001
 
-        Dim yTemp As New NVector(CurrentState.Length)
+        Dim yTemp As New Vector(CurrentState.Length)
         Dim gTemp As Double() = New Double(_nRoots - 1) {}
 
         For iter As Integer = 0 To MAX_ITER - 1
