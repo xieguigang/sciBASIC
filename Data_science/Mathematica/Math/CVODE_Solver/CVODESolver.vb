@@ -72,6 +72,7 @@
 ' ============================================================================
 
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' CVODE常微分方程求解器（变阶变步长多步法）
@@ -106,8 +107,8 @@ Public Class CVODESolver : Implements IDisposable
     Private _jacobianFunc As JacobianFunction
 
     Private _t As Double
-    Private _y As NVector
-    Private _ydot As NVector
+    Private _y As Vector
+    Private _ydot As Vector
 
     Private _h As Double
     Private _q As Integer
@@ -119,24 +120,24 @@ Public Class CVODESolver : Implements IDisposable
     ' 历史数据（index 0 = 最新）
     Private _cap As Integer
     Private _tHist() As Double
-    Private _yHist() As NVector
-    Private _fHist() As NVector
+    Private _yHist() As Vector
+    Private _fHist() As Vector
     Private _histCount As Integer
 
     ' 误差权重与绝对误差容差
-    Private _ewt As NVector
-    Private _atol As NVector
+    Private _ewt As Vector
+    Private _atol As Vector
 
     ' 线性求解器与矩阵 / 临时向量
     Private _linearSolver As DenseLinearSolver
     Private _J As DenseMatrix
     Private _A As DenseMatrix
-    Private _tempV As NVector
-    Private _tempV2 As NVector
-    Private _tempV3 As NVector
-    Private _delta As NVector
-    Private _knownSumV As NVector
-    Private _fNewHist As NVector
+    Private _tempV As Vector
+    Private _tempV2 As Vector
+    Private _tempV3 As Vector
+    Private _delta As Vector
+    Private _knownSumV As Vector
+    Private _fNewHist As Vector
 
     Private _isInitialized As Boolean
     Private _isDisposed As Boolean
@@ -169,24 +170,24 @@ Public Class CVODESolver : Implements IDisposable
 
     ''' <summary>分配所有内部资源（不依赖初值）。</summary>
     Private Sub AllocateResources()
-        _y = New NVector(_n)
-        _ydot = New NVector(_n)
-        _ewt = New NVector(_n)
-        _atol = NVector.Constant(_n, _options.AbsoluteTolerance)
-        _tempV = New NVector(_n)
-        _tempV2 = New NVector(_n)
-        _tempV3 = New NVector(_n)
-        _delta = New NVector(_n)
-        _knownSumV = New NVector(_n)
-        _fNewHist = New NVector(_n)
+        _y = New Vector(_n)
+        _ydot = New Vector(_n)
+        _ewt = New Vector(_n)
+        _atol = Vector.Constant(_n, _options.AbsoluteTolerance)
+        _tempV = New Vector(_n)
+        _tempV2 = New Vector(_n)
+        _tempV3 = New Vector(_n)
+        _delta = New Vector(_n)
+        _knownSumV = New Vector(_n)
+        _fNewHist = New Vector(_n)
 
         _cap = _maxOrder + 1
         _tHist = New Double(_cap - 1) {}
-        _yHist = New NVector(_cap - 1) {}
-        _fHist = New NVector(_cap - 1) {}
+        _yHist = New Vector(_cap - 1) {}
+        _fHist = New Vector(_cap - 1) {}
         For i As Integer = 0 To _cap - 1
-            _yHist(i) = New NVector(_n)
-            _fHist(i) = New NVector(_n)
+            _yHist(i) = New Vector(_n)
+            _fHist(i) = New Vector(_n)
         Next
 
         _linearSolver = New DenseLinearSolver(_n)
@@ -206,7 +207,7 @@ Public Class CVODESolver : Implements IDisposable
         End Get
     End Property
 
-    Public ReadOnly Property CurrentState As NVector
+    Public ReadOnly Property CurrentState As Vector
         Get
             Return _y
         End Get
@@ -252,7 +253,7 @@ Public Class CVODESolver : Implements IDisposable
 
 #Region "初始化求解"
 
-    Public Function Initialize(t0 As Double, y0 As NVector) As CVODEStatus
+    Public Function Initialize(t0 As Double, y0 As Vector) As CVODEStatus
         If y0 Is Nothing OrElse y0.Length <> _n Then
             Return CVODEStatus.BadInput
         End If
@@ -293,8 +294,8 @@ Public Class CVODESolver : Implements IDisposable
         If _options.InitialStep > 0 Then
             _h = _options.InitialStep
         Else
-            Dim yn As Double = _y.WRMSNorm(NVector.Ones(_n))
-            Dim fn As Double = _ydot.WRMSNorm(NVector.Ones(_n))
+            Dim yn As Double = _y.WRMSNorm(Vector.Ones(_n))
+            Dim fn As Double = _ydot.WRMSNorm(Vector.Ones(_n))
             If fn > ZERO_THRESHOLD Then
                 _h = 0.01 * yn / fn
             Else
@@ -391,7 +392,7 @@ Public Class CVODESolver : Implements IDisposable
         Loop
     End Function
 
-    Public Function Integrate(tOut As Double, Optional yOut As NVector = Nothing) As CVODEStatus
+    Public Function Integrate(tOut As Double, Optional yOut As Vector = Nothing) As CVODEStatus
         Dim status As CVODEStatus
 
         Do While _t < tOut
@@ -423,7 +424,7 @@ Public Class CVODESolver : Implements IDisposable
         ComputeErrorWeights()
 
         ' ---- 预测 ----
-        Dim yPred As New NVector(_n)
+        Dim yPred As New Vector(_n)
         Predict(q, hTry, tNew, yPred)
 
         ' ---- 校正系数（按当前真实历史点计算）----
@@ -479,7 +480,7 @@ Public Class CVODESolver : Implements IDisposable
         End If
 
         ' ---- Newton 迭代 ----
-        Dim y As New NVector(_n)
+        Dim y As New Vector(_n)
         y.CopyFrom(yPred)
         ' 收敛阈值采用 CVODE 标准 RCON=0.33（按 WRMS 加权范数）。
         ' 过紧（如 1e-4 或 0.1）会使非线性 BDF 示例无法在有限次迭代内收敛。
@@ -581,7 +582,7 @@ Public Class CVODESolver : Implements IDisposable
     End Function
 
     ''' <summary>提交一步成功结果到历史。</summary>
-    Private Sub Commit(tNew As Double, yCorr As NVector)
+    Private Sub Commit(tNew As Double, yCorr As Vector)
         ' 历史下移
         For i As Integer = _histCount - 1 To 1 Step -1
             _tHist(i) = _tHist(i - 1)
@@ -609,7 +610,7 @@ Public Class CVODESolver : Implements IDisposable
     ''' Adams：对过去 f 做多项式积分；BDF：对过去 y 做多项式外推。
     ''' 历史点不足时自动降阶使用可用点数。
     ''' </summary>
-    Private Sub Predict(q As Integer, h As Double, tNew As Double, yPred As NVector)
+    Private Sub Predict(q As Integer, h As Double, tNew As Double, yPred As Vector)
         If _method = CVODEMethod.Adams Then
             Dim numPast As Integer = std.Min(q, _histCount - 1)
             Dim nodes(numPast) As Double
@@ -641,7 +642,7 @@ Public Class CVODESolver : Implements IDisposable
     ''' 其中 DD_q[f] 为 f 在节点 (tNew, t_n, ..., t_{n-q+1}) 上的 q 阶差商，
     '''   C_{q+1} = (1/(q+1)!) · Σ_{k=0}^{q} α_k·(-k)^{q+1} 为 BDF 误差常数（α 为 BDF 系数）。
     ''' </summary>
-    Private Function EstimateBDFFrror(q As Integer, h As Double, tNew As Double, yCorr As NVector) As Double
+    Private Function EstimateBDFFrror(q As Integer, h As Double, tNew As Double, yCorr As Vector) As Double
         ' 1) BDF 系数 α_k = c_k / c0，c_k = L'_k(tNew)
         Dim nodes(q) As Double
         nodes(0) = tNew
@@ -668,7 +669,7 @@ Public Class CVODESolver : Implements IDisposable
         ' 3) q 阶差商 DD_q[f]_i（节点 xs=[tNew, tHist(0..q-1)]，值=[fNew, fHist(0..q-1)]）
         Dim m As Integer = q
         Dim xs(m) As Double
-        Dim fv(m) As NVector
+        Dim fv(m) As Vector
         xs(0) = tNew
         fv(0) = _fNewHist
         For k As Integer = 1 To m
@@ -676,7 +677,7 @@ Public Class CVODESolver : Implements IDisposable
             fv(k) = _fHist(k - 1)
         Next
 
-        Dim errVec As New NVector(_n)
+        Dim errVec As New Vector(_n)
         For i As Integer = 0 To _n - 1
             Dim tab(m) As Double
             For k As Integer = 0 To m
@@ -731,7 +732,7 @@ Public Class CVODESolver : Implements IDisposable
         ' p 阶差商 DD_p[f]：节点 xs=[tNew, tHist(0..q)]，值=[fNew, fHist(0..q)]
         Dim m As Integer = p
         Dim xs(m) As Double
-        Dim fv(m) As NVector
+        Dim fv(m) As Vector
         xs(0) = tNew
         fv(0) = _fNewHist
         For k As Integer = 1 To m
@@ -739,7 +740,7 @@ Public Class CVODESolver : Implements IDisposable
             fv(k) = _fHist(k - 1)
         Next
 
-        Dim errVec As New NVector(_n)
+        Dim errVec As New Vector(_n)
         For i As Integer = 0 To _n - 1
             Dim tab(m) As Double
             For k As Integer = 0 To m
@@ -760,7 +761,7 @@ Public Class CVODESolver : Implements IDisposable
 
 #Region "Jacobian 与线性系统"
 
-    Private Function ComputeJacobian(t As Double, yRef As NVector) As CVODEStatus
+    Private Function ComputeJacobian(t As Double, yRef As Vector) As CVODEStatus
         If _options.UseUserJacobian AndAlso _jacobianFunc IsNot Nothing Then
             _jacobianFunc(t, yRef, _ydot, _J)
         Else
@@ -770,7 +771,7 @@ Public Class CVODESolver : Implements IDisposable
     End Function
 
     ''' <summary>前向差分数值 Jacobian：J(i,j) = (f_i(y+e_j) - f_i(y)) / e_j。</summary>
-    Private Sub ComputeNumericalJacobian(t As Double, yRef As NVector)
+    Private Sub ComputeNumericalJacobian(t As Double, yRef As Vector)
         _rhsFunc(t, yRef, _tempV3)
         _nRHSEvals += 1
 
@@ -931,14 +932,14 @@ Public Class CVODESolver : Implements IDisposable
             Throw New ArgumentException("绝对误差容差必须为正数", NameOf(atol))
         End If
         _options.AbsoluteTolerance = atol
-        _atol = NVector.Constant(_n, atol)
+        _atol = Vector.Constant(_n, atol)
     End Sub
 
-    Public Sub SetAbsoluteTolerance(atol As NVector)
+    Public Sub SetAbsoluteTolerance(atol As Vector)
         If atol Is Nothing OrElse atol.Length <> _n Then
             Throw New ArgumentException("绝对误差容差向量维度不匹配")
         End If
-        _atol = New NVector(atol)
+        _atol = New Vector(atol)
     End Sub
 
     Public Sub SetRelativeTolerance(rtol As Double)
