@@ -58,6 +58,7 @@
 #End Region
 
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' 稠密线性求解器
@@ -233,7 +234,7 @@ Public Class DenseLinearSolver
     ''' <param name="b">右端向量</param>
     ''' <param name="x">解向量（输出）</param>
     ''' <returns>求解结果状态</returns>
-    Public Function Solve(b As NVector, x As NVector) As LinearSolverResult
+    Public Function Solve(b As Vector, x As Vector) As LinearSolverResult
         If Not _isFactored Then
             Throw New InvalidOperationException("必须先调用Factorize进行LU分解")
         End If
@@ -285,8 +286,8 @@ Public Class DenseLinearSolver
     ''' </summary>
     ''' <param name="b">右端向量</param>
     ''' <returns>解向量</returns>
-    Public Function Solve(b As NVector) As NVector
-        Dim x As New NVector(_n)
+    Public Function Solve(b As Vector) As Vector
+        Dim x As New Vector(_n)
         Dim result As LinearSolverResult = Solve(b, x)
         If result <> LinearSolverResult.Success Then
             Throw New InvalidOperationException($"求解失败: {result}")
@@ -302,7 +303,7 @@ Public Class DenseLinearSolver
     ''' 计算矩阵-向量乘法：y = A * x
     ''' 使用原始矩阵（分解前）
     ''' </summary>
-    Public Shared Sub MatrixVectorMultiply(A As DenseMatrix, x As NVector, y As NVector)
+    Public Shared Sub MatrixVectorMultiply(A As DenseMatrix, x As Vector, y As Vector)
         If A.Columns <> x.Length OrElse A.Rows <> y.Length Then
             Throw New ArgumentException("维度不匹配")
         End If

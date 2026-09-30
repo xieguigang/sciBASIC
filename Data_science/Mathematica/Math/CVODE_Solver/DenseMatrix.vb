@@ -62,6 +62,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
 
 ' ============================================================================
@@ -218,7 +219,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 创建对角矩阵
     ''' </summary>
-    Public Shared Function Diagonal(diag As NVector) As DenseMatrix
+    Public Shared Function Diagonal(diag As Vector) As DenseMatrix
         Dim n As Integer = diag.Length
         Dim m As New DenseMatrix(n, n)
         For i As Integer = 0 To n - 1
@@ -299,11 +300,11 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 矩阵-向量乘法：y = A * x
     ''' </summary>
-    Public Shared Function MultiplyVector(A As DenseMatrix, x As NVector) As NVector
+    Public Shared Function MultiplyVector(A As DenseMatrix, x As Vector) As Vector
         If A.Columns <> x.Length Then
             Throw New ArgumentException("矩阵列数与向量长度不匹配")
         End If
-        Dim y As New NVector(A.Rows)
+        Dim y As New Vector(A.Rows)
         For i As Integer = 0 To A.Rows - 1
             Dim sum As Double = 0.0
             For j As Integer = 0 To A.Columns - 1
@@ -390,7 +391,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 设置指定列
     ''' </summary>
-    Public Sub SetColumn(colIndex As Integer, v As NVector)
+    Public Sub SetColumn(colIndex As Integer, v As Vector)
         If colIndex < 0 OrElse colIndex >= _cols Then
             Throw New IndexOutOfRangeException("列索引超出范围")
         End If
@@ -405,11 +406,11 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 获取指定列
     ''' </summary>
-    Public Function GetColumn(colIndex As Integer) As NVector
+    Public Function GetColumn(colIndex As Integer) As Vector
         If colIndex < 0 OrElse colIndex >= _cols Then
             Throw New IndexOutOfRangeException("列索引超出范围")
         End If
-        Dim v As New NVector(_rows)
+        Dim v As New Vector(_rows)
         For i As Integer = 0 To _rows - 1
             v(i) = _data(i, colIndex)
         Next
@@ -419,7 +420,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 设置指定行
     ''' </summary>
-    Public Sub SetRow(rowIndex As Integer, v As NVector)
+    Public Sub SetRow(rowIndex As Integer, v As Vector)
         If rowIndex < 0 OrElse rowIndex >= _rows Then
             Throw New IndexOutOfRangeException("行索引超出范围")
         End If
@@ -434,11 +435,11 @@ Public Class DenseMatrix : Implements ICloneable
     ''' <summary>
     ''' 获取指定行
     ''' </summary>
-    Public Function GetRow(rowIndex As Integer) As NVector
+    Public Function GetRow(rowIndex As Integer) As Vector
         If rowIndex < 0 OrElse rowIndex >= _rows Then
             Throw New IndexOutOfRangeException("行索引超出范围")
         End If
-        Dim v As New NVector(_cols)
+        Dim v As New Vector(_cols)
         For j As Integer = 0 To _cols - 1
             v(j) = _data(rowIndex, j)
         Next
