@@ -115,7 +115,7 @@
     ''' ### 2.4 上下文模型（解压器的“记忆”）
     ''' | 变量 | 含义 |
     ''' |---|---|
-    ''' | `posState = pos & ((1&lt;&lt;pb)-1)` | 当前输出位置的低位 |
+    ''' | `posState = pos &amp; ((1&lt;&lt;pb)-1)` | 当前输出位置的低位 |
     ''' | `state`（0–11） | 有限状态机：字面量连续到了第几步、上个符号是匹配/重复匹配/短匹配 |
     ''' | `rep0..rep3` | 最近 4 个匹配距离（LRU） |
     ''' | 各概率数组 | `isMatch`、`isRep`、`isRepG0/G1/G2`、`isRep0Long`、字面量位树、长度模型×2、posSlot 位树×4、specPos、align 等 |
@@ -129,7 +129,7 @@
     ''' ### 2.5 主循环
     ''' ```python
     ''' while True:
-    ''' pos_state = len(out) & pos_mask
+    ''' pos_state = len(out) &amp; pos_mask
     ''' if decode_bit(is_match[state][pos_state]) == 0:
     ''' # ── 字面量 ──（紧跟匹配后的第一个字面量走"匹配字面量"模式）
     ''' out.append(decode_literal(state, rep0))
@@ -166,16 +166,16 @@
     ''' ### 2.6 字面量解码：普通模式与匹配模式
     ''' **普通模式**：按上下文选一棵 256 叶的位树，从高位到低位逐位判决：
     ''' ```python
-    ''' ctx = ((pos & lp_mask) &lt;&lt; lc) + (prev_byte >> (8 - lc))
+    ''' ctx = ((pos &amp; lp_mask) &lt;&lt; lc) + (prev_byte >> (8 - lc))
     ''' symbol = 1
     ''' while symbol &lt; 0x100:
     ''' symbol = (symbol &lt;&lt; 1) | decode_bit(lit_probs[ctx][symbol])
-    ''' byte = symbol & 0xFF
+    ''' byte = symbol &amp; 0xFF
     ''' ```
     ''' **匹配模式**（仅紧跟匹配后的第一个字面量）：匹配刚结束时，下一个字面量往往“长得像”匹配本该继续输出的下一个字节 `match_byte`（比如匹配了 `"the "` 之后，下一个字面量很常以 `t`、`m` 等开头）。LZMA 逐位对比：
     ''' ```python
     ''' while symbol &lt; 0x100:
-    ''' match_bit = (match_byte >> 7) & 1
+    ''' match_bit = (match_byte >> 7) &amp; 1
     ''' bit = decode_bit(probs[ctx][0x100 + (match_bit &lt;&lt; 8) + symbol])
     ''' symbol = (symbol &lt;&lt; 1) | bit
     ''' if bit != match_bit:
@@ -197,7 +197,7 @@
     ''' dist = slot                                # 0基:回退1~4字节
     ''' else:
     ''' n = (slot >> 1) - 1                        # 额外位数
-    ''' dist = (2 | (slot & 1)) &lt;&lt; n               # 基数
+    ''' dist = (2 | (slot &amp; 1)) &lt;&lt; n               # 基数
     ''' if slot &lt; 14:
     ''' dist += bit_tree_reverse(n, spec_pos)  # 中档距离:带概率
     ''' else:
