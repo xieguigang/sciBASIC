@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.6.33513.286
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12128.139 oobstable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{2BA16597-C55E-4FDA-ABE2-0BB440F56BB7}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Example", "Math.Statistics\Example\Example.vbproj", "{2D84C354-2DD0-442D-823A-27BCCC373959}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{59C60F98-6C4F-4B82-A5FA-F86766FAC85C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{59C60F98-6C4F-4B82-A5FA-F86766FAC85C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "t.test", "..\data\Student's T-test\t.test\t.test.vbproj", "{EE9E3D06-0C25-473F-B5C5-C053E023B561}"
 EndProject

@@ -63,16 +63,16 @@ Module Program
         Dim b#() = {185, 169, 173, 173, 188, 186, 175, 174, 179, 180}
 
         With t.Test(a, b)
-            Call $"alternative hypothesis: { .Valid}".__DEBUG_ECHO
-            Call .GetJson(True).__DEBUG_ECHO
+            Call $"alternative hypothesis: { .Valid}".debug
+            Call .GetJson(True).debug
         End With
 
         Dim x#() = {0, 1, 1, 1}
 
         ' ttest([0,1,1,1], {mu: 1}).valid() // true
         With t.Test(x, mu:=1)
-            Call $"alternative hypothesis: { .Valid}".__DEBUG_ECHO
-            Call .GetJson(True).__DEBUG_ECHO
+            Call $"alternative hypothesis: { .Valid}".debug
+            Call .GetJson(True).debug
         End With
 
         ' ttest([0,1,1,1], [1,2,2,2], {mu: -1}).valid() // true
@@ -81,8 +81,8 @@ Module Program
         a = {6846523.253, 6840877.665, 5806323.704}
         b = {3056565.388, 1831431.105, 2933659.497}
 
-        Call t.Test(a, b).GetJson(indent:=True).__DEBUG_ECHO
-        Call t.Test(a, b, varEqual:=False).GetJson(indent:=True).__DEBUG_ECHO
+        Call t.Test(a, b).GetJson(indent:=True).debug
+        Call t.Test(a, b, varEqual:=False).GetJson(indent:=True).debug
 
         Pause()
     End Sub
