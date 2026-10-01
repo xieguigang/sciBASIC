@@ -129,7 +129,7 @@ Public Class BundleNode
                 norm2 = norm * norm
                 c = dot / norm2
                 xi_bar = x0 + (c * xk_x0)
-                edgeCopy(j).unbundledPos = lerp(xi_bar, xi, delta)
+                edgeCopy(j).unbundledPos = InternalMath.lerp(xi_bar, xi, delta)
                 normal = edgeCopy(j + 1).pos - edgeCopy(j - 1).pos
                 normal = New Vector({-normal(1), normal(0)}).Unit
                 edgeCopy(j).normal = normal
