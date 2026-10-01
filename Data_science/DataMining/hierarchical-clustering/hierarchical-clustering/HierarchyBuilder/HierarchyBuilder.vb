@@ -86,12 +86,23 @@ Namespace Hierarchy
         Public ReadOnly Property Clusters As List(Of Cluster)
 
         ''' <summary>
+        ''' 当前仍然存活的簇数量（即 <see cref="Clusters"/> 列表中
+        ''' <see cref="Cluster.removed"/> = False 的条目数）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 凝聚过程中的簇删除采用「标记 + 惰性压实」策略：
+        ''' 合并时仅将两个旧簇标记为 <c>removed</c>（O(1)），失效条目在其数量
+        ''' 超过存活条目时由 <see cref="CompactClusters"/> 一次性移除。
+        ''' </remarks>
+        Dim aliveCount As Integer
+
+        ''' <summary>
         ''' 当<see cref="Clusters"/>的数量最终只有一个节点的时候，就认为完成了层次聚类操作了
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property TreeComplete As Boolean
             Get
-                Return Clusters.Count = 1
+                Return aliveCount = 1
             End Get
         End Property
 
@@ -115,16 +126,27 @@ Namespace Hierarchy
         ''' The first element in this <see cref="HierarchyBuilder"/>, 
         ''' if <see cref="TreeComplete"/> then this first element is the root cluster.
         ''' </summary>
+        ''' <remarks>
+        ''' 由于凝聚过程中的簇删除采用标记策略（<see cref="Cluster.removed"/>），
+        ''' 这里返回的是第一个仍然存活的簇。
+        ''' </remarks>
         ''' <returns></returns>
         Public ReadOnly Property First As Cluster
             Get
-                Return Clusters(Scan0)
+                For Each c As Cluster In Clusters
+                    If Not c.removed Then
+                        Return c
+                    End If
+                Next
+
+                Return Nothing
             End Get
         End Property
 
         Public Sub New(clusters As List(Of Cluster), distances As DistanceMap)
             Me.Clusters = clusters
             Me.Distances = distances
+            Me.aliveCount = clusters.Count
         End Sub
 
         ''' <summary>
@@ -141,7 +163,9 @@ Namespace Hierarchy
 
             'System.out.println("Final MinDistance: " + distances.minDist());
             'System.out.println("Tree complete: " + isTreeComplete());
-            Return Clusters
+
+            ' Clusters 列表可能还包含已标记删除、尚未压实的失效条目，这里只返回存活簇
+            Return Clusters.Where(Function(c) Not c.removed).ToList
         End Function
 
         ''' <summary>
@@ -154,8 +178,12 @@ Namespace Hierarchy
             If minDistLink Is Nothing Then
                 Return
             Else
-                Call removeCluster(minDistLink.Right())
-                Call removeCluster(minDistLink.Left())
+                ' O(1) 标记删除：旧实现在这里对 Clusters 列表做两次 O(n) 的
+                ' 线性扫描 + RemoveAt（累计 O(n^2) 的常数开销），
+                ' 失效条目由 CompactClusters 惰性压实
+                minDistLink.Left.removed = True
+                minDistLink.Right.removed = True
+                aliveCount -= 2
             End If
 
             Dim oldClusterL As Cluster = minDistLink.Left()
@@ -172,6 +200,11 @@ Namespace Hierarchy
 
             For idx As Integer = 0 To n - 1
                 Dim i As Cluster = Clusters(idx)
+
+                If i.removed Then
+                    Continue For
+                End If
+
                 Dim link1 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterL)
                 Dim link2 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterR)
                 Dim d1 As Distance = Nothing
@@ -197,19 +230,20 @@ Namespace Hierarchy
             Next
 
             Call Clusters.Add(newCluster)
+            aliveCount += 1
+
+            ' 失效条目多于存活条目时压实一次列表，
+            ' 保持 Clusters 的规模与遍历的缓存友好性（惰性压实的均摊代价为 O(1)）
+            If Clusters.Count > aliveCount * 2 Then
+                Call CompactClusters()
+            End If
         End Sub
 
         ''' <summary>
-        ''' 按引用（而非 <see cref="Cluster.Equals(Object)"/> 基于名称的比较）从 <see cref="Clusters"/> 中移除指定簇，
-        ''' 避免每次合并都进行 O(n) 次字符串比较。
+        ''' 一次性移除 <see cref="Clusters"/> 列表中所有已标记删除（<see cref="Cluster.removed"/>）的失效条目。
         ''' </summary>
-        Private Sub removeCluster(cluster As Cluster)
-            For i As Integer = 0 To Clusters.Count - 1
-                If Clusters(i) Is cluster Then
-                    Call Clusters.RemoveAt(i)
-                    Return
-                End If
-            Next
+        Private Sub CompactClusters()
+            Call Clusters.RemoveAll(Function(c) c.removed)
         End Sub
     End Class
 End Namespace

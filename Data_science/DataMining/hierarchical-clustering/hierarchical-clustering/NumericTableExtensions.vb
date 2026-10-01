@@ -57,6 +57,7 @@
 
 Imports System.Data
 Imports System.Runtime.CompilerServices
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.BIRCH
 Imports Microsoft.VisualBasic.Linq
@@ -112,15 +113,7 @@ Public Module HierarchicalClusteringTableExtensions
             matrix(i) = New Double(n - 1) {}
         Next
 
-        ' 距离矩阵是对称的：只需要计算上三角，然后镜像到下三角即可
-        For i As Integer = 0 To n - 1
-            For j As Integer = i + 1 To n - 1
-                Dim d As Double = f(rows(i), rows(j))
-
-                matrix(i)(j) = d
-                matrix(j)(i) = d
-            Next
-        Next
+        Call fillSymmetricMatrix(rows, matrix, f)
 
         Return New NumericTable(matrix, names, DirectCast(names.Clone(), String())) With {
             .labels = source.labels,
@@ -504,17 +497,65 @@ Public Module HierarchicalClusteringTableExtensions
             matrix(i) = New Double(n - 1) {}
         Next
 
-        For i As Integer = 0 To n - 1
-            For j As Integer = i + 1 To n - 1
-                Dim d As Double = DistanceMethods.EuclideanDistance(centroids(i), centroids(j))
-
-                matrix(i)(j) = d
-                matrix(j)(i) = d
-            Next
-        Next
+        ' 度量函数缺省为 DistanceMethods.EuclideanDistance，
+        ' 其内部已切换到 Math.SIMD 引擎的单趟零分配距离平方内核（SimdReduce.DistanceSquared）
+        Call fillSymmetricMatrix(centroids, matrix, Function(a, b) DistanceMethods.EuclideanDistance(a, b))
 
         Return matrix
     End Function
+
+    ''' <summary>
+    ''' 距离矩阵按行并行计算的样本数下限：低于该值时并行调度的开销
+    ''' 反而会超过计算本身的收益。
+    ''' </summary>
+    ''' <remarks>
+    ''' 注意这里与 <see cref="Math.SIMD.SimdParallel.MinParallelLength"/> 的
+    ''' “数据量”阈值语义不同，这里是“行数”阈值。
+    ''' </remarks>
+    Private Const MinParallelRows As Integer = 128
+
+    ''' <summary>
+    ''' 构建对称距离矩阵：计算上三角并镜像到下三角。
+    ''' 
+    ''' <para>
+    ''' 每一行 <c>i</c> 到 <c>j &gt; i</c> 的距离彼此独立，且并行时行 <c>i</c> 只会写
+    ''' <c>matrix(i)(j)</c> 与 <c>matrix(j)(i)</c> 两个互不重叠的槽位，因此数据规模较大时
+    ''' 可以安全地按行并行；行内的成对距离计算由度量函数完成
+    ''' （缺省的 <see cref="DistanceMethods.EuclideanDistance(Double(), Double())"/>
+    ''' 已基于 Math.SIMD 引擎实现单趟零分配的向量化计算）。
+    ''' </para>
+    ''' </summary>
+    ''' <param name="rows">特征矩阵（n x d）或者质心矩阵</param>
+    ''' <param name="matrix">与 <paramref name="rows"/> 行数一致的 n x n 目标矩阵（对角线保持零）</param>
+    ''' <param name="f">成对距离度量函数</param>
+    Private Sub fillSymmetricMatrix(rows As Double()(), matrix As Double()(), f As Func(Of Double(), Double(), Double))
+        Dim n As Integer = rows.Length
+
+        If n >= MinParallelRows Then
+            ' VB 的裸标识符 Parallel 会优先解析到 Microsoft.VisualBasic.Parallel，
+            ' 因此这里必须使用完全限定名
+            Call System.Threading.Tasks.Parallel.For(0, n,
+                Sub(i)
+                    Dim ri As Double() = rows(i)
+
+                    For j As Integer = i + 1 To n - 1
+                        Dim d As Double = f(ri, rows(j))
+
+                        matrix(i)(j) = d
+                        matrix(j)(i) = d
+                    Next
+                End Sub)
+        Else
+            For i As Integer = 0 To n - 1
+                For j As Integer = i + 1 To n - 1
+                    Dim d As Double = f(rows(i), rows(j))
+
+                    matrix(i)(j) = d
+                    matrix(j)(i) = d
+                Next
+            Next
+        End If
+    End Sub
 
     ''' <summary>
     ''' 将子簇级别的扁平簇结果展开回原始样本，写入 ``cluster`` 标签列
