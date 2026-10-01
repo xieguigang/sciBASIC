@@ -71,7 +71,7 @@ Namespace LinearAlgebra
     ''' <remarks>
     ''' 本模块现在是 <see cref="SingularValueDecomposition"/>（JAMA/LINPACK 系实现）
     ''' 的薄封装。与旧版 Numerical Recipes 直译实现相比，输出约定为：
-    ''' 奇异值恒为非负数且按降序排列，输入矩阵 <paramref name="a"/> 不会被修改。
+    ''' 奇异值恒为非负数且按降序排列，输入矩阵不会被修改。
     ''' </remarks>
     Public Module SVD
 
@@ -108,11 +108,11 @@ Namespace LinearAlgebra
                 w(i) = singularValues(i)
             Next
 
-            Dim V As GeneralMatrix = svd.V
+            Dim vMat As GeneralMatrix = svd.V
 
             For i As Integer = 0 To n - 1
                 For j As Integer = 0 To n - 1
-                    v(i, j) = V(i, j)
+                    v(i, j) = vMat(i, j)
                 Next
             Next
         End Sub

@@ -109,56 +109,71 @@ Namespace LinearAlgebra.Matrix
             Return result
         End Function
 
+        ''' <summary>矩形数组压平为 jagged 连续行（SIMD 内核的必要前提）</summary>
+        Private Function RectToJagged(a As Double(,)) As Double()()
+            Dim rows = a.GetLength(0)
+            Dim cols = a.GetLength(1)
+            Dim jagged(rows - 1)() As Double
+
+            For i = 0 To rows - 1
+                Dim row As Double() = New Double(cols - 1) {}
+                For j = 0 To cols - 1
+                    row(j) = a(i, j)
+                Next
+                jagged(i) = row
+            Next
+
+            Return jagged
+        End Function
+
+        ''' <summary>jagged 连续行还原为矩形数组</summary>
+        Private Function JaggedToRect(jagged As Double()(), rows As Integer, cols As Integer) As Double(,)
+            Dim result(rows - 1, cols - 1) As Double
+
+            For i = 0 To rows - 1
+                Dim row As Double() = jagged(i)
+                For j = 0 To cols - 1
+                    result(i, j) = row(j)
+                Next
+            Next
+
+            Return result
+        End Function
+
         ''' <summary>矩阵转置</summary>
+        ''' <remarks>SIMD 化：交给 32x32 分块的缓存友好转置内核</remarks>
         Public Function Transpose(a As Double(,)) As Double(,)
             Dim rows = a.GetLength(0)
             Dim cols = a.GetLength(1)
-            Dim result(cols - 1, rows - 1) As Double
-            For i = 0 To rows - 1
-                For j = 0 To cols - 1
-                    result(j, i) = a(i, j)
-                Next
-            Next
-            Return result
+            Dim jt As Double()() = SimdMatrix.Transpose(RectToJagged(a))
+            Return JaggedToRect(jt, cols, rows)
         End Function
 
         ''' <summary>矩阵加法</summary>
+        ''' <remarks>SIMD 化：行压平后走逐元素向量加法内核</remarks>
         Public Function Add(a As Double(,), b As Double(,)) As Double(,)
             Dim rows = a.GetLength(0)
             Dim cols = a.GetLength(1)
-            Dim result(rows - 1, cols - 1) As Double
-            For i = 0 To rows - 1
-                For j = 0 To cols - 1
-                    result(i, j) = a(i, j) + b(i, j)
-                Next
-            Next
-            Return result
+            Dim jc As Double()() = SimdMatrix.Add(RectToJagged(a), RectToJagged(b))
+            Return JaggedToRect(jc, rows, cols)
         End Function
 
         ''' <summary>矩阵减法</summary>
+        ''' <remarks>SIMD 化：行压平后走逐元素向量减法内核</remarks>
         Public Function Subtract(a As Double(,), b As Double(,)) As Double(,)
             Dim rows = a.GetLength(0)
             Dim cols = a.GetLength(1)
-            Dim result(rows - 1, cols - 1) As Double
-            For i = 0 To rows - 1
-                For j = 0 To cols - 1
-                    result(i, j) = a(i, j) - b(i, j)
-                Next
-            Next
-            Return result
+            Dim jc As Double()() = SimdMatrix.Subtract(RectToJagged(a), RectToJagged(b))
+            Return JaggedToRect(jc, rows, cols)
         End Function
 
         ''' <summary>标量乘矩阵</summary>
+        ''' <remarks>SIMD 化：行压平后走向量数乘内核</remarks>
         Public Function Scale(a As Double(,), s As Double) As Double(,)
             Dim rows = a.GetLength(0)
             Dim cols = a.GetLength(1)
-            Dim result(rows - 1, cols - 1) As Double
-            For i = 0 To rows - 1
-                For j = 0 To cols - 1
-                    result(i, j) = a(i, j) * s
-                Next
-            Next
-            Return result
+            Dim jc As Double()() = SimdMatrix.MultiplyScalar(RectToJagged(a), s)
+            Return JaggedToRect(jc, rows, cols)
         End Function
 
         ''' <summary>矩阵向量乘法 y = A × x</summary>

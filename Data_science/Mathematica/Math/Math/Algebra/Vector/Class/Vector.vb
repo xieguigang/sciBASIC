@@ -595,9 +595,8 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="value">常量值</param>
         Public Sub SetConstant(value As Double)
-            For i As Integer = 0 To buffer.Length - 1
-                buffer(i) = value
-            Next
+            ' SIMD 化：Array.Fill 走 Span.Fill 的向量化填充
+            Call System.Array.Fill(buffer, value)
         End Sub
 
 #End Region
@@ -617,13 +616,8 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Function L1Norm() As Double
-            Dim sum As Double = 0.0
-
-            For i As Integer = 0 To buffer.Length - 1
-                sum += std.Abs(buffer(i))
-            Next
-
-            Return sum
+            ' SIMD 化：Abs 归约内核（Abs 生成临时数组，Sum 走向量化归约）
+            Return SimdReduce.L1Norm(buffer)
         End Function
 
         ''' <summary>
@@ -631,17 +625,14 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Function InfinityNorm() As Double
-            Dim maxVal As Double = 0.0
+            ' SIMD 化：逐元素取绝对值后走向量化 Max 归约
+            Dim absVals As Double() = SimdMath.Abs(Of Double)(buffer)
 
-            For i As Integer = 0 To buffer.Length - 1
-                Dim absVal As Double = std.Abs(buffer(i))
+            If absVals.Length = 0 Then
+                Return 0.0
+            End If
 
-                If absVal > maxVal Then
-                    maxVal = absVal
-                End If
-            Next
-
-            Return maxVal
+            Return SimdReduce.Max(absVals)
         End Function
 
         ''' <summary>

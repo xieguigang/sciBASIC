@@ -102,6 +102,9 @@ Public Module ProgramMilp
                     TruncatedSVDTest.Main()
 
                     Return 0
+                Case "algebra-fix"
+                    ' Algebra 准确度修正 + SIMD 化的回归验证
+                    Return AlgebraFixTest.RunAll()
                 Case "lpp"
                     ' 保持对既有 LP 求解器演示入口的访问（自 test.vbproj 的启动对象切换之后）
                     Return ProgramLpp.Main(New String() {})

@@ -572,9 +572,9 @@ Public Module VectorMatrixSimdTest
         Dim v As New Vector(SampleData(17, 43))
         CheckClose("DotMultiply 第 3 行", ScalarDot(a(3), v.Array), ma.DotMultiply(v).Array(3))
 
-        ' 矩阵按行缩放（保持历史行为：就地缩放左操作数）
-        Dim rowScaled As NumericMatrix = Fresh(a) * New Vector(SampleData(23, 44))
-        Check("矩阵按行缩放尺寸", rowScaled.RowDimension = 23 AndAlso rowScaled.ColumnDimension = 17)
+        ' 矩阵×向量运算符（缺陷修正后：标准矩阵×向量乘法，返回行点积向量）
+        Dim rowScaled As Vector = Fresh(a) * New Vector(SampleData(17, 44))
+        Check("矩阵×向量运算符返回长度", rowScaled.Dim = 23)
 
         ' MatrixOps 的矩形数组乘法
         Dim rectA(2, 2) As Double

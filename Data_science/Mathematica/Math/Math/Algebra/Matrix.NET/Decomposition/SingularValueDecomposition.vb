@@ -56,6 +56,7 @@
 #End Region
 
 Imports stdf = System.Math
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Matrix
 
@@ -155,19 +156,33 @@ Namespace LinearAlgebra.Matrix
                     End If
                     m_s(k) = -m_s(k)
                 End If
+
+                ' SIMD 化：抽取 Householder 列片段 [k, m) 为连续数组，
+                ' 随后对每一列的点积与 AXPY 走 FMA 内核
+                Dim house As Double() = Nothing
+                Dim colJ As Double() = Nothing
+
+                If (k < nct) AndAlso (m_s(k) <> 0.0) Then
+                    Dim len As Integer = m - k
+                    house = New Double(len - 1) {}
+                    colJ = New Double(len - 1) {}
+
+                    For i As Integer = k To m - 1
+                        house(i - k) = A(i)(k)
+                    Next
+                End If
+
                 For j As Integer = k + 1 To n - 1
-                    If (k < nct) And (m_s(k) <> 0.0) Then
+                    If house IsNot Nothing Then
 
                         ' Apply the transformation.
 
-                        Dim t As Double = 0
-                        For i As Integer = k To m - 1
-                            t += A(i)(k) * A(i)(j)
-                        Next
+                        Call ExtractColumnFragment(A, j, k, m, colJ)
+
+                        Dim t As Double = SIMDIntrinsics.DotFma(house, colJ)
                         t = (-t) / A(k)(k)
-                        For i As Integer = k To m - 1
-                            A(i)(j) += t * A(i)(k)
-                        Next
+
+                        Call ApplyColumnAxpy(A, j, k, m, house, colJ, t)
                     End If
 
                     ' Place the k-th row of A into e for the
@@ -206,20 +221,22 @@ Namespace LinearAlgebra.Matrix
                     If (k + 1 < m) And (e(k) <> 0.0) Then
 
                         ' Apply the transformation.
+                        ' SIMD 化：work 的累加与回写改为列片段 + FMA 内核
+                        ' （workFrag 即旧实现中的 work(i) 片段，新分配即零初始化）
+                        Dim lenW As Integer = m - k - 1
+                        Dim workFrag As Double() = New Double(lenW - 1) {}
+                        Dim colJA As Double() = New Double(lenW - 1) {}
 
-                        For i As Integer = k + 1 To m - 1
-                            work(i) = 0.0
-                        Next
                         For j As Integer = k + 1 To n - 1
-                            For i As Integer = k + 1 To m - 1
-                                work(i) += e(j) * A(i)(j)
-                            Next
+                            Call ExtractColumnFragment(A, j, k + 1, m, colJA)
+                            Call SIMDIntrinsics.AxpyInPlace(e(j), colJA, workFrag)
                         Next
+
                         For j As Integer = k + 1 To n - 1
+                            Call ExtractColumnFragment(A, j, k + 1, m, colJA)
+
                             Dim t As Double = (-e(j)) / e(k + 1)
-                            For i As Integer = k + 1 To m - 1
-                                A(i)(j) += t * work(i)
-                            Next
+                            Call ApplyColumnAxpy(A, j, k + 1, m, workFrag, colJA, t)
                         Next
                     End If
                     If wantv Then
@@ -259,15 +276,23 @@ Namespace LinearAlgebra.Matrix
                 Next
                 For k As Integer = nct - 1 To 0 Step -1
                     If m_s(k) <> 0.0 Then
+                        ' SIMD 化：抽取 U 的 Householder 列片段 [k, m)，
+                        ' 每列的点积与 AXPY 走 FMA 内核
+                        Dim lenU As Integer = m - k
+                        Dim houseU As Double() = New Double(lenU - 1) {}
+                        Dim colJU As Double() = New Double(lenU - 1) {}
+
+                        For i As Integer = k To m - 1
+                            houseU(i - k) = U(i)(k)
+                        Next
+
                         For j As Integer = k + 1 To nu - 1
-                            Dim t As Double = 0
-                            For i As Integer = k To m - 1
-                                t += U(i)(k) * U(i)(j)
-                            Next
+                            Call ExtractColumnFragment(U, j, k, m, colJU)
+
+                            Dim t As Double = SIMDIntrinsics.DotFma(houseU, colJU)
                             t = (-t) / U(k)(k)
-                            For i As Integer = k To m - 1
-                                U(i)(j) += t * U(i)(k)
-                            Next
+
+                            Call ApplyColumnAxpy(U, j, k, m, houseU, colJU, t)
                         Next
                         For i As Integer = k To m - 1
                             U(i)(k) = -U(i)(k)
@@ -290,15 +315,22 @@ Namespace LinearAlgebra.Matrix
             If wantv Then
                 For k As Integer = n - 1 To 0 Step -1
                     If (k < nrt) And (e(k) <> 0.0) Then
+                        ' SIMD 化：抽取 V 的 Householder 列片段 [k+1, n)
+                        Dim lenV As Integer = n - k - 1
+                        Dim houseV As Double() = New Double(lenV - 1) {}
+                        Dim colJV As Double() = New Double(lenV - 1) {}
+
+                        For i As Integer = k + 1 To n - 1
+                            houseV(i - k - 1) = V(i)(k)
+                        Next
+
                         For j As Integer = k + 1 To nu - 1
-                            Dim t As Double = 0
-                            For i As Integer = k + 1 To n - 1
-                                t += V(i)(k) * V(i)(j)
-                            Next
+                            Call ExtractColumnFragment(V, j, k + 1, n, colJV)
+
+                            Dim t As Double = SIMDIntrinsics.DotFma(houseV, colJV)
                             t = (-t) / V(k + 1)(k)
-                            For i As Integer = k + 1 To n - 1
-                                V(i)(j) += t * V(i)(k)
-                            Next
+
+                            Call ApplyColumnAxpy(V, j, k + 1, n, houseV, colJV, t)
                         Next
                     End If
                     For i As Integer = 0 To n - 1
@@ -540,6 +572,32 @@ Namespace LinearAlgebra.Matrix
 
             valueU = U
             valueV = V
+        End Sub
+
+        ''' <summary>
+        ''' SIMD 化辅助：把矩阵 M 的列 j 的行片段 [rowStart, rowEnd) 抽取为连续数组
+        ''' </summary>
+        Private Shared Sub ExtractColumnFragment(M As Double()(), j As Integer,
+                                                 rowStart As Integer, rowEnd As Integer,
+                                                 colJ As Double())
+
+            For i As Integer = rowStart To rowEnd - 1
+                colJ(i - rowStart) = M(i)(j)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' SIMD 化辅助：colJ += t * house（就地 FMA AXPY），并把结果写回 M 的列 j
+        ''' </summary>
+        Private Shared Sub ApplyColumnAxpy(M As Double()(), j As Integer,
+                                           rowStart As Integer, rowEnd As Integer,
+                                           house As Double(), colJ As Double(), t As Double)
+
+            Call SIMDIntrinsics.AxpyInPlace(t, house, colJ)
+
+            For i As Integer = rowStart To rowEnd - 1
+                M(i)(j) = colJ(i - rowStart)
+            Next
         End Sub
 #End Region
 

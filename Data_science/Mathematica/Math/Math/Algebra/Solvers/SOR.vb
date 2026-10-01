@@ -107,7 +107,11 @@ Namespace LinearAlgebra.Solvers
                     Exit For
                 End If
 
-                x1 = x
+                ' 准确度修正：Vector 是引用类型，直接赋值会让 x1 与 x 共享
+                ' 同一缓冲，下一轮迭代中 x 的就地更新会同步改写 x1，
+                ' 导致误差恒为 0 而提前退出（静默返回未收敛的解）。
+                ' 必须深拷贝。
+                x1 = x.Clone()
             Next
 
             If Not converged Then

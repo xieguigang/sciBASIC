@@ -17,6 +17,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
 Imports std = System.Math
 
 Namespace LinearAlgebra
@@ -71,13 +72,11 @@ Namespace LinearAlgebra
             Dim m As Integer = a.Length
             Dim n As Integer = b.Length
             Dim buffer As Double()() = New Double(m - 1)() {}
+            Dim bRow As Double() = b.Array
 
+            ' SIMD 化：每一行都是标量 a(i) 与连续行向量 b 的数乘，走向量化内核
             For i As Integer = 0 To m - 1
-                buffer(i) = New Double(n - 1) {}
-
-                For j As Integer = 0 To n - 1
-                    buffer(i)(j) = a(i) * b(j)
-                Next
+                buffer(i) = SimdEngine.MultiplyScalar(Of Double)(a.Array(i), bRow)
             Next
 
             Return New NumericMatrix(buffer)

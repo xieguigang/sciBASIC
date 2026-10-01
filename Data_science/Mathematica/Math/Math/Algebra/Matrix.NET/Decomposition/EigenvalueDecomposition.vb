@@ -56,6 +56,8 @@
 #End Region
 
 Imports __std = System.Math
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
 
 Namespace LinearAlgebra.Matrix
 
@@ -203,16 +205,34 @@ Namespace LinearAlgebra.Matrix
                 V(i)(i) = 1.0
                 Dim h As Double = m_d(i + 1)
                 If h <> 0.0 Then
+                    ' SIMD 化：列片段 [0, i] 抽取为连续数组后走向量化内核
+                    Dim lenT As Integer = i + 1
+                    Dim colI1 As Double() = New Double(lenT - 1) {}
+                    Dim colJ As Double() = New Double(lenT - 1) {}
+
                     For k As Integer = 0 To i
-                        m_d(k) = V(k)(i + 1) / h
+                        colI1(k) = V(k)(i + 1)
                     Next
+
+                    ' m_d(k) = V(k)(i+1) / h（缩放后的 Householder 向量）
+                    Dim scaled As Double() = SimdEngine.DivideScalar(colI1, h)
+                    For k As Integer = 0 To i
+                        m_d(k) = scaled(k)
+                    Next
+
                     For j As Integer = 0 To i
-                        Dim g As Double = 0.0
                         For k As Integer = 0 To i
-                            g += V(k)(i + 1) * V(k)(j)
+                            colJ(k) = V(k)(j)
                         Next
+
+                        ' g = SUM(scaled(k) * V(k)(j)) = dot(colI1, colJ) / h
+                        Dim g As Double = SIMDIntrinsics.DotFma(colI1, colJ) / h
+
+                        ' V(k)(j) -= g * m_d(k)
+                        Call SIMDIntrinsics.AxpyInPlace(-g, scaled, colJ)
+
                         For k As Integer = 0 To i
-                            V(k)(j) -= g * m_d(k)
+                            V(k)(j) = colJ(k)
                         Next
                     Next
                 End If

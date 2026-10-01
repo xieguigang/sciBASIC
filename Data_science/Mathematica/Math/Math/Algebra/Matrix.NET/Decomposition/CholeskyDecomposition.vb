@@ -107,12 +107,14 @@ Namespace LinearAlgebra.Matrix
             For j As Integer = 0 To n - 1
                 Dim Lrowj As Double() = L(j)
                 Dim d As Double = 0.0
+
                 For k As Integer = 0 To j - 1
                     Dim Lrowk As Double() = L(k)
-                    Dim s As Double = 0.0
-                    For i As Integer = 0 To k - 1
-                        s += Lrowk(i) * Lrowj(i)
-                    Next
+
+                    ' SIMD 化：L(j) 行尚未写入的元素（下标 >= j）均为 0，因此对
+                    ' 两条整行做 FMA 点积与只累加前缀 [0, k) 的结果一致
+                    Dim s As Double = SIMDIntrinsics.DotFma(Lrowk, Lrowj)
+
                     s = (A(j)(k) - s) / L(k)(k)
                     Lrowj(k) = s
                     d = d + s * s
@@ -173,18 +175,20 @@ Namespace LinearAlgebra.Matrix
             Dim X As Double()() = B.ArrayPack(deepcopy:=True)
             Dim nx As Integer = B.ColumnDimension
 
-            ' Solve L*Y = B：逐行 AXPY（X(i) -= L(i)(k) * X(k)）
+            ' Solve L*Y = B：列向推进的前代替换。
+            ' 准确度修正：必须先将 X(k) 除以 L(k)(k) 得到 Y(k)，再把 Y(k) 的
+            ' 贡献 AXPY 到后续各行。旧实现先 AXPY 后归一化，会把未除以
+            ' L(k,k) 的值传播给后续行，导致 L(0,0) ≠ 1 时结果错误。
             For k As Integer = 0 To n - 1
                 Dim rowK As Double() = X(k)
-
-                For i As Integer = k + 1 To n - 1
-                    Call SIMDIntrinsics.AxpyInPlace(-L(i)(k), rowK, X(i))
-                Next
-
                 Dim pivot As Double = L(k)(k)
 
                 For j As Integer = 0 To nx - 1
                     rowK(j) /= pivot
+                Next
+
+                For i As Integer = k + 1 To n - 1
+                    Call SIMDIntrinsics.AxpyInPlace(-L(i)(k), rowK, X(i))
                 Next
             Next
 

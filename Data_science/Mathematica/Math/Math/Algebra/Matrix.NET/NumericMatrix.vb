@@ -1328,16 +1328,8 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator ^(x As Double, m1 As NumericMatrix) As NumericMatrix
-            Dim exp As New NumericMatrix(m1.m, m1.n)
-            Dim C As Double()() = exp.Array
-
-            For i As Integer = 0 To m1.m - 1
-                For j As Integer = 0 To m1.n - 1
-                    C(i)(j) = x ^ m1.buffer(i)(j)
-                Next
-            Next
-
-            Return exp
+            ' SIMD 化：逐元素幂运算走向量化内核
+            Return New NumericMatrix(SimdMatrix.PowScalar(m1.buffer, x), m1.m, m1.n)
         End Operator
 
         Public Shared Operator -(x As Double, m As NumericMatrix) As GeneralMatrix
