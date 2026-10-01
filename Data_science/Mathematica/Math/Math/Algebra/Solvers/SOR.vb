@@ -76,9 +76,17 @@ Namespace LinearAlgebra.Solvers
             Dim N As Integer = A.ColumnDimension
             Dim x1 As Vector = New Vector(N), x As Vector = New Vector(N)
             Dim sum As Double
+            Dim converged As Boolean = False
 
             For k As Integer = 0 To Iteration
                 For i As Integer = 0 To N - 1
+                    ' 准确度修正：对角零元素守卫 —— A(i,i) 为除数，
+                    ' 零元素会产生除零/NaN 并污染整个迭代序列
+                    If A(i, i) = 0 Then
+                        Throw New InvalidOperationException(
+                            $"SOR solver requires non-zero diagonal elements: A({i},{i}) = 0.")
+                    End If
+
                     sum = 0
 
                     For j As Integer = 0 To N - 1
@@ -95,11 +103,17 @@ Namespace LinearAlgebra.Solvers
                 Dim dx As Vector = x - x1, err As Double = std.Sqrt(dx.Mod)
 
                 If err < e Then
+                    converged = True
                     Exit For
                 End If
 
                 x1 = x
             Next
+
+            If Not converged Then
+                Call Console.WriteLine(
+                    $"WARNING: SOR iteration does not converge after {Iteration + 1} iterations (final error > {e}).")
+            End If
 
             Return x
         End Function

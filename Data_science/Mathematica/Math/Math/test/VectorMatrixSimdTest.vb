@@ -713,13 +713,18 @@ Public Module VectorMatrixSimdTest
         Next
         CheckClose("WiseOperation.Sum", rowSum, m.RowWise().Sum().Array(1))
 
-        ' Matrix * Vector 运算符（历史行为：就地按行缩放左操作数）
+        ' Matrix * Vector 运算符（缺陷修正后：标准矩阵×向量乘法，左操作数不被修改）
         Dim before As Double = a(3)(2)
         Dim mFresh As NumericMatrix = Fresh(a)
-        Dim scaled As NumericMatrix = mFresh * v
+        Dim matVec As Vector = mFresh * v
+        Dim expectedDot As Double = 0
 
-        CheckClose("Operator *(矩阵, 向量) 就地缩放", before * v.Array(3), mFresh(3, 2))
-        Check("Operator *(矩阵, 向量) 返回值尺寸保持", scaled.RowDimension = 7 AndAlso scaled.ColumnDimension = 5)
+        For j As Integer = 0 To 4
+            expectedDot += a(3)(j) * v.Array(j)
+        Next
+
+        CheckClose("Operator *(矩阵, 向量) 行点积", expectedDot, matVec.Array(3))
+        Check("Operator *(矩阵, 向量) 不修改左操作数", mFresh(3, 2) = before AndAlso mFresh(0, 0) = a(0)(0))
     End Sub
 
     Private Sub TestSolversAndDecompositions()

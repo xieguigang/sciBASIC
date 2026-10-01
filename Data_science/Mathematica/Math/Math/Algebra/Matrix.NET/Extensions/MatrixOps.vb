@@ -186,6 +186,12 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>
         ''' 矩阵求逆 - 使用 Gauss-Jordan 消元法带部分主元选取
         ''' </summary>
+        ''' <param name="strict">
+        ''' 兼容参数：现在无论该参数取值如何，数值奇异都会按照
+        ''' <paramref name="throwSingularity"/> 的设定抛出异常或返回 Nothing。
+        ''' 旧实现中非 strict 模式会把接近零的主元替换为固定值 1e-13 继续计算，
+        ''' 这会静默产生完全错误的逆矩阵，已移除该降级行为。
+        ''' </param>
         ''' <param name="throwSingularity">
         ''' this function will returns nothing if this parameter value set to false
         ''' </param>
@@ -204,6 +210,25 @@ Namespace LinearAlgebra.Matrix
                 Next
                 aug(i, i + n) = 1.0
             Next
+
+            ' 尺度相对的奇异判定阈值：主元绝对值相对矩阵整体尺度
+            ' 低于该比例时视为数值奇异（旧实现使用与尺度无关的固定值 1e-13）
+            Dim matScale = 0.0
+            For i = 0 To n - 1
+                For j = 0 To n - 1
+                    matScale = stdf.Max(matScale, stdf.Abs(a(i, j)))
+                Next
+            Next
+
+            If matScale = 0 Then
+                If throwSingularity Then
+                    Throw New Exception("矩阵奇异（零矩阵），无法求逆")
+                Else
+                    Return Nothing
+                End If
+            End If
+
+            Dim singularTol = matScale * 0.00000000000001
 
             ' 前向消元（带部分主元选取）
             For col As Integer = 0 To n - 1
@@ -226,20 +251,15 @@ Namespace LinearAlgebra.Matrix
                     Next
                 End If
 
-                ' 主元行归一化
+                ' 准确度修正：部分主元已是当前列剩余部分的最大元素，
+                ' 若它仍小于尺度相对阈值，则矩阵数值奇异，立即失败而非静默降级
                 Dim pivot = aug(col, col)
 
-                Const eps As Double = 0.0000000000001
-
-                If stdf.Abs(pivot) < eps Then
-                    If strict Then
-                        If throwSingularity Then
-                            Throw New Exception("矩阵奇异，无法求逆")
-                        Else
-                            Return Nothing
-                        End If
+                If maxVal <= singularTol Then
+                    If throwSingularity Then
+                        Throw New Exception("矩阵奇异，无法求逆")
                     Else
-                        pivot = eps
+                        Return Nothing
                     End If
                 End If
 
@@ -268,7 +288,12 @@ Namespace LinearAlgebra.Matrix
             Return inv
         End Function
 
-        ''' <summary>计算行列式（递归展开法，适用于小矩阵）</summary>
+        ''' <summary>计算行列式（LU 分解法，带部分主元选取，数值稳定）</summary>
+        ''' <remarks>
+        ''' 准确度修正：奇异判定从固定阈值 1e-14 改为尺度相对阈值
+        ''' （主元绝对值 &lt;= 矩阵最大元素绝对值 * 1e-14 时返回 0）。
+        ''' 旧实现会因固定阈值与矩阵尺度无关而对大数矩阵误判奇异。
+        ''' </remarks>
         Public Function Determinant(a As Double(,)) As Double
             Dim n = a.GetLength(0)
             If a.GetLength(1) <> n Then Throw New Exception("行列式要求方阵")
@@ -282,6 +307,16 @@ Namespace LinearAlgebra.Matrix
                     lu(i, j) = a(i, j)
                 Next
             Next
+
+            ' 矩阵整体尺度，用于相对奇异判定
+            Dim matScale = 0.0
+            For i = 0 To n - 1
+                For j = 0 To n - 1
+                    matScale = stdf.Max(matScale, stdf.Abs(a(i, j)))
+                Next
+            Next
+
+            Dim singularTol = matScale * 0.00000000000001
 
             Dim det = 1.0
             For k = 0 To n - 1
@@ -303,7 +338,7 @@ Namespace LinearAlgebra.Matrix
                     det = -det
                 End If
 
-                If stdf.Abs(lu(k, k)) < 0.00000000000001 Then Return 0.0
+                If maxVal <= singularTol Then Return 0.0
 
                 det *= lu(k, k)
                 For i = k + 1 To n - 1
@@ -334,7 +369,16 @@ Namespace LinearAlgebra.Matrix
             Next
 
             Dim maxIter = 200
-            Dim tol = 0.000000000001
+            ' 准确度修正：收敛容差从固定值 1e-12 改为相对矩阵尺度的比例值，
+            ' 避免大数/小数矩阵因固定阈值而误判收敛或永不收敛
+            Dim matScale = 0.0
+            For i = 0 To n - 1
+                For j = 0 To n - 1
+                    matScale = stdf.Max(matScale, stdf.Abs(a(i, j)))
+                Next
+            Next
+            Dim tol = stdf.Max(matScale, 1.0) * 0.000000000001
+            Dim converged = False
 
             For iter = 1 To maxIter
                 ' 找最大的非对角元素
@@ -350,7 +394,10 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
 
-                If maxOff < tol Then Exit For
+                If maxOff < tol Then
+                    converged = True
+                    Exit For
+                End If
 
                 ' 计算 Jacobi 旋转
                 Dim app = mat(p, p)
@@ -387,6 +434,12 @@ Namespace LinearAlgebra.Matrix
                     v(i, q) = -s * tempVi + c * tempVi2
                 Next
             Next
+
+            ' 准确度修正：迭代耗尽仍未收敛时抛出异常（旧实现静默返回未收敛的结果）
+            If Not converged Then
+                Throw New Exception(
+                    $"Jacobi eigenvalue decomposition does not converge after {maxIter} iterations.")
+            End If
 
             Dim eigenvalues(n - 1) As Double
             For i = 0 To n - 1

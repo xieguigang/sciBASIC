@@ -313,10 +313,20 @@ Namespace LinearAlgebra.Matrix
             Dim pp As Integer = p - 1
             Dim iter As Integer = 0
             Dim eps As Double = System.Math.Pow(2.0, -52.0)
+            ' 准确度修正：增加总迭代次数上限。旧实现中 iter 只在 kase=4 时归零，
+            ' 病态输入可能使主循环永远无法收敛（JAMA 已知缺陷，原注释自认
+            ' "Here is where a test for too many iterations would go"）。
+            Dim totalIter As Integer = 0
+            Dim maxTotalIterations As Integer = 1000 + 100 * System.Math.Max(m, n)
             While p > 0
                 Dim k As Integer, kase As Integer
 
-                ' Here is where a test for too many iterations would go.
+                totalIter += 1
+
+                If totalIter > maxTotalIterations Then
+                    Throw New ApplicationException(
+                        $"SVD does not converge after {maxTotalIterations} iterations of the QR step.")
+                End If
 
                 ' This section of the program inspects for
                 ' negligible elements in the s and e arrays.  On
@@ -594,9 +604,19 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Two norm condition number</summary>
         ''' <returns>     max(S)/min(S)
         ''' </returns>
+        ''' <remarks>
+        ''' 准确度修正：最小奇异值为 0（秩亏矩阵）时返回
+        ''' <see cref="Double.PositiveInfinity"/> 而非产生除零 NaN。
+        ''' </remarks>
         Public ReadOnly Property Condition() As Double
             Get
-                Return m_s(0) / m_s(System.Math.Min(m, n) - 1)
+                Dim sMin As Double = m_s(System.Math.Min(m, n) - 1)
+
+                If sMin = 0 Then
+                    Return Double.PositiveInfinity
+                End If
+
+                Return m_s(0) / sMin
             End Get
         End Property
 

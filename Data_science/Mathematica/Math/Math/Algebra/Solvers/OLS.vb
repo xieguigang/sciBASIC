@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
 
 Namespace LinearAlgebra.Solvers
 
@@ -149,45 +150,67 @@ Namespace LinearAlgebra.Solvers
         ''' <summary>
         ''' OLS 最小二乘法
         ''' </summary>
+        ''' <remarks>
+        ''' 当 <c>X'X</c> 奇异（自变量完全多重共线性）时，本函数回退为仅估计截距
+        ''' （beta(0) = mean(y)，其余系数为 0），并通过控制台输出警告。
+        ''' </remarks>
         Public Function Solve(X As Double(,), y As Double(), nS As Integer, nP As Integer) As Double()
-            ' X'X
+            ' 先把矩形数组的各列抽取为连续数组，供 SIMD 点积内核使用
+            ' （矩形数组按行连续，列访问是跨步的，无法直接向量化）
+            Dim cols As Double()() = New Double(nP - 1)() {}
+
+            For j As Integer = 0 To nP - 1
+                Dim col As Double() = New Double(nS - 1) {}
+
+                For k As Integer = 0 To nS - 1
+                    col(k) = X(k, j)
+                Next
+
+                cols(j) = col
+            Next
+
+            ' X'X —— 利用对称性只计算上三角，内层累加走 FMA 点积
             Dim XtX As Double(,) = New Double(nP - 1, nP - 1) {}
-            For i = 0 To nP - 1
-                For j = 0 To nP - 1
-                    Dim sum As Double = 0
-                    For k = 0 To nS - 1
-                        sum += X(k, i) * X(k, j)
-                    Next
+
+            For i As Integer = 0 To nP - 1
+                For j As Integer = i To nP - 1
+                    Dim sum As Double = SIMDIntrinsics.DotFma(cols(i), cols(j))
                     XtX(i, j) = sum
+                    XtX(j, i) = sum
                 Next
             Next
 
             ' X'y
             Dim Xty As Double() = New Double(nP - 1) {}
-            For i = 0 To nP - 1
-                Dim sum As Double = 0
-                For k = 0 To nS - 1
-                    sum += X(k, i) * y(k)
-                Next
-                Xty(i) = sum
+
+            For i As Integer = 0 To nP - 1
+                Xty(i) = SIMDIntrinsics.DotFma(cols(i), y)
             Next
 
             ' 求逆
             Dim invXtX As Double(,) = MatrixOps.Inverse(XtX, strict:=True, throwSingularity:=False)
+
             If invXtX Is Nothing Then
+                Call Console.WriteLine(
+                    "WARNING: OLS singular normal equations (X'X is not invertible, " &
+                    "likely perfect multicollinearity); fallback to intercept-only model.")
+
                 Dim result As Double() = New Double(nP - 1) {}
                 result(0) = y.Average()
                 Return result
             End If
 
-            ' β = (X'X)^(-1) X'y
+            ' β = (X'X)^(-1) X'y：逐行抽取逆矩阵后走 FMA 点积
             Dim beta As Double() = New Double(nP - 1) {}
-            For i = 0 To nP - 1
-                Dim sum As Double = 0
-                For j = 0 To nP - 1
-                    sum += invXtX(i, j) * Xty(j)
+
+            For i As Integer = 0 To nP - 1
+                Dim row As Double() = New Double(nP - 1) {}
+
+                For j As Integer = 0 To nP - 1
+                    row(j) = invXtX(i, j)
                 Next
-                beta(i) = sum
+
+                beta(i) = SIMDIntrinsics.DotFma(row, Xty)
             Next
 
             Return beta
