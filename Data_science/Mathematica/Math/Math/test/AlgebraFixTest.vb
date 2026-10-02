@@ -405,10 +405,6 @@ Public Module AlgebraFixTest
         Dim d As Double() = eig.RealEigenvalues
         Dim v As NumericMatrix = eig.V
 
-        ' TODO-DEBUG
-        Console.WriteLine($"  [DEBUG] d = [{d(0):G17}, {d(1):G17}]")
-        Console.WriteLine($"  [DEBUG] V(0,0)={v(0, 0):G17} V(0,1)={v(0, 1):G17} V(1,0)={v(1, 0):G17} V(1,1)={v(1, 1):G17}")
-
         CheckClose("对称特征值 3", 3.0, d(1), 0.0000001)
         CheckClose("对称特征值 1", 1.0, d(0), 0.0000001)
 
@@ -455,11 +451,11 @@ Public Module AlgebraFixTest
         CheckClose("OLS 共线性回退截距 = mean(y)", 4.0, beta2(0), 0.000001)
         CheckClose("OLS 共线性回退斜率 = 0", 0.0, beta2(1), 0.000001)
 
-        ' SOR：4x + y = 9, x + 3y = 7 → x = 2, y = 1（含非对角主导的松弛求解）
+        ' SOR：4x + y = 9, x + 3y = 5 → x = 2, y = 1
         Dim sorA As New NumericMatrix(New Double()() {
             New Double() {4.0, 1.0},
             New Double() {1.0, 3.0}})
-        Dim sorX As Vector = SOR.Solve(sorA, New Vector({9.0, 7.0}), 1.0, 0.000000001, 100)
+        Dim sorX As Vector = SOR.Solve(sorA, New Vector({9.0, 5.0}), 1.0, 0.000000001, 100)
 
         CheckClose("SOR x = 2", 2.0, sorX.Array(0), 0.00001)
         CheckClose("SOR y = 1", 1.0, sorX.Array(1), 0.00001)

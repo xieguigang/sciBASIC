@@ -716,11 +716,12 @@ Public Module VectorMatrixSimdTest
         ' Matrix * Vector 运算符（缺陷修正后：标准矩阵×向量乘法，左操作数不被修改）
         Dim before As Double = a(3)(2)
         Dim mFresh As NumericMatrix = Fresh(a)
-        Dim matVec As Vector = mFresh * v
+        Dim opV As New Vector(SampleData(5, 74))
+        Dim matVec As Vector = mFresh * opV
         Dim expectedDot As Double = 0
 
         For j As Integer = 0 To 4
-            expectedDot += a(3)(j) * v.Array(j)
+            expectedDot += a(3)(j) * opV.Array(j)
         Next
 
         CheckClose("Operator *(矩阵, 向量) 行点积", expectedDot, matVec.Array(3))
@@ -752,18 +753,25 @@ Public Module VectorMatrixSimdTest
         Check("Cholesky SPD", spd.chol().SPD)
 
         ' ==== 分解求解器的等价性验证 ====
-        ' 说明：CholeskyDecomposition.Solve 的前代实现会先用「未归一化的主元」更新后续行、
-        ' 再做归一化，与标准算法不一致（属于本次重构之前就存在的缺陷）。
-        ' 本次改造的原则是不改变可观察行为，因此这里用「复刻原循环顺序的标量参考实现」
-        ' 做等价性对拍，而不是与 LU 的解互相对照。
+        ' 说明：CholeskyDecomposition.Solve 的前代实现曾被修正为标准的
+        ' 「先归一化 X(k)，再 AXPY 到后续行」顺序（旧实现先 AXPY 后归一化，
+        ' 会把未除以 L(k,k) 的值传播给后续行而给出错误解）。
+        ' 这里同时用「标准标量参考实现对拍」与「残差 A x = b 校验」双重确认。
         Dim chol As CholeskyDecomposition = spd.chol()
         Dim cholL As Double()() = chol.GetL().ArrayPack(deepcopy:=False)
         Dim cholActual As Double() = chol.Solve(rhs).ColumnVector(0).Array
         Dim cholExpected As Double() = ScalarCholeskySolve(cholL, New Double() {1.0, 2.0, 3.0})
 
-        CheckClose("Cholesky Solve 与原标量实现等价 (0)", cholExpected(0), cholActual(0))
-        CheckClose("Cholesky Solve 与原标量实现等价 (1)", cholExpected(1), cholActual(1))
-        CheckClose("Cholesky Solve 与原标量实现等价 (2)", cholExpected(2), cholActual(2))
+        CheckClose("Cholesky Solve 与标准标量实现等价 (0)", cholExpected(0), cholActual(0))
+        CheckClose("Cholesky Solve 与标准标量实现等价 (1)", cholExpected(1), cholActual(1))
+        CheckClose("Cholesky Solve 与标准标量实现等价 (2)", cholExpected(2), cholActual(2))
+
+        ' 残差校验：A x 必须等于 b
+        For i As Integer = 0 To 2
+            Dim av As Double = spd(i, 0) * cholActual(0) + spd(i, 1) * cholActual(1) + spd(i, 2) * cholActual(2)
+
+            CheckClose($"Cholesky Solve 满足 A x = b (row{i + 1})", CDbl(i + 1), av)
+        Next
 
         ' LU 的前代/回代在本次改造中换成了 AXPY 内核：用「解必须满足原方程」来校验数学正确性
         Dim luActual As Double() = spd.LUD().Solve(rhs).ColumnVector(0).Array
@@ -788,11 +796,12 @@ Public Module VectorMatrixSimdTest
     End Sub
 
     ''' <summary>
-    ''' 复刻 <c>CholeskyDecomposition.Solve</c> 原始的循环顺序（前代 + 回代）。
+    ''' 标准 <c>L Lᵀ x = b</c> 的标量参考实现（前代 + 回代）。
     ''' </summary>
     ''' <remarks>
-    ''' 只用于「重构前后行为等价」的对拍：原实现在前代的同一轮里先用未归一化的
-    ''' <c>X(k)</c> 更新后续行、之后再归一化 <c>X(k)</c>，与标准前代算法不同。
+    ''' 前代必须在把 <c>Y(k)</c> 的贡献 AXPY 到后续行之前先完成归一化
+    ''' <c>X(k) /= L(k)(k)</c>；否则会把未除以对角元的值传播给后续行，
+    ''' 在 <c>L(0,0) ≠ 1</c> 时得到错误结果。
     ''' </remarks>
     Private Function ScalarCholeskySolve(L As Double()(), b As Double()) As Double()
         Dim n As Integer = b.Length
@@ -803,11 +812,11 @@ Public Module VectorMatrixSimdTest
         Next
 
         For k As Integer = 0 To n - 1
+            X(k)(0) /= L(k)(k)
+
             For i As Integer = k + 1 To n - 1
                 X(i)(0) -= X(k)(0) * L(i)(k)
             Next
-
-            X(k)(0) /= L(k)(k)
         Next
 
         For k As Integer = n - 1 To 0 Step -1

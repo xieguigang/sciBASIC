@@ -225,8 +225,8 @@ Namespace LinearAlgebra.Matrix
                             colJ(k) = V(k)(j)
                         Next
 
-                        ' g = SUM(scaled(k) * V(k)(j)) = dot(colI1, colJ) / h
-                        Dim g As Double = SIMDIntrinsics.DotFma(colI1, colJ) / h
+                        ' g = SUM(V(k)(i+1) * V(k)(j))，不除以 h（缩放因子在 scaled 中）
+                        Dim g As Double = SIMDIntrinsics.DotFma(colI1, colJ)
 
                         ' V(k)(j) -= g * m_d(k)
                         Call SIMDIntrinsics.AxpyInPlace(-g, scaled, colJ)
