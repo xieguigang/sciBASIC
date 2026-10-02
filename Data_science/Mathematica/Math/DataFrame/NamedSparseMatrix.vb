@@ -1,59 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::f7caf246e67c7722866ef17cec7bb4b3, Data_science\Mathematica\Math\DataFrame\NamedSparseMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 88
-    '    Code Lines: 55 (62.50%)
-    ' Comment Lines: 21 (23.86%)
-    '    - Xml Docs: 85.71%
-    ' 
-    '   Blank Lines: 12 (13.64%)
-    '     File Size: 2.64 KB
+' Summaries:
 
 
-    ' Class NamedSparseMatrix
-    ' 
-    '     Properties: [Dim]
-    ' 
-    '     Function: CheckElement, ContainsNode, GetDirectedValue, ToString
-    ' 
-    '     Sub: SetValue
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 88
+'    Code Lines: 55 (62.50%)
+' Comment Lines: 21 (23.86%)
+'    - Xml Docs: 85.71%
+' 
+'   Blank Lines: 12 (13.64%)
+'     File Size: 2.64 KB
+
+
+' Class NamedSparseMatrix
+' 
+'     Properties: [Dim]
+' 
+'     Function: CheckElement, ContainsNode, GetDirectedValue, ToString
+' 
+'     Sub: SetValue
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Public Class NamedSparseMatrix
 
@@ -71,24 +73,29 @@ Public Class NamedSparseMatrix
     ReadOnly hash As New HashSet(Of String)
 
     Default Public Property Value(i As String, j As String) As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return GetDirectedValue(i, j)
         End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Set
             Call SetValue(i, j, Value)
         End Set
     End Property
 
     Default Public Property Value(i As Integer, j As Integer) As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Me(names(i), names(j))
         End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Set
             Me(names(i), names(j)) = Value
         End Set
     End Property
 
     Public ReadOnly Property [Dim] As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return names.Count
         End Get
@@ -97,6 +104,8 @@ Public Class NamedSparseMatrix
     ''' <summary>
     ''' 检查指定的节点ID是否存在于矩阵维度中
     ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ContainsNode(nodeId As String) As Boolean
         Return hash.Contains(nodeId)
     End Function
@@ -107,6 +116,8 @@ Public Class NamedSparseMatrix
     ''' <param name="i"></param>
     ''' <param name="j"></param>
     ''' <returns>检查指定的边 (i -> j) 是否显式定义（非零值或在字典中存在键）</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CheckElement(i As String, j As String) As Boolean
         Return hash.Contains(i) AndAlso hash.Contains(j)
     End Function
