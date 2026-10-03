@@ -52,8 +52,37 @@
 
 #End Region
 
+Imports System.Buffers.Binary
+
 Namespace Data.Repository
 
+    ''' <summary>
+    ''' MurmurHash3 x86_32 哈希实现。
+    ''' </summary>
+    ''' <remarks>
+    ''' <para>
+    ''' 关于 SIMD 加速的评估结论（2026-10）：
+    ''' MurmurHash3 对单条数据而言是一条乘法/旋转/异或的<b>串行依赖链</b>，无法对单条哈希
+    ''' 进行向量化；而 <c>Microsoft.VisualBasic.Math.SIMD</c> 库
+    ''' （<see cref="Math.SIMD.SIMDIntrinsics"/> 提供 Double/Single FMA 内核，
+    ''' <c>Vectorized</c> 提供 VecAdd/VecMultiply/VecModulo 等逐元素算术原语）
+    ''' 缺少 MurmurHash 所需的 32 位整数 rotate、字节 shuffle 原语，
+    ''' 因此<b>无法基于该 SIMD 库对本模块的哈希函数进行加速</b>。
+    ''' </para>
+    ''' <para>
+    ''' 替代优化方案：字节数组重载的主体循环已改用
+    ''' <see cref="BinaryPrimitives.ReadUInt32LittleEndian(ReadOnlySpan(Of Byte))"/>
+    ''' 每 4 字节一次批量读取，相比旧版逐字节移位拼接，消除了每块 4 次的数组边界检查
+    ''' 与移位/或运算，热路径预期有 2~4 倍提升，且无任何堆内存分配，计算结果位级一致。
+    ''' </para>
+    ''' <para>
+    ''' 若将来出现批量哈希场景（例如全量索引重建、批量加载），可以考虑基于
+    ''' <c>System.Runtime.Intrinsics.X86.Avx2</c> 实现 8 通道并行的 MurmurHash
+    ''' （使用 <c>Avx2.MultiplyLow</c> + Sse2 移位/或模拟 rotate，同时处理 8 条数据），
+    ''' 该实现应直接使用 <c>System.Runtime.Intrinsics</c>，而不是 sciBASIC 的 SIMD 库；
+    ''' 在当前 BucketDb 单 key Get/Put 访问模式下收益有限，暂不实现。
+    ''' </para>
+    ''' </remarks>
     Public Module MurmurHash
 
         ' MurmurHash3 的常量
@@ -64,12 +93,24 @@ Namespace Data.Repository
         Const m As UInteger = 5UI
         Const n As UInteger = &HE6546B64UI
 
+        <System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)>
+        Private Function LoadUInt32(data As Byte(), i As Integer) As UInteger
+            ' 每 4 字节一次批量小端读取：
+            ' 相比逐字节移位拼接，消除 4 次数组边界检查与 3 次移位/或运算，
+            ' JIT 会将 AsSpan 越界检查折叠进主循环的条件判断，结果位级一致
+            Return BinaryPrimitives.ReadUInt32LittleEndian(data.AsSpan(i, 4))
+        End Function
+
         ''' <summary>
         ''' 计算给定数据的32位MurmurHash3值。
         ''' </summary>
         ''' <param name="data">输入数据。</param>
         ''' <param name="seed">哈希种子。</param>
         ''' <returns>32位无符号哈希值。</returns>
+        ''' <remarks>
+        ''' 主体循环使用 <see cref="BinaryPrimitives.ReadUInt32LittleEndian(ReadOnlySpan(Of Byte))"/>
+        ''' 批量读取以消除边界检查与移位拼接开销，详见类型注释中的 SIMD 评估结论。
+        ''' </remarks>
         Public Function MurmurHashCode3_x86_32(data As Byte(), seed As UInteger) As UInteger
             Dim length As Integer = data.Length
             Dim h As UInteger = seed
@@ -78,10 +119,7 @@ Namespace Data.Repository
 
             ' --- 处理主体部分（4字节块） ---
             While length - i >= 4
-                k = CUInt(data(i)) Or
-                            CUInt(data(i + 1)) << 8 Or
-                            CUInt(data(i + 2)) << 16 Or
-                            CUInt(data(i + 3)) << 24
+                k = LoadUInt32(data, i)
 
                 k *= c1
                 k = (k << r1) Or (k >> (32 - r1))
