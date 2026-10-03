@@ -54,6 +54,7 @@
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
+Imports std = System.Math
 
 Namespace LinearAlgebra.Solvers
 
@@ -214,6 +215,87 @@ Namespace LinearAlgebra.Solvers
             Next
 
             Return beta
+        End Function
+
+        ''' <summary>
+        ''' Solves A·x = b by Gaussian elimination with partial pivoting.
+        ''' </summary>
+        Public Function Solve(a As Double(,), b As Double()) As Double()
+            Dim n = a.GetLength(0)
+            If a.GetLength(1) <> n OrElse b.Length <> n Then Throw New ArgumentException("dimension mismatch")
+
+            Dim m(n - 1, n) As Double
+            For i = 0 To n - 1
+                For j = 0 To n - 1
+                    m(i, j) = a(i, j)
+                Next
+                m(i, n) = b(i)
+            Next
+
+            For col = 0 To n - 1
+                Dim piv = col
+                Dim best = std .Abs(m(col, col))
+                For r As Integer = col + 1 To n - 1
+                    If std.Abs(m(r, col)) > best Then
+                        best = std.Abs(m(r, col))
+                        piv = r
+                    End If
+                Next
+                If best < 0.000000000001 Then Throw New InvalidOperationException("singular system")
+
+                If piv <> col Then
+                    For j = 0 To n
+                        Dim t = m(col, j)
+                        m(col, j) = m(piv, j)
+                        m(piv, j) = t
+                    Next
+                End If
+
+                For r As Integer = col + 1 To n - 1
+                    Dim f = m(r, col) / m(col, col)
+                    If f <> 0.0 Then
+                        For j As Integer = col To n
+                            m(r, j) -= f * m(col, j)
+                        Next
+                    End If
+                Next
+            Next
+
+            Dim x(n - 1) As Double
+            For i = n - 1 To 0 Step -1
+                Dim s = m(i, n)
+                For j = i + 1 To n - 1
+                    s -= m(i, j) * x(j)
+                Next
+                x(i) = s / m(i, i)
+            Next
+            Return x
+        End Function
+
+        ''' <summary>
+        ''' Ordinary least squares β minimising ‖X·β − y‖² via the normal
+        ''' equations. A tiny ridge (1e-10 of the mean diagonal) is applied
+        ''' only as a fallback when X'X is singular, so rank-deficient
+        ''' covariate designs still return an answer instead of throwing.
+        ''' </summary>
+        Public Function LeastSquares(x As Double(,), y As Double()) As Double()
+            Dim p = x.GetLength(1)
+            Dim xt = Transpose(x)
+            Dim xtx = MatrixOps.Multiply(xt, x)
+            Dim xty = MatrixOps.MultiplyVec(xt, y)
+            Try
+                Return Solve(xtx, xty)
+            Catch ex As InvalidOperationException
+                Dim trace = 0.0
+                For i = 0 To p - 1
+                    trace += std.Abs(xtx(i, i))
+                Next
+                Dim ridge = If(trace > 0.0, 0.0000000001 * trace / p, 0.0000000001)
+                For i = 0 To p - 1
+                    xtx(i, i) += ridge
+                Next
+                Return Solve(xtx, xty)
+            End Try
         End Function
     End Module
 End Namespace
