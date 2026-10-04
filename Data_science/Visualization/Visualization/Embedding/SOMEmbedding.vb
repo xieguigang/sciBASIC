@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plots
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -96,22 +97,39 @@ Public Class SOMEmbedding : Inherits Plot
         End If
     End Sub
 
+    ''' <summary>
+    ''' 二维 SOM embedding：按类别分组后用 DataPlot 的散点图引擎渲染。
+    ''' </summary>
     Private Sub plot2D(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim points As New List(Of PointData)
         Dim class_id As String() = som.class_id.AsCharacter.ToArray
         Dim colors = New CategoryColorProfile(class_id, Designer.GetColors(theme.colorSet, class_id.Distinct.Count))
         Dim embedding = som.embeddings
+        Dim groups As New Dictionary(Of String, List(Of PointF))()
 
         For i As Integer = 0 To embedding.Length - 1
             Dim xy = embedding(i)
+            Dim cid = class_id(i)
 
-            Call points.Add(New PointData With {
-                .color = colors.GetColor(class_id(i)).ToHtmlColor,
-                .pt = New PointF(xy(0), xy(1))
+            If Not groups.ContainsKey(cid) Then groups(cid) = New List(Of PointF)()
+            groups(cid).Add(New PointF(CSng(xy(0)), CSng(xy(1))))
+        Next
+
+        Dim serials As New List(Of Series)()
+
+        For Each group In groups
+            serials.Add(New Series With {
+                .Name = group.Key,
+                .Color = colors.GetColor(group.Key),
+                .MarkerShape = MarkerShape.Circle,
+                .LineStyle = Drawing2D.DashStyle.Solid,
+                .PointSize = CSng(theme.pointSize),
+                .X = group.Value.Select(Function(p) CDbl(p.X)).ToArray(),
+                .Y = group.Value.Select(Function(p) CDbl(p.Y)).ToArray()
             })
         Next
 
-        Dim scatter As New Scatter2D(points, theme)
-        Call scatter.Plot(g, canvas)
+        Using scatter As New ScatterPlot(g)
+            scatter.Plot(serials)
+        End Using
     End Sub
 End Class
