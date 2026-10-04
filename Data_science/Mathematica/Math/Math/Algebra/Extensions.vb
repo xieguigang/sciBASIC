@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::b6cbdc1747b73b5991671a5b704ab4bb, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 249
-    '    Code Lines: 134 (53.82%)
-    ' Comment Lines: 79 (31.73%)
-    '    - Xml Docs: 70.89%
-    ' 
-    '   Blank Lines: 36 (14.46%)
-    '     File Size: 9.83 KB
+' Summaries:
 
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module HelperExtensions
-    ' 
-    '         Function: AsMatrix, GetColumn, IsNaNImaginary, (+2 Overloads) jaccard_coeff, jaccard_coeff_parallel
-    '                   jaccard_row, JaccardIndex, NAremove, PrimitiveLinearEquation, Tangent
-    '         Class JaccardTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
-    ' 
-    ' 
-    ' 
-    '     Enum ApplyOnAxis
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 249
+'    Code Lines: 134 (53.82%)
+' Comment Lines: 79 (31.73%)
+'    - Xml Docs: 70.89%
+' 
+'   Blank Lines: 36 (14.46%)
+'     File Size: 9.83 KB
+
+
+'     Delegate Function
+' 
+' 
+'     Module HelperExtensions
+' 
+'         Function: AsMatrix, GetColumn, IsNaNImaginary, (+2 Overloads) jaccard_coeff, jaccard_coeff_parallel
+'                   jaccard_row, JaccardIndex, NAremove, PrimitiveLinearEquation, Tangent
+'         Class JaccardTask
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: Solve
+' 
+' 
+' 
+'     Enum ApplyOnAxis
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Parallel
+Imports stdf = System.Math
 
 Namespace LinearAlgebra
 
@@ -307,6 +308,17 @@ Namespace LinearAlgebra
                     Yield {i, k, u / (2.0 * nodei.Length - u) / div}
                 End If
             Next
+        End Function
+
+        ''' <summary>Linear interpolation.</summary>
+        Public Function Lerp(a As Double, b As Double, t As Double) As Double
+            Return a + (b - a) * t
+        End Function
+
+        ''' <summary>Hermite smoothstep, 0 at t=0 and 1 at t=1.</summary>
+        Public Function SmoothStep(t As Double) As Double
+            t = stdf.Clamp(t, 0.0, 1.0)
+            Return t * t * (3.0 - 2.0 * t)
         End Function
     End Module
 

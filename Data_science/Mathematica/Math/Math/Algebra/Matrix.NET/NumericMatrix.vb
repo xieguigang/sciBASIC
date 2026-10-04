@@ -1137,7 +1137,17 @@ Namespace LinearAlgebra.Matrix
             End If
         End Function
 
+        ''' <summary>
+        ''' matrix dot vector product
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
         Public Function DotMultiply(v As Vector) As Vector
+            If v.Dim <> ColumnDimension Then
+                Throw New InvalidDataContractException(
+                    $"the size of the vector(dim={v.Dim}) should be equals to the column dimension({ColumnDimension}) in your matrix!")
+            End If
+
             Dim out As Double() = New Double(Me.RowDimension - 1) {}
             Dim values As Double() = v.Array
 
@@ -1318,16 +1328,8 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator ^(x As Double, m1 As NumericMatrix) As NumericMatrix
-            Dim exp As New NumericMatrix(m1.m, m1.n)
-            Dim C As Double()() = exp.Array
-
-            For i As Integer = 0 To m1.m - 1
-                For j As Integer = 0 To m1.n - 1
-                    C(i)(j) = x ^ m1.buffer(i)(j)
-                Next
-            Next
-
-            Return exp
+            ' SIMD 化：逐元素幂运算走向量化内核
+            Return New NumericMatrix(SimdMatrix.PowScalar(m1.buffer, x), m1.m, m1.n)
         End Operator
 
         Public Shared Operator -(x As Double, m As NumericMatrix) As GeneralMatrix
@@ -1366,16 +1368,22 @@ Namespace LinearAlgebra.Matrix
             Return m1.ArrayMultiply(m2)
         End Operator
 
-        Public Shared Operator *(m As NumericMatrix, v As Vector) As NumericMatrix
-            ' 注意：这里刻意保留了历史行为 —— 该运算符实际是“就地按行缩放左操作数”，
-            ' 而返回值是一整片零矩阵（历史缺陷）。本次重构只做向量化，不改变可观察行为。
-            Dim scaled As Double()() = SimdMatrix.MultiplyRows(m.buffer, v.Array)
-
-            For i As Integer = 0 To m.m - 1
-                Call System.Array.Copy(scaled(i), 0, m.buffer(i), 0, m.n)
-            Next
-
-            Return New NumericMatrix(m.RowDimension, m.ColumnDimension)
+        ''' <summary>
+        ''' matrix * vector product: returns a vector where element i 
+        ''' is the dot product of row i in <paramref name="m"/> with <paramref name="v"/>.
+        ''' </summary>
+        ''' <param name="m"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 历史缺陷修正：旧实现会就地按行缩放左操作数 <paramref name="m"/>，
+        ''' 并返回一个全零矩阵（既丢失输入数据，乘法结果也完全错误）。
+        ''' 现修正为标准的矩阵×向量乘法 <see cref="DotMultiply"/>。
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator *(m As NumericMatrix, v As Vector) As Vector
+            Return m.DotMultiply(v)
         End Operator
 
         ''' <summary>

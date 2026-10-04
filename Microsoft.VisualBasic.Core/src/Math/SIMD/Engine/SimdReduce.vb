@@ -284,6 +284,139 @@ Namespace Math.SIMD
 
 #End Region
 
+#Region "pairwise distance"
+
+        ''' <summary>
+        ''' 欧氏距离的平方：<c>SUM((a(i) - b(i)) ^ 2)</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' 单趟遍历、零临时数组：相比「先 <see cref="SimdEngine.Subtract(Of T)(T(), T())"/>
+        ''' 生成差值数组、再 <see cref="SumSquares(Double())"/>」的经典两趟写法，省掉了一整个
+        ''' 中间数组的堆分配与两次额外的内存往返。在成对距离计算（例如层次聚类的
+        ''' n×n 距离矩阵构建，调用次数为 O(n²)）的场景下，这个差别会同时表现为
+        ''' 更高的吞吐与显著更低的 GC 压力。
+        ''' </para>
+        ''' <para>
+        ''' 与 <see cref="Sum"/> 一样使用 4 路独立累加器来打断浮点加法的依赖链；
+        ''' 归约顺序与标量实现不同，结果可能存在末位（ULP）级差异。
+        ''' </para>
+        ''' </remarks>
+        Public Shared Function DistanceSquared(a As Double(), b As Double()) As Double
+            CheckNull(a, NameOf(a))
+            CheckNull(b, NameOf(b))
+            CheckAgree(a.Length, b.Length)
+
+            Dim len As Integer = a.Length
+            If len = 0 Then Return 0.0
+
+            Dim count As Integer = Vector(Of Double).Count
+            Dim step4 As Integer = count * 4
+            Dim ones As New Vector(Of Double)(1.0)
+            Dim i As Integer = 0
+
+            If SIMDEnvironment.IsEnabled AndAlso len >= step4 Then
+                Dim acc0 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim acc1 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim acc2 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim acc3 As Vector(Of Double) = Vector(Of Double).Zero
+                Dim last4 As Integer = len - step4
+
+                Do While i <= last4
+                    acc0 = Vector.Add(Of Double)(acc0, SquareDiff(New Vector(Of Double)(a, i), New Vector(Of Double)(b, i)))
+                    acc1 = Vector.Add(Of Double)(acc1, SquareDiff(New Vector(Of Double)(a, i + count), New Vector(Of Double)(b, i + count)))
+                    acc2 = Vector.Add(Of Double)(acc2, SquareDiff(New Vector(Of Double)(a, i + count * 2), New Vector(Of Double)(b, i + count * 2)))
+                    acc3 = Vector.Add(Of Double)(acc3, SquareDiff(New Vector(Of Double)(a, i + count * 3), New Vector(Of Double)(b, i + count * 3)))
+                    i += step4
+                Loop
+
+                acc0 = Vector.Add(Of Double)(Vector.Add(Of Double)(acc0, acc1),
+                                             Vector.Add(Of Double)(acc2, acc3))
+
+                Dim sum As Double = Vector.Dot(Of Double)(acc0, ones)
+
+                For k As Integer = i To len - 1
+                    Dim d As Double = a(k) - b(k)
+                    sum += d * d
+                Next
+
+                Return sum
+            End If
+
+            Dim fallback As Double = 0
+
+            For k As Integer = 0 To len - 1
+                Dim d As Double = a(k) - b(k)
+                fallback += d * d
+            Next
+
+            Return fallback
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function SquareDiff(a As Vector(Of Double), b As Vector(Of Double)) As Vector(Of Double)
+            Dim d As Vector(Of Double) = Vector.Subtract(Of Double)(a, b)
+            Return Vector.Multiply(Of Double)(d, d)
+        End Function
+
+        ''' <summary>
+        ''' 欧氏距离的平方（<see cref="Single"/> 输入，以 <see cref="Double"/> 返回）：
+        ''' <c>SUM((a(i) - b(i)) ^ 2)</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' <see cref="Single"/> 通道在一条 256 位指令上可以并行处理 8 个元素；
+        ''' 块内以 <see cref="Single"/> 累加（与 <see cref="Dot(Single(), Single())"/> 相同的模式），
+        ''' 尾部以 <see cref="Double"/> 累加以减少长向量上的精度损失。
+        ''' </remarks>
+        Public Shared Function DistanceSquared(a As Single(), b As Single()) As Double
+            CheckNull(a, NameOf(a))
+            CheckNull(b, NameOf(b))
+            CheckAgree(a.Length, b.Length)
+
+            Dim len As Integer = a.Length
+            If len = 0 Then Return 0.0
+
+            Dim count As Integer = Vector(Of Single).Count
+            Dim step4 As Integer = count * 4
+            Dim ones As New Vector(Of Single)(1.0F)
+            Dim i As Integer = 0
+            Dim sum As Double = 0
+
+            If SIMDEnvironment.IsEnabled AndAlso len >= step4 Then
+                Dim acc0 As Vector(Of Single) = Vector(Of Single).Zero
+                Dim acc1 As Vector(Of Single) = Vector(Of Single).Zero
+                Dim acc2 As Vector(Of Single) = Vector(Of Single).Zero
+                Dim acc3 As Vector(Of Single) = Vector(Of Single).Zero
+                Dim last4 As Integer = len - step4
+
+                Do While i <= last4
+                    Dim d0 As Vector(Of Single) = Vector.Subtract(Of Single)(New Vector(Of Single)(a, i), New Vector(Of Single)(b, i))
+                    Dim d1 As Vector(Of Single) = Vector.Subtract(Of Single)(New Vector(Of Single)(a, i + count), New Vector(Of Single)(b, i + count))
+                    Dim d2 As Vector(Of Single) = Vector.Subtract(Of Single)(New Vector(Of Single)(a, i + count * 2), New Vector(Of Single)(b, i + count * 2))
+                    Dim d3 As Vector(Of Single) = Vector.Subtract(Of Single)(New Vector(Of Single)(a, i + count * 3), New Vector(Of Single)(b, i + count * 3))
+
+                    acc0 = Vector.Add(Of Single)(acc0, Vector.Multiply(Of Single)(d0, d0))
+                    acc1 = Vector.Add(Of Single)(acc1, Vector.Multiply(Of Single)(d1, d1))
+                    acc2 = Vector.Add(Of Single)(acc2, Vector.Multiply(Of Single)(d2, d2))
+                    acc3 = Vector.Add(Of Single)(acc3, Vector.Multiply(Of Single)(d3, d3))
+                    i += step4
+                Loop
+
+                acc0 = Vector.Add(Of Single)(Vector.Add(Of Single)(acc0, acc1),
+                                             Vector.Add(Of Single)(acc2, acc3))
+                sum = Vector.Dot(Of Single)(acc0, ones)
+            End If
+
+            For k As Integer = i To len - 1
+                Dim d As Double = CDbl(a(k)) - CDbl(b(k))
+                sum += d * d
+            Next
+
+            Return sum
+        End Function
+
+#End Region
+
 #Region "dot"
 
         ''' <summary>

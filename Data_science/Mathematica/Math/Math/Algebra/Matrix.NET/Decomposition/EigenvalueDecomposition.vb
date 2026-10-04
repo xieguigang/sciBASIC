@@ -56,6 +56,8 @@
 #End Region
 
 Imports __std = System.Math
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
 
 Namespace LinearAlgebra.Matrix
 
@@ -203,16 +205,34 @@ Namespace LinearAlgebra.Matrix
                 V(i)(i) = 1.0
                 Dim h As Double = m_d(i + 1)
                 If h <> 0.0 Then
+                    ' SIMD 化：列片段 [0, i] 抽取为连续数组后走向量化内核
+                    Dim lenT As Integer = i + 1
+                    Dim colI1 As Double() = New Double(lenT - 1) {}
+                    Dim colJ As Double() = New Double(lenT - 1) {}
+
                     For k As Integer = 0 To i
-                        m_d(k) = V(k)(i + 1) / h
+                        colI1(k) = V(k)(i + 1)
                     Next
+
+                    ' m_d(k) = V(k)(i+1) / h（缩放后的 Householder 向量）
+                    Dim scaled As Double() = SimdEngine.DivideScalar(colI1, h)
+                    For k As Integer = 0 To i
+                        m_d(k) = scaled(k)
+                    Next
+
                     For j As Integer = 0 To i
-                        Dim g As Double = 0.0
                         For k As Integer = 0 To i
-                            g += V(k)(i + 1) * V(k)(j)
+                            colJ(k) = V(k)(j)
                         Next
+
+                        ' g = SUM(V(k)(i+1) * V(k)(j))，不除以 h（缩放因子在 scaled 中）
+                        Dim g As Double = SIMDIntrinsics.DotFma(colI1, colJ)
+
+                        ' V(k)(j) -= g * m_d(k)
+                        Call SIMDIntrinsics.AxpyInPlace(-g, scaled, colJ)
+
                         For k As Integer = 0 To i
-                            V(k)(j) -= g * m_d(k)
+                            V(k)(j) = colJ(k)
                         Next
                     Next
                 End If
@@ -265,7 +285,14 @@ Namespace LinearAlgebra.Matrix
                     Dim iter As Integer = 0
                     Do
                         iter = iter + 1
-                        ' (Could check iteration count here.)
+
+                        ' 准确度修正：增加迭代次数上限（沿用 EISPACK 的 30 次约定），
+                        ' 旧实现无上限，病态输入可能导致死循环。
+                        If iter > 30 Then
+                            Throw New ApplicationException(
+                                $"tql2: eigenvalue #{l} does not converge after 30 QL iterations.")
+                        End If
+
                         ' Compute implicit shift
 
                         Dim g As Double = m_d(l)
@@ -454,11 +481,21 @@ Namespace LinearAlgebra.Matrix
             If __std.Abs(yr) > __std.Abs(yi) Then
                 r = yi / yr
                 d = yr + r * yi
+                ' 准确度修正：d 为复数除数的模平方，yr = yi = 0 时 d = 0，
+                ' 会产生除零 NaN 并向特征值/特征向量传播，此处显式失败
+                If d = 0 Then
+                    Throw New ApplicationException(
+                        "cdiv: division by zero in complex scalar division (zero divisor).")
+                End If
                 cdivr = (xr + r * xi) / d
                 cdivi = (xi - r * xr) / d
             Else
                 r = yr / yi
                 d = yi + r * yr
+                If d = 0 Then
+                    Throw New ApplicationException(
+                        "cdiv: division by zero in complex scalar division (zero divisor).")
+                End If
                 cdivr = (r * xr + xi) / d
                 cdivi = (r * xi - xr) / d
             End If
@@ -643,7 +680,15 @@ Namespace LinearAlgebra.Matrix
                     End If
 
                     iter = iter + 1
-                    ' (Could check iteration count here.)
+
+                    ' 准确度修正：增加迭代次数上限（EISPACK 约定每对特征值最多
+                    ' 30 次 QR 迭代，第 10/20 次已做异常位移）。旧实现无上限，
+                    ' 病态输入可能导致死循环。
+                    If iter > 30 Then
+                        Throw New ApplicationException(
+                            "hqr2: eigenvalues do not converge after 30 QR iterations.")
+                    End If
+
                     ' Look for two consecutive small sub-diagonal elements
 
                     Dim m As Integer = n - 2

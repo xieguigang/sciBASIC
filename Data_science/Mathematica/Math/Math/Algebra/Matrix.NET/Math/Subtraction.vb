@@ -53,6 +53,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
 
 Namespace LinearAlgebra.Matrix
 
@@ -69,16 +71,22 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         <Extension>
         Public Function RowSubtraction(v As Vector, m As GeneralMatrix) As GeneralMatrix
-            ' 注意：这里保留了历史可观察行为 —— 原实现从未读取 m 的元素值，
-            ' 结果矩阵的每一行 j 都被整体填充为 v(j)（疑似历史缺陷）。
-            ' 本次只做向量化/块写入改造，不改变可观察行为。
+            If v.Dim <> m.RowDimension Then
+                Throw New InvalidDataContractException(
+                    $"the dimension of the vector(dim={v.Dim}) should be equals to the row dimension({m.RowDimension}) of the input matrix!")
+            End If
+
+            ' 历史缺陷修正：旧实现从未读取 m 的元素值，结果矩阵的每一行 j 
+            ' 都被整体填充为 v(j)（等于假设 m 全零）。现修正为文档声明的语义：
+            ' result(i, j) = v(i) - m(i, j)，即把列向量 v 按行广播到矩阵上做减法。
             Dim m2 As New NumericMatrix(m.RowDimension, m.ColumnDimension)
             Dim C As Double()() = m2.Array
             Dim values As Double() = v.Array
 
-            For j As Integer = 0 To m.RowDimension - 1
-                ' Array.Fill 走 Span.Fill 的向量化填充，取代逐元素赋值
-                Call System.Array.Fill(C(j), values(j))
+            ' 每行两步 SIMD 内核：先整行取负，再加标量 v(i)，无逐元素标量循环
+            For i As Integer = 0 To m.RowDimension - 1
+                Dim row As Double() = SimdEngine.MultiplyScalar(-1.0, m.X(i).Array)
+                C(i) = SimdEngine.AddScalar(row, values(i))
             Next
 
             Return m2

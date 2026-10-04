@@ -77,7 +77,15 @@ Namespace LinearAlgebra.Solvers
         Private curX As Double()
         Private prevX As Double()
         Private n As Integer
-        Private ReadOnly epsilon As Double = 0 '.00001
+        ''' <summary>
+        ''' 收敛阈值。旧默认值 0 会导致循环永远无法终止（浮点误差使得
+        ''' difference() 始终大于 0），必须为一个有效的正值。
+        ''' </summary>
+        Private ReadOnly epsilon As Double = 0.00001
+        ''' <summary>
+        ''' 幂迭代次数上限，防止谱分布病态（如 |lambda1| = |lambda2|）时无限循环。
+        ''' </summary>
+        Private Const maxIterations As Integer = 100000
         Private count As Integer = 0
 
 
@@ -129,6 +137,12 @@ Namespace LinearAlgebra.Solvers
                 newCurLambda()
                 newPrevX()
                 count += 1
+
+                If count > maxIterations Then
+                    Throw New InvalidOperationException(
+                        $"Power iteration does not converge after {maxIterations} iterations " &
+                        "(possible that |lambda1| = |lambda2| in the spectrum).")
+                End If
             End While
             Console.WriteLine("count = " & count.ToString())
             Console.WriteLine("Lambda = " & curLambda.ToString())
@@ -167,12 +181,9 @@ Namespace LinearAlgebra.Solvers
         End Sub
 
         Private Function vectorsMultiply(first As Double(), second As Double()) As Double
-            Dim res As Double = 0
-            For i = 0 To n - 1
-                res += first(i) * second(i)
-                i += 1
-            Next
-            Return res
+            ' 准确度修正：旧实现在 For 循环体内手动 i += 1，只累加了偶数下标的
+            ' 一半元素，点积结果错误。现改用 SIMD FMA 点积内核，一次性处理全部元素。
+            Return SIMDIntrinsics.DotFma(first, second)
         End Function
     End Class
 End Namespace

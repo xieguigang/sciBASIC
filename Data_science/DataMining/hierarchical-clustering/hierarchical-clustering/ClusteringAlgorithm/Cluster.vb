@@ -149,6 +149,18 @@ Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
     Friend ReadOnly Property Id As Integer
 
     ''' <summary>
+    ''' 供 <see cref="Hierarchy.HierarchyBuilder"/> 在凝聚过程中以 O(1) 的方式
+    ''' 标记当前簇已经被合并进新簇（等价于旧实现的从 Clusters 列表中物理移除）。
+    ''' 
+    ''' <para>
+    ''' 旧实现每合并一对簇都要对 Clusters 列表做一次 O(n) 的线性查找 + RemoveAt
+    ''' （尾部元素整体前移），累计 O(n^2) 的常数开销；标记位方案把删除降为 O(1)，
+    ''' 失效条目由 HierarchyBuilder 在其数量超过存活条目时一次性压实。
+    ''' </para>
+    ''' </summary>
+    Friend Property removed As Boolean
+
+    ''' <summary>
     ''' Gets the read-only collection of child clusters directly under this node.
     ''' An empty collection indicates that this node is a leaf cluster.
     ''' Implements <see cref="ITreeNodeData(Of Cluster).ChildNodes"/> .

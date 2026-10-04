@@ -56,6 +56,8 @@
 #End Region
 
 Imports System.Runtime.Serialization
+Imports SIMDIntrinsics = Microsoft.VisualBasic.Math.SIMD.SIMDIntrinsics
+Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
 
 Namespace LinearAlgebra.Matrix
 
@@ -124,15 +126,30 @@ Namespace LinearAlgebra.Matrix
                     Next
                     QR(k)(k) += 1.0
 
+                    ' SIMD 化：把 Householder 向量的列片段 [k, m) 抽取为连续数组，
+                    ' 后续对每一列的点积与 AXPY 走 FMA 内核；缓冲在每个 k 只分配一次
+                    Dim len As Integer = m - k
+                    Dim house As Double() = New Double(len - 1) {}
+                    Dim colJ As Double() = New Double(len - 1) {}
+
+                    For i As Integer = k To m - 1
+                        house(i - k) = QR(i)(k)
+                    Next
+
                     ' Apply transformation to remaining columns.
                     For j As Integer = k + 1 To n - 1
-                        Dim s As Double = 0.0
                         For i As Integer = k To m - 1
-                            s += QR(i)(k) * QR(i)(j)
+                            colJ(i - k) = QR(i)(j)
                         Next
+
+                        Dim s As Double = SIMDIntrinsics.DotFma(house, colJ)
                         s = (-s) / QR(k)(k)
+
+                        ' colJ += s * house（就地 AXPY），再写回矩阵列
+                        Call SIMDIntrinsics.AxpyInPlace(s, house, colJ)
+
                         For i As Integer = k To m - 1
-                            QR(i)(j) += s * QR(i)(k)
+                            QR(i)(j) = colJ(i - k)
                         Next
                     Next
                 End If
@@ -213,18 +230,33 @@ Namespace LinearAlgebra.Matrix
                         Qa(i)(k) = 0.0
                     Next
                     Qa(k)(k) = 1.0
-                    For j As Integer = k To n - 1
-                        If QR(k)(k) <> 0 Then
-                            Dim s As Double = 0.0
+
+                    If QR(k)(k) <> 0 Then
+                        ' SIMD 化：与构造函数相同 —— 抽取 Householder 列片段，
+                        ' 每列的点积与 AXPY 走 FMA 内核
+                        Dim len As Integer = m - k
+                        Dim house As Double() = New Double(len - 1) {}
+                        Dim colJ As Double() = New Double(len - 1) {}
+
+                        For i As Integer = k To m - 1
+                            house(i - k) = QR(i)(k)
+                        Next
+
+                        For j As Integer = k To n - 1
                             For i As Integer = k To m - 1
-                                s += QR(i)(k) * Qa(i)(j)
+                                colJ(i - k) = Qa(i)(j)
                             Next
+
+                            Dim s As Double = SIMDIntrinsics.DotFma(house, colJ)
                             s = (-s) / QR(k)(k)
+
+                            Call SIMDIntrinsics.AxpyInPlace(s, house, colJ)
+
                             For i As Integer = k To m - 1
-                                Qa(i)(j) += s * QR(i)(k)
+                                Qa(i)(j) = colJ(i - k)
                             Next
-                        End If
-                    Next
+                        Next
+                    End If
                 Next
                 Return X
             End Get
@@ -255,27 +287,41 @@ Namespace LinearAlgebra.Matrix
             Dim X As Double()() = B.ArrayPack(deepcopy:=True)
 
             ' Compute Y = transpose(Q)*B
+            ' SIMD 化：与构造函数相同 —— 列片段抽取 + FMA 点积/就地 AXPY
+            ' （缓冲按 k 的精确长度分配，避免 DotFma 混入 [0, k) 区间的过期数据）
             For k As Integer = 0 To n - 1
+                Dim len As Integer = m - k
+                Dim houseB As Double() = New Double(len - 1) {}
+                Dim colXB As Double() = New Double(len - 1) {}
+
+                For i As Integer = k To m - 1
+                    houseB(i - k) = QR(i)(k)
+                Next
+
                 For j As Integer = 0 To nx - 1
-                    Dim s As Double = 0.0
                     For i As Integer = k To m - 1
-                        s += QR(i)(k) * X(i)(j)
+                        colXB(i - k) = X(i)(j)
                     Next
+
+                    Dim s As Double = SIMDIntrinsics.DotFma(houseB, colXB)
                     s = (-s) / QR(k)(k)
+
+                    Call SIMDIntrinsics.AxpyInPlace(s, houseB, colXB)
+
                     For i As Integer = k To m - 1
-                        X(i)(j) += s * QR(i)(k)
+                        X(i)(j) = colXB(i - k)
                     Next
                 Next
             Next
+
             ' Solve R*X = Y;
             For k As Integer = n - 1 To 0 Step -1
-                For j As Integer = 0 To nx - 1
-                    X(k)(j) /= Rdiag(k)
-                Next
+                ' 行内逐元素除以 Rdiag(k)（SIMD 向量化）
+                X(k) = SimdEngine.DivideScalar(X(k), Rdiag(k))
+
                 For i As Integer = 0 To k - 1
-                    For j As Integer = 0 To nx - 1
-                        X(i)(j) -= X(k)(j) * QR(i)(k)
-                    Next
+                    ' X(i)(*) -= X(k)(*) * QR(i)(k)：整行连续内存的就地 AXPY
+                    Call SIMDIntrinsics.AxpyInPlace(-QR(i)(k), X(k), X(i))
                 Next
             Next
 

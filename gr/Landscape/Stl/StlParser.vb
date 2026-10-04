@@ -112,6 +112,8 @@ Namespace Stl
         ''' <summary>
         ''' 判断文件头是否为 ASCII STL 格式（以 "solid" 开头）
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function IsAsciiSTL(header As Byte()) As Boolean
             ' "solid" = 115, 111, 108, 105, 100
             Return header(0) = 115 AndAlso header(1) = 111 AndAlso

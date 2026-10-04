@@ -207,11 +207,13 @@ Namespace Math.Correlations
             If X.Length <> Y.Length Then
                 Throw New ArgumentException(DimNotAgree)
             Else
-                Dim v = SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(X, Y), 2)
-                Dim sum As Double = v.Sum
-                Dim distance As Double = std.Sqrt(sum)
-
-                Return distance
+                ' 使用 Math.SIMD 引擎的单趟零分配距离平方内核 SimdReduce.DistanceSquared。
+                '
+                ' 旧实现（SIMD.Subtract + SIMD.Exponent）会为每一对向量分配两个临时数组，
+                ' 在 n^2 量级的成对距离计算（例如层次聚类的距离矩阵构建，调用次数为 O(n^2)）
+                ' 中带来巨大的 GC 压力与多余的内存带宽开销；新内核单趟完成计算，
+                ' 使用 4 路累加器向量化，无任何堆分配
+                Return std.Sqrt(SIMD.SimdReduce.DistanceSquared(X, Y))
             End If
         End Function
 
