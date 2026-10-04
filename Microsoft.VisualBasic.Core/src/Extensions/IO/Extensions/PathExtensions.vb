@@ -858,7 +858,9 @@ Public Module PathExtensions
     ''' <param name="full">
     ''' http url should turn this parameter to false?
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function returns empty string if the given <paramref name="file"/> is empty.
+    ''' </returns>
     ''' <remarks>this function also could be used for handling of the http url location.
     ''' 这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI(NameOf(ParentPath))>
@@ -866,8 +868,12 @@ Public Module PathExtensions
     Public Function ParentPath(file$, Optional full As Boolean = True) As String
         If file.StringEmpty Then
             Return ""
+        Else
+            Return ParentPathInternal(file, full)
         End If
+    End Function
 
+    Private Function ParentPathInternal(file$, full As Boolean) As String
         Dim isUNCpath As Boolean = file.CheckUNCNetworkPath
         Dim isHttpUrl As Boolean = file.IsURLPattern
 
