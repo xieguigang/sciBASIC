@@ -528,7 +528,11 @@ Namespace Math.Correlations
                 sxy += xt * yt
             Next
 
-            Return sxy / (std.Sqrt(sxx * syy) + TINY)
+            If sxx <= 0 OrElse syy <= 0 Then
+                Return 0
+            Else
+                Return sxy / (std.Sqrt(sxx * syy) + TINY)
+            End If
         End Function
 
         ''' <summary>
