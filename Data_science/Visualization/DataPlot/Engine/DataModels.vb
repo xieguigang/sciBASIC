@@ -487,8 +487,8 @@ Public Class BarDataGroup
         Next
 
         Dim list As New List(Of BarDataSample)()
-        For Each name In order
-            If index.ContainsKey(name) Then list.Add(index(name))
+        For Each tag In order
+            If index.ContainsKey(tag) Then list.Add(index(tag))
         Next
 
         Return New BarDataGroup With {.Serials = Me.Serials, .Samples = list.ToArray()}
