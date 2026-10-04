@@ -23,6 +23,7 @@ Module corstore_test
 
         Call RunRoundTrip(IO.Path.Combine(tmpDir, "f32.corstore"), geneIds, truth, CorrelationEncodings.Float32, 0.000001)
         Call RunRoundTrip(IO.Path.Combine(tmpDir, "i16.corstore"), geneIds, truth, CorrelationEncodings.QuantizedInt16, 0.0001)
+        Call RunStreamRoundTrip(geneIds, truth)
 
         Check("PValue(0, n) = 1", CorrelationPValues.PValue(0.0, SampleN) = 1.0)
         Check("PValue(0.5, n) in (0, 0.001)",
@@ -150,5 +151,64 @@ Module corstore_test
     Private Sub Check(name$, ok As Boolean)
         Call Console.WriteLine($"  [{If(ok, "PASS", "FAIL")}] {name}")
         If Not ok Then failures += 1
+    End Sub
+
+    ''' <summary>
+    ''' 外部 Stream 模式 round-trip：矩阵与索引分别写入两个自定义 MemoryStream，
+    ''' 然后用 Open(stream, stream) 重新打开验证点查/邻域/流式筛选。
+    ''' </summary>
+    Private Sub RunStreamRoundTrip(geneIds As String(), truth As Single(,))
+        Call Console.WriteLine("--- round-trip [external streams] ---")
+
+        Dim dataStream As New System.IO.MemoryStream
+        Dim indexStream As New System.IO.MemoryStream
+
+        ' ① 写入（writer 不关闭外部流）
+        Using writer As New CorrelationMatrixWriter(dataStream, indexStream, geneIds, SampleN,
+                                                    CorrelationEncodings.Float32)
+            For i = 0 To geneIds.Length - 1
+                Dim row(geneIds.Length - 1) As Single
+                For j = 0 To geneIds.Length - 1 : row(j) = truth(i, j) : Next
+                Call writer.WriteRow(geneIds(i), row)
+            Next
+            Call writer.Complete()
+        End Using
+
+        Check($"[streams] data stream written ({dataStream.Length} bytes)", dataStream.Length > 0)
+        Check($"[streams] index stream written ({indexStream.Length} bytes)", indexStream.Length > 0)
+
+        ' ② 读取前把可写流转为可读视图（MemoryStream 直接 Seek(0)；真实场景由外部存储实现）
+        Call dataStream.Seek(0, System.IO.SeekOrigin.Begin)
+        Call indexStream.Seek(0, System.IO.SeekOrigin.Begin)
+
+        Using store = CorrelationMatrixStore.Open(dataStream, indexStream)
+            Dim rng As New Random(7)
+            Dim ok = True
+
+            For t = 0 To 500
+                Dim i = rng.Next(N), j = rng.Next(N)
+                If i = j OrElse Single.IsNaN(truth(i, j)) Then Continue For
+                Dim r = store.GetCorrelation(geneIds(i), geneIds(j))
+                If Math.Abs(r.cor - CDbl(truth(i, j))) > 0.000001 Then ok = False : Exit For
+            Next
+
+            Check($"[streams] point query precision", ok)
+
+            Dim nb = store.Neighbors(geneIds(7), 0.5)
+            Dim expected = 0
+            For j = 0 To N - 1
+                If j <> 7 AndAlso Not Single.IsNaN(truth(7, j)) AndAlso Math.Abs(truth(7, j)) >= 0.5 Then expected += 1
+            Next
+            Check($"[streams] Neighbors count = {expected}", nb.Length = expected)
+
+            Dim edges = store.StreamEdges(0.8).ToList()
+            Dim brute = 0
+            For i = 0 To N - 2
+                For j = i + 1 To N - 1
+                    If Not Single.IsNaN(truth(i, j)) AndAlso Math.Abs(truth(i, j)) >= 0.8 Then brute += 1
+                Next
+            Next
+            Check($"[streams] StreamEdges count = {brute}", edges.Count = brute)
+        End Using
     End Sub
 End Module

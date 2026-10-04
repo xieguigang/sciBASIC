@@ -116,20 +116,28 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
 
     ReadOnly _path As String
     ReadOnly _indexPath As String
-    ReadOnly _genes As String()
-    ReadOnly _geneIndex As Dictionary(Of String, Integer)
-    ReadOnly _offsets As Long()
-    ReadOnly _lengths As Integer()
-    ReadOnly _encoding As CorrelationEncodings
-    ReadOnly _n As Integer
-    ReadOnly _sampleN As Integer
-    ReadOnly _compression As CompressionLevel
+    Dim _genes As String()
+    Dim _geneIndex As Dictionary(Of String, Integer)
+    Dim _offsets As Long()
+    Dim _lengths As Integer()
+    Dim _encoding As CorrelationEncodings
+    Dim _n As Integer
+    Dim _sampleN As Integer
+    Dim _compression As CompressionLevel
 
-    Dim _stream As FileStream
+    Dim _stream As Stream
     Dim _writer As BinaryWriter
     Dim _nextRow As Integer = 0
     Dim _completed As Boolean = False
     Dim _disposed As Boolean = False
+
+    ' 流模式（外部自定义 Stream）专用状态：
+    ' _indexStream 非空表示流模式（索引写到该流而不是 {path}.index 文件）；
+    ' _position 手工跟踪数据流的写入位置（不依赖 BaseStream.Position，非可查找流也可写入）；
+    ' _ownsStream 表示数据流由本对象创建（文件模式），Dispose 时负责释放。
+    ReadOnly _indexStream As Stream
+    ReadOnly _ownsStream As Boolean
+    Dim _position As Long = 0
 
     ''' <summary>
     ''' 已经完成写入的行数
@@ -175,6 +183,73 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
 
         _path = IO.Path.GetFullPath(path)
         _indexPath = _path & ".index"
+        _ownsStream = True
+
+        Call Init(geneIds, sampleN, encoding, compression)
+
+        Call IO.Path.GetDirectoryName(_path).MakeDir
+        _stream = New FileStream(_path, FileMode.Create, FileAccess.Write, FileShare.Read)
+        _writer = New BinaryWriter(_stream)
+    End Sub
+
+    ''' <summary>
+    ''' 创建写入端（外部 Stream 模式）：矩阵数据与索引分别写入调用方提供的两个流
+    ''' </summary>
+    ''' <param name="dataOutput">
+    ''' 矩阵数据的输出流。只要求可写（<see cref="Stream.CanWrite"/>），
+    ''' **不要求可查找**——行偏移由写入端自行跟踪，顺序追加即可。
+    ''' 本对象不会关闭该流（生命周期归调用方所有）。
+    ''' </param>
+    ''' <param name="indexOutput">
+    ''' 索引的输出流（<see cref="Complete"/> 时写入 Brotli 压缩的索引缓冲区）。
+    ''' 本对象不会关闭该流。
+    ''' </param>
+    ''' <param name="geneIds">全部基因 ID（决定行序与行数 N），不允许重复（忽略大小写比较）</param>
+    ''' <param name="sampleN">计算相关系数时使用的样本数（p 值重算的依据）</param>
+    ''' <param name="encoding">磁盘编码方式</param>
+    ''' <param name="compression">Brotli 压缩级别</param>
+    ''' <remarks>
+    ''' 典型用途：矩阵数据与索引存入外部自定义的存储流（对象存储、加密流、网络流等）。
+    ''' 配套的读端为 <see cref="CorrelationMatrixStore.Open(Stream, Stream, Integer)"/>，
+    ''' 其数据流要求可读且可查找（随机访问行块）。
+    ''' </remarks>
+    Sub New(dataOutput As Stream,
+            indexOutput As Stream,
+            geneIds As IEnumerable(Of String),
+            sampleN As Integer,
+            Optional encoding As CorrelationEncodings = CorrelationEncodings.Float32,
+            Optional compression As CompressionLevel = CompressionLevel.Optimal)
+
+        If dataOutput Is Nothing Then
+            Throw New ArgumentNullException(NameOf(dataOutput), "矩阵数据输出流不能为空")
+        End If
+        If Not dataOutput.CanWrite Then
+            Throw New ArgumentException("矩阵数据输出流必须可写", NameOf(dataOutput))
+        End If
+        If indexOutput Is Nothing Then
+            Throw New ArgumentNullException(NameOf(indexOutput), "索引输出流不能为空")
+        End If
+        If Not indexOutput.CanWrite Then
+            Throw New ArgumentException("索引输出流必须可写", NameOf(indexOutput))
+        End If
+        If geneIds Is Nothing Then
+            Throw New ArgumentNullException(NameOf(geneIds), "基因 ID 列表不能为空")
+        End If
+
+        _indexStream = indexOutput
+
+        Call Init(geneIds, sampleN, encoding, compression)
+
+        _stream = dataOutput
+        _writer = New BinaryWriter(_stream, System.Text.Encoding.UTF8, leaveOpen:=True)
+    End Sub
+
+    ''' <summary>两种构造方式的公共初始化：基因表校验 + 行目录数组</summary>
+    Private Sub Init(geneIds As IEnumerable(Of String),
+                     sampleN As Integer,
+                     encoding As CorrelationEncodings,
+                     compression As CompressionLevel)
+
         _encoding = encoding
         _sampleN = sampleN
         _compression = compression
@@ -202,10 +277,6 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
 
         _offsets = New Long(_n - 1) {}
         _lengths = New Integer(_n - 1) {}
-
-        Call IO.Path.GetDirectoryName(_path).MakeDir
-        _stream = New FileStream(_path, FileMode.Create, FileAccess.Write, FileShare.Read)
-        _writer = New BinaryWriter(_stream)
     End Sub
 
     ''' <summary>
@@ -259,9 +330,11 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
 
         Dim raw As Byte() = EncodeRow(row)
         Dim compressed As Byte() = Brotli(raw)
-        Dim offset As Long = _writer.BaseStream.Position
+        ' 手工跟踪写入位置：不依赖 BaseStream.Position，非可查找的外部流也可以顺序追加
+        Dim offset As Long = _position
 
         _writer.Write(compressed)
+        _position += compressed.Length
 
         _offsets(_nextRow) = offset
         _lengths(_nextRow) = compressed.Length
@@ -282,32 +355,59 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
         End If
 
         Call _writer.Flush()
-        Call _stream.Dispose()
-        _writer = Nothing
-        _stream = Nothing
 
-        Dim tmp As String = _indexPath & ".tmp"
+        ' 索引输出：流模式写到外部索引流；文件模式原子写 {path}.index
+        If _indexStream IsNot Nothing Then
+            Dim indexBytes As Byte() = BuildIndexCompressed()
 
-        Using raw As New MemoryStream
-            Call WriteIndexBuffer(raw)
-            raw.Seek(0, SeekOrigin.Begin)
+            Call _indexStream.Write(indexBytes, 0, indexBytes.Length)
+            Call _indexStream.Flush()
 
-            Using file As New FileStream(tmp, FileMode.Create, FileAccess.Write)
-                Using brotli As New BrotliStream(file, CompressionLevel.Optimal)
-                    Call raw.CopyTo(brotli)
+            Call _stream.Flush()
+        Else
+            Call _stream.Dispose()
+            _writer = Nothing
+            _stream = Nothing
+
+            Dim tmp As String = _indexPath & ".tmp"
+
+            Using raw As New MemoryStream
+                Call WriteIndexBuffer(raw)
+                raw.Seek(0, SeekOrigin.Begin)
+
+                Using file As New FileStream(tmp, FileMode.Create, FileAccess.Write)
+                    Using brotli As New BrotliStream(file, CompressionLevel.Optimal)
+                        Call raw.CopyTo(brotli)
+                    End Using
                 End Using
             End Using
-        End Using
 
-        ' 原子替换：防止写入中断留下损坏的索引
-        If IO.File.Exists(_indexPath) Then
-            Call IO.File.Replace(tmp, _indexPath, Nothing)
-        Else
-            Call IO.File.Move(tmp, _indexPath)
+            ' 原子替换：防止写入中断留下损坏的索引
+            If IO.File.Exists(_indexPath) Then
+                Call IO.File.Replace(tmp, _indexPath, Nothing)
+            Else
+                Call IO.File.Move(tmp, _indexPath)
+            End If
         End If
 
         _completed = True
     End Sub
+
+    ''' <summary>生成 Brotli 压缩的索引缓冲区</summary>
+    Private Function BuildIndexCompressed() As Byte()
+        Using raw As New MemoryStream
+            Call WriteIndexBuffer(raw)
+            raw.Seek(0, SeekOrigin.Begin)
+
+            Using ms As New MemoryStream
+                Using bs As New BrotliStream(ms, CompressionLevel.Optimal)
+                    Call raw.CopyTo(bs)
+                End Using
+
+                Return ms.ToArray()
+            End Using
+        End Using
+    End Function
 
     ''' <summary>
     ''' 序列化索引缓冲区：
@@ -418,8 +518,10 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
 
     ''' <summary>
     ''' 关闭写入端。若全部行已写入但尚未调用 <see cref="Complete"/>，会自动补写索引；
-    ''' 若行不完整，数据文件会保留在磁盘上（缺少索引文件，无法被
-    ''' <see cref="CorrelationMatrixStore.Open"/> 打开），可用于断点后续写。
+    ''' 若行不完整：文件模式保留数据文件供断点续写（缺少索引文件，无法被
+    ''' <see cref="CorrelationMatrixStore.Open(String, Integer)"/> 打开）；
+    ''' 流模式刷盘后保留外部流中的数据（同样缺少索引，不可读）。
+    ''' 外部 Stream（流模式）不会被本对象关闭。
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         If _disposed Then
@@ -432,9 +534,13 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
             If _nextRow = _n Then
                 Call Complete()
             Else
-                ' 不完整：关闭句柄，保留数据文件供断点续写（无索引文件，读端无法打开）
-                Call ($"CorrelationMatrixWriter: disposed with {_nextRow}/{_n} rows written, " &
-                      $"data file kept at '{_path}' without index (incomplete store).").warning
+                ' 不完整：关闭句柄，保留已写数据（缺少索引文件，读端无法打开）
+                If _indexStream IsNot Nothing Then
+                    Call _stream.Flush()
+                End If
+
+                Call ($"CorrelationMatrixWriter: disposed with {_nextRow}/{_n} rows written " &
+                      $"(incomplete store, index not written).").warning
             End If
         End If
 
@@ -442,7 +548,7 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
             Call _writer.Dispose()
             _writer = Nothing
         End If
-        If _stream IsNot Nothing Then
+        If _stream IsNot Nothing AndAlso _ownsStream Then
             Call _stream.Dispose()
             _stream = Nothing
         End If
@@ -466,6 +572,15 @@ End Class
 ''' p 值不持久化，由相关系数与样本数 n 按需重算（<see cref="CorrelationPValues.PValue"/>）。
 ''' 热行缓存为小容量 LRU（默认 64 行），多线程并发读通过 <c>RandomAccess.Read</c>
 ''' 显式偏移实现，无需加锁（缓存链表本身有锁保护）。
+'''
+''' 支持两种打开方式：
+''' <list type="bullet">
+''' <item><see cref="Open(String, Integer)"/>：文件路径模式（数据文件 + <c>{path}.index</c> 索引文件）；</item>
+''' <item><see cref="Open(Stream, Stream, Integer)"/>：外部 Stream 模式——矩阵数据与索引分别从
+''' 调用方提供的两个自定义流读取（与 <see cref="CorrelationMatrixWriter"/> 的流模式构造配套），
+''' 数据流要求可读且可查找；若实际是 <see cref="FileStream"/> 会自动走无锁句柄读路径，
+''' 其他流走 Seek + Read + 锁。</item>
+''' </list>
 ''' </remarks>
 Public Class CorrelationMatrixStore : Implements IDisposable
 
@@ -480,6 +595,13 @@ Public Class CorrelationMatrixStore : Implements IDisposable
     ReadOnly _cache As RowLruCache
     Dim _handle As SafeFileHandle
     Dim _disposed As Boolean = False
+
+    ' 流模式（外部自定义 Stream）专用状态：
+    ' _dataStream 非空表示流模式（行块通过 Seek + Read 读取，且有锁保护）；
+    ' _ownsIO 表示底层句柄/流由本对象创建（文件模式），Dispose 时负责释放。
+    Dim _dataStream As Stream
+    ReadOnly _ioLock As New Object
+    ReadOnly _ownsIO As Boolean
 
     ''' <summary>
     ''' 基因 ID 表（行序与写入时的声明顺序一致）
@@ -511,7 +633,7 @@ Public Class CorrelationMatrixStore : Implements IDisposable
         End Get
     End Property
 
-    Private Sub New(path As String, handle As SafeFileHandle,
+    Private Sub New(path As String, handle As SafeFileHandle, dataStream As Stream, ownsIO As Boolean,
                     genes As String(), geneIndex As Dictionary(Of String, Integer),
                     offsets As Long(), lengths As Integer(),
                     n As Integer, sampleN As Integer, encoding As CorrelationEncodings,
@@ -519,6 +641,8 @@ Public Class CorrelationMatrixStore : Implements IDisposable
 
         _path = path
         _handle = handle
+        _dataStream = dataStream
+        _ownsIO = ownsIO
         _genes = genes
         _geneIndex = geneIndex
         _offsets = offsets
@@ -567,11 +691,72 @@ Public Class CorrelationMatrixStore : Implements IDisposable
         Dim handle As SafeFileHandle = IO.File.OpenHandle(
             fullPath, FileMode.Open, FileAccess.Read, FileShare.Read, FileOptions.RandomAccess)
 
-        Return New CorrelationMatrixStore(fullPath, handle, genes, geneIndex,
+        Return New CorrelationMatrixStore(fullPath, handle, Nothing, True, genes, geneIndex,
                                           offsets, lengths, n, sampleN,
                                           CType(encoding, CorrelationEncodings), cacheRows)
     End Function
 
+    ''' <summary>
+    ''' 打开一个已完成的存储（外部 Stream 模式）：矩阵数据与索引分别从调用方提供的两个流读取
+    ''' </summary>
+    ''' <param name="data">
+    ''' 矩阵数据的输入流。**必须可读且可查找**（<see cref="Stream.CanSeek"/>）——
+    ''' 行块按索引中的偏移量随机访问。本对象不会关闭该流（生命周期归调用方所有）。
+    ''' 若该流实际是 <see cref="FileStream"/>，会自动使用其句柄走无锁并发读路径。
+    ''' </param>
+    ''' <param name="index">索引的输入流（<see cref="Complete"/> 写出的 Brotli 压缩索引），必须可读</param>
+    ''' <param name="cacheRows">热行 LRU 缓存容量（行数），默认 64 行</param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 与 <see cref="CorrelationMatrixWriter"/> 的
+    ''' <c>Sub New(dataOutput, indexOutput, ...)</c> 构造函数配套使用：
+    ''' 写入时提供的两个流，在 Complete 之后可以直接交给本方法重新打开读取。
+    ''' </remarks>
+    Public Shared Function Open(data As Stream, index As Stream, Optional cacheRows As Integer = 64) As CorrelationMatrixStore
+        If data Is Nothing Then
+            Throw New ArgumentNullException(NameOf(data), "矩阵数据输入流不能为空")
+        End If
+        If Not data.CanRead Then
+            Throw New ArgumentException("矩阵数据输入流必须可读", NameOf(data))
+        End If
+        If Not data.CanSeek Then
+            Throw New ArgumentException("矩阵数据输入流必须可查找（随机访问行块）", NameOf(data))
+        End If
+        If index Is Nothing Then
+            Throw New ArgumentNullException(NameOf(index), "索引输入流不能为空")
+        End If
+        If Not index.CanRead Then
+            Throw New ArgumentException("索引输入流必须可读", NameOf(index))
+        End If
+
+        Dim genes As String() = Nothing
+        Dim offsets As Long() = Nothing
+        Dim lengths As Integer() = Nothing
+        Dim n As Integer, sampleN As Integer, encoding As Integer
+
+        Call LoadIndex(index, genes, offsets, lengths, n, sampleN, encoding)
+
+        Dim geneIndex As New Dictionary(Of String, Integer)(n, StringComparer.OrdinalIgnoreCase)
+
+        For i As Integer = 0 To n - 1
+            geneIndex(genes(i)) = i
+        Next
+
+        ' FileStream 特例：直接用句柄走 RandomAccess 无锁并发读；其他流走 Seek+Read + 锁
+        Dim handle As SafeFileHandle = Nothing
+        Dim dataStream As Stream = data
+
+        If TypeOf data Is FileStream Then
+            handle = DirectCast(data, FileStream).SafeFileHandle
+            dataStream = Nothing
+        End If
+
+        Return New CorrelationMatrixStore(Nothing, handle, dataStream, False, genes, geneIndex,
+                                          offsets, lengths, n, sampleN,
+                                          CType(encoding, CorrelationEncodings), cacheRows)
+    End Function
+
+    ''' <summary>从索引文件路径加载（内部转调 Stream 版本）</summary>
     Private Shared Sub LoadIndex(indexPath As String,
                                  ByRef genes As String(),
                                  ByRef offsets As Long(),
@@ -581,47 +766,59 @@ Public Class CorrelationMatrixStore : Implements IDisposable
                                  ByRef encoding As Integer)
 
         Using file As New FileStream(indexPath, FileMode.Open, FileAccess.Read)
-            Using brotli As New BrotliStream(file, CompressionMode.Decompress)
-                Using buf As New MemoryStream
-                    Call brotli.CopyTo(buf)
-                    Call buf.Seek(0, SeekOrigin.Begin)
+            Call LoadIndex(file, genes, offsets, lengths, n, sampleN, encoding)
+        End Using
+    End Sub
 
-                    Using r As New BinaryReader(buf)
-                        Dim magic As Char() = r.ReadChars(4)
+    ''' <summary>从索引输入流加载（Brotli 压缩缓冲区，读完后流的当前位置即索引末尾）</summary>
+    Private Shared Sub LoadIndex(indexStream As Stream,
+                                 ByRef genes As String(),
+                                 ByRef offsets As Long(),
+                                 ByRef lengths As Integer(),
+                                 ByRef n As Integer,
+                                 ByRef sampleN As Integer,
+                                 ByRef encoding As Integer)
 
-                        If magic(0) <> "C"c OrElse magic(1) <> "R"c OrElse magic(2) <> "S"c OrElse magic(3) <> "T"c Then
-                            Throw New InvalidDataException($"'{indexPath}' 不是有效的相关矩阵索引文件（magic 不匹配）")
-                        End If
+        Using brotli As New BrotliStream(indexStream, CompressionMode.Decompress)
+            Using buf As New MemoryStream
+                Call brotli.CopyTo(buf)
+                Call buf.Seek(0, SeekOrigin.Begin)
 
-                        Dim version As Integer = r.ReadInt32()
+                Using r As New BinaryReader(buf)
+                    Dim magic As Char() = r.ReadChars(4)
 
-                        If version <> 1 Then
-                            Throw New InvalidDataException($"不支持的索引版本: {version}")
-                        End If
+                    If magic(0) <> "C"c OrElse magic(1) <> "R"c OrElse magic(2) <> "S"c OrElse magic(3) <> "T"c Then
+                        Throw New InvalidDataException("不是有效的相关矩阵索引文件（magic 不匹配）")
+                    End If
 
-                        n = r.ReadInt32()
-                        sampleN = r.ReadInt32()
-                        encoding = r.ReadInt32()
+                    Dim version As Integer = r.ReadInt32()
 
-                        If n < 2 Then
-                            Throw New InvalidDataException($"索引中的基因数量无效: {n}")
-                        End If
+                    If version <> 1 Then
+                        Throw New InvalidDataException($"不支持的索引版本: {version}")
+                    End If
 
-                        genes = New String(n - 1) {}
+                    n = r.ReadInt32()
+                    sampleN = r.ReadInt32()
+                    encoding = r.ReadInt32()
 
-                        For i As Integer = 0 To n - 1
-                            Dim len As Integer = r.ReadInt16()
-                            genes(i) = System.Text.Encoding.UTF8.GetString(r.ReadBytes(len))
-                        Next
+                    If n < 2 Then
+                        Throw New InvalidDataException($"索引中的基因数量无效: {n}")
+                    End If
 
-                        offsets = New Long(n - 1) {}
-                        lengths = New Integer(n - 1) {}
+                    genes = New String(n - 1) {}
 
-                        For i As Integer = 0 To n - 1
-                            offsets(i) = r.ReadInt64()
-                            lengths(i) = r.ReadInt32()
-                        Next
-                    End Using
+                    For i As Integer = 0 To n - 1
+                        Dim len As Integer = r.ReadInt16()
+                        genes(i) = System.Text.Encoding.UTF8.GetString(r.ReadBytes(len))
+                    Next
+
+                    offsets = New Long(n - 1) {}
+                    lengths = New Integer(n - 1) {}
+
+                    For i As Integer = 0 To n - 1
+                        offsets(i) = r.ReadInt64()
+                        lengths(i) = r.ReadInt32()
+                    Next
                 End Using
             End Using
         End Using
@@ -800,22 +997,49 @@ Public Class CorrelationMatrixStore : Implements IDisposable
         Return data
     End Function
 
+    ''' <summary>
+    ''' 从底层存储读取指定长度的字节块：
+    ''' 文件模式（含外部 FileStream 特例）走 <see cref="RandomAccess.Read"/> 显式偏移，
+    ''' 多线程并发读无需加锁；其他外部流走 Seek + Read，用锁串行化（流不可并发寻位）。
+    ''' </summary>
+    Private Sub ReadRaw(offset As Long, length As Integer, buffer As Byte(), row As Integer)
+        If _handle IsNot Nothing Then
+            Dim total As Integer = 0
+
+            While total < length
+                Dim n As Integer = RandomAccess.Read(_handle, buffer.AsSpan(total, length - total), offset + total)
+
+                If n <= 0 Then
+                    Throw New IOException($"unexpected end of data file at offset {offset + total} (row {row})")
+                End If
+
+                total += n
+            End While
+        Else
+            SyncLock _ioLock
+                Call _dataStream.Seek(offset, SeekOrigin.Begin)
+
+                Dim total As Integer = 0
+
+                While total < length
+                    Dim n As Integer = _dataStream.Read(buffer, total, length - total)
+
+                    If n <= 0 Then
+                        Throw New IOException($"unexpected end of data stream at offset {offset + total} (row {row})")
+                    End If
+
+                    total += n
+                End While
+            End SyncLock
+        End If
+    End Sub
+
     Private Function DecodeBlock(row As Integer) As Single()
         Dim length As Integer = _lengths(row)
         Dim offset As Long = _offsets(row)
         Dim compressed(length - 1) As Byte
-        Dim total As Integer = 0
 
-        ' 显式偏移并发读：不共享 Stream.Position，多线程同时读不同/相同行均无需加锁
-        While total < length
-            Dim n As Integer = RandomAccess.Read(_handle, compressed.AsSpan(total, length - total), offset + total)
-
-            If n <= 0 Then
-                Throw New IOException($"unexpected end of data file at offset {offset + total} (row {row})")
-            End If
-
-            total += n
-        End While
+        Call ReadRaw(offset, length, compressed, row)
 
         Using src As New MemoryStream(compressed)
             Using brotli As New BrotliStream(src, CompressionMode.Decompress)
@@ -865,10 +1089,17 @@ Public Class CorrelationMatrixStore : Implements IDisposable
 
         _disposed = True
 
-        If _handle IsNot Nothing Then
+        If _handle IsNot Nothing AndAlso _ownsIO Then
             Call _handle.Dispose()
-            _handle = Nothing
         End If
+
+        _handle = Nothing
+
+        If _dataStream IsNot Nothing AndAlso _ownsIO Then
+            Call _dataStream.Dispose()
+        End If
+
+        _dataStream = Nothing
 
         Call _cache.Clear()
     End Sub
