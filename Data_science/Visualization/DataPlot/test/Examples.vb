@@ -236,7 +236,7 @@ Public Class Examples
             plt.Matrix = mat
             plt.RowLabels = Enumerable.Range(1, 10).Select(Function(i) "R" & i).ToArray()
             plt.ColLabels = Enumerable.Range(1, 12).Select(Function(i) "C" & i).ToArray()
-            plt.ColorMap = HeatmapPlot.ColorMapType.Viridis
+            plt.ColorMap = ColorScale.ColorMapType.Viridis
             plt.ShowValues = False
             plt.Plot()
             plt.SavePng(Path.Combine(dir, "heatmap.png"), 300)

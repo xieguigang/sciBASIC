@@ -123,6 +123,15 @@ Public Class PlotTheme
     Public Property MarginTop As Single = 70
     Public Property MarginBottom As Single = 70
 
+    ''' <summary>色阶图例条的宽度（垂直模式下）或高度（水平模式下）</summary>
+    Public Property ColorBarWidth As Single = 16.0F
+    ''' <summary>色阶图例条到绘图区的间距</summary>
+    Public Property ColorBarGap As Single = 20.0F
+    ''' <summary>次网格线宽</summary>
+    Public Property GridMinorWidth As Single = 0.5F
+    ''' <summary>抖动幅度（相对值域的比例），仅对启用了抖动的图表生效</summary>
+    Public Property JitterAmount As Double = 0.02
+
     ' ---------- 其它开关 ----------
     Public Property ShowGrid As Boolean = True
     Public Property ShowMinorGrid As Boolean = False

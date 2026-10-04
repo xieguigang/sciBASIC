@@ -58,11 +58,20 @@ Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>折线图（默认无标记，可单独配置）</summary>
 Public Class LinePlot
-    Inherits SeriesPlotEngine
+Inherits SeriesPlotEngine
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
-    End Sub
+''' <summary>是否用 Catmull-Rom 样条把折线平滑成曲线</summary>
+Public Property Smooth As Boolean = False
+''' <summary>样条每段的插值点数</summary>
+Public Property SmoothSamplesPerSegment As Integer = 12
+''' <summary>Series 提供 ErrorMinus / ErrorPlus 时，是否绘制半透明的误差带</summary>
+Public Property ShowErrorBand As Boolean = True
+''' <summary>误差带透明度（0~255）</summary>
+Public Property BandAlpha As Integer = 70
+
+Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+    MyBase.New(width, height, theme)
+End Sub
 
     ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>
     Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
@@ -128,13 +137,21 @@ Public Class LinePlot
                 pts.Add(New PointF(ToPixelX(s.X(j), xmin, xmax),
                                    ToPixelY(s.Y(j), ymin, ymax)))
             Next
+            If ShowErrorBand AndAlso s.ErrorMinus IsNot Nothing AndAlso s.ErrorPlus IsNot Nothing Then
+                DrawErrorBand(s, xmin, xmax, ymin, ymax, color)
+            End If
+
             If pts.Count > 1 Then
+                Dim drawPts = If(Smooth AndAlso pts.Count >= 3,
+                                 Geometry.SmoothSpline(pts.ToArray(), SmoothSamplesPerSegment),
+                                 pts.ToArray())
+
                 Using pen As New Pen(color, Theme.LineWidth)
                     pen.DashStyle = s.LineStyle
                     pen.StartCap = LineCap.Round
                     pen.EndCap = LineCap.Round
                     pen.LineJoin = LineJoin.Round
-                    _g.DrawLines(pen, pts.ToArray())
+                    _g.DrawLines(pen, drawPts)
                 End Using
             End If
             If s.MarkerShape <> MarkerShape.None Then
@@ -145,5 +162,30 @@ Public Class LinePlot
         Next
 
         DrawLegend(seriesList)
+    End Sub
+
+    ''' <summary>把 [-err, +err] 区间铺成一个闭合多边形，得到半透明误差带</summary>
+    Private Sub DrawErrorBand(s As Series, xmin As Double, xmax As Double,
+                              ymin As Double, ymax As Double, color As Color)
+        Dim n = System.Math.Min(System.Math.Min(s.X.Length, s.Y.Length),
+                                System.Math.Min(s.ErrorMinus.Length, s.ErrorPlus.Length))
+        If n < 2 Then Return
+
+        Dim upper As New List(Of PointF)()
+        Dim lower As New List(Of PointF)()
+
+        For j = 0 To n - 1
+            Dim px = ToPixelX(s.X(j), xmin, xmax)
+            upper.Add(New PointF(px, ToPixelY(s.Y(j) + s.ErrorPlus(j), ymin, ymax)))
+            lower.Add(New PointF(px, ToPixelY(s.Y(j) - s.ErrorMinus(j), ymin, ymax)))
+        Next
+
+        lower.Reverse()
+
+        Dim band = upper.Concat(lower).ToArray()
+
+        Using br As New SolidBrush(Color.FromArgb(BandAlpha, color))
+            _g.FillPolygon(br, band)
+        End Using
     End Sub
 End Class

@@ -78,6 +78,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports std = System.Math
 
 ' ============================================================================
@@ -568,6 +569,106 @@ Public Class PlotEngine : Implements IDisposable
                     _g.DrawLine(pen, x, y - size / 2, x, y + size / 2)
             End Select
         End Using
+    End Sub
+
+    ' ========================================================
+    '  子类通用辅助绘制
+    ' --------------------------------------------------------
+    '  下面的方法把「测量文本」「画色条图例」「画参考线」这类每个图表都会用到、
+    '  但又不属于坐标轴的绘制动作统一到基类，避免各图表各写一遍。
+    ' ========================================================
+    ''' <summary>测量文本在当前设备上的像素尺寸</summary>
+    Protected Function MeasureString(text As String, font As Font) As SizeF
+        Return _g.MeasureString(text, font)
+    End Function
+
+    ''' <summary>
+    ''' 绘制颜色条图例。
+    ''' </summary>
+    ''' <param name="cmap">色阶方案</param>
+    ''' <param name="vmin">色阶下界</param>
+    ''' <param name="vmax">色阶上界</param>
+    ''' <param name="rect">放置位置，留空时自动靠在绘图区右侧</param>
+    ''' <param name="horizontal">True 时横向绘制并贴到绘图区下方</param>
+    ''' <param name="tickCount">刻度数量</param>
+    ''' <param name="title">颜色条标题</param>
+    Protected Sub DrawColorLegend(cmap As ColorScale.ColorMapType, vmin As Double, vmax As Double,
+                                  Optional rect As RectangleF = Nothing,
+                                  Optional horizontal As Boolean = False,
+                                  Optional tickCount As Integer = 5,
+                                  Optional title As String = "")
+        If rect.IsEmpty Then
+            Dim gap = Theme.ColorBarGap
+            Dim barW = Theme.ColorBarWidth
+
+            If horizontal Then
+                rect = New RectangleF(_plotArea.Left, _plotArea.Bottom + 42.0F, _plotArea.Width, barW)
+            Else
+                rect = New RectangleF(_plotArea.Right + gap, _plotArea.Top, barW, _plotArea.Height)
+            End If
+        End If
+
+        ColorScale.DrawColorLegend(_g, Theme, cmap, vmin, vmax,
+                                   rect.X, rect.Y, rect.Width, rect.Height,
+                                   horizontal:=horizontal, tickCount:=tickCount, title:=title)
+    End Sub
+
+    ''' <summary>
+    ''' 在数据坐标系下绘制参考直线 y = a + b*x，并裁剪到绘图区内。
+    ''' </summary>
+    Protected Sub DrawAbline(a As Double, b As Double, xmin As Double, xmax As Double,
+                             ymin As Double, ymax As Double, pen As Pen)
+        Dim candidates As New List(Of PointF)()
+
+        ' 依次尝试与四条边界求交，取落在范围内的两点
+        Dim left As Double? = Nothing, right As Double? = Nothing
+        Dim bottom As Double? = Nothing, top As Double? = Nothing
+
+        If b <> 0 Then
+            Dim xb = (ymin - a) / b
+            Dim xt = (ymax - a) / b
+            If xb >= xmin AndAlso xb <= xmax Then bottom = xb
+            If xt >= xmin AndAlso xt <= xmax Then top = xt
+        End If
+
+        Dim yl = a + b * xmin
+        Dim yr = a + b * xmax
+        If yl >= ymin AndAlso yl <= ymax Then left = yl
+        If yr >= ymin AndAlso yr <= ymax Then right = yr
+
+        Dim hits As New List(Of PointF)()
+        If left.HasValue Then hits.Add(New PointF(ToPixelX(xmin, xmin, xmax), ToPixelY(left.Value, ymin, ymax)))
+        If right.HasValue Then hits.Add(New PointF(ToPixelX(xmax, xmin, xmax), ToPixelY(right.Value, ymin, ymax)))
+        If bottom.HasValue Then hits.Add(New PointF(ToPixelX(bottom.Value, xmin, xmax), ToPixelY(ymin, ymin, ymax)))
+        If top.HasValue Then hits.Add(New PointF(ToPixelX(top.Value, xmin, xmax), ToPixelY(ymax, ymin, ymax)))
+
+        If hits.Count < 2 Then Return
+
+        Dim p1 = hits(0)
+        Dim p2 = hits(1)
+        _g.DrawLine(pen, p1.X, p1.Y, p2.X, p2.Y)
+    End Sub
+
+    ''' <summary>
+    ''' 绘制带可选背景框的文本，x/y 为文本框的左上角。
+    ''' </summary>
+    Protected Sub DrawLabel(text As String, font As Font, brush As Brush, x As Single, y As Single,
+                            Optional backgroundColor As Color? = Nothing,
+                            Optional borderColor As Color? = Nothing)
+        Dim size = _g.MeasureString(text, font)
+
+        If backgroundColor.HasValue Then
+            Using cbr As New SolidBrush(backgroundColor.Value)
+                _g.FillRectangle(cbr, x - 2, y - 1, size.Width + 4, size.Height + 2)
+            End Using
+        End If
+        If borderColor.HasValue Then
+            Using cpen As New Pen(borderColor.Value, 0.7F)
+                _g.DrawRectangle(cpen, x - 2, y - 1, size.Width + 4, size.Height + 2)
+            End Using
+        End If
+
+        _g.DrawString(text, font, brush, x, y)
     End Sub
 
     ''' <summary>获取内部 Graphics（高级用户自定义绘制）</summary>

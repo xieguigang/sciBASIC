@@ -69,6 +69,27 @@ Public Class Series
     Public Property LineStyle As DashStyle = DashStyle.Solid
     Public Property Visible As Boolean = True
 
+    ''' <summary>每个点的尺寸因子（气泡图用），留空时所有点同尺寸</summary>
+    Public Property Size As Double() = Nothing
+
+    ''' <summary>每个点的负向误差（与 <see cref="Y"/> 同值域），可为 Nothing</summary>
+    Public Property ErrorMinus As Double() = Nothing
+
+    ''' <summary>每个点的正向误差，可为 Nothing</summary>
+    Public Property ErrorPlus As Double() = Nothing
+
+    ''' <summary>点标记尺寸，小于等于 0 时取主题的 <c>MarkerSize</c></summary>
+    Public Property PointSize As Single = 0
+
+    ''' <summary>面积图 / 柱状图的填充色，留空时取 <see cref="Color"/> 的半透明版本</summary>
+    Public Property FillColor As Color? = Nothing
+
+    ''' <summary>每个点的标签（可为 Nothing；只有少数图表会用到）</summary>
+    Public Property PointLabels As String() = Nothing
+
+    ''' <summary>填充透明度（面积图、置信带等场景）</summary>
+    Public Property FillAlpha As Integer = 120
+
     Public Overrides Function ToString() As String
         Return $"{Name} {CType(Color, Color).ToHtmlColor}"
     End Function
