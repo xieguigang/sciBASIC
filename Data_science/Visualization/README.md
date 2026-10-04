@@ -1,5 +1,6 @@
-+ [Plots](./Plots/Plots.vbproj) module have minimal required reference, only for some basically charting plot
-+ [Plots-statistics](./Plots-statistics/Plots.Statistics.vbproj) module have more complexe project reference, it have the ability for drawing more complexe charting plots which is combined from sevral basically drawings.
++ [DataPlot](./DataPlot/DataPlot.vbproj) is the **new unified 2D charting engine**: it reimplements all 2D plotting capabilities from the legacy `Plots` and `Plots-statistics` packages (bar/scatter/histogram family, contour, venn, pyramid, density, ROC/QQ/forest/PCA/Manhattan/cluster-heatmap and more) with statistical algorithm results injected through lightweight data contracts. New code should reference DataPlot.
++ [Plots](./Plots/plots-netcore5.vbproj) **(deprecated, kept only for the 3D plot stack)** - its 2D plotting has been migrated into DataPlot; it remains referenced by the 3D consumers (`Embedding3D`, `Kmeans` 3D helpers) until the 3D rendering is moved to [Canvas3D](./Canvas3D/Canvas3D.vbproj).
++ [Plots-statistics](./Plots-statistics/plots_extensions-netcore5.vbproj) **(deprecated)** - all of its 2D statistical charts now live in `DataPlot/Statistics`.
 + [Chart](./Chart/Plots.Charting.vbproj) project for WinForm controls.
 
 
