@@ -1,196 +1,175 @@
-﻿#Region "Microsoft.VisualBasic::f3f6c2a5ae970e0d1af09f5e71914d71, gr\network-visualization\Visualizer\DrawKDTree.vb"
+﻿#Region "Microsoft.VisualBasic::5f2a8c1e7d3b4906c9e4a7f2d6b8c1e5, Data_science\Visualization\DataPlot\Basic\DrawKDTree.vb"
 
-    ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
+    '       sciBASIC.NET Foundation, GPL3 Licensed
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 139
-    '    Code Lines: 111 (79.86%)
-    ' Comment Lines: 4 (2.88%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 24 (17.27%)
-    '     File Size: 5.62 KB
-
 
     ' Class DrawKDTree
     ' 
+    '     Properties: K, Query
+    ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
     '     Function: Plot
+    '     Sub: Plot
     ' 
-    '     Sub: PlotInternal, render
-    ' 
-    ' /********************************************************************************/
-
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports Microsoft.VisualBasic.Linq
 
-Public Class DrawKDTree : Inherits Plot
+' ============================================================================
+'  DrawKDTree.vb - KD-Tree 结构图
+'
+'  原来继承 ChartPlots 的 MustInherit Plot 并依赖它的 Theme/CSS 与 DataScaler。
+'  迁移后改为继承 DataPlot 的 <see cref="PlotEngine"/>：坐标轴、网格、坐标变换
+'  都走统一引擎，本文件只保留 KD-Tree 自己的连线与最近邻高亮逻辑。
+' ============================================================================
+
+''' <summary>KD-Tree 结构的可视化</summary>
+Public Class DrawKDTree : Inherits PlotEngine
 
     ReadOnly tree As KdTree(Of Point2D)
     ReadOnly query As NamedValue(Of PointF)()
     ReadOnly k As Integer
-    ReadOnly linePenCss As Stroke
 
-    Public Sub New(tree As KdTree(Of Point2D), query As NamedValue(Of PointF)(), k As Integer, theme As Theme)
-        MyBase.New(theme)
+    ''' <summary>树节点的直径</summary>
+    Public Property NodeSize As Single = 0
+    ''' <summary>最近邻高亮区的放大倍数</summary>
+    Public Property HullEnlarge As Double = 1.125
+    ''' <summary>最近邻连线的颜色（留空时按查询点描述里的颜色绘制）</summary>
+    Public Property LineColor As Color? = Nothing
+
+    Public Sub New(width As Integer, height As Integer,
+                   tree As KdTree(Of Point2D), query As NamedValue(Of PointF)(), k As Integer,
+                   Optional theme As PlotTheme = Nothing)
+        MyBase.New(width, height, theme)
+
+        If tree Is Nothing Then Throw New ArgumentNullException(NameOf(tree))
 
         Me.tree = tree
         Me.query = query
-        Me.k = k
-        Me.linePenCss = Stroke.TryParse(theme.lineStroke)
+        Me.k = If(k <= 0, 1, k)
     End Sub
 
-    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim allPoints As Point2D() = tree.GetPoints.ToArray
-        Dim xTicks As Double() = allPoints.Select(Function(p) p.X).CreateAxisTicks
-        Dim yTicks As Double() = allPoints.Select(Function(p) p.Y).CreateAxisTicks
-        Dim css As CSSEnvirnment = g.LoadEnvironment
-        Dim rect As Rectangle = canvas.PlotRegion(css)
-        Dim xscale = d3js.scale.linear.domain(values:=xTicks).range(values:=New Double() {rect.Left, rect.Right})
-        Dim yscale = d3js.scale.linear.domain(values:=yTicks).range(values:=New Double() {rect.Top, rect.Bottom})
-        Dim scaler As New DataScaler() With {
-            .AxisTicks = (xTicks.AsVector, yTicks.AsVector),
-            .region = rect,
-            .X = xscale,
-            .Y = yscale
-        }
+    Public Overloads Sub Plot()
+        Dim allPoints = tree.GetPoints.ToArray
+        If allPoints.Length = 0 Then Throw New InvalidOperationException("The KD-tree has no points.")
 
-        Call render(g, scaler, root:=tree.rootNode)
+        Dim xmin = If(Me.XMin, allPoints.Min(Function(p) p.X))
+        Dim xmax = If(Me.XMax, allPoints.Max(Function(p) p.X))
+        Dim ymin = If(Me.YMin, allPoints.Min(Function(p) p.Y))
+        Dim ymax = If(Me.YMax, allPoints.Max(Function(p) p.Y))
 
-        If Not query.IsNullOrEmpty Then
-            For Each q As NamedValue(Of PointF) In query
-                Dim pos As PointF = scaler.Translate(q.Value.X, q.Value.Y)
-                Dim color As Pen = New Pen(q.Description.TranslateColor, 6)
-                Dim point2 As PointF() = tree _
-                    .nearest(New Point2D(q.Value), k) _
-                    .Select(Function(knn)
-                                Dim p = knn.node.data.PointF
-                                p = scaler.Translate(p.X, p.Y)
-                                Return p
-                            End Function) _
-                    .ToArray
-                Dim poly = point2.JarvisMatch.Enlarge(1.125)
+        Geometry.ExpandRange(xmin, xmax, 0.05)
+        Geometry.ExpandRange(ymin, ymax, 0.05)
 
-                Call g.FillPolygon(New SolidBrush(color.Color.Alpha(120)), poly)
-                Call g.DrawCircle(pos, theme.pointSize * 5, color, fill:=True)
+        DrawBackground()
+        ComputePlotArea()
+        DrawPlotArea()
+        DrawTitle()
+        DrawAxisAndGrid(xmin, xmax, ymin, ymax)
 
-                For Each knn In point2
-                    Call g.DrawCircle(knn, theme.pointSize, color, fill:=False)
+        ' ---- 树的枝干 ----
+        Using pen As New Pen(Theme.AxisColor, Theme.LineWidth)
+            pen.DashStyle = DashStyle.Dash
+            renderTree(pen, tree.rootNode, xmin, xmax, ymin, ymax)
+        End Using
+
+        If query.IsNullOrEmpty Then Return
+
+        ' ---- 查询点与其最近邻 ----
+        Dim nodeSize = If(NodeSize > 0, NodeSize, Theme.MarkerSize)
+
+        For Each q In query
+            Dim color = q.Description.TranslateColor(throwEx:=False)
+            If color.IsEmpty Then color = If(LineColor, Theme.Palette(0))
+            Dim pos As New PointF(ToPixelX(q.Value.X, xmin, xmax), ToPixelY(q.Value.Y, ymin, ymax))
+            Dim knn = tree.nearest(New Point2D(q.Value), k) _
+                      .Select(Function(kn)
+                                  Dim p = kn.node.data.PointF
+                                  Return New PointF(ToPixelX(p.X, xmin, xmax), ToPixelY(p.Y, ymin, ymax))
+                              End Function) _
+                      .ToArray
+
+            If knn.Length >= 3 Then
+                Dim poly = knn.JarvisMatch.Enlarge(HullEnlarge)
+                Using br As New SolidBrush(Color.FromArgb(120, color))
+                    _g.FillPolygon(br, poly)
+                End Using
+            End If
+
+            Using br As New SolidBrush(color),
+                  pen As New Pen(color, Theme.LineWidth)
+                _g.FillEllipse(br, pos.X - nodeSize * 2.5F, pos.Y - nodeSize * 2.5F, nodeSize * 5, nodeSize * 5)
+                For Each p In knn
+                    _g.DrawEllipse(pen, p.X - nodeSize, p.Y - nodeSize, nodeSize * 2, nodeSize * 2)
                 Next
-            Next
-        End If
+            End Using
+        Next
     End Sub
 
-    Private Sub render(g As IGraphics, scaler As DataScaler, root As KdTreeNode(Of Point2D))
-        Dim pos As PointF, pos2 As PointF
-        Dim c As PointF
-        Dim linePen As Pen = g.LoadEnvironment.GetPen(linePenCss)
+    Private Sub renderTree(pen As Pen, root As KdTreeNode(Of Point2D),
+                           xmin As Double, xmax As Double, ymin As Double, ymax As Double)
+        If root Is Nothing Then Return
 
-        pos = root.data.PointF
-        pos = scaler.Translate(pos.X, pos.Y)
+        Dim pos = Translate(root.data.PointF, xmin, xmax, ymin, ymax)
+        Dim size = If(NodeSize > 0, NodeSize, Theme.MarkerSize)
 
-        Call g.DrawCircle(pos, theme.pointSize, Pens.LightGray, fill:=True)
+        Using br As New SolidBrush(Color.LightGray)
+            _g.FillEllipse(br, pos.X - size / 2, pos.Y - size / 2, size, size)
+        End Using
 
-        If Not root.left Is Nothing Then
-            pos2 = root.left.data.PointF
-            pos2 = scaler.Translate(pos2.X, pos2.Y)
+        For Each child In {root.left, root.right}
+            If child Is Nothing Then Continue For
 
-            If root.left.dimension = 0 Then
-                ' x -> y
-                c = New PointF(pos2.X, pos.Y)
-            Else
-                ' y -> x
-                c = New PointF(pos.X, pos2.Y)
-            End If
+            Dim pos2 = Translate(child.data.PointF, xmin, xmax, ymin, ymax)
+            ' 直角折线：先沿父节点的切分维度走，再折向子节点
+            Dim corner As PointF = If(child.dimension = 0,
+                                      New PointF(pos2.X, pos.Y),
+                                      New PointF(pos.X, pos2.Y))
 
-            Call g.DrawLine(linePen, pos, c)
-            Call g.DrawLine(linePen, pos2, c)
+            _g.DrawLine(pen, pos, corner)
+            _g.DrawLine(pen, pos2, corner)
 
-            Call render(g, scaler, root.left)
-        End If
-
-        If Not root.right Is Nothing Then
-            pos2 = root.right.data.PointF
-            pos2 = scaler.Translate(pos2.X, pos2.Y)
-
-            If root.left.dimension = 0 Then
-                ' x -> y
-                c = New PointF(pos2.X, pos.Y)
-            Else
-                ' y -> x
-                c = New PointF(pos.X, pos2.Y)
-            End If
-
-            Call g.DrawLine(linePen, pos, c)
-            Call g.DrawLine(linePen, pos2, c)
-
-            Call render(g, scaler, root.right)
-        End If
+            renderTree(pen, child, xmin, xmax, ymin, ymax)
+        Next
     End Sub
 
+    Private Function Translate(p As PointF, xmin As Double, xmax As Double,
+                               ymin As Double, ymax As Double) As PointF
+        Return New PointF(ToPixelX(p.X, xmin, xmax), ToPixelY(p.Y, ymin, ymax))
+    End Function
+
+    ''' <summary>
+    ''' 一键绘制 KD-Tree：解析画布尺寸后交给实例方法，最后导出为 <see cref="GraphicsData"/>。
+    ''' </summary>
     Public Overloads Shared Function Plot(tree As KdTree(Of Point2D),
                                           Optional query As NamedValue(Of PointF)() = Nothing,
                                           Optional k As Integer = 13,
                                           Optional size As String = "3600,2700",
-                                          Optional padding As String = g.DefaultPadding,
-                                          Optional bg$ = "white",
-                                          Optional pointSize As Integer = 8,
-                                          Optional line As String = "stroke: black; stroke-width: 1px; stroke-dash: dash;") As GraphicsData
+                                          Optional bg As String = "white",
+                                          Optional theme As PlotTheme = Nothing) As GraphicsData
+        Dim parts = size.Split(","c)
+        If parts.Length < 2 Then Throw New ArgumentException($"Invalid canvas size expression: {size}", NameOf(size))
 
-        Dim theme As New Theme With {
-            .padding = padding,
-            .background = bg,
-            .pointSize = pointSize,
-            .lineStroke = line
-        }
+        Dim w = Integer.Parse(parts(0).Trim)
+        Dim h = Integer.Parse(parts(1).Trim)
 
-        Return New DrawKDTree(tree, query, k, theme).Plot(size)
+        Using gd As New DrawKDTree(w, h, tree, query, k, theme)
+            gd.Plot()
+            Return gd.AsGraphicsData()
+        End Using
     End Function
-
 End Class

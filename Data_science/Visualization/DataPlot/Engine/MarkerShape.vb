@@ -64,5 +64,13 @@ Public Enum MarkerShape
     Diamond
     Cross
     Plus
+    ''' <summary>倒置三角形（尖端朝下）</summary>
+    InvertedTriangle
+    ''' <summary>正六边形</summary>
+    Hexagon
+    ''' <summary>正五边形</summary>
+    Pentagon
+    ''' <summary>五角星</summary>
+    Star
     None
 End Enum

@@ -567,6 +567,17 @@ Public Class PlotEngine : Implements IDisposable
                 Case MarkerShape.Plus
                     _g.DrawLine(pen, x - size / 2, y, x + size / 2, y)
                     _g.DrawLine(pen, x, y - size / 2, x, y + size / 2)
+                Case MarkerShape.InvertedTriangle
+                    Dim pts = {
+                        New PointF(x, y + size / 2),
+                        New PointF(x - size / 2, y - size / 2),
+                        New PointF(x + size / 2, y - size / 2)
+                    }
+                    _g.FillPolygon(br, pts)
+                Case MarkerShape.Hexagon, MarkerShape.Pentagon
+                    _g.FillPolygon(br, RegularPolygon(x, y, size / 2, If(shape = MarkerShape.Hexagon, 6, 5)))
+                Case MarkerShape.Star
+                    _g.FillPolygon(br, StarPolygon(x, y, size / 2))
             End Select
         End Using
     End Sub
@@ -670,6 +681,31 @@ Public Class PlotEngine : Implements IDisposable
 
         _g.DrawString(text, font, brush, x, y)
     End Sub
+
+    ''' <summary>生成正 n 边形的顶点（第一个顶点朝上）</summary>
+    Protected Shared Function RegularPolygon(cx As Single, cy As Single, radius As Single, n As Integer) As PointF()
+        Dim pts(n - 1) As PointF
+
+        For i = 0 To n - 1
+            Dim angle = -std.PI / 2 + 2 * std.PI * i / n
+            pts(i) = New PointF(CSng(cx + radius * std.Cos(angle)), CSng(cy + radius * std.Sin(angle)))
+        Next
+
+        Return pts
+    End Function
+
+    ''' <summary>生成五角星的十个顶点（外顶点与内顶点交替）</summary>
+    Protected Shared Function StarPolygon(cx As Single, cy As Single, radius As Single) As PointF()
+        Dim pts(9) As PointF
+
+        For i = 0 To 9
+            Dim r = If(i Mod 2 = 0, radius, radius * 0.382)
+            Dim angle = -std.PI / 2 + std.PI * i / 5
+            pts(i) = New PointF(CSng(cx + r * std.Cos(angle)), CSng(cy + r * std.Sin(angle)))
+        Next
+
+        Return pts
+    End Function
 
     ''' <summary>获取内部 Graphics（高级用户自定义绘制）</summary>
     Public Function GetGraphics() As IGraphics

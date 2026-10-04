@@ -210,7 +210,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\Data_science\Visualization\Plots\plots-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Visualization\DataPlot\DataPlot.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
