@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 
 #If NET48 Then
@@ -127,11 +128,11 @@ Public MustInherit Class EmbeddingRender : Inherits Plot
             Return serials
         End If
 
-        Dim color = GetClusterColors()
+        Dim colorMap = GetClusterColors()
         Dim maps As New Dictionary(Of String, List(Of PointF))()
 
-        For Each g In color
-            maps(g.Key) = New List(Of PointF)()
+        For Each clusterId In colorMap
+            maps(clusterId.Key) = New List(Of PointF)()
         Next
 
         For i As Integer = 0 To embeddings.Length - 1
@@ -139,7 +140,7 @@ Public MustInherit Class EmbeddingRender : Inherits Plot
         Next
 
         For Each group In maps.Where(Function(a) a.Value.Count > 0).ToArray()
-            serials.Add(ToSeries(group.Key, color(group.Key).Color, group.Value.ToArray()))
+            serials.Add(ToSeries(group.Key, colorMap(group.Key).Color, group.Value.ToArray()))
         Next
 
         Return serials
@@ -150,7 +151,6 @@ Public MustInherit Class EmbeddingRender : Inherits Plot
             .Name = name,
             .Color = color,
             .MarkerShape = MarkerShape.Circle,
-            .LineStyle = Drawing2D.DashStyle.Solid,
             .PointSize = CSng(theme.pointSize),
             .Visible = True,
             .X = points.Select(Function(p) CDbl(p.X)).ToArray(),

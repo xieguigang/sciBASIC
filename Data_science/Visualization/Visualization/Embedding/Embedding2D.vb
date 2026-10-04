@@ -53,9 +53,11 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 
 Public Class Embedding2D : Inherits EmbeddingRender

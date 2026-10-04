@@ -121,7 +121,6 @@ Public Class SOMEmbedding : Inherits Plot
                 .Name = group.Key,
                 .Color = colors.GetColor(group.Key),
                 .MarkerShape = MarkerShape.Circle,
-                .LineStyle = Drawing2D.DashStyle.Solid,
                 .PointSize = CSng(theme.pointSize),
                 .X = group.Value.Select(Function(p) CDbl(p.X)).ToArray(),
                 .Y = group.Value.Select(Function(p) CDbl(p.Y)).ToArray()
