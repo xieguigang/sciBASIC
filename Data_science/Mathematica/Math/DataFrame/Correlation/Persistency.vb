@@ -1,6 +1,7 @@
 Imports System.Buffers.Binary
 Imports System.IO
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.Win32.SafeHandles
 
 ''' <summary>
@@ -64,7 +65,7 @@ Public Module CorrelationPValues
         End If
 
         Try
-            Dim p As Double = Microsoft.VisualBasic.Math.Correlations.Beta.betai(0.5 * df, 0.5, x, throwMaxIterError:=False)
+            Dim p As Double = Beta.betai(0.5 * df, 0.5, x, throwMaxIterError:=False)
 
             If Double.IsNaN(p) OrElse Double.IsInfinity(p) Then
                 Return 1.0
