@@ -9,6 +9,8 @@
 ' ---------------------------------------------------------------------------
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -438,6 +440,74 @@ Public Class VennSet
             Next
         Next
     End Sub
+End Class
+
+''' <summary>条形图数据组里的一个分组：分组名 + 每个序列在该组下的取值</summary>
+Public Class BarDataSample : Implements INamedValue
+
+    ''' <summary>分组名称</summary>
+    Public Property tag As String Implements INamedValue.Key
+    ''' <summary>当前分组下每个序列的数据值</summary>
+    Public Property data As Double() = {}
+    ''' <summary>该分组下所有序列的求和（堆叠柱的总高度）</summary>
+    Public ReadOnly Property StackedSum As Double
+        Get
+            Return If(data Is Nothing, 0.0, data.Sum())
+        End Get
+    End Property
+
+    Public Overrides Function ToString() As String
+        Return $"{tag} = {If(data Is Nothing, 0, data.Length)} series"
+    End Function
+End Class
+
+''' <summary>条形图数据组：若干分组 + 每个序列的配色</summary>
+Public Class BarDataGroup
+
+    ''' <summary>序列名与配色，顺序与 <see cref="BarDataSample.data"/> 一致</summary>
+    Public Property Serials As NamedValue(Of Color)() = {}
+    ''' <summary>分组数据</summary>
+    Public Property Samples As BarDataSample() = {}
+
+    ''' <summary>按各组的平均值降序重排</summary>
+    Public Function Desc() As BarDataGroup
+        Dim order = Samples _
+            .OrderByDescending(Function(s) s.data.Average()) _
+            .Select(Function(s) s.tag) _
+            .ToArray()
+
+        Return Reorder(order)
+    End Function
+
+    ''' <summary>按给定的分组名顺序重排样本</summary>
+    Public Function Reorder(order As String()) As BarDataGroup
+        Dim index As New Dictionary(Of String, BarDataSample)()
+        For Each s In Samples
+            index(s.tag) = s
+        Next
+
+        Dim list As New List(Of BarDataSample)()
+        For Each name In order
+            If index.ContainsKey(name) Then list.Add(index(name))
+        Next
+
+        Return New BarDataGroup With {.Serials = Me.Serials, .Samples = list.ToArray()}
+    End Function
+
+    ''' <summary>转成 [序列, 分类] 的二维矩阵，便于直接喂给 <see cref="BarPlot"/></summary>
+    Public Function ToMatrix() As Double(,)
+        Dim nSer = Serials.Length
+        Dim nSample = Samples.Length
+        Dim out(nSer - 1, nSample - 1) As Double
+
+        For i = 0 To nSample - 1
+            For j = 0 To std.Min(nSer, Samples(i).data.Length) - 1
+                out(j, i) = Samples(i).data(j)
+            Next
+        Next
+
+        Return out
+    End Function
 End Class
 
 ''' <summary>样本正态性视图需要的矩估计结果（由统计量被调用方填进来）</summary>
