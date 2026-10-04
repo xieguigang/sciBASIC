@@ -12,7 +12,7 @@
     <OutputPath>../../../.nuget</OutputPath>
     <Configurations>Debug;Release;nuget_release</Configurations>
     <Title>DataPlot: GDI+ Chart Engine with ggplot2-Style Theme Units</Title>
-    <Description>Standalone GDI+ charting engine for sciBASIC#: scatter, line, bar, histogram, box, violin, jitter, bubble, pie, radar, rose, heatmap, chord, Sankey and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.</Description>
+    <Description>Standalone GDI+ charting engine for sciBASIC#: scatter (bubble/error-bar/jitter/hull), line, area, bar (grouped/stacked/percent/diverging/color-scale), histogram, box, violin, jitter, pie, radar, rose, pyramid, venn, contour, density, heatmap, cluster heatmap, correlation matrix, bubble heatmap, z-score, ROC, QQ, forest, PCA, Manhattan, regression, time trends and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.DataPlot</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
@@ -20,8 +20,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization;boxplot;violin-plot;heatmap;sankey;treemap</PackageTags>
-    <PackageReleaseNotes>DataPlot is a standalone GDI+ charting engine for sciBASIC#. It renders scatter, line, bar, histogram, box, violin, jitter, bubble, pie, radar, rose, heatmap, chord, Sankey and treemap plots onto a bitmap using ggplot2 style theme units - theme elements such as axis, plot background, grid and legend are described as composable units and combined into a theme - with automatic pixel layout so that axes, labels and legends are positioned without manual coordinates. The GgplotTheme namespace holds the theme definitions, and because the engine is independent of the other plotting packages it works both as a general charting library and as the rendering backend for higher level statistics oriented plot packages.</PackageReleaseNotes>
+    <PackageTags>scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization;boxplot;violin-plot;heatmap;sankey;treemap;contour;venn;roc-curve;qq-plot;forest-plot;pca-plot;manhattan-plot;correlation-matrix</PackageTags>
+    <PackageReleaseNotes>DataPlot is the standalone GDI+ charting engine for sciBASIC# and now hosts all 2D plotting capabilities migrated from the legacy Plots and Plots-statistics packages: the bar family (grouped, stacked, percent, diverging, horizontal, color-scale) is one parameterized plot; the scatter family gains bubble sizing, error bars, spline smoothing, convex hulls and jitter; new charts include contour/heatmap surfaces, venn diagrams, population pyramids, 2D density plots, cluster and correlation heatmaps, tree-plus-stacked-bar, ROC, QQ, forest, scree and PCA score plots with confidence ellipses, regression fits, Manhattan plots, mirrored bi-histograms, time trends, variable-width bars and z-score matrices. Statistical algorithm results (clustering trees, regression fits, PCA scores, correlation matrices) are injected through lightweight data contracts, so the package keeps its minimal dependency set - ggplot2 style theme units, automatic pixel layout and strong-typed themes remain the visual foundation.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
