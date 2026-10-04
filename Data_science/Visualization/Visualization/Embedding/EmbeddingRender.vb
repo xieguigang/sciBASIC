@@ -55,8 +55,9 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 
 #If NET48 Then
@@ -111,5 +112,49 @@ Public MustInherit Class EmbeddingRender : Inherits Plot
         map("n/a") = Brushes.Gray
 
         Return map
+    End Function
+
+    ''' <summary>
+    ''' 把降维结果按聚类分组拆成 DataPlot 的数据系列。
+    ''' 二维 embedding 的绘制统一交给 <see cref="ScatterPlot"/> 完成，这里只负责分组与配色。
+    ''' </summary>
+    Protected Function Build2DSeries() As List(Of Series)
+        Dim embeddings As PointF() = umap.GetPoint2D
+        Dim serials As New List(Of Series)()
+
+        If clusters.IsNullOrEmpty Then
+            serials.Add(ToSeries("ungroups", Color.Gray, embeddings))
+            Return serials
+        End If
+
+        Dim color = GetClusterColors()
+        Dim maps As New Dictionary(Of String, List(Of PointF))()
+
+        For Each g In color
+            maps(g.Key) = New List(Of PointF)()
+        Next
+
+        For i As Integer = 0 To embeddings.Length - 1
+            maps(getClusterLabel(i)).Add(embeddings(i))
+        Next
+
+        For Each group In maps.Where(Function(a) a.Value.Count > 0).ToArray()
+            serials.Add(ToSeries(group.Key, color(group.Key).Color, group.Value.ToArray()))
+        Next
+
+        Return serials
+    End Function
+
+    Private Function ToSeries(name As String, color As Color, points As PointF()) As Series
+        Return New Series With {
+            .Name = name,
+            .Color = color,
+            .MarkerShape = MarkerShape.Circle,
+            .LineStyle = Drawing2D.DashStyle.Solid,
+            .PointSize = CSng(theme.pointSize),
+            .Visible = True,
+            .X = points.Select(Function(p) CDbl(p.X)).ToArray(),
+            .Y = points.Select(Function(p) CDbl(p.Y)).ToArray()
+        }
     End Function
 End Class

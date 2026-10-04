@@ -162,6 +162,8 @@
     <ProjectReference Include="..\..\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\DataPlot\DataPlot.vbproj" />
+    <!-- 3D 图表渲染仍指向旧项目，待 3D 迁移到 Canvas3D 后再移除 -->
     <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
   </ItemGroup>
 

@@ -53,14 +53,12 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Linq
 
-Public Class Embedding2D ： Inherits EmbeddingRender
+Public Class Embedding2D : Inherits EmbeddingRender
 
     ReadOnly showConvexHull As Boolean
 
@@ -71,63 +69,14 @@ Public Class Embedding2D ： Inherits EmbeddingRender
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim embeddings As PointF() = umap.GetPoint2D
-        Dim serials As SerialData()
-        Dim hullConvexList As String() = Nothing
+        ' 二维embedding的绘制改由 DataPlot 的散点图引擎完成：
+        ' 老的 ChartPlots.Scatter2D 已经不再使用，这里只把分组好的数据喂进去。
+        Dim serials = Build2DSeries()
 
-        If clusters.IsNullOrEmpty Then
-            serials = {
-                New SerialData With {
-                    .color = Color.Gray,
-                    .pointSize = theme.pointSize,
-                    .shape = LegendStyles.Circle,
-                    .title = "ungroups",
-                    .pts = embeddings _
-                        .Select(Function(p) New PointData(p)) _
-                        .ToArray
-                }
-            }
-            hullConvexList = Nothing
-        Else
-            Dim maps As New Dictionary(Of String, List(Of PointData))
-            Dim color = GetClusterColors()
-
-            For Each group In color
-                maps(group.Key) = New List(Of PointData)
-            Next
-
-            For i As Integer = 0 To embeddings.Length - 1
-                maps(getClusterLabel(i)).Add(New PointData(embeddings(i)))
-            Next
-
-            serials = maps _
-                .Where(Function(c) c.Value.Count > 0) _
-                .Select(Function(a)
-                            Return New SerialData With {
-                                .color = color(a.Key).Color,
-                                .pointSize = theme.pointSize,
-                                .pts = a.Value.ToArray,
-                                .shape = LegendStyles.Circle,
-                                .title = a.Key
-                            }
-                        End Function) _
-                .ToArray
-
-            If showConvexHull Then
-                hullConvexList = maps _
-                    .Keys _
-                    .Where(Function(a) a <> "n/a") _
-                    .ToArray
-            End If
-        End If
-
-        Call New Plots.Scatter2D(
-            data:=serials,
-            theme:=theme,
-            scatterReorder:=False,
-            fillPie:=True,
-            ablines:=Nothing,
-            hullConvexList:=hullConvexList
-        ).Plot(g, canvas)
+        Using scatter As New ScatterPlot(g)
+            scatter.ShowLegend = True
+            scatter.ShowConvexHull = showConvexHull
+            scatter.Plot(serials)
+        End Using
     End Sub
 End Class
