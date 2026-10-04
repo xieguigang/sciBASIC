@@ -70,6 +70,60 @@ Public Module Extensions
         Call res.SaveAs(filepath)
     End Sub
 
+    ''' <summary>
+    ''' 把图表导出为图片文件，格式由扩展名决定（PNG / JPEG / BMP 等）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 只能用于自带位图的图表（由 <c>New(width, height)</c> 构造）。
+    ''' 外部注入画布时（例如画在 WinForms 控件上）没有可导出的位图，这里会明确报错，
+    ''' 而不是让调用方拿到一个空的 NullReference。
+    ''' </remarks>
+    <Extension>
+    Public Sub Save(plot As PlotEngine, filepath As String, Optional dpi As Integer = 300)
+        If plot Is Nothing Then Throw New ArgumentNullException(NameOf(plot))
+
+        Dim raster = TryCast(plot.GetGraphics, GdiRasterGraphics)
+
+        If raster Is Nothing Then
+            Throw New InvalidOperationException(
+                "This plot draws on an external graphics device and owns no bitmap; " &
+                "it cannot be saved to a file directly.")
+        End If
+
+        Call raster.ImageResource.SaveAs(filepath)
+    End Sub
+
+    ''' <summary><see cref="Save"/> 的同义写法，方便链式书写。</summary>
+    <Extension>
+    Public Sub SaveChanges(plot As PlotEngine, filepath As String, Optional dpi As Integer = 300)
+        Call plot.Save(filepath, dpi)
+    End Sub
+
+    ''' <summary>
+    ''' 取回图表渲染结果的图形数据对象（<c>GraphicsData</c>），
+    ''' 这样老代码里「返回 GraphicsData 再 .Save(...)」的写法可以无缝换成 DataPlot。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与 <see cref="Save"/> 一样，只有自带位图的图表（<c>New(width, height)</c>）才能取出图形数据。
+    ''' </remarks>
+    <Extension>
+    Public Function AsGraphicsData(plot As PlotEngine) As GraphicsData
+        If plot Is Nothing Then Throw New ArgumentNullException(NameOf(plot))
+
+        Dim raster = TryCast(plot.GetGraphics, GdiRasterGraphics)
+
+        If raster Is Nothing Then
+            Throw New InvalidOperationException(
+                "This plot draws on an external graphics device and owns no bitmap; " &
+                "it cannot be converted into GraphicsData.")
+        End If
+
+        Return New ImageData(
+            raster.ImageResource,
+            New System.Drawing.Size(plot.CanvasWidth, plot.CanvasHeight),
+            Microsoft.VisualBasic.MIME.Html.CSS.Padding.Zero)
+    End Function
+
     Public Iterator Function DataSerials(x As Double(), y As Double(), class_id As String()) As IEnumerable(Of Series)
         Dim groups = class_id.Select(Function(cid, i) (x(i), y(i), cid)).GroupBy(Function(a) a.cid)
         Dim colors As LoopArray(Of Color) = Designer.GetColors("paper")

@@ -104,7 +104,7 @@ Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
     plt.Matrix = dist.ToMatrix()
     plt.RowLabels = fieldName("doc", dist.length, sep := "_").toarray()
     plt.ColLabels = fieldName("doc", dist.length, sep := "_").ToArray()
-    plt.ColorMap = HeatmapPlot.ColorMapType.Plasma
+    plt.ColorMap = ColorScale.ColorMapType.Plasma
     plt.ShowValues = False
     plt.Plot()
     plt.SavePng(here("tfidf-heatmap.png"), 300)

@@ -57,7 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -81,13 +81,17 @@ Namespace TabularRender
         Public Property errMinus As Double
         Public Property Statics As Double()
 
-        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing, Optional lineWidth! = 2) As IEnumerable(Of ChartPlots.SerialData)
+        Public Shared Function GetData(csv$, Optional colors As Color() = Nothing, Optional lineWidth! = 2) As IEnumerable(Of Plots.Series)
             Return GetData(csv.LoadCsv(Of SerialData), colors, lineWidth)
         End Function
 
+        ''' <summary>
+        ''' 按 <see cref="serial"/> 分组，转成 DataPlot 的数据系列。
+        ''' 误差区间通过 <see cref="Plots.Series.ErrorMinus"/> / <see cref="Plots.Series.ErrorPlus"/> 传递。
+        ''' </summary>
         Public Shared Iterator Function GetData(data As IEnumerable(Of SerialData),
                                                 Optional colors As Color() = Nothing,
-                                                Optional lineWidth! = 2) As IEnumerable(Of ChartPlots.SerialData)
+                                                Optional lineWidth! = 2) As IEnumerable(Of Plots.Series)
             Dim gs = From x As SerialData
                      In data
                      Select x
@@ -99,23 +103,18 @@ Namespace TabularRender
                 colors)
 
             For Each g In gs.SeqIterator
+                Dim rows = g.value.Group.ToArray()
 
-                Yield New ChartPlots.SerialData With {
-                    .width = lineWidth,
-                    .title = g.value.serial,
-                    .color = colors(g.i),
-                    .pts = LinqAPI.Exec(Of PointData) <=
-                        From x As SerialData
-                        In g.value.Group
-                        Select New PointData With {
-                            .errMinus = x.errMinus,
-                            .errPlus = x.errPlus,
-                            .pt = New PointF(x.X, x.Y),
-                            .tag = x.tag,
-                            .value = x.value,
-                            .Statics = x.Statics
-                        }
-                    }
+                Yield New Plots.Series With {
+                    .Name = g.value.serial,
+                    .Color = colors(g.i),
+                    .PointSize = lineWidth,
+                    .X = rows.Select(Function(x) CDbl(x.X)).ToArray,
+                    .Y = rows.Select(Function(x) CDbl(x.Y)).ToArray,
+                    .ErrorMinus = rows.Select(Function(x) x.errMinus).ToArray,
+                    .ErrorPlus = rows.Select(Function(x) x.errPlus).ToArray,
+                    .PointLabels = rows.Select(Function(x) x.tag).ToArray
+                }
             Next
         End Function
 

@@ -61,8 +61,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -71,6 +73,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports std = System.Math
 
@@ -112,37 +115,45 @@ Namespace KMeans
 
             Dim clusters = clusterData.ClusterGroups
             Dim clusterColors = Designer.GetColors(schema)
-            Dim serials As New List(Of SerialData)
+            Dim serials As New List(Of Series)
             Dim labX$ = catagory.X.name, labY$ = catagory.Y.name
 
             For Each cluster In clusters.SeqIterator
                 Dim color As Color = clusterColors(cluster)
-                Dim points As New List(Of PointData)
+                Dim xs As New List(Of Double)
+                Dim ys As New List(Of Double)
 
                 For Each member As EntityClusterModel In (+cluster).Value
-                    points += New PointData With {
-                        .pt = New PointF With {
-                            .X = member(catagory.X.value).Average,
-                            .Y = member(catagory.Y.value).Average
-                        }
-                    }
+                    xs += member(catagory.X.value).Average
+                    ys += member(catagory.Y.value).Average
                 Next
 
-                serials += New SerialData With {
-                    .title = (+cluster).Key,
-                    .color = color,
-                    .pts = points,
-                    .shape = LegendStyles.Triangle,
-                    .pointSize = pointSize
+                serials += New Series With {
+                    .Name = (+cluster).Key,
+                    .Color = color,
+                    .X = xs.ToArray,
+                    .Y = ys.ToArray,
+                    .MarkerShape = MarkerShape.Triangle,
+                    .PointSize = pointSize
                 }
             Next
 
-            Return ChartPlots.Scatter.Plot(
-                serials,
-                size:=size, padding:=padding, bg:=bg,
-                drawLine:=False,
-                Xlabel:=labX, Ylabel:=labY,
-                htmlLabel:=False)
+            ' 二维聚类散点改由 DataPlot 的散点引擎绘制，
+            ' 画布与导出仍复用 imaging 的 GraphicsPlots，保持返回 GraphicsData 的兼容。
+            Dim plotInternal = Sub(ByRef gx As IGraphics, region As GraphicsRegion)
+                                   Using plt As New ScatterPlot(gx)
+                                       plt.XLabel = labX
+                                       plt.YLabel = labY
+                                       plt.Plot(serials)
+                                   End Using
+                               End Sub
+
+            Return g.GraphicsPlots(
+                size:=size.SizeParser,
+                padding:=padding,
+                bg:=bg,
+                plotAPI:=plotInternal
+            )
         End Function
 
         ''' <summary>

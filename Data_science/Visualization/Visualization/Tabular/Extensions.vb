@@ -54,7 +54,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Imaging
@@ -66,25 +66,27 @@ Namespace TabularRender
     Public Module Extensions
 
         <Extension>
-        Public Function ScatterSerials(csv As File, fieldX$, fieldY$, color$, Optional ptSize! = 5) As ChartPlots.SerialData
+        Public Function ScatterSerials(csv As File, fieldX$, fieldY$, color$, Optional ptSize! = 5) As Plots.Series
             With DataFrameResolver.CreateObject(csv)
                 Dim index As (X%, y%) = (.GetOrdinal(fieldX), .GetOrdinal(fieldY))
                 Dim columns = .GetColumnVectors.ToArray
                 Dim X = columns(index.X)
                 Dim Y = columns(index.y)
-                Dim pts As PointF() = X _
-                    .SeqIterator _
-                    .Select(Function(xi) New PointF(xi.value, Y(xi))) _
-                    .ToArray
-                Dim points As PointData() = pts _
-                    .Select(Function(pt) New PointData(pt)) _
-                    .ToArray
+                Dim n = System.Math.Min(X.Length, Y.Length)
+                Dim xs = New Double(n - 1) {}
+                Dim ys = New Double(n - 1) {}
 
-                Return New ChartPlots.SerialData With {
-                    .color = color.TranslateColor(throwEx:=False),
-                    .pointSize = ptSize,
-                    .title = $"Plot({fieldX}, {fieldY})",
-                    .pts = points
+                For i As Integer = 0 To n - 1
+                    xs(i) = X(i)
+                    ys(i) = Y(i)
+                Next
+
+                Return New Plots.Series With {
+                    .Color = color.TranslateColor(throwEx:=False),
+                    .PointSize = ptSize,
+                    .Name = $"Plot({fieldX}, {fieldY})",
+                    .X = xs,
+                    .Y = ys
                 }
             End With
         End Function
@@ -95,20 +97,35 @@ Namespace TabularRender
         ''' <param name="s"></param>
         ''' <param name="q">默认值为1，表示不会移除任何值</param>
         ''' <returns></returns>
+        ''' <summary>
+        ''' 按给定的分位数裁掉 Y 方向上的离群点
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="q">默认值为 1，表示不会移除任何值</param>
         <Extension>
-        Public Function RemovesYOutlier(s As ChartPlots.SerialData, Optional q# = 1) As ChartPlots.SerialData
+        Public Function RemovesYOutlier(s As Plots.Series, Optional q# = 1) As Plots.Series
             If q = 1.0R Then
                 Return s
             End If
 
-            With s.pts _
-                .Select(Function(pt) CDbl(pt.pt.Y)) _
-                .GKQuantile
-
-                q = .Query(quantile:=q)
-                s.pts = s.pts _
-                    .Where(Function(pt) pt.pt.Y <= q) _
+            With s.Y.GKQuantile
+                Dim threshold As Double = .Query(quantile:=q)
+                Dim keep = Enumerable _
+                    .Range(0, s.Y.Length) _
+                    .Where(Function(i) s.Y(i) <= threshold) _
                     .ToArray
+                Dim hasError = s.ErrorMinus IsNot Nothing AndAlso
+                               s.ErrorPlus IsNot Nothing AndAlso
+                               s.ErrorMinus.Length = s.Y.Length AndAlso
+                               s.ErrorPlus.Length = s.Y.Length
+
+                s.X = keep.Select(Function(i) s.X(i)).ToArray
+                s.Y = keep.Select(Function(i) s.Y(i)).ToArray
+
+                If hasError Then
+                    s.ErrorMinus = keep.Select(Function(i) s.ErrorMinus(i)).ToArray
+                    s.ErrorPlus = keep.Select(Function(i) s.ErrorPlus(i)).ToArray
+                End If
 
                 Return s
             End With
