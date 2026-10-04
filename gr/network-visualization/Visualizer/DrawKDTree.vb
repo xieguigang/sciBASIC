@@ -90,7 +90,7 @@ Public Class DrawKDTree : Inherits PlotEngine
         If query.IsNullOrEmpty Then Return
 
         ' ---- 查询点与其最近邻 ----
-        Dim nodeSize = If(NodeSize > 0, NodeSize, Theme.MarkerSize)
+        Dim nodeSize As Single = If(NodeSize > 0, NodeSize, Theme.MarkerSize)
 
         For Each q In query
             Dim color = q.Description.TranslateColor(throwEx:=False)

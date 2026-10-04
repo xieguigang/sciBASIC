@@ -64,7 +64,7 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -73,7 +73,7 @@ Namespace Styling
 
     Public Interface IGetShape
 
-        Function GetShapes(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, LegendStyles))
+        Function GetShapes(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, MarkerShape))
 
     End Interface
 
@@ -106,11 +106,11 @@ Namespace Styling
 
     Public Class DiscreteShape : Implements IGetShape
 
-        ReadOnly shapeList As New Dictionary(Of String, LegendStyles)
+        ReadOnly shapeList As New Dictionary(Of String, MarkerShape)
         ReadOnly selector As Func(Of Node, Object)
 
         Sub New(map As MapExpression)
-            Dim shape As LegendStyles
+            Dim shape As MarkerShape
 
             selector = map.propertyName.SelectNodeValue
 
@@ -120,20 +120,20 @@ Namespace Styling
                             Return s.GetTagValue("=", trim:=True)
                         End Function)
 
-                shape = [Enum].Parse(GetType(LegendStyles), p.Value, ignoreCase:=True)
+                shape = [Enum].Parse(GetType(MarkerShape), p.Value, ignoreCase:=True)
                 shapeList.Add(p.Name, shape)
             Next
         End Sub
 
-        Public Iterator Function GetShapes(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, LegendStyles)) Implements IGetShape.GetShapes
+        Public Iterator Function GetShapes(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, MarkerShape)) Implements IGetShape.GetShapes
             Dim key As String
-            Dim shape As LegendStyles
+            Dim shape As MarkerShape
 
             For Each node As Node In nodes
                 key = CStrSafe(selector(node))
-                shape = shapeList.TryGetValue(key, default:=LegendStyles.Circle)
+                shape = shapeList.TryGetValue(key, default:=MarkerShape.Circle)
 
-                Yield New Map(Of Node, LegendStyles) With {
+                Yield New Map(Of Node, MarkerShape) With {
                     .Key = node,
                     .Maps = shape
                 }
