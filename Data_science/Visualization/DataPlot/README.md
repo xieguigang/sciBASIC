@@ -63,7 +63,7 @@ Call box.Save("./box.png", width:=800, height:=600)
 - **自动布局的价值**：手工计算坐标会让"加一个图例"变成"重算所有偏移"。把布局抽象出来后，新增元素只影响布局引擎，不影响绘图代码。
 - **主题单元 vs 全局配色**：只换配色无法改变"网格是否显示""图例是否有边框"；主题单元模型让这些结构性差异也能通过配置表达。
 - **GDI+ 的定位**：本包输出位图（PNG / BMP），适合报告与演示；需要矢量输出（SVG / PostScript）时应使用 `Microsoft.VisualBasic.Imaging` 的驱动层。
-- **与 `Plots` 包的分工**：DataPlot 是**独立引擎**（自带主题与布局），`Plots` 是更偏统计与扩展的图表库；两者可分别使用，也可由上层按需选择。
+- **与 `Plots` 包的分工**：DataPlot 已接管旧 `Plots` / `Plots-statistics` 两个项目的**全部二维绘图能力**（本仓库这两个旧包仅因 3D 渲染尚未迁出而暂时保留，后续版本将删除）。2D 图表的新代码一律应使用 DataPlot；统计类图表所需的聚类树、回归拟合、PCA 得分等算法产物通过 `Microsoft.VisualBasic.Data.Plots` 里的轻量数据模型与接口（`ClusterTreeNode` / `IRegressionFit` / `IPCAScore` / `CorrelationMatrix` 等）注入，由上层算法包负责计算。
 
 ## 包信息
 
