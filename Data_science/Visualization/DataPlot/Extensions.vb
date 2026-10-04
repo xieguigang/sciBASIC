@@ -99,6 +99,31 @@ Public Module Extensions
         Call plot.Save(filepath, dpi)
     End Sub
 
+    ''' <summary>
+    ''' 取回图表渲染结果的图形数据对象（<c>GraphicsData</c>），
+    ''' 这样老代码里「返回 GraphicsData 再 .Save(...)」的写法可以无缝换成 DataPlot。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与 <see cref="Save"/> 一样，只有自带位图的图表（<c>New(width, height)</c>）才能取出图形数据。
+    ''' </remarks>
+    <Extension>
+    Public Function AsGraphicsData(plot As PlotEngine) As GraphicsData
+        If plot Is Nothing Then Throw New ArgumentNullException(NameOf(plot))
+
+        Dim raster = TryCast(plot.GetGraphics, GdiRasterGraphics)
+
+        If raster Is Nothing Then
+            Throw New InvalidOperationException(
+                "This plot draws on an external graphics device and owns no bitmap; " &
+                "it cannot be converted into GraphicsData.")
+        End If
+
+        Return New ImageData(
+            raster.ImageResource,
+            New System.Drawing.Size(plot.CanvasWidth, plot.CanvasHeight),
+            Microsoft.VisualBasic.MIME.Html.CSS.Padding.Zero)
+    End Function
+
     Public Iterator Function DataSerials(x As Double(), y As Double(), class_id As String()) As IEnumerable(Of Series)
         Dim groups = class_id.Select(Function(cid, i) (x(i), y(i), cid)).GroupBy(Function(a) a.cid)
         Dim colors As LoopArray(Of Color) = Designer.GetColors("paper")

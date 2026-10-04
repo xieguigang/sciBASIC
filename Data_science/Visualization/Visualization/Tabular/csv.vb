@@ -55,7 +55,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
@@ -118,7 +118,7 @@ Namespace TabularRender
 
             Dim colors As Color() = Designer.GetColors(schema, serialsName.Length)
             Dim out As New BarDataGroup With {
-                .Samples = samples,
+                .Samples = samples.ToArray,
                 .Serials = serialsName _
                     .SeqIterator _
                     .Select(Function(i)
