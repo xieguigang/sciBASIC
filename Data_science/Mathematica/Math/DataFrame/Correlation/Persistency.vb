@@ -624,6 +624,20 @@ Public Class CorrelationMatrixStore : Implements IDisposable
     End Property
 
     ''' <summary>
+    ''' 数据文件路径（文件模式）；外部 Stream 模式返回 Nothing
+    ''' </summary>
+    ''' <returns>
+    ''' 文件路径模式返回 <c>Open(path)</c> 时传入的完整路径；
+    ''' Stream 模式（<c>Open(data, index, ...)</c>）没有对应的磁盘文件路径，返回 Nothing。
+    ''' 可用于定位边车缓存文件（如 WGCNA 模块映射 <c>{storeFile}.modules</c>）。
+    ''' </returns>
+    Public ReadOnly Property storeFile As String
+        Get
+            Return _path
+        End Get
+    End Property
+
+    ''' <summary>
     ''' 计算相关系数时使用的样本数（p 值重算依据）
     ''' </summary>
     ''' <returns></returns>
@@ -706,13 +720,19 @@ Public Class CorrelationMatrixStore : Implements IDisposable
     ''' </param>
     ''' <param name="index">索引的输入流（<see cref="Complete"/> 写出的 Brotli 压缩索引），必须可读</param>
     ''' <param name="cacheRows">热行 LRU 缓存容量（行数），默认 64 行</param>
+    ''' <param name="storePath">
+    ''' 可选的数据文件路径记录：外部流背后若实际有对应的磁盘文件（例如 R# 侧的
+    ''' <c>{repo}/bicor.dat</c>），传入该路径可以让 <see cref="storeFile"/> 返回它，
+    ''' 从而支持边车缓存（如 WGCNA 模块映射 <c>{storeFile}.modules</c>）的自动定位。
+    ''' 为 Nothing 时 <see cref="storeFile"/> 返回 Nothing。
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 与 <see cref="CorrelationMatrixWriter"/> 的
     ''' <c>Sub New(dataOutput, indexOutput, ...)</c> 构造函数配套使用：
     ''' 写入时提供的两个流，在 Complete 之后可以直接交给本方法重新打开读取。
     ''' </remarks>
-    Public Shared Function Open(data As Stream, index As Stream, Optional cacheRows As Integer = 64) As CorrelationMatrixStore
+    Public Shared Function Open(data As Stream, index As Stream, Optional cacheRows As Integer = 64, Optional storePath As String = Nothing) As CorrelationMatrixStore
         If data Is Nothing Then
             Throw New ArgumentNullException(NameOf(data), "矩阵数据输入流不能为空")
         End If
@@ -751,7 +771,7 @@ Public Class CorrelationMatrixStore : Implements IDisposable
             dataStream = Nothing
         End If
 
-        Return New CorrelationMatrixStore(Nothing, handle, dataStream, False, genes, geneIndex,
+        Return New CorrelationMatrixStore(storePath, handle, dataStream, False, genes, geneIndex,
                                           offsets, lengths, n, sampleN,
                                           CType(encoding, CorrelationEncodings), cacheRows)
     End Function
