@@ -87,8 +87,8 @@ Public Class BubblePlot
     ''' <summary>大小图例示例值个数</summary>
     Public Property SizeLegendCount As Integer = 3
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot(seriesList As IList(Of BubbleSeries))

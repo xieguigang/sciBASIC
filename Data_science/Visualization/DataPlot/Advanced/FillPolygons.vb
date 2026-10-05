@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::2b7f9d4c6a1e4308b5c2d8f7a9b3e6c1, Data_science\Visualization\DataPlot\Advanced\FillPolygons.vb"
+﻿#Region "Microsoft.VisualBasic::2b7f9d4c6a1e4308b5c2d8f7a9b3e6c1, Data_science\Visualization\DataPlot\Advanced\FillPolygons.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -49,8 +49,8 @@ Public Class FillPolygons
     ''' <summary>是否绘制坐标轴与网格</summary>
     Public Property ShowAxes As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

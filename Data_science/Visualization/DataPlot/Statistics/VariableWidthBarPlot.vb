@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::2c6a9d3f8b4e4914e7a3c6d9f2b5e8d1, Data_science\Visualization\DataPlot\Statistics\VariableWidthBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2c6a9d3f8b4e4914e7a3c6d9f2b5e8d1, Data_science\Visualization\DataPlot\Statistics\VariableWidthBarPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -46,8 +46,8 @@ Public Class VariableWidthBarPlot
     ''' <summary>是否在横轴上写出柱子的名字</summary>
     Public Property ShowBarNames As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

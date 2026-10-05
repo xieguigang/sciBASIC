@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::2c9b4e7a1d3f4805e7c9b2a4d6f8c1e3, Data_science\Visualization\DataPlot\Statistics\ManhattanPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2c9b4e7a1d3f4805e7c9b2a4d6f8c1e3, Data_science\Visualization\DataPlot\Statistics\ManhattanPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -54,8 +54,8 @@ Public Class ManhattanPlot
     Public Property OddColor As Color = Color.FromArgb(31, 119, 180)
     Public Property EvenColor As Color = Color.FromArgb(140, 86, 75)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

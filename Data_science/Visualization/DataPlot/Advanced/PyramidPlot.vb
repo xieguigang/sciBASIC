@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::8e4b2c7f1a3d4905c7e9b2f4a6d8c1e3, Data_science\Visualization\DataPlot\Advanced\PyramidPlot.vb"
+﻿#Region "Microsoft.VisualBasic::8e4b2c7f1a3d4905c7e9b2f4a6d8c1e3, Data_science\Visualization\DataPlot\Advanced\PyramidPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -50,8 +50,8 @@ Public Class PyramidPlot
     Public Property LeftColor As Color? = Nothing
     Public Property RightColor As Color? = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

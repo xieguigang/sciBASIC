@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::6c3a9e1b7d2f4809a1b5c8e3f7d2a6b4, Data_science\Visualization\DataPlot\Advanced\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::6c3a9e1b7d2f4809a1b5c8e3f7d2a6b4, Data_science\Visualization\DataPlot\Advanced\AlignmentPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -47,8 +47,8 @@ Public Class AlignmentPlot
     ''' <summary>高亮区间的填充色</summary>
     Public Property HighlightColor As Color = Color.FromArgb(40, 100, 180)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

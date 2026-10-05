@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::6b1d4f8c3e5a4909f2b7e1d4c6a8f3e5, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
+﻿#Region "Microsoft.VisualBasic::6b1d4f8c3e5a4909f2b7e1d4c6a8f3e5, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -42,8 +42,8 @@ Public Class CorrelationTrianglePlot
     Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.CoolWarm
     Public Property ValueRange As (min As Double, max As Double) = (-1, 1)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

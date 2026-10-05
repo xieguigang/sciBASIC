@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::3d7b1e4a9c5f4915f8b4d7e1a3c6f9e2, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
+﻿#Region "Microsoft.VisualBasic::3d7b1e4a9c5f4915f8b4d7e1a3c6f9e2, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -48,8 +48,8 @@ Public Class ZScorePlot
     ''' <summary>分组标注条的宽度，0 表示不画</summary>
     Public Property GroupBarWidth As Single = 10.0F
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

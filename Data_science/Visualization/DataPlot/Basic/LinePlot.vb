@@ -69,8 +69,8 @@ Public Property ShowErrorBand As Boolean = True
 ''' <summary>误差带透明度（0~255）</summary>
 Public Property BandAlpha As Integer = 70
 
-Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-    MyBase.New(width, height, theme)
+Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    MyBase.New(width, height, theme, driver)
 End Sub
 
     ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>

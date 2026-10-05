@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::3c8a1f6e9b2d4705a8c3e1f7d9b0a2c4, Data_science\Visualization\DataPlot\Basic\ContourPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3c8a1f6e9b2d4705a8c3e1f7d9b0a2c4, Data_science\Visualization\DataPlot\Basic\ContourPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -82,8 +82,8 @@ Public Class ContourPlot
     Private xs As Double() = Nothing
     Private ys As Double() = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

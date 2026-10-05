@@ -85,8 +85,8 @@ Public Class BarPlot
     ''' <summary>自定义柱子：给了值时，完全按调用方指定的颜色与顺序绘制</summary>
     Public Property Serials As BarSerial() = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

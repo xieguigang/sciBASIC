@@ -64,8 +64,8 @@ Public Class ScatterPlot : Inherits SeriesPlotEngine
     ''' <summary>需要叠加的参考直线，元素为 (斜率 b, 截距 a)，即 y = a + b*x</summary>
     Public Property AbLines As New List(Of (b As Double, a As Double))()
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>

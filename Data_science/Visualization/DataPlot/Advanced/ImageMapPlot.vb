@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::9f2c4b7d1a3e4805b6c8e2f7a1d3b9c4, Data_science\Visualization\DataPlot\Advanced\ImageMapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9f2c4b7d1a3e4805b6c8e2f7a1d3b9c4, Data_science\Visualization\DataPlot\Advanced\ImageMapPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -52,8 +52,8 @@ Public Class ImageMapPlot
     ''' <summary>数据场外再叠加的多边形轮廓（可选，例如勾出感兴趣区域）</summary>
     Public Property OverlayShapes As List(Of PolygonGroup) = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

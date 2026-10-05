@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::4e8c2f5b1a6d4916a9c5e8f2b4d7a1c3, Data_science\Visualization\DataPlot\Statistics\SampleViewPlot.vb"
+﻿#Region "Microsoft.VisualBasic::4e8c2f5b1a6d4916a9c5e8f2b4d7a1c3, Data_science\Visualization\DataPlot\Statistics\SampleViewPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -56,8 +56,8 @@ Public Class SampleViewPlot
     ''' <summary>直方图分箱数</summary>
     Public Property Bins As Integer = 30
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

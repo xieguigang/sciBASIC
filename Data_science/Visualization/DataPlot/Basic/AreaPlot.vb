@@ -74,8 +74,8 @@ Public Class AreaPlot
     ''' <summary>面积基线 Y 值（默认 0，即曲线下面积）</summary>
     Public Property Baseline As Double = 0
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot(seriesList As IList(Of Series))

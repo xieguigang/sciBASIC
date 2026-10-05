@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::a1c4e7f9b2d64058c3e1a7f6b9d2c5e8, Data_science\Visualization\DataPlot\Statistics\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a1c4e7f9b2d64058c3e1a7f6b9d2c5e8, Data_science\Visualization\DataPlot\Statistics\QQPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -48,8 +48,8 @@ Public Class QQPlot
     ''' <summary>散点颜色</summary>
     Public Property PointColor As Color? = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

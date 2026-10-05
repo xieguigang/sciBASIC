@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::b4d8c2e6a1f34907d5b8c1e3a7f9d2b6, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b4d8c2e6a1f34907d5b8c1e3a7f9d2b6, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -43,8 +43,8 @@ Public Class ROCPlot
     ''' <summary>是否在图例文本里带上 AUC 值</summary>
     Public Property ShowAUCValue As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

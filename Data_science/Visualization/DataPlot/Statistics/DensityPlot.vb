@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::8d3f6b1c5a7b4911b4d9a3f6e8c1b5a7, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
+﻿#Region "Microsoft.VisualBasic::8d3f6b1c5a7b4911b4d9a3f6e8c1b5a7, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -51,8 +51,8 @@ Public Class DensityPlot
     ''' <summary>散点颜色</summary>
     Public Property PointColor As Color = Color.White
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

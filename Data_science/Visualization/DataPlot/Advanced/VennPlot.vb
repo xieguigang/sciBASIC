@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::5d1c8f3a7e2b4906b9f4c1a8d3e7b0c5, Data_science\Visualization\DataPlot\Advanced\VennPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5d1c8f3a7e2b4906b9f4c1a8d3e7b0c5, Data_science\Visualization\DataPlot\Advanced\VennPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -42,8 +42,8 @@ Public Class VennPlot
     ''' <summary>是否在圆上标出集合名与元素数</summary>
     Public Property ShowLabels As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

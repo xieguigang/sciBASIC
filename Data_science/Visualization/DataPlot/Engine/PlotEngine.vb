@@ -92,8 +92,8 @@ Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
         MyBase.New(bmp)
     End Sub
 
-    Protected Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Protected Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     ''' <summary>直接在外部提供的绘图设备上绘制（例如 DirectX 的 GPU 画布）。</summary>

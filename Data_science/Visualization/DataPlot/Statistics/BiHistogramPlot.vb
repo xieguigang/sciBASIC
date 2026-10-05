@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::1a5d8f3c7e2b4906b4c1a9d7e3f5b2c8, Data_science\Visualization\DataPlot\Statistics\BiHistogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::1a5d8f3c7e2b4906b4c1a9d7e3f5b2c8, Data_science\Visualization\DataPlot\Statistics\BiHistogramPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -38,8 +38,8 @@ Public Class BiHistogramPlot
     ''' <summary>向下绘制的样本</summary>
     Public Property SampleB As BiHistogramSample = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
         MyBase.Mirrored = True
     End Sub
 

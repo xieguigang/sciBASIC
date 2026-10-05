@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::c7b1e9d4a2f64803e8c5b1d9f3a7c2e5, Data_science\Visualization\DataPlot\Statistics\ForestPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c7b1e9d4a2f64803e8c5b1d9f3a7c2e5, Data_science\Visualization\DataPlot\Statistics\ForestPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -48,8 +48,8 @@ Public Class ForestPlot
     ''' <summary>点估计标记颜色</summary>
     Public Property MarkerColor As Color? = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::4f8a2c6e1b3d4907d9e5c1a8b2f7d3c6, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::4f8a2c6e1b3d4907d9e5c1a8b2f7d3c6, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -65,8 +65,8 @@ Public Class ClusterHeatmapPlot
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

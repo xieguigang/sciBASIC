@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::5a9c3e7b2d4f4808e1a6d9c3b5f7e2d4, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5a9c3e7b2d4f4808e1a6d9c3b5f7e2d4, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -47,8 +47,8 @@ Public Class CorrelationHeatmapPlot
     ''' <summary>系数的值域（通常为 -1~1）</summary>
     Public Property ValueRange As (min As Double, max As Double) = (-1, 1)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()

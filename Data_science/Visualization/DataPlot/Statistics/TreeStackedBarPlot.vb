@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::9e4a7b2d6c8f4912c5e1b4a7d9c2f6b8, Data_science\Visualization\DataPlot\Statistics\TreeStackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9e4a7b2d6c8f4912c5e1b4a7d9c2f6b8, Data_science\Visualization\DataPlot\Statistics\TreeStackedBarPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -49,8 +49,8 @@ Public Class TreeStackedBarPlot
     ''' <summary>是否在每段上写出数值</summary>
     Public Property ShowValues As Boolean = False
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     Public Sub Plot()
