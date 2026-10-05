@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afc87cf68bc5bcb8a2c2f06abc8a0092, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
+#Region "Microsoft.VisualBasic::afc87cf68bc5bcb8a2c2f06abc8a0092, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
 
     ' Author:
     ' 
@@ -53,8 +53,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.Drawing2D

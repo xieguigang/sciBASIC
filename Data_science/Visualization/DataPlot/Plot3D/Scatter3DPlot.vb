@@ -169,9 +169,17 @@ Namespace Plot3D.Impl
         ''' Plot(g, layout) 入口），供 Embedding3D 之类的多图层宿主使用。
         ''' </summary>
         ''' <param name="g">宿主画布（所有权归调用方，本方法不负责释放）</param>
-        ''' <param name="layout">绘图布局区域（画布尺寸 + padding）</param>
-        Public Sub Plot(ByRef g As IGraphics, layout As GraphicsRegion)
-            Call PlotInternal(g, layout)
+        ''' <param name="layout">绘图布局区域</param>
+        Public Sub Plot(ByRef g As IGraphics, layout As Rectangle)
+            Dim padding As New Padding With {
+                .Left = layout.Left,
+                .Top = layout.Top,
+                .Bottom = g.Height - layout.Bottom,
+                .Right = g.Width - layout.Right
+            }
+            Dim canvas As New GraphicsRegion(New Size(g.Width, g.Height), padding)
+
+            Call PlotInternal(g, canvas)
         End Sub
 
         Private Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)

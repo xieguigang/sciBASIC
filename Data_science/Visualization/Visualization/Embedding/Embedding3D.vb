@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3471b6fcea71e43d679b7ec973e2325e, Data_science\Visualization\Visualization\Embedding\Embedding3D.vb"
+#Region "Microsoft.VisualBasic::3471b6fcea71e43d679b7ec973e2325e, Data_science\Visualization\Visualization\Embedding\Embedding3D.vb"
 
     ' Author:
     ' 
@@ -53,10 +53,11 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Impl
+Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Impl
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Imaging
@@ -115,7 +116,7 @@ Public Class Embedding3D : Inherits EmbeddingRender
             showHull:=bubbleAlpha > 0,
             hullAlpha:=bubbleAlpha,
             hullBspline:=2,
-            theme:=theme
+            theme:=ThemeBridge.ToPlot3DTheme(theme)
         )
         Dim css As CSSEnvirnment = g.LoadEnvironment
 

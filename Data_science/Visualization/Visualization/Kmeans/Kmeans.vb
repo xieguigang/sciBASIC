@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2000cf8763618add582da2bcb9f0bbf0, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
+#Region "Microsoft.VisualBasic::2000cf8763618add582da2bcb9f0bbf0, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
 
     ' Author:
     ' 
@@ -56,9 +56,8 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Plots
