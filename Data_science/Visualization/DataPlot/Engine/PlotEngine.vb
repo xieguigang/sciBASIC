@@ -165,13 +165,34 @@ Public Class PlotEngine : Implements IDisposable
     ' ========================================================
     '  构造与释放
     ' ========================================================
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+    ''' <summary>
+    ''' 创建指定尺寸的画布。可以通过 <paramref name="driver"/> 参数选择绘图驱动，
+    ''' 从而支持输出 png（GDI 栅格）/ svg / postscript / pdf 等不同的图形格式。
+    ''' </summary>
+    ''' <param name="driver">
+    ''' 绘图驱动类型（<see cref="Drivers.Default"/> 表示使用全局默认驱动，默认为 GDI+ 栅格）。
+    ''' 非 GDI 驱动需要先在程序启动时完成注册（例如 <c>ImageDriver.Register()</c>、
+    ''' <c>ImageDriver.RegisterPostScript()</c> 或 Skia 驱动注册）。
+    ''' </param>
+    Public Sub New(width As Integer, height As Integer,
+                   Optional theme As PlotTheme = Nothing,
+                   Optional driver As Drivers = Drivers.Default)
+
         _width = width
         _height = height
         _Theme = If(theme, PlotTheme.Light())
-        _g = DriverLoad.CreateGraphicsDevice(New Size(width, height))
+        _g = DriverLoad.CreateGraphicsDevice(New Size(width, height), driver:=driver)
         ApplyQuality(_g)
     End Sub
+
+    ''' <summary>
+    ''' 当前绘图引擎所使用的绘图驱动类型。
+    ''' </summary>
+    Public ReadOnly Property Driver As Drivers
+        Get
+            Return _g.Driver
+        End Get
+    End Property
 
     ''' <summary>
     ''' 直接使用已有的 System.Drawing.Bitmap 作为绘图设备（GDI 驱动）。
