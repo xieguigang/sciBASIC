@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7909a163db6f01f1f6af4434e4e16b1, Data_science\DataMining\hierarchical-clustering\HCTreePlot\HorizonRightToLeft.vb"
+#Region "Microsoft.VisualBasic::c7909a163db6f01f1f6af4434e4e16b1, Data_science\DataMining\hierarchical-clustering\HCTreePlot\HorizonRightToLeft.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,6 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports std = System.Math

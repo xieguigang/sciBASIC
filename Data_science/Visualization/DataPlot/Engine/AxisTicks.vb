@@ -100,6 +100,32 @@ Public Module AxisTicksHelper
         Return list.ToArray
     End Function
 
+    ''' <summary>
+    ''' 按固定的刻度步长生成坐标轴序列（从旧 Plots 项目的 AxisScalling.GetAxisByTick 迁移）
+    ''' </summary>
+    <Extension>
+    Public Function GetAxisByTick(range As DoubleRange, tick As Double) As Double()
+        Return GetAxisByTick(range.Max, tick, range.Min).ToArray
+    End Function
+
+    Public Function GetAxisByTick(max As Double, tick As Double, Optional min As Double = 0R) As List(Of Double)
+        Dim l As New List(Of Double)
+        Dim i As Double = min
+
+        If tick = 0R Then
+            Throw New ArgumentException($"Tick can not be ZERO! min={min}, max={max}")
+        End If
+
+        Do Until i >= max
+            Call l.Add(i)
+            i += tick
+        Loop
+
+        Call l.Add(max)
+
+        Return l
+    End Function
+
     Private Function NiceStep(range As Double, tickCount As Integer) As Double
         If range <= 0 Then Return 1
 

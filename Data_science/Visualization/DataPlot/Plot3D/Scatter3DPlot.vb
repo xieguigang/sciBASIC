@@ -164,6 +164,16 @@ Namespace Plot3D.Impl
             )
         End Function
 
+        ''' <summary>
+        ''' 渲染到已有的宿主画布（图层式共享画布，等价于旧引擎基类 Plot 的
+        ''' Plot(g, layout) 入口），供 Embedding3D 之类的多图层宿主使用。
+        ''' </summary>
+        ''' <param name="g">宿主画布（所有权归调用方，本方法不负责释放）</param>
+        ''' <param name="layout">绘图布局区域（画布尺寸 + padding）</param>
+        Public Sub Plot(ByRef g As IGraphics, layout As GraphicsRegion)
+            Call PlotInternal(g, layout)
+        End Sub
+
         Private Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim legends As LegendObject() = serials _
                 .Select(Function(s)
