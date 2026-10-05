@@ -13,14 +13,86 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
 Namespace Canvas
 
     Public Module LayerRender
+
+        ''' <summary>
+        ''' 在宿主画布的给定子区域内绘制一个带坐标轴框架的序列面板。
+        ''' 等价于旧引擎的 <c>Scatter.Plot(c, g, rect, ...)</c> 多面板布局模式：
+        ''' 依据序列数据范围自动计算刻度与线性缩放，先绘制坐标轴/网格框架，
+        ''' 再把几何体委派给新引擎的折线/散点绘制。
+        ''' </summary>
+        ''' <param name="rect">面板布局区域（画布尺寸 + padding）</param>
+        ''' <param name="theme">ggplot CSS 主题（控制网格/轴样式/刻度字体等）</param>
+        <Extension>
+        Public Sub DrawPanel(g As IGraphics, rect As GraphicsRegion, theme As Theme,
+                             serials As IEnumerable(Of SerialData),
+                             Optional xlabel$ = "",
+                             Optional ylabel$ = "",
+                             Optional drawLine As Boolean = True,
+                             Optional nticksX As Integer = 9,
+                             Optional nticksY As Integer = 9)
+
+            Dim pts As PointF() = serials _
+                .SelectMany(Function(s) s.pts) _
+                .Select(Function(p) p.pt) _
+                .ToArray
+
+            If pts.IsNullOrEmpty Then
+                Return
+            End If
+
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim plotRect As Rectangle = rect.PlotRegion(css)
+            Dim xrange As New DoubleRange(pts.Select(Function(p) CDbl(p.X)))
+            Dim yrange As New DoubleRange(pts.Select(Function(p) CDbl(p.Y)))
+            Dim xticks As Double() = xrange.CreateAxisTicks(nticksX)
+            Dim yticks As Double() = yrange.CreateAxisTicks(nticksY)
+            Dim scaleX = d3js.scale.linear.domain(values:=xticks).range(integers:={plotRect.Left, plotRect.Right})
+            Dim scaleY = d3js.scale.linear.domain(values:=yticks).range(integers:={plotRect.Bottom, plotRect.Top})
+            Dim scaler As New DataScaler() With {
+                .AxisTicks = (New Vector(xticks), New Vector(yticks)),
+                .region = plotRect,
+                .X = scaleX,
+                .Y = scaleY
+            }
+
+            ' 先画坐标轴与网格框架（旧 Scatter.Plot 面板行为）
+            Call g.DrawAxis(
+                scaler, rect,
+                showGrid:=theme.drawGrid,
+                xlabel:=xlabel, ylabel:=ylabel,
+                labelFontStyle:=theme.axisLabelCSS,
+                xlayout:=theme.xAxisLayout, ylayout:=theme.yAxisLayout,
+                gridFill:=theme.gridFill,
+                gridX:=theme.gridStrokeX, gridY:=theme.gridStrokeY,
+                axisStroke:=theme.axisStroke,
+                tickFontStyle:=theme.axisTickCSS,
+                htmlLabel:=theme.htmlLabel,
+                XtickFormat:=theme.XaxisTickFormat,
+                YtickFormat:=theme.YaxisTickFormat,
+                xlabelRotate:=theme.xAxisRotate)
+
+            ' 再画几何体
+            If drawLine Then
+                Call DrawLines(g, scaler, theme, serials)
+            Else
+                Call DrawPoints(g, scaler, theme, serials)
+            End If
+        End Sub
 
         ''' <summary>
         ''' 把 ggplot 的旧 <see cref="SerialData"/> 系列转换为新引擎的 <see cref="Series"/> 系列
