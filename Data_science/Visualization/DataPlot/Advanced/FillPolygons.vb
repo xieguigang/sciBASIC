@@ -20,7 +20,6 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 ' ============================================================================
@@ -49,8 +48,6 @@ Public Class FillPolygons
     Public Property PointSize As Single = 4.0F
     ''' <summary>是否绘制坐标轴与网格</summary>
     Public Property ShowAxes As Boolean = True
-    ''' <summary>是否绘制图例</summary>
-    Public Property ShowLegend As Boolean = True
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)

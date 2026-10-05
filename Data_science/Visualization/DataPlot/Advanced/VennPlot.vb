@@ -41,8 +41,6 @@ Public Class VennPlot
     Public Property FillAlpha As Double = 0.45
     ''' <summary>是否在圆上标出集合名与元素数</summary>
     Public Property ShowLabels As Boolean = True
-    ''' <summary>是否绘制图例</summary>
-    Public Property ShowLegend As Boolean = True
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)
