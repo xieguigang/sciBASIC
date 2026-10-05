@@ -7,6 +7,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Canvas
 
