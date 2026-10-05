@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a9c3e7b2d4f4808e1a6d9c3b5f7e2d4, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
+#Region "Microsoft.VisualBasic::5a9c3e7b2d4f4808e1a6d9c3b5f7e2d4, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -49,6 +49,11 @@ Public Class CorrelationHeatmapPlot
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
         MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

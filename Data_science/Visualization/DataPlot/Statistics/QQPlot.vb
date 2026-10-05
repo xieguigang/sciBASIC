@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1c4e7f9b2d64058c3e1a7f6b9d2c5e8, Data_science\Visualization\DataPlot\Statistics\QQPlot.vb"
+#Region "Microsoft.VisualBasic::a1c4e7f9b2d64058c3e1a7f6b9d2c5e8, Data_science\Visualization\DataPlot\Statistics\QQPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -50,6 +50,11 @@ Public Class QQPlot
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
         MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

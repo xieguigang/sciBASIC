@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d3f6b1c5a7b4911b4d9a3f6e8c1b5a7, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
+#Region "Microsoft.VisualBasic::8d3f6b1c5a7b4911b4d9a3f6e8c1b5a7, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -53,6 +53,11 @@ Public Class DensityPlot
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
         MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

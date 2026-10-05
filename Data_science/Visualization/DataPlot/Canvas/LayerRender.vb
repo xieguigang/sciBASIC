@@ -1,0 +1,312 @@
+' ============================================================================
+'  LayerRender.vb - ggplot 图层 -> DataPlot 图型类的委派渲染器
+'
+'  ggplot 的图层模型要求多个图层共享同一块画布（IGraphics）与同一套坐标系统，
+'  而 DataPlot 的图型类默认是"独占画布、一次画完"。这里提供两个能力：
+'
+'  1) Attach: 把图型类装配到共享画布上（关闭框架重绘 + 钉死绘图区与数据范围）
+'  2) Draw*:  把 ggplot 的 SerialData 系列转换为新引擎的 Series 之后委派绘制
+'
+'  这样每个 geom 图层只需要替换掉旧 ChartPlots 的绘图调用即可，
+'  不必重写 ggplot 的数据映射管线。
+' ============================================================================
+
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
+Imports std = System.Math
+
+Namespace Canvas
+
+    Public Module LayerRender
+
+        ''' <summary>
+        ''' 把 ggplot 的旧 <see cref="SerialData"/> 系列转换为新引擎的 <see cref="Series"/> 系列
+        ''' </summary>
+        <Extension>
+        Public Function ToSeries(serials As IEnumerable(Of SerialData)) As List(Of Series)
+            Dim list As New List(Of Series)
+
+            For Each s As SerialData In If(serials, New SerialData() {})
+                Dim n As Integer = If(s.pts Is Nothing, 0, s.pts.Length)
+                Dim x As Double() = New Double(n - 1) {}
+                Dim y As Double() = New Double(n - 1) {}
+                Dim size As Double() = New Double(n - 1) {}
+
+                For i As Integer = 0 To n - 1
+                    x(i) = s.pts(i).pt.X
+                    y(i) = s.pts(i).pt.Y
+                    size(i) = If(s.pts(i).size, s.pointSize)
+                Next
+
+                list.Add(New Series With {
+                    .Name = s.title,
+                    .Color = s.color,
+                    .X = x,
+                    .Y = y,
+                    .Size = size,
+                    .LineStyle = s.lineType,
+                    .MarkerShape = ToMarkerShape(s.shape),
+                    .PointSize = If(s.pointSize > 0 AndAlso s.pointSize < 100, s.pointSize, 0)
+                })
+            Next
+
+            Return list
+        End Function
+
+        ''' <summary>旧图例形状枚举到新引擎标记形状的映射</summary>
+        Public Function ToMarkerShape(style As LegendStyles) As MarkerShape
+            Select Case style
+                Case LegendStyles.Rectangle, LegendStyles.RoundRectangle : Return MarkerShape.Square
+                Case LegendStyles.Diamond : Return MarkerShape.Diamond
+                Case LegendStyles.Triangle : Return MarkerShape.Triangle
+                Case LegendStyles.Hexagon : Return MarkerShape.Hexagon
+                Case LegendStyles.Pentacle : Return MarkerShape.Star
+                Case LegendStyles.SolidLine, LegendStyles.DashLine : Return MarkerShape.None
+                Case Else : Return MarkerShape.Circle
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 把图型类装配到 ggplot 的共享画布上：
+        ''' 关闭框架重绘（背景 / 边框 / 标题 / 坐标轴 / 图例由 ggplot 画布层统一负责），
+        ''' 并使用宿主给定的绘图区与跨图层联合计算出来的数据范围。
+        ''' </summary>
+        Public Function Attach(Of T As PlotEngine)(engine As T,
+                                                   scaler As DataScaler,
+                                                   Optional area As Rectangle? = Nothing) As T
+            Dim rect As Rectangle = If(area, scaler.region)
+
+            engine.DrawFrame = False
+            engine.SetPlotArea(New RectangleF(rect.X, rect.Y, rect.Width, rect.Height))
+
+            ' 分类轴（ordinal）不会有数值刻度范围，此时只钉死存在的那一维
+            Dim ticks = scaler.AxisTicks
+
+            If ticks.Y IsNot Nothing AndAlso ticks.Y.Length > 0 Then
+                engine.YMin = ticks.Y.Min
+                engine.YMax = ticks.Y.Max
+            End If
+
+            If ticks.X IsNot Nothing AndAlso ticks.X.Length > 0 Then
+                engine.XMin = ticks.X.Min
+                engine.XMax = ticks.X.Max
+            End If
+
+            Return engine
+        End Function
+
+        ''' <summary>折线 / 路径图层</summary>
+        Public Sub DrawLines(g As IGraphics, scaler As DataScaler, theme As Theme,
+                             serials As IEnumerable(Of SerialData),
+                             Optional smooth As Boolean = False)
+
+            If serials Is Nothing Then Return
+
+            Using plt As New LinePlot(g, ThemeBridge.ToPlotTheme(theme)) With {.Smooth = smooth}
+                Call Attach(plt, scaler)
+                Call plt.Plot(ToSeries(serials))
+            End Using
+        End Sub
+
+        ''' <summary>散点 / 点图层（支持抖动与凸包轮廓）</summary>
+        Public Sub DrawPoints(g As IGraphics, scaler As DataScaler, theme As Theme,
+                              serials As IEnumerable(Of SerialData),
+                              Optional jitter As Boolean = False,
+                              Optional showConvexHull As Boolean = False)
+
+            If serials Is Nothing Then Return
+
+            Using plt As New ScatterPlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+                .Jitter = jitter,
+                .ShowConvexHull = showConvexHull,
+                .ShowErrorBars = False
+            }
+                Call Attach(plt, scaler)
+                Call plt.Plot(ToSeries(serials))
+            End Using
+        End Sub
+
+        ''' <summary>面积 / 置信带图层</summary>
+        Public Sub DrawAreas(g As IGraphics, scaler As DataScaler, theme As Theme,
+                             serials As IEnumerable(Of SerialData))
+
+            If serials Is Nothing Then Return
+
+            Using plt As New AreaPlot(g, ThemeBridge.ToPlotTheme(theme))
+                Call Attach(plt, scaler)
+                Call plt.Plot(ToSeries(serials))
+            End Using
+        End Sub
+
+        ' ====================================================================
+        '  分组型（分类轴）图层：箱线图 / 小提琴图 / 抖动图
+        '  这几类图表的分类位置由引擎自己按绘图区等分排布，
+        '  Y 轴范围沿用 ggplot 跨图层联合计算出来的结果。
+        ' ====================================================================
+
+        ''' <summary>箱线图图层</summary>
+        Public Sub DrawBoxes(g As IGraphics, scaler As DataScaler, theme As Theme,
+                             groups As IEnumerable(Of BoxGroup),
+                             Optional showOutliers As Boolean = False,
+                             Optional horizontal As Boolean = False)
+
+            If groups Is Nothing Then Return
+
+            Using plt As New BoxPlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+                .Groups = groups.ToList(),
+                .ShowOutliers = showOutliers,
+                .Horizontal = horizontal
+            }
+                Call Attach(plt, scaler)
+                Call plt.Plot()
+            End Using
+        End Sub
+
+        ''' <summary>小提琴图图层</summary>
+        Public Sub DrawViolins(g As IGraphics, scaler As DataScaler, theme As Theme,
+                               groups As IEnumerable(Of BoxGroup))
+
+            If groups Is Nothing Then Return
+
+            Using plt As New ViolinPlot(g, ThemeBridge.ToPlotTheme(theme)) With {.Groups = groups.ToList()}
+                Call Attach(plt, scaler)
+                Call plt.Plot()
+            End Using
+        End Sub
+
+        ''' <summary>抖动散点图层</summary>
+        Public Sub DrawJitters(g As IGraphics, scaler As DataScaler, theme As Theme,
+                               groups As IEnumerable(Of BoxGroup),
+                               Optional jitterWidth As Single = 0.4F)
+
+            If groups Is Nothing Then Return
+
+            Using plt As New JitterPlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+                .Groups = groups.ToList(),
+                .JitterWidth = jitterWidth
+            }
+                Call Attach(plt, scaler)
+                Call plt.Plot()
+            End Using
+        End Sub
+
+        ''' <summary>柱状图图层（分类 + 取值，支持堆叠 / 百分比堆叠）</summary>
+        Public Sub DrawBars(g As IGraphics, scaler As DataScaler, theme As Theme,
+                            categories As String(), values As Double(),
+                            Optional colors As Color() = Nothing,
+                            Optional stack As BarPlot.StackMode = BarPlot.StackMode.None,
+                            Optional horizontal As Boolean = False,
+                            Optional multiValues As Double(,) = Nothing,
+                            Optional seriesNames As String() = Nothing)
+
+            ' ggplot 的堆叠柱状图（geom_bar + position=stack）在旧引擎之中是按
+            ' 百分比堆叠绘制的：每根柱子按系列占比填满整个绘图区高度，且不参与
+            ' ggplot 的数据坐标换算（以像素绘图区为单位）。这里保持同样的语义，
+            ' 直接用画布原语绘制，从而与旧引擎的输出保持一致。
+            Dim nCat As Integer = If(categories Is Nothing, 0, categories.Length)
+
+            If nCat = 0 Then Return
+
+            Dim nSer As Integer = If(multiValues Is Nothing, 1, multiValues.GetLength(0))
+            Dim palette As Color() = If(colors, ThemeBridge.ToPlotTheme(theme).Palette)
+            Dim area As New RectangleF(scaler.region.X, scaler.region.Y, scaler.region.Width, scaler.region.Height)
+            Dim band As Single = If(horizontal, area.Height, area.Width) / nCat
+            Dim thickness As Single = band * 0.7F
+            Dim offset As Single = (band - thickness) / 2
+
+            For j As Integer = 0 To nCat - 1
+                Dim cell As Double() = New Double(nSer - 1) {}
+                Dim total As Double = 0
+
+                For i As Integer = 0 To nSer - 1
+                    cell(i) = If(multiValues Is Nothing,
+                                 If(values IsNot Nothing AndAlso j < values.Length, values(j), 0),
+                                 multiValues(i, j))
+                    total += std.Abs(cell(i))
+                Next
+
+                If total <= 0 Then Continue For
+
+                Dim isPercent As Boolean = stack = BarPlot.StackMode.Percent
+                Dim cursor As Single = 0
+
+                For i As Integer = 0 To nSer - 1
+                    Dim value As Double = If(isPercent, std.Abs(cell(i)) / total, std.Abs(cell(i)) / total)
+                    Dim len As Single = CSng(value * If(horizontal, area.Width, area.Height))
+
+                    If len <= 0 Then Continue For
+
+                    Dim color As Color = palette(i Mod palette.Length)
+                    Dim bar As RectangleF
+
+                    If horizontal Then
+                        bar = New RectangleF(area.X + cursor, area.Y + j * band + offset, len, thickness)
+                    Else
+                        bar = New RectangleF(area.X + j * band + offset, area.Bottom - cursor - len, thickness, len)
+                    End If
+
+                    Using brush As New SolidBrush(color)
+                        Call g.FillRectangle(brush, bar)
+                    End Using
+                    Using pen As New Pen(color.Darken, 1.0F)
+                        Call g.DrawRectangle(pen, bar)
+                    End Using
+
+                    cursor += len
+                Next
+            Next
+        End Sub
+
+        ''' <summary>直方图图层</summary>
+        Public Sub DrawHistogram(g As IGraphics, scaler As DataScaler, theme As Theme,
+                                 data As Double(),
+                                 Optional bins As Integer = 0,
+                                 Optional color As Color = Nothing)
+
+            If data Is Nothing OrElse data.Length = 0 Then Return
+
+            Using plt As New HistogramPlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+                .Data = data,
+                .Bins = If(bins > 0, bins, 30)
+            }
+                If Not color.IsEmpty Then plt.Color = color
+
+                Call Attach(plt, scaler)
+                Call plt.Plot()
+            End Using
+        End Sub
+
+        ''' <summary>多个分组的直方图图层</summary>
+        Public Sub DrawHistograms(g As IGraphics, scaler As DataScaler, theme As Theme,
+                                  groups As IEnumerable(Of CategoryGroup),
+                                  Optional bins As Integer = 0)
+
+            If groups Is Nothing Then Return
+
+            Using plt As New HistogramPlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+                .Groups = groups.ToList(),
+                .Bins = If(bins > 0, bins, 30)
+            }
+                Call Attach(plt, scaler)
+                Call plt.Plot()
+            End Using
+        End Sub
+
+        ''' <summary>饼图图层</summary>
+        Public Sub DrawPie(g As IGraphics, scaler As DataScaler, theme As Theme,
+                           labels As String(), values As Double(), colors As Color())
+
+            Using plt As New PiePlot(g, ThemeBridge.ToPlotTheme(theme)) With {
+                .Labels = If(labels, New String() {}),
+                .Values = If(values, New Double() {}),
+                .Colors = If(colors, New Color() {})
+            }
+                Call Attach(plt, scaler)
+                Call plt.Plot()
+            End Using
+        End Sub
+    End Module
+End Namespace

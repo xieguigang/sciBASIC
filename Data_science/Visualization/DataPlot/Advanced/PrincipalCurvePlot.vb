@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a7d2e8c1b3f4906d8a5c2e7f9b1d3a6, Data_science\Visualization\DataPlot\Advanced\PrincipalCurvePlot.vb"
+#Region "Microsoft.VisualBasic::4a7d2e8c1b3f4906d8a5c2e7f9b1d3a6, Data_science\Visualization\DataPlot\Advanced\PrincipalCurvePlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -56,6 +56,11 @@ Public Class PrincipalCurvePlot
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
         MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

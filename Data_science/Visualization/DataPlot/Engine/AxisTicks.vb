@@ -36,6 +36,14 @@ Public Module AxisTicksHelper
     End Function
 
     <Extension>
+    Public Function CreateAxisTicks(range As (min As Double, max As Double),
+                                    Optional ticks As Integer = 10,
+                                    Optional decimalDigits As Integer = 2) As Double()
+
+        Return New DoubleRange(range.min, range.max).CreateAxisTicks(ticks, decimalDigits)
+    End Function
+
+    <Extension>
     Public Function CreateAxisTicks(data As IEnumerable(Of Double),
                                     Optional ticks As Integer = 10,
                                     Optional decimalDigits As Integer = 2) As Double()
