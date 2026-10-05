@@ -95,6 +95,97 @@ Namespace Canvas
         End Sub
 
         ''' <summary>
+        ''' 在宿主画布的给定子区域内绘制气泡图面板。
+        ''' 等价于旧引擎 <see cref="Plots.Bubble"/> 的图层式绘制：
+        ''' <see cref="PointData.value"/> 为气泡半径（像素），正 Y 值域（positiveRangeY）
+        ''' 与旧引擎保持一致。
+        ''' </summary>
+        <Extension>
+        Public Sub DrawBubbles(g As IGraphics, rect As GraphicsRegion, theme As Theme,
+                               serials As IEnumerable(Of SerialData),
+                               Optional xlabel$ = "",
+                               Optional ylabel$ = "",
+                               Optional nticksX As Integer = 9,
+                               Optional nticksY As Integer = 9,
+                               Optional positiveRangeY As Boolean = True,
+                               Optional bubblePen As Pen = Nothing,
+                               Optional showGrid As Boolean = True)
+
+            Dim pts As PointF() = serials _
+                .SelectMany(Function(s) s.pts) _
+                .Select(Function(p) p.pt) _
+                .ToArray
+
+            If pts.IsNullOrEmpty Then
+                Return
+            End If
+
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim plotRect As Rectangle = rect.PlotRegion(css)
+            Dim xrange As New DoubleRange(pts.Select(Function(p) CDbl(p.X)))
+            Dim ymin As Double = pts.Select(Function(p) CDbl(p.Y)).Min
+            Dim ymax As Double = pts.Select(Function(p) CDbl(p.Y)).Max
+
+            If positiveRangeY AndAlso ymin > 0 Then
+                ymin = 0
+            End If
+
+            Dim xticks As Double() = xrange.CreateAxisTicks(nticksX)
+            Dim yticks As Double() = New DoubleRange(ymin, ymax).CreateAxisTicks(nticksY)
+            Dim scaleX = d3js.scale.linear.domain(values:=xticks).range(integers:={plotRect.Left, plotRect.Right})
+            Dim scaleY = d3js.scale.linear.domain(values:=yticks).range(integers:={plotRect.Top, plotRect.Bottom})
+            Dim scaler As New DataScaler() With {
+                .AxisTicks = (New Vector(xticks), New Vector(yticks)),
+                .region = plotRect,
+                .X = scaleX,
+                .Y = scaleY
+            }
+
+            Call g.DrawAxis(
+                scaler, rect,
+                showGrid:=showGrid,
+                xlabel:=xlabel, ylabel:=ylabel,
+                labelFontStyle:=theme.axisLabelCSS,
+                xlayout:=theme.xAxisLayout, ylayout:=theme.yAxisLayout,
+                gridFill:=theme.gridFill,
+                gridX:=theme.gridStrokeX, gridY:=theme.gridStrokeY,
+                axisStroke:=theme.axisStroke,
+                tickFontStyle:=theme.axisTickCSS,
+                htmlLabel:=theme.htmlLabel,
+                XtickFormat:=theme.XaxisTickFormat,
+                YtickFormat:=theme.YaxisTickFormat,
+                xlabelRotate:=theme.xAxisRotate)
+
+            ' 气泡几何体：半径来自 PointData.value，0 值回退为 pointSize
+            For Each s As SerialData In serials
+                Dim b As SolidBrush = If(Not s.color.IsEmpty, New SolidBrush(s.color), Nothing)
+
+                For Each pt As PointData In s.pts
+                    Dim r As Double = If(pt.value = 0R, s.pointSize, pt.value)
+
+                    If r.IsNaNImaginary OrElse r <= 0 Then
+                        Continue For
+                    End If
+
+                    Dim p As PointF = scaler.Translate(pt.pt.X, pt.pt.Y)
+                    Dim bubble As New RectangleF(p.X - r, p.Y - r, r * 2, r * 2)
+
+                    If pt.color.StringEmpty Then
+                        If b IsNot Nothing Then
+                            Call g.FillPie(b, bubble, 0, 360)
+                        End If
+                    Else
+                        Call g.FillPie(New SolidBrush(pt.color.TranslateColor), bubble, 0, 360)
+                    End If
+
+                    If bubblePen IsNot Nothing Then
+                        Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
+                    End If
+                Next
+            Next
+        End Sub
+
+        ''' <summary>
         ''' 把 ggplot 的旧 <see cref="SerialData"/> 系列转换为新引擎的 <see cref="Series"/> 系列
         ''' </summary>
         <Extension>
