@@ -491,7 +491,7 @@ Namespace SVM
                     active_size = l
                 End If
 
-                Console.Error.Write(ASCII.LF & "WARNING: reaching max number of iterations" & ASCII.LF)
+                Console.Error.Write(ASCII.LF & $"WARNING: reaching max number of iterations [max_iter={max_iter}]" & ASCII.LF)
             End If
 
             ' calculate rho
