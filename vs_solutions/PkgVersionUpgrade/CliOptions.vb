@@ -112,6 +112,7 @@ Public Class CliOptions
         Console.WriteLine("      --fix-output-path 修正 nuget_release|x64 的产物输出路径（需配合 --output）。")
         Console.WriteLine("                        缺配置组的工程自动补建，并补齐 <Configurations> 中的")
         Console.WriteLine("                        nuget_release 与 <Platforms> 中的 x64。")
+        Console.WriteLine("  -r, --profile         目标编译配置参数，默认为 nuget_release|x64")
         Console.WriteLine("  -h, --help            显示本帮助信息。")
         Console.WriteLine()
         Console.WriteLine("Notes:")
@@ -125,6 +126,6 @@ Public Class CliOptions
         Console.WriteLine("Examples:")
         Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic --dry-run")
         Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic -v 10.5.0.0")
-        Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic --fix-output-path --output G:\out -n")
+        Console.WriteLine("  PkgVersionUpgrade --slnx VBS.slnx --namespace Microsoft.VisualBasic --fix-output-path --profile ""nuget_release|x64"" --output G:\out -n")
     End Sub
 End Class
