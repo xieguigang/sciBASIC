@@ -189,7 +189,7 @@ Module Program
             End If
 
             If opts.FixOutputPath AndAlso outputDir IsNot Nothing Then
-                result.OutputPath = OutputPathFixer.Apply(doc, ns, path, outputDir)
+                result.OutputPath = opts.CreateOutput.Apply(doc, ns, path, outputDir)
             End If
 
             If Not opts.DryRun AndAlso (result.Changed OrElse result.RemovedConditions > 0 OrElse result.OutputPathChanged) Then

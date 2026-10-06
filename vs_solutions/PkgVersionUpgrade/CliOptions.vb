@@ -76,8 +76,21 @@ Public Class CliOptions
     <Opt("-o", "--output")> Public Property OutputDir As String
     ''' <summary>是否请求打印用法说明</summary>
     <Opt("-h", "--help", "/?", "-?")> Public Property ShowHelp As Boolean
+
+    <Opt("-r", "--profile")> Public Property profile As String = "nuget_release|x64"
+
     ''' <summary>解析过程中出现的错误描述</summary>
     Public Property [Error] As String
+
+    Public Function CreateOutput() As OutputPathFixer
+        Dim t = Strings.Trim(profile).Split("|"c)
+        Dim o As New OutputPathFixer With {
+            .ReleaseConfiguration = t.ElementAtOrDefault(0, "nuget_release"),
+            .ReleasePlatform = t.ElementAtOrDefault(1, "x64")
+        }
+
+        Return o
+    End Function
 
     Public Shared Sub PrintUsage()
         Console.WriteLine("Usage:")

@@ -84,12 +84,12 @@ Imports System.IO
 ''' ``'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'``
 ''' 会被同一套逻辑覆盖。
 ''' </remarks>
-Module OutputPathFixer
+Public Class OutputPathFixer
 
     ''' <summary>需要修正的编译配置名</summary>
-    Private Const ReleaseConfiguration As String = "nuget_release"
+    Public Property ReleaseConfiguration As String = "nuget_release"
     ''' <summary>需要修正的目标平台名</summary>
-    Private Const ReleasePlatform As String = "x64"
+    Public Property ReleasePlatform As String = "x64"
 
     ''' <summary>
     ''' 计算出从工程所在目录到输出文件夹的相对路径
@@ -274,4 +274,4 @@ Module OutputPathFixer
         Return 1
     End Function
 
-End Module
+End Class
