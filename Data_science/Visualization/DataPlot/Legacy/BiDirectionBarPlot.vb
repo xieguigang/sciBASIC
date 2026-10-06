@@ -54,9 +54,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.Plots.BarPlot.Data
-Imports Microsoft.VisualBasic.Data.Plots.Canvas
-Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Imaging
@@ -90,18 +88,17 @@ Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 #End If
 
-Namespace BarPlot
-
+Namespace Legacy.BarPlot
     ''' <summary>
     ''' compare two data set
     ''' </summary>
     Public Class BiDirectionBarPlot : Inherits Plot
 
-        ReadOnly data As BiDirectionData
+        ReadOnly data As Legacy.BarPlot.Data.BiDirectionData
         ReadOnly colorFactor1 As SolidBrush
         ReadOnly colorFactor2 As SolidBrush
 
-        Public Sub New(data As BiDirectionData, color1 As Color, color2 As Color, theme As Theme)
+        Public Sub New(data As Legacy.BarPlot.Data.BiDirectionData, color1 As Color, color2 As Color, theme As Theme)
             MyBase.New(theme)
 
             Me.data = data
@@ -143,7 +140,7 @@ Namespace BarPlot
             Call g.DrawString(main, titleFont, Brushes.Black, labelPos)
 
             For i As Integer = 0 To data.size - 1
-                Dim sample As BarDataSample = data(i)
+                Dim sample As Legacy.BarPlot.Data.BarDataSample = data(i)
 
                 y += dh
 

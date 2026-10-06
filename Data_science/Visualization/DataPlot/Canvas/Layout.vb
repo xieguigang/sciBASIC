@@ -188,3 +188,18 @@ Namespace Canvas
         End Function
     End Class
 End Namespace
+
+Namespace Canvas
+
+    Public Module LayoutExtensions
+
+        <System.Runtime.CompilerServices.Extension>
+        Public Function IsNullOrEmpty(layout As Layout) As Boolean
+            If layout Is Nothing Then
+                Return True
+            Else
+                Return layout.isEmpty
+            End If
+        End Function
+    End Module
+End Namespace

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::809e6e6a7177f207a1a5f136d7d7c050, Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
+#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, Data_science\Visualization\Plots\g\ProfileGroup.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 16 (44.44%)
-    ' Comment Lines: 15 (41.67%)
+    '   Total Lines: 22
+    '    Code Lines: 11 (50.00%)
+    ' Comment Lines: 7 (31.82%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (13.89%)
-    '     File Size: 1.06 KB
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 619 B
 
 
-    '     Class BarDataSample
+    '     Class ProfileGroup
     ' 
-    '         Properties: data, StackedSum, tag
+    '         Properties: Serials
     ' 
     '         Function: ToString
     ' 
@@ -54,38 +54,25 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Legacy.BarPlot.Data
+Namespace Legacy
+
     ''' <summary>
-    ''' Named value of double vector.
+    ''' The plot data group
     ''' </summary>
-    Public Class BarDataSample : Implements INamedValue
+    Public MustInherit Class ProfileGroup
 
         ''' <summary>
-        ''' 分组名称
+        ''' The color profile of the plot elements
         ''' </summary>
         ''' <returns></returns>
-        Public Property tag As String Implements INamedValue.Key
-        ''' <summary>
-        ''' 当前分组下的每一个序列的数据值
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property data As Double()
-
-        ''' <summary>
-        ''' The sum of <see cref="data"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property StackedSum As Double
-            Get
-                Return data.Sum
-            End Get
-        End Property
+        Public Overridable Property Serials As NamedValue(Of Color)()
 
         Public Overrides Function ToString() As String
-            Return $"Dim {tag} = {data.GetJson}"
+            Return MyClass.GetJson
         End Function
     End Class
 End Namespace

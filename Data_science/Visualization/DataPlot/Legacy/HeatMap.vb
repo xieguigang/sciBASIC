@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::8b529d79ce99d1743d701ddabf81fd2e, Data_science\Visualization\Plots-statistics\HeatMap\HeatMap.vb"
+#Region "Microsoft.VisualBasic::5a97f8cb970f47a2678919f0ba2707cc, Data_science\Visualization\Plots\Scatter\Heatmap.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 77 (60.63%)
-    ' Comment Lines: 43 (33.86%)
-    '    - Xml Docs: 76.74%
+    '   Total Lines: 119
+    '    Code Lines: 92 (77.31%)
+    ' Comment Lines: 18 (15.13%)
+    '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 7 (5.51%)
-    '     File Size: 7.11 KB
+    '   Blank Lines: 9 (7.56%)
+    '     File Size: 5.25 KB
 
 
-    '     Module HeatMap
+    ' Module Scatter
     ' 
-    '         Function: Plot
+    '     Function: PlotHeatmap
     ' 
+    '     Sub: __plotInternal
     ' 
     ' /********************************************************************************/
 
@@ -54,128 +55,123 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
-Imports Microsoft.VisualBasic.Data.Framework.IO
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.Plots
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
+Namespace Legacy.Plots
 
-Namespace Statistics.Heatmap
-
+Partial Module Scatter
     ''' <summary>
-    ''' A heat map (or heatmap) is a graphical representation of data where the individual values 
-    ''' contained in a matrix are represented as colors. The term 'heat map' was originally coined 
-    ''' and trademarked by software designer Cormac Kinney in 1991, to describe a 2D display 
-    ''' depicting financial market information,[1] though similar plots such as shading matrices 
-    ''' have existed for over a century.
+    ''' 
     ''' </summary>
-    Public Module HeatMap
+    ''' <param name="data"></param>
+    ''' <param name="fieldX$"></param>
+    ''' <param name="fieldY$"></param>
+    ''' <param name="valueField$"></param>
+    ''' <param name="colorSchema$"></param>
+    ''' <param name="levels%"></param>
+    ''' <param name="size"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="xlabel$">
+    ''' 如果这个参数为默认的空值，则函数会使用<paramref name="fieldX"/>的值作为标签值，
+    ''' 但是如果为空字符串，则这个坐标轴的标签将不会被显示出来
+    ''' </param>
+    ''' <param name="ylabel$"></param>
+    ''' <param name="legendTitle$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function PlotHeatmap(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet),
+                                Optional fieldX$ = "X",
+                                Optional fieldY$ = "Y",
+                                Optional valueField$ = "value",
+                                Optional colorSchema$ = "jet",
+                                Optional levels% = 25,
+                                Optional size As Size = Nothing,
+                                Optional padding$ = g.DefaultPadding,
+                                Optional bg$ = "white",
+                                Optional xlabel$ = Nothing,
+                                Optional ylabel$ = Nothing,
+                                Optional legendTitle$ = Nothing,
+                                Optional ptSize% = 8) As GraphicsData
 
-        ' dendrogramLayout$ = A,B
-        '                                         |
-        '    A                                    | B
-        ' ------+---------------------------------+
-        '       |
-        '       |
-        '       |
-        '       |
+        Dim colors As Color() = Designer.GetColors(colorSchema, n:=levels)
 
-        ''' <summary>
-        ''' 可以用来表示任意变量之间的相关度
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="customColors">
-        ''' 可以使用这一组颜色来手动自定义heatmap的颜色，也可以使用<paramref name="mapName"/>来获取内置的颜色谱
-        ''' </param>
-        ''' <param name="mapLevels"></param>
-        ''' <param name="mapName">
-        ''' The color map name, using for the <see cref="Designer"/>
-        ''' 
-        ''' There are many different color schemes that can be used to illustrate the heatmap, with perceptual advantages 
-        ''' and disadvantages for each. Rainbow colormaps are often used, as humans can perceive more shades of color than 
-        ''' they can of gray, and this would purportedly increase the amount of detail perceivable in the image. However, 
-        ''' this is discouraged by many in the scientific community, for the following reasons:
-        '''
-        ''' + The colors lack the natural perceptual ordering found In grayscale Or blackbody spectrum colormaps.
-        ''' + Common colormaps(Like the "jet" colormap used As the Default In many visualization software packages) have 
-        '''   uncontrolled changes In luminance that prevent meaningful conversion To grayscale For display Or printing. 
-        '''   This also distracts from the actual data, arbitrarily making yellow And cyan regions appear more prominent 
-        '''   than the regions Of the data that are actually most important.[citation needed]
-        ''' + The changes between colors also lead To perception Of gradients that aren't actually present, making actual 
-        '''   gradients less prominent, meaning that rainbow colormaps can actually obscure detail in many cases rather than 
-        '''   enhancing it.
-        ''' </param>
-        ''' <param name="size"></param>
-        ''' <param name="bg"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Plot(data As IEnumerable(Of DataSet),
-                             Optional customColors As Color() = Nothing,
-                             Optional reverseClrSeq As Boolean = False,
-                             Optional mapLevels% = 30,
-                             Optional mapName$ = ColorBrewer.DivergingSchemes.RdYlBu11,
-                             Optional size$ = "3000,2700",
-                             Optional padding$ = g.DefaultPadding,
-                             Optional bg$ = "white",
-                             Optional drawScaleMethod As DrawElements = DrawElements.Rows,
-                             Optional drawLabels As DrawElements = DrawElements.Both,
-                             Optional drawDendrograms As DrawElements = DrawElements.Rows,
-                             Optional drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)) = Nothing,
-                             Optional dendrogramLayout$ = "200,200",
-                             Optional rowLabelfontStyle$ = CSSFont.Win7Normal,
-                             Optional colLabelFontStyle$ = CSSFont.Win7LargerBold,
-                             Optional legendTitle$ = "Heatmap Color Legend",
-                             Optional legendFontStyle$ = CSSFont.PlotSubTitle,
-                             Optional min# = -1,
-                             Optional max# = 1,
-                             Optional mainTitle$ = "heatmap",
-                             Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
-                             Optional drawGrid As Boolean = False,
-                             Optional drawValueLabel As Boolean = False,
-                             Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
-                             Optional legendWidth! = -1,
-                             Optional legendHasUnmapped As Boolean = True,
-                             Optional legendSize$ = "600,100",
-                             Optional tick# = -1,
-                             Optional legendLayout As Layouts = Layouts.Horizon,
-                             Optional rowLabelsMaxChars As Integer = 48,
-                             Optional ppi As Integer = 100,
-                             Optional driver As Drivers = Drivers.Default) As GraphicsData
+        If xlabel Is Nothing Then
+            xlabel = fieldX
+        End If
+        If ylabel Is Nothing Then
+            ylabel = fieldY
+        End If
+        If legendTitle.StringEmpty Then
+            legendTitle = valueField
+        End If
+        If size.IsEmpty Then
+            size = New Size(1600, 1200)
+        End If
 
-            Dim theme As New Theme With {
-                .padding = padding,
-                .background = bg,
-                .colorSet = mapName,
-                .drawGrid = drawGrid,
-                .axisTickCSS = rowLabelfontStyle,
-                .axisLabelCSS = colLabelFontStyle,
-                .legendTitleCSS = legendFontStyle,
-                .drawLabels = drawValueLabel,
-                .tagCSS = valuelabelFontCSS,
-                .legendCustomTicks = If(tick <= 0, Nothing, New Nullable(Of Double)(tick)),
-                .mainCSS = titleFontCSS
-            }
-            Dim app As New HeatMapPlot(data, rowLabelsMaxChars, dlayout:=dendrogramLayout.SizeParser, theme) With {
-                .legendTitle = legendTitle,
-                .main = mainTitle,
-                .mapLevels = mapLevels,
-                .LegendLayout = legendLayout,
-                .legendSize = legendSize.SizeParser,
-                .reverseColors = reverseClrSeq,
-                .drawClass = drawClass,
-                .drawDendrograms = drawDendrograms,
-                .drawLabels = drawLabels,
-                .scaleMethod = drawScaleMethod
-            }
+        Return g.GraphicsPlots(
+            size, padding,
+            bg,
+            Sub(ByRef g, rect)
+                Call g.__plotInternal(rect, data.ToArray, colors,
+                                      fieldX, fieldY, valueField,
+                                      labelX:=xlabel, labelY:=ylabel,
+                                      ptSize:=ptSize,
+                                      legendTitle:=legendTitle)
+            End Sub)
+    End Function
 
-            If Not customColors.IsNullOrEmpty Then
-                app.colors = customColors
-            End If
+    <Extension>
+    Private Sub __plotInternal(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(g As IGraphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
+                               fieldX$, fieldY$, fieldValue$,
+                               labelX$, labelY$, legendTitle$,
+                               ptSize%)
 
-            Return app.Plot(size.SizeParser, dpi:=ppi, driver:=driver)
-        End Function
-    End Module
+        Dim css As New CSSEnvirnment(rect.Size)
+        Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, rect.Padding)
+        Dim points As (pt As PointF, value#)() = data.Select(
+            Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue))).ToArray
+        Dim levels%() = points.Select(Function(pt) pt.value) _
+            .GenerateMapping(Level:=colors.Length)
+        Dim valueGroups = points _
+            .SeqIterator _
+            .Select(Function(p) (p.value.pt, p.value.value, seq:=levels(p))) _
+            .GroupBy(Function(o) o.seq)
+        Dim colorHelper = colors.MapHelper
+        Dim serials As SerialData() = valueGroups _
+            .Select(Function(o) New SerialData() With {
+                .color = colorHelper(o.Key),
+                .pts = o.Select(Function(x) New PointData(x.Item1)).ToArray,
+                .title = o.Key,
+                .pointSize = ptSize
+            }) _
+            .ToArray
+        Dim leftWidth% = rect.Size.Width * 0.9
+        Dim scatterPlotSize$ = $"{leftWidth},{rect.Size.Height}"
+        Dim left As GraphicsData = Scatter.Plot(
+            serials, scatterPlotSize,
+            Xlabel:=labelX, Ylabel:=labelY, drawLine:=False, showLegend:=False)
+        Dim legend As GraphicsData = Legends.ColorMapLegend(
+            designer:=colors,
+            title:=legendTitle,
+            min:=points.Min(Function(pt) pt.value),
+            max:=points.Max(Function(pt) pt.value),
+            lsize:=New Size(rect.Size.Width - leftWidth + padding.Right, rect.Size.Height * 0.7))
+
+        leftWidth -= (padding.Right)
+
+        With g
+            .DrawImageUnscaled(left, New Point)
+            .DrawImage(legend, leftWidth, CInt((rect.Size.Height - legend.Height) / 2))
+        End With
+    End Sub
+End Module
 End Namespace

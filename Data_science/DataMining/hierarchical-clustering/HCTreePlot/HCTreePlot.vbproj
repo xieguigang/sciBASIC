@@ -62,6 +62,7 @@
     <ProjectReference Include="..\..\..\..\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\Visualization\DataPlot\DataPlot.vbproj" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
 
     <ProjectReference Include="..\..\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\hierarchical-clustering\hctree.NET5.vbproj" />

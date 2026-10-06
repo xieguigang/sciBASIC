@@ -55,7 +55,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Plots.BarPlot.Data
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -85,8 +85,7 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 #End If
 
-Namespace BarPlot
-
+Namespace Legacy.BarPlot
     Public Module StackedBarPlot
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -95,7 +94,7 @@ Namespace BarPlot
         End Function
 
         <Extension>
-        Friend Iterator Function loadBrushes(data As BarDataGroup) As IEnumerable(Of NamedValue(Of SolidBrush))
+        Friend Iterator Function loadBrushes(data As Legacy.BarPlot.Data.BarDataGroup) As IEnumerable(Of NamedValue(Of SolidBrush))
             For Each s In data.Serials
 #Disable Warning CA1416 ' 验证平台兼容性
                 Yield New NamedValue(Of SolidBrush) With {
@@ -122,7 +121,7 @@ Namespace BarPlot
         ''' <param name="groupLabelFontCSS$"></param>
         ''' <param name="axisLabelFontCSS$"></param>
         ''' <returns></returns>
-        Public Function Plot(data As BarDataGroup,
+        Public Function Plot(data As Legacy.BarPlot.Data.BarDataGroup,
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",

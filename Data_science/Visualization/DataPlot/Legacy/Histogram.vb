@@ -71,8 +71,7 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
-Namespace BarPlot.Histogram
-
+Namespace Legacy.BarPlot.Histogram
     ''' <summary>
     ''' 对经由函数生成的连续数据的图形表述
     ''' </summary>
@@ -88,14 +87,14 @@ Namespace BarPlot.Histogram
         ''' <param name="showGrid"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Plot(data As IEnumerable(Of HistogramData),
+        Public Function Plot(data As IEnumerable(Of Legacy.BarPlot.Histogram.HistogramData),
                              Optional color$ = "darkblue",
                              Optional bg$ = "white",
                              Optional size$ = "1600,1200",
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As GraphicsData
 
-            Return New HistogramGroup With {
+            Return New Legacy.BarPlot.Histogram.HistogramGroup With {
                 .Serials = {
                     New NamedValue(Of Color) With {
                         .Name = NameOf(data),
@@ -103,7 +102,7 @@ Namespace BarPlot.Histogram
                     }
                 },
                 .Samples = {
-                    New HistProfile With {
+                    New Legacy.BarPlot.Histogram.HistProfile With {
                         .legend = New LegendObject With {
                             .color = color,
                             .fontstyle = CSSFont.Win10Normal,
@@ -135,7 +134,7 @@ Namespace BarPlot.Histogram
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As GraphicsData
 
-            Dim hist As New HistProfile(data, xrange)
+            Dim hist As New Legacy.BarPlot.Histogram.HistProfile(data, xrange)
             Return Plot(hist.data, color, bg, size, padding, showGrid)
         End Function
 
@@ -197,7 +196,7 @@ Namespace BarPlot.Histogram
         ''' <param name="alpha">Fill color alpha value, [0, 255]</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Plot(groups As HistogramGroup,
+        Public Function Plot(groups As Legacy.BarPlot.Histogram.HistogramGroup,
                              Optional bg$ = "white",
                              Optional size$ = "1600,1200",
                              Optional padding$ = g.DefaultPadding,
@@ -269,7 +268,7 @@ Namespace BarPlot.Histogram
                                       Optional size$ = "1600,1200",
                                       Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
-                                      Optional ByRef histData As HistogramData() = Nothing,
+                                      Optional ByRef histData As Legacy.BarPlot.Histogram.HistogramData() = Nothing,
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
@@ -316,7 +315,7 @@ Namespace BarPlot.Histogram
                                       Optional size$ = "1600,1200",
                                       Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
-                                      Optional ByRef histData As HistogramData() = Nothing,
+                                      Optional ByRef histData As Legacy.BarPlot.Histogram.HistogramData() = Nothing,
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
@@ -334,27 +333,27 @@ Namespace BarPlot.Histogram
                 .style = LegendStyles.Rectangle,
                 .title = serialsTitle
             }
-            Dim s As HistProfile = data.NewModel(histLegend)
-            Dim group As New HistogramGroup With {
+            Dim s As Legacy.BarPlot.Histogram.HistProfile = data.NewModel(histLegend)
+            Dim group As New Legacy.BarPlot.Histogram.HistogramGroup With {
                 .Samples = {s},
                 .Serials = {s.SerialData}
             }
 
             If Not highlights.IsNullOrEmpty Then
-                Dim samples As New List(Of HistProfile)(group.Samples)
+                Dim samples As New List(Of Legacy.BarPlot.Histogram.HistProfile)(group.Samples)
                 Dim serials As New List(Of NamedValue(Of Color))(group.Serials)
-                Dim sourceData As HistogramData() = samples(0).data
+                Dim sourceData As Legacy.BarPlot.Histogram.HistogramData() = samples(0).data
 
                 For Each highlight As NamedValue(Of DoubleRange) In highlights
                     serials.Add(New NamedValue(Of Color)(highlight.Name, highlight.Description.TranslateColor))
-                    samples.Add(New HistProfile() With {
+                    samples.Add(New Legacy.BarPlot.Histogram.HistProfile() With {
                         .legend = New LegendObject With {
                             .color = highlight.Description,
                             .fontstyle = CSSFont.Win7LargeBold,
                             .style = LegendStyles.Rectangle,
                             .title = highlight.Name
                         },
-                        .data = HistogramData.CheckHighlightRange(sourceData, highlight.Value).ToArray
+                        .data = Legacy.BarPlot.Histogram.HistogramData.CheckHighlightRange(sourceData, highlight.Value).ToArray
                     })
                 Next
 

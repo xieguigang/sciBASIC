@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc3657b56a4f406e33c5b156b672f676, Data_science\Visualization\test\ChartingBase.Test\My Project\Resources.Designer.vb"
+#Region "Microsoft.VisualBasic::fc3657b56a4f406e33c5b156b672f676, Data_science\Visualization\test\ChartingBase.Test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -66,6 +66,7 @@ Option Strict On
 Option Explicit On
 
 Imports System
+Imports Microsoft.VisualBasic.Data.Plots
 
 Namespace My.Resources
     

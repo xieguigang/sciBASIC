@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net10.0-windows</TargetFrameworks>
@@ -15,7 +15,6 @@
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\Visualization\Plots\plots-netcore5.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\HCTreePlot\HCTreePlot.vbproj" />
     <ProjectReference Include="..\hierarchical-clustering\hctree.NET5.vbproj" />

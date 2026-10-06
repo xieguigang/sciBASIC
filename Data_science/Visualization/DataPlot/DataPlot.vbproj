@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.Plots</RootNamespace>
@@ -56,6 +56,8 @@
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>

@@ -58,7 +58,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
-Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -95,8 +94,7 @@ Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 #End If
 
-Namespace BarPlot
-
+Namespace Legacy.BarPlot
     ''' <summary>
     ''' 只针对单组数据的条形图绘制
     ''' </summary>

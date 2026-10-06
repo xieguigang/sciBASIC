@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::809e6e6a7177f207a1a5f136d7d7c050, Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
+#Region "Microsoft.VisualBasic::d44d9532ee8f6421bde927aa40625310, Data_science\Visualization\Plots\BarPlot\Data\BiDirectionData.vb"
 
     ' Author:
     ' 
@@ -34,58 +34,54 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 16 (44.44%)
-    ' Comment Lines: 15 (41.67%)
+    '   Total Lines: 34
+    '    Code Lines: 17 (50.00%)
+    ' Comment Lines: 12 (35.29%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (13.89%)
-    '     File Size: 1.06 KB
+    '   Blank Lines: 5 (14.71%)
+    '     File Size: 859 B
 
 
-    '     Class BarDataSample
+    '     Class BiDirectionData
     ' 
-    '         Properties: data, StackedSum, tag
-    ' 
-    '         Function: ToString
+    '         Properties: Factor1, Factor2, samples, size
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Serialization.JSON
-
 Namespace Legacy.BarPlot.Data
-    ''' <summary>
-    ''' Named value of double vector.
-    ''' </summary>
-    Public Class BarDataSample : Implements INamedValue
+    Public Class BiDirectionData
 
         ''' <summary>
-        ''' 分组名称
+        ''' left
         ''' </summary>
         ''' <returns></returns>
-        Public Property tag As String Implements INamedValue.Key
+        Public Property Factor1 As String
         ''' <summary>
-        ''' 当前分组下的每一个序列的数据值
+        ''' right
         ''' </summary>
         ''' <returns></returns>
-        Public Property data As Double()
+        Public Property Factor2 As String
+        ''' <summary>
+        ''' data samples
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property samples As BarDataSample()
 
-        ''' <summary>
-        ''' The sum of <see cref="data"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property StackedSum As Double
+        Public ReadOnly Property size As Integer
             Get
-                Return data.Sum
+                Return samples.Length
             End Get
         End Property
 
-        Public Overrides Function ToString() As String
-            Return $"Dim {tag} = {data.GetJson}"
-        End Function
+        Default Public ReadOnly Property data(i As Integer) As BarDataSample
+            Get
+                Return samples(i)
+            End Get
+        End Property
+
     End Class
 End Namespace
