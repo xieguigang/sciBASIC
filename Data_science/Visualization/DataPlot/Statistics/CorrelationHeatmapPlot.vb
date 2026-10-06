@@ -1,24 +1,26 @@
 #Region "Microsoft.VisualBasic::5a9c3e7b2d4f4808e1a6d9c3b5f7e2d4, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class CorrelationHeatmapPlot
-    ' 
-    '     Properties: Correlation, RowTree, ColTree, ShowValues, ShowTrees
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    ' 
+' Class CorrelationHeatmapPlot
+' 
+'     Properties: Correlation, RowTree, ColTree, ShowValues, ShowTrees
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+' 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -43,11 +45,11 @@ Public Class CorrelationHeatmapPlot
     ''' <summary>是否在格子中写出系数</summary>
     Public Property ShowValues As Boolean = False
     ''' <summary>色阶：默认用零中心发散色阶</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.CoolWarm
+    Public Property ColorMap As ScalerPalette = ScalerPalette.Cool
     ''' <summary>系数的值域（通常为 -1~1）</summary>
     Public Property ValueRange As (min As Double, max As Double) = (-1, 1)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

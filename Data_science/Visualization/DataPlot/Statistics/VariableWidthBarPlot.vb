@@ -19,6 +19,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -40,7 +41,7 @@ Public Class VariableWidthBarPlot
     ''' <summary>是否用色阶给柱子上色（按高度）</summary>
     Public Property UseColorScale As Boolean = False
     ''' <summary>色阶方案</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
     ''' <summary>是否在横轴上写出柱子的名字</summary>

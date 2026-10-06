@@ -22,6 +22,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports std = System.Math
 
 ' ============================================================================
@@ -40,8 +41,7 @@ Imports std = System.Math
 ' ============================================================================
 
 ''' <summary>柱状图（分类数据）</summary>
-Public Class BarPlot
-    Inherits PlotEngine
+Public Class BarPlot : Inherits PlotEngine
 
     ''' <summary>堆叠方式</summary>
     Public Enum StackMode
@@ -78,7 +78,7 @@ Public Class BarPlot
     ''' <summary>用色阶给柱子上色（LevelBarplot 的行为）</summary>
     Public Property UseColorScale As Boolean = False
     ''' <summary>色阶方案（<see cref="UseColorScale"/> 为 True 时生效）</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
 

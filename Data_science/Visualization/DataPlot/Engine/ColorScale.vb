@@ -1,3 +1,9 @@
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports std = System.Math
+
 ' ---------------------------------------------------------------------------
 '  DataPlot / Engine / ColorScale.vb
 '  Copyright (c) 2018-2026 sciBASIC.NET Foundation, GPL3 Licensed
@@ -8,10 +14,6 @@
 '  (at your option) any later version.
 ' ---------------------------------------------------------------------------
 
-Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging
-Imports std = System.Math
-
 ''' <summary>
 ''' 色阶：把数值映射到颜色，并绘制与之配套的颜色条图例。
 ''' 热图、等高线图、密度图、相关性矩阵、Z-score 图、变宽条形图等所有需要色阶的图表
@@ -19,70 +21,12 @@ Imports std = System.Math
 ''' </summary>
 Public Module ColorScale
 
-    ''' <summary>内置色阶方案</summary>
-    Public Enum ColorMapType
-        Viridis
-        Plasma
-        Inferno
-        CoolWarm
-        Grayscale
-        Jet
-    End Enum
-
-    Private ReadOnly viridis As Color() = {
-        Color.FromArgb(68, 1, 84), Color.FromArgb(59, 82, 139),
-        Color.FromArgb(33, 145, 140), Color.FromArgb(94, 201, 98),
-        Color.FromArgb(253, 231, 37)
-    }
-
-    Private ReadOnly plasma As Color() = {
-        Color.FromArgb(13, 8, 135), Color.FromArgb(126, 3, 168),
-        Color.FromArgb(204, 71, 120), Color.FromArgb(248, 149, 64),
-        Color.FromArgb(240, 249, 33)
-    }
-
-    Private ReadOnly inferno As Color() = {
-        Color.FromArgb(0, 0, 4), Color.FromArgb(87, 16, 110),
-        Color.FromArgb(187, 55, 84), Color.FromArgb(249, 142, 9),
-        Color.FromArgb(252, 255, 164)
-    }
-
-    Private ReadOnly coolwarm As Color() = {
-        Color.FromArgb(59, 76, 192), Color.FromArgb(221, 221, 221),
-        Color.FromArgb(180, 4, 38)
-    }
-
-    Private ReadOnly jet As Color() = {
-        Color.FromArgb(0, 0, 131), Color.FromArgb(0, 60, 170),
-        Color.FromArgb(5, 255, 255), Color.FromArgb(255, 255, 0),
-        Color.FromArgb(250, 0, 0), Color.FromArgb(128, 0, 0)
-    }
-
-    ''' <summary>取色阶的控制点</summary>
-    Public Function GetPalette(cmap As ColorMapType) As Color()
-        Select Case cmap
-            Case ColorMapType.Viridis : Return viridis
-            Case ColorMapType.Plasma : Return plasma
-            Case ColorMapType.Inferno : Return inferno
-            Case ColorMapType.CoolWarm : Return coolwarm
-            Case ColorMapType.Jet : Return jet
-            Case Else : Return viridis
-        End Select
-    End Function
-
-    ''' <summary>按名称取色阶；无法识别时回落到 <see cref="ColorMapType.Viridis"/></summary>
-    Public Function ParseColorMap(name As String, Optional fallback As ColorMapType = ColorMapType.Viridis) As ColorMapType
-        If String.IsNullOrWhiteSpace(name) Then Return fallback
-
-        Select Case name.Trim.ToLower
-            Case "viridis" : Return ColorMapType.Viridis
-            Case "plasma" : Return ColorMapType.Plasma
-            Case "inferno" : Return ColorMapType.Inferno
-            Case "coolwarm", "cool-warm" : Return ColorMapType.CoolWarm
-            Case "grayscale", "gray", "grey" : Return ColorMapType.Grayscale
-            Case "jet" : Return ColorMapType.Jet
-            Case Else : Return fallback
-        End Select
+    ''' <summary>
+    ''' 取色阶的控制点
+    ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetPalette(cmap As ScalerPalette) As Color()
+        Return Designer.GetColors(cmap.Description)
     End Function
 
     ''' <summary>把 [0,1] 上的位置插值为具体颜色</summary>
@@ -108,7 +52,7 @@ Public Module ColorScale
     End Function
 
     ''' <summary>把 v 在 [vmin,vmax] 上归一化后取色</summary>
-    Public Function GetColor(v As Double, vmin As Double, vmax As Double, cmap As ColorMapType) As Color
+    Public Function GetColor(v As Double, vmin As Double, vmax As Double, cmap As ScalerPalette) As Color
         Dim t As Double
 
         If vmax <= vmin OrElse Double.IsNaN(v) Then
@@ -121,8 +65,8 @@ Public Module ColorScale
     End Function
 
     ''' <summary>直接按 0~1 的位置取色（越界会被裁剪）</summary>
-    Public Function GetColorT(t As Double, cmap As ColorMapType) As Color
-        If cmap = ColorMapType.Grayscale Then
+    Public Function GetColorT(t As Double, cmap As ScalerPalette) As Color
+        If cmap = ScalerPalette.Gray Then
             Dim gs = CInt(std.Clamp(t, 0, 1) * 255)
             Return Color.FromArgb(gs, gs, gs)
         End If
@@ -155,7 +99,7 @@ Public Module ColorScale
     ''' <param name="horizontal">True 时横向绘制</param>
     ''' <param name="tickCount">刻度数量</param>
     ''' <param name="title">颜色条标题（可留空）</param>
-    Public Sub DrawColorLegend(g As IGraphics, theme As PlotTheme, cmap As ColorMapType,
+    Public Sub DrawColorLegend(g As IGraphics, theme As PlotTheme, cmap As ScalerPalette,
                                vmin As Double, vmax As Double,
                                x As Single, y As Single, w As Single, h As Single,
                                Optional horizontal As Boolean = False,

@@ -77,6 +77,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports std = System.Math
@@ -171,10 +172,10 @@ Public Class PlotEngine : Implements IDisposable
 
     ''' <summary>由宿主钉死数据坐标范围（图层模式下通常由跨图层的联合计算结果提供）。</summary>
     Public Sub SetDataRange(xmin As Double, xmax As Double, ymin As Double, ymax As Double)
-        XMin = xmin
-        XMax = xmax
-        YMin = ymin
-        YMax = ymax
+        xmin = xmin
+        xmax = xmax
+        ymin = ymin
+        ymax = ymax
     End Sub
 
     ' ---------- 绘图区（数据坐标对应的像素矩形） ----------
@@ -662,7 +663,7 @@ Public Class PlotEngine : Implements IDisposable
     ''' <param name="horizontal">True 时横向绘制并贴到绘图区下方</param>
     ''' <param name="tickCount">刻度数量</param>
     ''' <param name="title">颜色条标题</param>
-    Protected Sub DrawColorLegend(cmap As ColorScale.ColorMapType, vmin As Double, vmax As Double,
+    Protected Sub DrawColorLegend(cmap As ScalerPalette, vmin As Double, vmax As Double,
                                   Optional rect As RectangleF = Nothing,
                                   Optional horizontal As Boolean = False,
                                   Optional tickCount As Integer = 5,

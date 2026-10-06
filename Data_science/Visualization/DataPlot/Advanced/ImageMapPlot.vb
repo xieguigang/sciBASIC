@@ -20,6 +20,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -40,7 +41,7 @@ Public Class ImageMapPlot
     ''' <summary>二维标量场（行 = y，列 = x）</summary>
     Public Property Image As Double(,) = Nothing
     ''' <summary>色阶方案</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Inferno
+    Public Property ColorMap As ScalerPalette = ScalerPalette.inferno
     ''' <summary>色阶下界（留空时自动取最小值）</summary>
     Public Property MinValue As Double? = Nothing
     ''' <summary>色阶上界（留空时自动取最大值）</summary>

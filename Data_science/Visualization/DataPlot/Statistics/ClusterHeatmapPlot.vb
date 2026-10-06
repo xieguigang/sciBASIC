@@ -1,26 +1,28 @@
 #Region "Microsoft.VisualBasic::4f8a2c6e1b3d4907d9e5c1a8b2f7d3c6, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class ClusterHeatmapPlot
-    ' 
-    '     Properties: Matrix, RowLabels, ColLabels, RowTree, ColTree
-    '                 ColorMap, Scaling, ShowRowDendrogram, ShowColDendrogram
-    '                 TreeFraction, ShowValues
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    ' 
+' Class ClusterHeatmapPlot
+' 
+'     Properties: Matrix, RowLabels, ColLabels, RowTree, ColTree
+'                 ColorMap, Scaling, ShowRowDendrogram, ShowColDendrogram
+'                 TreeFraction, ShowValues
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+' 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -57,7 +59,7 @@ Public Class ClusterHeatmapPlot
     Public Property TreeFraction As Double = 0.18
 
     ''' <summary>色阶方案</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>数据预处理方式（行/列/全局归一化）</summary>
     Public Property Scaling As Geometry.ScaleMode = Geometry.ScaleMode.None
     ''' <summary>是否在格子中写出数值</summary>
@@ -65,7 +67,7 @@ Public Class ClusterHeatmapPlot
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

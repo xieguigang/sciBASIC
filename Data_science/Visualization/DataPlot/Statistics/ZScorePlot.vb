@@ -19,6 +19,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -40,7 +41,7 @@ Public Class ZScorePlot
     ''' <summary>是否显示取值为 0 的格子（False 时这些格子留白）</summary>
     Public Property DisplayZERO As Boolean = True
     ''' <summary>色阶（默认零中心发散）</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.CoolWarm
+    Public Property ColorMap As ScalerPalette = ScalerPalette.Cool
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
     ''' <summary>是否在格子中写出数值</summary>

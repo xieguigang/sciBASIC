@@ -1,25 +1,26 @@
 #Region "Microsoft.VisualBasic::7c2e5a9b4f6b4910a3c8f2e5d7b9a4f6, Data_science\Visualization\DataPlot\Statistics\BubbleHeatmapPlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class BubbleHeatmapPlot
-    ' 
-    '     Properties: Matrix, RowLabels, ColLabels, ColorMap, ShowColorLegend
-    '                 MinRadiusFraction
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    ' 
+' Class BubbleHeatmapPlot
+' 
+'     Properties: Matrix, RowLabels, ColLabels, ColorMap, ShowColorLegend
+'                 MinRadiusFraction
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+' 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -31,8 +32,7 @@ Imports std = System.Math
 ' ============================================================================
 
 ''' <summary>泡泡热图</summary>
-Public Class BubbleHeatmapPlot
-    Inherits PlotEngine
+Public Class BubbleHeatmapPlot : Inherits PlotEngine
 
     ''' <summary>数值矩阵 [row, col]</summary>
     Public Property Matrix As Double(,) = Nothing
@@ -41,7 +41,7 @@ Public Class BubbleHeatmapPlot
     ''' <summary>列名</summary>
     Public Property ColLabels As String() = Nothing
     ''' <summary>色阶方案</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
     ''' <summary>最大圆点直径占格子的比例</summary>
@@ -51,7 +51,7 @@ Public Class BubbleHeatmapPlot
     ''' <summary>是否用数值绝对值决定半径（否则直接用原值，要求非负）</summary>
     Public Property UseAbsoluteRadius As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

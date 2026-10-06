@@ -1,24 +1,25 @@
 #Region "Microsoft.VisualBasic::6b1d4f8c3e5a4909f2b7e1d4c6a8f3e5, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class CorrelationTrianglePlot
-    ' 
-    '     Properties: Correlation, ShowValues, ShowUpper, ColorMap
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    ' 
+' Class CorrelationTrianglePlot
+' 
+'     Properties: Correlation, ShowValues, ShowUpper, ColorMap
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+' 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -39,10 +40,10 @@ Public Class CorrelationTrianglePlot
     ''' <summary>是否把系数写成数字叠在圆点上</summary>
     Public Property ShowValues As Boolean = True
     ''' <summary>色阶（默认零中心发散）</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.CoolWarm
+    Public Property ColorMap As ScalerPalette = ScalerPalette.Cool
     Public Property ValueRange As (min As Double, max As Double) = (-1, 1)
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 

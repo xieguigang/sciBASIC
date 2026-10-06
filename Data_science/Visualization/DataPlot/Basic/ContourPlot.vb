@@ -21,6 +21,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -69,7 +70,7 @@ Public Class ContourPlot
     ''' <summary>等值层数</summary>
     Public Property Levels As Integer = 12
     ''' <summary>色阶方案</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
     ''' <summary>填充模式下是否额外描出等值线</summary>

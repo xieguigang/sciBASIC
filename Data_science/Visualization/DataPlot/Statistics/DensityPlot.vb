@@ -20,8 +20,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
-Imports std = System.Math
 
 ' ============================================================================
 '  DensityPlot.vb - 二维散点密度图
@@ -41,7 +41,7 @@ Public Class DensityPlot
     ''' <summary>核半径（像素），小于等于 0 时按网格自动推算</summary>
     Public Property KernelRadius As Single = -1
     ''' <summary>色阶</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Inferno
+    Public Property ColorMap As ScalerPalette = ScalerPalette.inferno
     ''' <summary>是否在密度底图上叠加原始散点</summary>
     Public Property ShowPoints As Boolean = False
     ''' <summary>是否在密度底图上叠加等值线</summary>
