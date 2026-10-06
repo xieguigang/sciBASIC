@@ -1,11 +1,12 @@
 ﻿
 ''' <summary>单个工程的处理结果</summary>
 Public Class ProjectResult
+
     Public Property FilePath As String
-    Public Property Changes As VersionUpgrader.VersionChange()
+    Public Property Changes As VersionChange()
     Public Property RemovedConditions As Integer
     Public Property Warnings As Integer
-    Public Property OutputPath As OutputPathFixer.OutputPathResult
+    Public Property OutputPath As OutputPathResult
     Public Property [Error] As String
     Public Property Skipped As Boolean
 

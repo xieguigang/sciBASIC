@@ -159,7 +159,7 @@ Module Program
                                      timestamp As Date) As ProjectResult
         Dim result As New ProjectResult With {
             .FilePath = path,
-            .Changes = New VersionUpgrader.VersionChange() {}
+            .Changes = New VersionChange() {}
         }
 
         Try
