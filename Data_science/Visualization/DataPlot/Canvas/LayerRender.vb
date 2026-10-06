@@ -14,13 +14,13 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.Plots
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
@@ -96,7 +96,7 @@ Namespace Canvas
 
         ''' <summary>
         ''' 在宿主画布的给定子区域内绘制气泡图面板。
-        ''' 等价于旧引擎 <see cref="Plots.Bubble"/> 的图层式绘制：
+        ''' 等价于旧引擎 <see cref="Bubble"/> 的图层式绘制：
         ''' <see cref="PointData.value"/> 为气泡半径（像素），正 Y 值域（positiveRangeY）
         ''' 与旧引擎保持一致。
         ''' </summary>

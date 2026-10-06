@@ -58,9 +58,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot
-Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.Histogram
-Imports Microsoft.VisualBasic.Data.Plots.Contour
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
@@ -77,7 +75,7 @@ Namespace Legacy
         Public ReadOnly xmin, ymin As Single
 
         Friend ReadOnly serials As SerialData()
-        Friend ReadOnly hist As Legacy.BarPlot.Histogram.HistogramGroup
+        Friend ReadOnly hist As HistogramGroup
 
         ''' <summary>
         ''' 数据集类型
