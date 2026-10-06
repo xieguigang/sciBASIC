@@ -96,6 +96,13 @@ Namespace My
         ''' </summary>
         Public redirectInfo As LoggingDriver
 
+        Public Sub ClearHooks()
+            redirectInfo = Nothing
+            redirectWarning = Nothing
+            redirectError = Nothing
+            redirectDebug = Nothing
+        End Sub
+
         Public Function getLogger(level As MSG_TYPES) As LoggingDriver
             Select Case level
                 Case MSG_TYPES.DEBUG : Return redirectDebug
