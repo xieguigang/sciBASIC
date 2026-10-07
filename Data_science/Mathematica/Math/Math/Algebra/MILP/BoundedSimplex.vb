@@ -165,8 +165,9 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Private ReadOnly xOnes As Double()
         Private ReadOnly b As Double()
         Private ReadOnly c As Double()
-        Private ReadOnly l As Double()
-        Private ReadOnly u As Double()
+        ''' <summary>界数组可被 <see cref="SetBounds"/> 替换（并行 worker 复用同一实例）</summary>
+        Private l As Double()
+        Private u As Double()
 
         Private ReadOnly tolP As Double
         Private ReadOnly tolD As Double
@@ -196,12 +197,6 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             Me.Arows = MilpKernels.ToRows(A)
             Me.Acols = MilpKernels.TransposeRows(A)
-            Me.xOnes = New Double(m - 1) {}
-
-            For i As Integer = 0 To m - 1
-                xOnes(i) = 1.0
-            Next
-
             Me.b = b
             Me.c = c
             Me.l = l
@@ -212,6 +207,12 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Me.tolD = tolD
             Me.pivotEps = pivotEps
             Me.rangeEps = rangeEps
+
+            Me.xOnes = New Double(m - 1) {}
+
+            For i As Integer = 0 To m - 1
+                xOnes(i) = 1.0
+            Next
 
             Me.artSign = New Double(Me.m - 1) {}
             InitializeArtificialSigns()
@@ -230,6 +231,18 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 ' 非基本初值：优先下界；下界 −∞ 时用上界
                 atUpper(j) = Double.IsNegativeInfinity(l(j))
             Next
+        End Sub
+
+        ''' <summary>
+        ''' 替换界数组并重置可变状态（A/b/c 与行/列缓存不变）。
+        ''' 供并行 worker 在同一 <see cref="BoundedSimplex"/> 实例上跨节点复用，
+        ''' 避免每节点重新做 O(m·n) 的行/列缓存与人工列符号构造。
+        ''' 与串行路径一致：artSign 等派生量保持构造时的语义（界数组以引用方式读取）。
+        ''' </summary>
+        Friend Sub SetBounds(newL As Double(), newU As Double())
+            l = newL
+            u = newU
+            Call ResetState()
         End Sub
 
         ''' <summary>
@@ -477,7 +490,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' 工作列直接从 Arows 行连续取元素，人工列为符号单位列。
         ''' </summary>
         Private Function BasisRows() As Double()()
-            Dim rows(m - 1) As Double()
+            Dim rows As Double()() = New Double(m - 1)() {}
 
             For i As Integer = 0 To m - 1
                 rows(i) = New Double(m - 1) {}

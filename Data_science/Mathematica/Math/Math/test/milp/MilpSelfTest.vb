@@ -74,6 +74,7 @@
 ' ============================================================================
 
 Imports System.Collections.Generic
+Imports System.Diagnostics
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.MILP
@@ -108,6 +109,7 @@ Public Module MilpSelfTest
         T10()
         T11()
         T12()
+        T13()
 
         Console.WriteLine($"=== {If(failures = 0, "ALL TESTS PASSED", failures & " TEST(S) FAILED")} ===")
 
@@ -575,6 +577,56 @@ Public Module MilpSelfTest
             If Not objectiveOk Then
                 Console.WriteLine($"      诊断日志: {sol.Log.Replace(vbLf, " | ")}")
             End If
+        Next
+    End Sub
+
+    ' ==================================================================
+    ' T13：并行节点求解一致性（SIMD + EnableParallel=True 批次并行）
+    ' ==================================================================
+
+    Private Sub T13()
+        Console.WriteLine("-- T13 并行节点求解一致性（EnableParallel=True，对拍串行/D P 精确值）--")
+
+        ' ---- 30 件背包：串行 vs 并行对拍 + 计时 ----
+        Dim data = Knapsack30Data()
+        Dim exact As Double = KnapsackDPExact(data.weights, data.values, data.capacity)
+
+        Dim serialWatch = Stopwatch.StartNew()
+        Dim solSerial = MilpSolver.Solve(Knapsack30Model(), New MilpOptions With {
+            .MaxSeconds = 120, .EnableParallel = False})
+        serialWatch.Stop()
+
+        Dim parWatch = Stopwatch.StartNew()
+        Dim solPar = MilpSolver.Solve(Knapsack30Model(), New MilpOptions With {
+            .MaxSeconds = 120, .EnableParallel = True, .MaxThreads = 4})
+        parWatch.Stop()
+
+        Check(solSerial.Status = MilpStatus.Optimal AndAlso solPar.Status = MilpStatus.Optimal,
+              "两种模式均最优",
+              $"串行 obj={solSerial.ObjectiveValue:G8}，并行 obj={solPar.ObjectiveValue:G8}")
+        Check(System.Math.Abs(solPar.ObjectiveValue - exact) < 0.005,
+              "并行模式命中 DP 精确解",
+              $"obj={solPar.ObjectiveValue:G8} vs exact={exact:G8}")
+        Check(solPar.DroppedNodes = 0, "并行模式无数值丢弃", $"丢弃={solPar.DroppedNodes}")
+        Check(System.Math.Abs(solSerial.ObjectiveValue - solPar.ObjectiveValue) < 0.005,
+              "串行/并行目标值一致",
+              $"串行 {serialWatch.ElapsedMilliseconds}ms vs 并行 {parWatch.ElapsedMilliseconds}ms（{solPar.NodesExplored} 节点）")
+
+        ' ---- 其余小模型的并行一致性（对拍串行目标值）----
+        Dim models As (name As String, build As Func(Of MilpModel))() = {
+            ("生产计划", Function() ProductionModel()),
+            ("设施选址", Function() FacilityModel()),
+            ("3×3 指派", Function() AssignmentModel())
+        }
+
+        For Each c In models
+            Dim solS = MilpSolver.Solve(c.build(), New MilpOptions With {.EnableParallel = False})
+            Dim solP = MilpSolver.Solve(c.build(), New MilpOptions With {.EnableParallel = True, .MaxThreads = 4})
+
+            Check(solS.Status = solP.Status AndAlso
+                  System.Math.Abs(solS.ObjectiveValue - solP.ObjectiveValue) < 0.005,
+                  $"{c.name} 串行/并行一致",
+                  $"状态={solP.StatusText()}，obj={solP.ObjectiveValue:G8}")
         Next
     End Sub
 

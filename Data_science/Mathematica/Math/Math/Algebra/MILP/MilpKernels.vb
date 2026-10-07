@@ -43,6 +43,7 @@ Imports System.Numerics
 Imports System.Runtime.Intrinsics
 Imports System.Runtime.Intrinsics.X86
 Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
 Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
@@ -70,6 +71,24 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' </summary>
         Public Property MinParallelWork As Integer = 65536
 
+        ' ---- 嵌套并行抑制：并行 worker 线程内部不再触发内层 Parallel.For，
+        '      避免分支定界并行批次与 LU 行级并行的线程数相乘导致超订阅 ----
+        <ThreadStatic> Private workerDepth As Integer
+
+        Friend Sub BeginWorker()
+            workerDepth += 1
+        End Sub
+
+        Friend Sub EndWorker()
+            workerDepth -= 1
+        End Sub
+
+        Private ReadOnly Property NestedParallelSuppressed As Boolean
+            Get
+                Return workerDepth > 0
+            End Get
+        End Property
+
         ' ================================================================
         ' 布局转换：Double(,) <=> jagged rows
         ' ================================================================
@@ -78,7 +97,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Public Function ToRows(A As Double(,)) As Double()()
             Dim m As Integer = A.GetLength(0)
             Dim n As Integer = A.GetLength(1)
-            Dim rows(m - 1) As Double()
+            Dim rows As Double()() = New Double(m - 1)() {}
 
             For i As Integer = 0 To m - 1
                 Dim row As Double() = New Double(n - 1) {}
@@ -100,7 +119,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Public Function TransposeRows(A As Double(,)) As Double()()
             Dim m As Integer = A.GetLength(0)
             Dim n As Integer = A.GetLength(1)
-            Dim rows(n - 1) As Double()
+            Dim rows As Double()() = New Double(n - 1)() {}
 
             For j As Integer = 0 To n - 1
                 rows(j) = New Double(m - 1) {}
@@ -215,7 +234,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             If ShouldParallelize(nRows, workPerRow) Then
                 Dim po As ParallelOptions = MakeOptions()
 
-                Call Parallel.For(0, nRows, po,
+                Call System.Threading.Tasks.Parallel.For(0, nRows, po,
                     Sub(i)
                         dst(i) = SIMDIntrinsics.DotFma(rows(i), v)
                     End Sub)
@@ -288,14 +307,16 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 ' ---- L 因子 + 行更新（U 区段连续 AXPY，可并行）----
                 If ShouldParallelizeByWork(remaining) Then
                     Dim po As ParallelOptions = MakeOptions()
+                    Dim kSnapshot As Integer = k
+                    Dim nSnapshot As Integer = n
 
-                    Call Parallel.For(k + 1, n, po,
+                    Call System.Threading.Tasks.Parallel.For(kSnapshot + 1, nSnapshot, po,
                         Sub(i)
                             Dim row As Double() = rows(i)
-                            Dim lik As Double = row(k) / pivotVal
+                            Dim lik As Double = row(kSnapshot) / pivotVal
 
-                            row(k) = lik
-                            Call AxpyRange(row, pivotRow, -lik, k + 1, n)
+                            row(kSnapshot) = lik
+                            Call AxpyRange(row, pivotRow, -lik, kSnapshot + 1, nSnapshot)
                         End Sub)
                 Else
                     For i As Integer = k + 1 To n - 1
@@ -327,16 +348,18 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>按 行数 × 每行工作量 判断是否值得多线程。</summary>
         <System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)>
         Public Function ShouldParallelize(count As Integer, workPerRow As Integer) As Boolean
-            Return EnableParallel AndAlso count >= 2 AndAlso CLng(count) * workPerRow >= MinParallelWork
+            If Not EnableParallel OrElse NestedParallelSuppressed Then Return False
+
+            Return count >= 2 AndAlso CLng(count) * workPerRow >= MinParallelWork
         End Function
 
         ''' <summary>
-        ''' 按工作量自适应的并行 for：达到阈值走 <see cref="Parallel.For"/>，
+        ''' 按工作量自适应的并行 for：达到阈值走 <c>System.Threading.Tasks.Parallel.For</c>，
         ''' 否则顺序执行。迭代间必须相互独立（无共享可变状态）。
         ''' </summary>
         Public Sub ForParallel(count As Integer, workPerItem As Integer, body As Action(Of Integer))
             If ShouldParallelize(count, workPerItem) Then
-                Call Parallel.For(0, count, MakeOptions(), body)
+                Call System.Threading.Tasks.Parallel.For(0, count, MakeOptions(), body)
             Else
                 For i As Integer = 0 To count - 1
                     Call body(i)
@@ -347,7 +370,9 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>按总工作量（元素操作数）判断是否值得多线程。</summary>
         <System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)>
         Private Function ShouldParallelizeByWork(work As Integer) As Boolean
-            Return EnableParallel AndAlso work >= MinParallelWork
+            If Not EnableParallel OrElse NestedParallelSuppressed Then Return False
+
+            Return work >= MinParallelWork
         End Function
 
         Private Function MakeOptions() As ParallelOptions

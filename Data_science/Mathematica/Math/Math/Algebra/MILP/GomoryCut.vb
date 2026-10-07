@@ -139,7 +139,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             ' ---- 预筛选候选基本整数行（小数部分落在 (tol, 1−tol) 内）----
             Dim cand As New List(Of Integer)()
-            Dim frac As New Dictionary(Of Integer, Double)()
+            Dim fracs As New List(Of Double)()
 
             For k As Integer = 0 To m - 1
                 Dim bj As Integer = result.Basis(k)
@@ -153,7 +153,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 If f0 <= tol OrElse f0 >= i1 Then Continue For           ' 已经整数
 
                 cand.Add(k)
-                frac(k) = f0
+                fracs.Add(f0)
             Next
 
             If cand.Count = 0 Then Return cuts
@@ -169,7 +169,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Call MilpKernels.ForParallel(cand.Count, m * n,
                 Sub(idx)
                     generated(idx) = GenerateOne(form, fac, result, basic, AT,
-                                                 cand(idx), frac(idx), options, tol)
+                                                 cand(idx), fracs(idx), options, tol)
                 End Sub)
 
             For Each cut As CutRow In generated
