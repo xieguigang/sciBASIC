@@ -157,7 +157,12 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
         Private ReadOnly m As Integer
         Private ReadOnly n As Integer
-        Private ReadOnly A As Double(,)
+        ''' <summary>行主序缓存（每行连续，行点积 / 矩阵-向量乘 SIMD 友好）</summary>
+        Private ReadOnly Arows As Double()()
+        ''' <summary>列主序缓存（第 j 行 = A 第 j 列；列提取与 wᵀA_j 点积变为连续访存）</summary>
+        Private ReadOnly Acols As Double()()
+        ''' <summary>全 1 向量（长度 m），把 "xB += 常数" 形式的更新统一走 AXPY 内核</summary>
+        Private ReadOnly xOnes As Double()
         Private ReadOnly b As Double()
         Private ReadOnly c As Double()
         Private ReadOnly l As Double()
@@ -189,7 +194,14 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                        Optional pivotEps As Double = 0.000000001,
                        Optional rangeEps As Double = 0.000000001)
 
-            Me.A = A
+            Me.Arows = MilpKernels.ToRows(A)
+            Me.Acols = MilpKernels.TransposeRows(A)
+            Me.xOnes = New Double(m - 1) {}
+
+            For i As Integer = 0 To m - 1
+                xOnes(i) = 1.0
+            Next
+
             Me.b = b
             Me.c = c
             Me.l = l
@@ -225,18 +237,19 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' 保证初始人工变量 a_i = artSign(i)·(b_i − A_i·v) ≥ 0，从而人工基原始可行。
         ''' </summary>
         Private Sub InitializeArtificialSigns()
+            ' artSign(i) = sign(b_i − (A·v)_i)，v 为非基本变量的初始界值
+            ' （行主序矩阵-向量乘，SIMD/缓存友好，替代原来的逐元素列扫描）
+            Dim v(n - 1) As Double
+            Dim av(m - 1) As Double
+
+            For j As Integer = 0 To n - 1
+                v(j) = NonbasicBoundValue(j)
+            Next
+
+            Call MilpKernels.MatVecRows(Arows, v, av)
+
             For i As Integer = 0 To m - 1
-                Dim s As Double = b(i)
-
-                For j As Integer = 0 To n - 1
-                    Dim aij As Double = A(i, j)
-
-                    If aij = 0.0 Then Continue For
-
-                    s -= aij * NonbasicBoundValue(j)
-                Next
-
-                artSign(i) = If(s < -tolP, -1.0, 1.0)
+                artSign(i) = If(b(i) - av(i) < -tolP, -1.0, 1.0)
             Next
         End Sub
 
@@ -290,9 +303,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Dim col(m - 1) As Double
 
             If bj >= 0 Then
-                For i As Integer = 0 To m - 1
-                    col(i) = A(i, bj)
-                Next
+                ' 列主序缓存下第 bj 列是连续行，直接块拷贝
+                Call Array.Copy(Acols(bj), col, m)
             Else
                 Dim art As Integer = -1 - bj
                 col(art) = artSign(art)
@@ -455,54 +467,65 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Next
 
             ' 基矩阵必须非奇异
-            Dim Bm = BasisMatrix()
-
-            If LinAlg.LuFactor(Bm) Is Nothing Then Return False
+            If MilpKernels.LuFactorRows(BasisRows()) Is Nothing Then Return False
 
             Return True
         End Function
 
-        Private Function BasisMatrix() As Double(,)
-            Dim Bm(m - 1, m - 1) As Double
+        ''' <summary>
+        ''' 当前基矩阵（jagged 行形式，供 <see cref="MilpKernels.LuFactorRows"/> 就地消元）。
+        ''' 工作列直接从 Arows 行连续取元素，人工列为符号单位列。
+        ''' </summary>
+        Private Function BasisRows() As Double()()
+            Dim rows(m - 1) As Double()
+
+            For i As Integer = 0 To m - 1
+                rows(i) = New Double(m - 1) {}
+            Next
 
             For k As Integer = 0 To m - 1
                 Dim bj As Integer = basis(k)
 
                 If bj >= 0 Then
                     For i As Integer = 0 To m - 1
-                        Bm(i, k) = A(i, bj)
+                        rows(i)(k) = Arows(i)(bj)
                     Next
                 Else
                     Dim art As Integer = -1 - bj
-                    Bm(art, k) = artSign(art)
+                    rows(art)(k) = artSign(art)
                 End If
             Next
 
-            Return Bm
+            Return rows
         End Function
 
         ''' <summary>
         ''' 刷新分解、基本解、对偶值与约简成本。返回 False 表示数值失败。
         ''' </summary>
+        ''' <remarks>
+        ''' 三个 O(m·n) 数值段全部改为行主序连续访存 + SIMD：
+        '''   1. rhs 修正：rhs = b − A·v（v 为非基本变量的界值，基本列置 0）；
+        '''   2. 对偶值 y = B⁻ᵀc_B（LU 转置求解，保持 LinAlg 语义）；
+        '''   3. 约简成本 d = c_work − Aᵀy（列主序缓存的行批量点积）。
+        ''' </remarks>
         Private Function Refresh() As Boolean
-            fac = LinAlg.LuFactor(BasisMatrix())
+            fac = MilpKernels.LuFactorRows(BasisRows())
 
             If fac Is Nothing Then Return False
 
-            ' ---- xB = B⁻¹(b − Σ_{nonbasic} A_j v_j) ----
+            ' ---- xB = B⁻¹(b − A·v_nonbasic) ----
+            Dim v(n - 1) As Double
             Dim rhs(m - 1) As Double
-            Array.Copy(b, rhs, m)
+            Dim av(m - 1) As Double
 
             For j As Integer = 0 To n - 1
-                If inBasis(j) Then Continue For
+                v(j) = If(inBasis(j), 0.0, NonbasicValue(j))
+            Next
 
-                Dim vj As Double = NonbasicValue(j)
+            Call MilpKernels.MatVecRows(Arows, v, av)
 
-                If vj = 0.0 Then Continue For
-
-                For i As Integer = 0 To m - 1
-                    rhs(i) -= A(i, j) * vj
-                Next
+            For i As Integer = 0 To m - 1
+                rhs(i) = b(i) - av(i)
             Next
 
             xB = LinAlg.LuSolve(fac, rhs)
@@ -521,15 +544,13 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             If y Is Nothing Then Return False
 
-            ' ---- d_j = c_j − yᵀA_j ----
+            ' ---- d = c_work − Aᵀy ----
+            Dim ay(n - 1) As Double
+
+            Call MilpKernels.MatVecRows(Acols, y, ay)
+
             For j As Integer = 0 To n - 1
-                Dim s As Double = WorkCost(j)
-
-                For i As Integer = 0 To m - 1
-                    s -= A(i, j) * y(i)
-                Next
-
-                d(j) = s
+                d(j) = WorkCost(j) - ay(j)
             Next
 
             Return True
@@ -613,10 +634,14 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                     If basis(k) >= 0 Then Continue For
                     If std.Abs(xB(k)) > tolP * bNorm Then Continue For
 
-                    ' tableau 行：w = B⁻ᵀ e_k ⇒ α_j = wᵀA_j
+                    ' tableau 行：w = B⁻ᵀ e_k ⇒ α = Aᵀw（列主序行批量点积，一次算全行）
                     Dim w = LinAlg.LuSolveT(fac, UnitVector(k))
 
                     If w Is Nothing Then Return BsStatus.NumericFail
+
+                    Dim alphaAll(n - 1) As Double
+
+                    Call MilpKernels.MatVecRows(Acols, w, alphaAll)
 
                     Dim bestJ As Integer = -1
                     Dim bestAlpha As Double = pivotEps
@@ -625,11 +650,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                         If inBasis(j) Then Continue For
                         If u(j) - l(j) <= rangeEps Then Continue For
 
-                        Dim alpha As Double = 0.0
-
-                        For i As Integer = 0 To m - 1
-                            alpha += w(i) * A(i, j)
-                        Next
+                        Dim alpha As Double = alphaAll(j)
 
                         If std.Abs(alpha) > bestAlpha Then
                             bestAlpha = std.Abs(alpha)
@@ -700,9 +721,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 ' ---------- 方向 α = B⁻¹A_enter ----------
                 Dim colEnter(m - 1) As Double
 
-                For i As Integer = 0 To m - 1
-                    colEnter(i) = A(i, enter)
-                Next
+                Call Array.Copy(Acols(enter), colEnter, m)
 
                 Dim alpha = SolveWithBasis(colEnter)
 
@@ -758,10 +777,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
                 If theta < 0.0 Then theta = 0.0
 
-                ' ---------- 更新基本解 ----------
-                For i As Integer = 0 To m - 1
-                    xB(i) += (-sigma * alpha(i)) * theta
-                Next
+                ' ---------- 更新基本解（xB += (−sigma·theta)·alpha，FMA AXPY） ----------
+                Call MilpKernels.AxpyInPlace(xB, -sigma * theta, alpha)
 
                 If pivot Then
                     Dim leavingVar As Integer = basis(leave)
@@ -857,10 +874,14 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 Dim need As Double = If(tooLow, 1.0, -1.0)
                 Dim delta As Double = If(tooLow, loL - xB(leave), xB(leave) - hiL)
 
-                ' ---------- tableau 行：w = B⁻ᵀ e_leave ⇒ α_j = wᵀA_j ----------
+                ' ---------- tableau 行：w = B⁻ᵀ e_leave ⇒ α = Aᵀw（一次批量点积） ----------
                 Dim w = LinAlg.LuSolveT(fac, UnitVector(leave))
 
                 If w Is Nothing Then Return BsStatus.NumericFail
+
+                Dim alphaAll(n - 1) As Double
+
+                Call MilpKernels.MatVecRows(Acols, w, alphaAll)
 
                 Dim cand As New List(Of DualCandidate)()
 
@@ -871,11 +892,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
                     If dist <= rangeEps Then Continue For
 
-                    Dim alpha As Double = 0.0
-
-                    For i As Integer = 0 To m - 1
-                        alpha += w(i) * A(i, j)
-                    Next
+                    Dim alpha As Double = alphaAll(j)
 
                     If std.Abs(alpha) <= pivotEps Then Continue For
 
@@ -913,9 +930,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                     If contribution >= delta - 1.0E-12 Then
                         Dim theta As Double = delta / std.Abs(cd.g)
 
-                        For i As Integer = 0 To m - 1
-                            xB(i) += cd.g * theta
-                        Next
+                        Call MilpKernels.AxpyInPlace(xB, cd.g * theta, xOnes)
 
                         atUpper(basis(leave)) = Not tooLow
                         inBasis(basis(leave)) = False
@@ -930,10 +945,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                         pivoted = True
                         Exit For
                     Else
-                        ' 翻界：变量移到对侧界
-                        For i As Integer = 0 To m - 1
-                            xB(i) += cd.g * cd.dist
-                        Next
+                        ' 翻界：变量移到对侧界（xB += (g·dist)·1，FMA AXPY）
+                        Call MilpKernels.AxpyInPlace(xB, cd.g * cd.dist, xOnes)
 
                         atUpper(cd.j) = Not atUpper(cd.j)
                         delta -= contribution

@@ -137,9 +137,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             Dim i1 As Double = 1.0 - tol
 
-            For k As Integer = 0 To m - 1
-                If cuts.Count >= maxCuts Then Exit For
+            ' ---- 预筛选候选基本整数行（小数部分落在 (tol, 1−tol) 内）----
+            Dim cand As New List(Of Integer)()
+            Dim frac As New Dictionary(Of Integer, Double)()
 
+            For k As Integer = 0 To m - 1
                 Dim bj As Integer = result.Basis(k)
 
                 If bj < 0 Then Continue For                              ' 人工列（冗余行）
@@ -150,90 +152,36 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
                 If f0 <= tol OrElse f0 >= i1 Then Continue For           ' 已经整数
 
-                ' ---- tableau 行：w = B⁻ᵀe_k ----
-                Dim e(m - 1) As Double
-                e(k) = 1.0
+                cand.Add(k)
+                frac(k) = f0
+            Next
 
-                Dim w As Double() = LinAlg.LuSolveT(fac, e)
+            If cand.Count = 0 Then Return cuts
 
-                If w Is Nothing Then Continue For
+            ' ---- AT 列主序缓存：tableau 行 α = Aᵀw 变为行批量点积（连续访存 + SIMD）----
+            Dim AT As Double()() = form.TransposeCache()
 
-                Dim gamma(n - 1) As Double
-                Dim rhs As Double = f0
-                Dim nonZero As Integer = 0
+            ' ---- 逐候选行生成割：行间完全独立（只读共享 fac/form/result）----
+            ' 旧版按 k 顺序遇 maxCuts 即停；并行版生成全部候选后按违反量排序取前
+            ' maxCuts 条（Top-K），语义更强且与行生成顺序无关。
+            Dim generated(cand.Count - 1) As CutRow
 
-                For j As Integer = 0 To n - 1
-                    If basic.Contains(j) Then Continue For
+            Call MilpKernels.ForParallel(cand.Count, m * n,
+                Sub(idx)
+                    generated(idx) = GenerateOne(form, fac, result, basic, AT,
+                                                 cand(idx), frac(idx), options, tol)
+                End Sub)
 
-                    Dim range As Double = form.u(j) - form.l(j)
-
-                    If range <= 1.0E-09 Then Continue For
-
-                    Dim aq As Double = 0.0
-
-                    For i As Integer = 0 To m - 1
-                        aq += w(i) * form.A(i, j)
-                    Next
-
-                    Dim atUpper As Boolean = result.AtUpper(j)
-                    Dim ap As Double = If(atUpper, -aq, aq)
-                    Dim delta As Double = GmiDelta(ap, form.IsIntegerColumn(j), f0)
-
-                    If delta <= 0.0 Then Continue For
-
-                    If atUpper Then
-                        gamma(j) = -delta
-                        rhs -= delta * form.u(j)
-                    Else
-                        gamma(j) = delta
-                        rhs += delta * form.l(j)
-                    End If
-
-                    nonZero += 1
-                Next
-
-                If nonZero = 0 Then Continue For
-
-                ' ---- 尺度与密度校验 ----
-                Dim scale As Double = 0.0
-
-                For j As Integer = 0 To n - 1
-                    scale = std.Max(scale, std.Abs(gamma(j)))
-                Next
-
-                If scale <= 1.0E-09 OrElse scale > options.CutCoefficientLimit Then Continue For
-                If nonZero / CDbl(n) > options.CutDensityLimit * 1.5 Then Continue For
-
-                If std.Abs(scale - 1.0) > 1.0E-12 Then
-                    For j As Integer = 0 To n - 1
-                        gamma(j) /= scale
-                    Next
-
-                    rhs /= scale
-                End If
-
-                ' ---- 违反量：cut 为 Σ γ x ≥ rhs ----
-                Dim lhs As Double = 0.0
-
-                For j As Integer = 0 To n - 1
-                    If gamma(j) <> 0.0 Then lhs += gamma(j) * result.X(j)
-                Next
-
-                Dim violation As Double = rhs - lhs
-
-                If violation <= tol * (1.0 + std.Abs(rhs)) Then Continue For
-
-                cuts.Add(New CutRow With {
-                    .Coefficients = gamma,
-                    .Op = ">=",
-                    .Rhs = rhs,
-                    .Violation = violation,
-                    .SourceColumn = bj
-                })
+            For Each cut As CutRow In generated
+                If cut IsNot Nothing Then cuts.Add(cut)
             Next
 
             If cuts.Count > 1 Then
                 cuts.Sort(Function(p, q) q.Violation.CompareTo(p.Violation))
+            End If
+
+            If cuts.Count > maxCuts Then
+                cuts.RemoveRange(maxCuts, cuts.Count - maxCuts)
             End If
 
             If log IsNot Nothing AndAlso cuts.Count > 0 Then
@@ -241,6 +189,99 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             End If
 
             Return cuts
+        End Function
+
+        ''' <summary>
+        ''' 由一条候选基本行生成 GMI 割；数值不可靠 / 无违反时返回 Nothing。
+        ''' </summary>
+        Private Function GenerateOne(form As MilpLpForm, fac As LuFactorization, result As BsResult,
+                                     basic As HashSet(Of Integer), AT As Double()(),
+                                     k As Integer, f0 As Double,
+                                     options As MilpOptions, tol As Double) As CutRow
+
+            Dim m As Integer = form.Rows
+            Dim n As Integer = form.Cols
+            Dim bj As Integer = result.Basis(k)
+
+            ' ---- tableau 行：w = B⁻ᵀe_k（LinAlg.LuSolveT 只读 fac，线程安全）----
+            Dim e(m - 1) As Double
+            e(k) = 1.0
+
+            Dim w As Double() = LinAlg.LuSolveT(fac, e)
+
+            If w Is Nothing Then Return Nothing
+
+            ' α = Aᵀw：一次行批量点积算全行（替代旧的逐列跨步循环）
+            Dim aq(n - 1) As Double
+
+            Call MilpKernels.MatVecRows(AT, w, aq)
+
+            Dim gamma(n - 1) As Double
+            Dim rhs As Double = f0
+            Dim nonZero As Integer = 0
+
+            For j As Integer = 0 To n - 1
+                If basic.Contains(j) Then Continue For
+
+                Dim range As Double = form.u(j) - form.l(j)
+
+                If range <= 1.0E-09 Then Continue For
+
+                Dim atUpper As Boolean = result.AtUpper(j)
+                Dim ap As Double = If(atUpper, -aq(j), aq(j))
+                Dim delta As Double = GmiDelta(ap, form.IsIntegerColumn(j), f0)
+
+                If delta <= 0.0 Then Continue For
+
+                If atUpper Then
+                    gamma(j) = -delta
+                    rhs -= delta * form.u(j)
+                Else
+                    gamma(j) = delta
+                    rhs += delta * form.l(j)
+                End If
+
+                nonZero += 1
+            Next
+
+            If nonZero = 0 Then Return Nothing
+
+            ' ---- 尺度与密度校验 ----
+            Dim scale As Double = 0.0
+
+            For j As Integer = 0 To n - 1
+                scale = std.Max(scale, std.Abs(gamma(j)))
+            Next
+
+            If scale <= 1.0E-09 OrElse scale > options.CutCoefficientLimit Then Return Nothing
+            If nonZero / CDbl(n) > options.CutDensityLimit * 1.5 Then Return Nothing
+
+            If std.Abs(scale - 1.0) > 1.0E-12 Then
+                For j As Integer = 0 To n - 1
+                    gamma(j) /= scale
+                Next
+
+                rhs /= scale
+            End If
+
+            ' ---- 违反量：cut 为 Σ γ x ≥ rhs ----
+            Dim lhs As Double = 0.0
+
+            For j As Integer = 0 To n - 1
+                If gamma(j) <> 0.0 Then lhs += gamma(j) * result.X(j)
+            Next
+
+            Dim violation As Double = rhs - lhs
+
+            If violation <= tol * (1.0 + std.Abs(rhs)) Then Return Nothing
+
+            Return New CutRow With {
+                .Coefficients = gamma,
+                .Op = ">=",
+                .Rhs = rhs,
+                .Violation = violation,
+                .SourceColumn = bj
+            }
         End Function
 
         ''' <summary>GMI 割系数 δ_j。</summary>

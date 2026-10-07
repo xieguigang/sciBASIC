@@ -145,6 +145,65 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Public Property Rows As Integer
         Public Property Cols As Integer
 
+        ' ---------- SIMD jagged 缓存（惰性构建，A 替换后失效） ----------
+        Private _Arows As Double()()
+        Private _ArowNnz As Integer()
+        Private _AT As Double()()
+
+        ''' <summary>
+        ''' 行主序缓存（jagged，每行连续）：A·x 类行点积的 SIMD 快路径依赖。
+        ''' </summary>
+        Public Function RowCache() As Double()()
+            If _Arows Is Nothing Then
+                _Arows = MilpKernels.ToRows(A)
+            End If
+
+            Return _Arows
+        End Function
+
+        ''' <summary>每行非零元素计数（与 <see cref="RowCache"/> 同步构建）。</summary>
+        Public Function RowNonZero() As Integer()
+            Call RowCache()
+
+            If _ArowNnz Is Nothing Then
+                Dim m As Integer = A.GetLength(0)
+                Dim nnz(m - 1) As Integer
+
+                For i As Integer = 0 To m - 1
+                    Dim row As Double() = _Arows(i)
+                    Dim c As Integer = 0
+
+                    For j As Integer = 0 To row.Length - 1
+                        If row(j) <> 0.0 Then c += 1
+                    Next
+
+                    nnz(i) = c
+                Next
+
+                _ArowNnz = nnz
+            End If
+
+            Return _ArowNnz
+        End Function
+
+        ''' <summary>
+        ''' 列主序缓存（第 j 行 = A 第 j 列）：wᵀA_j 点积类热点的 SIMD 快路径依赖。
+        ''' </summary>
+        Public Function TransposeCache() As Double()()
+            If _AT Is Nothing Then
+                _AT = MilpKernels.TransposeRows(A)
+            End If
+
+            Return _AT
+        End Function
+
+        ''' <summary>A 被整体替换（追加割行）后调用，使行/列缓存失效。</summary>
+        Friend Sub InvalidateMatrixCaches()
+            _Arows = Nothing
+            _ArowNnz = Nothing
+            _AT = Nothing
+        End Sub
+
         ' ---------- 映射（对外只读） ----------
         Public ReadOnly Property OriginalVariableCount As Integer
 
@@ -318,15 +377,9 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Return _types(j) = MilpVarType.GeneralInteger OrElse _types(j) = MilpVarType.Binary
         End Function
 
-        ''' <summary>内部 min 方向目标值。</summary>
+        ''' <summary>内部 min 方向目标值（SIMD 点积）。</summary>
         Public Function InternalObjective(xWork As Double()) As Double
-            Dim s As Double = 0.0
-
-            For k As Integer = 0 To Cols - 1
-                s += c(k) * xWork(k)
-            Next
-
-            Return s
+            Return MilpKernels.Dot(c, xWork)
         End Function
 
         ' ====================================================================
@@ -455,6 +508,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             b = b2
             Rows = newRows
             Cols = newCols
+            InvalidateMatrixCaches()
 
             ReDim Preserve c(newCols - 1)
             ReDim Preserve l(newCols - 1)
@@ -604,21 +658,28 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             While rounds < 8
                 Dim changed As Boolean = False
+                Dim nCols As Integer = lb.Length
+                Dim rowLo(nCols - 1) As Double
+                Dim rowHi(nCols - 1) As Double
 
                 For i As Integer = 0 To rhs.Length - 1
                     Dim op As String = ops(i)
-                    Dim minAct As Double = 0.0
-                    Dim maxAct As Double = 0.0
+
+                    ' ---- 行活动度状态：单次 O(n) 扫描（旧实现在此之后还要对每个
+                    '      变量 O(n) 重扫整行求 minOther/maxOther，总体 O(m·n²)）----
+                    Dim sumLo As Double = 0.0
+                    Dim sumHi As Double = 0.0
+                    Dim negCnt As Integer = 0
+                    Dim posCnt As Integer = 0
                     Dim varCount As Integer = 0
 
-                    For j As Integer = 0 To lb.Length - 1
-                        Dim a As Double = Aorg(i, j)
+                    Call ScanRowActivity(Aorg, lb, ub, i, rowLo, rowHi,
+                                         sumLo, sumHi, negCnt, posCnt, varCount)
 
-                        If a = 0.0 Then Continue For
-
-                        varCount += 1
-                        AccumulateActivity(a, lb(j), ub(j), minAct, maxAct)
-                    Next
+                    ' 全行活动度（与原 AccumulateActivity 的 ±∞ 语义严格一致：
+                    ' 任一项 lo = −∞ ⇒ minAct = −∞；任一项 hi = +∞ ⇒ maxAct = +∞）
+                    Dim minAct As Double = If(negCnt >= 1, Double.NegativeInfinity, sumLo)
+                    Dim maxAct As Double = If(posCnt >= 1, Double.PositiveInfinity, sumHi)
 
                     If varCount = 0 Then
                         Dim bad As Boolean = (op = "<=" AndAlso 0.0 > rhs(i) + BOUND_TOL) OrElse
@@ -655,24 +716,44 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                             End If
                     End Select
 
-                    ' 逐个变量收紧界（"其它变量"的活动度单独求和，避免无穷界相减失真）
-                    For j As Integer = 0 To lb.Length - 1
+                    ' 逐个变量收紧界：minOther/maxOther 由行状态 O(1) 推导
+                    ' （±∞ 语义经无穷计数严格保持）；行内一旦发生收紧即失效重扫，
+                    ' 保持原实现"行内已收紧的界参与后续变量推导"的传播语义
+                    Dim rowValid As Boolean = True
+
+                    For j As Integer = 0 To nCols - 1
                         Dim a As Double = Aorg(i, j)
 
                         If a = 0.0 OrElse isFixed(j) Then Continue For
 
-                        Dim minOther As Double = 0.0
-                        Dim maxOther As Double = 0.0
+                        If Not rowValid Then
+                            sumLo = 0.0
+                            sumHi = 0.0
+                            negCnt = 0
+                            posCnt = 0
+                            varCount = 0
 
-                        For j2 As Integer = 0 To lb.Length - 1
-                            If j2 = j Then Continue For
+                            Call ScanRowActivity(Aorg, lb, ub, i, rowLo, rowHi,
+                                                 sumLo, sumHi, negCnt, posCnt, varCount)
 
-                            Dim a2 As Double = Aorg(i, j2)
+                            rowValid = True
+                        End If
 
-                            If a2 = 0.0 Then Continue For
+                        ' 排除第 j 项后的行活动度（"其它变量"），避免无穷界相减失真
+                        Dim minOther As Double
+                        Dim maxOther As Double
 
-                            AccumulateActivity(a2, lb(j2), ub(j2), minOther, maxOther)
-                        Next
+                        If rowLo(j) = Double.NegativeInfinity Then
+                            minOther = If(negCnt >= 2, Double.NegativeInfinity, sumLo)
+                        Else
+                            minOther = If(negCnt >= 1, Double.NegativeInfinity, sumLo - rowLo(j))
+                        End If
+
+                        If rowHi(j) = Double.PositiveInfinity Then
+                            maxOther = If(posCnt >= 2, Double.PositiveInfinity, sumHi)
+                        Else
+                            maxOther = If(posCnt >= 1, Double.PositiveInfinity, sumHi - rowHi(j))
+                        End If
 
                         Dim newLb As Double = lb(j)
                         Dim newUb As Double = ub(j)
@@ -713,6 +794,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                             lb(j) = newLb
                             ub(j) = newUb
                             changed = True
+                            rowValid = False
 
                             If lb(j) = ub(j) Then
                                 FoldFixed(Aorg, rhs, j, lb(j), fixedValue, isFixed)
@@ -783,6 +865,51 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             ElseIf Not Double.IsPositiveInfinity(maxAct) Then
                 maxAct += hi
             End If
+        End Sub
+
+        ''' <summary>
+        ''' 单行活动度状态扫描：逐项活动度区间 + 有限部分和 + 无穷计数。
+        ''' </summary>
+        ''' <remarks>
+        ''' 一次 O(n) 扫描同时提供：全行 min/max 活动度（negCnt/posCnt ≥ 1 ⇒ ±∞，
+        ''' 与 <see cref="AccumulateActivity"/> 语义一致）以及 O(1) 推导
+        ''' "排除任一变量"的 minOther/maxOther 所需的全部信息。
+        ''' </remarks>
+        Private Sub ScanRowActivity(Aorg As Double(,), lb As Double(), ub As Double(), i As Integer,
+                                    rowLo As Double(), rowHi As Double(),
+                                    ByRef sumLo As Double, ByRef sumHi As Double,
+                                    ByRef negCnt As Integer, ByRef posCnt As Integer,
+                                    ByRef varCount As Integer)
+
+            For j As Integer = 0 To lb.Length - 1
+                Dim a As Double = Aorg(i, j)
+
+                If a = 0.0 Then Continue For
+
+                Dim lo As Double = lb(j) * a
+                Dim hi As Double = ub(j) * a
+
+                If lo > hi Then
+                    Dim t As Double = lo : lo = hi : hi = t
+                End If
+
+                rowLo(j) = lo
+                rowHi(j) = hi
+
+                If Double.IsNegativeInfinity(lo) Then
+                    negCnt += 1
+                Else
+                    sumLo += lo
+                End If
+
+                If Double.IsPositiveInfinity(hi) Then
+                    posCnt += 1
+                Else
+                    sumHi += hi
+                End If
+
+                varCount += 1
+            Next
         End Sub
 
         ''' <summary>

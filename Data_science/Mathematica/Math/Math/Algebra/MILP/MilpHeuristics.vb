@@ -129,13 +129,28 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>
         ''' 检查工作解是否满足全部等式约束与变量界（整数性由调用方保证）。
         ''' </summary>
+        ''' <remarks>
+        ''' 行点积走 <see cref="MilpLpForm.RowCache"/> 的连续 jagged 行：
+        ''' 稠密行（非零占比 ≥ 50%）用 SIMD 点积，稀疏行保持跳零标量循环。
+        ''' </remarks>
         Public Function Feasible(form As MilpLpForm, x As Double(), tol As Double) As Boolean
-            For i As Integer = 0 To form.Rows - 1
-                Dim s As Double = 0.0
+            Dim rows As Double()() = form.RowCache()
+            Dim nnz As Integer() = form.RowNonZero()
+            Dim m As Integer = form.Rows
 
-                For k As Integer = 0 To form.Cols - 1
-                    If form.A(i, k) <> 0.0 Then s += form.A(i, k) * x(k)
-                Next
+            For i As Integer = 0 To m - 1
+                Dim s As Double
+                Dim row As Double() = rows(i)
+
+                If nnz(i) * 2 >= row.Length Then
+                    s = MilpKernels.Dot(row, x)
+                Else
+                    s = 0.0
+
+                    For k As Integer = 0 To row.Length - 1
+                        If row(k) <> 0.0 Then s += row(k) * x(k)
+                    Next
+                End If
 
                 If std.Abs(s - form.b(i)) > tol * (1.0 + std.Abs(form.b(i))) Then Return False
             Next

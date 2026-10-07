@@ -94,6 +94,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <param name="options">求解选项；Nothing 使用默认值</param>
         Public Function Solve(model As MilpModel, Optional options As MilpOptions = Nothing) As MilpSolution
             Dim opt As MilpOptions = If(options, New MilpOptions()).Clone()
+
+            ' 并行开关传递给内核门面（SIMD 向量化始终启用，多线程由选项控制）
+            MilpKernels.EnableParallel = opt.EnableParallel
+            MilpKernels.MaxThreads = opt.MaxThreads
+
             Dim log As New List(Of String)()
             Dim watch As Stopwatch = Stopwatch.StartNew()
 
