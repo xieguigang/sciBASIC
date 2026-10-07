@@ -110,6 +110,9 @@ Public Module ProgramMilp
                     Return ProgramLpp.Main(New String() {})
                 Case "lpp-selftest"
                     Return ProgramLpp.Main(New String() {"selftest"})
+                Case "triq-ecdf"
+                    ' TrIQ / ECDF 性能优化的正确性校验与提速基准
+                    Return DistributionsPerfTest.RunAll()
             End Select
         End If
 

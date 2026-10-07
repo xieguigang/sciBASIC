@@ -56,6 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace Distributions
 
@@ -84,14 +85,10 @@ Namespace Distributions
             Dim v As Double() = data.ToArray
             Dim cut As Double = v.FindThreshold(q, N, eps)
 
-            Return v _
-                .Select(Function(xi)
-                            If xi > cut Then
-                                Return cut
-                            Else
-                                Return xi
-                            End If
-                        End Function)
+            ' 等价上界钳制：xi > cut 时取 cut，否则取 xi；xi = cut 时两式均为 cut。
+            ' 改用 SIMD 逐元素向量化（SimdClamp = Min(Max(v, min), max)，端点到端内），
+            ' 在硬件不支持或 SIMDConfiguration.disable 时自动标量回退，数值结果不变。
+            Return v.SimdClamp(Double.MinValue, cut)
         End Function
 
         ''' <summary>
@@ -181,19 +178,36 @@ Namespace Distributions
                                        Optional T As Double? = Nothing) As IEnumerable(Of Integer)
 
             Dim f As Double() = data.ToArray
-            Dim minf As Double = f.Min
+            Dim minf As Double = f.SimdMin
+            Dim maxf As Double = f.SimdMax
 
             If T Is Nothing Then
-                T = f.Max
+                T = maxf
             End If
 
-            Dim levelRange As New DoubleRange(0, n)
-            Dim scaler As New DoubleRange(minf, T)
+            Dim span As Double = T - minf
 
-            Return From w As Double
-                   In f
-                   Let q As Double = If(w >= T, n - 1, scaler.ScaleMapping(w, levelRange))
-                   Select CInt(q)
+            If span = 0.0 Then
+                ' 所有值相等：原逻辑 w >= T 恒成立，统一返回 n - 1
+                Return f.Select(Function(w) n - 1)
+            End If
+
+            ' ScaleMapping 公式为 (w - minf) / span * n，其中 span = T - minf、目标区间 [0, n]。
+            ' 严格按原公式的运算顺序（减 -> 除 -> 乘）逐元素向量化仿射映射（SIMD 加速），
+            ' 再在标量层精确保留原分支语义：w >= T 强制取 n - 1；w < T 时由 CInt(scaled)
+            ' 决定（接近 T 的元素经四舍五入可能得到 n，与原实现一致，不可简单钳到 n - 1）。
+            Dim scaled As Double() = f _
+                .SimdAddScalar(-minf) _
+                .SimdDivideScalar(span) _
+                .SimdMultiplyScalar(n)
+
+            Dim levels As Integer() = New Integer(f.Length - 1) {}
+
+            For i As Integer = 0 To f.Length - 1
+                levels(i) = If(f(i) >= T, n - 1, CInt(scaled(i)))
+            Next
+
+            Return levels
         End Function
 
     End Module

@@ -111,18 +111,29 @@ Namespace Distributions
             Dim sample As DataBinBox(Of Double)() = data _
                 .OrderBy(Function(b) b.Boundary.Min) _
                 .ToArray
-            Dim N As Integer = Aggregate point As DataBinBox(Of Double)
-                               In sample
-                               Into Sum(point.Count)
-            Dim minK As Integer = 1
-            Dim minD As Double = Double.MaxValue
 
             If sample.Length = 0 Then
                 Return 0
             End If
 
-            For k As Integer = 1 To sample.Length - 1
-                Dim cdf As Double = ECDF.CDF(sample.Take(k), N)
+            ' 一次性物化各 bin 的计数并累计为包含式前缀和（cum(i) = sum_{j<=i} count(j)），
+            ' 消除原实现在循环内反复 sample.Take(k) 切片并从零累加 CDF 带来的 O(n^2) 开销。
+            ' 原 ECDF.CDF(sample.Take(k), N) 即前缀和 cum(k - 1) / N，下面按此等价复刻。
+            Dim n As Integer = sample.Length
+            Dim cum As Double() = New Double(n - 1) {}
+            Dim total As Double = 0
+
+            For i As Integer = 0 To n - 1
+                total += sample(i).Count
+                cum(i) = total
+            Next
+
+            Dim totalN As Double = total
+            Dim minK As Integer = 1
+            Dim minD As Double = Double.MaxValue
+
+            For k As Integer = 1 To n - 1
+                Dim cdf As Double = cum(k - 1) / totalN
 
                 If cdf > q Then
                     Exit For
