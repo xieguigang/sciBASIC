@@ -145,6 +145,11 @@ Namespace ApplicationServices.Debugging.Logging
             Me.split = split
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetConsoleSplit() As LoggingDriver
+            Return Sub(header, msg, level) Console.WriteLine($"[{level.ToString.ToLower} - {header}] {msg}")
+        End Function
+
         Private Shared Function openFile(path As String, append As Boolean) As FileStream
             If Not append Then
                 Call "".SaveTo(path)
