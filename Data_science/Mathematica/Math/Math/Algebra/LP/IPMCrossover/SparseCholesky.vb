@@ -1,82 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::0fa6a2c3906cfeaf6ceb8927e9174b2f, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseCholesky.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 493
-    '    Code Lines: 322 (65.31%)
-    ' Comment Lines: 35 (7.10%)
-    '    - Xml Docs: 22.86%
-    ' 
-    '   Blank Lines: 136 (27.59%)
-    '     File Size: 15.77 KB
+' Summaries:
 
 
-    '     Class SparseChol
-    ' 
-    '         Function: Factor, MinDegreeOrder
-    '         Class SparseCholFactor
-    ' 
-    '             Properties: NonZeros
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: Solve
-    ' 
-    '         Class MinHeap
-    ' 
-    '             Properties: Count
-    ' 
-    '             Function: Pop
-    ' 
-    '             Sub: Push
-    ' 
-    ' 
-    ' 
-    '     Class Pcg
-    ' 
-    '         Function: ResidualOk
-    '         Class PcgSolver
-    ' 
-    '             Properties: Converged, LastIters, MaxIter, Tol
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: Solve
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 493
+'    Code Lines: 322 (65.31%)
+' Comment Lines: 35 (7.10%)
+'    - Xml Docs: 22.86%
+' 
+'   Blank Lines: 136 (27.59%)
+'     File Size: 15.77 KB
+
+
+'     Class SparseChol
+' 
+'         Function: Factor, MinDegreeOrder
+'         Class SparseCholFactor
+' 
+'             Properties: NonZeros
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Function: Solve
+' 
+'         Class MinHeap
+' 
+'             Properties: Count
+' 
+'             Function: Pop
+' 
+'             Sub: Push
+' 
+' 
+' 
+'     Class Pcg
+' 
+'         Function: ResidualOk
+'         Class PcgSolver
+' 
+'             Properties: Converged, LastIters, MaxIter, Tol
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Function: Solve
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -99,8 +99,6 @@
 '    （基因组规模 GEM 的正规方程图接近随机图，L 的 fill-in 可能失控）。
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
 Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
