@@ -536,6 +536,98 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Return slackIdx
         End Function
 
+        ''' <summary>
+        ''' 批量追加多条割平面约束：稠密矩阵只重建一次（O(m·n) 一次而非每割一次），
+        ''' 元数据数组也只扩容一次。同一轮割平面的 gamma 都定义在追加前的列空间上。
+        ''' </summary>
+        ''' <param name="cuts">待追加的割（工作变量空间）</param>
+        ''' <returns>各新松弛列的索引</returns>
+        Public Function AddCutRowsWork(cuts As List(Of CutRow)) As Integer()
+            If cuts Is Nothing OrElse cuts.Count = 0 Then Return Array.Empty(Of Integer)()
+
+            Dim k As Integer = cuts.Count
+            Dim newRows As Integer = Rows + k
+            Dim newCols As Integer = Cols + k
+            Dim A2(newRows - 1, newCols - 1) As Double
+
+            ' ---- 旧矩阵整块搬运（仅此一次 O(m·n)）----
+            For i As Integer = 0 To Rows - 1
+                For c As Integer = 0 To Cols - 1
+                    A2(i, c) = A(i, c)
+                Next
+            Next
+
+            Dim b2(newRows - 1) As Double
+            Array.Copy(b, b2, Rows)
+
+            ' ---- 扩容列/行元数据（只一次）----
+            ReDim Preserve c(newCols - 1)
+            ReDim Preserve l(newCols - 1)
+            ReDim Preserve u(newCols - 1)
+            ReDim Preserve _colOrig(newCols - 1)
+            ReDim Preserve _colSign(newCols - 1)
+            ReDim Preserve _colShift(newCols - 1)
+            ReDim Preserve _colNames(newCols - 1)
+            ReDim Preserve _colTypes(newCols - 1)
+            ReDim Preserve _slackCol(newRows - 1)
+
+            Dim slackIdx As Integer() = New Integer(k - 1) {}
+
+            ' ---- 逐割填新行（新行只写自己的行段，代价 O(n)/割）----
+            For t As Integer = 0 To k - 1
+                Dim cut As CutRow = cuts(t)
+                Dim row As Integer = Rows + t
+                Dim gamma As Double() = cut.Coefficients
+
+                For c As Integer = 0 To Cols - 1
+                    If c < gamma.Length Then A2(row, c) = gamma(c)
+                Next
+
+                Dim slack As Integer = Cols + t
+
+                A2(row, slack) = If(cut.Op = ">=", -1.0, 1.0)
+                b2(row) = cut.Rhs
+
+                ' ---- 行均衡 ----
+                Dim scale As Double = 0.0
+
+                For c As Integer = 0 To newCols - 1
+                    scale = std.Max(scale, std.Abs(A2(row, c)))
+                Next
+
+                If scale > 0.0 Then
+                    For c As Integer = 0 To newCols - 1
+                        A2(row, c) /= scale
+                    Next
+
+                    b2(row) /= scale
+                End If
+
+                c(slack) = 0.0
+                l(slack) = 0.0
+                u(slack) = Double.PositiveInfinity
+                _colOrig(slack) = -1
+                _colSign(slack) = 1.0
+                _colShift(slack) = 0.0
+                _colNames(slack) = $"cut{row + 1}slack"
+                _colTypes(slack) = MilpVarType.Continuous
+                _slackCol(row) = slack
+                slackIdx(t) = slack
+
+                RowTypes.Add(If(cut.Op = ">=", ">=", "<="))
+                RowRhs.Add(cut.Rhs)
+            Next
+
+            ' ---- 提交 ----
+            A = A2
+            b = b2
+            Rows = newRows
+            Cols = newCols
+            InvalidateMatrixCaches()
+
+            Return slackIdx
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"MILP work form: {Rows} × {Cols}（原始变量 {OriginalVariableCount}，整数 {_integers.Count}）"
         End Function
