@@ -83,7 +83,6 @@
 ' ============================================================================
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
 
 Namespace LinearAlgebra.LinearProgramming.MILP
 

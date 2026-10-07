@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::6ce9b8babc8b4bf71415ce7cc3f217b2, Data_science\Mathematica\Math\Math\Algebra\MILP\BranchAndBound.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 658
-    '    Code Lines: 433 (65.81%)
-    ' Comment Lines: 78 (11.85%)
-    '    - Xml Docs: 20.51%
-    ' 
-    '   Blank Lines: 147 (22.34%)
-    '     File Size: 27.75 KB
+' Summaries:
 
 
-    '     Class BranchAndBound
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ApplyRootCuts, BestOriginalValue, Finish, GlobalBoundInternal, PickBranchColumn
-    '                   PickByPseudoCost, Pop, PushChild, RelativeGap, Solve
-    '                   SolveUnconstrained, TakeId
-    ' 
-    '         Sub: Push, RecordIncumbent, TryHeuristics, UpdatePseudoCost
-    '         Class Node
-    ' 
-    '             Properties: AtUpper, Basis, Bound, BranchUp, BranchVar
-    '                         Depth, Id, L, ParentBound, U
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 658
+'    Code Lines: 433 (65.81%)
+' Comment Lines: 78 (11.85%)
+'    - Xml Docs: 20.51%
+' 
+'   Blank Lines: 147 (22.34%)
+'     File Size: 27.75 KB
+
+
+'     Class BranchAndBound
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ApplyRootCuts, BestOriginalValue, Finish, GlobalBoundInternal, PickBranchColumn
+'                   PickByPseudoCost, Pop, PushChild, RelativeGap, Solve
+'                   SolveUnconstrained, TakeId
+' 
+'         Sub: Push, RecordIncumbent, TryHeuristics, UpdatePseudoCost
+'         Class Node
+' 
+'             Properties: AtUpper, Basis, Bound, BranchUp, BranchVar
+'                         Depth, Id, L, ParentBound, U
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -88,9 +88,8 @@
 ' Copyright (c) 2018 GPL3 Licensed — sciBASIC.NET Foundation
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Diagnostics
+Imports System.Threading
+Imports System.Threading.Tasks
 Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.MILP
@@ -127,6 +126,13 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
         Private simplex As BoundedSimplex
         Private ReadOnly open As New List(Of Node)()
+
+        ''' <summary>
+        ''' 并行节点求解（opt-in）的线程本地单纯形：每线程一个复用实例，
+        ''' 跨节点仅替换界数组（<see cref="BoundedSimplex.SetBounds"/>），
+        ''' 避免 O(m·n) 的行/列缓存重建。工厂惰性求值，串行模式零开销。
+        ''' </summary>
+        Private ReadOnly nodeWorkers As ThreadLocal(Of BoundedSimplex)
 
         Private lpSolves As Integer = 0
         Private cutsAdded As Integer = 0
@@ -168,6 +174,9 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 pcDown(j) = 1.0
                 pcUp(j) = 1.0
             Next
+
+            nodeWorkers = New ThreadLocal(Of BoundedSimplex)(
+                Function() New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol))
         End Sub
 
         ' ====================================================================
@@ -229,6 +238,10 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             })
 
             ' ================= 主循环 =================
+            ' 并行模式（opt-in）：EnableParallel 且有效线程数 > 1 时按批次并行求解节点 LP，
+            ' 分支/incumbent 合并仍在主线程串行执行（最优性语义与串行一致）。
+            Dim parallelMode As Boolean = options.EnableParallel AndAlso ParallelWorkerCount() > 1
+
             While open.Count > 0
                 If nodesExplored >= options.MaxNodes Then
                     stopStatus = MilpStatus.NodeLimit
@@ -254,98 +267,37 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                     Exit While
                 End If
 
-                Dim node As Node = Pop()
+                If parallelMode Then
+                    If ProcessNodeBatch() Then Exit While
+                Else
+                    Dim node As Node = Pop()
 
-                ' 按界剪枝
-                If bestX IsNot Nothing AndAlso node.Bound >= bestInternal - options.AbsoluteGap Then
-                    If options.Verbose Then
-                        log.Add($"    剪枝 节点#{node.Id} 深度{node.Depth} 界{node.Bound:G8} vs incumbent {bestInternal:G8}")
+                    ' 按界剪枝
+                    If bestX IsNot Nothing AndAlso node.Bound >= bestInternal - options.AbsoluteGap Then
+                        If options.Verbose Then
+                            log.Add($"    剪枝 节点#{node.Id} 深度{node.Depth} 界{node.Bound:G8} vs incumbent {bestInternal:G8}")
+                        End If
+
+                        Continue While
                     End If
 
-                    Continue While
-                End If
+                    nodesExplored += 1
 
-                nodesExplored += 1
+                    ' ---------- 热启动求解节点 LP ----------
+                    Array.Copy(node.L, form.l, form.Cols)
+                    Array.Copy(node.U, form.u, form.Cols)
 
-                ' ---------- 热启动求解节点 LP ----------
-                Array.Copy(node.L, form.l, form.Cols)
-                Array.Copy(node.U, form.u, form.Cols)
-
-                Dim r As BsResult = simplex.Solve(node.Basis, node.AtUpper, options.LpIterationLimit)
-                lpSolves += 1
-
-                If Not r.IsOptimal Then
-                    ' 热启动（对偶单纯形）失败 → 冷启动兜底重解，避免把"数值失败"
-                    ' 误判为不可行而静默丢弃子树（这会破坏最优性证明）。
-                    r = simplex.Solve(Nothing, Nothing, options.LpIterationLimit)
+                    Dim r As BsResult = simplex.Solve(node.Basis, node.AtUpper, options.LpIterationLimit)
                     lpSolves += 1
-                End If
 
-                If r.Status = BsStatus.Infeasible Then Continue While
-
-                If r.Status = BsStatus.Unbounded Then
-                    stopStatus = MilpStatus.Unbounded
-                    stopMessage = "分支子问题 LP 无界，原 MILP 目标无界。"
-                    Exit While
-                End If
-
-                If Not r.IsOptimal Then
-                    ' 冷启动仍失败：该子树无法证明，记录下来（最终不宣称最优）
-                    droppedByNumeric += 1
-                    Continue While
-                End If
-
-                Dim nodeBound As Double = form.InternalObjective(r.X)
-
-                UpdatePseudoCost(node, nodeBound)
-
-                If bestX IsNot Nothing AndAlso nodeBound >= bestInternal - options.AbsoluteGap Then
-                    Continue While
-                End If
-
-                ' ---------- 整数可行性 ----------
-                Dim k As Integer = PickBranchColumn(r)
-
-                If k < 0 Then
-                    RecordIncumbent(r.X)
-                    Continue While
-                End If
-
-                ' ---------- 节点启发式（抽样调用，控制开销）----------
-                If options.EnableHeuristics AndAlso (nodesExplored Mod 4 = 0) Then
-                    TryHeuristics(r)
-                End If
-
-                ' ---------- 分支 ----------
-                Dim j As Integer = form.ColumnOriginal(k)
-                Dim ob = form.GetOriginalBounds(j, node.L, node.U)
-                Dim xj As Double = form.ColumnShift(k) + form.ColumnSign(k) * r.X(k)
-
-                Dim down As Double = std.Floor(xj)
-                Dim up As Double = std.Ceiling(xj)
-
-                ' 数值保护：确保两侧都在当前值之外
-                If down >= xj - 1.0E-12 Then down = xj - 1.0
-                If up <= xj + 1.0E-12 Then up = xj + 1.0
-
-                Dim pushed As Boolean = False
-                Dim pushDown As Boolean = PushChild(node, k, j, ob.lo, down, False, nodeBound, r)
-                Dim pushUp As Boolean = PushChild(node, k, j, up, ob.hi, True, nodeBound, r)
-
-                pushed = pushDown OrElse pushUp
-
-                If options.Verbose Then
-                    log.Add($"    节点#{node.Id} 深度{node.Depth} 界{nodeBound:G8} → 分支 var{j} 值{xj:G10} " &
-                            $"[≤{down:G6}:{If(pushDown, "推", "跳过")} ≥{up:G6}:{If(pushUp, "推", "跳过")}] 开集{open.Count}")
-                End If
-
-                If Not pushed Then
-                    ' 分支未能收紧任何一侧（数值退化）→ 该节点视为叶子
-                    If Not MilpHeuristics.Feasible(form, r.X, tol * 10.0) Then
-                        ' 无法得到整数解，直接剪枝
-                    Else
-                        RecordIncumbent(r.X)
+                    If Not r.IsOptimal Then
+                        ' 热启动（对偶单纯形）失败 → 冷启动兜底重解，避免把"数值失败"
+                        ' 误判为不可行而静默丢弃子树（这会破坏最优性证明）。
+                        r = simplex.Solve(Nothing, Nothing, options.LpIterationLimit)
+                        lpSolves += 1
                     End If
+
+                    If ProcessNodeResult(node, r) Then Exit While
                 End If
             End While
 
@@ -393,12 +345,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 If cuts Is Nothing OrElse cuts.Count = 0 Then Exit For
 
                 Dim oldRows As Integer = form.Rows
-                Dim newSlacks As New List(Of Integer)()
 
-                For Each cut As CutRow In cuts
-                    newSlacks.Add(form.AddCutRowWork(cut.Coefficients, cut.Op, cut.Rhs))
-                    cutsAdded += 1
-                Next
+                ' 批量追加：稠密矩阵与元数据只重建一次（旧实现每割整块拷贝一次）
+                Dim newSlacks As Integer() = form.AddCutRowsWork(cuts)
+
+                cutsAdded += cuts.Count
 
                 ' ---- 重建单纯形，并把新松弛列作为新行的基变量 ----
                 simplex = New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol)
@@ -407,7 +358,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
                 Array.Copy(current.Basis, newBasis, current.Basis.Length)
 
-                For t As Integer = 0 To newSlacks.Count - 1
+                For t As Integer = 0 To newSlacks.Length - 1
                     newBasis(oldRows + t) = newSlacks(t)
                 Next
 
@@ -427,6 +378,162 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Next
 
             Return current
+        End Function
+
+        ' ====================================================================
+        ' 节点结果合并与并行批次
+        ' ====================================================================
+
+        ''' <summary>并行 worker 数（<see cref="MilpOptions.MaxThreads"/> 为 0 时取 CPU 逻辑核心数）。</summary>
+        Private Function ParallelWorkerCount() As Integer
+            Dim w As Integer = If(options.MaxThreads > 0, options.MaxThreads, Environment.ProcessorCount)
+            Return std.Max(1, w)
+        End Function
+
+        ''' <summary>
+        ''' 合并单个节点的 LP 结果（串行路径与并行批次共用）。
+        ''' 返回 True 表示搜索因"子问题 LP 无界"终止。
+        ''' </summary>
+        Private Function ProcessNodeResult(node As Node, r As BsResult) As Boolean
+            If r Is Nothing OrElse r.Status = BsStatus.Infeasible Then Return False
+
+            If r.Status = BsStatus.Unbounded Then
+                stopStatus = MilpStatus.Unbounded
+                stopMessage = "分支子问题 LP 无界，原 MILP 目标无界。"
+                Return True
+            End If
+
+            If Not r.IsOptimal Then
+                ' 冷启动仍失败：该子树无法证明，记录下来（最终不宣称最优）
+                droppedByNumeric += 1
+                Return False
+            End If
+
+            Dim nodeBound As Double = form.InternalObjective(r.X)
+
+            UpdatePseudoCost(node, nodeBound)
+
+            If bestX IsNot Nothing AndAlso nodeBound >= bestInternal - options.AbsoluteGap Then
+                Return False
+            End If
+
+            ' ---------- 整数可行性 ----------
+            Dim k As Integer = PickBranchColumn(r)
+
+            If k < 0 Then
+                RecordIncumbent(r.X)
+                Return False
+            End If
+
+            ' ---------- 节点启发式（抽样调用，控制开销）----------
+            If options.EnableHeuristics AndAlso (nodesExplored Mod 4 = 0) Then
+                TryHeuristics(r)
+            End If
+
+            ' ---------- 分支 ----------
+            Dim j As Integer = form.ColumnOriginal(k)
+            Dim ob = form.GetOriginalBounds(j, node.L, node.U)
+            Dim xj As Double = form.ColumnShift(k) + form.ColumnSign(k) * r.X(k)
+
+            Dim down As Double = std.Floor(xj)
+            Dim up As Double = std.Ceiling(xj)
+
+            ' 数值保护：确保两侧都在当前值之外
+            If down >= xj - 1.0E-12 Then down = xj - 1.0
+            If up <= xj + 1.0E-12 Then up = xj + 1.0
+
+            Dim pushDown As Boolean = PushChild(node, k, j, ob.lo, down, False, nodeBound, r)
+            Dim pushUp As Boolean = PushChild(node, k, j, up, ob.hi, True, nodeBound, r)
+
+            If options.Verbose Then
+                log.Add($"    节点#{node.Id} 深度{node.Depth} 界{nodeBound:G8} → 分支 var{j} 值{xj:G10} " &
+                        $"[≤{down:G6}:{If(pushDown, "推", "跳过")} ≥{up:G6}:{If(pushUp, "推", "跳过")}] 开集{open.Count}")
+            End If
+
+            If Not (pushDown OrElse pushUp) Then
+                ' 分支未能收紧任何一侧（数值退化）→ 该节点视为叶子
+                If MilpHeuristics.Feasible(form, r.X, tol * 10.0) Then
+                    RecordIncumbent(r.X)
+                End If
+            End If
+
+            Return False
+        End Function
+
+        ''' <summary>
+        ''' 并行节点批次（opt-in，需 <see cref="MilpOptions.EnableParallel"/>）：
+        ''' 一次弹出至多 P 个节点（P = 线程数），各 worker 以线程本地
+        ''' <see cref="BoundedSimplex"/> 实例 + 节点私有 l/u 并行求解 LP；
+        ''' 随后在主线程按弹出顺序合并结果（剪枝/分支/incumbent/伪成本全部
+        ''' 串行执行，无需任何锁）。返回 True 表示搜索因无界终止。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与串行路径的唯一差异：批次内所有节点 LP 都基于批次开始时的 incumbent
+        ''' 求解（串行逐节点感知最新 incumbent）；合并阶段剪枝即时使用最新
+        ''' incumbent，最优性语义一致，仅剪枝时机略有不同。
+        ''' </remarks>
+        Private Function ProcessNodeBatch() As Boolean
+            Dim batchSize As Integer = std.Min(ParallelWorkerCount(), open.Count)
+            Dim batch(batchSize - 1) As Node
+
+            For t As Integer = 0 To batchSize - 1
+                batch(t) = Pop()
+            Next
+
+            ' ---- 按界剪枝（弹出即丢弃，与串行 Pop→剪枝语义一致）----
+            Dim live As New List(Of Node)()
+
+            For Each nd As Node In batch
+                If bestX Is Nothing OrElse nd.Bound < bestInternal - options.AbsoluteGap Then
+                    live.Add(nd)
+                ElseIf options.Verbose Then
+                    log.Add($"    剪枝 节点#{nd.Id} 深度{nd.Depth} 界{nd.Bound:G8} vs incumbent {bestInternal:G8}")
+                End If
+            Next
+
+            If live.Count = 0 Then Return False
+
+            nodesExplored += live.Count
+
+            ' ---- 并行求解 LP（每线程一个复用的 BoundedSimplex，无共享可变状态）----
+            Dim results(live.Count - 1) As BsResult
+            Dim solves As Integer = 0
+
+            Call System.Threading.Tasks.Parallel.For(0, live.Count,
+                Sub(idx)
+                    Dim nd As Node = live(idx)
+                    Dim sx As BoundedSimplex = nodeWorkers.Value
+
+                    ' 抑制嵌套并行（worker 内的 LU/批量点积不再触发内层 Parallel.For）
+                    Call MilpKernels.BeginWorker()
+
+                    Try
+                        sx.SetBounds(nd.L, nd.U)
+
+                        Dim rr As BsResult = sx.Solve(nd.Basis, nd.AtUpper, options.LpIterationLimit)
+                        Dim used As Integer = 1
+
+                        If Not rr.IsOptimal Then
+                            ' 热启动（对偶单纯形）失败 → 冷启动兜底（与串行路径一致）
+                            rr = sx.Solve(Nothing, Nothing, options.LpIterationLimit)
+                            used = 2
+                        End If
+
+                        results(idx) = rr
+                        Interlocked.Add(solves, used)
+                    Finally
+                        Call MilpKernels.EndWorker()
+                    End Try
+                End Sub)
+
+            lpSolves += solves
+
+            ' ---- 顺序合并（分支/incumbent/伪成本更新全在主线程）----
+            For idx As Integer = 0 To live.Count - 1
+                If ProcessNodeResult(live(idx), results(idx)) Then Return True
+            Next
+
+            Return False
         End Function
 
         ' ====================================================================

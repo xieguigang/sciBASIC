@@ -20,8 +20,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
-Imports std = System.Math
 
 ' ============================================================================
 '  DensityPlot.vb - 二维散点密度图
@@ -41,7 +41,7 @@ Public Class DensityPlot
     ''' <summary>核半径（像素），小于等于 0 时按网格自动推算</summary>
     Public Property KernelRadius As Single = -1
     ''' <summary>色阶</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Inferno
+    Public Property ColorMap As ScalerPalette = ScalerPalette.inferno
     ''' <summary>是否在密度底图上叠加原始散点</summary>
     Public Property ShowPoints As Boolean = False
     ''' <summary>是否在密度底图上叠加等值线</summary>
@@ -51,8 +51,13 @@ Public Class DensityPlot
     ''' <summary>散点颜色</summary>
     Public Property PointColor As Color = Color.White
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

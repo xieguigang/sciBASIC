@@ -177,6 +177,16 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>是否输出详细日志（求解进度）。默认关闭。</summary>
         Public Property Verbose As Boolean = False
 
+        ''' <summary>
+        ''' 是否启用多线程并行加速（割平面逐行生成、预处理行扫描、大矩阵 LU 消元、
+        ''' 分支定界并行节点求解等）。SIMD 向量化不受该开关影响，始终启用。
+        ''' 默认关闭以保持既有串行行为。
+        ''' </summary>
+        Public Property EnableParallel As Boolean = False
+
+        ''' <summary>并行最大线程数；0 = 自动（CPU 逻辑核心数）。默认 0。</summary>
+        Public Property MaxThreads As Integer = 0
+
         ''' <summary>数值输出格式。</summary>
         Public Property DecimalFormat As String = "G6"
 
@@ -204,6 +214,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 .Branch = Branch,
                 .Node = Node,
                 .Verbose = Verbose,
+                .EnableParallel = EnableParallel,
+                .MaxThreads = MaxThreads,
                 .DecimalFormat = DecimalFormat
             }
         End Function

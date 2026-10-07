@@ -1,79 +1,79 @@
 ﻿#Region "Microsoft.VisualBasic::7a4514a1fdca608d24c8d9f9be5d844c, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpPresolve.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 960
-    '    Code Lines: 636 (66.25%)
-    ' Comment Lines: 135 (14.06%)
-    '    - Xml Docs: 45.19%
-    ' 
-    '   Blank Lines: 189 (19.69%)
-    '     File Size: 37.72 KB
+' Summaries:
 
 
-    '     Class PresolveStats
-    ' 
-    '         Properties: FixedVariables, InfeasibleReason, IsInfeasible, PropagationRounds, RedundantRows
-    '                     TightenedBounds
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class MilpLpForm
-    ' 
-    '         Properties: A, b, c, Cols, ColumnNames
-    '                     ColumnOriginal, ColumnShift, ColumnSign, ColumnTypes, FixedValue
-    '                     IntegerVariables, IsFixed, l, ObjOffset, OriginalVariableCount
-    '                     RowRhs, Rows, RowTypes, Sigma, SlackColumn
-    '                     Stats, u, VariableColumns, VariableNames, VariableShift
-    '                     VariableTypes
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: AddCutRowWork, GetOriginalBounds, InternalObjective, IsIntegerColumn, ToOriginalObjective
-    '                   ToOriginalSolution, ToString, WorkBoundsFor
-    ' 
-    '         Sub: SetOriginalBounds
-    ' 
-    '     Module MilpPresolve
-    ' 
-    '         Function: NormalizeOp, Run
-    ' 
-    '         Sub: AccumulateActivity, BuildShell, FoldFixed, MarkInfeasible, PresolveCore
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 960
+'    Code Lines: 636 (66.25%)
+' Comment Lines: 135 (14.06%)
+'    - Xml Docs: 45.19%
+' 
+'   Blank Lines: 189 (19.69%)
+'     File Size: 37.72 KB
+
+
+'     Class PresolveStats
+' 
+'         Properties: FixedVariables, InfeasibleReason, IsInfeasible, PropagationRounds, RedundantRows
+'                     TightenedBounds
+' 
+'         Function: ToString
+' 
+'     Class MilpLpForm
+' 
+'         Properties: A, b, c, Cols, ColumnNames
+'                     ColumnOriginal, ColumnShift, ColumnSign, ColumnTypes, FixedValue
+'                     IntegerVariables, IsFixed, l, ObjOffset, OriginalVariableCount
+'                     RowRhs, Rows, RowTypes, Sigma, SlackColumn
+'                     Stats, u, VariableColumns, VariableNames, VariableShift
+'                     VariableTypes
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: AddCutRowWork, GetOriginalBounds, InternalObjective, IsIntegerColumn, ToOriginalObjective
+'                   ToOriginalSolution, ToString, WorkBoundsFor
+' 
+'         Sub: SetOriginalBounds
+' 
+'     Module MilpPresolve
+' 
+'         Function: NormalizeOp, Run
+' 
+'         Sub: AccumulateActivity, BuildShell, FoldFixed, MarkInfeasible, PresolveCore
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -107,11 +107,8 @@
 ' Copyright (c) 2018 GPL3 Licensed — sciBASIC.NET Foundation
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
+Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.MILP
 
@@ -147,6 +144,65 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Public Property u As Double()
         Public Property Rows As Integer
         Public Property Cols As Integer
+
+        ' ---------- SIMD jagged 缓存（惰性构建，A 替换后失效） ----------
+        Private _Arows As Double()()
+        Private _ArowNnz As Integer()
+        Private _AT As Double()()
+
+        ''' <summary>
+        ''' 行主序缓存（jagged，每行连续）：A·x 类行点积的 SIMD 快路径依赖。
+        ''' </summary>
+        Public Function RowCache() As Double()()
+            If _Arows Is Nothing Then
+                _Arows = MilpKernels.ToRows(A)
+            End If
+
+            Return _Arows
+        End Function
+
+        ''' <summary>每行非零元素计数（与 <see cref="RowCache"/> 同步构建）。</summary>
+        Public Function RowNonZero() As Integer()
+            Call RowCache()
+
+            If _ArowNnz Is Nothing Then
+                Dim m As Integer = A.GetLength(0)
+                Dim nnz(m - 1) As Integer
+
+                For i As Integer = 0 To m - 1
+                    Dim row As Double() = _Arows(i)
+                    Dim c As Integer = 0
+
+                    For j As Integer = 0 To row.Length - 1
+                        If row(j) <> 0.0 Then c += 1
+                    Next
+
+                    nnz(i) = c
+                Next
+
+                _ArowNnz = nnz
+            End If
+
+            Return _ArowNnz
+        End Function
+
+        ''' <summary>
+        ''' 列主序缓存（第 j 行 = A 第 j 列）：wᵀA_j 点积类热点的 SIMD 快路径依赖。
+        ''' </summary>
+        Public Function TransposeCache() As Double()()
+            If _AT Is Nothing Then
+                _AT = MilpKernels.TransposeRows(A)
+            End If
+
+            Return _AT
+        End Function
+
+        ''' <summary>A 被整体替换（追加割行）后调用，使行/列缓存失效。</summary>
+        Friend Sub InvalidateMatrixCaches()
+            _Arows = Nothing
+            _ArowNnz = Nothing
+            _AT = Nothing
+        End Sub
 
         ' ---------- 映射（对外只读） ----------
         Public ReadOnly Property OriginalVariableCount As Integer
@@ -321,15 +377,9 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Return _types(j) = MilpVarType.GeneralInteger OrElse _types(j) = MilpVarType.Binary
         End Function
 
-        ''' <summary>内部 min 方向目标值。</summary>
+        ''' <summary>内部 min 方向目标值（SIMD 点积）。</summary>
         Public Function InternalObjective(xWork As Double()) As Double
-            Dim s As Double = 0.0
-
-            For k As Integer = 0 To Cols - 1
-                s += c(k) * xWork(k)
-            Next
-
-            Return s
+            Return MilpKernels.Dot(c, xWork)
         End Function
 
         ' ====================================================================
@@ -458,6 +508,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             b = b2
             Rows = newRows
             Cols = newCols
+            InvalidateMatrixCaches()
 
             ReDim Preserve c(newCols - 1)
             ReDim Preserve l(newCols - 1)
@@ -481,6 +532,98 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             RowTypes.Add(If(op = ">=", ">=", "<="))
             RowRhs.Add(rhs)
+
+            Return slackIdx
+        End Function
+
+        ''' <summary>
+        ''' 批量追加多条割平面约束：稠密矩阵只重建一次（O(m·n) 一次而非每割一次），
+        ''' 元数据数组也只扩容一次。同一轮割平面的 gamma 都定义在追加前的列空间上。
+        ''' </summary>
+        ''' <param name="cuts">待追加的割（工作变量空间）</param>
+        ''' <returns>各新松弛列的索引</returns>
+        Public Function AddCutRowsWork(cuts As List(Of CutRow)) As Integer()
+            If cuts Is Nothing OrElse cuts.Count = 0 Then Return Array.Empty(Of Integer)()
+
+            Dim k As Integer = cuts.Count
+            Dim newRows As Integer = Rows + k
+            Dim newCols As Integer = Cols + k
+            Dim A2(newRows - 1, newCols - 1) As Double
+
+            ' ---- 旧矩阵整块搬运（仅此一次 O(m·n)）----
+            For i As Integer = 0 To Rows - 1
+                For c As Integer = 0 To Cols - 1
+                    A2(i, c) = A(i, c)
+                Next
+            Next
+
+            Dim b2(newRows - 1) As Double
+            Array.Copy(b, b2, Rows)
+
+            ' ---- 扩容列/行元数据（只一次）----
+            ReDim Preserve c(newCols - 1)
+            ReDim Preserve l(newCols - 1)
+            ReDim Preserve u(newCols - 1)
+            ReDim Preserve _colOrig(newCols - 1)
+            ReDim Preserve _colSign(newCols - 1)
+            ReDim Preserve _colShift(newCols - 1)
+            ReDim Preserve _colNames(newCols - 1)
+            ReDim Preserve _colTypes(newCols - 1)
+            ReDim Preserve _slackCol(newRows - 1)
+
+            Dim slackIdx As Integer() = New Integer(k - 1) {}
+
+            ' ---- 逐割填新行（新行只写自己的行段，代价 O(n)/割）----
+            For t As Integer = 0 To k - 1
+                Dim cut As CutRow = cuts(t)
+                Dim row As Integer = Rows + t
+                Dim gamma As Double() = cut.Coefficients
+
+                For c As Integer = 0 To Cols - 1
+                    If c < gamma.Length Then A2(row, c) = gamma(c)
+                Next
+
+                Dim slack As Integer = Cols + t
+
+                A2(row, slack) = If(cut.Op = ">=", -1.0, 1.0)
+                b2(row) = cut.Rhs
+
+                ' ---- 行均衡 ----
+                Dim scale As Double = 0.0
+
+                For c As Integer = 0 To newCols - 1
+                    scale = std.Max(scale, std.Abs(A2(row, c)))
+                Next
+
+                If scale > 0.0 Then
+                    For c As Integer = 0 To newCols - 1
+                        A2(row, c) /= scale
+                    Next
+
+                    b2(row) /= scale
+                End If
+
+                c(slack) = 0.0
+                l(slack) = 0.0
+                u(slack) = Double.PositiveInfinity
+                _colOrig(slack) = -1
+                _colSign(slack) = 1.0
+                _colShift(slack) = 0.0
+                _colNames(slack) = $"cut{row + 1}slack"
+                _colTypes(slack) = MilpVarType.Continuous
+                _slackCol(row) = slack
+                slackIdx(t) = slack
+
+                RowTypes.Add(If(cut.Op = ">=", ">=", "<="))
+                RowRhs.Add(cut.Rhs)
+            Next
+
+            ' ---- 提交 ----
+            A = A2
+            b = b2
+            Rows = newRows
+            Cols = newCols
+            InvalidateMatrixCaches()
 
             Return slackIdx
         End Function
@@ -607,21 +750,28 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             While rounds < 8
                 Dim changed As Boolean = False
+                Dim nCols As Integer = lb.Length
+                Dim rowLo(nCols - 1) As Double
+                Dim rowHi(nCols - 1) As Double
 
                 For i As Integer = 0 To rhs.Length - 1
                     Dim op As String = ops(i)
-                    Dim minAct As Double = 0.0
-                    Dim maxAct As Double = 0.0
+
+                    ' ---- 行活动度状态：单次 O(n) 扫描（旧实现在此之后还要对每个
+                    '      变量 O(n) 重扫整行求 minOther/maxOther，总体 O(m·n²)）----
+                    Dim sumLo As Double = 0.0
+                    Dim sumHi As Double = 0.0
+                    Dim negCnt As Integer = 0
+                    Dim posCnt As Integer = 0
                     Dim varCount As Integer = 0
 
-                    For j As Integer = 0 To lb.Length - 1
-                        Dim a As Double = Aorg(i, j)
+                    Call ScanRowActivity(Aorg, lb, ub, i, rowLo, rowHi,
+                                         sumLo, sumHi, negCnt, posCnt, varCount)
 
-                        If a = 0.0 Then Continue For
-
-                        varCount += 1
-                        AccumulateActivity(a, lb(j), ub(j), minAct, maxAct)
-                    Next
+                    ' 全行活动度（与原 AccumulateActivity 的 ±∞ 语义严格一致：
+                    ' 任一项 lo = −∞ ⇒ minAct = −∞；任一项 hi = +∞ ⇒ maxAct = +∞）
+                    Dim minAct As Double = If(negCnt >= 1, Double.NegativeInfinity, sumLo)
+                    Dim maxAct As Double = If(posCnt >= 1, Double.PositiveInfinity, sumHi)
 
                     If varCount = 0 Then
                         Dim bad As Boolean = (op = "<=" AndAlso 0.0 > rhs(i) + BOUND_TOL) OrElse
@@ -658,24 +808,44 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                             End If
                     End Select
 
-                    ' 逐个变量收紧界（"其它变量"的活动度单独求和，避免无穷界相减失真）
-                    For j As Integer = 0 To lb.Length - 1
+                    ' 逐个变量收紧界：minOther/maxOther 由行状态 O(1) 推导
+                    ' （±∞ 语义经无穷计数严格保持）；行内一旦发生收紧即失效重扫，
+                    ' 保持原实现"行内已收紧的界参与后续变量推导"的传播语义
+                    Dim rowValid As Boolean = True
+
+                    For j As Integer = 0 To nCols - 1
                         Dim a As Double = Aorg(i, j)
 
                         If a = 0.0 OrElse isFixed(j) Then Continue For
 
-                        Dim minOther As Double = 0.0
-                        Dim maxOther As Double = 0.0
+                        If Not rowValid Then
+                            sumLo = 0.0
+                            sumHi = 0.0
+                            negCnt = 0
+                            posCnt = 0
+                            varCount = 0
 
-                        For j2 As Integer = 0 To lb.Length - 1
-                            If j2 = j Then Continue For
+                            Call ScanRowActivity(Aorg, lb, ub, i, rowLo, rowHi,
+                                                 sumLo, sumHi, negCnt, posCnt, varCount)
 
-                            Dim a2 As Double = Aorg(i, j2)
+                            rowValid = True
+                        End If
 
-                            If a2 = 0.0 Then Continue For
+                        ' 排除第 j 项后的行活动度（"其它变量"），避免无穷界相减失真
+                        Dim minOther As Double
+                        Dim maxOther As Double
 
-                            AccumulateActivity(a2, lb(j2), ub(j2), minOther, maxOther)
-                        Next
+                        If rowLo(j) = Double.NegativeInfinity Then
+                            minOther = If(negCnt >= 2, Double.NegativeInfinity, sumLo)
+                        Else
+                            minOther = If(negCnt >= 1, Double.NegativeInfinity, sumLo - rowLo(j))
+                        End If
+
+                        If rowHi(j) = Double.PositiveInfinity Then
+                            maxOther = If(posCnt >= 2, Double.PositiveInfinity, sumHi)
+                        Else
+                            maxOther = If(posCnt >= 1, Double.PositiveInfinity, sumHi - rowHi(j))
+                        End If
 
                         Dim newLb As Double = lb(j)
                         Dim newUb As Double = ub(j)
@@ -716,6 +886,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                             lb(j) = newLb
                             ub(j) = newUb
                             changed = True
+                            rowValid = False
 
                             If lb(j) = ub(j) Then
                                 FoldFixed(Aorg, rhs, j, lb(j), fixedValue, isFixed)
@@ -786,6 +957,51 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             ElseIf Not Double.IsPositiveInfinity(maxAct) Then
                 maxAct += hi
             End If
+        End Sub
+
+        ''' <summary>
+        ''' 单行活动度状态扫描：逐项活动度区间 + 有限部分和 + 无穷计数。
+        ''' </summary>
+        ''' <remarks>
+        ''' 一次 O(n) 扫描同时提供：全行 min/max 活动度（negCnt/posCnt ≥ 1 ⇒ ±∞，
+        ''' 与 <see cref="AccumulateActivity"/> 语义一致）以及 O(1) 推导
+        ''' "排除任一变量"的 minOther/maxOther 所需的全部信息。
+        ''' </remarks>
+        Private Sub ScanRowActivity(Aorg As Double(,), lb As Double(), ub As Double(), i As Integer,
+                                    rowLo As Double(), rowHi As Double(),
+                                    ByRef sumLo As Double, ByRef sumHi As Double,
+                                    ByRef negCnt As Integer, ByRef posCnt As Integer,
+                                    ByRef varCount As Integer)
+
+            For j As Integer = 0 To lb.Length - 1
+                Dim a As Double = Aorg(i, j)
+
+                If a = 0.0 Then Continue For
+
+                Dim lo As Double = lb(j) * a
+                Dim hi As Double = ub(j) * a
+
+                If lo > hi Then
+                    Dim t As Double = lo : lo = hi : hi = t
+                End If
+
+                rowLo(j) = lo
+                rowHi(j) = hi
+
+                If Double.IsNegativeInfinity(lo) Then
+                    negCnt += 1
+                Else
+                    sumLo += lo
+                End If
+
+                If Double.IsPositiveInfinity(hi) Then
+                    posCnt += 1
+                Else
+                    sumHi += hi
+                End If
+
+                varCount += 1
+            Next
         End Sub
 
         ''' <summary>

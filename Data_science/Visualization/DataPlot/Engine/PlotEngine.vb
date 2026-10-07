@@ -77,6 +77,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports std = System.Math
@@ -92,8 +93,8 @@ Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
         MyBase.New(bmp)
     End Sub
 
-    Protected Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Protected Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
+        MyBase.New(width, height, theme, driver)
     End Sub
 
     ''' <summary>直接在外部提供的绘图设备上绘制（例如 DirectX 的 GPU 画布）。</summary>
@@ -154,6 +155,29 @@ Public Class PlotEngine : Implements IDisposable
         BottomOutside
     End Enum
 
+    ' ---------- 图层叠加模式 ----------
+    ''' <summary>
+    ''' 图层叠加模式下应设为 False：此时跳过背景 / 绘图区边框 / 标题 / 坐标轴 / 图例的绘制，
+    ''' 只绘制几何图元本体，从而可以把多个图型叠加到同一块共享画布上（ggplot 的多图层模型）。
+    ''' </summary>
+    Public Property DrawFrame As Boolean = True
+
+    Private _plotAreaPinned As RectangleF? = Nothing
+
+    ''' <summary>由宿主给定固定的绘图区；图层模式下各图层必须共用同一块绘图区。</summary>
+    Public Sub SetPlotArea(area As RectangleF)
+        _plotAreaPinned = area
+        _plotArea = area
+    End Sub
+
+    ''' <summary>由宿主钉死数据坐标范围（图层模式下通常由跨图层的联合计算结果提供）。</summary>
+    Public Sub SetDataRange(xmin As Double, xmax As Double, ymin As Double, ymax As Double)
+        xmin = xmin
+        xmax = xmax
+        ymin = ymin
+        ymax = ymax
+    End Sub
+
     ' ---------- 绘图区（数据坐标对应的像素矩形） ----------
     Protected _plotArea As RectangleF
     Public ReadOnly Property PlotArea As RectangleF
@@ -165,13 +189,34 @@ Public Class PlotEngine : Implements IDisposable
     ' ========================================================
     '  构造与释放
     ' ========================================================
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+    ''' <summary>
+    ''' 创建指定尺寸的画布。可以通过 <paramref name="driver"/> 参数选择绘图驱动，
+    ''' 从而支持输出 png（GDI 栅格）/ svg / postscript / pdf 等不同的图形格式。
+    ''' </summary>
+    ''' <param name="driver">
+    ''' 绘图驱动类型（<see cref="Drivers.Default"/> 表示使用全局默认驱动，默认为 GDI+ 栅格）。
+    ''' 非 GDI 驱动需要先在程序启动时完成注册（例如 <c>ImageDriver.Register()</c>、
+    ''' <c>ImageDriver.RegisterPostScript()</c> 或 Skia 驱动注册）。
+    ''' </param>
+    Public Sub New(width As Integer, height As Integer,
+                   Optional theme As PlotTheme = Nothing,
+                   Optional driver As Drivers = Drivers.Default)
+
         _width = width
         _height = height
         _Theme = If(theme, PlotTheme.Light())
-        _g = DriverLoad.CreateGraphicsDevice(New Size(width, height))
+        _g = DriverLoad.CreateGraphicsDevice(New Size(width, height), driver:=driver)
         ApplyQuality(_g)
     End Sub
+
+    ''' <summary>
+    ''' 当前绘图引擎所使用的绘图驱动类型。
+    ''' </summary>
+    Public ReadOnly Property Driver As Drivers
+        Get
+            Return _g.Driver
+        End Get
+    End Property
 
     ''' <summary>
     ''' 直接使用已有的 System.Drawing.Bitmap 作为绘图设备（GDI 驱动）。
@@ -254,6 +299,12 @@ Public Class PlotEngine : Implements IDisposable
     ' ========================================================
     ''' <summary>计算绘图区矩形（基于主题边距）</summary>
     Protected Sub ComputePlotArea()
+        If _plotAreaPinned.HasValue Then
+            ' 图层模式：绘图区由宿主（画布）统一指定，禁止各图层自行推断
+            _plotArea = _plotAreaPinned.Value
+            Return
+        End If
+
         Dim x = Theme.MarginLeft
         Dim y = Theme.MarginTop
         Dim w = _width - Theme.MarginLeft - Theme.MarginRight
@@ -321,12 +372,16 @@ Public Class PlotEngine : Implements IDisposable
     '  背景与边框
     ' ========================================================
     Protected Sub DrawBackground()
+        If Not DrawFrame Then Return
+
         Using br As New SolidBrush(Theme.BackgroundColor)
             _g.FillRectangle(br, 0, 0, _width, _height)
         End Using
     End Sub
 
     Protected Sub DrawPlotArea()
+        If Not DrawFrame Then Return
+
         Using br As New SolidBrush(Theme.PlotAreaColor)
             _g.FillRectangle(br, _plotArea)
         End Using
@@ -336,6 +391,7 @@ Public Class PlotEngine : Implements IDisposable
     '  标题
     ' ========================================================
     Protected Sub DrawTitle()
+        If Not DrawFrame Then Return
         If String.IsNullOrEmpty(Title) Then Return
         Using sf As New StringFormat()
             sf.Alignment = StringAlignment.Center
@@ -367,6 +423,8 @@ Public Class PlotEngine : Implements IDisposable
                                   Optional xLabels As String() = Nothing,
                                   Optional yLabels As String() = Nothing,
                                   Optional xLabelRotate As Boolean = False)
+        If Not DrawFrame Then Return
+
         If xTicks Is Nothing Then xTicks = GenerateTicks(xmin, xmax)
         If yTicks Is Nothing Then yTicks = GenerateTicks(ymin, ymax)
 
@@ -477,6 +535,8 @@ Public Class PlotEngine : Implements IDisposable
     '  图例
     ' ========================================================
     Protected Sub DrawLegend(seriesList As IList(Of Series))
+        ' 图层模式下图例由宿主画布统一排版绘制（跨图层聚集），不在图层内部绘制
+        If Not DrawFrame Then Return
         If Not ShowLegend OrElse seriesList Is Nothing OrElse seriesList.Count = 0 Then Return
         Dim visible = seriesList.Where(Function(s) s.Visible AndAlso Not String.IsNullOrEmpty(s.Name)).ToList()
         If visible.Count = 0 Then Return
@@ -603,7 +663,7 @@ Public Class PlotEngine : Implements IDisposable
     ''' <param name="horizontal">True 时横向绘制并贴到绘图区下方</param>
     ''' <param name="tickCount">刻度数量</param>
     ''' <param name="title">颜色条标题</param>
-    Protected Sub DrawColorLegend(cmap As ColorScale.ColorMapType, vmin As Double, vmax As Double,
+    Protected Sub DrawColorLegend(cmap As ScalerPalette, vmin As Double, vmax As Double,
                                   Optional rect As RectangleF = Nothing,
                                   Optional horizontal As Boolean = False,
                                   Optional tickCount As Integer = 5,

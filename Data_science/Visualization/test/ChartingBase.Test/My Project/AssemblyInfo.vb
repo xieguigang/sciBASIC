@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::622b7354def3e6e298d67efbe9548050, Data_science\Visualization\test\ChartingBase.Test\My Project\AssemblyInfo.vb"
+#Region "Microsoft.VisualBasic::622b7354def3e6e298d67efbe9548050, Data_science\Visualization\test\ChartingBase.Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@
 #End Region
 
 Imports System
+Imports Microsoft.VisualBasic.Data.Plots
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48e61bc9fbf08d1016f3c8332dd63993, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanelV2.vb"
+#Region "Microsoft.VisualBasic::48e61bc9fbf08d1016f3c8332dd63993, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanelV2.vb"
 
     ' Author:
     ' 
@@ -57,8 +57,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D

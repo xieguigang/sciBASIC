@@ -21,6 +21,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -69,7 +70,7 @@ Public Class ContourPlot
     ''' <summary>等值层数</summary>
     Public Property Levels As Integer = 12
     ''' <summary>色阶方案</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
     ''' <summary>填充模式下是否额外描出等值线</summary>
@@ -82,8 +83,13 @@ Public Class ContourPlot
     Private xs As Double() = Nothing
     Private ys As Double() = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

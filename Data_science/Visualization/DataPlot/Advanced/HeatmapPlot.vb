@@ -1,73 +1,74 @@
-﻿#Region "Microsoft.VisualBasic::dd962bc2891aebbb66ce14d150e21aee, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
+#Region "Microsoft.VisualBasic::dd962bc2891aebbb66ce14d150e21aee, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 169 (86.22%)
-    ' Comment Lines: 8 (4.08%)
-    '    - Xml Docs: 12.50%
-    ' 
-    '   Blank Lines: 19 (9.69%)
-    '     File Size: 7.94 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Class HeatmapPlot
-    ' 
-    '     Properties: ColLabels, ColorMap, Matrix, MaxValue, MinValue
-    '                 RowLabels, ShowValues
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    '     Enum ColorMapType
-    ' 
-    '         CoolWarm, Grayscale, Inferno, Jet, Plasma
-    '         Viridis
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: Brightness, GetColor, LerpPalette
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 196
+'    Code Lines: 169 (86.22%)
+' Comment Lines: 8 (4.08%)
+'    - Xml Docs: 12.50%
+' 
+'   Blank Lines: 19 (9.69%)
+'     File Size: 7.94 KB
+
+
+' Class HeatmapPlot
+' 
+'     Properties: ColLabels, ColorMap, Matrix, MaxValue, MinValue
+'                 RowLabels, ShowValues
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+'     Enum ColorMapType
+' 
+'         CoolWarm, Grayscale, Inferno, Jet, Plasma
+'         Viridis
+' 
+' 
+' 
+'  
+' 
+'     Function: Brightness, GetColor, LerpPalette
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports stdf = System.Math
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 ''' <summary>热图</summary>
 Public Class HeatmapPlot
@@ -80,14 +81,19 @@ Public Class HeatmapPlot
     Public Property MaxValue As Double? = Nothing
 
     ''' <summary>色阶方案（取色逻辑统一走 <see cref="ColorScale"/>）</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否在每个格子里写出数值</summary>
     Public Property ShowValues As Boolean = False
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3e9c1b5d2f4086ae1b7c9d0e3f5a2b, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
+#Region "Microsoft.VisualBasic::7a3e9c1b5d2f4086ae1b7c9d0e3f5a2b, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -57,8 +57,13 @@ Public Class HistogramPlot
     ''' <summary>柱子透明度（多组并列时便于观察重叠）</summary>
     Public Property FillAlpha As Integer = 180
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

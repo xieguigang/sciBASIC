@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::3c7d3bae69a38562d77ce714ae19e402, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\Simplex.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 369
-    '    Code Lines: 322 (87.26%)
-    ' Comment Lines: 26 (7.05%)
-    '    - Xml Docs: 23.08%
-    ' 
-    '   Blank Lines: 21 (5.69%)
-    '     File Size: 16.50 KB
+' Summaries:
 
 
-    '     Class SimplexResult
-    ' 
-    ' 
-    ' 
-    '     Class SimplexSolver
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ColGet, ColGetAlive, ColPick, LoopPhase1, LoopPhase2
-    '                   LuSolveCol, Price, RatioTest, ReducedCosts, Solve
-    '                   Unit
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 369
+'    Code Lines: 322 (87.26%)
+' Comment Lines: 26 (7.05%)
+'    - Xml Docs: 23.08%
+' 
+'   Blank Lines: 21 (5.69%)
+'     File Size: 16.50 KB
+
+
+'     Class SimplexResult
+' 
+' 
+' 
+'     Class SimplexSolver
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ColGet, ColGetAlive, ColPick, LoopPhase1, LoopPhase2
+'                   LuSolveCol, Price, RatioTest, ReducedCosts, Solve
+'                   Unit
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,8 +72,6 @@
 '   → 无界证书。
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
 Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover

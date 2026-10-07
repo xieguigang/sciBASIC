@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a76c434f9516aa0017cc683f04a0a9, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Circular.vb"
+#Region "Microsoft.VisualBasic::f9a76c434f9516aa0017cc683f04a0a9, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Circular.vb"
 
     ' Author:
     ' 
@@ -53,8 +53,8 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D

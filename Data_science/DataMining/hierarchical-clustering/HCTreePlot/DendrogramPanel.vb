@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb5de02a0583d1861dc728c32b9abddf, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanel.vb"
+#Region "Microsoft.VisualBasic::cb5de02a0583d1861dc728c32b9abddf, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanel.vb"
 
     ' Author:
     ' 
@@ -55,12 +55,12 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Chart = Microsoft.VisualBasic.Data.ChartPlots.Graphic.Plot
+Imports Chart = Microsoft.VisualBasic.Data.Plots.Canvas.Plot
 
 Public MustInherit Class DendrogramPanel : Inherits Chart
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7dd57cc073871e84f1f39d0742c6da7, Data_science\Visualization\test\Program.vb"
+#Region "Microsoft.VisualBasic::a7dd57cc073871e84f1f39d0742c6da7, Data_science\Visualization\test\Program.vb"
 
     ' Author:
     ' 
@@ -52,11 +52,12 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Data.Plots
 
 Module Program
 
     Sub Main()
         Call ImageDriver.Register()
-        Call Examples.RunAll("Z:/")
+        Call ChartExamples.RunAll("Z:/")
     End Sub
 End Module

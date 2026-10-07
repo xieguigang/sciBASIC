@@ -1,66 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::1fdf349319bfcdeee71cad82865a996b, Data_science\Visualization\DataPlot\Engine\PlotTheme.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 179
-    '    Code Lines: 144 (80.45%)
-    ' Comment Lines: 20 (11.17%)
-    '    - Xml Docs: 50.00%
-    ' 
-    '   Blank Lines: 15 (8.38%)
-    '     File Size: 7.79 KB
+' Summaries:
 
 
-    ' Class PlotTheme
-    ' 
-    '     Properties: AnnotationFont, AntiAlias, AxisColor, AxisLabelFont, AxisLineWidth
-    '                 BackgroundColor, BarPadding, BorderColor, GridColor, GridLineWidth
-    '                 HighQualityText, LegendBackgroundColor, LegendBorderColor, LegendFont, LineWidth
-    '                 MarginBottom, MarginLeft, MarginRight, MarginTop, MarkerSize
-    '                 MinorGridColor, Palette, PlotAreaColor, ShowGrid, ShowLegendBorder
-    '                 ShowMinorGrid, SubTitleColor, SubTitleFont, TextColor, TickLabelFont
-    '                 TitleColor, TitleFont
-    ' 
-    '     Function: Clone, Dark, Grayscale, Light, Nature
-    '               Science
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 179
+'    Code Lines: 144 (80.45%)
+' Comment Lines: 20 (11.17%)
+'    - Xml Docs: 50.00%
+' 
+'   Blank Lines: 15 (8.38%)
+'     File Size: 7.79 KB
+
+
+' Class PlotTheme
+' 
+'     Properties: AnnotationFont, AntiAlias, AxisColor, AxisLabelFont, AxisLineWidth
+'                 BackgroundColor, BarPadding, BorderColor, GridColor, GridLineWidth
+'                 HighQualityText, LegendBackgroundColor, LegendBorderColor, LegendFont, LineWidth
+'                 MarginBottom, MarginLeft, MarginRight, MarginTop, MarkerSize
+'                 MinorGridColor, Palette, PlotAreaColor, ShowGrid, ShowLegendBorder
+'                 ShowMinorGrid, SubTitleColor, SubTitleFont, TextColor, TickLabelFont
+'                 TitleColor, TitleFont
+' 
+'     Function: Clone, Dark, Grayscale, Light, Nature
+'               Science
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Html
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
@@ -88,13 +91,15 @@ Public Class PlotTheme
     Public Property LegendBorderColor As Color = Color.FromArgb(200, 200, 200)
     Public Property BorderColor As Color = Color.FromArgb(180, 180, 180)
 
+    Public Shared Property DefaultFontFamily As String = FontFace.MicrosoftYaHei
+
     ' ---------- 字体 ----------
-    Public Property TitleFont As New Font("Microsoft YaHei", 16, FontStyle.Bold)
-    Public Property SubTitleFont As New Font("Microsoft YaHei", 10, FontStyle.Regular)
-    Public Property AxisLabelFont As New Font("Microsoft YaHei", 11, FontStyle.Regular)
-    Public Property TickLabelFont As New Font("Microsoft YaHei", 9, FontStyle.Regular)
-    Public Property LegendFont As New Font("Microsoft YaHei", 9, FontStyle.Regular)
-    Public Property AnnotationFont As New Font("Microsoft YaHei", 9, FontStyle.Regular)
+    Public Property TitleFont As New Font(DefaultFontFamily, 16, FontStyle.Bold)
+    Public Property SubTitleFont As New Font(DefaultFontFamily, 10, FontStyle.Regular)
+    Public Property AxisLabelFont As New Font(DefaultFontFamily, 11, FontStyle.Regular)
+    Public Property TickLabelFont As New Font(DefaultFontFamily, 9, FontStyle.Regular)
+    Public Property LegendFont As New Font(DefaultFontFamily, 9, FontStyle.Regular)
+    Public Property AnnotationFont As New Font(DefaultFontFamily, 9, FontStyle.Regular)
 
     ' ---------- 调色板（用于多系列 / 分类） ----------
     Public Property Palette As Color() = {
@@ -139,14 +144,23 @@ Public Class PlotTheme
     Public Property AntiAlias As Boolean = True
     Public Property HighQualityText As Boolean = True
 
+    Sub New(Optional padding As String = "padding: 70px 30px 70px 80px;")
+        Dim margin As Padding = CSS.Padding.TryParse(padding)
+
+        MarginBottom = Val(margin.Bottom)
+        MarginLeft = Val(margin.Left)
+        MarginRight = Val(margin.Right)
+        MarginTop = Val(margin.Top)
+    End Sub
+
     ''' <summary>浅色主题（默认，适合论文白底插图）</summary>
-    Public Shared Function Light() As PlotTheme
-        Return New PlotTheme()
+    Public Shared Function Light(Optional padding As String = "padding: 70px 30px 70px 80px;") As PlotTheme
+        Return New PlotTheme(padding)
     End Function
 
     ''' <summary>深色主题（适合演示 / 海报）</summary>
-    Public Shared Function Dark() As PlotTheme
-        Dim t As New PlotTheme()
+    Public Shared Function Dark(Optional padding As String = "padding: 70px 30px 70px 80px;") As PlotTheme
+        Dim t As New PlotTheme(padding)
         t.BackgroundColor = Color.FromArgb(30, 30, 30)
         t.PlotAreaColor = Color.FromArgb(40, 40, 40)
         t.AxisColor = Color.FromArgb(200, 200, 200)
@@ -171,8 +185,8 @@ Public Class PlotTheme
     End Function
 
     ''' <summary>Nature 期刊风格（清淡、克制）</summary>
-    Public Shared Function Nature() As PlotTheme
-        Dim t As New PlotTheme()
+    Public Shared Function Nature(Optional padding As String = "padding: 70px 30px 70px 80px;") As PlotTheme
+        Dim t As New PlotTheme(padding)
         t.BackgroundColor = Color.White
         t.PlotAreaColor = Color.White
         t.AxisColor = Color.Black
@@ -200,8 +214,8 @@ Public Class PlotTheme
     End Function
 
     ''' <summary>Science 期刊风格（紧凑、专业）</summary>
-    Public Shared Function Science() As PlotTheme
-        Dim t As New PlotTheme()
+    Public Shared Function Science(Optional padding As String = "padding: 70px 30px 70px 80px;") As PlotTheme
+        Dim t As New PlotTheme(padding)
         t.BackgroundColor = Color.White
         t.PlotAreaColor = Color.White
         t.AxisColor = Color.FromArgb(50, 50, 50)
@@ -228,8 +242,8 @@ Public Class PlotTheme
     End Function
 
     ''' <summary>灰色主题（适合黑白印刷）</summary>
-    Public Shared Function Grayscale() As PlotTheme
-        Dim t As New PlotTheme()
+    Public Shared Function Grayscale(Optional padding As String = "padding: 70px 30px 70px 80px;") As PlotTheme
+        Dim t As New PlotTheme(padding)
         t.Palette = {
             Color.FromArgb(20, 20, 20),
             Color.FromArgb(80, 80, 80),

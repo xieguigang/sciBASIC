@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b9f0c7d2a4e4b6f9c1d3e5a7b8c0d2e, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
+#Region "Microsoft.VisualBasic::1b9f0c7d2a4e4b6f9c1d3e5a7b8c0d2e, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
 
     ' 
     '       sciBASIC.NET Foundation, GPL3 Licensed
@@ -22,6 +22,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports std = System.Math
 
 ' ============================================================================
@@ -40,8 +41,7 @@ Imports std = System.Math
 ' ============================================================================
 
 ''' <summary>柱状图（分类数据）</summary>
-Public Class BarPlot
-    Inherits PlotEngine
+Public Class BarPlot : Inherits PlotEngine
 
     ''' <summary>堆叠方式</summary>
     Public Enum StackMode
@@ -78,15 +78,20 @@ Public Class BarPlot
     ''' <summary>用色阶给柱子上色（LevelBarplot 的行为）</summary>
     Public Property UseColorScale As Boolean = False
     ''' <summary>色阶方案（<see cref="UseColorScale"/> 为 True 时生效）</summary>
-    Public Property ColorMap As ColorScale.ColorMapType = ColorScale.ColorMapType.Viridis
+    Public Property ColorMap As ScalerPalette = ScalerPalette.viridis
     ''' <summary>是否绘制色阶图例条</summary>
     Public Property ShowColorLegend As Boolean = True
 
     ''' <summary>自定义柱子：给了值时，完全按调用方指定的颜色与顺序绘制</summary>
     Public Property Serials As BarSerial() = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

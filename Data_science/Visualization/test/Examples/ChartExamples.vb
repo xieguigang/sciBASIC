@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb625e3046e55319ab26031aa371a555, Data_science\Visualization\test\Examples\ChartExamples.vb"
+#Region "Microsoft.VisualBasic::fb625e3046e55319ab26031aa371a555, Data_science\Visualization\test\Examples\ChartExamples.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@
 #End Region
 
 Imports System.IO
-Imports DataPlot
+Imports Microsoft.VisualBasic.Data.Plots
 
 ' ============================================================================
 '  ChartExamples.vb - 9 种新增图表的使用示例与测试数据

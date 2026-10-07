@@ -1,63 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::15dd337ca01f584b97d2fca411de6e5a, Data\MyersDiff\DiffResult.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 247
-    '    Code Lines: 169 (68.42%)
-    ' Comment Lines: 43 (17.41%)
-    '    - Xml Docs: 62.79%
-    ' 
-    '   Blank Lines: 35 (14.17%)
-    '     File Size: 9.84 KB
+' Summaries:
 
 
-    ' Class DiffResult
-    ' 
-    '     Properties: DeleteCount, EqualCount, InsertCount, Items, NewCount
-    '                 OldCount, Similarity
-    ' 
-    '     Function: BuildDiffBlocks, ToSideBySide, ToSummary, ToUnifiedDiff, TruncatePad
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 247
+'    Code Lines: 169 (68.42%)
+' Comment Lines: 43 (17.41%)
+'    - Xml Docs: 62.79%
+' 
+'   Blank Lines: 35 (14.17%)
+'     File Size: 9.84 KB
+
+
+' Class DiffResult
+' 
+'     Properties: DeleteCount, EqualCount, InsertCount, Items, NewCount
+'                 OldCount, Similarity
+' 
+'     Function: BuildDiffBlocks, ToSideBySide, ToSummary, ToUnifiedDiff, TruncatePad
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Text
+Imports std = System.Math
 
 ' -----------------------------------------------------------------------
 ' 差异结果：封装完整的比较结果
 ' -----------------------------------------------------------------------
-Imports System.Text
 
 ''' <summary>
 ''' 表示两个序列比较后的完整差异结果。
@@ -108,7 +110,7 @@ Public Class DiffResult
     ''' <summary>相似度（0.0 ~ 1.0），基于相同元素占比计算。</summary>
     Public ReadOnly Property Similarity As Double
         Get
-            Dim total As Integer = Math.Max(OldCount, NewCount)
+            Dim total As Integer = std.Max(OldCount, NewCount)
             If total = 0 Then Return 1.0
             Return CDbl(EqualCount) / CDbl(total)
         End Get
@@ -252,8 +254,8 @@ Public Class DiffResult
 
         ' 为每个分组构建差异块
         For Each group In groups
-            Dim startIdx As Integer = Math.Max(0, group(0) - contextLines)
-            Dim endIdx As Integer = Math.Min(Items.Count - 1, group(group.Count - 1) + contextLines)
+            Dim startIdx As Integer = std.Max(0, group(0) - contextLines)
+            Dim endIdx As Integer = std.Min(Items.Count - 1, group(group.Count - 1) + contextLines)
 
             Dim blockItems As New List(Of DiffItem)()
             Dim oldLine As Integer = 0

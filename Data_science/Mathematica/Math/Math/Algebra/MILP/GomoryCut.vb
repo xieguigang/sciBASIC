@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::d1f83bb6c5a69d1d9e8a1ab8bdf0c9fd, Data_science\Mathematica\Math\Math\Algebra\MILP\GomoryCut.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 208
-    '    Code Lines: 112 (53.85%)
-    ' Comment Lines: 46 (22.12%)
-    '    - Xml Docs: 39.13%
-    ' 
-    '   Blank Lines: 50 (24.04%)
-    '     File Size: 8.36 KB
+' Summaries:
 
 
-    '     Class CutRow
-    ' 
-    '         Properties: Coefficients, Op, Rhs, SourceColumn, Violation
-    ' 
-    '     Module GomoryCut
-    ' 
-    '         Function: Generate, GmiDelta
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 208
+'    Code Lines: 112 (53.85%)
+' Comment Lines: 46 (22.12%)
+'    - Xml Docs: 39.13%
+' 
+'   Blank Lines: 50 (24.04%)
+'     File Size: 8.36 KB
+
+
+'     Class CutRow
+' 
+'         Properties: Coefficients, Op, Rhs, SourceColumn, Violation
+' 
+'     Module GomoryCut
+' 
+'         Function: Generate, GmiDelta
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,11 +82,8 @@
 ' Copyright (c) 2018 GPL3 Licensed — sciBASIC.NET Foundation
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
+Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.MILP
 
@@ -140,9 +137,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             Dim i1 As Double = 1.0 - tol
 
-            For k As Integer = 0 To m - 1
-                If cuts.Count >= maxCuts Then Exit For
+            ' ---- 预筛选候选基本整数行（小数部分落在 (tol, 1−tol) 内）----
+            Dim cand As New List(Of Integer)()
+            Dim fracs As New List(Of Double)()
 
+            For k As Integer = 0 To m - 1
                 Dim bj As Integer = result.Basis(k)
 
                 If bj < 0 Then Continue For                              ' 人工列（冗余行）
@@ -153,90 +152,36 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
                 If f0 <= tol OrElse f0 >= i1 Then Continue For           ' 已经整数
 
-                ' ---- tableau 行：w = B⁻ᵀe_k ----
-                Dim e(m - 1) As Double
-                e(k) = 1.0
+                cand.Add(k)
+                fracs.Add(f0)
+            Next
 
-                Dim w As Double() = LinAlg.LuSolveT(fac, e)
+            If cand.Count = 0 Then Return cuts
 
-                If w Is Nothing Then Continue For
+            ' ---- AT 列主序缓存：tableau 行 α = Aᵀw 变为行批量点积（连续访存 + SIMD）----
+            Dim AT As Double()() = form.TransposeCache()
 
-                Dim gamma(n - 1) As Double
-                Dim rhs As Double = f0
-                Dim nonZero As Integer = 0
+            ' ---- 逐候选行生成割：行间完全独立（只读共享 fac/form/result）----
+            ' 旧版按 k 顺序遇 maxCuts 即停；并行版生成全部候选后按违反量排序取前
+            ' maxCuts 条（Top-K），语义更强且与行生成顺序无关。
+            Dim generated(cand.Count - 1) As CutRow
 
-                For j As Integer = 0 To n - 1
-                    If basic.Contains(j) Then Continue For
+            Call MilpKernels.ForParallel(cand.Count, m * n,
+                Sub(idx)
+                    generated(idx) = GenerateOne(form, fac, result, basic, AT,
+                                                 cand(idx), fracs(idx), options, tol)
+                End Sub)
 
-                    Dim range As Double = form.u(j) - form.l(j)
-
-                    If range <= 1.0E-09 Then Continue For
-
-                    Dim aq As Double = 0.0
-
-                    For i As Integer = 0 To m - 1
-                        aq += w(i) * form.A(i, j)
-                    Next
-
-                    Dim atUpper As Boolean = result.AtUpper(j)
-                    Dim ap As Double = If(atUpper, -aq, aq)
-                    Dim delta As Double = GmiDelta(ap, form.IsIntegerColumn(j), f0)
-
-                    If delta <= 0.0 Then Continue For
-
-                    If atUpper Then
-                        gamma(j) = -delta
-                        rhs -= delta * form.u(j)
-                    Else
-                        gamma(j) = delta
-                        rhs += delta * form.l(j)
-                    End If
-
-                    nonZero += 1
-                Next
-
-                If nonZero = 0 Then Continue For
-
-                ' ---- 尺度与密度校验 ----
-                Dim scale As Double = 0.0
-
-                For j As Integer = 0 To n - 1
-                    scale = std.Max(scale, std.Abs(gamma(j)))
-                Next
-
-                If scale <= 1.0E-09 OrElse scale > options.CutCoefficientLimit Then Continue For
-                If nonZero / CDbl(n) > options.CutDensityLimit * 1.5 Then Continue For
-
-                If std.Abs(scale - 1.0) > 1.0E-12 Then
-                    For j As Integer = 0 To n - 1
-                        gamma(j) /= scale
-                    Next
-
-                    rhs /= scale
-                End If
-
-                ' ---- 违反量：cut 为 Σ γ x ≥ rhs ----
-                Dim lhs As Double = 0.0
-
-                For j As Integer = 0 To n - 1
-                    If gamma(j) <> 0.0 Then lhs += gamma(j) * result.X(j)
-                Next
-
-                Dim violation As Double = rhs - lhs
-
-                If violation <= tol * (1.0 + std.Abs(rhs)) Then Continue For
-
-                cuts.Add(New CutRow With {
-                    .Coefficients = gamma,
-                    .Op = ">=",
-                    .Rhs = rhs,
-                    .Violation = violation,
-                    .SourceColumn = bj
-                })
+            For Each cut As CutRow In generated
+                If cut IsNot Nothing Then cuts.Add(cut)
             Next
 
             If cuts.Count > 1 Then
                 cuts.Sort(Function(p, q) q.Violation.CompareTo(p.Violation))
+            End If
+
+            If cuts.Count > maxCuts Then
+                cuts.RemoveRange(maxCuts, cuts.Count - maxCuts)
             End If
 
             If log IsNot Nothing AndAlso cuts.Count > 0 Then
@@ -244,6 +189,99 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             End If
 
             Return cuts
+        End Function
+
+        ''' <summary>
+        ''' 由一条候选基本行生成 GMI 割；数值不可靠 / 无违反时返回 Nothing。
+        ''' </summary>
+        Private Function GenerateOne(form As MilpLpForm, fac As LuFactorization, result As BsResult,
+                                     basic As HashSet(Of Integer), AT As Double()(),
+                                     k As Integer, f0 As Double,
+                                     options As MilpOptions, tol As Double) As CutRow
+
+            Dim m As Integer = form.Rows
+            Dim n As Integer = form.Cols
+            Dim bj As Integer = result.Basis(k)
+
+            ' ---- tableau 行：w = B⁻ᵀe_k（LinAlg.LuSolveT 只读 fac，线程安全）----
+            Dim e(m - 1) As Double
+            e(k) = 1.0
+
+            Dim w As Double() = LinAlg.LuSolveT(fac, e)
+
+            If w Is Nothing Then Return Nothing
+
+            ' α = Aᵀw：一次行批量点积算全行（替代旧的逐列跨步循环）
+            Dim aq(n - 1) As Double
+
+            Call MilpKernels.MatVecRows(AT, w, aq)
+
+            Dim gamma(n - 1) As Double
+            Dim rhs As Double = f0
+            Dim nonZero As Integer = 0
+
+            For j As Integer = 0 To n - 1
+                If basic.Contains(j) Then Continue For
+
+                Dim range As Double = form.u(j) - form.l(j)
+
+                If range <= 1.0E-09 Then Continue For
+
+                Dim atUpper As Boolean = result.AtUpper(j)
+                Dim ap As Double = If(atUpper, -aq(j), aq(j))
+                Dim delta As Double = GmiDelta(ap, form.IsIntegerColumn(j), f0)
+
+                If delta <= 0.0 Then Continue For
+
+                If atUpper Then
+                    gamma(j) = -delta
+                    rhs -= delta * form.u(j)
+                Else
+                    gamma(j) = delta
+                    rhs += delta * form.l(j)
+                End If
+
+                nonZero += 1
+            Next
+
+            If nonZero = 0 Then Return Nothing
+
+            ' ---- 尺度与密度校验 ----
+            Dim scale As Double = 0.0
+
+            For j As Integer = 0 To n - 1
+                scale = std.Max(scale, std.Abs(gamma(j)))
+            Next
+
+            If scale <= 1.0E-09 OrElse scale > options.CutCoefficientLimit Then Return Nothing
+            If nonZero / CDbl(n) > options.CutDensityLimit * 1.5 Then Return Nothing
+
+            If std.Abs(scale - 1.0) > 1.0E-12 Then
+                For j As Integer = 0 To n - 1
+                    gamma(j) /= scale
+                Next
+
+                rhs /= scale
+            End If
+
+            ' ---- 违反量：cut 为 Σ γ x ≥ rhs ----
+            Dim lhs As Double = 0.0
+
+            For j As Integer = 0 To n - 1
+                If gamma(j) <> 0.0 Then lhs += gamma(j) * result.X(j)
+            Next
+
+            Dim violation As Double = rhs - lhs
+
+            If violation <= tol * (1.0 + std.Abs(rhs)) Then Return Nothing
+
+            Return New CutRow With {
+                .Coefficients = gamma,
+                .Op = ">=",
+                .Rhs = rhs,
+                .Violation = violation,
+                .SourceColumn = bj
+            }
         End Function
 
         ''' <summary>GMI 割系数 δ_j。</summary>

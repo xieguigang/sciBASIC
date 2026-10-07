@@ -77,9 +77,6 @@
 ' ============================================================================
 
 Imports std = System.Math
-Imports System.Collections.Generic
-Imports System.Diagnostics
-Imports System.Linq
 
 Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 

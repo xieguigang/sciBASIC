@@ -618,7 +618,10 @@ Namespace Data.Repository
 
         Private Function IsAppendOnlyLayout() As Boolean
             If _baseLineCount = 0 Then Return True
-            If _pieces.Count = 0 Then Return True
+            ' 当全部原始行都被删除（片段表为空）时，数据文件必须被完全重写截断，
+            ' 否则被删除的行会在下一次打开时复活。此处的快速追加合并只处理
+            ' 「所有修改都发生在文件末尾」的布局，删除操作不属于这一情形。
+            If _pieces.Count = 0 Then Return False
             Dim p0 As Piece = _pieces(0)
             Return p0.Kind = PieceKind.OriginalFile AndAlso p0.Start = 1 AndAlso p0.Count = _baseLineCount
         End Function

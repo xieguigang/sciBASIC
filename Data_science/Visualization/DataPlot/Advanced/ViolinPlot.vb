@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::058868afd6ef0b53252c8ec3760c0105, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
+#Region "Microsoft.VisualBasic::058868afd6ef0b53252c8ec3760c0105, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -68,8 +68,13 @@ Public Class ViolinPlot
     Public Property Groups As New List(Of BoxGroup)()
     Public Property ShowBoxInside As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()

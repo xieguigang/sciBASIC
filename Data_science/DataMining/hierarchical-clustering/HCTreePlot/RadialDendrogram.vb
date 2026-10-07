@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3252ca651b6db7797969cfe16e944d7c, Data_science\DataMining\hierarchical-clustering\HCTreePlot\RadialDendrogram.vb"
+#Region "Microsoft.VisualBasic::3252ca651b6db7797969cfe16e944d7c, Data_science\DataMining\hierarchical-clustering\HCTreePlot\RadialDendrogram.vb"
 
     ' Author:
     ' 
@@ -56,8 +56,8 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.Plots
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale

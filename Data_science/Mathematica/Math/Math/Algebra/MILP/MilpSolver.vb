@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::8551f3df881fc0c2697a355f634f8d67, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpSolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 117
-    '    Code Lines: 56 (47.86%)
-    ' Comment Lines: 37 (31.62%)
-    '    - Xml Docs: 51.35%
-    ' 
-    '   Blank Lines: 24 (20.51%)
-    '     File Size: 4.98 KB
+' Summaries:
 
 
-    '     Module MilpSolver
-    ' 
-    '         Function: MakeError, (+2 Overloads) Solve
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 117
+'    Code Lines: 56 (47.86%)
+' Comment Lines: 37 (31.62%)
+'    - Xml Docs: 51.35%
+' 
+'   Blank Lines: 24 (20.51%)
+'     File Size: 4.98 KB
+
+
+'     Module MilpSolver
+' 
+'         Function: MakeError, (+2 Overloads) Solve
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,11 +69,6 @@
 '
 ' Copyright (c) 2018 GPL3 Licensed — sciBASIC.NET Foundation
 ' ============================================================================
-
-Imports System
-Imports System.Collections.Generic
-Imports System.Diagnostics
-Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.MILP
 
@@ -99,6 +94,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <param name="options">求解选项；Nothing 使用默认值</param>
         Public Function Solve(model As MilpModel, Optional options As MilpOptions = Nothing) As MilpSolution
             Dim opt As MilpOptions = If(options, New MilpOptions()).Clone()
+
+            ' 并行开关传递给内核门面（SIMD 向量化始终启用，多线程由选项控制）
+            MilpKernels.EnableParallel = opt.EnableParallel
+            MilpKernels.MaxThreads = opt.MaxThreads
+
             Dim log As New List(Of String)()
             Dim watch As Stopwatch = Stopwatch.StartNew()
 

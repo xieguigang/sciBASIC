@@ -406,7 +406,7 @@ Public Class ZScoreEntry
 End Class
 
 ''' <summary>
-''' 文氏图的一个集合。<paramref name="Intersections"/> 的 key 是另一个集合的
+''' 文氏图的一个集合。<see cref="VennSet.Intersections"/> 的 key 是另一个集合的
 ''' <see cref="Name"/>，value 是与该集合的交集元素数量。
 ''' </summary>
 Public Class VennSet

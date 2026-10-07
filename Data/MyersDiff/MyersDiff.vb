@@ -1,63 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::2f429449e4c2653e3aa5e28ade29d2d0, Data\MyersDiff\MyersDiff.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 398
-    '    Code Lines: 195 (48.99%)
-    ' Comment Lines: 141 (35.43%)
-    '    - Xml Docs: 35.46%
-    ' 
-    '   Blank Lines: 62 (15.58%)
-    '     File Size: 16.72 KB
+' Summaries:
 
 
-    ' Class MyersDiff
-    ' 
-    '     Function: Backtrack, BuildDiffItems, Compare, CompareChars, CompareFiles
-    '               ComputeEditPath, ReadFileLines
-    '     Class EditStep
-    ' 
-    '         Properties: NewIndex, OldIndex, Type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 398
+'    Code Lines: 195 (48.99%)
+' Comment Lines: 141 (35.43%)
+'    - Xml Docs: 35.46%
+' 
+'   Blank Lines: 62 (15.58%)
+'     File Size: 16.72 KB
+
+
+' Class MyersDiff
+' 
+'     Function: Backtrack, BuildDiffItems, Compare, CompareChars, CompareFiles
+'               ComputeEditPath, ReadFileLines
+'     Class EditStep
+' 
+'         Properties: NewIndex, OldIndex, Type
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Text
 
 ' ============================================================================
 ' MyersDiff.vb — 基于 Myers 差异算法的文本比较模块
@@ -76,11 +78,6 @@
 '   Dim result As DiffResult = diff.CompareFiles("old.txt", "new.txt")
 '   Console.WriteLine(result.ToUnifiedDiff("old.txt", "new.txt"))
 ' ============================================================================
-
-Imports System.IO
-Imports System.Text
-
-
 
 ' -----------------------------------------------------------------------
 ' Myers 差异算法核心实现
@@ -164,12 +161,13 @@ Public Class MyersDiff
     ''' <param name="newFilePath">新文件路径。</param>
     ''' <param name="encoding">文件编码（默认 UTF-8）。</param>
     ''' <returns>包含所有差异项的 DiffResult 对象。</returns>
-    Public Function CompareFiles(oldFilePath As String, newFilePath As String,
-                                  Optional encoding As Encoding = Nothing) As DiffResult
-        If encoding Is Nothing Then encoding = Encoding.UTF8
+    Public Function CompareFiles(oldFilePath As String, newFilePath As String, Optional encoding As Encoding = Nothing) As DiffResult
+        If encoding Is Nothing Then
+            encoding = Encoding.UTF8
+        End If
 
-        Dim oldLines As String() = ReadFileLines(oldFilePath, encoding)
-        Dim newLines As String() = ReadFileLines(newFilePath, encoding)
+        Dim oldLines As String() = oldFilePath.ReadAllLines(encoding)
+        Dim newLines As String() = newFilePath.ReadAllLines(encoding)
 
         Return Compare(oldLines, newLines)
     End Function
@@ -431,29 +429,4 @@ Public Class MyersDiff
             Me.NewIndex = newIndex
         End Sub
     End Class
-
-    ' ================================================================
-    ' 辅助：读取文件行
-    ' ================================================================
-    ''' <summary>
-    ''' 读取文件的所有行，保留行尾空白但去除行尾换行符。
-    ''' </summary>
-    Private Function ReadFileLines(filePath As String, encoding As Encoding) As String()
-        If Not File.Exists(filePath) Then
-            Throw New FileNotFoundException(String.Format("文件未找到: {0}", filePath), filePath)
-        End If
-
-        Dim lines As New List(Of String)()
-
-        Using reader As New StreamReader(filePath, encoding)
-            Dim line As String = reader.ReadLine()
-            While line IsNot Nothing
-                lines.Add(line)
-                line = reader.ReadLine()
-            End While
-        End Using
-
-        Return lines.ToArray()
-    End Function
-
 End Class

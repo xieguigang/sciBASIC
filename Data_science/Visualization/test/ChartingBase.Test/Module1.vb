@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acc141cfecb7f55dc2f37fd233596d3c, Data_science\Visualization\test\ChartingBase.Test\Module1.vb"
+#Region "Microsoft.VisualBasic::acc141cfecb7f55dc2f37fd233596d3c, Data_science\Visualization\test\ChartingBase.Test\Module1.vb"
 
     ' Author:
     ' 
@@ -52,12 +52,13 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.StyledBarplot
-Imports Microsoft.VisualBasic.Data.ChartPlots.Dendrogram
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot
+Imports Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.StyledBarplot
+Imports Microsoft.VisualBasic.Data.Plots.Dendrogram
+Imports Microsoft.VisualBasic.Data.Plots.Canvas
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Mathematical

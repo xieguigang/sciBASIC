@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Data.visualize</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9762.11310</Version>
+		<Version>5.0.9775.28485</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -17,7 +17,7 @@
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9762.11310</AssemblyVersion>
+		<AssemblyVersion>1.0.9775.28485</AssemblyVersion>
 		<Title>Visualization Layer for Networks, Clusters and Embeddings</Title>
 		<Description>Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.Data.visualize</AssemblyTitle>
@@ -163,8 +163,6 @@
     <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\DataPlot\DataPlot.vbproj" />
-    <!-- 3D 图表渲染仍指向旧项目，待 3D 迁移到 Canvas3D 后再移除 -->
-    <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>

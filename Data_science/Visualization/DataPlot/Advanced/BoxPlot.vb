@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dc7dd4e18ff2b7d5aabc6682aa65954, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
+#Region "Microsoft.VisualBasic::1dc7dd4e18ff2b7d5aabc6682aa65954, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
 
     ' Author:
     ' 
@@ -70,8 +70,13 @@ Public Class BoxPlot
     Public Property ShowOutliers As Boolean = True
     Public Property ShowMean As Boolean = True
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
-        MyBase.New(width, height, theme)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+        MyBase.New(width, height, theme, driver)
+    End Sub
+
+    ''' <summary>直接在外部提供的绘图设备上绘制（图层叠加模式 / 宿主画布）。</summary>
+    Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+        MyBase.New(g, theme)
     End Sub
 
     Public Sub Plot()
@@ -85,8 +90,12 @@ Public Class BoxPlot
         Dim allData = Groups.SelectMany(Function(g) g.Data).ToList()
         Dim ymin = If(Me.YMin, allData.Min())
         Dim ymax = If(Me.YMax, allData.Max())
-        Dim pad = (ymax - ymin) * 0.05
-        ymin -= pad : ymax += pad
+
+        ' 图层模式下 Y 范围由宿主钉死，不再额外留白
+        If Me.YMin Is Nothing OrElse Me.YMax Is Nothing Then
+            Dim pad = (ymax - ymin) * 0.05
+            ymin -= pad : ymax += pad
+        End If
 
         Dim xTicks = Enumerable.Range(0, nGrp).Select(Function(i) CDbl(i)).ToArray()
         Dim yTicks = GenerateTicks(ymin, ymax)

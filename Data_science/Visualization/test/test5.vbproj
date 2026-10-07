@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<RootNamespace>test</RootNamespace>
@@ -17,7 +17,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;nuget_release</Configurations>
 		<OutputType>Exe</OutputType>
-		<StartupObject>Microsoft.VisualBasic.Data.visualize.Program</StartupObject>
+		<StartupObject>test.Program</StartupObject>
 		<AssemblyVersion>1.0.9753.4776</AssemblyVersion>
 	</PropertyGroup>
 
@@ -122,8 +122,7 @@
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
     <ProjectReference Include="..\DataPlot\DataPlot.vbproj" />
-    <ProjectReference Include="..\Plots-statistics\plots_extensions-netcore5.vbproj" />
-    <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\DataMining\hierarchical-clustering\HCTreePlot\HCTreePlot.vbproj" />
   </ItemGroup>
 
 </Project>
