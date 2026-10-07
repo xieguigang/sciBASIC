@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::6ce9b8babc8b4bf71415ce7cc3f217b2, Data_science\Mathematica\Math\Math\Algebra\MILP\BranchAndBound.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 658
-    '    Code Lines: 433 (65.81%)
-    ' Comment Lines: 78 (11.85%)
-    '    - Xml Docs: 20.51%
-    ' 
-    '   Blank Lines: 147 (22.34%)
-    '     File Size: 27.75 KB
+' Summaries:
 
 
-    '     Class BranchAndBound
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ApplyRootCuts, BestOriginalValue, Finish, GlobalBoundInternal, PickBranchColumn
-    '                   PickByPseudoCost, Pop, PushChild, RelativeGap, Solve
-    '                   SolveUnconstrained, TakeId
-    ' 
-    '         Sub: Push, RecordIncumbent, TryHeuristics, UpdatePseudoCost
-    '         Class Node
-    ' 
-    '             Properties: AtUpper, Basis, Bound, BranchUp, BranchVar
-    '                         Depth, Id, L, ParentBound, U
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 658
+'    Code Lines: 433 (65.81%)
+' Comment Lines: 78 (11.85%)
+'    - Xml Docs: 20.51%
+' 
+'   Blank Lines: 147 (22.34%)
+'     File Size: 27.75 KB
+
+
+'     Class BranchAndBound
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ApplyRootCuts, BestOriginalValue, Finish, GlobalBoundInternal, PickBranchColumn
+'                   PickByPseudoCost, Pop, PushChild, RelativeGap, Solve
+'                   SolveUnconstrained, TakeId
+' 
+'         Sub: Push, RecordIncumbent, TryHeuristics, UpdatePseudoCost
+'         Class Node
+' 
+'             Properties: AtUpper, Basis, Bound, BranchUp, BranchVar
+'                         Depth, Id, L, ParentBound, U
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -88,9 +88,6 @@
 ' Copyright (c) 2018 GPL3 Licensed — sciBASIC.NET Foundation
 ' ============================================================================
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Diagnostics
 Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming.MILP
