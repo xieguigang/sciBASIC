@@ -39,11 +39,11 @@ Public NotInheritable Class Parser
     End Property
 
     Private Function At(text As String) As Boolean
-        Return Cur.Type = TokenType.Punct AndAlso Cur.Text = text
+        Return Cur.name = TokenType.Punct AndAlso Cur.text = text
     End Function
 
     Private Function AtKeyword(word As String) As Boolean
-        Return Cur.Type = TokenType.Keyword AndAlso Cur.Text = word
+        Return Cur.name = TokenType.Keyword AndAlso Cur.text = word
     End Function
 
     Private Function Match(text As String) As Boolean
@@ -64,7 +64,7 @@ Public NotInheritable Class Parser
 
     Private Function Eat(text As String) As Token
         If Not At(text) Then
-            Throw New ParseException($"expected '{text}' but found '{Cur.Text}' at {Cur.Line}:{Cur.Col}")
+            Throw New ParseException($"expected '{text}' but found '{Cur.text}' at {Cur.Location}")
         End If
         Dim t = Cur
         _pos += 1
@@ -73,14 +73,14 @@ Public NotInheritable Class Parser
 
     Private Sub EatKeyword(word As String)
         If Not AtKeyword(word) Then
-            Throw New ParseException($"expected '{word}' but found '{Cur.Text}' at {Cur.Line}:{Cur.Col}")
+            Throw New ParseException($"expected '{word}' but found '{Cur.text}' at {Cur.Location}")
         End If
         _pos += 1
     End Sub
 
     Private Function ExpectIdentifier() As String
-        If Cur.Type <> TokenType.Identifier Then
-            Throw New ParseException($"expected identifier but found '{Cur.Text}' at {Cur.Line}:{Cur.Col}")
+        If Cur.name <> TokenType.Identifier Then
+            Throw New ParseException($"expected identifier but found '{Cur.text}' at {Cur.Location}")
         End If
         Dim name = Cur.Text
         _pos += 1
@@ -90,15 +90,15 @@ Public NotInheritable Class Parser
     ''' <summary>Consume ';' or accept ASI (line break / '}' / EOF before current token).</summary>
     Private Sub ConsumeStatementEnd()
         If Match(";") Then Return
-        If At("}") OrElse Cur.Type = TokenType.Eof OrElse Cur.LineBreakBefore Then Return
-        Throw New ParseException($"expected ';' before '{Cur.Text}' at {Cur.Line}:{Cur.Col}")
+        If At("}") OrElse Cur.name = TokenType.Eof OrElse Cur.LineBreakBefore Then Return
+        Throw New ParseException($"expected ';' before '{Cur.text}' at {Cur.Location}")
     End Sub
 
     ' ---------------- program / statements ----------------
 
     Private Function ParseProgram() As Program
         Dim body As New List(Of Statement)
-        While Cur.Type <> TokenType.Eof
+        While Cur.name <> TokenType.Eof
             body.Add(ParseStatement())
         End While
         Return New Program(body)
@@ -115,8 +115,8 @@ Public NotInheritable Class Parser
             Dim b = ParseBlock()
             Return New BlockStmt(b)
         End If
-        If Cur.Type = TokenType.Keyword Then
-            Select Case Cur.Text
+        If Cur.name = TokenType.Keyword Then
+            Select Case Cur.text
                 Case "var", "let", "const" : Dim s = ParseVar() : ConsumeStatementEnd() : Return s
                 Case "function" : Return ParseFunctionDecl()
                 Case "if" : Return ParseIf()
@@ -138,7 +138,7 @@ Public NotInheritable Class Parser
                     If _funcDepth = 0 Then Throw New ParseException("'return' outside of a function")
                     Dim value As Expression = Nothing
                     ' ASI: return [linebreak] → value-less return
-                    If Not At(";") AndAlso Not At("}") AndAlso Cur.Type <> TokenType.Eof AndAlso
+                    If Not At(";") AndAlso Not At("}") AndAlso Cur.name <> TokenType.Eof AndAlso
                        Not Cur.LineBreakBefore Then
                         value = ParseExpression()
                     End If
@@ -152,9 +152,9 @@ Public NotInheritable Class Parser
                     Return New ThrowStmt(v)
                 Case "try" : Return ParseTry()
                 Case "this"
-                    Throw New ParseException("'this' is not supported by this parser (line " & Cur.Line & ")")
+                    Throw New ParseException("'this' is not supported by this parser (line " & Cur.span.line & ")")
                 Case "new"
-                    Throw New ParseException("'new' is not supported by this parser (line " & Cur.Line & ")")
+                    Throw New ParseException("'new' is not supported by this parser (line " & Cur.span.line & ")")
             End Select
         End If
         Dim expr = ParseExpression()
@@ -166,7 +166,7 @@ Public NotInheritable Class Parser
         Eat("{")
         Dim body As New List(Of Statement)
         While Not At("}")
-            If Cur.Type = TokenType.Eof Then Throw New ParseException("missing '}' — unexpected end of input")
+            If Cur.name = TokenType.Eof Then Throw New ParseException("missing '}' — unexpected end of input")
             body.Add(ParseStatement())
         End While
         Eat("}")
@@ -330,10 +330,10 @@ Public NotInheritable Class Parser
 
     Private Function ParseAssignment() As Expression
         ' arrow function: single identifier followed by "=>" on the same line
-        If Cur.Type = TokenType.Identifier AndAlso _pos + 1 < _tokens.Count Then
+        If Cur.name = TokenType.Identifier AndAlso _pos + 1 < _tokens.Count Then
             Dim nxt = _tokens(_pos + 1)
-            If nxt.Type = TokenType.Punct AndAlso nxt.Text = "=>" AndAlso Not nxt.LineBreakBefore Then
-                Dim pname = Cur.Text
+            If nxt.name = TokenType.Punct AndAlso nxt.text = "=>" AndAlso Not nxt.LineBreakBefore Then
+                Dim pname = Cur.text
                 _pos += 2
                 Return ParseArrowBody({pname})
             End If
@@ -348,7 +348,7 @@ Public NotInheritable Class Parser
                 _pos += 1
             Else
                 Do
-                    If Cur.Type <> TokenType.Identifier Then ok = False : Exit Do
+                    If Cur.name <> TokenType.Identifier Then ok = False : Exit Do
                     parameters.Add(Cur.Text)
                     _pos += 1
                     If At(",") Then
@@ -369,10 +369,10 @@ Public NotInheritable Class Parser
         End If
 
         Dim left = ParseConditional()
-        If Cur.Type = TokenType.Punct AndAlso
-           (Cur.Text = "=" OrElse Cur.Text = "+=" OrElse Cur.Text = "-=" OrElse
-            Cur.Text = "*=" OrElse Cur.Text = "/=" OrElse Cur.Text = "%=") Then
-            Dim op = Cur.Text
+        If Cur.name = TokenType.Punct AndAlso
+           (Cur.text = "=" OrElse Cur.text = "+=" OrElse Cur.text = "-=" OrElse
+            Cur.text = "*=" OrElse Cur.text = "/=" OrElse Cur.text = "%=") Then
+            Dim op = Cur.text
             _pos += 1
             Dim right = ParseAssignment()
             If Not (TypeOf left Is IdentExpr OrElse TypeOf left Is MemberExpr) Then
@@ -430,8 +430,8 @@ Public NotInheritable Class Parser
 
     Private Function ParseEquality() As Expression
         Dim left = ParseRelational()
-        While Cur.Type = TokenType.Punct AndAlso
-              (Cur.Text = "==" OrElse Cur.Text = "!=" OrElse Cur.Text = "===" OrElse Cur.Text = "!==")
+        While Cur.name = TokenType.Punct AndAlso
+              (Cur.text = "==" OrElse Cur.text = "!=" OrElse Cur.text = "===" OrElse Cur.text = "!==")
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseRelational())
@@ -441,8 +441,8 @@ Public NotInheritable Class Parser
 
     Private Function ParseRelational() As Expression
         Dim left = ParseAdditive()
-        While Cur.Type = TokenType.Punct AndAlso
-              (Cur.Text = "<" OrElse Cur.Text = "<=" OrElse Cur.Text = ">" OrElse Cur.Text = ">=")
+        While Cur.name = TokenType.Punct AndAlso
+              (Cur.text = "<" OrElse Cur.text = "<=" OrElse Cur.text = ">" OrElse Cur.text = ">=")
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseAdditive())
@@ -481,7 +481,7 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParseUnary() As Expression
-        If Cur.Type = TokenType.Keyword AndAlso Cur.Text = "typeof" Then
+        If Cur.name = TokenType.Keyword AndAlso Cur.text = "typeof" Then
             _pos += 1
             Return New UnaryExpr("typeof", ParseUnary())
         End If
@@ -545,7 +545,7 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParsePrimary() As Expression
-        Select Case Cur.Type
+        Select Case Cur.name
             Case TokenType.Number
                 Dim v = CDbl(Cur.Value)
                 _pos += 1
@@ -555,7 +555,7 @@ Public NotInheritable Class Parser
                 _pos += 1
                 Return New LiteralExpr(s)
             Case TokenType.Identifier
-                Dim name = Cur.Text
+                Dim name = Cur.text
                 _pos += 1
                 Return New IdentExpr(name)
             Case TokenType.Punct
@@ -582,12 +582,12 @@ Public NotInheritable Class Parser
                     If Not At("}") Then
                         Do
                             Dim key As String
-                            Select Case Cur.Type
-                                Case TokenType.Identifier, TokenType.Keyword : key = Cur.Text : _pos += 1
+                            Select Case Cur.name
+                                Case TokenType.Identifier, TokenType.Keyword : key = Cur.text : _pos += 1
                                 Case TokenType.String : key = CStr(Cur.Value) : _pos += 1
                                 Case TokenType.Number : key = JsRuntime.JsStr(CDbl(Cur.Value)) : _pos += 1
                                 Case Else
-                                    Throw New ParseException($"bad object key '{Cur.Text}' at {Cur.Line}:{Cur.Col}")
+                                    Throw New ParseException($"bad object key '{Cur.text}' at {Cur.Location}")
                             End Select
                             Eat(":")
                             props.Add(New KeyValuePair(Of String, Expression)(key, ParseAssignment()))
@@ -597,8 +597,8 @@ Public NotInheritable Class Parser
                     Return New ObjectExpr(props)
                 End If
         End Select
-        If Cur.Type = TokenType.Keyword Then
-            Select Case Cur.Text
+        If Cur.name = TokenType.Keyword Then
+            Select Case Cur.text
                 Case "true" : _pos += 1 : Return New LiteralExpr(True)
                 Case "false" : _pos += 1 : Return New LiteralExpr(False)
                 Case "null" : _pos += 1 : Return New LiteralExpr(Nothing)
@@ -606,14 +606,14 @@ Public NotInheritable Class Parser
                 Case "function"
                     _pos += 1
                     Dim name As String = Nothing
-                    If Cur.Type = TokenType.Identifier Then
-                        name = Cur.Text
+                    If Cur.name = TokenType.Identifier Then
+                        name = Cur.text
                         _pos += 1
                     End If
                     Return ParseFunctionRest(name)
             End Select
         End If
-        Throw New ParseException($"unexpected token '{Cur.Text}' at {Cur.Line}:{Cur.Col}")
+        Throw New ParseException($"unexpected token '{Cur.text}' at {Cur.Location}")
     End Function
 
 End Class

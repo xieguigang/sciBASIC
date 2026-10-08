@@ -30,7 +30,7 @@ Public NotInheritable Class Lexer
         While True
             Dim t = lx.NextToken(False)      ' line-break detection restarts per token
             tokens.Add(t)
-            If t.Type = TokenType.Eof Then Exit While
+            If t.name = TokenType.Eof Then Exit While
         End While
         Return tokens
     End Function

@@ -28,13 +28,13 @@ Public Class LiteJsTests
     <Fact>
     Public Sub Lexer_TokensAndLineBreakFlag()
         Dim ts = Lexer.Lex("var x = 1;" & vbLf & "y")
-        Assert.Equal(TokenType.Keyword, ts(0).Type)
+        Assert.Equal(TokenType.Keyword, ts(0).name)
         Assert.Equal("var", ts(0).Text)
-        Assert.Equal(TokenType.Number, ts(3).Type)
+        Assert.Equal(TokenType.Number, ts(3).name)
         Assert.Equal(1.0, CDbl(ts(3).Value))
         Assert.False(ts(4).LineBreakBefore)   ' ';'
         Assert.True(ts(5).LineBreakBefore)    ' 'y'
-        Assert.Equal(2, ts(5).Line)
+        Assert.Equal(2, ts(5).span.line)
     End Sub
 
     <Fact>
@@ -52,7 +52,7 @@ Public Class LiteJsTests
     <Fact>
     Public Sub Lexer_CommentsAndNumbers()
         Dim ts = Lexer.Lex("// c" & vbLf & "var x = 0.5e2;")
-        Assert.Equal(TokenType.Number, ts(3).Type)
+        Assert.Equal(TokenType.Number, ts(3).name)
         Assert.Equal(50.0, CDbl(ts(3).Value))
     End Sub
 
