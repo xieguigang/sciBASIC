@@ -776,6 +776,16 @@ Namespace Render.CSS
             End Set
         End Property
 
+        ''' <summary>
+        ''' the drop shadow of the box, the value is a raw css string like
+        ''' ``2px 2px 4px rgba(0, 0, 0, 0.45)`` and it is parsed by the ui
+        ''' engine that draws the box.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("box-shadow")>
+        <DefaultValue("")>
+        Public Property BoxShadow() As String
+
 
         <CssProperty("corner-nw-radius")>
         <DefaultValue("0")>
