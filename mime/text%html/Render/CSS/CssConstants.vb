@@ -77,7 +77,17 @@ Namespace Render.CSS
         Public Const Hide As String = "hide"
         Public Const Inherit As String = "inherit"
         Public Const Inline As String = "inline"
+        ''' <summary>
+        ''' the ``inline-block`` display mode: the box itself is laid out as an
+        ''' inline level box, but its content is laid out as a block box.
+        ''' </summary>
+        Public Const InlineBlock As String = "inline-block"
         Public Const InlineTable As String = "inline-table"
+        ''' <summary>
+        ''' the ``fixed`` position mode: the box is removed from the normal flow
+        ''' and is placed against the edges of its containing block.
+        ''' </summary>
+        Public Const Fixed As String = "fixed"
         Public Const Inset As String = "inset"
         Public Const Italic As String = "italic"
         Public Const Justify As String = "justify"

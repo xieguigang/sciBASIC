@@ -222,7 +222,6 @@ Namespace Render.CSS
         Private _borderSpacing As String
         Private _borderCollapse As String
         Private _border As String
-        Private _bottom As String
         Private _color As String
         Private _cornerNWRadius As String
         Private _cornerNERadius As String
@@ -2499,7 +2498,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="attribute">Attribute to retrieve</param>
         ''' <returns>Attribute value or string.Empty if no attribute specified</returns>
-        Friend Function GetAttribute(attribute As String) As String
+        Public Function GetAttribute(attribute As String) As String
             Return GetAttribute(attribute, String.Empty)
         End Function
 
@@ -2509,7 +2508,7 @@ Namespace Render.CSS
         ''' <param name="attribute">Attribute to retrieve</param>
         ''' <param name="defaultValue">Value to return if attribute is not specified</param>
         ''' <returns>Attribute value or defaultValue if no attribute specified</returns>
-        Friend Function GetAttribute(attribute As String, defaultValue As String) As String
+        Public Function GetAttribute(attribute As String, defaultValue As String) As String
             If HtmlTag Is Nothing Then
                 Return defaultValue
             End If
@@ -2764,7 +2763,7 @@ Namespace Render.CSS
 
             MeasureWordsSize(g)
 
-            If Display = CssConstants.Block OrElse Display = CssConstants.ListItem OrElse Display = CssConstants.Table OrElse Display = CssConstants.InlineTable OrElse Display = CssConstants.TableCell OrElse Display = CssConstants.None Then
+            If Display = CssConstants.Block OrElse Display = CssConstants.ListItem OrElse Display = CssConstants.Table OrElse Display = CssConstants.InlineTable OrElse Display = CssConstants.InlineBlock OrElse Display = CssConstants.TableCell OrElse Display = CssConstants.None Then
                 '#Region "Measure Bounds"
                 If Display <> CssConstants.TableCell Then
                     Dim prevSibling As CssBox = GetPreviousSibling(Me)
@@ -2793,6 +2792,21 @@ Namespace Render.CSS
 
                     '#End Region
                     Size = New SizeF(width__1, Size.Height)
+
+                    ' the height of a block box, the original html renderer
+                    ' only grows a box by the size of its own content, while a
+                    ' user interface declaration always gives an explicit
+                    ' height to its controls
+                    Call ApplyCssHeight()
+                End If
+
+                ' an absolutely positioned box is removed from the normal flow
+                ' of the document, its location is resolved against the edges
+                ' of the containing block instead. the horizontal offset is
+                ' applied before the child boxes are measured so that they are
+                ' laid out at the right place.
+                If IsAbsolutelyPositioned Then
+                    Call ApplyAbsolutePosition(applyVertical:=True)
                 End If
 
                 'If we're talking about a table here..
@@ -2825,11 +2839,92 @@ Namespace Render.CSS
                 End If
             End If
 
+            ' the content of the box has grown its height, so the explicit css
+            ' height and the vertical offset of an absolutely positioned box
+            ' that is aligned through the bottom edge are resolved at here
+            Call ApplyCssHeight()
+
+            If IsAbsolutelyPositioned Then
+                Call ApplyAbsolutePosition(applyVertical:=True)
+            End If
+
             If InitialContainer IsNot Nothing Then
                 InitialContainer.MaximumSize = New SizeF(
                     std.Max(InitialContainer.MaximumSize.Width, ActualRight),
                     std.Max(InitialContainer.MaximumSize.Height, ActualBottom))
             End If
+        End Sub
+
+        ''' <summary>
+        ''' Applies the explicit css height of this box: the original html
+        ''' renderer only grows a box by the size of its own content, while a
+        ''' user interface declaration always gives an explicit height to its
+        ''' controls.
+        ''' </summary>
+        Private Sub ApplyCssHeight()
+            If Height = CssConstants.Auto OrElse String.IsNullOrEmpty(Height) Then
+                Return
+            End If
+
+            Dim availHeight As Single = ContainingBlock.Size.Height _
+                - ContainingBlock.ActualPaddingTop - ContainingBlock.ActualPaddingBottom _
+                - ContainingBlock.ActualBorderTopWidth - ContainingBlock.ActualBorderBottomWidth _
+                - ActualMarginTop - ActualMarginBottom _
+                - ActualBorderTopWidth - ActualBorderBottomWidth
+
+            Size = New SizeF(Size.Width, CssValue.ParseLength(Height, availHeight, Me))
+        End Sub
+
+        ''' <summary>
+        ''' Is this box removed from the normal flow of the document and placed
+        ''' against the edges of its containing block?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsAbsolutelyPositioned As Boolean
+            Get
+                Return Position = CssConstants.Absolute OrElse Position = CssConstants.Fixed
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Resolves the location of an absolutely positioned box against the
+        ''' padding box of its containing block, following the standard css
+        ''' rule: ``left`` and ``top`` are the offsets of the left and the top
+        ''' edge of the box, while ``right`` and ``bottom`` are the offsets of
+        ''' the right and the bottom edge of the box.
+        ''' </summary>
+        ''' <param name="applyVertical">
+        ''' the vertical offset requires the final height of the box, so it is
+        ''' applied again after the content of the box has been measured.
+        ''' </param>
+        Private Sub ApplyAbsolutePosition(Optional applyVertical As Boolean = True)
+            Dim area As RectangleF = ContainingBlock.ClientRectangle
+            Dim hasLeft As Boolean = Not String.IsNullOrEmpty(Left) AndAlso Left <> CssConstants.Auto
+            Dim hasRight As Boolean = Not String.IsNullOrEmpty(Right) AndAlso Right <> CssConstants.Auto
+            Dim hasTop As Boolean = Not String.IsNullOrEmpty(Top) AndAlso Top <> CssConstants.Auto
+            Dim hasBottom As Boolean = Not String.IsNullOrEmpty(Bottom) AndAlso Bottom <> CssConstants.Auto
+
+            Dim x As Single = Location.X
+            Dim y As Single = Location.Y
+
+            ' a percentage value of the offsets is relative to the size of the
+            ' containing block, ``left`` wins over ``right`` and ``top`` wins
+            ' over ``bottom`` when both of them are specified.
+            If hasLeft Then
+                x = area.Left + CssValue.ParseLength(Left, area.Width, Me)
+            ElseIf hasRight Then
+                x = area.Right - CssValue.ParseLength(Right, area.Width, Me) - Size.Width
+            End If
+
+            If applyVertical Then
+                If hasTop Then
+                    y = area.Top + CssValue.ParseLength(Top, area.Height, Me)
+                ElseIf hasBottom Then
+                    y = area.Bottom - CssValue.ParseLength(Bottom, area.Height, Me) - Size.Height
+                End If
+            End If
+
+            Location = New PointF(x, y)
         End Sub
 
         ''' <summary>
