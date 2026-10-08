@@ -5,10 +5,13 @@
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
+    <StartupObject>test.HTMLParserTest</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\text%markdown\markdown.NET5.vbproj" />
     <ProjectReference Include="..\html_netcore5.vbproj" />
   </ItemGroup>
  

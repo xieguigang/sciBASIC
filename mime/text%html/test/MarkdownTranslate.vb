@@ -109,10 +109,10 @@ Dim a$ = "12345"
 
     Sub Main()
 
-        Dim codeTest = New MarkdownHTML().Transform(codeBlockTest)
+        Dim codeTest = New MarkdownRender().Transform(codeBlockTest)
 
 
-        Dim html = New MarkdownHTML().Transform(testMarkdown)
+        Dim html = New MarkdownRender().Transform(testMarkdown)
 
 
         Pause()

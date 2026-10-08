@@ -104,7 +104,7 @@ End Function
 
         ' md = "G:\temp\reports.md".ReadAllText
 
-        Call New MarkdownHTML().Transform(md).SaveTo("./test.html", Encoding.UTF8)
+        Call New MarkdownRender().Transform(md).SaveTo("./test.html", Encoding.UTF8)
 
         Pause()
     End Sub
