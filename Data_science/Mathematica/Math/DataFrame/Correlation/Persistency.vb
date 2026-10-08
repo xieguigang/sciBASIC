@@ -210,7 +210,7 @@ Public Class CorrelationMatrixWriter : Implements IDisposable
     ''' <param name="compression">Brotli 压缩级别</param>
     ''' <remarks>
     ''' 典型用途：矩阵数据与索引存入外部自定义的存储流（对象存储、加密流、网络流等）。
-    ''' 配套的读端为 <see cref="CorrelationMatrixStore.Open(Stream, Stream, Integer)"/>，
+    ''' 配套的读端为 <see cref="CorrelationMatrixStore.Open"/>，
     ''' 其数据流要求可读且可查找（随机访问行块）。
     ''' </remarks>
     Sub New(dataOutput As Stream,
@@ -576,7 +576,7 @@ End Class
 ''' 支持两种打开方式：
 ''' <list type="bullet">
 ''' <item><see cref="Open(String, Integer)"/>：文件路径模式（数据文件 + <c>{path}.index</c> 索引文件）；</item>
-''' <item><see cref="Open(Stream, Stream, Integer)"/>：外部 Stream 模式——矩阵数据与索引分别从
+''' <item><see cref="Open"/>：外部 Stream 模式——矩阵数据与索引分别从
 ''' 调用方提供的两个自定义流读取（与 <see cref="CorrelationMatrixWriter"/> 的流模式构造配套），
 ''' 数据流要求可读且可查找；若实际是 <see cref="FileStream"/> 会自动走无锁句柄读路径，
 ''' 其他流走 Seek + Read + 锁。</item>
@@ -718,7 +718,7 @@ Public Class CorrelationMatrixStore : Implements IDisposable
     ''' 行块按索引中的偏移量随机访问。本对象不会关闭该流（生命周期归调用方所有）。
     ''' 若该流实际是 <see cref="FileStream"/>，会自动使用其句柄走无锁并发读路径。
     ''' </param>
-    ''' <param name="index">索引的输入流（<see cref="Complete"/> 写出的 Brotli 压缩索引），必须可读</param>
+    ''' <param name="index">索引的输入流（"Complete" 写出的 Brotli 压缩索引），必须可读</param>
     ''' <param name="cacheRows">热行 LRU 缓存容量（行数），默认 64 行</param>
     ''' <param name="storePath">
     ''' 可选的数据文件路径记录：外部流背后若实际有对应的磁盘文件（例如 R# 侧的

@@ -91,17 +91,12 @@ Namespace TabularRender
             End With
         End Function
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
         ''' <param name="s"></param>
         ''' <param name="q">默认值为1，表示不会移除任何值</param>
         ''' <returns></returns>
         ''' <summary>
         ''' 按给定的分位数裁掉 Y 方向上的离群点
         ''' </summary>
-        ''' <param name="s"></param>
-        ''' <param name="q">默认值为 1，表示不会移除任何值</param>
         <Extension>
         Public Function RemovesYOutlier(s As Plots.Series, Optional q# = 1) As Plots.Series
             If q = 1.0R Then
