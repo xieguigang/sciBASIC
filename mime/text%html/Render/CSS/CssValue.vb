@@ -296,7 +296,19 @@ Namespace Render.CSS
                 End Select
 
                 If String.IsNullOrEmpty(hex) Then
-                    Return onError
+                    ' only the basic set of the css color keywords is listed
+                    ' above, any other color name (the whole set of the x11 and
+                    ' the web color names) is resolved by the color translator
+                    ' of the imaging namespace
+                    Dim resolved As Boolean = False
+                    Dim named As Color = Global.Microsoft.VisualBasic.Imaging.GDIColors.TranslateColor(
+                        colorValue, throwEx:=False, success:=resolved)
+
+                    If Not resolved Then
+                        Return onError
+                    Else
+                        Return named
+                    End If
                 Else
                     Dim c As Color = GetActualColor(hex)
                     r = c.R

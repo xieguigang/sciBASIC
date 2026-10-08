@@ -756,6 +756,26 @@ Namespace Render.CSS
             End Set
         End Property
 
+        ''' <summary>
+        ''' the standard css name of the <see cref="CornerRadius"/> property
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this engine uses the ``corner-radius`` name for the corner radius of
+        ''' a box, this property is just an alias of it so that a stylesheet
+        ''' that follows the standard css specification can be used as well.
+        ''' </remarks>
+        <CssProperty("border-radius")>
+        <DefaultValue("0")>
+        Public Property BorderRadius() As String
+            Get
+                Return CornerRadius
+            End Get
+            Set
+                CornerRadius = Value
+            End Set
+        End Property
+
 
         <CssProperty("corner-nw-radius")>
         <DefaultValue("0")>
@@ -2340,6 +2360,51 @@ Namespace Render.CSS
 
 
                 Return _rectangles
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets the rectangle that should be used to paint this box.
+        ''' </summary>
+        ''' <remarks>
+        ''' An inline box does not own a location or a size of its own: its
+        ''' geometry is described by the line boxes that host its words, so the
+        ''' union of these rectangles is returned at here, while a block box
+        ''' simply returns its own bounds.
+        ''' </remarks>
+        Public ReadOnly Property PaintBounds() As RectangleF
+            Get
+                If _rectangles IsNot Nothing AndAlso _rectangles.Count > 0 Then
+                    Dim left As Single = Single.MaxValue
+                    Dim top As Single = Single.MaxValue
+                    Dim right As Single = Single.MinValue
+                    Dim bottom As Single = Single.MinValue
+
+                    For Each rect As RectangleF In _rectangles.Values
+                        If Single.IsInfinity(rect.Width) OrElse Single.IsInfinity(rect.Height) Then
+                            Continue For
+                        End If
+
+                        If rect.Left < left Then
+                            left = rect.Left
+                        End If
+                        If rect.Top < top Then
+                            top = rect.Top
+                        End If
+                        If rect.Right > right Then
+                            right = rect.Right
+                        End If
+                        If rect.Bottom > bottom Then
+                            bottom = rect.Bottom
+                        End If
+                    Next
+
+                    If left <= right AndAlso top <= bottom Then
+                        Return RectangleF.FromLTRB(left, top, right, bottom)
+                    End If
+                End If
+
+                Return Bounds
             End Get
         End Property
 
