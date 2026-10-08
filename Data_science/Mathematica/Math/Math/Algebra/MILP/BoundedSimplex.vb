@@ -189,11 +189,29 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Private iters As Integer
         Private diagnostic As String = ""
 
+        ' ---------- LU 增量更新状态 ----------
+        ''' <summary>
+        ''' 基矩阵的产品形式更新器。Refresh 不再每次迭代做 O(m³) 全量分解，
+        ''' 而是「换基时 O(m²) 秩 1 修正 + 达到上限/闸门触发时完整重构」。
+        ''' </summary>
+        Private ReadOnly _lu As LuUpdater
+        ''' <summary>建立当前基分解时的基快照；为空表示必须完整重构。</summary>
+        Private _factorBasis As Integer()
+        ''' <summary>
+        ''' 自上次完整重构以来的换基次数。与 <c>_lu.PendingUpdates</c> 比对即可
+        ''' 防御式地发现「漏掉某个换基点」：一旦不等就强制完整重构，
+        ''' 最坏情况退化为优化前的行为，而不会静默算错。
+        ''' </summary>
+        Private _basisEdits As Integer = 0
+
         Public Sub New(A As Double(,), b As Double(), c As Double(), l As Double(), u As Double(),
                        Optional tolP As Double = 0.0000001,
                        Optional tolD As Double = 0.0000001,
                        Optional pivotEps As Double = 0.000000001,
-                       Optional rangeEps As Double = 0.000000001)
+                       Optional rangeEps As Double = 0.000000001,
+                       Optional luOptions As LuUpdateOptions = Nothing)
+
+            Me._lu = New LuUpdater(luOptions)
 
             Me.Arows = MilpKernels.ToRows(A)
             Me.Acols = MilpKernels.TransposeRows(A)
