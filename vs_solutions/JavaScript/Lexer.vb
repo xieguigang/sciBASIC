@@ -1,7 +1,5 @@
-Option Strict On
-Option Explicit On
-
 Imports System.Globalization
+Imports System.Text
 
 ''' <summary>
 ''' JavaScript lexer (ES5-core subset): numbers, strings with escapes,
@@ -175,7 +173,7 @@ Public NotInheritable Class Lexer
             End While
             Dim hx = _src.Substring(start + 2, _pos - start - 2)
             Dim v As Long
-            If Not Long.TryParse(hx, Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, v) Then
+            If Not Long.TryParse(hx, NumberStyles.HexNumber, CultureInfo.InvariantCulture, v) Then
                 Throw New ParseException($"invalid hex literal at {sl}:{sc}")
             End If
             Return Make(TokenType.Number, _src.Substring(start, _pos - start), CDbl(v), sl, sc, brk)
@@ -217,7 +215,7 @@ Public NotInheritable Class Lexer
 
     Private Function ScanString(sl As Integer, sc As Integer, brk As Boolean) As Token
         Dim quote = Cur
-        Dim sb As New Text.StringBuilder()
+        Dim sb As New StringBuilder()
         Advance()
         While True
             If _pos >= _src.Length Then Throw New ParseException($"unterminated string starting at {sl}:{sc}")
@@ -241,7 +239,7 @@ Public NotInheritable Class Lexer
                     Case """"c, "'"c, "\"c, "/"c : sb.Append(esc)
                     Case "u"c
                         Advance()
-                        Dim hex As New Text.StringBuilder()
+                        Dim hex As New StringBuilder()
                         For i = 1 To 4
                             If _pos >= _src.Length OrElse Not Uri.IsHexDigit(Cur) Then
                                 Throw New ParseException($"bad \\u escape at {sl}:{sc}")
@@ -253,7 +251,7 @@ Public NotInheritable Class Lexer
                         Continue While
                     Case "x"c
                         Advance()
-                        Dim hex As New Text.StringBuilder()
+                        Dim hex As New StringBuilder()
                         For i = 1 To 2
                             If _pos >= _src.Length OrElse Not Uri.IsHexDigit(Cur) Then
                                 Throw New ParseException($"bad \\x escape at {sl}:{sc}")

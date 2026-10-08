@@ -1,16 +1,6 @@
-Option Strict On
-Option Explicit On
-
 Imports System.Globalization
+Imports System.Text
 
-''' <summary>
-''' The single source of JavaScript dynamic semantics used by BOTH the
-''' interpreter and the generated VB.NET code: weak typing, truthiness,
-''' loose/strict equality, member/index access, invocation and all builtin
-''' objects (console, Math, JSON, array &amp; string methods ...).
-''' <para>The generated code calls these functions directly, so a translated
-''' script behaves exactly like the interpreted one.</para>
-''' </summary>
 Namespace Runtime
 
     ''' <summary>Sink for console.log etc.; records lines for test/e2e comparison.</summary>
@@ -170,7 +160,7 @@ Namespace Runtime
             If Double.IsNaN(d) Then Return "NaN"
             If Double.IsPositiveInfinity(d) Then Return "Infinity"
             If Double.IsNegativeInfinity(d) Then Return "-Infinity"
-            If d = System.Math.Truncate(d) AndAlso System.Math.Abs(d) < 1.0E15 Then
+            If d = System.Math.Truncate(d) AndAlso System.Math.Abs(d) < 1.0E+15 Then
                 Return CLng(d).ToString(CultureInfo.InvariantCulture)
             End If
             Return d.ToString("R", CultureInfo.InvariantCulture)
@@ -863,7 +853,7 @@ Namespace Runtime
                 Case "padStart"
                     Dim n = CInt(JsNum(Arg(args, 0)))
                     Dim pad = If(args.Length > 1, JsStr(args(1)), " ")
-                    Dim sb As New Text.StringBuilder()
+                    Dim sb As New StringBuilder()
                     While sb.Length < n - s.Length
                         sb.Append(pad)
                     End While

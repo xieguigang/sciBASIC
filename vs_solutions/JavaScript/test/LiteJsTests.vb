@@ -1,10 +1,8 @@
 Option Strict On
 Option Explicit On
 
-Imports System.IO
-Imports System.Linq
-Imports LiteJs
-Imports LiteJs.Runtime
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports Xunit
 
 ''' <summary>Lexer / parser / interpreter / code-generator tests.</summary>

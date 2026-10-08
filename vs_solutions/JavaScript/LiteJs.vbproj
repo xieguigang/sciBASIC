@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>LiteJs</RootNamespace>
-    <AssemblyName>LiteJs</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</AssemblyName>
     <LangVersion>latest</LangVersion>
     <Version>1.0.0</Version>
     <Description>Lightweight JavaScript parser, tree-walking interpreter and JS-to-VB.NET code generator. Pure VB.NET, .NET BCL only.</Description>
@@ -11,6 +11,8 @@
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
     <Platforms>AnyCPU;x64</Platforms>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

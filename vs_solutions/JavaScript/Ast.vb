@@ -8,9 +8,6 @@ Option Explicit On
 ''' <para>Both the tree-walking <see cref="Interpreter"/> and the VB.NET
 ''' <see cref="CodeGenerator"/> operate on this object model.</para>
 ''' </summary>
-
-' ============================ expressions ============================
-
 Public MustInherit Class Expression
 End Class
 

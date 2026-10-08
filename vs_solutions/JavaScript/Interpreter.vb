@@ -1,7 +1,4 @@
-Option Strict On
-Option Explicit On
-
-Imports LiteJs.Runtime
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 
 ''' <summary>
 ''' Tree-walking interpreter over the AST: environment chains, closures,
