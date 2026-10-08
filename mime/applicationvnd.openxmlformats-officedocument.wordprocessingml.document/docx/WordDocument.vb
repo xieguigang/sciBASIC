@@ -356,15 +356,8 @@ Public Class WordDocument : Implements IDocumentWriter
             If i > 0 Then
                 _body.Append("<w:r><w:br/></w:r>")
             End If
-            _body.Append("<w:r><w:rPr>")
-            _body.Append($"<w:rFonts w:ascii=""{style.FontName}"" w:eastAsia=""{style.FontNameEastAsia}"" w:hAnsi=""{style.FontName}""/>")
-            If style.Bold Then _body.Append("<w:b/>")
-            If style.Italic Then _body.Append("<w:i/>")
-            If style.Underline Then _body.Append("<w:u w:val=""single""/>")
-            _body.Append($"<w:color w:val=""{style.ForeColor}""/>")
-            _body.Append($"<w:sz w:val=""{CInt(style.Size * 2)}""/>")
-            _body.Append("</w:rPr>")
-            _body.Append($"<w:t xml:space=""preserve"">{XEsc(lines(i))}</w:t></w:r>")
+
+            Call AppendInlineRuns(lines(i), style)
         Next
 
         _body.Append("</w:p>")
@@ -570,6 +563,14 @@ Public Class WordDocument : Implements IDocumentWriter
 
         ' 表头行
         If headers IsNot Nothing AndAlso headers.Length > 0 Then
+            Dim headerStyle As New WordStyle With {
+                .FontName = _paragraphStyle.FontName,
+                .FontNameEastAsia = _paragraphStyle.FontNameEastAsia,
+                .Size = _paragraphStyle.Size,
+                .Bold = ts.HeaderBold,
+                .ForeColor = ts.HeaderForeColor
+            }
+
             _body.Append("<w:tr><w:trPr><w:tblHeader/></w:trPr>")
             For c As Integer = 0 To nCols - 1
                 _body.Append("<w:tc><w:tcPr>")
@@ -579,12 +580,9 @@ Public Class WordDocument : Implements IDocumentWriter
                 _body.Append($"<w:vAlign w:val=""center""/></w:tcPr>")
                 _body.Append("<w:p><w:pPr>")
                 If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
-                _body.Append("</w:pPr><w:r><w:rPr>")
-                _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
-                If ts.HeaderBold Then _body.Append("<w:b/>")
-                _body.Append($"<w:color w:val=""{ts.HeaderForeColor}""/>")
-                _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/></w:rPr>")
-                _body.Append($"<w:t xml:space=""preserve"">{XEsc(If(c < headers.Length, headers(c), ""))}</w:t></w:r></w:p></w:tc>")
+                _body.Append("</w:pPr>")
+                Call AppendInlineRuns(If(c < headers.Length, headers(c), ""), headerStyle)
+                _body.Append("</w:p></w:tc>")
             Next
             _body.Append("</w:tr>")
         End If
@@ -603,10 +601,9 @@ Public Class WordDocument : Implements IDocumentWriter
                 _body.Append("<w:p><w:pPr>")
                 Dim align As String = GetAlign(alignments, c)
                 If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
-                _body.Append("</w:pPr><w:r><w:rPr>")
-                _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
-                _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/></w:rPr>")
-                _body.Append($"<w:t xml:space=""preserve"">{XEsc(If(c < If(row?.Length, 0), row(c), ""))}</w:t></w:r></w:p></w:tc>")
+                _body.Append("</w:pPr>")
+                Call AppendInlineRuns(If(c < If(row?.Length, 0), row(c), ""), _paragraphStyle, noLinks:=True)
+                _body.Append("</w:p></w:tc>")
             Next
             _body.Append("</w:tr>")
         Next
@@ -755,10 +752,9 @@ Public Class WordDocument : Implements IDocumentWriter
                 _body.Append("<w:p><w:pPr>")
                 Dim align As String = GetAlign(alignments, c)
                 If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
-                _body.Append("</w:pPr><w:r><w:rPr>")
-                _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
-                _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/></w:rPr>")
-                _body.Append($"<w:t xml:space=""preserve"">{XEsc(If(c < If(row?.Length, 0), row(c), ""))}</w:t></w:r></w:p></w:tc>")
+                _body.Append("</w:pPr>")
+                Call AppendInlineRuns(If(c < If(row?.Length, 0), row(c), ""), _paragraphStyle, noLinks:=True)
+                _body.Append("</w:p></w:tc>")
             Next
             _body.Append("</w:tr>")
         Next
@@ -1071,6 +1067,245 @@ Public Class WordDocument : Implements IDocumentWriter
     Private Shared Function PtToTwip(pt As Double) As Integer
         Return CInt(pt * 20)
     End Function
+
+    ' ========================================================================
+    ' 行内 markdown 解析（**加粗** / *斜体* / `代码` / [文本](url)）
+    ' ========================================================================
+    '
+    ' Paragraph 与 Table 单元格的文本统一走这里：把行内 markdown 标记解析成
+    ' 多个 <w:r> run（加粗/斜体/等宽代码/链接文本），无标记的纯文本行为与
+    ' 旧版完全一致（向后兼容）。
+    ' 限制：docx 包内未建立超链接 relationship，链接渲染为蓝色下划线文本并
+    ' 括注 url，不做真实可点击超链接。
+
+    ''' <summary>单个行内 run 的解析结果。</summary>
+    Private Class InlineRun
+
+        Public Text As String = ""
+        Public Bold As Boolean = False
+        Public Italic As Boolean = False
+        Public Code As Boolean = False
+        ''' <summary>链接目标 url（空串表示非链接 run）。</summary>
+        Public LinkUrl As String = ""
+
+    End Class
+
+    ''' <summary>反转义 markdown 转义序列：\| \\ \* \` \[ \] 等 → 字面字符。</summary>
+    Private Shared Function UnescapeMarkdown(text As String) As String
+        If String.IsNullOrEmpty(text) OrElse text.IndexOf("\"c) < 0 Then Return text
+
+        Dim sb As New StringBuilder(text.Length)
+        Dim i As Integer = 0
+
+        While i < text.Length
+            If text(i) = "\"c AndAlso i + 1 < text.Length Then
+                sb.Append(text(i + 1))
+                i += 2
+            Else
+                sb.Append(text(i))
+                i += 1
+            End If
+        End While
+
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>
+    ''' 行内 markdown 扫描器。escaped（\x）字符优先于一切标记判定；
+    ''' 代码/加粗/斜体片段内部递归解析，支持 **加粗*斜体*`代码`** 一类的嵌套。
+    ''' </summary>
+    Private Sub ParseInlineRuns(text As String,
+                                bold As Boolean,
+                                italic As Boolean,
+                                noLinks As Boolean,
+                                result As List(Of InlineRun))
+
+        Dim plain As New StringBuilder()
+        Dim flush As Action =
+            Sub()
+                If plain.Length > 0 Then
+                    result.Add(New InlineRun With {
+                        .Text = plain.ToString(),
+                        .Bold = bold,
+                        .Italic = italic
+                    })
+                    plain.Clear()
+                End If
+            End Sub
+
+        Dim i As Integer = 0
+
+        While i < text.Length
+            Dim c As Char = text(i)
+
+            ' ---- markdown 转义：\x → 字面 x ----
+            If c = "\"c AndAlso i + 1 < text.Length Then
+                plain.Append(text(i + 1))
+                i += 2
+                Continue While
+            End If
+
+            ' ---- 行内代码 `...` ----
+            If c = "`"c Then
+                Dim close As Integer = text.IndexOf("`"c, i + 1)
+
+                If close > i + 1 Then
+                    Call flush()
+                    result.Add(New InlineRun With {
+                        .Text = UnescapeMarkdown(text.Substring(i + 1, close - i - 1)),
+                        .Bold = bold,
+                        .Italic = italic,
+                        .Code = True
+                    })
+                    i = close + 1
+                    Continue While
+                End If
+
+                plain.Append(c)
+                i += 1
+                Continue While
+            End If
+
+            ' ---- 加粗 **...** ----
+            If c = "*"c AndAlso i + 1 < text.Length AndAlso text(i + 1) = "*"c Then
+                Dim close As Integer = text.IndexOf("**", i + 2)
+
+                If close > i + 2 Then
+                    Call flush()
+                    Dim inner As New List(Of InlineRun)()
+
+                    Call ParseInlineRuns(text.Substring(i + 2, close - i - 2), True, italic, noLinks, inner)
+
+                    For Each run As InlineRun In inner
+                        run.Bold = True
+                        result.Add(run)
+                    Next
+
+                    i = close + 2
+                    Continue While
+                End If
+
+                ' 未闭合：按字面处理
+                plain.Append("**")
+                i += 2
+                Continue While
+            End If
+
+            ' ---- 斜体 *...* ----
+            If c = "*"c Then
+                Dim close As Integer = text.IndexOf("*"c, i + 1)
+
+                If close > i + 1 Then
+                    Call flush()
+                    Dim inner As New List(Of InlineRun)()
+
+                    Call ParseInlineRuns(text.Substring(i + 1, close - i - 1), bold, True, noLinks, inner)
+
+                    For Each run As InlineRun In inner
+                        run.Italic = True
+                        result.Add(run)
+                    Next
+
+                    i = close + 1
+                    Continue While
+                End If
+
+                plain.Append(c)
+                i += 1
+                Continue While
+            End If
+
+            ' ---- 链接 [text](url) ----
+            If c = "["c AndAlso Not noLinks Then
+                Dim closeBracket As Integer = text.IndexOf("]"c, i + 1)
+
+                If closeBracket > i + 1 AndAlso
+                    closeBracket + 1 < text.Length AndAlso text(closeBracket + 1) = "("c Then
+
+                    Dim closeParen As Integer = text.IndexOf(")"c, closeBracket + 2)
+
+                    If closeParen > closeBracket + 2 Then
+                        Dim url As String = UnescapeMarkdown(text.Substring(closeBracket + 2, closeParen - closeBracket - 2))
+
+                        If url.Length > 0 Then
+                            Call flush()
+                            result.Add(New InlineRun With {
+                                .Text = UnescapeMarkdown(text.Substring(i + 1, closeBracket - i - 1)),
+                                .Bold = bold,
+                                .Italic = italic,
+                                .LinkUrl = url
+                            })
+                            i = closeParen + 1
+                            Continue While
+                        End If
+                    End If
+                End If
+
+                plain.Append(c)
+                i += 1
+                Continue While
+            End If
+
+            plain.Append(c)
+            i += 1
+        End While
+
+        Call flush()
+    End Sub
+
+    ''' <summary>把一段文本按行内 markdown 解析并直接写出 XML runs。</summary>
+    ''' <param name="noLinks">True 时不解析 [text](url) 链接（表格单元格使用）。</param>
+    Private Sub AppendInlineRuns(text As String, style As WordStyle, Optional noLinks As Boolean = False)
+        Dim runs As New List(Of InlineRun)()
+
+        Call ParseInlineRuns(If(text, ""), style.Bold, style.Italic, noLinks, runs)
+
+        For Each run As InlineRun In runs
+            Call AppendRunXml(run, style)
+        Next
+    End Sub
+
+    ''' <summary>把单个 run 写成 &lt;w:r&gt; XML 片段。</summary>
+    Private Sub AppendRunXml(run As InlineRun, style As WordStyle)
+        _body.Append("<w:r><w:rPr>")
+
+        If run.Code Then
+            Dim codeFont As String = If(_codeStyle IsNot Nothing, _codeStyle.FontName, "Consolas")
+            Dim codeEastAsia As String = If(_codeStyle IsNot Nothing, _codeStyle.FontNameEastAsia, codeFont)
+
+            _body.Append($"<w:rFonts w:ascii=""{codeFont}"" w:eastAsia=""{codeEastAsia}"" w:hAnsi=""{codeFont}""/>")
+        Else
+            _body.Append($"<w:rFonts w:ascii=""{style.FontName}"" w:eastAsia=""{style.FontNameEastAsia}"" w:hAnsi=""{style.FontName}""/>")
+        End If
+
+        If run.Bold OrElse style.Bold Then _body.Append("<w:b/>")
+        If run.Italic OrElse style.Italic Then _body.Append("<w:i/>")
+
+        If run.LinkUrl.Length > 0 Then
+            ' 无超链接 relationship，渲染为蓝色下划线文本 + 括注 url
+            _body.Append("<w:color w:val=""0563C1""/><w:u w:val=""single""/>")
+            _body.Append($"<w:sz w:val=""{CInt(style.Size * 2)}""/>")
+            _body.Append("</w:rPr>")
+            _body.Append($"<w:t xml:space=""preserve"">{XEsc(run.Text & $"（{run.LinkUrl}）")}</w:t></w:r>")
+            Return
+        End If
+
+        If run.Code Then
+            Dim codeColor As String = If(_codeStyle IsNot Nothing AndAlso _codeStyle.ForeColor.Length > 0, _codeStyle.ForeColor, "444444")
+            Dim codeSize As Double = If(_codeStyle IsNot Nothing, _codeStyle.Size, style.Size)
+
+            _body.Append($"<w:color w:val=""{codeColor}""/>")
+            _body.Append("<w:shd w:val=""clear"" w:color=""auto"" w:fill=""F2F2F2""/>")
+            _body.Append($"<w:sz w:val=""{CInt(codeSize * 2)}""/>")
+        Else
+            If style.Underline Then _body.Append("<w:u w:val=""single""/>")
+            _body.Append($"<w:color w:val=""{style.ForeColor}""/>")
+            _body.Append($"<w:sz w:val=""{CInt(style.Size * 2)}""/>")
+        End If
+
+        _body.Append("</w:rPr>")
+        _body.Append($"<w:t xml:space=""preserve"">{XEsc(run.Text)}</w:t></w:r>")
+    End Sub
 
     Private Shared Function XEsc(text As String) As String
         If String.IsNullOrEmpty(text) Then Return ""
