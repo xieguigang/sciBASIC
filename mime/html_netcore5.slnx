@@ -1,0 +1,15 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="../Microsoft.VisualBasic.Core/src/Core.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="text%html/html_netcore5.vbproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="text%html/Test/test.vbproj" Id="bf580aa1-8ba7-42bf-b567-134d4fa6d17d">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+</Solution>

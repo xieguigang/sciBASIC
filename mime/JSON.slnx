@@ -1,0 +1,49 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="CFD_win32" />
+    <BuildType Name="Debug" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="NPSearch" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="PlantMAT" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="application%json/JSON-netcore5.vbproj">
+    <BuildType Solution="CFD_win32|Any CPU" Project="Rsharp_app_release" />
+    <BuildType Solution="CFD_win32|x64" Project="Release" />
+    <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+    <Platform Solution="CFD_win32|x64" Project="x64" />
+    <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+    <Platform Solution="LipidSearch|x64" Project="x64" />
+    <Platform Solution="mzkit_win32|x64" Project="x64" />
+    <Platform Solution="mzkit|x64" Project="x64" />
+    <Platform Solution="NPSearch|x64" Project="x64" />
+    <Platform Solution="nuget_release|x64" Project="x64" />
+    <Platform Solution="PlantMAT|x64" Project="x64" />
+    <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+  </Project>
+  <Project Path="application%json/test/test.vbproj">
+    <BuildType Solution="CFD_win32|*" Project="Release" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Release" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Release" />
+    <BuildType Solution="PlantMAT|*" Project="Release" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+</Solution>

@@ -300,7 +300,7 @@ Namespace Script
             Dim found As New List(Of DefaultParameterFunction)
             Dim nested As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
             Dim stack As New Stack(Of String)
-            ''' <summary>当前正在扫描的函数块(用于记录函数块的结束行)</summary>
+            ' 当前正在扫描的函数块(用于记录函数块的结束行)
             Dim pending As DefaultParameterFunction = Nothing
 
             For i As Integer = 0 To lines.Length - 1

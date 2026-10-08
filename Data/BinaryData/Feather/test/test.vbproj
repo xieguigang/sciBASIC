@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <None Remove="out.txt" />
+    <None Remove="_diff_value.txt" />
+    <None Remove="_diff_writer.txt" />
   </ItemGroup>
 
   <ItemGroup>

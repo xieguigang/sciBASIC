@@ -53,7 +53,6 @@
 #End Region
 
 Imports System.IO
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
