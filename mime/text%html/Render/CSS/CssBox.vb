@@ -98,6 +98,9 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports rect = System.Drawing.Rectangle
+' the css property ``font-style`` of this class is a string value, so the
+' font style enum of the imaging namespace requires an alias at here
+Imports CssFontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 Imports std = System.Math
 
 Namespace Render.CSS
@@ -955,21 +958,32 @@ Namespace Render.CSS
         <DefaultValue("auto")>
         Public Property Top() As String
 
-        '[CssProperty("right")]
-        '[DefaultValue("auto")]
-        'public string Right
-        '{
-        '    get { return _right; }
-        '    set { _right = value; }
-        '}
+        ''' <summary>
+        ''' the offset of the right edge of this box from the right edge of its
+        ''' containing block, it is used by the absolutely positioned boxes.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("right")>
+        <DefaultValue("auto")>
+        Public Property Right() As String
 
-        '[CssProperty("bottom")]
-        '[DefaultValue("auto")]
-        'public string Bottom
-        '{
-        '    get { return _bottom; }
-        '    set { _bottom = value; }
-        '}
+        ''' <summary>
+        ''' the offset of the bottom edge of this box from the bottom edge of
+        ''' its containing block, it is used by the absolutely positioned boxes.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("bottom")>
+        <DefaultValue("auto")>
+        Public Property Bottom() As String
+
+        ''' <summary>
+        ''' the paint order of this box, a box with a larger z-index value is
+        ''' painted on top of a box with a smaller one.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("z-index")>
+        <DefaultValue("auto")>
+        Public Property ZIndex() As String
 
         <CssProperty("width")>
         <DefaultValue("auto")>
@@ -1881,14 +1895,14 @@ Namespace Render.CSS
                         FontSize = CssDefaults.FontSize & "pt"
                     End If
 
-                    Dim st As FontStyle = FontStyle.Regular
+                    Dim st As CssFontStyle = CssFontStyle.Regular
 
                     If FontStyle = CssConstants.Italic OrElse FontStyle = CssConstants.Oblique Then
-                        st = st Or FontStyle.Italic
+                        st = st Or CssFontStyle.Italic
                     End If
 
                     If FontWeight <> CssConstants.Normal AndAlso FontWeight <> CssConstants.Lighter AndAlso Not String.IsNullOrEmpty(FontWeight) Then
-                        st = st Or FontStyle.Bold
+                        st = st Or CssFontStyle.Bold
                     End If
 
                     Dim fsize As Single = 0F
@@ -3022,13 +3036,8 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         Private Sub PaintBorder(g As IGraphics, rectangle As RectangleF, isFirst As Boolean, isLast As Boolean)
-
-            Dim smooth As SmoothingMode = g.SmoothingMode
-
-            If InitialContainer IsNot Nothing AndAlso Not InitialContainer.AvoidGeometryAntialias AndAlso IsRounded Then
-                g.SmoothingMode = SmoothingMode.AntiAlias
-            End If
-
+            ' the smoothing mode is a gdi+ only graphics state, it is not
+            ' exposed by the cross platform graphics canvas
             'Top border
             If Not (String.IsNullOrEmpty(BorderTopStyle) OrElse BorderTopStyle = CssConstants.None) Then
                 Using b As New SolidBrush(ActualBorderTopColor)
@@ -3074,8 +3083,6 @@ Namespace Render.CSS
                 End If
             End If
 
-            g.SmoothingMode = smooth
-
         End Sub
 
         ''' <summary>
@@ -3090,7 +3097,6 @@ Namespace Render.CSS
 
             Dim roundrect As GraphicsPath = Nothing
             Dim b As Brush = Nothing
-            Dim smooth As SmoothingMode = g.SmoothingMode
 
             If IsRounded Then
                 roundrect = CssDrawingHelper.GetRoundRect(rectangle, ActualCornerNW, ActualCornerNE, ActualCornerSE, ActualCornerSW)
@@ -3102,17 +3108,11 @@ Namespace Render.CSS
                 b = New SolidBrush(ActualBackgroundColor)
             End If
 
-            If InitialContainer IsNot Nothing AndAlso Not InitialContainer.AvoidGeometryAntialias AndAlso IsRounded Then
-                g.SmoothingMode = SmoothingMode.AntiAlias
-            End If
-
             If roundrect IsNot Nothing Then
                 g.FillPath(b, roundrect)
             Else
                 g.FillRectangle(b, rectangle)
             End If
-
-            g.SmoothingMode = smooth
 
             If roundrect IsNot Nothing Then
                 roundrect.Dispose()
