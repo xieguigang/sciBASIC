@@ -33,8 +33,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.9775.28485</Version>
-    <AssemblyVersion>1.0.9775.28485</AssemblyVersion>
+    <Version>10.5.9777.32469</Version>
+    <AssemblyVersion>1.0.9777.32469</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

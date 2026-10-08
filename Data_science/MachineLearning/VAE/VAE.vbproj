@@ -12,8 +12,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.9775.28485</Version>
-    <AssemblyVersion>1.0.9775.28485</AssemblyVersion>
+    <Version>10.5.9777.32469</Version>
+    <AssemblyVersion>1.0.9777.32469</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.VAE</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

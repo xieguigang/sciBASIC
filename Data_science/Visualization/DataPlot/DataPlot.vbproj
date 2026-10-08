@@ -4,8 +4,8 @@
     <RootNamespace>Microsoft.VisualBasic.Data.Plots</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>1.0.9775.28485</Version>
-    <AssemblyVersion>1.0.9775.28485</AssemblyVersion>
+    <Version>10.5.9777.32469</Version>
+    <AssemblyVersion>1.0.9777.32469</AssemblyVersion>
     <AssemblyName>Microsoft.VisualBasic.Data.DataPlot</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
