@@ -97,6 +97,7 @@ Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports rect = System.Drawing.Rectangle
 Imports std = System.Math
 
 Namespace Render.CSS
