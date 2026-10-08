@@ -102,23 +102,27 @@ Namespace Render
             Dim atts As MatchCollection = Parser.Match(Parser.HmlTagAttributes, tag)
 
             For Each att As Match In atts
-                'Extract attribute and value
-                Dim chunks As String() = att.Value.Split("="c)
+                'Extract attribute and value: only the first ``=`` character
+                'separates the name from the value, the value itself may contain
+                'the ``=`` sign, e.g. a rich text tooltip value
+                Dim sep As Integer = att.Value.IndexOf("="c)
 
-                If chunks.Length = 1 Then
-                    If Not Attributes.ContainsKey(chunks(0)) Then
-                        Attributes.Add(chunks(0).ToLower(), String.Empty)
+                If sep < 0 Then
+                    Dim flag As String = att.Value.Trim()
+
+                    If flag.Length > 0 AndAlso Not Attributes.ContainsKey(flag.ToLower()) Then
+                        Call Attributes.Add(flag.ToLower(), String.Empty)
                     End If
-                ElseIf chunks.Length = 2 Then
-                    Dim attname As String = chunks(0).Trim()
-                    Dim attvalue As String = chunks(1).Trim()
+                Else
+                    Dim attname As String = att.Value.Substring(0, sep).Trim()
+                    Dim attvalue As String = att.Value.Substring(sep + 1).Trim()
 
-                    If attvalue.StartsWith("""") AndAlso attvalue.EndsWith("""") AndAlso attvalue.Length > 2 Then
+                    If attvalue.Length > 2 AndAlso attvalue.StartsWith("""") AndAlso attvalue.EndsWith("""") Then
                         attvalue = attvalue.Substring(1, attvalue.Length - 2)
                     End If
 
                     If Not Attributes.ContainsKey(attname) Then
-                        Attributes.Add(attname, attvalue)
+                        Call Attributes.Add(attname, attvalue)
                     End If
                 End If
             Next
