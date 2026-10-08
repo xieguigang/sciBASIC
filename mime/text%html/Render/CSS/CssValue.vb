@@ -454,13 +454,13 @@ Namespace Render.CSS
         ''' GDI+ image type.
         ''' </remarks>
         Public Shared Function GetImage(path As String) As Image
-            Dim source As Object = DetectSource(path)
-
-            Dim finfo As FileInfo = TryCast(source, FileInfo)
-            Dim prop As PropertyInfo = TryCast(source, PropertyInfo)
-            Dim method As MethodInfo = TryCast(source, MethodInfo)
-
             Try
+                Dim source As Object = DetectSource(path)
+
+                Dim finfo As FileInfo = TryCast(source, FileInfo)
+                Dim prop As PropertyInfo = TryCast(source, PropertyInfo)
+                Dim method As MethodInfo = TryCast(source, MethodInfo)
+
                 If finfo IsNot Nothing Then
                     If Not finfo.Exists Then
                         Return Nothing
@@ -482,9 +482,11 @@ Namespace Render.CSS
                 Else
                     Return Nothing
                 End If
-            Catch
-                'TODO: Return error image
-                Return New Bitmap(50, 50)
+            Catch ex As Exception
+                ' a broken image source must never break the layout of the
+                ' whole document, the missing image is just skipped
+                Call Console.WriteLine($"[html] the image source '{path}' can not be loaded: {ex.Message}")
+                Return Nothing
             End Try
         End Function
 
