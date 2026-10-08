@@ -249,7 +249,6 @@ Namespace Render.CSS
         Private _paddingRight As String
         Private _paddingTop As String
         Private _padding As String
-        Private _right As String
         Private _text As String
         Private _textAlign As String
         Private _textDecoration As String
