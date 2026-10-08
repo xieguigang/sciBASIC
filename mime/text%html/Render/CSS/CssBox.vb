@@ -2881,7 +2881,29 @@ Namespace Render.CSS
         ''' <returns></returns>
         Public ReadOnly Property IsAbsolutelyPositioned As Boolean
             Get
-                Return Position = CssConstants.Absolute OrElse Position = CssConstants.Fixed
+                If Position = CssConstants.Absolute OrElse Position = CssConstants.Fixed Then
+                    Return True
+                End If
+
+                ' a user interface declaration usually omits the ``position``
+                ' property of a control: an element that declares any of the
+                ' four offsets is taken out of the normal flow as well, so that
+                ' ``left`` and ``top`` can be used to place a control without
+                ' an explicit ``position:absolute``.
+                If Not String.IsNullOrEmpty(Left) AndAlso Left <> CssConstants.Auto Then
+                    Return True
+                End If
+                If Not String.IsNullOrEmpty(Top) AndAlso Top <> CssConstants.Auto Then
+                    Return True
+                End If
+                If Not String.IsNullOrEmpty(Right) AndAlso Right <> CssConstants.Auto Then
+                    Return True
+                End If
+                If Not String.IsNullOrEmpty(Bottom) AndAlso Bottom <> CssConstants.Auto Then
+                    Return True
+                End If
+
+                Return False
             End Get
         End Property
 
