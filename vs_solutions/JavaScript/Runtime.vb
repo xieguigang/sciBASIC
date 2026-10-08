@@ -1,0 +1,880 @@
+Option Strict On
+Option Explicit On
+
+Imports System.Globalization
+
+''' <summary>
+''' The single source of JavaScript dynamic semantics used by BOTH the
+''' interpreter and the generated VB.NET code: weak typing, truthiness,
+''' loose/strict equality, member/index access, invocation and all builtin
+''' objects (console, Math, JSON, array &amp; string methods ...).
+''' <para>The generated code calls these functions directly, so a translated
+''' script behaves exactly like the interpreted one.</para>
+''' </summary>
+Namespace Runtime
+
+    ''' <summary>Sink for console.log etc.; records lines for test/e2e comparison.</summary>
+    Public Class ScriptIO
+        Public ReadOnly Property Lines As New List(Of String)
+
+        Public Overridable Sub WriteLine(text As String)
+            Lines.Add(text)
+        End Sub
+    End Class
+
+    ''' <summary>Error object visible to JS try/catch; Payload is the thrown value.</summary>
+    Public NotInheritable Class JsRuntimeException
+        Inherits Exception
+
+        Public ReadOnly Payload As Object
+
+        Public Sub New(payload As Object)
+            MyBase.New(If(TypeOf payload Is String, CStr(payload), "JS runtime error"))
+            Me.Payload = payload
+        End Sub
+
+        Public Shared Function TypeError(message As String) As JsRuntimeException
+            Return New JsRuntimeException("TypeError: " & message)
+        End Function
+
+        Public Shared Function ReferenceError(name As String) As JsRuntimeException
+            Return New JsRuntimeException("ReferenceError: " & name & " is not defined")
+        End Function
+    End Class
+
+    ''' <summary>Marker object for JS `undefined` (distinct from null = Nothing).</summary>
+    Friend NotInheritable Class UndefinedMarker
+    End Class
+
+    ''' <summary>Builtin container object (Math, console, JSON, Object, Array, global fns).</summary>
+    Public NotInheritable Class NativeObject
+        Public ReadOnly Name As String
+        Public Sub New(name As String)
+            Me.Name = name
+        End Sub
+    End Class
+
+    ''' <summary>A builtin method bound to its receiver; callable through <see cref="JsRuntime.JsInvoke"/>.</summary>
+    Public NotInheritable Class BuiltinMethod
+        Public ReadOnly Target As Object
+        Public ReadOnly Name As String
+        Public Sub New(target As Object, name As String)
+            Me.Target = target
+            Me.Name = name
+        End Sub
+    End Class
+
+    Public Module JsRuntime
+
+        ''' <summary>JS function value in both worlds (interpreter closures and generated lambdas).</summary>
+        Public ReadOnly Undef As Object = New UndefinedMarker()
+
+        Public Property Io As ScriptIO = New ScriptIO()
+
+        Public ReadOnly ConsoleBuiltin As New NativeObject("console")
+        Public ReadOnly MathBuiltin As New NativeObject("Math")
+        Public ReadOnly Json As New NativeObject("JSON")
+        Public ReadOnly ObjectBuiltin As New NativeObject("Object")
+        Public ReadOnly ArrayBuiltin As New NativeObject("Array")
+        Public ReadOnly GlobalObj As New NativeObject("global")
+
+        ' math constants exposed as properties (System.Math qualified — the
+        ' field above shadows the type name inside this module)
+        Private ReadOnly _mathProps As New Dictionary(Of String, Object) From {
+            {"PI", System.Math.PI}, {"E", System.Math.E},
+            {"LN2", System.Math.Log(2.0)}, {"LN10", System.Math.Log(10.0)}
+        }
+
+        ''' <summary>Global identifiers installed into every fresh interpreter environment.</summary>
+        Public Function GlobalIdentifiers() As IDictionary(Of String, Object)
+            Dim g As New Dictionary(Of String, Object) From {
+                {"console", ConsoleBuiltin}, {"Math", MathBuiltin}, {"JSON", Json},
+                {"Object", ObjectBuiltin}, {"Array", ArrayBuiltin},
+                {"undefined", Undef}, {"NaN", Double.NaN}, {"Infinity", Double.PositiveInfinity}
+            }
+            For Each name In {"parseInt", "parseFloat", "isNaN", "isFinite",
+                              "String", "Number", "Boolean"}
+                g(name) = New BuiltinMethod(GlobalObj, name)
+            Next
+            Return g
+        End Function
+
+        ' ================= type predicates =================
+
+        Public Function IsNumber(x As Object) As Boolean
+            Return TypeOf x Is Double
+        End Function
+
+        Public Function IsJsArray(x As Object) As Boolean
+            Return TypeOf x Is List(Of Object)
+        End Function
+
+        Public Function IsJsObject(x As Object) As Boolean
+            Return TypeOf x Is Dictionary(Of String, Object)
+        End Function
+
+        ' ================= conversions =================
+
+        Public Function JsTruthy(x As Object) As Boolean
+            If x Is Nothing OrElse x Is Undef Then Return False
+            If TypeOf x Is Boolean Then Return CBool(x)
+            If TypeOf x Is Double Then
+                Dim d = CDbl(x)
+                Return Not (d = 0.0 OrElse Double.IsNaN(d))
+            End If
+            If TypeOf x Is String Then Return CStr(x).Length > 0
+            Return True
+        End Function
+
+        Public Function JsBool(x As Object) As Boolean
+            Return JsTruthy(x)
+        End Function
+
+        Public Function JsNum(x As Object) As Double
+            If TypeOf x Is Double Then Return CDbl(x)
+            If TypeOf x Is Boolean Then Return If(CBool(x), 1.0, 0.0)
+            If x Is Nothing Then Return 0.0
+            If x Is Undef Then Return Double.NaN
+            If TypeOf x Is String Then Return ParseNumberString(CStr(x))
+            If TypeOf x Is List(Of Object) Then
+                Dim a = DirectCast(x, List(Of Object))
+                If a.Count = 0 Then Return 0.0
+                If a.Count = 1 Then Return JsNum(a(0))
+                Return Double.NaN
+            End If
+            Return Double.NaN
+        End Function
+
+        Private Function ParseNumberString(s As String) As Double
+            Dim t = s.Trim()
+            If t = "" Then Return 0.0
+            Dim v As Double
+            If Double.TryParse(t, NumberStyles.Float, CultureInfo.InvariantCulture, v) Then Return v
+            Return Double.NaN
+        End Function
+
+        Public Function JsStr(x As Object) As String
+            If x Is Nothing Then Return "null"
+            If x Is Undef Then Return "undefined"
+            If TypeOf x Is Double Then Return NumToString(CDbl(x))
+            If TypeOf x Is Boolean Then Return If(CBool(x), "true", "false")
+            If TypeOf x Is String Then Return CStr(x)
+            If TypeOf x Is List(Of Object) Then Return JoinArray(DirectCast(x, List(Of Object)), ",")
+            If TypeOf x Is Dictionary(Of String, Object) Then Return "[object Object]"
+            If TypeOf x Is BuiltinMethod Then Return "[function: " & DirectCast(x, BuiltinMethod).Name & "]"
+            If TypeOf x Is NativeObject Then Return "[object " & DirectCast(x, NativeObject).Name & "]"
+            Return CStr(x)
+        End Function
+
+        Private Function NumToString(d As Double) As String
+            If Double.IsNaN(d) Then Return "NaN"
+            If Double.IsPositiveInfinity(d) Then Return "Infinity"
+            If Double.IsNegativeInfinity(d) Then Return "-Infinity"
+            If d = System.Math.Truncate(d) AndAlso System.Math.Abs(d) < 1.0E15 Then
+                Return CLng(d).ToString(CultureInfo.InvariantCulture)
+            End If
+            Return d.ToString("R", CultureInfo.InvariantCulture)
+        End Function
+
+        Private Function JoinArray(a As List(Of Object), sep As String) As String
+            Dim parts(a.Count - 1) As String
+            For i = 0 To a.Count - 1
+                parts(i) = If(a(i) Is Nothing OrElse a(i) Is Undef, "", JsStr(a(i)))
+            Next
+            Return String.Join(sep, parts)
+        End Function
+
+        ''' <summary>console.log formatting: arrays/objects shown structurally.</summary>
+        Public Function JsDisplay(x As Object) As String
+            If TypeOf x Is String Then Return CStr(x)
+            If TypeOf x Is List(Of Object) Then
+                Dim a = DirectCast(x, List(Of Object))
+                Dim parts(a.Count - 1) As String
+                For i = 0 To a.Count - 1
+                    parts(i) = JsDisplay(a(i))
+                Next
+                Return "[" & String.Join(", ", parts) & "]"
+            End If
+            If TypeOf x Is Dictionary(Of String, Object) Then
+                Dim d = DirectCast(x, Dictionary(Of String, Object))
+                Dim parts As New List(Of String)
+                For Each kv In d
+                    parts.Add(kv.Key & ": " & JsDisplay(kv.Value))
+                Next
+                Return "{" & String.Join(", ", parts) & "}"
+            End If
+            Return JsStr(x)
+        End Function
+
+        Public Function JsTypeOf(x As Object) As String
+            If TypeOf x Is Double Then Return "number"
+            If TypeOf x Is String Then Return "string"
+            If TypeOf x Is Boolean Then Return "boolean"
+            If TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod Then Return "function"
+            If x Is Nothing OrElse x Is Undef Then Return "undefined"
+            Return "object"
+        End Function
+
+        ' ================= arithmetic =================
+
+        Public Function JsAdd(a As Object, b As Object) As Object
+            If TypeOf a Is String OrElse TypeOf b Is String Then
+                Return JsStr(a) & JsStr(b)
+            End If
+            If TypeOf a Is Double AndAlso TypeOf b Is Double Then
+                Return CDbl(a) + CDbl(b)
+            End If
+            If a Is Nothing AndAlso b Is Nothing Then Return 0.0
+            If a Is Undef OrElse b Is Undef Then Return Double.NaN
+            Return JsNum(a) + JsNum(b)
+        End Function
+
+        Public Function JsSub(a As Object, b As Object) As Object
+            Return JsNum(a) - JsNum(b)
+        End Function
+
+        Public Function JsMul(a As Object, b As Object) As Object
+            Return JsNum(a) * JsNum(b)
+        End Function
+
+        Public Function JsDiv(a As Object, b As Object) As Object
+            Return JsNum(a) / JsNum(b)
+        End Function
+
+        Public Function JsMod(a As Object, b As Object) As Object
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) OrElse y = 0.0 Then Return Double.NaN
+            Return x - System.Math.Floor(x / y) * y      ' JS-style floored modulo
+        End Function
+
+        ''' <summary>Exponentiation (**). NaN base with fractional exponent → NaN, like JS.</summary>
+        Public Function JsPow(a As Object, b As Object) As Object
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) Then Return Double.NaN
+            Return System.Math.Pow(x, y)
+        End Function
+
+        Public Function JsNeg(a As Object) As Object
+            Return -JsNum(a)
+        End Function
+
+        Public Function JsNot(a As Object) As Object
+            Return Not JsTruthy(a)
+        End Function
+
+        ''' <summary>Short-circuit &amp;&amp; — evaluates b lazily only when a is truthy.</summary>
+        Public Function JsAnd(a As Object, b As Func(Of Object)) As Object
+            If JsTruthy(a) Then Return b()
+            Return a
+        End Function
+
+        ''' <summary>Short-circuit || — evaluates b lazily only when a is falsy.</summary>
+        Public Function JsOr(a As Object, b As Func(Of Object)) As Object
+            If JsTruthy(a) Then Return a
+            Return b()
+        End Function
+
+        ' ================= comparison =================
+
+        Public Function JsStrictEq(a As Object, b As Object) As Boolean
+            If IsNumber(a) AndAlso IsNumber(b) Then
+                Dim x = CDbl(a), y = CDbl(b)
+                If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+                Return x = y
+            End If
+            If TypeOf a Is String AndAlso TypeOf b Is String Then Return CStr(a) = CStr(b)
+            If TypeOf a Is Boolean AndAlso TypeOf b Is Boolean Then Return CBool(a) = CBool(b)
+            If a Is Nothing AndAlso b Is Nothing Then Return True
+            If a Is Undef AndAlso b Is Undef Then Return True
+            If IsJsArray(a) OrElse IsJsObject(a) OrElse IsJsArray(b) OrElse IsJsObject(b) OrElse
+               TypeOf a Is Func(Of Object(), Object) OrElse TypeOf b Is Func(Of Object(), Object) OrElse
+               TypeOf a Is BuiltinMethod OrElse TypeOf b Is BuiltinMethod Then
+                Return ReferenceEquals(a, b)
+            End If
+            Return False
+        End Function
+
+        Public Function JsEq(a As Object, b As Object) As Boolean
+            ' same types → strict
+            If (IsNumber(a) AndAlso IsNumber(b)) OrElse
+               (TypeOf a Is String AndAlso TypeOf b Is String) OrElse
+               (TypeOf a Is Boolean AndAlso TypeOf b Is Boolean) OrElse
+               (IsJsArray(a) OrElse IsJsObject(a) OrElse TypeOf a Is Func(Of Object(), Object) OrElse TypeOf a Is BuiltinMethod) AndAlso
+               (IsJsArray(b) OrElse IsJsObject(b) OrElse TypeOf b Is Func(Of Object(), Object) OrElse TypeOf b Is BuiltinMethod) Then
+                Return JsStrictEq(a, b)
+            End If
+            ' null / undefined family
+            If (a Is Nothing OrElse a Is Undef) AndAlso (b Is Nothing OrElse b Is Undef) Then Return True
+            If (a Is Nothing OrElse a Is Undef) OrElse (b Is Nothing OrElse b Is Undef) Then Return False
+            ' number vs string → numeric
+            If IsNumber(a) AndAlso TypeOf b Is String Then Return JsEq(a, JsNum(b))
+            If TypeOf a Is String AndAlso IsNumber(b) Then Return JsEq(JsNum(a), b)
+            ' boolean → number
+            If TypeOf a Is Boolean Then Return JsEq(JsNum(a), b)
+            If TypeOf b Is Boolean Then Return JsEq(a, JsNum(b))
+            ' object vs primitive → stringify then compare as strings when primitive is a string
+            If TypeOf b Is String Then Return CStr(JsStr(a)) = CStr(b)
+            If TypeOf a Is String Then Return CStr(a) = CStr(JsStr(b))
+            Return JsNum(a) = JsNum(b)
+        End Function
+
+        Public Function JsLt(a As Object, b As Object) As Boolean
+            If TypeOf a Is String AndAlso TypeOf b Is String Then Return String.Compare(CStr(a), CStr(b), StringComparison.Ordinal) < 0
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x < y
+        End Function
+
+        Public Function JsLe(a As Object, b As Object) As Boolean
+            If TypeOf a Is String AndAlso TypeOf b Is String Then Return String.Compare(CStr(a), CStr(b), StringComparison.Ordinal) <= 0
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x <= y
+        End Function
+
+        Public Function JsGt(a As Object, b As Object) As Boolean
+            If TypeOf a Is String AndAlso TypeOf b Is String Then Return String.Compare(CStr(a), CStr(b), StringComparison.Ordinal) > 0
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x > y
+        End Function
+
+        Public Function JsGe(a As Object, b As Object) As Boolean
+            If TypeOf a Is String AndAlso TypeOf b Is String Then Return String.Compare(CStr(a), CStr(b), StringComparison.Ordinal) >= 0
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x >= y
+        End Function
+
+        ' ================= member / index access =================
+
+        Public Function JsGet(obj As Object, name As String) As Object
+            If obj Is Nothing OrElse obj Is Undef Then
+                Throw JsRuntimeException.TypeError("cannot read property '" & name & "' of " & JsStr(obj))
+            End If
+            If IsJsArray(obj) Then
+                Dim a = DirectCast(obj, List(Of Object))
+                If name = "length" Then Return CDbl(a.Count)
+                If ArrayMethodNames.Contains(name) Then Return New BuiltinMethod(obj, name)
+                Return Undef
+            End If
+            If TypeOf obj Is String Then
+                If name = "length" Then Return CDbl(CStr(obj).Length)
+                If StringMethodNames.Contains(name) Then Return New BuiltinMethod(obj, name)
+                Return Undef
+            End If
+            If IsJsObject(obj) Then
+                Dim d = DirectCast(obj, Dictionary(Of String, Object))
+                Dim v As Object = Nothing
+                If d.TryGetValue(name, v) Then Return v
+                Return Undef
+            End If
+            If TypeOf obj Is NativeObject Then
+                Dim n = DirectCast(obj, NativeObject)
+                If n.Name = "Math" AndAlso _mathProps.TryGetValue(name, Nothing) Then Return _mathProps(name)
+                If n.Name = "Math" Then Return New BuiltinMethod(obj, name)
+                Return New BuiltinMethod(obj, name)
+            End If
+            If IsNumber(obj) AndAlso name = "toFixed" Then Return New BuiltinMethod(obj, name)
+            Return Undef
+        End Function
+
+        Public Function JsIndex(obj As Object, index As Object) As Object
+            If obj Is Nothing OrElse obj Is Undef Then
+                Throw JsRuntimeException.TypeError("cannot index " & JsStr(obj))
+            End If
+            If IsJsArray(obj) Then
+                Dim a = DirectCast(obj, List(Of Object))
+                Dim i = CInt(System.Math.Floor(JsNum(index)))
+                If Double.IsNaN(JsNum(index)) Then Return Undef
+                If i < 0 OrElse i >= a.Count Then Return Undef
+                Return a(i)
+            End If
+            If TypeOf obj Is String Then
+                Dim s = CStr(obj)
+                Dim i = CInt(System.Math.Floor(JsNum(index)))
+                If i < 0 OrElse i >= s.Length Then Return Undef
+                Return s.Substring(i, 1)
+            End If
+            If IsJsObject(obj) Then
+                Dim d = DirectCast(obj, Dictionary(Of String, Object))
+                Dim v As Object = Nothing
+                If d.TryGetValue(JsStr(index), v) Then Return v
+                Return Undef
+            End If
+            Return Undef
+        End Function
+
+        Public Sub JsSet(obj As Object, name As String, value As Object)
+            If obj Is Nothing OrElse obj Is Undef Then
+                Throw JsRuntimeException.TypeError("cannot set property '" & name & "' of " & JsStr(obj))
+            End If
+            If IsJsObject(obj) Then
+                DirectCast(obj, Dictionary(Of String, Object))(name) = value
+            End If
+            ' other targets: silently ignored (non-strict JS)
+        End Sub
+
+        Public Sub JsSetIndex(obj As Object, index As Object, value As Object)
+            If obj Is Nothing OrElse obj Is Undef Then
+                Throw JsRuntimeException.TypeError("cannot index " & JsStr(obj))
+            End If
+            If IsJsArray(obj) Then
+                Dim a = DirectCast(obj, List(Of Object))
+                Dim i = CInt(System.Math.Floor(JsNum(index)))
+                While a.Count <= i
+                    a.Add(Undef)
+                End While
+                a(i) = value
+                Return
+            End If
+            If IsJsObject(obj) Then
+                DirectCast(obj, Dictionary(Of String, Object))(JsStr(index)) = value
+            End If
+        End Sub
+
+        ' ================= invocation =================
+
+        Public Function JsInvoke(f As Object, args As Object()) As Object
+            If TypeOf f Is Func(Of Object(), Object) Then
+                Return DirectCast(f, Func(Of Object(), Object)).Invoke(args)
+            End If
+            If TypeOf f Is BuiltinMethod Then
+                Dim m = DirectCast(f, BuiltinMethod)
+                Return DispatchBuiltin(m.Target, m.Name, args)
+            End If
+            Throw JsRuntimeException.TypeError(JsStr(f) & " is not a function")
+        End Function
+
+        ' ================= construction helpers (used by generated code) =================
+
+        Public Function JsArray(ParamArray elements As Object()) As Object
+            Return New List(Of Object)(elements)
+        End Function
+
+        ''' <summary>Object literal from (key, value) tuples (VB tuple literals convert implicitly).</summary>
+        Public Function JsObj(pairs As (Key As String, Value As Object)()) As Object
+            Dim d As New Dictionary(Of String, Object)
+            For Each p In pairs
+                d(p.Key) = p.Value
+            Next
+            Return d
+        End Function
+
+        ''' <summary>Keys for for-in: array indices (as strings) or object keys.</summary>
+        Public Function JsForInKeys(obj As Object) As Object()
+            If IsJsArray(obj) Then
+                Dim a = DirectCast(obj, List(Of Object))
+                Dim keys(a.Count - 1) As Object
+                For i = 0 To a.Count - 1
+                    keys(i) = i.ToString(CultureInfo.InvariantCulture)
+                Next
+                Return keys
+            End If
+            If IsJsObject(obj) Then
+                Return New List(Of Object)(DirectCast(obj, Dictionary(Of String, Object)).Keys.Cast(Of Object)()).ToArray()
+            End If
+            Return New Object() {}
+        End Function
+
+        ' ================= builtin dispatch =================
+
+        Private ReadOnly ArrayMethodNames As New HashSet(Of String) From {
+            "push", "pop", "shift", "unshift", "join", "concat", "slice", "indexOf",
+            "includes", "reverse", "sort", "map", "filter", "reduce", "forEach"
+        }
+
+        Private ReadOnly StringMethodNames As New HashSet(Of String) From {
+            "charAt", "charCodeAt", "substring", "slice", "indexOf", "toUpperCase",
+            "toLowerCase", "trim", "split", "replace", "includes", "startsWith",
+            "endsWith", "repeat", "padStart", "toString"
+        }
+
+        Private Function Arg(args As Object(), i As Integer) As Object
+            If i < args.Length Then Return args(i)
+            Return Undef
+        End Function
+
+        Private Function DispatchBuiltin(target As Object, name As String, args As Object()) As Object
+            If TypeOf target Is NativeObject Then
+                Select Case DirectCast(target, NativeObject).Name
+                    Case "console" : Return BuiltinConsole(name, args)
+                    Case "Math" : Return BuiltinMath(name, args)
+                    Case "JSON" : Return BuiltinJson(name, args)
+                    Case "Object" : Return BuiltinObject(name, args)
+                    Case "Array" : Return BuiltinArrayCtor(name, args)
+                    Case "global" : Return BuiltinGlobalFn(name, args)
+                End Select
+            End If
+            If IsJsArray(target) Then Return BuiltinArrayMethod(DirectCast(target, List(Of Object)), name, args)
+            If TypeOf target Is String Then Return BuiltinStringMethod(CStr(target), name, args)
+            If IsNumber(target) AndAlso name = "toFixed" Then
+                Dim digits = CInt(JsNum(Arg(args, 0)))
+                Return CDbl(target).ToString("F" & digits.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
+            End If
+            Throw JsRuntimeException.TypeError($"{JsStr(target)}.{name} is not a function")
+        End Function
+
+        Private Function BuiltinConsole(name As String, args As Object()) As Object
+            Dim parts(args.Length - 1) As String
+            For i = 0 To args.Length - 1
+                parts(i) = JsDisplay(args(i))
+            Next
+            Dim prefix = If(name = "error", "[error] ", If(name = "warn", "[warn] ", ""))
+            Io.WriteLine(prefix & String.Join(" ", parts))
+            Return Undef
+        End Function
+
+        Private Function BuiltinMath(name As String, args As Object()) As Object
+            Select Case name
+                Case "abs" : Return System.Math.Abs(JsNum(Arg(args, 0)))
+                Case "ceil" : Return System.Math.Ceiling(JsNum(Arg(args, 0)))
+                Case "floor" : Return System.Math.Floor(JsNum(Arg(args, 0)))
+                Case "round"
+                    Dim d = JsNum(Arg(args, 0))
+                    ' JS rounds .5 up (towards +infinity)
+                    Return System.Math.Floor(d + 0.5)
+                Case "trunc" : Return System.Math.Truncate(JsNum(Arg(args, 0)))
+                Case "sqrt" : Return System.Math.Sqrt(JsNum(Arg(args, 0)))
+                Case "pow" : Return System.Math.Pow(JsNum(Arg(args, 0)), JsNum(Arg(args, 1)))
+                Case "sign"
+                    Dim d = JsNum(Arg(args, 0))
+                    Return If(Double.IsNaN(d) OrElse d = 0.0, If(d = 0.0, 0.0, Double.NaN), System.Math.Sign(d))
+                Case "min"
+                    Dim r = Double.PositiveInfinity
+                    For Each a In args
+                        Dim v = JsNum(a)
+                        If v < r Then r = v
+                    Next
+                    Return r
+                Case "max"
+                    Dim r = Double.NegativeInfinity
+                    For Each a In args
+                        Dim v = JsNum(a)
+                        If v > r Then r = v
+                    Next
+                    Return r
+                Case "random" : Return New Random().NextDouble()
+                Case "hypot"
+                    Dim s = 0.0
+                    For Each a In args
+                        Dim v = JsNum(a)
+                        s += v * v
+                    Next
+                    Return System.Math.Sqrt(s)
+            End Select
+            Throw JsRuntimeException.TypeError("System.Math." & name & " is not a function")
+        End Function
+
+        Private Function BuiltinJson(name As String, args As Object()) As Object
+            Select Case name
+                Case "stringify" : Return JsonStringify(Arg(args, 0))
+            End Select
+            Throw JsRuntimeException.TypeError("JSON." & name & " is not a function")
+        End Function
+
+        Private Function JsonStringify(x As Object) As String
+            If x Is Nothing OrElse x Is Undef Then Return If(x Is Nothing, "null", "null")
+            If TypeOf x Is Double OrElse TypeOf x Is Boolean Then Return JsStr(x)
+            If TypeOf x Is String Then Return """" & CStr(x) & """"
+            If IsJsArray(x) Then
+                Dim a = DirectCast(x, List(Of Object))
+                Dim parts(a.Count - 1) As String
+                For i = 0 To a.Count - 1
+                    parts(i) = JsonStringify(a(i))
+                Next
+                Return "[" & String.Join(",", parts) & "]"
+            End If
+            If IsJsObject(x) Then
+                Dim parts As New List(Of String)
+                For Each kv In DirectCast(x, Dictionary(Of String, Object))
+                    parts.Add("""" & kv.Key & """:" & JsonStringify(kv.Value))
+                Next
+                Return "{" & String.Join(",", parts) & "}"
+            End If
+            Return "null"
+        End Function
+
+        Private Function BuiltinObject(name As String, args As Object()) As Object
+            Select Case name
+                Case "keys"
+                    Dim o = Arg(args, 0)
+                    Dim keys = JsForInKeys(o)
+                    Return New List(Of Object)(keys)
+                Case "values"
+                    Dim o = Arg(args, 0)
+                    If IsJsObject(o) Then
+                        Return New List(Of Object)(DirectCast(o, Dictionary(Of String, Object)).Values)
+                    End If
+                    Return New List(Of Object)()
+            End Select
+            Throw JsRuntimeException.TypeError("Object." & name & " is not a function")
+        End Function
+
+        Private Function BuiltinArrayCtor(name As String, args As Object()) As Object
+            Select Case name
+                Case "isArray" : Return IsJsArray(Arg(args, 0))
+                Case "from"
+                    Dim o = Arg(args, 0)
+                    If IsJsArray(o) Then Return New List(Of Object)(DirectCast(o, List(Of Object)))
+                    Return New List(Of Object)()
+            End Select
+            Throw JsRuntimeException.TypeError("Array." & name & " is not a function")
+        End Function
+
+        Private Function BuiltinGlobalFn(name As String, args As Object()) As Object
+            Select Case name
+                Case "String" : Return JsStr(Arg(args, 0))
+                Case "Number" : Return JsNum(Arg(args, 0))
+                Case "Boolean" : Return JsTruthy(Arg(args, 0))
+                Case "isNaN" : Return Double.IsNaN(JsNum(Arg(args, 0)))
+                Case "isFinite" : Return Not Double.IsNaN(JsNum(Arg(args, 0)))
+                Case "parseInt" : Return ParseIntPrefix(JsStr(Arg(args, 0)))
+                Case "parseFloat" : Return ParseFloatPrefix(JsStr(Arg(args, 0)))
+            End Select
+            Throw JsRuntimeException.TypeError(name & " is not a function")
+        End Function
+
+        Private Function ParseIntPrefix(s As String) As Object
+            Dim t = s.Trim()
+            Dim sign = 1.0
+            If t.StartsWith("-"c) Then sign = -1.0 : t = t.Substring(1)
+            If t.StartsWith("+"c) Then t = t.Substring(1)
+            If t.StartsWith("0x", StringComparison.OrdinalIgnoreCase) Then
+                t = t.Substring(2)
+                Dim i = 0
+                While i < t.Length AndAlso Uri.IsHexDigit(t(i))
+                    i += 1
+                End While
+                If i = 0 Then Return Double.NaN
+                Return sign * Convert.ToInt64(t.Substring(0, i), 16)
+            End If
+            Dim n = 0
+            While n < t.Length AndAlso Char.IsDigit(t(n))
+                n += 1
+            End While
+            If n = 0 Then Return Double.NaN
+            Return sign * CDbl(t.Substring(0, n))
+        End Function
+
+        Private Function ParseFloatPrefix(s As String) As Object
+            Dim t = s.Trim()
+            Dim n = 0
+            If n < t.Length AndAlso (t(n) = "+"c OrElse t(n) = "-"c) Then n += 1
+            While n < t.Length AndAlso Char.IsDigit(t(n)) : n += 1 : End While
+            If n < t.Length AndAlso t(n) = "."c Then
+                n += 1
+                While n < t.Length AndAlso Char.IsDigit(t(n)) : n += 1 : End While
+            End If
+            If n < t.Length AndAlso (t(n) = "e"c OrElse t(n) = "E"c) Then
+                Dim save = n
+                n += 1
+                If n < t.Length AndAlso (t(n) = "+"c OrElse t(n) = "-"c) Then n += 1
+                If n < t.Length AndAlso Char.IsDigit(t(n)) Then
+                    While n < t.Length AndAlso Char.IsDigit(t(n)) : n += 1 : End While
+                Else
+                    n = save
+                End If
+            End If
+            If n = 0 Then Return Double.NaN
+            Dim v As Double
+            If Double.TryParse(t.Substring(0, n), NumberStyles.Float, CultureInfo.InvariantCulture, v) Then Return v
+            Return Double.NaN
+        End Function
+
+        Private Function BuiltinArrayMethod(a As List(Of Object), name As String, args As Object()) As Object
+            Select Case name
+                Case "push"
+                    For Each v In args
+                        a.Add(v)
+                    Next
+                    Return CDbl(a.Count)
+                Case "pop"
+                    If a.Count = 0 Then Return Undef
+                    Dim v = a(a.Count - 1)
+                    a.RemoveAt(a.Count - 1)
+                    Return v
+                Case "shift"
+                    If a.Count = 0 Then Return Undef
+                    Dim v = a(0)
+                    a.RemoveAt(0)
+                    Return v
+                Case "unshift"
+                    For i = args.Length - 1 To 0 Step -1
+                        a.Insert(0, args(i))
+                    Next
+                    Return CDbl(a.Count)
+                Case "join"
+                    Dim sep = If(args.Length > 0, JsStr(args(0)), ",")
+                    Return JoinArray(a, sep)
+                Case "concat"
+                    Dim r As New List(Of Object)(a)
+                    For Each v In args
+                        If IsJsArray(v) Then
+                            r.AddRange(DirectCast(v, List(Of Object)))
+                        Else
+                            r.Add(v)
+                        End If
+                    Next
+                    Return r
+                Case "slice"
+                    Dim len = a.Count
+                    Dim start = NormIndex(JsNum(Arg(args, 0)), len)
+                    Dim ending As Integer
+                    If args.Length < 2 OrElse Arg(args, 1) Is Undef Then
+                        ending = len
+                    Else
+                        ending = NormIndex(JsNum(args(1)), len)
+                    End If
+                    Return New List(Of Object)(a.GetRange(start, System.Math.Max(0, ending - start)))
+                Case "indexOf"
+                    Dim r = -1
+                    For i = 0 To a.Count - 1
+                        If JsStrictEq(a(i), Arg(args, 0)) Then r = i : Exit For
+                    Next
+                    Return CDbl(r)
+                Case "includes"
+                    For Each v In a
+                        If JsStrictEq(v, Arg(args, 0)) Then Return True
+                    Next
+                    Return False
+                Case "reverse"
+                    a.Reverse()
+                    Return a
+                Case "sort"
+                    If args.Length > 0 AndAlso TypeOf args(0) Is Func(Of Object(), Object) Then
+                        Dim cmp = DirectCast(args(0), Func(Of Object(), Object))
+                        Dim proxy As New List(Of Object)(a)
+                        proxy.Sort(Function(x, y) CInt(System.Math.Floor(JsNum(JsInvoke(cmp, {x, y})))))
+                        a.Clear()
+                        a.AddRange(proxy)
+                    Else
+                        ' JS default sort: string comparison
+                        Dim proxy As New List(Of Object)(a)
+                        proxy.Sort(Function(x, y) String.Compare(JsStr(x), JsStr(y), StringComparison.Ordinal))
+                        a.Clear()
+                        a.AddRange(proxy)
+                    End If
+                    Return a
+                Case "map"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    Dim r As New List(Of Object)
+                    For i = 0 To a.Count - 1
+                        r.Add(JsInvoke(fn, {a(i), CDbl(i), a}))
+                    Next
+                    Return r
+                Case "filter"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    Dim r As New List(Of Object)
+                    For i = 0 To a.Count - 1
+                        If JsTruthy(JsInvoke(fn, {a(i), CDbl(i), a})) Then r.Add(a(i))
+                    Next
+                    Return r
+                Case "reduce"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    Dim acc As Object
+                    Dim startIdx As Integer
+                    If args.Length > 1 Then
+                        acc = args(1)
+                        startIdx = 0
+                    ElseIf a.Count > 0 Then
+                        acc = a(0)
+                        startIdx = 1
+                    Else
+                        Throw JsRuntimeException.TypeError("reduce of empty array with no initial value")
+                    End If
+                    For i = startIdx To a.Count - 1
+                        acc = JsInvoke(fn, {acc, a(i), CDbl(i), a})
+                    Next
+                    Return acc
+                Case "forEach"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    For i = 0 To a.Count - 1
+                        JsInvoke(fn, {a(i), CDbl(i), a})
+                    Next
+                    Return Undef
+            End Select
+            Throw JsRuntimeException.TypeError("array." & name & " is not a function")
+        End Function
+
+        Private Function NormIndex(d As Double, len As Integer) As Integer
+            Dim i As Integer
+            If Double.IsNaN(d) Then d = 0.0
+            If d < 0 Then
+                i = len + CInt(System.Math.Floor(d))
+                If i < 0 Then i = 0
+            Else
+                i = CInt(System.Math.Floor(d))
+                If i > len Then i = len
+            End If
+            Return i
+        End Function
+
+        Private Function BuiltinStringMethod(s As String, name As String, args As Object()) As Object
+            Select Case name
+                Case "charAt"
+                    Dim i = CInt(JsNum(Arg(args, 0)))
+                    If i < 0 OrElse i >= s.Length Then Return ""
+                    Return s.Substring(i, 1)
+                Case "charCodeAt"
+                    Dim i = CInt(JsNum(Arg(args, 0)))
+                    If i < 0 OrElse i >= s.Length Then Return Double.NaN
+                    Return CDbl(AscW(s(i)))
+                Case "substring"
+                    Dim a = CInt(System.Math.Max(0.0, System.Math.Min(CDbl(s.Length), JsNum(Arg(args, 0)))))
+                    Dim b = If(args.Length < 2 OrElse Arg(args, 1) Is Undef, s.Length,
+                               CInt(System.Math.Max(0.0, System.Math.Min(CDbl(s.Length), JsNum(args(1))))))
+                    If a > b Then Dim t = a : a = b : b = t
+                    Return s.Substring(a, b - a)
+                Case "slice"
+                    Dim start = NormIndex(JsNum(Arg(args, 0)), s.Length)
+                    Dim ending As Integer
+                    If args.Length < 2 OrElse Arg(args, 1) Is Undef Then
+                        ending = s.Length
+                    Else
+                        ending = NormIndex(JsNum(args(1)), s.Length)
+                    End If
+                    If ending <= start Then Return ""
+                    Return s.Substring(start, ending - start)
+                Case "indexOf"
+                    Return CDbl(s.IndexOf(JsStr(Arg(args, 0)), StringComparison.Ordinal))
+                Case "toUpperCase" : Return s.ToUpperInvariant()
+                Case "toLowerCase" : Return s.ToLowerInvariant()
+                Case "trim" : Return s.Trim()
+                Case "split"
+                    If args.Length = 0 OrElse Arg(args, 0) Is Undef Then Return New List(Of Object) From {s}
+                    Dim sep = JsStr(args(0))
+                    If sep = "" Then
+                        Dim chars As New List(Of Object)
+                        For Each c In s
+                            chars.Add(c.ToString())
+                        Next
+                        Return chars
+                    End If
+                    Return New List(Of Object)(s.Split({sep}, StringSplitOptions.None).Cast(Of Object)())
+                Case "replace"
+                    Return s.Replace(JsStr(Arg(args, 0)), JsStr(Arg(args, 1)))
+                Case "includes" : Return s.Contains(JsStr(Arg(args, 0)))
+                Case "startsWith" : Return s.StartsWith(JsStr(Arg(args, 0)), StringComparison.Ordinal)
+                Case "endsWith" : Return s.EndsWith(JsStr(Arg(args, 0)), StringComparison.Ordinal)
+                Case "repeat"
+                    Dim n = CInt(JsNum(Arg(args, 0)))
+                    Return String.Concat(Enumerable.Repeat(s, n))
+                Case "padStart"
+                    Dim n = CInt(JsNum(Arg(args, 0)))
+                    Dim pad = If(args.Length > 1, JsStr(args(1)), " ")
+                    Dim sb As New Text.StringBuilder()
+                    While sb.Length < n - s.Length
+                        sb.Append(pad)
+                    End While
+                    Dim r = sb.ToString()
+                    If r.Length > n - s.Length Then r = r.Substring(0, n - s.Length)
+                    Return r & s
+                Case "toString" : Return s
+            End Select
+            Throw JsRuntimeException.TypeError("string." & name & " is not a function")
+        End Function
+
+    End Module
+
+End Namespace
