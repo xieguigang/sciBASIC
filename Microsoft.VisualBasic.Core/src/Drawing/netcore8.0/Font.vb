@@ -109,7 +109,41 @@ Namespace Imaging
         End Property
         Public ReadOnly Property Style As FontStyle
         Public ReadOnly Property Unit As GraphicsUnit
+
+        ''' <summary>
+        ''' The line spacing, in pixels, of this font: it is derived from the
+        ''' design grid of <see cref="Imaging.FontFamily"/> instead of being a
+        ''' constant, so that it stays consistent with
+        ''' <see cref="FontFamily.GetLineSpacing(FontStyle)"/>.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Height As Single
+            Get
+                Dim family As FontFamily = Me.FontFamily
+
+                Return Size * family.GetLineSpacing(Style) / family.GetEmHeight(Style)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The font family that this font belongs to (the GDI+ code of the html
+        ''' layout engine reads the typographic metrics through this property).
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property FontFamily As FontFamily
+            Get
+                If _fontFamily Is Nothing Then
+                    _fontFamily = New FontFamily(Name)
+                End If
+
+                Return _fontFamily
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the cached font family object of this font
+        ''' </summary>
+        Dim _fontFamily As FontFamily = Nothing
 
         ''' <summary>
         ''' Gets a value indicating whether this font is bold.
@@ -156,8 +190,10 @@ Namespace Imaging
 
         Sub New(font As FontFamily, designHeight As Integer, fontStyle As FontStyle, unit As GraphicsUnit)
             Me.Name = font.Name
+            Me.Size = designHeight
             Me.Style = fontStyle
             Me.Unit = unit
+            Me._fontFamily = font
         End Sub
 
         Sub New(baseFont As Font, style As FontStyle)
@@ -165,10 +201,11 @@ Namespace Imaging
             _Size = baseFont.Size
             _Style = style
             _Unit = baseFont.Unit
+            _fontFamily = baseFont._fontFamily
         End Sub
 
         Public Function Clone() As Object
-            Return New Font(Name, Size, Style)
+            Return New Font(Name, Size, Style, Unit)
         End Function
 
         Public Function GetHeight(g As IGraphics) As Single
@@ -259,7 +296,38 @@ Namespace Imaging
         End Sub
     End Class
 
+    ''' <summary>
+    ''' A cross platform replacement of the GDI+ <c>System.Drawing.FontFamily</c>
+    ''' </summary>
+    ''' <remarks>
+    ''' The typographic metrics that are exposed here are expressed in the design
+    ''' units of a typical TrueType font: the em square is split into 2048 units,
+    ''' the ascender takes 1854 of them and the descender 434, the line gap is 67
+    ''' units so that the line spacing becomes ``1854 + 434 + 67 = 2355`` units.
+    ''' 
+    ''' Because all of the values share the very same design grid, the classic
+    ''' formula that is used by the html layout engine
+    ''' (<c>font.Size * GetCellAscent(style) / GetEmHeight(style)</c>) keeps working
+    ''' on every platform without any change of the caller code.
+    ''' </remarks>
     Public Class FontFamily
+
+        ''' <summary>
+        ''' the units per em square of a typical TrueType font
+        ''' </summary>
+        Public Const UnitsPerEm As Integer = 2048
+        ''' <summary>
+        ''' the ascender of a typical TrueType font, in design units
+        ''' </summary>
+        Public Const DesignAscender As Integer = 1854
+        ''' <summary>
+        ''' the descender of a typical TrueType font, in design units (a positive value)
+        ''' </summary>
+        Public Const DesignDescender As Integer = 434
+        ''' <summary>
+        ''' the line gap of a typical TrueType font, in design units
+        ''' </summary>
+        Public Const DesignLineGap As Integer = 67
 
         Public Property Name As String
 
@@ -271,20 +339,32 @@ Namespace Imaging
             Return True
         End Function
 
+        ''' <summary>
+        ''' Gets the height, in design units, of the em square for the specified style.
+        ''' </summary>
         Public Function GetEmHeight(fontStyle As FontStyle) As Integer
-            Return 12
+            Return UnitsPerEm
         End Function
 
+        ''' <summary>
+        ''' Gets the cell ascent, in design units, of this font family.
+        ''' </summary>
         Public Function GetCellAscent(fontStyle As FontStyle) As Integer
-            Throw New NotImplementedException()
+            Return DesignAscender
         End Function
 
+        ''' <summary>
+        ''' Gets the cell descent, in design units, of this font family.
+        ''' </summary>
         Public Function GetCellDescent(fontStyle As FontStyle) As Integer
-            Throw New NotImplementedException()
+            Return DesignDescender
         End Function
 
+        ''' <summary>
+        ''' Gets the distance, in design units, between two consecutive baselines.
+        ''' </summary>
         Public Function GetLineSpacing(fontStyle As FontStyle) As Integer
-            Throw New NotImplementedException()
+            Return DesignAscender + DesignDescender + DesignLineGap
         End Function
     End Class
 

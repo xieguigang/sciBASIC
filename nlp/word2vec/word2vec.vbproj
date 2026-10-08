@@ -6,9 +6,9 @@
 
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>5.0.9775.28485</Version>
+		<Version>10.5.9777.32612</Version>
 
-		<AssemblyVersion>5.33.9775.28485</AssemblyVersion>
+		<AssemblyVersion>5.33.9777.32612</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

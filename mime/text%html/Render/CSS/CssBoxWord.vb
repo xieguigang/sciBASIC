@@ -61,9 +61,9 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
-#If NET48 Then
     ''' <summary>
     ''' Represents a word inside an inline box
     ''' </summary>
@@ -86,7 +86,7 @@ Namespace Render.CSS
         Private _breakAfter As Boolean
         Private _spacesBefore As Integer
         Private _breakBefore As Boolean
-        Private _image As Drawing.Image
+        Private _image As Image
 
 
 #End Region
@@ -103,7 +103,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="owner"></param>
         ''' <param name="image"></param>
-        Public Sub New(owner As CssBox, image As Drawing.Image)
+        Public Sub New(owner As CssBox, image As Image)
             Me.New(owner)
             Me.Image = image
         End Sub
@@ -125,7 +125,7 @@ Namespace Render.CSS
         ''' <summary>
         ''' Gets the image this words represents (if one)
         ''' </summary>
-        Public Property Image() As Drawing.Image
+        Public Property Image() As Image
             Get
                 Return _image
             End Get
@@ -253,5 +253,4 @@ Namespace Render.CSS
 
 #End Region
     End Class
-#End If
 End Namespace

@@ -103,8 +103,6 @@ Namespace Render
         End Sub
 #End Region
 
-#If NET48 Then
-
         ''' <summary>
         ''' Draws the HTML on the specified point using the specified width.
         ''' </summary>
@@ -113,7 +111,7 @@ Namespace Render
         ''' <param name="location">Point to start drawing</param>
         ''' <param name="width">Width to fit HTML drawing</param>
         <Extension>
-        Public Sub Render(g As Graphics, html As String, location As PointF, width As Single)
+        Public Sub Render(g As IGraphics, html As String, location As PointF, width As Single)
             Call Render(g, html, New RectangleF(location, New SizeF(width, 0)), False)
         End Sub
 
@@ -125,9 +123,8 @@ Namespace Render
         ''' <param name="area">Area where HTML should be drawn</param>
         ''' <param name="clip">If true, it will only paint on the specified area</param>
         <Extension>
-        Public Sub Render(g As Graphics, html As String, area As RectangleF, clip As Boolean)
+        Public Sub Render(g As IGraphics, html As String, area As RectangleF, clip As Boolean)
             Dim container As New InitialContainer(html)
-            Dim prevClip As Region = g.Clip
 
             If clip Then
                 g.SetClip(area)
@@ -138,10 +135,12 @@ Namespace Render
             container.Paint(g)
 
             If clip Then
-                g.SetClip(prevClip, CombineMode.Replace)
+                ' the graphics context of the cross platform canvas does not
+                ' expose the gdi+ clip region object, so the clip rectangle is
+                ' just dropped at here
+                g.ResetClip()
             End If
         End Sub
-#End If
 
         ''' <summary>
         ''' load the css styling environment from the given graphics canvas object.

@@ -22,6 +22,7 @@
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports std = System.Math
 
 ''' <summary>
 ''' 一个编码后的 MP4 采样（AVCC 长度前缀形式的 NAL 序列）。
@@ -99,7 +100,7 @@ Friend Class MP4SampleStore
         Dim remain As Long = total
 
         While remain > 0
-            Dim n As Integer = writer.Read(buffer, 0, CInt(Math.Min(buffer.Length, remain)))
+            Dim n As Integer = writer.Read(buffer, 0, CInt(std.Min(buffer.Length, remain)))
             If n <= 0 Then Exit While
 
             Call out.Write(buffer, 0, n)
@@ -313,7 +314,7 @@ Friend Class MP4Muxer
         Dim duration As Long = 0
 
         For Each track As MP4TrackSource In tracks
-            Dim d As Long = CLng(track.samples.count) * MOVIE_TIMESCALE \ Math.Max(1, track.fps)
+            Dim d As Long = CLng(track.samples.count) * MOVIE_TIMESCALE \ std.Max(1, track.fps)
             If d > duration Then duration = d
         Next
 
@@ -359,7 +360,7 @@ Friend Class MP4Muxer
     End Sub
 
     Private Shared Sub writeTkhd(w As Mp4BoxWriter, track As MP4TrackSource, trackId As Integer)
-        Dim duration As Long = CLng(track.samples.count) * MOVIE_TIMESCALE \ Math.Max(1, track.fps)
+        Dim duration As Long = CLng(track.samples.count) * MOVIE_TIMESCALE \ std.Max(1, track.fps)
 
         Call w.fullBox("tkhd", 0, &H7,
                        Sub(m)
@@ -385,7 +386,7 @@ Friend Class MP4Muxer
                        Sub(m)
                            Call m.writeU32(0L)
                            Call m.writeU32(0L)
-                           Call m.writeU32(Math.Max(1, track.fps))   ' 轨道时间基 = 帧率
+                           Call m.writeU32(std.Max(1, track.fps))   ' 轨道时间基 = 帧率
                            Call m.writeU32(track.samples.count)       ' 每个采样 1 个时间单位
                            Call m.writeU16(LANGUAGE_UND)
                            Call m.writeU16(0)
@@ -461,7 +462,7 @@ Friend Class MP4Muxer
         Dim text As Byte() = System.Text.Encoding.ASCII.GetBytes("AVC Coding")
 
         name(0) = CByte(text.Length)
-        Call Array.Copy(text, 0, name, 1, Math.Min(text.Length, 31))
+        Call Array.Copy(text, 0, name, 1, std.Min(text.Length, 31))
 
         Return name
     End Function

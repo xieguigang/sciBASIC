@@ -96,7 +96,6 @@ Namespace Render.CSS
             Return result
         End Function
 
-#If NET48 Then
         ''' <summary>
         ''' Parses a length. Lengths are followed by an unit identifier (e.g. 10px, 3.1em)
         ''' </summary>
@@ -185,7 +184,7 @@ Namespace Render.CSS
 
             Return factor * ParseNumber(number, hundredPercent)
         End Function
-#End If
+
         ''' <summary>
         ''' Parses a color value in CSS style; e.g. #ff0000, red, rgb(255,0,0), rgb(100%, 0, 0)
         ''' </summary>
@@ -297,7 +296,19 @@ Namespace Render.CSS
                 End Select
 
                 If String.IsNullOrEmpty(hex) Then
-                    Return onError
+                    ' only the basic set of the css color keywords is listed
+                    ' above, any other color name (the whole set of the x11 and
+                    ' the web color names) is resolved by the color translator
+                    ' of the imaging namespace
+                    Dim resolved As Boolean = False
+                    Dim named As Color = Global.Microsoft.VisualBasic.Imaging.GDIColors.TranslateColor(
+                        colorValue, throwEx:=False, success:=resolved)
+
+                    If Not resolved Then
+                        Return onError
+                    Else
+                        Return named
+                    End If
                 Else
                     Dim c As Color = GetActualColor(hex)
                     r = c.R
@@ -310,7 +321,6 @@ Namespace Render.CSS
 
             Return Color.FromArgb(r, g, b)
         End Function
-#If NET48 Then
         ''' <summary>
         ''' Parses a border value in CSS style; e.g. 1px, 1, thin, thick, medium
         ''' </summary>
@@ -332,7 +342,7 @@ Namespace Render.CSS
                     Return Abs(ParseLength(borderValue, 1, b))
             End Select
         End Function
-#End If
+
         ''' <summary>
         ''' Split the value by spaces; e.g. Useful in values like 'padding:5 4 3 inherit'
         ''' </summary>
@@ -426,28 +436,36 @@ Namespace Render.CSS
                 Dim prop As PropertyInfo = t.GetProperty(propName)
 
                 Return prop
-            ElseIf Uri.IsWellFormedUriString(path, UriKind.RelativeOrAbsolute) Then
+            ElseIf File.Exists(path) Then
+                ' a local file wins over everything else: a relative path like
+                ' ``./image.png`` is a well formed relative uri but it can not
+                ' be turned into an uri object without a base address
+                Return New FileInfo(path)
+            ElseIf Uri.TryCreate(path, UriKind.Absolute, Nothing) Then
                 Return New Uri(path)
             Else
                 Return New FileInfo(path)
             End If
         End Function
 
-#If NET48 Then
-
         ''' <summary>
         ''' Gets the image of the specified path
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        Public Shared Function GetImage(path As String) As Drawing.Image
-            Dim source As Object = DetectSource(path)
-
-            Dim finfo As FileInfo = TryCast(source, FileInfo)
-            Dim prop As PropertyInfo = TryCast(source, PropertyInfo)
-            Dim method As MethodInfo = TryCast(source, MethodInfo)
-
+        ''' <remarks>
+        ''' the image data model of this function is the cross platform image 
+        ''' type of the ``Microsoft.VisualBasic.Imaging`` namespace, not the 
+        ''' GDI+ image type.
+        ''' </remarks>
+        Public Shared Function GetImage(path As String) As Image
             Try
+                Dim source As Object = DetectSource(path)
+
+                Dim finfo As FileInfo = TryCast(source, FileInfo)
+                Dim prop As PropertyInfo = TryCast(source, PropertyInfo)
+                Dim method As MethodInfo = TryCast(source, MethodInfo)
+
                 If finfo IsNot Nothing Then
                     If Not finfo.Exists Then
                         Return Nothing
@@ -459,22 +477,23 @@ Namespace Render.CSS
                         Return Nothing
                     End If
 
-                    Return TryCast(prop.GetValue(Nothing, Nothing), Drawing.Image)
+                    Return TryCast(prop.GetValue(Nothing, Nothing), Image)
                 ElseIf method IsNot Nothing Then
                     If Not method.ReturnType.IsSubclassOf(GetType(Image)) Then
                         Return Nothing
                     End If
 
-                    Return TryCast(method.Invoke(Nothing, Nothing), Drawing.Image)
+                    Return TryCast(method.Invoke(Nothing, Nothing), Image)
                 Else
                     Return Nothing
                 End If
-            Catch
-                'TODO: Return error image
-                Return New Bitmap(50, 50)
+            Catch ex As Exception
+                ' a broken image source must never break the layout of the
+                ' whole document, the missing image is just skipped
+                Call Console.WriteLine($"[html] the image source '{path}' can not be loaded: {ex.Message}")
+                Return Nothing
             End Try
         End Function
-#End If
 
         ''' <summary>
         ''' Gets the content of the stylesheet specified in the path

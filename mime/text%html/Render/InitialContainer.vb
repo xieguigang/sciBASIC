@@ -62,11 +62,11 @@
 
 Imports System.Drawing
 Imports System.Text.RegularExpressions
+Imports System.Xml.Linq
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
 
 Namespace Render
-
-#If NET48 Then
 
     ''' <summary>
     ''' HTML rendering
@@ -87,12 +87,32 @@ Namespace Render
             FeedStyleSheet(CssDefaults.DefaultStyleSheet)
         End Sub
 
+        ''' <summary>
+        ''' Create the layout container from the html document source text.
+        ''' </summary>
+        ''' <param name="documentSource"></param>
         Public Sub New(documentSource As String)
             Me.New()
             _DocumentSource = documentSource
             ParseDocument()
             CascadeStyles(Me)
             BlockCorrection(Me)
+        End Sub
+
+        ''' <summary>
+        ''' Create the layout container from a xml literal (or any other 
+        ''' <see cref="XElement"/> object) that declares the user interface.
+        ''' </summary>
+        ''' <param name="xml">
+        ''' the ui declaration, example as:
+        ''' <code>
+        ''' &lt;form style="background-color: gray;">
+        '''     &lt;button style="left:50%;top:50%;width:200px;height:60px">hello&lt;/button>
+        ''' &lt;/form>
+        ''' </code>
+        ''' </param>
+        Public Sub New(xml As XElement)
+            Me.New(If(xml Is Nothing, "", xml.ToString()))
         End Sub
 
 #End Region
@@ -473,7 +493,7 @@ Namespace Render
             Return result
         End Function
 
-        Public Overrides Sub MeasureBounds(g As Graphics)
+        Public Overrides Sub MeasureBounds(g As IGraphics)
             LinkRegions.Clear()
 
             MyBase.MeasureBounds(g)
@@ -481,5 +501,4 @@ Namespace Render
 
 #End Region
     End Class
-#End If
 End Namespace

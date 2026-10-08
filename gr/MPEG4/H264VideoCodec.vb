@@ -21,6 +21,9 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+Imports System.Runtime.CompilerServices
+Imports std = System.Math
+
 ''' <summary>
 ''' 一个宏块在解码器中留下的邻接状态：后续宏块推导上下文时要用到。
 ''' </summary>
@@ -223,7 +226,7 @@ Friend Class H264VideoCodec
         Dim q As Integer = If(quality < 0, 0, If(quality > 100, 100, quality))
         Dim value As Integer = 1 + (100 - q) * 50 \ 100
 
-        Return Math.Max(1, Math.Min(29, value))
+        Return std.Max(1, std.Min(29, value))
     End Function
 
     ''' <summary>
@@ -613,8 +616,9 @@ Friend Class H264VideoCodec
         End If
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Shared Function medianOf3(a As Integer, b As Integer, c As Integer) As Integer
-        Return Math.Max(Math.Min(a, b), Math.Min(Math.Max(a, b), c))
+        Return std.Max(std.Min(a, b), std.Min(std.Max(a, b), c))
     End Function
 
     ''' <summary>
@@ -704,7 +708,7 @@ Friend Class H264VideoCodec
     ''' <param name="ctxBase">分量的上下文基址：x 为 40、y 为 47</param>
     ''' <param name="amvd">左邻与上邻的 <b>mvd 幅值</b>之和，决定首个 bin 的上下文</param>
     Private Shared Sub writeMvd(cabac As H264Cabac, ctxBase As Integer, mvd As Integer, amvd As Integer)
-        Dim magnitude As Integer = Math.Abs(mvd)
+        Dim magnitude As Integer = std.Abs(mvd)
         Dim ctx As Integer = ctxBase + If(amvd > 2, 1, 0) + If(amvd > 32, 1, 0)
 
         If magnitude = 0 Then
@@ -1016,8 +1020,8 @@ Friend Class H264VideoCodec
 
         mvStoreX(mbIndex) = mvX
         mvStoreY(mbIndex) = mvY
-        mvMagX(mbIndex) = Math.Abs(mvdX)
-        mvMagY(mbIndex) = Math.Abs(mvdY)
+        mvMagX(mbIndex) = std.Abs(mvdX)
+        mvMagY(mbIndex) = std.Abs(mvdY)
         ' P 切片的宏块恒为列表 0、参考索引 0（列表 1 不使用 → 哨兵 -1）
         refL0(mbIndex) = 0
         refL1(mbIndex) = -1
@@ -1353,15 +1357,15 @@ Friend Class H264VideoCodec
         If useL0 Then
             mvStoreX(mbIndex) = mv0X
             mvStoreY(mbIndex) = mv0Y
-            mvMagX(mbIndex) = Math.Abs(mvd0X)
-            mvMagY(mbIndex) = Math.Abs(mvd0Y)
+            mvMagX(mbIndex) = std.Abs(mvd0X)
+            mvMagY(mbIndex) = std.Abs(mvd0Y)
         End If
 
         If useL1 Then
             mvStoreX1(mbIndex) = mv1X
             mvStoreY1(mbIndex) = mv1Y
-            mvMagX1(mbIndex) = Math.Abs(mvd1X)
-            mvMagY1(mbIndex) = Math.Abs(mvd1Y)
+            mvMagX1(mbIndex) = std.Abs(mvd1X)
+            mvMagY1(mbIndex) = std.Abs(mvd1Y)
         End If
 
         ' ---- 11. 重建 ----

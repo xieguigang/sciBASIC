@@ -117,9 +117,6 @@ Friend NotInheritable Class H264Transform
     ''' <summary>
     ''' 4x4 逆向变换（输入的系数已经完成反量化，输出残差样点）
     ''' </summary>
-    ''' <summary>
-    ''' 4x4 逆向变换（输入的系数已完成反量化，输出残差样点）
-    ''' </summary>
     ''' <remarks>
     ''' 严格镜像解码器 <c>ff_h264_idct_add</c>（h264idct_template.c:33-67）：
     ''' 第一级按<b>列</b>、第二级按<b>行</b>（与规范 8.5.12.2 的行/列次序互为转置，二者等价），
@@ -171,15 +168,10 @@ Friend NotInheritable Class H264Transform
     End Sub
 
     ''' <summary>
-    ''' 量化：把变换系数 W 量化为 level
-    ''' </summary>
-    ''' <param name="coeff">变换系数（长度 16）</param>
-    ''' <param name="levels">量化输出（长度 16）</param>
-    ''' <param name="qp">量化参数</param>
-    ''' <param name="intra">是否按帧内编码的舍入偏移</param>
-    ''' <summary>
     ''' 反量化基数表（ffmpeg <c>ff_h264_dequant4_coeff_init</c>，h264data.c:152），
     ''' 行按 <c>qp Mod 6</c>、列按位置类别索引
+    ''' 
+    ''' 量化：把变换系数 W 量化为 level
     ''' </summary>
     Private Shared ReadOnly dequantInit As Integer()() = {
         New Integer() {10, 13, 16},

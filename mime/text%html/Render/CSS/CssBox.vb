@@ -92,18 +92,18 @@
 
 Imports System.ComponentModel
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Reflection
 Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports rect = System.Drawing.Rectangle
+' the css property ``font-style`` of this class is a string value, so the
+' font style enum of the imaging namespace requires an alias at here
+Imports CssFontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 Imports std = System.Math
 
 Namespace Render.CSS
-
-#If NET48 Then
 
     ''' <summary>
     ''' Represents a CSS Box of text or replaced elements.
@@ -222,7 +222,6 @@ Namespace Render.CSS
         Private _borderSpacing As String
         Private _borderCollapse As String
         Private _border As String
-        Private _bottom As String
         Private _color As String
         Private _cornerNWRadius As String
         Private _cornerNERadius As String
@@ -250,7 +249,6 @@ Namespace Render.CSS
         Private _paddingRight As String
         Private _paddingTop As String
         Private _padding As String
-        Private _right As String
         Private _text As String
         Private _textAlign As String
         Private _textDecoration As String
@@ -758,6 +756,26 @@ Namespace Render.CSS
             End Set
         End Property
 
+        ''' <summary>
+        ''' the standard css name of the <see cref="CornerRadius"/> property
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this engine uses the ``corner-radius`` name for the corner radius of
+        ''' a box, this property is just an alias of it so that a stylesheet
+        ''' that follows the standard css specification can be used as well.
+        ''' </remarks>
+        <CssProperty("border-radius")>
+        <DefaultValue("0")>
+        Public Property BorderRadius() As String
+            Get
+                Return CornerRadius
+            End Get
+            Set
+                CornerRadius = Value
+            End Set
+        End Property
+
 
         <CssProperty("corner-nw-radius")>
         <DefaultValue("0")>
@@ -958,21 +976,32 @@ Namespace Render.CSS
         <DefaultValue("auto")>
         Public Property Top() As String
 
-        '[CssProperty("right")]
-        '[DefaultValue("auto")]
-        'public string Right
-        '{
-        '    get { return _right; }
-        '    set { _right = value; }
-        '}
+        ''' <summary>
+        ''' the offset of the right edge of this box from the right edge of its
+        ''' containing block, it is used by the absolutely positioned boxes.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("right")>
+        <DefaultValue("auto")>
+        Public Property Right() As String
 
-        '[CssProperty("bottom")]
-        '[DefaultValue("auto")]
-        'public string Bottom
-        '{
-        '    get { return _bottom; }
-        '    set { _bottom = value; }
-        '}
+        ''' <summary>
+        ''' the offset of the bottom edge of this box from the bottom edge of
+        ''' its containing block, it is used by the absolutely positioned boxes.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("bottom")>
+        <DefaultValue("auto")>
+        Public Property Bottom() As String
+
+        ''' <summary>
+        ''' the paint order of this box, a box with a larger z-index value is
+        ''' painted on top of a box with a smaller one.
+        ''' </summary>
+        ''' <returns></returns>
+        <CssProperty("z-index")>
+        <DefaultValue("auto")>
+        Public Property ZIndex() As String
 
         <CssProperty("width")>
         <DefaultValue("auto")>
@@ -1884,14 +1913,14 @@ Namespace Render.CSS
                         FontSize = CssDefaults.FontSize & "pt"
                     End If
 
-                    Dim st As FontStyle = Global.System.Drawing.FontStyle.Regular
+                    Dim st As CssFontStyle = CssFontStyle.Regular
 
                     If FontStyle = CssConstants.Italic OrElse FontStyle = CssConstants.Oblique Then
-                        st = st Or Global.System.Drawing.FontStyle.Italic
+                        st = st Or CssFontStyle.Italic
                     End If
 
                     If FontWeight <> CssConstants.Normal AndAlso FontWeight <> CssConstants.Lighter AndAlso Not String.IsNullOrEmpty(FontWeight) Then
-                        st = st Or Global.System.Drawing.FontStyle.Bold
+                        st = st Or CssFontStyle.Bold
                     End If
 
                     Dim fsize As Single = 0F
@@ -2335,6 +2364,51 @@ Namespace Render.CSS
         End Property
 
         ''' <summary>
+        ''' Gets the rectangle that should be used to paint this box.
+        ''' </summary>
+        ''' <remarks>
+        ''' An inline box does not own a location or a size of its own: its
+        ''' geometry is described by the line boxes that host its words, so the
+        ''' union of these rectangles is returned at here, while a block box
+        ''' simply returns its own bounds.
+        ''' </remarks>
+        Public ReadOnly Property PaintBounds() As RectangleF
+            Get
+                If _rectangles IsNot Nothing AndAlso _rectangles.Count > 0 Then
+                    Dim left As Single = Single.MaxValue
+                    Dim top As Single = Single.MaxValue
+                    Dim right As Single = Single.MinValue
+                    Dim bottom As Single = Single.MinValue
+
+                    For Each rect As RectangleF In _rectangles.Values
+                        If Single.IsInfinity(rect.Width) OrElse Single.IsInfinity(rect.Height) Then
+                            Continue For
+                        End If
+
+                        If rect.Left < left Then
+                            left = rect.Left
+                        End If
+                        If rect.Top < top Then
+                            top = rect.Top
+                        End If
+                        If rect.Right > right Then
+                            right = rect.Right
+                        End If
+                        If rect.Bottom > bottom Then
+                            bottom = rect.Bottom
+                        End If
+                    Next
+
+                    If left <= right AndAlso top <= bottom Then
+                        Return RectangleF.FromLTRB(left, top, right, bottom)
+                    End If
+                End If
+
+                Return Bounds
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Gets the right of the box. When setting, it will affect only the width of the box.
         ''' </summary>
         Public Property ActualRight() As Single
@@ -2430,7 +2504,7 @@ Namespace Render.CSS
         ''' Creates the <see cref="ListItemBox"/>
         ''' </summary>
         ''' <param name="g"></param>
-        Private Sub CreateListItemBox(g As Graphics)
+        Private Sub CreateListItemBox(g As IGraphics)
             If Display = CssConstants.ListItem Then
                 If _listItemBox Is Nothing Then
                     _listItemBox = New CssBox()
@@ -2488,7 +2562,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="attribute">Attribute to retrieve</param>
         ''' <returns>Attribute value or string.Empty if no attribute specified</returns>
-        Friend Function GetAttribute(attribute As String) As String
+        Public Function GetAttribute(attribute As String) As String
             Return GetAttribute(attribute, String.Empty)
         End Function
 
@@ -2498,7 +2572,7 @@ Namespace Render.CSS
         ''' <param name="attribute">Attribute to retrieve</param>
         ''' <param name="defaultValue">Value to return if attribute is not specified</param>
         ''' <returns>Attribute value or defaultValue if no attribute specified</returns>
-        Friend Function GetAttribute(attribute As String, defaultValue As String) As String
+        Public Function GetAttribute(attribute As String, defaultValue As String) As String
             If HtmlTag Is Nothing Then
                 Return defaultValue
             End If
@@ -2633,7 +2707,7 @@ Namespace Render.CSS
         ''' Get the width of the box at full width (No line breaks)
         ''' </summary>
         ''' <returns></returns>
-        Friend Function GetFullWidth(g As Graphics) As Single
+        Friend Function GetFullWidth(g As IGraphics) As Single
             Dim sum As Single = 0F
             Dim paddingsum As Single = 0F
             GetFullWidth_WordsWith(Me, g, sum, paddingsum)
@@ -2645,7 +2719,7 @@ Namespace Render.CSS
         ''' Gets the longest word (in width) inside the box, deeply.
         ''' </summary>
         ''' <param name="b"></param>
-        Private Sub GetFullWidth_WordsWith(b As CssBox, g As Graphics, ByRef sum As Single, ByRef paddingsum As Single)
+        Private Sub GetFullWidth_WordsWith(b As CssBox, g As IGraphics, ByRef sum As Single, ByRef paddingsum As Single)
             If b.Display <> CssConstants.Inline Then
                 sum = 0
             End If
@@ -2744,7 +2818,7 @@ Namespace Render.CSS
         ''' Measures the bounds of box and children, recursively.
         ''' </summary>
         ''' <param name="g">Device context to draw</param>
-        Public Overridable Sub MeasureBounds(g As Graphics)
+        Public Overridable Sub MeasureBounds(g As IGraphics)
             If Display = CssConstants.None Then
                 Return
             End If
@@ -2753,7 +2827,7 @@ Namespace Render.CSS
 
             MeasureWordsSize(g)
 
-            If Display = CssConstants.Block OrElse Display = CssConstants.ListItem OrElse Display = CssConstants.Table OrElse Display = CssConstants.InlineTable OrElse Display = CssConstants.TableCell OrElse Display = CssConstants.None Then
+            If Display = CssConstants.Block OrElse Display = CssConstants.ListItem OrElse Display = CssConstants.Table OrElse Display = CssConstants.InlineTable OrElse Display = CssConstants.InlineBlock OrElse Display = CssConstants.TableCell OrElse Display = CssConstants.None Then
                 '#Region "Measure Bounds"
                 If Display <> CssConstants.TableCell Then
                     Dim prevSibling As CssBox = GetPreviousSibling(Me)
@@ -2782,6 +2856,21 @@ Namespace Render.CSS
 
                     '#End Region
                     Size = New SizeF(width__1, Size.Height)
+
+                    ' the height of a block box, the original html renderer
+                    ' only grows a box by the size of its own content, while a
+                    ' user interface declaration always gives an explicit
+                    ' height to its controls
+                    Call ApplyCssHeight()
+                End If
+
+                ' an absolutely positioned box is removed from the normal flow
+                ' of the document, its location is resolved against the edges
+                ' of the containing block instead. the horizontal offset is
+                ' applied before the child boxes are measured so that they are
+                ' laid out at the right place.
+                If IsAbsolutelyPositioned Then
+                    Call ApplyAbsolutePosition(applyVertical:=True)
                 End If
 
                 'If we're talking about a table here..
@@ -2814,6 +2903,15 @@ Namespace Render.CSS
                 End If
             End If
 
+            ' the content of the box has grown its height, so the explicit css
+            ' height and the vertical offset of an absolutely positioned box
+            ' that is aligned through the bottom edge are resolved at here
+            Call ApplyCssHeight()
+
+            If IsAbsolutelyPositioned Then
+                Call ApplyAbsolutePosition(applyVertical:=True)
+            End If
+
             If InitialContainer IsNot Nothing Then
                 InitialContainer.MaximumSize = New SizeF(
                     std.Max(InitialContainer.MaximumSize.Width, ActualRight),
@@ -2822,10 +2920,104 @@ Namespace Render.CSS
         End Sub
 
         ''' <summary>
+        ''' Applies the explicit css height of this box: the original html
+        ''' renderer only grows a box by the size of its own content, while a
+        ''' user interface declaration always gives an explicit height to its
+        ''' controls.
+        ''' </summary>
+        Private Sub ApplyCssHeight()
+            If Height = CssConstants.Auto OrElse String.IsNullOrEmpty(Height) Then
+                Return
+            End If
+
+            Dim availHeight As Single = ContainingBlock.Size.Height _
+                - ContainingBlock.ActualPaddingTop - ContainingBlock.ActualPaddingBottom _
+                - ContainingBlock.ActualBorderTopWidth - ContainingBlock.ActualBorderBottomWidth _
+                - ActualMarginTop - ActualMarginBottom _
+                - ActualBorderTopWidth - ActualBorderBottomWidth
+
+            Size = New SizeF(Size.Width, CssValue.ParseLength(Height, availHeight, Me))
+        End Sub
+
+        ''' <summary>
+        ''' Is this box removed from the normal flow of the document and placed
+        ''' against the edges of its containing block?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsAbsolutelyPositioned As Boolean
+            Get
+                If Position = CssConstants.Absolute OrElse Position = CssConstants.Fixed Then
+                    Return True
+                End If
+
+                ' a user interface declaration usually omits the ``position``
+                ' property of a control: an element that declares any of the
+                ' four offsets is taken out of the normal flow as well, so that
+                ' ``left`` and ``top`` can be used to place a control without
+                ' an explicit ``position:absolute``.
+                If Not String.IsNullOrEmpty(Left) AndAlso Left <> CssConstants.Auto Then
+                    Return True
+                End If
+                If Not String.IsNullOrEmpty(Top) AndAlso Top <> CssConstants.Auto Then
+                    Return True
+                End If
+                If Not String.IsNullOrEmpty(Right) AndAlso Right <> CssConstants.Auto Then
+                    Return True
+                End If
+                If Not String.IsNullOrEmpty(Bottom) AndAlso Bottom <> CssConstants.Auto Then
+                    Return True
+                End If
+
+                Return False
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Resolves the location of an absolutely positioned box against the
+        ''' padding box of its containing block, following the standard css
+        ''' rule: ``left`` and ``top`` are the offsets of the left and the top
+        ''' edge of the box, while ``right`` and ``bottom`` are the offsets of
+        ''' the right and the bottom edge of the box.
+        ''' </summary>
+        ''' <param name="applyVertical">
+        ''' the vertical offset requires the final height of the box, so it is
+        ''' applied again after the content of the box has been measured.
+        ''' </param>
+        Private Sub ApplyAbsolutePosition(Optional applyVertical As Boolean = True)
+            Dim area As RectangleF = ContainingBlock.ClientRectangle
+            Dim hasLeft As Boolean = Not String.IsNullOrEmpty(Left) AndAlso Left <> CssConstants.Auto
+            Dim hasRight As Boolean = Not String.IsNullOrEmpty(Right) AndAlso Right <> CssConstants.Auto
+            Dim hasTop As Boolean = Not String.IsNullOrEmpty(Top) AndAlso Top <> CssConstants.Auto
+            Dim hasBottom As Boolean = Not String.IsNullOrEmpty(Bottom) AndAlso Bottom <> CssConstants.Auto
+
+            Dim x As Single = Location.X
+            Dim y As Single = Location.Y
+
+            ' a percentage value of the offsets is relative to the size of the
+            ' containing block, ``left`` wins over ``right`` and ``top`` wins
+            ' over ``bottom`` when both of them are specified.
+            If hasLeft Then
+                x = area.Left + CssValue.ParseLength(Left, area.Width, Me)
+            ElseIf hasRight Then
+                x = area.Right - CssValue.ParseLength(Right, area.Width, Me) - Size.Width
+            End If
+
+            If applyVertical Then
+                If hasTop Then
+                    y = area.Top + CssValue.ParseLength(Top, area.Height, Me)
+                ElseIf hasBottom Then
+                    y = area.Bottom - CssValue.ParseLength(Bottom, area.Height, Me) - Size.Height
+                End If
+            End If
+
+            Location = New PointF(x, y)
+        End Sub
+
+        ''' <summary>
         ''' Measures the word spacing
         ''' </summary>
         ''' <param name="g"></param>
-        Private Sub MeasureWordSpacing(g As Graphics)
+        Private Sub MeasureWordSpacing(g As IGraphics)
             _actualWordSpacing = CssLayoutEngine.WhiteSpace(g, Me)
 
             If WordSpacing <> CssConstants.Normal Then
@@ -2839,7 +3031,7 @@ Namespace Render.CSS
         ''' Assigns words its width and height
         ''' </summary>
         ''' <param name="g"></param>
-        Friend Sub MeasureWordsSize(g As Graphics)
+        Friend Sub MeasureWordsSize(g As IGraphics)
             If _wordsSizeMeasured Then
                 Return
             End If
@@ -2886,17 +3078,16 @@ Namespace Render.CSS
                     Else
                         Dim word As String = b.Text
 
-                        Dim measurable As CharacterRange() = {New CharacterRange(0, word.Length)}
-                        Dim sf As New StringFormat()
+                        ' the gdi+ only api ``MeasureCharacterRanges`` is not
+                        ' available on the cross platform runtime, the size of
+                        ' the given word is measured by the graphics driver of
+                        ' the current canvas instead.
+                        Dim s As SizeF = g.MeasureString(word, ActualFont)
 
-                        sf.SetMeasurableCharacterRanges(measurable)
-
-                        Dim regions As Region() = g.MeasureCharacterRanges(word, ActualFont, New RectangleF(0, 0, Single.MaxValue, Single.MaxValue), sf)
-
-                        Dim s As SizeF = regions(0).GetBounds(g).Size
-                        Dim p As PointF = regions(0).GetBounds(g).Location
-
-                        b.LastMeasureOffset = New PointF(p.X, p.Y)
+                        ' the offset of the first measure character is a gdi+
+                        ' only value, it is always zero on the cross platform
+                        ' runtime
+                        b.LastMeasureOffset = PointF.Empty
                         b.Width = s.Width
                         ' +p.X;
                         b.Height = s.Height
@@ -2954,7 +3145,7 @@ Namespace Render.CSS
         ''' Paints the fragment
         ''' </summary>
         ''' <param name="g"></param>
-        Public Sub Paint(g As Graphics)
+        Public Sub Paint(g As IGraphics)
             If Display = CssConstants.None Then
                 Return
             End If
@@ -3025,14 +3216,9 @@ Namespace Render.CSS
         ''' Paints the border of the box
         ''' </summary>
         ''' <param name="g"></param>
-        Private Sub PaintBorder(g As Graphics, rectangle As RectangleF, isFirst As Boolean, isLast As Boolean)
-
-            Dim smooth As SmoothingMode = g.SmoothingMode
-
-            If InitialContainer IsNot Nothing AndAlso Not InitialContainer.AvoidGeometryAntialias AndAlso IsRounded Then
-                g.SmoothingMode = SmoothingMode.AntiAlias
-            End If
-
+        Private Sub PaintBorder(g As IGraphics, rectangle As RectangleF, isFirst As Boolean, isLast As Boolean)
+            ' the smoothing mode is a gdi+ only graphics state, it is not
+            ' exposed by the cross platform graphics canvas
             'Top border
             If Not (String.IsNullOrEmpty(BorderTopStyle) OrElse BorderTopStyle = CssConstants.None) Then
                 Using b As New SolidBrush(ActualBorderTopColor)
@@ -3078,15 +3264,13 @@ Namespace Render.CSS
                 End If
             End If
 
-            g.SmoothingMode = smooth
-
         End Sub
 
         ''' <summary>
         ''' Paints the background of the box
         ''' </summary>
         ''' <param name="g"></param>
-        Private Sub PaintBackground(g As Graphics, rectangle As RectangleF)
+        Private Sub PaintBackground(g As IGraphics, rectangle As RectangleF)
             'HACK: Background rectangles are being deactivated when justifying text.
             If ContainingBlock.TextAlign = CssConstants.Justify Then
                 Return
@@ -3094,7 +3278,6 @@ Namespace Render.CSS
 
             Dim roundrect As GraphicsPath = Nothing
             Dim b As Brush = Nothing
-            Dim smooth As SmoothingMode = g.SmoothingMode
 
             If IsRounded Then
                 roundrect = CssDrawingHelper.GetRoundRect(rectangle, ActualCornerNW, ActualCornerNE, ActualCornerSE, ActualCornerSW)
@@ -3106,17 +3289,11 @@ Namespace Render.CSS
                 b = New SolidBrush(ActualBackgroundColor)
             End If
 
-            If InitialContainer IsNot Nothing AndAlso Not InitialContainer.AvoidGeometryAntialias AndAlso IsRounded Then
-                g.SmoothingMode = SmoothingMode.AntiAlias
-            End If
-
             If roundrect IsNot Nothing Then
                 g.FillPath(b, roundrect)
             Else
                 g.FillRectangle(b, rectangle)
             End If
-
-            g.SmoothingMode = smooth
 
             If roundrect IsNot Nothing Then
                 roundrect.Dispose()
@@ -3130,7 +3307,7 @@ Namespace Render.CSS
         ''' Paints the text decoration
         ''' </summary>
         ''' <param name="g"></param>
-        Private Sub PaintDecoration(g As Graphics, rectangle As RectangleF, isFirst As Boolean, isLast As Boolean)
+        Private Sub PaintDecoration(g As IGraphics, rectangle As RectangleF, isFirst As Boolean, isLast As Boolean)
             If String.IsNullOrEmpty(TextDecoration) OrElse TextDecoration = CssConstants.None OrElse IsImage Then
                 Return
             End If
@@ -3258,5 +3435,4 @@ Namespace Render.CSS
         End Function
 #End Region
     End Class
-#End If
 End Namespace

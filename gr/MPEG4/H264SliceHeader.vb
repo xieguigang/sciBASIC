@@ -21,6 +21,8 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+Imports std = System.Math
+
 ''' <summary>
 ''' H.264 的 slice_type 取值（写入码流的是该值，读到时大于 4 表示整幅图像统一类型）。
 ''' </summary>
@@ -59,7 +61,6 @@ Friend NotInheritable Class H264SliceHeader
     ''' <param name="idrPicId">IDR 图像的 idr_pic_id</param>
     ''' <param name="sliceQpDelta">slice_qp_delta（相对 PPS 的 pic_init_qp_minus26）</param>
     ''' <param name="cabacInitIdc">非 I 切片的 cabac_init_idc，取 0 - 2</param>
-    ''' <param name="outputStream">已经写好的位流写入器</param>
     Friend Shared Sub write(w As BitStreamWriter,
                             sliceType As H264SliceType,
                             isIdr As Boolean,
@@ -125,7 +126,7 @@ Friend NotInheritable Class H264SliceHeader
         End If
 
         If sliceType <> H264SliceType.I Then
-            Call w.writeUe(Math.Max(0, Math.Min(2, cabacInitIdc)))      ' cabac_init_idc
+            Call w.writeUe(std.Max(0, std.Min(2, cabacInitIdc)))      ' cabac_init_idc
         End If
 
         Call w.writeSe(sliceQpDelta)                                    ' slice_qp_delta

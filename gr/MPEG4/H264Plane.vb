@@ -21,6 +21,8 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+Imports std = System.Math
+
 ''' <summary>
 ''' 单个 8bit 图像平面（亮度或色度），带独立步长。
 ''' </summary>
@@ -72,7 +74,7 @@ Friend Class H264Plane
     ''' <param name="visibleHeight">实际可见高度</param>
     Friend Sub padEdges(visibleWidth As Integer, visibleHeight As Integer)
         For y As Integer = 0 To height - 1
-            Dim last As Integer = at(Math.Max(0, visibleWidth - 1), Math.Min(y, visibleHeight - 1))
+            Dim last As Integer = at(std.Max(0, visibleWidth - 1), std.Min(y, visibleHeight - 1))
 
             For x As Integer = visibleWidth To width - 1
                 setAt(x, y, last)
@@ -81,7 +83,7 @@ Friend Class H264Plane
 
         For y As Integer = visibleHeight To height - 1
             For x As Integer = 0 To width - 1
-                setAt(x, y, at(x, Math.Max(0, visibleHeight - 1)))
+                setAt(x, y, at(x, std.Max(0, visibleHeight - 1)))
             Next
         Next
     End Sub
@@ -183,8 +185,8 @@ Friend Class H264Yuv420
         Next
 
         Call y.padEdges(width, height)
-        Call u.padEdges(Math.Max(1, width \ 2), Math.Max(1, height \ 2))
-        Call v.padEdges(Math.Max(1, width \ 2), Math.Max(1, height \ 2))
+        Call u.padEdges(std.Max(1, width \ 2), std.Max(1, height \ 2))
+        Call v.padEdges(std.Max(1, width \ 2), std.Max(1, height \ 2))
     End Sub
 
     ''' <summary>

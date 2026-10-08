@@ -21,6 +21,8 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+Imports std = System.Math
+
 ''' <summary>
 ''' H.264 CABAC 算术编码器与上下文状态管理。
 ''' </summary>
@@ -71,7 +73,7 @@ Friend Class H264Cabac
             mValues = H264CabacTables.ctxInitM_I
             nValues = H264CabacTables.ctxInitN_I
         Else
-            offset = Math.Max(0, Math.Min(2, cabacInitIdc)) * 1024
+            offset = std.Max(0, std.Min(2, cabacInitIdc)) * 1024
             mValues = H264CabacTables.ctxInitM_PB
             nValues = H264CabacTables.ctxInitN_PB
         End If

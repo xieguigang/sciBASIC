@@ -72,9 +72,9 @@
 Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
-#If NET48 Then
     Friend Class CssTable
 #Region "Subclasses"
 
@@ -148,7 +148,7 @@ Namespace Render.CSS
             _allRows = New List(Of CssBox)()
         End Sub
 
-        Public Sub New(tableBox As CssBox, g As Graphics)
+        Public Sub New(tableBox As CssBox, g As IGraphics)
             Me.New()
             If Not (tableBox.Display = CssConstants.Table OrElse tableBox.Display = CssConstants.InlineTable) Then
                 Throw New ArgumentException("Box is not a table", "tableBox")
@@ -330,7 +330,7 @@ Namespace Render.CSS
         ''' Analyzes the Table and assigns values to this CssTable object.
         ''' To be called from the constructor
         ''' </summary>
-        Private Sub Analyze(g As Graphics)
+        Private Sub Analyze(g As IGraphics)
             Dim availSpace As Single = GetAvailableWidth()
             Dim availCellSpace As Single = Single.NaN
             'Will be set later
@@ -792,7 +792,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="b"></param>
         ''' <param name="g"></param>
-        Private Sub Measure(b As CssBox, g As Graphics)
+        Private Sub Measure(b As CssBox, g As IGraphics)
             If b Is Nothing Then
                 Return
             End If
@@ -808,7 +808,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="b"></param>
         ''' <param name="g"></param>
-        Private Sub MeasureWords(b As CssBox, g As Graphics)
+        Private Sub MeasureWords(b As CssBox, g As IGraphics)
             If b Is Nothing Then
                 Return
             End If
@@ -945,5 +945,4 @@ Namespace Render.CSS
 
 #End Region
     End Class
-#End If
 End Namespace

@@ -10,8 +10,8 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.9775.28485</Version>
-    <AssemblyVersion>1.0.9775.28485</AssemblyVersion>
+    <Version>10.5.9777.32612</Version>
+    <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
 
     <Title>Machine Vision Tools: Shape, Blob, OCR and Tracking</Title>
     <Description>2D curve and shape matching with Procrustes and Frechet distance, connected component labelling, Hough circle detection, text OCR, RANSAC point-set alignment and multi-object tracking. Part of sciBASIC#.</Description>
