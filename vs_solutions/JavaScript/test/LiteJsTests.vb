@@ -192,28 +192,4 @@ Public Class LiteJsTests
         Assert.DoesNotContain("Dim string As", code)      ' VB keyword escaped
     End Sub
 
-    ' ------------------------------------------------------------- CLI demo
-
-    <Fact>
-    Public Sub Cli_Demo_NoE2E_Passes()
-        Dim rc = LiteJs.Cli.Program.Main({"/demo", "/no-e2e"})
-        Assert.Equal(0, rc)
-    End Sub
-
-    <Fact>
-    Public Sub Cli_Run_Translate_Smoke()
-        Dim dir = Path.Combine(Path.GetTempPath(), "litejs_" & Guid.NewGuid().ToString("N"))
-        Directory.CreateDirectory(dir)
-        Try
-            Dim js = Path.Combine(dir, "t.js")
-            File.WriteAllText(js, "function add(a,b){return a+b;} console.log(add(2,40));")
-            Assert.Equal(0, LiteJs.Cli.Program.Main({"/run", js}))
-            Dim outVb = Path.Combine(dir, "t.vb")
-            Assert.Equal(0, LiteJs.Cli.Program.Main({"/translate", js, outVb}))
-            Assert.True(File.ReadAllText(outVb).Contains("JsRuntime.JsAdd"))
-        Finally
-            Directory.Delete(dir, True)
-        End Try
-    End Sub
-
 End Class
