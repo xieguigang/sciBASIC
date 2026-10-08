@@ -8,6 +8,8 @@
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;mzkit_win32;CellaLAB-Desktop;nuget_release</Configurations>
     <Version>10.5.9777.32612</Version>
     <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
