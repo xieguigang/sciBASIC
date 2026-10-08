@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml.Linq
 Imports Microsoft.VisualBasic.Imaging
@@ -112,8 +113,56 @@ Namespace Render
         ''' </code>
         ''' </param>
         Public Sub New(xml As XElement)
-            Me.New(If(xml Is Nothing, "", xml.ToString()))
+            Me.New(If(xml Is Nothing, "", EscapeTagClosures(xml.ToString())))
         End Sub
+
+        ''' <summary>
+        ''' The xml serializer escapes the ``&lt;`` character of an attribute
+        ''' value but leaves the ``&gt;`` one as it is, and such a character
+        ''' terminates the html tag early: a rich text value like
+        ''' ``tooltip="&lt;b&gt;title&lt;/b&gt;"`` is read back as
+        ''' ``tooltip="&amp;lt;b&amp;gt;title"``. the ``&gt;`` characters that
+        ''' are located inside of an attribute value are escaped again at here.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
+        Private Shared Function EscapeTagClosures(html As String) As String
+            Dim buffer As New StringBuilder(html.Length)
+            Dim inTag As Boolean = False
+            Dim quote As Char = ControlChars.NullChar
+
+            For Each c As Char In html
+                If Not inTag Then
+                    If c = "<"c Then
+                        inTag = True
+                    End If
+
+                    Call buffer.Append(c)
+                    Continue For
+                End If
+
+                If quote <> ControlChars.NullChar Then
+                    If c = quote Then
+                        quote = ControlChars.NullChar
+                    ElseIf c = ">"c Then
+                        Call buffer.Append("&gt;")
+                        Continue For
+                    End If
+
+                    Call buffer.Append(c)
+                ElseIf c = """"c OrElse c = "'"c Then
+                    quote = c
+                    Call buffer.Append(c)
+                ElseIf c = ">"c Then
+                    inTag = False
+                    Call buffer.Append(c)
+                Else
+                    Call buffer.Append(c)
+                End If
+            Next
+
+            Return buffer.ToString()
+        End Function
 
 #End Region
 
