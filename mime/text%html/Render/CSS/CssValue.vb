@@ -436,7 +436,12 @@ Namespace Render.CSS
                 Dim prop As PropertyInfo = t.GetProperty(propName)
 
                 Return prop
-            ElseIf Uri.IsWellFormedUriString(path, UriKind.RelativeOrAbsolute) Then
+            ElseIf File.Exists(path) Then
+                ' a local file wins over everything else: a relative path like
+                ' ``./image.png`` is a well formed relative uri but it can not
+                ' be turned into an uri object without a base address
+                Return New FileInfo(path)
+            ElseIf Uri.TryCreate(path, UriKind.Absolute, Nothing) Then
                 Return New Uri(path)
             Else
                 Return New FileInfo(path)
