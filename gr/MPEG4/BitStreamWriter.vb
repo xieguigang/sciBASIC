@@ -21,6 +21,8 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+Imports std = System.Math
+
 ''' <summary>
 ''' MSB-first 位流写入器，负责 H.264 的位级语法写出与 RBSP 防竞争字节插入。
 ''' </summary>
@@ -44,7 +46,7 @@ Friend Class BitStreamWriter
     Private firstBitSkipped As Boolean
 
     Friend Sub New(Optional capacity As Integer = 4096)
-        Me.buf = New Byte(Math.Max(capacity, 16) - 1) {}
+        Me.buf = New Byte(std.Max(capacity, 16) - 1) {}
     End Sub
 
     ''' <summary>
@@ -79,7 +81,7 @@ Friend Class BitStreamWriter
 
     Friend Sub writeBits(value As Long, bits As Integer)
         While bits > 0
-            Dim take As Integer = Math.Min(8 - nbits, bits)
+            Dim take As Integer = std.Min(8 - nbits, bits)
             Dim shift As Integer = bits - take
             Dim mask As Long = (1L << take) - 1L
             Dim part As Integer = CInt((value >> shift) And mask)
@@ -159,7 +161,7 @@ Friend Class BitStreamWriter
     Private Sub ensure(size As Integer)
         If size <= buf.Length Then Return
 
-        Dim next_ As Byte() = New Byte(Math.Max(size, buf.Length * 2) - 1) {}
+        Dim next_ As Byte() = New Byte(std.Max(size, buf.Length * 2) - 1) {}
         Call Array.Copy(buf, next_, len)
         buf = next_
     End Sub

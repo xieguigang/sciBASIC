@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ''' <summary>
 ''' 整像素运动估计与运动补偿
 ''' </summary>
@@ -60,7 +62,7 @@ Friend Class H264MotionEstimation
 
         For y As Integer = 0 To size - 1
             For x As Integer = 0 To size - 1
-                sum += Math.Abs(sample(source, x0 + x, y0 + y) - sample(reference, x0 + ox + x, y0 + oy + y))
+                sum += std.Abs(sample(source, x0 + x, y0 + y) - sample(reference, x0 + ox + x, y0 + oy + y))
             Next
         Next
 

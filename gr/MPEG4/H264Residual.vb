@@ -21,6 +21,8 @@
 ' You should have received a copy of the GNU General Public License
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+Imports std = System.Math
+
 ''' <summary>
 ''' H.264 残差变换系数块的 CABAC 编码（coded_block_flag + 显著性图 + 幅值 + 符号）。
 ''' </summary>
@@ -147,7 +149,7 @@ Friend NotInheritable Class H264Residual
 
             If level = 0 Then Continue For
 
-            Dim magnitude As Integer = Math.Abs(level)
+            Dim magnitude As Integer = std.Abs(level)
             Dim ctx As Integer = absBase + level1Ctx(nodeCtx)
 
             If magnitude = 1 Then
@@ -160,7 +162,7 @@ Friend NotInheritable Class H264Residual
                 ctx = absBase + levelGt1Ctx(nodeCtx)
                 nodeCtx = levelTransAfterGtOne(nodeCtx)
 
-                Dim prefixTop As Integer = Math.Min(magnitude, 15)
+                Dim prefixTop As Integer = std.Min(magnitude, 15)
 
                 For a As Integer = 3 To prefixTop
                     Call cabac.encodeBin(ctx, 1)

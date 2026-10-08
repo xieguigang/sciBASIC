@@ -74,7 +74,7 @@ Public Class H264CabacDebugReader
     ''' <summary>
     ''' 读取一位，上下文状态由调用方按期望的语法元素给出
     ''' </summary>
-    ''' <summary>归一化之后的区间宽度，用于与编码器逐 bin 对账</summary>
+    ''' <remarks>归一化之后的区间宽度，用于与编码器逐 bin 对账</remarks>>
     Public ReadOnly Property range As Integer
         Get
             Return rangeValue
