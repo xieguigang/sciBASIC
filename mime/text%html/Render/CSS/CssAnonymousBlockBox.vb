@@ -59,7 +59,6 @@
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
-#If NET48 Then
     ''' <summary>
     ''' Represents an anonymous block box
     ''' </summary>
@@ -101,5 +100,4 @@ Namespace Render.CSS
             Display = CssConstants.None
         End Sub
     End Class
-#End If
 End Namespace

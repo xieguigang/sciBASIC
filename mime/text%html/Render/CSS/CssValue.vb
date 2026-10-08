@@ -96,7 +96,6 @@ Namespace Render.CSS
             Return result
         End Function
 
-#If NET48 Then
         ''' <summary>
         ''' Parses a length. Lengths are followed by an unit identifier (e.g. 10px, 3.1em)
         ''' </summary>
@@ -185,7 +184,7 @@ Namespace Render.CSS
 
             Return factor * ParseNumber(number, hundredPercent)
         End Function
-#End If
+
         ''' <summary>
         ''' Parses a color value in CSS style; e.g. #ff0000, red, rgb(255,0,0), rgb(100%, 0, 0)
         ''' </summary>
@@ -310,7 +309,6 @@ Namespace Render.CSS
 
             Return Color.FromArgb(r, g, b)
         End Function
-#If NET48 Then
         ''' <summary>
         ''' Parses a border value in CSS style; e.g. 1px, 1, thin, thick, medium
         ''' </summary>
@@ -332,7 +330,7 @@ Namespace Render.CSS
                     Return Abs(ParseLength(borderValue, 1, b))
             End Select
         End Function
-#End If
+
         ''' <summary>
         ''' Split the value by spaces; e.g. Useful in values like 'padding:5 4 3 inherit'
         ''' </summary>
@@ -433,14 +431,17 @@ Namespace Render.CSS
             End If
         End Function
 
-#If NET48 Then
-
         ''' <summary>
         ''' Gets the image of the specified path
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        Public Shared Function GetImage(path As String) As Drawing.Image
+        ''' <remarks>
+        ''' the image data model of this function is the cross platform image 
+        ''' type of the ``Microsoft.VisualBasic.Imaging`` namespace, not the 
+        ''' GDI+ image type.
+        ''' </remarks>
+        Public Shared Function GetImage(path As String) As Image
             Dim source As Object = DetectSource(path)
 
             Dim finfo As FileInfo = TryCast(source, FileInfo)
@@ -459,13 +460,13 @@ Namespace Render.CSS
                         Return Nothing
                     End If
 
-                    Return TryCast(prop.GetValue(Nothing, Nothing), Drawing.Image)
+                    Return TryCast(prop.GetValue(Nothing, Nothing), Image)
                 ElseIf method IsNot Nothing Then
                     If Not method.ReturnType.IsSubclassOf(GetType(Image)) Then
                         Return Nothing
                     End If
 
-                    Return TryCast(method.Invoke(Nothing, Nothing), Drawing.Image)
+                    Return TryCast(method.Invoke(Nothing, Nothing), Image)
                 Else
                     Return Nothing
                 End If
@@ -474,7 +475,6 @@ Namespace Render.CSS
                 Return New Bitmap(50, 50)
             End Try
         End Function
-#End If
 
         ''' <summary>
         ''' Gets the content of the stylesheet specified in the path

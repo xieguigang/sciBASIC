@@ -64,8 +64,6 @@ Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 
-#If NET48 Then
-
     ''' <summary>
     ''' Represents a line of text.
     ''' </summary>
@@ -247,7 +245,7 @@ Namespace Render.CSS
         ''' Draws the rectangles for debug purposes
         ''' </summary>
         ''' <param name="g"></param>
-        Friend Sub DrawRectangles(g As Graphics)
+        Friend Sub DrawRectangles(g As IGraphics)
             For Each b As CssBox In Rectangles.Keys
                 If Single.IsInfinity(Rectangles(b).Width) Then
                     Continue For
@@ -262,7 +260,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <returns></returns>
-        Public Function GetBaseLineHeight(b As CssBox, g As Graphics) As Single
+        Public Function GetBaseLineHeight(b As CssBox, g As IGraphics) As Single
             Dim f As Font = b.ActualFont
             Dim ff As FontFamily = f.FontFamily
             Dim s As FontStyle = f.Style
@@ -275,7 +273,7 @@ Namespace Render.CSS
         ''' <param name="g">Device info</param>
         ''' <param name="b">box to check words</param>
         ''' <param name="baseline">baseline</param>
-        Friend Sub SetBaseLine(g As Graphics, b As CssBox, baseline As Single)
+        Friend Sub SetBaseLine(g As IGraphics, b As CssBox, baseline As Single)
             'TODO: Aqui me quede, checar poniendo "by the" con un font-size de 3em
             Dim ws As List(Of CssBoxWord) = WordsOf(b)
 
@@ -328,5 +326,4 @@ Namespace Render.CSS
             Return String.Join(" ", ws)
         End Function
     End Class
-#End If
 End Namespace

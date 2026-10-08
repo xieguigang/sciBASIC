@@ -108,6 +108,23 @@ Namespace Imaging
 
         Shared ReadOnly fontFamilies As Dictionary(Of String, String)
 
+        ''' <summary>
+        ''' the well known font families that are always accepted by this helper
+        ''' class, the installed font collection of the underlying operating
+        ''' system is not available on a non windows platform.
+        ''' </summary>
+        ''' <returns></returns>
+        Private Shared ReadOnly Property WellknownFontFamilies As String()
+            Get
+                Return {
+                    MicrosoftYaHei, MicrosoftYaHeiUI, Ubuntu, SegoeUI,
+                    Arial, BookmanOldStyle, Calibri, Cambria, CambriaMath,
+                    Consolas, CourierNew, NSimSun, SimSun, Verdana,
+                    Tahoma, TimesNewRoman
+                }
+            End Get
+        End Property
+
         Shared Sub New()
 #If NET48 Then
             Dim fontFamilies() As FontFamily
@@ -116,6 +133,17 @@ Namespace Imaging
             ' Get the array of FontFamily objects.
             fontFamilies = installedFontCollection.Families
             InstalledFontFamilies = fontFamilies.Select(Function(f) f.Name).ToArray
+            FontFace.fontFamilies = New Dictionary(Of String, String)
+
+            For Each family$ In InstalledFontFamilies
+                FontFace.fontFamilies(LCase(family)) = family
+            Next
+#Else
+            ' the gdi+ installed font collection is not available on the
+            ' cross platform runtime, so only the well known font families
+            ' of this helper class are registered here, the unknown font
+            ' name is always fallback to the default font name.
+            InstalledFontFamilies = WellknownFontFamilies
             FontFace.fontFamilies = New Dictionary(Of String, String)
 
             For Each family$ In InstalledFontFamilies

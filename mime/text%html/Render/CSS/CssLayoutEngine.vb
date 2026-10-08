@@ -63,7 +63,6 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
-#If NET48 Then
     ''' <summary>
     ''' Helps on CSS Layout
     ''' </summary>
@@ -83,7 +82,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="blockBox"></param>
-        Public Shared Sub CreateLineBoxes(g As Graphics, blockBox As CssBox)
+        Public Shared Sub CreateLineBoxes(g As IGraphics, blockBox As CssBox)
 
             blockBox.LineBoxes.Clear()
 
@@ -138,7 +137,7 @@ Namespace Render.CSS
         ''' <param name="curx">Current x coordinate that will be the left of the next word</param>
         ''' <param name="cury">Current y coordinate that will be the top of the next word</param>
         ''' <param name="maxbottom">Maximum bottom reached so far</param>
-        Private Shared Sub FlowBox(g As Graphics, blockbox As CssBox, box As CssBox, maxright As Single, linespacing As Single, startx As Single,
+        Private Shared Sub FlowBox(g As IGraphics, blockbox As CssBox, box As CssBox, maxright As Single, linespacing As Single, startx As Single,
         ByRef line As CssLineBox, ByRef curx As Single, ByRef cury As Single, ByRef maxbottom As Single)
             box.FirstHostingLineBox = line
 
@@ -233,20 +232,19 @@ Namespace Render.CSS
         ''' <param name="g"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
-        Public Shared Function WhiteSpace(g As Graphics, b As CssBox) As Single
-            Dim space As String = " ."
+        Public Shared Function WhiteSpace(g As IGraphics, b As CssBox) As Single
             Dim w As Single = 0F
             Dim onError As Single = 5.0F
 
-            Dim sf As New StringFormat()
-            sf.SetMeasurableCharacterRanges(New CharacterRange() {New CharacterRange(0, 1)})
-            Dim regs As Region() = g.MeasureCharacterRanges(space, b.ActualFont, New RectangleF(0, 0, Single.MaxValue, Single.MaxValue), sf)
+            ' the gdi+ only api ``MeasureCharacterRanges`` is not available on
+            ' the cross platform runtime, the width of a single white space is
+            ' measured as the difference between the width of a space followed
+            ' by a dot and the width of the dot itself.
+            w = g.MeasureString(" .", b.ActualFont).Width - g.MeasureString(".", b.ActualFont).Width
 
-            If regs Is Nothing OrElse regs.Length = 0 Then
+            If w <= 0 Then
                 Return onError
             End If
-
-            w = regs(0).GetBounds(g).Width
 
             If Not (String.IsNullOrEmpty(b.WordSpacing) OrElse b.WordSpacing = CssConstants.Normal) Then
                 w += CssValue.ParseLength(b.WordSpacing, 0, b)
@@ -259,7 +257,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="lineBox"></param>
-        Private Shared Sub ApplyAlignment(g As Graphics, lineBox As CssLineBox)
+        Private Shared Sub ApplyAlignment(g As IGraphics, lineBox As CssLineBox)
 
             '#Region "Horizontal alignment"
 
@@ -342,7 +340,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="lineBox"></param>
-        Private Shared Sub ApplyVerticalAlignment(g As Graphics, lineBox As CssLineBox)
+        Private Shared Sub ApplyVerticalAlignment(g As IGraphics, lineBox As CssLineBox)
 
             Dim isTableCell As Boolean = lineBox.OwnerBox.Display = CssConstants.TableCell
             Dim baseline As Single = lineBox.GetMaxWordBottom() - GetDescent(lineBox.OwnerBox.ActualFont) - 2
@@ -396,7 +394,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="cell"></param>
-        Public Shared Sub ApplyCellVerticalAlignment(g As Graphics, cell As CssBox)
+        Public Shared Sub ApplyCellVerticalAlignment(g As IGraphics, cell As CssBox)
             If cell.VerticalAlign = CssConstants.Top OrElse cell.VerticalAlign = CssConstants.Baseline Then
                 Return
             End If
@@ -445,7 +443,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="lineBox"></param>
-        Private Shared Sub ApplyJustifyAlignment(g As Graphics, lineBox As CssLineBox)
+        Private Shared Sub ApplyJustifyAlignment(g As IGraphics, lineBox As CssLineBox)
             If lineBox.Equals(lineBox.OwnerBox.LineBoxes(lineBox.OwnerBox.LineBoxes.Count - 1)) Then
                 Return
             End If
@@ -490,7 +488,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="line"></param>
-        Private Shared Sub ApplyCenterAlignment(g As Graphics, line As CssLineBox)
+        Private Shared Sub ApplyCenterAlignment(g As IGraphics, line As CssLineBox)
             If line.Words.Count = 0 Then
                 Return
             End If
@@ -519,7 +517,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="line"></param>
-        Private Shared Sub ApplyRightAlignment(g As Graphics, line As CssLineBox)
+        Private Shared Sub ApplyRightAlignment(g As IGraphics, line As CssLineBox)
             If line.Words.Count = 0 Then
                 Return
             End If
@@ -554,7 +552,7 @@ Namespace Render.CSS
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="line"></param>
-        Private Shared Sub ApplyLeftAlignment(g As Graphics, line As CssLineBox)
+        Private Shared Sub ApplyLeftAlignment(g As IGraphics, line As CssLineBox)
             'No alignment needed.
 
             'foreach (LineBoxRectangle r in line.Rectangles)
@@ -575,5 +573,4 @@ Namespace Render.CSS
 
 #End Region
     End Class
-#End If
 End Namespace

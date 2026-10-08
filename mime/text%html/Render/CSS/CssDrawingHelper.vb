@@ -62,11 +62,9 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
-#If NET48 Then
     ''' <summary>
     ''' Provides some drawing functionallity
     ''' </summary>
@@ -195,7 +193,12 @@ Namespace Render.CSS
 
             End Select
 
-            Dim path As New GraphicsPath(pts, New Byte() {CByte(PathPointType.Line), CByte(PathPointType.Line), CByte(PathPointType.Line), CByte(PathPointType.Line)})
+            ' the cross platform graphics path type of the imaging namespace
+            ' does not accept the gdi+ point type flag array, the polygon is
+            ' built from the four corner points instead.
+            Dim path As New GraphicsPath()
+
+            Call path.AddLines(pts)
 
             If corner IsNot Nothing Then
                 path.AddPath(corner, True)
@@ -344,5 +347,4 @@ Namespace Render.CSS
             Return path
         End Function
     End Class
-#End If
 End Namespace
