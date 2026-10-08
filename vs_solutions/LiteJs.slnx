@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/framework/">
+    <Project Path="../Microsoft.VisualBasic.Core/src/Core.vbproj" />
+    <Project Path="dev/VisualStudio/VisualStudio.NET5.vbproj" />
+  </Folder>
   <Project Path="JavaScript/LiteJs.vbproj" />
   <Project Path="JavaScript/test/LiteJs.Tests.vbproj" />
 </Solution>

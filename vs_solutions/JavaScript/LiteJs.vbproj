@@ -18,4 +18,9 @@
     <None Remove="test\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+  </ItemGroup>
+
 </Project>
