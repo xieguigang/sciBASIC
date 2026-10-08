@@ -121,9 +121,9 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                                  log As List(Of String)) As List(Of CutRow)
 
             Dim cuts As New List(Of CutRow)()
-            Dim fac As LuFactorization = simplex.Factorization
+            Dim baseFac As LuFactorization = simplex.Updater.BaseFactorization
 
-            If fac Is Nothing Then Return cuts
+            If baseFac Is Nothing Then Return cuts
             If result Is Nothing OrElse Not result.IsOptimal Then Return cuts
 
             Dim m As Integer = form.Rows
@@ -168,7 +168,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             Call MilpKernels.ForParallel(cand.Count, m * n,
                 Sub(idx)
-                    generated(idx) = GenerateOne(form, fac, result, basic, AT,
+                    generated(idx) = GenerateOne(form, simplex, result, basic, AT,
                                                  cand(idx), fracs(idx), options, tol)
                 End Sub)
 
@@ -194,7 +194,13 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>
         ''' 由一条候选基本行生成 GMI 割；数值不可靠 / 无违反时返回 Nothing。
         ''' </summary>
-        Private Function GenerateOne(form As MilpLpForm, fac As LuFactorization, result As BsResult,
+        ''' <remarks>
+        ''' tableau 行改走 <see cref="BoundedSimplex.SolveBasisT"/>（LU 更新器的纯读
+        ''' 接口），以便在基含有 η 修正时也拿到精确的 B⁻ᵀe_k。候选行之间并行，
+        ''' 该接口只读内部状态、可并发调用，线程安全语义与原先的
+        ''' <c>LinAlg.LuSolveT(fac, …)</c> 完全一致。
+        ''' </remarks>
+        Private Function GenerateOne(form As MilpLpForm, simplex As BoundedSimplex, result As BsResult,
                                      basic As HashSet(Of Integer), AT As Double()(),
                                      k As Integer, f0 As Double,
                                      options As MilpOptions, tol As Double) As CutRow
@@ -203,11 +209,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Dim n As Integer = form.Cols
             Dim bj As Integer = result.Basis(k)
 
-            ' ---- tableau 行：w = B⁻ᵀe_k（LinAlg.LuSolveT 只读 fac，线程安全）----
+            ' ---- tableau 行：w = B⁻ᵀe_k（BoundedSimplex.SolveBasisT 只读，线程安全）----
             Dim e(m - 1) As Double
             e(k) = 1.0
 
-            Dim w As Double() = LinAlg.LuSolveT(fac, e)
+            Dim w As Double() = simplex.SolveBasisT(e)
 
             If w Is Nothing Then Return Nothing
 

@@ -80,6 +80,8 @@
 ' Copyright (c) 2018 GPL3 Licensed — sciBASIC.NET Foundation
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming.IPMCrossover
+
 Namespace LinearAlgebra.LinearProgramming.MILP
 
     ''' <summary>
@@ -187,6 +189,35 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>并行最大线程数；0 = 自动（CPU 逻辑核心数）。默认 0。</summary>
         Public Property MaxThreads As Integer = 0
 
+        ''' <summary>
+        ''' 是否启用基矩阵 LU 增量更新（产品形式 η 修正，换基 O(m²)）。
+        ''' 关闭时退回「每次换基完整重构 LU」的既有路径 —— 既是 A/B benchmark
+        ''' 的对照组，也是一键回退开关。默认开启。
+        ''' </summary>
+        Public Property EnableLuUpdate As Boolean = True
+
+        ''' <summary>
+        ''' 两轮完整重构之间允许的最大换基次数（η 条数上限），达到即强制完整重构。
+        ''' 兼作周期性重构的节奏控制。默认 60。
+        ''' </summary>
+        Public Property LuMaxUpdates As Integer = 60
+
+        ''' <summary>LU 更新主元分母 |1 + w_p| 的下限，低于该值拒绝本次更新并重构。默认 1e-12。</summary>
+        Public Property LuPivotTolerance As Double = 0.000000000001
+
+        ''' <summary>LU 更新 η 向量无穷范数上限，超过该值拒绝本次更新并重构。默认 1e6。</summary>
+        Public Property LuMaxEtaNorm As Double = 1000000.0
+
+        ''' <summary>把 LU 更新相关选项转换成共享层的 <see cref="LuUpdateOptions"/>。</summary>
+        Friend Function ToLuUpdateOptions() As LuUpdateOptions
+            Return New LuUpdateOptions With {
+                .Enabled = EnableLuUpdate,
+                .MaxUpdates = System.Math.Max(1, LuMaxUpdates),
+                .PivotTolerance = LuPivotTolerance,
+                .MaxEtaNorm = LuMaxEtaNorm
+            }
+        End Function
+
         ''' <summary>数值输出格式。</summary>
         Public Property DecimalFormat As String = "G6"
 
@@ -216,6 +247,10 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 .Verbose = Verbose,
                 .EnableParallel = EnableParallel,
                 .MaxThreads = MaxThreads,
+                .EnableLuUpdate = EnableLuUpdate,
+                .LuMaxUpdates = LuMaxUpdates,
+                .LuPivotTolerance = LuPivotTolerance,
+                .LuMaxEtaNorm = LuMaxEtaNorm,
                 .DecimalFormat = DecimalFormat
             }
         End Function

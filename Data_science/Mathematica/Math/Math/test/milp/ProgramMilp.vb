@@ -62,6 +62,8 @@
 '   dotnet run                 运行全部演示（默认 demo）
 '   dotnet run -- demo         同上
 '   dotnet run -- selftest     内置自检（与暴力枚举 / DP 精确解 / 已知最优对拍）
+'   dotnet run -- lu-selftest  LU 增量更新自检（T14 单元对拍 / T15 端到端 A/B）
+'   dotnet run -- milp-bench   LU 增量更新 A/B 基准（重构 vs 增量，加速比报告）
 '   dotnet run -- lpp          既有 IPM+Crossover 线性规划演示
 '   dotnet run -- lpp-selftest 既有线性规划自检
 '
@@ -82,6 +84,12 @@ Public Module ProgramMilp
             Select Case args(0).ToLowerInvariant()
                 Case "selftest"
                     Return MilpSelfTest.RunAll()
+                Case "lu-selftest"
+                    ' LU 增量更新（产品形式 η 修正）的正确性校验
+                    Return MilpLuSelfTest.RunAll()
+                Case "milp-bench"
+                    ' LU 增量更新 vs 每次换基全量重构的 A/B 基准
+                    Return MilpLuBenchmark.RunAll()
                 Case "simd"
                     ' Vector / NumericMatrix SIMD 重构的正确性验证
                     Return VectorMatrixSimdTest.RunAll()

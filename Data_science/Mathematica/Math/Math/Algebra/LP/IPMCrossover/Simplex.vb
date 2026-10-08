@@ -96,13 +96,36 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         Private ReadOnly n As Int32
         Private ReadOnly log As List(Of String)
 
-        Public Sub New(A As Double(,), b As Double(), c As Double(), Optional log As List(Of String) = Nothing)
+        ''' <summary>
+        ''' 基矩阵的 LU 增量更新器：把「每迭代 O(m³) 全量分解」降为
+        ''' 「换基 O(m²) 秩 1 修正 + 每 K 次一次 O(m³) 重构」。
+        ''' </summary>
+        Private ReadOnly _lu As LuUpdater
+
+        ''' <summary>LU 完整重构次数（统计用）。</summary>
+        Public ReadOnly Property LuRefactorCount As Int32
+            Get
+                Return _lu.RefactorCount
+            End Get
+        End Property
+
+        ''' <summary>LU 增量更新次数（统计用）。</summary>
+        Public ReadOnly Property LuUpdateCount As Int32
+            Get
+                Return _lu.UpdateCount
+            End Get
+        End Property
+
+        Public Sub New(A As Double(,), b As Double(), c As Double(),
+                       Optional log As List(Of String) = Nothing,
+                       Optional luOptions As LuUpdateOptions = Nothing)
             Me.A = A
             Me.b = b
             Me.c = c
             Me.m = A.GetLength(0)
             Me.n = A.GetLength(1)
             Me.log = log
+            Me._lu = New LuUpdater(luOptions)
         End Sub
 
         ''' <summary>单位向量</summary>
@@ -242,16 +265,30 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Dim bland As Boolean = False
             Dim prevObj As Double? = Nothing
             Dim bNorm = 1.0 + LinAlg.Norm2(b)
+
+            ' 入口处作废增量状态：basis 可能自上次调用以来已被外部整体改写
+            ' （Solve() 的 Phase1 → 驱逐人工列 → Phase2 即是如此），
+            ' 首次迭代必须从当前 basis 出发重新分解
+            Call _lu.Invalidate()
+
             While iters < maxIter
                 iters += 1
-                Dim Bm = LinAlg.TakeCols(A1, basis)
-                Dim facB = LinAlg.LuFactor(Bm)
-                If facB Is Nothing Then Return Tuple.Create("numeric_fail", basis, CType(Nothing, Double()), iters)
-                Dim xB = LinAlg.LuSolve(facB, b)
-                If xB.Min() < -0.0000001 * bNorm Then
+
+                ' ---- 按需（重）建立基分解：换基走 O(m²) 增量修正，仅首次 /
+                '      闸门拒绝 / η 条数达上限时才做 O(m³) 全量分解 ----
+                If _lu.NeedsRefactor Then
+                    Dim Bm = LinAlg.TakeCols(A1, basis)
+                    Dim facB = LinAlg.LuFactor(Bm)
+                    If facB Is Nothing OrElse Not _lu.SetBase(facB) Then
+                        Return Tuple.Create("numeric_fail", basis, CType(Nothing, Double()), iters)
+                    End If
+                End If
+
+                Dim xB = _lu.Solve(b)
+                If xB Is Nothing OrElse xB.Min() < -0.0000001 * bNorm Then
                     Return Tuple.Create("infeasible", basis, xB, iters)
                 End If
-                Dim y = LinAlg.LuSolveT(facB, ColPick(c1, basis))
+                Dim y = _lu.SolveT(ColPick(c1, basis))
                 Dim d = ReducedCosts(A1, c1, y)
                 Dim enter = Price(d, basis, barred, bland, c1, 0.000000001)
                 If enter < 0 Then
@@ -263,10 +300,13 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                     Dim status = If(obj1 <= 0.0000001 * bNorm, "optimal", "infeasible")
                     Return Tuple.Create(status, basis, xB, iters)
                 End If
-                Dim alpha = LinAlg.LuSolve(facB, ColGet(A1, enter))
+                Dim enterCol = ColGet(A1, enter)
+                Dim alpha = _lu.Solve(enterCol)
                 Dim leave = RatioTest(xB, alpha)
                 If leave < 0 Then Return Tuple.Create("unbounded", basis, xB, iters)
                 basis(leave) = enter
+                ' 换基：alpha = B⁻¹a_enter 已算好，直接复用省去一次 O(m²) 正解
+                Call _lu.ApplyUpdate(leave, enterCol, alpha)
                 Dim obj = 0.0
                 For i = 0 To basis.Count - 1
                     obj += c1(basis(i)) * xB(i)
@@ -295,21 +335,34 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 bAlive(i) = b(keepRows(i))
             Next
             Dim bNorm = 1.0 + LinAlg.Norm2(bAlive)
+
+            ' 入口处作废增量状态：basis / keepRows 可能自上次调用以来已被外部整体改写
+            ' （本方法被 Crossover 复用为收尾入口），首次迭代必须从当前 basis 重新分解
+            Call _lu.Invalidate()
+
             While iters < maxIter
                 iters += 1
-                Dim Bm(mm - 1, basis.Count - 1) As Double
-                For i = 0 To mm - 1
-                    For jj = 0 To basis.Count - 1
-                        Bm(i, jj) = A(keepRows(i), basis(jj))
+
+                ' ---- 按需（重）建立基分解：换基走 O(m²) 增量修正，仅首次 /
+                '      闸门拒绝 / η 条数达上限时才做 O(m³) 全量分解 ----
+                If _lu.NeedsRefactor Then
+                    Dim Bm(mm - 1, basis.Count - 1) As Double
+                    For i = 0 To mm - 1
+                        For jj = 0 To basis.Count - 1
+                            Bm(i, jj) = A(keepRows(i), basis(jj))
+                        Next
                     Next
-                Next
-                Dim facB = LinAlg.LuFactor(Bm)
-                If facB Is Nothing Then Return Tuple.Create("numeric_fail", basis, CType(Nothing, Double()), iters)
-                Dim xB = LinAlg.LuSolve(facB, bAlive)
-                If xB.Min() < -0.0000001 * bNorm Then
+                    Dim facB = LinAlg.LuFactor(Bm)
+                    If facB Is Nothing OrElse Not _lu.SetBase(facB) Then
+                        Return Tuple.Create("numeric_fail", basis, CType(Nothing, Double()), iters)
+                    End If
+                End If
+
+                Dim xB = _lu.Solve(bAlive)
+                If xB Is Nothing OrElse xB.Min() < -0.0000001 * bNorm Then
                     Return Tuple.Create("infeasible", basis, xB, iters)
                 End If
-                Dim y = LinAlg.LuSolveT(facB, ColPick(c, basis))
+                Dim y = _lu.SolveT(ColPick(c, basis))
                 ' reduced costs（keep 行）
                 Dim d(n - 1) As Double
                 For j = 0 To n - 1
@@ -323,10 +376,13 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 If enter < 0 Then
                     Return Tuple.Create("optimal", basis, xB, iters)
                 End If
-                Dim alpha = LuSolveCol(Bm, facB, ColGetAlive(A, keepRows, enter))
+                Dim enterCol = ColGetAlive(A, keepRows, enter)
+                Dim alpha = _lu.Solve(enterCol)
                 Dim leave = RatioTest(xB, alpha)
                 If leave < 0 Then Return Tuple.Create("unbounded", basis, xB, iters)
                 basis(leave) = enter
+                ' 换基：alpha = B⁻¹a_enter 已算好，直接复用省去一次 O(m²) 正解
+                Call _lu.ApplyUpdate(leave, enterCol, alpha)
                 Dim obj = 0.0
                 For i = 0 To basis.Count - 1
                     obj += c(basis(i)) * xB(i)
@@ -340,11 +396,6 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
                 prevObj = obj
             End While
             Return Tuple.Create("max_iter", basis, CType(Nothing, Double()), iters)
-        End Function
-
-        ''' <summary>B⁻¹·col（给定已分解的 Bm/facB）</summary>
-        Private Shared Function LuSolveCol(Bm As Double(,), fac As LuFactorization, col As Double()) As Double()
-            Return LinAlg.LuSolve(fac, col)
         End Function
 
         ''' <summary>Dantzig 定价；bland=True 时取最小索引（防循环）</summary>

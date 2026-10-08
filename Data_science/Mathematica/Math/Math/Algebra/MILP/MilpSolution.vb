@@ -137,6 +137,13 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' <summary>是否在根节点即得到整数可行解</summary>
         Public Property IncumbentAtRoot As Boolean = False
 
+        ''' <summary>基矩阵 LU 完整重构次数（含热启动基载入与闸门触发的重构）</summary>
+        Public Property LuRefactors As Integer = 0
+        ''' <summary>基矩阵 LU 增量更新（η 修正）次数</summary>
+        Public Property LuUpdates As Integer = 0
+        ''' <summary>LU 更新被稳定性闸门拒绝的次数（拒绝即触发完整重构）</summary>
+        Public Property LuGateRejects As Integer = 0
+
         Public Property ElapsedMilliseconds As Long = 0
         Public Property Log As String = ""
         Public Property FailureMessage As String = ""
@@ -223,6 +230,10 @@ Namespace LinearAlgebra.LinearProgramming.MILP
 
             sb.AppendLine($"统计: 节点 {NodesExplored}，LP 求解 {LpSolves}，割平面 {CutsAdded}，" &
                           $"启发式可行解 {HeuristicSolutions}，耗时 {ElapsedMilliseconds} ms")
+
+            If LuUpdates > 0 OrElse LuRefactors > 0 Then
+                sb.AppendLine($"LU: 重构 {LuRefactors}，增量更新 {LuUpdates}，闸门拒绝 {LuGateRejects}")
+            End If
 
             If DroppedNodes > 0 Then
                 sb.AppendLine($"警告: {DroppedNodes} 个节点因 LP 数值失败被丢弃，最优性未被证明。")

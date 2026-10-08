@@ -119,6 +119,13 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         Private _updates As Integer = 0
         Private _gateRejects As Integer = 0
 
+        ''' <summary>
+        ''' 最近一次 <see cref="ApplyUpdate"/> 是否被闸门拒绝。
+        ''' 拒绝意味着 η 序列与"已被调用方换掉的基"脱节（基已变但修正未记入），
+        ''' 此时必须重构 —— 由 <see cref="NeedsRefactor"/> 反映。
+        ''' </summary>
+        Private _lastRejected As Boolean = False
+
         ''' <summary>η 序列增长前的初始容量。</summary>
         Private Const InitialEtaCapacity As Integer = 16
 
@@ -161,6 +168,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
             _base = base
             _etaCount = 0
+            _lastRejected = False
 
             Return True
         End Function
@@ -169,13 +177,15 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         ''' 作废当前的基分解与 η 序列（不改动统计计数）。
         ''' </summary>
         ''' <remarks>
-        ''' 用于「基与工作矩阵已不再对应」的场景：<see cref="BoundedSimplex.SetBounds"/>
-        ''' 替换界数组后热启动基来自别的节点、割平面追加行列导致基结构变化等。
+        ''' 用于「基与工作矩阵已不再对应」的场景：MILP 并行 worker 经
+        ''' <c>BoundedSimplex.SetBounds</c> 替换界数组后热启动基来自别的节点、
+        ''' 割平面追加行列导致基结构变化等。
         ''' 此后 <see cref="NeedsRefactor"/> 恒为 True，下一次求解前必然完整重构。
         ''' </remarks>
         Public Sub Invalidate()
             _base = Nothing
             _etaCount = 0
+            _lastRejected = False
         End Sub
 
         ''' <summary>
@@ -207,11 +217,17 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
         ''' </summary>
         ''' <param name="leavePos">离开列在基中的位置（0-based）。</param>
         ''' <param name="enteringCol">进入列的完整列向量（长度 = m）。</param>
+        ''' <param name="preSolved">
+        ''' 可选：调用方已经算好的 <c>B⁻¹·enteringCol</c>（例如单纯形方向 α）。
+        ''' 传入可省去一次 O(m²) 正解；为 Nothing 时内部现算。
+        ''' </param>
         ''' <returns>
         ''' True 表示已追加 η；False 表示被稳定性闸门拒绝或尚无基分解 —— 
         ''' 此时 <see cref="NeedsRefactor"/> 为 True，调用方应完整重构。
         ''' </returns>
-        Public Function ApplyUpdate(leavePos As Integer, enteringCol As Double()) As Boolean
+        Public Function ApplyUpdate(leavePos As Integer, enteringCol As Double(),
+                                    Optional preSolved As Double() = Nothing) As Boolean
+
             If _base Is Nothing OrElse enteringCol Is Nothing Then
                 Return False
             End If
@@ -219,12 +235,14 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             ' ---- 闸门 0：未启用 → 一律要求重构（等价于优化前的每迭代全量分解）----
             If Not _opts.Enabled Then
                 _gateRejects += 1
+                _lastRejected = True
                 Return False
             End If
 
             ' ---- 闸门 1：η 条数上限（同时充当周期性强制重构）----
             If _etaCount >= _opts.MaxUpdates Then
                 _gateRejects += 1
+                _lastRejected = True
                 Return False
             End If
 
@@ -235,9 +253,12 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             End If
 
             ' ---- z = B⁻¹a_q（当前基，含已累积的 η）----
-            Dim z As Double() = Solve(enteringCol)
+            Dim z As Double() = If(preSolved, Solve(enteringCol))
 
-            If z Is Nothing Then Return False
+            If z Is Nothing OrElse z.Length < m Then
+                _lastRejected = True
+                Return False
+            End If
 
             ' ---- w = z − e_p；分母 1 + w_p = z_p ----
             Dim denom As Double = z(leavePos)
@@ -245,6 +266,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             ' 闸门 2：主元分母下限（|1 + w_p| 过小 → 换基本身数值不可靠）
             If std.Abs(denom) < _opts.PivotTolerance Then
                 _gateRejects += 1
+                _lastRejected = True
                 Return False
             End If
 
@@ -264,6 +286,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
 
             If norm > _opts.MaxEtaNorm Then
                 _gateRejects += 1
+                _lastRejected = True
                 Return False
             End If
 
@@ -275,6 +298,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             _etaD(_etaCount) = denom
             _etaCount += 1
             _updates += 1
+            _lastRejected = False
 
             Return True
         End Function
@@ -389,6 +413,7 @@ Namespace LinearAlgebra.LinearProgramming.IPMCrossover
             Get
                 If _base Is Nothing Then Return True
                 If Not _opts.Enabled Then Return True
+                If _lastRejected Then Return True
                 Return _etaCount >= _opts.MaxUpdates
             End Get
         End Property

@@ -112,7 +112,7 @@ dotnet run -- lpp-selftest    # 既有线性规划自检（回归入口）
 | 割平面 | 仅根节点（cut-and-branch）；节点级割 / Mir / 覆盖割未实现 |
 | 分支规则 | most-fractional（默认）/ first-fractional / 伪成本（pseudo-cost，基于子节点界退化在线学习）；节点选择 best-bound（默认）/ depth-first |
 | 单一相对间隙语义 | 相对间隙按 `|incumbent − bound| / max(1, |incumbent|)` 计算，与 Gurobi 的 `|primal − dual|/(1e-10+|primal|)` 略有差异 |
-| 节点 LP | 每次主元重构 LU（与既有 `SimplexSolver` 一致）；未做 LU 更新与稀疏 Markowitz 主元 |
+| 节点 LU | **已做产品形式（η）LU 增量更新**（见 §九）：换基 O(m²) 秩 1 修正 + 周期性重构，`EnableLuUpdate` 可一键关闭回退旧路径。稀疏 Markowitz 主元仍未做（第 ② 期） |
 | 稀疏大规模 | 工作矩阵为稠密 `Double(,)`，面向中等规模（数百 ~ 数千变量）；基因组规模 FBA 仍应走既有稀疏 LP 路径 |
 | 整数变量下界 | 要求有限下界（否则分支定界无法终止），校验阶段会明确报错 |
 | 预处理 | 未做系数缩放消除、隐含整数（implied integer）、行/列冗余的完整 presolve |
@@ -127,21 +127,26 @@ Algebra/MILP/
 ├── readme.txt           需求与算法背景说明（保持不变）
 ├── README.md            本文档
 ├── MilpModel.vb         MilpVarType / MilpVariable / MilpModel（建模与校验）
-├── MilpOptions.vb       求解选项与枚举（BranchRule / NodeRule）
-├── MilpSolution.vb      MilpStatus / MilpSolution（结果与报告）
+├── MilpOptions.vb       求解选项与枚举（BranchRule / NodeRule / LU 更新开关与阈值）
+├── MilpSolution.vb      MilpStatus / MilpSolution（结果、报告与 LU 统计）
 ├── MilpPresolve.vb      预处理 + MilpLpForm（工作形式与映射）
-├── BoundedSimplex.vb    有界变量修订单纯形（Phase1 / 原始 / 对偶 + 翻界）
+├── BoundedSimplex.vb    有界变量修订单纯形（Phase1 / 原始 / 对偶 + 翻界 + LU 增量更新）
 ├── GomoryCut.vb         GMI 割生成
 ├── MilpHeuristics.vb    舍入 + 潜水启发式
 ├── BranchAndBound.vb    分支定界搜索 + 根节点割平面
 └── MilpSolver.vb        顶层入口（流水线编排）
 
+Algebra/LP/IPMCrossover/（共享组件，MILP 与既有 SimplexSolver 共用）
+└── LuUpdate.vb          LuUpdater：基矩阵产品形式（η）LU 增量更新 + 稳定性闸门
+
 test/milp/
-├── ProgramMilp.vb       演示入口（demo / selftest）
-└── MilpSelfTest.vb      内置自检 T1–T11
+├── ProgramMilp.vb       演示入口（demo / selftest / lu-selftest / milp-bench）
+├── MilpSelfTest.vb      内置自检 T1–T13
+├── MilpLuSelfTest.vb    LU 更新自检 T14（残差对拍）/ T15（端到端 A/B）
+└── MilpLuBenchmark.vb   LU 更新 A/B 基准（重构 vs 增量，加速比报告）
 ```
 
-## 八、复用关系（未修改任何既有 LP 代码）
+## 八、复用关系（LU 更新以共享组件形式接入既有 `SimplexSolver`）
 
 | 复用对象 | 用途 |
 |---|---|
@@ -150,8 +155,77 @@ test/milp/
 | `LinearProgramming.OptimizationType` / `LpSparseMatrix` | 目标方向语义 / 稀疏矩阵（预留） |
 | `IPMCrossover.LppConstraint` | MILP 约束（字典系数 + 运算符 + 右端项） |
 | `IPMCrossover.LinAlg` / `LuFactorization` | LU 分解、前后代、转置求解、2-范数与点积 |
-| `IPMCrossover.LuSolveT` | tableau 行 `B⁻ᵀe_i`（割平面推导） |
+| `IPMCrossover.LuUpdater`（`LuUpdate.vb`） | **基矩阵 LU 增量更新**（η 修正 + 稳定性闸门），供节点 LP 与割平面 tableau 行推导共用 |
 
 `BoundedSimplex` 与既有的 `SimplexSolver`（x ≥ 0 标准形）、`InteriorPointSolver`
 （有界变量内点法）、`CrossoverSolver` 形成互补：前者服务 MILP 节点的
 "改界热启动"，后者服务一次性连续 LP 求解。
+
+## 九、基矩阵 LU 增量更新（产品形式 η 修正）
+
+### 动机
+
+单纯形每轮迭代要解 `B·x = b` 与 `Bᵀ·y = c_B`。旧实现在**每一次迭代**都重新装配
+基矩阵并做一次完整 LU 分解，即 `O(m³)/迭代`；而一次迭代真正改变的只是基的一列。
+
+### 数学形式
+
+换基（第 `p` 列被换为 `a_q`）时基矩阵变化为秩 1：
+
+```
+B' = B + (a_q − B·e_p)·e_pᵀ = B·(I + w·e_pᵀ)，  w = B⁻¹a_q − e_p
+(I + w·e_pᵀ)⁻¹ = I − w·e_pᵀ/(1 + w_p)，  1 + w_p = z_p，z = B⁻¹a_q
+```
+
+于是求解只需在**基 LU 的一次三角回代**之上叠加 `O(m)` 修正：
+
+- 正解 `B'x = b`：`z = B⁻¹b`，`x = z − w·(z_p / (1 + w_p))`
+- 转置解 `B'ᵀx = b`：`v = b`，`v_p −= (w·v)/(1 + w_p)`，`x = B⁻ᵀv`
+
+连续 `k` 次换基后 `B_k = B₀·Πⱼ(I + wⱼ·e_{pⱼ}ᵀ)`，正解按 `j` 升序、转置解按 `j` 降序
+施加修正，最后再做基的三角回代。
+
+**为什么选 PFU 而不是 Forrest–Tomlin 原地 U 更新**：PFU 能 100% 复用既有
+`LinAlg.LuSolve / LuSolveT`（纯函数：只读 `fac`、不改入参、可返回 `Nothing`），
+语义零改动、正确性极易对拍；代价是单次求解随 η 条数线性增长 `O(m² + k·m)`，
+由 `LuMaxUpdates` 封顶。FT 原地 U 更新性能上限更高但需处理 spike 与列重排序，
+归入第 ② 期（稀疏 η + Markowitz 阈值主元）一并做。
+
+### 关键设计
+
+| 项 | 说明 |
+|---|---|
+| `Refresh()` 拆分 | 拆为 `EnsureFactorization()`（按需重构/更新）+ 每次必算的 `xB/y/d`。**基分解只依赖 `basis` 与 A，与 `l/u` 无关**，因此翻界（bound flip）不触发任何 LU 工作 |
+| 换基触发点 | 仅三处：`RunPrimal` 主元、`RunDual` 主元、Phase 1 驱赶人工列 |
+| 防御式兜底 | 维护换基计数 `_basisEdits` 与 `_lu.PendingUpdates` 比对：一旦不一致（说明有换基点绕过了更新入口）立即强制完整重构 —— 最坏退化为旧路径，绝不静默算错 |
+| 稳定性闸门 | 主元分母 `\|1+w_p\| ≥ LuPivotTolerance`、`\|w\|∞ ≤ LuMaxEtaNorm`、η 条数 ≤ `LuMaxUpdates`；任一触发即标记 `NeedsRefactor` 并在下次完整重构 |
+| 热启动播种 | `LoadWarmStart` 里原本为探测奇异性做却丢弃的那次 `O(m³)` 分解，现直接播种 updater，白做一次的开销被消除 |
+| 线程安全 | `Solve` / `SolveT` 为**纯读**，可并发（`GomoryCut` 的并行割行生成依赖此性质）；只有 `ApplyUpdate` / `SetBase` / `Refactor` 写入 |
+| 对外兼容 | `Factorization` 属性保留：存在待应用 η 时先强制完整重构，保证返回值恒为当前基的精确分解；内部代码一律走 `SolveBasis` / `SolveBasisT` |
+| A/B 开关 | `MilpOptions.EnableLuUpdate`（默认 `True`）；关闭时 `NeedsRefactor` 恒真，每次换基完整重构 —— 既是 benchmark 对照组，也是一键回退开关 |
+
+### 实测（Windows / .NET 10，`dotnet run -- milp-bench`）
+
+数值层（同一基矩阵 60 次换基，"每次全量重构 + LuSolve" vs "LuUpdater"）：
+
+| 基规模 m | 重构路径 | 增量路径 | 加速比 |
+|---|---|---|---|
+| 80 | 62.5 ms | 9.7 ms | 6.5× |
+| 160 | 417.1 ms | 34.0 ms | 12.3× |
+| 320 | 3481.1 ms | 219.6 ms | 15.9× |
+| 640 | 25006.4 ms | 1515.7 ms | 16.5× |
+
+端到端（30 件 0/1 背包）：总耗时 44 ms → 12 ms（**3.7×**），LU 完整重构
+337 → 62 次、η 增量更新 139 次，目标值同为 DP 精确最优 304.3。
+
+精度对账（`dotnet run -- lu-selftest`）：随机可逆方阵（m = 40…165）+ 随机换基
+序列下，更新解与"每次全量重构"解的逐分量最大偏差 `3.6e-17`、线性方程残差
+`2.7e-15`，远优于 1e-9 的验收阈值；闸门拒绝 → 重构 → 状态复位链路亦被覆盖。
+
+### 后续项（本次未做）
+
+- **增量 `xB` / `rhs` / `d`**：LU 修好后，`Refresh` 里两个 `O(m·n)` 的 `MatVecRows`
+  将成为新瓶颈。翻界时 `rhs` 可 `O(m)` 增量（`rhs -= Acols(j)·Δv`），`y/d` 在不换基时
+  完全不变。此项需独立开关与独立验证。
+- **第 ② 期稀疏化**：`A` 改 CSR/CSC（复用既有 `LpSparseMatrix` / `SparseTableauRow`）
+  + Markowitz 阈值主元 + LUSOL 风格稀疏 η（或 Forrest–Tomlin 原地 U 更新）。

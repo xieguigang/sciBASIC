@@ -145,6 +145,7 @@ lpp-ipm-crossover/
 ├── CompatHelpers.vb            IsNullOrEmpty/StringEmpty/NamedValue 最小实现
 ├── Lpp/
 │   ├── LinAlg.vb               Cholesky(±reg)/迭代精化/LU/LuSolveT/阶梯秩
+│   ├── LuUpdate.vb             基矩阵 LU 增量更新（产品形式 η + 稳定性闸门；与 MILP 共用）
 │   ├── LppProblem.vb           输入模型 + 标准形转换（σ/翻转/松弛映射）
 │   ├── InteriorPoint.vb        Mehrotra IPM（自适应正则化、停滞检测）
 │   ├── Simplex.vb              Phase1/2 修订单纯形（证书 + 收尾）

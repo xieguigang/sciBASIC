@@ -176,7 +176,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Next
 
             nodeWorkers = New ThreadLocal(Of BoundedSimplex)(
-                Function() New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol))
+                Function() New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol,
+                                              luOptions:=options.ToLuUpdateOptions()))
         End Sub
 
         ' ====================================================================
@@ -196,7 +197,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 Return Finish(MilpStatus.Optimal, "无约束问题（各变量独立取最优界）。")
             End If
 
-            simplex = New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol)
+            simplex = New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol,
+                                         luOptions:=options.ToLuUpdateOptions())
 
             Dim res As BsResult = simplex.Solve(Nothing, Nothing, options.LpIterationLimit)
             lpSolves += 1
@@ -352,7 +354,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 cutsAdded += cuts.Count
 
                 ' ---- 重建单纯形，并把新松弛列作为新行的基变量 ----
-                simplex = New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol)
+                simplex = New BoundedSimplex(form.A, form.b, form.c, form.l, form.u, tol, tol,
+                                             luOptions:=options.ToLuUpdateOptions())
 
                 Dim newBasis(form.Rows - 1) As Integer
 
@@ -822,6 +825,29 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             sol.ElapsedMilliseconds = watch.ElapsedMilliseconds
             sol.Log = String.Join(ControlChars.Lf, log)
             sol.FailureMessage = If(message, "")
+
+            ' ---- 汇总 LU 更新统计（主 simplex + 全部并行 worker）----
+            Dim refactors As Integer = 0
+            Dim updates As Integer = 0
+            Dim rejects As Integer = 0
+
+            If simplex IsNot Nothing Then
+                refactors += simplex.Updater.RefactorCount
+                updates += simplex.Updater.UpdateCount
+                rejects += simplex.Updater.GateRejectCount
+            End If
+
+            If nodeWorkers IsNot Nothing AndAlso nodeWorkers.IsValueCreated Then
+                Dim w As BoundedSimplex = nodeWorkers.Value
+
+                refactors += w.Updater.RefactorCount
+                updates += w.Updater.UpdateCount
+                rejects += w.Updater.GateRejectCount
+            End If
+
+            sol.LuRefactors = refactors
+            sol.LuUpdates = updates
+            sol.LuGateRejects = rejects
 
             Return sol
         End Function

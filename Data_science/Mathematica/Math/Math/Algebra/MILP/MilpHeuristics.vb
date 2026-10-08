@@ -212,7 +212,8 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Dim u As Double() = CType(form.u.Clone(), Double())
             Dim simplex As New BoundedSimplex(form.A, form.b, form.c, l, u,
                                              options.FeasibilityTolerance,
-                                             options.FeasibilityTolerance)
+                                             options.FeasibilityTolerance,
+                                             luOptions:=options.ToLuUpdateOptions())
 
             Dim res As BsResult = simplex.Solve(startBasis, startAtUpper, options.LpIterationLimit)
 

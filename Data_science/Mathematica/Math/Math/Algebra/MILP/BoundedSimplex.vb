@@ -184,7 +184,6 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         Private xB As Double()
         Private d As Double()
         Private y As Double()
-        Private fac As LuFactorization
         Private phaseOne As Boolean
         Private iters As Integer
         Private diagnostic As String = ""
@@ -261,6 +260,12 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             l = newL
             u = newU
             Call ResetState()
+
+            ' 界数组被替换：跨节点复用同一实例，热启动基来自别的节点，
+            ' LU 增量状态必须整体作废（下一次求解前完整重构）
+            _lu.Invalidate()
+            _factorBasis = Nothing
+            _basisEdits = 0
         End Sub
 
         ''' <summary>
@@ -369,11 +374,45 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         ''' 当前基的 LU 分解（在 <see cref="Solve"/> 返回后有效）。
         ''' 割平面推导需要 B⁻ᵀe_i（tableau 行），直接复用该分解，避免重复计算。
         ''' </summary>
+        ''' <remarks>
+        ''' 引入 LU 增量更新后，内部因子 = 完整分解 + 若干 η 修正，
+        ''' 无法用单个 <see cref="LuFactorization"/> 精确表达。因此本属性在
+        ''' 存在待应用 η 时<b>强制做一次完整重构</b>，保证返回值恒为当前基的精确分解。
+        ''' 内部代码请改用 <see cref="SolveBasisT"/> / <see cref="SolveBasis"/>（纯读），
+        ''' 本属性仅保留给外部既有调用方，兼容旧的并行只读语义。
+        ''' </remarks>
         Public ReadOnly Property Factorization As LuFactorization
             Get
-                Return fac
+                If _lu.BaseFactorization Is Nothing OrElse _lu.PendingUpdates > 0 Then
+                    If Not RefactorNow() Then Return Nothing
+                End If
+
+                Return _lu.BaseFactorization
             End Get
         End Property
+
+        ''' <summary>LU 增量更新器（统计与诊断用；求解路径请勿直接改写其状态）。</summary>
+        Friend ReadOnly Property Updater As LuUpdater
+            Get
+                Return _lu
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' B⁻ᵀ·rhs（tableau 行推导，w = B⁻ᵀe_i）。纯读，可并发调用。
+        ''' 语义与优化前的 <c>LinAlg.LuSolveT(fac, rhs)</c> 完全一致。
+        ''' </summary>
+        Friend Function SolveBasisT(rhs As Double()) As Double()
+            Return _lu.SolveT(rhs)
+        End Function
+
+        ''' <summary>
+        ''' B⁻¹·rhs。纯读，可并发调用。
+        ''' 语义与优化前的 <c>LinAlg.LuSolve(fac, rhs)</c> 完全一致。
+        ''' </summary>
+        Friend Function SolveBasis(rhs As Double()) As Double()
+            Return _lu.Solve(rhs)
+        End Function
 
         ''' <summary>内部 min 方向目标值。</summary>
         Private Function ObjectiveValue() As Double
@@ -497,8 +536,16 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 If inBasis(j) Then atUpper(j) = False
             Next
 
-            ' 基矩阵必须非奇异
-            If MilpKernels.LuFactorRows(BasisRows()) Is Nothing Then Return False
+            ' 基矩阵必须非奇异。这里的分解结果不再丢弃，而是直接播种 LU 更新器：
+            ' 原实现为探测奇异性白做一次 O(m³) 后立刻在 Refresh 里再做一次。
+            Dim fresh As LuFactorization = MilpKernels.LuFactorRows(BasisRows())
+
+            If fresh Is Nothing Then Return False
+
+            If Not _lu.SetBase(fresh) Then Return False
+
+            _factorBasis = CType(basis.Clone(), Integer())
+            _basisEdits = 0
 
             Return True
         End Function
@@ -538,11 +585,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
         '''   1. rhs 修正：rhs = b − A·v（v 为非基本变量的界值，基本列置 0）；
         '''   2. 对偶值 y = B⁻ᵀc_B（LU 转置求解，保持 LinAlg 语义）；
         '''   3. 约简成本 d = c_work − Aᵀy（列主序缓存的行批量点积）。
+        ''' 基分解本身由 <see cref="EnsureFactorization"/> 按需提供：
+        ''' 换基时 O(m²) 秩 1 修正，翻界/常规迭代直接复用，不再每次 O(m³)。
         ''' </remarks>
         Private Function Refresh() As Boolean
-            fac = MilpKernels.LuFactorRows(BasisRows())
-
-            If fac Is Nothing Then Return False
+            If Not EnsureFactorization() Then Return False
 
             ' ---- xB = B⁻¹(b − A·v_nonbasic) ----
             Dim v(n - 1) As Double
@@ -559,7 +606,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 rhs(i) = b(i) - av(i)
             Next
 
-            xB = LinAlg.LuSolve(fac, rhs)
+            xB = _lu.Solve(rhs)
 
             If xB Is Nothing Then Return False
 
@@ -571,7 +618,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 cB(k) = If(bj >= 0, WorkCost(bj), ArtCost(bj))
             Next
 
-            y = LinAlg.LuSolveT(fac, cB)
+            y = _lu.SolveT(cB)
 
             If y Is Nothing Then Return False
 
@@ -587,9 +634,71 @@ Namespace LinearAlgebra.LinearProgramming.MILP
             Return True
         End Function
 
+        ''' <summary>
+        ''' 保证 <see cref="_lu"/> 精确对应于当前 <c>basis</c>。
+        ''' </summary>
+        ''' <remarks>
+        ''' 基分解只依赖 <c>basis</c> 与 A，与 l/u 无关，因此：
+        '''   · 翻界（bound flip）不换基 → 完全复用，无需任何 O(m) 工作；
+        '''   · 换基 → 换基点已通过 <see cref="ApplyBasisChange"/> 追加 η（O(m²)）；
+        '''   · 出现以下任一情况则完整重构（O(m³)）：
+        '''       - 尚无基分解（冷启动 / SetBounds 后 / 割平面追加行列）；
+        '''       - 闸门拒绝（主元分母过小、η 范数过大、条数达上限）；
+        '''       - 换基计数与 η 条数不一致 —— 防御式兜底，说明有换基点绕过了
+        '''         <see cref="ApplyBasisChange"/>，此时宁可退化成优化前行为也不算错。
+        ''' </remarks>
+        Private Function EnsureFactorization() As Boolean
+            Dim stale As Boolean =
+                _factorBasis Is Nothing OrElse
+                _factorBasis.Length <> m OrElse
+                _basisEdits <> _lu.PendingUpdates OrElse
+                _lu.NeedsRefactor
+
+            If Not stale Then Return True
+
+            Dim fresh As LuFactorization = MilpKernels.LuFactorRows(BasisRows())
+
+            If fresh Is Nothing Then Return False
+
+            If Not _lu.SetBase(fresh) Then Return False
+
+            _factorBasis = CType(basis.Clone(), Integer())
+            _basisEdits = 0
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 做一次强制完整重构并同步内部状态（<see cref="Factorization"/> getter 与诊断用）。
+        ''' </summary>
+        Friend Function RefactorNow() As Boolean
+            Dim fresh As LuFactorization = MilpKernels.LuFactorRows(BasisRows())
+
+            If fresh Is Nothing Then Return False
+
+            If Not _lu.SetBase(fresh) Then Return False
+
+            _factorBasis = CType(basis.Clone(), Integer())
+            _basisEdits = 0
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 换基点统一入口：登记换基计数并尝试 O(m²) 秩 1 修正。
+        ''' 修正被闸门拒绝（返回 False）时不必处理 —— <see cref="EnsureFactorization"/>
+        ''' 会通过「计数不一致」检测到并自动完整重构。
+        ''' </summary>
+        ''' <param name="leavePos">离开列在基中的位置。</param>
+        ''' <param name="enteringCol">进入列向量（A 的第 enter 列，长度 = m）。</param>
+        Private Sub ApplyBasisChange(leavePos As Integer, enteringCol As Double())
+            _basisEdits += 1
+            Call _lu.ApplyUpdate(leavePos, enteringCol)
+        End Sub
+
         ''' <summary>B⁻¹·col。</summary>
         Private Function SolveWithBasis(col As Double()) As Double()
-            Return LinAlg.LuSolve(fac, col)
+            Return _lu.Solve(col)
         End Function
 
         ' ====================================================================
@@ -608,6 +717,11 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 inBasis(j) = False
                 atUpper(j) = Double.IsNegativeInfinity(l(j))
             Next
+
+            ' 冷启动：基被整体替换，此前的任何增量状态都失效
+            _lu.Invalidate()
+            _factorBasis = Nothing
+            _basisEdits = 0
 
             Dim st = RunPrimal(maxIter)
 
@@ -666,7 +780,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                     If std.Abs(xB(k)) > tolP * bNorm Then Continue For
 
                     ' tableau 行：w = B⁻ᵀ e_k ⇒ α = Aᵀw（列主序行批量点积，一次算全行）
-                    Dim w = LinAlg.LuSolveT(fac, UnitVector(k))
+                    Dim w = _lu.SolveT(UnitVector(k))
 
                     If w Is Nothing Then Return BsStatus.NumericFail
 
@@ -694,6 +808,10 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                         inBasis(bestJ) = True
                         atUpper(bestJ) = False
                         moved = True
+
+                        ' 换基：第 k 列被换为 A 的第 bestJ 列
+                        Call ApplyBasisChange(k, Acols(bestJ))
+
                         Exit For
                     End If
                     ' 否则：该行为冗余行，人工变量留在基中（固定为 0，永不阻塞）
@@ -826,7 +944,13 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                     atUpper(enter) = False
                     basis(leave) = enter
                     xB(leave) = newVal
+
+                    ' 换基：第 leave 列被换为 A 的第 enter 列
+                    ' （alpha 已是 B⁻¹a_enter，可与后续修正共用，但为保持 updater
+                    '  内部语义单一仍走标准 ApplyUpdate 入口）
+                    Call ApplyBasisChange(leave, Acols(enter))
                 Else
+                    ' 翻界不换基：无需任何 LU 工作
                     atUpper(enter) = Not atUpper(enter)
                 End If
 
@@ -906,7 +1030,7 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                 Dim delta As Double = If(tooLow, loL - xB(leave), xB(leave) - hiL)
 
                 ' ---------- tableau 行：w = B⁻ᵀ e_leave ⇒ α = Aᵀw（一次批量点积） ----------
-                Dim w = LinAlg.LuSolveT(fac, UnitVector(leave))
+                Dim w = _lu.SolveT(UnitVector(leave))
 
                 If w Is Nothing Then Return BsStatus.NumericFail
 
@@ -974,6 +1098,10 @@ Namespace LinearAlgebra.LinearProgramming.MILP
                         xB(leave) = newVal
                         delta = 0.0
                         pivoted = True
+
+                        ' 换基：第 leave 列被换为 A 的第 cd.j 列
+                        Call ApplyBasisChange(leave, Acols(cd.j))
+
                         Exit For
                     Else
                         ' 翻界：变量移到对侧界（xB += (g·dist)·1，FMA AXPY）
