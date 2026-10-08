@@ -12,4 +12,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
 </Project>
