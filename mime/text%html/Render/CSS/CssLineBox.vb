@@ -60,7 +60,7 @@
 
 Imports System.Drawing
 Imports System.Math
-Imports rect = System.Drawing.Rectangle
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 

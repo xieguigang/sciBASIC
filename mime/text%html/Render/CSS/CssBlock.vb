@@ -57,6 +57,7 @@
 
 Imports System.Reflection
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 #If NET48 Then

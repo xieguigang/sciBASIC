@@ -58,6 +58,7 @@
 
 Imports System.Globalization
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 

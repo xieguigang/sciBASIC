@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 

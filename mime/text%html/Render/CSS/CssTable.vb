@@ -72,6 +72,7 @@
 Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 #If NET48 Then

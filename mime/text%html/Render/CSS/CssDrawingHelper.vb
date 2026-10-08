@@ -63,7 +63,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports rect = System.Drawing.Rectangle
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Render.CSS
 #If NET48 Then
