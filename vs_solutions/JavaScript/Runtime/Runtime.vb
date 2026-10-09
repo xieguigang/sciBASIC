@@ -3,57 +3,6 @@ Imports System.Text
 
 Namespace Runtime
 
-    ''' <summary>Sink for console.log etc.; records lines for test/e2e comparison.</summary>
-    Public Class ScriptIO
-        Public ReadOnly Property Lines As New List(Of String)
-
-        Public Overridable Sub WriteLine(text As String)
-            Lines.Add(text)
-        End Sub
-    End Class
-
-    ''' <summary>Error object visible to JS try/catch; Payload is the thrown value.</summary>
-    Public NotInheritable Class JsRuntimeException
-        Inherits Exception
-
-        Public ReadOnly Payload As Object
-
-        Public Sub New(payload As Object)
-            MyBase.New(If(TypeOf payload Is String, CStr(payload), "JS runtime error"))
-            Me.Payload = payload
-        End Sub
-
-        Public Shared Function TypeError(message As String) As JsRuntimeException
-            Return New JsRuntimeException("TypeError: " & message)
-        End Function
-
-        Public Shared Function ReferenceError(name As String) As JsRuntimeException
-            Return New JsRuntimeException("ReferenceError: " & name & " is not defined")
-        End Function
-    End Class
-
-    ''' <summary>Marker object for JS `undefined` (distinct from null = Nothing).</summary>
-    Friend NotInheritable Class UndefinedMarker
-    End Class
-
-    ''' <summary>Builtin container object (Math, console, JSON, Object, Array, global fns).</summary>
-    Public NotInheritable Class NativeObject
-        Public ReadOnly Name As String
-        Public Sub New(name As String)
-            Me.Name = name
-        End Sub
-    End Class
-
-    ''' <summary>A builtin method bound to its receiver; callable through <see cref="JsRuntime.JsInvoke"/>.</summary>
-    Public NotInheritable Class BuiltinMethod
-        Public ReadOnly Target As Object
-        Public ReadOnly Name As String
-        Public Sub New(target As Object, name As String)
-            Me.Target = target
-            Me.Name = name
-        End Sub
-    End Class
-
     Public Module JsRuntime
 
         ''' <summary>JS function value in both worlds (interpreter closures and generated lambdas).</summary>
