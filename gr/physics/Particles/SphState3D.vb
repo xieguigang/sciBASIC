@@ -21,8 +21,7 @@
 '
 ' /********************************************************************************/
 
-Imports System.Math
-Imports System.Threading.Tasks
+Imports std = System.Math
 
 ''' <summary>
 ''' The Structure-of-Arrays particle state of the 3D SPH solver.
@@ -87,7 +86,7 @@ Public Class SphState3D
     ''' allocate the SoA buffers for <paramref name="n"/> particles
     ''' </summary>
     Sub New(n As Integer)
-        Call EnsureCapacity(Math.Max(1, n))
+        Call EnsureCapacity(std.Max(1, n))
         Me.Count = n
     End Sub
 
@@ -98,8 +97,8 @@ Public Class SphState3D
     Public Sub EnsureCapacity(n As Integer)
         If px IsNot Nothing AndAlso px.Length >= n Then Return
 
-        Dim size As Integer = Math.Max(16, n)
-        size = Math.Max(size, If(px Is Nothing, 0, px.Length * 2))
+        Dim size As Integer = std.Max(16, n)
+        size = std.Max(size, If(px Is Nothing, 0, px.Length * 2))
 
         px = Grow(px, size)
         py = Grow(py, size)
@@ -182,7 +181,7 @@ Public Class SphState3D
     ''' (used by the read only <c>Entity</c> property and by the renderer).
     ''' </summary>
     Public Sub SyncToParticles(particles As Particle3D())
-        Dim n = Math.Min(Count, particles.Length)
+        Dim n = std.Min(Count, particles.Length)
 
         For i As Integer = 0 To n - 1
             Dim p = particles(i)
@@ -224,7 +223,7 @@ Public Class SphState3D
             If s > maxSq Then maxSq = s
         Next
 
-        Return Sqrt(maxSq)
+        Return std.Sqrt(maxSq)
     End Function
 
     ''' <summary>the arithmetic mean density over all particles</summary>

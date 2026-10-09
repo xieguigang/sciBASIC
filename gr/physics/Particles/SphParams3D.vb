@@ -22,7 +22,7 @@
 '
 ' /********************************************************************************/
 
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The flat parameter bundle of one 3D SPH sub step.
@@ -106,11 +106,11 @@ Public Class SphParams3D
         }
 
         ' 与 FluidKernels3D 完全一致的三维归一化常数
-        p.SpikyPow2 = CSng(15 / (2 * PI * Pow(h, 5)))
-        p.SpikyPow3 = CSng(15 / (PI * Pow(h, 6)))
-        p.GradSpikyPow2 = CSng(15 / (PI * Pow(h, 5)))
-        p.GradSpikyPow3 = CSng(45 / (PI * Pow(h, 6)))
-        p.Poly6 = CSng(315 / (64 * PI * Pow(h, 9)))
+        p.SpikyPow2 = CSng(15 / (2 * std.PI * std.Pow(h, 5)))
+        p.SpikyPow3 = CSng(15 / (std.PI * std.Pow(h, 6)))
+        p.GradSpikyPow2 = CSng(15 / (std.PI * std.Pow(h, 5)))
+        p.GradSpikyPow3 = CSng(45 / (std.PI * std.Pow(h, 6)))
+        p.Poly6 = CSng(315 / (64 * std.PI * std.Pow(h, 9)))
 
         If kernels IsNot Nothing Then
             p.SelfDensity = kernels.SelfDensityKernel()

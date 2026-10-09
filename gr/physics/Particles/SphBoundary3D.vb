@@ -20,7 +20,7 @@
 '
 ' /********************************************************************************/
 
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The computational domain boundary of the 3D SPH solver: pushes escaped
@@ -142,7 +142,7 @@ Public Class CylinderBoundary3D : Inherits SphBoundary3D
     Public Overrides Sub Project(state As SphState3D, i As Integer, padding As Single, damping As Single)
         Dim dx = state.px(i) - CenterX
         Dim dy = state.py(i) - CenterY
-        Dim r = CSng(Sqrt(dx * dx + dy * dy))
+        Dim r = CSng(std.Sqrt(dx * dx + dy * dy))
         Dim limit = Radius - padding
 
         If r > limit AndAlso r > 0.000001F Then

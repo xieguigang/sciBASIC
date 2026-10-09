@@ -22,7 +22,7 @@
 '
 ' /********************************************************************************/
 
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' A rotating impeller (Rushton style disc turbine plus its shaft) modelled as
@@ -77,7 +77,7 @@ Public Class SphImpeller3D
     ''' <summary>current revolution per minute (derived from <see cref="AngularVelocity"/>)</summary>
     Public ReadOnly Property Rpm As Single
         Get
-            Return AngularVelocity * 60.0F / (2 * PI)
+            Return AngularVelocity * 60.0F / (2 * std.PI)
         End Get
     End Property
 
@@ -94,7 +94,7 @@ Public Class SphImpeller3D
 
     ''' <summary>set the rotation speed in revolution per minute</summary>
     Public Sub SetRpm(rpm As Single)
-        AngularVelocity = rpm * 2 * PI / 60.0F
+        AngularVelocity = rpm * 2 * std.PI / 60.0F
     End Sub
 
     ''' <summary>advance the rotation angle</summary>
@@ -109,9 +109,9 @@ Public Class SphImpeller3D
     Private Function DistanceToBody(x As Single, y As Single, z As Single) As Single
         Dim dx = x - CenterX
         Dim dy = y - CenterY
-        Dim r = CSng(Sqrt(dx * dx + dy * dy))
+        Dim r = CSng(std.Sqrt(dx * dx + dy * dy))
         Dim outR = r - Radius
-        Dim dz = Abs(z - ZCenter) - BladeHeight * 0.5F
+        Dim dz = std.Abs(z - ZCenter) - BladeHeight * 0.5F
         Dim dDisc As Single
 
         If outR <= 0 AndAlso dz <= 0 Then
@@ -119,7 +119,7 @@ Public Class SphImpeller3D
         Else
             Dim a = If(outR > 0, outR, 0.0F)
             Dim b = If(dz > 0, dz, 0.0F)
-            dDisc = CSng(Sqrt(a * a + b * b))
+            dDisc = CSng(std.Sqrt(a * a + b * b))
         End If
 
         If ShaftRadius > 0 AndAlso z >= ZCenter - BladeHeight * 0.5F AndAlso z <= ShaftTop Then

@@ -99,8 +99,8 @@ Public Class FluidKernels3D
         SpikyPow3DerivativeScalingFactor = 45 / (PI * Pow(smoothingRadius, 6))
         SpikyPow2DerivativeScalingFactor = 15 / (PI * Pow(smoothingRadius, 5))
 
-        SelfDensity = SpikyPow2(0, smoothingRadius)
-        SelfNearDensity = SpikyPow3(0, smoothingRadius)
+        SelfDensity = SpikyKernelPow2(0, smoothingRadius)
+        SelfNearDensity = SpikyKernelPow3(0, smoothingRadius)
     End Sub
 
     ''' <summary>

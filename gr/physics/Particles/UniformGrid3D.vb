@@ -25,7 +25,7 @@
 '
 ' /********************************************************************************/
 
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' A flat uniform grid (counting sorted) neighbour search structure for the
@@ -69,7 +69,7 @@ Public Class UniformGrid3D
     ' 构建期临时缓冲（复用，不每步分配）
     Private counts() As Integer
     Private cursor() As Integer
-    Private cellOf() As Integer
+    Private cellIndexOf() As Integer
 
     ''' <summary>
     ''' create a uniform grid that covers the given axis aligned domain.
@@ -87,36 +87,36 @@ Public Class UniformGrid3D
             maxX As Single, maxY As Single, maxZ As Single,
             capacity As Integer)
 
-        Me.CellSize = CSng(Math.Max(0.000001F, cellSize))
+        Me.CellSize = CSng(std.Max(0.000001F, cellSize))
         Me.OriginX = minX
         Me.OriginY = minY
         Me.OriginZ = minZ
 
         ' +2 格余量：粒子在边界投影前可能略微越界，夹取后仍落在合法格内
-        Me.Nx = Math.Max(1, CInt(Math.Ceiling((maxX - minX) / Me.CellSize)) + 2)
-        Me.Ny = Math.Max(1, CInt(Math.Ceiling((maxY - minY) / Me.CellSize)) + 2)
-        Me.Nz = Math.Max(1, CInt(Math.Ceiling((maxZ - minZ) / Me.CellSize)) + 2)
+        Me.Nx = std.Max(1, CInt(std.Ceiling((maxX - minX) / Me.CellSize)) + 2)
+        Me.Ny = std.Max(1, CInt(std.Ceiling((maxY - minY) / Me.CellSize)) + 2)
+        Me.Nz = std.Max(1, CInt(std.Ceiling((maxZ - minZ) / Me.CellSize)) + 2)
 
         Dim nCells = Me.CellCount
 
         Me.CellStart = New Integer(nCells) {}
         Me.counts = New Integer(nCells - 1) {}
         Me.cursor = New Integer(nCells - 1) {}
-        Me.cellOf = New Integer(Math.Max(1, capacity) - 1) {}
-        Me.Entries = New Integer(Math.Max(1, capacity) - 1) {}
+        Me.cellIndexOf = New Integer(std.Max(1, capacity) - 1) {}
+        Me.Entries = New Integer(std.Max(1, capacity) - 1) {}
     End Sub
 
     Private Sub EnsureCapacity(n As Integer)
-        If cellOf.Length >= n AndAlso Entries.Length >= n Then Return
+        If cellIndexOf.Length >= n AndAlso Entries.Length >= n Then Return
 
-        Dim size As Integer = Math.Max(n, cellOf.Length * 2)
-        cellOf = New Integer(size - 1) {}
+        Dim size As Integer = std.Max(n, cellIndexOf.Length * 2)
+        cellIndexOf = New Integer(size - 1) {}
         Entries = New Integer(size - 1) {}
     End Sub
 
     ''' <summary>the cell coordinate along x of the given world position (clamped)</summary>
     Public Function CoordX(x As Single) As Integer
-        Dim c = CInt(Floor((x - OriginX) / CellSize))
+        Dim c = CInt(std.Floor((x - OriginX) / CellSize))
         If c < 0 Then Return 0
         If c >= Nx Then Return Nx - 1
         Return c
@@ -124,7 +124,7 @@ Public Class UniformGrid3D
 
     ''' <summary>the cell coordinate along y of the given world position (clamped)</summary>
     Public Function CoordY(y As Single) As Integer
-        Dim c = CInt(Floor((y - OriginY) / CellSize))
+        Dim c = CInt(std.Floor((y - OriginY) / CellSize))
         If c < 0 Then Return 0
         If c >= Ny Then Return Ny - 1
         Return c
@@ -132,7 +132,7 @@ Public Class UniformGrid3D
 
     ''' <summary>the cell coordinate along z of the given world position (clamped)</summary>
     Public Function CoordZ(z As Single) As Integer
-        Dim c = CInt(Floor((z - OriginZ) / CellSize))
+        Dim c = CInt(std.Floor((z - OriginZ) / CellSize))
         If c < 0 Then Return 0
         If c >= Nz Then Return Nz - 1
         Return c
@@ -168,13 +168,12 @@ Public Class UniformGrid3D
         Dim sx = If(predicted, state.qx, state.px)
         Dim sy = If(predicted, state.qy, state.py)
         Dim sz = If(predicted, state.qz, state.pz)
-        Dim inverse = 1.0F / CellSize
 
         Array.Clear(counts, 0, counts.Length)
 
         For i As Integer = 0 To n - 1
             Dim c = CellOf(sx(i), sy(i), sz(i))
-            cellOf(i) = c
+            cellIndexOf(i) = c
             counts(c) += 1
         Next
 
@@ -188,7 +187,7 @@ Public Class UniformGrid3D
         Array.Copy(CellStart, cursor, counts.Length)
 
         For i As Integer = 0 To n - 1
-            Dim c = cellOf(i)
+            Dim c = cellIndexOf(i)
             Entries(cursor(c)) = i
             cursor(c) += 1
         Next
