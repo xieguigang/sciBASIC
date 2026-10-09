@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ooxml-validator\**" />
+    <EmbeddedResource Remove="ooxml-validator\**" />
+    <None Remove="ooxml-validator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\..\text%markdown\markdown.NET5.vbproj" />
