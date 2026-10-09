@@ -148,6 +148,32 @@ Public Class WordDocument : Implements IDocumentWriter
     Private _imageRelIdCounter As Integer = 2  ' rId1=styles, rId2=settings
     Private _imageIdCounter As Integer = 0
 
+    ' === 页眉页脚 / 多节 ===
+    Private _headerFooterParts As New List(Of HeaderFooterPart)()
+    Private _hfPartCache As New Dictionary(Of String, String)()
+    Private _sections As New List(Of SectionDef)()
+    Private _curSection As New SectionDef()
+    Private _useEvenOddHeaders As Boolean = False
+
+    ''' <summary>页眉/页脚部件信息（word/headerN.xml 或 word/footerN.xml）。</summary>
+    Friend Class HeaderFooterPart
+        Public Property RelId As String
+        Public Property Kind As String      ' "header" / "footer"
+        Public Property Xml As String       ' 部件完整 XML
+    End Class
+
+    ''' <summary>
+    ''' 节属性定义。每个节可独立设置奇偶页页眉与页脚页码格式；
+    ''' sectPr 位于节末（段落级 sectPr 或文档末尾的 body 级 sectPr）。
+    ''' </summary>
+    Friend Class SectionDef
+        Public Property HeaderOddRelId As String = ""   ' 奇数页页眉（evenAndOddHeaders 开启时 default 类型即奇数页）
+        Public Property HeaderEvenRelId As String = ""  ' 偶数页页眉
+        Public Property FooterRelId As String = ""      ' 页脚（居中 PAGE 页码域，格式由 pgNumType 决定）
+        Public Property PageNumFmt As String = ""       ' 页码格式：upperRoman（前置部分）/ decimal（正文）；空=不指定
+        Public Property PageNumStart As Integer = 0     ' 页码起始号；0=续前节
+    End Class
+
     ''' <summary>图像嵌入信息。</summary>
     Friend Class ImageEntry
         Public Property RelId As String
