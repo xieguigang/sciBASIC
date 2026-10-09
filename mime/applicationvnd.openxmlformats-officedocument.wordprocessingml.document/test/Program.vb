@@ -624,8 +624,9 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
 
         ' ============================================================
         ' [8] 论文正文 —— 第二章
-        ' （公式块说明：规范要求"另行起，缩格书写，编号置于括号内、右端对齐"；
-        '   当前模块的 math 块以等宽字体代码块形式近似渲染（另行起），OMML 公式对象为后续扩展）
+        ' （公式说明：规范要求"另行起，缩格书写，编号置于括号内、右端对齐"；
+        '   2.4 节的公式以 Content MathML 提供，经 Formula API 输出 Word 原生
+        '   OMML 公式对象——公式居中、编号右端对齐，Word 中可直接双击编辑）
         ' ============================================================
         doc.WriteBlocks({
             New JSONSchema.Block With {.type = "heading", .level = 1, .content = "第二章 材料与方法"},
@@ -659,8 +660,25 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
                 .checked = {True, True, True, False}
             },
             New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.4 统计模型"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "DESeq2 采用负二项广义线性模型估计基因表达量的离散程度。以两个条件下的均值比较为例，其标准化统计量可表示为："},
-            New JSONSchema.Block With {.type = "math", .content = "W_1 = U_11 - U_12 * U_21    (2-1)"},
+            New JSONSchema.Block With {.type = "paragraph", .content = "DESeq2 采用负二项广义线性模型估计基因表达量的离散程度。以两个条件下的均值比较为例，其标准化统计量可表示为："}
+        })
+
+        ' 公式 (2-1)：Content MathML -> 表达式树 -> OMML 原生公式对象
+        ' （另行起，公式居中，编号"(2-1)"右端对齐；W_1/U_11 等符号按约定渲染为下标）
+        ' W₁ = U₁₁ − U₁₂ × U₂₁
+        doc.Formula(
+            "<math><apply><eq/><ci>W_1</ci>" &
+            "<apply><minus/><ci>U_11</ci><apply><times/><ci>U_12</ci><ci>U_21</ci></apply></apply></apply></math>",
+            equationNo:="(2-1)")
+
+        ' 分式公式（无编号，演示 m:f 竖式分式与 n 元运算链）：
+        ' W₁ = (U₁₁ − U₁₂ × U₂₁) / (U₁₁ + U₂₂)
+        doc.Formula(
+            "<math><apply><eq/><ci>W_1</ci>" &
+            "<apply><divide/><apply><minus/><ci>U_11</ci><apply><times/><ci>U_12</ci><ci>U_21</ci></apply></apply>" &
+            "<apply><plus/><ci>U_11</ci><ci>U_22</ci></apply></apply></apply></math>")
+
+        doc.WriteBlocks({
             New JSONSchema.Block With {.type = "paragraph", .content = "式中，U_11、U_12、U_21 分别为对应条件下的模型估计参数；较长的公式转行时应尽可能在＝处回行，或在＋、－、×、／等记号处换行。"},
             New JSONSchema.Block With {.type = "blockquote", .content = "注：所有分析均在 R 4.3.2 环境下完成，随机数种子统一设置为 42 以保证结果可重复。"},
             New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.5 测序数据质量统计"},

@@ -125,13 +125,30 @@ Namespace MathML
         ''' <param name="mathML"></param>
         ''' <returns></returns>
         ''' 
+        ''' <summary>
+        ''' 解析 MathML 文档（&lt;math&gt; 根元素）为 lambda 表达式树。
+        ''' 支持两种布局：
+        '''   1. &lt;math&gt;&lt;lambda&gt;&lt;bvar/&gt;...&lt;apply/&gt;&lt;/lambda&gt;&lt;/math&gt;（函数定义）；
+        '''   2. &lt;math&gt;&lt;apply&gt;...&lt;/apply&gt;&lt;/math&gt;（纯表达式体，参数表为空）。
+        ''' </summary>
         <Extension>
         Public Function ParseXml(mathML As XmlElement) As LambdaExpression
             Dim lambdaElement As XmlElement = mathML.getElementsByTagName("lambda").FirstOrDefault
             Dim parameters As String()
+            Dim applyElement As XmlElement
 
             If lambdaElement Is Nothing Then
-                Return Nothing
+                ' 无 lambda 包装：直接解析顶层的 apply 表达式体
+                applyElement = mathML.getElementsByTagName("apply").FirstOrDefault
+
+                If applyElement Is Nothing Then
+                    Return Nothing
+                Else
+                    Return New LambdaExpression With {
+                        .parameters = New String() {},
+                        .lambda = applyElement.parseInternal
+                    }
+                End If
             Else
                 parameters = lambdaElement _
                     .getElementsByTagName("bvar") _

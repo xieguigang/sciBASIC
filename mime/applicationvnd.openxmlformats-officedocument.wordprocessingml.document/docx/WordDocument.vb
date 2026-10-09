@@ -568,9 +568,9 @@ Public Class WordDocument : Implements IDocumentWriter
     Public Function Formula(mathml As String, Optional equationNo As String = "") As WordDocument
         If String.IsNullOrEmpty(mathml) Then Return Me
 
-        ' MathML -> 表达式树 -> OMML（字号继承正文样式）
+        ' MathML -> 表达式树 -> OMML（字号继承正文样式）；包裹 inline 公式元素 m:oMath
         Dim lambda As LambdaExpression = LambdaExpression.FromMathML(mathml)
-        Dim omath As String = OmmlBuilder.ToOmml(lambda, _paragraphStyle.Size)
+        Dim omath As String = "<m:oMath>" & OmmlBuilder.ToOmml(lambda, _paragraphStyle.Size) & "</m:oMath>"
 
         ' 制表位位置：居中 = 内容宽度中点；右对齐 = 内容宽度右缘
         Dim contentWidth As Integer = _pageWidth - _marginLeft - _marginRight
