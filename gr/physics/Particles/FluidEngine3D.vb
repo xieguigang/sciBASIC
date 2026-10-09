@@ -699,7 +699,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
     ''' pass and take the mean of the densest quartile (the interior particles
     ''' of a liquid block).
     ''' </summary>
-    Public Sub CalibrateDensity()
+    Public Sub CalibrateDensity(Optional interiorFilter As Func(Of Integer, Boolean) = Nothing)
         Dim n = _state.Count
         If n = 0 Then Return
 
@@ -717,8 +717,8 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         Call _grid.Build(_state, predicted:=True)
         Call cpuFallback.DensityPass(_state, _grid, sphParams)
 
-        RestDensity = TopQuartileMean(_state.dens, n)
-        RestNearDensity = TopQuartileMean(_state.densNear, n)
+        RestDensity = MedianOf(_state.dens, n, interiorFilter)
+        RestNearDensity = MedianOf(_state.densNear, n, interiorFilter)
 
         If RestDensity <= 0.0000001F Then RestDensity = 1.0F
         If RestNearDensity <= 0.0000001F Then RestNearDensity = 1.0F
@@ -752,22 +752,31 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         sphParams.NearPressureK = NearPressureRatio * K
     End Sub
 
-    Private Shared Function TopQuartileMean(buf As Single(), n As Integer) As Single
-        Dim tmp As Single() = New Single(n - 1) {}
-        Array.Copy(buf, tmp, n)
-        Array.Sort(tmp)
+    ''' <summary>
+    ''' median of the given buffer, restricted to the particles accepted by the
+    ''' (optional) interior filter. using the median of the interior particles
+    ''' (instead of the mean over everything) keeps the rest density free of the
+    ''' free surface deficit, so the bulk liquid settles at rho = 1.
+    ''' </summary>
+    Private Shared Function MedianOf(buf As Single(), n As Integer,
+                                     Optional filter As Func(Of Integer, Boolean) = Nothing) As Single
+        Dim values As New List(Of Single)(n)
 
-        Dim from = n - std.Max(1, n \ 4)
-        Dim sum As Double = 0
-        Dim count = 0
-
-        For i As Integer = from To n - 1
-            sum += tmp(i)
-            count += 1
+        For i As Integer = 0 To n - 1
+            If filter IsNot Nothing AndAlso Not filter(i) Then Continue For
+            values.Add(buf(i))
         Next
 
-        If count = 0 Then Return buf(0)
-        Return CSng(sum / count)
+        If values.Count = 0 Then
+            For i As Integer = 0 To n - 1
+                values.Add(buf(i))
+            Next
+        End If
+
+        If values.Count = 0 Then Return 1.0F
+
+        values.Sort()
+        Return values(values.Count \ 2)
     End Function
 
     ''' <summary>force a rebuild of the cached parameters on the next step</summary>

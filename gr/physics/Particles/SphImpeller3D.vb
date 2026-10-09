@@ -57,6 +57,15 @@ Public Class SphImpeller3D
     Public Property AxialVelocity As Single = 0.0F
 
     ''' <summary>
+    ''' radial discharge coefficient of a Rushton style turbine: an outward
+    ''' radial velocity of <c>RadialPumping * omega * r</c> is superposed onto the
+    ''' tangential velocity, so the impeller actually pumps the broth outward
+    ''' (and thereby drives the two circulation loops of a stirred tank) instead
+    ''' of only spinning a thin layer of fluid.
+    ''' </summary>
+    Public Property RadialPumping As Single = 0.35F
+
+    ''' <summary>
     ''' thickness of the velocity forcing band around the solid body: the
     ''' blending weight decays linearly from 1 (on the surface) to 0 at this
     ''' distance.
@@ -170,6 +179,13 @@ Public Class SphImpeller3D
             Dim tvx = -omega * dy
             Dim tvy = omega * dx
             Dim tvz = AxialVelocity
+
+            ' 径向排出流（Rushton 涡轮）：v_r = RadialPumping * omega * r，
+            ' 方向 (dx,dy) 即径向外，故分量 = RadialPumping * omega * (dx,dy)
+            If RadialPumping <> 0.0F Then
+                tvx += RadialPumping * omega * dx
+                tvy += RadialPumping * omega * dy
+            End If
 
             state.vx(i) += (tvx - state.vx(i)) * blend
             state.vy(i) += (tvy - state.vy(i)) * blend

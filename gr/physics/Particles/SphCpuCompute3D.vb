@@ -160,7 +160,12 @@ Public Class SphCpuCompute3D : Implements ISphCompute3D
 
                                              Dim pI = K * (rhoI - 1.0F)
                                              If pI < pMin Then pI = pMin
-                                             Dim pnI = KN * rhoNI
+
+                                             ' 近压力只作"抗团聚"修正：以静止近密度为参考并截断到非负，
+                                             ' 否则它会在液体内部产生恒定的排斥力，把平衡密度整体压低
+                                             ' （表现为全场压力恒为负、密度系统性偏低于静止密度）。
+                                             Dim pnI = KN * (rhoNI - 1.0F)
+                                             If pnI < 0 Then pnI = 0.0F
 
                                              press(i) = pI
                                              pressNear(i) = pnI
@@ -214,7 +219,8 @@ Public Class SphCpuCompute3D : Implements ISphCompute3D
 
                                                              Dim pJ = K * (rhoJ - 1.0F)
                                                              If pJ < pMin Then pJ = pMin
-                                                             Dim pnJ = KN * rhoNJ
+                                                             Dim pnJ = KN * (rhoNJ - 1.0F)
+                                                             If pnJ < 0 Then pnJ = 0.0F
 
                                                              ' 对称（动量守恒）压力梯度：
                                                              ' a_i = -m Σ (p_i/rho_i^2 + p_j/rho_j^2) ∇_i W
