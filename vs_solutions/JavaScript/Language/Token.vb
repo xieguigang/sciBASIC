@@ -1,15 +1,5 @@
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-''' <summary>Token categories produced by <see cref="Lexer"/>.</summary>
-Public Enum TokenType
-    Number
-    [String]
-    Identifier
-    Keyword
-    Punct
-    Eof
-End Enum
-
 ''' <summary>A lexical token; <see cref="LineBreakBefore"/> drives the simple ASI rule.</summary>
 Public NotInheritable Class Token : Inherits CodeToken(Of TokenType)
 

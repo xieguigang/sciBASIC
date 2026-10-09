@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mime\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
   </ItemGroup>
 
