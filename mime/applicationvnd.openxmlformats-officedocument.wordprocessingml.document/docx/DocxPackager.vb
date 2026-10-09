@@ -114,7 +114,7 @@ Public Class DocxPackager
                 WriteEntry(archive, "word/styles.xml", BuildStylesXml(doc))
 
                 ' 5. word/settings.xml
-                WriteEntry(archive, "word/settings.xml", BuildSettingsXml())
+                WriteEntry(archive, "word/settings.xml", BuildSettingsXml(doc))
 
                 ' 6. word/_rels/document.xml.rels
                 WriteEntry(archive, "word/_rels/document.xml.rels", BuildDocumentRels(doc))
@@ -125,7 +125,14 @@ Public Class DocxPackager
                 ' 8. docProps/app.xml
                 WriteEntry(archive, "docProps/app.xml", BuildAppProps(doc))
 
-                ' 9. 图片文件
+                ' 9. 页眉/页脚部件文件
+                For Each hf As WordDocument.HeaderFooterPart In doc.GetHeaderFooterParts()
+                    Dim relNum As Integer = Integer.Parse(hf.RelId.Replace("rId", ""))
+                    Dim partPath As String = If(hf.Kind = "header", $"word/header{relNum}.xml", $"word/footer{relNum}.xml")
+                    WriteEntry(archive, partPath, hf.Xml)
+                Next
+
+                ' 10. 图片文件
                 For Each img As WordDocument.ImageEntry In doc.GetImages()
                     Dim contentType As String = GetImageContentType(img.Extension)
                     ' 根据关系 ID 确定文件名
@@ -166,6 +173,17 @@ Public Class DocxPackager
         sb.Append("<Override PartName=""/word/settings.xml"" ContentType=""application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml""/>")
         sb.Append("<Override PartName=""/docProps/core.xml"" ContentType=""application/vnd.openxmlformats-package.core-properties+xml""/>")
         sb.Append("<Override PartName=""/docProps/app.xml"" ContentType=""application/vnd.openxmlformats-officedocument.extended-properties+xml""/>")
+
+        ' 页眉/页脚部件
+        For Each hf As WordDocument.HeaderFooterPart In doc.GetHeaderFooterParts()
+            Dim relNum As Integer = Integer.Parse(hf.RelId.Replace("rId", ""))
+            Dim partName As String = If(hf.Kind = "header", $"word/header{relNum}.xml", $"word/footer{relNum}.xml")
+            Dim contentType As String = If(hf.Kind = "header",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml")
+            sb.Append($"<Override PartName=""/{partName}"" ContentType=""{contentType}""/>")
+        Next
+
         sb.Append("</Types>")
         Return sb.ToString()
     End Function
@@ -196,6 +214,16 @@ Public Class DocxPackager
             sb.Append($"<Relationship Id=""{img.RelId}"" Type=""http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"" Target=""media/image{relNum - 2}.{img.Extension}""/>")
         Next
 
+        ' 页眉/页脚关系
+        For Each hf As WordDocument.HeaderFooterPart In doc.GetHeaderFooterParts()
+            Dim relNum As Integer = Integer.Parse(hf.RelId.Replace("rId", ""))
+            Dim target As String = If(hf.Kind = "header", $"header{relNum}.xml", $"footer{relNum}.xml")
+            Dim relType As String = If(hf.Kind = "header",
+                "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header",
+                "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer")
+            sb.Append($"<Relationship Id=""{hf.RelId}"" Type=""{relType}"" Target=""{target}""/>")
+        Next
+
         sb.Append("</Relationships>")
         Return sb.ToString()
     End Function
@@ -208,12 +236,8 @@ Public Class DocxPackager
         sb.Append("<w:body>")
         sb.Append(doc.GetBodyXml())
 
-        ' 节属性 (页面大小和边距)
-        Dim margins = doc.GetMargins()
-        sb.Append("<w:sectPr>")
-        sb.Append($"<w:pgSz w:w=""{doc.GetPageWidth()}"" w:h=""{doc.GetPageHeight()}""/>")
-        sb.Append($"<w:pgMar w:top=""{margins.Top}"" w:right=""{margins.Right}"" w:bottom=""{margins.Bottom}"" w:left=""{margins.Left}"" w:header=""720"" w:footer=""720"" w:gutter=""0""/>")
-        sb.Append("</w:sectPr>")
+        ' 文档末尾的节属性 (body 级 sectPr：页面大小、边距 + 最后一节的页眉页脚与页码格式)
+        sb.Append(doc.GetFinalSectionPr())
 
         sb.Append("</w:body>")
         sb.Append("</w:document>")
@@ -324,10 +348,13 @@ Public Class DocxPackager
     End Function
 
     ''' <summary>word/settings.xml</summary>
-    Private Function BuildSettingsXml() As String
+    Private Function BuildSettingsXml(doc As WordDocument) As String
         Dim sb As New StringBuilder()
         sb.Append("<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>")
         sb.Append($"<w:settings xmlns:w=""{NS_W}"">")
+        ' 奇偶页页眉分注（学位论文规范：奇数页章序章题、偶数页校名）
+        ' 注意：CT_Settings 序列中 evenAndOddHeaders 位于 updateFields 之前
+        If doc.GetUseEvenOddHeaders() Then sb.Append("<w:evenAndOddHeaders/>")
         ' 自动更新域（让 Word 打开时自动更新 TOC）
         sb.Append("<w:updateFields w:val=""true""/>")
         sb.Append("</w:settings>")
