@@ -232,7 +232,7 @@ Public Class DocxPackager
     Private Function BuildDocumentXml(doc As WordDocument) As String
         Dim sb As New StringBuilder()
         sb.Append("<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>")
-        sb.Append($"<w:document xmlns:w=""{NS_W}"" xmlns:r=""{NS_R}"" xmlns:wp=""{NS_WP}"" xmlns:a=""{NS_A}"" xmlns:pic=""{NS_PIC}"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"">")
+        sb.Append($"<w:document xmlns:w=""{NS_W}"" xmlns:r=""{NS_R}"" xmlns:wp=""{NS_WP}"" xmlns:a=""{NS_A}"" xmlns:pic=""{NS_PIC}"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"" xmlns:m=""http://schemas.openxmlformats.org/officeDocument/2006/math"">")
         sb.Append("<w:body>")
         sb.Append(doc.GetBodyXml())
 
