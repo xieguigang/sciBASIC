@@ -190,4 +190,61 @@ Public Class LiteJsTests
         Assert.DoesNotContain("Dim string As", code)      ' VB keyword escaped
     End Sub
 
+    ' ----------------------------------------------------------------- json
+
+    <Fact>
+    Public Sub Json_Parse_Scalars()
+        Assert.Equal("1.5", OneLine("console.log(JSON.parse('1.5'));"))
+        Assert.Equal("42", OneLine("console.log(JSON.parse('42'));"))
+        Assert.Equal("true", OneLine("console.log(JSON.parse('true'));"))
+        Assert.Equal("null", OneLine("console.log(JSON.parse('null'));"))
+        Assert.Equal("hi there", OneLine("console.log(JSON.parse('""hi there""'));"))
+    End Sub
+
+    <Fact>
+    Public Sub Json_Parse_Composites()
+        Assert.Equal("TP53 2", OneLine(
+            "var o = JSON.parse('{""name"":""TP53"",""score"":2}');" &
+            "console.log(o.name, o.score);"))
+        Assert.Equal("3 2", OneLine(
+            "var a = JSON.parse('[1,2,3]'); console.log(a.length, a[1]);"))
+        Assert.Equal("x 1", OneLine(
+            "var o = JSON.parse('{""nested"":{""deep"":{""x"":1}}}');" &
+            "console.log(o.nested.deep.x, 1);"))
+    End Sub
+
+    <Fact>
+    Public Sub Json_Parse_Errors()
+        Assert.Throws(Of JsRuntimeException)(Function() RunJs("JSON.parse('{');"))
+        Assert.Throws(Of JsRuntimeException)(Function() RunJs("JSON.parse('');"))
+        ' parse errors are catchable by JS try/catch
+        Assert.Equal("caught", OneLine(
+            "try { JSON.parse('{bad'); } catch (e) { console.log('caught'); }"))
+    End Sub
+
+    <Fact>
+    Public Sub Json_Stringify()
+        Assert.Equal("1", OneLine(
+            "console.log(JSON.parse(JSON.stringify({a: 1, b: [1, 2]})).b[0]);"))
+        Assert.Equal("""x""", OneLine("console.log(JSON.stringify('x'));"))
+        Assert.Equal("[1,2,3]", OneLine("console.log(JSON.stringify([1,2,3]));"))
+        ' undefined members are omitted, undefined in arrays → null
+        Assert.Equal("{""b"":1}", OneLine(
+            "console.log(JSON.stringify({a: undefined, b: 1}));"))
+        Assert.Equal("[null]", OneLine("console.log(JSON.stringify([NaN]));"))
+        ' top-level undefined → the value undefined itself
+        Assert.Equal("undefined", OneLine("console.log(JSON.stringify(undefined));"))
+    End Sub
+
+    <Fact>
+    Public Sub Console_JsonStyleDisplay()
+        Assert.Equal("[1,2,3]", OneLine("console.log([1,2,3]);"))
+        Assert.Equal("{""a"":1}", OneLine("console.log({a: 1});"))
+        Assert.Equal("{""name"":""TP53"",""score"":2}", OneLine(
+            "console.log({name: 'TP53', score: 2});"))
+        ' scalars keep the existing display behaviour
+        Assert.Equal("abc", OneLine("console.log('abc');"))
+        Assert.Equal("1.5", OneLine("console.log(1.5);"))
+    End Sub
+
 End Class

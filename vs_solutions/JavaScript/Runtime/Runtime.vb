@@ -1,6 +1,8 @@
 Imports System.Globalization
 Imports System.Text
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Namespace Runtime
 
@@ -124,24 +126,17 @@ Namespace Runtime
             Return String.Join(sep, parts)
         End Function
 
-        ''' <summary>console.log formatting: arrays/objects shown structurally.</summary>
+        ''' <summary>console.log formatting: arrays/objects shown as JSON text.</summary>
         Public Function JsDisplay(x As Object) As String
             If TypeOf x Is String Then Return CStr(x)
-            If TypeOf x Is List(Of Object) Then
-                Dim a = DirectCast(x, List(Of Object))
-                Dim parts(a.Count - 1) As String
-                For i = 0 To a.Count - 1
-                    parts(i) = JsDisplay(a(i))
-                Next
-                Return "[" & String.Join(", ", parts) & "]"
-            End If
-            If TypeOf x Is Dictionary(Of String, Object) Then
-                Dim d = DirectCast(x, Dictionary(Of String, Object))
-                Dim parts As New List(Of String)
-                For Each kv In d
-                    parts.Add(kv.Key & ": " & JsDisplay(kv.Value))
-                Next
-                Return "{" & String.Join(", ", parts) & "}"
+            If TypeOf x Is List(Of Object) OrElse TypeOf x Is Dictionary(Of String, Object) Then
+                ' JSON style display: {"a": 1, "b": [1, 2]}
+                Try
+                    Return DisplayJson(x)
+                Catch ex As JsRuntimeException
+                    ' circular reference in displayed graph
+                    Return "[Circular]"
+                End Try
             End If
             Return JsStr(x)
         End Function
@@ -509,30 +504,172 @@ Namespace Runtime
         Private Function BuiltinJson(name As String, args As Object()) As Object
             Select Case name
                 Case "stringify" : Return JsonStringify(Arg(args, 0))
+                Case "parse" : Return JsParseJson(JsStr(Arg(args, 0)))
             End Select
             Throw JsRuntimeException.TypeError("JSON." & name & " is not a function")
         End Function
 
-        Private Function JsonStringify(x As Object) As String
-            If x Is Nothing OrElse x Is Undef Then Return If(x Is Nothing, "null", "null")
-            If TypeOf x Is Double OrElse TypeOf x Is Boolean Then Return JsStr(x)
-            If TypeOf x Is String Then Return """" & CStr(x) & """"
-            If IsJsArray(x) Then
-                Dim a = DirectCast(x, List(Of Object))
-                Dim parts(a.Count - 1) As String
-                For i = 0 To a.Count - 1
-                    parts(i) = JsonStringify(a(i))
+        ' ========================================================
+        ' JSON interop (based on Microsoft.VisualBasic.MIME.application.json)
+        ' ========================================================
+
+        ''' <summary>JSONSerializer 输出选项：紧凑、非 unicode 转义、Date 输出 ISO 字符串</summary>
+        Private Function JsonOpts() As JSONSerializerOptions
+            Return New JSONSerializerOptions With {
+                .indent = False,
+                .unicodeEscape = False,
+                .unixTimestamp = False
+            }
+        End Function
+
+        ''' <summary>对象/数组的 JSON 风格文本（console 显示与 JSON.stringify 共用）</summary>
+        Private Function DisplayJson(x As Object) As String
+            Return ToJsonElement(x, New HashSet(Of Object)).BuildJsonString(JsonOpts())
+        End Function
+
+        ''' <summary>
+        ''' JS 值图 → <see cref="JsonElement"/> DOM（JSON.stringify 语义）。
+        ''' </summary>
+        Private Function ToJsonElement(x As Object, ancestors As HashSet(Of Object)) As JsonElement
+            If x Is Nothing OrElse x Is Undef Then
+                Return JsonValue.NULL
+            ElseIf TypeOf x Is Double Then
+                ' NaN / ±Infinity → null (JS JSON.stringify standard)
+                Dim d = CDbl(x)
+                If Double.IsNaN(d) OrElse Double.IsInfinity(d) Then
+                    Return JsonValue.NULL
+                End If
+                Return New JsonValue(d)
+            ElseIf TypeOf x Is Boolean Then
+                Return New JsonValue(CBool(x))
+            ElseIf TypeOf x Is String Then
+                Return New JsonValue(CStr(x))
+            ElseIf TypeOf x Is Single OrElse TypeOf x Is Integer OrElse TypeOf x Is Long Then
+                ' rendered as unquoted json numbers by JSONWriter
+                Return New JsonValue(x)
+            ElseIf TypeOf x Is List(Of Object) Then
+                If Not ancestors.Add(x) Then
+                    Throw JsRuntimeException.TypeError("Converting circular structure to JSON")
+                End If
+                Dim arr As New JsonArray
+                For Each el In DirectCast(x, List(Of Object))
+                    arr.Add(ToJsonElement(el, ancestors))
                 Next
-                Return "[" & String.Join(",", parts) & "]"
-            End If
-            If IsJsObject(x) Then
-                Dim parts As New List(Of String)
+                Call ancestors.Remove(x)
+                Return arr
+            ElseIf TypeOf x Is Dictionary(Of String, Object) Then
+                If Not ancestors.Add(x) Then
+                    Throw JsRuntimeException.TypeError("Converting circular structure to JSON")
+                End If
+                Dim obj As New JsonObject
                 For Each kv In DirectCast(x, Dictionary(Of String, Object))
-                    parts.Add("""" & kv.Key & """:" & JsonStringify(kv.Value))
+                    Dim v = kv.Value
+                    ' JS standard: undefined / function members are omitted
+                    If v Is Undef OrElse TypeOf v Is Func(Of Object(), Object) OrElse TypeOf v Is BuiltinMethod Then
+                        Continue For
+                    End If
+                    obj.Add(kv.Key, ToJsonElement(v, ancestors))
                 Next
-                Return "{" & String.Join(",", parts) & "}"
+                Call ancestors.Remove(x)
+                Return obj
+            Else
+                ' functions and other opaque clr objects → null
+                Return JsonValue.NULL
             End If
-            Return "null"
+        End Function
+
+        ''' <summary>
+        ''' <see cref="JsonElement"/> DOM → JS 值图（JSON.parse 语义）。
+        ''' </summary>
+        Private Function FromJsonElement(el As JsonElement) As Object
+            If el Is Nothing Then
+                Return Nothing
+            ElseIf TypeOf el Is JsonObject Then
+                Dim d As New Dictionary(Of String, Object)
+                For Each member In DirectCast(el, JsonObject)
+                    d(member.Name) = FromJsonElement(member.Value)
+                Next
+                Return d
+            ElseIf TypeOf el Is JsonArray Then
+                Dim list As New List(Of Object)
+                For Each item In DirectCast(el, JsonArray)
+                    list.Add(FromJsonElement(item))
+                Next
+                Return list
+            Else
+                Dim v = DirectCast(el, JsonValue)
+
+                If v.value Is Nothing Then
+                    Return Nothing
+                ElseIf TypeOf v.value Is Double OrElse TypeOf v.value Is Boolean OrElse
+                       TypeOf v.value Is Integer OrElse TypeOf v.value Is Long OrElse
+                       TypeOf v.value Is Single Then
+                    ' native clr values (host-constructed graphs)
+                    Return v.value
+                End If
+
+                ' parsed scalars arrive as raw literal text:
+                ' quoted → js string, otherwise number/boolean/null literal
+                Dim raw = CStr(v.value)
+
+                If raw.StartsWith(""""c) Then
+                    Return v.GetStripString(decodeMetachar:=True)
+                End If
+
+                Dim text = raw.Trim()
+
+                If text = "null" Then
+                    Return Nothing
+                ElseIf text = "true" Then
+                    Return True
+                ElseIf text = "false" Then
+                    Return False
+                Else
+                    Dim num As Double
+                    If Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, num) Then
+                        Return num
+                    Else
+                        Return v.GetStripString(decodeMetachar:=True)
+                    End If
+                End If
+            End If
+        End Function
+
+        ''' <summary>
+        ''' JSON.parse：解析失败抛出可被脚本 try/catch 捕获的 SyntaxError。
+        ''' </summary>
+        Public Function JsParseJson(text As String) As Object
+            If text Is Nothing OrElse text.Trim().Length = 0 Then
+                Throw JsRuntimeException.SyntaxError("Unexpected end of JSON input")
+            End If
+
+            Dim el As JsonElement
+
+            Try
+                el = JsonParser.Parse(text)
+            Catch ex As Exception
+                If TypeOf ex Is JsRuntimeException Then
+                    Throw
+                End If
+                Throw JsRuntimeException.SyntaxError(ex.Message)
+            End Try
+
+            Return FromJsonElement(el)
+        End Function
+
+        ''' <summary>
+        ''' JSON.stringify（JS 标准语义）：
+        ''' 顶层 undefined/函数返回 undefined 值本身；对象中 undefined/函数成员省略；
+        ''' 数组中转 null；NaN/±Infinity 转 null；循环引用抛 TypeError。
+        ''' </summary>
+        Private Function JsonStringify(x As Object) As Object
+            If x Is Nothing Then
+                Return "null"
+            ElseIf x Is Undef OrElse TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod Then
+                Return Undef
+            Else
+                Return DisplayJson(x)
+            End If
         End Function
 
         Private Function BuiltinObject(name As String, args As Object()) As Object
