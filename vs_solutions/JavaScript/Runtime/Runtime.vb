@@ -1,5 +1,6 @@
 Imports System.Globalization
 Imports System.Text
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Runtime
 
@@ -812,6 +813,217 @@ Namespace Runtime
                 Case "toString" : Return s
             End Select
             Throw JsRuntimeException.TypeError("string." & name & " is not a function")
+        End Function
+
+        ' ========================================================
+        ' JsValue 热路径重载：解释器内部求值专用，全程零 box/unbox。
+        ' Object 版本保留给宿主边界、内置函数派发与生成代码使用。
+        ' ========================================================
+
+        ''' <summary>JsValue → Object（宿主边界装箱：undefined → Undef 标记、null → Nothing）</summary>
+        Public Function JsBox(v As JsValue) As Object
+            If v.IsUndef Then
+                Return Undef
+            ElseIf v.IsNull Then
+                Return Nothing
+            Else
+                Return v.AsObject()
+            End If
+        End Function
+
+        ''' <summary>Object → JsValue（宿主边界拆箱：Undef 标记 → undefined、Nothing → null）</summary>
+        Public Function JsUnbox(x As Object) As JsValue
+            If x Is Nothing Then
+                Return JsValue.Null
+            ElseIf x Is Undef Then
+                Return JsValue.Undef
+            Else
+                Return JsValue.OfObject(x)
+            End If
+        End Function
+
+        Public Function JsTruthy(v As JsValue) As Boolean
+            Return v.Truthy()
+        End Function
+
+        Public Function JsBool(v As JsValue) As Boolean
+            Return v.Truthy()
+        End Function
+
+        Public Function JsNum(v As JsValue) As Double
+            Select Case v.VarType
+                Case TypeCode.Double, TypeCode.Single, TypeCode.Int32, TypeCode.Int64
+                    Return v.AsDouble()
+                Case TypeCode.Boolean : Return If(v.AsBoolean(), 1.0, 0.0)
+                Case TypeCode.String : Return ParseNumberString(v.AsString())
+                Case TypeCode.Empty : Return Double.NaN
+                Case TypeCode.DBNull : Return 0.0
+                Case Else : Return JsNum(v.AsObject())
+            End Select
+        End Function
+
+        Public Function JsStr(v As JsValue) As String
+            Select Case v.VarType
+                Case TypeCode.Empty : Return "undefined"
+                Case TypeCode.DBNull : Return "null"
+                Case TypeCode.Double, TypeCode.Single, TypeCode.Int32, TypeCode.Int64
+                    Return NumToString(v.AsDouble())
+                Case TypeCode.Boolean : Return If(v.AsBoolean(), "true", "false")
+                Case TypeCode.String : Return v.AsString()
+                Case Else : Return JsStr(v.AsObject())
+            End Select
+        End Function
+
+        Public Function JsTypeOf(v As JsValue) As String
+            Select Case v.VarType
+                Case TypeCode.Double, TypeCode.Single, TypeCode.Int32, TypeCode.Int64 : Return "number"
+                Case TypeCode.String : Return "string"
+                Case TypeCode.Boolean : Return "boolean"
+                Case TypeCode.Empty, TypeCode.DBNull : Return "undefined"
+                Case Else
+                    Dim o = v.AsObject()
+                    If TypeOf o Is Func(Of Object(), Object) OrElse TypeOf o Is BuiltinMethod Then Return "function"
+                    Return "object"
+            End Select
+        End Function
+
+        ' ---------- JsValue 算术 ----------
+
+        Public Function JsAdd(a As JsValue, b As JsValue) As JsValue
+            If a.IsString OrElse b.IsString Then
+                Return JsValue.Str(JsStr(a) & JsStr(b))
+            End If
+            If a.IsNumber AndAlso b.IsNumber Then
+                Return JsValue.Number(a.AsDouble() + b.AsDouble())
+            End If
+            Return JsValue.Number(JsNum(a) + JsNum(b))
+        End Function
+
+        Public Function JsSub(a As JsValue, b As JsValue) As JsValue
+            If a.IsNumber AndAlso b.IsNumber Then
+                Return JsValue.Number(a.AsDouble() - b.AsDouble())
+            End If
+            Return JsValue.Number(JsNum(a) - JsNum(b))
+        End Function
+
+        Public Function JsMul(a As JsValue, b As JsValue) As JsValue
+            If a.IsNumber AndAlso b.IsNumber Then
+                Return JsValue.Number(a.AsDouble() * b.AsDouble())
+            End If
+            Return JsValue.Number(JsNum(a) * JsNum(b))
+        End Function
+
+        Public Function JsDiv(a As JsValue, b As JsValue) As JsValue
+            If a.IsNumber AndAlso b.IsNumber Then
+                Return JsValue.Number(a.AsDouble() / b.AsDouble())
+            End If
+            Return JsValue.Number(JsNum(a) / JsNum(b))
+        End Function
+
+        Public Function JsMod(a As JsValue, b As JsValue) As JsValue
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) OrElse y = 0.0 Then
+                Return JsValue.Number(Double.NaN)
+            End If
+            Return JsValue.Number(x - System.Math.Floor(x / y) * y)      ' JS-style floored modulo
+        End Function
+
+        ''' <summary>Exponentiation (**). NaN base → NaN, like JS.</summary>
+        Public Function JsPow(a As JsValue, b As JsValue) As JsValue
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) Then Return JsValue.Number(Double.NaN)
+            Return JsValue.Number(System.Math.Pow(x, y))
+        End Function
+
+        Public Function JsNeg(a As JsValue) As JsValue
+            If a.IsNumber Then
+                Return JsValue.Number(-a.AsDouble())
+            End If
+            Return JsValue.Number(-JsNum(a))
+        End Function
+
+        Public Function JsNot(a As JsValue) As JsValue
+            Return JsValue.Boolean_(Not a.Truthy())
+        End Function
+
+        ' ---------- JsValue 比较 ----------
+
+        Public Function JsStrictEq(a As JsValue, b As JsValue) As Boolean
+            If a.IsNumber AndAlso b.IsNumber Then
+                Dim x = a.AsDouble(), y = b.AsDouble()
+                If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+                Return x = y
+            End If
+            If a.IsString AndAlso b.IsString Then Return a.AsString() = b.AsString()
+            If a.IsBoolean AndAlso b.IsBoolean Then Return a.AsBoolean() = b.AsBoolean()
+            If a.IsNull AndAlso b.IsNull Then Return True
+            If a.IsUndef AndAlso b.IsUndef Then Return True
+            If (a.IsObject OrElse a.VarType = TypeCode.DateTime) AndAlso
+               (b.IsObject OrElse b.VarType = TypeCode.DateTime) Then
+                Return ReferenceEquals(a.AsObject(), b.AsObject())
+            End If
+            Return False
+        End Function
+
+        Public Function JsEq(a As JsValue, b As JsValue) As Boolean
+            ' same types → strict
+            If (a.IsNumber AndAlso b.IsNumber) OrElse
+               (a.IsString AndAlso b.IsString) OrElse
+               (a.IsBoolean AndAlso b.IsBoolean) OrElse
+               (a.IsObject AndAlso b.IsObject) Then
+                Return JsStrictEq(a, b)
+            End If
+            ' null / undefined family
+            Dim aNullish = a.IsNull OrElse a.IsUndef
+            Dim bNullish = b.IsNull OrElse b.IsUndef
+            If aNullish AndAlso bNullish Then Return True
+            If aNullish OrElse bNullish Then Return False
+            ' number vs string → numeric
+            If a.IsNumber AndAlso b.IsString Then Return JsNum(a) = JsNum(b)
+            If a.IsString AndAlso b.IsNumber Then Return JsNum(a) = JsNum(b)
+            ' boolean → number
+            If a.IsBoolean Then Return JsNum(a) = JsNum(b)
+            If b.IsBoolean Then Return JsNum(a) = JsNum(b)
+            ' object vs primitive → stringify then compare as strings when primitive is a string
+            If b.IsString Then Return JsStr(a) = b.AsString()
+            If a.IsString Then Return a.AsString() = JsStr(b)
+            Return JsNum(a) = JsNum(b)
+        End Function
+
+        Public Function JsLt(a As JsValue, b As JsValue) As Boolean
+            If a.IsString AndAlso b.IsString Then
+                Return String.Compare(a.AsString(), b.AsString(), StringComparison.Ordinal) < 0
+            End If
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x < y
+        End Function
+
+        Public Function JsLe(a As JsValue, b As JsValue) As Boolean
+            If a.IsString AndAlso b.IsString Then
+                Return String.Compare(a.AsString(), b.AsString(), StringComparison.Ordinal) <= 0
+            End If
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x <= y
+        End Function
+
+        Public Function JsGt(a As JsValue, b As JsValue) As Boolean
+            If a.IsString AndAlso b.IsString Then
+                Return String.Compare(a.AsString(), b.AsString(), StringComparison.Ordinal) > 0
+            End If
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x > y
+        End Function
+
+        Public Function JsGe(a As JsValue, b As JsValue) As Boolean
+            If a.IsString AndAlso b.IsString Then
+                Return String.Compare(a.AsString(), b.AsString(), StringComparison.Ordinal) >= 0
+            End If
+            Dim x = JsNum(a), y = JsNum(b)
+            If Double.IsNaN(x) OrElse Double.IsNaN(y) Then Return False
+            Return x >= y
         End Function
 
     End Module
