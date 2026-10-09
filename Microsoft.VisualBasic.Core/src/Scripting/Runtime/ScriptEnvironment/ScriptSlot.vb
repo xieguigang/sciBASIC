@@ -39,7 +39,7 @@
     ' Comment Lines: 33 (17.55%)
     '    - Xml Docs: 42.42%
     ' 
-    '   Blank Lines: 27 (14.36%)
+    '   Blank Lines: 25 (14.97%)
     '     File Size: 6.72 KB
 
 
@@ -51,10 +51,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetValue
+    '         Function: GetJsValue, GetValue
     ' 
     '         Sub: ClearValues, (+2 Overloads) Dispose, SetBoolean, SetDate, SetDouble
-    '              SetInteger, SetLong, SetObject, SetSingle, SetString
+    '              SetInteger, SetJsValue, SetLong, SetObject, SetSingle, SetString
     '              SetValue
     ' 
     ' 
@@ -67,12 +67,26 @@ Namespace Scripting.Runtime
     ''' <summary>
     ''' 变量槽位：封装变量的类型、值和元数据
     ''' </summary>
+    ''' <remarks>
+    ''' 内部的值存储统一由 <see cref="JsValue"/> 标签联合体承载：
+    ''' CLR 基础类型（Double/Int32/Boolean/...）在槽位内以强类型字段保存，
+    ''' 读写均不发生装箱；只有在通过 <see cref="GetValue"/> 跨越宿主边界时
+    ''' 才会执行一次装箱。
+    ''' </remarks>
     Public Class ScriptSlot : Implements IDisposable
 
         Private disposedValue As Boolean
 
+        ' — 值存储（JsValue 联合体） —
+        Private _v As JsValue
+
         ' — 元数据 —
-        Public ReadOnly Property VarType As TypeCode = TypeCode.Empty
+        ''' <summary>当前槽位值的数据类型标签</summary>
+        Public ReadOnly Property VarType As TypeCode
+            Get
+                Return _v.VarType
+            End Get
+        End Property
 
         ''' <summary>
         ''' current symbol value is constant lock binding in the environment?
@@ -88,20 +102,91 @@ Namespace Scripting.Runtime
 
         Public Property IsConst As Boolean = False
 
-        ' --- 强类型值存储 (模拟 Union，避免装箱) ---
-        ' 只有与 VarType 对应的字段才是有效数据
+        ' --- 强类型值读取 (无装箱) ---
+
         Public ReadOnly Property BoolValue As Boolean
+            Get
+                If _v.VarType = TypeCode.Boolean Then
+                    Return _v.AsBoolean()
+                Else
+                    Return False
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property IntValue As Integer
+            Get
+                If _v.VarType = TypeCode.Int32 Then
+                    Return _v.AsInt32()
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property DblValue As Double
+            Get
+                If _v.VarType = TypeCode.Double Then
+                    Return _v.AsDouble()
+                Else
+                    Return 0.0
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property StrValue As String
+            Get
+                If _v.VarType = TypeCode.String Then
+                    Return _v.AsString()
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' .NET clr class object value
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ObjValue As Object
+            Get
+                If _v.VarType = TypeCode.Object Then
+                    Return _v._obj
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property SngValue As Single
+            Get
+                If _v.VarType = TypeCode.Single Then
+                    Return _v.AsSingle()
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property LngValue As Long
+            Get
+                If _v.VarType = TypeCode.Int64 Then
+                    Return _v.AsInt64()
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property DateValue As Date
+            Get
+                If _v.VarType = TypeCode.DateTime Then
+                    Return CDate(_v._obj)
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
 
         Sub New()
         End Sub
@@ -117,110 +202,68 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="value"></param>
         Public Sub SetBoolean(value As Boolean)
-            Call ClearValues()
-            _VarType = TypeCode.Boolean
-            _BoolValue = value
+            _v = JsValue.Boolean_(value)
         End Sub
 
         Public Sub SetInteger(value As Integer)
-            Call ClearValues()
-            _VarType = TypeCode.Int32
-            _IntValue = value
+            _v = JsValue.Int32(value)
         End Sub
 
         Public Sub SetDouble(value As Double)
-            Call ClearValues()
-            _VarType = TypeCode.Double
-            _DblValue = value
+            _v = JsValue.Number(value)
         End Sub
 
         Public Sub SetString(value As String)
-            Call ClearValues()
-            _VarType = TypeCode.String
-            _StrValue = value
+            _v = JsValue.Str(value)
         End Sub
 
         Public Sub SetObject(value As Object)
-            Call ClearValues()
-            _VarType = TypeCode.Object
-            _ObjValue = value
+            _v = JsValue.OfObject(value)
         End Sub
 
         Public Sub SetLong(value As Long)
-            Call ClearValues()
-            _VarType = TypeCode.Int64
-            _LngValue = value
+            _v = JsValue.Int64(value)
         End Sub
 
         Public Sub SetSingle(value As Single)
-            Call ClearValues()
-            _VarType = TypeCode.Single
-            _SngValue = value
+            _v = JsValue.Single_(value)
         End Sub
 
         Public Sub SetDate(value As Date)
-            Call ClearValues()
-            _VarType = TypeCode.DateTime
-            _DateValue = value
+            _v = JsValue.Date_(value)
         End Sub
 
-        ' --- 通用 Set 方法 (可能会发生一次拆箱，用于外部 Object 传入时) ---
+        ' ========================================================
+        ' JsValue 直接读写接口 (解释器热路径专用，零装箱)
+        ' ========================================================
+
+        ''' <summary>以零装箱的方式读取槽位当前值</summary>
+        Public Function GetJsValue() As JsValue
+            Return _v
+        End Function
+
+        ''' <summary>以零装箱的方式写入槽位值</summary>
+        Public Sub SetJsValue(v As JsValue)
+            _v = v
+        End Sub
+
+        ' --- 通用 Set 方法 (用于外部 Object 传入时，仅在边界执行一次转换) ---
         Public Sub SetValue(value As Object)
             If value Is Nothing Then
-                ClearValues()
+                Call ClearValues()
             Else
-                Dim t = value.GetType()
-
-                If t Is GetType(Integer) Then
-                    SetInteger(DirectCast(value, Integer))
-                ElseIf t Is GetType(Double) Then
-                    SetDouble(DirectCast(value, Double))
-                ElseIf t Is GetType(Boolean) Then
-                    SetBoolean(DirectCast(value, Boolean))
-                ElseIf t Is GetType(String) Then
-                    SetString(DirectCast(value, String))
-                ElseIf t Is GetType(Single) Then
-                    SetSingle(DirectCast(value, Single))
-                ElseIf t Is GetType(Long) Then
-                    SetLong(DirectCast(value, Long))
-                ElseIf t Is GetType(Date) Then
-                    SetDate(DirectCast(value, Date))
-                Else
-                    ' 其他类型统一当 Object 处理
-                    SetObject(value)
-                End If
+                _v = JsValue.OfObject(value)
             End If
         End Sub
 
-        ' --- 通用 Get 方法 (返回 Object，读取基础类型时会发生装箱，应尽量避免在引擎内部核心循环使用) ---
+        ' --- 通用 Get 方法 (返回 Object，读取基础类型时会发生一次装箱，应尽量避免在引擎内部核心循环使用) ---
         Public Function GetValue() As Object
-            Select Case VarType
-                Case TypeCode.Empty, TypeCode.DBNull : Return Nothing
-                Case TypeCode.Boolean : Return BoolValue
-                Case TypeCode.Int32 : Return IntValue
-                Case TypeCode.Double : Return DblValue
-                Case TypeCode.String : Return StrValue
-                Case TypeCode.Object : Return ObjValue
-                Case TypeCode.Single : Return SngValue
-                Case TypeCode.Int64 : Return LngValue
-                Case TypeCode.DateTime : Return DateValue
-
-                Case Else
-                    Return Nothing
-            End Select
+            Return _v.AsObject()
         End Function
 
-        ' 辅助方法：切换类型时，清空旧值（特别是引用类型，防止内存泄漏）
+        ' 清空槽位值（切换类型时释放旧引用，防止内存泄漏）
         Protected Sub ClearValues()
-            _BoolValue = False
-            _IntValue = 0
-            _DblValue = 0.0
-            _SngValue = 0
-            _LngValue = 0
-            _DateValue = Nothing
-            _StrValue = Nothing
-            _ObjValue = Nothing ' 释放旧引用
-            _VarType = TypeCode.Empty
+            _v = JsValue.Undef
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
