@@ -10,6 +10,9 @@
     <Project Path="../application%json/JSON-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../application%xml/xml-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../text%markdown/markdown.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
