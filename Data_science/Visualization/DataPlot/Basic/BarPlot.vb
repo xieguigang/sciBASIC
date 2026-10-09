@@ -1,28 +1,29 @@
 #Region "Microsoft.VisualBasic::1b9f0c7d2a4e4b6f9c1d3e5a7b8c0d2e, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class BarPlot
-    ' 
-    '     Properties: Categories, ColorMap, Horizontal, MultiValues, SeriesNames
-    '                 ShowColorLegend, ShowValueLabels, StackMode, UseColorScale
-    '                 Values, ValueLabelFormat, Diverging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    '     Enum StackMode / Orientation
-    ' 
+' Class BarPlot
+' 
+'     Properties: Categories, ColorMap, Horizontal, MultiValues, SeriesNames
+'                 ShowColorLegend, ShowValueLabels, StackMode, UseColorScale
+'                 Values, ValueLabelFormat, Diverging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+'     Enum StackMode / Orientation
+' 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -85,7 +86,7 @@ Public Class BarPlot : Inherits PlotEngine
     ''' <summary>自定义柱子：给了值时，完全按调用方指定的颜色与顺序绘制</summary>
     Public Property Serials As BarSerial() = Nothing
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 
@@ -94,7 +95,11 @@ Public Class BarPlot : Inherits PlotEngine
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Public Overloads Shared Function Plot(Serials As IReadOnlyCollection(Of BarSerial), size As String) As GraphicsData
+        Throw New NotImplementedException
+    End Function
+
+    Public Overloads Sub Plot()
         If Serials IsNot Nothing AndAlso Serials.Length > 0 Then
             DrawCustomSerials()
             Return

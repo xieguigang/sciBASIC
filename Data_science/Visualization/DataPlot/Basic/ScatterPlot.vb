@@ -1,26 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::fd25df1f7685cc2f67ae020ddbe85a5f, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class ScatterPlot
-    ' 
-    '     Properties: BubbleMaxSize, BubbleMinSize, AbLines, ShowErrorBars
-    '                 HullAlpha, Jitter, JitterAmount, ShowConvexHull
-    '                 Smooth, SmoothSamplesPerSegment
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    '     Sub: Plot
-    ' 
+' Class ScatterPlot
+' 
+'     Properties: BubbleMaxSize, BubbleMinSize, AbLines, ShowErrorBars
+'                 HullAlpha, Jitter, JitterAmount, ShowConvexHull
+'                 Smooth, SmoothSamplesPerSegment
+' 
+'     Constructor: (+3 Overloads) Sub New
+'     Sub: Plot
+' 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
 ' ============================================================================
@@ -64,7 +66,7 @@ Public Class ScatterPlot : Inherits SeriesPlotEngine
     ''' <summary>需要叠加的参考直线，元素为 (斜率 b, 截距 a)，即 y = a + b*x</summary>
     Public Property AbLines As New List(Of (b As Double, a As Double))()
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 
@@ -77,6 +79,15 @@ Public Class ScatterPlot : Inherits SeriesPlotEngine
     Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
         MyBase.New(g, theme)
     End Sub
+
+    Public Overloads Shared Function Plot(seriesList As IList(Of Series), size As String) As GraphicsData
+        Dim sz As Size = size.SizeParser
+
+        Using scatter As New ScatterPlot(sz.Width, sz.Height)
+            Call scatter.Plot(seriesList)
+            Throw New NotImplementedException
+        End Using
+    End Function
 
     Public Overrides Sub Plot(seriesList As IList(Of Series))
         If seriesList Is Nothing OrElse seriesList.Count = 0 Then
