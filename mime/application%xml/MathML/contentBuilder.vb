@@ -162,64 +162,115 @@ Namespace MathML
         ReadOnly symbols As Index(Of String) = {"apply", "ci", "cn"}
         ''' <summary>
         ''' a list of standard math function
+        ''' （sqrt/root 为一元函数：root 的 &lt;degree&gt; 子元素在解析时被忽略，按平方根处理）
         ''' </summary>
-        ReadOnly stdMathFunc As Index(Of String) = {"abs", "cos", "sin", "tan", "max", "min", "exp", "log", "ln"}
+        ReadOnly stdMathFunc As Index(Of String) =
+            {"abs", "cos", "sin", "tan", "cot", "sec", "csc",
+             "max", "min", "exp", "log", "ln", "sqrt", "root",
+             "arcsin", "arccos", "arctan", "sinh", "cosh", "tanh"}
 
+        ''' <summary>
+        ''' 可以折叠为左结合二元表达式树的运算符名称集合。
+        ''' 包括四则运算、幂运算以及关系运算符（eq/leq/geq/neq），
+        ''' 例如 apply(plus, a, b, c) => ((a + b) + c)。
+        ''' </summary>
+        ReadOnly chainableOperators As Index(Of String) =
+            {"plus", "minus", "times", "divide", "power", "eq", "leq", "geq", "neq"}
+
+        ''' <summary>判断元素名是否为已知的二元/n元运算符或关系符。</summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function isChainable(name As String) As Boolean
+            Return name Like chainableOperators
+        End Function
+
+        ''' <summary>
+        ''' 将 n 元同类运算符操作数序列折叠为左结合的二元表达式树。
+        ''' </summary>
+        Private Function foldChain([operator] As String, operands As MathExpression()) As MathExpression
+            Dim exp As MathExpression = operands(Scan0)
+
+            For i As Integer = 1 To operands.Length - 1
+                exp = New BinaryExpression With {
+                    .[operator] = [operator],
+                    .applyleft = exp,
+                    .applyright = operands(i)
+                }
+            Next
+
+            Return exp
+        End Function
+
+        ''' <summary>
+        ''' 解析 &lt;apply&gt; 表达式节点为表达式树。
+        ''' 
+        ''' 支持：
+        '''   - 二元与 n 元运算链（自动折叠为左结合二元树，修复旧实现丢弃多余操作数的缺陷）；
+        '''   - 一元负号 minus（自动补 0 - x）；
+        '''   - 关系运算符 eq/leq/geq/neq；
+        '''   - 标准数学函数（见 <see cref="stdMathFunc"/>，root 忽略 degree 子元素）；
+        '''   - 隐式乘法（apply 首元素为操作数时默认 times）。
+        ''' </summary>
         <Extension>
         Private Function parseInternal(apply As XmlElement) As MathExpression
             Dim [operator] As XmlElement
 
             ' 如果第一个元素是变量，常数或者apply表达式
-            ' 则默认操作符为乘法操作？
+            ' 则判断第二个元素是否为运算符：是则按 [操作数, 运算符, 操作数...] 处理，
+            ' 否则默认为隐式乘法操作
             If apply.elements(Scan0).name Like symbols Then
-                If apply.elements.Length < 3 Then
+                If apply.elements.Length >= 3 AndAlso isChainable(apply.elements(1).name) Then
+                    [operator] = apply.elements(1)
+                    apply.elements = {[operator]} _
+                        .Join(apply.elements.Where(Function(e, i) i <> 1)) _
+                        .ToArray
+                Else
                     [operator] = New XmlElement With {.name = "times"}
                     apply.elements = {[operator]}.Join(apply.elements).ToArray
-                Else
-                    [operator] = apply.elements(1)
-                    apply.elements = {
-                        [operator],
-                        apply.elements(0),
-                        apply.elements(2)
-                    }
                 End If
             Else
                 [operator] = apply.elements(Scan0)
             End If
 
+            ' 标准数学函数：apply(func, args...)
             If [operator].name Like stdMathFunc Then
+                Dim args As XmlElement() = apply.elements _
+                    .Skip(1) _
+                    .Where(Function(e) [operator].name <> "root" OrElse e.name <> "degree") _
+                    .ToArray
+
                 Return New MathFunctionExpression With {
                     .name = [operator].name,
-                    .parameters = apply.elements _
-                        .Skip(1) _
+                    .parameters = args _
                         .Select(AddressOf ExpressionComponent) _
                         .ToArray
                 }
-            Else
-                Dim left, right As MathExpression
+            End If
 
-                If apply.elements.Length = 2 Then
-                    If apply.elements(Scan0).name = "minus" Then
-                        apply.elements = {apply.elements(Scan0)} _
-                            .Join({New XmlElement With {.name = "cn", .text = "0"}}) _
-                            .Join(apply.elements.Skip(1)) _
-                            .ToArray
-                    Else
-                        Throw New NotImplementedException(apply.elements(Scan0).name)
+            ' 二元/n 元运算符与关系运算符：apply(op, a, b, ...)
+            If isChainable([operator].name) Then
+                Dim operands As MathExpression() = apply.elements _
+                    .Skip(1) _
+                    .Select(AddressOf ExpressionComponent) _
+                    .ToArray
+
+                If operands.Length = 1 Then
+                    ' 一元 minus：0 - x（取负）
+                    If [operator].name = "minus" Then
+                        Return New BinaryExpression With {
+                            .[operator] = "minus",
+                            .applyleft = New SymbolExpression With {.text = "0", .isNumericLiteral = True},
+                            .applyright = operands(Scan0)
+                        }
                     End If
+
+                    Throw New InvalidExpressionException(
+                        $"apply/{[operator].name} requires at least 2 operands!")
                 End If
 
-                left = apply.elements(1).ExpressionComponent
-                right = apply.elements(2).ExpressionComponent
-
-                Dim exp As New BinaryExpression With {
-                    .[operator] = [operator].name,
-                    .applyleft = left,
-                    .applyright = right
-                }
-
-                Return exp
+                Return foldChain([operator].name, operands)
             End If
+
+            Throw New NotImplementedException($"Unsupported MathML apply operator: {[operator].name}")
         End Function
 
         <Extension>
