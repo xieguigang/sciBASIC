@@ -288,9 +288,10 @@ Public Class WordDocument : Implements IDocumentWriter
     Public Function DocTitle(text As String) As WordDocument
         Dim s As WordStyle = _titleStyle
         _body.Append("<w:p><w:pPr>")
+        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：shd -> spacing -> jc，否则 Word 拒绝打开
+        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
         _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
         _body.Append($"<w:jc w:val=""{s.Alignment}""/>")
-        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
         _body.Append("</w:pPr><w:r><w:rPr>")
         _body.Append($"<w:rFonts w:ascii=""{s.FontName}"" w:eastAsia=""{s.FontNameEastAsia}"" w:hAnsi=""{s.FontName}""/>")
         If s.Bold Then _body.Append("<w:b/>")
@@ -342,9 +343,10 @@ Public Class WordDocument : Implements IDocumentWriter
 
         _body.Append("<w:p><w:pPr>")
         _body.Append($"<w:pStyle w:val=""Heading{level}""/>")
+        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：shd -> spacing -> jc，否则 Word 拒绝打开
+        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
         _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
         If s.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{s.Alignment}""/>")
-        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
         _body.Append("</w:pPr><w:r><w:rPr>")
         _body.Append($"<w:rFonts w:ascii=""{s.FontName}"" w:eastAsia=""{s.FontNameEastAsia}"" w:hAnsi=""{s.FontName}""/>")
         If s.Bold Then _body.Append("<w:b/>")
@@ -365,10 +367,11 @@ Public Class WordDocument : Implements IDocumentWriter
     ''' <summary>写入正文段落（指定样式）。</summary>
     Public Function Paragraph(text As String, style As WordStyle) As WordDocument
         _body.Append("<w:p><w:pPr>")
-        _body.Append($"<w:spacing w:before=""{PtToTwip(style.SpaceBefore)}"" w:after=""{PtToTwip(style.SpaceAfter)}"" w:line=""{CInt(style.LineSpacing * 240)}"" w:lineRule=""auto""/>")
-        If style.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{style.Alignment}""/>")
-        If style.FirstLineIndent > 0 Then _body.Append($"<w:ind w:firstLine=""{PtToTwip(style.FirstLineIndent)}""/>")
+        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：shd -> spacing -> ind -> jc，否则 Word 拒绝打开
         If style.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{style.BackColor}""/>")
+        _body.Append($"<w:spacing w:before=""{PtToTwip(style.SpaceBefore)}"" w:after=""{PtToTwip(style.SpaceAfter)}"" w:line=""{CInt(style.LineSpacing * 240)}"" w:lineRule=""auto""/>")
+        If style.FirstLineIndent > 0 Then _body.Append($"<w:ind w:firstLine=""{PtToTwip(style.FirstLineIndent)}""/>")
+        If style.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{style.Alignment}""/>")
         _body.Append("</w:pPr>")
 
         ' 支持多行文本
@@ -389,14 +392,15 @@ Public Class WordDocument : Implements IDocumentWriter
     Public Function CodeBlock(code As String, Optional language As String = "") As WordDocument
         Dim s As WordStyle = _codeStyle
         _body.Append("<w:p><w:pPr>")
-        _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""240"" w:lineRule=""auto""/>")
-        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
+        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：pBdr -> shd -> spacing，否则 Word 拒绝打开
         _body.Append("<w:pBdr>")
         _body.Append("<w:top w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("<w:bottom w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("<w:left w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("<w:right w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("</w:pBdr>")
+        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
+        _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""240"" w:lineRule=""auto""/>")
         _body.Append("</w:pPr>")
 
         ' 代码内容（每行一个 run，用 <w:br/> 换行）
@@ -421,12 +425,13 @@ Public Class WordDocument : Implements IDocumentWriter
     Public Function Blockquote(text As String) As WordDocument
         Dim s As WordStyle = _blockquoteStyle
         _body.Append("<w:p><w:pPr>")
-        _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
-        _body.Append("<w:ind w:left=""720""/>")  ' 左缩进 0.5 英寸
-        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
+        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：pBdr -> shd -> spacing -> ind，否则 Word 拒绝打开
         _body.Append("<w:pBdr>")
         _body.Append("<w:left w:val=""single"" w:sz=""24"" w:space=""8"" w:color=""4472C4""/>")
         _body.Append("</w:pBdr>")
+        If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
+        _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
+        _body.Append("<w:ind w:left=""720""/>")  ' 左缩进 0.5 英寸
         _body.Append("</w:pPr><w:r><w:rPr>")
         _body.Append($"<w:rFonts w:ascii=""{s.FontName}"" w:eastAsia=""{s.FontNameEastAsia}"" w:hAnsi=""{s.FontName}""/>")
         If s.Italic Then _body.Append("<w:i/>")
@@ -701,17 +706,17 @@ Public Class WordDocument : Implements IDocumentWriter
         Dim txtStyle As WordStyle = If(_tableTextStyle, _paragraphStyle)
 
         _body.Append("<w:tbl><w:tblPr>")
+        ' 注意：tblPr 子元素必须遵循 CT_TblPrBase 序列：tblW -> jc -> tblBorders -> tblLayout，否则 Word 拒绝打开
         ' 宽度策略
         If mode = "window" Then
             _body.Append("<w:tblW w:w=""5000"" w:type=""pct""/>")   ' 100% 页面宽度
         Else
             _body.Append("<w:tblW w:type=""auto""/>")              ' 按内容自适应
         End If
-        _body.Append("<w:tblLayout w:type=""autofit""/>")
         If center Then _body.Append("<w:jc w:val=""center""/>")    ' 表格整体水平居中
         _body.Append("<w:tblBorders>")
         If threeLine Then
-            ' 三线表：仅保留顶线、底线（粗，1.5pt）与表头下分隔线（由表头行 trBorders 提供，0.75pt），
+            ' 三线表：仅保留顶线、底线（粗，1.5pt）与表头下分隔线（由表头单元格 tcBorders 提供，0.75pt），
             ' 去除全部竖线及数据行之间的横线
             _body.Append($"<w:top w:val=""single"" w:sz=""12"" w:space=""0"" w:color=""{ts.BorderColor}""/>")
             _body.Append("<w:left w:val=""none"" w:sz=""0"" w:space=""0"" w:color=""auto""/>")
@@ -728,6 +733,7 @@ Public Class WordDocument : Implements IDocumentWriter
             _body.Append($"<w:insideV w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
         End If
         _body.Append("</w:tblBorders>")
+        _body.Append("<w:tblLayout w:type=""autofit""/>")
         _body.Append("</w:tblPr>")
 
         ' 列定义：auto 模式下由 Word 自动计算宽度
@@ -739,17 +745,18 @@ Public Class WordDocument : Implements IDocumentWriter
 
         ' 表头行
         If headers IsNot Nothing AndAlso headers.Length > 0 Then
-            _body.Append("<w:tr><w:trPr>")
-            If threeLine Then
-                ' 三线表：表头下方加一条分隔线（0.75pt）
-                _body.Append("<w:trBorders>")
-                _body.Append($"<w:bottom w:val=""single"" w:sz=""6"" w:space=""0"" w:color=""{ts.BorderColor}""/>")
-                _body.Append("</w:trBorders>")
-            End If
-            _body.Append("<w:tblHeader/></w:trPr>")
+            ' 注意：CT_TrPr 中不存在 trBorders 元素（非法元素会导致 Word 拒绝打开文档），
+            ' 三线表的表头分隔线必须通过每个表头单元格 tcPr 内的 tcBorders（bottom）实现
+            _body.Append("<w:tr><w:trPr><w:tblHeader/></w:trPr>")
             For c As Integer = 0 To nCols - 1
                 _body.Append("<w:tc><w:tcPr>")
                 _body.Append("<w:tcW w:w=""0"" w:type=""auto""/>")
+                If threeLine Then
+                    ' 三线表：表头下方加一条分隔线（0.75pt），tcBorders 须位于 tcW 之后、shd/vAlign 之前
+                    _body.Append("<w:tcBorders>")
+                    _body.Append($"<w:bottom w:val=""single"" w:sz=""6"" w:space=""0"" w:color=""{ts.BorderColor}""/>")
+                    _body.Append("</w:tcBorders>")
+                End If
                 If Not threeLine Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{ts.HeaderBackColor}""/>")
                 _body.Append("<w:vAlign w:val=""center""/></w:tcPr>")
                 _body.Append("<w:p><w:pPr>")
