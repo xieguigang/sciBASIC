@@ -702,3 +702,4 @@ vs_solutions/package-install-cache/part1/output-info.ini
 vs_solutions/package-install-cache/part2/output-info.ini
 Data/DataFrame/_smoke/dataframework-netcore5.vbproj
 gr/8
+/mime/applicationvnd.openxmlformats-officedocument.wordprocessingml.document/test/ooxml-validator
