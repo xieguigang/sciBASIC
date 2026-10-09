@@ -108,9 +108,16 @@ Module Program
         Console.WriteLine()
 
         ' ================================================================
-        ' Demo 3: 文本提取
+        ' Demo 3: 论文主题格式（江南大学 2025 规范）
         ' ================================================================
-        Console.WriteLine("[4] 从 .docx 提取文本...")
+        Console.WriteLine("[4] 生成学位论文主题格式文档（江南大学 2025 规范）...")
+        DemoThesisFormatting(outDir)
+        Console.WriteLine()
+
+        ' ================================================================
+        ' Demo 4: 文本提取
+        ' ================================================================
+        Console.WriteLine("[5] 从 .docx 提取文本...")
         DemoTextExtraction(outDir)
         Console.WriteLine()
 
@@ -427,7 +434,129 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
     End Sub
 
     ' ================================================================
-    ' Demo 3: 从 .docx 提取文本
+    ' Demo 3: 论文主题格式（ThesisFormatting + WriteBlocks）
+    ' ================================================================
+    Private Sub DemoThesisFormatting(outDir As String)
+        ' 1. 构造论文样章 Block 列表（章/节/小节标题、正文、表格、代码、引用、列表、图）
+        Dim blocks As New List(Of JSONSchema.Block) From {
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 1,
+                .content = "第一章 绪论"
+            },
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 2,
+                .content = "1.1 研究背景与意义"
+            },
+            New JSONSchema.Block With {
+                .type = "paragraph",
+                .content = "本段落在 ThesisFormatting 主题下渲染，正文为小四号宋体，首行缩进两个中文字符，1.25 倍行距，两端对齐；英文与数字采用 Times New Roman 字体，例如 DNA sequencing coverage 250 bp、Q30 ratio 93.2%。"
+            },
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 3,
+                .content = "1.1.1 国内外研究现状"
+            },
+            New JSONSchema.Block With {
+                .type = "paragraph",
+                .content = "近年来，高通量测序技术的快速发展为基因组学研究提供了海量数据支撑，相关研究成果已在 Nature、Science 等国际期刊上大量发表。"
+            },
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 2,
+                .content = "1.2 主要研究内容"
+            },
+            New JSONSchema.Block With {
+                .type = "paragraph",
+                .content = "本文的主要研究内容如下表所示："
+            },
+            New JSONSchema.Block With {
+                .type = "table",
+                .headers = {"研究内容", "技术方法", "预期成果"},
+                .alignments = {"left", "center", "left"},
+                .rows = {New String() {"质量控制与比对", "FastQC + STAR", "高质量比对 BAM 文件"},
+                         New String() {"差异表达分析", "DESeq2", "差异基因列表"},
+                         New String() {"功能富集分析", "GO + KEGG", "显著富集通路"}}
+            },
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 1,
+                .content = "第二章 材料与方法"
+            },
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 2,
+                .content = "2.1 数据来源"
+            },
+            New JSONSchema.Block With {
+                .type = "paragraph",
+                .content = "实验数据来源于本课题组 2024 年度采集的 6 个生物学重复样本，测序平台为 Illumina NovaSeq 6000。"
+            },
+            New JSONSchema.Block With {
+                .type = "heading",
+                .level = 2,
+                .content = "2.2 分析流程"
+            },
+            New JSONSchema.Block With {
+                .type = "paragraph",
+                .content = "差异表达分析的核心 R 代码如下："
+            },
+            New JSONSchema.Block With {
+                .type = "code",
+                .language = "r",
+                .content = "library(DESeq2)" & vbCrLf &
+                           "dds <- DESeqDataSetFromMatrix(countData = count_matrix, colData = sample_info," & vbCrLf &
+                           "                              design = ~ condition)" & vbCrLf &
+                           "dds <- DESeq(dds)" & vbCrLf &
+                           "res  <- results(dds, alpha = 0.05)"
+            },
+            New JSONSchema.Block With {
+                .type = "list",
+                .ordered = True,
+                .items = {"原始数据质量控制：FastQC 质量评估与 Trimmomatic 接头去除",
+                          "序列比对：STAR aligner 比对至参考基因组",
+                          "表达定量：HTSeq-count 统计基因层面 read 计数",
+                          "差异分析：DESeq2 以 |log2FC| > 1 且 padj < 0.05 为筛选标准"}
+            },
+            New JSONSchema.Block With {
+                .type = "blockquote",
+                .content = "注：所有分析均在 R 4.3.2 环境下完成，随机数种子统一设置为 42 以保证结果可重复。"
+            },
+            New JSONSchema.Block With {
+                .type = "image",
+                .url = Path.Combine(outDir, "test_chart.png"),
+                .alt = "图 2.1 实验技术路线图"
+            },
+            New JSONSchema.Block With {
+                .type = "paragraph",
+                .content = "以上流程构成了本文完整的数据分析框架，后续章节将依次展开详细论述。"
+            }
+        }
+
+        ' 2. 创建 WordDocument 并应用论文主题（江南大学 2025 规范默认样式）
+        Dim doc As New WordDocument(
+            author:="研究生学位论文",
+            title:="基于转录组测序的差异表达基因分析研究",
+            tags:={"学位论文", "江南大学", "格式规范"}
+        )
+
+        Dim theme As New ThesisFormatting()
+        theme.ApplyTo(doc)
+
+        ' 论文题目（黑体小二号居中，封面规范）
+        doc.DocTitle("基于转录组测序的差异表达基因分析研究")
+
+        ' 3. 写入 Block 列表并保存
+        doc.WriteBlocks(blocks)
+
+        Dim outPath As String = Path.Combine(outDir, "thesis_demo.docx")
+        doc.Save(outPath)
+        Console.WriteLine($"  已保存: {outPath}")
+    End Sub
+
+    ' ================================================================
+    ' Demo 4: 从 .docx 提取文本
     ' ================================================================
     Private Sub DemoTextExtraction(outDir As String)
         Dim reader As New DocxTextReader()

@@ -138,6 +138,9 @@ Public Class WordDocument : Implements IDocumentWriter
     Private _codeStyle As WordStyle
     Private _blockquoteStyle As WordStyle
     Private _titleStyle As WordStyle
+    Private _tableTextStyle As WordStyle    ' 表格文字样式（Nothing 时回退 _paragraphStyle）
+    Private _captionStyle As WordStyle      ' 图注/题注样式（Nothing 时使用内置默认样式）
+    Private _threeLineTable As Boolean = False ' True 时 Table 使用三线表（国际通行学术表格）
 
     ' === 内部状态 ===
     Private _body As New StringBuilder()
@@ -215,6 +218,24 @@ Public Class WordDocument : Implements IDocumentWriter
     ''' <summary>设置表格样式。</summary>
     Public Function TableStyle(style As TableStyle) As WordDocument
         _tableStyle = style
+        Return Me
+    End Function
+
+    ''' <summary>设置表格文字样式（表头字体/字号与单元格内容）。未设置时回退为正文样式。</summary>
+    Public Function TableTextStyle(style As WordStyle) As WordDocument
+        _tableTextStyle = style
+        Return Me
+    End Function
+
+    ''' <summary>设置图注/题注样式（Image 的 caption 段落）。未设置时使用内置默认样式。</summary>
+    Public Function CaptionStyle(style As WordStyle) As WordDocument
+        _captionStyle = style
+        Return Me
+    End Function
+
+    ''' <summary>设置 Table 方法是否采用三线表（仅顶线、表头下分隔线、底线，无竖线）。</summary>
+    Public Function ThreeLineTable(use As Boolean) As WordDocument
+        _threeLineTable = use
         Return Me
     End Function
 
@@ -537,10 +558,16 @@ Public Class WordDocument : Implements IDocumentWriter
         End If
         If nCols = 0 Then Return Me
 
+        ' 三线表模式：转调自适应表格实现（学术规范：仅顶线、表头下分隔线、底线，表格整体居中）
+        If _threeLineTable Then
+            Return WriteAutoFitTable("window", headers, rows, alignments, center:=True, threeLine:=True)
+        End If
+
         ' 计算列宽 (平均分配页面内容宽度)
         Dim contentWidth As Integer = _pageWidth - _marginLeft - _marginRight
         Dim colWidth As Integer = contentWidth \ nCols
         Dim ts As TableStyle = _tableStyle
+        Dim txtStyle As WordStyle = If(_tableTextStyle, _paragraphStyle)
 
         _body.Append("<w:tbl><w:tblPr>")
         _body.Append($"<w:tblW w:w=""{contentWidth}"" w:type=""dxa""/>")
@@ -564,9 +591,9 @@ Public Class WordDocument : Implements IDocumentWriter
         ' 表头行
         If headers IsNot Nothing AndAlso headers.Length > 0 Then
             Dim headerStyle As New WordStyle With {
-                .FontName = _paragraphStyle.FontName,
-                .FontNameEastAsia = _paragraphStyle.FontNameEastAsia,
-                .Size = _paragraphStyle.Size,
+                .FontName = txtStyle.FontName,
+                .FontNameEastAsia = txtStyle.FontNameEastAsia,
+                .Size = txtStyle.Size,
                 .Bold = ts.HeaderBold,
                 .ForeColor = ts.HeaderForeColor
             }
@@ -602,7 +629,7 @@ Public Class WordDocument : Implements IDocumentWriter
                 Dim align As String = GetAlign(alignments, c)
                 If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
                 _body.Append("</w:pPr>")
-                Call AppendInlineRuns(If(c < If(row?.Length, 0), row(c), ""), _paragraphStyle, noLinks:=True)
+                Call AppendInlineRuns(If(c < If(row?.Length, 0), row(c), ""), txtStyle, noLinks:=True)
                 _body.Append("</w:p></w:tc>")
             Next
             _body.Append("</w:tr>")
@@ -671,6 +698,7 @@ Public Class WordDocument : Implements IDocumentWriter
         If nCols = 0 Then Return Me
 
         Dim ts As TableStyle = _tableStyle
+        Dim txtStyle As WordStyle = If(_tableTextStyle, _paragraphStyle)
 
         _body.Append("<w:tbl><w:tblPr>")
         ' 宽度策略
@@ -728,12 +756,12 @@ Public Class WordDocument : Implements IDocumentWriter
                 Dim align As String = GetAlign(alignments, c)
                 If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
                 _body.Append("</w:pPr><w:r><w:rPr>")
-                _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
+                _body.Append($"<w:rFonts w:ascii=""{txtStyle.FontName}"" w:eastAsia=""{txtStyle.FontNameEastAsia}"" w:hAnsi=""{txtStyle.FontName}""/>")
                 If ts.HeaderBold Then _body.Append("<w:b/>")
                 ' 三线表无表头底色，故表头文字改用深色，避免沿用白色前景导致在白底上不可见
-                Dim headerFore As String = If(threeLine, "000000", ts.HeaderForeColor)
+                Dim headerFore As String = If(threeLine, txtStyle.ForeColor, ts.HeaderForeColor)
                 _body.Append($"<w:color w:val=""{headerFore}""/>")
-                _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/></w:rPr>")
+                _body.Append($"<w:sz w:val=""{CInt(txtStyle.Size * 2)}""/></w:rPr>")
                 _body.Append($"<w:t xml:space=""preserve"">{XEsc(If(c < headers.Length, headers(c), ""))}</w:t></w:r></w:p></w:tc>")
             Next
             _body.Append("</w:tr>")
@@ -753,7 +781,7 @@ Public Class WordDocument : Implements IDocumentWriter
                 Dim align As String = GetAlign(alignments, c)
                 If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
                 _body.Append("</w:pPr>")
-                Call AppendInlineRuns(If(c < If(row?.Length, 0), row(c), ""), _paragraphStyle, noLinks:=True)
+                Call AppendInlineRuns(If(c < If(row?.Length, 0), row(c), ""), txtStyle, noLinks:=True)
                 _body.Append("</w:p></w:tc>")
             Next
             _body.Append("</w:tr>")
@@ -844,13 +872,28 @@ Public Class WordDocument : Implements IDocumentWriter
         _body.Append("<a:prstGeom prst=""rect""><a:avLst/></a:prstGeom></pic:spPr></pic:pic>")
         _body.Append("</a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>")
 
-        ' 图注
+        ' 图注（题注样式已设置时按样式渲染，否则使用内置默认样式）
         If caption <> "" Then
-            _body.Append("<w:p><w:pPr><w:jc w:val=""center""/>")
-            _body.Append("<w:spacing w:after=""120""/></w:pPr>")
-            _body.Append("<w:r><w:rPr><w:rFonts w:eastAsia=""Microsoft YaHei""/>")
-            _body.Append("<w:sz w:val=""18""/><w:i/><w:color w:val=""808080""/></w:rPr>")
-            _body.Append($"<w:t xml:space=""preserve"">{XEsc(caption)}</w:t></w:r></w:p>")
+            Dim cs As WordStyle = _captionStyle
+            If cs IsNot Nothing Then
+                _body.Append("<w:p><w:pPr>")
+                _body.Append($"<w:spacing w:before=""{PtToTwip(cs.SpaceBefore)}"" w:after=""{PtToTwip(cs.SpaceAfter)}"" w:line=""{CInt(cs.LineSpacing * 240)}"" w:lineRule=""auto""/>")
+                If cs.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{cs.Alignment}""/>")
+                _body.Append("</w:pPr><w:r><w:rPr>")
+                _body.Append($"<w:rFonts w:ascii=""{cs.FontName}"" w:eastAsia=""{cs.FontNameEastAsia}"" w:hAnsi=""{cs.FontName}""/>")
+                If cs.Bold Then _body.Append("<w:b/>")
+                If cs.Italic Then _body.Append("<w:i/>")
+                _body.Append($"<w:color w:val=""{cs.ForeColor}""/>")
+                _body.Append($"<w:sz w:val=""{CInt(cs.Size * 2)}""/><w:szCs w:val=""{CInt(cs.Size * 2)}""/>")
+                _body.Append("</w:rPr>")
+                _body.Append($"<w:t xml:space=""preserve"">{XEsc(caption)}</w:t></w:r></w:p>")
+            Else
+                _body.Append("<w:p><w:pPr><w:jc w:val=""center""/>")
+                _body.Append("<w:spacing w:after=""120""/></w:pPr>")
+                _body.Append("<w:r><w:rPr><w:rFonts w:eastAsia=""Microsoft YaHei""/>")
+                _body.Append("<w:sz w:val=""18""/><w:i/><w:color w:val=""808080""/></w:rPr>")
+                _body.Append($"<w:t xml:space=""preserve"">{XEsc(caption)}</w:t></w:r></w:p>")
+            End If
         End If
 
         Return Me
