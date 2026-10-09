@@ -14,7 +14,7 @@ Namespace Runtime
         ''' <summary>JS function value in both worlds (interpreter closures and generated lambdas).</summary>
         Public ReadOnly Undef As Object = New UndefinedMarker()
 
-        Public Property Io As ScriptIO = New ScriptIO()
+        Public Property Io As ScriptIO = New LogTextIO()
 
         Public ReadOnly ConsoleBuiltin As New NativeObject("console")
         Public ReadOnly MathBuiltin As New NativeObject("Math")
@@ -692,7 +692,9 @@ Namespace Runtime
                 If text.Length < 2 OrElse Not text.EndsWith(""""c) Then
                     Throw JsRuntimeException.SyntaxError("Unexpected end of JSON input")
                 End If
-                Return JsonParser.StripString(text, decodeMetaChar:=True)
+                ' strip the outer quotes, then decode the escape sequences
+                ' (same as the tokenicer + StripString pipeline for string tokens)
+                Return JsonParser.StripString(text.Substring(1, text.Length - 2), decodeMetaChar:=True)
             Else
                 ' strict JS json number: -?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?
                 Dim num As Double

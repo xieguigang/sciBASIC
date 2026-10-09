@@ -103,7 +103,13 @@ Friend Class JSONWriter : Implements IDisposable
             If opts.indent Then
                 Call Me.json.WriteLine(opts.offsets(indent) & "null")
             Else
-                Call Me.json.WriteLine("null")
+                ' non-indented mode stays compact: honour trailingNewline the
+                ' same way as the scalar JsonValue branch below
+                Call Me.json.Write("null")
+
+                If trailingNewline Then
+                    Call Me.json.WriteLine()
+                End If
             End If
         Else
             Select Case json.GetType
