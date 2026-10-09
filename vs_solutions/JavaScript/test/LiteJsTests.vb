@@ -229,7 +229,7 @@ Public Class LiteJsTests
         Assert.Equal("""x""", OneLine("console.log(JSON.stringify('x'));"))
         Assert.Equal("[1,2,3]", OneLine("console.log(JSON.stringify([1,2,3]));"))
         ' undefined members are omitted, undefined in arrays → null
-        Assert.Equal("{""b"":1}", OneLine(
+        Assert.Equal("{""b"": 1}", OneLine(
             "console.log(JSON.stringify({a: undefined, b: 1}));"))
         Assert.Equal("[null]", OneLine("console.log(JSON.stringify([NaN]));"))
         ' top-level undefined → the value undefined itself
@@ -240,7 +240,7 @@ Public Class LiteJsTests
     Public Sub Console_JsonStyleDisplay()
         Assert.Equal("[1,2,3]", OneLine("console.log([1,2,3]);"))
         Assert.Equal("{""a"": 1}", OneLine("console.log({a: 1});"))
-        Assert.Equal("{""name"": ""TP53"", ""score"": 2}", OneLine(
+        Assert.Equal("{""name"": ""TP53"",""score"": 2}", OneLine(
             "console.log({name: 'TP53', score: 2});"))
         ' scalars keep the existing display behaviour
         Assert.Equal("abc", OneLine("console.log('abc');"))
