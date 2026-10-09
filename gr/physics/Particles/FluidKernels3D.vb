@@ -59,13 +59,22 @@ Imports System.Math
 ''' 
 ''' The method signatures mirror the 2D <see cref="FluidKernels"/>, but the
 ''' normalization scaling factors use the correct three dimensional constants
-''' so that the kernels integrate to unity over a 3D sphere of radius h:
+''' so that the kernels integrate to unity over a 3D sphere of radius h.
 ''' 
-''' + Poly6:            315 / (64 * PI * h^9)
-''' + SpikyPow3:        15  / (PI * h^6)
-''' + SpikyPow2:        15  / (PI * h^5)
-''' + d/dr SpikyPow3:   45  / (PI * h^6)
-''' + d/dr SpikyPow2:   30  / (PI * h^5)
+''' The constants are obtained from the exact 3D volume integral
+''' <c>∫ (h-r)^n · 4πr² dr</c> over <c>r ∈ [0,h]</c>:
+''' 
+''' + Poly6             (h²-r²)³ : ∫ = 64πh⁹/315  → 315  / (64 * PI * h^9)
+''' + SpikyPow3         (h-r)³   : ∫ = πh⁶/15     → 15   / (PI * h^6)
+''' + SpikyPow2         (h-r)²   : ∫ = 2πh⁵/15    → 15   / (2 * PI * h^5)
+''' + d/dr SpikyPow3  -3(h-r)²   :                  45   / (PI * h^6)
+''' + d/dr SpikyPow2  -2(h-r)    :                  15   / (PI * h^5)
+''' 
+''' NOTE: the SpikyPow2 pair was previously normalized with the 2D-derived
+''' constants (15/(PI*h^5) and 30/(PI*h^5)), which are exactly 2x too large in
+''' three dimensions. That factor of two made the pressure term of
+''' <see cref="FluidEngine3D"/> inconsistent with the near-pressure term and
+''' is one of the reasons why the original 3D solver looked unstable.
 ''' 
 ''' The scaling factors depend only on the smoothing radius, so they are
 ''' precomputed once in the constructor.
@@ -78,13 +87,38 @@ Public Class FluidKernels3D
     ReadOnly SpikyPow3DerivativeScalingFactor As Single
     ReadOnly SpikyPow2DerivativeScalingFactor As Single
 
+    ''' <summary>the self contribution W(0) of the density kernel (h-r)^2</summary>
+    ReadOnly SelfDensity As Single
+    ''' <summary>the self contribution W(0) of the near density kernel (h-r)^3</summary>
+    ReadOnly SelfNearDensity As Single
+
     Sub New(smoothingRadius As Single)
         Poly6ScalingFactor = 315 / (64 * PI * Pow(smoothingRadius, 9))
         SpikyPow3ScalingFactor = 15 / (PI * Pow(smoothingRadius, 6))
-        SpikyPow2ScalingFactor = 15 / (PI * Pow(smoothingRadius, 5))
+        SpikyPow2ScalingFactor = 15 / (2 * PI * Pow(smoothingRadius, 5))
         SpikyPow3DerivativeScalingFactor = 45 / (PI * Pow(smoothingRadius, 6))
-        SpikyPow2DerivativeScalingFactor = 30 / (PI * Pow(smoothingRadius, 5))
+        SpikyPow2DerivativeScalingFactor = 15 / (PI * Pow(smoothingRadius, 5))
+
+        SelfDensity = SpikyPow2(0, smoothingRadius)
+        SelfNearDensity = SpikyPow3(0, smoothingRadius)
     End Sub
+
+    ''' <summary>
+    ''' The self density contribution W(0) of the (h-r)^2 density kernel: a
+    ''' particle always contributes its own kernel value to its density sum.
+    ''' </summary>
+    ''' <returns>W_spiky2(0) = 15*h^2 / (2*PI*h^5)</returns>
+    Public Function SelfDensityKernel() As Single
+        Return SelfDensity
+    End Function
+
+    ''' <summary>
+    ''' The self density contribution W(0) of the (h-r)^3 near density kernel.
+    ''' </summary>
+    ''' <returns>W_spiky3(0) = 15*h^3 / (PI*h^6)</returns>
+    Public Function SelfNearDensityKernel() As Single
+        Return SelfNearDensity
+    End Function
 
     Public Function SmoothingKernelPoly6(dst As Single, radius As Single) As Single
         If dst < radius Then
