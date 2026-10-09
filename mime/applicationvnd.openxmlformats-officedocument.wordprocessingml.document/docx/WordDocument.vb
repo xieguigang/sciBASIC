@@ -737,10 +737,14 @@ Public Class WordDocument : Implements IDocumentWriter
         _body.Append("<w:tblLayout w:type=""autofit""/>")
         _body.Append("</w:tblPr>")
 
-        ' 列定义：auto 模式下由 Word 自动计算宽度
+        ' 列定义：autofit 模式下 Word 会按 tblLayout 自动调整最终列宽，
+        ' 但 gridCol 必须给出非零的初始宽度提示——零宽度列会导致 Word 以草稿视图
+        ' 打开文档且无法正常分页（表现为全部内容挤在"一页"中、看不到页面布局）
+        Dim gridContentWidth As Integer = _pageWidth - _marginLeft - _marginRight
+        Dim gridColWidth As Integer = std.Max(1, gridContentWidth \ nCols)
         _body.Append("<w:tblGrid>")
         For c As Integer = 0 To nCols - 1
-            _body.Append("<w:gridCol w:w=""0""/>")
+            _body.Append($"<w:gridCol w:w=""{gridColWidth}""/>")
         Next
         _body.Append("</w:tblGrid>")
 
