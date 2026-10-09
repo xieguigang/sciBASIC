@@ -120,12 +120,6 @@ Namespace MathML
         End Function
 
         ''' <summary>
-        ''' 因为反序列化存在一个元素顺序的bug，所以在这里不可以通过反序列化来进行表达式的解析
-        ''' </summary>
-        ''' <param name="mathML"></param>
-        ''' <returns></returns>
-        ''' 
-        ''' <summary>
         ''' 解析 MathML 文档（&lt;math&gt; 根元素）为 lambda 表达式树。
         ''' 支持两种布局：
         '''   1. &lt;math&gt;&lt;lambda&gt;&lt;bvar/&gt;...&lt;apply/&gt;&lt;/lambda&gt;&lt;/math&gt;（函数定义）；
