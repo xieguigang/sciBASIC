@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' Tree-walking interpreter over the AST: environment chains, closures,
@@ -49,8 +50,8 @@ Public NotInheritable Class Interpreter
 
     Private NotInheritable Class ReturnSignal
         Inherits Exception
-        Public ReadOnly Value As Object
-        Public Sub New(value As Object)
+        Public ReadOnly Value As JsValue
+        Public Sub New(value As JsValue)
             MyBase.New()
             Me.Value = value
         End Sub
@@ -82,7 +83,7 @@ Public NotInheritable Class Interpreter
             Case TypeOf s Is VarStmt
                 Dim v = DirectCast(s, VarStmt)
                 For Each d In v.Declarations
-                    Dim value = If(d.Init IsNot Nothing, Eval(d.Init, env), JsRuntime.Undef)
+                    Dim value = If(d.Init IsNot Nothing, Eval(d.Init, env), JsValue.Undef)
                     env.Define(d.Name, value, v.Kind = "const")
                 Next
             Case TypeOf s Is BlockStmt
@@ -141,7 +142,7 @@ Public NotInheritable Class Interpreter
             Case TypeOf s Is ForInStmt
                 Dim fin = DirectCast(s, ForInStmt)
                 Dim obj = Eval(fin.ObjectExpr, env)
-                For Each key In JsRuntime.JsForInKeys(obj)
+                For Each key In JsRuntime.JsForInKeys(JsRuntime.JsBox(obj))
                     Dim bodyEnv As New Environment(env)
                     bodyEnv.Define(fin.VarName, key, False)
                     Try
@@ -154,14 +155,14 @@ Public NotInheritable Class Interpreter
                 Next
             Case TypeOf s Is ReturnStmt
                 Dim r = DirectCast(s, ReturnStmt)
-                Throw New ReturnSignal(If(r.Value IsNot Nothing, Eval(r.Value, env), JsRuntime.Undef))
+                Throw New ReturnSignal(If(r.Value IsNot Nothing, Eval(r.Value, env), JsValue.Undef))
             Case TypeOf s Is BreakStmt
                 Throw New BreakSignal()
             Case TypeOf s Is ContinueStmt
                 Throw New ContinueSignal()
             Case TypeOf s Is ThrowStmt
                 Dim t = DirectCast(s, ThrowStmt)
-                Throw New JsRuntimeException(Eval(t.Value, env))
+                Throw New JsRuntimeException(JsRuntime.JsBox(Eval(t.Value, env)))
             Case TypeOf s Is TryStmt
                 Dim t = DirectCast(s, TryStmt)
                 Try
@@ -205,13 +206,13 @@ Public NotInheritable Class Interpreter
                            Execute(st, fenv)
                        Next
                    Catch r As ReturnSignal
-                       Return r.Value
+                       Return JsRuntime.JsBox(r.Value)
                    End Try
                    Return JsRuntime.Undef
                End Function
     End Function
 
-    Private Function Eval(e As Expression, env As Environment) As Object
+    Private Function Eval(e As Expression, env As Environment) As JsValue
         Select Case True
             Case TypeOf e Is LiteralExpr
                 Return DirectCast(e, LiteralExpr).Value
@@ -226,16 +227,16 @@ Public NotInheritable Class Interpreter
                     ' special case: typeof undeclared → "undefined" without throwing
                     If TypeOf u.Operand Is IdentExpr Then
                         Dim nm = DirectCast(u.Operand, IdentExpr).Name
-                        Dim v As Object = Nothing
-                        If Not env.TryGet(nm, v) Then Return "undefined"
-                        Return JsRuntime.JsTypeOf(v)
+                        Dim v As JsValue = Nothing
+                        If Not env.TryGet(nm, v) Then Return JsValue.Str("undefined")
+                        Return JsValue.Str(JsRuntime.JsTypeOf(v))
                     End If
-                    Return JsRuntime.JsTypeOf(Eval(u.Operand, env))
+                    Return JsValue.Str(JsRuntime.JsTypeOf(Eval(u.Operand, env)))
                 End If
                 Dim operand = Eval(u.Operand, env)
                 Select Case u.Op
                     Case "-" : Return JsRuntime.JsNeg(operand)
-                    Case "+" : Return JsRuntime.JsNum(operand)
+                    Case "+" : Return JsValue.Number(JsRuntime.JsNum(operand))
                     Case "!" : Return JsRuntime.JsNot(operand)
                 End Select
                 Throw New InvalidOperationException("unknown unary operator " & u.Op)
@@ -245,8 +246,8 @@ Public NotInheritable Class Interpreter
                 Dim oldV = Eval(up.Target, env)
                 Dim n = JsRuntime.JsNum(oldV)
                 Dim [new] = If(up.Op = "++", n + 1.0, n - 1.0)
-                AssignTo(up.Target, [new], env)
-                Return If(up.IsPrefix, [new], oldV)
+                AssignTo(up.Target, JsValue.Number([new]), env)
+                Return If(up.IsPrefix, JsValue.Number([new]), oldV)
 
             Case TypeOf e Is BinaryExpr
                 Dim b = DirectCast(e, BinaryExpr)
@@ -259,14 +260,14 @@ Public NotInheritable Class Interpreter
                     Case "/" : Return JsRuntime.JsDiv(l, r)
                     Case "%" : Return JsRuntime.JsMod(l, r)
                     Case "**" : Return JsRuntime.JsPow(l, r)
-                    Case "<" : Return JsRuntime.JsLt(l, r)
-                    Case "<=" : Return JsRuntime.JsLe(l, r)
-                    Case ">" : Return JsRuntime.JsGt(l, r)
-                    Case ">=" : Return JsRuntime.JsGe(l, r)
-                    Case "==" : Return JsRuntime.JsEq(l, r)
-                    Case "!=" : Return Not JsRuntime.JsEq(l, r)
-                    Case "===" : Return JsRuntime.JsStrictEq(l, r)
-                    Case "!==" : Return Not JsRuntime.JsStrictEq(l, r)
+                    Case "<" : Return JsValue.Boolean_(JsRuntime.JsLt(l, r))
+                    Case "<=" : Return JsValue.Boolean_(JsRuntime.JsLe(l, r))
+                    Case ">" : Return JsValue.Boolean_(JsRuntime.JsGt(l, r))
+                    Case ">=" : Return JsValue.Boolean_(JsRuntime.JsGe(l, r))
+                    Case "==" : Return JsValue.Boolean_(JsRuntime.JsEq(l, r))
+                    Case "!=" : Return JsValue.Boolean_(Not JsRuntime.JsEq(l, r))
+                    Case "===" : Return JsValue.Boolean_(JsRuntime.JsStrictEq(l, r))
+                    Case "!==" : Return JsValue.Boolean_(Not JsRuntime.JsStrictEq(l, r))
                 End Select
                 Throw New InvalidOperationException("unknown binary operator " & b.Op)
 
@@ -296,7 +297,7 @@ Public NotInheritable Class Interpreter
                     ' compound: target = target OP value
                     Dim cur = Eval(a.Target, env)
                     Dim rhs = Eval(a.Value, env)
-                    Dim v As Object
+                    Dim v As JsValue
                     Select Case a.Op
                         Case "+=" : v = JsRuntime.JsAdd(cur, rhs)
                         Case "-=" : v = JsRuntime.JsSub(cur, rhs)
@@ -311,54 +312,54 @@ Public NotInheritable Class Interpreter
 
             Case TypeOf e Is CallExpr
                 Dim c = DirectCast(e, CallExpr)
-                Dim f = Eval(c.Callee, env)
+                Dim f = JsRuntime.JsBox(Eval(c.Callee, env))
                 Dim args(c.Arguments.Count - 1) As Object
                 For i = 0 To c.Arguments.Count - 1
-                    args(i) = Eval(c.Arguments(i), env)
+                    args(i) = JsRuntime.JsBox(Eval(c.Arguments(i), env))
                 Next
-                Return JsRuntime.JsInvoke(f, args)
+                Return JsRuntime.JsUnbox(JsRuntime.JsInvoke(f, args))
 
             Case TypeOf e Is MemberExpr
                 Dim m = DirectCast(e, MemberExpr)
-                Dim obj = Eval(m.Obj, env)
+                Dim obj = JsRuntime.JsBox(Eval(m.Obj, env))
                 If m.Computed Then
-                    Return JsRuntime.JsIndex(obj, Eval(DirectCast(m.Name, Expression), env))
+                    Return JsRuntime.JsUnbox(JsRuntime.JsIndex(obj, JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env))))
                 End If
-                Return JsRuntime.JsGet(obj, CStr(m.Name))
+                Return JsRuntime.JsUnbox(JsRuntime.JsGet(obj, CStr(m.Name)))
 
             Case TypeOf e Is FuncExpr
-                Return MakeFunction(DirectCast(e, FuncExpr), env)
+                Return JsValue.OfObject(MakeFunction(DirectCast(e, FuncExpr), env))
 
             Case TypeOf e Is ArrayExpr
                 Dim arr = DirectCast(e, ArrayExpr)
                 Dim list As New List(Of Object)
                 For Each el In arr.Elements
-                    list.Add(Eval(el, env))
+                    list.Add(JsRuntime.JsBox(Eval(el, env)))
                 Next
-                Return list
+                Return JsValue.OfObject(list)
 
             Case TypeOf e Is ObjectExpr
                 Dim o = DirectCast(e, ObjectExpr)
                 Dim d As New Dictionary(Of String, Object)
                 For Each p In o.Properties
-                    d(p.Key) = Eval(p.Value, env)
+                    d(p.Key) = JsRuntime.JsBox(Eval(p.Value, env))
                 Next
-                Return d
+                Return JsValue.OfObject(d)
         End Select
 
         Throw New InvalidOperationException("unknown expression type " & e.GetType().Name)
     End Function
 
-    Private Sub AssignTo(target As Expression, value As Object, env As Environment)
+    Private Sub AssignTo(target As Expression, value As JsValue, env As Environment)
         If TypeOf target Is IdentExpr Then
             env.Assign(DirectCast(target, IdentExpr).Name, value)
         ElseIf TypeOf target Is MemberExpr Then
             Dim m = DirectCast(target, MemberExpr)
-            Dim obj = Eval(m.Obj, env)
+            Dim obj = JsRuntime.JsBox(Eval(m.Obj, env))
             If m.Computed Then
-                JsRuntime.JsSetIndex(obj, Eval(DirectCast(m.Name, Expression), env), value)
+                JsRuntime.JsSetIndex(obj, JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env)), JsRuntime.JsBox(value))
             Else
-                JsRuntime.JsSet(obj, CStr(m.Name), value)
+                JsRuntime.JsSet(obj, CStr(m.Name), JsRuntime.JsBox(value))
             End If
         Else
             Throw New InvalidOperationException("invalid assignment target")

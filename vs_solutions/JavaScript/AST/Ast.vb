@@ -1,6 +1,8 @@
 Option Strict On
 Option Explicit On
 
+Imports Microsoft.VisualBasic.Scripting.Runtime
+
 ''' <summary>
 ''' Abstract-syntax-tree node types for the supported JavaScript subset.
 ''' <para>Two hierarchies: <see cref="Expression"/> (values) and
@@ -15,10 +17,14 @@ End Class
 Public NotInheritable Class LiteralExpr
     Inherits Expression
 
-    ''' <summary>Double, String, Boolean, Nothing (= null) or JsRuntime undef marker.</summary>
-    Public ReadOnly Value As Object
+    ''' <summary>
+    ''' JsValue tagged union: Double/Int32 number, String, Boolean,
+    ''' <see cref="JsValue.Null"/> (= null) or <see cref="JsValue.Undef"/> (undefined).
+    ''' Stored unboxed — no CLR primitive boxing on the interpreter hot path.
+    ''' </summary>
+    Public ReadOnly Value As JsValue
 
-    Public Sub New(value As Object)
+    Public Sub New(value As JsValue)
         Me.Value = value
     End Sub
 End Class

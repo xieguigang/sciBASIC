@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 
 ''' <summary>
@@ -549,11 +550,11 @@ Public NotInheritable Class Parser
             Case TokenType.Number
                 Dim v = CDbl(Cur.Value)
                 _pos += 1
-                Return New LiteralExpr(v)
+                Return New LiteralExpr(JsValue.Number(v))
             Case TokenType.String
                 Dim s = CStr(Cur.Value)
                 _pos += 1
-                Return New LiteralExpr(s)
+                Return New LiteralExpr(JsValue.Str(s))
             Case TokenType.Identifier
                 Dim name = Cur.text
                 _pos += 1
@@ -599,10 +600,10 @@ Public NotInheritable Class Parser
         End Select
         If Cur.name = TokenType.Keyword Then
             Select Case Cur.text
-                Case "true" : _pos += 1 : Return New LiteralExpr(True)
-                Case "false" : _pos += 1 : Return New LiteralExpr(False)
-                Case "null" : _pos += 1 : Return New LiteralExpr(Nothing)
-                Case "undefined" : _pos += 1 : Return New LiteralExpr(JsRuntime.Undef)
+                Case "true" : _pos += 1 : Return New LiteralExpr(JsValue.Boolean_(True))
+                Case "false" : _pos += 1 : Return New LiteralExpr(JsValue.Boolean_(False))
+                Case "null" : _pos += 1 : Return New LiteralExpr(JsValue.Null)
+                Case "undefined" : _pos += 1 : Return New LiteralExpr(JsValue.Undef)
                 Case "function"
                     _pos += 1
                     Dim name As String = Nothing

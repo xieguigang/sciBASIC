@@ -9,8 +9,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' <remarks>
 ''' 复用 Core 库的 <see cref="NestedScriptEnvironment"/>（作用域链 + <see cref="ScriptSlot"/> 槽位），
 ''' 槽位内部以 <see cref="JsValue"/> 标签联合体承载值：
-''' 解释器热路径（<see cref="TryGet(String, JsValue ByRef)"/>、<see cref="Define(String, JsValue, Boolean)"/>、
-''' <see cref="Assign(String, JsValue)"/>、<see cref="LookupOrThrow"/>）全程零 box/unbox。
+''' 解释器热路径（TryGet/Define/Assign/LookupOrThrow 的 JsValue 重载）全程零 box/unbox。
 ''' </remarks>
 Public NotInheritable Class Environment
     Inherits NestedScriptEnvironment
@@ -64,6 +63,22 @@ Public NotInheritable Class Environment
     Public Function LookupOrThrow(name As String) As JsValue
         Dim s = FindSlot(name, True)
         Return s.GetJsValue()
+    End Function
+
+    ''' <summary>
+    ''' 重写槽位查找：变量未定义时抛出脚本引擎的
+    ''' <see cref="JsRuntimeException.ReferenceError"/>（可被 JS try/catch 捕获），
+    ''' 而不是 Core 默认的普通 Exception。
+    ''' </summary>
+    Public Overrides Function FindSlot(name As String, throwIfNotFound As Boolean) As ScriptSlot
+        Dim s = MyBase.FindSlot(name, False)
+        If s IsNot Nothing Then
+            Return s
+        ElseIf throwIfNotFound Then
+            Throw JsRuntimeException.ReferenceError(name)
+        Else
+            Return Nothing
+        End If
     End Function
 
     ' ========================================================
