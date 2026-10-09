@@ -104,6 +104,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.MIME.application.xml.MathML
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports std = System.Math
 
@@ -549,6 +550,56 @@ Public Class WordDocument : Implements IDocumentWriter
     ''' <summary>插入分页符。</summary>
     Public Function PageBreak() As WordDocument
         _body.Append("<w:p><w:r><w:br w:type=""page""/></w:r></w:p>")
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 写入数学公式（OMML 原生公式对象，可在 Word 中直接编辑）。
+    ''' 内容为 Content MathML 字符串，经 xml-netcore5 的 MathML 解析器
+    ''' （LambdaExpression.FromMathML）解析为表达式树后序列化为 m:oMath。
+    ''' 
+    ''' 段落采用制表位排版：公式置于居中制表位、编号置于右对齐制表位——
+    ''' 符合学位论文规范"公式另行起，编号置于括号内、右端对齐"的要求。
+    ''' </summary>
+    ''' <param name="mathml">Content MathML 字符串，如：
+    ''' &lt;math&gt;&lt;apply&gt;&lt;eq/&gt;&lt;ci&gt;W_1&lt;/ci&gt;...&lt;/apply&gt;&lt;/math&gt;。
+    ''' 符号文本支持上下标约定："U_11" 渲染为下标 U₁₁、"x^2" 渲染为上标 x²。</param>
+    ''' <param name="equationNo">公式编号（如 "(2-1)"）；空字符串表示不显示编号。</param>
+    Public Function Formula(mathml As String, Optional equationNo As String = "") As WordDocument
+        If String.IsNullOrEmpty(mathml) Then Return Me
+
+        ' MathML -> 表达式树 -> OMML（字号继承正文样式）
+        Dim lambda As LambdaExpression = LambdaExpression.FromMathML(mathml)
+        Dim omath As String = OmmlBuilder.ToOmml(lambda, _paragraphStyle.Size)
+
+        ' 制表位位置：居中 = 内容宽度中点；右对齐 = 内容宽度右缘
+        Dim contentWidth As Integer = _pageWidth - _marginLeft - _marginRight
+        Dim centerPos As Integer = contentWidth \ 2
+
+        _body.Append("<w:p><w:pPr>")
+        ' pPr 子元素顺序遵循 CT_PPrBase 序列：tabs -> spacing -> ind -> jc
+        _body.Append("<w:tabs>")
+        _body.Append($"<w:tab w:val=""center"" w:pos=""{centerPos}""/>")
+        _body.Append($"<w:tab w:val=""right"" w:pos=""{contentWidth}""/>")
+        _body.Append("</w:tabs>")
+        _body.Append($"<w:spacing w:before=""{PtToTwip(_paragraphStyle.SpaceBefore)}"" w:after=""{PtToTwip(_paragraphStyle.SpaceAfter)}"" w:line=""{CInt(_paragraphStyle.LineSpacing * 240)}"" w:lineRule=""auto""/>")
+        _body.Append("</w:pPr>")
+
+        ' 跳至居中制表位 -> 公式对象
+        _body.Append("<w:r><w:tab/></w:r>")
+        _body.Append(omath)
+
+        ' 跳至右对齐制表位 -> 公式编号
+        If Not String.IsNullOrEmpty(equationNo) Then
+            _body.Append("<w:r><w:tab/></w:r>")
+            _body.Append("<w:r><w:rPr>")
+            _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
+            _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/><w:szCs w:val=""{CInt(_paragraphStyle.Size * 2)}""/>")
+            _body.Append("</w:rPr>")
+            _body.Append($"<w:t xml:space=""preserve"">{XEsc(equationNo)}</w:t></w:r>")
+        End If
+
+        _body.Append("</w:p>")
         Return Me
     End Function
 
@@ -1200,8 +1251,15 @@ Public Class WordDocument : Implements IDocumentWriter
                 End If
             Case "html", "raw"
                 Paragraph(If(b.content, ""))
-            Case "math", "equation", "tex", "latex"
-                CodeBlock(If(b.content, ""), "latex")
+            Case "math", "equation", "mathml", "tex", "latex"
+                ' MathML 内容（以 < 开头）→ OMML 原生公式对象；其余按 LaTeX 源码代码块渲染
+                Dim mathContent As String = If(b.content, "").Trim()
+
+                If mathContent.StartsWith("<") Then
+                    Formula(mathContent)
+                Else
+                    CodeBlock(mathContent, "latex")
+                End If
             Case "link", "a"
                 Paragraph($"[{If(b.alt, "")}]({If(b.url, "")})")
             Case "tasklist", "tasks", "todo"
