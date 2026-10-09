@@ -133,10 +133,20 @@ Namespace Scripting.Runtime
         ''' <summary>
         ''' 显式声明一个变量
         ''' </summary>
-        Public Function DefineVariable(name As String, Optional isReadOnly As Boolean = False) As ScriptSlot
-            If _slots.ContainsKey(name) Then
+        ''' <param name="name"></param>
+        ''' <param name="isReadOnly"></param>
+        ''' <param name="overwrite">
+        ''' 允许覆盖同作用域内的既有声明（JS var/函数提升的重声明语义）。
+        ''' 默认 False 保持原有行为：重声明抛出异常。
+        ''' </param>
+        Public Function DefineVariable(name As String,
+                                       Optional isReadOnly As Boolean = False,
+                                       Optional overwrite As Boolean = False) As ScriptSlot
+
+            If _slots.ContainsKey(name) AndAlso Not overwrite Then
                 Throw New Exception($"变量 '{name}' 已在当前作用域中定义")
             End If
+
             Dim slot = New ScriptSlot(is_readonly:=isReadOnly)
             _slots(name) = slot
             Return slot
@@ -157,7 +167,10 @@ Namespace Scripting.Runtime
             End If
         End Function
 
-        Private Sub CheckReadOnly(slot As ScriptSlot, name As String)
+        ''' <summary>
+        ''' 只读检查。虚方法：宿主解释器可以重写为抛出脚本引擎自己的运行时异常类型。
+        ''' </summary>
+        Protected Overridable Sub CheckReadOnly(slot As ScriptSlot, name As String)
             If slot.IsReadOnly OrElse slot.IsConst Then
                 Throw New Exception($"无法修改只读变量: '{name}'")
             End If
@@ -207,6 +220,24 @@ Namespace Scripting.Runtime
         Public Sub New(Optional parent As ScriptEnvironment = Nothing)
             _parent = parent
         End Sub
+
+        ''' <summary>父级作用域（Nothing 表示当前已经是根作用域）</summary>
+        Public ReadOnly Property Parent As ScriptEnvironment
+            Get
+                Return _parent
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 沿作用域链上溯至全局根作用域。
+        ''' </summary>
+        Public Function Root() As ScriptEnvironment
+            Dim env = Me
+            While env.Parent IsNot Nothing
+                env = env.Parent
+            End While
+            Return env
+        End Function
 
         Public Overrides Function FindSlot(name As String, throwIfNotFound As Boolean) As ScriptSlot
             Dim currentEnv = Me

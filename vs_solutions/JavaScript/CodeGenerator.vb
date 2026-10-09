@@ -303,7 +303,7 @@ Public NotInheritable Class CodeGenerator
 
     Friend Function GenExpr(e As Expression, scope As Scope) As String
         If TypeOf e Is LiteralExpr Then
-            Return LiteralText(DirectCast(e, LiteralExpr).Value)
+            Return LiteralText(DirectCast(e, LiteralExpr).Value.AsObject())
 
         ElseIf TypeOf e Is IdentExpr Then
             Return ResolveIdent(DirectCast(e, IdentExpr).Name, scope)
