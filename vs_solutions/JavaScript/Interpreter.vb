@@ -27,6 +27,16 @@ Public NotInheritable Class Interpreter
         ExecuteBlock(program.Body, _globals)
     End Sub
 
+    ''' <summary>
+    ''' Register a host-side value (e.g. a <see cref="Func(Of Object(), Object)"/>
+    ''' delegate wrapping a .NET method) as a global identifier visible to scripts.
+    ''' </summary>
+    ''' <param name="name">the global name that the script references.</param>
+    ''' <param name="value">the host value/closure to bind.</param>
+    Public Sub DefineGlobal(name As String, value As Object)
+        _globals.Define(name, value, False)
+    End Sub
+
     ' ---------------- control-flow signals ----------------
 
     Private NotInheritable Class BreakSignal
