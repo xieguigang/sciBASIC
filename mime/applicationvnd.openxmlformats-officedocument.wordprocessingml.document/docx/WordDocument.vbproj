@@ -46,6 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\application%xml\xml-netcore5.vbproj" />
     <ProjectReference Include="..\..\text%markdown\markdown.NET5.vbproj" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
