@@ -30,6 +30,8 @@ Namespace Scripting.Runtime
     ''' <item><see cref="TypeCode.Empty"/> => undefined（未定义）</item>
     ''' <item><see cref="TypeCode.DBNull"/> => null（空值）</item>
     ''' <item><see cref="TypeCode.Single"/> 的数据存放在 <c>_dbl</c> 字段中（Single → Double 转换无损）</item>
+    ''' <item><see cref="TypeCode.DateTime"/> 的数据以 100ns Ticks 形式存放在 <c>_lng</c> 字段中（零装箱，
+    ''' 注意往返不保留 <see cref="DateTimeKind"/> 元数据）</item>
     ''' </list>
     ''' </remarks>
     Public Structure JsValue
@@ -95,9 +97,9 @@ Namespace Scripting.Runtime
             Return New JsValue(TypeCode.String, 0, 0, 0, False, s, Nothing)
         End Function
 
-        ''' <summary>日期值</summary>
+        ''' <summary>日期值（以 100ns Ticks 形式零装箱存储于 <c>_lng</c> 字段）</summary>
         Public Shared Function Date_(d As Date) As JsValue
-            Return New JsValue(TypeCode.DateTime, 0, 0, 0, False, Nothing, d)
+            Return New JsValue(TypeCode.DateTime, 0, 0, d.Ticks, False, Nothing, Nothing)
         End Function
 
         ''' <summary>任意 CLR 引用类型对象</summary>
@@ -248,7 +250,7 @@ Namespace Scripting.Runtime
                 Case TypeCode.Single : Return CSng(_dbl)
                 Case TypeCode.Int64 : Return _lng
                 Case TypeCode.String : Return _str
-                Case TypeCode.DateTime : Return _obj
+                Case TypeCode.DateTime : Return New Date(_lng)
                 Case TypeCode.Object : Return _obj
                 Case Else : Return Nothing
             End Select
@@ -282,6 +284,7 @@ Namespace Scripting.Runtime
                 Case TypeCode.Int64 : Return _lng.ToString
                 Case TypeCode.Double, TypeCode.Single : Return _dbl.ToString
                 Case TypeCode.String : Return _str
+                Case TypeCode.DateTime : Return New Date(_lng).ToString
                 Case Else : Return _obj?.ToString
             End Select
         End Function

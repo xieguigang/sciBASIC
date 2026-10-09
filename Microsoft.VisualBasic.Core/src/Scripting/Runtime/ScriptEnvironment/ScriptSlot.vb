@@ -181,7 +181,7 @@ Namespace Scripting.Runtime
         Public ReadOnly Property DateValue As Date
             Get
                 If _v.VarType = TypeCode.DateTime Then
-                    Return CDate(_v._obj)
+                    Return New Date(_v._lng)
                 Else
                     Return Nothing
                 End If
