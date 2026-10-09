@@ -14,7 +14,7 @@ Public NotInheritable Class Interpreter
     Public ReadOnly Io As ScriptIO
 
     Public Sub New(Optional io As ScriptIO = Nothing)
-        Me.Io = If(io, New ScriptIO())
+        Me.Io = If(io, New LogTextIO)
         JsRuntime.Io = Me.Io          ' builtin dispatch (console.log) reads the static sink
         _globals = New Environment(Nothing)
         For Each kv In JsRuntime.GlobalIdentifiers()

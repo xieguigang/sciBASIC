@@ -11,10 +11,10 @@ Public Class LiteJsTests
     ' ------------------------------------------------------------- helpers
 
     Private Shared Function RunJs(source As String) As List(Of String)
-        Dim io As New ScriptIO()
+        Dim io As ScriptIO = New LogTextIO
         Dim engine As New Interpreter(io)
         engine.Run(Parser.Parse(source))
-        Return io.Lines
+        Return DirectCast(io, LogTextIO).Lines
     End Function
 
     Private Shared Function OneLine(source As String) As String
