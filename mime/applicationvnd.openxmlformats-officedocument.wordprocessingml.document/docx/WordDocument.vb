@@ -520,11 +520,10 @@ Public Class WordDocument : Implements IDocumentWriter
         Return Me
     End Function
 
-    ''' <summary>插入目录 (TOC)。Word 打开时会自动更新目录。</summary>
+    ''' <summary>插入目录 (TOC)。Word 打开时会自动更新目录。标题样式由 styles.xml 的 TOCHeading 样式决定（跟随主题章标题样式）。</summary>
     Public Function Toc(Optional maxLevel As Integer = 3) As WordDocument
         _body.Append("<w:p><w:pPr><w:pStyle w:val=""TOCHeading""/></w:pPr>")
-        _body.Append("<w:r><w:rPr><w:b/><w:sz w:val=""28""/></w:rPr>")
-        _body.Append("<w:t>目录</w:t></w:r></w:p>")
+        _body.Append("<w:r><w:t>目  录</w:t></w:r></w:p>")
 
         _body.Append("<w:p><w:r><w:fldChar w:fldCharType=""begin""/></w:r>")
         _body.Append("<w:r><w:instrText xml:space=""preserve""> TOC \o ""1-")

@@ -281,15 +281,43 @@ Public Class DocxPackager
             sb.Append("</w:rPr></w:style>")
         Next
 
-        ' TOC 标题样式
+        ' TOC 标题样式（跟随主题章标题样式：如论文规范中为"三号黑体居中，段前段后空1行"）
+        Dim h1 As WordStyle = headings(0)
         sb.Append("<w:style w:type=""paragraph"" w:styleId=""TOCHeading"">")
         sb.Append("<w:name w:val=""TOC Heading""/>")
         sb.Append("<w:basedOn w:val=""Normal""/>")
         sb.Append("<w:next w:val=""Normal""/>")
         sb.Append("<w:qFormat/>")
-        sb.Append("<w:pPr><w:spacing w:before=""240"" w:after=""120""/></w:pPr>")
-        sb.Append("<w:rPr><w:b/><w:color w:val=""1F4D78""/><w:sz w:val=""28""/></w:rPr>")
-        sb.Append("</w:style>")
+        sb.Append("<w:pPr>")
+        sb.Append($"<w:spacing w:before=""{PtToTwip(h1.SpaceBefore)}"" w:after=""{PtToTwip(h1.SpaceAfter)}"" w:line=""{CInt(h1.LineSpacing * 240)}"" w:lineRule=""auto""/>")
+        If h1.Alignment <> "left" Then sb.Append($"<w:jc w:val=""{JcVal(h1.Alignment)}""/>")
+        sb.Append("</w:pPr><w:rPr>")
+        sb.Append($"<w:rFonts w:ascii=""{h1.FontName}"" w:eastAsia=""{h1.FontNameEastAsia}"" w:hAnsi=""{h1.FontName}""/>")
+        If h1.Bold Then sb.Append("<w:b/>")
+        If h1.Italic Then sb.Append("<w:i/>")
+        sb.Append($"<w:color w:val=""{h1.ForeColor}""/>")
+        sb.Append($"<w:sz w:val=""{CInt(h1.Size * 2)}""/><w:szCs w:val=""{CInt(h1.Size * 2)}""/>")
+        sb.Append("</w:rPr></w:style>")
+
+        ' 目录条目样式 TOC1-TOC3
+        ' （规范：目录字体小四号宋体，行距固定值 20 磅，两端对齐；一级目录无缩进，
+        '   二级/三级目录分别左缩进 2 个字符(480 twips)和 4 个字符(960 twips)）
+        Dim ps As WordStyle = doc.GetParagraphStyle()
+        Dim tocIndents() As Integer = {0, 480, 960}
+        For lvl As Integer = 1 To 3
+            sb.Append($"<w:style w:type=""paragraph"" w:styleId=""TOC{lvl}"">")
+            sb.Append($"<w:name w:val=""toc {lvl}""/>")
+            sb.Append("<w:basedOn w:val=""Normal""/>")
+            sb.Append("<w:next w:val=""Normal""/>")
+            sb.Append("<w:pPr>")
+            sb.Append("<w:spacing w:line=""400"" w:lineRule=""exact""/>")
+            If tocIndents(lvl - 1) > 0 Then sb.Append($"<w:ind w:left=""{tocIndents(lvl - 1)}""/>")
+            sb.Append("<w:jc w:val=""both""/>")
+            sb.Append("</w:pPr><w:rPr>")
+            sb.Append($"<w:rFonts w:ascii=""{ps.FontName}"" w:eastAsia=""{ps.FontNameEastAsia}"" w:hAnsi=""{ps.FontName}""/>")
+            sb.Append($"<w:sz w:val=""{CInt(ps.Size * 2)}""/><w:szCs w:val=""{CInt(ps.Size * 2)}""/>")
+            sb.Append("</w:rPr></w:style>")
+        Next
 
         sb.Append("</w:styles>")
         Return sb.ToString()

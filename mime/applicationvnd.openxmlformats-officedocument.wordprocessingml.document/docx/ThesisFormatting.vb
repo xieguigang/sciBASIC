@@ -117,6 +117,9 @@ Public Class ThesisFormatting
     ''' <summary>图题/题注（Image 的 caption）：五号字，居中对齐（规范：图题字号五号，居中对齐）。</summary>
     Public Property CaptionStyle As WordStyle
 
+    ''' <summary>参考文献/学术成果清单条目内容：五号宋体，1.25 倍行距（规范：参考文献内容用五号字，1.25 倍行距）。</summary>
+    Public Property ReferenceStyle As WordStyle
+
     ''' <summary>表格边框/底纹样式：黑色细边框，表头白底黑字，无隔行底纹。</summary>
     Public Property Table As TableStyle
 
@@ -289,6 +292,20 @@ Public Class ThesisFormatting
             .BorderSize = 4,
             .AltRowBackColor = "",
             .CellPadding = 120
+        }
+
+        ' -- 参考文献/学术成果清单条目：五号(10.5pt)宋体，1.25 倍行距（规范：内容用五号字，1.25 倍行距） --
+        ReferenceStyle = New WordStyle With {
+            .FontName = LatinFont,
+            .FontNameEastAsia = ChineseBodyFont,
+            .Size = SizeWuHao,
+            .Bold = False,
+            .ForeColor = WordColors.Black,
+            .Alignment = "justify",
+            .LineSpacing = 1.25,
+            .FirstLineIndent = 0,
+            .SpaceBefore = 0,
+            .SpaceAfter = 3
         }
     End Sub
 
