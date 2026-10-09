@@ -1,6 +1,9 @@
 Imports System.Globalization
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+' NOTE: Microsoft.VisualBasic.MIME.application.json(+"".Javascript) 命名空间
+' 已由 LiteJs.vbproj 的项目级 <Import> 提供，此处不再重复导入
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
@@ -524,7 +527,8 @@ Namespace Runtime
 
         ''' <summary>对象/数组的 JSON 风格文本（console 显示与 JSON.stringify 共用）</summary>
         Private Function DisplayJson(x As Object) As String
-            Return ToJsonElement(x, New HashSet(Of Object)).BuildJsonString(JsonOpts())
+            ' TrimEnd: the json writer terminates the document with a newline
+            Return ToJsonElement(x, New HashSet(Of Object)).BuildJsonString(JsonOpts()).TrimEnd()
         End Function
 
         ''' <summary>
@@ -643,6 +647,17 @@ Namespace Runtime
                 Throw JsRuntimeException.SyntaxError("Unexpected end of JSON input")
             End If
 
+            Dim trimmed = text.Trim()
+
+            ' the strict-mode json tokenicer rejects top-level scalar documents
+            ' (a buffered literal at the end of the stream) — handle the scalar
+            ' cases directly here with strict JS json grammar
+            Dim head As Char = trimmed(0)
+
+            If head <> "{"c AndAlso head <> "["c Then
+                Return ParseScalarLiteral(trimmed)
+            End If
+
             Dim el As JsonElement
 
             Try
@@ -654,7 +669,39 @@ Namespace Runtime
                 Throw JsRuntimeException.SyntaxError(ex.Message)
             End Try
 
+            If el Is Nothing Then
+                ' the parser returns Nothing on tokenizer errors / malformed input
+                Throw JsRuntimeException.SyntaxError("Unexpected token in JSON")
+            End If
+
             Return FromJsonElement(el)
+        End Function
+
+        ''' <summary>
+        ''' 顶层标量字面量（null/true/false/string/number）的 JS 严格解析。
+        ''' </summary>
+        Private Function ParseScalarLiteral(text As String) As Object
+            If text = "null" Then
+                Return Nothing
+            ElseIf text = "true" Then
+                Return True
+            ElseIf text = "false" Then
+                Return False
+            ElseIf text.StartsWith(""""c) Then
+                ' quoted string: must be terminated by the closing quote
+                If text.Length < 2 OrElse Not text.EndsWith(""""c) Then
+                    Throw JsRuntimeException.SyntaxError("Unexpected end of JSON input")
+                End If
+                Return JsonParser.StripString(text, decodeMetaChar:=True)
+            Else
+                ' strict JS json number: -?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?
+                Dim num As Double
+                If Regex.IsMatch(text, "^-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?$") AndAlso
+                   Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, num) Then
+                    Return num
+                End If
+                Throw JsRuntimeException.SyntaxError($"Unexpected token '{text}' in JSON")
+            End If
         End Function
 
         ''' <summary>

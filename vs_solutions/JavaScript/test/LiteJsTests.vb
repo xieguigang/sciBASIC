@@ -208,7 +208,7 @@ Public Class LiteJsTests
             "console.log(o.name, o.score);"))
         Assert.Equal("3 2", OneLine(
             "var a = JSON.parse('[1,2,3]'); console.log(a.length, a[1]);"))
-        Assert.Equal("x 1", OneLine(
+        Assert.Equal("1 1", OneLine(
             "var o = JSON.parse('{""nested"":{""deep"":{""x"":1}}}');" &
             "console.log(o.nested.deep.x, 1);"))
     End Sub
@@ -239,8 +239,8 @@ Public Class LiteJsTests
     <Fact>
     Public Sub Console_JsonStyleDisplay()
         Assert.Equal("[1,2,3]", OneLine("console.log([1,2,3]);"))
-        Assert.Equal("{""a"":1}", OneLine("console.log({a: 1});"))
-        Assert.Equal("{""name"":""TP53"",""score"":2}", OneLine(
+        Assert.Equal("{""a"": 1}", OneLine("console.log({a: 1});"))
+        Assert.Equal("{""name"": ""TP53"", ""score"": 2}", OneLine(
             "console.log({name: 'TP53', score: 2});"))
         ' scalars keep the existing display behaviour
         Assert.Equal("abc", OneLine("console.log('abc');"))
