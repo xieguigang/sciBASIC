@@ -18,6 +18,10 @@
         Public Shared Function ReferenceError(name As String) As JsRuntimeException
             Return New JsRuntimeException("ReferenceError: " & name & " is not defined")
         End Function
+
+        Public Shared Function SyntaxError(message As String) As JsRuntimeException
+            Return New JsRuntimeException("SyntaxError: " & message)
+        End Function
     End Class
 
 End Namespace
