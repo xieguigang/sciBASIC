@@ -65,5 +65,13 @@ Namespace MathML
         <Description("/")> divide
         <Description("^")> power
         <Description("-")> minus
+        ''' <summary>关系运算符：等于 =</summary>
+        <Description("=")> eq
+        ''' <summary>关系运算符：小于等于 ≤</summary>
+        <Description("≤")> leq
+        ''' <summary>关系运算符：大于等于 ≥</summary>
+        <Description("≥")> geq
+        ''' <summary>关系运算符：不等于 ≠</summary>
+        <Description("≠")> neq
     End Enum
 End Namespace
