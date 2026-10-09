@@ -1,25 +1,26 @@
 #Region "Microsoft.VisualBasic::7a3e9c1b5d2f4086ae1b7c9d0e3f5a2b, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
 
-    ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
+' 
+'       sciBASIC.NET Foundation, GPL3 Licensed
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
 
-    ' Class HistogramPlot
-    ' 
-    '     Properties: Bins, BinEdges, Color, Data, Density, Groups
-    '                 Mirrored, ShowDensityCurve, ShowLegendImpl, ShowRug
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
-    ' 
+' Class HistogramPlot
+' 
+'     Properties: Bins, BinEdges, Color, Data, Density, Groups
+'                 Mirrored, ShowDensityCurve, ShowLegendImpl, ShowRug
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Plot
+' 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ' ============================================================================
@@ -57,7 +58,7 @@ Public Class HistogramPlot
     ''' <summary>柱子透明度（多组并列时便于观察重叠）</summary>
     Public Property FillAlpha As Integer = 180
 
-    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default)
+    Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Drivers = Drivers.Default)
         MyBase.New(width, height, theme, driver)
     End Sub
 
@@ -66,7 +67,11 @@ Public Class HistogramPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Public Overloads Shared Function Plot(data As IEnumerable(Of Double), nbins As Integer, size As String) As GraphicsData
+        Throw New NotImplementedException
+    End Function
+
+    Public Overloads Sub Plot()
         Dim sources = ResolveSources()
 
         If sources.Count = 0 OrElse sources.All(Function(g) g.Data Is Nothing OrElse g.Data.Length = 0) Then
