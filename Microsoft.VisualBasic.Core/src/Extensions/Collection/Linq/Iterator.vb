@@ -62,6 +62,16 @@ Namespace Linq
     <HideModuleName>
     Public Module IteratorExtensions
 
+        ''' <summary>
+        ''' make union of the key-value pair tuple value data
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function c(Of T)(ParamArray x As IEnumerable(Of KeyValuePair(Of String, T))()) As IEnumerable(Of T)
+            Return x.SelectMany(Function(ai) ai.Select(Function(i) i.Value))
+        End Function
+
         Public Iterator Function c(Of T)(ParamArray x As IEnumerable(Of T)()) As IEnumerable(Of T)
             For Each xi As IEnumerable(Of T) In x
                 If xi IsNot Nothing Then
