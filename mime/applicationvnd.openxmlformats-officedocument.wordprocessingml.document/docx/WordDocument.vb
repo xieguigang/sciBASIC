@@ -107,6 +107,12 @@ Imports System.Text
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports std = System.Math
 
+' OOXML 命名空间（与 DocxPackager 中的定义保持一致）
+Friend Module OOXMLNamespaces
+    Friend Const NS_W As String = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    Friend Const NS_R As String = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+End Module
+
 ''' <summary>
 ''' Word 文档生成器。
 ''' 支持通过流式 API 构建 docx 文档，包括标题、段落、表格、图片、
@@ -544,6 +550,137 @@ Public Class WordDocument : Implements IDocumentWriter
     Public Function PageBreak() As WordDocument
         _body.Append("<w:p><w:r><w:br w:type=""page""/></w:r></w:p>")
         Return Me
+    End Function
+
+    ' ========================================================================
+    ' 页眉页脚与多节 (sectPr)
+    '
+    ' 文档由一个或多个节组成：
+    '   - 调用 EndSection() 结束当前节（写入段落级 sectPr，后续内容从新一页开始）；
+    '   - 文档末尾未显式结束的节由 body 级 sectPr 描述（见 DocxPackager）；
+    '   - 每节可独立设置奇数页/偶数页页眉与页脚页码格式；
+    '   - 奇偶页页眉需 settings.xml 的 <w:evenAndOddHeaders/> 支持（自动写入）。
+    ' ========================================================================
+
+    ''' <summary>
+    ''' 设置当前节的奇数页页眉（五号宋体居中）。
+    ''' 学位论文规范：奇数页页眉为章序及章题，因此每章应独立成节并分别设置。
+    ''' 相同文字的页眉自动共享同一个部件。
+    ''' </summary>
+    Public Function HeaderOdd(text As String) As WordDocument
+        If String.IsNullOrEmpty(text) Then Return Me
+        _curSection.HeaderOddRelId = AddHeaderFooterPart("header", text)
+        _useEvenOddHeaders = True
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 设置当前节的偶数页页眉（五号宋体居中）。
+    ''' 学位论文规范：偶数页页眉为"江南大学硕士学位论文"/"江南大学博士学位论文"。
+    ''' </summary>
+    Public Function HeaderEven(text As String) As WordDocument
+        If String.IsNullOrEmpty(text) Then Return Me
+        _curSection.HeaderEvenRelId = AddHeaderFooterPart("header", text)
+        _useEvenOddHeaders = True
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 设置当前节页脚：居中连续页码（五号字）。
+    ''' 学位论文规范：前置部分（摘要、目录、清单等）用大写罗马数字页码；
+    ''' 正文从 1 开始用连续的阿拉伯数字页码。
+    ''' </summary>
+    ''' <param name="roman">True=大写罗马数字（前置部分）；False=阿拉伯数字（正文）。</param>
+    ''' <param name="restartAtOne">True=本节页码从 1 重新开始（正文第一节）；False=续前节。</param>
+    Public Function FooterPageNumbers(roman As Boolean, Optional restartAtOne As Boolean = False) As WordDocument
+        If _curSection.FooterRelId = "" Then
+            _curSection.FooterRelId = AddHeaderFooterPart("footer", "")
+        End If
+        _curSection.PageNumFmt = If(roman, "upperRoman", "decimal")
+        If restartAtOne Then _curSection.PageNumStart = 1
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 结束当前节：在文档流中写入节属性（节分隔符，类型为 nextPage），
+    ''' 其后的内容将从新的一页开始并应用新的页眉页脚设置。
+    ''' 注意：节属性描述的是"本节"，因此 HeaderOdd/HeaderEven/FooterPageNumbers
+    ''' 必须在写入本节内容之前调用。
+    ''' </summary>
+    Public Function EndSection() As WordDocument
+        _sections.Add(_curSection)
+        _body.Append("<w:p><w:pPr>")
+        _body.Append(BuildSectionPr(_curSection))
+        _body.Append("</w:pPr></w:p>")
+        _curSection = New SectionDef()
+        Return Me
+    End Function
+
+    ''' <summary>创建页眉/页脚部件（相同内容自动复用），返回其关系 ID。</summary>
+    Private Function AddHeaderFooterPart(kind As String, text As String) As String
+        Dim cacheKey As String = kind & "|" & text
+        If _hfPartCache.ContainsKey(cacheKey) Then Return _hfPartCache(cacheKey)
+
+        Dim relId As String = NextRelId()
+        Dim sb As New StringBuilder()
+        Dim rootTag As String = If(kind = "header", "w:hdr", "w:ftr")
+        sb.Append("<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>")
+        sb.Append($"<{rootTag} xmlns:w=""{NS_W}"" xmlns:r=""{NS_R}"">")
+        ' 页眉/页脚文字：五号(10.5pt)宋体、居中（规范：页眉五号宋体居中、页码五号字居中）
+        Dim rpr As String =
+            "<w:rPr><w:rFonts w:ascii=""Times New Roman"" w:eastAsia=""宋体"" w:hAnsi=""Times New Roman""/>" &
+            "<w:sz w:val=""21""/><w:szCs w:val=""21""/></w:rPr>"
+        sb.Append("<w:p><w:pPr>")
+        sb.Append("<w:spacing w:before=""0"" w:after=""0"" w:line=""240"" w:lineRule=""auto""/>")
+        sb.Append("<w:jc w:val=""center""/>")
+        sb.Append("</w:pPr>")
+        If kind = "header" Then
+            sb.Append($"<w:r>{rpr}<w:t xml:space=""preserve"">{XEsc(text)}</w:t></w:r>")
+        Else
+            ' 页码域：居中 PAGE 字段，显示格式由所在节的 pgNumType（罗马/阿拉伯）决定
+            sb.Append($"<w:r>{rpr}<w:fldChar w:fldCharType=""begin""/></w:r>")
+            sb.Append($"<w:r>{rpr}<w:instrText xml:space=""preserve""> PAGE </w:instrText></w:r>")
+            sb.Append($"<w:r>{rpr}<w:fldChar w:fldCharType=""separate""/></w:r>")
+            sb.Append($"<w:r>{rpr}<w:t>1</w:t></w:r>")
+            sb.Append($"<w:r>{rpr}<w:fldChar w:fldCharType=""end""/></w:r>")
+        End If
+        sb.Append("</w:p>")
+        sb.Append($"</{rootTag}>")
+
+        _headerFooterParts.Add(New HeaderFooterPart With {.RelId = relId, .Kind = kind, .Xml = sb.ToString()})
+        _hfPartCache(cacheKey) = relId
+        Return relId
+    End Function
+
+    ''' <summary>构建节属性 XML（sectPr 内部内容）。子元素顺序遵循 CT_SectPr 序列。</summary>
+    Private Function BuildSectionPr(sect As SectionDef) As String
+        Dim sb As New StringBuilder()
+        sb.Append("<w:sectPr>")
+        If sect.HeaderOddRelId <> "" Then sb.Append($"<w:headerReference w:type=""default"" r:id=""{sect.HeaderOddRelId}""/>")
+        If sect.HeaderEvenRelId <> "" Then sb.Append($"<w:headerReference w:type=""even"" r:id=""{sect.HeaderEvenRelId}""/>")
+        If sect.FooterRelId <> "" Then
+            ' 奇偶页页眉模式下，页码需同时引用奇数页（default）与偶数页（even）页脚，
+            ' 否则偶数页将无页码；两者指向同一个 PAGE 域页脚部件
+            sb.Append($"<w:footerReference w:type=""default"" r:id=""{sect.FooterRelId}""/>")
+            If _useEvenOddHeaders Then sb.Append($"<w:footerReference w:type=""even"" r:id=""{sect.FooterRelId}""/>")
+        End If
+        sb.Append($"<w:pgSz w:w=""{_pageWidth}"" w:h=""{_pageHeight}""/>")
+        sb.Append($"<w:pgMar w:top=""{_marginTop}"" w:right=""{_marginRight}"" w:bottom=""{_marginBottom}"" w:left=""{_marginLeft}"" w:header=""720"" w:footer=""720"" w:gutter=""0""/>")
+        If sect.PageNumFmt <> "" Then
+            If sect.PageNumStart > 0 Then
+                sb.Append($"<w:pgNumType w:fmt=""{sect.PageNumFmt}"" w:start=""{sect.PageNumStart}""/>")
+            Else
+                sb.Append($"<w:pgNumType w:fmt=""{sect.PageNumFmt}""/>")
+            End If
+        End If
+        sb.Append("</w:sectPr>")
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>分配下一个关系 ID（图片与页眉页脚部件共用同一序列，rId1=styles、rId2=settings）。</summary>
+    Private Function NextRelId() As String
+        _imageRelIdCounter += 1
+        Return "rId" & _imageRelIdCounter.ToString()
     End Function
 
     ''' <summary>插入目录 (TOC)。Word 打开时会自动更新目录。标题样式由 styles.xml 的 TOCHeading 样式决定（跟随主题章标题样式）。</summary>
@@ -1098,6 +1235,24 @@ Public Class WordDocument : Implements IDocumentWriter
 
     Friend Function GetImages() As List(Of ImageEntry)
         Return _images
+    End Function
+
+    ''' <summary>获取全部页眉/页脚部件（headerN.xml / footerN.xml）。</summary>
+    Friend Function GetHeaderFooterParts() As List(Of HeaderFooterPart)
+        Return _headerFooterParts
+    End Function
+
+    ''' <summary>是否启用了奇偶页页眉（需在 settings.xml 写入 evenAndOddHeaders）。</summary>
+    Friend Function GetUseEvenOddHeaders() As Boolean
+        Return _useEvenOddHeaders
+    End Function
+
+    ''' <summary>
+    ''' 获取文档末尾（body 级 sectPr）的节属性 XML。
+    ''' 对应最后一个未通过 EndSection() 显式结束的节。
+    ''' </summary>
+    Friend Function GetFinalSectionPr() As String
+        Return BuildSectionPr(_curSection)
     End Function
 
     Friend Function GetDefaultStyle() As WordStyle

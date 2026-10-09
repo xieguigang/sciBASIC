@@ -461,8 +461,12 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
     '   [11] 致谢："致  谢"三号黑体中间空2字符居中；内容小四宋体 1.25 倍行距
     '   [12] 攻读学位期间取得的学术成果清单：标题三号黑体居中；条目按著录格式五号
     '
-    ' 注：页眉页脚（奇数页章序章题、偶数页校名，前置部分罗马数字页码、正文阿拉伯
-    '     数字页码）当前 WordDocument 模块暂不支持，作为后续扩展。
+    ' 页眉页脚（多节实现）：文档划分为 8 个节——
+    '   第1节 封面+声明：无页眉页脚；
+    '   第2节 前置部分（摘要/Abstract/目录/清单）：页脚大写罗马数字页码（I、II、III……）；
+    '   第3-8节 正文各章/参考文献/附录/致谢/成果清单：每节奇数页页眉=章序及章题
+    '   （或部分标题）、偶数页页眉="江南大学硕士学位论文"（五号宋体居中），
+    '   页脚为居中阿拉伯数字页码，自第一章起从 1 连续编号。
     ' ================================================================
     Private Sub DemoThesisFormatting(outDir As String)
         ' 创建 WordDocument 并应用论文主题（江南大学 2025 规范默认样式）
@@ -512,6 +516,14 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
             New JSONSchema.Block With {.type = "paragraph", .content = "日期：　　　　年　　月　　日　　日期：　　　　年　　月　　日"}
         })
         doc.PageBreak()
+
+        ' ============================================================
+        ' 第 1 节结束（封面+声明：无页眉页脚）；开启第 2 节（前置部分）
+        ' ============================================================
+        doc.EndSection()
+
+        ' 第 2 节（前置部分）：页脚为大写罗马数字页码（摘要 I、Abstract II、目录 III……）
+        doc.FooterPageNumbers(roman:=True)
 
         ' ============================================================
         ' [3] 中文摘要及关键词
@@ -566,6 +578,17 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         doc.PageBreak()
 
         ' ============================================================
+        ' 第 2 节结束；开启第 3 节（正文第一章）
+        ' ============================================================
+        doc.EndSection()
+
+        ' 第 3 节（正文第一章）：页码从 1 重新开始（阿拉伯数字）；
+        ' 奇数页页眉 = 章序及章题，偶数页页眉 = 校名（规范：页眉分奇偶页标注）
+        doc.HeaderOdd("第一章 绪论")
+        doc.HeaderEven("江南大学硕士学位论文")
+        doc.FooterPageNumbers(roman:=False, restartAtOne:=True)
+
+        ' ============================================================
         ' [8] 论文正文 —— 第一章（每一章另起页）
         ' ============================================================
         doc.WriteBlocks({
@@ -592,7 +615,12 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
             New JSONSchema.Block With {.type = "paragraph", .content = "本文共分为四章：第一章为绪论，介绍研究背景与主要研究内容；第二章介绍材料与实验方法；第三章给出结果与分析；第四章为结论与展望。"},
             New JSONSchema.Block With {.type = "hr"}
         })
-        doc.PageBreak()
+        doc.EndSection()
+
+        ' 第 4 节（正文第二章）：奇数页页眉 = 本章章序章题，页码续前节
+        doc.HeaderOdd("第二章 材料与方法")
+        doc.HeaderEven("江南大学硕士学位论文")
+        doc.FooterPageNumbers(roman:=False)
 
         ' ============================================================
         ' [8] 论文正文 —— 第二章
@@ -647,7 +675,12 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
             },
             New JSONSchema.Block With {.type = "paragraph", .content = "以上流程构成了本文完整的数据分析框架，后续章节将依次展开详细论述。"}
         })
-        doc.PageBreak()
+        doc.EndSection()
+
+        ' 第 5 节（参考文献）：奇数页页眉 = 部分标题，页码续前节
+        doc.HeaderOdd("参考文献")
+        doc.HeaderEven("江南大学硕士学位论文")
+        doc.FooterPageNumbers(roman:=False)
 
         ' ============================================================
         ' [9] 参考文献（标题三号黑体居中；条目五号宋体 1.25 倍行距，GB/T 7714 著录格式）
@@ -662,7 +695,12 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         doc.Paragraph("[4] 王莉，牟蕾，宋涛，等. 新冠疫情常态化管理期间新疆地区医务人员心理健康状况研究[C]. 北京：中华预防医学会第32次全国医院感染学术年会，2023.", refStyle)
         doc.Paragraph("[5] 丁文详. 数字革命与竞争国际化[N]. 中国青年报，2000-11-20（15）.", refStyle)
         doc.Paragraph("[6] SHINOTSUKA H，NAGATA K，SIRIWARDANA M，et al. Sample structure prediction from measured XPS data using Bayesian estimation and SESSA simulator[J/OL]. Journal of electron spectroscopy and related phenomena，2023，267：147370.", refStyle)
-        doc.PageBreak()
+        doc.EndSection()
+
+        ' 第 6 节（附录A）
+        doc.HeaderOdd("附录A 主要分析脚本清单")
+        doc.HeaderEven("江南大学硕士学位论文")
+        doc.FooterPageNumbers(roman:=False)
 
         ' ============================================================
         ' [10] 附录A（内容小四宋体 1.25 倍行距；附录中的公式及图表编号冠以附录序号字母）
@@ -673,7 +711,12 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
             New JSONSchema.Block With {.type = "paragraph", .content = "本附录列出论文正文所涉及的主要分析脚本及其功能说明，包括原始数据质量控制脚本 qc_pipeline.sh、序列比对脚本 align_run.sh、差异表达分析脚本 deseq_analysis.R 以及功能富集分析脚本 enrichment.R。"},
             New JSONSchema.Block With {.type = "paragraph", .content = "全部脚本均在 Ubuntu 22.04 LTS 环境下测试通过，运行顺序及参数配置详见脚本头部注释。"}
         })
-        doc.PageBreak()
+        doc.EndSection()
+
+        ' 第 7 节（致谢）
+        doc.HeaderOdd("致　谢")
+        doc.HeaderEven("江南大学硕士学位论文")
+        doc.FooterPageNumbers(roman:=False)
 
         ' ============================================================
         ' [11] 致谢（"致  谢"三号黑体中间空2字符居中；内容小四宋体 1.25 倍行距）
@@ -684,7 +727,12 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
             New JSONSchema.Block With {.type = "paragraph", .content = "感谢课题组各位同学在实验数据采集与处理过程中给予的帮助与支持；感谢江南大学生物工程学院为本研究提供的实验平台与技术条件；感谢国家自然科学基金项目对本研究的资助。"},
             New JSONSchema.Block With {.type = "paragraph", .content = "最后，感谢家人一直以来的理解、支持与鼓励。"}
         })
-        doc.PageBreak()
+        doc.EndSection()
+
+        ' 第 8 节（学术成果清单，最后一节）：节属性由文档末尾的 body 级 sectPr 描述
+        doc.HeaderOdd("攻读学位期间取得的学术成果清单")
+        doc.HeaderEven("江南大学硕士学位论文")
+        doc.FooterPageNumbers(roman:=False)
 
         ' ============================================================
         ' [12] 攻读学位期间取得的学术成果清单
@@ -700,7 +748,9 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         Console.WriteLine($"  已保存: {outPath}")
         Console.WriteLine("  覆盖格式项：封面/原创性声明/中英文摘要及关键词/目录/图表与缩写清单/")
         Console.WriteLine("              正文(章-节-小节-正文-三线表-图-公式-注释-列表-任务列表-引用-代码)/")
-        Console.WriteLine("              参考文献/附录/致谢/学术成果清单（页眉页脚暂不支持）")
+        Console.WriteLine("              参考文献/附录/致谢/学术成果清单")
+        Console.WriteLine("  页眉页脚：奇数页章序章题、偶数页校名（五号宋体居中）；")
+        Console.WriteLine("            前置部分大写罗马数字页码、正文从1起阿拉伯数字页码（8 节）")
     End Sub
 
     ' ================================================================
