@@ -291,7 +291,7 @@ Public Class WordDocument : Implements IDocumentWriter
         ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：shd -> spacing -> jc，否则 Word 拒绝打开
         If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
         _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
-        _body.Append($"<w:jc w:val=""{s.Alignment}""/>")
+        _body.Append($"<w:jc w:val=""{JcVal(s.Alignment)}""/>")
         _body.Append("</w:pPr><w:r><w:rPr>")
         _body.Append($"<w:rFonts w:ascii=""{s.FontName}"" w:eastAsia=""{s.FontNameEastAsia}"" w:hAnsi=""{s.FontName}""/>")
         If s.Bold Then _body.Append("<w:b/>")
@@ -346,7 +346,7 @@ Public Class WordDocument : Implements IDocumentWriter
         ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：shd -> spacing -> jc，否则 Word 拒绝打开
         If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
         _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
-        If s.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{s.Alignment}""/>")
+        If s.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{JcVal(s.Alignment)}""/>")
         _body.Append("</w:pPr><w:r><w:rPr>")
         _body.Append($"<w:rFonts w:ascii=""{s.FontName}"" w:eastAsia=""{s.FontNameEastAsia}"" w:hAnsi=""{s.FontName}""/>")
         If s.Bold Then _body.Append("<w:b/>")
@@ -371,7 +371,7 @@ Public Class WordDocument : Implements IDocumentWriter
         If style.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{style.BackColor}""/>")
         _body.Append($"<w:spacing w:before=""{PtToTwip(style.SpaceBefore)}"" w:after=""{PtToTwip(style.SpaceAfter)}"" w:line=""{CInt(style.LineSpacing * 240)}"" w:lineRule=""auto""/>")
         If style.FirstLineIndent > 0 Then _body.Append($"<w:ind w:firstLine=""{PtToTwip(style.FirstLineIndent)}""/>")
-        If style.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{style.Alignment}""/>")
+        If style.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{JcVal(style.Alignment)}""/>")
         _body.Append("</w:pPr>")
 
         ' 支持多行文本
@@ -392,11 +392,12 @@ Public Class WordDocument : Implements IDocumentWriter
     Public Function CodeBlock(code As String, Optional language As String = "") As WordDocument
         Dim s As WordStyle = _codeStyle
         _body.Append("<w:p><w:pPr>")
-        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：pBdr -> shd -> spacing，否则 Word 拒绝打开
+        ' 注意：pPr 子元素必须遵循 CT_PPrBase 序列：pBdr -> shd -> spacing，否则 Word 拒绝打开；
+        ' pBdr 内部子元素遵循 CT_PBdr 序列：top -> left -> bottom -> right
         _body.Append("<w:pBdr>")
         _body.Append("<w:top w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
-        _body.Append("<w:bottom w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("<w:left w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
+        _body.Append("<w:bottom w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("<w:right w:val=""single"" w:sz=""4"" w:space=""4"" w:color=""D0D0D0""/>")
         _body.Append("</w:pBdr>")
         If s.BackColor <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{s.BackColor}""/>")
@@ -530,7 +531,7 @@ Public Class WordDocument : Implements IDocumentWriter
         _body.Append(maxLevel.ToString())
         _body.Append(""" \h \z \u </w:instrText></w:r>")
         _body.Append("<w:r><w:fldChar w:fldCharType=""separate""/></w:r>")
-        _body.Append("<w:r><w:rPr><w:color w:val=""808080""/><w:i/></w:rPr>")
+        _body.Append("<w:r><w:rPr><w:i/><w:color w:val=""808080""/></w:rPr>")
         _body.Append("<w:t>右键此处选择「更新域」以生成目录</w:t></w:r>")
         _body.Append("<w:r><w:fldChar w:fldCharType=""end""/></w:r></w:p>")
         Return Me
@@ -885,7 +886,7 @@ Public Class WordDocument : Implements IDocumentWriter
             If cs IsNot Nothing Then
                 _body.Append("<w:p><w:pPr>")
                 _body.Append($"<w:spacing w:before=""{PtToTwip(cs.SpaceBefore)}"" w:after=""{PtToTwip(cs.SpaceAfter)}"" w:line=""{CInt(cs.LineSpacing * 240)}"" w:lineRule=""auto""/>")
-                If cs.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{cs.Alignment}""/>")
+                If cs.Alignment <> "left" Then _body.Append($"<w:jc w:val=""{JcVal(cs.Alignment)}""/>")
                 _body.Append("</w:pPr><w:r><w:rPr>")
                 _body.Append($"<w:rFonts w:ascii=""{cs.FontName}"" w:eastAsia=""{cs.FontNameEastAsia}"" w:hAnsi=""{cs.FontName}""/>")
                 If cs.Bold Then _body.Append("<w:b/>")
@@ -898,7 +899,7 @@ Public Class WordDocument : Implements IDocumentWriter
                 _body.Append("<w:p><w:pPr><w:jc w:val=""center""/>")
                 _body.Append("<w:spacing w:after=""120""/></w:pPr>")
                 _body.Append("<w:r><w:rPr><w:rFonts w:eastAsia=""Microsoft YaHei""/>")
-                _body.Append("<w:sz w:val=""18""/><w:i/><w:color w:val=""808080""/></w:rPr>")
+                _body.Append("<w:i/><w:color w:val=""808080""/><w:sz w:val=""18""/></w:rPr>")
                 _body.Append($"<w:t xml:space=""preserve"">{XEsc(caption)}</w:t></w:r></w:p>")
             End If
         End If
@@ -1370,6 +1371,16 @@ Public Class WordDocument : Implements IDocumentWriter
             Case "right" : Return "right"
             Case Else : Return "left"
         End Select
+    End Function
+
+    ''' <summary>
+    ''' 将样式对齐方式归一化为 ST_Jc 合法枚举值。
+    ''' OOXML 的 ST_Jc 中不存在 "justify"，两端对齐的合法值是 "both"，
+    ''' 直接输出 "justify" 会导致 Word 报"文件损坏"而拒绝打开。
+    ''' </summary>
+    Private Shared Function JcVal(align As String) As String
+        If String.IsNullOrEmpty(align) Then Return "left"
+        Return If(align.ToLower() = "justify", "both", align.ToLower())
     End Function
 
     ' ========================================================================

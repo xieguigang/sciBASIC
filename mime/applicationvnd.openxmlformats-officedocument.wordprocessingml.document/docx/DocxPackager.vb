@@ -249,7 +249,7 @@ Public Class DocxPackager
         sb.Append("<w:qFormat/>")
         sb.Append("<w:pPr>")
         sb.Append($"<w:spacing w:before=""{PtToTwip(ts.SpaceBefore)}"" w:after=""{PtToTwip(ts.SpaceAfter)}"" w:line=""{CInt(ts.LineSpacing * 240)}"" w:lineRule=""auto""/>")
-        sb.Append($"<w:jc w:val=""{ts.Alignment}""/>")
+        sb.Append($"<w:jc w:val=""{JcVal(ts.Alignment)}""/>")
         sb.Append("</w:pPr><w:rPr>")
         sb.Append($"<w:rFonts w:ascii=""{ts.FontName}"" w:eastAsia=""{ts.FontNameEastAsia}"" w:hAnsi=""{ts.FontName}""/>")
         If ts.Bold Then sb.Append("<w:b/>")
@@ -288,7 +288,7 @@ Public Class DocxPackager
         sb.Append("<w:next w:val=""Normal""/>")
         sb.Append("<w:qFormat/>")
         sb.Append("<w:pPr><w:spacing w:before=""240"" w:after=""120""/></w:pPr>")
-        sb.Append("<w:rPr><w:b/><w:sz w:val=""28""/><w:color w:val=""1F4D78""/></w:rPr>")
+        sb.Append("<w:rPr><w:b/><w:color w:val=""1F4D78""/><w:sz w:val=""28""/></w:rPr>")
         sb.Append("</w:style>")
 
         sb.Append("</w:styles>")
@@ -366,6 +366,15 @@ Public Class DocxPackager
 
     Private Shared Function PtToTwip(pt As Double) As Integer
         Return CInt(pt * 20)
+    End Function
+
+    ''' <summary>
+    ''' 将样式对齐方式归一化为 ST_Jc 合法枚举值（"justify" → "both"，
+    ''' ST_Jc 中不存在 "justify"，直接输出会导致 Word 拒绝打开文档）。
+    ''' </summary>
+    Private Shared Function JcVal(align As String) As String
+        If String.IsNullOrEmpty(align) Then Return "left"
+        Return If(align.ToLower() = "justify", "both", align.ToLower())
     End Function
 
     Private Shared Function XEsc(text As String) As String
