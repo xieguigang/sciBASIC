@@ -231,8 +231,10 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' 将任意文本哈希为 6 位十六进制颜色值（不含 # 前缀）
         ''' </summary>
-        Public Function TextToColorHex(text As String) As String
-            If String.IsNullOrEmpty(text) Then text = ""
+        Public Shared Function TextToColorHex(text As String) As String
+            If text.StringEmpty(, True) Then
+                Return "black"
+            End If
 
             Using sha As SHA256 = SHA256.Create()
                 ' 用 UTF-8 编码，支持中文等任意字符

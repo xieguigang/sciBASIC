@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
@@ -67,7 +68,7 @@ Namespace Data
     ''' 2017.1.30
     ''' 由于受到XML序列化的限制，这里就不再实现这个枚举接口了
     ''' </remarks>
-    Public Class Surface ': Implements IEnumerable(Of Point3D)
+    Public Class Surface : Implements Enumeration(Of Vertex)
 
         ''' <summary>
         ''' 请注意，在这里面的点都是有先后顺序分别的，为了模型文件的XML文档结构的可读性，
@@ -89,7 +90,12 @@ Namespace Data
         ''' <returns></returns>
         Public ReadOnly Property Brush As Brush
             Get
-                Return paint.GetBrush
+                Try
+                    Return paint.GetBrush
+                Catch ex As Exception
+                    Call App.LogException(ex)
+                    Return New SolidBrush(CustomDesigns.TextToColorHex(paint).TranslateColor)
+                End Try
             End Get
         End Property
 
@@ -102,6 +108,12 @@ Namespace Data
 
         Public Overrides Function ToString() As String
             Return paint
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Vertex) Implements Enumeration(Of Vertex).GenericEnumerator
+            For Each v As Vertex In vertices
+                Yield v
+            Next
         End Function
     End Class
 End Namespace
