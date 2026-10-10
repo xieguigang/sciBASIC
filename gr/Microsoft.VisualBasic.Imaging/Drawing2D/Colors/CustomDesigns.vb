@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::77175ad04db01771ae4f2a07a2a2130c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 174
-    '    Code Lines: 140 (80.46%)
-    ' Comment Lines: 16 (9.20%)
-    '    - Xml Docs: 87.50%
-    ' 
-    '   Blank Lines: 18 (10.34%)
-    '     File Size: 7.17 KB
+' Summaries:
 
 
-    '     Class CustomDesigns
-    ' 
-    '         Function: ClusterColour, ExtractThemeColors, FlexImaging, Halloween, Icefire
-    '                   IsBlackColor, IsWhiteColor, Order, Paper, Rainbow
-    '                   Seismic, TSF, Unicorn, Vibrant
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 174
+'    Code Lines: 140 (80.46%)
+' Comment Lines: 16 (9.20%)
+'    - Xml Docs: 87.50%
+' 
+'   Blank Lines: 18 (10.34%)
+'     File Size: 7.17 KB
+
+
+'     Class CustomDesigns
+' 
+'         Function: ClusterColour, ExtractThemeColors, FlexImaging, Halloween, Icefire
+'                   IsBlackColor, IsWhiteColor, Order, Paper, Rainbow
+'                   Seismic, TSF, Unicorn, Vibrant
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
+Imports System.Security.Cryptography
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
@@ -225,6 +226,21 @@ Namespace Drawing2D.Colors
                     Yield colorGroups(i)
                 End If
             Next
+        End Function
+
+        ''' <summary>
+        ''' 将任意文本哈希为 6 位十六进制颜色值（不含 # 前缀）
+        ''' </summary>
+        Public Function TextToColorHex(text As String) As String
+            If String.IsNullOrEmpty(text) Then text = ""
+
+            Using sha As SHA256 = SHA256.Create()
+                ' 用 UTF-8 编码，支持中文等任意字符
+                Dim hash As Byte() = sha.ComputeHash(Encoding.UTF8.GetBytes(text))
+
+                ' 取哈希前 3 个字节作为 R、G、B
+                Return $"#{hash(0):X2}{hash(1):X2}{hash(2):X2}"
+            End Using
         End Function
     End Class
 End Namespace
