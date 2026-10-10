@@ -1868,6 +1868,17 @@ Namespace Render.CSS
         End Property
 
         ''' <summary>
+        ''' Overrides the computed background color of this box at runtime: the
+        ''' ui engine uses it to paint the content of a tab page with the very
+        ''' same color as the active tab of a tab strip.
+        ''' </summary>
+        ''' <param name="color"></param>
+        Public Sub SetBackgroundColor(color As Color)
+            _backgroundColor = $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}"
+            _actualBackgroundColor = color
+        End Sub
+
+        ''' <summary>
         ''' Gets the second color that creates a gradient for the background
         ''' </summary>
         Public ReadOnly Property ActualBackgroundGradient() As Color
