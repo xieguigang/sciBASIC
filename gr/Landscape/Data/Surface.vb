@@ -84,17 +84,30 @@ Namespace Data
         <XmlAttribute>
         Public Property paint As String
 
+        Shared ReadOnly textures As New Dictionary(Of String, String)
+
         ''' <summary>
         ''' 将<see cref="paint"/>资源字符串转换为相对应的<see cref="Brush"/>画刷对象.
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Brush As Brush
             Get
+                Dim paint As String = If(Me.paint, "")
+
+                If textures.ContainsKey(paint) Then
+                    Return textures(paint).GetBrush
+                End If
+
                 Try
                     Return paint.GetBrush
                 Catch ex As Exception
+                    Dim color As String = CustomDesigns.TextToColorHex(paint)
+
+                    ' handling of the missing texture brush data
+                    Call textures.Add(paint, color)
                     Call App.LogException(ex)
-                    Return New SolidBrush(CustomDesigns.TextToColorHex(paint).TranslateColor)
+
+                    Return New SolidBrush(color.TranslateColor)
                 End Try
             End Get
         End Property
