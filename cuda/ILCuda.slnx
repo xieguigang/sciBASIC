@@ -13,9 +13,12 @@
   </Folder>
   <Folder Name="/demo/">
     <Project Path="ILCuda/test/test.vbproj" Id="2c38bbd3-7e26-4278-8128-1dc6a66b9059">
-      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
+  <Project Path="GTop/GTop.vbproj" Id="185d6c5a-b8a7-45ed-be6e-07dfad15c78e">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="ILCuda/ILCuda.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
