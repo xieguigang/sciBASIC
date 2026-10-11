@@ -147,12 +147,14 @@ Namespace ComponentModel.DataStructures
             If IsLeaf Then
                 If _depth < _maxDepth AndAlso refine(_bounds, _depth) Then
                     Call subdivide()
+                Else
+                    Return
                 End If
-            Else
-                For Each child As TightOctree(Of T) In _children
-                    Call child.refineNode(refine)
-                Next
             End If
+
+            For Each child As TightOctree(Of T) In _children
+                Call child.refineNode(refine)
+            Next
         End Sub
 
         ''' <summary>
