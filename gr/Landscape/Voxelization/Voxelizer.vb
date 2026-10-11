@@ -54,9 +54,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Numerics
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Landscape.Data
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace Voxelization
@@ -198,27 +201,24 @@ Namespace Voxelization
         End Function
 
         ''' <summary>
-        ''' 计算点集的轴对齐包围盒
+        ''' 计算点集的轴对齐包围盒（SoA 化 + SIMD 归约，SimdReduce 基于 Vector(Of Double)）
         ''' </summary>
         ''' <returns>(minX, minY, minZ, maxX, maxY, maxZ)</returns>
         Private Function ComputeBoundingBox(vertices As Point3D()) As (minX As Double, minY As Double, minZ As Double, maxX As Double, maxY As Double, maxZ As Double)
-            Dim minX As Double = Double.MaxValue
-            Dim minY As Double = Double.MaxValue
-            Dim minZ As Double = Double.MaxValue
-            Dim maxX As Double = Double.MinValue
-            Dim maxY As Double = Double.MinValue
-            Dim maxZ As Double = Double.MinValue
+            Dim n As Integer = vertices.Length
+            Dim xs(n - 1) As Double
+            Dim ys(n - 1) As Double
+            Dim zs(n - 1) As Double
 
-            For Each v In vertices
-                If v.X < minX Then minX = v.X
-                If v.Y < minY Then minY = v.Y
-                If v.Z < minZ Then minZ = v.Z
-                If v.X > maxX Then maxX = v.X
-                If v.Y > maxY Then maxY = v.Y
-                If v.Z > maxZ Then maxZ = v.Z
+            For i As Integer = 0 To n - 1
+                xs(i) = vertices(i).X
+                ys(i) = vertices(i).Y
+                zs(i) = vertices(i).Z
             Next
 
-            Return (minX, minY, minZ, maxX, maxY, maxZ)
+            ' SimdReduce：Vector(Of Double) 逐块 Min/Max，顺序确定性内核
+            Return (SimdReduce.Min(xs), SimdReduce.Min(ys), SimdReduce.Min(zs),
+                    SimdReduce.Max(xs), SimdReduce.Max(ys), SimdReduce.Max(zs))
         End Function
 
         ''' <summary>
