@@ -45,11 +45,11 @@ Namespace Drawing3D.Math3D.Delaunay3D
         Const FaceMask As Long = &H1FFFFF
 
         ' 空腔收集的 InSphere 相对容差（坐标已归一化到单位盒）
-        Const InSphereEps As Double = 0.000000000001
+        Const InSphereEps As Double = 0.000000000000001
         ' 重复点判定阈值（归一化坐标空间）
         Const DuplicateEps As Double = 0.000000001
         ' 导出时体积退化阈值（6 倍有向体积，归一化空间）
-        Const VolumeEps As Double = 0.000000000000001
+        Const VolumeEps As Double = 0.00000000000001
 
         Dim _points As List(Of Point3D)
         Dim _wx As Double(), _wy As Double(), _wz As Double()
@@ -360,23 +360,34 @@ Namespace Drawing3D.Math3D.Delaunay3D
             Dim qy As Double = _wy(q)
             Dim qz As Double = _wz(q)
 
-            ' --- 点定位：从最近邻点的关联四面体出发 ---
-            Dim seeds As New List(Of Integer)
+            ' --- 点定位：最近邻点（重复检测）+ 直线行走定位包含新点的四面体 ---
             Dim nearestDist As Double = 0
             Dim nearest As OctreePoint(Of Integer) = _octree.Nearest(qx, qy, qz, nearestDist)
 
+            If nearestDist <> Double.PositiveInfinity AndAlso nearestDist < DuplicateEps Then
+                ' 重复点：跳过
+                _skipped += 1
+                Return
+            End If
+
+            Dim seeds As New List(Of Integer)
+
             If nearestDist <> Double.PositiveInfinity Then
-                If nearestDist < DuplicateEps Then
-                    ' 重复点：跳过
-                    _skipped += 1
-                    Return
-                End If
+                Dim start As Integer = -1
 
                 For Each t As Integer In _pointTets(nearest.Value)
-                    If _tets(t).Alive AndAlso Not seeds.Contains(t) Then
-                        seeds.Add(t)
+                    If _tets(t).Alive Then
+                        start = t
+                        Exit For
                     End If
                 Next
+
+                Dim containing As Integer = LocateContainingTet(qx, qy, qz, start)
+
+                If containing >= 0 Then
+                    ' 包含新点的四面体必然在外接球空腔内 -> BFS 从它出发完备
+                    seeds.Add(containing)
+                End If
             End If
 
             ' --- 收集坏四面体空腔 ---
@@ -402,9 +413,10 @@ Namespace Drawing3D.Math3D.Delaunay3D
             End If
 
             ' --- 空腔边界面：面邻居为空/已死（全局或暴露边界）或同样属于空腔 ---
-            ' 同一个面会被空腔两侧的坏四面体各报告一次，按面键去重
-            Dim boundary As New List(Of Integer())
-            Dim boundarySeen As New HashSet(Of Long)
+            ' 空腔内部面会被两侧的坏四面体各报告一次（计数 2），必须排除；
+            ' 只有恰好被报告一次（计数 1）的面才是真正的空腔边界面
+            Dim boundaryRaw As New Dictionary(Of Long, Integer())
+            Dim boundaryCount As New Dictionary(Of Long, Integer)
 
             For Each t As Integer In bad
                 Dim v As Integer() = _tets(t).V
@@ -414,12 +426,24 @@ Namespace Drawing3D.Math3D.Delaunay3D
 
                     If nb < 0 OrElse Not _tets(nb).Alive OrElse badSet.Contains(nb) Then
                         Dim key As Long = FaceKeyOf(t, slot)
+                        Dim triple As Integer() = {v((slot + 1) Mod 4), v((slot + 2) Mod 4), v((slot + 3) Mod 4)}
 
-                        If boundarySeen.Add(key) Then
-                            boundary.Add({v((slot + 1) Mod 4), v((slot + 2) Mod 4), v((slot + 3) Mod 4)})
+                        If Not boundaryRaw.ContainsKey(key) Then
+                            boundaryRaw(key) = triple
+                            boundaryCount(key) = 1
+                        Else
+                            boundaryCount(key) += 1
                         End If
                     End If
                 Next
+            Next
+
+            Dim boundary As New List(Of Integer())
+
+            For Each pair In boundaryRaw
+                If boundaryCount(pair.Key) = 1 Then
+                    boundary.Add(pair.Value)
+                End If
             Next
 
             ' --- 删除坏四面体 ---
@@ -542,6 +566,53 @@ Namespace Drawing3D.Math3D.Delaunay3D
                 End If
             End If
         End Sub
+
+        ''' <summary>
+        ''' 可见性行走（visibility walk）：从 <paramref name="start"/> 四面体出发，
+        ''' 每步跨越"将新点隔在外面"的面，直到找到包含新点的四面体。
+        ''' 返回 -1 表示行走失败（调用方应退回全量扫描）。
+        ''' </summary>
+        Private Function LocateContainingTet(qx As Double, qy As Double, qz As Double, start As Integer) As Integer
+            Dim current As Integer = start
+            Dim guard As Integer = 0
+
+            While current >= 0 AndAlso _tets(current).Alive AndAlso guard < 100000
+                guard += 1
+                Dim v As Integer() = _tets(current).V
+                Dim inside As Boolean = True
+
+                For slot As Integer = 0 To 3
+                    Dim opp As Integer = v(slot)
+                    ' 新点与对面顶点在面（其余三顶点构成）同侧 -> 该面不阻挡
+                    Dim dOpp As Double = FaceSide(v, slot, _wx(opp), _wy(opp), _wz(opp))
+                    Dim dQ As Double = FaceSide(v, slot, qx, qy, qz)
+
+                    If dOpp * dQ < 0 Then
+                        ' 新点被该面隔在外面 -> 跨越到邻居
+                        current = _tets(current).N(slot)
+                        inside = False
+                        Exit For
+                    End If
+                Next
+
+                If inside Then
+                    Return current
+                End If
+            End While
+
+            Return -1
+        End Function
+
+        ''' <summary>点 (px,py,pz) 相对四面体第 slot 个面（其余三顶点构成）平面的有向侧。</summary>
+        Private Function FaceSide(v As Integer(), slot As Integer, px As Double, py As Double, pz As Double) As Double
+            Dim a As Integer = v((slot + 1) Mod 4)
+            Dim b As Integer = v((slot + 2) Mod 4)
+            Dim c As Integer = v((slot + 3) Mod 4)
+            Dim bx As Double = _wx(b) - _wx(a), by As Double = _wy(b) - _wy(a), bz As Double = _wz(b) - _wz(a)
+            Dim cx As Double = _wx(c) - _wx(a), cy As Double = _wy(c) - _wy(a), cz As Double = _wz(c) - _wz(a)
+            Dim dx As Double = px - _wx(a), dy As Double = py - _wy(a), dz As Double = pz - _wz(a)
+            Return bx * (cy * dz - cz * dy) + by * (cz * dx - cx * dz) + bz * (cx * dy - cy * dx)
+        End Function
 
         Private Sub collectCavity(qx As Double, qy As Double, qz As Double,
                                   seeds As IEnumerable(Of Integer),
