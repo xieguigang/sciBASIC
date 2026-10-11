@@ -443,7 +443,7 @@ Namespace Voxelization
     End Function
 
     ''' <summary>体素列索引夹取到 [0, n-1]。</summary>
-    Private Shared Function ClampIndex(v As Double, n As Integer) As Integer
+    Private Function ClampIndex(v As Double, n As Integer) As Integer
         Dim i As Integer = CInt(v)
         If i < 0 Then i = 0
         If i > n - 1 Then i = n - 1
@@ -556,7 +556,7 @@ Namespace Voxelization
     ''' 标量 Möller–Trumbore 求交（使用预计算常量）。
     ''' 返回参数化距离 t；不相交返回 NaN。
     ''' </summary>
-    Private Shared Function ScalarIntersect(f As Double(), v0x As Double(), v0y As Double(), sz As Double(),
+    Private Function ScalarIntersect(f As Double(), v0x As Double(), v0y As Double(), sz As Double(),
                                             e1x As Double(), e1y As Double(), e1z As Double(),
                                             e2x As Double(), e2y As Double(), e2z As Double(),
                                             t As Integer, ox As Double, oy As Double) As Double
@@ -588,10 +588,17 @@ Namespace Voxelization
 #Region "核心算法 —— 列扫描体素化"
 
         ''' <summary>
-        ''' 列扫描体素化的内部实现。
+        ''' 列扫描体素化的内部实现（并行 + SIMD 版本）。
         '''
-        ''' 对每个 (x, y) 列沿 Z 轴发射射线，收集与所有三角形的交点，
-        ''' 排序后在交点对之间将体素标记为 True（固体内部）。
+        ''' 优化结构：
+        '''     1. 三角形常量预计算（SoA）：h/a/f/sz 只算一次，求交化简为纯乘加；
+        '''     2. XY 空间分箱（CSR）：每列只测试覆盖它的三角形；
+        '''     3. Parallel.For 按 X 行并行：各列写 shape 的索引区间不相交，
+        '''        交点列表 / 排序 / 合并全部线程局部化；
+        '''     4. 列内连续分箱段走 Vector(Of Double) 批量求交（标量复核 + 尾部）。
+        '''
+        ''' 结果语义与原串行实现一致（浮点求交顺序差异可能引起
+        ''' 边界格点的微量差异，见公共 API 文档）。
         ''' </summary>
         ''' <param name="triangles">三角面列表（已从 SceneModel 中提取）</param>
         ''' <param name="width">X 轴体素数量</param>
@@ -615,67 +622,78 @@ Namespace Voxelization
             Dim totalVoxels As Long = CLng(width) * height * depth
             Dim shape As Boolean() = New Boolean(CInt(totalVoxels - 1)) {}
 
-            ' 射线方向（沿 +Z 轴，长度覆盖整个 depth）
-            Dim rayDir = New Point3D(0, 0, 1)
+            If triangles.Count = 0 Then
+                Return shape
+            End If
 
-            ' 用于暂存每条射线的交点列表
-            Dim intersections As New List(Of Double)(capacity:=128)
+            ' 射线起点：列中心，Z 轴从包围盒下方略微偏移开始（与原实现一致）
+            Dim rayOriginZ As Double = minZ - voxelSize * 0.5
 
-            ' 遍历每一列 (x, y)
-            For x As Integer = 0 To width - 1
-                Dim worldX As Double = minX + (x + 0.5) * voxelSize
+            ' ---- 1. 常量预计算 + 2. XY 空间分箱 ----
+            Dim batch As TriangleBatch = BuildBatch(triangles, rayOriginZ)
 
-                For y As Integer = 0 To height - 1
-                    Dim worldY As Double = minY + (y + 0.5) * voxelSize
+            If batch.Count = 0 Then
+                Return shape
+            End If
 
-                    ' 射线起点：列中心，Z 轴从包围盒下方略微偏移开始
-                    Dim rayOrigin = New Point3D(worldX, worldY, minZ - voxelSize * 0.5)
-                    intersections.Clear()
+            Dim bins As ColumnBins = BuildColumnBins(batch, width, height, minX, minY, voxelSize)
 
-                    ' 与所有三角形求交，收集交点 Z 坐标
-                    For Each tri In triangles
-                        Dim t As Double = 0
-                        If RayTriangleIntersect(rayOrigin, rayDir, tri.v1, tri.v2, tri.v3, t) Then
-                            Dim zHit As Double = rayOrigin.Z + t
-                            intersections.Add(zHit)
+            ' ---- 3. 按行并行扫描 ----
+            Parallel.For(0, width,
+                Sub(x As Integer)
+                    ' 线程局部交点列表（原共享 List 在并行下不安全，已局部化）
+                    Dim intersections As New List(Of Double)(capacity:=64)
+                    Dim worldX As Double = minX + (x + 0.5) * voxelSize
+                    Dim rowBase As Integer = x * height
+
+                    For y As Integer = 0 To height - 1
+                        Dim col As Integer = rowBase + y
+                        Dim p0 As Integer = bins.ColPtr(col)
+                        Dim cnt As Integer = bins.ColPtr(col + 1) - p0
+                        intersections.Clear()
+
+                        ' 与该列覆盖的三角形求交，收集交点 Z 坐标
+                        If cnt > 0 Then
+                            Call CollectIntersections(bins, p0, cnt,
+                                                      worldX, minY + (y + 0.5) * voxelSize,
+                                                      rayOriginZ, intersections)
                         End If
-                    Next
 
-                    ' 如果没有交点或只有一个交点（射线擦过边缘），整列标记为 False
-                    If intersections.Count < 2 Then
-                        Continue For
-                    End If
+                        ' 如果没有交点或只有一个交点（射线擦过边缘），整列标记为 False
+                        If intersections.Count < 2 Then
+                            Continue For
+                        End If
 
-                    ' 按 Z 坐标排序交点
-                    intersections.Sort()
+                        ' 按 Z 坐标排序交点
+                        intersections.Sort()
 
-                    ' 过滤掉过于接近的重复交点（同一顶点/边的多次命中）
-                    intersections = MergeCloseIntersections(intersections, voxelSize * 0.01)
+                        ' 过滤掉过于接近的重复交点（同一顶点/边的多次命中）
+                        intersections = MergeCloseIntersections(intersections, voxelSize * 0.01)
 
-                    ' 交点对之间的体素标记为 True（固体内部）
-                    ' z0,z1 → internal, z2,z3 → internal, ...
-                    For i As Integer = 0 To intersections.Count - 1 Step 2
-                        If i + 1 >= intersections.Count Then Exit For
+                        ' 交点对之间的体素标记为 True（固体内部）
+                        ' z0,z1 → internal, z2,z3 → internal, ...
+                        For i As Integer = 0 To intersections.Count - 1 Step 2
+                            If i + 1 >= intersections.Count Then Exit For
 
-                        Dim zEntry As Double = intersections(i)
-                        Dim zExit As Double = intersections(i + 1)
+                            Dim zEntry As Double = intersections(i)
+                            Dim zExit As Double = intersections(i + 1)
 
-                        ' 找到对应的体素 Z 索引范围
-                        Dim zStart As Integer = CInt(std.Floor((zEntry - minZ) / voxelSize))
-                        Dim zEnd As Integer = CInt(std.Ceiling((zExit - minZ) / voxelSize)) - 1
+                            ' 找到对应的体素 Z 索引范围
+                            Dim zStart As Integer = CInt(std.Floor((zEntry - minZ) / voxelSize))
+                            Dim zEnd As Integer = CInt(std.Ceiling((zExit - minZ) / voxelSize)) - 1
 
-                        If zStart < 0 Then zStart = 0
-                        If zEnd >= depth Then zEnd = depth - 1
+                            If zStart < 0 Then zStart = 0
+                            If zEnd >= depth Then zEnd = depth - 1
 
-                        For z As Integer = zStart To zEnd
-                            If z >= 0 AndAlso z < depth Then
-                                Dim idx As Integer = (x * height + y) * depth + z
-                                shape(idx) = True
-                            End If
+                            For z As Integer = zStart To zEnd
+                                If z >= 0 AndAlso z < depth Then
+                                    Dim idx As Integer = (x * height + y) * depth + z
+                                    shape(idx) = True
+                                End If
+                            Next
                         Next
                     Next
-                Next
-            Next
+                End Sub)
 
             Return shape
         End Function
