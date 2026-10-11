@@ -162,14 +162,14 @@ Namespace Runtime
         ''' <summary>系统中 NVIDIA GPU 的数量</summary>
         Public Function DeviceCount() As Integer
             Dim count As Integer = 0
-            Check(nvmlDeviceGetCount(count), "nvmlDeviceGetCount")
+            NvmlApi.Check(nvmlDeviceGetCount(count), "nvmlDeviceGetCount")
             Return count
         End Function
 
         ''' <summary>按序号取得设备句柄封装</summary>
         Public Function GetDevice(index As Integer) As NvmlDevice
             Dim handle As IntPtr = IntPtr.Zero
-            Check(nvmlDeviceGetHandleByIndex(index, handle), "nvmlDeviceGetHandleByIndex")
+            NvmlApi.Check(nvmlDeviceGetHandleByIndex(index, handle), "nvmlDeviceGetHandleByIndex")
             Return New NvmlDevice(index, handle)
         End Function
 
