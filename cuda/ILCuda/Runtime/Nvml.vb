@@ -210,6 +210,19 @@ Namespace Runtime
             End Get
         End Property
 
+        ''' <summary>
+        ''' 安全调用 NVML 入口：捕获一切异常（含 EntryPointNotFoundException，
+        ''' 即该驱动版本的 nvml.dll 未导出此函数），统一返回
+        ''' NVML_ERROR_FUNCTION_NOT_FOUND，使上层把缺失能力当作"不支持"而非崩溃。
+        ''' </summary>
+        Private Function CallStatus(action As Func(Of nvmlReturnT)) As nvmlReturnT
+            Try
+                Return action()
+            Catch
+                Return nvmlReturnT.NVML_ERROR_FUNCTION_NOT_FOUND
+            End Try
+        End Function
+
         ''' <summary>设备名称，例如 "NVIDIA RTX A4000"</summary>
         Public ReadOnly Property Name As String
             Get
@@ -256,7 +269,7 @@ Namespace Runtime
         Public Function GetCudaComputeCapability() As (major As Integer, minor As Integer)
             Dim major As Integer = 0
             Dim minor As Integer = 0
-            If nvmlDeviceGetCudaComputeCapability(_handle, major, minor) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetCudaComputeCapability(_handle, major, minor)) = nvmlReturnT.NVML_SUCCESS Then
                 Return (major, minor)
             End If
             Return (-1, -1)
@@ -266,8 +279,8 @@ Namespace Runtime
         Public Function GetPcieLink() As (gen As Integer, width As Integer)
             Dim gen As UInteger = 0
             Dim width As UInteger = 0
-            Dim gOk = nvmlDeviceGetPcieLinkGen(_handle, gen)
-            Dim wOk = nvmlDeviceGetPcieLinkWidth(_handle, width)
+            Dim gOk = CallStatus(Function() nvmlDeviceGetPcieLinkGen(_handle, gen))
+            Dim wOk = CallStatus(Function() nvmlDeviceGetPcieLinkWidth(_handle, width))
             Return (If(gOk = nvmlReturnT.NVML_SUCCESS, CInt(gen), -1),
                     If(wOk = nvmlReturnT.NVML_SUCCESS, CInt(width), -1))
         End Function
@@ -275,7 +288,7 @@ Namespace Runtime
         ''' <summary>SM 活跃占比与显存控制器带宽占比（%）；不支持时 -1</summary>
         Public Function GetUtilization() As NvmlUtilization
             Dim u As New nvmlUtilization_t()
-            If nvmlDeviceGetUtilizationRates(_handle, u) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetUtilizationRates(_handle, u)) = nvmlReturnT.NVML_SUCCESS Then
                 Return New NvmlUtilization With {
                     .GpuPercent = CInt(u.gpu),
                     .MemoryControllerPercent = CInt(u.memory)
@@ -291,12 +304,12 @@ Namespace Runtime
         Public Function GetMemoryInfo() As NvmlMemory
             Dim m As New nvmlMemory_v2_t()
             m.version = MemoryV2Version()
-            If nvmlDeviceGetMemoryInfo_v2(_handle, m) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetMemoryInfo_v2(_handle, m)) = nvmlReturnT.NVML_SUCCESS Then
                 Return New NvmlMemory With {.UsedBytes = m.used, .TotalBytes = m.total, .Available = True}
             End If
 
             Dim m1 As New nvmlMemory_t()
-            If nvmlDeviceGetMemoryInfo(_handle, m1) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetMemoryInfo(_handle, m1)) = nvmlReturnT.NVML_SUCCESS Then
                 Return New NvmlMemory With {.UsedBytes = m1.used, .TotalBytes = m1.total, .Available = True}
             End If
 
@@ -307,8 +320,8 @@ Namespace Runtime
         Public Function GetPcieThroughput() As NvmlPcie
             Dim tx As UInteger = 0
             Dim rx As UInteger = 0
-            Dim tOk = nvmlDeviceGetPcieThroughput(_handle, nvmlPcieUtilizationCounter_t.NVML_PCIE_UTIL_TX, tx)
-            Dim rOk = nvmlDeviceGetPcieThroughput(_handle, nvmlPcieUtilizationCounter_t.NVML_PCIE_UTIL_RX, rx)
+            Dim tOk = CallStatus(Function() nvmlDeviceGetPcieThroughput(_handle, nvmlPcieUtilizationCounter_t.NVML_PCIE_UTIL_TX, tx))
+            Dim rOk = CallStatus(Function() nvmlDeviceGetPcieThroughput(_handle, nvmlPcieUtilizationCounter_t.NVML_PCIE_UTIL_RX, rx))
             Return New NvmlPcie With {
                 .TxMBps = If(tOk = nvmlReturnT.NVML_SUCCESS, tx / 1024.0, -1),
                 .RxMBps = If(rOk = nvmlReturnT.NVML_SUCCESS, rx / 1024.0, -1)
@@ -318,7 +331,7 @@ Namespace Runtime
         ''' <summary>功耗（瓦）；不支持时 -1</summary>
         Public Function GetPowerWatts() As Double
             Dim mw As UInteger = 0
-            If nvmlDeviceGetPowerUsage(_handle, mw) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetPowerUsage(_handle, mw)) = nvmlReturnT.NVML_SUCCESS Then
                 Return mw / 1000.0
             End If
             Return -1
@@ -327,7 +340,7 @@ Namespace Runtime
         ''' <summary>核心温度（℃）；不支持时 -1</summary>
         Public Function GetTemperatureC() As Integer
             Dim t As UInteger = 0
-            If nvmlDeviceGetTemperature(_handle, nvmlTemperatureSensors_t.NVML_TEMPERATURE_GPU, t) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetTemperature(_handle, nvmlTemperatureSensors_t.NVML_TEMPERATURE_GPU, t)) = nvmlReturnT.NVML_SUCCESS Then
                 Return CInt(t)
             End If
             Return -1
@@ -336,7 +349,7 @@ Namespace Runtime
         ''' <summary>时钟频率（MHz）；不支持时 -1</summary>
         Public Function GetClock(kind As nvmlClockType_t) As Integer
             Dim c As UInteger = 0
-            If nvmlDeviceGetClockInfo(_handle, kind, c) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetClockInfo(_handle, kind, c)) = nvmlReturnT.NVML_SUCCESS Then
                 Return CInt(c)
             End If
             Return -1
@@ -345,7 +358,7 @@ Namespace Runtime
         ''' <summary>风扇转速（%）；不支持时 -1</summary>
         Public Function GetFanSpeedPercent() As Integer
             Dim s As UInteger = 0
-            If nvmlDeviceGetFanSpeed(_handle, s) = nvmlReturnT.NVML_SUCCESS Then
+            If CallStatus(Function() nvmlDeviceGetFanSpeed(_handle, s)) = nvmlReturnT.NVML_SUCCESS Then
                 Return CInt(s)
             End If
             Return -1
@@ -357,8 +370,8 @@ Namespace Runtime
             Dim encPeriod As UInteger = 0
             Dim dec As UInteger = 0
             Dim decPeriod As UInteger = 0
-            Dim eOk = nvmlDeviceGetEncoderUtilization(_handle, enc, encPeriod)
-            Dim dOk = nvmlDeviceGetDecoderUtilization(_handle, dec, decPeriod)
+            Dim eOk = CallStatus(Function() nvmlDeviceGetEncoderUtilization(_handle, enc, encPeriod))
+            Dim dOk = CallStatus(Function() nvmlDeviceGetDecoderUtilization(_handle, dec, decPeriod))
             Return (If(eOk = nvmlReturnT.NVML_SUCCESS, CInt(enc), -1),
                     If(dOk = nvmlReturnT.NVML_SUCCESS, CInt(dec), -1))
         End Function

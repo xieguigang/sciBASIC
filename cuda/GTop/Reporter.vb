@@ -252,10 +252,10 @@ Public Module Reporter
         If filled < 0 Then filled = 0
         If filled > width Then filled = width
 
-        Dim bar = New String("#"c, filled) & New String("-"c, width - filled)
+        Dim barText = New String("#"c, filled) & New String("-"c, width - filled)
 
         If Not useColor Then
-            Return $"  {label}: [{bar}] {percent}%"
+            Return $"  {label}: [{barText}] {percent}%"
         End If
 
         Dim color As AnsiColor
@@ -267,7 +267,7 @@ Public Module Reporter
             color = AnsiColor.BrightRed
         End If
 
-        Return $"  {label}: [{color.GetEscapeSequence()}{bar}{AnsiEscapeCodes.Reset}] {percent}%"
+        Return $"  {label}: [{color.GetEscapeSequence()}{barText}{AnsiEscapeCodes.Reset}] {percent}%"
     End Function
 
     Private Sub AddRow(rows As List(Of Object()), name As String, value As String)
