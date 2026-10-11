@@ -114,13 +114,14 @@ Namespace ComponentModel.DataStructures
             Dim cx As Double = CenterX
             Dim cy As Double = CenterY
             Dim cz As Double = CenterZ
-            Dim minX As Double = If((index And 1) = 1, cx, MinX)
-            Dim maxX As Double = If((index And 1) = 1, MaxX, cx)
-            Dim minY As Double = If((index And 2) = 2, cy, MinY)
-            Dim maxY As Double = If((index And 2) = 2, MaxY, cy)
-            Dim minZ As Double = If((index And 4) = 4, cz, MinZ)
-            Dim maxZ As Double = If((index And 4) = 4, MaxZ, cz)
-            Return New BoundingBox3D(minX, minY, minZ, maxX, maxY, maxZ)
+            ' 注意：局部变量不能与字段 MinX/MaxX 等仅大小写不同（VB 不区分大小写会遮蔽字段）
+            Dim loX As Double = If((index And 1) = 1, cx, MinX)
+            Dim hiX As Double = If((index And 1) = 1, MaxX, cx)
+            Dim loY As Double = If((index And 2) = 2, cy, MinY)
+            Dim hiY As Double = If((index And 2) = 2, MaxY, cy)
+            Dim loZ As Double = If((index And 4) = 4, cz, MinZ)
+            Dim hiZ As Double = If((index And 4) = 4, MaxZ, cz)
+            Return New BoundingBox3D(loX, loY, loZ, hiX, hiY, hiZ)
         End Function
 
         Public Overrides Function ToString() As String
