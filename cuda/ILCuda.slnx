@@ -16,6 +16,9 @@
       <Platform Solution="Debug|x64" Project="x64" />
     </Project>
   </Folder>
+  <Project Path="GTop/GTop.vbproj" Id="185d6c5a-b8a7-45ed-be6e-07dfad15c78e">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
   <Project Path="ILCuda/ILCuda.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
