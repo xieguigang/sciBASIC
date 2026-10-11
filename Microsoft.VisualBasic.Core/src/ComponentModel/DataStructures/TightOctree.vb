@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 Namespace ComponentModel.DataStructures
 
     ''' <summary>
@@ -159,6 +161,33 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         Public Sub RefineToUniform(targetDepth As Integer)
             Call Refine(Function(b, depth) depth < targetDepth)
+        End Sub
+
+        ''' <summary>
+        ''' 边界自适应细分：递归细分所有与负载项（几何边界）相交、
+        ''' 且尺寸大于 <paramref name="minCellSize"/> 的叶子单元（受 maxDepth 硬上限保护）。
+        ''' 这是笛卡尔八叉树网格的标准生成方式：远场保持粗单元，壁面附近细化至目标尺度。
+        ''' </summary>
+        Public Sub RefineBoundaryCells(minCellSize As Double)
+            Call refineBoundaryNode(minCellSize)
+        End Sub
+
+        Private Sub refineBoundaryNode(minCellSize As Double)
+            If IsLeaf Then
+                If _depth < _maxDepth AndAlso _items.Count > 0 AndAlso
+                    std.Max(std.Max(_bounds.SizeX, _bounds.SizeY), _bounds.SizeZ) > minCellSize Then
+
+                    Call subdivide()
+                Else
+                    Return
+                End If
+            End If
+
+            If Not IsLeaf Then
+                For Each child As TightOctree(Of T) In _children
+                    Call child.refineBoundaryNode(minCellSize)
+                Next
+            End If
         End Sub
 
         Private Sub subdivide()
