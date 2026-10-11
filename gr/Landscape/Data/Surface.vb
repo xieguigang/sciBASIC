@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
@@ -67,7 +68,7 @@ Namespace Data
     ''' 2017.1.30
     ''' 由于受到XML序列化的限制，这里就不再实现这个枚举接口了
     ''' </remarks>
-    Public Class Surface ': Implements IEnumerable(Of Point3D)
+    Public Class Surface : Implements Enumeration(Of Vertex)
 
         ''' <summary>
         ''' 请注意，在这里面的点都是有先后顺序分别的，为了模型文件的XML文档结构的可读性，
@@ -83,13 +84,31 @@ Namespace Data
         <XmlAttribute>
         Public Property paint As String
 
+        Shared ReadOnly textures As New Dictionary(Of String, String)
+
         ''' <summary>
         ''' 将<see cref="paint"/>资源字符串转换为相对应的<see cref="Brush"/>画刷对象.
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Brush As Brush
             Get
-                Return paint.GetBrush
+                Dim paint As String = If(Me.paint, "")
+
+                If textures.ContainsKey(paint) Then
+                    Return textures(paint).GetBrush
+                End If
+
+                Try
+                    Return paint.GetBrush
+                Catch ex As Exception
+                    Dim color As String = CustomDesigns.TextToColorHex(paint)
+
+                    ' handling of the missing texture brush data
+                    Call textures.Add(paint, color)
+                    Call App.LogException(ex)
+
+                    Return New SolidBrush(color.TranslateColor)
+                End Try
             End Get
         End Property
 
@@ -102,6 +121,12 @@ Namespace Data
 
         Public Overrides Function ToString() As String
             Return paint
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Vertex) Implements Enumeration(Of Vertex).GenericEnumerator
+            For Each v As Vertex In vertices
+                Yield v
+            Next
         End Function
     End Class
 End Namespace
