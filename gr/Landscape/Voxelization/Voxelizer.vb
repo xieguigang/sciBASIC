@@ -262,78 +262,326 @@ Namespace Voxelization
 
 #End Region
 
-#Region "核心算法 —— Möller–Trumbore 射线-三角形相交"
+#Region "核心算法 —— 三角形常量预计算（SoA）与 XY 空间分箱"
 
-        ''' <summary>
-        ''' Möller–Trumbore 射线-三角形快速相交检测。
-        ''' </summary>
-        ''' <param name="rayOrigin">射线起点</param>
-        ''' <param name="rayDir">射线方向（不需要单位化）</param>
-        ''' <param name="v0">三角形顶点0</param>
-        ''' <param name="v1">三角形顶点1</param>
-        ''' <param name="v2">三角形顶点2</param>
-        ''' <param name="t">输出：交点到射线起点的参数化距离</param>
-        ''' <returns>True 表示射线与三角形相交，结果写入 t；否则 False</returns>
-        ''' <remarks>
-        ''' 参考资料: Möller, T., &amp; Trumbore, B. (1997).
-        ''' "Fast, Minimum Storage Ray-Triangle Intersection."
-        ''' Journal of Graphics Tools, 2(1), 21–28.
-        ''' </remarks>
-        Private Function RayTriangleIntersect(
-                rayOrigin As Point3D,
-                rayDir As Point3D,
-                v0 As Point3D,
-                v1 As Point3D,
-                v2 As Point3D,
-                ByRef t As Double) As Boolean
+    ''' <summary>
+    ''' Möller–Trumbore 退化判定阈值（与原实现一致的 EPSILON）
+    ''' </summary>
+    Friend Const RayEpsilon As Double = 0.0000001
 
-            Const EPSILON As Double = 0.0000001
+    ''' <summary>
+    ''' 三角形批量求交的预计算数据（SoA 布局）。
+    '''
+    ''' 列扫描的射线方向固定为 +Z，因此
+    ''' <c>h = rayDir × e2 = (−e2y, e2x, 0)</c>，从而
+    ''' <c>a = e1·h</c> 与 <c>f = 1/a</c> 均为三角形常量；
+    ''' 又因所有射线的起点 Z 坐标相同（<c>rayOriginZ</c>），
+    ''' <c>sz = rayOriginZ − v0z</c> 亦为常量。
+    ''' 预计算后每对（射线，三角形）的求交化简为纯标量乘加，
+    ''' 且可对整段 SoA 数据做 <see cref="Vector(Of Double)"/> 批量运算。
+    ''' </summary>
+    Private Class TriangleBatch
 
-            ' 边向量
-            Dim edge1 = v1.subtract(v0)   ' v1 - v0
-            Dim edge2 = v2.subtract(v0)   ' v2 - v0
+        ''' <summary>通过退化过滤（|a| ≥ eps）的三角形数量。</summary>
+        Public Count As Integer
 
-            ' h = rayDir × edge2
-            Dim h = Point3D.Cross(rayDir, edge2)
+        Public V0x As Double(), V0y As Double(), Sz As Double()
+        ''' <summary>1/a（行列式倒数）。</summary>
+        Public F As Double()
+        Public E1x As Double(), E1y As Double(), E1z As Double()
+        Public E2x As Double(), E2y As Double(), E2z As Double()
 
-            ' a = edge1 · h  (行列式的值)
-            Dim a = Point3D.Dot(edge1, h)
+        ''' <summary>三角形 XY 包围盒（世界坐标，分箱用）。</summary>
+        Public BMinX As Double(), BMaxX As Double(), BMinY As Double(), BMaxY As Double()
 
-            ' 射线平行于三角形平面 → 不相交
-            If std.Abs(a) < EPSILON Then
-                Return False
+    End Class
+
+    ''' <summary>
+    ''' 从三角形列表构建 SoA 预计算批数据：
+    ''' 预计算 f = 1/(e1·h)、sz = rayOriginZ − v0z 与 XY 包围盒，
+    ''' 过滤 |a| &lt; eps 的退化三角形（与原 RayTriangleIntersect 行为一致）。
+    ''' </summary>
+    Private Function BuildBatch(triangles As List(Of (v1 As Point3D, v2 As Point3D, v3 As Point3D)),
+                                rayOriginZ As Double) As TriangleBatch
+        Dim n As Integer = triangles.Count
+        Dim b As New TriangleBatch With {
+            .Count = 0,
+            .V0x = New Double(n - 1) {}, .V0y = New Double(n - 1) {}, .Sz = New Double(n - 1) {},
+            .F = New Double(n - 1) {},
+            .E1x = New Double(n - 1) {}, .E1y = New Double(n - 1) {}, .E1z = New Double(n - 1) {},
+            .E2x = New Double(n - 1) {}, .E2y = New Double(n - 1) {}, .E2z = New Double(n - 1) {},
+            .BMinX = New Double(n - 1) {}, .BMaxX = New Double(n - 1) {},
+            .BMinY = New Double(n - 1) {}, .BMaxY = New Double(n - 1) {}
+        }
+
+        For Each tri In triangles
+            Dim v0x = tri.v1.X, v0y = tri.v1.Y, v0z = tri.v1.Z
+            Dim e1x = tri.v2.X - v0x, e1y = tri.v2.Y - v0y, e1z = tri.v2.Z - v0z
+            Dim e2x = tri.v3.X - v0x, e2y = tri.v3.Y - v0y, e2z = tri.v3.Z - v0z
+
+            ' h = rayDir × e2 = (−e2y, e2x, 0)，a = e1·h
+            Dim a As Double = -e1x * e2y + e1y * e2x
+
+            If std.Abs(a) < RayEpsilon Then
+                Continue For   ' 射线平行于三角形平面，永不相交
             End If
 
-            Dim f = 1.0 / a
+            Dim m As Integer = b.Count
 
-            ' s = rayOrigin - v0
-            Dim s = rayOrigin.subtract(v0)
+            b.V0x(m) = v0x
+            b.V0y(m) = v0y
+            b.Sz(m) = rayOriginZ - v0z
+            b.F(m) = 1.0 / a
+            b.E1x(m) = e1x : b.E1y(m) = e1y : b.E1z(m) = e1z
+            b.E2x(m) = e2x : b.E2y(m) = e2y : b.E2z(m) = e2z
+            b.BMinX(m) = std.Min(v0x, std.Min(v0x + e1x, v0x + e2x))
+            b.BMaxX(m) = std.Max(v0x, std.Max(v0x + e1x, v0x + e2x))
+            b.BMinY(m) = std.Min(v0y, std.Min(v0y + e1y, v0y + e2y))
+            b.BMaxY(m) = std.Max(v0y, std.Max(v0y + e1y, v0y + e2y))
 
-            ' u = f * (s · h)
-            Dim u = f * Point3D.Dot(s, h)
+            b.Count = m + 1
+        Next
 
-            ' u 超出 [0, 1] → 不相交
-            If u < 0.0 OrElse u > 1.0 Then
-                Return False
+        Return b
+    End Function
+
+    ''' <summary>
+    ''' XY 空间分箱结果（CSR 紧凑布局）：
+    ''' 列 c 的三角形批数据位于各 SoA 数组的 [ColPtr(c), ColPtr(c+1)) 区间，
+    ''' 列内连续 —— 使单列批量求交可以走无 gather 的
+    ''' <see cref="Vector(Of Double)"/> 切片运算。
+    ''' </summary>
+    Private Class ColumnBins
+
+        ''' <summary>列前缀和（长度 width*height + 1）。</summary>
+        Public ColPtr As Integer()
+
+        ''' <summary>分箱后的三角形常量总数。</summary>
+        Public Total As Integer
+
+        Public F As Double(), V0x As Double(), V0y As Double(), Sz As Double()
+        Public E1x As Double(), E1y As Double(), E1z As Double()
+        Public E2x As Double(), E2y As Double(), E2z As Double()
+
+    End Class
+
+    ''' <summary>
+    ''' 按三角形 XY 包围盒落入的体素列区间建桶（CSR 两趟填充）：
+    ''' 每列只测试覆盖它的三角形，消除「每列遍历全部三角形」的无效求交。
+    ''' </summary>
+    Private Function BuildColumnBins(b As TriangleBatch,
+                                     width As Integer, height As Integer,
+                                     minX As Double, minY As Double,
+                                     voxelSize As Double) As ColumnBins
+        Dim cols As Integer = width * height
+        Dim counts(cols) As Integer   ' 末位留给前缀和
+        Dim invVoxel As Double = 1.0 / voxelSize
+
+        ' ---- Pass 1：统计每列桶大小 ----
+        For t As Integer = 0 To b.Count - 1
+            Dim x0 As Integer = ClampIndex(std.Floor((b.BMinX(t) - minX) * invVoxel - 0.5), width)
+            Dim x1 As Integer = ClampIndex(std.Floor((b.BMaxX(t) - minX) * invVoxel - 0.5), width)
+            Dim y0 As Integer = ClampIndex(std.Floor((b.BMinY(t) - minY) * invVoxel - 0.5), height)
+            Dim y1 As Integer = ClampIndex(std.Floor((b.BMaxY(t) - minY) * invVoxel - 0.5), height)
+
+            For x As Integer = x0 To x1
+                Dim rowBase As Integer = x * height
+                For y As Integer = y0 To y1
+                    counts(rowBase + y) += 1
+                Next
+            Next
+        Next
+
+        ' ---- 前缀和 ----
+        Dim bins As New ColumnBins With {.ColPtr = New Integer(cols) {}}
+
+        For c As Integer = 0 To cols - 1
+            bins.ColPtr(c + 1) = bins.ColPtr(c) + counts(c)
+        Next
+
+        bins.Total = bins.ColPtr(cols)
+
+        If bins.Total = 0 Then
+            Return bins
+        End If
+
+        ' ---- CSR SoA 分配 ----
+        Dim total As Integer = bins.Total
+
+        bins.F = New Double(total - 1) {}
+        bins.V0x = New Double(total - 1) {} : bins.V0y = New Double(total - 1) {}
+        bins.Sz = New Double(total - 1) {}
+        bins.E1x = New Double(total - 1) {} : bins.E1y = New Double(total - 1) {} : bins.E1z = New Double(total - 1) {}
+        bins.E2x = New Double(total - 1) {} : bins.E2y = New Double(total - 1) {} : bins.E2z = New Double(total - 1) {}
+
+        Dim cursor(cols - 1) As Integer
+        Call Array.Copy(bins.ColPtr, cursor, cols)
+
+        ' ---- Pass 2：按同一遍历顺序填充（保证与 Pass 1 计数一致）----
+        For t As Integer = 0 To b.Count - 1
+            Dim x0 As Integer = ClampIndex(std.Floor((b.BMinX(t) - minX) * invVoxel - 0.5), width)
+            Dim x1 As Integer = ClampIndex(std.Floor((b.BMaxX(t) - minX) * invVoxel - 0.5), width)
+            Dim y0 As Integer = ClampIndex(std.Floor((b.BMinY(t) - minY) * invVoxel - 0.5), height)
+            Dim y1 As Integer = ClampIndex(std.Floor((b.BMaxY(t) - minY) * invVoxel - 0.5), height)
+
+            For x As Integer = x0 To x1
+                Dim rowBase As Integer = x * height
+                For y As Integer = y0 To y1
+                    Dim p As Integer = cursor(rowBase + y)
+                    cursor(rowBase + y) = p + 1
+
+                    bins.F(p) = b.F(t)
+                    bins.V0x(p) = b.V0x(t) : bins.V0y(p) = b.V0y(t)
+                    bins.Sz(p) = b.Sz(t)
+                    bins.E1x(p) = b.E1x(t) : bins.E1y(p) = b.E1y(t) : bins.E1z(p) = b.E1z(t)
+                    bins.E2x(p) = b.E2x(t) : bins.E2y(p) = b.E2y(t) : bins.E2z(p) = b.E2z(t)
+                Next
+            Next
+        Next
+
+        Return bins
+    End Function
+
+    ''' <summary>体素列索引夹取到 [0, n-1]。</summary>
+    Private Shared Function ClampIndex(v As Double, n As Integer) As Integer
+        Dim i As Integer = CInt(v)
+        If i < 0 Then i = 0
+        If i > n - 1 Then i = n - 1
+        Return i
+    End Function
+
+#End Region
+
+#Region "核心算法 —— SIMD 批量射线-三角形求交"
+
+    ''' <summary>
+    ''' 对单列的一个连续分箱段（SoA，[offset, offset+count)）做
+    ''' <see cref="Vector(Of Double)"/> 批量 Möller–Trumbore 求交：
+    '''
+    ''' 对固定 +Z 射线（起点 (ox, oy, rayOriginZ)）：
+    ''' <code>
+    ''' s  = (ox − v0x, oy − v0y, rayOriginZ − v0z)   [z 分量为三角形常量 sz]
+    ''' u  = f·(−sx·e2y + sy·e2x)                     [= f·(s·h)]
+    ''' v  = f·( sx·e1y − sy·e1x)                     [= f·(rayDir·q), q = s×e1]
+    ''' t  = f·(e2·q)
+    ''' </code>
+    ''' u/v/t 全部以向量切片计算，掩码筛出命中通道后标量复核收集交点 Z 值。
+    ''' </summary>
+    Private Sub CollectIntersections(bins As ColumnBins, offset As Integer, count As Integer,
+                                     ox As Double, oy As Double, rayOriginZ As Double,
+                                     hits As List(Of Double))
+        Dim f = bins.F, v0x = bins.V0x, v0y = bins.V0y, sz = bins.Sz
+        Dim e1x = bins.E1x, e1y = bins.E1y, e1z = bins.E1z
+        Dim e2x = bins.E2x, e2y = bins.E2y, e2z = bins.E2z
+
+        Dim vOx As New Vector(Of Double)(ox)
+        Dim vOy As New Vector(Of Double)(oy)
+        Dim vZero As New Vector(Of Double)(0.0)
+        Dim vOne As New Vector(Of Double)(1.0)
+        Dim vEps As New Vector(Of Double)(RayEpsilon)
+
+        Dim W As Integer = Vector(Of Double).Count
+        Dim i As Integer = offset
+        Dim vecEnd As Integer = offset + (count \ W) * W
+
+        ' ---- SIMD 主批处理 ----
+        While i < vecEnd
+            Dim svx As Vector(Of Double) = Vector.Subtract(vOx, New Vector(Of Double)(v0x, i))
+            Dim svy As Vector(Of Double) = Vector.Subtract(vOy, New Vector(Of Double)(v0y, i))
+            Dim fv As New Vector(Of Double)(f, i)
+            Dim e1xv As New Vector(Of Double)(e1x, i)
+            Dim e1yv As New Vector(Of Double)(e1y, i)
+            Dim e1zv As New Vector(Of Double)(e1z, i)
+            Dim e2xv As New Vector(Of Double)(e2x, i)
+            Dim e2yv As New Vector(Of Double)(e2y, i)
+            Dim e2zv As New Vector(Of Double)(e2z, i)
+            Dim szv As New Vector(Of Double)(sz, i)
+
+            ' u = f·(−sx·e2y + sy·e2x)
+            Dim u As Vector(Of Double) = Vector.Multiply(fv,
+                Vector.Add(Vector.Multiply(Vector.Negate(svx), e2yv),
+                           Vector.Multiply(svy, e2xv)))
+
+            ' v = f·(sx·e1y − sy·e1x)
+            Dim v As Vector(Of Double) = Vector.Multiply(fv,
+                Vector.Subtract(Vector.Multiply(svx, e1yv),
+                                Vector.Multiply(svy, e1xv)))
+
+            ' q = s×e1, t = f·(e2·q)
+            Dim qx As Vector(Of Double) = Vector.Subtract(Vector.Multiply(svy, e1zv), Vector.Multiply(szv, e1yv))
+            Dim qy As Vector(Of Double) = Vector.Subtract(Vector.Multiply(szv, e1xv), Vector.Multiply(svx, e1zv))
+            Dim qz As Vector(Of Double) = Vector.Subtract(Vector.Multiply(svx, e1yv), Vector.Multiply(svy, e1xv))
+            Dim t As Vector(Of Double) = Vector.Multiply(fv,
+                Vector.Add(Vector.Add(Vector.Multiply(e2xv, qx), Vector.Multiply(e2yv, qy)),
+                           Vector.Multiply(e2zv, qz)))
+
+            ' 掩码：u∈[0,1] && v≥0 && u+v≤1 && t>eps
+            Dim m As Vector(Of Double) =
+                Vector.BitwiseAnd(
+                    Vector.BitwiseAnd(Vector.GreaterThanOrEqual(u, vZero),
+                                      Vector.LessThanOrEqual(u, vOne)),
+                    Vector.BitwiseAnd(
+                        Vector.BitwiseAnd(Vector.GreaterThanOrEqual(v, vZero),
+                                          Vector.LessThanOrEqual(Vector.Add(u, v), vOne)),
+                        Vector.GreaterThan(t, vEps)))
+
+            If Not Vector.EqualsAll(m, vZero) Then
+                For k As Integer = 0 To W - 1
+                    If m(k) <> 0.0 Then
+                        ' 标量复核（同一公式，过滤掩码通道的浮点边缘差异）
+                        Dim hit As Double = ScalarIntersect(f, v0x, v0y, sz, e1x, e1y, e1z,
+                                                            e2x, e2y, e2z, i + k, ox, oy)
+                        If Not Double.IsNaN(hit) Then
+                            hits.Add(rayOriginZ + hit)
+                        End If
+                    End If
+                Next
             End If
 
-            ' q = s × edge1
-            Dim q = Point3D.Cross(s, edge1)
+            i += W
+        End While
 
-            ' v = f * (rayDir · q)
-            Dim v = f * Point3D.Dot(rayDir, q)
-
-            ' v 超出 [0, 1] 或者 u+v 超出 [0, 1] → 不相交
-            If v < 0.0 OrElse u + v > 1.0 Then
-                Return False
+        ' ---- 标量尾部 ----
+        While i < offset + count
+            Dim hit As Double = ScalarIntersect(f, v0x, v0y, sz, e1x, e1y, e1z,
+                                                e2x, e2y, e2z, i, ox, oy)
+            If Not Double.IsNaN(hit) Then
+                hits.Add(rayOriginZ + hit)
             End If
+            i += 1
+        End While
+    End Sub
 
-            ' t = f * (edge2 · q)
-            t = f * Point3D.Dot(edge2, q)
+    ''' <summary>
+    ''' 标量 Möller–Trumbore 求交（使用预计算常量）。
+    ''' 返回参数化距离 t；不相交返回 NaN。
+    ''' </summary>
+    Private Shared Function ScalarIntersect(f As Double(), v0x As Double(), v0y As Double(), sz As Double(),
+                                            e1x As Double(), e1y As Double(), e1z As Double(),
+                                            e2x As Double(), e2y As Double(), e2z As Double(),
+                                            t As Integer, ox As Double, oy As Double) As Double
+        Dim sx As Double = ox - v0x(t)
+        Dim sy As Double = oy - v0y(t)
+        Dim ff As Double = f(t)
 
-            ' 只接受正向射线方向上的交点 (t > 0)
-            Return t > EPSILON
-        End Function
+        Dim u As Double = ff * (-sx * e2y(t) + sy * e2x(t))
+        If u < 0.0 OrElse u > 1.0 Then
+            Return Double.NaN
+        End If
+
+        Dim v As Double = ff * (sx * e1y(t) - sy * e1x(t))
+        If v < 0.0 OrElse u + v > 1.0 Then
+            Return Double.NaN
+        End If
+
+        Dim szt As Double = sz(t)
+        Dim qx As Double = sy * e1z(t) - szt * e1y(t)
+        Dim qy As Double = szt * e1x(t) - sx * e1z(t)
+        Dim qz As Double = sx * e1y(t) - sy * e1x(t)
+        Dim result As Double = ff * (e2x(t) * qx + e2y(t) * qy + e2z(t) * qz)
+
+        Return If(result > RayEpsilon, result, Double.NaN)
+    End Function
 
 #End Region
 
