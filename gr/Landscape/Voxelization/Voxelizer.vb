@@ -639,7 +639,7 @@ Namespace Voxelization
             Dim bins As ColumnBins = BuildColumnBins(batch, width, height, minX, minY, voxelSize)
 
             ' ---- 3. 按行并行扫描 ----
-            Parallel.For(0, width,
+            System.Threading.Tasks.Parallel.For(0, width,
                 Sub(x As Integer)
                     ' 线程局部交点列表（原共享 List 在并行下不安全，已局部化）
                     Dim intersections As New List(Of Double)(capacity:=64)
