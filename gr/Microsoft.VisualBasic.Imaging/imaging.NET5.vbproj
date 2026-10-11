@@ -372,6 +372,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Drawing2D\Math2D\MarchingSquares\contour_tracing.rs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Drawing2D\Math2D\MarchingSquares\contour_tracing.rs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Import Include="System.Data" />
     <Import Include="System.Resources" />
   </ItemGroup>

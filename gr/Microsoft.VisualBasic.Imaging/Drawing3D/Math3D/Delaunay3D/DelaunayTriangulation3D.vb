@@ -526,6 +526,20 @@ Namespace Drawing3D.Math3D.Delaunay3D
                 Dim line As String = $"insert #{q}: bad=[{String.Join(",", bad)}] boundary={boundary.Count} created=[{_tets.Count - boundary.Count}..{_tets.Count - 1}]"
                 DebugLog.Add(line)
                 LastDebugLog.Add(line)
+
+                If q = 3 Then
+                    For Each t As Integer In bad
+                        LastDebugLog.Add($"  bad tet#{t}: V=[{String.Join(",", _tets(t).V)}]")
+                    Next
+
+                    For i As Integer = 0 To boundary.Count - 1
+                        LastDebugLog.Add($"  boundary[{i}]: [{String.Join(",", boundary(i))}]")
+                    Next
+
+                    For i As Integer = _tets.Count - boundary.Count To _tets.Count - 1
+                        LastDebugLog.Add($"  created tet#{i}: V=[{String.Join(",", _tets(i).V)}]")
+                    Next
+                End If
             End If
         End Sub
 
