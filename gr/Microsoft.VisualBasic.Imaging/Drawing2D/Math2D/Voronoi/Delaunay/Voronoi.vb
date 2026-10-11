@@ -86,22 +86,31 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         Public ReadOnly Property SitesIndexedByLocation As Dictionary(Of Vector2D, Site)
 
         Private Sub Reset()
-            sites.Dispose()
-            sites = Nothing
+            If sites IsNot Nothing Then
+                sites.Dispose()
+                sites = Nothing
+            End If
 
-            For Each t In triangles
-                t.Dispose()
-            Next
-            triangles.Clear()
+            If triangles IsNot Nothing Then
+                For Each t In triangles
+                    t.Dispose()
+                Next
+                triangles.Clear()
+            End If
 
-            For Each e In Edges
-                e.Dispose()
-            Next
-            Edges.Clear()
+            If Edges IsNot Nothing Then
+                For Each e In Edges
+                    e.Dispose()
+                Next
+                Edges.Clear()
+            End If
 
             _PlotBounds = Rectf.zero
-            _SitesIndexedByLocation.Clear()
-            _SitesIndexedByLocation = Nothing
+
+            If _SitesIndexedByLocation IsNot Nothing Then
+                _SitesIndexedByLocation.Clear()
+                _SitesIndexedByLocation = Nothing
+            End If
         End Sub
 
         Public Sub New(points As List(Of Vector2D), plotBounds As Rectf)
@@ -121,12 +130,19 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             triangles = New List(Of Triangle)()
             _Edges = New List(Of Edge)()
 
-            FortunesAlgorithm()
+            ' 少于 2 个站点时 Fortune 扫描线无法运行（优先队列在退化包围盒上会出问题），
+            ' 此时保持空的边集合即可，Region/等接口按空图处理
+            If sites.Count() >= 2 Then
+                FortunesAlgorithm()
+            End If
         End Sub
 
         Private Sub AddSites(points As List(Of Vector2D))
             For i = 0 To points.Count - 1
-                AddSite(points(i), i)
+                ' 去除重复坐标点：重复站点会破坏扫描线的 y,x 全序并产生退化边
+                If Not SitesIndexedByLocation.ContainsKey(points(i)) Then
+                    AddSite(points(i), i)
+                End If
             Next
         End Sub
 
