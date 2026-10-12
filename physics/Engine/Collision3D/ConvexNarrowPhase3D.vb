@@ -212,7 +212,7 @@ Namespace Collision3D
             Next
 
             If points.Count > MaxContacts Then
-                points = Deepest(points, pens, MaxContacts)
+                points = KeepDeepest(points, pens, MaxContacts)
             End If
 
             If points.Count = 0 Then
@@ -294,7 +294,8 @@ Namespace Collision3D
         End Function
 
         ''' <summary>按穿透深度降序保留前 <paramref name="count"/> 个点。</summary>
-        Private Function Deepest(points As List(Of Vector3), pens As List(Of Double), count As Integer) As List(Of Vector3)
+        Private Function KeepDeepest(points As List(Of Vector3), pens As List(Of Double), count As Integer) As List(Of Vector3)
+
             Dim order As Integer() = Enumerable.Range(0, points.Count).ToArray()
 
             Array.Sort(order, Function(x As Integer, y As Integer) pens(y).CompareTo(pens(x)))
@@ -347,7 +348,7 @@ Namespace Collision3D
             Next
 
             If pts.Count > 0 Then
-                If pts.Count > MaxContacts Then pts = Deepest(pts, pens, MaxContacts)
+                If pts.Count > MaxContacts Then pts = KeepDeepest(pts, pens, MaxContacts)
                 ' A 的外向面法向即 A→B
                 Return NarrowPhase3D.Build(va.Body, vb.Body, nrm, pts, pens)
             End If
@@ -375,7 +376,7 @@ Namespace Collision3D
 
             If pts.Count = 0 Then Return Nothing
 
-            If pts.Count > MaxContacts Then pts = Deepest(pts, pens, MaxContacts)
+            If pts.Count > MaxContacts Then pts = KeepDeepest(pts, pens, MaxContacts)
 
             ' B 的外向面法向是 B→A，取反得 A→B
             Return NarrowPhase3D.Build(va.Body, vb.Body, nrm * -1.0, pts, pens)
@@ -409,7 +410,7 @@ Namespace Collision3D
             Next
 
             If pts.Count = 0 Then Return Nothing
-            If pts.Count > MaxContacts Then pts = Deepest(pts, pens, MaxContacts)
+            If pts.Count > MaxContacts Then pts = KeepDeepest(pts, pens, MaxContacts)
 
             Return NarrowPhase3D.Build(plane, convex, pl.Normal, pts, pens)
         End Function
@@ -439,7 +440,7 @@ Namespace Collision3D
             Next
 
             If pts.Count = 0 Then Return Nothing
-            If pts.Count > MaxContacts Then pts = Deepest(pts, pens, MaxContacts)
+            If pts.Count > MaxContacts Then pts = KeepDeepest(pts, pens, MaxContacts)
 
             Return NarrowPhase3D.Build(convex, plane, pl.Normal * -1.0, pts, pens)
         End Function

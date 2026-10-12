@@ -219,14 +219,14 @@ Namespace Collision3D
 
             Dim cen As Vector3 = VolumeCentroid()
             Dim vol As Double = 0.0
-            Dim C As Matrix3x3 = Matrix3x3.Zero
+            Dim moment As Matrix3x3 = Matrix3x3.Zero
 
             For Each f As Integer() In Faces
-                For i As Integer = 1 To f.Length - 2
+                For k As Integer = 1 To f.Length - 2
                     Dim a As Vector3 = Vector3.Zero - cen
                     Dim b As Vector3 = Vertices(f(0)) - cen
-                    Dim c As Vector3 = Vertices(f(i)) - cen
-                    Dim d As Vector3 = Vertices(f(i + 1)) - cen
+                    Dim c As Vector3 = Vertices(f(k)) - cen
+                    Dim d As Vector3 = Vertices(f(k + 1)) - cen
                     Dim tv As Double = TetraVolume(a, b, c, d)
                     Dim s As Vector3 = a + b + c + d
 
@@ -240,7 +240,7 @@ Namespace Collision3D
                     contrib = contrib + Matrix3x3.Outer(d, d)
 
                     vol += tv
-                    C = C + contrib * (tv / 20.0)
+                    moment = moment + contrib * (tv / 20.0)
                 Next
             Next
 
@@ -248,17 +248,17 @@ Namespace Collision3D
                 Return FallbackInertia(mass)
             End If
 
-            Dim tr As Double = C.m11 + C.m22 + C.m33
-            Dim I As Matrix3x3 = Matrix3x3.Diagonal(tr, tr, tr) + C * (-1.0)
+            Dim tr As Double = moment.m11 + moment.m22 + moment.m33
+            Dim inertia As Matrix3x3 = Matrix3x3.Diagonal(tr, tr, tr) + moment * (-1.0)
 
-            I = I * (mass / vol)
+            inertia = inertia * (mass / vol)
 
             ' 数值保护：惯性张量必须对称正定，否则四元数积分会发散
-            If I.m11 <= 0.0 OrElse I.m22 <= 0.0 OrElse I.m33 <= 0.0 OrElse I.Determinant() <= 1.0E-12 Then
+            If inertia.m11 <= 0.0 OrElse inertia.m22 <= 0.0 OrElse inertia.m33 <= 0.0 OrElse inertia.Determinant() <= 1.0E-12 Then
                 Return FallbackInertia(mass)
             End If
 
-            Return I
+            Return inertia
         End Function
 
         Private Function FallbackInertia(mass As Double) As Matrix3x3

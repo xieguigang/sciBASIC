@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>ConvexSelfTest</RootNamespace>
+    <AssemblyName>ConvexSelfTest</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <StartupObject>ConvexSelfTest.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\PhysicsEngine.vbproj" />
+  </ItemGroup>
+
+</Project>
