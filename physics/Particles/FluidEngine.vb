@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::63ad0f9b90d1834876540eb698d107bd, gr\physics\Particles\FluidEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 306
-    '    Code Lines: 228 (74.51%)
-    ' Comment Lines: 16 (5.23%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 62 (20.26%)
-    '     File Size: 11.57 KB
+' Summaries:
 
 
-    ' Class FluidEngine
-    ' 
-    '     Properties: Entity, Height, Width
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
-    ' 
-    '     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, HandleCollisions
-    '          Resize, RunDebugStep, RunSimulationStep, UpdatePositions
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 306
+'    Code Lines: 228 (74.51%)
+' Comment Lines: 16 (5.23%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 62 (20.26%)
+'     File Size: 11.57 KB
+
+
+' Class FluidEngine
+' 
+'     Properties: Entity, Height, Width
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
+' 
+'     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, HandleCollisions
+'          Resize, RunDebugStep, RunSimulationStep, UpdatePositions
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
-Imports Microsoft.VisualBasic.Imaging.Physics
+Imports Microsoft.VisualBasic.Engine.Physics
 Imports par = System.Threading.Tasks.Parallel
 
 Public Class FluidEngine : Implements IContainer(Of Particle)

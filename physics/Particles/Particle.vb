@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Engine.Physics
 Imports Microsoft.VisualBasic.Imaging
 
 Public Class Particle : Implements Layout2D

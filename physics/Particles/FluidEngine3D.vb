@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::ba3069c9d56188f836ca538a920b05fb, gr\physics\Particles\FluidEngine3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 353
-    '    Code Lines: 235 (66.57%)
-    ' Comment Lines: 54 (15.30%)
-    '    - Xml Docs: 72.22%
-    ' 
-    '   Blank Lines: 64 (18.13%)
-    '     File Size: 13.32 KB
+' Summaries:
 
 
-    ' Class FluidEngine3D
-    ' 
-    '     Properties: BoxSize, CollisionDamping, Count, DeltaTime, DisturbAccel
-    '                 DisturbDamping, Entity, Gravity, NearPressureMultiplier, ParticleSize
-    '                 PressureMultiplier, SmoothingRadius, TargetDensity, ViscosityStrength
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
-    ' 
-    '     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, DecayDisturbance
-    '          HandleCollisions, Reset, RunDebugStep, RunSimulationStep, UpdatePositions
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 353
+'    Code Lines: 235 (66.57%)
+' Comment Lines: 54 (15.30%)
+'    - Xml Docs: 72.22%
+' 
+'   Blank Lines: 64 (18.13%)
+'     File Size: 13.32 KB
+
+
+' Class FluidEngine3D
+' 
+'     Properties: BoxSize, CollisionDamping, Count, DeltaTime, DisturbAccel
+'                 DisturbDamping, Entity, Gravity, NearPressureMultiplier, ParticleSize
+'                 PressureMultiplier, SmoothingRadius, TargetDensity, ViscosityStrength
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
+' 
+'     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, DecayDisturbance
+'          HandleCollisions, Reset, RunDebugStep, RunSimulationStep, UpdatePositions
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports std = System.Math
 Imports par = System.Threading.Tasks.Parallel
+Imports Microsoft.VisualBasic.Engine.Physics
 
 ''' <summary>
 ''' A 3D Smoothed Particle Hydrodynamics (SPH) fluid simulation engine.

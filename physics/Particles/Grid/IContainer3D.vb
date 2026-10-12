@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports Microsoft.VisualBasic.Engine.Physics
+
+''' <summary>
 ''' the 3D volume container of the particles(the 3D counterpart of the 2D
 ''' <see cref="IContainer(Of T)"/>).
 ''' </summary>
