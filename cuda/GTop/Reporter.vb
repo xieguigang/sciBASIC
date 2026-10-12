@@ -1,20 +1,20 @@
 #Region "Microsoft.VisualBasic::gtop-reporter, cuda\GTop\Reporter.vb"
 
-    ' Author:
-    '       xieguigang (xie.guigang@live.com)
-    '
-    ' Copyright (c) sciBASIC.NET Foundation
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+' Author:
+'       xieguigang (xie.guigang@live.com)
+'
+' Copyright (c) sciBASIC.NET Foundation
+' GNU GENERAL PUBLIC LICENSE (GPL3)
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.Text
-Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 ''' <summary>
 ''' GTop 的渲染层：
@@ -230,13 +230,13 @@ Public Module Reporter
     Private Sub RunLivePlain(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
                              processCounter As GpuProcessCounter, processRows As Integer)
         sampler.Run(shouldStop, Sub(s)
-                                 Console.WriteLine($"{s.Time:HH:mm:ss} GPU={FmtPercent(s.GpuPercent)} 显存控={FmtPercent(s.MemoryControllerPercent)} 显存={FmtMB(s.UsedMB)}/{FmtMB(s.TotalMB)}MB PCIe TX={FmtDouble(s.PcieTxMBps)} RX={FmtDouble(s.PcieRxMBps)} 功耗={FmtWatts(s.PowerWatts)}W 温度={FmtTemp(s.TemperatureC)}")
-                                 If processCounter IsNot Nothing Then
-                                     For Each p In processCounter.Poll()
-                                         Console.WriteLine($"{s.Time:HH:mm:ss} PID={p.Pid,7} CUDA={FmtPercent(p.CudaCorePercent)} Copy={FmtPercent(p.CopyEnginePercent)} 编码={FmtPercent(p.EncoderPercent)} 解码={FmtPercent(p.DecoderPercent)} 显存={FmtMemMB(p.DedicatedMB)}MB {PadName(p.Name)}")
-                                     Next
-                                 End If
-                             End Sub)
+                                    Console.WriteLine($"{s.Time:HH:mm:ss} GPU={FmtPercent(s.GpuPercent)} 显存控={FmtPercent(s.MemoryControllerPercent)} 显存={FmtMB(s.UsedMB)}/{FmtMB(s.TotalMB)}MB PCIe TX={FmtDouble(s.PcieTxMBps)} RX={FmtDouble(s.PcieRxMBps)} 功耗={FmtWatts(s.PowerWatts)}W 温度={FmtTemp(s.TemperatureC)}")
+                                    If processCounter IsNot Nothing Then
+                                        For Each p In processCounter.Poll()
+                                            Console.WriteLine($"{s.Time:HH:mm:ss} PID={p.Pid,7} CUDA={FmtPercent(p.CudaCorePercent)} Copy={FmtPercent(p.CopyEnginePercent)} 编码={FmtPercent(p.EncoderPercent)} 解码={FmtPercent(p.DecoderPercent)} 显存={FmtMemMB(p.DedicatedMB)}MB {PadName(p.Name)}")
+                                        Next
+                                    End If
+                                End Sub)
     End Sub
 
     Private Sub RunLiveColor(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
@@ -246,25 +246,25 @@ Public Module Reporter
         Dim procRows = If(processRows > 0, System.Math.Min(processRows, 15), 0)
 
         sampler.Run(shouldStop, Sub(s)
-                                 Dim sb As New StringBuilder()
-                                 If frameLines > 0 Then sb.Append(AnsiEscapeCodes.GetMoveCursorUp(frameLines))
+                                    Dim sb As New StringBuilder()
+                                    If frameLines > 0 Then sb.Append(AnsiEscapeCodes.GetMoveCursorUp(frameLines))
 
-                                 Dim lines = BuildLiveLines(device, s)
-                                 If processCounter IsNot Nothing AndAlso procRows > 0 Then
-                                     lines.AddRange(BuildProcessLines(processCounter.Poll(), procRows, True))
-                                 End If
-                                 lines.Add("  按 Ctrl+C 停止")
+                                    Dim lines = BuildLiveLines(device, s)
+                                    If processCounter IsNot Nothing AndAlso procRows > 0 Then
+                                        lines.AddRange(BuildProcessLines(processCounter.Poll(), procRows, True))
+                                    End If
+                                    lines.Add("  按 Ctrl+C 停止")
 
-                                 For i As Integer = 0 To lines.Count - 1
-                                     sb.Append(AnsiEscapeCodes.ClearLine)
-                                     sb.Append(lines(i))
-                                     sb.Append(vbCrLf)
-                                 Next
+                                    For i As Integer = 0 To lines.Count - 1
+                                        sb.Append(AnsiEscapeCodes.ClearLine)
+                                        sb.Append(lines(i))
+                                        sb.Append(vbCrLf)
+                                    Next
 
-                                 Console.Out.Write(sb.ToString())
-                                 Console.Out.Flush()
-                                 frameLines = lines.Count
-                             End Sub)
+                                    Console.Out.Write(sb.ToString())
+                                    Console.Out.Flush()
+                                    frameLines = lines.Count
+                                End Sub)
 
         ' 结束后再下一行，留给命令行提示符
         Console.Out.Write(vbCrLf)
@@ -295,18 +295,45 @@ Public Module Reporter
 
     ''' <summary>
     ''' 构建实时仪表盘中的进程块，采用"三线表"格式（仅顶线、表头下横线、底线；无竖线与内部横线）。
+    ''' 表格宽度固定为命令行窗口宽度的 85%，并水平居中；进程名过长时按列宽裁剪。
     ''' 列宽与横线长度按"显示宽度"（全角字符按 2 列，见 <see cref="UnicodeWidth"/>）计算，
     ''' 因此中文列名与中文进程名也能对齐。固定高度 procRows 行，不足补空行以保持原地刷新稳定。
     ''' </summary>
     Private Function BuildProcessLines(rows As IReadOnlyList(Of GpuProcessSample), procRows As Integer, useColor As Boolean) As List(Of String)
         Dim L As New List(Of String)()
-        L.Add($"  进程级 GPU 使用（CUDA核心%=3D/Compute 引擎最大值；Copy% 为带宽代理；共 {rows.Count} 个）")
 
-        Dim headers = {"PID", "CUDA%", "Copy%", "编码%", "解码%", "显存MB", "进程名"}
+        ' 目标表格宽度：窗口宽度的 85%（列间分隔符 2 空格）
+        Const gap As Integer = 2
+        Dim winW = GetConsoleWidth()
+        Dim tableW = CInt(System.Math.Round(winW * 0.85))
+
+        Dim headers = {"PID", "CUDA%", "Copy%", "编码%", "解码%", "显存", "进程名"}
         Dim rightAlign = {True, True, True, True, True, True, False}
-        Dim cols = headers.Length
+        Dim widths = {7, 6, 6, 6, 6, 9, 0}   ' 前 6 列固定宽度，末列（进程名）占剩余宽度
 
-        ' 组装数据单元格（进程名放最后一列）
+        Dim fixedSum As Integer = 0
+        For c As Integer = 0 To 5
+            fixedSum += widths(c)
+        Next
+
+        Dim nameW = tableW - gap * (headers.Length - 1) - fixedSum
+        Const minNameW As Integer = 8
+        If nameW < minNameW Then
+            nameW = minNameW
+            tableW = fixedSum + gap * (headers.Length - 1) + nameW
+        End If
+        widths(6) = nameW
+
+        ' 水平居中：左缩进 = (窗口宽度 - 表格宽度) / 2
+        Dim centerPad = System.Math.Max(0, (winW - tableW) \ 2)
+        Dim padStr = New String(" "c, centerPad)
+        Dim rule = New String("─"c, tableW)
+
+        L.Add("")
+        L.Add("")
+        L.Add(padStr & TruncateByWidth($"进程级 GPU 使用（CUDA核心%=3D/Compute 引擎最大值；Copy% 为带宽代理；共 {rows.Count} 个）", tableW))
+
+        ' 组装数据单元格（进程名放最后一列，按列宽裁剪）
         Dim n = System.Math.Min(rows.Count, procRows)
         Dim dataCells As New List(Of String())()
         Dim dataPercent As New List(Of Integer)()
@@ -319,47 +346,44 @@ Public Module Reporter
                 FmtPercent(p.CopyEnginePercent),
                 FmtPercent(p.EncoderPercent),
                 FmtPercent(p.DecoderPercent),
-                FmtMemMB(p.DedicatedMB),
-                TruncateByWidth(PadName(p.Name), 30)
+                StringFormats.Lanudry(p.DedicatedMB * ByteSize.MB),
+                TruncateByWidth(PadName(p.Name), nameW)
             })
             dataPercent.Add(p.CudaCorePercent)
         Next
 
-        ' 按显示宽度计算各列宽度
-        Dim widths(cols - 1) As Integer
-        For c As Integer = 0 To cols - 1
-            widths(c) = UnicodeWidth.GetWidth(headers(c))
-        Next
-        For Each cells In dataCells
-            For c As Integer = 0 To cols - 1
-                Dim w = UnicodeWidth.GetWidth(cells(c))
-                If w > widths(c) Then widths(c) = w
-            Next
-        Next
-
-        ' 横线总宽度 = 左缩进 + 各列宽度 + 列间 2 空格
-        Dim total As Integer = 2
-        For c As Integer = 0 To cols - 1
-            total += widths(c)
-            If c < cols - 1 Then total += 2
-        Next
-        Dim rule = New String("─"c, total)
-
-        L.Add(rule)                                                                          ' 顶线
-        L.Add("  " & BuildProcessRow(headers, widths, rightAlign, -1, 0, False))              ' 表头
-        L.Add(rule)                                                                          ' 表头下横线
+        L.Add(padStr & rule)                                                              ' 顶线
+        L.Add(padStr & BuildProcessRow(headers, widths, rightAlign, -1, 0, False))        ' 表头
+        L.Add(padStr & rule)                                                              ' 表头下横线
 
         For i As Integer = 0 To procRows - 1
             If i >= n Then
                 L.Add(String.Empty)   ' 补空行，保持块高恒定，避免刷新残影
                 Continue For
             End If
-            L.Add("  " & BuildProcessRow(dataCells(i), widths, rightAlign, 1, dataPercent(i), useColor))
+            L.Add(padStr & BuildProcessRow(dataCells(i), widths, rightAlign, 1, dataPercent(i), useColor))
         Next
 
-        L.Add(rule)                                                                          ' 底线
+        L.Add(padStr & rule)                                                              ' 底线
 
         Return L
+    End Function
+
+    ''' <summary>取命令行窗口宽度；输出被重定向或无控制台时回退到 120。</summary>
+    Private Function GetConsoleWidth() As Integer
+        Try
+            Dim w = Console.WindowWidth
+            If w > 20 Then Return w
+        Catch
+        End Try
+
+        Try
+            Dim w = Console.BufferWidth
+            If w > 20 Then Return w
+        Catch
+        End Try
+
+        Return 120
     End Function
 
     ''' <summary>按列宽（显示宽度）对齐地拼装一行，可对指定列按阈值着色。</summary>
