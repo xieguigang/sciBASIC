@@ -12,7 +12,7 @@
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.GNN</RootNamespace>
     <Version>10.6.9781.24297</Version>
     <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
-    <Configurations>nuget_release;Rsharp_app_release;Debug</Configurations>
+    <Configurations>nuget_release;Rsharp_app_release;Debug;Release</Configurations>
     <Title>Graph Neural Networks: GCN, GAT and Recurrent Temporal Graph Layers</Title>
     <Description>Graph neural network library for sciBASIC#, providing GCN and graph-attention layers, GRU and RNN recurrent graph layers, temporal graph snapshots, and graph classification models with SGD and Adam training.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.GNN</AssemblyTitle>
