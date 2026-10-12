@@ -29,12 +29,11 @@
 
     ' Summaries:
 
-    ' Shared numeric helpers for the flocking engine and its renderers. The VB 
-    ''' <c>CInt(Double)</c> conversion routes through <c>Math.Round</c> with 
-    ' banker's rounding and costs ~10ns per call; at 80k boids the renderer 
-    ' alone performs ~1.9M conversions per frame, which dominates the whole 
-    ' gdi+ phase. <see cref="Round"/> reproduces the exact same rounding with a 
-    ' magic-number add at ~2ns.
+    ' Shared numeric helpers for the flocking engine and its renderers. The VB
+    ' CInt(Double) conversion routes through Math.Round with banker's rounding
+    ' and costs ~10ns per call; at 80k boids the renderer alone performs ~1.9M
+    ' conversions per frame, which dominates the whole gdi+ phase. Round
+    ' reproduces the exact same rounding with a magic-number add at ~2ns.
 
     '     Class BoidMath
     '
