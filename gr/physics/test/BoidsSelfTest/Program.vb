@@ -16,6 +16,10 @@ Module Program
     Dim lastPhysicsAvg As Double = 0.0
 
     Sub Main()
+        ' match the demo app configuration: the parallel solve needs the thread
+        ' pool to actually supply ProcessorCount worker threads
+        System.Threading.ThreadPool.SetMinThreads(Environment.ProcessorCount, Environment.ProcessorCount)
+
         Console.WriteLine("===========================================================")
         Console.WriteLine(" Boids SIMD engine self test")
         Console.WriteLine($" runtime: {Environment.Version}, os: {Environment.OSVersion}")
@@ -296,10 +300,12 @@ Module Program
 
         Report($"SIMD   ({frames} frames)", field, grid, solver, state, frames)
 
+        ' the 60fps budget check uses the SIMD path total
+        lastPhysicsAvg = physicsAvg
+
         SIMDEnvironment.config = SIMDConfiguration.disable
         Report($"scalar ({frames} frames)", field, grid, solver, state, frames)
         SIMDEnvironment.config = SIMDConfiguration.auto
-        lastPhysicsAvg = physicsAvg
 
         ' allocation check (steady state)
         Dim before As Long = GC.GetAllocatedBytesForCurrentThread()
@@ -327,9 +333,9 @@ Module Program
     ''' </summary>
     Sub BenchmarkLegacy()
         Console.WriteLine()
-        Console.WriteLine("[extra] legacy engine baseline (LINQ grid + dictionary hash), 80k boids ...")
+        Console.WriteLine("[extra] legacy engine baseline (LINQ grid + dictionary hash), 120k boids ...")
 
-        Const n As Integer = 80000
+        Const n As Integer = 120000
         Const frames As Integer = 10
 
         Dim field As New Field(2000.0, 1200.0, n)
@@ -492,9 +498,10 @@ Module Program
         sw.Stop()
 
         Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
+        Dim total = lastPhysicsAvg + avg
         Console.WriteLine($" render model: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (gdi+ phase only)")
-        Console.WriteLine($" physics + render model budget check: 4.753 ms + {avg:F3} ms = {4.753 + avg:F3} ms " &
-                          $"({If(4.753 + avg <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
+        Console.WriteLine($" physics ({lastPhysicsAvg:F3} ms) + render ({avg:F3} ms) = {total:F3} ms " &
+                          $"-> {1000.0 / total:F1} fps ({If(total <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
     End Sub
 
     Sub RenderModelFrame(buf As Integer(), w As Integer, h As Integer, state As FlockState)
