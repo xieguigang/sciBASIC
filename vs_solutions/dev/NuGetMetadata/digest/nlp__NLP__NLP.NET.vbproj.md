@@ -1,0 +1,213 @@
+# nlp/NLP/NLP.NET.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.NLP
+- AssemblyName  : Microsoft.VisualBasic.Data.NLP
+- TargetFramework: net10.0
+- Source files  : 51
+- Existing Title: Natural Language Processing Toolkit: Tokenizers, Stemmer, BM25 and LDA
+- Existing Desc : NLP toolkit for sciBASIC#: Chinese word segmentation via max-match, HMM and a HuggingFace-compatible BPE/WordPiece/Unigram pipeline, plus a Porter stemmer, TF-IDF, bigram extraction, BM25 ranked search and Gibbs-sampled LDA topic modeling.
+- Existing Tags : scibasic;nlp;chinese-tokenizer;huggingface;tokenizer;bm25;lda;topic-model;tf-idf;stemmer;text-mining
+
+## Namespaces
+- BM25  [files: 6]
+- ChineseTokenizer  [files: 5]
+- ChineseTokenizer.HuggingFace  [files: 16]
+- LDA  [files: 10]
+- Model  [files: 6]
+
+## Public types
+- Class BM25Engine (BM25\BM25.vb) - BM25 引擎。 使用方式: Dim engine As New BM25Engine(k1:=1.2, b:=0.75)
+- Class Document (BM25\Document.vb) - 文档表示：ID + 分词后的词元列表。
+- Enum IdfVariant (BM25\IdfVariant.vb) - IDF 计算方式。
+- Module NamespaceDoc (BM25\NamespaceDoc.vb) - Okapi BM25 ranked retrieval engine: indexes documents with per-term contributions and selectable IDF variants, then scores and returns the best matching documents for a query.
+- Class SearchResult (BM25\SearchResult.vb) - 单条检索结果。
+- Class TermContribution (BM25\TermContribution.vb) - 单个查询词的贡献明细。
+- Module Extensions (Extensions.vb)
+- Class Corpus (LDA\Corpus.vb) - a set of documents 语料库，也就是文档集合 @author hankcs
+- Module Debugger (LDA\Debugger.vb)
+- Module DocumentLoader (LDA\DocumentLoader.vb)
+- Module LdaSamplingKernel (LDA\Gibbs.vb) - The gibbs sampling kernel that runs on the flattened (CSR) corpus layout. Replaces the old <c>GibbsSamplingTask</c>, which was creating a parallel schedule for each single document and was copying the whole ``ndsum``
+- Class LdaGibbsSampler (LDA\LdaGibbsSampler.vb) - collapsed gibbs sampling 是一条马尔可夫链，对第 i 个词语的采样依赖于 除它以外所有词语的当前状态，所以严格的并行化在数学上是不可能的。这里 采用的是与 PLDA / LightLDA / MALLET 相同的近似并行模型：
+- Class LdaInterpreter (LDA\LdaInterpreter.vb) - @author hankcs
+- Structure DocBlock (LDA\LdaPartition.vb) - A continuous block of documents that is sampled by one single worker thread.
+- Module LdaPartition (LDA\LdaPartition.vb) - The partition is created only once before the first sampling iteration and then it is reused by all of the following iterations. Creating the parallel task inside the iteration loop is the major reason of the poor
+- Module NamespaceDoc (LDA\NamespaceDoc.vb) - Latent Dirichlet Allocation topic modelling: corpus and vocabulary containers, a Gibbs sampled LDA trainer, and helpers that load documents and interpret or persist the trained topic model.
+- Class Vocabulary (LDA\Vocabulary.vb) - a word set mapping between the word and its index id value @author hankcs
+- Class NamespaceDoc (NamespaceDoc.vb) - Core natural language processing primitives: text and stop-word helpers, a Porter stemmer, bigram extraction and TF-IDF document weighting, together with the shared document utilities that the BM25, LDA and tokenizer sub-namespaces build on.
+- Class Stemmer (Stemmer.vb) - - **Language Specific:** It is designed specifically for English and may not work well for other languages. **Applications:** - **Information Retrieval:** Improves the accuracy of search engines by reducing words to their base form, allowing for more effective matching of queries to documents.
+- Class Bigram (Text\Bigram.vb)
+- Class Counter (Text\Model\Counter.vb) - counter for a specific token string
+- Module NamespaceDoc (Text\Model\NamespaceDoc.vb) - Lightweight text document model used by the NLP toolkit: paragraph, sentence, character walker and token counter abstractions for iterating over and measuring natural language text.
+- Class Paragraph (Text\Model\Paragraph.vb) - a collection of the text <see cref="Sentence"/>.
+- Class Sentence (Text\Model\Sentence.vb) - a collection of the <see cref="Word"/>
+- Class SentenceCharWalker (Text\Model\SentenceCharWalker.vb) - Parse a line of sentence to a set of the word tokens
+- Class TokenCounter (Text\Model\TokenCounter.vb) - 计数器 最初代码来自Ansj的tree-split包中的love.cq.util; @author fangy </summary>
+- Class StopWords (Text\StopWords.vb)
+- Module Text (Text\Text.vb)
+- Class DocumentTFIDF (TF-IDF\DocumentTFIDF.vb) - - Can be biased towards longer documents. - May not perform well with very rare or very common terms. **Example:**
+- Class TFIDF (TF-IDF\TFIDF.vb)
+- Enum SegmentAlgorithm (Tokenizer\src\ChineseTokenizer.vb) - 分词算法枚举，供 <see cref="Tokenizer"/> 选择内部策略。
+- Structure Token (Tokenizer\src\HuggingFace\Abstractions.vb) - 单个 token 的切分结果。 <see cref="Start"/> 与 <see cref="[End]"/> 描述该 token 在 <b>预分词分片</b> 内部的字符偏移量（半开区间 <c>[Start, End)</c>），在流水线的后续阶段会被
+- Class Split (Tokenizer\src\HuggingFace\Abstractions.vb) - 预分词之后产生的文本分片。 该类型同时携带分片文本与其在原始输入串上的偏移量，使得预分词器可以被串联 组合（<c>Sequence</c>）而不会丢失位置信息。<see cref="IsSpecial"/> 用于标记
+- Class Encoding (Tokenizer\src\HuggingFace\Abstractions.vb) - 编码结果，等价于 HuggingFace 中的 <c>Encoding</c> 对象。
+- Interface INormalizer (Tokenizer\src\HuggingFace\Abstractions.vb) - 文本归一化器契约，对应 tokenizer.json 中的 <c>normalizer</c> 段。 实现必须是无副作用的只读操作，从而允许分词器实例在多线程之间安全共享。
+- Interface IPreTokenizer (Tokenizer\src\HuggingFace\Abstractions.vb) - 预分词器契约，对应 tokenizer.json 中的 <c>pre_tokenizer</c> 段。 预分词器接受上一级产出的分片集合并继续细分，因此 <c>Sequence</c> 类型的 预分词器可以通过逐级 map-flatten 的方式简单地组合起来。实现必须是无副作用
+- Interface ITokenizerModel (Tokenizer\src\HuggingFace\Abstractions.vb) - 子词模型契约：BPE / WordPiece / Unigram 均实现该接口。 实现必须是无副作用的只读操作（内部缓存需自行保证线程安全）。
+- Interface IPostProcessor (Tokenizer\src\HuggingFace\Abstractions.vb) - 后处理器契约，对应 tokenizer.json 中的 <c>post_processor</c> 段。
+- Interface IDecoder (Tokenizer\src\HuggingFace\Abstractions.vb) - 解码器契约，对应 tokenizer.json 中的 <c>decoder</c> 段。
+- Module ByteLevelAlphabet (Tokenizer\src\HuggingFace\ByteLevelAlphabet.vb) - 从而使得词表文件本身是可读的纯文本。最典型的表现就是空格被映射为 <c>Ġ</c>， 换行被映射为 <c>Ċ</c>，而中文这类多字节字符则会呈现为 <c>å±ĭ</c> 之类的乱码形态。 </para>
+- Enum JsonNodeType (Tokenizer\src\HuggingFace\JsonReader.vb) - json 节点的数据类型。
+- Module JsonReader (Tokenizer\src\HuggingFace\JsonReader.vb) - 供 HuggingFace 分词器模型文件使用的轻量级 json 解析器。
+- Module NamespaceDoc (Tokenizer\src\HuggingFace\NamespaceDoc.vb) - HuggingFace compatible tokenizer implementation: BPE, WordPiece and Unigram models with the normalizer, pre-tokenizer, post-processor and decoder pipeline, plus the tokenizer JSON configuration reader.
+- Structure TemplatePiece (Tokenizer\src\HuggingFace\PostProcessors.vb) - 模板片段：<see cref="IsSequence"/> 为真时表示序列占位符。
+- Enum SplitBehavior (Tokenizer\src\HuggingFace\PreTokenizers.vb) - <c>Split</c> 预分词器对匹配片段的处理方式。
+- Class TokenizerConfig (Tokenizer\src\HuggingFace\TokenizerConfig.vb) - tokenizer_config.json 的强类型描述。 该文件描述的是 <c>transformers</c> 层面的配置（而非 <c>tokenizers</c> 层面的 分词流水线），其中最关键的是 <see cref="AddBosToken"/> 与
+- Module TokenizerFactory (Tokenizer\src\HuggingFace\TokenizerFactory.vb) - 依据 tokenizer.json 中各配置节点的 <c>type</c> 字段构造流水线组件。 遇到尚未支持的组件类型时会抛出携带具体类型名的异常，便于快速定位缺失的能力， 而不是静默地退化为空实现导致分词结果出现难以排查的偏差。
+- Class AddedTokenInfo (Tokenizer\src\HuggingFace\TokenizerJson.vb) - tokenizer.json 中 <c>added_tokens</c> 数组的元素。
+- Class ModelSection (Tokenizer\src\HuggingFace\TokenizerJson.vb) - tokenizer.json 中 <c>model</c> 段的强类型描述。
+- Class TokenizerJson (Tokenizer\src\HuggingFace\TokenizerJson.vb) - tokenizer.json 的强类型描述。 <c>normalizer</c> / <c>pre_tokenizer</c> / <c>post_processor</c> / <c>decoder</c> 这四个段落是依据 <c>type</c> 字段区分的多态结构，因此这里保留其原始的
+- Module NamespaceDoc (Tokenizer\src\NamespaceDoc.vb) - Chinese word segmentation tokenizers: dictionary based maximum matching and HMM based segmentation, together with the word dictionary and trie index that back them.
+
+## Notable public members
+- Public Property K1 As Double = 1.2
+- Public Property B As Double = 0.75
+- Public Property IdfMode As IdfVariant = IdfVariant.Lucene
+- Public ReadOnly Property DocumentCount As Integer
+- Public ReadOnly Property AverageDocumentLength As Double
+- Public Sub New(Optional k1 As Double = 1.2,
+- Public Sub AddDocument(docId As Integer, tokens As String(), Optional rawText As String = "")
+- Public Sub AddDocument(docId As Integer, text As String)
+- Public Sub AddDocuments(documents As IEnumerable(Of (Integer, String())))
+- Public Sub AddDocuments(documents As IEnumerable(Of (Integer, String)))
+- Public Sub BuildIndex()
+- Public Sub RefreshIdf()
+- Public Function Search(queryTokens As String()) As List(Of SearchResult)
+- Public Function Search(queryTokens As String(), topK As Integer) As List(Of SearchResult)
+- Public Function Search(query As String, Optional topK As Integer = 10) As List(Of SearchResult)
+- Public Function GetIdf(term As String) As Double
+- Public Function GetDocumentFrequency(term As String) As Integer
+- Public Function GetTermFrequency(term As String, docId As Integer) As Integer
+- Public Function GetDocumentLength(docId As Integer) As Integer
+- Public Function GetDocumentText(docId As Integer) As String
+- Public Shared Function SimpleTokenizer(text As String) As String()
+- Public Function GetStatistics() As String
+- Public Function GetDocumentLengths() As List(Of (Integer, Integer))
+- Public Function GetVocabulary() As List(Of String)
+- Public Sub Clear()
+- Public Property Id As Integer
+- Public Property RawText As String
+- Public Property Tokens As String()
+- Public ReadOnly Property Length As Integer
+- Public Sub New(id As Integer, tokens As String(), Optional rawText As String = "")
+- Public Property DocId As Integer
+- Public Property Score As Double
+- Public Property TermContributions As List(Of TermContribution)
+- Public Overrides Function ToString() As String
+- Public Property Term As String
+- Public Property Idf As Double
+- Public Property Tf As Integer
+- Public Property LengthFactor As Double
+- Public Property TfSaturation As Double
+- Public Property Contribution As Double
+- Public Iterator Function StemmerNormalize(docs As IEnumerable(Of String)) As IEnumerable(Of String)
+- Public Iterator Function StemmerNormalize(str As String) As IEnumerable(Of String)
+- Public Overridable ReadOnly Property VocabularySize As Integer
+- Public Overridable ReadOnly Property Vocabulary As Vocabulary
+- Public Overridable ReadOnly Property Document As Integer()()
+- Public Sub New()
+- Public Overridable Function addDocument(document As IEnumerable(Of String)) As Integer()
+- Public Overridable Function toArray() As Integer()()
+- Public Overrides Function ToString() As String
+- Public Shared Function load(folderPath As String) As Corpus
+- Public Shared Function loadDocument(path As String, vocabulary As Vocabulary) As Integer()
+- Public Function inference(alpha As Double, beta As Double, phi As Double()(), doc As Integer()) As Double()
+- Public Function inference(phi As Double()(), doc As Integer()) As Double()
+- Public Function shadeDouble(d As Double, max As Double) As String
+- Public Sub hist(data As Double(), fmax As Integer)
+- Public Function load(folderPath As String) As Corpus
+- Public Function loadDocument(path As String, vocabulary As Vocabulary) As Integer()
+- Friend Const CACHE_LINE_INTS As Integer = 16
+- Friend Sub New(K As Integer, alpha As Double, beta As Double, V As Integer,
+- Friend Function GetSlot(w As Integer) As Integer
+- ... and 316 more
+
+## Imports
+- dft = Microsoft.VisualBasic.Data.Framework.DataFrame
+- int = Microsoft.VisualBasic.ComponentModel.Counter
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Data.NLP.Model
+- Microsoft.VisualBasic.Data.Trinity.NLP
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Default
+- Microsoft.VisualBasic.Language.Values
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Parallel
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.VisualBasic.Text
+- Microsoft.VisualBasic.Text.Parser
+- r = System.Text.RegularExpressions.Regex
+- randf = Microsoft.VisualBasic.Math.RandomExtensions
+- std = System.Math
+- SysDirectory = System.IO.Directory
+- SysFile = System.IO.File
+
+## File tree
+- BM25\BM25.vb
+- BM25\Document.vb
+- BM25\IdfVariant.vb
+- BM25\NamespaceDoc.vb
+- BM25\SearchResult.vb
+- BM25\TermContribution.vb
+- Extensions.vb
+- LDA\Corpus.vb
+- LDA\Debugger.vb
+- LDA\DocumentLoader.vb
+- LDA\Gibbs.vb
+- LDA\LdaGibbsSampler.vb
+- LDA\LdaInterpreter.vb
+- LDA\LdaPartition.vb
+- LDA\LdaRng.vb
+- LDA\NamespaceDoc.vb
+- LDA\Vocabulary.vb
+- NamespaceDoc.vb
+- Stemmer.vb
+- Text\Bigram.vb
+- Text\Model\Counter.vb
+- Text\Model\NamespaceDoc.vb
+- Text\Model\Paragraph.vb
+- Text\Model\Sentence.vb
+- Text\Model\SentenceCharWalker.vb
+- Text\Model\TokenCounter.vb
+- Text\StopWords.vb
+- Text\Text.vb
+- TF-IDF\DocumentTFIDF.vb
+- TF-IDF\TFIDF.vb
+- Tokenizer\src\ChineseTokenizer.vb
+- Tokenizer\src\HmmModel.vb
+- Tokenizer\src\HuggingFace\Abstractions.vb
+- Tokenizer\src\HuggingFace\AddedVocabulary.vb
+- Tokenizer\src\HuggingFace\BpeModel.vb
+- Tokenizer\src\HuggingFace\ByteLevelAlphabet.vb
+- Tokenizer\src\HuggingFace\Decoders.vb
+- Tokenizer\src\HuggingFace\HuggingFaceTokenizer.vb
+- Tokenizer\src\HuggingFace\JsonReader.vb
+- Tokenizer\src\HuggingFace\NamespaceDoc.vb
+- Tokenizer\src\HuggingFace\Normalizers.vb
+- Tokenizer\src\HuggingFace\PostProcessors.vb
+- Tokenizer\src\HuggingFace\PreTokenizers.vb
+- Tokenizer\src\HuggingFace\TokenizerConfig.vb
+- Tokenizer\src\HuggingFace\TokenizerFactory.vb
+- Tokenizer\src\HuggingFace\TokenizerJson.vb
+- Tokenizer\src\HuggingFace\UnigramModel.vb
+- Tokenizer\src\HuggingFace\WordPieceModel.vb
+- Tokenizer\src\MaxMatchTokenizer.vb
+- Tokenizer\src\NamespaceDoc.vb
+- Tokenizer\src\WordDictionary.vb
+

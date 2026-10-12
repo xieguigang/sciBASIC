@@ -1,0 +1,230 @@
+# gr/Landscape/Landscape.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Imaging.Landscape
+- AssemblyName  : Microsoft.VisualBasic.Imaging.Landscape
+- TargetFramework: net10.0
+- Source files  : 48
+- Existing Title: 3D Mesh Model Parsers And Voxelization Toolkit
+- Existing Desc : Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation, as part of the sciBASIC# imaging stack.
+- Existing Tags : scibasic;3d-model;mesh-parser;point-cloud;voxelization;sdf;stl;obj;gltf;collada;3mf
+
+## Namespaces
+- Collada  [files: 3]
+- Data  [files: 6]
+- Gltf  [files: 5]
+- Max3DS  [files: 3]
+- Ply  [files: 5]
+- Stl  [files: 6]
+- ThreeMF  [files: 4]
+- ThreeMF.Xml  [files: 4]
+- Voxelization  [files: 7]
+- Wavefront  [files: 4]
+
+## Public types
+- Module ColladaParser (COLLADA\ColladaParser.vb) - COLLADA (.dae) 文件几何数据解析器
+- Class GeometrySource (COLLADA\ColladaTypes.vb) - 单个 &lt;source&gt; 元素的数据
+- Module NamespaceDoc (COLLADA\NamespaceDoc.vb) - COLLADA (.dae) mesh parsing: the COLLADA parser together with its element type definitions.
+- Enum ModelFormat (Data\ModelFormat.vb) - 支持的 3D 模型文件格式枚举
+- Module ModelLoader (Data\ModelLoader.vb) - - 3DS (.3ds) — 3D-Studio 旧版交换格式 - 3MF (.3mf) — 3D 制造格式（ZIP 容器 + XML 模型） ## 使用示例
+- Module NamespaceDoc (Data\NamespaceDoc.vb) - The unified 3D scene model: the model loader, scene, surface and vertex types shared by all mesh format readers.
+- Class SceneModel (Data\SceneModel.vb) - The data model of the landscape 3D model.
+- Class Surface (Data\Surface.vb) - 方便将3D模型保存与XML文件之中的数据模型对象 2017.1.30 由于受到XML序列化的限制，这里就不再实现这个枚举接口了
+- Structure Vertex (Data\Vertex.vb)
+- Module GlbReader (glTF\GlbReader.vb) - │ length: uint32 │ 文件总长度 ├──────────────────────────────┤ │ Chunk 0: JSON │
+- Module GltfReader (glTF\GltfReader.vb) - glTF (.gltf) 文本格式 3D 模型文件解析器 glTF (GL Transmission Format) 是 Khronos Group 制定的开放标准 3D 场景格式。 文本格式 (.gltf) 使用 JSON 描述场景结构，外部二进制文件 (.bin) 存储顶点数据。
+- Class GltfRoot (glTF\GltfTypes.vb) - glTF JSON 根对象，对应 glTF 2.0 规范的顶层结构
+- Class AssetInfo (glTF\GltfTypes.vb) - 资产描述信息
+- Class Scene (glTF\GltfTypes.vb) - 场景定义：包含一组根节点索引
+- Class Node (glTF\GltfTypes.vb) - 场景图中的节点，可包含网格引用、变换矩阵和子节点
+- Class GltfMesh (glTF\GltfTypes.vb) - 网格定义：包含多个图元 (Primitive)
+- Class Primitive (glTF\GltfTypes.vb) - 图元：描述一个可渲染的几何体单元
+- Class Accessor (glTF\GltfTypes.vb) - 访问器：描述如何从 BufferView 中读取类型化数组数据
+- Class BufferView (glTF\GltfTypes.vb) - 缓冲区视图：描述 Buffer 中的一个子区域
+- Class GltfBuffer (glTF\GltfTypes.vb) - 缓冲区：存储实际的二进制数据
+- Class GltfMaterial (glTF\GltfTypes.vb) - 材质定义
+- Class PbrMetallicRoughness (glTF\GltfTypes.vb) - PBR 金属粗糙度材质属性
+- Enum GltfComponentType (glTF\GltfTypes.vb) - 访问器组件类型常量
+- Enum GltfPrimitiveMode (glTF\GltfTypes.vb) - 图元渲染模式常量
+- Module ModelBuilder (glTF\ModelBuilder.vb) - glTF / GLB 共享的 SceneModel 构建逻辑。 负责将已加载的 GltfRoot JSON 模型和二进制缓冲区数组转换为 Data.SceneModel。
+- Module NamespaceDoc (glTF\NamespaceDoc.vb) - glTF and GLB (binary glTF) model reading: the readers, the glTF type definitions and the scene model builder.
+- Module ChunkId (Max3DS\Max3DSParser.vb)
+- Module Max3DSParser (Max3DS\Max3DSParser.vb) - 3DS (3D-Studio) 三维模型文件解析器。 3DS 是 Autodesk 3ds Max 使用的旧版标准交换格式。 采用分块（Chunk）存储结构，支持网格几何数据、材质定义、
+- Class Chunk3DS (Max3DS\Max3DSTypes.vb) - 3DS 文件块（Chunk）结构。 3DS 格式使用类似 RIFF/IFF 的分块存储： - 2 字节 Chunk ID (UInt16)
+- Class Mesh3DS (Max3DS\Max3DSTypes.vb) - 3DS 网格数据内部表示。 包含从单个 0x4100 (OBJ_MESH) Chunk 中解析出的所有几何信息。
+- Class Material3DS (Max3DS\Max3DSTypes.vb) - 3DS 材质定义。
+- Module NamespaceDoc (Max3DS\NamespaceDoc.vb) - Autodesk 3DS (3D Studio) mesh parsing: the chunk based parser and its type definitions.
+- Class NamespaceDoc (NamespaceDoc.vb) - A 3D mesh model parsing and voxelization toolkit: loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model, and converts the surfaces into voxel and signed distance volumes.
+- Class Header (PLY\Header.vb)
+- Module NamespaceDoc (PLY\NamespaceDoc.vb) - PLY (Polygon File Format) point cloud reading and writing: header parsing, the reader and writer, and the point cloud model.
+- Module PlyReader (PLY\PlyReader.vb) - PLY point cloud file reader. Supports ASCII, binary_little_endian, and binary_big_endian format variants. Parses vertex elements into <see cref="PointCloud"/> objects with automatic property
+- Module PlyWriter (PLY\PlyWriter.vb)
+- Class PointCloud (PLY\PointCloud.vb)
+- Module NamespaceDoc (STL\NamespaceDoc.vb) - STL mesh parsing in both ASCII and binary encodings.
+- Module StlParser (STL\StlBinaryReader.vb)
+- Module Extensions (ThreeMF\Extensions.vb) - 3mf 格式相关的扩展工具方法
+- Module ModelIO (ThreeMF\ModelIO.vb)
+- Module NamespaceDoc (ThreeMF\NamespaceDoc.vb) - 3MF (3D Manufacturing Format) model I/O: project and model reading and writing helpers.
+- Class Project (ThreeMF\Project.vb)
+- Class Mesh (ThreeMF\Xml\Mesh.vb)
+- Class Component (ThreeMF\Xml\Mesh.vb)
+- Class build (ThreeMF\Xml\Model3D.vb)
+- Class item (ThreeMF\Xml\Model3D.vb)
+- Module NamespaceDoc (ThreeMF\Xml\NamespaceDoc.vb) - The 3MF XML object model: the mesh, 3D model and resource elements of a 3MF package.
+- Class BaseMaterial (ThreeMF\Xml\Resources.vb)
+- Class Resources (ThreeMF\Xml\Resources.vb)
+- Interface IObject (ThreeMF\Xml\Resources.vb)
+- Class Object3D (ThreeMF\Xml\Resources.vb)
+- Class BaseMaterials (ThreeMF\Xml\Resources.vb)
+- Class BVH (Voxelization\BVH.vb) - 三角形网格的包围盒层次结构 (Bounding Volume Hierarchy)，用于加速 "空间中任意一点到网格最近三角面" 的查询。 采用质心 AABB 最长轴中位数分割递归构建 (非 SAH)，叶子节点三角形数量
+- Module NamespaceDoc (Voxelization\NamespaceDoc.vb) - Surface voxelization: voxel models, the bounding volume hierarchy and signed distance field (SDF) volume generation used for CFD simulation grids.
+- Structure SDFTriangle (Voxelization\SDFTriangle.vb) - SDF 体素化使用的三角面片，预存三个顶点、轴对齐包围盒 (AABB) 与质心， 以加速 BVH 的构建与最近三角面查询。
+- Class SDFVolume (Voxelization\SDFVolume.vb) - ## 数据含义 - <see cref="SDF"/>：每个体素中心到网格最近三角面的**带符号**欧几里得距离。 负值表示体素中心位于模型内部（固体），正值表示位于模型外部（流体空间），
+- Module SDFVoxelizer (Voxelization\SDFVoxelizer.vb) - 占比作为分数占用率 (occupancy)，显著平滑表面、消除阶梯伪影。 ## 输出 - <see cref="Voxelize"/>：抗锯齿后的二进制 <see cref="VoxelModel"/> (可直接替换现有体素模型)。
+- Module Voxelizer (Voxelization\Voxelizer.vb) - 采用 **列扫描射线投射 (Column-based Ray Casting)** 算法： 1. 对体素网格中的每一列 ``(x, y)``，沿 Z 轴正方向发射一条射线 2. 使用 Möller–Trumbore 算法计算射线与每个三角面的交点
+- Class VoxelModel (Voxelization\VoxelModel.vb) - 三维体素模型，用于 CFD 流体动力学仿真计算。 使用一维 <see cref="Boolean"/> 数组表示三维空间中每个体素的状态： ``False`` = 空/外部空间（无计算数据），
+- Module NamespaceDoc (Wavefront\NamespaceDoc.vb) - Wavefront OBJ model parsing: the OBJ text parser together with the triangle and OBJ model types.
+- Class ObjModel (Wavefront\ObjModel.vb)
+- Class ObjGroup (Wavefront\ObjModel.vb)
+- Module ObjTextParser (Wavefront\ObjTextParser.vb) - OBJ (Wavefront) 文件文本解析器
+- Class Triangle (Wavefront\Triangle.vb)
+
+## Notable public members
+- Public Function ReadFile(filePath$) As Data.SceneModel
+- Public Function ReadGeometries(filePath$) As Data.Surface()
+- Public Function ReadGeometries(doc As XDocument) As Data.Surface()
+- Public Property sourceId As String
+- Public Property floatArray As Single()
+- Public Property stride As Integer
+- Public Property count As Integer
+- Public Function LoadModel(filePath$) As SceneModel
+- Public Function VoxelizeForCFD(filePath$, Optional resolution As Integer = 128) As VoxelModel
+- Public Function VoxelizeForCFD(filePath$, voxelSize As Double) As VoxelModel
+- Public Function DetectFormat(filePath$) As ModelFormat
+- Public Property Surfaces As Surface()
+- Public Property bg As String
+- Public Property vertices As Vertex()
+- Public Property paint As String
+- Public ReadOnly Property Brush As Brush
+- Public Function CreateObject() As Drawing3D.Surface
+- Public Overrides Function ToString() As String
+- Public Iterator Function GenericEnumerator() As IEnumerator(Of Vertex) Implements Enumeration(Of Vertex).GenericEnumerator
+- Public Property Point3D As String
+- Public ReadOnly Property PointData As Point3D
+- Public Overrides Function ToString() As String
+- Public Function ReadFile(filePath$) As Data.SceneModel
+- Public Function ReadStream(stream As Stream) As Data.SceneModel
+- Public Function ReadFile(filePath$) As Data.SceneModel
+- Public Function LoadBuffers(root As GltfRoot, baseDir As String) As List(Of Byte())
+- Public Property Asset As AssetInfo
+- Public Property DefaultScene As Integer?
+- Public Property Scenes As Scene()
+- Public Property Nodes As Node()
+- Public Property Meshes As GltfMesh()
+- Public Property Accessors As Accessor()
+- Public Property BufferViews As BufferView()
+- Public Property Buffers As GltfBuffer()
+- Public Property Materials As GltfMaterial()
+- Public Property Version As String
+- Public Property Generator As String
+- Public Property Name As String
+- Public Property Nodes As Integer()
+- Public Property Name As String
+- Public Property MeshIndex As Integer?
+- Public Property Children As Integer()
+- Public Property Matrix As Single()
+- Public Property Translation As Single()
+- Public Property Rotation As Single()
+- Public Property Scale As Single()
+- Public Property Name As String
+- Public Property Primitives As Primitive()
+- Public Property Attributes As Dictionary(Of String, Integer)
+- Public Property IndicesAccessor As Integer?
+- Public Property MaterialIndex As Integer?
+- Public Property Mode As Integer?
+- Public Property BufferViewIndex As Integer?
+- Public Property ByteOffset As Integer?
+- Public Property ComponentType As Integer
+- Public Property Count As Integer
+- Public Property ElementType As String
+- Public Property Max As Single()
+- Public Property Min As Single()
+- Public ReadOnly Property NumComponents As Integer
+- ... and 188 more
+
+## Imports
+- Matrix3 = Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.Matrix
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ApplicationServices.Zip
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+- Microsoft.VisualBasic.Imaging.Drawing3D
+- Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+- Microsoft.VisualBasic.Imaging.Landscape.Collada
+- Microsoft.VisualBasic.Imaging.Landscape.Data
+- Microsoft.VisualBasic.Imaging.Landscape.Gltf
+- Microsoft.VisualBasic.Imaging.Landscape.Max3DS
+- Microsoft.VisualBasic.Imaging.Landscape.Stl
+- Microsoft.VisualBasic.Imaging.Landscape.ThreeMF
+- Microsoft.VisualBasic.Imaging.Landscape.ThreeMF.Xml
+- Microsoft.VisualBasic.Imaging.Landscape.Voxelization
+- Microsoft.VisualBasic.Imaging.Landscape.Wavefront
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Values
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math.SIMD
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.VisualBasic.Text.Xml
+- std = System.Math
+- System.ComponentModel
+
+## File tree
+- COLLADA\ColladaParser.vb
+- COLLADA\ColladaTypes.vb
+- COLLADA\NamespaceDoc.vb
+- Data\ModelFormat.vb
+- Data\ModelLoader.vb
+- Data\NamespaceDoc.vb
+- Data\SceneModel.vb
+- Data\Surface.vb
+- Data\Vertex.vb
+- glTF\GlbReader.vb
+- glTF\GltfReader.vb
+- glTF\GltfTypes.vb
+- glTF\ModelBuilder.vb
+- glTF\NamespaceDoc.vb
+- Max3DS\Max3DSParser.vb
+- Max3DS\Max3DSTypes.vb
+- Max3DS\NamespaceDoc.vb
+- NamespaceDoc.vb
+- PLY\Header.vb
+- PLY\NamespaceDoc.vb
+- PLY\PlyReader.vb
+- PLY\PlyWriter.vb
+- PLY\PointCloud.vb
+- STL\MeshBuilder.vb
+- STL\NamespaceDoc.vb
+- STL\StlAsciiReader.vb
+- STL\StlBinaryReader.vb
+- STL\StlParser.vb
+- STL\StlWriter.vb
+- ThreeMF\Extensions.vb
+- ThreeMF\ModelIO.vb
+- ThreeMF\NamespaceDoc.vb
+- ThreeMF\Project.vb
+- ThreeMF\Xml\Mesh.vb
+- ThreeMF\Xml\Model3D.vb
+- ThreeMF\Xml\NamespaceDoc.vb
+- ThreeMF\Xml\Resources.vb
+- Voxelization\BVH.vb
+- Voxelization\NamespaceDoc.vb
+- Voxelization\SDFTriangle.vb
+- Voxelization\SDFVolume.vb
+- Voxelization\SDFVoxelizer.vb
+- Voxelization\Voxelizer.vb
+- Voxelization\VoxelModel.vb
+- Wavefront\NamespaceDoc.vb
+- Wavefront\ObjModel.vb
+- Wavefront\ObjTextParser.vb
+- Wavefront\Triangle.vb
+

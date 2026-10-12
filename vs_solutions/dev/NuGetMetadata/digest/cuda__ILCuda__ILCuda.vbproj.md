@@ -1,0 +1,217 @@
+# cuda/ILCuda/ILCuda.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Computing.ILCuda
+- AssemblyName  : Microsoft.VisualBasic.Computing.ILCuda
+- TargetFramework: net10.0
+- Source files  : 51
+- Existing Title: ILCuda: Pure-Interop VB.NET CUDA Compute Framework
+- Existing Desc : Dependency-free VB.NET CUDA framework built on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu sources, kernel catalog and launch planning, reduction, elementwise and BLAS kernels, plus an IL-to-CUDA emitter.
+- Existing Tags : scibasic;cuda;nvrtc;gpu;interop;cuda-driver-api;kernels;blas;jit-compilation;il-to-cuda
+
+## Namespaces
+- IL2Cuda  [files: 5]
+- Kernels  [files: 3]
+- Math  [files: 5]
+- Runtime  [files: 26]
+
+## Public types
+- Enum CudaIndexMode (IL2Cuda\CudaAttributes.vb)
+- Enum CudaIndexKind (IL2Cuda\CudaAttributes.vb)
+- Class CudaKernelAttribute (IL2Cuda\CudaAttributes.vb)
+- Class CudaIndexAttribute (IL2Cuda\CudaAttributes.vb)
+- Class CudaInputAttribute (IL2Cuda\CudaAttributes.vb)
+- Class CudaOutputAttribute (IL2Cuda\CudaAttributes.vb)
+- Class CudaEmitter (IL2Cuda\CudaEmitter.vb)
+- Module CudaTypeMap (IL2Cuda\CudaTypeMap.vb)
+- Class IlCudaKernel (IL2Cuda\IlCudaKernel.vb)
+- Module IlCudaTranslator (IL2Cuda\IlCudaKernel.vb)
+- Module NamespaceDoc (IL2Cuda\NamespaceDoc.vb) - IL to CUDA source translator: the CudaKernel and parameter/index attributes that mark .NET methods as kernels, the .NET to CUDA type mapping table, and the IL emitter that translates the marked method bodies into CUDA C source.
+- Module CudaDriverApi (Interop\CudaDriverApi.vb)
+- Class CudaException (Interop\CUresult\CudaException.vb) - CUDA 调用失败时抛出的异常
+- Enum CUdevice_attribute (Interop\CUresult\CUdevice_attribute.vb) - 设备属性查询键（CUdevice_attribute）
+- Enum CUresult (Interop\CUresult\CUresult.vb) - CUDA Driver API 的返回码（取自 cuda.h 中的 CUresult 定义，覆盖常用错误）
+- Class NvmlException (Interop\CUresult\NvmlException.vb) - NVML 调用失败时抛出的异常（风格对齐 <see cref="CudaException"/>）
+- Enum nvrtcResult (Interop\CUresult\nvrtcResult.vb) - NVRTC 返回码（nvrtcResult）
+- Class PdhException (Interop\CUresult\PdhException.vb) - Windows 性能计数器（PDH）调用失败时抛出的异常（风格对齐 <see cref="NvmlException"/>）
+- Module NvmlApi (Interop\NvmlApi.vb)
+- Enum nvmlReturnT (Interop\NvmlApi.vb)
+- Enum nvmlPcieUtilizationCounter_t (Interop\NvmlApi.vb)
+- Enum nvmlClockType_t (Interop\NvmlApi.vb)
+- Enum nvmlTemperatureSensors_t (Interop\NvmlApi.vb)
+- Structure nvmlUtilization_t (Interop\NvmlApi.vb)
+- Structure nvmlMemory_v2_t (Interop\NvmlApi.vb)
+- Structure nvmlMemory_t (Interop\NvmlApi.vb)
+- Module NvrtcApi (Interop\NvrtcApi.vb)
+- Class NativeSearchPath (Interop\NvrtcApi.vb) - NVRTC 在编译时会通过 LoadLibrary 载入同目录下的 nvrtc-builtins64_*.dll， 而默认的动态库搜索路径并不包含"NVRTC 动态库自身所在目录"， 因此这里需要先把该目录加入搜索路径（Windows: SetDllDirectory）。
+- Module PdhApi (Interop\PdhApi.vb)
+- Structure PDH_FMT_COUNTERVALUE (Interop\PdhApi.vb)
+- Structure PDH_FMT_COUNTERVALUE_ITEM (Interop\PdhApi.vb)
+- Class KernelSourceFile (Kernels\KernelSourceFile.vb) - 一个内核源码文件（通常来自程序集的内嵌资源，也可以是运行时注册的内联源码）
+- Module KernelSources (Kernels\KernelSources.vb)
+- Module NamespaceDoc (Kernels\NamespaceDoc.vb) - The catalog of embedded CUDA kernel source files: loads and manages the .cu kernel sources that ship with the ILCuda framework.
+- Module GpuBasicMath (Math\GpuBasicMath.vb)
+- Module GpuBlas (Math\GpuBlas.vb)
+- Module GpuElementwise (Math\GpuElementwise.vb)
+- Enum UnaryOp (Math\GpuElementwise.vb)
+- Enum ReduceOp (Math\GpuReduce.vb)
+- Module GpuReduce (Math\GpuReduce.vb)
+- Class VectorSummary (Math\GpuReduce.vb)
+- Module NamespaceDoc (Math\NamespaceDoc.vb) - CUDA math kernels exposed as managed wrappers: element-wise unary and binary operations, generic reductions and a BLAS subset (GEMM/GEMV) running on the GPU.
+- Class NamespaceDoc (NamespaceDoc.vb) - Low level CUDA interop layer: P/Invoke bindings to the CUDA Driver API and NVRTC, the native NVRTC library loader, and the CUresult/nvrtcResult status enums plus the CudaException type.
+- Module CubinInspector (Runtime\CubinInspector.vb)
+- Class EngineOptions (Runtime\CudaEngine\EngineOptions.vb)
+- Module KernelNames (Runtime\CudaEngine\KernelNames.vb) - 框架自带内核的函数名（与 Kernels\*.cu 中的 extern "C" 名称一一对应）。 demo 或业务方自行注册的内核名不在本表中，应在使用方自己的代码里定义， 并通过 <see cref="KernelCatalog"/> 注册元数据。
+- Enum CudaEventFlags (Runtime\CudaEvent.vb)
+- Structure MemoryInfo (Runtime\CudaMemory.vb)
+- Module CudaMemory (Runtime\CudaMemory.vb)
+- Enum CudaStreamFlags (Runtime\CudaStream.vb)
+- Class DeviceReport (Runtime\Diagnostics\DeviceReport.vb) - 设备属性的纯数据快照：不持有任何 CUDA 句柄，可安全地跨层传递与格式化输出。 框架只生成它，怎么显示由调用方决定。
+- Class NvrtcCandidate (Runtime\Diagnostics\EnvironmentReport.vb)
+- Class EnvironmentReport (Runtime\Diagnostics\EnvironmentReport.vb) - 一次 CUDA 环境探测的结果：驱动版本、设备列表、NVRTC 候选、参与编译的内核源码。 全部是纯数据，探测过程中的异常会被记录到 <see cref="ErrorMessage"/> 而不抛出。
+- Module CudaEnvironment (Runtime\Diagnostics\EnvironmentReport.vb)
+- Enum FixKind (Runtime\Diagnostics\FixSuggestion.vb)
+- Class FixSuggestion (Runtime\Diagnostics\FixSuggestion.vb) - 一条可操作的修复建议（纯数据，由调用方决定如何呈现）
+- Structure GpuProcessSample (Runtime\GpuProcessCounters.vb) - 单个进程的 GPU 使用快照（各字段均为"采样窗口内"的值）。
+- Class KernelInfo (Runtime\KernelCatalog.vb)
+- Module KernelCatalog (Runtime\KernelCatalog.vb)
+- Class KernelImage (Runtime\KernelImage.vb)
+- Structure LaunchConfig (Runtime\LaunchConfig.vb)
+- Module LaunchPlanner (Runtime\LaunchConfig.vb)
+- Module NamespaceDoc (Runtime\NamespaceDoc.vb) - CUDA runtime management: device, context, stream, event, module and device/host memory objects, JIT compilation of kernels through NVRTC, cubin inspection, kernel catalog and launch configuration, plus the high level CudaEngine and environment diagnostics.
+- Structure NvmlUtilization (Runtime\Nvml.vb) - SM 活跃占比与显存控制器带宽占比（采样周期内，单位 %）。 哨兵 -1 表示不可用。
+- Structure NvmlMemory (Runtime\Nvml.vb) - 显存使用情况（字节级）。<see cref="Available"/> 为 False 表示查询失败。
+- Structure NvmlPcie (Runtime\Nvml.vb) - PCIe 吞吐（MB/s）。TX = 设备→主机，RX = 主机→设备。 哨兵 -1 表示不可用。
+- Structure NvmlSample (Runtime\Nvml.vb) - 一次采样快照：时间戳 + 全部指标。供 GTop 的 MonitorSampler 累积。
+- Module Nvml (Runtime\Nvml.vb) - NVML 生命周期与设备枚举（风格对齐 CudaDevice 的 EnsureInitialized / Enumerate）
+- Module NvrtcCompiler (Runtime\NvrtcCompiler.vb)
+
+## Notable public members
+- Public Property Name As String
+- Public Property Mode As CudaIndexMode
+- Public Sub New()
+- Public Sub New(name As String, Optional mode As CudaIndexMode = CudaIndexMode.Grid1D)
+- Public Property Kind As CudaIndexKind
+- Public Sub New()
+- Public Sub New(kind As CudaIndexKind)
+- Public Property IndentSize As Integer = 4
+- Public Sub New(Optional indent As Integer = 0)
+- Public ReadOnly Property Text As String
+- Public Sub AppendLine(Optional text As String = Nothing)
+- Public Sub IncreaseIndent()
+- Public Sub DecreaseIndent()
+- Public Sub EmitStatement(stmt As Statement)
+- Public Sub EmitBlock(block As BlockStatement)
+- Public Function EmitExpression(expr As Expression) As String
+- Public Function CudaType(t As System.Type) As String
+- Public Function ElementType(t As System.Type) As System.Type
+- Public Function ParameterCudaType(t As System.Type, Optional isPointer As Boolean = False) As String
+- Public Function TryMapMathFunction(declaringType As String, methodName As String,
+- Public Function PrefersSingle(callNode As CallExpression) As Boolean
+- Public Function FormatLiteral(value As Object) As String
+- Public Function OperatorText(op As BinaryOperator) As String
+- Public Function SafeName(name As String) As String
+- Public Property Name As String
+- Public Property Source As String
+- Public Property DeviceFunctionName As String
+- Public Property IndexMode As CudaIndexMode
+- Public Property Syntax As MethodSyntax
+- Public Property MethodName As String
+- Public Property CountParameterName As String = "il_n"
+- Public Property OutputParameterName As String = "il_out"
+- Public Sub Register()
+- Public Sub Launch(engine As CudaEngine, config As LaunchConfig, ParamArray args As Object())
+- Public Sub Launch(engine As CudaEngine, stream As CudaStream, config As LaunchConfig,
+- Public Overrides Function ToString() As String
+- Public Function Translate(method As MethodInfo, Optional kernelName As String = Nothing) As IlCudaKernel
+- Friend Const CudaLib As String = "nvcuda"
+- Friend Function cuInit(flags As UInteger) As CUresult
+- Friend Function cuDriverGetVersion(ByRef driverVersion As Integer) As CUresult
+- Friend Function cuGetErrorName(status As CUresult, ByRef namePtr As IntPtr) As CUresult
+- Friend Function cuGetErrorString(status As CUresult, ByRef strPtr As IntPtr) As CUresult
+- Friend Function cuDeviceGetCount(ByRef count As Integer) As CUresult
+- Friend Function cuDeviceGet(ByRef device As Integer, ordinal As Integer) As CUresult
+- Friend Function cuDeviceGetName(name As StringBuilder, length As Integer, device As Integer) As CUresult
+- Friend Function cuDeviceTotalMem_v2(ByRef bytes As ULong, device As Integer) As CUresult
+- Friend Function cuDeviceGetAttribute(ByRef value As Integer, attrib As CUdevice_attribute, device As Integer) As CUresult
+- Friend Function cuDevicePrimaryCtxRetain(ByRef ctx As IntPtr, device As Integer) As CUresult
+- Friend Function cuDevicePrimaryCtxRelease(device As Integer) As CUresult
+- Friend Function cuCtxSetCurrent(ctx As IntPtr) As CUresult
+- Friend Function cuCtxGetCurrent(ByRef ctx As IntPtr) As CUresult
+- Friend Function cuCtxSynchronize() As CUresult
+- Friend Function cuModuleLoadData(ByRef hmodule As IntPtr, image As IntPtr) As CUresult
+- Friend Function cuModuleUnload(hmodule As IntPtr) As CUresult
+- Friend Function cuModuleGetFunction(ByRef hfunc As IntPtr, hmodule As IntPtr, name As String) As CUresult
+- Friend Function cuMemAlloc_v2(ByRef dptr As ULong, bytesize As ULong) As CUresult
+- Friend Function cuMemFree_v2(dptr As ULong) As CUresult
+- Friend Function cuMemcpyHtoD_v2(dstDevice As ULong, srcHost As IntPtr, byteCount As ULong) As CUresult
+- Friend Function cuMemcpyDtoH_v2(dstHost As IntPtr, srcDevice As ULong, byteCount As ULong) As CUresult
+- Friend Function cuMemsetD8_v2(dstDevice As ULong, value As Byte, count As ULong) As CUresult
+- ... and 440 more
+
+## Imports
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL
+- Microsoft.VisualBasic.Computing.ILCuda.Kernels
+- Microsoft.VisualBasic.Computing.ILCuda.Runtime
+- System.Collections.Generic
+- System.Globalization
+- System.IO
+- System.Linq
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Text
+- System.Text.RegularExpressions
+
+## File tree
+- IL2Cuda\CudaAttributes.vb
+- IL2Cuda\CudaEmitter.vb
+- IL2Cuda\CudaTypeMap.vb
+- IL2Cuda\IlCudaKernel.vb
+- IL2Cuda\NamespaceDoc.vb
+- Interop\CudaDriverApi.vb
+- Interop\CUresult\CudaException.vb
+- Interop\CUresult\CUdevice_attribute.vb
+- Interop\CUresult\CUresult.vb
+- Interop\CUresult\NvmlException.vb
+- Interop\CUresult\nvrtcResult.vb
+- Interop\CUresult\PdhException.vb
+- Interop\NvmlApi.vb
+- Interop\NvrtcApi.vb
+- Interop\NvrtcLibrary.vb
+- Interop\PdhApi.vb
+- Kernels\KernelSourceFile.vb
+- Kernels\KernelSources.vb
+- Kernels\NamespaceDoc.vb
+- Math\GpuBasicMath.vb
+- Math\GpuBlas.vb
+- Math\GpuElementwise.vb
+- Math\GpuReduce.vb
+- Math\NamespaceDoc.vb
+- NamespaceDoc.vb
+- Runtime\CubinInspector.vb
+- Runtime\CudaContext.vb
+- Runtime\CudaDevice.vb
+- Runtime\CudaEngine\CudaEngine.vb
+- Runtime\CudaEngine\EngineOptions.vb
+- Runtime\CudaEngine\KernelNames.vb
+- Runtime\CudaEvent.vb
+- Runtime\CudaKernel.vb
+- Runtime\CudaMemory.vb
+- Runtime\CudaModule.vb
+- Runtime\CudaRuntime.vb
+- Runtime\CudaStream.vb
+- Runtime\CudaTimer.vb
+- Runtime\DeviceBuffer.vb
+- Runtime\DeviceMemory.vb
+- Runtime\Diagnostics\DeviceReport.vb
+- Runtime\Diagnostics\EnvironmentReport.vb
+- Runtime\Diagnostics\FixSuggestion.vb
+- Runtime\GpuProcessCounters.vb
+- Runtime\KernelCatalog.vb
+- Runtime\KernelImage.vb
+- Runtime\LaunchConfig.vb
+- Runtime\NamespaceDoc.vb
+- Runtime\Nvml.vb
+- Runtime\NvrtcCompiler.vb
+- Runtime\PinnedHostBuffer.vb
+

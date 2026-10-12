@@ -1,0 +1,374 @@
+# Data_science/Visualization/DataPlot/DataPlot.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.Plots
+- AssemblyName  : Microsoft.VisualBasic.Data.DataPlot
+- TargetFramework: net10.0
+- Source files  : 134
+- Existing Title: DataPlot: GDI+ Chart Engine with ggplot2-Style Theme Units
+- Existing Desc : Standalone GDI+ charting engine for sciBASIC#: scatter (bubble/error-bar/jitter/hull), line, area, bar (grouped/stacked/percent/diverging/color-scale), histogram, box, violin, jitter, pie, radar, rose, pyramid, venn, contour, density, heatmap, cluster heatmap, correlation matrix, bubble heatmap, z-score, ROC, QQ, forest, PCA, Manhattan, regression, time trends and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.
+- Existing Tags : scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization;boxplot;violin-plot;heatmap;sankey;treemap;contour;venn;roc-curve;qq-plot;forest-plot;pca-plot;manhattan-plot;correlation-matrix
+
+## Namespaces
+- Canvas  [files: 21]
+- GgplotTheme  [files: 7]
+- Legacy  [files: 3]
+- Legacy.BarPlot  [files: 11]
+- Legacy.BarPlot.Data  [files: 5]
+- Legacy.BarPlot.Histogram  [files: 4]
+- Legacy.Plots  [files: 8]
+- Plot3D  [files: 6]
+- Plot3D.Device  [files: 2]
+- Plot3D.Impl  [files: 1]
+- Plot3D.Legend  [files: 3]
+- Plot3D.Model  [files: 2]
+- Statistics.Heatmap  [files: 2]
+
+## Public types
+- Class AlignmentPlot (Advanced\AlignmentPlot.vb)
+- Class BoxGroup (Advanced\BoxGroup.vb)
+- Class BoxPlot (Advanced\BoxPlot.vb)
+- Class BubbleSeries (Advanced\BubblePlot.vb)
+- Class BubblePlot (Advanced\BubblePlot.vb)
+- Class ChordLink (Advanced\ChordPlot.vb)
+- Class ChordPlot (Advanced\ChordPlot.vb)
+- Class DendrogramTheme (Advanced\DendrogramPlot.vb) - 层次聚类树图的样式参数
+- Class DendrogramPlot (Advanced\DendrogramPlot.vb) - 绘制层次聚类图(竖直方向)
+- Class FillPolygons (Advanced\FillPolygons.vb)
+- Class HeatmapPlot (Advanced\HeatmapPlot.vb)
+- Class ImageMapPlot (Advanced\ImageMapPlot.vb)
+- Class JitterPlot (Advanced\JitterPlot.vb)
+- Class PiePlot (Advanced\PiePlot.vb)
+- Class PrincipalCurvePlot (Advanced\PrincipalCurvePlot.vb)
+- Class PyramidPlot (Advanced\PyramidPlot.vb)
+- Class RadarPlot (Advanced\RadarPlot.vb)
+- Class RosePlot (Advanced\RosePlot.vb)
+- Class SankeyLink (Advanced\SankeyPlot\SankeyLink.vb)
+- Class SankeyNode (Advanced\SankeyPlot\SankeyNode.vb)
+- Class SankeyPlot (Advanced\SankeyPlot\SankeyPlot.vb)
+- Class TreemapNode (Advanced\TreemapPlot.vb)
+- Class TreemapPlot (Advanced\TreemapPlot.vb)
+- Class VennPlot (Advanced\VennPlot.vb)
+- Class ViolinPlot (Advanced\ViolinPlot.vb)
+- Class AreaPlot (Basic\AreaPlot.vb)
+- Class BarPlot (Basic\BarPlot.vb)
+- Enum StackMode (Basic\BarPlot.vb)
+- Class ContourPlot (Basic\ContourPlot.vb)
+- Enum ContourMode (Basic\ContourPlot.vb)
+- Class HistogramPlot (Basic\HistogramPlot.vb)
+- Class LinePlot (Basic\LinePlot.vb)
+- Class ScatterPlot (Basic\ScatterPlot.vb) - 散点图
+- Class StackedAreaPlot (Basic\StackedAreaPlot.vb)
+- Class StackedBarPlot (Basic\StackedBarPlot.vb)
+- Structure Annotation (Canvas\Annotation.vb)
+- Module Axis (Canvas\Axis.vb)
+- Enum XAxisLayoutStyles (Canvas\AxisStyles.vb)
+- Enum YAxisLayoutStyles (Canvas\AxisStyles.vb)
+- Enum YlabelPosition (Canvas\AxisStyles.vb)
+- Class Theme (Canvas\CanvasTheme.vb) - The plot style theme definition
+- Class DataScaler (Canvas\DataScaler.vb) - 将用户数据转换为作图的时候所需要的空间数据
+- Module DataScalerExtensions (Canvas\DataScaler.vb)
+- Class Ellipse (Canvas\Ellipse.vb) - PCA 统计椭圆类，用于表示基于协方差的置信椭圆
+- Class FractionData (Canvas\FractionData.vb) - 扇形/金字塔的数据模型
+- Enum ValueLabels (Canvas\LabelStyles.vb)
+- Module LayerRender (Canvas\LayerRender.vb)
+- Class LayoutDependency (Canvas\Layout.vb)
+- Class Absolute (Canvas\Layout.vb) - 绝对位置定位
+- Class PercentageRelative (Canvas\Layout.vb) - 百分比相对定位
+- Module LayoutExtensions (Canvas\Layout.vb)
+- Class CircleSizeLegend (Canvas\Legends.vb) - 气泡尺寸图例：绘制一组嵌套的圆圈以及各自的数值标注
+- Class Mapper (Canvas\Mapper.vb) - 将数据坐标转换为绘图坐标（宽度/高度比例）
+- Module PieChart (Canvas\PieChart.vb)
+- Structure PointData (Canvas\PointData.vb) - 绘图的点的数据
+- Module Resolution2K (Canvas\Resolution.vb)
+- Module Resolution1K (Canvas\Resolution.vb)
+- Class SerialData (Canvas\SerialData.vb) - 一条曲线的绘图数据模型 [x, y]
+- Class TermScaler (Canvas\TermScaler.vb)
+- Class XAxis (Canvas\XAxis.vb)
+- Class YScaler (Canvas\YScaler.vb)
+- Class AxisProvider (Engine\AxisProvider.vb) - ```vbnet Dim axis$ = "(min,max),tick=steps,n=parts" ' example as
+- Module AxisScalling (Engine\AxisScalling.vb)
+- Enum AxisSide (Engine\AxisSide.vb)
+- Module ColorScale (Engine\ColorScale.vb) - 色阶：把数值映射到颜色，并绘制与之配套的颜色条图例。 热图、等高线图、密度图、相关性矩阵、Z-score 图、变宽条形图等所有需要色阶的图表 共用这一份实现，避免每种图各自写一遍取色与 colorbar 绘制。
+- Class ClusterTreeNode (Engine\DataModels.vb) - 层次聚类树节点。聚类算法由调用方完成，DataPlot 只消费树形结果用于绘制树状图 / 聚类热图的行、列装饰。
+- Interface IRegressionFit (Engine\DataModels.vb) - 回归拟合结果。调用方把已经拟合好的结果包进来即可绘制拟合图， DataPlot 不会自己去算回归。
+- Class RegressionFit (Engine\DataModels.vb)
+- Interface IPCAScore (Engine\DataModels.vb) - PCA 分析结果。 <see cref="Contributions"/> 同时用于碎石图，因此得分图与碎石图共用该模型。
+- Class PCAScoreSet (Engine\DataModels.vb)
+- Class CorrelationMatrix (Engine\DataModels.vb) - 相关性矩阵。数据由调用方算好（Pearson / Spearman 等任意度量）， 这里只承载矩阵本身与行列名。
+- Class CategoryGroup (Engine\DataModels.vb)
+- Class ROCCurve (Engine\DataModels.vb)
+- Class ForestEntry (Engine\DataModels.vb)
+- Class ManhattanPoint (Engine\DataModels.vb)
+- Class BiHistogramSample (Engine\DataModels.vb)
+- Class VariableBarData (Engine\DataModels.vb)
+- Structure TimePoint (Engine\DataModels.vb)
+- Class PolygonGroup (Engine\DataModels.vb)
+- Class BarSerial (Engine\DataModels.vb)
+- Class ODESeries (Engine\DataModels.vb)
+- Class ZScoreEntry (Engine\DataModels.vb)
+- Class VennSet (Engine\DataModels.vb) - 文氏图的一个集合。<see cref="VennSet.Intersections"/> 的 key 是另一个集合的 <see cref="Name"/>，value 是与该集合的交集元素数量。
+- Class BarDataSample (Engine\DataModels.vb)
+- Class BarDataGroup (Engine\DataModels.vb)
+- Class SampleMoments (Engine\DataModels.vb)
+- Module Geometry (Engine\Geometry.vb) - 与具体图表无关的通用数值 / 几何工具：分位数、刻度算法、核密度估计、样条平滑、 抖动、矩阵行列表标准化。多个图表类型（箱线、小提琴、密度图、轮廓图、聚类热图……） 共用这里的实现，避免出现多份不一致的副本。
+- Enum ScaleMode (Engine\Geometry.vb)
+- Structure EllipseFit (Engine\Geometry.vb)
+- Class CssRule (Engine\GgplotTheme\CssThemeMapper.vb) - Represents a single CSS rule with a selector and a set of properties.
+- Class CssThemeMapper (Engine\GgplotTheme\CssThemeMapper.vb) - axis.ticks.length { length: 0.25cm; }
+- Class ArrowSpec (Engine\GgplotTheme\Elements.vb)
+- Class ElementLine (Engine\GgplotTheme\Elements.vb)
+- Class ElementRect (Engine\GgplotTheme\Elements.vb)
+- Class ElementText (Engine\GgplotTheme\Elements.vb)
+- Class ElementPoint (Engine\GgplotTheme\Elements.vb)
+- Class ElementPolygon (Engine\GgplotTheme\Elements.vb)
+- Class ElementGeom (Engine\GgplotTheme\Elements.vb)
+- Module ElementHelpers (Engine\GgplotTheme\Elements.vb)
+- Class ResolvedElementText (Engine\GgplotTheme\LayoutCalculator.vb) - A text element with all properties resolved to pixel values. Produced by LayoutCalculator for rendering.
+- Class ResolvedElementLine (Engine\GgplotTheme\LayoutCalculator.vb) - A line element with all properties resolved to pixel values.
+- Class ResolvedElementRect (Engine\GgplotTheme\LayoutCalculator.vb) - A rectangle element with all properties resolved to pixel values.
+- Class PlotLayout (Engine\GgplotTheme\LayoutCalculator.vb) - Contains computed pixel positions for the main plot regions. All values are in pixels relative to the canvas origin (top-left).
+- Class LayoutCalculator (Engine\GgplotTheme\LayoutCalculator.vb) - The automatic layout calculation system. Converts all theme units (cm, mm, pt, lines, char, null, npc, inch, px) to pixel values based on the canvas context (canvas size, PPI).
+- Module NamespaceDoc (Engine\GgplotTheme\NamespaceDoc.vb) - The ggplot style theme definitions used by the plot library.
+- Enum ThemeElementType (Engine\GgplotTheme\Theme.vb) - Identifies the type of a theme element, used for CSS parsing and inheritance resolution.
+- Class Theme (Engine\GgplotTheme\Theme.vb)
+- Enum UnitType (Engine\GgplotTheme\Units.vb) - Supported unit types for theme measurements, mirroring R's grid unit() system. These correspond to the units used in ggplot2 theme specifications.
+- Class Unit (Engine\GgplotTheme\Units.vb)
+- Class Margin (Engine\GgplotTheme\Units.vb)
+- Class CanvasContext (Engine\GgplotTheme\Units.vb)
+- Class UnitConverter (Engine\GgplotTheme\Units.vb) - Converts Unit values to pixels based on a CanvasContext. Handles all ggplot unit types: cm, mm, pt, lines, char, null, npc, inch, px. For relative units (rel), resolve against parent value before calling ToPixels.
+- Enum MarkerShape (Engine\MarkerShape.vb)
+- Class PlotEngine (Engine\PlotEngine.vb) - 绘图引擎：所有图表类型的基类与公共能力。 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
+- Enum LegendPos (Engine\PlotEngine.vb)
+- Class PlotTheme (Engine\PlotTheme.vb) - 图表主题：包含颜色、字体、线宽、边距等所有视觉样式参数。 可直接使用预定义主题，也可基于预定义主题派生自定义主题。
+- Class Series (Engine\Series.vb)
+- Module Extensions (Extensions.vb)
+- Module AlignmentPlot (Legacy\AlignmentPlot.vb) - Visualize and comparing two discrete signals. (以条形图的方式可视化绘制两个离散的信号的比对的图形)
+- Structure Signal (Legacy\AlignmentPlot.vb)
+- ... and 79 more
+
+## Notable public members
+- Public Property Tracks As List(Of Series) = New List(Of Series)()
+- Public Property Highlights As New List(Of (start As Double, [end] As Double))()
+- Public Property TrackHeight As Single = 0
+- Public Property ShowTrackNames As Boolean = True
+- Public Property Fill As Boolean = False
+- Public Property HighlightColor As Color = Color.FromArgb(40, 100, 180)
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
+- Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property Name As String = ""
+- Public Property Data As Double() = {}
+- Public Property Color As Color? = Nothing
+- Public Property Groups As New List(Of BoxGroup)()
+- Public Property Horizontal As Boolean = False
+- Public Property ShowOutliers As Boolean = True
+- Public Property ShowMean As Boolean = True
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
+- Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property Sizes As Double() = {}
+- Public Property MinBubbleSize As Single = 4.0F
+- Public Property MaxBubbleSize As Single = 30.0F
+- Public Property FillAlpha As Integer = 140
+- Public Property ShowSizeLegend As Boolean = True
+- Public Property SizeLegendCount As Integer = 3
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
+- Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot(seriesList As IList(Of BubbleSeries))
+- Public Property Source As Integer
+- Public Property Target As Integer
+- Public Property Value As Double
+- Public Property Color As Color? = Nothing
+- Public Property NodeLabels As String() = {}
+- Public Property Matrix As Double(,) = Nothing
+- Public Property Links As New List(Of ChordLink)()
+- Public Property NodeColors As Color() = Nothing
+- Public Property ChordAlpha As Integer = 100
+- Public Property Symmetric As Boolean = True
+- Public Property ShowSelfLoops As Boolean = False
+- Public Property StartAngle As Single = -90
+- Public Property GapAngle As Single = 1.5F
+- Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing, Optional driver As Microsoft.VisualBasic.Imaging.Driver.Dri…
+- Public Sub New(g As IGraphics, Optional theme As PlotTheme = Nothing)
+- Public Sub Plot()
+- Public Property padding As String = g.DefaultPadding
+- Public Property background As String = "white"
+- Public Property gridStrokeX As String = Stroke.AxisGridStroke
+- Public Property axisTickCSS As String = CSSFont.PlotLabelNormal
+- Public Property axisStroke As String = Stroke.AxisStroke
+- Public Property tagCSS As String = CSSFont.PlotLabelNormal
+- Public Property XaxisTickFormat As String = "F1"
+- Public Property pointSize As Single = 10
+- Public ReadOnly Property classinfo As Dictionary(Of String, String)
+- Public Sub New(hist As Cluster, theme As DendrogramTheme,
+- Protected Function GetColor(id As String) As Color
+- Public Function Plot(Optional size$ = "2100,1600",
+- Protected Overridable Sub DendrogramTree(partition As Cluster,
+- Public Property Groups As List(Of PolygonGroup) = New List(Of PolygonGroup)()
+- Public Property ShowOutline As Boolean = True
+- Public Property ShowPoints As Boolean = False
+- ... and 1534 more
+
+## Imports
+- AdjustableArrowCap = Microsoft.VisualBasic.Imaging.AdjustableArrowCap
+- AdjustableArrowCap = System.Drawing.Drawing2D.AdjustableArrowCap
+- Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+- Bitmap = System.Drawing.Bitmap
+- Brush = Microsoft.VisualBasic.Imaging.Brush
+- Brush = System.Drawing.Brush
+- Brushes = Microsoft.VisualBasic.Imaging.Brushes
+- Brushes = System.Drawing.Brushes
+- DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+- DashStyle = System.Drawing.Drawing2D.DashStyle
+- defaultStyle = Microsoft.VisualBasic.Language.Default.[Default](Of  Microsoft.VisualBasic.Data.Plots.Legacy.BarPlot.RectangleStyling)
+- Font = Microsoft.VisualBasic.Imaging.Font
+- Font = System.Drawing.Font
+- FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+- FontStyle = System.Drawing.FontStyle
+- GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+- GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+- Image = Microsoft.VisualBasic.Imaging.Image
+- Image = System.Drawing.Image
+- Matrix = Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.Matrix
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+
+## File tree
+- Advanced\AlignmentPlot.vb
+- Advanced\BoxGroup.vb
+- Advanced\BoxPlot.vb
+- Advanced\BubblePlot.vb
+- Advanced\ChordPlot.vb
+- Advanced\DendrogramPlot.vb
+- Advanced\FillPolygons.vb
+- Advanced\HeatmapPlot.vb
+- Advanced\ImageMapPlot.vb
+- Advanced\JitterPlot.vb
+- Advanced\PiePlot.vb
+- Advanced\PrincipalCurvePlot.vb
+- Advanced\PyramidPlot.vb
+- Advanced\RadarPlot.vb
+- Advanced\RosePlot.vb
+- Advanced\SankeyPlot\SankeyLink.vb
+- Advanced\SankeyPlot\SankeyNode.vb
+- Advanced\SankeyPlot\SankeyPlot.vb
+- Advanced\TreemapPlot.vb
+- Advanced\VennPlot.vb
+- Advanced\ViolinPlot.vb
+- Basic\AreaPlot.vb
+- Basic\BarPlot.vb
+- Basic\ContourPlot.vb
+- Basic\HistogramPlot.vb
+- Basic\LinePlot.vb
+- Basic\ScatterPlot.vb
+- Basic\StackedAreaPlot.vb
+- Basic\StackedBarPlot.vb
+- Canvas\Annotation.vb
+- Canvas\Axis.vb
+- Canvas\AxisStyles.vb
+- Canvas\CanvasTheme.vb
+- Canvas\DataScaler.vb
+- Canvas\Ellipse.vb
+- Canvas\FractionData.vb
+- Canvas\LabelStyles.vb
+- Canvas\LayerRender.vb
+- Canvas\Layout.vb
+- Canvas\Legends.vb
+- Canvas\Mapper.vb
+- Canvas\PieChart.vb
+- Canvas\PlotBase.vb
+- Canvas\PointData.vb
+- Canvas\Resolution.vb
+- Canvas\SerialData.vb
+- Canvas\TermScaler.vb
+- Canvas\XAxis.vb
+- Canvas\YScaler.vb
+- Engine\AxisProvider.vb
+- Engine\AxisScalling.vb
+- Engine\AxisSide.vb
+- Engine\ColorScale.vb
+- Engine\DataModels.vb
+- Engine\Geometry.vb
+- Engine\GgplotTheme\CssThemeMapper.vb
+- Engine\GgplotTheme\DefaultTheme.vb
+- Engine\GgplotTheme\Elements.vb
+- Engine\GgplotTheme\LayoutCalculator.vb
+- Engine\GgplotTheme\NamespaceDoc.vb
+- Engine\GgplotTheme\Theme.vb
+- Engine\GgplotTheme\Units.vb
+- Engine\MarkerShape.vb
+- Engine\PlotEngine.vb
+- Engine\PlotTheme.vb
+- Engine\Series.vb
+- Extensions.vb
+- Legacy\AlignmentPlot.vb
+- Legacy\BarDataGroup.vb
+- Legacy\BarDataSample.vb
+- Legacy\BarPlot.vb
+- Legacy\BarPlot2.vb
+- Legacy\BarPlotDataExtensions.vb
+- Legacy\BiDirectionBarPlot.vb
+- Legacy\BiDirectionData.vb
+- Legacy\Bubble.vb
+- Legacy\Constructor.vb
+- Legacy\DataModel.vb
+- Legacy\DensityPlot.vb
+- Legacy\Extensions.vb
+- Legacy\Heatmap.vb
+- Legacy\Histogram.vb
+- Legacy\HistogramPlot.vb
+- Legacy\LevelBarplot.vb
+- Legacy\LinePlot.vb
+- Legacy\LinePlot2D.vb
+- Legacy\Mapper.vb
+- Legacy\Models.vb
+- Legacy\PlotAlignmentGroup.vb
+- Legacy\ProfileGroup.vb
+- Legacy\RectangleStyles.vb
+- Legacy\Scaling.vb
+- Legacy\Scatter.vb
+- Legacy\Scatter2D.vb
+- Legacy\SimpleBarPlot.vb
+- Legacy\StackedBarPlot.vb
+- Legacy\StackedPercentageBarPlot.vb
+- Legacy\StyledBarplot.vb
+- Legacy\Violin.vb
+- Legacy\ViolinPlot.vb
+- NamespaceDoc.vb
+- Plot3D\Data.vb
+- Plot3D\Device\Element3D.vb
+- Plot3D\Device\RenderEngine.vb
+- Plot3D\Legend\LegendObject.vb
+- Plot3D\Legend\LegendPlot.vb
+- Plot3D\Legend\LegendStyles.vb
+- Plot3D\Model\Axis.vb
+- Plot3D\Model\Grid.vb
+- Plot3D\PieChart3D.vb
+- Plot3D\Plot3DTheme.vb
+- Plot3D\Scatter3DPlot.vb
+- Plot3D\ScatterHeatmap.vb
+- Plot3D\Serial3D.vb
+- Statistics\BiHistogramPlot.vb
+- Statistics\BubbleHeatmapPlot.vb
+- Statistics\ClusterHeatmapPlot.vb
+- Statistics\ClusterTree.vb
+- Statistics\CorrelationHeatmapPlot.vb
+- Statistics\CorrelationTrianglePlot.vb
+- Statistics\DensityPlot.vb
+- Statistics\ForestPlot.vb
+- Statistics\ManhattanPlot.vb
+- Statistics\PCAScorePlot.vb
+- Statistics\QQPlot.vb
+- Statistics\RegressionPlot.vb
+- Statistics\ROCPlot.vb
+- Statistics\SampleViewPlot.vb
+- Statistics\ScreePlot.vb
+- Statistics\TimeTrendsPlot.vb
+- Statistics\TreeStackedBarPlot.vb
+- Statistics\VariableWidthBarPlot.vb
+- Statistics\ZScorePlot.vb
+- ThemeBridge.vb
+

@@ -1,0 +1,330 @@
+# vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio
+- AssemblyName  : Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio
+- TargetFramework: net10.0
+- Source files  : 89
+- Existing Title: Visual Studio Solution, VBProject And Source Code Analysis Toolkit
+- Existing Desc : Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by metadata reflection, decodes IL into syntax trees and resolves source maps for sciBASIC# code tooling.
+- Existing Tags : scibasic;visual-studio;solution-parser;slnx;vbproj;code-analysis;vbnet;il-decompiler;source-map;reflection
+
+## Namespaces
+- CodeSign  [files: 7]
+- IL  [files: 18]
+- Resource  [files: 5]
+- sln  [files: 5]
+- sln.File  [files: 8]
+- SourceMap  [files: 6]
+- VBProj  [files: 6]
+- VBProj.CodeDOM  [files: 10]
+- VBProj.CodeDOM.Syntax  [files: 7]
+- VBProj.NuGet  [files: 6]
+- VBProj.ProjectXml  [files: 2]
+- VBProj.Reflection  [files: 2]
+- VersionControl  [files: 2]
+- VersionControl.Git  [files: 4]
+
+## Public types
+- Module CodeSignHelpers (CodeSign\CodeSign.vb)
+- Class CodeStatics (CodeSign\CodeStatistics.vb)
+- Class LicenseInfo (CodeSign\LicenseInfo.vb)
+- Module LicenseMgr (CodeSign\LicenseMgr.vb) - Source code license banner
+- Module NamespaceDoc (CodeSign\NamespaceDoc.vb) - Code signing and license inspection helpers for VB.NET source files: source code statistics, license header information and VB code signature extraction for the supported languages.
+- Enum Languages (CodeSign\SupportedLanguages.vb)
+- Module VBCodeSignature (CodeSign\VBCodeSignature.vb) - 在这个模块之中对VB的代码文件进行大纲摘要的提取操作
+- Class AstInterpreter (IL\Decompiler\AstInterpreter.vb)
+- Class BasicBlock (IL\Decompiler\BasicBlock.vb)
+- Class ControlFlowGraph (IL\Decompiler\ControlFlowGraph.vb)
+- Module IlOpcodeInfo (IL\Decompiler\IlOpcodeInfo.vb)
+- Class DecompileDiagnostics (IL\Decompiler\MethodDecompiler.vb)
+- Class DecompileOptions (IL\Decompiler\MethodDecompiler.vb)
+- Class DecompileException (IL\Decompiler\MethodDecompiler.vb)
+- Module MethodDecompiler (IL\Decompiler\MethodDecompiler.vb)
+- Class SsaBuilder (IL\Decompiler\SsaBuilder.vb)
+- Class PhiInfo (IL\Decompiler\SsaBuilder.vb)
+- Class StackSimulator (IL\Decompiler\StackSimulator.vb)
+- Class StructureRecovery (IL\Decompiler\StructureRecovery.vb)
+- Module SyntaxWriter (IL\Decompiler\SyntaxWriter.vb)
+- Module Globals (IL\Globals.vb)
+- Class ILInstruction (IL\ILInstruction.vb)
+- Class MethodAnalyzer (IL\MethodAnalyzer.vb)
+- Class MethodBodyReader (IL\MethodBodyReader.vb) - Parsing the IL of a Method Body > https://www.codeproject.com/articles/14058/parsing-the-il-of-a-method-body
+- Class MethodReference (IL\MethodReference.vb)
+- Module NamespaceDoc (IL\NamespaceDoc.vb) - IL disassembly and decompilation of .NET assemblies: instruction and method body readers, control flow graph construction, SSA and stack simulation, and structured syntax recovery used to reconstruct readable source code.
+- Class LiteralExpression (IL\Syntax\Expressions.vb)
+- Class ParameterExpression (IL\Syntax\Expressions.vb)
+- Class LocalExpression (IL\Syntax\Expressions.vb)
+- Class BinaryExpression (IL\Syntax\Expressions.vb)
+- Class UnaryExpression (IL\Syntax\Expressions.vb)
+- Class ConvertExpression (IL\Syntax\Expressions.vb)
+- Class CallExpression (IL\Syntax\Expressions.vb)
+- Class ArrayIndexExpression (IL\Syntax\Expressions.vb)
+- Class ArrayLengthExpression (IL\Syntax\Expressions.vb)
+- Class TernaryExpression (IL\Syntax\Expressions.vb)
+- Class PhiArgument (IL\Syntax\Expressions.vb)
+- Class PhiExpression (IL\Syntax\Expressions.vb) - SSA phi 节点。结构化还原阶段会把它就地折叠成"分支末尾赋值 + 声明提升"， 因此正常情况下最终 AST 里不应残留 phi。
+- Class BlockStatement (IL\Syntax\Statements.vb)
+- Class VariableDeclarationStatement (IL\Syntax\Statements.vb)
+- Class AssignmentStatement (IL\Syntax\Statements.vb)
+- Class ExpressionStatement (IL\Syntax\Statements.vb)
+- Class ReturnStatement (IL\Syntax\Statements.vb)
+- Class IfStatement (IL\Syntax\Statements.vb)
+- Class WhileStatement (IL\Syntax\Statements.vb)
+- Class ForStatement (IL\Syntax\Statements.vb)
+- Class BreakStatement (IL\Syntax\Statements.vb)
+- Class ContinueStatement (IL\Syntax\Statements.vb)
+- Class NopStatement (IL\Syntax\Statements.vb)
+- Class ParameterDeclaration (IL\Syntax\Statements.vb)
+- Class LocalDeclaration (IL\Syntax\Statements.vb)
+- Class MethodSyntax (IL\Syntax\Statements.vb) - 一个方法反编译之后的完整语法树。
+- Enum SyntaxKind (IL\Syntax\SyntaxNode.vb)
+- Enum BinaryOperator (IL\Syntax\SyntaxNode.vb)
+- Enum UnaryOperator (IL\Syntax\SyntaxNode.vb)
+- Module OperatorPrecedence (IL\Syntax\SyntaxNode.vb) - 一个二元运算符的优先级（数字越大越紧），供发射器决定是否需要加括号。
+- Class NamespaceDoc (NamespaceDoc.vb) - Visual Studio solution, VB.NET project and source code analysis toolkit: parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by reflection and decodes IL and source maps.
+- Module MimeData (Resource\MimeData.vb)
+- Module NamespaceDoc (Resource\NamespaceDoc.vb) - The .resx resource file data model: typed resource headers, resx schema objects and the MIME data helpers used to read and write .NET resources.
+- Class resheader (Resource\xml\resheader.vb)
+- Class assembly (Resource\xml\resheader.vb)
+- Class data (Resource\xml\resheader.vb)
+- Class resx (Resource\xml\resx.vb)
+- Class schema (Resource\xml\schema.vb)
+- Class import (Resource\xml\schema.vb)
+- Class element (Resource\xml\schema.vb)
+- Class sequence (Resource\xml\schema.vb)
+- Class complexType (Resource\xml\schema.vb)
+- Class choice (Resource\xml\schema.vb)
+- Class attribute (Resource\xml\schema.vb)
+- Module LegacySlnParser (sln\File\LegacySlnParser.vb)
+- Module NamespaceDoc (sln\File\NamespaceDoc.vb) - Low level readers and writers for the Visual Studio solution file formats: the legacy .sln parser, the modern .slnx parser and writer, and solution configuration models.
+- Module Parser (sln\File\Parser.vb) - Parses Visual Studio solution files, both the classic ``.sln`` (text) format and the new ``.slnx`` (XML) format, into a unified <see cref="Solution"/> model.
+- Enum TypeId (sln\File\Project.vb) - Known Visual Studio project type GUIDs.
+- Class Project (sln\File\Project.vb) - A project or solution folder inside the solution.
+- Module SlnxParser (sln\File\SlnxParser.vb)
+- Module SlnxWriter (sln\File\SlnxWriter.vb)
+- Class SolutionConfiguration (sln\File\SolutionConfiguration.vb) - A solution level build configuration / platform pair, e.g. ``Debug|AnyCPU``.
+- Class FolderWorkspace (sln\FolderWorkspace.vb)
+- Interface IProjectWorkspace (sln\IProjectWorkspace.vb)
+- Module NamespaceDoc (sln\NamespaceDoc.vb) - Visual Studio solution workspace model: solution, project workspace and folder workspace abstractions that represent a loaded .sln or .slnx solution in memory.
+- Class Solution (sln\Solution.vb) - Microsoft Visual Studio Solution File, works for both classic .sln (text) and the new .slnx (XML) solution formats.
+- Class SolutionWorkspace (sln\SolutionWorkspace.vb)
+- Module base64VLQ (sourceMap\base64VLQ.vb) - VLQ编码 > https://github.com/mozilla/source-map/blob/master/lib/base64-vlq.js
+- Module mappingDecode (sourceMap\mappingDecode.vb)
+- Module mappingEncode (sourceMap\mappingEncode.vb)
+- Class mappingLine (sourceMap\mappingLine.vb)
+- Module NamespaceDoc (sourceMap\NamespaceDoc.vb) - Source map (v3) decoding and encoding: the base64 VLQ codec, line and segment mapping decoders/encoders and the source map file model.
+- Class sourceMap (sourceMap\sourceMap.vb)
+- Class MethodSymbol (VBProject\CodeDOM\CallableMemberSymbol.vb) - function / sub / operator / sub new (constructor).
+- Class EnumSymbol (VBProject\CodeDOM\EnumSymbol.vb)
+- Class InterfaceSymbol (VBProject\CodeDOM\InterfaceSymbol.vb)
+- Class SourceLocations (VBProject\CodeDOM\LanguageSymbolType.vb)
+- Class Source (VBProject\CodeDOM\LanguageSymbolType.vb)
+- Class PropertySymbol (VBProject\CodeDOM\MemberSymbol.vb) - property declaration, e.g. Property X As XX / Property Item(index As Integer) As XX.
+- Class EventSymbol (VBProject\CodeDOM\MemberSymbol.vb) - event symbol, e.g. Event XXX(x As XX)
+- Class DelegateSymbol (VBProject\CodeDOM\MemberSymbol.vb) - delegate declaration, e.g. Public Delegate Function AAA(x As XX) As XXX
+- Module NamespaceDoc (VBProject\CodeDOM\NamespaceDoc.vb) - The VB.NET source code symbol tree: namespace, type, member, variable and enum symbol objects produced by the recursive descent parser and used for code analysis.
+- Class NamespaceSymbol (VBProject\CodeDOM\NamespaceSymbol.vb)
+- Class ClassSymbol (VBProject\CodeDOM\NamespaceSymbol.vb)
+- Class ModuleSymbol (VBProject\CodeDOM\NamespaceSymbol.vb)
+- Class StructureSymbol (VBProject\CodeDOM\NamespaceSymbol.vb)
+- Enum SymbolType (VBProject\CodeDOM\SymbolType.vb)
+- Module NamespaceDoc (VBProject\CodeDOM\Syntax\NamespaceDoc.vb) - The VB.NET recursive descent parser and lexical scanner: tokens, statements, type information helpers and the parser implementation that feeds the code symbol tree.
+- Class StmtParser (VBProject\CodeDOM\Syntax\StmtParser.vb)
+- Module TypeInfoHelper (VBProject\CodeDOM\Syntax\TypeInfoHelper.vb) - helpers to build <see cref="TypeInfo"/> clr type references from the type name text that was extracted out of the VB.NET source code. Because the type is only known by its textual name at parse time, the
+- Module VBParser (VBProject\CodeDOM\Syntax\VBParser.vb) - recursive descent parser for VB.NET source code. <see cref="Parse"/> turns a VB.NET source text string into a symbol tree rooted at a synthetic <see cref="TypeContainerSymbol"/> (namespace kind).
+- Class VBScanner (VBProject\CodeDOM\Syntax\VBScanner.vb) - lexical scanner for VB.NET source code. It handles line continuations (the trailing underscore, outside of strings/comments), strips single quote comments and collects triple
+- Class VBStatement (VBProject\CodeDOM\Syntax\VBStatement.vb) - a logical (already line-continued) source line together with the xml documentation comment that immediately precedes it.
+- Enum TokenKind (VBProject\CodeDOM\Syntax\VBToken.vb) - the kind of a lexical token produced by <see cref="VBScanner"/>
+- Structure Token (VBProject\CodeDOM\Syntax\VBToken.vb) - a single lexical token with its source text and line number. <see cref="Line"/> holds the 1-based physical line of the logical statement this token belongs to (a statement may span several physical
+- Class VariableSymbol (VBProject\CodeDOM\VariableSymbol.vb) - a variable symbol. Per design, class/structure fields AND local method variables share this single type (Field is intentionally not split out). Use <see cref="LanguageSymbolType.Parent"/> to tell whether it is a field (Parent is a TypeContainerSymbol) or a local (Parent is a MemberSymbol).
+- Module NamespaceDoc (VBProject\NuGet\NamespaceDoc.vb) - NuGet package resolution helpers for VB project files: package, framework and version models together with the NuGet resolver and client used to restore dependencies.
+- Class NuGetClient (VBProject\NuGet\NuGetClient.vb) - NuGet 全局包目录(<c>~/.nuget/packages</c>)作为本地缓存。 功能边界(刻意保持轻量, 不引入 NuGet 官方客户端库): <list type="bullet">
+- Module NuGetFramework (VBProject\NuGet\NuGetFramework.vb) - 采用"等级"模型: 每个 TFM 映射为一个整数等级, 只有当资产 TFM 的等级 不高于目标框架等级时才认为兼容, 并在全部兼容资产中取等级最高者。 <list type="bullet">
+- Class NuGetDependency (VBProject\NuGet\NuGetPackage.vb) - 一条 nuget 依赖声明(来自目标包的 <c>.nuspec</c>)。
+- Class NuGetDependencyGroup (VBProject\NuGet\NuGetPackage.vb) - 一个 nuspec 的依赖组(<c>&lt;group targetFramework="..."&gt;</c>)。
+- Class NuGetPackage (VBProject\NuGet\NuGetPackage.vb) - 一个已经落到本地缓存目录的 nuget 包: 包含解析出的依赖与资产(托管 dll / 原生资产目录)。
+- Class NuGetResolveResult (VBProject\NuGet\NuGetPackage.vb) - 一次 nuget 依赖解析的完整结果: 根包 + 全部传递依赖。
+- Class NuGetException (VBProject\NuGet\NuGetPackage.vb) - nuget 包解析过程中出现的可预期错误(包不存在、版本不存在、网络不可达等)。
+- ... and 37 more
+
+## Notable public members
+- Public Function SignCode(code$, key As AES, Optional lang As Languages = Languages.VisualBasic) As String
+- Public Function ParseHeaderRegion(code$, lang As Languages) As String
+- Public Property totalLines As Integer
+- Public Property commentLines As Integer
+- Public Property xml_comments As Integer
+- Public Property blankLines As Integer
+- Public Property size As Double
+- Public ReadOnly Property lineOfCodes As Integer
+- Public Property classes As Integer
+- Public Property properties As Integer
+- Public Shared Function StatVB(code As String) As CodeStatics
+- Public Property Authors As NamedValue()
+- Public Property Title As String
+- Public Property Copyright As String
+- Public Property Brief As String
+- Public Overrides Function ToString() As String
+- Public ReadOnly Property Template As LicenseInfo
+- Public Property Ignores As String() = {".+\.Designer\.vb", "AssemblyInfo\.vb"}
+- Public Function Insert(src As String, info As LicenseInfo, rootDir$, Optional ByRef stat As CodeStatics = Nothing) As Boolean
+- Public Function RemoveRegion(src As String) As String
+- Public Function AddRegion(src As String, info As LicenseInfo, file As String, Optional ByRef stat As CodeStatics = Nothing) As String
+- Public Function Inserts(info As LicenseInfo, rootDir$) As String()
+- Public Function RemoveAttributes(line As String) As String
+- Public Function SummaryModules(vb As String, stat As CodeStatics) As String
+- Public Property StepLimit As Integer = 50_000_000
+- Public Sub New(syntax As MethodSyntax)
+- Public Function Invoke(ParamArray args As Object()) As Object
+- Public Property Id As Integer
+- Public Property Offset As Integer
+- Public Property Instructions As New List(Of ILInstruction)
+- Public Property Predecessors As New List(Of Integer)
+- Public Property Successors As New List(Of Integer)
+- Public Property ImmediateDominator As Integer = -1
+- Public Property DominatorChildren As New List(Of Integer)
+- Public Property DominanceFrontier As New HashSet(Of Integer)
+- Public Property PostOrder As Integer = -1
+- Public Property ReversePostOrder As Integer = -1
+- Public Property ImmediatePostDominator As Integer = -1
+- Public Property IsLoopHeader As Boolean
+- Public Property LoopLatch As Integer = -1
+- Public Property LoopFollow As Integer = -1
+- Public Property LoopBody As New HashSet(Of Integer)
+- Public Property Statements As New List(Of Statement)
+- Public Property Condition As Expression
+- Public Property TrueSuccessor As Integer = -1
+- Public Property FalseSuccessor As Integer = -1
+- Public Property ExitStack As New List(Of Expression)
+- Public ReadOnly Property FirstOffset As Integer
+- Public ReadOnly Property LastInstruction As ILInstruction
+- Public ReadOnly Property Terminates As Boolean
+- Public Overrides Function ToString() As String
+- Public Const VirtualExit As Integer = -1
+- Public ReadOnly Property Blocks As IReadOnlyList(Of BasicBlock)
+- Public ReadOnly Property EntryBlock As BasicBlock
+- Public Function BlockIdAtOffset(offset As Integer) As Integer
+- Public Function ReachableBlocks() As List(Of BasicBlock)
+- Public Shared Function Build(reader As MethodBodyReader) As ControlFlowGraph
+- Public Function ReversePostOrderIds() As List(Of Integer)
+- Public Sub ComputeDominators()
+- Public Sub ComputePostDominators()
+- ... and 588 more
+
+## Imports
+- ASCII = Microsoft.VisualBasic.Text.ASCII
+- DevAssemblyInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
+- Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln.File
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM.Syntax
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
+- Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
+- Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
+- Microsoft.VisualBasic.CommandLine
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Emit.Marshal
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.UnixBash
+- Microsoft.VisualBasic.Language.Values
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Net.Http
+- Microsoft.VisualBasic.Net.Protocols.ContentTypes
+- Microsoft.VisualBasic.Scripting.Expressions
+
+## File tree
+- CodeSign\CodeSign.vb
+- CodeSign\CodeStatistics.vb
+- CodeSign\LicenseInfo.vb
+- CodeSign\LicenseMgr.vb
+- CodeSign\NamespaceDoc.vb
+- CodeSign\SupportedLanguages.vb
+- CodeSign\VBCodeSignature.vb
+- IL\Decompiler\AstInterpreter.vb
+- IL\Decompiler\BasicBlock.vb
+- IL\Decompiler\ControlFlowGraph.vb
+- IL\Decompiler\IlOpcodeInfo.vb
+- IL\Decompiler\MethodDecompiler.vb
+- IL\Decompiler\SsaBuilder.vb
+- IL\Decompiler\StackSimulator.vb
+- IL\Decompiler\StructureRecovery.vb
+- IL\Decompiler\SyntaxWriter.vb
+- IL\Globals.vb
+- IL\ILInstruction.vb
+- IL\MethodAnalyzer.vb
+- IL\MethodBodyReader.vb
+- IL\MethodReference.vb
+- IL\NamespaceDoc.vb
+- IL\Syntax\Expressions.vb
+- IL\Syntax\Statements.vb
+- IL\Syntax\SyntaxNode.vb
+- NamespaceDoc.vb
+- Resource\MimeData.vb
+- Resource\NamespaceDoc.vb
+- Resource\xml\resheader.vb
+- Resource\xml\resx.vb
+- Resource\xml\schema.vb
+- sln\File\Global.vb
+- sln\File\LegacySlnParser.vb
+- sln\File\NamespaceDoc.vb
+- sln\File\Parser.vb
+- sln\File\Project.vb
+- sln\File\SlnxParser.vb
+- sln\File\SlnxWriter.vb
+- sln\File\SolutionConfiguration.vb
+- sln\FolderWorkspace.vb
+- sln\IProjectWorkspace.vb
+- sln\NamespaceDoc.vb
+- sln\Solution.vb
+- sln\SolutionWorkspace.vb
+- sourceMap\base64VLQ.vb
+- sourceMap\mappingDecode.vb
+- sourceMap\mappingEncode.vb
+- sourceMap\mappingLine.vb
+- sourceMap\NamespaceDoc.vb
+- sourceMap\sourceMap.vb
+- VBProject\CodeDOM\CallableMemberSymbol.vb
+- VBProject\CodeDOM\EnumSymbol.vb
+- VBProject\CodeDOM\InterfaceSymbol.vb
+- VBProject\CodeDOM\LanguageSymbolType.vb
+- VBProject\CodeDOM\MemberSymbol.vb
+- VBProject\CodeDOM\NamespaceDoc.vb
+- VBProject\CodeDOM\NamespaceSymbol.vb
+- VBProject\CodeDOM\SymbolType.vb
+- VBProject\CodeDOM\Syntax\NamespaceDoc.vb
+- VBProject\CodeDOM\Syntax\StmtParser.vb
+- VBProject\CodeDOM\Syntax\TypeInfoHelper.vb
+- VBProject\CodeDOM\Syntax\VBParser.vb
+- VBProject\CodeDOM\Syntax\VBScanner.vb
+- VBProject\CodeDOM\Syntax\VBStatement.vb
+- VBProject\CodeDOM\Syntax\VBToken.vb
+- VBProject\CodeDOM\TypeContainerSymbol.vb
+- VBProject\CodeDOM\VariableSymbol.vb
+- VBProject\NuGet\NamespaceDoc.vb
+- VBProject\NuGet\NuGetClient.vb
+- VBProject\NuGet\NuGetFramework.vb
+- VBProject\NuGet\NuGetPackage.vb
+- VBProject\NuGet\NuGetResolver.vb
+- VBProject\NuGet\NuGetVersion.vb
+- VBProject\Project\AssemblyInfo.vb
+- VBProject\Project\Extensions.vb
+- VBProject\Project\NamespaceDoc.vb
+- VBProject\Project\ProjectFiles.vb
+- VBProject\Project\ProjectXml.vb
+- VBProject\Project\VBDocument.vb
+- VBProject\Project\VBProject.vb
+- VBProject\Reflection\AssemblySymbolLoader.vb
+- VBProject\Reflection\NamespaceDoc.vb
+- VersionControl\git\diff.vb
+- VersionControl\git\log.vb
+- VersionControl\git\NamespaceDoc.vb
+- VersionControl\git\weeklyLog.vb
+- VersionControl\NamespaceDoc.vb
+- VersionControl\svn.vb
+- WCFTraceFile.vb
+

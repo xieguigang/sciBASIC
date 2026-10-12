@@ -1,0 +1,156 @@
+# Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.DataMining.HierarchicalClustering
+- AssemblyName  : Microsoft.VisualBasic.DataMining.HierarchicalClustering
+- TargetFramework: net10.0
+- Source files  : 21
+- Existing Title: Hierarchical Clustering with BIRCH and Linkage Strategies
+- Existing Desc : Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.
+- Existing Tags : scibasic;hierarchical-clustering;birch;cf-tree;linkage;dendrogram;clustering
+
+## Namespaces
+- BIRCH  [files: 6]
+- Hierarchy  [files: 6]
+
+## Public types
+- Class BirchOptions (BIRCH\BirchPreclustering.vb) - BIRCH 预聚类（CF-tree）参数。 <para> BIRCH（Balanced Iterative Reducing and Clustering using Hierarchies）先用 CF-tree 把
+- Class BirchPreclustering (BIRCH\BirchPreclustering.vb) - BIRCH 预聚类的结果：m 个子簇的名称、质心，以及「子簇 -&gt; 成员样本行索引」的映射。
+- Class CFEntry (BIRCH\CFEntry.vb) - @author Roberto Perdisci (roberto.perdisci@gmail.com)
+- Class CFEntryPair (BIRCH\CFEntryPair.vb) - @author Roberto Perdisci (roberto.perdisci@gmail.com)
+- Class CFNode (BIRCH\CFNode.vb) - @author Roberto Perdisci (roberto.perdisci@gmail.com) @version 0.1
+- Class CFTree (BIRCH\CFTree.vb) - This is an implementation of the BIRCH clustering algorithm described in: T. Zhang, R. Ramakrishnan, and M. Livny. "BIRCH: A New Data Clustering Algorithm and Its Applications"
+- Module NamespaceDoc (BIRCH\NamespaceDoc.vb) - The BIRCH (balanced iterative reducing and clustering using hierarchies) algorithm.
+- Class Cluster (ClusteringAlgorithm\Cluster.vb) - Represents a node (cluster) in the hierarchical clustering tree (dendrogram). Each cluster can be a leaf node (containing a single data point) or an internal node (containing child clusters formed by merging). Implements the tree node data structure
+- Interface ClusteringAlgorithm (ClusteringAlgorithm\ClusteringAlgorithm.vb)
+- Class DefaultClusteringAlgorithm (ClusteringAlgorithm\DefaultClusteringAlgorithm.vb) - Default implementation of the <see cref="ClusteringAlgorithm"/> interface that provides hierarchical agglomerative clustering functionality. Supports standard clustering, flat (threshold-based) clustering, and weighted clustering using configurable linkage strategies.
+- Module DoCluster (ClusteringAlgorithm\DoCluster.vb)
+- Interface LinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Defines a strategy for calculating the distance between clusters in hierarchical clustering. This is the core abstraction that allows different linkage criteria (single, complete, average, weighted) to be plugged into the clustering algorithm.
+- Class SingleLinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Implements the single-linkage (nearest neighbor) clustering strategy. The distance between two clusters is defined as the minimum distance between any single element from the first cluster and any single element from the second cluster.
+- Class WeightedLinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Implements the weighted-linkage clustering strategy. The distance between two clusters is computed as the weighted average of the distances between all inter-cluster element pairs, where each distance is weighted by its associated weight.
+- Class CompleteLinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Implements the complete-linkage (farthest neighbor) clustering strategy. The distance between two clusters is defined as the maximum distance between any single element from the first cluster and any single element from the second cluster.
+- Class AverageLinkageStrategy (ClusteringAlgorithm\LinkageStrategy.vb) - Implements the average-linkage (unweighted pair-group method using arithmetic averages, UPGMA) clustering strategy. The distance between two clusters is defined as the arithmetic mean of all pairwise distances
+- Class PDistClusteringAlgorithm (ClusteringAlgorithm\PDistClusteringAlgorithm.vb)
+- Class Distance (HierarchyBuilder\Distance.vb) - distance value union the corresponding weight value(default weight is ``1.0``).
+- Class DistanceMap (HierarchyBuilder\DistanceMap.vb) - Container for linkages with the minimal methods needed in the package Created by Alexandre Masselot on 7/18/14.
+- Class HierarchyBuilder (HierarchyBuilder\HierarchyBuilder.vb)
+- Class HierarchyLink (HierarchyBuilder\HierarchyLink.vb)
+- Module LinkHashCode (HierarchyBuilder\HierarchyLink.vb)
+- Class HierarchyTreeNode (HierarchyBuilder\HierarchyTreeNode.vb)
+- Module NamespaceDoc (HierarchyBuilder\NamespaceDoc.vb) - Hierarchical cluster tree building.
+- Class NamespaceDoc (NamespaceDoc.vb) - Hierarchical clustering: the clustering tree (dendrogram) model and the shared hierarchical clustering utilities.
+- Module HierarchicalClusteringTableExtensions (NumericTableExtensions.vb)
+- Module PrintHelper (PrintHelper.vb)
+
+## Notable public members
+- Public Property maxNodeEntries As Integer = 50
+- Public Property threshold As Double = 0
+- Public Property distFunction As Integer = CFTree.D0_DIST
+- Public Property targetSubclusters As Integer = 2000
+- Public Property linkage As LinkageStrategy
+- Public Property silent As Boolean = True
+- Public Property automaticRebuild As Boolean = False
+- Public Property thresholdRefineIterations As Integer = 6
+- Public ReadOnly Property Names As String()
+- Public ReadOnly Property Centroids As Double()()
+- Public ReadOnly Property Members As Dictionary(Of String, Integer())
+- Public ReadOnly Property Threshold As Double
+- Friend Sub New(names As String(), centroids As Double()(), members As Dictionary(Of String, Integer()), threshold As Double)
+- Public Shared Function Precluster(rows As Double()(), Optional options As BirchOptions = Nothing) As BirchPreclustering
+- Public Sub New()
+- Public Sub New(x As Double())
+- Public Sub New(x As Double(), index As Integer)
+- Public Sub New(e As CFEntry)
+- Protected Friend Overridable ReadOnly Property IndexList As List(Of Integer)
+- Protected Friend Overridable Function hasChild() As Boolean
+- Protected Friend Overridable Property Child As CFNode
+- Protected Friend Overridable ReadOnly Property ChildSize As Integer
+- Protected Friend Overridable Property SubclusterID As Integer
+- Protected Friend Overridable Sub update(e As CFEntry)
+- Protected Friend Overridable Sub addToChild(e As CFEntry)
+- Protected Friend Overridable Function isWithinThreshold(e As CFEntry, threshold As Double, distFunction As Integer) As Boolean
+- Protected Friend Overridable Function distance(e As CFEntry, distFunction As Integer) As Double
+- Public Overrides Function Equals(o As Object) As Boolean
+- Public Overrides Function ToString() As String
+- Public Sub New()
+- Public Sub New(e1 As CFEntry, e2 As CFEntry)
+- Public Overrides Function Equals(o As Object) As Boolean
+- Public Overrides Function ToString() As String
+- Public Sub New(maxNodeEntries As Integer, distThreshold As Double, distFunction As Integer, applyMergingRefinement As Boolean, leafStatus As Boolean)
+- Public Overridable Function size() As Integer
+- Public Overridable ReadOnly Property Dummy As Boolean
+- Public Overridable ReadOnly Property MaxNodeEntries As Integer
+- Public Overridable ReadOnly Property DistThreshold As Double
+- Public Overridable ReadOnly Property DistFunction As Integer
+- Protected Friend Overridable Property NextLeaf As CFNode
+- Protected Friend Overridable Property PreviousLeaf As CFNode
+- Protected Friend Overridable Sub addToEntryList(e As CFEntry)
+- Protected Friend Overridable ReadOnly Property Entries As List(Of CFEntry)
+- Public Overridable Function mapToClosestSubcluster(e As CFEntry) As Integer
+- Public Overridable Function insertEntry(e As CFEntry) As Boolean
+- Public Overridable Function splitEntry(closest As CFEntry) As CFEntryPair
+- Protected Friend Overridable Sub redistributeEntries(oldEntries As List(Of CFEntry), farEntries As CFEntryPair, newE1 As CFEntry, newE2 As CFEntry)
+- Protected Friend Overridable Sub redistributeEntries(oldEntries1 As List(Of CFEntry), oldEntries2 As List(Of CFEntry), closeEntries As CFEntryPair, ne…
+- Protected Friend Overridable Sub redistributeEntries(oldEntries1 As List(Of CFEntry), oldEntries2 As List(Of CFEntry), newE As CFEntry)
+- Protected Friend Overridable Function findClosestEntry(e As CFEntry) As CFEntry
+- Protected Friend Overridable Function findFarthestEntryPair(entries As List(Of CFEntry)) As CFEntryPair
+- Protected Friend Overridable Function findClosestEntryPair(entries As List(Of CFEntry)) As CFEntryPair
+- Public Overridable Sub mergingRefinement(splitEntries As CFEntryPair)
+- Public Overridable ReadOnly Property Leaf As Boolean
+- Public Overridable Function applyMergingRefinement() As Boolean
+- Protected Friend Overridable WriteOnly Property LeafStatus As Boolean
+- Protected Friend Overridable Function countChildrenNodes() As Integer
+- Protected Friend Overridable Function countEntriesInChildrenNodes() As Integer
+- Public Overrides Function ToString() As String
+- Public Const D0_DIST As Integer = 0
+- ... and 122 more
+
+## Imports
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ApplicationServices.Debugging
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
+- Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+- Microsoft.VisualBasic.Data
+- Microsoft.VisualBasic.DataMining.HierarchicalClustering.BIRCH
+- Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Default
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.Correlations
+- Microsoft.VisualBasic.Math.HashMaps
+- Microsoft.VisualBasic.Parallel
+- Microsoft.VisualBasic.Serialization.JSON
+- std = System.Math
+- System.Collections.Generic
+- System.Data
+- System.IO
+- System.Runtime.CompilerServices
+- System.Text
+
+## File tree
+- BIRCH\BirchPreclustering.vb
+- BIRCH\CFEntry.vb
+- BIRCH\CFEntryPair.vb
+- BIRCH\CFNode.vb
+- BIRCH\CFTree.vb
+- BIRCH\NamespaceDoc.vb
+- ClusteringAlgorithm\Cluster.vb
+- ClusteringAlgorithm\ClusteringAlgorithm.vb
+- ClusteringAlgorithm\DefaultClusteringAlgorithm.vb
+- ClusteringAlgorithm\DoCluster.vb
+- ClusteringAlgorithm\LinkageStrategy.vb
+- ClusteringAlgorithm\PDistClusteringAlgorithm.vb
+- HierarchyBuilder\Distance.vb
+- HierarchyBuilder\DistanceMap.vb
+- HierarchyBuilder\HierarchyBuilder.vb
+- HierarchyBuilder\HierarchyLink.vb
+- HierarchyBuilder\HierarchyTreeNode.vb
+- HierarchyBuilder\NamespaceDoc.vb
+- NamespaceDoc.vb
+- NumericTableExtensions.vb
+- PrintHelper.vb
+

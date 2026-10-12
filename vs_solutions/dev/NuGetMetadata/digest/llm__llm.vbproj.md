@@ -1,0 +1,176 @@
+# llm/llm.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.DeepLearning.LLM
+- AssemblyName  : Microsoft.VisualBasic.DeepLearning.LLM
+- TargetFramework: net10.0
+- Source files  : 35
+- Existing Title: Decoder-only LLM Engine: DeepSeekMoE, KV Cache and Function Calling
+- Existing Desc : Pure managed decoder-only language model engine for sciBASIC#: DeepSeek-style mixture-of-experts with isolated shared experts and node-limited routing, prefill/incremental decoding KV cache with GQA/MQA, RoPE, RMSNorm and SwiGLU decoder blocks, AdamW training with masked cross-entropy, and schema-constrained function calling driven by a multi-turn agent loop.
+- Existing Tags : scibasic;llm;decoder-only;transformer;mixture-of-experts;deepseek-moe;kv-cache;rope;rmsnorm;swiglu;gqa;mqa;function-calling;constrained-decoding;tool-calling;agent-loop;adamw;language-model
+
+## Namespaces
+- Agent  [files: 4]
+- Agent.ToolCalls  [files: 6]
+- Generator  [files: 3]
+- Sampler  [files: 2]
+- Text  [files: 3]
+- Trainer  [files: 4]
+
+## Public types
+- Class AdamW (AdamW.vb) - AdamW：解耦权重衰减的 Adam 优化器。
+- Class AgentLoop (Agent\AgentLoop.vb) - 多轮工具调用循环：模型负责"想"，框架负责"做"。
+- Class AgentLoopOptions (Agent\AgentLoopOptions.vb)
+- Class AgentRound (Agent\AgentRound.vb)
+- Class AgentRunResult (Agent\AgentRunResult.vb)
+- Class JsonSchema (Agent\ToolCalls\JsonSchema.vb)
+- Class JsonSchemaProperty (Agent\ToolCalls\JsonSchemaProperty.vb)
+- Class ToolCall (Agent\ToolCalls\ToolCall.vb)
+- Module ToolCallProtocol (Agent\ToolCalls\ToolCallProtocol.vb)
+- Class ToolDefinition (Agent\ToolCalls\ToolDefinition.vb)
+- Class ToolRegistry (Agent\ToolCalls\ToolRegistry.vb)
+- Class CausalSelfAttention (CausalSelfAttention.vb) - 因果自注意力层：<c>y = Concat(head_1..head_H) · Wo</c>， 其中 <c>head_h = softmax(Q_h K_hᵀ/√d_k + mask) V_h</c>。
+- Class Cache (CausalSelfAttention.vb)
+- Class ConstrainedDecoder (ConstrainedDecoder.vb) - 按 JSON Schema 约束 logits 的解码器：保证生成的参数对象在语法上<b>必然</b>合法。
+- Class GenerationOptions (Generator\GenerationOptions.vb)
+- Class GenerationResult (Generator\GenerationResult.vb)
+- Class TextGenerator (Generator\TextGenerator.vb)
+- Class KVCache (KVCache.vb) - 单层的 K/V 缓存：预分配 <c>[maxSeq, nKvHeads, headDim]</c>，按位置顺序追加。 本类只负责"存"，不负责"算"；注意力层直接读写 <see cref="KeysRaw"/> / <see cref="ValuesRaw"/>，从而避免在每步解码中产生临时张量。
+- Class LLMBlock (LLMBlock.vb) - 单层解码块：Pre-Norm 的"因果自注意力 + 前馈网络（稠密或 MoE）"。
+- Class Cache (LLMBlock.vb)
+- Class LLMModel (LLMModel.vb) - 纯 decoder-only 的语言模型：词嵌入 + 若干 <see cref="LLMBlock"/> + 末端 RMSNorm + 绑定输出层。
+- Class ForwardCache (LLMModel.vb)
+- Class LLMModelConfig (LLMModelConfig.vb) - LLM 的结构超参。
+- Module LLMTensorOps (LLMTensorOps.vb) - LLM 模块共用的张量工具与手写反向算子。
+- Class MoELayer (MoE\MoELayer.vb) - DeepSeekMoE：细粒度专家分割 + 共享专家隔离 + Sigmoid Top-K 路由 + 无辅助损失负载均衡。
+- Class RouteInfo (MoE\MoELayer.vb)
+- Class Cache (MoE\MoELayer.vb)
+- Class ParameterSet (ParameterSet.vb) - 与一组参数张量绑定的优化器状态集合。
+- Class Entry (ParameterSet.vb)
+- Class RmsNorm (RmsNorm.vb) - RMSNorm 归一化层（Pre-Norm 用法）。
+- Class Cache (RmsNorm.vb)
+- Class RotaryEmbedding (RotaryEmbedding.vb) - RoPE 旋转位置编码：预计算 cos/sin 表，并按绝对位置对最后两维做旋转。 本类是无状态的纯函数集合（除只读的预计算表），因此同一个实例可以被模型内 全部注意力层共享。
+- Class LLMSampler (Sampler\LLMSampler.vb) - 采样器：把 <c>logits</c> 变成概率分布，再按配置选出一个 token。
+- Class SamplingConfig (Sampler\SamplingConfig.vb)
+- Class SwiGLUFeedForward (SwiGLUFeedForward.vb) - SwiGLU 前馈网络：<c>y = (SiLU(x·Wg) ⊙ (x·Wu)) · Wd</c>。
+- Class Cache (SwiGLUFeedForward.vb)
+- Interface ITextCodec (Text\TextCodec.vb)
+- Class TokenizerVocabulary (Text\TokenizerVocabulary.vb) - 词表的文本视图：把 token id 映射回它实际贡献的文本，并建立首字符倒排索引。
+- Class TokenStream (Text\TokenStream.vb) - 自回归 token 流：持有上下文与缓存，按需给出下一个位置的 logits。
+- Class LMBatch (Trainer\LMBatch.vb) - 一个训练批次：等长的若干条 token 序列（展平存放）+ 逐位置的损失掩码。
+- Class LMTrainer (Trainer\LMTrainer.vb) - 语言模型训练器：把"前向 → 掩码交叉熵 → 反向 → 裁剪 → AdamW → MoE 均衡"串成一个训练步。
+- Class TrainingConfig (Trainer\TrainingConfig.vb)
+- Class TrainingStepReport (Trainer\TrainingStepReport.vb)
+
+## Notable public members
+- Public Property WeightDecay As Double = 0.0
+- Public ReadOnly Property Gradient As Tensor
+- Public Sub New(param As Tensor, Optional weightDecay As Double = 0.0)
+- Public Sub ZeroGrad()
+- Public Function GradientNorm() As Double
+- Public Property UseDeviceResidency As Boolean = False
+- Public ReadOnly Property Momentum As Tensor
+- Public ReadOnly Property Velocity As Tensor
+- Public Function TryDeviceStep(learningRate As Double, [step] As Integer, param As Tensor) As Boolean
+- Public Sub MakeTrainingStep(learningRate As Double, [step] As Integer, param As Tensor)
+- Public ReadOnly Property Model As LLMModel
+- Public ReadOnly Property Registry As ToolRegistry
+- Public Sub New(model As LLMModel, codec As ITextCodec, registry As ToolRegistry)
+- Public Function BuildInitialPrompt(systemPrompt As String, userMessage As String) As String
+- Public Function Run(systemPrompt As String, userMessage As String,
+- Public Property MaxToolRounds As Integer = 4
+- Public Property MaxTokensPerReply As Integer = 24
+- Public Property MaxArgumentTokens As Integer = 96
+- Public Property UseCache As Boolean = True
+- Public Property Sampling As New SamplingConfig()
+- Public Property ForcedToolName As String
+- Public Property Verbose As Boolean = True
+- Public Property TraceSteps As Integer = 16
+- Public Property Index As Integer
+- Public Property AssistantText As String
+- Public Property HasToolCall As Boolean
+- Public Property ToolName As String
+- Public Property ToolDecidedByModel As Boolean = True
+- Public Property ToolCallText As String
+- Public Property ArgumentsJson As String
+- Public Property Arguments As Dictionary(Of String, String)
+- Public Property ToolResult As String
+- Public Property UsedConstrainedDecoding As Boolean
+- Public Property ConstrainedTrace As New List(Of String)
+- Public Property ContextTokensBefore As Integer
+- Public Property ContextTokensAfter As Integer
+- Public Property ReusedPrefixTokens As Integer
+- Public Property UserMessage As String
+- Public Property SystemPrompt As String
+- Public Property Rounds As New List(Of AgentRound)
+- Public Property FinalText As String
+- Public Property TotalContextTokens As Integer
+- Public Property CacheBytes As Long
+- Public Property ElapsedMilliseconds As Double
+- Public Property HitRoundLimit As Boolean
+- Public ReadOnly Property ToolCallCount As Integer
+- Public Property Type As String = "object"
+- Public Property Description As String
+- Public Property Properties As New List(Of JsonSchemaProperty)
+- Public Sub New()
+- Public Sub New(description As String, ParamArray properties As JsonSchemaProperty())
+- Public Function FindProperty(name As String) As JsonSchemaProperty
+- Public ReadOnly Property RequiredCount As Integer
+- Public Function RenderPrompt() As String
+- Public Function BuildJson(values As Dictionary(Of String, String)) As String
+- Public Shared Function Empty() As JsonSchema
+- Public Property Name As String
+- Public Property Type As String = "string"
+- Public Property Description As String
+- Public Property EnumValues As String()
+- ... and 324 more
+
+## Imports
+- Diagnostics = System.Diagnostics
+- Microsoft.VisualBasic.DeepLearning.LLM.Agent.ToolCalls
+- Microsoft.VisualBasic.DeepLearning.LLM.Generator
+- Microsoft.VisualBasic.DeepLearning.LLM.Sampler
+- Microsoft.VisualBasic.DeepLearning.LLM.Text
+- Microsoft.VisualBasic.MachineLearning
+- Microsoft.VisualBasic.MachineLearning.TensorFlow
+- std = System.Math
+- SysIO = System.IO
+- System.Runtime.CompilerServices
+- System.Text
+
+## File tree
+- AdamW.vb
+- Agent\AgentLoop.vb
+- Agent\AgentLoopOptions.vb
+- Agent\AgentRound.vb
+- Agent\AgentRunResult.vb
+- Agent\ToolCalls\JsonSchema.vb
+- Agent\ToolCalls\JsonSchemaProperty.vb
+- Agent\ToolCalls\ToolCall.vb
+- Agent\ToolCalls\ToolCallProtocol.vb
+- Agent\ToolCalls\ToolDefinition.vb
+- Agent\ToolCalls\ToolRegistry.vb
+- CausalSelfAttention.vb
+- ConstrainedDecoder.vb
+- Generator\GenerationOptions.vb
+- Generator\GenerationResult.vb
+- Generator\TextGenerator.vb
+- KVCache.vb
+- LLMBlock.vb
+- LLMModel.vb
+- LLMModelConfig.vb
+- LLMTensorOps.vb
+- MoE\MoELayer.vb
+- ParameterSet.vb
+- RmsNorm.vb
+- RotaryEmbedding.vb
+- Sampler\LLMSampler.vb
+- Sampler\SamplingConfig.vb
+- SwiGLUFeedForward.vb
+- Text\TextCodec.vb
+- Text\TokenizerVocabulary.vb
+- Text\TokenStream.vb
+- Trainer\LMBatch.vb
+- Trainer\LMTrainer.vb
+- Trainer\TrainingConfig.vb
+- Trainer\TrainingStepReport.vb
+
