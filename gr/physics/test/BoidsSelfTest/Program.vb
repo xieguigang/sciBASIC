@@ -622,7 +622,7 @@ Module Program
                 Dim rowOffset As Integer = yi * w
 
                 For xi As Integer = fromX To toX
-                    pbuf(rowOffset + xi) = c
+                    buf(rowOffset + xi) = c
                 Next
             End If
 
