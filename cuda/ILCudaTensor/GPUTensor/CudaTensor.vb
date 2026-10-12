@@ -322,11 +322,19 @@ Namespace GPUTensor
         ''' 在消费级显卡（FP64 只有 FP32 的 1/64）上这是主要的加速来源；
         ''' 设为 <c>False</c> 可用于观察纯双精度路径的数值与耗时。
         ''' </param>
+        ''' <param name="registerFloat">
+        ''' 是否一并切换<b>单精度</b>栈 <see cref="tf.TensorF.computeKernelF"/>。默认 <c>True</c>。
+        ''' 两条栈共用同一个引擎与同一份驻留缓存预算。
+        ''' 设为 <c>False</c> 可用于"只要双精度栈"的诊断场景。
+        ''' </param>
         Public Shared Function Register(Optional options As ILCudaRuntime.EngineOptions = Nothing,
                                         Optional cacheBytes As Long = 0,
-                                        Optional useFp32Gemm As Boolean = True) As Boolean
-            ' 必须在 CudaEngine.TryCreate 之前把内核源码注入编译单元
+                                        Optional useFp32Gemm As Boolean = True,
+                                        Optional registerFloat As Boolean = True) As Boolean
+            ' 必须在 CudaEngine.TryCreate 之前把内核源码注入编译单元。
+            ' 两条栈的程序集是同一个，一次 Register 就把 tensor_f32.cu 一并注入了。
             DoubleKernelRegistry.EnsureRegistered()
+            FloatKernelRegistry.EnsureRegistered()
             ILCudaKernels.KernelSources.Register(GetType(CudaTensor).Assembly)
 
             If options Is Nothing Then options = New ILCudaRuntime.EngineOptions()
@@ -348,14 +356,22 @@ Namespace GPUTensor
 
             _current = backend
             LastError = Nothing
+
+            If registerFloat Then
+                ' 复用同一个引擎，不再走一遍 CudaTensorF.Register（那会重复注入内核源码）
+                Call CudaTensorF.Adopt(engine, cacheBytes)
+            End If
+
             Return True
         End Function
 
-        ''' <summary>把计算后端切回默认的 SIMD CPU 实现</summary>
+        ''' <summary>把计算后端切回默认的 SIMD CPU 实现（两条栈一并还原）</summary>
         Public Shared Sub Unregister()
             SyncLock tf.Tensor.SyncRoot
                 tf.Tensor.computeKernel = tfCompute.SIMDTensor.Default
             End SyncLock
+
+            Call CudaTensorF.Unregister()
 
             _current = Nothing
         End Sub
