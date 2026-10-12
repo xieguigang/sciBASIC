@@ -31,40 +31,51 @@
 
     ' Summaries:
 
+    ' The <see cref="Field"/> is the public facade of the flocking simulation. 
+    ' Internally it orchestrates three phases per frame:
+
+    '   1. <see cref="FlockGrid.Build"/>  - counting-sort spatial grid, O(N), zero allocation
+    '   2. <see cref="FlockSolver"/>     - the four flocking rules, parallel over boid ranges
+    '   3. <see cref="FlockIntegrate"/>  - SIMD streaming integration + wall rules
+
+    ' The public surface is source compatible with the legacy implementation 
+    ' except that <see cref="Boid"/> is now a value type view instead of a 
+    ' heap object (see the notes on <see cref="Boid"/>).
 
     ' Code Statistics:
 
-    '   Total Lines: 162
-    '    Code Lines: 119 (73.46%)
-    ' Comment Lines: 14 (8.64%)
-    '    - Xml Docs: 42.86%
+    '   Total Lines: 246
+    '    Code Lines: 148 (60.16%)
+    ' Comment Lines: 32 (13.01%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 29 (17.90%)
-    '     File Size: 7.21 KB
+    '   Blank Lines: 66 (26.83%)
+    '     File Size: 9.14 KB
 
 
     '     Class Field
     ' 
-    '         Properties: Entity, Height, MaxSpeed, Width
+    '         Properties: Entity, Grid, Height, MaxSpeed, PredatorCount, State, Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Align, Avoid, Flock, Predator
-    ' 
-    '         Sub: Advance, BounceOffWalls, WrapAround
-    '         Class PhysicTask
+    '         Sub: Advance
+    '         Class BoidCollection
     ' 
     '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Solve
+    '             Function: GetEnumerator
+    '             Class BoidEnumerator
     ' 
-    ' 
+    '                 Constructor: (+1 Overloads) Sub New
+    '                 Sub: Dispose
+    '                 Function: MoveNext, get_Current
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -80,149 +91,157 @@ Namespace Boids
 
         Public ReadOnly Property Width As Double Implements IContainer(Of Boid).Width
         Public ReadOnly Property Height As Double Implements IContainer(Of Boid).Height
+
+        ''' <summary>
+        ''' a read only collection view of all boids inside this field; enumerating
+        ''' it yields zero allocation <see cref="Boid"/> value views.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Entity As IReadOnlyCollection(Of Boid) Implements IContainer(Of Boid).Entity
             Get
-                Return Boids
+                Return _entity
             End Get
         End Property
 
         Public ReadOnly Property MaxSpeed As Double = 6
 
+        Public Property PredatorCount As Integer = 6
+
         Default Public ReadOnly Property Item(i As Integer) As Boid
             Get
-                Return Boids(i)
+                Return New Boid(_state, i)
             End Get
         End Property
 
-        Dim Boids As New List(Of Boid)
-        Dim BoidGrid As Grid(Of Boid())
-        Dim Radius As Single = 15
+        ''' <summary>
+        ''' the SoA simulation state; exposes the px/py/vx/vy component arrays for
+        ''' consumers that want to stream over the boids without going through
+        ''' the <see cref="Item"/> views (e.g. the SIMD renderer).
+        ''' </summary>
+        Public ReadOnly Property State As FlockState
+            Get
+                Return _state
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the spatial grid of the most recent <see cref="Advance"/> call
+        ''' </summary>
+        Friend ReadOnly Property Grid As FlockGrid
+            Get
+                Return _grid
+            End Get
+        End Property
+
+        Friend ReadOnly _state As FlockState
+        Friend ReadOnly _grid As FlockGrid
+        Friend ReadOnly _task As FlockSolver
+        Friend ReadOnly _entity As BoidCollection
+
+        ''' <summary>
+        ''' the spatial grid cell size, in simulation units (pixels)
+        ''' </summary>
+        Friend ReadOnly Radius As Single = 15
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
-            Call (width, height).Set(Me.Width, Me.Height)
+            If boidCount < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(boidCount))
+            End If
 
-            For i = 0 To boidCount - 1
-                Boids.Add(New Boid(randf.seeds, width, height))
+            Me.Width = width
+            Me.Height = height
+
+            _state = New FlockState(boidCount)
+            _grid = New FlockGrid(boidCount)
+            _entity = New BoidCollection(_state)
+            _task = New FlockSolver(Me)
+
+            ' keep the legacy initialization sequence so that a given random 
+            ' seed still produces the same initial flock layout
+            Dim rand As Random = randf.seeds
+
+            For i As Integer = 0 To boidCount - 1
+                _state.px(i) = rand.NextDouble() * width
+                _state.py(i) = rand.NextDouble() * height
+                _state.vx(i) = rand.NextDouble() - 0.5
+                _state.vy(i) = rand.NextDouble() - 0.5
             Next
 
             VectorTask.n_threads = App.CPUCoreNumbers
-            Task = New PhysicTask(Me)
         End Sub
 
-        Dim Task As PhysicTask
-
+        ''' <summary>
+        ''' Advances the simulation by one time step: rebuild the spatial grid, 
+        ''' evaluate the flocking rules in parallel, then run the SIMD integration 
+        ''' kernel with the wall rules.
+        ''' </summary>
         Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
-            BoidGrid = Me.EncodeGrid(Radius)
-            Task.Run()
+            _grid.Build(_state, Radius)
+            _task.Run()
+            FlockIntegrate.Integrate(_state, Width, Height, bounceOffWalls, wrapAroundEdges,
+                                     minSpeed:=1, maxSpeed:=MaxSpeed)
+        End Sub
+    End Class
 
-            ' move all boids forward in time
-            ' just update the fields of each boid
-            For Each boid In Boids
-                boid.MoveForward(maxSpeed:=MaxSpeed)
-                If bounceOffWalls Then Me.BounceOffWalls(boid)
-                If wrapAroundEdges Then WrapAround(boid)
-            Next
+    ''' <summary>
+    ''' a read only, allocation free collection view over the boid slots
+    ''' </summary>
+    Friend NotInheritable Class BoidCollection
+        Implements IReadOnlyCollection(Of Boid)
+
+        ReadOnly _state As FlockState
+
+        Public Sub New(state As FlockState)
+            _state = state
         End Sub
 
-        Private Class PhysicTask : Inherits VectorTask
+        Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of Boid).Count
+            Get
+                Return _state.count
+            End Get
+        End Property
 
-            ReadOnly field As Field
-            ReadOnly boids As List(Of Boid)
-
-            Sub New(field As Field)
-                Call MyBase.New(field.Boids.Count)
-                Me.field = field
-                Me.boids = field.Boids
-            End Sub
-
-            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-                Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing,
-               alignXvel As Double = Nothing, alignYvel As Double = Nothing,
-               avoidXvel As Double = Nothing, avoidYvel As Double = Nothing,
-               predXvel As Double = Nothing, predYvel As Double = Nothing
-
-                Const distance As Double = 50
-
-                ' update void speed and direction (velocity) based on rules
-                For i As Integer = start To ends
-                    Dim boid As Boid = boids(i)
-                    Dim neighbors As Boid() = field.BoidGrid.SpatialLookup(boid, field.Radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
-
-                    field.Flock(boid, neighbors, 0.0003).Set(flockXvel, flockYvel)
-                    field.Align(boid, neighbors, 0.01).Set(alignXvel, alignYvel)
-                    field.Avoid(boid, 20, 0.001).Set(avoidXvel, avoidYvel)
-                    field.Predator(boid, 150, 0.00005).Set(predXvel, predYvel)
-
-                    boid.Xvel += flockXvel + avoidXvel + alignXvel + predXvel
-                    boid.Yvel += flockYvel + avoidYvel + alignYvel + predYvel
-                Next
-            End Sub
-        End Class
-
-        Private Function Flock(boid As Boid, neighbors As Boid(), power As Double) As (Double, Double)
-            ' point toward the center of the flock (mean flock boid position)
-            Dim meanX As Double = neighbors.Sum(Function(x) x.x) / neighbors.Count()
-            Dim meanY As Double = neighbors.Sum(Function(x) x.y) / neighbors.Count()
-            Dim deltaCenterX = meanX - boid.x
-            Dim deltaCenterY = meanY - boid.y
-            Return (deltaCenterX * power, deltaCenterY * power)
+        Public Function GetEnumerator() As IEnumerator(Of Boid) Implements IEnumerable(Of Boid).GetEnumerator
+            Return New BoidEnumerator(_state)
         End Function
 
-        Private Function Avoid(boid As Boid, distance As Double, power As Double) As (Double, Double)
-            ' point away as boids get close
-            Dim neighbors = BoidGrid.SpatialLookup(boid, Radius).Where(Function(x) x.GetDistance(boid) < distance)
-            Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
-
-            For Each neighbor As Boid In neighbors
-                Dim closeness = distance - boid.GetDistance(neighbor)
-                sumClosenessX += (boid.x - neighbor.x) * closeness
-                sumClosenessY += (boid.y - neighbor.y) * closeness
-            Next
-            Return (sumClosenessX * power, sumClosenessY * power)
+        Private Function GetEnumeratorObject() As IEnumerator Implements IEnumerable.GetEnumerator
+            Return Me.GetEnumerator()
         End Function
+    End Class
 
-        Public PredatorCount As Integer = 6
+    Friend NotInheritable Class BoidEnumerator
+        Implements IEnumerator(Of Boid)
 
-        Private Function Predator(boid As Boid, distance As Double, power As Double) As (Double, Double)
-            ' point away as predators get close
-            Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
+        ReadOnly _state As FlockState
+        Dim _index As Integer = -1
 
-            For i As Integer = 0 To PredatorCount - 1
-                Dim lPredator = Boids(i)
-                Dim distanceAway = boid.GetDistance(lPredator)
-                If distanceAway < distance Then
-                    Dim closeness = distance - distanceAway
-                    sumClosenessX += (boid.x - lPredator.x) * closeness
-                    sumClosenessY += (boid.y - lPredator.y) * closeness
-                End If
-            Next
-            Return (sumClosenessX * power, sumClosenessY * power)
-        End Function
-
-        Private Function Align(boid As Boid, neighbors As Boid(), power As Double) As (Double, Double)
-            ' point toward the center of the flock (mean flock boid position)
-            ' Dim neighbors = BoidGrid.SpatialLookup(boid, Radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
-            Dim meanXvel As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
-            Dim meanYvel As Double = neighbors.Sum(Function(x) x.Yvel) / neighbors.Count()
-            Dim dXvel = meanXvel - boid.Xvel
-            Dim dYvel = meanYvel - boid.Yvel
-            Return (dXvel * power, dYvel * power)
-        End Function
-
-        Private Sub BounceOffWalls(boid As Boid)
-            Dim pad As Double = 50
-            Dim turn = 0.5
-            If boid.x < pad Then boid.Xvel += turn
-            If boid.x > Width - pad Then boid.Xvel -= turn
-            If boid.y < pad Then boid.Yvel += turn
-            If boid.y > Height - pad Then boid.Yvel -= turn
+        Public Sub New(state As FlockState)
+            _state = state
         End Sub
 
-        Private Sub WrapAround(boid As Boid)
-            If boid.x < 0 Then boid.x += Width
-            If boid.x > Width Then boid.x -= Width
-            If boid.y < 0 Then boid.y += Height
-            If boid.y > Height Then boid.y -= Height
+        Public ReadOnly Property Current As Boid Implements IEnumerator(Of Boid).Current
+            Get
+                Return New Boid(_state, _index)
+            End Get
+        End Property
+
+        Private ReadOnly Property CurrentObject As Object Implements IEnumerator.Current
+            Get
+                Return Me.Current
+            End Get
+        End Property
+
+        Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+            _index += 1
+            Return _index < _state.count
+        End Function
+
+        Public Sub Reset() Implements IEnumerator.Reset
+            _index = -1
+        End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
         End Sub
     End Class
 End Namespace
