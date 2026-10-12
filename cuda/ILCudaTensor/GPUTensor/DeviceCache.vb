@@ -184,17 +184,26 @@ Namespace GPUTensor
         End Function
 
         ''' <summary>
-        ''' 取得<b>单精度</b>主机数组对应的显存缓冲（单精度栈 <c>TensorF</c> 专用）。
+        ''' 取得<b>非 Double 主机数组</b>（单精度栈的 <c>Single()</c> 场、CFD 的 <c>Byte()</c> 掩膜）
+        ''' 对应的显存缓冲。
         ''' </summary>
+        ''' <typeparam name="THost">主机数组的元素类型（<c>Single</c> / <c>Byte</c> 等）</typeparam>
         ''' <remarks>
-        ''' 与 <see cref="GetBuffer"/> 的唯一差别是主机数组的元素类型：
-        ''' <c>TensorF.Data</c> 本身就是 <c>Single()</c>，不存在"Double 主机 + 降精度"这一步，
-        ''' 因此 <paramref name="convert"/> 通常是恒等映射（或就地做一次类型规整）。
+        ''' 存在的理由：<see cref="GetBuffer"/> 的主机侧被硬编码成 <c>Double()</c>，
+        ''' 而单精度栈 <c>TensorF.Data</c> 本身就是 <c>Single()</c>、CFD 的掩膜是 <c>Byte()</c>，
+        ''' 两者都没有"Double 主机 + 降精度"这一步，走不了那条通道。
+        ''' <paramref name="convert"/> 因此通常是恒等映射。
         ''' 缓存键仍然是数组引用身份 + <paramref name="version"/>，语义与双精度通道完全一致。
+        ''' <para>
+        ''' 注意：<c>Byte()</c> 这类辅助数组自身没有版本号，调用方统一传 0，
+        ''' 即"一旦上传就长期复用"。这对 CFD 的静态几何掩膜是合适的；
+        ''' 若调用方会就地改写掩膜，应改用 <see cref="Clear"/> 强制失效。
+        ''' </para>
         ''' </remarks>
-        ''' <param name="convert">主机 Single 数组到显存元素类型的转换（通常是恒等映射）</param>
-        Public Function GetBufferF(engine As CudaEngine, host As Single(), version As Long,
-                                   convert As Func(Of Single(), T())) As DeviceBuffer(Of T)
+        ''' <param name="convert">主机数组到显存元素类型的转换（通常是恒等映射）</param>
+        Public Function GetBufferF(Of THost As Structure)(engine As CudaEngine, host As THost(),
+                                                          version As Long,
+                                                          convert As Func(Of THost(), T())) As DeviceBuffer(Of T)
             If host Is Nothing OrElse host.Length = 0 Then
                 Throw New ArgumentException("主机数组不能为空", NameOf(host))
             End If
