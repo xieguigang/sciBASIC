@@ -26,7 +26,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/drawing/">
-    <Project Path="../../../Microsoft.VisualBasic.Drawing/src/DXApi/DXApi.vbproj">
+    <Project Path="../../../../Microsoft.VisualBasic.Drawing/src/DXApi/DXApi.vbproj">
       <BuildType Solution="Biodeep|*" Project="Release" />
       <BuildType Solution="Biostack|*" Project="Release" />
       <BuildType Solution="CFD_win32|*" Project="nuget_release" />
@@ -46,7 +46,7 @@
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../../../Microsoft.VisualBasic.Drawing/src/DxCanvas/DxCanvas.vbproj">
+    <Project Path="../../../../Microsoft.VisualBasic.Drawing/src/DxCanvas/DxCanvas.vbproj">
       <BuildType Solution="Biodeep|*" Project="Release" />
       <BuildType Solution="Biostack|*" Project="Release" />
       <BuildType Solution="CFD_win32|*" Project="nuget_release" />
@@ -66,7 +66,7 @@
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../../../Microsoft.VisualBasic.Drawing/src/Microsoft.VisualBasic.Drawing/Microsoft.VisualBasic.Drawing.vbproj">
+    <Project Path="../../../../Microsoft.VisualBasic.Drawing/src/Microsoft.VisualBasic.Drawing/Microsoft.VisualBasic.Drawing.vbproj">
       <BuildType Solution="Biodeep|*" Project="Release" />
       <BuildType Solution="Biostack|*" Project="MEMI-Desktop" />
       <BuildType Solution="CFD_win32|*" Project="MEMI-Desktop" />
@@ -85,7 +85,7 @@
       <BuildType Solution="Yilia-Release_x64|*" Project="Rsharp_app_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../../../Microsoft.VisualBasic.Drawing/src/TrueType/TrueType.vbproj">
+    <Project Path="../../../../Microsoft.VisualBasic.Drawing/src/TrueType/TrueType.vbproj">
       <BuildType Solution="Biodeep|*" Project="Release" />
       <BuildType Solution="Biostack|*" Project="Release" />
       <BuildType Solution="CFD_win32|*" Project="nuget_release" />
