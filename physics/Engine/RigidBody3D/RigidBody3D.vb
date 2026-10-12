@@ -1,7 +1,5 @@
-Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.Math3D
-Imports Microsoft.VisualBasic.Imaging.Physics.Collision3D
-Imports std = System.Math
+Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
+Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 
 ''' <summary>
 ''' 3D 刚体：不会发生形变，受力后整体平动 + 绕质心转动。

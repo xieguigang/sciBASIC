@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.Engine.Physics.ForceFields3D
+Imports Microsoft.VisualBasic.Engine.Physics.Joints3D
 Imports Microsoft.VisualBasic.Imaging.Physics.Collision3D
 Imports Microsoft.VisualBasic.Imaging.Physics.ForceFields3D
 Imports Microsoft.VisualBasic.Imaging.Physics.Joints3D
