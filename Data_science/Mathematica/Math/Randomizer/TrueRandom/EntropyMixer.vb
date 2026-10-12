@@ -91,7 +91,7 @@ Public Class EntropyMixer
             Return New Byte(-1) {}
         End If
 
-        Dim out As New Byte(count - 1) {}
+        Dim out As Byte() = New Byte(count - 1) {}
         Dim offset As Integer = 0
 
         Using hmac As New HMACSHA256(_key)

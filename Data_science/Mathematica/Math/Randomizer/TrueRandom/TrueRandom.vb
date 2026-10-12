@@ -70,9 +70,9 @@ Public Class TrueRandom : Implements IProvideRandomValues
     Private _bytesSinceRefresh As Integer
 
     ''' <summary>
-    ''' 全局共享实例，便于直接调用 <c>TrueRandom.Global.GenerateBytes(n)</c>。
+    ''' 全局共享实例，便于直接调用 <c>TrueRandom.SharedInstance.GenerateBytes(n)</c>。
     ''' </summary>
-    Public Shared ReadOnly Global As New TrueRandom()
+    Public Shared ReadOnly SharedInstance As New TrueRandom()
 
     ''' <summary>
     ''' 初始化混合生成器：以 CSPRNG 取 32 字节密钥，并折叠一份环境噪声种子。
