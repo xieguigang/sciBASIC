@@ -117,19 +117,12 @@ Module Program
         Dim solver As New FlockSolver(field)
         solver.Run()
 
-        Dim engineDvx = field.State.dvx.Clone()
-        Dim engineDvy = field.State.dvy.Clone()
+        Dim engineDvx As Double() = field.State.dvx.Clone()
+        Dim engineDvy As Double() = field.State.dvy.Clone()
 
-        ' reference side
-        Dim referenceState = initial.Clone()
-        FlockReference.Advance(referenceState, 2000.0, 1200.0, True, False, field.PredatorCount)
-
-        ' the reference integrates in place; recompute its dv from the state delta
-        ' is not possible, so instead re-run the reference phase 1 only by using a
-        ' fresh clone and comparing dv directly through a second pass
+        ' reference side: its phase 1 leaves dvx/dvy filled
         Dim ref2 = initial.Clone()
-        Dim refSolver = New FlockSolver(field)   ' dummy, not used
-        refSolver.Run()
+        FlockReference.Advance(ref2, 2000.0, 1200.0, True, False, field.PredatorCount)
 
         Dim diffs As New List(Of (i As Integer, dx As Double, dy As Double))
 
