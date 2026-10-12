@@ -96,10 +96,12 @@ Namespace Linq
         ''' </summary>
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <param name="enums">The sequence to type as <see cref="IEnumerable(Of T)"/></param>
-        ''' <returns>The input sequence typed as <see cref="IEnumerable(Of T)"/>.</returns>
+        ''' <returns>
+        ''' The input sequence typed as <see cref="IEnumerable(Of T)"/>, or empty collection if the source is nothing.
+        ''' </returns>
         ''' <remarks>
-        ''' this iterator function is a kind of safe function: for the given data source is nothing,
-        ''' this function will returns a empty collection, null reference error will not happends 
+        ''' this iterator function is a kind of <strong>safe function: for the given data source is nothing,
+        ''' this function will returns a empty collection, null reference error will not happends </strong>
         ''' in this iterator function.
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
