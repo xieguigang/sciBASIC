@@ -56,12 +56,16 @@ Namespace Boids
     ''' <remarks>
     ''' The rules, the constants, the accumulation orders and the integrate 
     ''' semantics mirror the legacy <see cref="Field"/> implementation exactly, 
-    ''' except that neighbors are found by brute force instead of the spatial 
-    ''' grid hash (which changes the floating point summation order by ULP 
-    ''' amounts only) and the solve is two-phase so the result is deterministic.
+    ''' including its neighbor candidate restriction: the legacy spatial hash 
+    ''' used 15px cells and only probed the 3x3 cell block around each boid 
+    ''' (so the effective perception set is the intersection of that box with 
+    ''' the distance filter, NOT the full distance circle). The solve is two 
+    ''' phase here so the result is deterministic; neighbor enumeration order 
+    ''' differs from the grid order by ULP amounts only.
     ''' </remarks>
     Friend NotInheritable Class FlockReference
 
+        Const cellSize As Double = 15.0
         Const flockDistance As Double = 50.0
         Const avoidDistance As Double = 20.0
         Const predatorDistance As Double = 150.0
@@ -93,6 +97,8 @@ Namespace Boids
             For i As Integer = 0 To n - 1
                 Dim bx = px(i)
                 Dim by = py(i)
+                Dim icx As Integer = CInt(bx / cellSize)
+                Dim icy As Integer = CInt(by / cellSize)
 
                 Dim sumX As Double = 0.0
                 Dim sumY As Double = 0.0
@@ -103,6 +109,14 @@ Namespace Boids
                 Dim avoidY As Double = 0.0
 
                 For j As Integer = 0 To n - 1
+                    ' legacy candidate restriction: only the 3x3 cell block 
+                    ' around the boid's own cell is probed
+                    Dim jcx As Integer = CInt(px(j) / cellSize)
+                    Dim jcy As Integer = CInt(py(j) / cellSize)
+
+                    If jcx < icx - 1 OrElse jcx > icx + 1 OrElse
+                       jcy < icy - 1 OrElse jcy > icy + 1 Then Continue For
+
                     Dim ddx As Double = bx - px(j)
                     Dim ddy As Double = by - py(j)
                     Dim d2 As Double = ddx * ddx + ddy * ddy
