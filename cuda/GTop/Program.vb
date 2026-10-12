@@ -1,15 +1,13 @@
 #Region "Microsoft.VisualBasic::gtop-entry, cuda\GTop\Program.vb"
 
-    ' Author:
-    '       xieguigang (xie.guigang@live.com)
-    '
-    ' Copyright (c) sciBASIC.NET Foundation
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+' Author:
+'       xieguigang (xie.guigang@live.com)
+'
+' Copyright (c) sciBASIC.NET Foundation
+' GNU GENERAL PUBLIC LICENSE (GPL3)
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Module Program

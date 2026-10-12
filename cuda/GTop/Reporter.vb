@@ -175,7 +175,9 @@ Public Module Reporter
             })
         Next
 
+        Console.WriteLine()
         Console.WriteLine("说明：CUDA核心% = 3D/Compute 引擎利用率最大值（Windows 下 CUDA 计算常计入 3D 引擎）；Copy% 为数据拷贝带宽代理。")
+        Console.WriteLine()
 
         ' 注意：表格库的 EmbedTitle 在标题长度超过表格宽度时会抛异常，故标题保持简短
         ' 进程名放最后一列：含中文（全角）时其显示宽度与字符数不一致，放末尾可避免影响前面数值列的对齐
@@ -297,7 +299,9 @@ Public Module Reporter
     Private Function BuildProcessLines(rows As IReadOnlyList(Of GpuProcessSample), procRows As Integer, useColor As Boolean) As List(Of String)
         Dim L As New List(Of String)()
 
+        L.Add("")
         L.Add($"  进程级 GPU 使用（CUDA核心%=3D/Compute 引擎最大值；Copy% 为带宽代理；共 {rows.Count} 个）")
+        L.Add("")
         ' 进程名放最后一列：含中文（全角）时其显示宽度与字符数不一致，放末尾可避免影响前面数值列的对齐
         L.Add("  " & "PID".PadLeft(7) & " " & "CUDA%".PadLeft(6) & " " & "Copy%".PadLeft(6) & " " & "编码%".PadLeft(6) & " " & "解码%".PadLeft(6) & " " & "显存MB".PadLeft(10) & "   进程名")
 
