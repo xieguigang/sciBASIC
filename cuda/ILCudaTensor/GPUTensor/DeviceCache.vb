@@ -1,72 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::94359f453e5b41d365990ff975e057b3, cuda\ILCudaTensor\GPUTensor\DeviceCache.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 195
-    '    Code Lines: 108 (55.38%)
-    ' Comment Lines: 50 (25.64%)
-    '    - Xml Docs: 60.00%
-    ' 
-    '   Blank Lines: 37 (18.97%)
-    '     File Size: 8.21 KB
+' Summaries:
 
 
-    '     Class DeviceCache
-    ' 
-    '         Properties: Bytes, Count
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetBuffer
-    ' 
-    '         Sub: Clear, Dispose, Evict
-    '         Class Entry
-    ' 
-    '             Properties: Ticks
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: Finalize
-    ' 
-    '         Class HostComparer
-    ' 
-    '             Function: HashOf, ReferenceEqualsTo
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 195
+'    Code Lines: 108 (55.38%)
+' Comment Lines: 50 (25.64%)
+'    - Xml Docs: 60.00%
+' 
+'   Blank Lines: 37 (18.97%)
+'     File Size: 8.21 KB
+
+
+'     Class DeviceCache
+' 
+'         Properties: Bytes, Count
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetBuffer
+' 
+'         Sub: Clear, Dispose, Evict
+'         Class Entry
+' 
+'             Properties: Ticks
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: Finalize
+' 
+'         Class HostComparer
+' 
+'             Function: HashOf, ReferenceEqualsTo
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -146,7 +146,7 @@ Namespace GPUTensor
         Private ReadOnly _map As New Dictionary(Of Object, Entry)(New HostComparer())
         Private ReadOnly _sync As New Object()
         Private ReadOnly _capacity As Long
-        Private _bytes As Long
+
         Private _ticks As Long
 
         ''' <param name="capacityBytes">显存容量上限（字节）；&lt;= 0 表示不限制</param>
@@ -156,10 +156,6 @@ Namespace GPUTensor
 
         ''' <summary>已驻留的字节数</summary>
         Public ReadOnly Property Bytes As Long
-            Get
-                Return _bytes
-            End Get
-        End Property
 
         ''' <summary>当前驻留的缓冲个数</summary>
         Public ReadOnly Property Count As Integer
@@ -232,7 +228,7 @@ Namespace GPUTensor
                 ' 版本失效：淘汰旧条目并释放显存
                 If entry IsNot Nothing Then
                     _map.Remove(key)
-                    _bytes -= CLng(entry.Buffer.Count) * CLng(entry.Buffer.ElementSize)
+                    _Bytes -= CLng(entry.Buffer.Count) * CLng(entry.Buffer.ElementSize)
                     entry.Buffer.Dispose()
                 End If
 
@@ -246,7 +242,7 @@ Namespace GPUTensor
 
                 _ticks += 1
                 _map(key) = New Entry(buffer, version, _ticks)
-                _bytes += needBytes
+                _Bytes += needBytes
 
                 Return buffer
             End SyncLock
@@ -275,7 +271,7 @@ Namespace GPUTensor
         ''' <summary>按 LRU 淘汰直到腾出需要的空间（最近使用过的若干条目受保护）</summary>
         Private Sub Evict(needBytes As Long)
             If _capacity <= 0 Then Return
-            If _bytes + needBytes <= _capacity Then Return
+            If _Bytes + needBytes <= _capacity Then Return
 
             Dim snapshot = _map.ToArray()
             Array.Sort(snapshot, Function(x, y) x.Value.Ticks.CompareTo(y.Value.Ticks))
@@ -284,12 +280,12 @@ Namespace GPUTensor
             Dim victimLimit = System.Math.Max(0, snapshot.Length - ProtectedRecentEntries)
 
             For i As Integer = 0 To victimLimit - 1
-                If _bytes + needBytes <= _capacity Then Exit For
+                If _Bytes + needBytes <= _capacity Then Exit For
 
                 Dim pair = snapshot(i)
 
                 _map.Remove(pair.Key)
-                _bytes -= CLng(pair.Value.Buffer.Count) * CLng(pair.Value.Buffer.ElementSize)
+                _Bytes -= CLng(pair.Value.Buffer.Count) * CLng(pair.Value.Buffer.ElementSize)
                 pair.Value.Buffer.Dispose()
             Next
         End Sub
@@ -302,7 +298,7 @@ Namespace GPUTensor
                 Next
 
                 _map.Clear()
-                _bytes = 0
+                _Bytes = 0
             End SyncLock
         End Sub
 
