@@ -18,6 +18,7 @@ Module Program
         Console.WriteLine("===========================================================")
 
         TestCellRounding()
+        DebugDivergence()
         TestEngineAgainstReference()
         TestViewApi()
         Benchmark()
@@ -83,6 +84,70 @@ Module Program
         Next
 
         Check($"CellRound matches CInt on {samples.Count} samples", pass:=bad = 0)
+    End Sub
+
+    ''' <summary>
+    ''' Focused divergence diagnostics: run both engines for a single frame on a 
+    ''' small flock and dump the per-boid rule-force deltas that disagree, so the 
+    ''' source of the discrepancy can be identified.
+    ''' </summary>
+    Sub DebugDivergence()
+        Console.WriteLine()
+        Console.WriteLine("[debug] single frame divergence diagnostics (n=100) ...")
+
+        Const n As Integer = 100
+        Dim seed As New Random(20240101)
+        Dim initial As New FlockState(n)
+
+        For i As Integer = 0 To n - 1
+            initial.px(i) = seed.NextDouble() * 2000.0
+            initial.py(i) = seed.NextDouble() * 1200.0
+            initial.vx(i) = (seed.NextDouble() - 0.5) * 4.0
+            initial.vy(i) = (seed.NextDouble() - 0.5) * 4.0
+        Next
+
+        ' engine side: build grid + solve only, then snapshot dvx/dvy
+        Dim field As New Field(2000.0, 1200.0, n)
+        Array.Copy(initial.px, field.State.px, n)
+        Array.Copy(initial.py, field.State.py, n)
+        Array.Copy(initial.vx, field.State.vx, n)
+        Array.Copy(initial.vy, field.State.vy, n)
+
+        field.Grid.Build(field.State, field.Radius)
+        Dim solver As New FlockSolver(field)
+        solver.Run()
+
+        Dim engineDvx = field.State.dvx.Clone()
+        Dim engineDvy = field.State.dvy.Clone()
+
+        ' reference side
+        Dim referenceState = initial.Clone()
+        FlockReference.Advance(referenceState, 2000.0, 1200.0, True, False, field.PredatorCount)
+
+        ' the reference integrates in place; recompute its dv from the state delta
+        ' is not possible, so instead re-run the reference phase 1 only by using a
+        ' fresh clone and comparing dv directly through a second pass
+        Dim ref2 = initial.Clone()
+        Dim refSolver = New FlockSolver(field)   ' dummy, not used
+        refSolver.Run()
+
+        Dim diffs As New List(Of (i As Integer, dx As Double, dy As Double))
+
+        For i As Integer = 0 To n - 1
+            Dim dx = engineDvx(i) - ref2.dvx(i)
+            Dim dy = engineDvy(i) - ref2.dvy(i)
+
+            If System.Math.Abs(dx) > 1.0E-9 OrElse System.Math.Abs(dy) > 1.0E-9 Then
+                diffs.Add((i, dx, dy))
+            End If
+        Next
+
+        Console.WriteLine($" boids with dv mismatch: {diffs.Count} / {n}")
+
+        For Each d In diffs.Take(8)
+            Console.WriteLine($"   boid {d.i}: dvx diff = {d.dx:E4}, dvy diff = {d.dy:E4}, " &
+                              $"engine dvx = {engineDvx(d.i):F6}, ref dvx = {ref2.dvx(d.i):F6}")
+        Next
     End Sub
 
     ''' <summary>
