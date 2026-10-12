@@ -120,22 +120,30 @@ Namespace GPUTensor
 
         End Class
 
-        ''' <summary>按数组引用身份比较的相等性比较器</summary>
+        ''' <summary>
+        ''' 按数组引用身份比较的相等性比较器。
+        ''' </summary>
+        ''' <remarks>
+        ''' 比较器面向 <c>Object</c> 而不是某个具体数组类型，是为了让同一份缓存
+        ''' 既能以 <c>Double()</c> 为键（双精度栈）、也能以 <c>Single()</c> 为键
+        ''' （单精度栈 <c>TensorF</c> 的底层数组本身就是 <c>Single()</c>）。
+        ''' 判等一律用引用身份，因此两种元素类型的键绝不会互相误命中。
+        ''' </remarks>
         Private NotInheritable Class HostComparer
-            Implements IEqualityComparer(Of Double())
+            Implements IEqualityComparer(Of Object)
 
-            Public Function ReferenceEqualsTo(a As Double(), b As Double()) As Boolean Implements IEqualityComparer(Of Double()).Equals
+            Public Function ReferenceEqualsTo(a As Object, b As Object) As Boolean Implements IEqualityComparer(Of Object).Equals
                 Return ReferenceEquals(a, b)
             End Function
 
-            Public Function HashOf(a As Double()) As Integer Implements IEqualityComparer(Of Double()).GetHashCode
+            Public Function HashOf(a As Object) As Integer Implements IEqualityComparer(Of Object).GetHashCode
                 If a Is Nothing Then Return 0
                 Return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(a)
             End Function
 
         End Class
 
-        Private ReadOnly _map As New Dictionary(Of Double(), Entry)(New HostComparer())
+        Private ReadOnly _map As New Dictionary(Of Object, Entry)(New HostComparer())
         Private ReadOnly _sync As New Object()
         Private ReadOnly _capacity As Long
         Private _bytes As Long
@@ -172,10 +180,41 @@ Namespace GPUTensor
                 Throw New ArgumentException("主机数组不能为空", NameOf(host))
             End If
 
+            Return GetBufferCore(host, host.Length, version, Function() convert(host))
+        End Function
+
+        ''' <summary>
+        ''' 取得<b>单精度</b>主机数组对应的显存缓冲（单精度栈 <c>TensorF</c> 专用）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 与 <see cref="GetBuffer"/> 的唯一差别是主机数组的元素类型：
+        ''' <c>TensorF.Data</c> 本身就是 <c>Single()</c>，不存在"Double 主机 + 降精度"这一步，
+        ''' 因此 <paramref name="convert"/> 通常是恒等映射（或就地做一次类型规整）。
+        ''' 缓存键仍然是数组引用身份 + <paramref name="version"/>，语义与双精度通道完全一致。
+        ''' </remarks>
+        ''' <param name="convert">主机 Single 数组到显存元素类型的转换（通常是恒等映射）</param>
+        Public Function GetBufferF(engine As CudaEngine, host As Single(), version As Long,
+                                   convert As Func(Of Single(), T())) As DeviceBuffer(Of T)
+            If host Is Nothing OrElse host.Length = 0 Then
+                Throw New ArgumentException("主机数组不能为空", NameOf(host))
+            End If
+
+            Return GetBufferCore(host, host.Length, version, Function() convert(host))
+        End Function
+
+        ''' <summary>
+        ''' 两条主机数组通道共用的取缓冲主体（LRU 命中 / 版本失效 / 淘汰 / 上传）。
+        ''' </summary>
+        ''' <param name="key">缓存键，即主机数组对象本身（按引用身份比较）</param>
+        ''' <param name="length">主机数组长度（元素个数）</param>
+        ''' <param name="version">主机数据的当前版本号</param>
+        ''' <param name="upload">真正需要上传时才调用的转换（避免在命中路径上做无谓的转换）</param>
+        Private Function GetBufferCore(key As Object, length As Integer, version As Long,
+                                       upload As Func(Of T())) As DeviceBuffer(Of T)
             SyncLock _sync
                 Dim entry As Entry = Nothing
 
-                If _map.TryGetValue(host, entry) AndAlso entry.Version = version Then
+                If _map.TryGetValue(key, entry) AndAlso entry.Version = version Then
                     _ticks += 1
                     entry.Ticks = _ticks
                     Return entry.Buffer
@@ -183,21 +222,21 @@ Namespace GPUTensor
 
                 ' 版本失效：淘汰旧条目并释放显存
                 If entry IsNot Nothing Then
-                    _map.Remove(host)
+                    _map.Remove(key)
                     _bytes -= CLng(entry.Buffer.Count) * CLng(entry.Buffer.ElementSize)
                     entry.Buffer.Dispose()
                 End If
 
                 Dim elementSize As Integer = Marshal.SizeOf(GetType(T))
-                Dim needBytes As Long = CLng(host.Length) * CLng(elementSize)
+                Dim needBytes As Long = CLng(length) * CLng(elementSize)
 
                 Evict(needBytes)
 
-                Dim buffer As New DeviceBuffer(Of T)(host.Length)
-                buffer.Write(convert(host))
+                Dim buffer As New DeviceBuffer(Of T)(length)
+                buffer.Write(upload())
 
                 _ticks += 1
-                _map(host) = New Entry(buffer, version, _ticks)
+                _map(key) = New Entry(buffer, version, _ticks)
                 _bytes += needBytes
 
                 Return buffer
