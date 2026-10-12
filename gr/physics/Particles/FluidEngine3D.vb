@@ -120,7 +120,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         Set(value As Single)
             If value <= 0 Then value = 1
             _smoothingRadius = value
-            Kernels = New FluidKernels3D(value)
+            Kernels = FluidKernels.For3D(value)
             paramsDirty = True
             gridStale = True
         End Set
@@ -281,7 +281,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
     End Property
 
     ''' <summary>the kernel bundle of the current smoothing radius</summary>
-    Public ReadOnly Property Kernels3D As FluidKernels3D
+    Public ReadOnly Property Kernels3D As FluidKernels
         Get
             Return Kernels
         End Get
@@ -299,7 +299,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
 
     ReadOnly NumParticles As Integer
 
-    Private Kernels As FluidKernels3D
+    Private Kernels As FluidKernels
 
     ' Buffers
     Private Particles As Particle3D()
@@ -610,7 +610,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         If Not paramsDirty AndAlso sphParams IsNot Nothing Then Return
 
         If Kernels Is Nothing Then
-            Kernels = New FluidKernels3D(_smoothingRadius)
+            Kernels = FluidKernels.For3D(_smoothingRadius)
         End If
 
         sphParams = SphParams3D.FromKernels(Kernels, _smoothingRadius)
@@ -703,7 +703,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         Dim n = _state.Count
         If n = 0 Then Return
 
-        If Kernels Is Nothing Then Kernels = New FluidKernels3D(_smoothingRadius)
+        If Kernels Is Nothing Then Kernels = FluidKernels.For3D(_smoothingRadius)
         If sphParams Is Nothing Then
             sphParams = SphParams3D.FromKernels(Kernels, _smoothingRadius)
         End If

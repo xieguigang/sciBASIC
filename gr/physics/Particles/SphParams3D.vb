@@ -91,9 +91,13 @@ Public Class SphParams3D
     ''' <summary>
     ''' build the parameter bundle from the smoothing kernels.
     ''' </summary>
-    ''' <param name="kernels">the (correctly normalized) 3D kernels</param>
+    ''' <param name="kernels">
+    ''' the (correctly normalized) kernels. the normalization constants are read
+    ''' straight out of this bundle, so a 3D caller must pass a 3D bundle
+    ''' (<c>FluidKernels.For3D</c>) and a 2D caller a 2D one.
+    ''' </param>
     ''' <param name="h">smoothing radius</param>
-    Public Shared Function FromKernels(kernels As FluidKernels3D, h As Single) As SphParams3D
+    Public Shared Function FromKernels(kernels As FluidKernels, h As Single) As SphParams3D
         Dim p As New SphParams3D With {
             .SmoothingRadius = h,
             .SqrRadius = h * h,
@@ -105,17 +109,22 @@ Public Class SphParams3D
             .MaxAccel = 0.0F
         }
 
-        ' 与 FluidKernels3D 完全一致的三维归一化常数
-        p.SpikyPow2 = CSng(15 / (2 * std.PI * std.Pow(h, 5)))
-        p.SpikyPow3 = CSng(15 / (std.PI * std.Pow(h, 6)))
-        p.GradSpikyPow2 = CSng(15 / (std.PI * std.Pow(h, 5)))
-        p.GradSpikyPow3 = CSng(45 / (std.PI * std.Pow(h, 6)))
-        p.Poly6 = CSng(315 / (64 * std.PI * std.Pow(h, 9)))
-
+        ' 归一化常数统一由 kernels 提供（单一数据源），不再在本文件里重复书写
+        ' 第三份常数；kernels 缺省时退回三维解析常数，保持既有行为不变。
         If kernels IsNot Nothing Then
+            p.SpikyPow2 = kernels.SpikyPow2Factor
+            p.SpikyPow3 = kernels.SpikyPow3Factor
+            p.GradSpikyPow2 = kernels.GradSpikyPow2Factor
+            p.GradSpikyPow3 = kernels.GradSpikyPow3Factor
+            p.Poly6 = kernels.Poly6Factor
             p.SelfDensity = kernels.SelfDensityKernel()
             p.SelfNearDensity = kernels.SelfNearDensityKernel()
         Else
+            p.SpikyPow2 = CSng(15 / (2 * std.PI * std.Pow(h, 5)))
+            p.SpikyPow3 = CSng(15 / (std.PI * std.Pow(h, 6)))
+            p.GradSpikyPow2 = CSng(15 / (std.PI * std.Pow(h, 5)))
+            p.GradSpikyPow3 = CSng(45 / (std.PI * std.Pow(h, 6)))
+            p.Poly6 = CSng(315 / (64 * std.PI * std.Pow(h, 9)))
             p.SelfDensity = p.SpikyPow2 * h * h
             p.SelfNearDensity = p.SpikyPow3 * h * h * h
         End If
