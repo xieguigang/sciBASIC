@@ -22,8 +22,6 @@
 '
 ' /********************************************************************************/
 
-Imports std = System.Math
-
 ''' <summary>
 ''' The flat parameter bundle of one 3D SPH sub step.
 ''' </summary>
@@ -109,25 +107,18 @@ Public Class SphParams3D
             .MaxAccel = 0.0F
         }
 
-        ' 归一化常数统一由 kernels 提供（单一数据源），不再在本文件里重复书写
-        ' 第三份常数；kernels 缺省时退回三维解析常数，保持既有行为不变。
-        If kernels IsNot Nothing Then
-            p.SpikyPow2 = kernels.SpikyPow2Factor
-            p.SpikyPow3 = kernels.SpikyPow3Factor
-            p.GradSpikyPow2 = kernels.GradSpikyPow2Factor
-            p.GradSpikyPow3 = kernels.GradSpikyPow3Factor
-            p.Poly6 = kernels.Poly6Factor
-            p.SelfDensity = kernels.SelfDensityKernel()
-            p.SelfNearDensity = kernels.SelfNearDensityKernel()
-        Else
-            p.SpikyPow2 = CSng(15 / (2 * std.PI * std.Pow(h, 5)))
-            p.SpikyPow3 = CSng(15 / (std.PI * std.Pow(h, 6)))
-            p.GradSpikyPow2 = CSng(15 / (std.PI * std.Pow(h, 5)))
-            p.GradSpikyPow3 = CSng(45 / (std.PI * std.Pow(h, 6)))
-            p.Poly6 = CSng(315 / (64 * std.PI * std.Pow(h, 9)))
-            p.SelfDensity = p.SpikyPow2 * h * h
-            p.SelfNearDensity = p.SpikyPow3 * h * h * h
-        End If
+        ' 归一化常数一律由 FluidKernels 提供（单一数据源）：这些常数此前在本文件里
+        ' 还有一份硬编码副本，与 FluidKernels/FluidKernels3D 构成三处重复，正是
+        ' "改了一处忘了另一处" 这类错误的温床。kernels 缺省时按三维构造一份默认核。
+        Dim k As FluidKernels = If(kernels, FluidKernels.For3D(h))
+
+        p.SpikyPow2 = k.SpikyPow2Factor
+        p.SpikyPow3 = k.SpikyPow3Factor
+        p.GradSpikyPow2 = k.GradSpikyPow2Factor
+        p.GradSpikyPow3 = k.GradSpikyPow3Factor
+        p.Poly6 = k.Poly6Factor
+        p.SelfDensity = k.SelfDensityKernel()
+        p.SelfNearDensity = k.SelfNearDensityKernel()
 
         Return p
     End Function
