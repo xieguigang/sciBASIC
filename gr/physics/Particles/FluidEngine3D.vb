@@ -120,7 +120,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         Set(value As Single)
             If value <= 0 Then value = 1
             _smoothingRadius = value
-            Kernels = New FluidKernels3D(value)
+            Kernels = FluidKernels.For3D(value)
             paramsDirty = True
             gridStale = True
         End Set
@@ -281,7 +281,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
     End Property
 
     ''' <summary>the kernel bundle of the current smoothing radius</summary>
-    Public ReadOnly Property Kernels3D As FluidKernels3D
+    Public ReadOnly Property Kernels3D As FluidKernels
         Get
             Return Kernels
         End Get
@@ -299,7 +299,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
 
     ReadOnly NumParticles As Integer
 
-    Private Kernels As FluidKernels3D
+    Private Kernels As FluidKernels
 
     ' Buffers
     Private Particles As Particle3D()
