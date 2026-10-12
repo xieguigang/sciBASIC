@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.Imaging.Physics</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Engine.Physics</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
-    <AssemblyName>Microsoft.VisualBasic.Imaging.Physics</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Engine.Physics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;gcmodeller_desktop;CFD_win32;nuget_release;CellaLAB-Desktop</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>logo-knot.png</PackageIcon>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -19,7 +19,7 @@
     <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
     <Title>2D Rigid Body Physics Engine With Particle And Fluid Solvers</Title>
     <Description>A fixed-step 2D physics world with rigid bodies, broad and narrow phase collision, revolute, prismatic, spring and weld joints, force fields, SPH fluids and boids flocking, plus force-driven label placement for sciBASIC#.</Description>
-    <AssemblyTitle>Microsoft.VisualBasic.Imaging.Physics</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.Engine.Physics</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
