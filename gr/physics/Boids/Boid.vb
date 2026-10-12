@@ -31,21 +31,29 @@
 
     ' Summaries:
 
+    ' A boid is now a **value type view** (zero allocation) over one slot of the
+    ' <see cref="FlockState"/> structure-of-arrays simulation state, instead of a
+    ' heap object. This is a deliberate breaking change made for the SIMD/SoA
+    ' refactor: at 80k boids the old object-per-boid layout cost ~640k heap
+    ' allocations per frame and destroyed cache locality on every neighbor scan.
+    ' The public member surface (x/y/Xvel/Yvel/MoveForward/Accelerate/GetSpeed/
+    ' GetAngle/GetPosition) is preserved; all members now read/write the slot
+    ' that the view points at.
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 49 (69.01%)
-    ' Comment Lines: 10 (14.08%)
+    '   Total Lines: 118
+    '    Code Lines: 86 (72.88%)
+    ' Comment Lines: 10 (8.47%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (16.90%)
-    '     File Size: 2.35 KB
+    '   Blank Lines: 22 (18.64%)
+    '     File Size: 4.61 KB
 
 
-    '     Class Boid
+    '     Structure Boid
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: GetAngle, GetPosition, GetSpeed
     ' 
@@ -56,7 +64,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Imaging
 Imports std = System.Math
 
 Namespace Boids
@@ -67,38 +75,89 @@ Namespace Boids
     ''' <remarks>
     ''' https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
     ''' </remarks>
-    Public Class Boid : Inherits Vector2D
-        Implements Layout2D
+    Public Structure Boid : Implements Layout2D
 
-        Public Xvel As Double
-        Public Yvel As Double
+        Friend ReadOnly state As FlockState
+        Friend ReadOnly index As Integer
 
-        Public Sub New(x As Double, y As Double, xVel As Double, yVel As Double)
-            Call (x, y, xVel, yVel).Set(Me.x, Me.y, Me.Xvel, Me.Yvel)
+        Friend Sub New(state As FlockState, index As Integer)
+            Me.state = state
+            Me.index = index
         End Sub
 
-        Public Sub New(rand As Random, width As Double, height As Double)
-            x = rand.NextDouble() * width
-            y = rand.NextDouble() * height
-            Xvel = (rand.NextDouble() - 0.5)
-            Yvel = (rand.NextDouble() - 0.5)
-        End Sub
+        ''' <summary>
+        ''' position x
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property x As Double Implements Layout2D.X
+            Get
+                Return state.px(index)
+            End Get
+            Set(value As Double)
+                state.px(index) = value
+            End Set
+        End Property
 
+        ''' <summary>
+        ''' position y
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property y As Double Implements Layout2D.Y
+            Get
+                Return state.py(index)
+            End Get
+            Set(value As Double)
+                state.py(index) = value
+            End Set
+        End Property
+
+        Public Property Xvel As Double
+            Get
+                Return state.vx(index)
+            End Get
+            Set(value As Double)
+                state.vx(index) = value
+            End Set
+        End Property
+
+        Public Property Yvel As Double
+            Get
+                Return state.vy(index)
+            End Get
+            Set(value As Double)
+                state.vy(index) = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Moves the boid forward in time and clamps its speed into the 
+        ''' ``[minSpeed, maxSpeed]`` range. This is a view operation: it mutates
+        ''' the underlying simulation state slot.
+        ''' </summary>
         Public Sub MoveForward(Optional minSpeed As Double = 1, Optional maxSpeed As Double = 5)
-            x += Xvel
-            y += Yvel
+            Dim s = state
+            Dim i = index
+            Dim vxv = s.vx(i)
+            Dim vyv = s.vy(i)
 
-            Dim speed = GetSpeed()
+            s.px(i) += vxv
+            s.py(i) += vyv
+
+            Dim speed = std.Sqrt(vxv * vxv + vyv * vyv)
+
             If speed > maxSpeed Then
-                Xvel = Xvel / speed * maxSpeed
-                Yvel = Yvel / speed * maxSpeed
+                vxv = vxv / speed * maxSpeed
+                vyv = vyv / speed * maxSpeed
             ElseIf speed < minSpeed Then
-                Xvel = Xvel / speed * minSpeed
-                Yvel = Yvel / speed * minSpeed
+                vxv = vxv / speed * minSpeed
+                vyv = vyv / speed * minSpeed
             End If
 
-            If Double.IsNaN(Xvel) Then Xvel = 0
-            If Double.IsNaN(Yvel) Then Yvel = 0
+            If Double.IsNaN(vxv) Then vxv = 0
+            If Double.IsNaN(vyv) Then vyv = 0
+
+            s.vx(i) = vxv
+            s.vy(i) = vyv
         End Sub
 
         Public Function GetPosition(time As Double) As (Double, Double)
@@ -106,8 +165,8 @@ Namespace Boids
         End Function
 
         Public Sub Accelerate(Optional scale As Double = 1.0)
-            Xvel *= scale
-            Yvel *= scale
+            state.vx(index) *= scale
+            state.vy(index) *= scale
         End Sub
 
         Public Function GetAngle() As Double
@@ -123,7 +182,7 @@ Namespace Boids
         ''' </summary>
         ''' <returns></returns>
         Public Function GetSpeed() As Double
-            Return std.Sqrt(Xvel ^ 2 + Yvel ^ 2)
+            Return std.Sqrt(Xvel * Xvel + Yvel * Yvel)
         End Function
-    End Class
+    End Structure
 End Namespace

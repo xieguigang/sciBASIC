@@ -176,19 +176,45 @@ Namespace My.JavaScript
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 对序列执行"降维"（折叠 / Reduce）操作：从初始累积值 <paramref name="init"/> 出发，
+        ''' 依次将序列中的每个元素通过累积函数 <paramref name="produce"/> 合并到累积值上，
+        ''' 最终把整个序列折叠成一个单一结果值。
         ''' </summary>
-        ''' <typeparam name="T">序列的类型</typeparam>
-        ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
-        ''' <param name="seq"></param>
-        ''' <param name="produce"></param>
-        ''' <param name="init"></param>
-        ''' <returns></returns>
+        ''' <typeparam name="T">序列中源元素（项）的类型</typeparam>
+        ''' <typeparam name="V">降维之后的结果（累积值）类型</typeparam>
+        ''' <param name="seq">待折叠的源序列。若为 <see langword="Nothing"/>，
+        ''' 则不调用累积函数，直接返回 <paramref name="init"/>。</param>
+        ''' <param name="produce">累积函数：第一个参数为当前累积值（类型 V），
+        ''' 第二个参数为当前遍历到的元素（类型 T），返回值作为新的累积值（类型 V）。</param>
+        ''' <param name="init">累积的初始值。默认为 <see langword="Nothing"/>；
+        ''' 当 V 为值类型时即该类型的默认值（如 Integer 的 0、Boolean 的 False）。</param>
+        ''' <returns>折叠完成后的最终累积值。若 <paramref name="seq"/> 为 <see langword="Nothing"/>
+        ''' 或为空序列，则原样返回 <paramref name="init"/>。</returns>
+        ''' <remarks>
+        ''' <para>本方法相当于函数式编程中的 fold，是 <see cref="Enumerable.Aggregate"/> 的简化版本，
+        ''' 并对 <see langword="Nothing"/> 序列做了容错（返回初始值而不是抛异常）。</para>
+        ''' <para>注意：<paramref name="init"/> 始终作为累积起点参与运算，
+        ''' 首个元素并不会自动取代初始值（与某些语言中省略初始值时的行为不同）。</para>
+        ''' <para>累积函数的参数顺序为（累积值, 当前元素）。若累积运算不满足交换律
+        ''' （例如减法、除法、字符串拼接），参数顺序与遍历顺序会影响最终结果。</para>
+        ''' <para>若 <paramref name="seq"/> 不为空而 <paramref name="produce"/> 为 <see langword="Nothing"/>，
+        ''' 运行时将引发 <see cref="NullReferenceException"/>；
+        ''' 累积函数自身抛出的异常也会原样向上传播。</para>
+        ''' </remarks>
+        ''' <example>
+        ''' 求和：Dim sum = New Integer() {1, 2, 3}.reduce(Function(acc, x) acc + x) ' 结果：6
+        ''' 拼接：Dim s = {"a", "b", "c"}.reduce(Function(acc, x) acc &amp; x) ' 结果："abc"
+        ''' 容错：Dim n = CType(Nothing, IEnumerable(Of Integer)).reduce(Function(acc, x) acc + x) ' 结果：0
+        ''' </example>
         <Extension>
         Public Function reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), Optional init As V = Nothing) As V
-            For Each x As T In seq
-                init = produce(init, x)
-            Next
+            If seq Is Nothing Then
+                Return init
+            Else
+                For Each x As T In seq
+                    init = produce(init, x)
+                Next
+            End If
 
             Return init
         End Function
