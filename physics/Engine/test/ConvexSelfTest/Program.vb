@@ -13,6 +13,7 @@ Module Program
     Private Failed As Integer = 0
 
     Sub Main()
+        Call RampDebug()
         Call MeshProperties()
         Call Winding()
         Call BoxOnGround()
@@ -30,6 +31,66 @@ Module Program
         If Failed > 0 Then
             Environment.Exit(1)
         End If
+    End Sub
+
+    Private Sub RampDebug()
+        Console.WriteLine("-- ramp debug: direct manifold probe")
+
+        Dim ramp As ConvexMesh3D = ConvexMesh3D.CreateWedge(8, 3, 8)
+        Dim wedge As RigidBody3D = PhysicsWorld3D.StaticConvex(ramp, New Vector3(0, ramp.PivotOffset.y, 0))
+
+        wedge.Label = "wedge"
+
+        For Each y As Double In {3.6, 3.3, 3.15, 3.1, 3.05, 3.0}
+            Dim probe As RigidBody3D = PhysicsWorld3D.Box(1, 1, 1, 1.0)
+
+            probe.Label = "box"
+            probe.Position = New Vector3(3.0, y, 0)
+
+            Dim m As Manifold3D = NarrowPhase3D.Collide(probe, wedge)
+
+            If m Is Nothing Then
+                Console.WriteLine($"  y={y:F2} -> no manifold")
+            Else
+                Dim pts As String = ""
+
+                For Each c In m.Contacts
+                    pts &= $" ({c.Position.x:F2},{c.Position.y:F2},{c.Position.z:F2})/pen={c.Penetration:F3}"
+                Next
+
+                Console.WriteLine($"  y={y:F2} -> A={m.A.Label} B={m.B.Label} n=({m.Normal.x:F3},{m.Normal.y:F3},{m.Normal.z:F3}){pts}")
+            End If
+        Next
+
+        Console.WriteLine("-- ramp debug trace")
+
+        Dim ramp As ConvexMesh3D = ConvexMesh3D.CreateWedge(8, 3, 8)
+        Dim w As New PhysicsWorld3D()
+
+        w.Add(PhysicsWorld3D.GroundPlane(0.0))
+        w.Add(PhysicsWorld3D.StaticConvex(ramp, New Vector3(0, ramp.PivotOffset.y, 0)))
+
+        Dim b As RigidBody3D = PhysicsWorld3D.Box(1, 1, 1, 1.0)
+
+        b.Position = New Vector3(3.0, 6.0, 0)
+        b.Material.Friction = 0.2
+        w.Add(b)
+
+        For i As Integer = 1 To 180
+            w.Step(1.0 / 60.0)
+
+            If i Mod 10 = 0 OrElse i < 40 Then
+                Dim info As String = ""
+
+                For Each m In w.Contacts
+                    If m.A Is b OrElse m.B Is b Then
+                        info &= $" n=({m.Normal.x:F2},{m.Normal.y:F2},{m.Normal.z:F2}) pen={m.Penetration:F3} pts={m.Contacts.Count}"
+                    End If
+                Next
+
+                Console.WriteLine($"  t={i / 60.0:F2} x={b.Position.x:F3} y={b.Position.y:F3} vx={b.Velocity.x:F3} vy={b.Velocity.y:F3} | {info}")
+            End If
+        Next
     End Sub
 
     ' /********************************************************************************/

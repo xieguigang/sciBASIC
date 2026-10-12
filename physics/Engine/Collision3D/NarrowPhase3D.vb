@@ -226,7 +226,9 @@ Namespace Collision3D
                 Return Nothing
             End If
 
-            Dim normalWorld As Vector3 = box.Orientation.Rotate(normalLocal) * -1.0
+            ' normalLocal 已由球心指向盒面，即 A(球) → B(盒)，与流形约定一致，不能再取反：
+            ' 取反会让求解器把球往盒子里推（球会一路陷进静态盒并被以最大修正速度持续下压）
+            Dim normalWorld As Vector3 = box.Orientation.Rotate(normalLocal)
             Dim point As Vector3 = box.Position + box.Orientation.Rotate(contact)
 
             Return Build(sphere, box, normalWorld, {point}, {penetration})
@@ -256,7 +258,8 @@ Namespace Collision3D
                 Return Nothing
             End If
 
-            Dim normalWorld As Vector3 = Vector3Math.Normalize(box.Orientation.Rotate(normalSum)) * -1.0
+            ' 与 SphereBox 同理：normalLocal 之和已经是 A(胶囊) → B(盒)
+            Dim normalWorld As Vector3 = Vector3Math.Normalize(box.Orientation.Rotate(normalSum))
 
             Return Build(capsule, box, normalWorld, points, penetrations)
         End Function
