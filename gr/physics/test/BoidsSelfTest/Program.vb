@@ -1,7 +1,10 @@
 Imports System.Diagnostics
 Imports System.Linq
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.Imaging.Physics.Boids
 Imports Microsoft.VisualBasic.Math.SIMD
+Imports Microsoft.VisualBasic.Parallel
+Imports std = System.Math
 
 Module Program
 
@@ -22,6 +25,8 @@ Module Program
         TestEngineAgainstReference()
         TestViewApi()
         Benchmark()
+        BenchmarkLegacy()
+        BenchmarkRenderModel()
 
         Console.WriteLine()
         Console.WriteLine("===========================================================")
@@ -305,6 +310,289 @@ Module Program
         solver.Run()
         FlockIntegrate.Integrate(field.State, field.Width, field.Height, True, False, 1.0, 6.0)
     End Sub
+
+    ''' <summary>
+    ''' Baseline benchmark that faithfully replicates the LEGACY per-frame cost 
+    ''' model: serial LINQ GroupBy grid build (nested dictionary spatial hash) + 
+    ''' multi threaded per-boid rules with LINQ Where/ToArray/Sum over the grid 
+    ''' lookups. This is the "before" number of the refactor.
+    ''' </summary>
+    Sub BenchmarkLegacy()
+        Console.WriteLine()
+        Console.WriteLine("[extra] legacy engine baseline (LINQ grid + dictionary hash), 80k boids ...")
+
+        Const n As Integer = 80000
+        Const frames As Integer = 10
+
+        Dim field As New Field(2000.0, 1200.0, n)
+
+        ' warm up
+        For i As Integer = 1 To 2
+            LegacyFrame(field)
+        Next
+
+        Dim sw = Stopwatch.StartNew()
+
+        For i As Integer = 1 To frames
+            LegacyFrame(field)
+        Next
+
+        sw.Stop()
+
+        Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
+
+        Console.WriteLine($" legacy TOTAL: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (physics only)")
+    End Sub
+
+    Sub LegacyFrame(field As Field)
+        Dim state = field.State
+        Dim n = state.count
+        Dim px = state.px
+        Dim py = state.py
+        Dim vx = state.vx
+        Dim vy = state.vy
+        Dim dvx = state.dvx
+        Dim dvy = state.dvy
+
+        ' legacy: rebuild the dictionary-of-dictionaries grid every frame
+        Dim grid = field.Entity.EncodeGrid(field.Radius)
+
+        ' legacy: VectorTask parallel per-boid rules
+        Dim workers As Integer = System.Math.Max(1, VectorTask.n_threads)
+        Dim span As Integer = n \ workers
+
+        System.Threading.Tasks.Parallel.For(0, workers, Sub(t)
+            Dim start As Integer = t * span
+            Dim ends As Integer = start + span - 1
+
+            If start >= n Then Return
+            If ends >= n Then ends = n - 1
+
+            For i As Integer = start To ends
+                Dim boid = field(i)
+                Dim neighbors = grid.SpatialLookup(boid, field.Radius) _
+                    .Where(Function(x) GeomDistance(x, boid) < 50.0) _
+                    .ToArray()
+
+                Dim meanX As Double = neighbors.Sum(Function(x) x.x) / neighbors.Count()
+                Dim meanY As Double = neighbors.Sum(Function(x) x.y) / neighbors.Count()
+                Dim flockX As Double = (meanX - boid.x) * 0.0003
+                Dim flockY As Double = (meanY - boid.y) * 0.0003
+
+                Dim meanVX As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
+                Dim meanVY As Double = neighbors.Sum(Function(x) x.Yvel) / neighbors.Count()
+                Dim alignX As Double = (meanVX - boid.Xvel) * 0.01
+                Dim alignY As Double = (meanVY - boid.Yvel) * 0.01
+
+                Dim avoidNeighbors = grid.SpatialLookup(boid, field.Radius) _
+                    .Where(Function(x) GeomDistance(x, boid) < 20.0)
+                Dim avoidX As Double = 0.0
+                Dim avoidY As Double = 0.0
+
+                For Each nb As Boid In avoidNeighbors
+                    Dim closeness As Double = 20.0 - GeomDistance(nb, boid)
+                    avoidX += (boid.x - nb.x) * closeness
+                    avoidY += (boid.y - nb.y) * closeness
+                Next
+
+                Dim predX As Double = 0.0
+                Dim predY As Double = 0.0
+
+                For p As Integer = 0 To field.PredatorCount - 1
+                    Dim pred = field(p)
+                    Dim d As Double = GeomDistance(pred, boid)
+
+                    If d < 150.0 Then
+                        Dim closeness As Double = 150.0 - d
+                        predX += (boid.x - pred.x) * closeness
+                        predY += (boid.y - pred.y) * closeness
+                    End If
+                Next
+
+                dvx(i) = flockX + avoidX * 0.001 + alignX + predX * 0.00005
+                dvy(i) = flockY + avoidY * 0.001 + alignY + predY * 0.00005
+            Next
+        End Sub)
+
+        ' legacy: serial MoveForward + BounceOffWalls
+        For i As Integer = 0 To n - 1
+            Dim vxv As Double = vx(i) + dvx(i)
+            Dim vyv As Double = vy(i) + dvy(i)
+
+            px(i) += vxv
+            py(i) += vyv
+
+            Dim speed As Double = std.Sqrt(vxv * vxv + vyv * vyv)
+
+            If speed > 6.0 Then
+                vxv = vxv / speed * 6.0
+                vyv = vyv / speed * 6.0
+            ElseIf speed < 1.0 Then
+                vxv = vxv / speed * 1.0
+                vyv = vyv / speed * 1.0
+            End If
+
+            If Double.IsNaN(vxv) Then vxv = 0
+            If Double.IsNaN(vyv) Then vyv = 0
+
+            If px(i) < 50.0 Then vxv += 0.5
+            If px(i) > 2000.0 - 50.0 Then vxv -= 0.5
+            If py(i) < 50.0 Then vyv += 0.5
+            If py(i) > 1200.0 - 50.0 Then vyv -= 0.5
+
+            vx(i) = vxv
+            vy(i) = vyv
+        Next
+    End Sub
+
+    Function GeomDistance(a As Boid, b As Boid) As Double
+        Return std.Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
+    End Function
+
+    ''' <summary>
+    ''' Render cost model: mirrors the memory traffic of the SDRender LockBits 
+    ''' renderer (clear the 2000x1200 32bpp buffer + ~35 clipped pixel writes per 
+    ''' boid) on a managed buffer, to estimate the gdi+ phase cost without a GUI.
+    ''' </summary>
+    Sub BenchmarkRenderModel()
+        Console.WriteLine()
+        Console.WriteLine("[extra] render cost model (LockBits write pattern), 80k boids ...")
+
+        Const w As Integer = 2000
+        Const h As Integer = 1200
+        Const frames As Integer = 50
+        Const n As Integer = 80000
+
+        Dim field As New Field(2000.0, 1200.0, n)
+        Dim state = field.State
+
+        For i As Integer = 1 To 5
+            field.Advance()
+        Next
+
+        Dim buf(w * h - 1) As Integer
+        Dim rand As New Random(7)
+
+        ' warm up
+        RenderModelFrame(buf, w, h, state, rand)
+
+        Dim sw = Stopwatch.StartNew()
+
+        For f As Integer = 1 To frames
+            RenderModelFrame(buf, w, h, state, rand)
+        Next
+
+        sw.Stop()
+
+        Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
+        Console.WriteLine($" render model: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (gdi+ phase only)")
+        Console.WriteLine($" physics + render model budget check: 4.753 ms + {avg:F3} ms = {4.753 + avg:F3} ms " &
+                          $"({If(4.753 + avg <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
+    End Sub
+
+    Sub RenderModelFrame(buf As Integer(), w As Integer, h As Integer, state As FlockState, rand As Random)
+        Array.Clear(buf, 0, buf.Length)
+
+        Dim px = state.px
+        Dim py = state.py
+        Dim vx = state.vx
+        Dim vy = state.vy
+
+        For i As Integer = 0 To state.count - 1
+            Dim bx = px(i)
+            Dim by = py(i)
+            Dim dx = vx(i)
+            Dim dy = vy(i)
+            Dim len = std.Sqrt(dx * dx + dy * dy)
+            Dim scaleFactor As Double = If(len > 8.0, 8.0 / len, 1.0)
+            Dim ex = bx + dx * scaleFactor
+            Dim ey = by + dy * scaleFactor
+
+            ' shaft: ~1 step per pixel, 3 writes per step
+            If len > 0.0 Then
+                Dim steps = CInt(len)
+                If steps < 1 Then steps = 1
+                Dim sx = (ex - bx) / steps
+                Dim sy = (ey - by) / steps
+                Dim cxp = bx
+                Dim cyp = by
+
+                For s As Integer = 0 To steps
+                    Dim xi = CInt(cxp)
+                    Dim yi = CInt(cyp)
+
+                    If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi) = &HFF3366CC
+                    If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi + 1) = &HFF3366CC
+                    If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then buf((yi + 1) * w + xi) = &HFF3366CC
+
+                    cxp += sx
+                    cyp += sy
+                Next
+            End If
+
+            ' head: scanline triangle, ~7 rows x ~3 span writes
+            Dim ux As Double, uy As Double
+
+            If len > 0.0 Then
+                ux = (ex - bx) / len
+                uy = (ey - by) / len
+            Else
+                ux = 1.0
+                uy = 0.0
+            End If
+
+            Dim baseX = ex - 10.0 * ux
+            Dim baseY = ey - 10.0 * uy
+            Dim p1x = baseX + 7.0 * uy
+            Dim p1y = baseY - 7.0 * ux
+            Dim p2x = baseX - 7.0 * uy
+            Dim p2y = baseY + 7.0 * ux
+
+            Dim minY = CInt(std.Floor(std.Min(ey, std.Min(p1y, p2y))))
+            Dim maxY = CInt(std.Ceiling(std.Max(ey, std.Max(p1y, p2y)))) - 1
+
+            If minY < 0 Then minY = 0
+            If maxY >= h Then maxY = h - 1
+
+            For yi As Integer = minY To maxY
+                Dim yc = yi + 0.5
+                Dim x0 = Double.MaxValue
+                Dim x1 = Double.MinValue
+                Dim found = 0
+
+                found += ScanEdgeModel(ex, ey, p1x, p1y, yc, x0, x1)
+                found += ScanEdgeModel(p1x, p1y, p2x, p2y, yc, x0, x1)
+                found += ScanEdgeModel(p2x, p2y, ex, ey, yc, x0, x1)
+
+                If found < 2 Then Continue For
+
+                Dim fromX = CInt(std.Ceiling(x0 - 0.5))
+                Dim toX = CInt(std.Floor(x1 - 0.5))
+
+                If fromX < 0 Then fromX = 0
+                If toX >= w Then toX = w - 1
+
+                For xi As Integer = fromX To toX
+                    buf(yi * w + xi) = &HFF3366CC
+                Next
+            Next
+        Next
+    End Sub
+
+    Function ScanEdgeModel(ax As Double, ay As Double, bx As Double, by As Double,
+                           yc As Double, ByRef x0 As Double, ByRef x1 As Double) As Integer
+        If (ay <= yc AndAlso by > yc) OrElse (by <= yc AndAlso ay > yc) Then
+            Dim t = (yc - ay) / (by - ay)
+            Dim x = ax + t * (bx - ax)
+
+            If x < x0 Then x0 = x
+            If x > x1 Then x1 = x
+
+            Return 1
+        End If
+
+        Return 0
+    End Function
 
     Sub Report(title As String, field As Field, grid As FlockGrid, solver As FlockSolver,
                state As FlockState, frames As Integer)
