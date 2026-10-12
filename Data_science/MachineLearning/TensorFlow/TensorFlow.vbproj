@@ -15,8 +15,8 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>10.5.9777.32612</Version>
-    <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <Version>10.6.0.0</Version>
+    <AssemblyVersion>1.0.9781.24247</AssemblyVersion>
     <Title>Pure VB.NET Tensor Engine with NumPy API and Pluggable Compute Backend</Title>
     <Description>A self-contained tensor computation engine for sciBASIC#: managed double and float32 tensors with a NumPy-style API, TensorFlow-style nn activations and losses, plus a pluggable SIMD CPU backend with convolution, matmul and sparse SpMM operators.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.TensorFlow</AssemblyTitle>

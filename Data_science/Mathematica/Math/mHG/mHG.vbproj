@@ -18,8 +18,8 @@
     <PackageTags>scibasic;hypothesis-testing;minimum-hypergeometric;enrichment;ranked-list;gene-set</PackageTags>
     <PackageReleaseNotes>Adds exact dynamic programming p-value calculation, vectorized hypergeometric row recursion and R-compatible separation line helpers for ranked enrichment.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>10.5.9777.32612</Version>
-    <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <Version>10.6.0.0</Version>
+    <AssemblyVersion>1.0.9781.24247</AssemblyVersion>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
