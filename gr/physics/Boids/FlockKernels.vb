@@ -127,7 +127,14 @@ Namespace Boids
             If predCount > n Then predCount = n
             Dim predEnd As Integer = predCount - 1
 
-            For i As Integer = start To ends
+            ' The task partitions are interpreted as ranges over the cell-sorted 
+            ' boid id list (<see cref="FlockGrid.sortedIds"/>). Processing the 
+            ' boids in grid order means that consecutive boids share grid cells, 
+            ' so their neighbor data stays hot in cache; the per-boid math, the 
+            ' neighbor enumeration order and the accumulation order are all 
+            ' identical to processing the boids in index order.
+            For slot As Integer = start To ends
+                Dim i As Integer = sorted(slot)
                 Dim bx = px(i)
                 Dim by = py(i)
                 Dim bvx = vx(i)
@@ -147,12 +154,12 @@ Namespace Boids
                 Dim cy = cellOfY(i)
 
                 For dy As Integer = -1 To 1
-                    Dim gy As Integer = cy + dy - minCy + 1
+                    Dim gy As Integer = cy + dy - minCy
                     If gy < 0 OrElse gy >= ny Then Continue For
                     Dim rowOffset As Integer = gy * nx
 
                     For dx As Integer = -1 To 1
-                        Dim gx As Integer = cx + dx - minCx + 1
+                        Dim gx As Integer = cx + dx - minCx
                         If gx < 0 OrElse gx >= nx Then Continue For
 
                         Dim cid As Integer = rowOffset + gx
@@ -273,10 +280,13 @@ Namespace Boids
                 Dim last As Integer = n - vecCount
 
                 Do While i <= last
-                    Dim vecX As Vector(Of Double) = New Vector(Of Double)(px, i) + New Vector(Of Double)(vx, i)
-                    Dim vecY As Vector(Of Double) = New Vector(Of Double)(py, i) + New Vector(Of Double)(vy, i)
+                    ' the rule force delta is applied to the velocity FIRST, the
+                    ' position is then integrated with the updated velocity, which
+                    ' is the legacy MoveForward ordering
                     Dim vecVX As Vector(Of Double) = New Vector(Of Double)(vx, i) + New Vector(Of Double)(dvx, i)
                     Dim vecVY As Vector(Of Double) = New Vector(Of Double)(vy, i) + New Vector(Of Double)(dvy, i)
+                    Dim vecX As Vector(Of Double) = New Vector(Of Double)(px, i) + vecVX
+                    Dim vecY As Vector(Of Double) = New Vector(Of Double)(py, i) + vecVY
 
                     ' speed clamp: factor = min(max(speed, minSpeed), maxSpeed) / speed
                     Dim sp2 As Vector(Of Double) = vecVX * vecVX + vecVY * vecVY
