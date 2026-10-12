@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
 Imports Microsoft.VisualBasic.Engine.Physics.Math3D
+Imports std = System.Math
 
 ''' <summary>
 ''' 3D 刚体：不会发生形变，受力后整体平动 + 绕质心转动。
@@ -78,6 +79,23 @@ Public Class RigidBody3D
     ''' <summary>是否产生过接触（供上层判断"脚是否踩到地面"）。</summary>
     Public Property HadContact As Boolean = False
 
+    ''' <summary>
+    ''' 是否处于休眠：休眠体不参与积分，线/角速度被清零，只有被外来的运动物体唤醒后才恢复。
+    ''' 由 <see cref="PhysicsWorld3D"/> 在 <c>AllowSleep</c> 打开时自动维护。
+    ''' </summary>
+    Public Property IsSleeping As Boolean = False
+
+    ''' <summary>低速持续时间（秒），达到阈值后进入休眠。</summary>
+    Public Property SleepTimer As Double = 0.0
+
+    ''' <summary>世界系逆惯性张量的缓存（姿态未变时直接复用，避免每接触点都做矩阵求逆）。</summary>
+    Private cacheInvInertia As Matrix3x3
+    Private cacheInvInertiaQ As Quaternion
+    Private cacheInvInertiaValid As Boolean = False
+    ''' <summary>局部惯性张量逆的缓存。</summary>
+    Private cacheInvLocal As Matrix3x3
+    Private cacheInvLocalValid As Boolean = False
+
     Sub New(shape As Collider3D, Optional mass As Double = 1.0, Optional material As PhysicsMaterial = Nothing)
         Me.Shape = shape
         Me.Mass = mass
@@ -101,6 +119,25 @@ Public Class RigidBody3D
         IsStatic = True
     End Sub
 
+    ''' <summary>唤醒休眠体（被碰撞、被施力或刚加入世界时调用）。</summary>
+    Public Sub Wake()
+        IsSleeping = False
+        SleepTimer = 0.0
+    End Sub
+
+    ''' <summary>局部惯性张量被外部改写后调用，使逆矩阵缓存失效。</summary>
+    Public Sub InvalidateInertiaCache()
+        cacheInvInertiaValid = False
+        cacheInvLocalValid = False
+    End Sub
+
+    Private Function SameOrientation(a As Quaternion, b As Quaternion) As Boolean
+        Return std.Abs(a.w - b.w) < 1.0E-9 AndAlso
+               std.Abs(a.x - b.x) < 1.0E-9 AndAlso
+               std.Abs(a.y - b.y) < 1.0E-9 AndAlso
+               std.Abs(a.z - b.z) < 1.0E-9
+    End Function
+
     ' /********************************************************************************/
     '  质量属性
     ' /********************************************************************************/
@@ -111,29 +148,43 @@ Public Class RigidBody3D
         End Get
     End Property
 
-    ''' <summary>局部惯性张量的逆。</summary>
+    ''' <summary>局部惯性张量的逆（带缓存）。</summary>
     Public ReadOnly Property InvInertiaLocal As Matrix3x3
         Get
             If IsStatic Then
                 Return Matrix3x3.Zero
             End If
 
-            Return InertiaLocal.Inverse()
+            If Not cacheInvLocalValid Then
+                cacheInvLocal = InertiaLocal.Inverse()
+                cacheInvLocalValid = True
+            End If
+
+            Return cacheInvLocal
         End Get
     End Property
 
     ''' <summary>
-    ''' 世界系逆惯性张量 <c>R · I⁻¹ · Rᵀ</c>。每步姿态变化后都要重新取值。
+    ''' 世界系逆惯性张量 <c>R · I⁻¹ · Rᵀ</c>。姿态未变化时复用缓存，
+    ''' 避免每个接触点、每次迭代都重做一次矩阵求逆。
     ''' </summary>
     Public Function InvInertiaWorld() As Matrix3x3
         If IsStatic Then
             Return Matrix3x3.Zero
         End If
 
+        If cacheInvInertiaValid AndAlso SameOrientation(cacheInvInertiaQ, Orientation) Then
+            Return cacheInvInertia
+        End If
+
         Dim m As Matrix3x3 = Orientation.ToMatrix3x3()
 
         ' 行向量约定下 R = Mᵀ，故 invI_world = Mᵀ · invI_local · M
-        Return m.Transpose().Multiply(InertiaLocal.Inverse()).Multiply(m)
+        cacheInvInertia = m.Transpose().Multiply(InvInertiaLocal).Multiply(m)
+        cacheInvInertiaQ = Orientation
+        cacheInvInertiaValid = True
+
+        Return cacheInvInertia
     End Function
 
     ''' <summary>
@@ -196,20 +247,20 @@ Public Class RigidBody3D
 
     ''' <summary>施加一个集中于质心的力。</summary>
     Public Sub ApplyForce(f As Vector3)
-        If IsStatic Then Return
+        If IsStatic OrElse IsSleeping Then Return
         ForceAccum = ForceAccum + f
     End Sub
 
     ''' <summary>在世界坐标点 <paramref name="worldPoint"/> 施加力，会同时产生扭矩。</summary>
     Public Sub ApplyForceAtPoint(worldPoint As Vector3, f As Vector3)
-        If IsStatic Then Return
+        If IsStatic OrElse IsSleeping Then Return
         ForceAccum = ForceAccum + f
         TorqueAccum = TorqueAccum + Vector3Math.Cross(worldPoint - Position, f)
     End Sub
 
     ''' <summary>施加纯扭矩（世界系）。</summary>
     Public Sub ApplyTorque(t As Vector3)
-        If IsStatic Then Return
+        If IsStatic OrElse IsSleeping Then Return
         TorqueAccum = TorqueAccum + t
     End Sub
 
@@ -231,7 +282,7 @@ Public Class RigidBody3D
     ''' 半隐式（辛）欧拉：由力更新速度。应在 <see cref="IntegratePosition"/> 之前调用。
     ''' </summary>
     Public Sub IntegrateVelocity(dt As Double)
-        If IsStatic Then Return
+        If IsStatic OrElse IsSleeping Then Return
 
         ' v += (F/m)·dt
         Velocity = Velocity + (ForceAccum * InvMass) * dt
@@ -255,7 +306,7 @@ Public Class RigidBody3D
 
     ''' <summary>由速度更新位置与姿态（四元数积分后重新归一化）。</summary>
     Public Sub IntegratePosition(dt As Double)
-        If IsStatic Then Return
+        If IsStatic OrElse IsSleeping Then Return
 
         Position = Position + Velocity * dt
         Orientation = Orientation.Integrate(AngularVelocity, dt).Normalize()
@@ -276,7 +327,8 @@ Public Class RigidBody3D
     Public ReadOnly Property KineticEnergy As Double
         Get
             Dim lin As Double = 0.5 * Mass * Vector3Math.LengthSquared(Velocity)
-            Dim w As Vector3 = InvInertiaWorld().MultiplyLeft(AngularVelocity)
+            ' 转动动能 = ½·ω·I·ω，必须用惯性张量本身而非其逆
+            Dim w As Vector3 = InertiaWorld().MultiplyLeft(AngularVelocity)
             Dim rot As Double = 0.5 * Vector3Math.Dot(AngularVelocity, w)
 
             Return lin + rot

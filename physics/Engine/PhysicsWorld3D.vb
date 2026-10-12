@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
 Imports Microsoft.VisualBasic.Engine.Physics.ForceFields3D
 Imports Microsoft.VisualBasic.Engine.Physics.Joints3D
+Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 
 ''' <summary>
 ''' 3D 物理世界。以 <see cref="PhysicsWorld3D.Step"/> 固定步长驱动，内部按子步执行：
@@ -42,6 +43,25 @@ Public Class PhysicsWorld3D
 
     ''' <summary>允许的穿透容差，避免接触抖动。</summary>
     Public Property Slop As Double = 0.01
+
+    ''' <summary>
+    ''' 跨帧热启动：把上一子步同一接触点上累积的法向/摩擦冲量继承下来并立即施加。
+    ''' 堆叠与静止接触的收敛速度完全依赖它，关闭后物体会持续抖动。
+    ''' </summary>
+    Public Property WarmStarting As Boolean = True
+
+    ''' <summary>热启动时匹配上一帧接触点的位置容差（米）。</summary>
+    Public Property WarmStartRadius As Double = 0.08
+
+    ''' <summary>是否允许刚体休眠（低速持续一段时间后冻结，既防抖又省 CPU）。</summary>
+    Public Property AllowSleep As Boolean = True
+
+    ''' <summary>进入休眠的线速度阈值（m/s）。</summary>
+    Public Property SleepLinearTolerance As Double = 0.08
+    ''' <summary>进入休眠的角速度阈值（rad/s）。</summary>
+    Public Property SleepAngularTolerance As Double = 0.15
+    ''' <summary>低速需持续的时间（秒）。</summary>
+    Public Property SleepTimeRequired As Double = 0.6
 
     ''' <summary>
     ''' 子步钩子：每个子步都会被调用一次，用于施加"持续存在"的外部力
