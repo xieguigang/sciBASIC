@@ -22,10 +22,18 @@ Partial Class FormPlayer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPlayer))
+        SuspendLayout()
+        ' 
+        ' FormPlayer
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Text = "Form1"
+        ClientSize = New Size(896, 588)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Name = "FormPlayer"
+        Text = "World Simulator"
+        ResumeLayout(False)
     End Sub
 
 End Class
