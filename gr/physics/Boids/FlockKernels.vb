@@ -127,7 +127,14 @@ Namespace Boids
             If predCount > n Then predCount = n
             Dim predEnd As Integer = predCount - 1
 
-            For i As Integer = start To ends
+            ' The task partitions are interpreted as ranges over the cell-sorted 
+            ' boid id list (<see cref="FlockGrid.sortedIds"/>). Processing the 
+            ' boids in grid order means that consecutive boids share grid cells, 
+            ' so their neighbor data stays hot in cache; the per-boid math, the 
+            ' neighbor enumeration order and the accumulation order are all 
+            ' identical to processing the boids in index order.
+            For slot As Integer = start To ends
+                Dim i As Integer = sorted(slot)
                 Dim bx = px(i)
                 Dim by = py(i)
                 Dim bvx = vx(i)
