@@ -1,71 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::d61677b127cab6bf2729d00f1207e906, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiColor.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 197
-    '    Code Lines: 141 (71.57%)
-    ' Comment Lines: 30 (15.23%)
-    '    - Xml Docs: 70.00%
-    ' 
-    '   Blank Lines: 26 (13.20%)
-    '     File Size: 9.65 KB
+' Summaries:
 
 
-    '     Structure AnsiColor
-    ' 
-    '         Properties: B, G, R
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Equals, FromConsoleColor, GetCode, GetEscapeSequence, GetHashCode
-    '                   Rgb, ToString, TryParse
-    '         Operators: <>, =
-    '         Enum Type
-    ' 
-    '             Background, Foreground
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 197
+'    Code Lines: 141 (71.57%)
+' Comment Lines: 30 (15.23%)
+'    - Xml Docs: 70.00%
+' 
+'   Blank Lines: 26 (13.20%)
+'     File Size: 9.65 KB
+
+
+'     Structure AnsiColor
+' 
+'         Properties: B, G, R
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) Equals, FromConsoleColor, GetCode, GetEscapeSequence, GetHashCode
+'                   Rgb, ToString, TryParse
+'         Operators: <>, =
+'         Enum Type
+' 
+'             Background, Foreground
+' 
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Globalization
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
@@ -124,12 +125,18 @@ Namespace ApplicationServices.Terminal
             Return New AnsiColor($"38;2;{r};{g};{b}", $"48;2;{r};{g};{b}", $"#{r:X2}{g:X2}{b:X2}") With {._R = r, ._G = g, ._B = b}
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function FromRgbColor(c As Color) As AnsiColor
+            Return Rgb(c.R, c.G, c.B)
+        End Function
+
         Public Sub New(foregroundCode As String, backgroundCode As String, friendlyName As String)
             Me.foregroundCode = foregroundCode
             Me.backgroundCode = backgroundCode
             Me.friendlyName = friendlyName
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetEscapeSequence(Optional type As Type = Type.Foreground) As String
             Return AnsiEscapeCodes.ToAnsiEscapeSequence(GetCode(type))
         End Function

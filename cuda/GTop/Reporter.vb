@@ -8,6 +8,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Globalization
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -245,6 +246,8 @@ Public Module Reporter
         ' 进程块固定高度，避免样本数波动导致原地刷新残影
         Dim procRows = If(processRows > 0, System.Math.Min(processRows, 15), 0)
 
+        Static gray As New ConsoleFormat(AnsiColor.FromRgbColor(Color.DimGray), AnsiColor.Black, Underline:=True)
+
         sampler.Run(shouldStop, Sub(s)
                                     Dim sb As New StringBuilder()
                                     If frameLines > 0 Then sb.Append(AnsiEscapeCodes.GetMoveCursorUp(frameLines))
@@ -253,7 +256,10 @@ Public Module Reporter
                                     If processCounter IsNot Nothing AndAlso procRows > 0 Then
                                         lines.AddRange(BuildProcessLines(processCounter.Poll(), procRows, True))
                                     End If
-                                    lines.Add("  按 Ctrl+C 停止")
+                                    lines.Add("")
+                                    lines.Add("")
+                                    lines.Add(New TextSpan("  按 Ctrl+C 停止", gray))
+                                    lines.Add(AnsiEscapeCodes.Reset)
 
                                     For i As Integer = 0 To lines.Count - 1
                                         sb.Append(AnsiEscapeCodes.ClearLine)
