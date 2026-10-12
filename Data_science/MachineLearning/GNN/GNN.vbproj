@@ -19,8 +19,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;graph-neural-network;gcn;graph-attention;message-passing;temporal-graph;graph-classification</PackageTags>
-    <PackageReleaseNotes>Graph neural networks for sciBASIC#. The core of the package provides GCN and graph attention layers that aggregate messages over the neighbourhood of each node, GRU and RNN recurrent layers that carry state along edges, and temporal graph models that operate on a sequence of graph snapshots instead of a single static graph. GraphDataset wraps graph inputs together with their labels, and graph classification models are trained with SGD and Adam. The package turns graph structured data into a directly trainable representation, complementing the vector based embedding approaches in the Bootstrapping package - embeddings are best when the graph is fixed, while message passing layers can also be used inside larger end to end models.</PackageReleaseNotes>
+    <PackageTags>scibasic;graph-neural-network;gcn;graph-attention;temporal-graph</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

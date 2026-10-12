@@ -20,8 +20,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;visual-studio;solution-parser;slnx;vbproj;code-analysis;vbnet;il-decompiler;source-map;reflection</PackageTags>
-    <PackageReleaseNotes>The Visual Studio and VB.NET source code analysis toolkit of sciBASIC#. Solution handling: Solution.Load / Save parse and write both the classic text .sln format and the new XML .slnx format, exposing project trees, folders, configurations and solution workspaces with a dedicated parser and writer per format. Source analysis: VBProj.CodeDOM.Syntax provides a scanner plus a recursive descent parser that turns VB.NET source text into a symbol tree of namespaces, types, members and variables, while VBProj.Project models the .vbproj file itself (documents, references, build configurations and NuGet metadata). Compiled asset analysis: VBProj.Reflection.AssemblySymbolLoader maps an assembly into the same symbol model through read-only metadata reflection; the IL namespace adds instruction and method body readers, and a decompiler that recovers control flow graphs, SSA form and structured syntax; the SourceMap namespace decodes and encodes source maps (base64 VLQ mappings). Tooling: CodeSign offers code statistics, license banner insertion/removal and VB code signature extraction, the Resource namespace models resx/xsd content, and VersionControl provides git and svn log and diff parsing. This package is the foundation of the sciBASIC# code generation and documentation pipelines.</PackageReleaseNotes>
+    <PackageTags>scibasic;visual-studio;solution-parser;slnx;code-analysis;il-decompiler;source-map</PackageTags>
+    <PackageReleaseNotes>Added an IL decompiler with control flow graph, SSA construction and structured syntax recovery, plus .slnx solution support.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

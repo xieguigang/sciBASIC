@@ -18,8 +18,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;variational-autoencoder;graph-vae;gaussian-mixture;gmm;generative-model;latent-space;clustering</PackageTags>
-    <PackageReleaseNotes>Variational autoencoders and Gaussian mixture models for sciBASIC#. The GraphVAE type implements a graph variational autoencoder - a graph convolutional network encoder paired with an inner product decoder - so graphs can be embedded into a continuous latent space and sampled from it. The Gaussian mixture VAE uses categorical latent variables, which makes the latent space directly interpretable as a soft cluster assignment rather than an opaque code. The package also provides an EM trained Gaussian mixture model, and MathUtils supplies the numerical helpers (log-sum-exp, KL divergence and sampling utilities) needed by all of them. The result is a generative modelling layer that doubles as a soft clustering method.</PackageReleaseNotes>
+    <PackageTags>scibasic;variational-autoencoder;gmm;generative-model;clustering</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -19,10 +19,10 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<AssemblyVersion>1.0.9777.32612</AssemblyVersion>
 		<Title>Classical Machine Learning: Random Forest, SVM, GA and Q-Learning</Title>
-		<Description>Classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port, genetic algorithms and differential evolution, Q-learning tables, activation functions and normalised sample datasets.</Description>
+		<Description>A classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port with grid parameter selection, genetic algorithm and differential evolution engines, tabular Q-learning, activation functions and normalized sample training datasets.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning</AssemblyTitle>
-		<PackageTags>scibasic;machine-learning;random-forest;svm;libsvm;genetic-algorithm;differential-evolution;q-learning;reinforcement-learning</PackageTags>
-    <PackageReleaseNotes>The classical machine learning library of sciBASIC#. Supervised models: the SVM namespace contains a LibSVM style support vector machine port with its kernels, solvers and a storage procedure model, while the RandomForests namespace implements random forests. Evolutionary methods: the Darwinism namespace provides a genetic algorithm framework with populations, substitution strategies and model definitions, together with differential evolution. Reinforcement learning: the QLearning namespace implements tabular Q learning with its data models. Supporting types: the ComponentModel namespace holds the shared learning interfaces and the activation functions used by the network models, while normalized sample dataset types complete the picture. Together these cover the algorithms that do not require a neural network.</PackageReleaseNotes>
+		<PackageTags>scibasic;machine-learning;random-forest;svm;genetic-algorithm;q-learning;activation-functions</PackageTags>
+    <PackageReleaseNotes>Adds JSON serializable SVM storage models, elite population replacement strategies and expanded activation functions including sinc and softplus.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

@@ -22,8 +22,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;novel-view-synthesis;computer-vision;adam-optimizer</PackageTags>
-    <PackageReleaseNotes>3D Gaussian splatting scene reconstruction and rendering for sciBASIC#. The scene is represented by a set of anisotropic Gaussian ellipsoids, each carrying a position, scale, rotation, opacity and colour: GaussianModel holds this representation, ImageLoader reads the multi view input images, Camera defines the projection used for rasterisation, GradientCalculator computes the gradients of the image loss with respect to every Gaussian parameter, Optimizer updates them with Adam, and SplatRenderer rasterises the Gaussians into an image. The package is intended for novel view synthesis and for converting multi view captures into a renderable 3D representation, and complements the mesh and voxel tooling of the Landscape package.</PackageReleaseNotes>
+    <PackageTags>scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

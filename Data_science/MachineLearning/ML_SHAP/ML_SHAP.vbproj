@@ -8,13 +8,22 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
-    <Title>SHAP Model Interpretation for sciBASIC# Machine Learning</Title>
-    <Description>SHAP (SHapley Additive exPlanations) analysis facade for sciBASIC# machine learning: runs any IShapExplainer over a ShapDataset to produce per sample contribution matrices and global feature importance.</Description>
-    <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance;machine-learning</PackageTags>
-    <PackageReleaseNotes>ML_SHAP provides the analysis facade that turns Shapley value attribution into report ready model interpretation for sciBASIC# machine learning workflows. ShapAnalyzer.Analyze takes any IShapExplainer together with a ShapDataset and produces a ShapAnalysisResult containing the per sample contributions and additive values (ShapExplanation), the explainer baseline / expected value, and two global aggregates - MeanAbsShap (mean absolute contribution, used as feature importance) and MeanShap (mean signed contribution, indicating the direction of each feature effect); GlobalImportance() returns the features ordered by descending mean absolute SHAP value. The facade covers both regression and classification models, supports a sample cap through maxSamples for fast exploratory runs, and optionally accepts a raw model output delegate so the reported output can be the true model prediction instead of the additive approximation. Missing feature names fall back to F1, F2 placeholders. The explainers themselves live in Microsoft.VisualBasic.Math.Statistics.ShapleyValue (including TreeSHAP for tree ensembles) and in the XGBoost integration, keeping this package free of any model specific dependency.</PackageReleaseNotes>
+    <Title>SHAP Model Interpretation and Feature Importance Analysis</Title>
+    <Description>A SHAP (SHapley Additive exPlanations) analysis facade for sciBASIC# machine learning: runs linear, random forest and XGBoost explainers over sample datasets to produce per-sample contribution matrices, global feature importance rankings and CSV report export.</Description>
+    <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance</PackageTags>
+    <PackageReleaseNotes>Adds SHAP explainer models for linear, random forest and XGBoost predictors with per-sample contribution matrices and CSV report writers.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>10.5.9777.32612</Version>
     <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.SHAP</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -26,6 +35,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

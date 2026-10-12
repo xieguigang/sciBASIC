@@ -23,8 +23,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;nlp;chinese-tokenizer;huggingface;tokenizer;bm25;lda;topic-model;tf-idf;stemmer;text-mining</PackageTags>
-    <PackageReleaseNotes>Natural language processing toolkit of sciBASIC#. Segmentation: ChineseTokenizer provides maximum-match segmentation (forward, backward and bidirectional) over a WordDictionary, an HMM based tokenizer and a trie backed dictionary, while ChineseTokenizer.HuggingFace loads a pretrained tokenizer.json and runs a full HuggingFace compatible pipeline - normalizer, pre-tokenizer, BPE / WordPiece / Unigram models, post-processor, decoder and byte-level alphabet - so models trained in the Python ecosystem can be reused directly. Retrieval: BM25 builds an incremental Okapi BM25 index (AddDocument, BuildIndex, Search) with selectable IDF variants and per-term contribution details. Topic modelling: LDA offers a Gibbs sampled Latent Dirichlet Allocation sampler together with Corpus and Vocabulary loaders and model interpretation helpers. Text utilities: Porter stemmer, stop words, TF-IDF weighting, bigram extraction and the shared sentence / paragraph / token counter models used across the NLP stack.</PackageReleaseNotes>
+    <PackageTags>scibasic;nlp;tokenizer;chinese-tokenizer;bm25;lda;tf-idf</PackageTags>
+    <PackageReleaseNotes>Added a HuggingFace compatible tokenizer pipeline with BPE, WordPiece and Unigram models plus a BM25 ranked retrieval engine.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

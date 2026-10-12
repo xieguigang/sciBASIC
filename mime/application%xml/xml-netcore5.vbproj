@@ -21,8 +21,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;xml;xsd;mathml;xpath;xml-parser;code-generator</PackageTags>
-    <PackageReleaseNotes>General purpose XML helpers for sciBASIC#. Element tree: XmlParser parses XML text into the generic XmlElement tree, where each node carries its name, namespace, attributes, child elements, text and comments. XPath: XPath.XPath and XPathParser turn a path expression into a selector chain (child, root, current node, parent and attribute selectors), and XPathQuery executes it with QuerySingle / QueryAll over any IXmlDocumentTree implementation. MathML: the MathML namespace parses content markup - LambdaExpression, BinaryExpression, SymbolExpression and MathFunctionExpression - with ContentBuilder converting MathML XML into expression objects and a ToString renderer printing them back out. XSD: the xsd namespace models a schema document (schema, element, complexType, simpleType, attribute, sequence and restriction) so that XSD files map onto serializable classes. Object graph loading: XmlGeneric.GraphWriter hydrates plain .NET objects from XML by reflection (Load, LoadXml(Of T)). A code generator helper is also included at the namespace root.</PackageReleaseNotes>
+    <PackageTags>scibasic;xml;xsd;mathml;xpath;code-generator</PackageTags>
+    <PackageReleaseNotes>Improved MathML content parsing into typed lambda expressions and extended the XSD schema models with VB.NET code generation.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

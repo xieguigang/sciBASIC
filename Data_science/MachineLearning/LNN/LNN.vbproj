@@ -14,8 +14,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;liquid-neural-network;ode;runge-kutta;continuous-time;time-series;recurrent-network</PackageTags>
-    <PackageReleaseNotes>Liquid neural networks for sciBASIC#. Unlike fixed architecture networks, a liquid network lets the neuron dynamics follow a learnable ODE, so the hidden state evolves as a continuous time dynamical system rather than as a discrete recurrence. The ODESolver namespace provides the Euler, Heun, RK4 and adaptive RK45 integrators used to advance that state; LiquidCell and LiquidLayer define the continuous time units, ActivationFunctions provides the nonlinearities, and LiquidNeuralNetwork with LNNTrainer assembles the model and trains it with SGD or Adam. TimeSeriesUtils supplies the preprocessing helpers - windowing, scaling and splitting - needed to feed time series data in, which makes the package a natural fit for irregularly sampled and continuously evolving signals.</PackageReleaseNotes>
+    <PackageTags>scibasic;liquid-neural-network;ode;time-series;continuous-time</PackageTags>
+    <PackageReleaseNotes>Improves the CUDA compute integration shared by the GNN and LNN graph learning models.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

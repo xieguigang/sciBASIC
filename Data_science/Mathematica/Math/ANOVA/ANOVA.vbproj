@@ -19,13 +19,13 @@
     <RepositoryType>git</RepositoryType>
     <Version>10.5.9777.32612</Version>
     <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
-    <Title>ANOVA and Multivariate Analysis Toolkit for VB.NET</Title>
-    <Description>One-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with FDR correction, and multivariate methods (PCA, PLS, OPLS-DA) for omics data. Part of the sciBASIC# scientific computing framework.</Description>
-    <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics.ANOVA</AssemblyTitle>
+    <Title>ANOVA, Kruskal-Wallis and Multivariate Omics Analysis Toolkit</Title>
+    <Description>A statistical hypothesis testing toolkit for sciBASIC#: one-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with Bonferroni and Benjamini-Hochberg FDR correction, plus PCA, PLS-DA and OPLS-DA multivariate analysis over unified numeric tables.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
-    <PackageTags>scibasic;anova;kruskal-wallis;fdr-correction;multivariate-analysis;pca;pls;opls-da</PackageTags>
-    <PackageReleaseNotes>ANOVA and multivariate analysis for sciBASIC#. The root namespace provides one way ANOVA F-tests for comparing group means, Kruskal-Wallis non-parametric group comparison with FDR correction for multiple testing, and the multivariate methods widely used on omics data - PCA for unsupervised structure, PLS for supervised projection, and OPLS-DA for discriminant analysis with orthogonal signal correction. The stats namespace holds the supporting statistical helpers. Together these cover the standard workflow of differential analysis across experimental groups, from testing a single feature to projecting the whole sample set.</PackageReleaseNotes>
+    <PackageTags>scibasic;anova;kruskal-wallis;pca;pls-da;opls-da;omics</PackageTags>
+    <PackageReleaseNotes>Adds unified NumericTable entry points for PCA, PLS-DA and OPLS-DA multivariate analysis with score and loading export to tabular projections.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

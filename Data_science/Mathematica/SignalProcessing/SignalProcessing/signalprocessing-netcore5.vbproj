@@ -21,8 +21,8 @@
     <AssemblyTitle>Microsoft.VisualBasic.Math.SignalProcessing</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;signal-processing;fft;wavelet;peak-detection;filtering;savitzky-golay;kalman-filter;dtw;cow-alignment</PackageTags>
-    <PackageReleaseNotes>Algorithms for one dimensional signals in sciBASIC#. Transforms: FFT with the related spectral analysis helpers and the wavelet transforms each live in their own namespace. Filtering: the Filters namespace implements digital filters including Savitzky-Golay smoothing, KalmanFilter provides state estimation, and the HungarianAlgorithm namespace solves the optimal assignment problem used when matching signals. Detection and alignment: PeakFinding locates peaks in a series, the root namespace covers baseline removal, resampling and normalisation, NDtw implements dynamic time warping together with its Preprocessing steps, and COW implements correlation optimised warping for chromatogram style alignment; the Sampler.EmGaussian namespace adds expectation maximisation based Gaussian mixture sampling, while the Source namespace defines signal sources with arithmetic operations and generators such as waveform and noise sources.</PackageReleaseNotes>
+    <PackageTags>scibasic;signal-processing;fft;wavelet;peak-detection;filtering</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

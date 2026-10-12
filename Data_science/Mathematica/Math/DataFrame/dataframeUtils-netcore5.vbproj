@@ -21,8 +21,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation;scaling;centering</PackageTags>
-    <PackageReleaseNotes>Labelled data matrix utilities for sciBASIC#. The root namespace provides the labelled numeric matrix model together with pairwise correlation and distance matrix builders, missing value imputation, and the scaling and centering transforms that prepare a matrix for multivariate analysis. The MatrixMarket namespace reads and writes the Matrix Market MTX and RUA file formats so matrices can be exchanged with external numerical tools. This package is the bridge between tabular data frames and the linear algebra routines of the Math package: labels travel with the matrix, so correlation and distance results stay readable in terms of sample and feature names.</PackageReleaseNotes>
+    <PackageTags>scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation</PackageTags>
+    <PackageReleaseNotes>Adds matrix data storage with save and load export APIs, improved matrix builders and XML documentation.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

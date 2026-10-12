@@ -20,8 +20,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;graph-embedding;node2vec;graph2vec;knowledge-graph;complex;random-walk;representation-learning</PackageTags>
-    <PackageReleaseNotes>Graph and knowledge graph embedding for sciBASIC#. The GraphEmbedding namespace defines the shared embedding abstractions, with GraphEmbedding.complex, complex_NNE, complex_NNE_AER and complex_R implementing the ComplEx knowledge graph embedding variants together with the neural network encoder and auto-encoder regularised forms; GraphEmbedding.struct covers structural embeddings and GraphEmbedding.util the supporting helpers. The node2vec namespace implements the node2vec biased random walk plus word2vec training to produce node vectors, and the root namespace covers whole graph graph2vec style vectors. Together they provide graph representation learning, so a graph can be turned into numeric vectors that the standard machine learning packages can consume - which turns link prediction and node classification into ordinary vector based learning problems.</PackageReleaseNotes>
+    <PackageTags>scibasic;graph-embedding;node2vec;knowledge-graph;complex</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

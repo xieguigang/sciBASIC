@@ -20,8 +20,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;gibbs-sampling;metropolis-hastings;mcmc;motif-finding;markov-basis;contingency-table</PackageTags>
-    <PackageReleaseNotes>Gibbs sampling and Metropolis-Hastings samplers for sciBASIC#. The package provides Gibbs sampling for repeated motif discovery in biological sequences - where the sampler alternately resamples the position of each motif occurrence conditional on all the others, which is far more efficient than enumerating the joint space - and a Metropolis-Hastings sampler over Markov bases used for contingency table analysis and chi-square testing. Both samplers share the same MCMC foundation, so burn-in handling, thinning and convergence diagnostics are implemented once and reused.</PackageReleaseNotes>
+    <PackageTags>scibasic;gibbs-sampling;metropolis-hastings;motif-finding;markov-chain;mcmc</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

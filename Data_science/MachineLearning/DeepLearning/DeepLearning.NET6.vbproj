@@ -21,10 +21,10 @@
 		<DocumentationFile>Microsoft.VisualBasic.DeepLearning.xml</DocumentationFile>
 		<AssemblyVersion>1.0.9777.32612</AssemblyVersion>
 		<Title>Deep Learning Framework: CNN, RNN, Transformer and ANN Models</Title>
-		<Description>Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.</Description>
+		<Description>A deep learning toolkit for sciBASIC#: trainable convolutional networks with SGD, AdaGrad and Adam trainers, a CeNiN CNN reader for image inference, character-level RNNs, a hand-written Transformer encoder-decoder with explicit backward passes, and general feed-forward neural networks.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.DeepLearning</AssemblyTitle>
-		<PackageTags>scibasic;deep-learning;cnn;rnn;transformer;attention;adam-optimizer;neural-network;cenin</PackageTags>
-    <PackageReleaseNotes>The deep learning framework of sciBASIC#. Models: a trainable convolutional network with its data containers, layer implementations and loss layers, plus the CeNiN reader for importing CeNiN network definitions; character level recurrent networks with configurable cells; and a Transformer implementation with attention layers. Training: dedicated trainer namespaces for the CNN and RNN models using the SGD, AdaGrad and Adam optimisers. A general artificial neural network implementation is also included for feed forward models. Together these cover the standard modern architectures, and because the tensor runtime underneath is a pure managed implementation there is no native dependency to deploy.</PackageReleaseNotes>
+		<PackageTags>scibasic;deep-learning;cnn;rnn;transformer;attention;neural-network</PackageTags>
+    <PackageReleaseNotes>Reworks the feed-forward network onto a unified CNN compute kernel and adds an explicit backward-pass Transformer with Adam optimization.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

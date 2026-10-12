@@ -14,14 +14,14 @@
     <RepositoryType>git</RepositoryType>
     <Version>10.5.9777.32612</Version>
     <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
-    <Title>Statistics Toolkit: Distributions, Hypothesis Tests and More</Title>
-    <Description>Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.</Description>
+    <Title>Statistics Toolkit: Distributions, Hypothesis Tests and SHAP</Title>
+    <Description>A statistics toolkit for sciBASIC#: probability distributions with method-of-moments and L-moment estimation, t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I hypothesis tests, plus FastICA, RANSAC and Shapley/TreeSHAP feature attribution.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;statistics;hypothesis-testing;distribution;moment-functions;fastica;ransac;shapley-value;treeshap</PackageTags>
-    <PackageReleaseNotes>The statistics toolkit of sciBASIC#. Distributions: the Distributions namespace models probability distributions with parameter estimation by the method of moments (MethodOfMoments) and by linear moments (LinearMoments). Tests: the Hypothesis namespace provides the standard hypothesis tests (t-test, F-test and chi-square among others) with the Mantel test for matrix correlation and Fisher's exact test for contingency tables. Descriptors: MomentFunctions computes means, variance, skewness and kurtosis, while ShapleyValue implements Shapley value attribution and its TreeSHAP variant for tree model interpretation. Other methods: FastICA performs independent component analysis, and RANSAC provides robust model fitting in the presence of outliers. This package is the statistical backbone used by the data mining, machine learning and plotting packages.</PackageReleaseNotes>
+    <PackageTags>scibasic;statistics;hypothesis-testing;distributions;fastica;ransac;shapley-value</PackageTags>
+    <PackageReleaseNotes>Adds the Skellam distribution, optimized TreeSHAP explainers and expanded L-moment distribution families for hydrological and omics modeling.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -21,8 +21,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;markdown;markdown-parser;html-renderer;text-renderer;table-of-contents;json;document</PackageTags>
-    <PackageReleaseNotes>The markdown processor of sciBASIC#. Parsing: MarkdownParser is a two phase recursive parser - block level tokenization followed by inline span parsing - so nested lists, block quotes containing headers or lists, and tables with inline formatting all work through recursion. Output: MarkdownRender.Transform renders markdown to HTML, or to plain text when constructed with a TextRender; the abstract Render base class defines the pluggable output contract implemented by HtmlRender and TextRender, and an image URL router is exposed for rewriting embedded image locations. Block model: JSONSchema.Block is a typed block model (type, level, content, headers, rows and list data) suited to structured content such as large language model output - JSONRenderer.Parse turns a JSON document into an IEnumerable(Of Block), while ToMarkdown / ToHtml render them back out and BlockRenderer converts a single block. Table of contents: TOC.GenerateToc builds a nested markdown list from ATX headers, TOC.AddToc prepends it to the document, and MarkdownRender.GetTOC returns each header text together with its level.</PackageReleaseNotes>
+    <PackageTags>scibasic;markdown;parser;html-renderer;document</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

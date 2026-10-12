@@ -21,8 +21,8 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;network-graph;graph-model;graph-analysis;centrality;community-detection;shortest-path</PackageTags>
-    <PackageReleaseNotes>The network graph data model and topology analysis library of sciBASIC#, the data layer of the network visualization stack. Model: the Graph namespace defines the node and edge abstractions (Graph, GraphTree), the abstract Graph.Abstract base types, the graph model data classes, and the mxGraph compatible model namespace used for interchange; Layouts holds the vector types that store node layout coordinates and Graph.EdgeBundling the edge bundling handles. Analysis: the Analysis namespace adds communities, graph embedding, strongly connected components (Kosaraju), PAGA and network statistics, with Analysis.Model providing adjacency and edge sets, directed vertices and traversal policies, and Analysis.SimilarityImpl the connectivity and topology similarity measures. Interchange: FileStream.Generic defines the dynamics table interface through which graphs exchange data with the file stream serialization layer, and TreeAPI exposes hierarchical tree traversal over graph data.</PackageReleaseNotes>
+    <PackageTags>scibasic;network-graph;graph-model;graph-analysis;centrality</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
