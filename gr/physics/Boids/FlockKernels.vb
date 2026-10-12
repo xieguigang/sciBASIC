@@ -273,10 +273,13 @@ Namespace Boids
                 Dim last As Integer = n - vecCount
 
                 Do While i <= last
-                    Dim vecX As Vector(Of Double) = New Vector(Of Double)(px, i) + New Vector(Of Double)(vx, i)
-                    Dim vecY As Vector(Of Double) = New Vector(Of Double)(py, i) + New Vector(Of Double)(vy, i)
+                    ' the rule force delta is applied to the velocity FIRST, the
+                    ' position is then integrated with the updated velocity, which
+                    ' is the legacy MoveForward ordering
                     Dim vecVX As Vector(Of Double) = New Vector(Of Double)(vx, i) + New Vector(Of Double)(dvx, i)
                     Dim vecVY As Vector(Of Double) = New Vector(Of Double)(vy, i) + New Vector(Of Double)(dvy, i)
+                    Dim vecX As Vector(Of Double) = New Vector(Of Double)(px, i) + vecVX
+                    Dim vecY As Vector(Of Double) = New Vector(Of Double)(py, i) + vecVY
 
                     ' speed clamp: factor = min(max(speed, minSpeed), maxSpeed) / speed
                     Dim sp2 As Vector(Of Double) = vecVX * vecVX + vecVY * vecVY

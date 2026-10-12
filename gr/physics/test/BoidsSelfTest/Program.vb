@@ -113,11 +113,11 @@ Module Program
                 initial.vy(i) = (seed.NextDouble() - 0.5) * 4.0
             Next
 
-            Dim engineState = initial.Clone()
             Dim referenceState = initial.Clone()
 
             Dim field As New Field(2000.0, 1200.0, cfg.n)
-            Dim grid As New FlockGrid(cfg.n)
+            ' the solver reads the field's own grid instance, so drive that one
+            Dim grid = field.Grid
             Dim solver As New FlockSolver(field)
 
             ' inject the deterministic initial state into the engine side
@@ -206,13 +206,23 @@ Module Program
 
         Dim field As New Field(2000.0, 1200.0, n)
         Dim state = field.State
-        Dim grid As New FlockGrid(n)
+        Dim grid = field.Grid
         Dim solver As New FlockSolver(field)
 
         ' warm up (JIT, thread pool, page faults)
         For i As Integer = 1 To warmup
             AdvanceOne(field, grid, solver)
         Next
+
+        ' grid diagnostics: make sure the spatial grid is actually populated
+        Dim occupied As Integer = 0
+
+        For c As Integer = 0 To grid.nCells - 1
+            If grid.cellStart(c + 1) > grid.cellStart(c) Then occupied += 1
+        Next
+
+        Console.WriteLine($" grid: {grid.nx} x {grid.ny} = {grid.nCells} cells, occupied = {occupied}, " &
+                          $"avg fill = {n / grid.nCells:F2}, avg neighbor candidates ~= {9.0 * n / grid.nCells:F1}")
 
         Report($"SIMD   ({frames} frames)", field, grid, solver, state, frames)
 
