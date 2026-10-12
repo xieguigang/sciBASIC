@@ -26,7 +26,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
-    <Configurations>nuget_release;Debug</Configurations>
+    <Configurations>nuget_release;Debug;Release</Configurations>
     <Title>Managed CVODE Variable-Step ODE Solver with Adams and BDF Methods</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
