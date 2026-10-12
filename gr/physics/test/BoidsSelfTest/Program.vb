@@ -502,6 +502,7 @@ Module Program
         Dim vx = state.vx
         Dim vy = state.vy
 
+        ' mirrors SDRender.DrawGlyphCompact (the glyph used at 80k boids)
         For i As Integer = 0 To state.count - 1
             Dim bx = px(i)
             Dim by = py(i)
@@ -512,128 +513,43 @@ Module Program
             Dim ex = bx + dx * scaleFactor
             Dim ey = by + dy * scaleFactor
 
-            ' shaft: ~1 step per pixel, 3 writes per step
-            If len > 0.0 Then
-                Dim steps = BoidMath.Round(len)
-                If steps < 1 Then steps = 1
-                Dim sx = (ex - bx) / steps
-                Dim sy = (ey - by) / steps
-                Dim cxp = bx
-                Dim cyp = by
-
-                For s As Integer = 0 To steps
-                    Dim xi = BoidMath.Round(cxp)
-                    Dim yi = BoidMath.Round(cyp)
-
-                    If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi) = &HFF3366CC
-                    If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi + 1) = &HFF3366CC
-                    If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then buf((yi + 1) * w + xi) = &HFF3366CC
-
-                    cxp += sx
-                    cyp += sy
-                Next
-            End If
-
-            ' head: incremental scanline triangle, ~7 rows x ~3 span writes
-            Dim ux As Double, uy As Double
-
-            If len > 0.0 Then
-                ux = (ex - bx) / len
-                uy = (ey - by) / len
-            Else
-                ux = 1.0
-                uy = 0.0
-            End If
-
-            Dim baseX = ex - 10.0 * ux
-            Dim baseY = ey - 10.0 * uy
-            Dim p1x = baseX + 7.0 * uy
-            Dim p1y = baseY - 7.0 * ux
-            Dim p2x = baseX - 7.0 * uy
-            Dim p2y = baseY + 7.0 * ux
-
-            FillTriangleModel(buf, w, h, ex, ey, p1x, p1y, p2x, p2y, &HFF3366CC)
+            PutBlock2Model(buf, w, h, bx, by)
+            PutBlock2Model(buf, w, h, (bx + ex) * 0.5, (by + ey) * 0.5)
+            PutBlock3Model(buf, w, h, ex, ey)
         Next
     End Sub
 
-    Sub FillTriangleModel(buf As Integer(), w As Integer, h As Integer,
-                          ax As Double, ay As Double, bx As Double, by As Double,
-                          cx As Double, cy As Double, c As Integer)
-        If ay > by Then
-            Dim tx = ax, ty = ay
-            ax = bx : ay = by
-            bx = tx : by = ty
-        End If
-        If by > cy Then
-            Dim tx = bx, ty = by
-            bx = cx : by = cy
-            cx = tx : cy = ty
-        End If
-        If ay > by Then
-            Dim tx = ax, ty = ay
-            ax = bx : ay = by
-            bx = tx : by = ty
-        End If
+    Sub PutBlock2Model(buf As Integer(), w As Integer, h As Integer, x As Double, y As Double)
+        Dim xi = BoidMath.Round(x)
+        Dim yi = BoidMath.Round(y)
+        Dim c = &HFF3366CC
 
-        If cy <= ay Then Return
+        If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi) = c
+        If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi + 1) = c
+        If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then buf((yi + 1) * w + xi) = c
+    End Sub
 
-        Dim minY = BoidMath.Round(std.Floor(ay))
-        Dim maxY = BoidMath.Round(std.Ceiling(cy)) - 1
+    Sub PutBlock3Model(buf As Integer(), w As Integer, h As Integer, x As Double, y As Double)
+        Dim xi = BoidMath.Round(x)
+        Dim yi = BoidMath.Round(y)
 
-        If minY < 0 Then minY = 0
-        If maxY >= h Then maxY = h - 1
-        If minY > maxY Then Return
+        If xi < 0 Then xi = 0
+        If xi > w - 3 Then xi = w - 3
+        If yi < 0 Then yi = 0
+        If yi > h - 3 Then yi = h - 3
 
-        Dim longDx As Double = (cx - ax) / (cy - ay)
-        Dim upDx As Double = If(by > ay, (bx - ax) / (by - ay), 0.0)
-        Dim loDx As Double = If(cy > by, (cx - bx) / (cy - by), 0.0)
+        Dim row0 = yi * w
+        Dim c = &HFF3366CC
 
-        Dim yc As Double = minY + 0.5
-        Dim xLong As Double = ax + (yc - ay) * longDx
-        Dim xShort As Double
-        Dim shortDx As Double
-
-        If (by > ay) AndAlso (yc <= by) Then
-            xShort = ax + (yc - ay) * upDx
-            shortDx = upDx
-        Else
-            xShort = bx + (yc - by) * loDx
-            shortDx = loDx
-        End If
-
-        For yi As Integer = minY To maxY
-            If (by > ay) AndAlso (cy > by) AndAlso (yi + 0.5 > by) AndAlso (shortDx <> loDx) Then
-                yc = yi + 0.5
-                xShort = bx + (yc - by) * loDx
-                shortDx = loDx
-            End If
-
-            Dim x0 As Double = xLong
-            Dim x1 As Double = xShort
-
-            If x0 > x1 Then
-                Dim tmp = x0
-                x0 = x1
-                x1 = tmp
-            End If
-
-            Dim fromX = BoidMath.Round(std.Ceiling(x0 - 0.5))
-            Dim toX = BoidMath.Round(std.Floor(x1 - 0.5))
-
-            If fromX < 0 Then fromX = 0
-            If toX >= w Then toX = w - 1
-
-            If fromX <= toX Then
-                Dim rowOffset As Integer = yi * w
-
-                For xi As Integer = fromX To toX
-                    buf(rowOffset + xi) = c
-                Next
-            End If
-
-            xLong += longDx
-            xShort += shortDx
-        Next
+        buf(row0 + xi) = c
+        buf(row0 + xi + 1) = c
+        buf(row0 + xi + 2) = c
+        buf(row0 + w + xi) = c
+        buf(row0 + w + xi + 1) = c
+        buf(row0 + w + xi + 2) = c
+        buf(row0 + w + w + xi) = c
+        buf(row0 + w + w + xi + 1) = c
+        buf(row0 + w + w + xi + 2) = c
     End Sub
 
     Sub Report(title As String, field As Field, grid As FlockGrid, solver As FlockSolver,
