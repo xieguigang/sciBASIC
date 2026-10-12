@@ -215,6 +215,7 @@
     <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
     <ProjectReference Include="..\Datavisualization.Network\network_graph-netcore5.vbproj" />
+    <ProjectReference Include="..\network_layout\network_layout.vbproj" />
   </ItemGroup>
 
 </Project>
