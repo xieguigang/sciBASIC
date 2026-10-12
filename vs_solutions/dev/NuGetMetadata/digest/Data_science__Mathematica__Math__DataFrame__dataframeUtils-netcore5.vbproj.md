@@ -1,0 +1,155 @@
+# Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Math.Matrix
+- AssemblyName  : Microsoft.VisualBasic.Math.Matrix
+- TargetFramework: net10.0
+- Source files  : 22
+- Existing Title: Labelled Data Matrix, Correlation and Distance Utilities
+- Existing Desc : Labelled numeric matrix model with pairwise correlation and distance matrix builders, missing-value imputation, scaling and centering transforms, and Matrix Market MTX/RUA file IO. Part of sciBASIC#.
+- Existing Tags : scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation;scaling;centering
+
+## Namespaces
+- MatrixMarket  [files: 3]
+
+## Public types
+- Module Builder (Correlation\Builder.vb)
+- Module Correlation (Correlation\Correlation.vb)
+- Class CorrelationMatrix (Correlation\CorrelationMatrix.vb) - the correlation matrix join the pvalue matrix
+- Module Distance (Correlation\Distance.vb)
+- Class DistanceMatrix (Correlation\DistanceMatrix.vb) - a dissimilarity or similarity structure
+- Enum CorrelationEncodings (Correlation\Persistency.vb) - 带符号相关系数矩阵的磁盘编码方式
+- Module CorrelationPValues (Correlation\Persistency.vb) - 相关系数显著性 p 值（学生 t 检验） 与 CellPhenotype 流水线（<c>CorrelationSignificance.PValue</c>）使用同一公式： <code>
+- Class CorrelationMatrixWriter (Correlation\Persistency.vb) - 原子写入 <c>{path}.index</c>。 存储布局（<see cref="CorrelationMatrixStore"/> 的读端依赖此布局）： <code>
+- Class CorrelationMatrixStore (Correlation\Persistency.vb) - p 值不持久化，由相关系数与样本数 n 按需重算（<see cref="CorrelationPValues.PValue"/>）。 热行缓存为小容量 LRU（默认 64 行），多线程并发读通过 <c>RandomAccess.Read</c> 显式偏移实现，无需加锁（缓存链表本身有锁保护）。
+- Class DataMatrix (DataMatrix.vb) - A NxN data matrix which can be convert to graph object under a certain cutoff value. a matrix data wrapper for pairwise comparision analysis
+- Enum DataType (DataType.vb)
+- Module InternalHelpers (InternalHelpers.vb) - 这个模块是在删除了csv文件模块的依赖之后的进行重复实现某些csv文件模块的逻辑函数的帮助模块
+- Module LoadDataMatrix (LoadDataMatrix.vb)
+- Module Impute (Math\Impute.vb)
+- Enum InferMethods (Math\InferMethods.vb) - 缺失值的模拟推断方法
+- Module MathFormula (Math\MathFormula.vb)
+- Module MatrixTypeCast (Math\MatrixTypeCast.vb)
+- Module NumericDataSet (Math\NumericDataSet.vb)
+- Module MatrixFormat (MatrixMarket\MatrixFormat.vb)
+- Enum MatrixCompression (MatrixMarket\MatrixFormat.vb) - v2 头部中的压缩标志位：0 表示未压缩，1 表示后续数据经过 gzip 压缩。
+- Class MTXFormat (MatrixMarket\MTXFormat.vb) - % %================================================================================= 5 5 8
+- Module NamespaceDoc (MatrixMarket\NamespaceDoc.vb) - Matrix Market file format reading and writing.
+- Class RUAFormat (MatrixMarket\RUAFormat.vb) - - Line 1 : 72 chars title + 8 chars identifier - Line 2 : totcrd ptrcrd indcrd valcrd rhscrd (5 integers) - Line 3 : mxtype(14) N M nz nrhs
+- Enum MatrixVisit (MatrixVisit.vb)
+- Class NamedSparseMatrix (NamedSparseMatrix.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - The math matrix library: matrix data structures, operations and factorizations over data frames.
+
+## Notable public members
+- Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), …
+- Public Function Correlation(Of DataSet As INamedValue)(data As Enumeration(Of DataSet), eval As Func(Of DataSet, Double())) As CorrelationMatrix
+- Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), …
+- Public Function MatrixBuilder(Of DataSet As INamedValue)(allData As DataSet(),
+- Public Function MatrixBuilder(df As DataFrame, eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
+- Public Function CorrelationMatrix(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional doCor As…
+- Public Iterator Function CorrelatesNormalized(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optio…
+- Public Function Pearson(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional visit As MatrixVis…
+- Public Function Spearman(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional visit As MatrixVi…
+- Public Property pvalue(a$, b$) As Double
+- Public Overridable Property pvalue(i%, j%) As Double
+- Public Function GetPvalueMatrix() As GeneralMatrix
+- Public Function GetUniqueTuples() As IEnumerable(Of (a$, b$))
+- Public Function GetCorrelationQuantile() As FastRankQuantile
+- Public Function GetPvalueQuantile() As FastRankQuantile
+- Public Function Power(exp As Double) As CorrelationMatrix
+- Public Function Sign() As Double()()
+- Public Function PositiveMatrix() As CorrelationMatrix
+- Public Function Euclidean(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
+- Public Function Correlation(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional spearman As Boolean…
+- Public Function Similarity(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
+- Public ReadOnly Property is_dist As Boolean = True
+- Public Function GetQuantile(reverse As Boolean) As QuantileEstimationGK
+- Public Shared Function CreateMatrix(Of T As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of T), isDistance As Boolean) As Distan…
+- Public Function PValue(r As Double, n As Integer) As Double
+- Public ReadOnly Property WrittenRows As Integer
+- Public ReadOnly Property IsCompleted As Boolean
+- Public Sub WriteRow(geneId As String, row As Double())
+- Public Sub WriteRow(geneId As String, row As Single())
+- Public Sub Complete()
+- Friend Shared Function Dequantize(v As Short) As Single
+- Friend Shared Function DecodeFloat32(buf As Byte(), n As Integer) As Single()
+- Friend Shared Function DecodeInt16(buf As Byte(), n As Integer) As Single()
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public ReadOnly Property genes As String()
+- Public ReadOnly Property size As Integer
+- Public ReadOnly Property storeFile As String
+- Public ReadOnly Property SampleN As Integer
+- Public Shared Function Open(path As String, Optional cacheRows As Integer = 64) As CorrelationMatrixStore
+- Public Shared Function Open(data As Stream, index As Stream, Optional cacheRows As Integer = 64, Optional storePath As String = Nothing) As Correlatio…
+- Public Function GetCorrelation(id1 As String, id2 As String) As (cor As Double, pvalue As Double)
+- Public Function Neighbors(geneId As String, minAbsCor As Double) As (gene As String, cor As Double, pvalue As Double)()
+- Public Iterator Function StreamEdges(minAbsCor As Double,
+- Public Function ReadRow(row As Integer, Optional useCache As Boolean = True) As Single()
+- Public Function Contains(geneId As String) As Boolean
+- Public Function IndexOf(geneId As String) As Integer
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public ReadOnly Property keys As String()
+- Public ReadOnly Property size As Integer
+- Public Function Visit(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(projectName As String, direction As MatrixVisit) As DataSet
+- Public Iterator Function PopulateRows() As IEnumerable(Of IReadOnlyCollection(Of Double))
+- Public Iterator Function PopulateRowObjects(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of DataSet)
+- Public Function HasObject(name As String) As Boolean
+- Public Function GetVector(name As String) As Double()
+- Public Iterator Function PopulateRowEntitys(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(propertyNames As String()) As IEnumerabl…
+- Public Overrides Function ToString() As String
+- Public Function GetVector() As IEnumerable Implements IBucketVector.GetVector
+- Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
+- Public Function GetLabels() As IEnumerable(Of String) Implements ILabeledMatrix.GetLabels
+- Friend Function PropertyNames(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As DataSet()) As String()
+- ... and 34 more
+
+## Imports
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math.Correlations
+- Microsoft.VisualBasic.Math.Correlations.Correlations
+- Microsoft.VisualBasic.Math.Distributions
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+- Microsoft.VisualBasic.Math.Quantile
+- Microsoft.VisualBasic.Math.Scripting.MathExpression
+- Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
+- Microsoft.VisualBasic.Math.Statistics.Hypothesis
+- Microsoft.VisualBasic.Math.Statistics.Hypothesis.Mantel
+- Microsoft.VisualBasic.Scripting
+- Microsoft.VisualBasic.Serialization
+- Microsoft.VisualBasic.Serialization.BinaryDumping
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.Win32.SafeHandles
+- std = System.Math
+- System.Buffers.Binary
+- System.Data
+- System.Globalization
+
+## File tree
+- Correlation\Builder.vb
+- Correlation\Correlation.vb
+- Correlation\CorrelationMatrix.vb
+- Correlation\Distance.vb
+- Correlation\DistanceMatrix.vb
+- Correlation\Persistency.vb
+- DataMatrix.vb
+- DataType.vb
+- InternalHelpers.vb
+- LoadDataMatrix.vb
+- Math\Impute.vb
+- Math\InferMethods.vb
+- Math\MathFormula.vb
+- Math\MatrixTypeCast.vb
+- Math\NumericDataSet.vb
+- MatrixMarket\MatrixFormat.vb
+- MatrixMarket\MTXFormat.vb
+- MatrixMarket\NamespaceDoc.vb
+- MatrixMarket\RUAFormat.vb
+- MatrixVisit.vb
+- NamedSparseMatrix.vb
+- NamespaceDoc.vb
+

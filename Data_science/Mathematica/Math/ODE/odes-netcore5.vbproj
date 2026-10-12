@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.5.9777.32612</Version>
+		<Version>10.6.9781.24297</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -19,11 +19,11 @@
 		<RepositoryType>git</RepositoryType>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+		<AssemblyVersion>1.0.9781.24297</AssemblyVersion>
 		<Title>Ordinary Differential Equation Solver Core for Dynamic Models</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyTitle>
-		<PackageTags>scibasic;ode;runge-kutta;euler-method;dynamical-system;numerical-integration;simulation</PackageTags>
-    <PackageReleaseNotes>Ordinary differential equation solving for sciBASIC#. The package integrates systems of ODEs with the Euler, RK2, RK4, Gill and trapezoidal solvers, so both the inexpensive first order methods and the classical fourth order Runge-Kutta family are available. Models are declared explicitly through the Dynamics namespace - variables, parameters and initial values - and the Data namespace holds the supporting data models, which means a dynamic system can be specified as data rather than as hand written derivative code. Together with the managed CVODE package (Sundials.CVODE), this forms the ODE solving layer of the sciBASIC# mathematics stack.</PackageReleaseNotes>
+		<PackageTags>scibasic;ode;runge-kutta;dynamical-system;numerical-integration;simulation</PackageTags>
+    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IncludeSymbols>True</IncludeSymbols>

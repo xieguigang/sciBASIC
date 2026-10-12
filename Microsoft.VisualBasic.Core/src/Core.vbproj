@@ -6,8 +6,8 @@
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.5.9777.32612</Version>    
-		<AssemblyVersion>5.33.9777.32612</AssemblyVersion>
+		<Version>10.6.9781.24297</Version>    
+		<AssemblyVersion>5.33.9781.24297</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
@@ -37,8 +37,8 @@
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <Title>Visual Basic Runtime Core Library For Scientific Computing</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>scibasic;runtime;linq;reflection;application-services;commandline;serialization;interop;terminal</PackageTags>
-    <PackageReleaseNotes>The runtime core of sciBASIC# - the library every other package in this repository builds on. Collections and data: LINQ style sequence extensions, generic collection helpers with deques and priority queues, the component model (named values, data source and repository abstractions, schema maps, settings and INI configuration) and the I/O extensions covering files, paths, symbolic links and value types. Text and serialization: text processing with encoding and splitting, text patterns and validators, the text parser framework with an HTML parser, string similarity (Levenshtein), a text search index, an XML toolkit (document tree, element model, serialization models, LINQ style querying and Open XML parts) and the JSON serializer with schema provider and formatter. Reflection and interop: reflection helpers, IL emit based delegate factories, marshal helpers and the dynamic interop layer that loads and invokes unmanaged libraries on Windows and Unix. Command line: attribute driven reflection based CLI binding, POSIX style arguments, parsers, an interop service with a shared ORM, interpreters and a manual page viewer. Parallelism and application services: data pipes and stream buffers, the memory mapped file protocol, tasks and thread pools, application and clock helpers, debugging and assertion support, logging, localization, plugin loading, zip archives, the terminal toolkit (shell and console abstractions, line editing, markdown and ANSI rendering, console table builders, progress bars and the tqdm style bar) and the math core (statistics, correlations, information theory, SIMD vectorization) with the scripting, networking and GDI+ drawing drivers.</PackageReleaseNotes>
+		<PackageTags>scibasic;runtime;linq;reflection;commandline;serialization;terminal</PackageTags>
+    <PackageReleaseNotes>Expanded the terminal toolkit with markdown ANSI rendering, interactive line editing with completion, and memory mapped file IPC channels.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 

@@ -1,0 +1,132 @@
+# mime/application%rtf/RTF.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MIME.RTF
+- AssemblyName  : Microsoft.VisualBasic.MIME.RTF
+- TargetFramework: net10.0
+- Source files  : 14
+- Existing Title: Rich Text Format Document Writer, Text Extractor and Office MathML Document Model
+- Existing Desc : Reads and writes rich text format documents in the sciBASIC# framework: RtfDocument implements the shared IDocumentWriter contract to emit RTF 1.x files from fluent calls or from markdown JSONSchema content blocks (headings, paragraphs, code, lists, tables, embedded png/jpeg images, page setup and a static table of contents), RtfTextReader parses any .rtf back into plain text, a paragraph array and document metadata, and a document object model tracks styled text regions and fonts; serializable Office Math Markup Language (OMML) models cover equations and Word XML round-tripping.
+- Existing Tags : scibasic;rtf;rich-text-format;omml;office-math;document-model;word;document-generation;text-extraction;markdown;idocumentwriter
+
+## Namespaces
+- Models  [files: 2]
+- Omml  [files: 3]
+
+## Public types
+- Class Font (Font.vb) - Font style of the selected text region.
+- Class FormatedRegion (FormatedRegion.vb)
+- Module NamespaceDoc (Models\NamespaceDoc.vb) - Shared font model used by the rich text format document builder.
+- Class NamespaceDoc (NamespaceDoc.vb) - Rich Text Format document model: styled text regions and fonts tracked by the Rtf document object, which emits RTF markup.
+- Class HTML (Omml\HTML.vb)
+- Module NamespaceDoc (Omml\NamespaceDoc.vb) - Office Math Markup Language (OMML) models: serializable equation and document property types, including the Word document, paragraph, font and style token models.
+- Class DocumentXmlProperty (Omml\XML.vb)
+- Class DocumentProperties (Omml\XML.vb)
+- Class OfficeDocumentSettings (Omml\XML.vb)
+- Class WordDocument (Omml\XML.vb)
+- Class Compatibility (Omml\XML.vb)
+- Class mathPr (Omml\XML.vb)
+- Structure ValueAttribute (Omml\XML.vb)
+- Class Paragraph (Omml\XML.vb)
+- Class Font (Omml\XML.vb)
+- Class StyleTokens (Omml\XML.vb)
+- Module RtfCodePage (Reader\RtfLexer.vb) - RTF 所依赖的代码页访问：写入侧用于把非 ASCII 文本（字体名、生成器）编码为 ``\'hh``， 读取侧用于按 \ansicpg / \cpg 解码 ``\'hh`` 与原始多字节字节序列。 优先使用 <c>CodePagesEncodingProvider</c> 注册系统代码页（如 cp936）；
+- Class RtfLexer (Reader\RtfLexer.vb) - RTF 词法解析器：单遍扫描 RTF 字节流，产出正文段落与文档元数据。
+- Class RtfDocumentInfo (Reader\RtfTextReader.vb) - RTF 文档元数据（对应 RTF 的 \info 组与 \*\generator）。 缺失字段为空字符串，不会抛出异常。
+- Class RtfTextReader (Reader\RtfTextReader.vb) - RTF 文本提取器：从 .rtf 文件或 RTF 文本流中读取正文。 <code> Dim reader As New RtfTextReader()
+- Class Rtf (Rtf.vb) - Rich text format document object model.(带有格式描述信息的文本文档的对象模型)
+- Enum RtfBlockType (Writer\RtfBlock.vb)
+- Class RtfBlock (Writer\RtfBlock.vb) - 单个 RTF 文档内容块。承载文本、级别、样式快照、表格/图片数据等， 由 <see cref="RtfDocument"/> 收集并在 <see cref="RtfSerializer"/> 中消费。
+- Class RtfDocument (Writer\RtfDocument.vb) - RTF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与 <c>WordDocument</c> / <c>PdfDocument</c> 完全一致的编程接口， 将文本、表格、图片写入并生成 .rtf 文件。
+- Class RtfWriteMeta (Writer\RtfDocument.vb)
+- Class RtfSerializer (Writer\RtfSerializer.vb) - RTF 1.x 序列化器：把 <see cref="RtfBlock"/> 队列渲染为 RTF 文本并落盘。 一般不需要直接使用本类，调用 <see cref="RtfDocument.Save"/> 即可。
+
+## Notable public members
+- Public Const RTF_LF As String = "\par"
+- Public Const RTF_FONT_STYLE_BOLD As String = "\b"
+- Public Const RTF_FONT_STYLE_ITALIC As String = "\i"
+- Public Const RTF_FONT_SIZE As String = "\fs"
+- Public Const RTF_FONT_STYLE_UNDER_LINE As String = "\ul"
+- Public Const RTF_FONT_STYLE_NONE_UNDER_LINE As String = "\ulnone"
+- Public Overrides Function ToString() As String
+- Public Shared Function FromExistsValue(Font As Font, Color As Color) As Font
+- Public Function GenerateRTFTAG(Region As FormatedRegion) As String
+- Public Function Clone() As Font
+- Public Shared Function FontColorToString(R As Integer, G As Integer, B As Integer) As String
+- Public Overloads Shared Function ToString(Color As Color) As String
+- Public Property Font As Font
+- Public ReadOnly Property Text As String
+- Public ReadOnly Property Start As Integer
+- Public ReadOnly Property Right As Integer
+- Public Function Contains(p As Integer) As Boolean
+- Public Overrides Function ToString() As String
+- Public Function GenerateDocumentText() As String
+- Public ReadOnly Property HaveParFlag As Boolean
+- Public Property FontSize As Integer
+- Public Property FontBold As Boolean
+- Public Property FontFamilyName As String
+- Public Property FontItalic As Boolean
+- Public Property FontColor As Color
+- Public Property FontUnderline As Boolean
+- Public Overrides Function ToString() As String
+- Public Const WORD_XML_NAMESPACE As String = "xmlns:v=""urn:schemas-microsoft-com:vml"" xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:w=""u…
+- Public Property Head As Head
+- Public Function SaveDocument(path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+- Public Const WORD_XML_METADATA As String = ""
+- Public Property DocumentProperties As Omml.DocumentProperties
+- Public Property OfficeDocumentSettings As OfficeDocumentSettings
+- Public Property Author As String
+- Public Property LastAuthor As String
+- Public Property Revision As Integer
+- Public Property TotalTime As Integer
+- Public Property Created As Date
+- Public Property LastSaved As Date
+- Public Property Pages As Integer
+- Public Property Words As Integer
+- Public Property Characters As Long
+- Public Property Lines As Integer
+- Public Property Paragraphs As Integer
+- Public Property CharactersWithSpaces As Long
+- Public Property Version As String
+- Public Overrides Function ToString() As String
+- Public Property AllowPNG
+- Public Property TrackMoves As Boolean
+- Public Property TrackFormatting
+- Public Property PunctuationKerning
+- Public Property DrawingGridHorizontalSpacing As String
+- Public Property DrawingGridVerticalSpacing As String
+- Public Property DisplayHorizontalDrawingGridEvery As Integer
+- Public Property DisplayVerticalDrawingGridEvery As Integer
+- Public Property UseMarginsForDrawingGridOrigin
+- Public Property ValidateAgainstSchemas As Boolean
+- Public Property SaveIfXMLInvalid As Boolean
+- Public Property IgnoreMixedContent As Boolean
+- Public Property AlwaysShowPlaceholderText As Boolean
+- ... and 147 more
+
+## Imports
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.MIME.Office.WordDocument
+- Microsoft.VisualBasic.MIME.text.markdown
+- Microsoft.VisualBasic.Serialization.JSON
+- System.Drawing
+- System.IO
+- System.Text
+- System.Xml.Serialization
+
+## File tree
+- Font.vb
+- FormatedRegion.vb
+- Models\Font.vb
+- Models\NamespaceDoc.vb
+- NamespaceDoc.vb
+- Omml\HTML.vb
+- Omml\NamespaceDoc.vb
+- Omml\XML.vb
+- Reader\RtfLexer.vb
+- Reader\RtfTextReader.vb
+- Rtf.vb
+- Writer\RtfBlock.vb
+- Writer\RtfDocument.vb
+- Writer\RtfSerializer.vb
+

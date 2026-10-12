@@ -5,12 +5,20 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$Root          = 'g:\pixelArtist\src\framework',
-    [string]$InventoryFile = (Join-Path $PSScriptRoot 'projects.json'),
+    [string]$Root          = '',
+    [string]$InventoryFile = '',
     [switch]$WhatIf
 )
 
 $ErrorActionPreference = 'Stop'
+
+# $PSScriptRoot is empty under some hosts (powershell -File from a wrapper),
+# so fall back to the invocation path before deriving any defaults.
+$ScriptDir = $PSScriptRoot
+if ([string]::IsNullOrEmpty($ScriptDir)) { $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition }
+if ([string]::IsNullOrEmpty($Root))          { $Root          = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $ScriptDir)) }
+if ([string]::IsNullOrEmpty($InventoryFile)) { $InventoryFile = Join-Path $ScriptDir 'projects.json' }
+
 $Root = (Resolve-Path $Root).Path.TrimEnd('\')
 
 function Test-WhitespaceNode($node) {
@@ -86,7 +94,8 @@ foreach ($p in $targets) {
 
     $doc = New-Object System.Xml.XmlDocument
     $doc.PreserveWhitespace = $true
-    $doc.Load($full)
+    try { $doc.Load($full) }
+    catch { Write-Warning "Cannot parse $($p.path): $($_.Exception.Message)"; continue }
 
     # Find the first unconditional ItemGroup; the <None Remove="..."> groups of
     # SDK projects are unconditional and are a valid home for the new item.
@@ -95,9 +104,24 @@ foreach ($p in $targets) {
         if ($ig.LocalName -eq 'ItemGroup' -and -not $ig.GetAttribute('Condition')) { $itemGroup = $ig; break }
     }
     if ($null -eq $itemGroup) {
+        # Derive the child indent from the document body BEFORE building the
+        # new group, so the element is not written flush-left. Prefer the last
+        # real child's indentation; fall back to the first child's.
+        $childIndent = ''
+        foreach ($n in @($doc.DocumentElement.ChildNodes)) {
+            if (Test-WhitespaceNode $n) { continue }
+            $prev = $n.PreviousSibling
+            if (Test-WhitespaceNode $prev) { $childIndent = ($prev.Value -split "`n")[-1] }
+            break
+        }
+        if ([string]::IsNullOrEmpty($childIndent)) {
+            $first = $doc.DocumentElement.FirstChild
+            if (Test-WhitespaceNode $first) { $childIndent = ($first.Value -split "`n")[-1] }
+        }
+        if ([string]::IsNullOrEmpty($childIndent)) { $childIndent = '  ' }
+
         $itemGroup = $doc.CreateElement('ItemGroup', $doc.DocumentElement.NamespaceURI)
-        $indents0 = Get-Indents $itemGroup
-        [void]$doc.DocumentElement.AppendChild($doc.CreateWhitespace("`n" + $indents0.Group))
+        [void]$doc.DocumentElement.AppendChild($doc.CreateWhitespace("`n" + $childIndent))
         [void]$doc.DocumentElement.AppendChild($itemGroup)
         [void]$doc.DocumentElement.AppendChild($doc.CreateWhitespace("`n"))
     }
@@ -115,14 +139,14 @@ foreach ($p in $targets) {
     [void]$item.AppendChild($pp)
     [void]$item.AppendChild($doc.CreateWhitespace("`n" + $indents.Elem))
 
-    Append-Element $doc $itemGroup $item $indents
-
     # The path must actually resolve, otherwise pack still fails.
     $resolved = [System.IO.Path]::GetFullPath((Join-Path (Split-Path $full -Parent) $p.iconRelPath))
     if (-not (Test-Path $resolved)) {
         Write-Warning "Icon path does not resolve for $($p.path): $resolved"
         continue
     }
+
+    Append-Element $doc $itemGroup $item $indents
 
     Write-Host ("  " + $p.path + "  ->  " + $p.iconRelPath) -ForegroundColor Green
     if (-not $WhatIf) { [void](Save-XmlPreserving $doc $full) }

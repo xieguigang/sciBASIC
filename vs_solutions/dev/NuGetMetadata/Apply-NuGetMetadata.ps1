@@ -9,7 +9,8 @@
 
     Common    : Authors, Company, Copyright, PackageProjectUrl, RepositoryUrl,
                 RepositoryType, PackageLicenseExpression, PackageIcon
-    Per-proj  : Title, Description, PackageTags, AssemblyTitle  (from metadata.json)
+    Per-proj  : Title, Description, PackageTags, PackageReleaseNotes,
+                AssemblyTitle  (from metadata.json)
 
   Legacy (non-SDK) projects only receive the assembly-level fields, because
   Package* properties are meaningless there.
@@ -117,7 +118,9 @@ function Find-ChildElement($parent, [string]$name) {
 function Set-Property($doc, $group, [string]$name, [string]$value, $indents) {
     $existing = Find-ChildElement $group $name
     if ($existing) {
-        if ($existing.InnerText -ne $value) {
+        # Compare trimmed: attributes padded with whitespace inside the vbproj
+        # must not defeat idempotency (rewrite on every run).
+        if ($existing.InnerText.Trim() -ne $value) {
             $existing.InnerText = $value
             return 'updated'
         }
@@ -129,16 +132,20 @@ function Set-Property($doc, $group, [string]$name, [string]$value, $indents) {
     return 'added'
 }
 
-function Remove-Property($group, [string]$name) {
+function Remove-Property($doc, [string]$name) {
+    # Remove every occurrence of the property anywhere in the document, not
+    # only in the target PropertyGroup, so Verify (which scans the whole file)
+    # cannot report leftovers.
     $targets = @()
-    foreach ($c in $group.ChildNodes) {
-        if ($c.NodeType -eq 'Element' -and $c.LocalName -eq $name) { $targets += $c }
+    foreach ($c in $doc.DocumentElement.GetElementsByTagName($name)) {
+        if ($c.NodeType -eq 'Element') { $targets += $c }
     }
     foreach ($c in $targets) {
+        $parent = $c.ParentNode
         if (Test-WhitespaceNode $c.PreviousSibling) {
-            [void]$group.RemoveChild($c.PreviousSibling)
+            [void]$parent.RemoveChild($c.PreviousSibling)
         }
-        [void]$group.RemoveChild($c)
+        [void]$parent.RemoveChild($c)
     }
     return ($targets.Count -gt 0)
 }
@@ -177,6 +184,18 @@ function Ensure-IconItem($doc, [string]$relPath) {
         $last = $doc.DocumentElement.LastChild
         $indent = ''
         if (Test-WhitespaceNode $last) { $indent = ($last.Value -split "`n")[-1] }
+        if (-not $indent) {
+            # A trailing "\n" yields an empty last line; fall back to the
+            # indentation of the first real child so the group is not
+            # written flush-left.
+            foreach ($n in @($doc.DocumentElement.ChildNodes)) {
+                if (Test-WhitespaceNode $n) { continue }
+                $prev = $n.PreviousSibling
+                if (Test-WhitespaceNode $prev) { $indent = ($prev.Value -split "`n")[-1] }
+                break
+            }
+        }
+        if (-not $indent) { $indent = '  ' }
         [void]$doc.DocumentElement.AppendChild($doc.CreateWhitespace("`n" + $indent))
         [void]$doc.DocumentElement.AppendChild($itemGroup)
         [void]$doc.DocumentElement.AppendChild($doc.CreateWhitespace("`n"))
@@ -246,8 +265,8 @@ function Save-XmlPreserving($doc, [string]$path) {
 # ---------------------------------------------------------------------------
 
 $Root = (Resolve-Path $Root).Path.TrimEnd('\')
-$inventory = Get-Content $InventoryFile -Raw | ConvertFrom-Json
-$metadata  = Get-Content $MetadataFile  -Raw | ConvertFrom-Json
+$inventory = Get-Content $InventoryFile -Encoding UTF8 -Raw | ConvertFrom-Json
+$metadata  = Get-Content $MetadataFile  -Encoding UTF8 -Raw | ConvertFrom-Json
 
 $metaByPath = @{}
 foreach ($m in $metadata) { $metaByPath[$m.path] = $m }
@@ -271,7 +290,11 @@ foreach ($p in $targets) {
         $stats.missing++
         continue
     }
-    if (-not $meta.title -or -not $meta.description -or -not $meta.packageTags -or -not $meta.assemblyTitle) {
+    # packageTags is pack-only: legacy (non-SDK) projects never receive it,
+    # so it must not be mandatory for them.
+    $missingRequired = (-not $meta.title) -or (-not $meta.description) -or (-not $meta.assemblyTitle) `
+        -or (-not $p.isLegacy -and -not $meta.packageTags)
+    if ($missingRequired) {
         Write-Warning "Incomplete metadata for $($p.path) -- skipped"
         $stats.missing++
         continue
@@ -312,9 +335,15 @@ foreach ($p in $targets) {
         # PackageTags is a pack-only concept.
         $ops += (Set-Property $doc $group 'PackageTags' $meta.packageTags $indents)
 
+        # Release notes are optional: only written when the metadata entry
+        # carries a non-empty releaseNotes value.
+        if ($meta.releaseNotes) {
+            $ops += (Set-Property $doc $group 'PackageReleaseNotes' $meta.releaseNotes $indents)
+        }
+
         # License: switch to a SPDX expression; PackageLicenseFile would
         # otherwise clash (NU5034).
-        if (Remove-Property $group 'PackageLicenseFile') {
+        if (Remove-Property $doc 'PackageLicenseFile') {
             $stats.licFileRemoved++
             $ops += 'removed(PackageLicenseFile)'
         }

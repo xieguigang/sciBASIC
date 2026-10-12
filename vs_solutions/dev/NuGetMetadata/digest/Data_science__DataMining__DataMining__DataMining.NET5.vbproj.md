@@ -1,0 +1,399 @@
+# Data_science/DataMining/DataMining/DataMining.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.DataMining
+- AssemblyName  : Microsoft.VisualBasic.DataMining.Framework
+- TargetFramework: net10.0
+- Source files  : 147
+- Existing Title: Core Data Mining Toolkit: Clustering, Association Rules and Evaluation
+- Existing Desc : Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.
+- Existing Tags : scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;decision-tree;association-rules;model-evaluation
+
+## Namespaces
+- AprioriRules  [files: 5]
+- AprioriRules.Entities  [files: 5]
+- AprioriRules.Impl  [files: 3]
+- Clustering  [files: 8]
+- ComponentModel  [files: 7]
+- ComponentModel.Discretion  [files: 3]
+- ComponentModel.Encoder  [files: 4]
+- ComponentModel.Encoder.Variable  [files: 4]
+- ComponentModel.EntityModels  [files: 5]
+- ComponentModel.Normalizer  [files: 3]
+- ComponentModel.Serialization  [files: 2]
+- DBSCAN  [files: 6]
+- DecisionTree  [files: 6]
+- DecisionTree.Data  [files: 4]
+- DFL_Driver  [files: 3]
+- Evaluation  [files: 19]
+- FuzzyCMeans  [files: 6]
+- HDBSCAN.Distance  [files: 8]
+- HDBSCAN.Hdbscanstar  [files: 7]
+- HDBSCAN.Runner  [files: 4]
+- Kernel.BayesianBeliefNetwork  [files: 3]
+- Kernel.Classifier  [files: 4]
+- KMeans  [files: 13]
+- KMeans.Bisecting  [files: 3]
+- Lloyds  [files: 4]
+
+## Public types
+- Module Apriori (AprioriRules\Algorithm\Implementation\Apriori.vb)
+- Module NamespaceDoc (AprioriRules\Algorithm\Implementation\NamespaceDoc.vb) - The internal implementation of the Apriori association rule algorithm.
+- Module StrongRules (AprioriRules\Algorithm\Implementation\StrongRules.vb)
+- Structure ItemSet (AprioriRules\Algorithm\ItemSet.vb)
+- Module NamespaceDoc (AprioriRules\Algorithm\NamespaceDoc.vb) - Entity models of the Apriori association rule algorithm, such as item sets and association rules.
+- Class Output (AprioriRules\Algorithm\Output.vb)
+- Class Rule (AprioriRules\Algorithm\Rule.vb)
+- Structure Transaction (AprioriRules\Algorithm\Transaction.vb) - a transaction record
+- Module TransactionExtensions (AprioriRules\Algorithm\Transaction.vb)
+- Class TransactionTokensItem (AprioriRules\Algorithm\TransactionTokensItem.vb)
+- Module AprioriExport (AprioriRules\ExportAPI.vb)
+- Class Encoding (AprioriRules\Helper\Encoding.vb) - Transaction encoding helper.(对一个Transaction之中的独立部件编码为一个字符)
+- Structure Item (AprioriRules\Helper\Item.vb) - mapping the <see cref="Item"/> string comparision to <see cref="Code"/> comparision constant value liked, so readonly field at here
+- Module NamespaceDoc (AprioriRules\NamespaceDoc.vb) - The Apriori association rule mining algorithm.
+- Class BisectingKMeans (Clustering\BisectingKMeans\BisectingKMeans.vb) - Created by touhid on 12/21/15. @author touhid
+- Class Cluster (Clustering\BisectingKMeans\Cluster.vb) - Created by touhid on 12/21/15. @author touhid
+- Module NamespaceDoc (Clustering\BisectingKMeans\NamespaceDoc.vb) - Bisecting K-Means clustering.
+- Class CanopySeeds (Clustering\Canopy.vb)
+- Class CanopyBuilder (Clustering\Canopy.vb) - initial for k-means 与传统的聚类算法(比如K-means)不同，Canopy聚类最大的特点是不需要事先指定k值(即clustering的个数)， 因此具有很大的实际应用价值。与其他聚类算法相比，Canopy聚类虽然精度较低，但其在速度上有很大优势，
+- Enum Mark (Clustering\Canopy.vb)
+- Module ClusteringTableExtensions (Clustering\ClusteringTableExtensions.vb)
+- Class DbscanAlgorithm (Clustering\DBSCAN\DbscanAlgorithm.vb) - DBSCAN algorithm class, Density-based spatial clustering of applications with noise (DBSCAN) <typeparam name="T">Takes dataset item row (features, preferences, vector) type</typeparam> ###### DBSCAN Clustering Algorithm C# Implementation
+- Class DbscanPoint (Clustering\DBSCAN\DbscanPoint.vb)
+- Enum ClusterIDs (Clustering\DBSCAN\DbscanPoint.vb)
+- Class DbscanSession (Clustering\DBSCAN\DbscanSession.vb)
+- Module Extensions (Clustering\DBSCAN\Extensions.vb)
+- Module NamespaceDoc (Clustering\DBSCAN\NamespaceDoc.vb) - Density based spatial clustering of applications with noise (DBSCAN).
+- Class Point (Clustering\DBSCAN\Optics\Point.vb)
+- Interface IQueryDensity (Clustering\Density.vb)
+- Class Algorithm (Clustering\FuzzyCMeans\Algorithm.vb)
+- Class Classify (Clustering\FuzzyCMeans\Classify.vb)
+- Module CMeans (Clustering\FuzzyCMeans\CMeans.vb) - ##### Bioinformatics In the field of bioinformatics, clustering Is used for a number of applications. One use Is as a pattern recognition technique to analyze gene expression data from microarrays Or other
+- Class CMeansResult (Clustering\FuzzyCMeans\CMeansEngine.vb) - 模糊 C 均值聚类的数值计算结果
+- Class CMeansEngine (Clustering\FuzzyCMeans\CMeansEngine.vb) - 基于数值行（``Double()``）的模糊 C 均值聚类引擎。 该引擎直接消费<see cref="NumericTable"/>的特征矩阵，不再依赖 <see cref="ComponentModel.EntityModels.ClusterEntity"/> 实体对象，
+- Class FuzzyCMeansEntity (Clustering\FuzzyCMeans\Entity.vb) - A numeric vector object that tagged with the fuzzy cmeans cluster membership values
+- Module NamespaceDoc (Clustering\FuzzyCMeans\NamespaceDoc.vb) - Fuzzy C-Means clustering.
+- Class CosineSimilarity (Clustering\HDBSCAN\Distance\CosineSimilarity.vb) - Computes cosine similarity between two points, d = 1 - ((X*Y) / (||X||*||Y||))
+- Interface IDistanceCalculator (Clustering\HDBSCAN\Distance\DistanceCalculator.vb) - An interface for classes which compute the distance between two points (where points are represented as arrays of doubles).
+- Class EuclideanDistance (Clustering\HDBSCAN\Distance\EuclideanDistance.vb) - Computes the euclidean distance between two points, d = sqrt((x1-y1)^2 + (x2-y2)^2 + ... + (xn-yn)^2).
+- Interface ISparseMatrixSupport (Clustering\HDBSCAN\Distance\ISparseMatrixSupport.vb)
+- Class ManhattanDistance (Clustering\HDBSCAN\Distance\ManhattanDistance.vb) - Computes the manhattan distance between two points, d = |x1-y1| + |x2-y2| + ... + |xn-yn|.
+- Module NamespaceDoc (Clustering\HDBSCAN\Distance\NamespaceDoc.vb) - Distance metrics used by the HDBSCAN clustering algorithm.
+- Class PearsonCorrelation (Clustering\HDBSCAN\Distance\PearsonCorrelation.vb) - Computes the euclidean distance between two points, d = 1 - (cov(X,Y) / (std_dev(X) * std_dev(Y)))
+- Class SupremumDistance (Clustering\HDBSCAN\Distance\SupremumDistance.vb) - Computes the supremum distance between two points, d = max[(x1-y1), (x2-y2), ... ,(xn-yn)].
+- Class Cluster (Clustering\HDBSCAN\Hdbscanstar\Cluster.vb) - An HDBSCAN* cluster, which will have a birth level, death level, stability, and constraint satisfaction once fully constructed.
+- Class HdbscanAlgorithm (Clustering\HDBSCAN\Hdbscanstar\HdbscanAlgorithm.vb)
+- Class HdbscanConstraint (Clustering\HDBSCAN\Hdbscanstar\HdbscanConstraint.vb) - A clustering constraint (either a must-link or cannot-link constraint between two points).
+- Enum HdbscanConstraintType (Clustering\HDBSCAN\Hdbscanstar\HdbscanConstraintType.vb)
+- Module NamespaceDoc (Clustering\HDBSCAN\Hdbscanstar\NamespaceDoc.vb) - The HDBSCAN* hierarchical density based clustering algorithm.
+- Class OutlierScore (Clustering\HDBSCAN\Hdbscanstar\OutlierScore.vb) - Simple storage class that keeps the outlier score, core distance, and id (index) for a single point. OutlierScores are sorted in ascending order by outlier score, with core distances used to break outlier score ties, and ids used to break core distance ties.
+- Class UndirectedGraph (Clustering\HDBSCAN\Hdbscanstar\UndirectedGraph.vb) - An undirected graph, with weights assigned to each edge. Vertices in the graph are 0 indexed.
+- Class HdbscanParameters (Clustering\HDBSCAN\Runner\HdbscanParameters.vb)
+- Class HdbscanResult (Clustering\HDBSCAN\Runner\HdbscanResult.vb)
+- Class HdbscanRunner (Clustering\HDBSCAN\Runner\HdbscanRunner.vb)
+- Module NamespaceDoc (Clustering\HDBSCAN\Runner\NamespaceDoc.vb) - The HDBSCAN clustering runner.
+- Module Evaluation (Clustering\KMeans\Evaluation.vb) - 判断聚类结果优劣的两个距离判定方法
+- Class EvaluationScore (Clustering\KMeans\EvaluationScore.vb)
+- Module Extensions (Clustering\KMeans\Extensions.vb)
+- Class KMeansAlgorithm (Clustering\KMeans\KMeans.vb) - This class implement a KMeans clustering algorithm. (请注意，实体对象的属性必须要长度一致)
+- Class KMeansEngine (Clustering\KMeans\KMeansEngine.vb) - 基于统一二维表<see cref="NumericTable"/>的 KMeans 聚类引擎。 算法直接消费数值行（``Double()``）而不再依赖 <see cref="ComponentModel.EntityBase(Of Double)"/> 实体对象，
+- Module Kmedoids (Clustering\KMeans\Kmedoids.vb) - Partitioning around medoids(PAM)
+- Class Cluster (Clustering\KMeans\Models\Cluster.vb) - A collection of the target entity object will be a cluster <typeparam name="T"></typeparam>
+- Class ClusterCollection (Clustering\KMeans\Models\ClusterCollection.vb) - A collection of Cluster objects or Clusters
+- Class KMeansCluster (Clustering\KMeans\Models\KMeansCluster.vb)
+- Class NumericCluster (Clustering\KMeans\Models\NumericCluster.vb) - 统一二维表聚类所使用的数值簇对象。 和旧的泛型版本<see cref="Cluster(Of T)"/>不一样的地方在于：这个簇对象 直接存放数值行（<see cref="Double"/>数组）以及该行在原始表中的下标与行名，
+- Class NumericClusterCollection (Clustering\KMeans\Models\NumericClusterCollection.vb) - <see cref="NumericKMeansCluster"/> 的集合，表示一次 KMeans 运算结果之中的全部簇。
+- Class NumericKMeansCluster (Clustering\KMeans\Models\NumericKMeansCluster.vb)
+- Module NamespaceDoc (Clustering\KMeans\NamespaceDoc.vb) - K-Means clustering.
+- Class KNN (Clustering\KNN.vb) - KNN classifier
+- Class KNNCluster (Clustering\KNNCluster.vb)
+- Module KNNClusterRunner (Clustering\KNNCluster.vb)
+- Class LloydsMethodClustering (Clustering\Lloyds\LloydsMethodClustering.vb) - Voronoi
+- Module NamespaceDoc (Clustering\Lloyds\NamespaceDoc.vb) - Lloyd's algorithm for K-Means style clustering.
+- Class Point (Clustering\Lloyds\Point.vb)
+- Module NamespaceDoc (Clustering\NamespaceDoc.vb) - The clustering namespace root: shared clustering abstractions over the supported algorithms.
+- Class NumericRow (Clustering\NumericRow.vb) - 数值行对象：包装统一二维表<see cref="Data.NumericTable"/>之中的一行数值数据， 同时携带样本 ID 与该行在原始表之中的下标。 该对象用于在不修改既有泛型聚类算法内部实现的前提之下，让这些算法直接消费
+- Class Spectral (Clustering\Spectral.vb) - Spectral Clustering
+- Class Discretizer (ComponentModel\Discretizer\Discretizer.vb) - 通过这个对象来执行对连续性数值的数据集的离散化操作 离散化是通过类似于等宽分bin来实现的
+- Module NamespaceDoc (ComponentModel\Discretizer\NamespaceDoc.vb) - Data discretization used when preparing machine learning features.
+- Class NormalRangeDiscretizer (ComponentModel\Discretizer\NormalRangeDiscretizer.vb) - 对原始数据进行区间离散化 这种离散化处理方法比较适用于人工神经网络, 如果你的数据在归一化之后任然无法收敛 可以使用区间离散化来进行归一化, 通过减少数据特征来消除无法收敛的问题
+- Class ColorClass (ComponentModel\Encoder\Class.vb) - Object entity classification class
+- Class ClassEncoder (ComponentModel\Encoder\ClassEncoder.vb)
+- Module Extensions (ComponentModel\Encoder\Extensions.vb)
+- Module NamespaceDoc (ComponentModel\Encoder\NamespaceDoc.vb) - Feature encoding models that convert categorical and numeric data into feature vectors.
+- Class Binary (ComponentModel\Encoder\Variable\Binary.vb)
+- Class Categorical (ComponentModel\Encoder\Variable\Categorical.vb)
+- Class CategoricalEncoder (ComponentModel\Encoder\Variable\CategoricalEncoder.vb)
+- Module NamespaceDoc (ComponentModel\Encoder\Variable\NamespaceDoc.vb) - Variable (value range) definitions used by the feature encoders.
+- Class ClusterEntity (ComponentModel\EntityModels\ClusterEntity.vb)
+- Class DataSetConvertor (ComponentModel\EntityModels\DataSetConvertor.vb)
+- Class EntityClusterModel (ComponentModel\EntityModels\EntityClusterModel.vb)
+- Class Metric (ComponentModel\EntityModels\Metric.vb)
+- Module NamespaceDoc (ComponentModel\EntityModels\NamespaceDoc.vb) - Entity model interfaces for the data mining components.
+- Interface IClusterPoint (ComponentModel\IClusterPoint.vb)
+- Class IntegerEntity (ComponentModel\IntegerEntity.vb)
+- Module NamespaceDoc (ComponentModel\NamespaceDoc.vb) - The component model of the data mining framework: the shared data mining component interfaces and their containers.
+- Enum Methods (ComponentModel\Normalizer\Methods.vb)
+- Module NamespaceDoc (ComponentModel\Normalizer\NamespaceDoc.vb) - Data normalization used when preparing machine learning features.
+- Module Normalizations (ComponentModel\Normalizer\Normalizations.vb)
+- Class Standardizer (ComponentModel\Normalizer\Standardizer.vb) - 每维度特征的 z-score 标准化器。 训练阶段按特征维计算均值/标准差，推理阶段复用同一套参数， 解决各维度特征量纲差异大导致的梯度不稳定问题。
+- Module NamespaceDoc (ComponentModel\Serialization\NamespaceDoc.vb) - Serialization of the data mining component models.
+- Class TraceBackIterator (ComponentModel\TraceBackIterator.vb) - A helper module for record the clustering traceback information for run algorithm debug
+- Module Algorithm (DecisionTree\Algorithm.vb) - Algorithm module for train a new decision tree model
+- Class Attributes (DecisionTree\Attributes.vb) - Node attribute value
+- Class Entity (DecisionTree\DataModels\DataModels.vb) - A row in data table.(分类用的对象实例) 属性向量<see cref="Entity.entityVector"/>的最后一个值总是用来表示<see cref="Entity.decisions"/>结果值
+- Class ClassifyResult (DecisionTree\DataModels\DataModels.vb)
+- Class DataTable (DecisionTree\DataModels\DataTable.vb) - 训练集样本数据表
+- Module NamespaceDoc (DecisionTree\DataModels\NamespaceDoc.vb) - Data models used by the decision tree learner.
+- Module NamespaceDoc (DecisionTree\NamespaceDoc.vb) - Decision tree learning: tree construction and the decision tree model.
+- Class Tree (DecisionTree\Tree.vb) - Implementation of the ID3 to create a decision tree > https://github.com/WolfgangOfner/DecisionTree
+- Class TreeNode (DecisionTree\TreeNode.vb)
+- Module VisualDebugger (DecisionTree\VisualDebugger.vb) - Display debug info on console
+- Module ClusteringIndices (Evaluation\ClusteringIndices.vb) - 聚类质量指标的**唯一实现**。 输入统一为「行主序特征矩阵 + 整数簇标签」，不依赖任何具体的聚类算法模型 （避免耦合已经标记为 ``Obsolete`` 的 ``ClusterEntity`` / ``KMeans.Bisecting.Cluster``）。
+- Enum ResultKinds (Evaluation\EvaluationReport.vb) - 评估结果数据的形式（对应统一评估框架所支持的三类结果）。
+- Interface IEvaluationResult (Evaluation\EvaluationReport.vb) - 统一评估框架的输入契约：任何可被评估的结果数据都需要声明自己的种类与名字。
+- Interface IRocResult (Evaluation\EvaluationReport.vb) - 能够产生 ROC 曲线的结果数据（分类与回归结果）。
+- Class EvaluationReport (Evaluation\EvaluationReport.vb) - 统一评估报告：一个结果数据在统一框架之下计算出的全部指标。
+- Class ChangePoint (Evaluation\LabelEvaluate\ChangePoint.vb)
+- Module FakeAUCGenerator (Evaluation\LabelEvaluate\FakeAUCGenerator.vb)
+- Class PerformanceEvaluator (Evaluation\LabelEvaluate\PerformanceEvaluator.vb)
+- ... and 36 more
+
+## Notable public members
+- Public Function GetAssociateRules(<Parameter("Support.Min")> minSupport#,
+- Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As IEnumerable(Of TransactionTokensItem)
+- Public Function GetSupport(generatedCandidate As ItemSet, transactionsList As IEnumerable(Of ItemSet)) As Double
+- Public Function CheckIsSubset(child As ItemSet, parent As ItemSet) As Boolean
+- Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of ItemSet)) As Dictionary(Of ItemSet…
+- Public Function GetCandidate(frequentItems As IList(Of TransactionTokensItem),
+- Public Function GenerateCandidate(firstItem As ItemSet, secondItem As ItemSet) As ItemSet
+- Public Function GetFrequentItems(candidates As IDictionary(Of ItemSet, Double), minSupport#, transactionsCount#) As List(Of TransactionTokensItem)
+- Public Function GetClosedItemSets(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As Dictionary(Of ItemSet, Dictionary(Of ItemSet, …
+- Public Function GetItemParents(child As ItemSet, index%, allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As Dictionary(Of ItemSet, …
+- Public Function CheckIsClosed(child As ItemSet, parents As Dictionary(Of ItemSet, Double), allFrequentItems As Dictionary(Of ItemSet, TransactionToken…
+- Public Function GenerateRules(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As HashSet(Of Rule)
+- Public Function GenerateSubsets(item As ItemSet) As IEnumerable(Of ItemSet)
+- Public Sub GenerateSubsetsRecursive(item As ItemSet, subsetLength%, temp As Item(), subsets As IList(Of ItemSet), Optional q% = 0, Optional r% = 0)
+- Public Function GetStrongRules(minConfidence#, rules As HashSet(Of Rule), allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As IList(…
+- Public Iterator Function AddStrongRule(rule As Rule, XY As ItemSet, minConfidence#, allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem))…
+- Public Function GetConfidence(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem), X As ItemSet, XY As ItemSet) As (support As (XY#, X#)…
+- Public Function GetMaximalItemSets(closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))) As IList(Of ItemSet)
+- Public ReadOnly Property Length As Integer
+- Public ReadOnly Property HashCode As Integer
+- Public Overrides Function GetHashCode() As Integer
+- Public Function IsNullOrEmpty() As Boolean
+- Public Function SorterSortTokens() As ItemSet
+- Public Overrides Function ToString() As String
+- Public Function Contains(i As Item) As Boolean
+- Public Function PopLast() As ItemSet
+- Public Shared Function Empty() As ItemSet
+- Public Function Remove(child As ItemSet) As ItemSet
+- Public Function Slice(start As Integer, count As Integer) As ItemSet
+- Public Overrides Function Equals(obj As Object) As Boolean
+- Public Function CompareTo(other As ItemSet) As Integer Implements IComparable(Of ItemSet).CompareTo
+- Public Property StrongRules() As List(Of Rule)
+- Public Property MaximalItemSets() As List(Of ItemSet)
+- Public Property ClosedItemSets() As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))
+- Public Property FrequentItems() As Dictionary(Of ItemSet, TransactionTokensItem)
+- Public Property TransactionSize As Integer
+- Public Overrides Function ToString() As String
+- Public ReadOnly Property SupportXY As Double
+- Public ReadOnly Property SupportX As Double
+- Public ReadOnly Property length As Integer
+- Public Sub New(combination As ItemSet, remaining As ItemSet, confidence#, supports As (XY#, X#))
+- Public Overrides Function ToString() As String
+- Public Function CompareTo(other As Rule) As Integer Implements IComparable(Of Rule).CompareTo
+- Public Overrides Function GetHashCode() As Integer
+- Public Overrides Function Equals(obj As Object) As Boolean
+- Public Property Name As String
+- Public Property Items As String()
+- Public Overrides Function ToString() As String
+- Public Function BuildTransactions(data As IEnumerable(Of NamedValue(Of String()))) As IEnumerable(Of Transaction)
+- Public Function AllItems(transactions As IEnumerable(Of Transaction)) As IEnumerable(Of String)
+- Public Property Name() As ItemSet
+- Public Property Support() As Double
+- Public Overrides Function ToString() As String
+- Public Function CompareTo(other As TransactionTokensItem) As Integer Implements IComparable(Of TransactionTokensItem).CompareTo
+- Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of Item), transactions As ItemSet()) As Output
+- Public Function AnalysisTransactions(transactions As IEnumerable(Of ItemSet),
+- Public Function AnalysisTransactions(transactions As IEnumerable(Of Transaction),
+- Public ReadOnly Property CodeMappings As IReadOnlyDictionary(Of Integer, String)
+- Public ReadOnly Property AllItems As Item()
+- Public Function Encoding(item As String) As Item
+- ... and 586 more
+
+## Imports
+- ASCII = Microsoft.VisualBasic.Text.ASCII
+- Bisecting = Microsoft.VisualBasic.DataMining.KMeans.Bisecting
+- Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
+- ClusteringIndices = Microsoft.VisualBasic.DataMining.Evaluation.ClusteringIndices
+- LloydsNS = Microsoft.VisualBasic.DataMining.Lloyds
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Data
+- Microsoft.VisualBasic.DataMining.AprioriRules.Entities
+- Microsoft.VisualBasic.DataMining.AprioriRules.Impl
+- Microsoft.VisualBasic.DataMining.Clustering
+- Microsoft.VisualBasic.DataMining.ComponentModel
+- Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
+- Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
+- Microsoft.VisualBasic.DataMining.DBSCAN
+- Microsoft.VisualBasic.DataMining.DecisionTree.Data
+
+## File tree
+- AprioriRules\Algorithm\Implementation\Apriori.vb
+- AprioriRules\Algorithm\Implementation\NamespaceDoc.vb
+- AprioriRules\Algorithm\Implementation\StrongRules.vb
+- AprioriRules\Algorithm\ItemSet.vb
+- AprioriRules\Algorithm\NamespaceDoc.vb
+- AprioriRules\Algorithm\Output.vb
+- AprioriRules\Algorithm\Rule.vb
+- AprioriRules\Algorithm\Transaction.vb
+- AprioriRules\Algorithm\TransactionTokensItem.vb
+- AprioriRules\ExportAPI.vb
+- AprioriRules\Helper\Encoding.vb
+- AprioriRules\Helper\Item.vb
+- AprioriRules\NamespaceDoc.vb
+- Clustering\BisectingKMeans\BisectingKMeans.vb
+- Clustering\BisectingKMeans\Cluster.vb
+- Clustering\BisectingKMeans\NamespaceDoc.vb
+- Clustering\Canopy.vb
+- Clustering\ClusteringTableExtensions.vb
+- Clustering\DBSCAN\DbscanAlgorithm.vb
+- Clustering\DBSCAN\DbscanPoint.vb
+- Clustering\DBSCAN\DbscanSession.vb
+- Clustering\DBSCAN\Extensions.vb
+- Clustering\DBSCAN\NamespaceDoc.vb
+- Clustering\DBSCAN\Optics\Point.vb
+- Clustering\Density.vb
+- Clustering\FuzzyCMeans\Algorithm.vb
+- Clustering\FuzzyCMeans\Classify.vb
+- Clustering\FuzzyCMeans\CMeans.vb
+- Clustering\FuzzyCMeans\CMeansEngine.vb
+- Clustering\FuzzyCMeans\Entity.vb
+- Clustering\FuzzyCMeans\NamespaceDoc.vb
+- Clustering\HDBSCAN\Distance\CosineSimilarity.vb
+- Clustering\HDBSCAN\Distance\DistanceCalculator.vb
+- Clustering\HDBSCAN\Distance\EuclideanDistance.vb
+- Clustering\HDBSCAN\Distance\ISparseMatrixSupport.vb
+- Clustering\HDBSCAN\Distance\ManhattanDistance.vb
+- Clustering\HDBSCAN\Distance\NamespaceDoc.vb
+- Clustering\HDBSCAN\Distance\PearsonCorrelation.vb
+- Clustering\HDBSCAN\Distance\SupremumDistance.vb
+- Clustering\HDBSCAN\Hdbscanstar\Cluster.vb
+- Clustering\HDBSCAN\Hdbscanstar\HdbscanAlgorithm.vb
+- Clustering\HDBSCAN\Hdbscanstar\HdbscanConstraint.vb
+- Clustering\HDBSCAN\Hdbscanstar\HdbscanConstraintType.vb
+- Clustering\HDBSCAN\Hdbscanstar\NamespaceDoc.vb
+- Clustering\HDBSCAN\Hdbscanstar\OutlierScore.vb
+- Clustering\HDBSCAN\Hdbscanstar\UndirectedGraph.vb
+- Clustering\HDBSCAN\Runner\HdbscanParameters.vb
+- Clustering\HDBSCAN\Runner\HdbscanResult.vb
+- Clustering\HDBSCAN\Runner\HdbscanRunner.vb
+- Clustering\HDBSCAN\Runner\NamespaceDoc.vb
+- Clustering\KMeans\Evaluation.vb
+- Clustering\KMeans\EvaluationScore.vb
+- Clustering\KMeans\Extensions.vb
+- Clustering\KMeans\KMeans.vb
+- Clustering\KMeans\KMeansEngine.vb
+- Clustering\KMeans\Kmedoids.vb
+- Clustering\KMeans\Models\Cluster.vb
+- Clustering\KMeans\Models\ClusterCollection.vb
+- Clustering\KMeans\Models\KMeansCluster.vb
+- Clustering\KMeans\Models\NumericCluster.vb
+- Clustering\KMeans\Models\NumericClusterCollection.vb
+- Clustering\KMeans\Models\NumericKMeansCluster.vb
+- Clustering\KMeans\NamespaceDoc.vb
+- Clustering\KNN.vb
+- Clustering\KNNCluster.vb
+- Clustering\Lloyds\Clustering.vb
+- Clustering\Lloyds\LloydsMethodClustering.vb
+- Clustering\Lloyds\NamespaceDoc.vb
+- Clustering\Lloyds\Point.vb
+- Clustering\NamespaceDoc.vb
+- Clustering\NumericRow.vb
+- Clustering\Spectral.vb
+- ComponentModel\Discretizer\Discretizer.vb
+- ComponentModel\Discretizer\NamespaceDoc.vb
+- ComponentModel\Discretizer\NormalRangeDiscretizer.vb
+- ComponentModel\Encoder\Class.vb
+- ComponentModel\Encoder\ClassEncoder.vb
+- ComponentModel\Encoder\Extensions.vb
+- ComponentModel\Encoder\NamespaceDoc.vb
+- ComponentModel\Encoder\Variable\Binary.vb
+- ComponentModel\Encoder\Variable\Categorical.vb
+- ComponentModel\Encoder\Variable\CategoricalEncoder.vb
+- ComponentModel\Encoder\Variable\NamespaceDoc.vb
+- ComponentModel\EntityBase.vb
+- ComponentModel\EntityModels\ClusterEntity.vb
+- ComponentModel\EntityModels\DataSetConvertor.vb
+- ComponentModel\EntityModels\EntityClusterModel.vb
+- ComponentModel\EntityModels\Metric.vb
+- ComponentModel\EntityModels\NamespaceDoc.vb
+- ComponentModel\IClusterPoint.vb
+- ComponentModel\IDataEmbedding.vb
+- ComponentModel\IntegerEntity.vb
+- ComponentModel\NamespaceDoc.vb
+- ComponentModel\Normalizer\Methods.vb
+- ComponentModel\Normalizer\NamespaceDoc.vb
+- ComponentModel\Normalizer\Normalizations.vb
+- ComponentModel\Normalizer\Standardizer.vb
+- ComponentModel\Serialization\EntityVectorFile.vb
+- ComponentModel\Serialization\NamespaceDoc.vb
+- ComponentModel\TraceBackAlgorithm.vb
+- ComponentModel\TraceBackIterator.vb
+- DecisionTree\Algorithm.vb
+- DecisionTree\Attributes.vb
+- DecisionTree\DataModels\DataImports.vb
+- DecisionTree\DataModels\DataModels.vb
+- DecisionTree\DataModels\DataTable.vb
+- DecisionTree\DataModels\NamespaceDoc.vb
+- DecisionTree\NamespaceDoc.vb
+- DecisionTree\Tree.vb
+- DecisionTree\TreeNode.vb
+- DecisionTree\VisualDebugger.vb
+- Evaluation\ClusteringIndices.vb
+- Evaluation\EvaluationReport.vb
+- Evaluation\LabelEvaluate\ChangePoint.vb
+- Evaluation\LabelEvaluate\FakeAUCGenerator.vb
+- Evaluation\LabelEvaluate\PerformanceEvaluator.vb
+- Evaluation\LabelEvaluate\RankPair.vb
+- Evaluation\Metric.vb
+- Evaluation\MetricRegistry.vb
+- Evaluation\ModelEvaluation.vb
+- Evaluation\NamespaceDoc.vb
+- Evaluation\RegressionClassify.vb
+- Evaluation\RegressionROC.vb
+- Evaluation\Results\ClassificationResult.vb
+- Evaluation\Results\ClusteringResult.vb
+- Evaluation\Results\RegressionResult.vb
+- Evaluation\ROC.vb
+- Evaluation\Roc\Auc.vb
+- Evaluation\Roc\RocBuilder.vb
+- Evaluation\Roc\RocCurve.vb
+- Evaluation\Validate.vb
+- Evaluation\Validation.vb
+- Interface\DFL\I_FactorElement.vb
+- Interface\DFL\NamespaceDoc.vb
+- Interface\DFL\Node.vb
+- Kernel\Bayesian.vb
+- Kernel\BayesianBeliefNetwork\BeliefNetwork.vb
+- Kernel\BayesianBeliefNetwork\BNInfer.vb
+- Kernel\BayesianBeliefNetwork\NamespaceDoc.vb
+- Kernel\NamespaceDoc.vb
+- Kernel\Neuron\Neuron.vb
+- Kernel\Neuron\NeuronEntity.vb
+- MarginalLikelihoodAnalysis.vb
+- NamespaceDoc.vb
+- SelfOrganizingMap.vb
+- Statistics.vb
+- ValueMapping.vb
+

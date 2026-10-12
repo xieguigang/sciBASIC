@@ -11,18 +11,26 @@
     <NoWarn>42016,41999,42004,42032</NoWarn>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
-    <AssemblyTitle>Spiking Neural Network  ·  LIF + SurrogateGrad + STDP</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork</AssemblyTitle>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Spiking Neural Network  ·  LIF + SurrogateGrad + STDP</Title>
-    <PackageTags>scibasic;deep-learning;spiking-neural-network;lif;surrogate-gradient;stdp;recurrent;sparse;tensor</PackageTags>
-    <Description>Spiking neural network toolkit for sciBASIC#: leaky integrate and fire (LIF) and recurrent/sparse LIF layers, population and rate encoders and decoders, surrogate gradient training and STDP plasticity on the tensor runtime.</Description>
-    <PackageReleaseNotes>SNN implements biologically inspired spiking neural networks on top of the sciBASIC# tensor runtime. Component overview: (1) neuron layers - LIFLayer, RecurrentLIFLayer and SparseLIFLayer model leaky integrate and fire dynamics with membrane time constants, thresholds and reset, where the sparse variant consumes real connectomes stored as CSR matrices (SparseMatrix, with the GPU accelerated sparse x dense path provided by ILCudaTensor); (2) coding - Encoder and Decoder convert continuous data to and from spike trains using population and rate coding; (3) learning - STDP provides spike timing dependent plasticity for local unsupervised learning, Surrogate supplies differentiable surrogate gradient functions so the discrete spike emission can be trained by back propagation, and RegressionLosses adds regression oriented objectives; (4) composition - Network assembles the layers and LinearReadout performs the final readout, while TensorHelper provides shared reshaping and tensor utilities. The bundled README walks through the LIF membrane equation, the surrogate gradient derivation and the STDP weight update rule.</PackageReleaseNotes>
+    <Title>Spiking Neural Network Toolkit with LIF, Surrogate Gradients and STDP</Title>
+    <PackageTags>scibasic;spiking-neural-network;lif;surrogate-gradient;stdp;sparse-synapses;deep-learning</PackageTags>
+    <Description>A spiking neural network toolkit for sciBASIC#: leaky integrate-and-fire (LIF) layers with recurrent and sparse CSR connectivity, rate/latency spike encoders and decoders, surrogate gradient BPTT training plus STDP plasticity built on the tensor runtime.</Description>
+    <PackageReleaseNotes>Adds recurrent and sparse LIF layers with fused SIMD forward paths, CSR synapse matrices, STDP plasticity and Adam training with gradient clipping.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <OutputPath>../../../.nuget/</OutputPath>
-    <Version>10.5.9777.32612</Version>
-    <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <Version>10.6.9781.24297</Version>
+    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -34,6 +42,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

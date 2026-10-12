@@ -30,6 +30,7 @@ $Expected = @{
     PackageIcon               = 'logo-knot.png'
     PackageProjectUrl         = 'http://scibasic.net/'
     RepositoryUrl             = 'https://github.com/xieguigang/sciBASIC'
+    RepositoryType            = 'git'
 }
 
 $inventory = Get-Content $InventoryFile -Encoding UTF8 -Raw | ConvertFrom-Json
@@ -46,6 +47,7 @@ function Get-ChildText($parent, [string]$name) {
 
 function Find-ReadmeItem($doc, [string]$fileName) {
     # any None/Content/Resource item whose Include ends with the readme name
+    # (with a path-segment boundary so `MyREADME.md` never matches `README.md`)
     $stack = New-Object 'System.Collections.Generic.Stack[System.Xml.XmlNode]'
     $stack.Push($doc.DocumentElement)
     while ($stack.Count -gt 0) {
@@ -54,10 +56,43 @@ function Find-ReadmeItem($doc, [string]$fileName) {
             if ($c.NodeType -ne 'Element') { continue }
             if (@('None', 'Content', 'Resource') -contains $c.LocalName) {
                 $inc = $c.GetAttribute('Include')
-                if ($inc -and $inc -match ([regex]::Escape($fileName) + '$')) { return $c }
+                if ($inc -and $inc -match '(^|[\\/])' + [regex]::Escape($fileName) + '$') { return $c }
             }
             $stack.Push($c)
         }
+    }
+    return $null
+}
+
+function Find-IconItem($doc) {
+    # live scan: any None/Content/Resource item referencing the package icon
+    $stack = New-Object 'System.Collections.Generic.Stack[System.Xml.XmlNode]'
+    $stack.Push($doc.DocumentElement)
+    while ($stack.Count -gt 0) {
+        $node = $stack.Pop()
+        foreach ($c in $node.ChildNodes) {
+            if ($c.NodeType -ne 'Element') { continue }
+            if (@('None', 'Content', 'Resource') -contains $c.LocalName) {
+                $inc = $c.GetAttribute('Include')
+                if ($inc -and $inc -match 'logo-knot\.png$') { return $c }
+            }
+            $stack.Push($c)
+        }
+    }
+    return $null
+}
+
+function Find-RootNsPropertyGroup($doc) {
+    # same target group resolution as Apply-NuGetMetadata.ps1
+    foreach ($pg in $doc.DocumentElement.ChildNodes) {
+        if ($pg.LocalName -ne 'PropertyGroup') { continue }
+        if ($pg.GetAttribute('Condition')) { continue }
+        foreach ($c in $pg.ChildNodes) {
+            if ($c.NodeType -eq 'Element' -and $c.LocalName -eq 'RootNamespace') { return $pg }
+        }
+    }
+    foreach ($pg in $doc.DocumentElement.ChildNodes) {
+        if ($pg.LocalName -eq 'PropertyGroup' -and -not $pg.GetAttribute('Condition')) { return $pg }
     }
     return $null
 }
@@ -81,13 +116,19 @@ foreach ($p in $libs) {
     $doc.PreserveWhitespace = $true
     $doc.Load($full)
 
+    # Collect the metadata properties from the same PropertyGroup that the
+    # Apply script targets (the one declaring RootNamespace). Scanning the
+    # whole document instead would pick stale values from conditional or
+    # leftover groups and produce false mismatches.
+    $group = Find-RootNsPropertyGroup $doc
     $props = @{}
-    foreach ($pg in $doc.DocumentElement.ChildNodes) {
-        if ($pg.LocalName -ne 'PropertyGroup') { continue }
-        foreach ($c in $pg.ChildNodes) {
-            if ($c.NodeType -ne 'Element') { continue }
-            if (-not $props.ContainsKey($c.LocalName)) { $props[$c.LocalName] = $c.InnerText.Trim() }
-        }
+    if ($null -eq $group) {
+        $problems.Add("NO TARGET PropertyGroup (RootNamespace group) in $($p.path)")
+        continue
+    }
+    foreach ($c in $group.ChildNodes) {
+        if ($c.NodeType -ne 'Element') { continue }
+        if (-not $props.ContainsKey($c.LocalName)) { $props[$c.LocalName] = $c.InnerText.Trim() }
     }
 
     $meta = $metaByPath[$p.path]
@@ -97,7 +138,7 @@ foreach ($p in $libs) {
     #    infrastructure: PackageIcon / PackageTags / PackageLicenseExpression
     #    are meaningless there.
     foreach ($key in $Expected.Keys) {
-        if ($p.isLegacy -and @('PackageIcon', 'PackageTags', 'PackageLicenseExpression') -contains $key) { continue }
+        if ($p.isLegacy -and @('PackageIcon', 'PackageLicenseExpression') -contains $key) { continue }
         $actual = $props[$key]
         if ($actual -ne $Expected[$key]) {
             $problems.Add("UNIFIED MISMATCH [$key] in $($p.path): expected '$($Expected[$key])' got '$actual'")
@@ -109,27 +150,43 @@ foreach ($p in $libs) {
         $problems.Add("PackageLicenseFile still present in $($p.path)")
     }
 
-    # 4) per-project content
-    foreach ($key in @('Title', 'Description', 'PackageTags', 'AssemblyTitle')) {
-        if ($p.isLegacy -and $key -eq 'PackageTags') { continue }
-        if ([string]::IsNullOrWhiteSpace($props[$key])) {
-            $problems.Add("MISSING $key in $($p.path)")
+    # 4) per-project content (only comparable when metadata.json has the entry;
+    #    a missing entry is already reported by check 8)
+    if ($meta) {
+        foreach ($key in @('Title', 'Description', 'PackageTags', 'AssemblyTitle')) {
+            if ($p.isLegacy -and $key -eq 'PackageTags') { continue }
+            if ([string]::IsNullOrWhiteSpace($props[$key])) {
+                $problems.Add("MISSING $key in $($p.path)")
+            }
+            elseif ($props[$key] -ne $meta.$key) {
+                $problems.Add("CONTENT MISMATCH $key in $($p.path)")
+            }
         }
-        elseif ($meta -and $props[$key] -ne $meta.$key) {
-            $problems.Add("CONTENT MISMATCH $key in $($p.path)")
+
+        # 4b) release notes, when the metadata entry carries one
+        if (-not $p.isLegacy -and $meta.releaseNotes) {
+            if ([string]::IsNullOrWhiteSpace($props['PackageReleaseNotes'])) {
+                $problems.Add("MISSING PackageReleaseNotes in $($p.path)")
+            }
+            elseif ($props['PackageReleaseNotes'] -ne $meta.releaseNotes) {
+                $problems.Add("CONTENT MISMATCH PackageReleaseNotes in $($p.path)")
+            }
         }
     }
 
-    # 5) icon item present when PackageIcon is declared
-    if (-not $p.isLegacy -and $props['PackageIcon'] -and -not $p.existingIconItem) {
+    # 5) icon item present when PackageIcon is declared (live scan of the
+    #    current document -- the inventory snapshot may be stale)
+    $iconItem = Find-IconItem $doc
+    if (-not $p.isLegacy -and $props['PackageIcon'] -and -not $iconItem) {
         $problems.Add("PackageIcon without <None Include>: $($p.path)")
     }
 
     # 6) icon relative path must resolve to a real file
-    if ($p.existingIconItem) {
-        $resolved = [System.IO.Path]::GetFullPath((Join-Path (Split-Path $full -Parent) $p.existingIconItem))
+    if ($iconItem) {
+        $inc = $iconItem.GetAttribute('Include')
+        $resolved = [System.IO.Path]::GetFullPath((Join-Path (Split-Path $full -Parent) $inc))
         if (-not (Test-Path $resolved)) {
-            $problems.Add("Icon path does not resolve: $($p.path) -> $($p.existingIconItem)")
+            $problems.Add("Icon path does not resolve: $($p.path) -> $inc")
         }
     }
 

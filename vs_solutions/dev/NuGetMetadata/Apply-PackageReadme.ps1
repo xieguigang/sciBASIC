@@ -144,7 +144,8 @@ function Set-ChildText($doc, $parent, [string]$name, [string]$value, $indents) {
 
 function Find-ReadmeItem($doc, [string]$fileName) {
     # Match any None/Content/Resource item whose Include ends with the readme
-    # file name, so `..\README.md` and `README.md` are treated as the same item.
+    # file name (with a path-segment boundary, so `..\README.md` and `README.md`
+    # are treated as the same item but `MyREADME.md` never matches).
     $stack = New-Object 'System.Collections.Generic.Stack[System.Xml.XmlNode]'
     $stack.Push($doc.DocumentElement)
     while ($stack.Count -gt 0) {
@@ -153,7 +154,7 @@ function Find-ReadmeItem($doc, [string]$fileName) {
             if ($c.NodeType -ne 'Element') { continue }
             if (@('None', 'Content', 'Resource') -contains $c.LocalName) {
                 $inc = $c.GetAttribute('Include')
-                if ($inc -and $inc -match ([regex]::Escape($fileName) + '$')) { return $c }
+                if ($inc -and $inc -match '(^|[\\/])' + [regex]::Escape($fileName) + '$') { return $c }
             }
             $stack.Push($c)
         }

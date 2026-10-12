@@ -1,0 +1,209 @@
+# Data/BinaryData/SQLite3/SQLite3.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.IO.ManagedSqlite
+- AssemblyName  : Microsoft.VisualBasic.Data.IO.SQLite3
+- TargetFramework: net10.0
+- Source files  : 44
+- Existing Title: Managed SQLite3 Database File Reader
+- Existing Desc : A pure managed parser and writer for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.
+- Existing Tags : scibasic;sqlite3;database;btree;sql-parser;reader;writer;managed
+
+## Namespaces
+- Core.Helpers  [files: 4]
+- Core.Internal  [files: 2]
+- Core.Objects  [files: 6]
+- Core.Objects.Enums  [files: 6]
+- Core.Objects.Headers  [files: 3]
+- Core.SQLSchema  [files: 4]
+- Core.Tables  [files: 5]
+- Writer  [files: 5]
+- Writer.Internal  [files: 5]
+
+## Public types
+- Module BTreeTools (Helpers\BTreeTools.vb)
+- Module NamespaceDoc (Helpers\NamespaceDoc.vb) - Low level SQLite file helpers: B-tree navigation tools, the sqlite data stream and general stream helpers.
+- Class SqliteDataStream (Helpers\SqliteDataStream.vb)
+- Module StreamHelper (Helpers\StreamHelper.vb)
+- Module NamespaceDoc (Internal\NamespaceDoc.vb) - Internal reader base classes for the managed SQLite file parser.
+- Class ReaderBase (Internal\ReaderBase.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - A pure managed SQLite3 database file toolkit: decodes the database header, B-tree pages, the master table and column types and exposes tables and rows without the native SQLite engine.
+- Class BTreeCellData (Objects\BTreeCellData.vb)
+- Class BTreeInteriorTablePage (Objects\BTreeInteriorTablePage.vb) - SQLite B-Tree datastructure that contains other Interior / Leaf pages
+- Structure Cell (Objects\BTreeInteriorTablePage.vb)
+- Class BTreeLeafTablePage (Objects\BTreeLeafTablePage.vb) - SQLite B-Tree datastructure that cells with data
+- Structure Cell (Objects\BTreeLeafTablePage.vb)
+- Class ColumnDataMeta (Objects\ColumnDataMeta.vb)
+- Enum BTreeType (Objects\Enums\BTreeType.vb)
+- Enum FileReadVersion (Objects\Enums\FileReadVersion.vb)
+- Enum FileWriteVersion (Objects\Enums\FileWriteVersion.vb)
+- Module NamespaceDoc (Objects\Enums\NamespaceDoc.vb) - SQLite file format enumerations: B-tree types, file read and write versions, data types and text encodings.
+- Enum SqliteDataType (Objects\Enums\SqliteDataType.vb)
+- Module DataTypeParser (Objects\Enums\SqliteDataType.vb)
+- Enum SqliteEncoding (Objects\Enums\SqliteEncoding.vb)
+- Structure BTreeHeader (Objects\Headers\BTreeHeader.vb)
+- Class DatabaseHeader (Objects\Headers\DatabaseHeader.vb)
+- Module NamespaceDoc (Objects\Headers\NamespaceDoc.vb) - The SQLite database header and B-tree page header structures.
+- Module NamespaceDoc (Objects\NamespaceDoc.vb) - The SQLite page object model: B-tree pages, interior and leaf table pages, cells and column data metadata.
+- Module Extensions (Schema\Extensions.vb)
+- Module NamespaceDoc (Schema\NamespaceDoc.vb) - The SQLite schema model and the CREATE TABLE SQL parser used to describe tables and their columns.
+- Class Schema (Schema\Schema.vb)
+- Enum TokenTypes (Schema\SQLParser.vb)
+- Class Token (Schema\SQLParser.vb)
+- Class SQLParser (Schema\SQLParser.vb)
+- Class Sqlite3Database (Sqlite3Database.vb) - MBW.Utilities.ManagedSqlite > https://github.com/LordMike/MBW.Utilities.ManagedSqlite > https://www.sqlite.org/fileformat.html
+- Class Sqlite3Settings (Sqlite3Settings.vb)
+- Module NamespaceDoc (Tables\NamespaceDoc.vb) - The SQLite table model: the master table, tables, rows and schema rows.
+- Class Sqlite3MasterTable (Tables\Sqlite3MasterTable.vb) - 主表主要是记录用户创建的数据表的结构定义以及在数据库文件之中的读取偏移位置
+- Class Sqlite3Row (Tables\Sqlite3Row.vb)
+- Class Sqlite3SchemaRow (Tables\Sqlite3SchemaRow.vb)
+- Class Sqlite3Table (Tables\Sqlite3Table.vb)
+- Structure LeafEntry (Writer\Internal\BTreeWriter.vb) - 表 B 树叶页之中的一条记录(按 rowid 升序排列)
+- Class BTreeNode (Writer\Internal\BTreeWriter.vb) - 表 B 树的节点(叶节点或内部节点), 页号在结构构建完成之后单独分配。
+- Class BTreeWriter (Writer\Internal\BTreeWriter.vb) - 表 B 树写入器: 负责容量计算、自底向上建树、cell 编码与页号分配。
+- Module NamespaceDoc (Writer\Internal\NamespaceDoc.vb) - The internal SQLite write path: the B-tree writer, page buffer, record encoder and file serializer.
+- Class PageBuffer (Writer\Internal\PageBuffer.vb) - 单个数据库页的字节缓冲, 提供大端整数写入与 B 树页组装能力。
+- Module RecordEncoder (Writer\Internal\RecordEncoder.vb) - SQLite 记录体(record)编码器。 与读取侧 <c>Sqlite3Table.ReadValue</c> 严格对称: 记录体 = <c>varint(headerSize) + 各列 serial type(varint) + 各列数据</c>。
+- Class WriterTableSnapshot (Writer\Internal\SqliteFileSerializer.vb) - 一张表在提交时的快照数据
+- Class SqliteFileSerializer (Writer\Internal\SqliteFileSerializer.vb) - 把内存模型序列化为一个完整的 SQLite3 数据库文件。 页号分配策略: 用户表从第 2 页起按 pre-order 分配; <c>sqlite_master</c> 的根页固定为第 1 页, 其子页在所有用户表页之后分配; 溢出页最后分配。这样父页始终可以引用已经确定的子页号。
+- Module NamespaceDoc (Writer\NamespaceDoc.vb) - The SQLite database writer: column and data row models together with the table and database writers.
+- Class Sqlite3Column (Writer\Sqlite3Column.vb) - SQLite 数据表的列定义。
+- Class Sqlite3DataRow (Writer\Sqlite3DataRow.vb) - 写入模块的内存数据行, 取值语义与读取侧 <c>Sqlite3Row</c> 保持一致(可按序号或列名访问)。
+- Class Sqlite3TableWriter (Writer\Sqlite3TableWriter.vb) - 单张数据表的可写模型, 提供链式的行级增删改查(CRUD)。所有修改在 <see cref="Sqlite3Writer.Commit"/> 时落盘。
+- Class Sqlite3Writer (Writer\Sqlite3Writer.vb) - SQLite3 数据库写入器。 采用"内存模型 + 提交时整文件重建"的策略: 全部增删改在内存之中完成, 调用 <see cref="Commit"/> 时一次性序列化重建整个数据库文件, 并以临时文件原子替换目标文件,
+
+## Notable public members
+- Public Function ExportTable(table As Sqlite3Table) As IEnumerable(Of [Property](Of String))
+- Public Iterator Function ExportTable(Of T)(table As Sqlite3Table,
+- Public Function ExportTable(database As Sqlite3Database, tableName$) As IEnumerable(Of [Property](Of String))
+- Public Function WalkTableBTree(node As BTreePage) As IEnumerable(Of BTreeCellData)
+- Public Sub New(reader As ReaderBase, page As UInteger, dataOffset As UShort, dataLength As UShort, overflowPage As UInteger, fullDataSize As Long)
+- Public Overrides Function Read(buffer As Byte(), offset As Integer, count As Integer) As Integer
+- Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
+- Public Overrides ReadOnly Property CanRead() As Boolean
+- Public Overrides ReadOnly Property CanSeek() As Boolean
+- Public Overrides ReadOnly Property Length() As Long
+- Public Overrides Property Position() As Long
+- Public Function ReadFully(stream As Stream, length As Integer) As Byte()
+- Public Function ReadFully(stream As Stream, buffer As Byte(), offset As Integer, length As Integer) As Integer
+- Public ReadOnly Property Length As Long
+- Public ReadOnly Property Position As Long
+- Public Property TextEncoding As SqliteEncoding
+- Public Property PageSize As UShort
+- Public Property ReservedSpace() As Byte
+- Public ReadOnly Property EOF As Boolean
+- Public Sub New(stream As Stream)
+- Friend Sub New(stream As Stream, origin As ReaderBase)
+- Friend Sub ApplySqliteDatabaseHeader(header As DatabaseHeader)
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Friend Function CheckMagicBytes(comparison As Byte(), Optional throwException As Boolean = True) As Boolean
+- Friend Function CheckMagicBytes(toRead As UInteger, comparison As Byte(), Optional throwException As Boolean = True) As Boolean
+- Friend Sub CheckSize(sizeWanted As UInteger, Optional throwException As Boolean = True)
+- Friend Sub SetPositionAndCheckSize(position As ULong, sizeWanted As UInteger, Optional throwException As Boolean = True)
+- Friend Sub SetPosition(position As ULong)
+- Friend Sub SeekPage(page As UInteger, Optional offset As UShort = 0)
+- Friend Sub Skip(bytes As UInteger)
+- Public Function ReadByte() As Byte
+- Public Function ReadUInt16() As UShort
+- Public Function ReadUInt32() As UInteger
+- Public Function ReadInt16() As Short
+- Public Function ReadInt32() As Integer
+- Public Function ReadVarInt(Optional ByRef readBytes As Byte = 0) As Long
+- Public Sub SkipVarInt()
+- Public Function Read(count As Integer) As Byte()
+- Public Function Read(buffer As Byte(), offset As Integer, count As Integer) As Integer
+- Public Function ReadInteger(bytes As Byte) As Long
+- Public Function ReadString(bytes As UShort) As String
+- Public Function ReadString(bytes As Integer) As String
+- Friend Property Page As UInteger
+- Friend Property Cell As BTreeLeafTablePage.Cell
+- Friend Property CellOffset As UShort
+- Public Property Cells() As Cell()
+- Public Sub New(reader As ReaderBase, page As UInteger, header As BTreeHeader, cellOffsets As UShort())
+- Protected Overrides Sub ParseInternal()
+- Public Property Cells() As Cell()
+- Public Sub New(reader As ReaderBase, page As UInteger, header As BTreeHeader, cellOffsets As UShort())
+- Protected Overrides Sub ParseInternal()
+- Public ReadOnly Property Page() As UInteger
+- Protected Friend ReadOnly Property Reader() As ReaderBase
+- Protected Friend ReadOnly Property Header() As BTreeHeader
+- Protected Friend ReadOnly Property CellOffsets() As UShort()
+- Protected Sub New(reader As ReaderBase, page As UInteger, header As BTreeHeader, cellOffsets As UShort())
+- Friend Shared Function Parse(reader As ReaderBase, page As UInteger) As BTreePage
+- Protected MustOverride Sub ParseInternal()
+- Public ReadOnly Property type As SqliteDataType
+- Public ReadOnly Property name As String
+- ... and 173 more
+
+## Imports
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.Framework.StorageProvider
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
+- Microsoft.VisualBasic.Data.IO.ManagedSqlite.Writer.Internal
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.Default
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Scripting.TokenIcer
+- Microsoft.VisualBasic.Serialization.JSON
+- Microsoft.VisualBasic.Text
+- Microsoft.VisualBasic.Text.Parser
+- std = System.Math
+- System.Collections.Generic
+- System.Data
+- System.Diagnostics
+- System.IO
+- System.Linq
+
+## File tree
+- Extensions.vb
+- Helpers\BTreeTools.vb
+- Helpers\NamespaceDoc.vb
+- Helpers\SqliteDataStream.vb
+- Helpers\StreamHelper.vb
+- Internal\NamespaceDoc.vb
+- Internal\ReaderBase.vb
+- NamespaceDoc.vb
+- Objects\BTreeCellData.vb
+- Objects\BTreeInteriorTablePage.vb
+- Objects\BTreeLeafTablePage.vb
+- Objects\BTreePage.vb
+- Objects\ColumnDataMeta.vb
+- Objects\Enums\BTreeType.vb
+- Objects\Enums\FileReadVersion.vb
+- Objects\Enums\FileWriteVersion.vb
+- Objects\Enums\NamespaceDoc.vb
+- Objects\Enums\SqliteDataType.vb
+- Objects\Enums\SqliteEncoding.vb
+- Objects\Headers\BTreeHeader.vb
+- Objects\Headers\DatabaseHeader.vb
+- Objects\Headers\NamespaceDoc.vb
+- Objects\NamespaceDoc.vb
+- Schema\Extensions.vb
+- Schema\NamespaceDoc.vb
+- Schema\Schema.vb
+- Schema\SQLParser.vb
+- Sqlite3Database.vb
+- Sqlite3Settings.vb
+- Tables\NamespaceDoc.vb
+- Tables\Sqlite3MasterTable.vb
+- Tables\Sqlite3Row.vb
+- Tables\Sqlite3SchemaRow.vb
+- Tables\Sqlite3Table.vb
+- Writer\Internal\BTreeWriter.vb
+- Writer\Internal\NamespaceDoc.vb
+- Writer\Internal\PageBuffer.vb
+- Writer\Internal\RecordEncoder.vb
+- Writer\Internal\SqliteFileSerializer.vb
+- Writer\NamespaceDoc.vb
+- Writer\Sqlite3Column.vb
+- Writer\Sqlite3DataRow.vb
+- Writer\Sqlite3TableWriter.vb
+- Writer\Sqlite3Writer.vb
+

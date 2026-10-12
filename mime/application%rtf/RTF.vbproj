@@ -6,9 +6,9 @@
     <AssemblyName>Microsoft.VisualBasic.MIME.RTF</AssemblyName>
 	  <Platforms>AnyCPU;x64;x86;ARM64;ARM32</Platforms>
 	  <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
-    <Title>Rich Text Format Document Writer, Text Extractor and Office MathML Document Model</Title>
-    <Description>Reads and writes rich text format documents in the sciBASIC# framework: RtfDocument implements the shared IDocumentWriter contract to emit RTF 1.x files from fluent calls or from markdown JSONSchema content blocks (headings, paragraphs, code, lists, tables, embedded png/jpeg images, page setup and a static table of contents), RtfTextReader parses any .rtf back into plain text, a paragraph array and document metadata, and a document object model tracks styled text regions and fonts; serializable Office Math Markup Language (OMML) models cover equations and Word XML round-tripping.</Description>
-    <AssemblyTitle>RTF Document Writer and Text Extractor</AssemblyTitle>
+    <Title>Rich Text Format Writer, Reader and Office MathML Models</Title>
+    <Description>Reads and writes rich text format documents for sciBASIC#: RtfDocument implements the shared IDocumentWriter contract to emit RTF 1.x files with headings, tables, images and page setup, RtfTextReader parses .rtf back into text and metadata, plus serializable OMML equation models.</Description>
+    <AssemblyTitle>Microsoft.VisualBasic.MIME.RTF</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
@@ -19,17 +19,19 @@
       本项目为 SDK 风格工程，使用 PackageXxx 属性打包。
       同时保留旧式属性名 Tags / ReleaseNotes，以兼容 nuget.exe pack 等旧打包流程。
     -->
-    <PackageTags>scibasic;rtf;rich-text-format;omml;office-math;document-model;word;document-generation;text-extraction;markdown;idocumentwriter</PackageTags>
+    <PackageTags>scibasic;rtf;rich-text-format;omml;document-generation;text-extraction</PackageTags>
     <Tags>scibasic;rtf;rich-text-format;omml;office-math;document-model;word;document-generation;text-extraction;markdown;idocumentwriter</Tags>
-    <PackageReleaseNotes>RTF provides Rich Text Format document generation and text extraction for the sciBASIC# framework together with serializable Office Math (OMML) models. Writing: RtfDocument implements the shared IDocumentWriter contract - the same fluent surface as the docx and pdf writers - covering document metadata (author, title, subject, description, tags, generator), heading levels 1-6 plus paragraph, code, blockquote and document-title styles, page setup in twips (A4 and Letter presets), paragraphs, code blocks, ordered / unordered / task / definition lists, horizontal rules, page breaks, a static table of contents, tables (equal width, auto-fit to window or to contents, centring, three-line style and per-column alignment) and png/jpeg images embedded as hexadecimal pict data. Markdown integration: WriteBlocks consumes the JSONSchema.Block content model directly (heading, paragraph, code, list, tasklist, deflist, table, blockquote, hr, image, link, math and footnote), so structured content such as large language model output renders without any intermediate format. Reading: RtfLexer is a single pass byte level lexer with an explicit group stack, per-group code page and uc handling, ignorable destination skipping, metadata capture and malformed input tolerance, while RtfTextReader exposes ExtractText, ExtractParagraphs, ExtractMetadata and a streaming GetText iterator. Model: the original document object model is preserved unchanged - Rtf is the document, FormatedRegion records a styled span of text and Font (plus Models.Font) describes typeface, size and style - and an Office / OMML XML model set (document properties, Word document settings, math properties, html head) keeps equations and document metadata round-tripping through Word XML.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added a fluent RTF 1.x writer implementing IDocumentWriter and a single-pass lexer for text and metadata extraction.</PackageReleaseNotes>
     <ReleaseNotes>RTF document generation, text extraction and Office Math (OMML) models for sciBASIC#. Generation: RtfDocument implements IDocumentWriter (metadata, heading levels 1-6 and other styles, page setup in twips with A4 / Letter presets, lists, task lists, definition lists, rules, page breaks, static table of contents, tables with auto-fit and three-line styles, embedded png/jpeg images) and WriteBlocks renders the JSONSchema.Block markdown content model directly. Extraction: RtfTextReader returns the whole text, a paragraph array and document metadata through a tolerant single pass lexer that handles unicode escapes, hexadecimal escapes and raw multi-byte code pages. Model: the original Rtf / FormatedRegion / Font document object model is unchanged, and a serializable Office / OMML XML model set remains available for Word XML round-tripping.</ReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TargetFramework>net10.0</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>10.5.9777.32612</Version>
-    <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <Version>10.6.9781.24297</Version>
+    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -42,6 +44,14 @@
     <ProjectReference Include="..\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vbproj" />
     <ProjectReference Include="..\text%markdown\markdown.NET5.vbproj" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,197 @@
+# Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.Bootstrapping
+- AssemblyName  : Microsoft.VisualBasic.Data.Bootstrapping.Fittings
+- TargetFramework: net10.0
+- Source files  : 44
+- Existing Title: Curve Fitting and Regression Modelling Library
+- Existing Desc : Linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic, LASSO and Levenberg-Marquardt fitting with Bayesian and Gauss-Newton solvers. Part of sciBASIC#.
+- Existing Tags : scibasic;curve-fitting;regression;linear-least-squares;lasso;loess;logistic-regression;levenberg-marquardt
+
+## Namespaces
+- LASSO  [files: 4]
+- LevenbergMarquardt  [files: 9]
+- Logistic  [files: 4]
+- Multivariate  [files: 5]
+
+## Public types
+- Module Program (_smoketest\Program.vb) - DataFittings 回归算法统一 NumericTable 入口的自检程序。
+- Class BayesianCurveFitting (BayesianCurveFitting.vb)
+- Class Evaluation (Evaluation.vb) - Data fitting result evaluation.
+- Class GaussNewtonSolver (GaussNewtonSolver.vb) - least squares fitting for general curve functions
+- Class LassoFit (LASSO\LassoFit.vb)
+- Class LassoFitGenerator (LASSO\LassoFitGenerator.vb) - This implemenation is based on: Friedman, J., Hastie, T. and Tibshirani, R. (2008) Regularization Paths for Generalized Linear Models via Coordinate Descent. http://www-stat.stanford.edu/~hastie/Papers/glmnet.pdf
+- Class MathUtil (LASSO\MathUtil.vb) - Utility Math functions that are used by other classes. @author Yasser Ganjisaffar (http://www.ics.uci.edu/~yganjisa/)
+- Module NamespaceDoc (LASSO\NamespaceDoc.vb) - LASSO (L1 regularized) regression.
+- Class JamaHelper (Levenberg-Marquardt\JamaHelper.vb) - Created by duy on 31/1/15.
+- Interface LmParamHandler (Levenberg-Marquardt\LmParamHandler.vb) - Created by duy on 18/3/15.
+- Interface LmScalarModel (Levenberg-Marquardt\LmScalarModel.vb) - LmScalarModel is an interface for models (functions) whose ranges are single real-valued numbers
+- Class LmSolver (Levenberg-Marquardt\LmSolver.vb) - + g is the gradient (Jacobian) vector of the chi-squared error function + u is the damping value ### Adjusting damping value
+- Class LmSumError (Levenberg-Marquardt\LmSumError.vb) - Created by duy on 1/4/15.
+- Class LmSumSquaresError (Levenberg-Marquardt\LmSumSquaresError.vb) - Created by duy on 27/1/15.
+- Module NamespaceDoc (Levenberg-Marquardt\NamespaceDoc.vb) - The Levenberg-Marquardt non-linear least squares fitting algorithm.
+- Module DoubleLinear (Linear\DoubleLinear.vb)
+- Module Extensions (Linear\Extensions.vb)
+- Module FeatureProjection (Linear\FeatureProjection.vb)
+- Class FitResult (Linear\FitResult.vb) - 在讨论模型时，所谓“线性”并不意味就是直线。回归模型相对于参数是线性的，但是相对于解释变量可以是非线性关系。 比如以下这些常见形式都是线性回归模型： |模型名称 |表达式 |
+- Interface IFitted (Linear\IFitted.vb) - a unify interface model of linear fitting result
+- Module LeastSquares (Linear\LeastSquares.vb) - Linear interpolator 曲线拟合类，只适用于线性拟合： + ``y = a*x + b``
+- Module LinearFittingAlgorithm (Linear\MLR\LinearFitting.vb) - 多元线性回归拟合算法模块，提供拟合入口、特征曲线升维以及回归系数置信区间的计算。 (Multiple linear regression fitting algorithms: fit entry points, feature curve scaling, and confidence interval computation.)
+- Class MLRFit (Linear\MLR\MLRFit.vb) - Multiple linear regression.(多元线性回归) Problem of predicting appropriate values of given feature set as inputvector using supervised linear regression with multiple dimensional sample input
+- Module NamespaceDoc (Linear\MLR\NamespaceDoc.vb) - Multivariate linear regression (MLR).
+- Module NormalEquation (Linear\MLR\NormalEquation.vb)
+- Module NonNegativeLeastSquares (Linear\NonNegativeLeastSquares.vb) - NNLS Non-Negative Least-Squares algorithm
+- Class WeightedFit (Linear\Weighted\WeightedFit.vb) - 加权拟合的结果
+- Module WeightedLinearRegression (Linear\Weighted\WeightedLinearRegression.vb) - ## An Algorithm for Weighted Linear Regression > https://www.codeproject.com/Articles/25335/An-Algorithm-for-Weighted-Linear-Regression
+- Module LMA (LMA.vb) - ### Levenberg–Marquardt algorithm In mathematics and computing, the Levenberg–Marquardt algorithm (LMA or just LM), also known as the damped least-squares (DLS)
+- Structure FitInput (LMA.vb)
+- Module LOESS (LOESS\LOESS.vb) - ======================================================================== LOESS回归实现 ========================================================================
+- Class LOESSModel (LOESS\LOESSModel.vb) - LOESS模型，存储训练数据和参数
+- Class Instance (Logistic\Instance.vb) - classify training model
+- Class Logistic (Logistic\Logistic.vb) - This method uses Gradient descent algorithm. It uses number of small steps (iterations) And with each step use New theta values which results in smaller cost function value. After a while it comes to
+- Class LogisticFit (Logistic\LogisticFit.vb)
+- Module NamespaceDoc (Logistic\NamespaceDoc.vb) - Logistic regression.
+- Module LowessFittings (Lowess\LowessFittings.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - Curve fitting and regression: linear, polynomial and non-linear data fitting models.
+- Module NumericTablePrediction (NumericTablePrediction.vb) - 将回归模型的预测结果写回到统一二维表 <see cref="NumericTable"/> 的标签矩阵之中， 从而可以方便地把预测值与原始的观测值放在同一张表里面进行对比。
+- Module NumericTableRegressions (NumericTableRegressions.vb) - 1. 自变量 X 取表的**全部**特征列（<see cref="NumericTable.features"/>） 2. 因变量 y 由参数 ``y`` 指定标签列名，缺省为表中的第一个标签列； 表中没有标签列的时候会抛出 <see cref="ArgumentException"/>
+- Class StockPredict (stockpredict.vb) - Bayesian Curve Fitting
+- Interface IFitError (TestPoint.vb)
+- Class TestPoint (TestPoint.vb)
+
+## Notable public members
+- Public Sub New(x As Double(), t As Double(), m As Integer)
+- Public Overridable Function getS2X(x As Double) As Double
+- Public Overridable Function getMx(x As Double) As Double
+- Public Property SSR As Double
+- Public Property SSE As Double
+- Public Property RMSE As Double
+- Public ReadOnly Property R_square As Double
+- Public Overrides Function ToString() As String
+- Public Shared Function Calculate(X As Vector(), Y As Double(), fx As Func(Of Vector, Double), Optional parallel As Boolean = True) As Evaluation
+- Public Delegate Function FitFunction(x As Double, args As NumericMatrix) As Double
+- Public Sub New(fitFunction As FitFunction,
+- Public Function Fit(data As DataPoint(), argumentSize As Integer) As Double()
+- Public Function Fit(data As DataPoint(), ParamArray args As Double()) As Double()
+- Public Function LUPDecompose(m As NumericMatrix, Optional tol As Double = 0.0001) As (Boolean, NumericMatrix, Integer(), Integer)
+- Public Function Invert(m As NumericMatrix, Optional tol As Double = 0.0001, Optional truncate As Double = 10000) As (Boolean, NumericMatrix)
+- Public Property numberOfLambdas As Integer
+- Public Property intercepts As Double()
+- Public Property compressedWeights As Double()()
+- Public Property indices As Integer()
+- Public Property numberOfWeights As Integer()
+- Public Property nonZeroWeights As Integer()
+- Public Property lambdas As Double()
+- Public Property rsquared As Double()
+- Public Property numberOfPasses As Integer
+- Public Property numFeatures As Integer
+- Public Property featureNames As String()
+- Public Sub New(numberOfLambdas As Integer, maxAllowedFeaturesAlongPath As Integer, numFeatures As Integer)
+- Public Overridable Function getWeights(lambdaIdx As Integer) As Double()
+- Public Overrides Function ToString() As String
+- Public Function toDataFrame() As Dictionary(Of String, Array)
+- Public Function toNumericTable(Optional featureNames As String() = Nothing) As NumericTable
+- Public Shared Property tqdm_verbose As Boolean = True
+- Public Overridable Function getMaxAllowedObservations(maxNumFeatures As Integer) As Integer
+- Public Sub init(featureNames As String(), numObservations As Integer)
+- Public Overridable Sub init(maxNumFeatures As Integer, numObservations As Integer)
+- Public Overridable WriteOnly Property NumberOfFeatures As Integer
+- Public Overridable Sub setFeatureValues(idx As Integer, values As Double())
+- Public Overridable Function getFeatureValues(idx As Integer) As Double()
+- Public Overridable Sub setObservationValues(idx As Integer, values As Double())
+- Public Overridable WriteOnly Property Targets As Double()
+- Public Overridable Sub setTarget(idx As Integer, target As Double)
+- Public Overridable Function fit(maxAllowedFeaturesPerModel As Integer) As LassoFit
+- Public Shared Function getStg(arr As Double()) As Double
+- Public Shared Function getStg(arr As IList(Of Double)) As Double
+- Public Shared Function getStd(arr As Double(), avg As Double) As Double
+- Public Shared Function getStd(arr As IList(Of Double), avg As Double) As Double
+- Public Shared Function getDotProduct(vector1 As Single(), vector2 As Single(), length As Integer) As Double
+- Public Shared Function getDotProduct(vector1 As Double(), vector2 As Double(), length As Integer) As Double
+- Public Shared Sub divideInPlace(ByRef vector As Double(), val As Single)
+- Public Shared Function getFormattedDouble(val As Double, decimalPoints As Integer) As String
+- Public Shared Function solvePSDMatrixEq(A As Matrix, b As Matrix) As Matrix
+- Public Shared Function dotProduct(u As Matrix, v As Matrix) As Double
+- Protected Function hessian(dataIdx As Integer, optParams As Double()) As Double()()
+- Protected Function hessian(optParams As Double()) As Double()()
+- Public Sub New(inErrorFunc As LmModelError)
+- Public Sub New(errorFunc As LmModelError, damping As Double, maxNumIter As Integer, gradientEpsilon As Double, changeEpsilon As Double)
+- Public Overridable Property DampingFactor As Double
+- Public Overridable Property MaxNumIter As Integer
+- Public Overridable ReadOnly Property ErrorFunc As LmModelError
+- Public Overridable Property GradientEpsilon As Double
+- ... and 137 more
+
+## Imports
+- CholeskyDecomposition = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.CholeskyDecomposition
+- FeatureProjectionNS = Microsoft.VisualBasic.Data.Bootstrapping.FeatureProjection
+- FittingExtensions = Microsoft.VisualBasic.Data.Bootstrapping.Extensions
+- LassoNS = Microsoft.VisualBasic.Data.Bootstrapping.LASSO
+- LogisticNS = Microsoft.VisualBasic.Data.Bootstrapping.Logistic
+- Matrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix
+- Microsoft.VisualBasic.ApplicationServices.Debugging
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.Data
+- Microsoft.VisualBasic.Data.Bootstrapping
+- Microsoft.VisualBasic.Data.Bootstrapping.LevenbergMarquardt
+- Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.Distributions
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+- Microsoft.VisualBasic.Math.Scripting
+- Microsoft.VisualBasic.Scripting.Runtime
+- Microsoft.VisualBasic.Serialization.JSON
+- MultivariateNS = Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
+
+## File tree
+- _smoketest\Program.vb
+- BayesianCurveFitting.vb
+- Evaluation.vb
+- GaussNewtonSolver.vb
+- LASSO\LassoFit.vb
+- LASSO\LassoFitGenerator.vb
+- LASSO\MathUtil.vb
+- LASSO\NamespaceDoc.vb
+- Levenberg-Marquardt\JamaHelper.vb
+- Levenberg-Marquardt\LmDatumError.vb
+- Levenberg-Marquardt\LmModelError.vb
+- Levenberg-Marquardt\LmParamHandler.vb
+- Levenberg-Marquardt\LmScalarModel.vb
+- Levenberg-Marquardt\LmSolver.vb
+- Levenberg-Marquardt\LmSumError.vb
+- Levenberg-Marquardt\LmSumSquaresError.vb
+- Levenberg-Marquardt\NamespaceDoc.vb
+- Linear\DoubleLinear.vb
+- Linear\Extensions.vb
+- Linear\FeatureProjection.vb
+- Linear\FitResult.vb
+- Linear\IFitted.vb
+- Linear\LeastSquares.vb
+- Linear\MLR\Error.vb
+- Linear\MLR\LinearFitting.vb
+- Linear\MLR\MLRFit.vb
+- Linear\MLR\NamespaceDoc.vb
+- Linear\MLR\NormalEquation.vb
+- Linear\NonNegativeLeastSquares.vb
+- Linear\Weighted\WeightedFit.vb
+- Linear\Weighted\WeightedLinearRegression.vb
+- LMA.vb
+- LOESS\LOESS.vb
+- LOESS\LOESSModel.vb
+- Logistic\Instance.vb
+- Logistic\Logistic.vb
+- Logistic\LogisticFit.vb
+- Logistic\NamespaceDoc.vb
+- Lowess\LowessFittings.vb
+- NamespaceDoc.vb
+- NumericTablePrediction.vb
+- NumericTableRegressions.vb
+- stockpredict.vb
+- TestPoint.vb
+

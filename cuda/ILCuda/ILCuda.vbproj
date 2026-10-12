@@ -13,10 +13,10 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <Description>Dependency-free VB.NET CUDA framework built on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu sources, kernel catalog and launch planning, reduction, elementwise and BLAS kernels, plus an IL-to-CUDA emitter.</Description>
+    <Description>A CUDA compute framework for sciBASIC#: zero-dependency Driver API and NVRTC interop for device, context, stream and memory management, JIT compilation of embedded .cu kernels, plus an IL emitter that translates marked .NET methods into CUDA C source.</Description>
     <OutputPath>../../.nuget/</OutputPath>
     <Configurations>Debug;Release;nuget_release;Rsharp_app_release</Configurations>
-    <Title>ILCuda: Pure-Interop VB.NET CUDA Compute Framework</Title>
+    <Title>Pure-Interop CUDA Compute Framework with IL-to-CUDA Kernel Emitter</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Computing.ILCuda</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
@@ -24,8 +24,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>scibasic;cuda;nvrtc;gpu;interop;cuda-driver-api;kernels;blas;jit-compilation;il-to-cuda</PackageTags>
-    <PackageReleaseNotes>ILCuda is the dependency-free CUDA compute framework of sciBASIC#, built directly on the CUDA Driver API (nvcuda.dll) and NVRTC - no CUDA Runtime, no C++/CLI and no third party wrapper. Interop layer: the full DllImport surface of the driver API with Check() helpers, the NVRTC dynamic binding (NativeLibrary + GetDelegateForFunctionPointer), and the CUresult / CUdevice_attribute / nvrtcResult enums plus CudaException. Runtime layer: device attributes, primary context management, PTX/cubin module loading, kernel launching with argument marshalling, streams and events for copy/compute overlap and GPU side timing, typed device buffers and pinned host buffers, and a LaunchPlanner deriving grid/block sizes. Compilation: NvrtcCompiler obtains kernel images through multiple channels (NVRTC compile, precompiled image, failure diagnostics) while CubinInspector pre-checks driver compatibility. Kernels: an embedded source catalog with basic (vecAdd / saxpy), two-stage generic reduction, elementwise operators and a BLAS subset (tiled GEMM / GEMV). Diagnostics: structured DeviceReport / EnvironmentReport / FixSuggestion output that explains driver or toolkit version mismatches. The IL2Cuda namespace adds the CudaKernel attribute family, the .NET to CUDA type map and an IL emitter that turns marked method bodies into CUDA C source.</PackageReleaseNotes>
+    <PackageTags>scibasic;cuda;nvrtc;gpu;cuda-driver-api;jit-compilation;il-to-cuda</PackageTags>
+    <PackageReleaseNotes>Adds NVML diagnostics, GPU process counters and environment reporting alongside the new IL-to-CUDA kernel emitter and launch planner.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -33,8 +33,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>10.5.9777.32612</Version>
-    <AssemblyVersion>1.0.9777.32612</AssemblyVersion>
+    <Version>10.6.9781.24297</Version>
+    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

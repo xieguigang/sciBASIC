@@ -1,0 +1,198 @@
+# Data_science/Mathematica/Math/GeneticProgramming/GeneticProgramming.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming
+- AssemblyName  : Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming
+- TargetFramework: net10.0
+- Source files  : 49
+- Existing Title: Symbolic Regression via Genetic Programming and GA
+- Existing Desc : Evolves mathematical expressions and polynomial models with genetic programming and genetic algorithms, using pluggable expression trees and error objectives such as MSE, MAE, SSE and SAE. Part of sciBASIC#.
+- Existing Tags : scibasic;genetic-programming;symbolic-regression;expression-tree;evolutionary-algorithm;polynomial-model;fitness-function
+
+## Namespaces
+- evolution  [files: 11]
+- evolution.measure  [files: 7]
+- model  [files: 5]
+- model.factory  [files: 4]
+- model.impl  [files: 20]
+
+## Public types
+- Class Configuration (evolution\Configuration.vb) - Basic configuration for the evolution.
+- Class Evolution (evolution\Evolution.vb)
+- Class EvolutionResult (evolution\EvolutionResult.vb)
+- Class GAConfiguration (evolution\GAConfiguration.vb) - Configuration for the Genetic Algorithm evolution.
+- Class GAPolynomial (evolution\GAPolynomial.vb)
+- Class GAPolynomialUtils (evolution\GAPolynomialUtils.vb)
+- Enum PolyMutationType (evolution\GAPolynomialUtils.vb)
+- Enum PolyCrossoverType (evolution\GAPolynomialUtils.vb)
+- Class GPConfiguration (evolution\GPConfiguration.vb) - Configuration for the Genetic Programming evolution.
+- Class GPTree (evolution\GPTree.vb)
+- Class GPTreeUtils (evolution\GPTreeUtils.vb)
+- Class TraverseResult (evolution\GPTreeUtils.vb)
+- Enum TreeMutationType (evolution\GPTreeUtils.vb)
+- Enum TreeCrossoverType (evolution\GPTreeUtils.vb)
+- Interface Individual (evolution\Individual.vb)
+- Class MeanAbsoluteError (evolution\measure\MeanAbsoluteError.vb)
+- Class MeanSquareError (evolution\measure\MeanSquareError.vb)
+- Module NamespaceDoc (evolution\measure\NamespaceDoc.vb) - Fitness measures used to evaluate evolved programs.
+- Interface Objective (evolution\measure\Objective.vb)
+- Enum InnerEnum (evolution\measure\ObjectiveFunction.vb)
+- Class SumAbsoluteError (evolution\measure\SumAbsoluteError.vb)
+- Class SumSquareError (evolution\measure\SumSquareError.vb)
+- Module NamespaceDoc (evolution\NamespaceDoc.vb) - The genetic programming evolution engine: genomes, selection and the evolution loop.
+- Interface BinaryExpression (model\BinaryExpression.vb)
+- Interface Expression (model\Expression.vb) - Represents an expression that can be evaluated for a variable <tt>x</tt>.
+- Class ExpressionWrapper (model\ExpressionWrapper.vb)
+- Enum InnerEnum (model\factory\CompositeExpression.vb)
+- Class ExpressionFactory (model\factory\ExpressionFactory.vb)
+- Module NamespaceDoc (model\factory\NamespaceDoc.vb) - Factories that build symbolic program models.
+- Module Symbols (model\factory\Symbols.vb)
+- Class Cosine (model\impl\Cosine.vb)
+- Class Divide (model\impl\Divide.vb)
+- Class Exponential (model\impl\Exponential.vb)
+- Class E (model\impl\literal\E.vb)
+- Class Number (model\impl\literal\Number.vb)
+- Class PI (model\impl\literal\PI.vb)
+- Class Tau (model\impl\literal\Tau.vb)
+- Class Logarithm (model\impl\Logarithm.vb)
+- Class Minus (model\impl\Minus.vb)
+- Class Multiply (model\impl\Multiply.vb)
+- Module NamespaceDoc (model\impl\NamespaceDoc.vb) - Implementations of the symbolic program model nodes.
+- Class Plus (model\impl\Plus.vb)
+- Class Power (model\impl\Power.vb)
+- Class Sine (model\impl\Sine.vb)
+- Class SquareRoot (model\impl\SquareRoot.vb)
+- Class Tangent (model\impl\Tangent.vb)
+- Class Variable (model\impl\Variable.vb)
+- Module NamespaceDoc (model\NamespaceDoc.vb) - The symbolic program model used by genetic programming.
+- Interface UnaryExpression (model\UnaryExpression.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - Genetic programming: symbolic regression and the evolution of executable programs.
+- Module Utils (Utils.vb)
+
+## Notable public members
+- Public Overridable Function validate() As Boolean
+- Public Shared Function createDefaultConfig() As Configuration
+- Public Overridable WriteOnly Property ExpressionFactory As ExpressionFactory
+- Public Overridable Function evolvePolyFor(dataTuples As IEnumerable(Of DataPoint), configuration As GAConfiguration) As EvolutionResult
+- Public Overridable Function evolveTreeFor(dataTuples As IEnumerable(Of DataPoint), configuration As GPConfiguration) As EvolutionResult
+- Public Sub New(result As Expression, fitness As Double, time As Long, epochs As Integer, fitnessProgress As IList(Of Double), timeProgress As IList(Of…
+- Public Overrides Function ToString() As String
+- Public Overrides Function validate() As Boolean
+- Public Overloads Shared Function createDefaultConfig() As GAConfiguration
+- Public Shared WriteOnly Property Objective As Objective
+- Public Sub New(root As ExpressionWrapper)
+- Protected Friend Overridable ReadOnly Property Root As ExpressionWrapper
+- Protected Friend Overridable ReadOnly Property Parameters As ISet(Of Number)
+- Protected Friend Overridable Property Order As Integer
+- Public Overridable ReadOnly Property Expression As Expression Implements Individual.Expression
+- Public Overridable ReadOnly Property Fitness As Double Implements Individual.Fitness
+- Public Overridable Function computeFitness(dataTuples As IList(Of DataPoint)) As Double Implements Individual.computeFitness
+- Public Overridable Function CompareTo(other As Individual) As Integer Implements IComparable(Of Individual).CompareTo
+- Public Shared Sub mutation(type As PolyMutationType, poly As GAPolynomial, rangeForm As Double, rangeTo As Double)
+- Public Shared Sub randomPointMutation(poly As GAPolynomial, rangeForm As Double, rangeTo As Double)
+- Public Shared Sub gaussianPointMutation(poly As GAPolynomial, rangeForm As Double, rangeTo As Double)
+- Public Shared Sub crossover(type As PolyCrossoverType, polyOne As GAPolynomial, polyTwo As GAPolynomial)
+- Public Shared Sub simpleCrossover(polyOne As GAPolynomial, polyTwo As GAPolynomial)
+- Public Shared Sub arithmeticalCrossover(polyOne As GAPolynomial, polyTwo As GAPolynomial)
+- Public Shared Sub simulatedBinaryCrossover(polyOne As GAPolynomial, polyTwo As GAPolynomial)
+- Public Shared Function traverse(expression As ExpressionWrapper) As ISet(Of Number)
+- Public Overrides Function validate() As Boolean
+- Public Overloads Shared Function createDefaultConfig() As GPConfiguration
+- Public Shared Property Objective As Objective
+- Public Sub New(root As ExpressionWrapper)
+- Protected Friend Overridable ReadOnly Property Root As ExpressionWrapper
+- Protected Friend Overridable ReadOnly Property Terminals As ISet(Of ExpressionWrapper)
+- Protected Friend Overridable ReadOnly Property NonTerminals As ISet(Of ExpressionWrapper)
+- Protected Friend Overridable Property Depth As Integer
+- Public Overridable ReadOnly Property Expression As Expression Implements Individual.Expression
+- Public Overridable ReadOnly Property Fitness As Double Implements Individual.Fitness
+- Public Overridable Function computeFitness(dataTuples As IList(Of DataPoint)) As Double Implements Individual.computeFitness
+- Public Overridable Function CompareTo(other As Individual) As Integer Implements IComparable(Of Individual).CompareTo
+- Public Shared Sub mutation(type As TreeMutationType, tree As GPTree, factory As ExpressionFactory)
+- Public Shared Sub pointMutation(tree As GPTree, factory As ExpressionFactory)
+- Public Shared Sub subtreeMutation(tree As GPTree, factory As ExpressionFactory)
+- Public Shared Sub crossover(type As TreeCrossoverType, treeOne As GPTree, treeTwo As GPTree)
+- Public Shared Sub subtreeCrossover(treeOne As GPTree, treeTwo As GPTree)
+- Public Shared Function traverse(expression As ExpressionWrapper) As TraverseResult
+- Public Sub New(depth As Integer, terminals As ISet(Of ExpressionWrapper), nonTerminals As ISet(Of ExpressionWrapper))
+- Public Overrides Function getOverallError(ParamArray errors As Double()) As Double
+- Public Overrides Function getOverallError(ParamArray errors As Double()) As Double
+- Public Shared Function values() As IList(Of ObjectiveFunction)
+- Public Function ordinal() As Integer
+- Public Overrides Function ToString() As String
+- Public Shared Function valueOf(name As String) As ObjectiveFunction
+- Public Overridable Function getError(expected As Double, real As Double) As Double Implements Objective.getError
+- Public Overridable Function getOverallError(ParamArray errors As Double()) As Double Implements Objective.getOverallError
+- Public Overridable Function getError(expected As Double, real As Double) As Double Implements Objective.getError
+- Public Overridable Function getOverallError(ParamArray errors As Double()) As Double Implements Objective.getOverallError
+- Public Overridable Property Expression As Expression
+- Public Overridable ReadOnly Property Unary As Boolean
+- Public Overridable ReadOnly Property Binary As Boolean
+- Public Overridable Property LeftChild As Expression Implements BinaryExpression.LeftChild
+- Public Overridable Property RightChild As Expression Implements BinaryExpression.RightChild
+- ... and 120 more
+
+## Imports
+- Microsoft.VisualBasic.Data.Bootstrapping
+- Microsoft.VisualBasic.Emit.Delegates
+- Microsoft.VisualBasic.Language.Java.Arrays
+- Microsoft.VisualBasic.Math.Scripting
+- Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+- Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+- Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
+- Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
+- rndf = Microsoft.VisualBasic.Math.RandomExtensions
+- std = System.Math
+- System.Reflection
+- System.Runtime.CompilerServices
+
+## File tree
+- evolution\Configuration.vb
+- evolution\Evolution.vb
+- evolution\EvolutionResult.vb
+- evolution\GAConfiguration.vb
+- evolution\GAPolynomial.vb
+- evolution\GAPolynomialUtils.vb
+- evolution\GPConfiguration.vb
+- evolution\GPTree.vb
+- evolution\GPTreeUtils.vb
+- evolution\Individual.vb
+- evolution\measure\MeanAbsoluteError.vb
+- evolution\measure\MeanSquareError.vb
+- evolution\measure\NamespaceDoc.vb
+- evolution\measure\Objective.vb
+- evolution\measure\ObjectiveFunction.vb
+- evolution\measure\SumAbsoluteError.vb
+- evolution\measure\SumSquareError.vb
+- evolution\NamespaceDoc.vb
+- model\BinaryExpression.vb
+- model\Expression.vb
+- model\ExpressionWrapper.vb
+- model\factory\CompositeExpression.vb
+- model\factory\ExpressionFactory.vb
+- model\factory\NamespaceDoc.vb
+- model\factory\Symbols.vb
+- model\impl\AbstractBinaryExpression.vb
+- model\impl\AbstractExpression.vb
+- model\impl\AbstractUnaryExpression.vb
+- model\impl\Cosine.vb
+- model\impl\Divide.vb
+- model\impl\Exponential.vb
+- model\impl\literal\E.vb
+- model\impl\literal\Number.vb
+- model\impl\literal\PI.vb
+- model\impl\literal\Tau.vb
+- model\impl\Logarithm.vb
+- model\impl\Minus.vb
+- model\impl\Multiply.vb
+- model\impl\NamespaceDoc.vb
+- model\impl\Plus.vb
+- model\impl\Power.vb
+- model\impl\Sine.vb
+- model\impl\SquareRoot.vb
+- model\impl\Tangent.vb
+- model\impl\Variable.vb
+- model\NamespaceDoc.vb
+- model\UnaryExpression.vb
+- NamespaceDoc.vb
+- Utils.vb
+

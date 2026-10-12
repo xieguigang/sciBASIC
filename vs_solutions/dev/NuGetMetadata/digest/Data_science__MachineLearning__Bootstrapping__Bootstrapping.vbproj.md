@@ -1,0 +1,196 @@
+# Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.MachineLearning.Bootstrapping
+- AssemblyName  : Microsoft.VisualBasic.MachineLearning.Bootstrapping
+- TargetFramework: net10.0
+- Source files  : 42
+- Existing Title: Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)
+- Existing Desc : Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.
+- Existing Tags : scibasic;graph-embedding;node2vec;graph2vec;knowledge-graph;complex;random-walk;representation-learning
+
+## Namespaces
+- GraphEmbedding  [files: 3]
+- GraphEmbedding.complex  [files: 5]
+- GraphEmbedding.complex_NNE  [files: 5]
+- GraphEmbedding.complex_NNE_AER  [files: 6]
+- GraphEmbedding.complex_R  [files: 6]
+- GraphEmbedding.struct  [files: 8]
+- GraphEmbedding.util  [files: 3]
+- node2vec  [files: 4]
+
+## Public types
+- Class Graph2Vec (Graph2Vec.vb)
+- Class Arguments (GraphEmbedding\Arguments.vb)
+- Class AdaGrad (GraphEmbedding\complex\AdaGrad.vb)
+- Class ComplEx (GraphEmbedding\complex\ComplEx.vb)
+- Class Evaluation (GraphEmbedding\complex\Evaluation.vb)
+- Class Gradients (GraphEmbedding\complex\Gradients.vb)
+- Module NamespaceDoc (GraphEmbedding\complex\NamespaceDoc.vb) - The complex graph embedding models.
+- Class AdaGrad (GraphEmbedding\complex_NNE\AdaGrad.vb)
+- Class ComplEx (GraphEmbedding\complex_NNE\ComplEx.vb)
+- Class Evaluation (GraphEmbedding\complex_NNE\Evaluation.vb)
+- Class Gradients (GraphEmbedding\complex_NNE\Gradients.vb)
+- Module NamespaceDoc (GraphEmbedding\complex_NNE\NamespaceDoc.vb) - The complex graph embedding model with a neural network encoder.
+- Class AdaGrad (GraphEmbedding\complex_NNE_AER\AdaGrad.vb)
+- Class AERGradients (GraphEmbedding\complex_NNE_AER\AERGradients.vb)
+- Class ComplEx (GraphEmbedding\complex_NNE_AER\ComplEx.vb)
+- Class Evaluation (GraphEmbedding\complex_NNE_AER\Evaluation.vb)
+- Class Gradients (GraphEmbedding\complex_NNE_AER\Gradients.vb)
+- Module NamespaceDoc (GraphEmbedding\complex_NNE_AER\NamespaceDoc.vb) - The auto-encoder regularized complex graph embedding model.
+- Class AdaGrad (GraphEmbedding\complex_R\AdaGrad.vb)
+- Class ComplEx (GraphEmbedding\complex_R\ComplEx.vb)
+- Class Evaluation (GraphEmbedding\complex_R\Evaluation.vb)
+- Class Gradients (GraphEmbedding\complex_R\Gradients.vb)
+- Module NamespaceDoc (GraphEmbedding\complex_R\NamespaceDoc.vb) - The complex graph embedding model with typed relations.
+- Class RGradients (GraphEmbedding\complex_R\RGradients.vb)
+- Module NamespaceDoc (GraphEmbedding\NamespaceDoc.vb) - Graph embedding algorithms: the shared embedding abstractions.
+- Class Matrix (GraphEmbedding\struct\Matrix.vb)
+- Module NamespaceDoc (GraphEmbedding\struct\NamespaceDoc.vb) - Structural graph embedding models.
+- Structure Relation (GraphEmbedding\struct\Relation.vb)
+- Class Rule (GraphEmbedding\struct\Rule.vb)
+- Class RuleSet (GraphEmbedding\struct\RuleSet.vb)
+- Structure Triple (GraphEmbedding\struct\Triple.vb)
+- Class TripleDict (GraphEmbedding\struct\TripleDict.vb)
+- Class TripleSet (GraphEmbedding\struct\TripleSet.vb)
+- Module NamespaceDoc (GraphEmbedding\util\NamespaceDoc.vb) - Utility helpers for the graph embedding algorithms.
+- Class NegativeTripleGenerator (GraphEmbedding\util\NegativeTripleGenerator.vb)
+- Class StringSplitter (GraphEmbedding\util\StringSplitter.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - The graph embedding and bootstrapping machine learning toolkit.
+- Class Graph (Node2Vec\Graph.vb) - Created by freemso on 17-3-14.
+- Module NamespaceDoc (Node2Vec\NamespaceDoc.vb) - The node2vec graph embedding algorithm.
+- Module Solver (Node2Vec\Solver.vb) - Created by freemso on 17-3-14.
+
+## Notable public members
+- Public Function Setup(terms As IEnumerable(Of String)) As Graph2Vec
+- Public Function GraphVector(g As Graph) As Double()
+- Public MustOverride Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTri…
+- Public MustOverride Sub learn()
+- Public Shared Function ComplEx(args As Arguments)
+- Public Shared Function learn(Of alg As {New, Algorithm})(args As Arguments)
+- Public Shared Function complex_NNE(args As Arguments)
+- Public Shared Function complex_NNE_AER(args As Arguments, rules As String)
+- Public Shared Function complex_R(args As Arguments, rules As String)
+- Public Property k As Integer = 50
+- Public Property lmbda As Double = 0.001
+- Public Property gamma As Double = 0.1
+- Public Property neg As Integer = 2
+- Public Property iterations As Integer = 1000
+- Public Property skip As Integer = 1
+- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), in_Real_MatrixE As …
+- Public Overridable Sub gradientDescent()
+- Public Sub New()
+- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
+- Public Overrides Sub learn()
+- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
+- Public Overridable Sub calculateMetrics()
+- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
+- Public Overridable Function sigmoid(x As Double) As Double
+- Public Overridable Sub calculateGradients()
+- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), in_Real_MatrixE As …
+- Public Overridable Sub gradientDescent()
+- Public Sub New()
+- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
+- Public Overrides Sub learn()
+- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
+- Public Overridable Sub calculateMetrics()
+- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
+- Public Overridable Function sigmoid(x As Double) As Double
+- Public Overridable Sub calculateGradients()
+- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), inLstRules As List(…
+- Public Overridable Sub gradientDescent()
+- Public Sub New(inRule As Rule, inReal_MatrixR As Matrix, inImag_MatrixR As Matrix, inReal_MatrixRGradient As Matrix, inImag_MatrixRGradient As Matrix,…
+- Public Overridable Sub calculateGradients()
+- Public Sub New()
+- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
+- Public Overrides Sub learn()
+- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
+- Public Overridable Sub calculateMetrics()
+- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
+- Public Overridable Function sigmoid(x As Double) As Double
+- Public Overridable Sub calculateGradients()
+- Public Sub New(inLstPosTriples As List(Of Triple), inLstHeadNegTriples As List(Of Triple), inLstTailNegTriples As List(Of Triple), inLstRules As List(…
+- Public Overridable Sub gradientDescent()
+- Public Sub New()
+- Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriple…
+- Public Overrides Sub learn()
+- Public Sub New(inLstTestTriples As TripleSet, inLstAllTriples As Dictionary(Of String, Boolean), in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix,…
+- Public Overridable Sub calculateMetrics()
+- Public Sub New(inTriple As Triple, inLabel As Double, in_Real_MatrixE As Matrix, in_Real_MatrixR As Matrix, in_Imag_MatrixE As Matrix, in_Imag_MatrixR…
+- Public Overridable Function sigmoid(x As Double) As Double
+- Public Overridable Sub calculateGradients()
+- Public Sub New(inRule As Rule, inReal_MatrixR As Matrix, inImag_MatrixR As Matrix, inReal_MatrixRGradient As Matrix, inImag_MatrixRGradient As Matrix,…
+- Public Overridable Sub calculateGradients()
+- Public Sub New()
+- ... and 53 more
+
+## Imports
+- Edge = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data
+- Microsoft.VisualBasic.Data.GraphTheory
+- Microsoft.VisualBasic.Data.GraphTheory.SequenceGraphTransform
+- Microsoft.VisualBasic.Data.NLP.Word2Vec
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Linq
+- Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
+- Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
+- Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Text
+- Node = Microsoft.VisualBasic.Data.GraphTheory.Vertex
+- randf = Microsoft.VisualBasic.Math.RandomExtensions
+- std = System.Math
+- System
+- System.Collections.Generic
+- System.ComponentModel
+- System.IO
+- System.Runtime.CompilerServices
+- System.Text
+- System.Text.RegularExpressions
+
+## File tree
+- Graph2Vec.vb
+- GraphEmbedding\Algorithm.vb
+- GraphEmbedding\Arguments.vb
+- GraphEmbedding\complex\AdaGrad.vb
+- GraphEmbedding\complex\ComplEx.vb
+- GraphEmbedding\complex\Evaluation.vb
+- GraphEmbedding\complex\Gradients.vb
+- GraphEmbedding\complex\NamespaceDoc.vb
+- GraphEmbedding\complex_NNE\AdaGrad.vb
+- GraphEmbedding\complex_NNE\ComplEx.vb
+- GraphEmbedding\complex_NNE\Evaluation.vb
+- GraphEmbedding\complex_NNE\Gradients.vb
+- GraphEmbedding\complex_NNE\NamespaceDoc.vb
+- GraphEmbedding\complex_NNE_AER\AdaGrad.vb
+- GraphEmbedding\complex_NNE_AER\AERGradients.vb
+- GraphEmbedding\complex_NNE_AER\ComplEx.vb
+- GraphEmbedding\complex_NNE_AER\Evaluation.vb
+- GraphEmbedding\complex_NNE_AER\Gradients.vb
+- GraphEmbedding\complex_NNE_AER\NamespaceDoc.vb
+- GraphEmbedding\complex_R\AdaGrad.vb
+- GraphEmbedding\complex_R\ComplEx.vb
+- GraphEmbedding\complex_R\Evaluation.vb
+- GraphEmbedding\complex_R\Gradients.vb
+- GraphEmbedding\complex_R\NamespaceDoc.vb
+- GraphEmbedding\complex_R\RGradients.vb
+- GraphEmbedding\NamespaceDoc.vb
+- GraphEmbedding\struct\Matrix.vb
+- GraphEmbedding\struct\NamespaceDoc.vb
+- GraphEmbedding\struct\Relation.vb
+- GraphEmbedding\struct\Rule.vb
+- GraphEmbedding\struct\RuleSet.vb
+- GraphEmbedding\struct\Triple.vb
+- GraphEmbedding\struct\TripleDict.vb
+- GraphEmbedding\struct\TripleSet.vb
+- GraphEmbedding\util\NamespaceDoc.vb
+- GraphEmbedding\util\NegativeTripleGenerator.vb
+- GraphEmbedding\util\StringSplitter.vb
+- NamespaceDoc.vb
+- Node2Vec\AliasMethod.vb
+- Node2Vec\Graph.vb
+- Node2Vec\NamespaceDoc.vb
+- Node2Vec\Solver.vb
+

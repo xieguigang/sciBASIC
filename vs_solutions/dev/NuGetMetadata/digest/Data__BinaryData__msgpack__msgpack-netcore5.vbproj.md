@@ -1,0 +1,144 @@
+# Data/BinaryData/msgpack/msgpack-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.IO.MessagePack
+- AssemblyName  : Microsoft.VisualBasic.Data.IO.MessagePack
+- TargetFramework: net10.0
+- Source files  : 27
+- Existing Title: MessagePack Binary Object Serialization Implementation
+- Existing Desc : Serializes and deserializes .NET objects to and from the MessagePack binary format, with reflection based member schemas, MessagePackMember attributes, nil implication handling and typed collection support, in either compact array or named map layout.
+- Existing Tags : scibasic;msgpack;messagepack;serialization;binary-format;deserialization;reflection
+
+## Namespaces
+- Constants  [files: 8]
+- Serialization  [files: 6]
+- Serialization.Default  [files: 2]
+- Serialization.Reflection  [files: 3]
+
+## Public types
+- Module MsgPackConstants (Constants\MsgPackConstants.vb)
+- Module NamespaceDoc (Constants\NamespaceDoc.vb) - The MessagePack format constants: format byte ranges and codes for booleans, fixed integers, fixed strings, fixed arrays and fixed maps.
+- Module MagicBytes (MagicBytes.vb)
+- Module MsgPackArrayIO (MsgPackArrayIO.vb) - 这里做的三件事（<b>wire 格式完全不变</b>，旧文件照样能读，别的 msgpack 实现也照样能读）： 1. <b>写</b>：先把元素编进一块字节缓冲（大端序按 msgpack 约定），攒够一块再整块写盘， 流调用次数从 <c>O(n)</c> 降到 <c>O(n / 块大小)</c>，且全程零分配；
+- Module MsgPackIO (MsgPackIO.vb)
+- Class MsgPackSerializer (MsgPackSerializer.vb)
+- Class NamespaceDoc (NamespaceDoc.vb) - MessagePack binary object serialization: serializes and deserializes .NET objects to and from the MessagePack format, driven by a serialization context and message pack I/O helpers.
+- Module ObjectExtensions (ObjectExtensions.vb)
+- Class NamedValueSchema (Serialization\Default\FrameworkInternal.vb)
+- Module NamespaceDoc (Serialization\Default\NamespaceDoc.vb) - The default MessagePack serialization handlers for framework internal types.
+- Class MessagePackMemberAttribute (Serialization\MessagePackMemberAttribute.vb)
+- Class MessagePackMemberDefinition (Serialization\MessagePackMemberDefinition.vb)
+- Module NamespaceDoc (Serialization\NamespaceDoc.vb) - The MessagePack serialization model: member attributes and definitions, nil implication handling, the serialization method and the schema provider.
+- Enum NilImplication (Serialization\NilImplication.vb)
+- Module NamespaceDoc (Serialization\Reflection\NamespaceDoc.vb) - Reflection based MessagePack serialization: the serializable property and type information models.
+- Class SerializableProperty (Serialization\Reflection\SerializableProperty.vb)
+- Class TypeInfo (Serialization\Reflection\TypeInfo.vb)
+- Enum SerializationMethod (Serialization\SerializationMethod.vb)
+- Class SerializationContext (SerializationContext.vb)
+
+## Notable public members
+- Public Const MIN As Byte = &H90
+- Public Const MAX As Byte = &H9F
+- Public Const POSITIVE_MIN As Byte = &H0
+- Public Const POSITIVE_MAX As Byte = &H7F
+- Public Const NEGATIVE_MIN As Byte = &HE0
+- Public Const NEGATIVE_MAX As Byte = &HFF
+- Public Const MIN As Byte = &H80
+- Public Const MAX As Byte = &H8F
+- Public Const MIN As Byte = &HA0
+- Public Const MAX As Byte = &HBF
+- Public Const MAX_LENGTH As Integer = 31
+- Public Const MAX_PROPERTY_COUNT As Integer = 15
+- Public Const NIL As Byte = &HC0
+- Public Const FLOAT_32 As Byte = &HCA
+- Public Const FLOAT_64 As Byte = &HCB
+- Public Const UINT_8 As Byte = &HCC
+- Public Const UNSIGNED_INTEGER_8 As Byte = &HCC
+- Public Const UINT_16 As Byte = &HCD
+- Public Const UNSIGNED_INTEGER_16 As Byte = &HCD
+- Public Const UINT_32 As Byte = &HCE
+- Public Const UNSIGNED_INTEGER_32 As Byte = &HCE
+- Public Const UINT_64 As Byte = &HCF
+- Public Const UNSIGNED_INTEGER_64 As Byte = &HCF
+- Public Const INT_8 As Byte = &HD0
+- Public Const INTEGER_8 As Byte = &HD0
+- Public Const INT_16 As Byte = &HD1
+- Public Const INTEGER_16 As Byte = &HD1
+- Public Const INT_32 As Byte = &HD2
+- Public Const INTEGER_32 As Byte = &HD2
+- Public Const INT_64 As Byte = &HD3
+- Public Const INTEGER_64 As Byte = &HD3
+- Public Const STR_8 As Byte = &HD9
+- Public Const STRING_8 As Byte = &HD9
+- Public Const STR_16 As Byte = &HDA
+- Public Const STRING_16 As Byte = &HDA
+- Public Const STR_32 As Byte = &HDB
+- Public Const STRING_32 As Byte = &HDB
+- Public Const ARRAY_16 As Byte = &HDC
+- Public Const ARRAY_32 As Byte = &HDD
+- Public Const MAP_16 As Byte = &HDE
+- Public Const MAP_32 As Byte = &HDF
+- Public Shared Function GetEnums() As Dictionary(Of String, Byte)
+- Public Function IsArray(magic As Byte) As Boolean
+- Public Function TypeOfMagic(magic As Byte) As Type
+- Friend Function IsPrimitiveElement(elementType As Type) As Boolean
+- Friend Function TryWriteArray(array As Array, writer As BinaryWriter) As Boolean
+- Friend Function TryReadArray(array As Array, numElements As Integer, reader As BinaryDataReader) As Boolean
+- Friend Function TryReadList(collection As IList, numElements As Integer, reader As BinaryDataReader) As Boolean
+- Friend Function ReadNumArrayElements(reader As BinaryDataReader) As Integer
+- Friend Sub DeserializeArray(array As Array, numElements As Integer, reader As BinaryDataReader)
+- Friend Function DeserializeCollection(collection As IList, reader As BinaryDataReader) As Boolean
+- Friend Function DeserializeCollection(collection As IDictionary, reader As BinaryDataReader, Optional header As Byte? = Nothing) As Boolean
+- Friend Function ToUnixMillis(dateTime As Date) As Long
+- Friend Function ToUnixMillis(span As TimeSpan) As Long
+- Friend Function ToDateTime(value As Long) As Date
+- Friend Function ToTimeSpan(value As Long) As TimeSpan
+- Friend Function DeserializeValue(type As Type, reader As BinaryDataReader, nilImplication As NilImplication) As Object
+- Friend Function ReadHeader(t As Type, reader As BinaryDataReader, nilImplication As NilImplication, <Out> ByRef result As Object) As Byte
+- Friend Function ReadMsgPackBoolean(reader As BinaryDataReader, nilImplication As NilImplication) As Object
+- Friend Function ReadMsgPackFloat(reader As BinaryDataReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
+- ... and 72 more
+
+## Imports
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.Data.IO.MessagePack.Constants
+- Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+- Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection
+- Microsoft.VisualBasic.Emit.Delegates
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Text.Xml.Models
+- System.IO
+- System.Reflection
+- System.Runtime.CompilerServices
+- System.Runtime.InteropServices
+- System.Text
+- TypeInfo = Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection.TypeInfo
+
+## File tree
+- Constants\Bool.vb
+- Constants\FixedArray.vb
+- Constants\FixedInteger.vb
+- Constants\FixedMap.vb
+- Constants\FixedString.vb
+- Constants\MsgPackConstants.vb
+- Constants\MsgPackFormats.vb
+- Constants\NamespaceDoc.vb
+- MagicBytes.vb
+- MsgPackArrayIO.vb
+- MsgPackIO.vb
+- MsgPackSerializer.vb
+- NamespaceDoc.vb
+- ObjectExtensions.vb
+- Properties\AssemblyInfo.vb
+- Serialization\Default\FrameworkInternal.vb
+- Serialization\Default\NamespaceDoc.vb
+- Serialization\MessagePackMemberAttribute.vb
+- Serialization\MessagePackMemberDefinition.vb
+- Serialization\NamespaceDoc.vb
+- Serialization\NilImplication.vb
+- Serialization\Reflection\NamespaceDoc.vb
+- Serialization\Reflection\SerializableProperty.vb
+- Serialization\Reflection\TypeInfo.vb
+- Serialization\SchemaProvider.vb
+- Serialization\SerializationMethod.vb
+- SerializationContext.vb
+

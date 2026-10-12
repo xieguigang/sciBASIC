@@ -1,0 +1,279 @@
+# Data/DataFrame/dataframework-netcore5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Data.Framework
+- AssemblyName  : Microsoft.VisualBasic.Data.Framework
+- TargetFramework: net10.0
+- Source files  : 80
+- Existing Title: Tabular Data Frame and CSV/ARFF Storage Provider Framework
+- Existing Desc : Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers and writers, MySQL helpers, reflection based storage providers that map .NET classes to table rows and columns, and a streaming LINQ style I/O layer.
+- Existing Tags : scibasic;dataframe;dataset;csv;arff;storage-provider;tabular-data;reflection
+
+## Namespaces
+- DataSetExtensions  [files: 8]
+- DataSetExtensions.Excel  [files: 3]
+- IO  [files: 9]
+- IO.ArffFile  [files: 3]
+- IO.CSVFile  [files: 7]
+- IO.Linq  [files: 5]
+- StorageProvider  [files: 4]
+- StorageProvider.ComponentModels  [files: 11]
+- StorageProvider.Reflection  [files: 10]
+
+## Public types
+- Module Program (_smoketest\Program.vb) - NumericTable 的 csv/tsv 文本读写与 DataFrame 双向转换的自检程序。
+- Class DataFrame (DataFrame\DataFrame.vb) - R language liked dataframe object
+- Class DataFrameReader (DataFrame\DataFrameReader.vb)
+- Module FastLoader (DataFrame\FastLoader.vb)
+- Class FeatureVector (DataFrame\FeatureVector.vb) - the feature column vector
+- Module FileWriter (DataFrame\FileWriter.vb)
+- Module Mapper (DataFrame\Mapper.vb)
+- Module NumericDataSet (DataFrame\NumericDataSet.vb)
+- Module NumericTableConversion (DataFrame\NumericTableConversion.vb) - <see cref="NumericTable"/> 与 <see cref="DataFrame"/> 之间的相互转换。 其中标签列统一以 <see cref="DefaultLabelPrefix"/> 作为列名前缀参与转换， 因此 ``table -> dataframe -> table`` 的往返是无损的：行名、特征列、标签列、
+- Module NumericTableIO (DataFrame\NumericTableIO.vb) - ``` ,f1,f2,f3,label:cluster,label:score s1,1.5,-2.25,0,1,0.1
+- Class DataRows (DataSet\DataRows.vb) - 提供了类似于R语言之中的``cbind``操作类似的按照列进行数据框合并的方法
+- Module Coordinates (DataSet\Excel\Coordinates.vb)
+- Module Numerics (DataSet\Excel\Functions\Numerics.vb)
+- Module NamespaceDoc (DataSet\Excel\NamespaceDoc.vb) - Excel coordinate and numeric function helpers for exporting data sets to spreadsheet cells.
+- Module Extensions (DataSet\Extensions.vb)
+- Class HTMLWriter (DataSet\HTMLWriter.vb) - file generator for mshtml
+- Interface MatrixProvider (DataSet\MatrixProvider.vb) - A numeric data matrix provider
+- Class DataTable (DataSet\MatrixProvider.vb)
+- Module MySQL (DataSet\MySQL.vb) - MySQL data extensions
+- Module NamespaceDoc (DataSet\NamespaceDoc.vb) - DataSet extensions: data rows, table unions, the HTML writer, the matrix provider together with MySQL and R data frame helpers.
+- Module RDataFrameHelpers (DataSet\RDataFrameHelpers.vb) - Helpers function for R dataframe data imports
+- Module DataImports (Extensions\DataImports.vb)
+- Module DocumentExtensions (Extensions\DocumentExtensions.vb) - The csv document extensions API
+- Module Extensions (Extensions\Extensions.vb)
+- Module DataSetMath (Extensions\Math.vb) - Vector math extensions for <see cref="DataSet"/> or its collection.
+- Module PipeStream (Extensions\PipeStream.vb)
+- Module ProfileStreams (Extensions\ProfileStreams.vb) - Provides the ``*.ini`` file like config data function
+- Module StreamIOHandler (Extensions\StreamIOHandler.vb)
+- Module Write_csv (Extensions\Write_csv.vb) - write csv file method that call in clr environment
+- Class Arguments (Extensions\Write_csv.vb)
+- Module ArffReader (IO\ARFFText\ArffReader.vb) - @relation iris @attribute sepal_length numeric @attribute sepal_width numeric
+- Module ArffWriter (IO\ARFFText\ArffWriter.vb)
+- Module NamespaceDoc (IO\ARFFText\NamespaceDoc.vb) - ARFF (WEKA attribute-relation file format) reader and writer.
+- Module FileLoader (IO\CSVText\CSVFile\FileLoader.vb) - Wrapper module for read csv/tsv file
+- Module NamespaceDoc (IO\CSVText\CSVFile\NamespaceDoc.vb) - The CSV file loader and row tokenizer: header parsing, row iteration, field tokenization and streaming CSV reading.
+- Module RowHelpers (IO\CSVText\CSVFile\RowHelpers.vb)
+- Class RowIterator (IO\CSVText\CSVFile\RowIterator.vb)
+- Class RowTokenizer (IO\CSVText\CSVFile\RowTokenizer.vb) - Parse the csv row by char scanning
+- Module StreamIO (IO\CSVText\CSVFile\StreamIO.vb)
+- Class File (IO\CSVText\File.vb)
+- Class RowObject (IO\CSVText\RowObject.vb) - A line of data in the csv file.
+- Class DataSet (IO\Generic\DataSet.vb) - The numeric dataset, <see cref="DynamicPropertyBase(Of Double)"/>, <see cref="Double"/>. (数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)
+- Class EntityObject (IO\Generic\EntityObject.vb) - The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>. (有名称属性的表抽象对象)
+- Module Extensions (IO\Generic\Extensions.vb)
+- Class Table (IO\Generic\Table.vb) - 没有名称属性的表抽象对象
+- Module FileFormat (IO\Generic\Table.vb)
+- Module GenericMeta (IO\MetaData\GenericMeta.vb)
+- Module Meta (IO\MetaData\Meta.vb)
+- Module NamespaceDoc (IO\NamespaceDoc.vb) - The tabular I/O layer: generic DataSet, Table and EntityObject models, metadata handling and the shared CSV text row and file helpers.
+- Module BatchQueue (Linq\BatchQueue.vb)
+- Class SchemaReader (Linq\DataStream.vb)
+- Module DataLinqStream (Linq\DataStream.vb)
+- Class DataStream (Linq\DataStream.vb) - Buffered large text dataset Table reader
+- Class LinqWhere (Linq\LinqWhere.vb) - 主要是为了构建通过命令行的通用化查询工具 <typeparam name="T"></typeparam>
+- Class ExprToken (Linq\LinqWhere.vb)
+- Module NamespaceDoc (Linq\NamespaceDoc.vb) - LINQ style streaming data operators over tabular data: batch queues, data streams and write streams for querying and transforming row sequences.
+- Class WriteStream (Linq\WriteStream.vb) - The stream writer for the data set, you can handling the ultra large dataset serialize into a csv document by using this writer stream object. (文件写入流，这个一般是在遇到非常大的文件流的时候才需要使用)
+- Class MappingsHelper (Mappings.vb) - Handling the data fields mapping for make processing of the csv headers. (在写csv的时候生成列域名的映射的一些快捷函数)
+- Class NamespaceDoc (NamespaceDoc.vb) - The tabular data frame framework: DataFrame and DataSet objects, stream and CSV/ARFF readers and writers, and the reflection based storage providers that map .NET classes to table rows and columns.
+- Class DynamicObjectLoader (StorageProvider\ComponntModels\DynamicObjectLoader.vb) - Data structure for high perfermence data loading.
+- Module NamespaceDoc (StorageProvider\ComponntModels\NamespaceDoc.vb) - The storage provider component model: the provider base, schema provider, row builder and row writer, together with the reflection bridges for arrays, dictionaries, enums, fields and key/value pairs.
+- Class CollectionColumn (StorageProvider\ComponntModels\ReflectionBridges\Array.vb)
+- Class MetaAttribute (StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb)
+- Class Column (StorageProvider\ComponntModels\ReflectionBridges\Field.vb)
+- Class KeyValuePair (StorageProvider\ComponntModels\ReflectionBridges\KeyValuePair.vb)
+- Class RowBuilder (StorageProvider\ComponntModels\RowBuilder.vb) - 这个是用于将Csv文件之中的行数据转换为.NET对象的
+- Class RowWriter (StorageProvider\ComponntModels\RowWriter.vb) - 从.NET对象转换为Csv文件之中的行数据
+- Class SchemaProvider (StorageProvider\ComponntModels\SchemaProvider.vb) - 从目标对象解析出来的Csv文件的结构组织数据
+- Class DataFrameResolver (StorageProvider\DataFrame\DataFrameResolver.vb) - The dynamics data frame object which its first line is not contains the but using for the title property. (第一行总是没有的，即本对象类型适用于第一行为列标题行的数据)
+- Class HeaderSchema (StorageProvider\DataFrame\HeaderSchema.vb) - Create table column schema based on the dataframe title headers
+- Interface ISchema (StorageProvider\DataFrame\ISchema.vb)
+- Module NamespaceDoc (StorageProvider\DataFrame\NamespaceDoc.vb) - The storage provider abstraction for data frames: the schema interfaces, the header schema and the data frame resolver used to bind tables to object models.
+- Class CollectionAttribute (StorageProvider\Reflection\Attributes\Collection.vb)
+- Class ColumnAttribute (StorageProvider\Reflection\Attributes\Column.vb)
+- Class Ignored (StorageProvider\Reflection\Attributes\ColumnAttributes.vb)
+- Interface IAttributeComponent (StorageProvider\Reflection\Attributes\ColumnAttributes.vb)
+- Enum ProviderIds (StorageProvider\Reflection\Attributes\ColumnAttributes.vb)
+- Class DataAttribute (StorageProvider\Reflection\Attributes\DataAttribute.vb)
+- Class MetaAttribute (StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb)
+- Module NamespaceDoc (StorageProvider\Reflection\NamespaceDoc.vb) - Reflection based storage providers: the column and data attributes, metadata providers and the type schema provider that map .NET types to table schemas.
+- Enum DataFlowDirections (StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb)
+- Module MetaAttributeParser (StorageProvider\Reflection\StorageProviders\MetaAttributes.vb) - 解析出字典域标记信息
+- Module Reflector (StorageProvider\Reflection\StorageProviders\Reflection.vb) - The dynamics reflection operations on Csv data source services.
+- Module TypeSchemaProvider (StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb)
+
+## Notable public members
+- Public Property features As New Dictionary(Of String, FeatureVector)
+- Public Property name As String
+- Public Property description As String
+- Public Property rownames As String()
+- Public ReadOnly Property dims As Size
+- Public ReadOnly Property featureNames As String()
+- Public ReadOnly Property nsamples As Integer
+- Public ReadOnly Property nfeatures As Integer
+- Public ReadOnly Property featureSet As FeatureVector()
+- Public Function delete(featureName As String) As FeatureVector
+- Public Function add(featureName As String, v As StringVector) As DataFrame
+- Public Function add(featureName As String, v As IEnumerable(Of String)) As DataFrame
+- Public Function add(featureName As String, v As IEnumerable(Of Double)) As DataFrame
+- Public Function add(featureName As String, v As IEnumerable(Of Single)) As DataFrame
+- Public Function add(featureName As String, v As IEnumerable(Of Integer)) As DataFrame
+- Public Function add(feature As FeatureVector) As DataFrame
+- Public Function row(i As Integer) As Object()
+- Public Iterator Function foreachRow() As IEnumerable(Of NamedCollection(Of Object))
+- Public Iterator Function foreachRow(Of T)(apply As Func(Of NamedCollection(Of Object), NamedCollection(Of T))) As IEnumerable(Of NamedCollection(Of T)…
+- Public Function slice(rownames As IEnumerable(Of String)) As DataFrame
+- Public Function Union(append As DataFrame) As DataFrame
+- Public Overrides Function ToString() As String
+- Public Shared Function read_csv(file As String,
+- Public Shared Function read_arff(file As String) As DataFrame
+- Public Shared Function read_arff(file As Stream) As DataFrame
+- Public Shared Sub write_arff(df As DataFrame, file As Stream)
+- Public Shared Sub write_arff(df As DataFrame, text As TextWriter)
+- Public Shared Function read_csv(file As Stream,
+- Public Shared Function GetDimension(file As String) As (rows As Integer, cols As Integer, header As String())
+- Public Iterator Function GenericEnumerator() As IEnumerator(Of FeatureVector) Implements Enumeration(Of FeatureVector).GenericEnumerator
+- Public Shared Function FromRows(Of T)(rows As IEnumerable(Of NamedCollection(Of T)), colnames As IEnumerable(Of String)) As DataFrame
+- Public ReadOnly Property delimiter As Char = ","c
+- Public ReadOnly Property rowHeader As Boolean = True
+- Public Function GetRowHeaders() As IEnumerable(Of String)
+- Public Iterator Function GetFeatures() As IEnumerable(Of FeatureVector)
+- Public Sub ReadStreamLines()
+- Public Sub ReadLines()
+- Public Function ReadCsv(file As Stream,
+- Friend Function ParseFeature(data As List(Of String), name As String) As FeatureVector
+- Public Function CountLinesFast(filePath As String) As Long
+- Public ReadOnly Property vector As Array
+- Public ReadOnly Property type As Type
+- Public ReadOnly Property name As String Implements IReadOnlyId.Identity
+- Public Property attributes As Dictionary(Of String, String)
+- Public ReadOnly Property isScalar As Boolean
+- Public ReadOnly Property size As Integer
+- Public Function GetScalarValue() As Object
+- Public Function Getter() As Func(Of Integer, Object)
+- Public Overrides Function ToString() As String
+- Public Shared Function CheckSupports(type As Type) As Boolean
+- Public Shared Function FromScalar(Of T)(name As String, val As T) As FeatureVector
+- Public Shared Function FromScalar(name As String, val As Object) As FeatureVector
+- Public Shared Function FromGeneral(name As String, vec As Array) As FeatureVector
+- Public Function WriteCsv(df As DataFrame, file As String, Optional blank As String = "") As Boolean
+- Public Sub WriteCsv(df As DataFrame, file As Stream, Optional blank As String = "")
+- Public Iterator Function FieldName(prefix As String, n As Integer, Optional sep As String = "_") As IEnumerable(Of String)
+- Public Function as_dataframe(Of T As {INamedValue, IVector})(ds As IEnumerable(Of T), Optional colnames As String() = Nothing) As DataFrame
+- Public Function as_dataframe(Of T As Class)(list As IEnumerable(Of T),
+- Public Function StreamToFrame(source As Object(), typeDef As Type,
+- Public Function Transpose(mat As DataFrame) As DataFrame
+- ... and 637 more
+
+## Imports
+- any = Microsoft.VisualBasic.Scripting
+- anys = Microsoft.VisualBasic.Scripting
+- ASCII = Microsoft.VisualBasic.Text.ASCII
+- csvFile = Microsoft.VisualBasic.Data.Framework.IO.File
+- Field = Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels.StorageProvider
+- File_csv = Microsoft.VisualBasic.Data.Framework.IO.File
+- Microsoft.VisualBasic.ApplicationServices
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
+- Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+- Microsoft.VisualBasic.ComponentModel.Settings
+- Microsoft.VisualBasic.Data
+- Microsoft.VisualBasic.Data.Framework
+- Microsoft.VisualBasic.Data.Framework.DataSetExtensions
+- Microsoft.VisualBasic.Data.Framework.IO
+- Microsoft.VisualBasic.Data.Framework.IO.ArffFile
+- Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+- Microsoft.VisualBasic.Data.Framework.IO.Linq
+
+## File tree
+- _smoketest\Program.vb
+- DataFrame\DataFrame.vb
+- DataFrame\DataFrameReader.vb
+- DataFrame\FastLoader.vb
+- DataFrame\FeatureVector.vb
+- DataFrame\FileWriter.vb
+- DataFrame\Mapper.vb
+- DataFrame\NumericDataSet.vb
+- DataFrame\NumericTableConversion.vb
+- DataFrame\NumericTableIO.vb
+- DataSet\DataRows.vb
+- DataSet\Excel\Coordinates.vb
+- DataSet\Excel\Functions\Numerics.vb
+- DataSet\Excel\NamespaceDoc.vb
+- DataSet\Extensions.vb
+- DataSet\HTMLWriter.vb
+- DataSet\MatrixProvider.vb
+- DataSet\MySQL.vb
+- DataSet\NamespaceDoc.vb
+- DataSet\RDataFrameHelpers.vb
+- DataSet\Union.vb
+- Extensions\DataImports.vb
+- Extensions\DocumentExtensions.vb
+- Extensions\Extensions.vb
+- Extensions\Math.vb
+- Extensions\PipeStream.vb
+- Extensions\ProfileStreams.vb
+- Extensions\StreamIOHandler.vb
+- Extensions\Write_csv.vb
+- IO\ARFFText\ArffReader.vb
+- IO\ARFFText\ArffWriter.vb
+- IO\ARFFText\NamespaceDoc.vb
+- IO\CSVText\CSVFile\FileLoader.vb
+- IO\CSVText\CSVFile\NamespaceDoc.vb
+- IO\CSVText\CSVFile\RowHelpers.vb
+- IO\CSVText\CSVFile\RowIterator.vb
+- IO\CSVText\CSVFile\RowTokenizer.vb
+- IO\CSVText\CSVFile\StreamIO.vb
+- IO\CSVText\CSVFile\Tokenizer.vb
+- IO\CSVText\File.vb
+- IO\CSVText\RowObject.vb
+- IO\Generic\DataSet.vb
+- IO\Generic\EntityObject.vb
+- IO\Generic\Extensions.vb
+- IO\Generic\Table.vb
+- IO\MetaData\GenericMeta.vb
+- IO\MetaData\Meta.vb
+- IO\NamespaceDoc.vb
+- Linq\BatchQueue.vb
+- Linq\DataStream.vb
+- Linq\LinqWhere.vb
+- Linq\NamespaceDoc.vb
+- Linq\WriteStream.vb
+- Mappings.vb
+- NamespaceDoc.vb
+- StorageProvider\ComponntModels\DynamicObjectLoader.vb
+- StorageProvider\ComponntModels\NamespaceDoc.vb
+- StorageProvider\ComponntModels\ProviderBase.vb
+- StorageProvider\ComponntModels\ReflectionBridges\Array.vb
+- StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb
+- StorageProvider\ComponntModels\ReflectionBridges\Enum.vb
+- StorageProvider\ComponntModels\ReflectionBridges\Field.vb
+- StorageProvider\ComponntModels\ReflectionBridges\KeyValuePair.vb
+- StorageProvider\ComponntModels\RowBuilder.vb
+- StorageProvider\ComponntModels\RowWriter.vb
+- StorageProvider\ComponntModels\SchemaProvider.vb
+- StorageProvider\DataFrame\DataFrameResolver.vb
+- StorageProvider\DataFrame\HeaderSchema.vb
+- StorageProvider\DataFrame\ISchema.vb
+- StorageProvider\DataFrame\NamespaceDoc.vb
+- StorageProvider\Reflection\Attributes\Collection.vb
+- StorageProvider\Reflection\Attributes\Column.vb
+- StorageProvider\Reflection\Attributes\ColumnAttributes.vb
+- StorageProvider\Reflection\Attributes\DataAttribute.vb
+- StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb
+- StorageProvider\Reflection\NamespaceDoc.vb
+- StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb
+- StorageProvider\Reflection\StorageProviders\MetaAttributes.vb
+- StorageProvider\Reflection\StorageProviders\Reflection.vb
+- StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb
+

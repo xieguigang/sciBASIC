@@ -5,8 +5,8 @@
     <RootNamespace>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Version>1.0.0</Version>
-    <Description>Lightweight JavaScript parser, tree-walking interpreter and JS-to-VB.NET code generator. Pure VB.NET, .NET BCL only.</Description>
+    <Version>10.6.9781.24297</Version>
+    <Description>A lightweight JavaScript engine for sciBASIC#: lexes and parses JS source into an AST, runs it on a tree-walking interpreter with weak typing and builtin runtime semantics, and transpiles programs into standalone VB.NET classes.</Description>
     <OptionStrict>On</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
@@ -14,12 +14,39 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Configurations>Debug;Release;nuget_release</Configurations>
+    <Title>JavaScript Parser, Interpreter and VB.NET Code Generator</Title>
+    <AssemblyTitle>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</AssemblyTitle>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;javascript;interpreter;parser;ast;code-generator;scripting</PackageTags>
+    <PackageReleaseNotes>Rebuilt the JavaScript virtual machine with a new lexer, recursive descent parser, environment scopes and a JS-to-VB.NET code generator.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -63,11 +63,23 @@ $MaxSignatureLen  = 150
 $ExcludeDirPattern = '(^|[\\])(obj|bin|\.git|\.vs|packages|test|tests|My Project)([\\]|$)'
 
 function Read-TextFile([string]$path) {
-    # Honour a BOM when present; fall back to the ANSI code page otherwise so
-    # that legacy GBK-encoded sources still yield usable text.
-    $sr = New-Object System.IO.StreamReader($path, [System.Text.Encoding]::Default, $true)
-    try { return $sr.ReadToEnd() }
-    finally { $sr.Close() }
+    # Honour a BOM when present. Without a BOM, try a strict UTF-8 decode first
+    # (most current sources) and only fall back to the system ANSI code page
+    # when the bytes are not valid UTF-8 (legacy GBK-encoded files).
+    $bytes = [System.IO.File]::ReadAllBytes($path)
+    if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+        return (New-Object System.Text.UTF8Encoding($false)).GetString($bytes, 3, $bytes.Length - 3)
+    }
+    if ($bytes.Length -ge 2 -and $bytes[0] -eq 0xFF -and $bytes[1] -eq 0xFE) {
+        return [System.Text.Encoding]::Unicode.GetString($bytes, 2, $bytes.Length - 2)
+    }
+
+    $strictUtf8 = New-Object System.Text.UTF8Encoding($false, $true)
+    try { return $strictUtf8.GetString($bytes) }
+    catch {
+        $fallback = [System.Text.Encoding]::GetEncoding(0)
+        return $fallback.GetString($bytes)
+    }
 }
 
 function Get-Summary([string[]]$lines, [int]$declIndex) {

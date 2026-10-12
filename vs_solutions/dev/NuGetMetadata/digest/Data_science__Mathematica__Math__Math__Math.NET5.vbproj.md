@@ -1,0 +1,410 @@
+# Data_science/Mathematica/Math/Math/Math.NET5.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Math
+- AssemblyName  : Microsoft.VisualBasic.Math.Core
+- TargetFramework: net10.0
+- Source files  : 269
+- Existing Title: Core Mathematics Library: Linear Algebra, Numerics and More
+- Existing Desc : Core math for sciBASIC#: dense and sparse matrices, SVD and linear solvers, simplex linear programming, BigDecimal arithmetic, splines, quantiles, distributions, fuzzy logic and an expression scripting engine.
+- Existing Tags : scibasic;mathematics;linear-algebra;sparse-matrix;svd;numerics;linear-programming;bigdecimal;spline;quantile;expression-scripting
+
+## Namespaces
+- demo  [files: 1]
+- Distributions  [files: 14]
+- Distributions.BinBox  [files: 6]
+- Distributions.Summary  [files: 4]
+- DownSampling  [files: 12]
+- DownSampling.LargestTriangleBucket  [files: 11]
+- DownSampling.MaxMin  [files: 7]
+- DownSampling.Mixed  [files: 2]
+- DownSampling.TimeGap  [files: 2]
+- Framework  [files: 3]
+- Framework.Optimization  [files: 2]
+- Framework.Optimization.LBFGSB  [files: 12]
+- Framework.Optimization.LBFGSB.LineSearches  [files: 5]
+- HashMaps  [files: 4]
+- HashMaps.MinHash  [files: 5]
+- Interpolation  [files: 13]
+- LinearAlgebra  [files: 18]
+- LinearAlgebra.LinearProgramming  [files: 11]
+- LinearAlgebra.LinearProgramming.IPMCrossover  [files: 11]
+- LinearAlgebra.LinearProgramming.MILP  [files: 11]
+- LinearAlgebra.Matrix  [files: 20]
+- LinearAlgebra.Matrix.MDSScale  [files: 5]
+- LinearAlgebra.Solvers  [files: 6]
+- Logical.FuzzyLogic  [files: 8]
+- Logical.FuzzyLogic.Models  [files: 4]
+- Numerics  [files: 6]
+- Quantile  [files: 11]
+- Scripting  [files: 13]
+- Scripting.BasicR  [files: 2]
+- Scripting.MathExpression  [files: 9]
+- Scripting.MathExpression.Impl  [files: 9]
+- Scripting.Rscript  [files: 2]
+
+## Public types
+- Module HelperExtensions (Algebra\Extensions.vb)
+- Enum ApplyOnAxis (Algebra\Extensions.vb)
+- Class EllipseFitResult (Algebra\Helpers\EllipseFitResult.vb)
+- Class PCAEllipseResult (Algebra\Helpers\PCAEllipseResult.vb) - PCA统计椭圆计算结果 基于协方差矩阵和分布假设的数据椭圆/置信椭圆
+- Class PCAEllipseCalculator (Algebra\Helpers\PCAEllipseResult.vb) - PCA椭圆计算器
+- Enum EllipseType (Algebra\Helpers\PCAEllipseResult.vb) - 椭圆类型枚举
+- Class EigenDecompositionResult (Algebra\Helpers\PCAEllipseResult.vb) - 特征分解结果
+- Module Extensions (Algebra\LP\Extensions.vb)
+- Class CrossoverResult (Algebra\LP\IPMCrossover\Crossover.vb)
+- Class CrossoverSolver (Algebra\LP\IPMCrossover\Crossover.vb)
+- Class IpResult (Algebra\LP\IPMCrossover\InteriorPoint.vb)
+- Class InteriorPointSolver (Algebra\LP\IPMCrossover\InteriorPoint.vb)
+- Class LuFactorization (Algebra\LP\IPMCrossover\LinAlg.vb)
+- Module LinAlg (Algebra\LP\IPMCrossover\LinAlg.vb)
+- Interface INormalFactor (Algebra\LP\IPMCrossover\LpMatrix.vb) - 正规方程 (A·Θ·Aᵀ + reg·I)·z = rhs 的求解器
+- Interface ILpMatrix (Algebra\LP\IPMCrossover\LpMatrix.vb) - 约束矩阵抽象：内点法只依赖这四个运算，因此稠密/ sparse 可自由切换
+- Class DenseLpMatrix (Algebra\LP\IPMCrossover\LpMatrix.vb)
+- Class DenseNormalFactor (Algebra\LP\IPMCrossover\LpMatrix.vb)
+- Class SparseLpMatrix (Algebra\LP\IPMCrossover\LpMatrix.vb) - 稀疏实现：CSR(行) + CSC(列) 双副本。 正规方程 A·Θ·Aᵀ 稀疏装配后优先走稀疏 LDLᵀ， fill-in 超阈值或分解失败时自动降级为雅可比预条件 PCG（零 fill-in，无 OOM 风险）。
+- Class SparseNormalFactor (Algebra\LP\IPMCrossover\LpMatrix.vb) - 稀疏正规方程因子：优先稀疏 LDLᵀ，解出后做一次残差校验； 残差不达标（排序/数值问题）则本次改用 PCG 并永久降级。
+- Class LppConstraint (Algebra\LP\IPMCrossover\LppProblem.vb)
+- Class LppProblem (Algebra\LP\IPMCrossover\LppProblem.vb)
+- Class StandardForm (Algebra\LP\IPMCrossover\LppProblem.vb)
+- Module LppSolver (Algebra\LP\IPMCrossover\LppSolver.vb)
+- Class LuUpdateOptions (Algebra\LP\IPMCrossover\LuUpdate.vb) - LU 增量更新的控制参数与稳定性阈值。
+- Module NamespaceDoc (Algebra\LP\IPMCrossover\NamespaceDoc.vb) - Interior point method crossover routines for linear programming.
+- Class SimplexResult (Algebra\LP\IPMCrossover\Simplex.vb)
+- Class SimplexSolver (Algebra\LP\IPMCrossover\Simplex.vb)
+- Class SparseChol (Algebra\LP\IPMCrossover\SparseCholesky.vb)
+- Class SparseCholFactor (Algebra\LP\IPMCrossover\SparseCholesky.vb)
+- Class Pcg (Algebra\LP\IPMCrossover\SparseCholesky.vb)
+- Class PcgSolver (Algebra\LP\IPMCrossover\SparseCholesky.vb)
+- Class SymCsr (Algebra\LP\IPMCrossover\SparseNormal.vb)
+- Module SparseNormal (Algebra\LP\IPMCrossover\SparseNormal.vb)
+- Class LPP (Algebra\LP\LPP.vb) - solve continuous-space linear programming problems by the simplex method. java source: https://github.com/gthole/lpp
+- Module LPPDebugView (Algebra\LP\LPPDebugView.vb)
+- Class LppVariable (Algebra\LP\LPPModel.vb)
+- Class LppEquation (Algebra\LP\LPPModel.vb)
+- Class LPPModel (Algebra\LP\LPPModel.vb) - Linear Programming Model
+- Class LPPSolution (Algebra\LP\LPPSolution.vb)
+- Class LPPSolver (Algebra\LP\LPPSolver.vb) - 使用单纯形法进行线性规划问题的求解
+- Class LPPSolverTwoPhased (Algebra\LP\LPPSolverTwoPhased.vb) - 1. the basic variables was re-calculated from the tableau via a "unit vector" scanning helper, which costs O(m^2 * n) and will fail on the numerical noise, result in a full zero solution.
+- Class LpSparseMatrix (Algebra\LP\LpSparseMatrix.vb) - A sparse matrix in the compressed sparse row(CSR) format. This matrix object is specially designed for the large scale linear programming problem, example as the FBA problem of the genome scale
+- Module NamespaceDoc (Algebra\LP\NamespaceDoc.vb) - Linear programming solvers.
+- Enum OptimizationType (Algebra\LP\OptimizationType.vb)
+- Class SparseTableauRow (Algebra\LP\SparseTableauRow.vb) - A single row in the simplex tableau, stored in the sparse format. The column index in <see cref="Idx"/> is always kept in ascending order, so that:
+- Class CholeskyDecomposition (Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb) - For a symmetric, positive definite matrix A, the Cholesky decomposition is an lower triangular matrix L so that A = L*L'. If the matrix is not symmetric or positive definite, the constructor
+- Class EigenvalueDecomposition (Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb) - If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. A = V.Multiply(D.Multiply(V.Transpose())) and
+- Class LargeScaleEigenSolver (Algebra\Matrix.NET\Decomposition\LargeScaleEigenSolver.vb)
+- Class KEigenResult (Algebra\Matrix.NET\Decomposition\LargeScaleEigenSolver.vb)
+- Class LUDecomposition (Algebra\Matrix.NET\Decomposition\LUDecomposition.vb) - For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n unit lower triangular matrix L, an n-by-n upper triangular matrix U, and a permutation vector piv of length m so that A(piv,:) = L*U.
+- Class NMF (Algebra\Matrix.NET\Decomposition\NMF.vb) - defined by the user. Usually r Is chosen To be smaller than n Or m, so that W And H are smaller than the original matrix V. This results In a compressed version Of the original data matrix.
+- Class QRDecomposition (Algebra\Matrix.NET\Decomposition\QRDecomposition.vb) - For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n orthogonal matrix Q and an n-by-n upper triangular matrix R so that A = Q*R.
+- Class SingularValueDecomposition (Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb) - <P> For an m-by-n matrix A with m >= n, the singular value decomposition is an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and
+- Class TruncatedSVD (Algebra\Matrix.NET\Decomposition\TruncatedSVD.vb) - 与完整的 <see cref="SingularValueDecomposition"/>（LINPACK 稠密算法， 需要将矩阵完全稠密化，O(m·n) 内存）不同，本算法在整个计算流程中 仅依赖稀疏矩阵-向量乘法（A·x 与 Aᵀ·y，均为 O(nnz) 复杂度），
+- Module Extensions (Algebra\Matrix.NET\Extensions\Extensions.vb)
+- Module vbMatrix (Algebra\Matrix.NET\Extensions\MatrixMath.vb)
+- Module MatrixOps (Algebra\Matrix.NET\Extensions\MatrixOps.vb) - 矩阵运算模块 - 使用 VB.NET 基础数学函数实现线性代数运算 包含：矩阵乘法、转置、求逆、行列式、特征值分解等
+- Module Serialization (Algebra\Matrix.NET\Extensions\Serialization.vb) - data serialization of the numeric matrix
+- Interface GeneralMatrix (Algebra\Matrix.NET\GeneralMatrix.vb) - [m,n]
+- Class IndexVector (Algebra\Matrix.NET\IndexVector.vb) - another form of <see cref="SparseMatrix"/>
+- Module Multiply (Algebra\Matrix.NET\Math\Multiply.vb)
+- Module Subtraction (Algebra\Matrix.NET\Math\Subtraction.vb)
+- Class WiseOperation (Algebra\Matrix.NET\Math\WiseOperation.vb)
+- Class Data (Algebra\Matrix.NET\MDS\Data.vb) - Created by IntelliJ IDEA. User: da Date: 10/8/11
+- Class LandmarkMDS (Algebra\Matrix.NET\MDS\LandmarkMDS.vb) - Created by IntelliJ IDEA. User: da Date: 10/8/11
+- Class MDS (Algebra\Matrix.NET\MDS\MDS.vb) - Created by IntelliJ IDEA. User: da Date: 10/8/11
+- Module NamespaceDoc (Algebra\Matrix.NET\MDS\NamespaceDoc.vb) - Multidimensional scaling over matrices.
+- Class SMACOF (Algebra\Matrix.NET\MDS\SMACOF.vb)
+- Module NamespaceDoc (Algebra\Matrix.NET\NamespaceDoc.vb) - The matrix data types and matrix operations.
+- Class NumericMatrix (Algebra\Matrix.NET\NumericMatrix.vb)
+- Class SparseMatrix (Algebra\Matrix.NET\SparseMatrix.vb)
+- Enum BsStatus (Algebra\MILP\BoundedSimplex.vb)
+- Class BsResult (Algebra\MILP\BoundedSimplex.vb)
+- Class BoundedSimplex (Algebra\MILP\BoundedSimplex.vb) - 有界变量修订单纯形。实例与一个问题矩阵 (A, b, c, l, u) 绑定； 分支只修改 l/u，割平面通过重建实例（行/列追加）+ 热启动基复用。
+- Class BranchAndBound (Algebra\MILP\BranchAndBound.vb)
+- Class CutRow (Algebra\MILP\GomoryCut.vb)
+- Module GomoryCut (Algebra\MILP\GomoryCut.vb) - Gomory 混合整数割生成器。
+- Module MilpHeuristics (Algebra\MILP\MilpHeuristics.vb)
+- Module MilpKernels (Algebra\MILP\MilpKernels.vb) - MILP 数值内核门面：SIMD 快路径 + 标量回退 + 按工作量自适应的多线程调度。 并行开关（<see cref="EnableParallel"/> / <see cref="MaxThreads"/>）由 <see cref="MilpSolver.Solve"/> 入口根据 <see cref="MilpOptions"/> 设置；
+- Enum MilpVarType (Algebra\MILP\MilpModel.vb) - MILP 变量类型。
+- Class MilpVariable (Algebra\MILP\MilpModel.vb) - MILP 变量：在既有 <see cref="LppVariable"/> 之上追加整数类型标记。
+- Class MilpModel (Algebra\MILP\MilpModel.vb) - MILP 模型：线性目标 + 线性约束 + 变量类型/上下界。 建模 API 采用流式写法，便于构造演示与测试问题： <code>
+- Enum BranchRule (Algebra\MILP\MilpOptions.vb) - 分支变量选择规则。
+- Enum NodeRule (Algebra\MILP\MilpOptions.vb) - 节点选择规则。
+- Class MilpOptions (Algebra\MILP\MilpOptions.vb) - MILP 求解选项。
+- Class PresolveStats (Algebra\MILP\MilpPresolve.vb) - 预处理统计。
+- Class MilpLpForm (Algebra\MILP\MilpPresolve.vb) - MILP 预处理结果 + 节点 LP 工作形式（含全部"工作列 → 原始变量"映射）。
+- Module MilpPresolve (Algebra\MILP\MilpPresolve.vb) - 预处理与工作形式构造。
+- Enum MilpStatus (Algebra\MILP\MilpSolution.vb) - MILP 求解状态。
+- Class MilpSolution (Algebra\MILP\MilpSolution.vb) - MILP 求解结果。
+- Module MilpSolver (Algebra\MILP\MilpSolver.vb) - 混合整数线性规划（MILP）求解器入口。 <code> Dim model As New MilpModel With {.ObjectiveSense = "max"}
+- Module NamespaceDoc (Algebra\MILP\NamespaceDoc.vb) - Mixed integer linear programming.
+- Module NamespaceDoc (Algebra\NamespaceDoc.vb) - Linear algebra: matrix operations, decompositions and linear system solvers.
+- Class MultivariatePolynomial (Algebra\Polynomial\MultivariatePolynomial.vb) - 多元多项式 ``` f(x1, x2, x3, ...) = a*x1 + b*x2 + c*x3 + ...
+- Class Polynomial (Algebra\Polynomial\Polynomial.vb) - 一元多项式的数据模型 ``` f(x) = a + bx + cx^2 + dx^3 + ...
+- Module GaussianElimination (Algebra\Solvers\GaussianElimination.vb) - + Multiplying a row by a nonzero number, + Adding a multiple Of one row To another row. Using these operations, a matrix can always be transformed into an upper triangular
+- Module NamespaceDoc (Algebra\Solvers\NamespaceDoc.vb) - Linear system solvers.
+- Module OLS (Algebra\Solvers\OLS.vb) - ### 三、 补充：OLS 的经典假设（高斯-马尔可夫假设） 为了让 OLS 算出来的结果是“最佳线性无偏估计量（BLUE）”，需要满足几个假设： 1. **线性关系**：因变量与自变量之间是线性关系。
+- Class PowerMethod (Algebra\Solvers\PowerMethod.vb) - Method for finding eigenvectors https://github.com/ValentinDutin/PowerIterationMethod
+- Module SOR (Algebra\Solvers\SOR.vb)
+- Module SVD (Algebra\SVD.vb) - Singular Value Decomposition 本模块现在是 <see cref="SingularValueDecomposition"/>（JAMA/LINPACK 系实现） 的薄封装。与旧版 Numerical Recipes 直译实现相比，输出约定为：
+- Class Vector (Algebra\Vector\Class\DoCall.vb)
+- Class Argument (Algebra\Vector\Class\DoCall.vb) - Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/> ###### 2019-03-07 因为这个类的名称会与<see cref="ArgumentAttribute"/>产生冲突，所以将这个对象移到内部了
+- Class HalfVector (Algebra\Vector\Class\HalfVector.vb) - 精度比较低的半精度向量
+- Class Vector (Algebra\Vector\Class\Math.vb)
+- Class SparseVector (Algebra\Vector\Class\SparseVector.vb)
+- Class Vector (Algebra\Vector\Class\Vector.vb) - A numeric vector this numeric vector is based on the <see cref="Vector(Of Double)"/>
+- Module Extensions (Algebra\Vector\Extensions.vb)
+- Module LinearTransforms (Algebra\Vector\LinearTransforms.vb)
+- Module NumericsVector (Algebra\Vector\NumericsVector.vb) - Numerics vector converts for numeric types like: <see cref="Integer"/>, <see cref="Long"/>, <see cref="ULong"/>, <see cref="Byte"/>, <see cref="Single"/>
+- Class VectorEqualityComparer (Algebra\Vector\VectorEqualityComparer.vb) - Determine that the two vector are equals to each other.
+- Module VectorMath (Algebra\Vector\VectorMath.vb)
+- Module Abundance (Distributions\Abundance.vb)
+- Enum AlgorithmType (Distributions\Abundance.vb) - the algorithms for computing kurtosis/skewness
+- Interface ISample (Distributions\Abundance.vb)
+- Module AxisDensity (Distributions\AxisDensity.vb)
+- Module BesselFunctions (Distributions\Bessel.vb) - 用于 Skellam 分布的概率密度函数计算（参见 ``dskellam``）。 实现策略： 1. 中等参数区域（``x &lt; 30 + ν``）使用幂级数定义
+- Module Beta (Distributions\Beta.vb) - Beta distribution
+- Enum BinMaps (Distributions\BinBox\BinMaps.vb)
+- ... and 199 more
+
+## Notable public members
+- Public Delegate Function fx(x#) As Double
+- Public Function GetColumn(matrix As Double(,), columnIndex As Integer) As Double()
+- Public Function AsMatrix(d As IEnumerable(Of Double())) As NumericMatrix
+- Public Function IsNaNImaginary(v As IEnumerable(Of Double)) As BooleanVector
+- Public Function NAremove(x As IEnumerable(Of Double)) As IEnumerable(Of Double)
+- Public Function PrimitiveLinearEquation(p1 As PointF, p2 As PointF) As fx
+- Public Function Tangent(slideWindows As SlideWindow(Of PointF)) As fx
+- Public Function jaccard_coeff(idx As Integer()(), Optional symmetrize As Boolean = True) As GeneralMatrix
+- Public Function jaccard_coeff_parallel(idx As Integer()(), Optional symmetrize As Boolean = True) As GeneralMatrix
+- Public Function JaccardIndex(x As Double(), y As Double()) As Double
+- Public Function jaccard_coeff(a As String(), b As String(), Optional symmetrize As Boolean = True) As Double
+- Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+- Public Function Lerp(a As Double, b As Double, t As Double) As Double
+- Public Function SmoothStep(t As Double) As Double
+- Public Property Center As PointF
+- Public Property SemiMajorAxis As Single
+- Public Property SemiMinorAxis As Single
+- Public Property RotationAngle As Single
+- Public Property Coefficients As Double()
+- Public ReadOnly Property Area As Double
+- Public Function CreateShape() As EllipseShape
+- Public Shared Function FitEllipse(points As PointF(), Optional strict As Boolean = True) As EllipseFitResult
+- Public Property Center As PointF
+- Public Property SemiMajorAxis As Single
+- Public Property SemiMinorAxis As Single
+- Public Property RotationAngle As Single
+- Public Property ConfidenceLevel As Single
+- Public Property CovarianceMatrix As Double(,)
+- Public Property EigenValues As Double()
+- Public Property EigenVectors As Double(,)
+- Public ReadOnly Property Area As Double
+- Public Function CreateShape() As EllipseShape
+- Public Shared Function CalculateEllipse(
+- Public Property EigenValues As Double()
+- Public Property EigenVectors As Double(,) ' 每列是一个特征向量
+- Public Function intToBinary(binary As Long, digits As Integer) As List(Of Byte)
+- Friend Function ParseType(type As String) As OptimizationType
+- Public Sub New(A As Double(,), b As Double(), c As Double(), Optional log As List(Of String) = Nothing)
+- Public Function Run(xIpm As Double(), sIpm As Double()) As CrossoverResult
+- Public Sub New(A As Double(,), b As Double(), c As Double(),
+- Public Sub New(mat As ILpMatrix, b As Double(), c As Double(), u As Double(),
+- Public Function Solve() As IpResult
+- Public Sub New(lu As Double(,), piv As Int32())
+- Public Function Cholesky(A As Double(,)) As Double(,)
+- Public Function CholSolve(L As Double(,), rhs As Double()) As Double()
+- Public Function Cholesky(A As Double(,), reg As Double) As Double(,)
+- Public Function SolveSpd(M As Double(,), rhs As Double(), reg As Double) As Double()
+- Public Function LuFactor(A As Double(,)) As LuFactorization
+- Public Function LuSolve(fac As LuFactorization, rhs As Double()) As Double()
+- Public Function LuSolveT(fac As LuFactorization, rhs As Double()) As Double()
+- Public Function EchelonRank(A As Double(,), Optional tol As Double = 0.0000000001) As Int32
+- Public Function TakeCols(A As Double(,), cols As List(Of Int32)) As Double(,)
+- Public Function AppendCol(A As Double(,), col As Double()) As Double(,)
+- Public Function Dot(a As Double(), b As Double()) As Double
+- Public Function Norm2(a As Double()) As Double
+- Public Sub New(A As Double(,))
+- Public ReadOnly Property Rows As Int32 Implements ILpMatrix.Rows
+- Public ReadOnly Property Columns As Int32 Implements ILpMatrix.Columns
+- Public ReadOnly Property NonZeros As Long Implements ILpMatrix.NonZeros
+- Public Function Mv(x As Double()) As Double() Implements ILpMatrix.Mv
+- ... and 1605 more
+
+## Imports
+- __std = System.Math
+- _rand = Microsoft.VisualBasic.Math.RandomExtensions
+- ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.ArgumentAttribute
+- Microsoft.VisualBasic.ApplicationServices.Debugging
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+- Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+- Microsoft.VisualBasic.CommandLine.Reflection
+- Microsoft.VisualBasic.ComponentModel
+- Microsoft.VisualBasic.ComponentModel.Algorithm.base
+- Microsoft.VisualBasic.ComponentModel.Collection
+- Microsoft.VisualBasic.ComponentModel.Collection.Generic
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+- Microsoft.VisualBasic.ComponentModel.DataStructures
+- Microsoft.VisualBasic.ComponentModel.Ranges
+- Microsoft.VisualBasic.ComponentModel.Ranges.Model
+- Microsoft.VisualBasic.ComponentModel.TagData
+- Microsoft.VisualBasic.Data.Repository
+- Microsoft.VisualBasic.Emit.Parameters
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Imaging.BitmapImage
+- Microsoft.VisualBasic.Imaging.Math2D
+- Microsoft.VisualBasic.Language
+- Microsoft.VisualBasic.Language.C.CLangStringFormatProvider
+
+## File tree
+- Algebra\Extensions.vb
+- Algebra\Helpers\EllipseFitResult.vb
+- Algebra\Helpers\PCAEllipseResult.vb
+- Algebra\LP\Extensions.vb
+- Algebra\LP\IPMCrossover\Crossover.vb
+- Algebra\LP\IPMCrossover\InteriorPoint.vb
+- Algebra\LP\IPMCrossover\LinAlg.vb
+- Algebra\LP\IPMCrossover\LpMatrix.vb
+- Algebra\LP\IPMCrossover\LppProblem.vb
+- Algebra\LP\IPMCrossover\LppSolver.vb
+- Algebra\LP\IPMCrossover\LuUpdate.vb
+- Algebra\LP\IPMCrossover\NamespaceDoc.vb
+- Algebra\LP\IPMCrossover\Simplex.vb
+- Algebra\LP\IPMCrossover\SparseCholesky.vb
+- Algebra\LP\IPMCrossover\SparseNormal.vb
+- Algebra\LP\LPP.vb
+- Algebra\LP\LPPDebugView.vb
+- Algebra\LP\LPPModel.vb
+- Algebra\LP\LPPSolution.vb
+- Algebra\LP\LPPSolver.vb
+- Algebra\LP\LPPSolverTwoPhased.vb
+- Algebra\LP\LpSparseMatrix.vb
+- Algebra\LP\NamespaceDoc.vb
+- Algebra\LP\OptimizationType.vb
+- Algebra\LP\SparseTableauRow.vb
+- Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb
+- Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb
+- Algebra\Matrix.NET\Decomposition\LargeScaleEigenSolver.vb
+- Algebra\Matrix.NET\Decomposition\LUDecomposition.vb
+- Algebra\Matrix.NET\Decomposition\NMF.vb
+- Algebra\Matrix.NET\Decomposition\QRDecomposition.vb
+- Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb
+- Algebra\Matrix.NET\Decomposition\TruncatedSVD.vb
+- Algebra\Matrix.NET\Extensions\Extensions.vb
+- Algebra\Matrix.NET\Extensions\MatrixMath.vb
+- Algebra\Matrix.NET\Extensions\MatrixOps.vb
+- Algebra\Matrix.NET\Extensions\Serialization.vb
+- Algebra\Matrix.NET\GeneralMatrix.vb
+- Algebra\Matrix.NET\IndexVector.vb
+- Algebra\Matrix.NET\Math\Multiply.vb
+- Algebra\Matrix.NET\Math\Subtraction.vb
+- Algebra\Matrix.NET\Math\WiseOperation.vb
+- Algebra\Matrix.NET\MDS\Data.vb
+- Algebra\Matrix.NET\MDS\LandmarkMDS.vb
+- Algebra\Matrix.NET\MDS\MDS.vb
+- Algebra\Matrix.NET\MDS\NamespaceDoc.vb
+- Algebra\Matrix.NET\MDS\SMACOF.vb
+- Algebra\Matrix.NET\NamespaceDoc.vb
+- Algebra\Matrix.NET\NumericMatrix.vb
+- Algebra\Matrix.NET\SparseMatrix.vb
+- Algebra\MILP\BoundedSimplex.vb
+- Algebra\MILP\BranchAndBound.vb
+- Algebra\MILP\GomoryCut.vb
+- Algebra\MILP\MilpHeuristics.vb
+- Algebra\MILP\MilpKernels.vb
+- Algebra\MILP\MilpModel.vb
+- Algebra\MILP\MilpOptions.vb
+- Algebra\MILP\MilpPresolve.vb
+- Algebra\MILP\MilpSolution.vb
+- Algebra\MILP\MilpSolver.vb
+- Algebra\MILP\NamespaceDoc.vb
+- Algebra\NamespaceDoc.vb
+- Algebra\Polynomial\Formula.vb
+- Algebra\Polynomial\MultivariatePolynomial.vb
+- Algebra\Polynomial\Polynomial.vb
+- Algebra\Solvers\GaussianElimination.vb
+- Algebra\Solvers\ISolver.vb
+- Algebra\Solvers\NamespaceDoc.vb
+- Algebra\Solvers\OLS.vb
+- Algebra\Solvers\PowerMethod.vb
+- Algebra\Solvers\SOR.vb
+- Algebra\SVD.vb
+- Algebra\Vector\Class\DoCall.vb
+- Algebra\Vector\Class\HalfVector.vb
+- Algebra\Vector\Class\Math.vb
+- Algebra\Vector\Class\SparseVector.vb
+- Algebra\Vector\Class\Vector.vb
+- Algebra\Vector\Extensions.vb
+- Algebra\Vector\LinearTransforms.vb
+- Algebra\Vector\NumericsVector.vb
+- Algebra\Vector\VectorEqualityComparer.vb
+- Algebra\Vector\VectorMath.vb
+- Distributions\Abundance.vb
+- Distributions\AxisDensity.vb
+- Distributions\Bessel.vb
+- Distributions\Beta.vb
+- Distributions\BinBox\BinMaps.vb
+- Distributions\BinBox\CutBins.vb
+- Distributions\BinBox\DataBinBox.vb
+- Distributions\BinBox\Density.vb
+- Distributions\BinBox\NamespaceDoc.vb
+- Distributions\BinBox\Violin.vb
+- Distributions\Bootstraping.vb
+- Distributions\ChiSquare.vb
+- Distributions\DirichletDistribution.vb
+- Distributions\ECDF.vb
+- Distributions\Gamma.vb
+- Distributions\Gaussian.vb
+- Distributions\NamespaceDoc.vb
+- Distributions\pnorm.vb
+- Distributions\PoissonDiskGenerator.vb
+- Distributions\Summary\NamespaceDoc.vb
+- Distributions\Summary\SampleDistribution.vb
+- Distributions\Summary\StreamingSampleDistribution.vb
+- Distributions\Summary\ToString.vb
+- Distributions\TrIQ.vb
+- DownSampling\Bucket.vb
+- DownSampling\BucketBasedAlgorithm.vb
+- DownSampling\BucketFactory.vb
+- DownSampling\BucketSplitter.vb
+- DownSampling\DownSamplingAlgorithm.vb
+- DownSampling\DSAlgorithms.vb
+- DownSampling\EventOrder.vb
+- DownSampling\FixedNumBucketSplitter.vb
+- DownSampling\FixedTimeBucketSplitter.vb
+- DownSampling\LargestTriangleBucket\LinkedBucketNode.vb
+- DownSampling\LargestTriangleBucket\LTABuilder.vb
+- DownSampling\LargestTriangleBucket\LTAlgorithm.vb
+- DownSampling\LargestTriangleBucket\LTDynamicBucketSplitter.vb
+- DownSampling\LargestTriangleBucket\LTOneBucketWeightCalculator.vb
+- DownSampling\LargestTriangleBucket\LTThreeBucketWeightCalculator.vb
+- DownSampling\LargestTriangleBucket\LTWeightCalculator.vb
+- DownSampling\LargestTriangleBucket\LTWeightedBucket.vb
+- DownSampling\LargestTriangleBucket\LTWeightedBucketFactory.vb
+- DownSampling\LargestTriangleBucket\NamespaceDoc.vb
+- DownSampling\LargestTriangleBucket\Triangle.vb
+- DownSampling\MaxMin\MMAlgorithm.vb
+- DownSampling\MaxMin\MMBucket.vb
+- DownSampling\MaxMin\MMBucketFactory.vb
+- DownSampling\MaxMin\NamespaceDoc.vb
+- DownSampling\MaxMin\PIPlotAlgorithm.vb
+- DownSampling\MaxMin\PIPlotBucket.vb
+- DownSampling\MaxMin\PIPlotBucketFactory.vb
+- DownSampling\Mixed\MixedAlgorithm.vb
+- DownSampling\Mixed\NamespaceDoc.vb
+- DownSampling\NamespaceDoc.vb
+- DownSampling\PlainEvent.vb
+- DownSampling\TimeGap\NamespaceDoc.vb
+- DownSampling\TimeGap\TimeGapAlgorithm.vb
+- DownSampling\WeightedEvent.vb
+- Extensions.vb
+- FalseDiscoveryRate.vb
+- FuzzyLogic\FuzzyEngine.vb
+- FuzzyLogic\FuzzyRule.vb
+- FuzzyLogic\FuzzyRuleCollection.vb
+- FuzzyLogic\LinguisticVariable.vb
+- FuzzyLogic\LinguisticVariableCollection.vb
+- FuzzyLogic\MembershipFunction.vb
+- FuzzyLogic\MembershipFunctionCollection.vb
+- FuzzyLogic\Models\Extensions.vb
+- ... and 119 more files
+
