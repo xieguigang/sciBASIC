@@ -154,12 +154,12 @@ Namespace Boids
                 Dim cy = cellOfY(i)
 
                 For dy As Integer = -1 To 1
-                    Dim gy As Integer = cy + dy - minCy + 1
+                    Dim gy As Integer = cy + dy - minCy
                     If gy < 0 OrElse gy >= ny Then Continue For
                     Dim rowOffset As Integer = gy * nx
 
                     For dx As Integer = -1 To 1
-                        Dim gx As Integer = cx + dx - minCx + 1
+                        Dim gx As Integer = cx + dx - minCx
                         If gx < 0 OrElse gx >= nx Then Continue For
 
                         Dim cid As Integer = rowOffset + gx
