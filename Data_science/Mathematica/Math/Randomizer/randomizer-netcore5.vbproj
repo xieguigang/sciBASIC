@@ -16,12 +16,12 @@
     <Version>10.6.9781.24297</Version>
     <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
     <Title>Random Number Generators and Seeded Samplers Library</Title>
-    <Description>Random number generation for sciBASIC#: Mersenne Twister, a fast xorshift-style generator, a thread-safe wrapper and a table-driven RAND randomizer for normal deviates and Monte Carlo simulation.</Description>
+    <Description>Random number generation for sciBASIC#: Mersenne Twister, a fast xorshift-style generator, a thread-safe wrapper, a table-driven RAND randomizer for normal deviates and Monte Carlo simulation, plus TrueRandom - a hybrid true random generator driven by OS environment noise (PDH performance counters, process/GC/timing) and a CSPRNG, and a pure environmental entropy collector.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Randomizer</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;random;mersenne-twister;monte-carlo;pseudorandom;sampling</PackageTags>
+    <PackageTags>scibasic;random;mersenne-twister;monte-carlo;pseudorandom;sampling;true-random;entropy;environment-noise;pdh;csprng</PackageTags>
     <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>

@@ -19,13 +19,37 @@
 | **xorshift 风格** | 极快，状态小 | 吞吐敏感的循环 |
 | **线程安全包装** | 并发安全访问 | 多线程采样 |
 | **表驱动 RAND** | 经典实现，用于正态偏差 | 兼容性 / 教学 |
+| **TrueRandom** | 混合真随机：OS 加密级 CSPRNG + 环境噪声注入 | 不可预测性、蒙特卡洛、随机抽样 |
+| **EnvironmentEntropy** | 纯环境噪声熵收集器（PDH/进程/GC/计时） | 高熵种子、密钥盐 |
+
+## 真随机数（环境噪声驱动）
+
+前四类均为**伪随机**生成器（由种子决定、可复现）。当研究需要**不可预测**
+的真随机源（如密钥盐、需抗回溯的蒙特卡洛、安全相关抽样）时，本包提供两套
+基于操作系统环境噪声的真随机组件：
+
+- **`TrueRandom`**（混合生成器，快、大规模）：以操作系统加密级 CSPRNG
+  （`System.Security.Cryptography.RandomNumberGenerator`，由系统熵池驱动）做
+  批量展开，并用 `EntropyMixer`（HMAC-SHA256 计数器模式）将其与环境噪声折叠，
+  每 1024 字节刷新一次密钥（折叠新 CSPRNG 块 + 一次环境噪声采样），实现前向保密。
+  实现 `IProvideRandomValues` 接口，并额外提供批量方法
+  `GenerateBytes(n)` / `GenerateInt32s(n)` / `GenerateDoubles(n)`。
+- **`EnvironmentEntropy`**（纯环境噪声熵收集器，慢、高熵）：只采样实时环境噪声
+  —— 高精度计时抖动、系统时钟、进程 CPU/内存/线程/句柄统计、GC 计数与堆大小、
+  线程池积压、GUID，以及 **Windows 上的 PDH 性能计数器**（处理器时间、上下文
+  切换、磁盘队列、可用内存等；非 Windows 自动回退到跨平台统计）——经 SHA256
+  压缩并演化产出。**不调用任何 CSPRNG**，适合少量高熵种子。
+
+> 环境噪声采集（尤其 PDH `CollectQueryData`）为毫秒级，仅用于初始化与周期性
+> 刷新；批量产出主路径为 HMAC-SHA256 计数器模式，吞吐可接受。
 
 ## 核心能力
 
 - 均匀随机数生成（多种算法）；
 - **正态偏差生成**（表驱动 RAND）——蒙特卡洛与随机算法的基础；
 - 采样辅助方法（随机抽样、随机重排）；
-- 集中式种子管理，保证实验可复现。
+- **真随机数生成**：`TrueRandom` / `EnvironmentEntropy` 基于 OS 环境噪声与 CSPRNG；
+- 集中式种子管理，保证实验可复现（伪随机部分）。
 
 ## 快速上手
 
@@ -46,6 +70,18 @@ Dim sample = rng.ReservoirSampling(population, k:=100)
 
 ' 5. 并行场景使用线程安全包装
 Dim safeRng As New ThreadSafeRandom(seed:=42)
+
+' 6. 真随机数（环境噪声 + CSPRNG，不可预测）
+Dim trng As New TrueRandom()
+Dim bytes = trng.GenerateBytes(1024)        ' 1024 字节真随机
+Dim ints  = trng.GenerateInt32s(100)        ' 100 个全范围 Int32
+Dim dbls  = trng.GenerateDoubles(50)        ' 50 个 [0,1) 双精度
+Dim r = trng.Next(1, 7)                     ' [1,7) 整数（骰子）
+
+' 7. 纯环境噪声高熵种子（不依赖 CSPRNG）
+Dim ent As New EnvironmentEntropy()
+Dim seed = ent.GetSeed()                    ' 32 字节（256-bit）高熵种子
+Dim more = ent.GetBytes(64)                 ' 64 字节环境熵
 ```
 
 ## 实现要点
