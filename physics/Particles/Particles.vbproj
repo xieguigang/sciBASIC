@@ -6,6 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.Engine.Particles</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyTitle>Particle System</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>
