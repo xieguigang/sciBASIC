@@ -15,7 +15,7 @@ Module Program
         Console.WriteLine("===========================================================")
         Console.WriteLine(" Boids SIMD engine self test")
         Console.WriteLine($" runtime: {Environment.Version}, os: {Environment.OSVersion}")
-        Console.WriteLine($" cpu cores: {Environment.ProcessorCount}")
+        Console.WriteLine($" cpu cores: {Environment.ProcessorCount}, VectorTask.n_threads = {VectorTask.n_threads}")
         Console.WriteLine($" simd: enabled={SIMDEnvironment.IsEnabled}, hardware={SIMDEnvironment.IsHardwareAccelerated}, avx2={SIMDEnvironment.IsAvx2Supported}, fma={SIMDEnvironment.IsFmaSupported}")
         Console.WriteLine($" vector(double).count = {System.Numerics.Vector(Of Double).Count}")
         Console.WriteLine("===========================================================")
@@ -257,20 +257,23 @@ Module Program
     End Sub
 
     ''' <summary>
-    ''' 80k boids performance benchmark with per phase breakdown
+    ''' 120k boids performance benchmark with per phase breakdown
+    ''' (matches the FormRender demo scale)
     ''' </summary>
     Sub Benchmark()
         Console.WriteLine()
-        Console.WriteLine("[4/4] 80k boids benchmark (Release numbers only) ...")
+        Console.WriteLine("[4/4] 120k boids benchmark (Release numbers only) ...")
 
-        Const n As Integer = 80000
-        Const frames As Integer = 100
+        Const n As Integer = 120000
+        Const frames As Integer = 500
         Const warmup As Integer = 10
 
         Dim field As New Field(2000.0, 1200.0, n)
         Dim state = field.State
         Dim grid = field.Grid
         Dim solver As New FlockSolver(field)
+
+        Console.WriteLine($" benchmark threads: VectorTask.n_threads = {VectorTask.n_threads}, pool threads = {System.Threading.ThreadPool.ThreadCount}")
 
         ' warm up (JIT, thread pool, page faults)
         For i As Integer = 1 To warmup
@@ -560,6 +563,10 @@ Module Program
         Dim sw As Stopwatch
 
         For i As Integer = 1 To frames
+            ' mimic the GUI frame cadence: a gap between frames so the thread
+            ' pool threads can park (comment out to measure back-to-back)
+            If i Mod 2 = 0 Then Threading.Thread.Sleep(3)
+
             sw = Stopwatch.StartNew()
             grid.Build(state, field.Radius)
             sw.Stop()
