@@ -610,7 +610,7 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
         If Not paramsDirty AndAlso sphParams IsNot Nothing Then Return
 
         If Kernels Is Nothing Then
-            Kernels = New FluidKernels3D(_smoothingRadius)
+            Kernels = FluidKernels.For3D(_smoothingRadius)
         End If
 
         sphParams = SphParams3D.FromKernels(Kernels, _smoothingRadius)
