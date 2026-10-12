@@ -95,6 +95,9 @@ Imports tfCompute = Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 ''' <remarks>
 ''' 索引器被刻意设计为"纯数组读写"，不包含版本计数或任何原子操作，
 ''' 以便 CFD 这类每秒上亿次随机访问的热循环可以直接使用。
+''' 代价是 GPU 后端无法自动感知就地写入，需要调用方显式调用
+''' <see cref="MarkHostModified"/> 或 <see cref="InvalidateAllDeviceCaches"/>
+''' （与双精度 <see cref="Tensor"/> 在这方面的语义完全一致）。
 ''' </remarks>
 Public Class TensorF : Implements ICloneable, IDisposable
 
@@ -109,6 +112,11 @@ Public Class TensorF : Implements ICloneable, IDisposable
 
     Private _disposed As Boolean
 
+    ''' <summary>
+    ''' 本实例自身的主机写入计数（配合 <see cref="DeviceEpoch"/> 构成 <see cref="Version"/>）。
+    ''' </summary>
+    Private _version As Long
+
     ''' <summary>切换计算后端时使用的同步根对象</summary>
     Public Shared ReadOnly SyncRoot As New Object()
 
@@ -117,6 +125,44 @@ Public Class TensorF : Implements ICloneable, IDisposable
     ''' （<see cref="tfCompute.SIMDTensorF.Default"/>）；后续可切换为 GPU 后端。
     ''' </summary>
     Public Shared Property computeKernelF As tfCompute.ITensorComputeF = tfCompute.SIMDTensorF.Default
+
+    ''' <summary>
+    ''' 全局的设备端缓存纪元号（单精度栈）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与双精度 <see cref="Tensor.DeviceEpoch"/> 完全同构，只是作用于另一条栈。
+    ''' GPU 后端（<c>CudaTensorF</c>）会把张量的主机数据上传到显存并做 LRU 缓存，
+    ''' 缓存键是"主机数组引用 + <see cref="Version"/>"。当调用方<b>绕过</b>索引器、
+    ''' 直接就地修改了底层 <c>Single()</c> 数组时，张量自身无从感知，显存副本会一直
+    ''' 停留在旧值上，导致后续计算静默使用过期数据。
+    '''
+    ''' 单精度栈比双精度栈更容易踩到这个坑：CFD 场通常用
+    ''' <see cref="Wrap"/> 做零拷贝包装（不复制数组），然后在主机侧的推进循环里
+    ''' 就地改写，整个过程完全不经过 TensorF 的任何成员。
+    '''
+    ''' 这类调用方在修改完成之后必须调用一次 <see cref="InvalidateAllDeviceCaches"/>，
+    ''' 让所有张量的缓存副本失效（<see cref="Version"/> 会随之改变）。
+    ''' </remarks>
+    Private Shared _deviceEpoch As Long = 0
+
+    ''' <summary>当前的全局设备端缓存纪元号（单精度栈）</summary>
+    Public Shared ReadOnly Property DeviceEpoch As Long
+        Get
+            Return Interlocked.Read(_deviceEpoch)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 让所有单精度张量的设备端缓存副本失效。
+    ''' </summary>
+    ''' <remarks>
+    ''' 仅在"绕过索引器直接就地修改底层数组"之后需要调用；
+    ''' 通过索引器的写入不需要调用本方法（GPU 后端每次算子调用都会重新取
+    ''' <see cref="Version"/>，原地写入后 <see cref="MarkHostModified"/> 才是细粒度做法）。
+    ''' </remarks>
+    Public Shared Sub InvalidateAllDeviceCaches()
+        Interlocked.Increment(_deviceEpoch)
+    End Sub
 
 #Region "基础属性"
 
@@ -163,6 +209,38 @@ Public Class TensorF : Implements ICloneable, IDisposable
             Return _disposed
         End Get
     End Property
+
+    ''' <summary>
+    ''' 数据版本号（只读）。任何原地写入都应使其自增，供设备端缓存判断失效。
+    ''' </summary>
+    ''' <remarks>
+    ''' 返回值 = 本实例自身的写入计数 + <see cref="DeviceEpoch"/>。
+    ''' 加上全局纪元是为了覆盖"绕过索引器直接就地修改底层数组"的场景
+    ''' （见 <see cref="InvalidateAllDeviceCaches"/>）。
+    ''' <para>
+    ''' 注意：本类的索引器被刻意设计为纯数组读写、不做版本计数（见类注释），
+    ''' 因此这里<b>不会</b>自动跟踪写入。需要让设备端缓存失效的调用方必须显式调用
+    ''' <see cref="MarkHostModified"/> 或 <see cref="InvalidateAllDeviceCaches"/>。
+    ''' </para>
+    ''' </remarks>
+    Public ReadOnly Property Version As Long
+        Get
+            Return _version + DeviceEpoch
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 声明本张量的主机数据已被<b>绕过索引器</b>就地修改过，从而让设备端缓存副本失效。
+    ''' </summary>
+    ''' <remarks>
+    ''' 适用于"零拷贝视图 + 外部直接改写底层 <c>Single()</c>"的场景，
+    ''' 典型例子是 CFD 的一整条推进管线在主机侧直接改写 <see cref="Wrap"/> 出来的场缓冲。
+    ''' 与全局的 <see cref="InvalidateAllDeviceCaches"/> 相比，本方法只失效<b>当前这一个</b>张量，
+    ''' 粒度更细，也不会把其它张量的缓存一并冲掉。
+    ''' </remarks>
+    Public Sub MarkHostModified()
+        Interlocked.Increment(_version)
+    End Sub
 
 #End Region
 

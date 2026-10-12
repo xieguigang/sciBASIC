@@ -62,6 +62,12 @@
     <EmbeddedResource Include="Kernels\tensor.cu" />
     <EmbeddedResource Include="Kernels\gemm.cu" />
     <!--
+      手写单精度内核（float32）：两段式全局归约 + CFD 四个扩展原语。
+      单精度栈的逐元素 / 标量算子由 FloatKernels.vb 经 IL2Cuda 自动生成，
+      只有"块内共享内存归约"与"三维 stencil"这两类 IL2Cuda 表达不了的才放这里。
+    -->
+    <EmbeddedResource Include="Kernels\tensor_f32.cu" />
+    <!--
       CSR 稀疏 × 稠密内核（double）：脉冲神经网络加载真实突触连接组
       （FlyWire 等）时的核心算子，行并行 + atomicAdd(double)。
     -->
