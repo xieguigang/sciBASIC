@@ -1,5 +1,3 @@
-Imports Microsoft.VisualBasic.Imaging.Physics.Math3D
-
 Namespace ForceFields3D
 
     ''' <summary>

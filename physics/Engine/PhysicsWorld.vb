@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::64f0c36c0e8ec11a2d92fe924d803048, gr\physics\PhysicsWorld.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 147
-    '    Code Lines: 87 (59.18%)
-    ' Comment Lines: 34 (23.13%)
-    '    - Xml Docs: 64.71%
-    ' 
-    '   Blank Lines: 26 (17.69%)
-    '     File Size: 5.16 KB
+' Summaries:
 
 
-    ' Class PhysicsWorld
-    ' 
-    '     Function: Box, Circle
-    ' 
-    '     Sub: [Step], (+3 Overloads) Add, StepInternal, StepSub
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 147
+'    Code Lines: 87 (59.18%)
+' Comment Lines: 34 (23.13%)
+'    - Xml Docs: 64.71%
+' 
+'   Blank Lines: 26 (17.69%)
+'     File Size: 5.16 KB
+
+
+' Class PhysicsWorld
+' 
+'     Function: Box, Circle
+' 
+'     Sub: [Step], (+3 Overloads) Add, StepInternal, StepSub
+' 
+' /********************************************************************************/
 
 #End Region
 
 ' Copyright (c) 2018 GPL3 Licensed
 ' 物理世界：固定步长游戏循环，整合力场、宽/窄相位碰撞、关节与刚体积分。
 
-Imports Microsoft.VisualBasic.Imaging.Physics.Collision
-Imports Microsoft.VisualBasic.Imaging.Physics.ForceFields
-Imports Microsoft.VisualBasic.Imaging.Physics.Joints
+Imports Microsoft.VisualBasic.Engine.Physics.Collision
+Imports Microsoft.VisualBasic.Engine.Physics.ForceFields
+Imports Microsoft.VisualBasic.Engine.Physics.Joints
 
 ''' <summary>
 ''' 2D 物理世界。以 <see cref="PhysicsWorld.Step"/> 固定步长驱动，内部按子步执行：

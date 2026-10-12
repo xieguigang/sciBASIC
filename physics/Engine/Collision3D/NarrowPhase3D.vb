@@ -1,5 +1,4 @@
-Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.Math3D
+Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 Imports std = System.Math
 
 Namespace Collision3D

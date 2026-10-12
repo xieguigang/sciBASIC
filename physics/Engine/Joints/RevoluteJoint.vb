@@ -1,62 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::029df8e29bdcb199bb730bed3d2255ed, gr\physics\Joints\RevoluteJoint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 64
-    '    Code Lines: 44 (68.75%)
-    ' Comment Lines: 9 (14.06%)
-    '    - Xml Docs: 66.67%
-    ' 
-    '   Blank Lines: 11 (17.19%)
-    '     File Size: 2.60 KB
+' Summaries:
 
 
-    '     Class RevoluteJoint
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: SolveAxis, SolvePosition, SolveVelocity
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 64
+'    Code Lines: 44 (68.75%)
+' Comment Lines: 9 (14.06%)
+'    - Xml Docs: 66.67%
+' 
+'   Blank Lines: 11 (17.19%)
+'     File Size: 2.60 KB
+
+
+'     Class RevoluteJoint
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: SolveAxis, SolvePosition, SolveVelocity
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 ' Copyright (c) 2018 GPL3 Licensed
 ' 铰链/球窝关节：允许绕单轴旋转，约束两个锚点重合（2D 下等价于球窝）。
-
-Imports Microsoft.VisualBasic.Imaging.Physics
 
 Namespace Joints
 
@@ -93,7 +91,7 @@ Namespace Joints
             Dim vn = Dot(rv, normal)
             Dim rnA = Cross(rA, normal), rnB = Cross(rB, normal)
             Dim k = A.InvMass + B.InvMass + A.InvInertia * rnA * rnA + B.InvInertia * rnB * rnB
-            If k < 1.0e-12 Then Return
+            If k < 0.000000000001 Then Return
 
             Dim j = -vn / k
             If normal.x <> 0 Then jAcc = New Vector2(jAcc.x + j, jAcc.y) Else jAcc = New Vector2(jAcc.x, jAcc.y + j)

@@ -1,9 +1,6 @@
+Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
 Imports Microsoft.VisualBasic.Engine.Physics.ForceFields3D
 Imports Microsoft.VisualBasic.Engine.Physics.Joints3D
-Imports Microsoft.VisualBasic.Imaging.Physics.Collision3D
-Imports Microsoft.VisualBasic.Imaging.Physics.ForceFields3D
-Imports Microsoft.VisualBasic.Imaging.Physics.Joints3D
-Imports Microsoft.VisualBasic.Imaging.Physics.Math3D
 
 ''' <summary>
 ''' 3D 物理世界。以 <see cref="PhysicsWorld3D.Step"/> 固定步长驱动，内部按子步执行：
