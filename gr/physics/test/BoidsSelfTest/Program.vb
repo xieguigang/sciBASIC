@@ -471,32 +471,25 @@ Module Program
         Next
 
         Dim buf(w * h - 1) As Integer
-        Dim handle = Runtime.InteropServices.GCHandle.Alloc(buf, Runtime.InteropServices.GCHandleType.Pinned)
 
-        Try
-            Dim pbuf As Integer* = CType(handle.AddrOfPinnedObject().ToPointer(), Integer*)
+        ' warm up
+        RenderModelFrame(buf, w, h, state)
 
-            ' warm up
-            RenderModelFrame(pbuf, buf, w, h, state)
+        Dim sw = Stopwatch.StartNew()
 
-            Dim sw = Stopwatch.StartNew()
+        For f As Integer = 1 To frames
+            RenderModelFrame(buf, w, h, state)
+        Next
 
-            For f As Integer = 1 To frames
-                RenderModelFrame(pbuf, buf, w, h, state)
-            Next
+        sw.Stop()
 
-            sw.Stop()
-
-            Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
-            Console.WriteLine($" render model: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (gdi+ phase only)")
-            Console.WriteLine($" physics + render model budget check: 4.753 ms + {avg:F3} ms = {4.753 + avg:F3} ms " &
-                              $"({If(4.753 + avg <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
-        Finally
-            handle.Free()
-        End Try
+        Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
+        Console.WriteLine($" render model: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (gdi+ phase only)")
+        Console.WriteLine($" physics + render model budget check: 4.753 ms + {avg:F3} ms = {4.753 + avg:F3} ms " &
+                          $"({If(4.753 + avg <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
     End Sub
 
-    Sub RenderModelFrame(ByVal pbuf As Integer*, buf As Integer(), w As Integer, h As Integer, state As FlockState)
+    Sub RenderModelFrame(buf As Integer(), w As Integer, h As Integer, state As FlockState)
         Array.Clear(buf, 0, buf.Length)
 
         Dim px = state.px
@@ -527,9 +520,9 @@ Module Program
                     Dim xi = CInt(cxp)
                     Dim yi = CInt(cyp)
 
-                    If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then pbuf(yi * w + xi) = &HFF3366CC
-                    If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then pbuf(yi * w + xi + 1) = &HFF3366CC
-                    If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then pbuf((yi + 1) * w + xi) = &HFF3366CC
+                    If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi) = &HFF3366CC
+                    If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi + 1) = &HFF3366CC
+                    If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then buf((yi + 1) * w + xi) = &HFF3366CC
 
                     cxp += sx
                     cyp += sy
@@ -554,11 +547,11 @@ Module Program
             Dim p2x = baseX - 7.0 * uy
             Dim p2y = baseY + 7.0 * ux
 
-            FillTriangleModel(pbuf, w, h, ex, ey, p1x, p1y, p2x, p2y, &HFF3366CC)
+            FillTriangleModel(buf, w, h, ex, ey, p1x, p1y, p2x, p2y, &HFF3366CC)
         Next
     End Sub
 
-    Sub FillTriangleModel(ByVal pbuf As Integer*, w As Integer, h As Integer,
+    Sub FillTriangleModel(buf As Integer(), w As Integer, h As Integer,
                           ax As Double, ay As Double, bx As Double, by As Double,
                           cx As Double, cy As Double, c As Integer)
         If ay > by Then
