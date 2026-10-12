@@ -134,6 +134,35 @@ Namespace GPUTensor
         ''' <summary>系统时间常数批量计算：τ^sys = 1/(1/τ_eff + σ(h·Wg + u·Wgi + bg))</summary>
         Public Const CellSysTau As String = "tcCellSysTauDoubleKernel"
 
+        ' ---- 单精度栈（Kernels\tensor_f32.cu，float32）----
+        '
+        ' 单精度栈的逐元素 / 标量算子走 FloatKernels.vb 的 IL2Cuda 自动生成内核
+        ' （名字前缀 il_tensorf_），这里只登记手写内核。
+        ' 矩阵乘不在内：直接复用 ILCuda 自带的 gemmKernel（本来就是单精度）。
+
+        ''' <summary>单精度全局求和 - 阶段一（double 累加，float 输入）</summary>
+        Public Const PartialSumF32 As String = "tensorF32ReducePartialSumKernel"
+        ''' <summary>单精度全局求和 - 阶段二</summary>
+        Public Const FinalSumF32 As String = "tensorF32ReduceFinalSumKernel"
+        ''' <summary>单精度全局最大值 - 阶段一</summary>
+        Public Const PartialMaxF32 As String = "tensorF32ReducePartialMaxKernel"
+        ''' <summary>单精度全局最大值 - 阶段二</summary>
+        Public Const FinalMaxF32 As String = "tensorF32ReduceFinalMaxKernel"
+        ''' <summary>单精度全局最小值 - 阶段一</summary>
+        Public Const PartialMinF32 As String = "tensorF32ReducePartialMinKernel"
+        ''' <summary>单精度全局最小值 - 阶段二</summary>
+        Public Const FinalMinF32 As String = "tensorF32ReduceFinalMinKernel"
+
+        ' ---- CFD 扩展原语（Kernels\tensor_f32.cu，单精度）----
+        ''' <summary>七点拉普拉斯 stencil（带固体掩膜）</summary>
+        Public Const Laplacian7F32 As String = "tensorLaplacian7Fp32Kernel"
+        ''' <summary>带掩膜的七点 Jacobi 迭代<b>一步</b>（读 prev 写 cur，主机侧负责 ping-pong）</summary>
+        Public Const Jacobi7F32 As String = "tensorJacobi7Fp32Kernel"
+        ''' <summary>半拉格朗日平流 + 三线性插值（纯 gather）</summary>
+        Public Const AdvectTrilinearF32 As String = "tensorAdvectTrilinearFp32Kernel"
+        ''' <summary>按掩膜把固体单元置零（就地）</summary>
+        Public Const ApplyMaskF32 As String = "tensorApplyMaskFp32Kernel"
+
         ' ---- 两段式全局归约 ----
         ''' <summary>全局求和 - 阶段一（部分结果）</summary>
         Public Const PartialSum As String = "tensorReducePartialSumKernel"
