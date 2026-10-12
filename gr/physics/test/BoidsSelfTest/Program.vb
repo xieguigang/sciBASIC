@@ -1,5 +1,6 @@
 Imports System.Diagnostics
 Imports System.Linq
+Imports Microsoft.VisualBasic.Imaging.Physics.Boids
 Imports Microsoft.VisualBasic.Math.SIMD
 
 Module Program

@@ -273,46 +273,46 @@ Namespace Boids
                 Dim last As Integer = n - vecCount
 
                 Do While i <= last
-                    Dim X As Vector(Of Double) = New Vector(Of Double)(px, i) + New Vector(Of Double)(vx, i)
-                    Dim Y As Vector(Of Double) = New Vector(Of Double)(py, i) + New Vector(Of Double)(vy, i)
-                    Dim VX As Vector(Of Double) = New Vector(Of Double)(vx, i) + New Vector(Of Double)(dvx, i)
-                    Dim VY As Vector(Of Double) = New Vector(Of Double)(vy, i) + New Vector(Of Double)(dvy, i)
+                    Dim vecX As Vector(Of Double) = New Vector(Of Double)(px, i) + New Vector(Of Double)(vx, i)
+                    Dim vecY As Vector(Of Double) = New Vector(Of Double)(py, i) + New Vector(Of Double)(vy, i)
+                    Dim vecVX As Vector(Of Double) = New Vector(Of Double)(vx, i) + New Vector(Of Double)(dvx, i)
+                    Dim vecVY As Vector(Of Double) = New Vector(Of Double)(vy, i) + New Vector(Of Double)(dvy, i)
 
                     ' speed clamp: factor = min(max(speed, minSpeed), maxSpeed) / speed
-                    Dim sp2 As Vector(Of Double) = VX * VX + VY * VY
+                    Dim sp2 As Vector(Of Double) = vecVX * vecVX + vecVY * vecVY
                     Dim sp As Vector(Of Double) = Vector.SquareRoot(sp2)
                     Dim factor As Vector(Of Double) = Vector.Divide(Vector.Min(Vector.Max(sp, vMin), vMax), sp)
 
-                    VX = VX * factor
-                    VY = VY * factor
+                    vecVX = vecVX * factor
+                    vecVY = vecVY * factor
 
                     ' NaN guard: a lane whose velocity is NaN (or zero, which stays
                     ' zero) is written back as zero, matching the legacy semantics
                     ' where 0/0 -> NaN -> 0
-                    Dim keepX As Vector(Of Double) = Vector.BitwiseOr(Vector.LessThan(VX, vZero), Vector.GreaterThan(VX, vZero))
-                    Dim keepY As Vector(Of Double) = Vector.BitwiseOr(Vector.LessThan(VY, vZero), Vector.GreaterThan(VY, vZero))
+                    Dim keepX As Vector(Of Double) = Vector.BitwiseOr(Vector.LessThan(vecVX, vZero), Vector.GreaterThan(vecVX, vZero))
+                    Dim keepY As Vector(Of Double) = Vector.BitwiseOr(Vector.LessThan(vecVY, vZero), Vector.GreaterThan(vecVY, vZero))
 
-                    VX = Vector.ConditionalSelect(keepX, VX, vZero)
-                    VY = Vector.ConditionalSelect(keepY, VY, vZero)
+                    vecVX = Vector.ConditionalSelect(keepX, vecVX, vZero)
+                    vecVY = Vector.ConditionalSelect(keepY, vecVY, vZero)
 
                     If bounce Then
-                        VX = Vector.ConditionalSelect(Vector.LessThan(X, vPad), VX + vTurn, VX)
-                        VX = Vector.ConditionalSelect(Vector.GreaterThan(X, vRight), VX - vTurn, VX)
-                        VY = Vector.ConditionalSelect(Vector.LessThan(Y, vPad), VY + vTurn, VY)
-                        VY = Vector.ConditionalSelect(Vector.GreaterThan(Y, vBottom), VY - vTurn, VY)
+                        vecVX = Vector.ConditionalSelect(Vector.LessThan(vecX, vPad), vecVX + vTurn, vecVX)
+                        vecVX = Vector.ConditionalSelect(Vector.GreaterThan(vecX, vRight), vecVX - vTurn, vecVX)
+                        vecVY = Vector.ConditionalSelect(Vector.LessThan(vecY, vPad), vecVY + vTurn, vecVY)
+                        vecVY = Vector.ConditionalSelect(Vector.GreaterThan(vecY, vBottom), vecVY - vTurn, vecVY)
                     End If
 
                     If wrap Then
-                        X = Vector.ConditionalSelect(Vector.LessThan(X, vZero), X + vWidth, X)
-                        X = Vector.ConditionalSelect(Vector.GreaterThan(X, vWidth), X - vWidth, X)
-                        Y = Vector.ConditionalSelect(Vector.LessThan(Y, vZero), Y + vHeight, Y)
-                        Y = Vector.ConditionalSelect(Vector.GreaterThan(Y, vHeight), Y - vHeight, Y)
+                        vecX = Vector.ConditionalSelect(Vector.LessThan(vecX, vZero), vecX + vWidth, vecX)
+                        vecX = Vector.ConditionalSelect(Vector.GreaterThan(vecX, vWidth), vecX - vWidth, vecX)
+                        vecY = Vector.ConditionalSelect(Vector.LessThan(vecY, vZero), vecY + vHeight, vecY)
+                        vecY = Vector.ConditionalSelect(Vector.GreaterThan(vecY, vHeight), vecY - vHeight, vecY)
                     End If
 
-                    X.CopyTo(px, i)
-                    Y.CopyTo(py, i)
-                    VX.CopyTo(vx, i)
-                    VY.CopyTo(vy, i)
+                    vecX.CopyTo(px, i)
+                    vecY.CopyTo(py, i)
+                    vecVX.CopyTo(vx, i)
+                    vecVY.CopyTo(vy, i)
 
                     i += vecCount
                 Loop

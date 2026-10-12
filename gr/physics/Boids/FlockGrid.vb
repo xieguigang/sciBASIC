@@ -56,11 +56,11 @@ Namespace Boids
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' The legacy implementation rebuilt a <see cref="GridGraph.Grid(Of T())"/> 
-    ''' (a nested <see cref="Dictionary(Of Long, Dictionary(Of Long, GridCell(Of T)))"/>) 
-    ''' every frame via LINQ GroupBy, and every neighbor lookup probed that 
-    ''' dictionary-of-dictionaries nine times. At 80k boids that is ~1.4M 
-    ''' dictionary probes plus hundreds of thousands of allocations per frame.
+    ''' The legacy implementation rebuilt the generic <c>Grid(Of T())</c> spatial 
+    ''' hash (a nested dictionary of dictionaries) every frame via LINQ GroupBy, 
+    ''' and every neighbor lookup probed that dictionary-of-dictionaries nine 
+    ''' times. At 80k boids that is ~1.4M dictionary probes plus hundreds of 
+    ''' thousands of allocations per frame.
     ''' </para>
     ''' <para>
     ''' This grid is rebuilt every frame in O(N): one pass computes the rounded 
@@ -73,10 +73,10 @@ Namespace Boids
     ''' </para>
     ''' <para>
     ''' The grid is padded by one cell on each side of the per-frame bounding box. 
-    ''' Because <see cref="Field.BounceOffWalls"/> only applies a steering force 
-    ''' (it never clamps positions), boids can drift outside the canvas; the 
-    ''' padding preserves the legacy behavior where such out-of-bounds boids can 
-    ''' still see each other as neighbors.
+    ''' Because the wall bounce rule only applies a steering force (it never 
+    ''' clamps positions), boids can drift outside the canvas; the padding 
+    ''' preserves the legacy behavior where such out-of-bounds boids can still 
+    ''' see each other as neighbors.
     ''' </para>
     ''' </remarks>
     Friend NotInheritable Class FlockGrid
