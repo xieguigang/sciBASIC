@@ -151,6 +151,42 @@ Public Module Reporter
     End Sub
 
     ' ------------------------------------------------------------------
+    ' 进程列表表（每进程 CUDA 计算/拷贝引擎利用率 + 专用显存）
+    ' ------------------------------------------------------------------
+    Public Sub PrintProcesses(rows As IReadOnlyList(Of GpuProcessSample), Optional topN As Integer = 0)
+        If rows Is Nothing OrElse rows.Count = 0 Then
+            Console.WriteLine("当前没有检测到正在使用 GPU 计算引擎的进程。")
+            Return
+        End If
+
+        Dim count = If(topN > 0, System.Math.Min(topN, rows.Count), rows.Count)
+        Dim table As New List(Of Object())()
+
+        For i As Integer = 0 To count - 1
+            Dim p = rows(i)
+            table.Add({
+                p.Pid,
+                FmtPercent(p.CudaCorePercent),
+                FmtPercent(p.CopyEnginePercent),
+                FmtPercent(p.EncoderPercent),
+                FmtPercent(p.DecoderPercent),
+                FmtMemMB(p.DedicatedMB),
+                PadName(p.Name)
+            })
+        Next
+
+        Console.WriteLine("说明：CUDA核心% = 3D/Compute 引擎利用率最大值（Windows 下 CUDA 计算常计入 3D 引擎）；Copy% 为数据拷贝带宽代理。")
+
+        ' 注意：表格库的 EmbedTitle 在标题长度超过表格宽度时会抛异常，故标题保持简短
+        ' 进程名放最后一列：含中文（全角）时其显示宽度与字符数不一致，放末尾可避免影响前面数值列的对齐
+        ConsoleTableBuilder _
+            .From(table) _
+            .WithColumn("PID", "CUDA核心%", "Copy%", "编码%", "解码%", "显存MB", "进程名") _
+            .WithTitle($"GPU 进程列表（共 {count} 个）", ConsoleColor.Cyan) _
+            .ExportAndWriteLine(TableAligntment.Left)
+    End Sub
+
+    ' ------------------------------------------------------------------
     ' CSV 导出
     ' ------------------------------------------------------------------
     Public Sub WriteCsv(samples As IReadOnlyList(Of NvmlSample), path As String)
@@ -180,28 +216,43 @@ Public Module Reporter
     ' ------------------------------------------------------------------
     ' 实时仪表盘（--top）
     ' ------------------------------------------------------------------
-    Public Sub RunLive(sampler As MonitorSampler, device As NvmlDevice, useColor As Boolean, shouldStop As Func(Of Boolean))
+    Public Sub RunLive(sampler As MonitorSampler, device As NvmlDevice, useColor As Boolean, shouldStop As Func(Of Boolean),
+                       Optional processCounter As GpuProcessCounter = Nothing, Optional processRows As Integer = 0)
         If useColor Then
-            RunLiveColor(sampler, device, shouldStop)
+            RunLiveColor(sampler, device, shouldStop, processCounter, processRows)
         Else
-            RunLivePlain(sampler, device, shouldStop)
+            RunLivePlain(sampler, device, shouldStop, processCounter, processRows)
         End If
     End Sub
 
-    Private Sub RunLivePlain(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean))
+    Private Sub RunLivePlain(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
+                             processCounter As GpuProcessCounter, processRows As Integer)
         sampler.Run(shouldStop, Sub(s)
                                  Console.WriteLine($"{s.Time:HH:mm:ss} GPU={FmtPercent(s.GpuPercent)} 显存控={FmtPercent(s.MemoryControllerPercent)} 显存={FmtMB(s.UsedMB)}/{FmtMB(s.TotalMB)}MB PCIe TX={FmtDouble(s.PcieTxMBps)} RX={FmtDouble(s.PcieRxMBps)} 功耗={FmtWatts(s.PowerWatts)}W 温度={FmtTemp(s.TemperatureC)}")
+                                 If processCounter IsNot Nothing Then
+                                     For Each p In processCounter.Poll()
+                                         Console.WriteLine($"{s.Time:HH:mm:ss} PID={p.Pid,7} CUDA={FmtPercent(p.CudaCorePercent)} Copy={FmtPercent(p.CopyEnginePercent)} 编码={FmtPercent(p.EncoderPercent)} 解码={FmtPercent(p.DecoderPercent)} 显存={FmtMemMB(p.DedicatedMB)}MB {PadName(p.Name)}")
+                                     Next
+                                 End If
                              End Sub)
     End Sub
 
-    Private Sub RunLiveColor(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean))
+    Private Sub RunLiveColor(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
+                             processCounter As GpuProcessCounter, processRows As Integer)
         Dim frameLines As Integer = 0
+        ' 进程块固定高度，避免样本数波动导致原地刷新残影
+        Dim procRows = If(processRows > 0, System.Math.Min(processRows, 15), 0)
 
         sampler.Run(shouldStop, Sub(s)
                                  Dim sb As New StringBuilder()
                                  If frameLines > 0 Then sb.Append(AnsiEscapeCodes.GetMoveCursorUp(frameLines))
 
                                  Dim lines = BuildLiveLines(device, s)
+                                 If processCounter IsNot Nothing AndAlso procRows > 0 Then
+                                     lines.AddRange(BuildProcessLines(processCounter.Poll(), procRows, True))
+                                 End If
+                                 lines.Add("  按 Ctrl+C 停止")
+
                                  For i As Integer = 0 To lines.Count - 1
                                      sb.Append(AnsiEscapeCodes.ClearLine)
                                      sb.Append(lines(i))
@@ -236,9 +287,69 @@ Public Module Reporter
         L.Add($"  PCIe     : TX {FmtDouble(s.PcieTxMBps)} MB/s   RX {FmtDouble(s.PcieRxMBps)} MB/s")
         L.Add($"  时钟     : SM {FmtMHz(s.SmClockMHz)} MHz   MEM {FmtMHz(s.MemClockMHz)} MHz   功耗 {FmtWatts(s.PowerWatts)} W   温度 {FmtTemp(s.TemperatureC)}")
         L.Add($"  编/解码  : 编码 {FmtPercent(s.EncoderPercent)}   解码 {FmtPercent(s.DecoderPercent)}")
-        L.Add("  按 Ctrl+C 停止")
 
         Return L
+    End Function
+
+    ''' <summary>
+    ''' 构建实时仪表盘中的进程块（固定高度 procRows 行，含表头；不足则补空行）。
+    ''' </summary>
+    Private Function BuildProcessLines(rows As IReadOnlyList(Of GpuProcessSample), procRows As Integer, useColor As Boolean) As List(Of String)
+        Dim L As New List(Of String)()
+
+        L.Add($"  进程级 GPU 使用（CUDA核心%=3D/Compute 引擎最大值；Copy% 为带宽代理；共 {rows.Count} 个）")
+        ' 进程名放最后一列：含中文（全角）时其显示宽度与字符数不一致，放末尾可避免影响前面数值列的对齐
+        L.Add("  " & "PID".PadLeft(7) & " " & "CUDA%".PadLeft(6) & " " & "Copy%".PadLeft(6) & " " & "编码%".PadLeft(6) & " " & "解码%".PadLeft(6) & " " & "显存MB".PadLeft(10) & "   进程名")
+
+        Dim n = System.Math.Min(rows.Count, procRows)
+        For i As Integer = 0 To procRows - 1
+            If i >= n Then
+                L.Add(String.Empty)   ' 补空行，保持块高恒定，避免刷新残影
+                Continue For
+            End If
+
+            Dim p = rows(i)
+            Dim name = PadName(p.Name)
+            If name.Length > 31 Then name = name.Substring(0, 31)
+
+            Dim cudaCell = FmtPercent(p.CudaCorePercent).PadLeft(6)
+            If useColor Then cudaCell = Colorize(cudaCell, p.CudaCorePercent)
+
+            L.Add("  " &
+                  p.Pid.ToString().PadLeft(7) & " " &
+                  cudaCell & " " &
+                  FmtPercent(p.CopyEnginePercent).PadLeft(6) & " " &
+                  FmtPercent(p.EncoderPercent).PadLeft(6) & " " &
+                  FmtPercent(p.DecoderPercent).PadLeft(6) & " " &
+                  FmtMemMB(p.DedicatedMB).PadLeft(10) & "   " &
+                  name)
+        Next
+
+        Return L
+    End Function
+
+    ''' <summary>按阈值给文本着色（&lt;50 亮绿、&lt;80 亮黄、否则亮红；不可用不着色）。</summary>
+    Private Function Colorize(text As String, percent As Integer) As String
+        If percent < 0 Then Return text
+
+        Dim color As AnsiColor
+        If percent < 50 Then
+            color = AnsiColor.BrightGreen
+        ElseIf percent < 80 Then
+            color = AnsiColor.BrightYellow
+        Else
+            color = AnsiColor.BrightRed
+        End If
+
+        Return color.GetEscapeSequence() & text & AnsiEscapeCodes.Reset
+    End Function
+
+    Private Function FmtMemMB(v As Double) As String
+        Return v.ToString("N1", CultureInfo.InvariantCulture)
+    End Function
+
+    Private Function PadName(name As String) As String
+        Return If(String.IsNullOrEmpty(name), "?", name)
     End Function
 
     ''' <summary>阈值着色的利用率条：&lt;50 绿、&lt;80 黄、否则红。</summary>
