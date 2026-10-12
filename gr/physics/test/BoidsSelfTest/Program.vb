@@ -492,6 +492,11 @@ Module Program
     Sub RenderModelFrame(buf As Integer(), w As Integer, h As Integer, state As FlockState)
         Array.Clear(buf, 0, buf.Length)
 
+        RenderModelRange(buf, w, h, state, 0, state.count - 1)
+    End Sub
+
+    Sub RenderModelRange(buf As Integer(), w As Integer, h As Integer, state As FlockState, start As Integer, ends As Integer)
+
         Dim px = state.px
         Dim py = state.py
         Dim vx = state.vx
@@ -509,7 +514,7 @@ Module Program
 
             ' shaft: ~1 step per pixel, 3 writes per step
             If len > 0.0 Then
-                Dim steps = CInt(len)
+                Dim steps = BoidMath.Round(len)
                 If steps < 1 Then steps = 1
                 Dim sx = (ex - bx) / steps
                 Dim sy = (ey - by) / steps
@@ -517,8 +522,8 @@ Module Program
                 Dim cyp = by
 
                 For s As Integer = 0 To steps
-                    Dim xi = CInt(cxp)
-                    Dim yi = CInt(cyp)
+                    Dim xi = BoidMath.Round(cxp)
+                    Dim yi = BoidMath.Round(cyp)
 
                     If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi) = &HFF3366CC
                     If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi + 1) = &HFF3366CC
@@ -572,8 +577,8 @@ Module Program
 
         If cy <= ay Then Return
 
-        Dim minY = CInt(std.Floor(ay))
-        Dim maxY = CInt(std.Ceiling(cy)) - 1
+        Dim minY = BoidMath.Round(std.Floor(ay))
+        Dim maxY = BoidMath.Round(std.Ceiling(cy)) - 1
 
         If minY < 0 Then minY = 0
         If maxY >= h Then maxY = h - 1
@@ -612,8 +617,8 @@ Module Program
                 x1 = tmp
             End If
 
-            Dim fromX = CInt(std.Ceiling(x0 - 0.5))
-            Dim toX = CInt(std.Floor(x1 - 0.5))
+            Dim fromX = BoidMath.Round(std.Ceiling(x0 - 0.5))
+            Dim toX = BoidMath.Round(std.Floor(x1 - 0.5))
 
             If fromX < 0 Then fromX = 0
             If toX >= w Then toX = w - 1

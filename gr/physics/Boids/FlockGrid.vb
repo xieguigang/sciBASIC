@@ -241,23 +241,12 @@ Namespace Boids
         End Function
 
         ''' <summary>
-        ''' Fast round-half-to-even (banker's rounding) of a double, bit-compatible 
-        ''' with the VB <c>CInt()</c> conversion that the legacy cell hashing used, 
-        ''' but roughly an order of magnitude cheaper on the 80k boids/frame hot path.
+        ''' Fast round-half-to-even (banker's rounding) of a double, bit-compatible
+        ''' with the VB <c>CInt()</c> conversion that the legacy cell hashing used.
         ''' </summary>
-        ''' <param name="v">the value to round; finite values only</param>
-        ''' <remarks>
-        ''' Uses the classic magic-number trick: adding ``1.5 * 2^52`` forces the 
-        ''' FPU to round to the nearest integer with ties to even, and the low 32 
-        ''' bits of the resulting bit pattern are the rounded value in two's 
-        ''' complement. Valid for |v| &lt; 2^51.
-        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CellRound(v As Double) As Integer
-            Dim magic = v + 6755399441055744.0R
-            Dim bits = BitConverter.DoubleToInt64Bits(magic)
-
-            Return CInt(bits And &HFFFFFFFFL)
+            Return BoidMath.Round(v)
         End Function
     End Class
 End Namespace
