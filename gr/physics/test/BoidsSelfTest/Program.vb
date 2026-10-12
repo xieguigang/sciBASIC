@@ -471,26 +471,32 @@ Module Program
         Next
 
         Dim buf(w * h - 1) As Integer
-        Dim rand As New Random(7)
+        Dim handle = Runtime.InteropServices.GCHandle.Alloc(buf, Runtime.InteropServices.GCHandleType.Pinned)
 
-        ' warm up
-        RenderModelFrame(buf, w, h, state, rand)
+        Try
+            Dim pbuf As Integer* = CType(handle.AddrOfPinnedObject().ToPointer(), Integer*)
 
-        Dim sw = Stopwatch.StartNew()
+            ' warm up
+            RenderModelFrame(pbuf, buf, w, h, state)
 
-        For f As Integer = 1 To frames
-            RenderModelFrame(buf, w, h, state, rand)
-        Next
+            Dim sw = Stopwatch.StartNew()
 
-        sw.Stop()
+            For f As Integer = 1 To frames
+                RenderModelFrame(pbuf, buf, w, h, state)
+            Next
 
-        Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
-        Console.WriteLine($" render model: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (gdi+ phase only)")
-        Console.WriteLine($" physics + render model budget check: 4.753 ms + {avg:F3} ms = {4.753 + avg:F3} ms " &
-                          $"({If(4.753 + avg <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
+            sw.Stop()
+
+            Dim avg As Double = sw.Elapsed.TotalMilliseconds / frames
+            Console.WriteLine($" render model: avg {avg,7:F3} ms/frame -> {1000.0 / avg,7:F1} fps (gdi+ phase only)")
+            Console.WriteLine($" physics + render model budget check: 4.753 ms + {avg:F3} ms = {4.753 + avg:F3} ms " &
+                              $"({If(4.753 + avg <= 16.7, "WITHIN", "OVER")} the 16.7 ms / 60 fps budget)")
+        Finally
+            handle.Free()
+        End Try
     End Sub
 
-    Sub RenderModelFrame(buf As Integer(), w As Integer, h As Integer, state As FlockState, rand As Random)
+    Sub RenderModelFrame(ByVal pbuf As Integer*, buf As Integer(), w As Integer, h As Integer, state As FlockState)
         Array.Clear(buf, 0, buf.Length)
 
         Dim px = state.px
@@ -521,16 +527,16 @@ Module Program
                     Dim xi = CInt(cxp)
                     Dim yi = CInt(cyp)
 
-                    If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi) = &HFF3366CC
-                    If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then buf(yi * w + xi + 1) = &HFF3366CC
-                    If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then buf((yi + 1) * w + xi) = &HFF3366CC
+                    If xi >= 0 AndAlso xi < w AndAlso yi >= 0 AndAlso yi < h Then pbuf(yi * w + xi) = &HFF3366CC
+                    If xi + 1 >= 0 AndAlso xi + 1 < w AndAlso yi >= 0 AndAlso yi < h Then pbuf(yi * w + xi + 1) = &HFF3366CC
+                    If xi >= 0 AndAlso xi < w AndAlso yi + 1 >= 0 AndAlso yi + 1 < h Then pbuf((yi + 1) * w + xi) = &HFF3366CC
 
                     cxp += sx
                     cyp += sy
                 Next
             End If
 
-            ' head: scanline triangle, ~7 rows x ~3 span writes
+            ' head: incremental scanline triangle, ~7 rows x ~3 span writes
             Dim ux As Double, uy As Double
 
             If len > 0.0 Then
@@ -548,51 +554,89 @@ Module Program
             Dim p2x = baseX - 7.0 * uy
             Dim p2y = baseY + 7.0 * ux
 
-            Dim minY = CInt(std.Floor(std.Min(ey, std.Min(p1y, p2y))))
-            Dim maxY = CInt(std.Ceiling(std.Max(ey, std.Max(p1y, p2y)))) - 1
-
-            If minY < 0 Then minY = 0
-            If maxY >= h Then maxY = h - 1
-
-            For yi As Integer = minY To maxY
-                Dim yc = yi + 0.5
-                Dim x0 = Double.MaxValue
-                Dim x1 = Double.MinValue
-                Dim found = 0
-
-                found += ScanEdgeModel(ex, ey, p1x, p1y, yc, x0, x1)
-                found += ScanEdgeModel(p1x, p1y, p2x, p2y, yc, x0, x1)
-                found += ScanEdgeModel(p2x, p2y, ex, ey, yc, x0, x1)
-
-                If found < 2 Then Continue For
-
-                Dim fromX = CInt(std.Ceiling(x0 - 0.5))
-                Dim toX = CInt(std.Floor(x1 - 0.5))
-
-                If fromX < 0 Then fromX = 0
-                If toX >= w Then toX = w - 1
-
-                For xi As Integer = fromX To toX
-                    buf(yi * w + xi) = &HFF3366CC
-                Next
-            Next
+            FillTriangleModel(pbuf, w, h, ex, ey, p1x, p1y, p2x, p2y, &HFF3366CC)
         Next
     End Sub
 
-    Function ScanEdgeModel(ax As Double, ay As Double, bx As Double, by As Double,
-                           yc As Double, ByRef x0 As Double, ByRef x1 As Double) As Integer
-        If (ay <= yc AndAlso by > yc) OrElse (by <= yc AndAlso ay > yc) Then
-            Dim t = (yc - ay) / (by - ay)
-            Dim x = ax + t * (bx - ax)
-
-            If x < x0 Then x0 = x
-            If x > x1 Then x1 = x
-
-            Return 1
+    Sub FillTriangleModel(ByVal pbuf As Integer*, w As Integer, h As Integer,
+                          ax As Double, ay As Double, bx As Double, by As Double,
+                          cx As Double, cy As Double, c As Integer)
+        If ay > by Then
+            Dim tx = ax, ty = ay
+            ax = bx : ay = by
+            bx = tx : by = ty
+        End If
+        If by > cy Then
+            Dim tx = bx, ty = by
+            bx = cx : by = cy
+            cx = tx : cy = ty
+        End If
+        If ay > by Then
+            Dim tx = ax, ty = ay
+            ax = bx : ay = by
+            bx = tx : by = ty
         End If
 
-        Return 0
-    End Function
+        If cy <= ay Then Return
+
+        Dim minY = CInt(std.Floor(ay))
+        Dim maxY = CInt(std.Ceiling(cy)) - 1
+
+        If minY < 0 Then minY = 0
+        If maxY >= h Then maxY = h - 1
+        If minY > maxY Then Return
+
+        Dim longDx As Double = (cx - ax) / (cy - ay)
+        Dim upDx As Double = If(by > ay, (bx - ax) / (by - ay), 0.0)
+        Dim loDx As Double = If(cy > by, (cx - bx) / (cy - by), 0.0)
+
+        Dim yc As Double = minY + 0.5
+        Dim xLong As Double = ax + (yc - ay) * longDx
+        Dim xShort As Double
+        Dim shortDx As Double
+
+        If (by > ay) AndAlso (yc <= by) Then
+            xShort = ax + (yc - ay) * upDx
+            shortDx = upDx
+        Else
+            xShort = bx + (yc - by) * loDx
+            shortDx = loDx
+        End If
+
+        For yi As Integer = minY To maxY
+            If (by > ay) AndAlso (cy > by) AndAlso (yi + 0.5 > by) AndAlso (shortDx <> loDx) Then
+                yc = yi + 0.5
+                xShort = bx + (yc - by) * loDx
+                shortDx = loDx
+            End If
+
+            Dim x0 As Double = xLong
+            Dim x1 As Double = xShort
+
+            If x0 > x1 Then
+                Dim tmp = x0
+                x0 = x1
+                x1 = tmp
+            End If
+
+            Dim fromX = CInt(std.Ceiling(x0 - 0.5))
+            Dim toX = CInt(std.Floor(x1 - 0.5))
+
+            If fromX < 0 Then fromX = 0
+            If toX >= w Then toX = w - 1
+
+            If fromX <= toX Then
+                Dim rowOffset As Integer = yi * w
+
+                For xi As Integer = fromX To toX
+                    pbuf(rowOffset + xi) = c
+                Next
+            End If
+
+            xLong += longDx
+            xShort += shortDx
+        Next
+    End Sub
 
     Sub Report(title As String, field As Field, grid As FlockGrid, solver As FlockSolver,
                state As FlockState, frames As Integer)

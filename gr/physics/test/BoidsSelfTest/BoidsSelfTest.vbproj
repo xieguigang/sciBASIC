@@ -7,6 +7,8 @@
     <AssemblyName>BoidsSelfTest</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- the render cost model writes into a pinned pixel buffer through pointers -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
