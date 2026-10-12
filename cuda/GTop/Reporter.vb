@@ -294,42 +294,109 @@ Public Module Reporter
     End Function
 
     ''' <summary>
-    ''' 构建实时仪表盘中的进程块（固定高度 procRows 行，含表头；不足则补空行）。
+    ''' 构建实时仪表盘中的进程块，采用"三线表"格式（仅顶线、表头下横线、底线；无竖线与内部横线）。
+    ''' 列宽与横线长度按"显示宽度"（全角字符按 2 列，见 <see cref="UnicodeWidth"/>）计算，
+    ''' 因此中文列名与中文进程名也能对齐。固定高度 procRows 行，不足补空行以保持原地刷新稳定。
     ''' </summary>
     Private Function BuildProcessLines(rows As IReadOnlyList(Of GpuProcessSample), procRows As Integer, useColor As Boolean) As List(Of String)
         Dim L As New List(Of String)()
-
-        L.Add("")
         L.Add($"  进程级 GPU 使用（CUDA核心%=3D/Compute 引擎最大值；Copy% 为带宽代理；共 {rows.Count} 个）")
-        L.Add("")
-        ' 进程名放最后一列：含中文（全角）时其显示宽度与字符数不一致，放末尾可避免影响前面数值列的对齐
-        L.Add("  " & "PID".PadLeft(7) & " " & "CUDA%".PadLeft(6) & " " & "Copy%".PadLeft(6) & " " & "编码%".PadLeft(6) & " " & "解码%".PadLeft(6) & " " & "显存MB".PadLeft(10) & "   进程名")
 
+        Dim headers = {"PID", "CUDA%", "Copy%", "编码%", "解码%", "显存MB", "进程名"}
+        Dim rightAlign = {True, True, True, True, True, True, False}
+        Dim cols = headers.Length
+
+        ' 组装数据单元格（进程名放最后一列）
         Dim n = System.Math.Min(rows.Count, procRows)
+        Dim dataCells As New List(Of String())()
+        Dim dataPercent As New List(Of Integer)()
+
+        For i As Integer = 0 To n - 1
+            Dim p = rows(i)
+            dataCells.Add({
+                p.Pid.ToString(),
+                FmtPercent(p.CudaCorePercent),
+                FmtPercent(p.CopyEnginePercent),
+                FmtPercent(p.EncoderPercent),
+                FmtPercent(p.DecoderPercent),
+                FmtMemMB(p.DedicatedMB),
+                TruncateByWidth(PadName(p.Name), 30)
+            })
+            dataPercent.Add(p.CudaCorePercent)
+        Next
+
+        ' 按显示宽度计算各列宽度
+        Dim widths(cols - 1) As Integer
+        For c As Integer = 0 To cols - 1
+            widths(c) = UnicodeWidth.GetWidth(headers(c))
+        Next
+        For Each cells In dataCells
+            For c As Integer = 0 To cols - 1
+                Dim w = UnicodeWidth.GetWidth(cells(c))
+                If w > widths(c) Then widths(c) = w
+            Next
+        Next
+
+        ' 横线总宽度 = 左缩进 + 各列宽度 + 列间 2 空格
+        Dim total As Integer = 2
+        For c As Integer = 0 To cols - 1
+            total += widths(c)
+            If c < cols - 1 Then total += 2
+        Next
+        Dim rule = New String("─"c, total)
+
+        L.Add(rule)                                                                          ' 顶线
+        L.Add("  " & BuildProcessRow(headers, widths, rightAlign, -1, 0, False))              ' 表头
+        L.Add(rule)                                                                          ' 表头下横线
+
         For i As Integer = 0 To procRows - 1
             If i >= n Then
                 L.Add(String.Empty)   ' 补空行，保持块高恒定，避免刷新残影
                 Continue For
             End If
-
-            Dim p = rows(i)
-            Dim name = PadName(p.Name)
-            If name.Length > 31 Then name = name.Substring(0, 31)
-
-            Dim cudaCell = FmtPercent(p.CudaCorePercent).PadLeft(6)
-            If useColor Then cudaCell = Colorize(cudaCell, p.CudaCorePercent)
-
-            L.Add("  " &
-                  p.Pid.ToString().PadLeft(7) & " " &
-                  cudaCell & " " &
-                  FmtPercent(p.CopyEnginePercent).PadLeft(6) & " " &
-                  FmtPercent(p.EncoderPercent).PadLeft(6) & " " &
-                  FmtPercent(p.DecoderPercent).PadLeft(6) & " " &
-                  FmtMemMB(p.DedicatedMB).PadLeft(10) & "   " &
-                  name)
+            L.Add("  " & BuildProcessRow(dataCells(i), widths, rightAlign, 1, dataPercent(i), useColor))
         Next
 
+        L.Add(rule)                                                                          ' 底线
+
         Return L
+    End Function
+
+    ''' <summary>按列宽（显示宽度）对齐地拼装一行，可对指定列按阈值着色。</summary>
+    Private Function BuildProcessRow(cells As String(), widths As Integer(), rightAlign As Boolean(),
+                                     colorIndex As Integer, colorPercent As Integer, useColor As Boolean) As String
+        Dim parts As New List(Of String)()
+
+        For c As Integer = 0 To cells.Length - 1
+            Dim pad = System.Math.Max(0, widths(c) - UnicodeWidth.GetWidth(cells(c)))
+            Dim cell = If(rightAlign(c), New String(" "c, pad) & cells(c), cells(c) & New String(" "c, pad))
+
+            If useColor AndAlso c = colorIndex Then
+                cell = Colorize(cell, colorPercent)
+            End If
+
+            parts.Add(cell)
+        Next
+
+        Return String.Join("  ", parts)
+    End Function
+
+    ''' <summary>按显示宽度截断字符串（超出时以省略号结尾）。</summary>
+    Private Function TruncateByWidth(text As String, maxWidth As Integer) As String
+        If String.IsNullOrEmpty(text) OrElse UnicodeWidth.GetWidth(text) <= maxWidth Then
+            Return text
+        End If
+
+        Dim sb As New StringBuilder()
+        Dim w As Integer = 0
+        For Each ch As Char In text
+            Dim cw = UnicodeWidth.GetWidth(ch)
+            If w + cw > maxWidth - 1 Then Exit For
+            sb.Append(ch)
+            w += cw
+        Next
+
+        Return sb.ToString() & "…"
     End Function
 
     ''' <summary>按阈值给文本着色（&lt;50 亮绿、&lt;80 亮黄、否则亮红；不可用不着色）。</summary>
