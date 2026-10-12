@@ -102,7 +102,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     Public ReadOnly Property Height As Double Implements IContainer(Of Particle).Height
 
     Sub New(n As Integer, canvas As Size, Optional smoothingRadius As Single = 25)
-        Kernels = New FluidKernels(smoothingRadius)
+        Kernels = FluidKernels.For2D(smoothingRadius)
 
         Me.SmoothingRadius = smoothingRadius
         Me.Particles = New Particle(n - 1) {}
