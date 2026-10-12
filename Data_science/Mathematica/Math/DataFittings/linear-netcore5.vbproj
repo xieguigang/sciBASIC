@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Data.Bootstrapping.Fittings</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.6.0.0</Version>
+		<Version>10.6.9781.24297</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -18,7 +18,7 @@
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;PlantMAT;CellaLAB-Desktop</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>1.0.9781.24247</AssemblyVersion>
+		<AssemblyVersion>1.0.9781.24297</AssemblyVersion>
 		<Title>Curve Fitting and Regression Toolkit with LASSO and Levenberg-Marquardt</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Data.Bootstrapping</AssemblyTitle>
 		<PackageTags>scibasic;curve-fitting;regression;least-squares;lasso;loess;levenberg-marquardt</PackageTags>
