@@ -220,43 +220,55 @@ Public Module Reporter
     ' 实时仪表盘（--top）
     ' ------------------------------------------------------------------
     Public Sub RunLive(sampler As MonitorSampler, device As NvmlDevice, useColor As Boolean, shouldStop As Func(Of Boolean),
-                       Optional processCounter As GpuProcessCounter = Nothing, Optional processRows As Integer = 0)
+                       Optional processMonitor As ProcessMonitor = Nothing,
+                       Optional hardware As CudaDevice = Nothing,
+                       Optional processRows As Integer = 0)
         If useColor Then
-            RunLiveColor(sampler, device, shouldStop, processCounter, processRows)
+            RunLiveColor(sampler, device, shouldStop, processMonitor, hardware, processRows)
         Else
-            RunLivePlain(sampler, device, shouldStop, processCounter, processRows)
+            RunLivePlain(sampler, device, shouldStop, processMonitor)
         End If
     End Sub
 
     Private Sub RunLivePlain(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
-                             processCounter As GpuProcessCounter, processRows As Integer)
+                             processMonitor As ProcessMonitor)
         sampler.Run(shouldStop, Sub(s)
                                     Console.WriteLine($"{s.Time:HH:mm:ss} GPU={FmtPercent(s.GpuPercent)} 显存控={FmtPercent(s.MemoryControllerPercent)} 显存={FmtMB(s.UsedMB)}/{FmtMB(s.TotalMB)}MB PCIe TX={FmtDouble(s.PcieTxMBps)} RX={FmtDouble(s.PcieRxMBps)} 功耗={FmtWatts(s.PowerWatts)}W 温度={FmtTemp(s.TemperatureC)}")
-                                    If processCounter IsNot Nothing Then
-                                        For Each p In processCounter.Poll()
-                                            Console.WriteLine($"{s.Time:HH:mm:ss} PID={p.Pid,7} CUDA={FmtPercent(p.CudaCorePercent)} Copy={FmtPercent(p.CopyEnginePercent)} 编码={FmtPercent(p.EncoderPercent)} 解码={FmtPercent(p.DecoderPercent)} 显存={FmtMemMB(p.DedicatedMB)}MB {PadName(p.Name)}")
+                                    If processMonitor IsNot Nothing Then
+                                        processMonitor.Update()
+                                        For Each p In processMonitor.Rows()
+                                            Console.WriteLine($"{s.Time:HH:mm:ss} PID={p.Pid,7} CUDA={FmtPercent(p.Cuda)} Copy={FmtPercent(p.Copy)} 编码={FmtPercent(p.Enc)} 解码={FmtPercent(p.Dec)} 显存={StringFormats.Lanudry(p.MemMB * ByteSize.MB)} {Sparkline.Render(p.History, 20)} {PadName(p.Name)}")
                                         Next
                                     End If
                                 End Sub)
     End Sub
 
     Private Sub RunLiveColor(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
-                             processCounter As GpuProcessCounter, processRows As Integer)
+                             processMonitor As ProcessMonitor, hardware As CudaDevice, processRows As Integer)
         Dim frameLines As Integer = 0
         ' 进程块固定高度，避免样本数波动导致原地刷新残影
         Dim procRows = If(processRows > 0, System.Math.Min(processRows, 15), 0)
 
+        Dim cudaHist As New List(Of Integer)()
+        Dim memHist As New List(Of Integer)()
+        Const histLen As Integer = 60
+
         Static gray As New ConsoleFormat(AnsiColor.FromRgbColor(Color.DimGray), AnsiColor.Black, Underline:=True)
 
         sampler.Run(shouldStop, Sub(s)
+                                    AddHistory(cudaHist, s.GpuPercent, histLen)
+                                    AddHistory(memHist, CInt(s.MemoryUsedRatio * 100), histLen)
+                                    If processMonitor IsNot Nothing Then processMonitor.Update()
+
                                     Dim sb As New StringBuilder()
                                     If frameLines > 0 Then sb.Append(AnsiEscapeCodes.GetMoveCursorUp(frameLines))
 
                                     Dim lines = BuildLiveLines(device, s)
-                                    If processCounter IsNot Nothing AndAlso procRows > 0 Then
-                                        lines.AddRange(BuildProcessLines(processCounter.Poll(), procRows, True))
+                                    If hardware IsNot Nothing Then lines.AddRange(BuildHardwareLines(hardware))
+                                    lines.AddRange(BuildCurveLines(cudaHist, memHist))
+                                    If processMonitor IsNot Nothing AndAlso procRows > 0 Then
+                                        lines.AddRange(BuildProcessLines(processMonitor.Rows(), procRows, True))
                                     End If
-                                    lines.Add("")
                                     lines.Add("")
                                     lines.Add(New TextSpan("  按 Ctrl+C 停止", gray))
                                     lines.Add(AnsiEscapeCodes.Reset)
@@ -276,6 +288,28 @@ Public Module Reporter
         Console.Out.Write(vbCrLf)
         Console.Out.Flush()
     End Sub
+
+    Private Sub AddHistory(hist As List(Of Integer), value As Integer, maxLen As Integer)
+        hist.Add(value)
+        If hist.Count > maxLen Then hist.RemoveAt(0)
+    End Sub
+
+    ''' <summary>静态硬件详细参数（来自 CUDA Driver API 的设备属性）。</summary>
+    Private Function BuildHardwareLines(d As CudaDevice) As List(Of String)
+        Dim L As New List(Of String)()
+        L.Add($"  硬件信息 : {d.Name}   计算能力 {d.ComputeCapability}   SM {d.MultiprocessorCount}   Warp {d.WarpSize}   线程/块 {d.MaxThreadsPerBlock}   共享内存 {d.MaxSharedMemoryPerBlock \ 1024} KB")
+        L.Add($"             核心 {d.ClockRateKhz \ 1000} MHz   显存 {d.MemoryClockRateKhz \ 1000} MHz   位宽 {d.GlobalMemoryBusWidth} bit   L2 {d.L2CacheSize \ 1024} KB   显存总量 {FmtMB(d.TotalMemoryMB)} MB")
+        Return L
+    End Function
+
+    ''' <summary>设备级历史曲线（CUDA 利用率 / 显存利用率，迷你曲线）。</summary>
+    Private Function BuildCurveLines(cudaHist As IReadOnlyList(Of Integer), memHist As IReadOnlyList(Of Integer)) As List(Of String)
+        Const w As Integer = 60
+        Return New List(Of String) From {
+            $"  CUDA历史 : {Sparkline.Render(cudaHist, w)}",
+            $"  显存历史 : {Sparkline.Render(memHist, w)}"
+        }
+    End Function
 
     Private Function BuildLiveLines(device As NvmlDevice, s As NvmlSample) As List(Of String)
         Dim L As New List(Of String)()
@@ -301,24 +335,25 @@ Public Module Reporter
 
     ''' <summary>
     ''' 构建实时仪表盘中的进程块，采用"三线表"格式（仅顶线、表头下横线、底线；无竖线与内部横线）。
-    ''' 表格宽度固定为命令行窗口宽度的 85%，并水平居中；进程名过长时按列宽裁剪。
-    ''' 列宽与横线长度按"显示宽度"（全角字符按 2 列，见 <see cref="UnicodeWidth"/>）计算，
-    ''' 因此中文列名与中文进程名也能对齐。固定高度 procRows 行，不足补空行以保持原地刷新稳定。
+    ''' 表格宽度固定为命令行窗口宽度的 85% 并水平居中；进程名过长时按列宽裁剪。
+    ''' 在"进程名"之前插入一列"CUDA曲线"，显示该进程最近的 CUDA 利用率历史（迷你曲线）。
+    ''' 列宽与横线长度按显示宽度（全角按 2 列）计算；固定高度 procRows 行，不足补空行以稳定原地刷新。
     ''' </summary>
-    Private Function BuildProcessLines(rows As IReadOnlyList(Of GpuProcessSample), procRows As Integer, useColor As Boolean) As List(Of String)
+    Private Function BuildProcessLines(rows As IReadOnlyList(Of ProcessMonitor.Row), procRows As Integer, useColor As Boolean) As List(Of String)
         Dim L As New List(Of String)()
 
         ' 目标表格宽度：窗口宽度的 85%（列间分隔符 2 空格）
         Const gap As Integer = 2
+        Const curveW As Integer = 16
         Dim winW = GetConsoleWidth()
         Dim tableW = CInt(System.Math.Round(winW * 0.85))
 
-        Dim headers = {"PID", "CUDA%", "Copy%", "编码%", "解码%", "显存", "进程名"}
-        Dim rightAlign = {True, True, True, True, True, True, False}
-        Dim widths = {7, 6, 6, 6, 6, 9, 0}   ' 前 6 列固定宽度，末列（进程名）占剩余宽度
+        Dim headers = {"PID", "CUDA%", "Copy%", "编码%", "解码%", "显存", "CUDA曲线", "进程名"}
+        Dim rightAlign = {True, True, True, True, True, True, False, False}
+        Dim widths = {7, 6, 6, 6, 6, 9, curveW, 0}   ' 末列（进程名）占剩余宽度
 
         Dim fixedSum As Integer = 0
-        For c As Integer = 0 To 5
+        For c As Integer = 0 To 6
             fixedSum += widths(c)
         Next
 
@@ -328,7 +363,7 @@ Public Module Reporter
             nameW = minNameW
             tableW = fixedSum + gap * (headers.Length - 1) + nameW
         End If
-        widths(6) = nameW
+        widths(7) = nameW
 
         ' 水平居中：左缩进 = (窗口宽度 - 表格宽度) / 2
         Dim centerPad = System.Math.Max(0, (winW - tableW) \ 2)
@@ -337,25 +372,26 @@ Public Module Reporter
 
         L.Add("")
         L.Add("")
-        L.Add(padStr & TruncateByWidth($"进程级 GPU 使用（CUDA核心%=3D/Compute 引擎最大值；Copy% 为带宽代理；共 {rows.Count} 个）", tableW))
+        L.Add(padStr & TruncateByWidth($"进程级 GPU 使用（按活动度乘积降序；无活动保留 1 分钟；共 {rows.Count} 个）", tableW))
 
-        ' 组装数据单元格（进程名放最后一列，按列宽裁剪）
+        ' 组装数据单元格（曲线与进程名依次放最后两列）
         Dim n = System.Math.Min(rows.Count, procRows)
         Dim dataCells As New List(Of String())()
-        Dim dataPercent As New List(Of Integer)()
+        Dim dataCuda As New List(Of Integer)()
 
         For i As Integer = 0 To n - 1
-            Dim p = rows(i)
+            Dim r = rows(i)
             dataCells.Add({
-                p.Pid.ToString(),
-                FmtPercent(p.CudaCorePercent),
-                FmtPercent(p.CopyEnginePercent),
-                FmtPercent(p.EncoderPercent),
-                FmtPercent(p.DecoderPercent),
-                StringFormats.Lanudry(p.DedicatedMB * ByteSize.MB),
-                TruncateByWidth(PadName(p.Name), nameW)
+                r.Pid.ToString(),
+                FmtPercent(r.Cuda),
+                FmtPercent(r.Copy),
+                FmtPercent(r.Enc),
+                FmtPercent(r.Dec),
+                StringFormats.Lanudry(r.MemMB * ByteSize.MB),
+                Sparkline.Render(r.History, curveW),
+                TruncateByWidth(PadName(r.Name), nameW)
             })
-            dataPercent.Add(p.CudaCorePercent)
+            dataCuda.Add(r.Cuda)
         Next
 
         L.Add(padStr & rule)                                                              ' 顶线
@@ -367,7 +403,7 @@ Public Module Reporter
                 L.Add(String.Empty)   ' 补空行，保持块高恒定，避免刷新残影
                 Continue For
             End If
-            L.Add(padStr & BuildProcessRow(dataCells(i), widths, rightAlign, 1, dataPercent(i), useColor))
+            L.Add(padStr & BuildProcessRow(dataCells(i), widths, rightAlign, 1, dataCuda(i), useColor))
         Next
 
         L.Add(padStr & rule)                                                              ' 底线

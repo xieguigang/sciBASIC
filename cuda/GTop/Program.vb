@@ -105,21 +105,35 @@ Module Program
             sampler.Run(stopFn)
             Reporter.PrintHistory(device, sampler.Samples)
         Else
-            ' 实时仪表盘（默认模式）：始终输出完整信息 = 设备指标 + 每进程指标（PDH 可用时）
+            ' 实时仪表盘（默认模式）：完整信息 = 设备指标 + 硬件参数 + 历史曲线 + 每进程指标
+            Dim hw = TryGetHardware(opts.DeviceIndex)
+
             If GpuProcessCounter.IsAvailable() Then
                 Using procCounter As New GpuProcessCounter()
-                    Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, procCounter, opts.MaxRows)
+                    Dim total = device.GetMemoryInfo().TotalBytes
+                    Dim procMonitor As New ProcessMonitor(procCounter, total, 20, TimeSpan.FromMinutes(1))
+                    Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, procMonitor, hw, opts.MaxRows)
                 End Using
             Else
                 If opts.Processes Then
                     Console.Error.WriteLine("警告：进程级 GPU 计数器不可用，仅显示设备仪表盘。")
                 End If
-                Reporter.RunLive(sampler, device, Not opts.Plain, stopFn)
+                Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, Nothing, hw, 0)
             End If
         End If
 
         RemoveHandler Console.CancelKeyPress, AddressOf OnCancel
     End Sub
+
+    ''' <summary>尝试获取指定设备的静态硬件参数（CUDA Driver API 设备属性）；失败返回 Nothing。</summary>
+    Private Function TryGetHardware(index As Integer) As CudaDevice
+        Try
+            Dim devices = CudaDevice.Enumerate()
+            If index >= 0 AndAlso index < devices.Count Then Return devices(index)
+        Catch
+        End Try
+        Return Nothing
+    End Function
 
     ''' <summary>
     ''' --processes 一次性模式：采集一次进程级 GPU 计数并打印进程表（不依赖 NVML）。
@@ -215,6 +229,8 @@ Module Program
         Console.WriteLine("      以及功耗、温度、SM/显存时钟、风扇、编解码利用率。")
         Console.WriteLine("进程指标(--processes)：每进程 CUDA核心%(=3D/Compute 引擎利用率最大值，Windows 下 CUDA 常计入 3D 引擎)、")
         Console.WriteLine("      拷贝引擎%(带宽代理)、编解码% 与专用显存(MB)。每进程字节吞吐 Windows 不提供，以拷贝引擎利用率代理。")
+        Console.WriteLine("实时仪表盘(默认/--top)另含：显卡硬件详细参数、CUDA/显存历史曲线、每进程 CUDA 历史曲线；")
+        Console.WriteLine("      进程按 (CUDA%+1)×(显存占用%+1)×(Copy%+1)×(编码%+解码%+1) 实时降序，失去活动后保留 1 分钟再移除。")
         Console.WriteLine("NVML 随 NVIDIA 显示驱动发布，无需 CUDA Toolkit、无需建立 CUDA 上下文即可监控整卡。")
     End Sub
 End Module
