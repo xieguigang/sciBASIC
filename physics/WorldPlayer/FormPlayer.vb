@@ -47,6 +47,8 @@ Public Class FormPlayer
     Private lastEditorPageSize As Size = Size.Empty
     ''' <summary>布局同步的调试轨迹。</summary>
     Private lastSyncInfo As String = ""
+    ''' <summary>布局事件的逐步日志（仅 --shot 模式会输出）。</summary>
+    Private ReadOnly layoutLog As New System.Text.StringBuilder()
 
     ''' <summary>默认演示脚本名（位于输出目录）。</summary>
     Private Const DefaultScript As String = "demo\platform.js"
@@ -376,20 +378,16 @@ Public Class FormPlayer
         If area <> lastCanvasArea AndAlso area.Width > 0 AndAlso area.Height > 0 Then
             lastCanvasArea = area
 
-            viewport.Dock = DockStyle.None
-            viewport.Size = area
-            viewport.Location = Point.Empty
+            pageCanvas.PerformLayout()
 
-            lastSyncInfo = $"area={area.Width}x{area.Height} -> viewport={viewport.Width}x{viewport.Height} dock={viewport.Dock}"
+            lastSyncInfo = $"area={area.Width}x{area.Height} viewport={viewport.Width}x{viewport.Height}"
 
             Call RenderFrame(force:=True)
-        Else
-            lastSyncInfo &= $" | skip(area={area.Width}x{area.Height} last={lastCanvasArea.Width}x{lastCanvasArea.Height} viewport={viewport.Width}x{viewport.Height})"
         End If
 
         Dim selected As TabPage = tabs.SelectedTab
 
-        If selected Is pageScript AndAlso selected.Size <> lastEditorPageSize Then
+        If selected IsNot Nothing AndAlso selected.Size <> lastEditorPageSize Then
             lastEditorPageSize = selected.Size
             selected.PerformLayout()
         End If
@@ -513,6 +511,9 @@ Public Class FormPlayer
 
     ''' <summary>视口 / 分割条尺寸变化：立刻按新尺寸同步并重画。</summary>
     Private Sub Viewport_Resize(sender As Object, e As EventArgs)
+        layoutLog.AppendLine($"  viewport.Resize -> {viewport.Width}x{viewport.Height} " &
+                             $"(page={pageCanvas.Width}x{pageCanvas.Height} display={pageCanvas.DisplayRectangle.Width}x{pageCanvas.DisplayRectangle.Height} dock={viewport.Dock})")
+
         Call SyncLayout()
         Call RenderFrame(force:=True)
     End Sub
@@ -694,6 +695,8 @@ Public Class FormPlayer
                                           $"buffer={If(renderBuffer Is Nothing, "none", renderBuffer.Width & "x" & renderBuffer.Height)} " &
                                           $"camera={rig.Camera.Screen.Width}x{rig.Camera.Screen.Height}")
                                  text.Add($"  [sync] {lastSyncInfo}")
+                                 text.Add("  [log]")
+                                 text.Add(layoutLog.ToString())
                                  Call Capture(Me, System.IO.Path.Combine(outDir, "shot-canvas.png"))
 
                                  ' 再测编辑器页
