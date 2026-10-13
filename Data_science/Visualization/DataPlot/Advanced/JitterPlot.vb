@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::14a654661fcc1db5e6bd835423c76050, Data_science\Visualization\DataPlot\Advanced\JitterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2215f8ed850fd536d3b0e2098ad1a450, Data_science\Visualization\DataPlot\Advanced\JitterPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 98 (79.67%)
-    ' Comment Lines: 14 (11.38%)
-    '    - Xml Docs: 57.14%
+    '   Total Lines: 128
+    '    Code Lines: 101 (78.91%)
+    ' Comment Lines: 15 (11.72%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 11 (8.94%)
-    '     File Size: 5.39 KB
+    '   Blank Lines: 12 (9.38%)
+    '     File Size: 5.76 KB
 
 
     ' Class JitterPlot
@@ -48,7 +48,7 @@
     '     Properties: Groups, Horizontal, JitterWidth, MarkerAlpha, MarkerShape
     '                 MarkerSize, RandomSeed
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Sub: DrawMarkerAlpha, Plot
     ' 
     ' /********************************************************************************/

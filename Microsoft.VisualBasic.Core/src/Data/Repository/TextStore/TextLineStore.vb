@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eccc80ed90f8f2461f49904e1a491fef, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
+﻿#Region "Microsoft.VisualBasic::050e0f08cdf53412397c468ba15c388b, Microsoft.VisualBasic.Core\src\Data\Repository\TextStore\TextLineStore.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1234
-    '    Code Lines: 1015 (82.25%)
-    ' Comment Lines: 90 (7.29%)
-    '    - Xml Docs: 53.33%
+    '   Total Lines: 1237
+    '    Code Lines: 1015 (82.05%)
+    ' Comment Lines: 93 (7.52%)
+    '    - Xml Docs: 51.61%
     ' 
-    '   Blank Lines: 129 (10.45%)
-    '     File Size: 55.72 KB
+    '   Blank Lines: 129 (10.43%)
+    '     File Size: 56.05 KB
 
 
     '     Class TextLineStore

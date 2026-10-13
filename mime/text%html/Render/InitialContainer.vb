@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e3cd53772c32f14472c066f9802ddbf, mime\text%html\Render\InitialContainer.vb"
+﻿#Region "Microsoft.VisualBasic::8f740505b71ed496f2ff2d7865cdd4ac, mime\text%html\Render\InitialContainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 423
-    '    Code Lines: 230 (54.37%)
-    ' Comment Lines: 103 (24.35%)
-    '    - Xml Docs: 62.14%
+    '   Total Lines: 491
+    '    Code Lines: 266 (54.18%)
+    ' Comment Lines: 129 (26.27%)
+    '    - Xml Docs: 69.77%
     ' 
-    '   Blank Lines: 90 (21.28%)
-    '     File Size: 15.85 KB
+    '   Blank Lines: 96 (19.55%)
+    '     File Size: 18.60 KB
 
 
     '     Class InitialContainer
@@ -48,9 +48,9 @@
     '         Properties: AvoidGeometryAntialias, AvoidTextAntialias, DocumentSource, LinkRegions, MaximumSize
     '                     MediaBlocks, ScrollOffset
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: BlockCorrection_GetInlineGroups, FindParent
+    '         Function: BlockCorrection_GetInlineGroups, EscapeTagClosures, FindParent
     ' 
     '         Sub: BlockCorrection, CascadeStyles, FeedStyleBlock, FeedStyleSheet, MeasureBounds
     '              ParseDocument

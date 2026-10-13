@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::101c8919755ef2585f2a31fcc52037f7, physics\Engine\PhysicsWorld3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 447
+    '    Code Lines: 261 (58.39%)
+    ' Comment Lines: 84 (18.79%)
+    '    - Xml Docs: 82.14%
+    ' 
+    '   Blank Lines: 102 (22.82%)
+    '     File Size: 16.95 KB
+
+
+    ' Class PhysicsWorld3D
+    ' 
+    '     Properties: AllowSleep, Baumgarte, Contacts, Hooks, SleepAngularTolerance
+    '                 SleepLinearTolerance, SleepTimeRequired, Slop, WarmStarting, WarmStartRadius
+    ' 
+    '     Function: Box, Capsule, Convex, Find, GroundPlane
+    '               PairKey, (+2 Overloads) Remove, Sphere, StaticBox, StaticConvex
+    '               StaticPlane
+    ' 
+    '     Sub: [Step], (+5 Overloads) Add, ApplyWarmStart, Clear, ClearVelocities
+    '          MaybeWake, RemoveMotorsOf, StepInternal, StepSub, UpdateSleep
+    '          WakeNear
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
 Imports Microsoft.VisualBasic.Engine.Physics.ForceFields3D
 Imports Microsoft.VisualBasic.Engine.Physics.Joints3D

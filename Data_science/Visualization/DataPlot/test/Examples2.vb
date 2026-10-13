@@ -1,23 +1,60 @@
-#Region "Microsoft.VisualBasic::7b3c9e1f5a2d4928b6c1e9f3a5d7b2c4, Data_science\Visualization\DataPlot\test\Examples2.vb"
+﻿#Region "Microsoft.VisualBasic::90d030472f2cee628fa30031211aa83b, Data_science\Visualization\DataPlot\test\Examples2.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 458
+    '    Code Lines: 377 (82.31%)
+    ' Comment Lines: 25 (5.46%)
+    '    - Xml Docs: 4.00%
+    ' 
+    '   Blank Lines: 56 (12.23%)
+    '     File Size: 19.31 KB
+
 
     ' Class MigrationExamples
     ' 
-    '     Function: Gau, SampleNormal2
+    '     Function: BalancedTree, DemoCorrelation, Gau, SampleNormal2
     ' 
     '     Sub: DemoAlignment, DemoBiHistogram, DemoBubbleHeatmap, DemoClusterHeatmap, DemoContour
     '          DemoCorrelationHeatmap, DemoCorrelationTriangle, DemoDensity, DemoForest, DemoManhattan
-    '          DemoPCA, DemoPrincipalCurve, DemoPyramid, DemoQQ, DemoROC, DemoScree
-    '          DemoTimeTrends, DemoVariableWidthBar, DemoVenn, DemoZScore
+    '          DemoPCA, DemoPrincipalCurve, DemoPyramid, DemoQQ, DemoROC
+    '          DemoScree, DemoTimeTrends, DemoVariableWidthBar, DemoVenn, DemoZScore
     '          RunAll
     ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

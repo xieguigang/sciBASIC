@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::d6e28b8473756748d865932496c3673a, Data_science\Visualization\Plots\Scatter\Data\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::b4f681f4aec47afcd0f97bb3e4bd83b2, Data_science\Visualization\DataPlot\Canvas\Annotation.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 92 (76.67%)
-    ' Comment Lines: 14 (11.67%)
+    '   Total Lines: 125
+    '    Code Lines: 93 (74.40%)
+    ' Comment Lines: 14 (11.20%)
     '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 14 (11.67%)
-    '     File Size: 3.87 KB
+    '   Blank Lines: 18 (14.40%)
+    '     File Size: 4.19 KB
 
 
-    ' Structure Annotation
+    '     Structure Annotation
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
-    '     Sub: Draw
+    '         Sub: Draw
+    ' 
     ' 
     ' /********************************************************************************/
 

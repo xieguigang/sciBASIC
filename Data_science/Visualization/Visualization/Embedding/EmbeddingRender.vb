@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::afc87cf68bc5bcb8a2c2f06abc8a0092, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
+﻿#Region "Microsoft.VisualBasic::b6fdfafa83c75fcaf948f34e45ba155a, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 45 (73.77%)
-    ' Comment Lines: 3 (4.92%)
+    '   Total Lines: 105
+    '    Code Lines: 77 (73.33%)
+    ' Comment Lines: 7 (6.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (21.31%)
-    '     File Size: 2.02 KB
+    '   Blank Lines: 21 (20.00%)
+    '     File Size: 3.65 KB
 
 
     ' Class EmbeddingRender
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetClusterColors, getClusterLabel
+    '     Function: Build2DSeries, GetClusterColors, getClusterLabel, ToSeries
     ' 
     ' /********************************************************************************/
 

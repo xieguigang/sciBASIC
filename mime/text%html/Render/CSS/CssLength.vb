@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93a398cbb668dc353321f63846bfeb22, mime\text%html\Render\CSS\CssLength.vb"
+﻿#Region "Microsoft.VisualBasic::63129fe1886e442d8eeac2aef96d3bf0, mime\text%html\Render\CSS\CssLength.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
-    '    Code Lines: 113 (54.85%)
-    ' Comment Lines: 51 (24.76%)
+    '   Total Lines: 207
+    '    Code Lines: 114 (55.07%)
+    ' Comment Lines: 51 (24.64%)
     '    - Xml Docs: 86.27%
     ' 
-    '   Blank Lines: 42 (20.39%)
-    '     File Size: 7.03 KB
+    '   Blank Lines: 42 (20.29%)
+    '     File Size: 7.06 KB
 
 
     '     Class CssLength

@@ -1,3 +1,70 @@
+﻿#Region "Microsoft.VisualBasic::5978fd58113331b0c1144bf065d2bc51, physics\WorldPlayer\Rendering\CameraRig.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 302
+    '    Code Lines: 179 (59.27%)
+    ' Comment Lines: 69 (22.85%)
+    '    - Xml Docs: 84.06%
+    ' 
+    '   Blank Lines: 54 (17.88%)
+    '     File Size: 11.86 KB
+
+
+    ' Class CameraRig
+    ' 
+    '     Properties: AngleX, AngleY, Distance, FocusX, FocusY
+    '                 FocusZ, Smoothing, TargetAngleX, TargetAngleY, TargetViewDistance
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: RotationMatrix, ScreenToPlane, ScreenToRay, ToPhysics, ToRender
+    '               Unrotate, WrapDeg
+    ' 
+    '     Sub: CaptureHome, Orbit, Reset, SetAngles, SetDistance
+    '          SetFieldOfView, SetFocus, SetScreen, Tick, Zoom
+    '     Class Matrix3x3D
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Engine.Physics
 Imports Microsoft.VisualBasic.Imaging.Drawing3D

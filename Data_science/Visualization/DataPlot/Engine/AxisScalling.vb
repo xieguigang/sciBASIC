@@ -1,55 +1,54 @@
-#Region "Microsoft.VisualBasic::ab60407a5b62b624851ec7a83387c6fa, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::879406bb1b53b7ea6d75c32ffc9249b4, Data_science\Visualization\DataPlot\Engine\AxisScalling.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 431
-'    Code Lines: 242 (56.15%)
-' Comment Lines: 120 (27.84%)
-'    - Xml Docs: 45.83%
-' 
-'   Blank Lines: 69 (16.01%)
-'     File Size: 17.85 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module AxisScalling
-' 
-'         Function: __fix, __max, AxisExpression, (+4 Overloads) CreateAxisTicks, (+2 Overloads) GetAxisByTick
-'                   (+2 Overloads) GetAxisValues
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 429
+    '    Code Lines: 241 (56.18%)
+    ' Comment Lines: 120 (27.97%)
+    '    - Xml Docs: 45.83%
+    ' 
+    '   Blank Lines: 68 (15.85%)
+    '     File Size: 16.42 KB
+
+
+    ' Module AxisScalling
+    ' 
+    '     Function: __fix, __max, AxisExpression, (+4 Overloads) CreateAxisTicks, (+2 Overloads) GetAxisByTick
+    '               (+2 Overloads) GetAxisValues
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

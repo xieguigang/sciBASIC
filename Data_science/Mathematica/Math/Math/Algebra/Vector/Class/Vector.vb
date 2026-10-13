@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8ae25e8a760d68f97896de860f81989, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::2fb6770ee1a350191870c1ef833e193d, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1126
-    '    Code Lines: 467 (41.47%)
-    ' Comment Lines: 506 (44.94%)
-    '    - Xml Docs: 72.92%
+    '   Total Lines: 1518
+    '    Code Lines: 659 (43.41%)
+    ' Comment Lines: 648 (42.69%)
+    '    - Xml Docs: 78.40%
     ' 
-    '   Blank Lines: 153 (13.59%)
-    '     File Size: 41.95 KB
+    '   Blank Lines: 211 (13.90%)
+    '     File Size: 56.91 KB
 
 
     '     Class Vector
@@ -50,12 +50,15 @@
     ' 
     '         Constructor: (+12 Overloads) Sub New
     ' 
-    '         Function: Abs, AsDiagonal, AsSparse, CumSum, (+2 Overloads) dot
-    '                   DotProduct, norm, Ones, Order, Product
-    '                   (+2 Overloads) rand, Scalar, ScaleToRange, seq, slice
-    '                   SumMagnitudes, (+2 Overloads) ToString
+    '         Function: Abs, AsDiagonal, AsSparse, Clone, Constant
+    '                   CumSum, (+2 Overloads) dot, DotProduct, EqualsApprox, InfinityNorm
+    '                   L1Norm, L2Norm, LinearSum, LinSpace, MaxAbs
+    '                   MaxElement, MinElement, norm, Ones, Order
+    '                   Product, (+2 Overloads) rand, Scalar, ScaleToRange, seq
+    '                   slice, Sqrt, SumMagnitudes, (+2 Overloads) ToString, Zeros
     ' 
-    '         Sub: CopyFrom, (+3 Overloads) CopyTo
+    '         Sub: AddConstant, AddVector, (+3 Overloads) CopyFrom, (+3 Overloads) CopyTo, DivideElementWiseInPlace
+    '              (+2 Overloads) LinearSumInPlace, MultiplyElementWiseInPlace, ScaleInPlace, SetConstant, SubtractVector
     ' 
     '         Operators: (+4 Overloads) -, (+7 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >

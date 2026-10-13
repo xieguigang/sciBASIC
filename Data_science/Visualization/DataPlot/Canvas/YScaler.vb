@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::4f5be49dc6cc2f27b6c4753532a205ce, Data_science\Visualization\Plots\g\Axis\DataScaler\YScaler.vb"
+﻿#Region "Microsoft.VisualBasic::37148eaf66f88d3be08509776ef851c0, Data_science\Visualization\DataPlot\Canvas\YScaler.vb"
 
     ' Author:
     ' 

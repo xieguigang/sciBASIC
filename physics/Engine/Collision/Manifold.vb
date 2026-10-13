@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::f1d2ec3bb3cb9920e6ba7ec78b0fa493, gr\physics\Collision\Manifold.vb"
+﻿#Region "Microsoft.VisualBasic::f7454cf93c4bc7dd88f144d4ba3f2f5a, physics\Engine\Collision\Manifold.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 44
-'    Code Lines: 21 (47.73%)
-' Comment Lines: 13 (29.55%)
-'    - Xml Docs: 76.92%
-' 
-'   Blank Lines: 10 (22.73%)
-'     File Size: 1.56 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Manifold
-' 
-'         Sub: InitSolver
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 20 (47.62%)
+    ' Comment Lines: 13 (30.95%)
+    '    - Xml Docs: 76.92%
+    ' 
+    '   Blank Lines: 9 (21.43%)
+    '     File Size: 1.51 KB
+
+
+    '     Class Manifold
+    ' 
+    '         Sub: InitSolver
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

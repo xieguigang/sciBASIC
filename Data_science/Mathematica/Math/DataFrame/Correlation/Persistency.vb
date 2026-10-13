@@ -1,3 +1,94 @@
+﻿#Region "Microsoft.VisualBasic::724e81deb382f2b6497e8e42d4c07899, Data_science\Mathematica\Math\DataFrame\Correlation\Persistency.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1187
+    '    Code Lines: 729 (61.42%)
+    ' Comment Lines: 255 (21.48%)
+    '    - Xml Docs: 92.94%
+    ' 
+    '   Blank Lines: 203 (17.10%)
+    '     File Size: 47.01 KB
+
+
+    ' Enum CorrelationEncodings
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Module CorrelationPValues
+    ' 
+    '     Function: Clamp01, PValue
+    ' 
+    ' Class CorrelationMatrixWriter
+    ' 
+    '     Properties: IsCompleted, WrittenRows
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: Brotli, BuildIndexCompressed, DecodeFloat32, DecodeInt16, Dequantize
+    '               EncodeRow, Quantize
+    ' 
+    '     Sub: Complete, Dispose, Init, WriteIndexBuffer, (+2 Overloads) WriteRow
+    ' 
+    ' Class CorrelationMatrixStore
+    ' 
+    '     Properties: genes, SampleN, size, storeFile
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Contains, DecodeBlock, GetCorrelation, IndexOf, Neighbors
+    '               (+2 Overloads) Open, ReadRow, RowOf, StreamEdges
+    ' 
+    '     Sub: Dispose, (+2 Overloads) LoadIndex, ReadRaw
+    '     Class RowLruCache
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: TryGet
+    ' 
+    '         Sub: Add, Clear
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Buffers.Binary
 Imports System.IO
 Imports System.IO.Compression

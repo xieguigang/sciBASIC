@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::019ce8f7cdde6677e83efbbf4fd95798, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
+﻿#Region "Microsoft.VisualBasic::8c558f070ac85f0b6d9e1f889f4caeeb, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 461
-    '    Code Lines: 354 (76.79%)
-    ' Comment Lines: 62 (13.45%)
-    '    - Xml Docs: 25.81%
+    '   Total Lines: 720
+    '    Code Lines: 501 (69.58%)
+    ' Comment Lines: 138 (19.17%)
+    '    - Xml Docs: 56.52%
     ' 
-    '   Blank Lines: 45 (9.76%)
-    '     File Size: 19.89 KB
+    '   Blank Lines: 81 (11.25%)
+    '     File Size: 31.65 KB
 
 
     ' Class SeriesPlotEngine
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
     ' 
     ' Class PlotEngine
     ' 
@@ -61,15 +61,17 @@
     ' 
     '  
     ' 
-    '     Properties: CanvasHeight, CanvasWidth, PlotArea
+    '     Properties: CanvasHeight, CanvasWidth, DrawFrame, Driver, GraphicsDevice
+    '                 PlotArea
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
     ' 
-    '     Function: FormatNumber, GenerateTicks, GetGraphics, NiceStep, ToBitmap
-    '               ToPixelX, ToPixelY
+    '     Function: FormatNumber, GenerateTicks, GetGraphics, MeasureString, NiceStep
+    '               RegularPolygon, StarPolygon, ToBitmap, ToPixelX, ToPixelY
     ' 
-    '     Sub: ApplyQuality, AutoRange, ComputePlotArea, Dispose, DrawAxisAndGrid
-    '          DrawBackground, DrawLegend, DrawMarker, DrawPlotArea, DrawTitle
+    '     Sub: ApplyQuality, AutoRange, ComputePlotArea, Dispose, DrawAbline
+    '          DrawAxisAndGrid, DrawBackground, DrawColorLegend, DrawLabel, DrawLegend
+    '          DrawMarker, DrawPlotArea, DrawTitle, SetDataRange, SetPlotArea
     ' 
     ' /********************************************************************************/
 

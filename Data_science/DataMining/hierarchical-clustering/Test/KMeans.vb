@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ed4f4192e231fd3689e01c4dc8d6ca4, sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::2ed4f4192e231fd3689e01c4dc8d6ca4, Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 9
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 2
-    '     File Size: 329.00 B
+    '    Code Lines: 4 (44.44%)
+    ' Comment Lines: 3 (33.33%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (22.22%)
+    '     File Size: 329 B
 
 
     ' Module KMeans

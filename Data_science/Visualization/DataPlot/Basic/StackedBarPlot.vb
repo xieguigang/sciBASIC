@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::8db545af1da58fdc37a5927b3a4c667e, Data_science\Visualization\DataPlot\Basic\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c7f08bf69b30fadfc11bfc72dd2756f7, Data_science\Visualization\DataPlot\Basic\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 158 (88.27%)
-    ' Comment Lines: 10 (5.59%)
-    '    - Xml Docs: 30.00%
+    '   Total Lines: 184
+    '    Code Lines: 161 (87.50%)
+    ' Comment Lines: 11 (5.98%)
+    '    - Xml Docs: 36.36%
     ' 
-    '   Blank Lines: 11 (6.15%)
-    '     File Size: 8.25 KB
+    '   Blank Lines: 12 (6.52%)
+    '     File Size: 8.61 KB
 
 
     ' Class StackedBarPlot
@@ -48,7 +48,7 @@
     '     Properties: Categories, Horizontal, MultiValues, SeriesNames, ShowTotalLabel
     '                 ShowValueLabels
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Sub: Plot
     ' 
     ' /********************************************************************************/

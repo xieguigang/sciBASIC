@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30f0e198a36ddc84bc4a9fe2f2201d3a, Data_science\Visualization\DataPlot\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f2140ff56dff0845e9a816cd5383d8b4, Data_science\Visualization\DataPlot\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 29 (85.29%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 101
+    '    Code Lines: 55 (54.46%)
+    ' Comment Lines: 36 (35.64%)
+    '    - Xml Docs: 86.11%
     ' 
-    '   Blank Lines: 5 (14.71%)
-    '     File Size: 1.37 KB
+    '   Blank Lines: 10 (9.90%)
+    '     File Size: 4.98 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: DataSerials
+    '     Function: AsGraphicsData, DataSerials
     ' 
-    '     Sub: SavePng
+    '     Sub: Save, SaveChanges, SavePng
     ' 
     ' /********************************************************************************/
 

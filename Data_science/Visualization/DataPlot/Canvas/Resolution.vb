@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::2571aa791eccacb8cb8d2adc6b7f65d3, Data_science\Visualization\Plots\g\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::97cc5f973da2074c96eb83e49356d159, Data_science\Visualization\DataPlot\Canvas\Resolution.vb"
 
     ' Author:
     ' 

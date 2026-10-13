@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f598384011bdf34132cbe0c37b401799, Data_science\Mathematica\Math\Math\Algebra\SVD.vb"
+﻿#Region "Microsoft.VisualBasic::a0eef3afb50164217cf4f7b63bbee519, Data_science\Mathematica\Math\Math\Algebra\SVD.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 360
-    '    Code Lines: 275 (76.39%)
-    ' Comment Lines: 28 (7.78%)
-    '    - Xml Docs: 21.43%
+    '   Total Lines: 66
+    '    Code Lines: 25 (37.88%)
+    ' Comment Lines: 31 (46.97%)
+    '    - Xml Docs: 58.06%
     ' 
-    '   Blank Lines: 57 (15.83%)
-    '     File Size: 12.38 KB
+    '   Blank Lines: 10 (15.15%)
+    '     File Size: 2.85 KB
 
 
     '     Module SVD

@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::e2e17181313a1b71ac7cf9ac978e288c, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppProblem.vb"
+﻿#Region "Microsoft.VisualBasic::5aedc0f115116ed37770809bc459953a, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppProblem.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 441
-'    Code Lines: 291 (65.99%)
-' Comment Lines: 85 (19.27%)
-'    - Xml Docs: 38.82%
-' 
-'   Blank Lines: 65 (14.74%)
-'     File Size: 18.75 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LppConstraint
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'     Class LppProblem
-' 
-'         Function: ConstraintTypes, VariableNames
-' 
-'     Class StandardForm
-' 
-'         Properties: IsSparse
-' 
-'         Function: Clone, FromProblem, FromSparse, HasNonZero, MapShadowPrice
-'                   ToDense, ToOriginal
-' 
-'         Sub: NegateRow
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 438
+    '    Code Lines: 288 (65.75%)
+    ' Comment Lines: 85 (19.41%)
+    '    - Xml Docs: 38.82%
+    ' 
+    '   Blank Lines: 65 (14.84%)
+    '     File Size: 18.68 KB
+
+
+    '     Class LppConstraint
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class LppProblem
+    ' 
+    '         Function: ConstraintTypes, VariableNames
+    ' 
+    '     Class StandardForm
+    ' 
+    '         Properties: IsSparse
+    ' 
+    '         Function: Clone, FromProblem, FromSparse, HasNonZero, MapShadowPrice
+    '                   ToDense, ToOriginal
+    ' 
+    '         Sub: NegateRow
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

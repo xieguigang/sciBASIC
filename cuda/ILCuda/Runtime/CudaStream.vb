@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8133567325e938cd26d0b48b5afd365, cuda\ILCuda\Runtime\CudaStream.vb"
+﻿#Region "Microsoft.VisualBasic::e6b67414ae2220be3752fe0949c17cb7, cuda\ILCuda\Runtime\CudaStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 58 (61.05%)
-    ' Comment Lines: 17 (17.89%)
+    '   Total Lines: 103
+    '    Code Lines: 63 (61.17%)
+    ' Comment Lines: 17 (16.50%)
     '    - Xml Docs: 64.71%
     ' 
-    '   Blank Lines: 20 (21.05%)
-    '     File Size: 3.52 KB
+    '   Blank Lines: 23 (22.33%)
+    '     File Size: 3.74 KB
 
 
     '     Enum CudaStreamFlags

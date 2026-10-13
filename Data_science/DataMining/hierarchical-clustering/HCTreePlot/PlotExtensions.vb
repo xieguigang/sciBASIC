@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::353e7d1aa30535705b0634eaf5bc2c8d, Data_science\Visualization\Plots-statistics\HeatMap\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f85a0541c58598e0dd0f688ec8d1ccd7, Data_science\DataMining\hierarchical-clustering\HCTreePlot\PlotExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 121
-    '    Code Lines: 91 (75.21%)
-    ' Comment Lines: 13 (10.74%)
+    '   Total Lines: 123
+    '    Code Lines: 93 (75.61%)
+    ' Comment Lines: 13 (10.57%)
     '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 17 (14.05%)
-    '     File Size: 5.30 KB
+    '   Blank Lines: 17 (13.82%)
+    '     File Size: 5.47 KB
 
 
     '     Module PlotExtensions

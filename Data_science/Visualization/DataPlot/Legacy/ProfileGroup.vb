@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, Data_science\Visualization\Plots\g\ProfileGroup.vb"
+﻿#Region "Microsoft.VisualBasic::5b7f6d43487973b6af21db53e766f756, Data_science\Visualization\DataPlot\Legacy\ProfileGroup.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (18.18%)
-    '     File Size: 619 B
+    '     File Size: 618 B
 
 
     '     Class ProfileGroup

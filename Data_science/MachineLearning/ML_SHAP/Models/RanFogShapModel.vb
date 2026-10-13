@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\Models\RanFogShapModel.vb"
+﻿#Region "Microsoft.VisualBasic::6461d4331dfaf768b305461abcaffebb, Data_science\MachineLearning\ML_SHAP\Models\RanFogShapModel.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 189
+    '    Code Lines: 102 (53.97%)
+    ' Comment Lines: 57 (30.16%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 30 (15.87%)
+    '     File Size: 7.62 KB
 
 
+    ' Class RanFogShapModel
+    ' 
+    '     Properties: Forest, IsClassification, Name, Training
+    ' 
+    '     Function: BuildExplainer, BuildNode, Output, Predict, PredictResult
+    '               Train
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.ShapleyValue

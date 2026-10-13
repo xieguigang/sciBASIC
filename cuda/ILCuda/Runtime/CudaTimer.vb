@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3744505969714b2fbbfec83087208d04, cuda\ILCuda\Runtime\CudaTimer.vb"
+﻿#Region "Microsoft.VisualBasic::2c3f55e23b18602c2a2b272ed8bafa69, cuda\ILCuda\Runtime\CudaTimer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 38 (67.86%)
-    ' Comment Lines: 7 (12.50%)
+    '   Total Lines: 66
+    '    Code Lines: 43 (65.15%)
+    ' Comment Lines: 7 (10.61%)
     '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 11 (19.64%)
-    '     File Size: 2.05 KB
+    '   Blank Lines: 16 (24.24%)
+    '     File Size: 2.27 KB
 
 
     '     Class CudaTimer

@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::61cddeaca8839d7c5cf3f9443bbe1ef0, physics\Engine\Collision3D\NarrowPhase3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 423
+    '    Code Lines: 305 (72.10%)
+    ' Comment Lines: 41 (9.69%)
+    '    - Xml Docs: 51.22%
+    ' 
+    '   Blank Lines: 77 (18.20%)
+    '     File Size: 18.83 KB
+
+
+    '     Module NarrowPhase3D
+    ' 
+    '         Function: BoxSphereContact, Build, CapsuleBox, CapsuleCapsule, CapsulePlane
+    '                   CapsuleTips, Clamp, ClosestPointOnSegment, Collide, CollideSorted
+    '                   Sign, SphereBox, SphereCapsule, SpherePlane, SphereSphere
+    ' 
+    '         Sub: ClosestPointsBetweenSegments
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 Imports std = System.Math
 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::3a1f0c9d81b24e579a6d3f5c1b8e0427, gr\physics\Boids\FlockState.vb"
+﻿#Region "Microsoft.VisualBasic::3b362ea051d8aede54a7ebe0e65082b3, physics\Particles\Boids\FlockState.vb"
 
     ' Author:
     ' 
@@ -25,17 +25,28 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    ' Structure-of-arrays simulation state for the flocking engine. All four 
-    ' component arrays are allocated once and reused across frames, so a 
-    ' simulation step performs zero heap allocation for the state itself.
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 45 (50.00%)
+    ' Comment Lines: 35 (38.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (11.11%)
+    '     File Size: 3.40 KB
+
 
     '     Class FlockState
     ' 
-    '         Properties: count, px, py, vx, vy
+    '         Properties: count, dvx, dvy, px, py
+    '                     vx, vy
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone

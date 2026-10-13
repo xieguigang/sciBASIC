@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3f6e8d49f9da02658ed47e61b4c94d4, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpSolution.vb"
+﻿#Region "Microsoft.VisualBasic::03c6e595f2338493a0eb89ac99277596, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpSolution.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 98 (57.65%)
-    ' Comment Lines: 44 (25.88%)
-    '    - Xml Docs: 63.64%
+    '   Total Lines: 180
+    '    Code Lines: 103 (57.22%)
+    ' Comment Lines: 47 (26.11%)
+    '    - Xml Docs: 65.96%
     ' 
-    '   Blank Lines: 28 (16.47%)
-    '     File Size: 7.43 KB
+    '   Blank Lines: 30 (16.67%)
+    '     File Size: 8.02 KB
 
 
     '     Enum MilpStatus
@@ -54,8 +54,9 @@
     ' 
     '         Properties: BestBound, CutsAdded, DroppedNodes, ElapsedMilliseconds, FailureMessage
     '                     HasIncumbent, HeuristicSolutions, IncumbentAtRoot, Log, Lp
-    '                     LpSolves, NodesExplored, ObjectiveValue, RelativeGap, RootRelaxation
-    '                     Solution, SolverError, Status, VariableNames
+    '                     LpSolves, LuGateRejects, LuRefactors, LuUpdates, NodesExplored
+    '                     ObjectiveValue, RelativeGap, RootRelaxation, Solution, SolverError
+    '                     Status, VariableNames
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetSolution, StatusText, ToString

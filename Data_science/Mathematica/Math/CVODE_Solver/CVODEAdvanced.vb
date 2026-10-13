@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d5d7037ca240813422057a864521a4a, Data_science\Mathematica\Math\CVODE_Solver\CVODEAdvanced.vb"
+﻿#Region "Microsoft.VisualBasic::b2e188fe63f212f2823fc7d9529c50fb, Data_science\Mathematica\Math\CVODE_Solver\CVODEAdvanced.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 98 (55.68%)
-    ' Comment Lines: 43 (24.43%)
+    '   Total Lines: 177
+    '    Code Lines: 99 (55.93%)
+    ' Comment Lines: 43 (24.29%)
     '    - Xml Docs: 58.14%
     ' 
-    '   Blank Lines: 35 (19.89%)
-    '     File Size: 5.67 KB
+    '   Blank Lines: 35 (19.77%)
+    '     File Size: 5.72 KB
 
 
     ' Class CVODESolverEx

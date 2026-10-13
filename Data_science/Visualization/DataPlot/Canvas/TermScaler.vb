@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::5fcfa1900c543e5ca1382fc40a9e5950, Data_science\Visualization\Plots\g\Axis\DataScaler\TermScaler.vb"
+﻿#Region "Microsoft.VisualBasic::b055ba4d247301a5e990202c55911c08, Data_science\Visualization\DataPlot\Canvas\TermScaler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 6 (17.65%)
-    '     File Size: 1.08 KB
+    '     File Size: 1.07 KB
 
 
     '     Class TermScaler

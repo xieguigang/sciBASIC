@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::766e498255f6e1e69d61cbeeff520a89, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Horizon.vb"
+﻿#Region "Microsoft.VisualBasic::be51db16e30c8cb5148ef55d9838ce77, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Horizon.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 24 (16.22%)
-    '     File Size: 6.63 KB
+    '     File Size: 6.60 KB
 
 
     ' Class Horizon

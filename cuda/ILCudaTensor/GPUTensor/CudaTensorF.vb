@@ -1,3 +1,72 @@
+﻿#Region "Microsoft.VisualBasic::f88537dc5ae07743e8a13551e1a44cf1, cuda\ILCudaTensor\GPUTensor\CudaTensorF.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 863
+    '    Code Lines: 498 (57.71%)
+    ' Comment Lines: 179 (20.74%)
+    '    - Xml Docs: 81.56%
+    ' 
+    '   Blank Lines: 186 (21.55%)
+    '     File Size: 38.22 KB
+
+
+    '     Class CudaTensorF
+    ' 
+    '         Properties: Current, KernelCatalog, LastError, MaxStageBlocks, MinCfdCellsF
+    '                     MinGemmElementsF, MinGpuElementsF, Name
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Abs, Add, AddScalar, AdvectTrilinear, Clip
+    '                   DescribeKernels, Device, Divide, DivideScalar, EwBinary
+    '                   EwUnary, Exp, FluidMask, IsKernelAvailable, JacobiStencil7
+    '                   Laplacian7, Log, MaskBuf, MatMul, MaxAll
+    '                   Maximum, MeanAll, MinAll, Minimum, Multiply
+    '                   MultiplyScalar, Negate, NFluidBuf, OnGpu, Reciprocal
+    '                   ReduceExtreme, ReduceSum, Register, Relu, Sigmoid
+    '                   Sqrt, Square, Subtract, SumAll, Tanh
+    '                   TryGrid, TryKernel, UniformNFluid
+    ' 
+    '         Sub: Adopt, ApplyMask, Dispose, Unregister
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' 单精度（float32）张量计算后端：ITensorComputeF 的 CUDA GPU 实现
 '

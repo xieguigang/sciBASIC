@@ -1,3 +1,72 @@
+﻿#Region "Microsoft.VisualBasic::e322e54b59a6f9a6a988ff7caf1fb53c, physics\WorldPlayer\World\WorldHost.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 294
+    '    Code Lines: 182 (61.90%)
+    ' Comment Lines: 58 (19.73%)
+    '    - Xml Docs: 72.41%
+    ' 
+    '   Blank Lines: 54 (18.37%)
+    '     File Size: 10.99 KB
+
+
+    ' Class SpawnOptions
+    ' 
+    '     Properties: Color, Density, Depth, Edge, Friction
+    '                 Height, Kind, Label, Mass, Orientation
+    '                 Radius, Restitution, Segment, SizeX, SizeY
+    '                 SizeZ, Velocity, Width, X, Y
+    '                 Z
+    ' 
+    ' Class WorldHost
+    ' 
+    '     Properties: BodyLimit, ContactCount, DynamicCount, KillPlaneY, LastError
+    '                 Paused, SimTime, SleepingCount
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: BuildCollider, BuildMesh, Find, Remove, Spawn
+    ' 
+    '     Sub: AddGround, Clear, ClearDynamic, Cull, EnforceLimit
+    '          SetGravity, Update
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Engine.Physics
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D

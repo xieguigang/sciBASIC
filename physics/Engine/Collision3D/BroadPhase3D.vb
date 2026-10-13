@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::fc7557ec7b75d5868dbee1bdd6cffd3e, physics\Engine\Collision3D\BroadPhase3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 43 (58.90%)
+    ' Comment Lines: 15 (20.55%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 15 (20.55%)
+    '     File Size: 2.65 KB
+
+
+    '     Structure BodyPair3D
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Module BroadPhase3D
+    ' 
+    '         Properties: Margin
+    ' 
+    '         Function: ComputePairs
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Namespace Collision3D
 
     ''' <summary>宽相位输出的候选刚体对。</summary>

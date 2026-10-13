@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::4a14173d6b0fd2796c68804c5bb93840, Data_science\Visualization\Visualization\Embedding\Embedding2D.vb"
+﻿#Region "Microsoft.VisualBasic::3b9bc2b53f9249dd32db752278864653, Data_science\Visualization\Visualization\Embedding\Embedding2D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 68 (86.08%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 30
+    '    Code Lines: 22 (73.33%)
+    ' Comment Lines: 2 (6.67%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (13.92%)
-    '     File Size: 2.93 KB
+    '   Blank Lines: 6 (20.00%)
+    '     File Size: 1.20 KB
 
 
     ' Class Embedding2D

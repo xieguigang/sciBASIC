@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::f646cf4333fcd0b9098df14114b7dc77, Data_science\Visualization\Plots\g\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::cd1f7dd69258867337a03593bc9d291e, Data_science\Visualization\DataPlot\Legacy\Mapper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 287
-    '    Code Lines: 215 (74.91%)
-    ' Comment Lines: 33 (11.50%)
+    '   Total Lines: 286
+    '    Code Lines: 215 (75.17%)
+    ' Comment Lines: 33 (11.54%)
     '    - Xml Docs: 93.94%
     ' 
-    '   Blank Lines: 39 (13.59%)
-    '     File Size: 11.78 KB
+    '   Blank Lines: 38 (13.29%)
+    '     File Size: 11.94 KB
 
 
     '     Class Mapper

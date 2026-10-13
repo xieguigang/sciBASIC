@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::498db22fb6f1746095c620d9eaf9c1c3, vs_solutions\dev\VisualStudio\VBProject\Project\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::69fca7edf8038e3e9fb7888ef07e3d15, vs_solutions\dev\VisualStudio\VBProject\Project\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 102 (73.38%)
-    ' Comment Lines: 20 (14.39%)
+    '   Total Lines: 160
+    '    Code Lines: 119 (74.38%)
+    ' Comment Lines: 20 (12.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (12.23%)
-    '     File Size: 5.74 KB
+    '   Blank Lines: 21 (13.12%)
+    '     File Size: 6.54 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, ExtractNuGetAssemblyInfo, GetOutputDirectory, GetOutputName
-    '                   GetProfile, RootNamespace
+    '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, ExtractNuGetAssemblyInfo, FallbackPath, GetOutputDirectory
+    '                   GetOutputName, GetProfile, RootNamespace
     ' 
     ' 
     ' /********************************************************************************/

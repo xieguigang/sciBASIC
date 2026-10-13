@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e4a650020ff1a8250e3a96237f4d17c, Data_science\MachineLearning\LNN\LiquidCell.vb"
+﻿#Region "Microsoft.VisualBasic::73cc3aa7429447aa13f256ae70dcf1db, Data_science\MachineLearning\LNN\LiquidCell.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 977
-    '    Code Lines: 546 (55.89%)
-    ' Comment Lines: 264 (27.02%)
-    '    - Xml Docs: 90.15%
+    '   Total Lines: 1070
+    '    Code Lines: 597 (55.79%)
+    ' Comment Lines: 300 (28.04%)
+    '    - Xml Docs: 90.67%
     ' 
-    '   Blank Lines: 167 (17.09%)
-    '     File Size: 34.13 KB
+    '   Blank Lines: 173 (16.17%)
+    '     File Size: 39.49 KB
 
 
     ' Enum LiquidMode
@@ -65,18 +65,19 @@
     ' Class LiquidCell
     ' 
     '     Properties: ActivationType, Bias, BiasGate, BiasGateGradient, BiasGradient
-    '                 HasGate, HiddenSize, InputSize, LastInputGradient, Mode
-    '                 RecordCount, State, Tau, TauGradient, TauMax
-    '                 TauMin, Training, UseBoundedTau, WeightGate, WeightGateGradient
-    '                 WeightGateInput, WeightGateInputGradient, WeightInput, WeightInputGradient, WeightRecurrent
-    '                 WeightRecurrentGradient
+    '                 EffectiveTauVector, HasGate, HiddenSize, InputSize, LastInputGradient
+    '                 Mode, RecordCount, State, Tau, TauGradient
+    '                 TauMax, TauMin, Training, UseBoundedTau, WeightGate
+    '                 WeightGateGradient, WeightGateInput, WeightGateInputGradient, WeightInput, WeightInputGradient
+    '                 WeightRecurrent, WeightRecurrentGradient
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: ApplyActivation, ApplyActivationDerivative, Backward, BackwardCfC, BackwardEuler
-    '               BackwardHeun, BackwardRK4, BackwardThroughF, ComputeDerivative, EffectiveTau
-    '               EffectiveTauDerivative, Forward, ForwardCfC, GetGradients, GetParameterPairs
-    '               GetParameters, GetSystemTau, LinearForward, ToRow
+    '               BackwardHeun, BackwardRK4, BackwardThroughF, BatchActivationCode, ComputeDerivative
+    '               EffectiveTau, EffectiveTauDerivative, Forward, ForwardBatch, ForwardCfC
+    '               GetGradients, GetParameterPairs, GetParameters, GetSystemTau, LinearForward
+    '               ToRow
     ' 
     '     Sub: AccumulateParamGradients, ClearRecords, Dispose, EnsureGateParameters, PropagateToStateAndInput
     '          ResetState, SetMode, SetState, ZeroGradients

@@ -21,8 +21,8 @@
     <PackageReleaseNotes>Adds recurrent and sparse LIF layers with fused SIMD forward paths, CSR synapse matrices, STDP plasticity and Adam training with gradient clipping.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <OutputPath>../../../.nuget/</OutputPath>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>

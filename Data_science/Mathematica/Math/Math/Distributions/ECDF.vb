@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14aa13c87d6e5ec8a37d0e2600c00890, Data_science\Mathematica\Math\Math\Distributions\ECDF.vb"
+﻿#Region "Microsoft.VisualBasic::64f22fda39236d88db09b41643de800f, Data_science\Mathematica\Math\Math\Distributions\ECDF.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 50 (45.05%)
-    ' Comment Lines: 47 (42.34%)
-    '    - Xml Docs: 89.36%
+    '   Total Lines: 122
+    '    Code Lines: 55 (45.08%)
+    ' Comment Lines: 50 (40.98%)
+    '    - Xml Docs: 84.00%
     ' 
-    '   Blank Lines: 14 (12.61%)
-    '     File Size: 4.32 KB
+    '   Blank Lines: 17 (13.93%)
+    '     File Size: 4.79 KB
 
 
     '     Class ECDF

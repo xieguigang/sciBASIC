@@ -12,8 +12,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <Title>Statistics Toolkit: Distributions, Hypothesis Tests and SHAP</Title>
     <Description>A statistics toolkit for sciBASIC#: probability distributions with method-of-moments and L-moment estimation, t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I hypothesis tests, plus FastICA, RANSAC and Shapley/TreeSHAP feature attribution.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics</AssemblyTitle>

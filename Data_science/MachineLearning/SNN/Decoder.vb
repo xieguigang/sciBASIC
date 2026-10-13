@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1dde9ab91a36abee0d61d352052315b, Data_science\MachineLearning\SNN\Decoder.vb"
+﻿#Region "Microsoft.VisualBasic::e0aa14c11e9e3d11a884c8c9bca43903, Data_science\MachineLearning\SNN\Decoder.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 213
-    '    Code Lines: 135 (63.38%)
-    ' Comment Lines: 42 (19.72%)
-    '    - Xml Docs: 59.52%
+    '   Total Lines: 232
+    '    Code Lines: 140 (60.34%)
+    ' Comment Lines: 53 (22.84%)
+    '    - Xml Docs: 67.92%
     ' 
-    '   Blank Lines: 36 (16.90%)
-    '     File Size: 7.87 KB
+    '   Blank Lines: 39 (16.81%)
+    '     File Size: 8.75 KB
 
 
     ' Module SpikeDecoders
     ' 
     '     Function: ActiveNeurons, ConcatRateAndPotential, dataLength, FiringRate, MembranePotential
-    '               RasterText, SpikeCounts, TotalSpikeCount
+    '               RasterText, (+2 Overloads) SpikeCounts, TotalSpikeCount
     ' 
     '     Sub: AssertHistory
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6dbf63e175063b63e6f2a5d5b36ffaf, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::8841db4f4cf8341503f9b4b823d53fc4, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 979
-    '    Code Lines: 706 (72.11%)
-    ' Comment Lines: 140 (14.30%)
-    '    - Xml Docs: 42.86%
+    '   Total Lines: 1024
+    '    Code Lines: 732 (71.48%)
+    ' Comment Lines: 149 (14.55%)
+    '    - Xml Docs: 40.27%
     ' 
-    '   Blank Lines: 133 (13.59%)
-    '     File Size: 36.74 KB
+    '   Blank Lines: 143 (13.96%)
+    '     File Size: 39.08 KB
 
 
     '     Class EigenvalueDecomposition

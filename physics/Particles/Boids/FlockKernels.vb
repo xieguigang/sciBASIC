@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::9c3d72e0a18b45d6f4b2c8e0d1a7f534, gr\physics\Boids\FlockKernels.vb"
+﻿#Region "Microsoft.VisualBasic::af088aaeb74e7d4dedbc3cc4a75c2408, physics\Particles\Boids\FlockKernels.vb"
 
     ' Author:
     ' 
@@ -25,26 +25,23 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    ' The SIMD compute kernels of the flocking engine.
 
-    ' <see cref="FlockSolver"/> evaluates the four flocking rules (cohesion, 
-    ' alignment, separation, predator avoidance) for a boid index range on top 
-    ' of the counting-sort grid. It is two-phase: rule forces are accumulated 
-    ' into per-boid delta arrays so that every boid reads the frame-start 
-    ' velocities of its neighbors (the legacy parallel implementation raced on 
-    ' partially updated velocities). Distances are pre-filtered by squared 
-    ' magnitude so that sqrt is only evaluated for accepted pairs.
+    ' Code Statistics:
 
-    ' <see cref="FlockIntegrate"/> is a single streaming pass that applies the 
-    ' rule forces, integrates the positions, clamps the speed and applies the 
-    ' wall bounce / wrap rules. It runs 4 lanes of <see cref="Vector(Of Double)"/> 
-    ' (AVX2) when the hardware and <see cref="Math.SIMD.SIMDEnvironment"/> allow 
-    ' it, and falls back to the scalar path otherwise (the 
-    ' <c>SIMDConfiguration.disable</c> escape hatch keeps working).
+    '   Total Lines: 343
+    '    Code Lines: 240 (69.97%)
+    ' Comment Lines: 51 (14.87%)
+    '    - Xml Docs: 60.78%
+    ' 
+    '   Blank Lines: 52 (15.16%)
+    '     File Size: 15.73 KB
+
 
     '     Class FlockSolver
     ' 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::7a88cabcb12e3acc6a6aa9ef1a9121c4, Data_science\Visualization\Visualization\Embedding\SOMEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::87d15912678f4134431f77f425be4f18, Data_science\Visualization\Visualization\Embedding\SOMEmbedding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 50 (79.37%)
-    ' Comment Lines: 4 (6.35%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 77
+    '    Code Lines: 59 (76.62%)
+    ' Comment Lines: 7 (9.09%)
+    '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 9 (14.29%)
-    '     File Size: 2.44 KB
+    '   Blank Lines: 11 (14.29%)
+    '     File Size: 2.98 KB
 
 
     ' Class SOMEmbedding

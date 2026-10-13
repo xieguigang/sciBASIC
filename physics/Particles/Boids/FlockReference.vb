@@ -1,47 +1,53 @@
-#Region "Microsoft.VisualBasic::5e8b3c47d92a4f06b71c0e8d3a2f1690, gr\physics\Boids\FlockReference.vb"
+﻿#Region "Microsoft.VisualBasic::06898043eb83b7eddf8fd56e12b842d5, physics\Particles\Boids\FlockReference.vb"
 
     ' Author:
-    '
+    ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
-    '
+    ' 
     ' Copyright (c) 2018 GPL3 Licensed
-    '
-    '
+    ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    '
-    '
+    ' 
+    ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
-    '
+    ' 
     ' This program is distributed in the hope that it will be useful,
     ' but WITHOUT ANY WARRANTY; without even the implied warranty of
     ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General PUBLIC License for more details.
-    '
+    ' GNU General Public License for more details.
+    ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 
     ' /********************************************************************************/
 
     ' Summaries:
 
-    ' A faithful, deliberately slow re-implementation of the legacy flocking 
-    ' rules (brute force O(N^2) neighbor search, no grid, no SIMD, no parallel). 
-    ' It exists **only** so the development self-test can validate the SIMD 
-    ' engine against the legacy semantics within a small floating point 
-    ' tolerance; it is not part of the public API and must not be used by 
-    ' production code.
+
+    ' Code Statistics:
+
+    '   Total Lines: 159
+    '    Code Lines: 115 (72.33%)
+    ' Comment Lines: 17 (10.69%)
+    '    - Xml Docs: 76.47%
+    ' 
+    '   Blank Lines: 27 (16.98%)
+    '     File Size: 6.54 KB
+
 
     '     Class FlockReference
-    '
-    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Sub: Advance
-    '
-    '
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

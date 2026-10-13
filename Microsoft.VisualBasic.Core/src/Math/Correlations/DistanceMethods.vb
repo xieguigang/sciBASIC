@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c59ae33089d607e89bd64816b3891bd6, Microsoft.VisualBasic.Core\src\Math\Correlations\DistanceMethods.vb"
+﻿#Region "Microsoft.VisualBasic::def88a0e30f7b2aa1d5f08d3099ac562, Microsoft.VisualBasic.Core\src\Math\Correlations\DistanceMethods.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 319
-    '    Code Lines: 160 (50.16%)
-    ' Comment Lines: 118 (36.99%)
-    '    - Xml Docs: 89.83%
+    '   Total Lines: 321
+    '    Code Lines: 157 (48.91%)
+    ' Comment Lines: 124 (38.63%)
+    '    - Xml Docs: 85.48%
     ' 
-    '   Blank Lines: 41 (12.85%)
-    '     File Size: 11.95 KB
+    '   Blank Lines: 40 (12.46%)
+    '     File Size: 12.32 KB
 
 
     '     Module DistanceMethods

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c66d5c9732cc44d8acabacb397e7b233, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::fe7890a9e497bbaade9d8f95bc3afa98, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 351
-    '    Code Lines: 145 (41.31%)
-    ' Comment Lines: 168 (47.86%)
-    '    - Xml Docs: 86.31%
+    '   Total Lines: 363
+    '    Code Lines: 146 (40.22%)
+    ' Comment Lines: 178 (49.04%)
+    '    - Xml Docs: 86.52%
     ' 
-    '   Blank Lines: 38 (10.83%)
-    '     File Size: 15.77 KB
+    '   Blank Lines: 39 (10.74%)
+    '     File Size: 16.41 KB
 
 
     ' Class Cluster
     ' 
     '     Properties: Children, Distance, DistanceValue, Id, isLeaf
     '                 IsRoot, LeafCount, LeafNames, Leafs, Name
-    '                 Parent, TotalDistance, WeightValue
+    '                 Parent, removed, TotalDistance, WeightValue
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73da11469ecd72cc25d5a283afd636ea, Microsoft.VisualBasic.Core\src\Data\Repository\MurmurHash.vb"
+﻿#Region "Microsoft.VisualBasic::79b77f90121c1decb958e9fa7e5ddfd1, Microsoft.VisualBasic.Core\src\Data\Repository\MurmurHash.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 97 (64.67%)
-    ' Comment Lines: 35 (23.33%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 188
+    '    Code Lines: 99 (52.66%)
+    ' Comment Lines: 69 (36.70%)
+    '    - Xml Docs: 75.36%
     ' 
-    '   Blank Lines: 18 (12.00%)
-    '     File Size: 5.77 KB
+    '   Blank Lines: 20 (10.64%)
+    '     File Size: 8.21 KB
 
 
     '     Module MurmurHash
     ' 
-    '         Function: (+2 Overloads) MurmurHashCode3_x86_32
+    '         Function: LoadUInt32, (+2 Overloads) MurmurHashCode3_x86_32
     ' 
     ' 
     ' /********************************************************************************/

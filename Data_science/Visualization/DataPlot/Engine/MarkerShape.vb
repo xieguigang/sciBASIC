@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6f15747d2ad274814e0330a70266af3, Data_science\Visualization\DataPlot\Engine\MarkerShape.vb"
+﻿#Region "Microsoft.VisualBasic::64a5fe31a6117149ee8a64b05e925c63, Data_science\Visualization\DataPlot\Engine\MarkerShape.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 9 (90.00%)
-    ' Comment Lines: 1 (10.00%)
+    '   Total Lines: 18
+    '    Code Lines: 13 (72.22%)
+    ' Comment Lines: 5 (27.78%)
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 152 B
+    '     File Size: 393 B
 
 
     ' Enum MarkerShape
     ' 
-    '     Circle, Cross, Diamond, None, Plus
-    '     Square, Triangle
+    '     Circle, Cross, Diamond, Hexagon, InvertedTriangle
+    '     None, Pentagon, Plus, Square, Star
+    '     Triangle
     ' 
     '  
     ' 

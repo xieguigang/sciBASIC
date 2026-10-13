@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1a4de7c6f93dd0f0a0badbca249c4a2, cuda\ILCuda\Runtime\CudaMemory.vb"
+﻿#Region "Microsoft.VisualBasic::a18f8ad4cafb734676a260d89c61345c, cuda\ILCuda\Runtime\CudaMemory.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 62 (68.89%)
-    ' Comment Lines: 11 (12.22%)
+    '   Total Lines: 92
+    '    Code Lines: 63 (68.48%)
+    ' Comment Lines: 11 (11.96%)
     '    - Xml Docs: 72.73%
     ' 
-    '   Blank Lines: 17 (18.89%)
-    '     File Size: 3.11 KB
+    '   Blank Lines: 18 (19.57%)
+    '     File Size: 3.15 KB
 
 
     '     Structure MemoryInfo

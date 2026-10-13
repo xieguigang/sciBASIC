@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::e6aff777f49e1eff7abb95228d59bcf4, Data_science\Visualization\Plots-statistics\HeatMap\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::dd4209224e0b35ee344d003d4085ff6f, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DataScaler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 101 (78.29%)
-    ' Comment Lines: 17 (13.18%)
+    '   Total Lines: 131
+    '    Code Lines: 103 (78.63%)
+    ' Comment Lines: 17 (12.98%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (8.53%)
-    '     File Size: 5.85 KB
+    '   Blank Lines: 11 (8.40%)
+    '     File Size: 6.01 KB
 
 
     '     Module DataScaler

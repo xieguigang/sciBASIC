@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::1dc7dd4e18ff2b7d5aabc6682aa65954, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2fedcb55cb438df1e1abbde5ccebcd13, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 124 (86.11%)
-    ' Comment Lines: 9 (6.25%)
-    '    - Xml Docs: 11.11%
+    '   Total Lines: 153
+    '    Code Lines: 129 (84.31%)
+    ' Comment Lines: 11 (7.19%)
+    '    - Xml Docs: 18.18%
     ' 
-    '   Blank Lines: 11 (7.64%)
-    '     File Size: 6.72 KB
+    '   Blank Lines: 13 (8.50%)
+    '     File Size: 7.24 KB
 
 
     ' Class BoxPlot
     ' 
     '     Properties: Groups, Horizontal, ShowMean, ShowOutliers
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: Quantile
     ' 

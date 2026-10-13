@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b58bb16340c467fbc941471af1a008a8, Data_science\MachineLearning\TensorFlow\TensorF.vb"
+﻿#Region "Microsoft.VisualBasic::edb33d31a3b7d6b57c0a99338025385a, Data_science\MachineLearning\TensorFlow\TensorF.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 379
-    '    Code Lines: 200 (52.77%)
-    ' Comment Lines: 113 (29.82%)
-    '    - Xml Docs: 78.76%
+    '   Total Lines: 457
+    '    Code Lines: 218 (47.70%)
+    ' Comment Lines: 167 (36.54%)
+    '    - Xml Docs: 84.43%
     ' 
-    '   Blank Lines: 66 (17.41%)
-    '     File Size: 13.45 KB
+    '   Blank Lines: 72 (15.75%)
+    '     File Size: 17.48 KB
 
 
     ' Class TensorF
     ' 
-    '     Properties: computeKernelF, Data, IsDisposed, Length, Rank
-    '                 Shape, TotalLength
+    '     Properties: computeKernelF, Data, DeviceEpoch, IsDisposed, Length
+    '                 Rank, Shape, TotalLength, Version
     ' 
     '     Constructor: (+3 Overloads) Sub New
     ' 
@@ -54,7 +54,8 @@
     '               Get1DInd, Ones, Scalar, ToDoubles, ToString
     '               ToTensor, Wrap, Zeros
     ' 
-    '     Sub: Clear, CopyFrom, Dispose, Fill, UpdateDimProds
+    '     Sub: Clear, CopyFrom, Dispose, Fill, InvalidateAllDeviceCaches
+    '          MarkHostModified, UpdateDimProds
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4890cf57fde5e00cded4c2f639b3a07, Data\BinaryData\msgpack\Serialization\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::4c32b194b5294a578b700a13bd1bc758, Data\BinaryData\msgpack\Serialization\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 31 (49.21%)
-    ' Comment Lines: 23 (36.51%)
+    '   Total Lines: 62
+    '    Code Lines: 30 (48.39%)
+    ' Comment Lines: 23 (37.10%)
     '    - Xml Docs: 91.30%
     ' 
-    '   Blank Lines: 9 (14.29%)
-    '     File Size: 2.31 KB
+    '   Blank Lines: 9 (14.52%)
+    '     File Size: 2.29 KB
 
 
     '     Class SchemaProvider

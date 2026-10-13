@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\Models\LinearShapModel.vb"
+﻿#Region "Microsoft.VisualBasic::78eba84e60f2f8e59cf5bf3621d88db6, Data_science\MachineLearning\ML_SHAP\Models\LinearShapModel.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 152
+    '    Code Lines: 84 (55.26%)
+    ' Comment Lines: 44 (28.95%)
+    '    - Xml Docs: 97.73%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 24 (15.79%)
+    '     File Size: 5.51 KB
 
 
+    ' Class LinearShapModel
+    ' 
+    '     Properties: Coefficients, Fitted, Intercept, IsClassification, Link
+    '                 Name, Training
+    ' 
+    '     Function: BuildExplainer, ComputeFeatureMeans, Output, Predict, PredictResult
+    '               Train
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Linq
 Imports Microsoft.VisualBasic.Data

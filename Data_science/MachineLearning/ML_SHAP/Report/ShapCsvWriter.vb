@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\Report\ShapCsvWriter.vb"
+﻿#Region "Microsoft.VisualBasic::fe5ee8d9bd5eeb9f5d8557e6e9d52133, Data_science\MachineLearning\ML_SHAP\Report\ShapCsvWriter.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 119
+    '    Code Lines: 81 (68.07%)
+    ' Comment Lines: 15 (12.61%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 23 (19.33%)
+    '     File Size: 4.44 KB
 
 
+    ' Module ShapCsvWriter
+    ' 
+    '     Function: BuildHeader, BuildRow, Escape, Format, MeanShapOf
+    ' 
+    '     Sub: WriteExplanations, WriteGlobalImportance
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Globalization
 Imports System.IO

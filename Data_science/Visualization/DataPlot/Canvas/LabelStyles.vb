@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::26351168e2be3aacca53da138d7ea5ef, Data_science\Visualization\Plots\Fractions\LabelStyles.vb"
+﻿#Region "Microsoft.VisualBasic::4034537b6de186eceaace144aeabadf3, Data_science\Visualization\DataPlot\Canvas\LabelStyles.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 128 B
+    '     File Size: 125 B
 
 
     '     Enum ValueLabels

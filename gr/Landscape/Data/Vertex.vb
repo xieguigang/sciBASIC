@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b2cbcb7cd71ab230656f9f4222b6abd, gr\Landscape\Data\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::d484d5a3ae55e26b67e56de19da9b985, gr\Landscape\Data\Vertex.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 28 (70.00%)
-    ' Comment Lines: 6 (15.00%)
+    '   Total Lines: 41
+    '    Code Lines: 28 (68.29%)
+    ' Comment Lines: 6 (14.63%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (15.00%)
+    '   Blank Lines: 7 (17.07%)
     '     File Size: 1.31 KB
 
 

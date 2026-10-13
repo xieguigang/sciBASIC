@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f52f026abdd400d065f14978e3033c26, gr\physics\Collision\NarrowPhase.vb"
+﻿#Region "Microsoft.VisualBasic::f52f026abdd400d065f14978e3033c26, physics\Engine\Collision\NarrowPhase.vb"
 
     ' Author:
     ' 

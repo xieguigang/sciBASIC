@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::81d04c11b6abeb59ff456d0fe5e57f05, Data_science\Visualization\Plots\BarPlot\LevelBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::559b592b87de2cb57f874f686afa9459, Data_science\Visualization\DataPlot\Legacy\LevelBarplot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 212
-    '    Code Lines: 178 (83.96%)
-    ' Comment Lines: 8 (3.77%)
+    '   Total Lines: 210
+    '    Code Lines: 177 (84.29%)
+    ' Comment Lines: 8 (3.81%)
     '    - Xml Docs: 37.50%
     ' 
-    '   Blank Lines: 26 (12.26%)
-    '     File Size: 10.07 KB
+    '   Blank Lines: 25 (11.90%)
+    '     File Size: 10.01 KB
 
 
     '     Module LevelBarplot

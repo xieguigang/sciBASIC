@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97fc2e7834d4529fc24256353875d3ca, Data_science\MachineLearning\SNN\SparseLIFLayer.vb"
+﻿#Region "Microsoft.VisualBasic::3fed8632a2ba57a70761c54df0fca03c, Data_science\MachineLearning\SNN\SparseLIFLayer.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,41 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 89 (50.57%)
-    ' Comment Lines: 50 (28.41%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 506
+    '    Code Lines: 220 (43.48%)
+    ' Comment Lines: 193 (38.14%)
+    '    - Xml Docs: 81.87%
     ' 
-    '   Blank Lines: 37 (21.02%)
-    '     File Size: 6.77 KB
+    '   Blank Lines: 93 (18.38%)
+    '     File Size: 20.91 KB
 
 
+    ' Enum LifResidentPrecision
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum LifStepPath
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     ' Class SparseLIFLayer
     ' 
     '     Properties: Beta, Counts, FallbackSteps, InputSize, KeepHistory
-    '                 LastStepPath, Membrane, Name, ResetMode
-    '                 ResidentPrecision, SHistory, Synapses, Threshold
-    '                 UHistory, Units, UseFusedStep
+    '                 LastStepPath, Membrane, Name, ResetMode, ResidentPrecision
+    '                 SHistory, Synapses, Threshold, UHistory, Units
+    '                 UseFusedStep
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: ForwardStep, SyncFromDevice, ToString
+    '     Function: ForwardStep, forwardStepByOperators, PrepareDeviceState, SyncFromDevice, ToString
     ' 
-    '     Sub: ReleaseDeviceBuffers, ResetState
+    '     Sub: AccumulateCounts, RecordStep, ReleaseDeviceBuffers, ReleaseDeviceState, ResetState
     ' 
     ' /********************************************************************************/
 

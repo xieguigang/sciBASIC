@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::d1cbcd97aac90fdd078207dfd3046268, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::6a0bdc99049dfaa1b3271a491fbecbe9, Data_science\Visualization\DataPlot\Legacy\DataModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 241
-    '    Code Lines: 175 (72.61%)
-    ' Comment Lines: 39 (16.18%)
+    '   Total Lines: 240
+    '    Code Lines: 175 (72.92%)
+    ' Comment Lines: 39 (16.25%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 27 (11.20%)
-    '     File Size: 8.32 KB
+    '   Blank Lines: 26 (10.83%)
+    '     File Size: 8.31 KB
 
 
     '     Structure HistogramData

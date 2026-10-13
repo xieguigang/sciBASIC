@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f83090b249f368ecc6c293035e6a5586, gr\avi\AVIMainHeader.vb"
+﻿#Region "Microsoft.VisualBasic::8c851404c4aa85473d88f206d0b3e376, gr\avi\AVIMainHeader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 53 (47.75%)
-    ' Comment Lines: 48 (43.24%)
+    '   Total Lines: 177
+    '    Code Lines: 97 (54.80%)
+    ' Comment Lines: 58 (32.77%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (9.01%)
-    '     File Size: 3.74 KB
+    '   Blank Lines: 22 (12.43%)
+    '     File Size: 5.98 KB
 
 
     ' Class AVIMainHeader
@@ -50,6 +50,9 @@
     '                 dwTotalFrames, dwWidth
     ' 
     '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: getPrimaryVideoStream
+    ' 
     '     Sub: Write
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2af1668e5dd842b6f5d0453e2952d19, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpOptions.vb"
+﻿#Region "Microsoft.VisualBasic::8832429b224c5117897bc8e92aa1dbfd, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpOptions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 140
-    '    Code Lines: 57 (40.71%)
-    ' Comment Lines: 51 (36.43%)
-    '    - Xml Docs: 78.43%
+    '   Total Lines: 187
+    '    Code Lines: 78 (41.71%)
+    ' Comment Lines: 69 (36.90%)
+    '    - Xml Docs: 84.06%
     ' 
-    '   Blank Lines: 32 (22.86%)
-    '     File Size: 6.16 KB
+    '   Blank Lines: 40 (21.39%)
+    '     File Size: 8.61 KB
 
 
     '     Enum BranchRule
@@ -60,11 +60,13 @@
     '     Class MilpOptions
     ' 
     '         Properties: AbsoluteGap, Branch, CutCoefficientLimit, CutDensityLimit, DecimalFormat
-    '                     DivingDepthLimit, EnableCuts, EnableHeuristics, EnablePresolve, FeasibilityTolerance
-    '                     IntegerTolerance, LpIterationLimit, MaxCutsPerRound, MaxNodes, MaxOpenNodes
-    '                     MaxSeconds, Node, RelativeGap, RootCutRounds, Verbose
+    '                     DivingDepthLimit, EnableCuts, EnableHeuristics, EnableLuUpdate, EnableParallel
+    '                     EnablePresolve, FeasibilityTolerance, IntegerTolerance, LpIterationLimit, LuMaxEtaNorm
+    '                     LuMaxUpdates, LuPivotTolerance, MaxCutsPerRound, MaxNodes, MaxOpenNodes
+    '                     MaxSeconds, MaxThreads, Node, RelativeGap, RootCutRounds
+    '                     Verbose
     ' 
-    '         Function: Clone
+    '         Function: Clone, ToLuUpdateOptions
     ' 
     ' 
     ' /********************************************************************************/

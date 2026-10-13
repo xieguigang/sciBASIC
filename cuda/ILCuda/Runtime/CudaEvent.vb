@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13222d241700e6f139c16e0ba264a21e, cuda\ILCuda\Runtime\CudaEvent.vb"
+﻿#Region "Microsoft.VisualBasic::ac1d9bfb8e95111d4cc6524e8bbb6635, cuda\ILCuda\Runtime\CudaEvent.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 68 (61.26%)
-    ' Comment Lines: 18 (16.22%)
+    '   Total Lines: 117
+    '    Code Lines: 72 (61.54%)
+    ' Comment Lines: 18 (15.38%)
     '    - Xml Docs: 55.56%
     ' 
-    '   Blank Lines: 25 (22.52%)
-    '     File Size: 4.12 KB
+    '   Blank Lines: 27 (23.08%)
+    '     File Size: 4.29 KB
 
 
     '     Enum CudaEventFlags

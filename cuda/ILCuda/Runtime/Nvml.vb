@@ -1,11 +1,81 @@
-#Region "Microsoft.VisualBasic::nvml-runtime, cuda\ILCuda\Runtime\Nvml.vb"
+﻿#Region "Microsoft.VisualBasic::2a08713745fcc6b298757e04ae6bb484, cuda\ILCuda\Runtime\Nvml.vb"
 
     ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
-    '
-    ' Copyright (c) sciBASIC.NET Foundation
-    '
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 399
+    '    Code Lines: 288 (72.18%)
+    ' Comment Lines: 67 (16.79%)
+    '    - Xml Docs: 79.10%
+    ' 
+    '   Blank Lines: 44 (11.03%)
+    '     File Size: 16.97 KB
+
+
+    '     Structure NvmlUtilization
+    ' 
+    ' 
+    ' 
+    '     Structure NvmlMemory
+    ' 
+    '         Properties: TotalMB, UsedMB, UsedRatio
+    ' 
+    '     Structure NvmlPcie
+    ' 
+    ' 
+    ' 
+    '     Structure NvmlSample
+    ' 
+    '         Properties: MemoryUsedRatio, TotalMB, UsedMB
+    ' 
+    '     Module Nvml
+    ' 
+    '         Function: DeviceCount, Enumerate, GetDevice, IsAvailable
+    ' 
+    '         Sub: Init, Shutdown
+    ' 
+    '     Class NvmlDevice
+    ' 
+    '         Properties: Handle, Name, Ordinal, Serial, Uuid
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CallStatus, GetClock, GetCudaComputeCapability, GetEncoderDecoderPercent, GetFanSpeedPercent
+    '                   GetMemoryInfo, GetPcieLink, GetPcieThroughput, GetPowerWatts, GetSample
+    '                   GetTemperatureC, GetUtilization, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

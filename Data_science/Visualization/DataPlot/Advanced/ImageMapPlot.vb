@@ -1,21 +1,61 @@
-#Region "Microsoft.VisualBasic::9f2c4b7d1a3e4805b6c8e2f7a1d3b9c4, Data_science\Visualization\DataPlot\Advanced\ImageMapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::dfc498edd354b63bcd5c916e9a6e49d0, Data_science\Visualization\DataPlot\Advanced\ImageMapPlot.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 83 (68.60%)
+    ' Comment Lines: 19 (15.70%)
+    '    - Xml Docs: 47.37%
+    ' 
+    '   Blank Lines: 19 (15.70%)
+    '     File Size: 5.19 KB
+
 
     ' Class ImageMapPlot
     ' 
-    '     Properties: Image, ColorMap, ShowColorLegend, ShowFrame, MinValue, MaxValue
-    '                 OverlayShapes
+    '     Properties: ColorMap, Image, MaxValue, MinValue, OverlayShapes
+    '                 ShowColorLegend, ShowFrame
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
+    '     Constructor: (+2 Overloads) Sub New
     ' 
+    '     Function: CastMax, CastMin
+    ' 
+    '     Sub: DrawOverlays, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

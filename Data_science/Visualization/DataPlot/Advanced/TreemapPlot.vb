@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2809931c6aefdaf62998695740402520, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::018a821ace18ab789c71c37fa46cc0a2, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
 
     ' Author:
     ' 
@@ -34,29 +34,33 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 151 (74.02%)
-    ' Comment Lines: 26 (12.75%)
-    '    - Xml Docs: 53.85%
+    '   Total Lines: 422
+    '    Code Lines: 270 (63.98%)
+    ' Comment Lines: 79 (18.72%)
+    '    - Xml Docs: 84.81%
     ' 
-    '   Blank Lines: 27 (13.24%)
-    '     File Size: 8.42 KB
+    '   Blank Lines: 73 (17.30%)
+    '     File Size: 16.70 KB
 
 
     ' Class TreemapNode
     ' 
-    '     Properties: Color, Group, Label, Rect, Value
+    '     Properties: Children, Color, Depth, Group, IsLeaf
+    '                 Label, Rect, Tag, Value
+    ' 
+    '     Function: ToString
     ' 
     ' Class TreemapPlot
     ' 
-    '     Properties: AutoFontSize, BorderWidth, ColorByGroup, Nodes, ShowLabels
-    '                 ShowValues
+    '     Properties: AutoFontSize, BorderWidth, ColorByGroup, GroupPadding, HeaderHeight
+    '                 Layout, MaxRenderDepth, Nodes, ShowLabels, ShowValues
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: ShortestSide, WorstAspect
+    '     Function: HitTest, InnerRect, LayoutNodes, ShortestSide, WorstAspect
     ' 
-    '     Sub: AssignColors, DrawNodeLabel, LayoutRow, Plot, Squarify
+    '     Sub: AssignColors, DrawGroupHeader, DrawNodeLabel, LayoutRow, Normalize
+    '          Plot, Squarify, SquarifyNodes
     ' 
     ' /********************************************************************************/
 

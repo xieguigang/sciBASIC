@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::ef3a9386fa6b1929f97c46f712522ab9, gr\physics\layout\AbstractForce.vb"
+﻿#Region "Microsoft.VisualBasic::f4991627324b1ea63b940611f85f8401, physics\Particles\Layout\AbstractForce.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 60
-'    Code Lines: 10 (16.67%)
-' Comment Lines: 44 (73.33%)
-'    - Xml Docs: 6.82%
-' 
-'   Blank Lines: 6 (10.00%)
-'     File Size: 2.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class AbstractForce
-' 
-'         Function: CalculateForce
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 11 (18.03%)
+    ' Comment Lines: 44 (72.13%)
+    '    - Xml Docs: 6.82%
+    ' 
+    '   Blank Lines: 6 (9.84%)
+    '     File Size: 2.59 KB
+
+
+    '     Class AbstractForce
+    ' 
+    '         Function: CalculateForce
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

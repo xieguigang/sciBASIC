@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90d2ccfc58293f366ed0693478dbb842, gr\physics\layout\LabelAdjust.vb"
+﻿#Region "Microsoft.VisualBasic::90d2ccfc58293f366ed0693478dbb842, physics\Particles\Layout\LabelAdjust.vb"
 
     ' Author:
     ' 

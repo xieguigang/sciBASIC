@@ -1,21 +1,60 @@
-#Region "Microsoft.VisualBasic::2b7f9d4c6a1e4308b5c2d8f7a9b3e6c1, Data_science\Visualization\DataPlot\Advanced\FillPolygons.vb"
+﻿#Region "Microsoft.VisualBasic::e01a348baed1ad5e8bea7e3acdbf095a, Data_science\Visualization\DataPlot\Advanced\FillPolygons.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 101 (70.63%)
+    ' Comment Lines: 19 (13.29%)
+    '    - Xml Docs: 42.11%
+    ' 
+    '   Blank Lines: 23 (16.08%)
+    '     File Size: 5.95 KB
+
 
     ' Class FillPolygons
     ' 
-    '     Properties: Groups, ShowLegendImpl, ShowOutline, ShowPoints, PointSize
-    '                 ShowAxes
+    '     Properties: Groups, PointSize, ShowAxes, ShowOutline, ShowPoints
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
+    '     Constructor: (+2 Overloads) Sub New
     ' 
+    '     Function: Regions
+    ' 
+    '     Sub: ComputeRange, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

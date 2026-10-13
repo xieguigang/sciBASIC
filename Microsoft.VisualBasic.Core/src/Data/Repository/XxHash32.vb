@@ -1,3 +1,62 @@
+﻿#Region "Microsoft.VisualBasic::0cf1b1e59d01a03d7dbd9fdb7342c481, Microsoft.VisualBasic.Core\src\Data\Repository\XxHash32.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 107 (75.35%)
+    ' Comment Lines: 14 (9.86%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 21 (14.79%)
+    '     File Size: 5.47 KB
+
+
+    '     Class XxHash32
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Avalanche, ComputeHash, GetValue, ReadLE32, Rotl
+    '                   Round
+    ' 
+    '         Sub: Reset, Update
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 

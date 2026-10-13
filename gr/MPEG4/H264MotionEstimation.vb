@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::979b7886b9dbab46152e0af459b46d6f, gr\MPEG4\H264MotionEstimation.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 47 (55.29%)
+    ' Comment Lines: 24 (28.24%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (16.47%)
+    '     File Size: 3.52 KB
+
+
+    ' Class H264MotionEstimation
+    ' 
+    '     Function: sad, sample, searchInteger
+    ' 
+    '     Sub: buildPrediction
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports std = System.Math
 
 ''' <summary>

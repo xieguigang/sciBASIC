@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::7ca42a177d190a8c9fbde94acfd0c3c5, vs_solutions\JavaScript\test\LiteJsT1Tests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 363
+    '    Code Lines: 247 (68.04%)
+    ' Comment Lines: 65 (17.91%)
+    '    - Xml Docs: 16.92%
+    ' 
+    '   Blank Lines: 51 (14.05%)
+    '     File Size: 19.17 KB
+
+
+    ' Class LiteJsT1Tests
+    ' 
+    '     Function: Generate, OneLine, RunJs
+    ' 
+    '     Sub: Bitwise_Int32Semantics, CodeGen_DestructuringAndOptionalChain, CodeGen_LoopsAndLabels, CodeGen_OperatorsAndBuiltins, CodeGen_SwitchUsesIfGotoChain
+    '          CodeGen_TemplateSpreadAndParameters, CommaOperatorAndRelationalOperators, DeleteAndVoid, Destructuring_ArrayAndObject, ForOf_ArraysStringsAndDestructuring
+    '          Labels_BreakAndContinue, NullishCoalescing, NumericSeparators, ObjectLiteral_ShorthandMethodsAccessorsComputedSpread, OptionalChaining_MemberIndexCallAndShortCircuit
+    '          RestAndDefaultParameters, Spread_InCallsArraysAndObjects, Switch_MatchDefaultFallThroughBreak, TemplateLiterals_InterpolationAndEscapes
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 

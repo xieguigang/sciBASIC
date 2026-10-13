@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d58af2d61f9659ae95312d43706e0635, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\PDistClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::04e39681dd9fe21ff44710ec90d4fe36, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\PDistClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 55 (50.46%)
-    ' Comment Lines: 33 (30.28%)
-    '    - Xml Docs: 24.24%
+    '   Total Lines: 151
+    '    Code Lines: 78 (51.66%)
+    ' Comment Lines: 48 (31.79%)
+    '    - Xml Docs: 41.67%
     ' 
-    '   Blank Lines: 21 (19.27%)
-    '     File Size: 5.03 KB
+    '   Blank Lines: 25 (16.56%)
+    '     File Size: 7.34 KB
 
 
     ' Class PDistClusteringAlgorithm
     ' 
-    '     Function: accessFunction, createClusters, createLinkages, performClustering, performFlatClustering
-    '               performWeightedClustering
+    '     Function: accessFunction, alignRow, createClusters, createLinkages, performClustering
+    '               performFlatClustering, performWeightedClustering
     ' 
     ' /********************************************************************************/
 

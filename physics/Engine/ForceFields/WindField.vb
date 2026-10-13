@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::69b7f200d7b1276157b547f026c70e83, gr\physics\ForceFields\WindField.vb"
+﻿#Region "Microsoft.VisualBasic::1b1c24a7917aefa33424a56fb65b0290, physics\Engine\ForceFields\WindField.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 45
-'    Code Lines: 25 (55.56%)
-' Comment Lines: 9 (20.00%)
-'    - Xml Docs: 77.78%
-' 
-'   Blank Lines: 11 (24.44%)
-'     File Size: 1.53 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class WindField
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Apply
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 43
+    '    Code Lines: 23 (53.49%)
+    ' Comment Lines: 9 (20.93%)
+    '    - Xml Docs: 77.78%
+    ' 
+    '   Blank Lines: 11 (25.58%)
+    '     File Size: 1.46 KB
+
+
+    '     Class WindField
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Apply
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

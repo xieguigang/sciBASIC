@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::125da894ab23907e08619faf132aa716, Data_science\Visualization\Plots\g\Axis\AxisProvider.vb"
+﻿#Region "Microsoft.VisualBasic::06660502b4fba498c74272fbd39fe54f, Data_science\Visualization\DataPlot\Engine\AxisProvider.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 51 (62.96%)
-    ' Comment Lines: 18 (22.22%)
+    '   Total Lines: 78
+    '    Code Lines: 49 (62.82%)
+    ' Comment Lines: 18 (23.08%)
     '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 12 (14.81%)
-    '     File Size: 2.49 KB
+    '   Blank Lines: 11 (14.10%)
+    '     File Size: 2.45 KB
 
 
     '     Class AxisProvider
@@ -49,7 +49,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: AxisTicks, ToString, TryParse
-    ' 
     ' 
     ' /********************************************************************************/
 

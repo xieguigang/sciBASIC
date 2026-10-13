@@ -1,3 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::db01b5a2e6c9cc65bafbeedc71f31f28, physics\Particles\SphCpuCompute3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 285
+    '    Code Lines: 199 (69.82%)
+    ' Comment Lines: 37 (12.98%)
+    '    - Xml Docs: 27.03%
+    ' 
+    '   Blank Lines: 49 (17.19%)
+    '     File Size: 15.19 KB
+
+
+    ' Class SphCpuCompute3D
+    ' 
+    '     Properties: Name
+    ' 
+    '     Function: ClampF, RunSubstep
+    ' 
+    '     Sub: DensityPass, ForcePass
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '   SphCpuCompute3D.vb

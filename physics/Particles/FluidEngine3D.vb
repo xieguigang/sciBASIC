@@ -1,62 +1,70 @@
-﻿#Region "Microsoft.VisualBasic::ba3069c9d56188f836ca538a920b05fb, gr\physics\Particles\FluidEngine3D.vb"
+﻿#Region "Microsoft.VisualBasic::708774b49d42b2fc4dbd27b70e332fab, physics\Particles\FluidEngine3D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 353
-'    Code Lines: 235 (66.57%)
-' Comment Lines: 54 (15.30%)
-'    - Xml Docs: 72.22%
-' 
-'   Blank Lines: 64 (18.13%)
-'     File Size: 13.32 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class FluidEngine3D
-' 
-'     Properties: BoxSize, CollisionDamping, Count, DeltaTime, DisturbAccel
-'                 DisturbDamping, Entity, Gravity, NearPressureMultiplier, ParticleSize
-'                 PressureMultiplier, SmoothingRadius, TargetDensity, ViscosityStrength
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
-' 
-'     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, DecayDisturbance
-'          HandleCollisions, Reset, RunDebugStep, RunSimulationStep, UpdatePositions
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 764
+    '    Code Lines: 453 (59.29%)
+    ' Comment Lines: 173 (22.64%)
+    '    - Xml Docs: 87.28%
+    ' 
+    '   Blank Lines: 138 (18.06%)
+    '     File Size: 29.07 KB
+
+
+    ' Class FluidEngine3D
+    ' 
+    '     Properties: AutoCalibrateDensity, AutoPressure, Backend, Boundary, BoxSize
+    '                 CflFactor, CollisionDamping, Count, DeltaTime, DisturbAccel
+    '                 DisturbDamping, EffectivePressureK, EffectiveSoundSpeed, Entity, Gravity
+    '                 GravityDirection, Grid, Impeller, Kernels3D, LastSubSteps
+    '                 MaxAccel, MaxSubSteps, MaxVelocity, NearPressureMultiplier, NearPressureRatio
+    '                 Params, ParticleSize, ParticleSpacing, PredictionFactor, PressureMultiplier
+    '                 ReferenceSpeed, RestDensity, RestNearDensity, SmoothingRadius, SoundSpeed
+    '                 SoundSpeedFactor, State, StepCount, TargetDensity, Time
+    '                 ViscosityStrength, WallPadding
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: CalculateDensity, ComputeExternalForce, ComputeSubSteps, EstimateReferenceSpeed, GetDensity
+    '               GetNormalizedDensity, GetPressure, MedianOf, NearPressureFromDensity, PressureFromDensity
+    ' 
+    '     Sub: CalibrateDensity, DecayDisturbance, EnsureGrid, EnsureParams, EnsurePressureScale
+    '          InvalidateParams, Reset, RunDebugStep, RunParallel, RunSimulationStep
+    '          RunStep, RunSubStep, SetParticleCount
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

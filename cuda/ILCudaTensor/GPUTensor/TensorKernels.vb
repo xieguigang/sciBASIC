@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dbcf5f9be3446c6838aa8cf351d7e26, cuda\ILCudaTensor\GPUTensor\TensorKernels.vb"
+﻿#Region "Microsoft.VisualBasic::87bfadcf2c8ca58078a2e3daa33acfce, cuda\ILCudaTensor\GPUTensor\TensorKernels.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 30 (41.10%)
-    ' Comment Lines: 35 (47.95%)
-    '    - Xml Docs: 74.29%
+    '   Total Lines: 120
+    '    Code Lines: 47 (39.17%)
+    ' Comment Lines: 60 (50.00%)
+    '    - Xml Docs: 71.67%
     ' 
-    '   Blank Lines: 8 (10.96%)
-    '     File Size: 4.37 KB
+    '   Blank Lines: 13 (10.83%)
+    '     File Size: 7.92 KB
 
 
     '     Module TensorKernelNames
-    ' 
-    '         Fields: Conv2DBackwardBias, Conv2DBackwardFilter, Conv2DBackwardInput, Conv2DForward
-    '                 FinalMax, FinalMin, FinalSum, GemmDouble
-    '                 LifUpdateDouble, LifUpdateFp32, MaxPool2DBackward, MaxPool2DForward
-    '                 PartialMax, PartialMin, PartialSum, RowArgMax
-    '                 RowArgMin, RowLogSoftmax, RowMax, RowMean
-    '                 RowMin, RowSoftmax, RowSum, SpmmCsr
-    '                 TrainAccumulate, TrainAdamW, TrainMaskedCrossEntropy, TrainTranspose
     ' 
     ' 
     ' 

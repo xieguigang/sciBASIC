@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de911949b854eb26e17ec98c60a30872, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e0d4226fe2338f05cca999581a2156c0, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1128
-    '    Code Lines: 638 (56.56%)
-    ' Comment Lines: 371 (32.89%)
-    '    - Xml Docs: 83.83%
+    '   Total Lines: 1134
+    '    Code Lines: 642 (56.61%)
+    ' Comment Lines: 373 (32.89%)
+    '    - Xml Docs: 83.91%
     ' 
-    '   Blank Lines: 119 (10.55%)
-    '     File Size: 44.25 KB
+    '   Blank Lines: 119 (10.49%)
+    '     File Size: 44.51 KB
 
 
     ' Module PathExtensions
@@ -49,10 +49,10 @@
     '               DirectoryExists, DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy
     '               FileExists, FileLength, FileMove, FileName, FileOpened
     '               GetDirectoryFullPath, GetFullPath, ListDirectory, ListFiles, Long2Short
-    '               MakeDir, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
-    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath
-    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
-    '               UnixPath
+    '               MakeDir, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, ParentPathInternal
+    '               PathCombine, PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo
+    '               SplitPath, TheFile, ToDIR_URL, ToFileURL, TrimDIR
+    '               TrimSuffix, UnixPath
     ' 
     ' /********************************************************************************/
 

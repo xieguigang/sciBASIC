@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1203c2b5542d170747e443046177f9d, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::8934a9743e03d4faaf7e812288c71fbf, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 97 (46.63%)
-    ' Comment Lines: 87 (41.83%)
-    '    - Xml Docs: 95.40%
+    '   Total Lines: 213
+    '    Code Lines: 97 (45.54%)
+    ' Comment Lines: 92 (43.19%)
+    '    - Xml Docs: 95.65%
     ' 
-    '   Blank Lines: 24 (11.54%)
-    '     File Size: 7.07 KB
+    '   Blank Lines: 24 (11.27%)
+    '     File Size: 7.28 KB
 
 
     '     Structure SeqValue

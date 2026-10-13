@@ -1,23 +1,72 @@
-#Region "Microsoft.VisualBasic::1b9f0c7d2a4e4b6f9c1d3e5a7b8c0d2e, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::306b10a37064ced42b4175148b834ca2, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class BarPlot
-' 
-'     Properties: Categories, ColorMap, Horizontal, MultiValues, SeriesNames
-'                 ShowColorLegend, ShowValueLabels, StackMode, UseColorScale
-'                 Values, ValueLabelFormat, Diverging
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-'     Enum StackMode / Orientation
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 327
+    '    Code Lines: 231 (70.64%)
+    ' Comment Lines: 37 (11.31%)
+    '    - Xml Docs: 54.05%
+    ' 
+    '   Blank Lines: 59 (18.04%)
+    '     File Size: 13.57 KB
+
+
+    ' Class BarPlot
+    ' 
+    ' 
+    '     Enum StackMode
+    ' 
+    '         None, Percent, Stacked
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Baseline, Categories, ColorMap, Diverging, Horizontal
+    '                 MultiValues, Serials, SeriesNames, ShowColorLegend, ShowValueLabels
+    '                 Stack, UseColorScale, ValueLabelFormat, Values
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: BarColor, BuildMatrix, Plot
+    ' 
+    '     Sub: DrawAxisByOrientation, DrawBar, DrawBarBody, DrawCustomSerials, DrawSeriesLegend
+    '          Plot, ValueRange, WriteBarLabel
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

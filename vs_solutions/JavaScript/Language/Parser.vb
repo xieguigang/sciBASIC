@@ -1,3 +1,80 @@
+﻿#Region "Microsoft.VisualBasic::60c701fca03bf9f804c8085778076aa5, vs_solutions\JavaScript\Language\Parser.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1478
+    '    Code Lines: 1257 (85.05%)
+    ' Comment Lines: 112 (7.58%)
+    '    - Xml Docs: 58.04%
+    ' 
+    '   Blank Lines: 109 (7.37%)
+    '     File Size: 61.15 KB
+
+
+    ' Class Parser
+    ' 
+    '     Properties: Cur, Prev
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: AsyncFunctionAhead, At, AtAsync, AtKeyword, AwaitOperandFollows
+    '               CanStartExpression, ConvertRestTarget, Eat, ExpectIdentifier, ExpectMemberName
+    '               IsAccessorHeader, IsAsyncMethodHeader, IsAtOf, IsMethodHeader, Match
+    '               MatchKeyword, NextIsPunct, Parse, ParseAdditive, ParseArguments
+    '               ParseArrayLiteral, ParseArrowBody, ParseAssignment, ParseBindingTarget, ParseBitwiseAnd
+    '               ParseBitwiseOr, ParseBitwiseXor, ParseBlock, ParseCallOrMember, ParseCaseBody
+    '               ParseClassBody, ParseClassDecl, ParseClassExpression, ParseConditional, ParseDoWhile
+    '               ParseEmbeddedExpression, ParseEquality, ParseExponent, ParseExpression, ParseFor
+    '               ParseForRest, ParseFunctionDecl, ParseFunctionRest, ParseIf, ParseLogicalAnd
+    '               ParseLogicalOr, ParseLoopBody, ParseMethodBody, ParseMultiplicative, ParseNullishCoalescing
+    '               ParseObjectLiteral, ParseObjectProperty, ParseParameterList, ParsePostfix, ParsePrimary
+    '               ParseProgram, ParsePropertyName, ParseRelational, ParseShift, ParseStatement
+    '               ParseSwitch, ParseTemplate, ParseTry, ParseUnary, ParseVar
+    '               ParseWhile, StartsExpression, TryConvertToPattern, TryParseLabelRef, YieldIsOperator
+    ' 
+    '     Sub: ConsumeStatementEnd, EatKeyword
+    '     Class ParamSpec
+    ' 
+    '         Function: FromName
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports Microsoft.VisualBasic.Scripting.Runtime
 

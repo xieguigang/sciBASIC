@@ -1,3 +1,67 @@
+﻿#Region "Microsoft.VisualBasic::7ecd15e7444749e7bda300978e26897d, physics\Engine\RigidBody3D\RigidBody3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 341
+    '    Code Lines: 184 (53.96%)
+    ' Comment Lines: 86 (25.22%)
+    '    - Xml Docs: 79.07%
+    ' 
+    '   Blank Lines: 71 (20.82%)
+    '     File Size: 13.60 KB
+
+
+    ' Class RigidBody3D
+    ' 
+    '     Properties: CollisionGroup, CollisionMask, ForceAccumulator, Forward, HadContact
+    '                 ID, InvInertiaLocal, InvMass, IsSleeping, KineticEnergy
+    '                 Label, Right, SleepTimer, Up
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetAABB, InertiaWorld, InvInertiaWorld, SameOrientation, ToLocal
+    '               ToString, ToWorld
+    ' 
+    '     Sub: ApplyAngularAcceleration, ApplyForce, ApplyForceAtPoint, ApplyImpulse, ApplyTorque
+    '          ClearForces, IntegratePosition, IntegrateVelocity, InvalidateInertiaCache, SetKinematic
+    '          SetStatic, Wake
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
 Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 Imports std = System.Math

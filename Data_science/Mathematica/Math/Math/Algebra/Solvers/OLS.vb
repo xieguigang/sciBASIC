@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::492cd526ea4401f85ce10e1ded332e5d, Data_science\Mathematica\Math\Math\Algebra\Solvers\OLS.vb"
+﻿#Region "Microsoft.VisualBasic::9a380a6f11d4cc76593f97286bbd47ba, Data_science\Mathematica\Math\Math\Algebra\Solvers\OLS.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 40 (28.17%)
-    ' Comment Lines: 95 (66.90%)
-    '    - Xml Docs: 74.74%
+    '   Total Lines: 247
+    '    Code Lines: 112 (45.34%)
+    ' Comment Lines: 110 (44.53%)
+    '    - Xml Docs: 76.36%
     ' 
-    '   Blank Lines: 7 (4.93%)
-    '     File Size: 8.18 KB
+    '   Blank Lines: 25 (10.12%)
+    '     File Size: 12.41 KB
 
 
     '     Module OLS
     ' 
-    '         Function: Solve
+    '         Function: LeastSquares, (+2 Overloads) Solve
     ' 
     ' 
     ' /********************************************************************************/

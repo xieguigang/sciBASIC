@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40b8815b9390fa86abecbf5b3f30b0bf, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
+﻿#Region "Microsoft.VisualBasic::389b18f6720b8429c1adf280b7f961d5, Data_science\MachineLearning\TensorFlow\Compute\TensorComputeBase.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1333
-    '    Code Lines: 980 (73.52%)
-    ' Comment Lines: 81 (6.08%)
-    '    - Xml Docs: 59.26%
+    '   Total Lines: 1862
+    '    Code Lines: 1333 (71.59%)
+    ' Comment Lines: 156 (8.38%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 272 (20.41%)
-    '     File Size: 56.04 KB
+    '   Blank Lines: 373 (20.03%)
+    '     File Size: 81.44 KB
 
 
     '     Class TensorComputeBase
@@ -50,20 +50,21 @@
     '         Function: Abs, Add, AddScalar, ArgGlobal, ArgMax
     '                   ArgMin, Clip, Concat, Conv2D, Conv2DBackwardBias
     '                   Conv2DBackwardFilter, Conv2DBackwardInput, ConvOutSize, Cos, Divide
-    '                   DivideScalar, Elu, Exp, Gelu, Heaviside
-    '                   HuberLoss, IsDevicePinned, L2Loss, L2Norm, LeakyRelu
-    '                   Log, LogSoftmax, MapBinary, MapUnary, MaskedCrossEntropy
+    '                   DivideScalar, Elu, Exp, FluxHeadBatch, Gelu
+    '                   GraphFeatureBatch, GraphLayerBatch, Heaviside, HuberLoss, IsDevicePinned
+    '                   L2Loss, L2Norm, LeakyRelu, LifStep, Log
+    '                   LogSoftmax, LtcRk4Batch, MapBinary, MapUnary, MaskedCrossEntropy
     '                   MatMul, Max, Maximum, MaxPool2D, MaxPool2DBackward
     '                   Mean, MeanAll, Min, Minimum, MseLoss
     '                   Multiply, MultiplyScalar, Negate, NormalizeAxis, PinDevice
-    '                   Pow, Prod, Reciprocal, ReduceAlongAxis, ReduceArgAxis
-    '                   ReduceGlobal, Relu, Sigmoid, SigmoidCrossEntropyWithLogits, Sin
-    '                   Slice, Softmax, SpMM, Sqrt, Square
-    '                   StdDev, Subtract, Sum, SumAll, Swish
-    '                   SyncFromDevice, Tanh, TopK, Transpose, TryAdamWStep
-    '                   UnpinDevice, Wrap
+    '                   PinDevice64, Pow, Prod, Reciprocal, ReduceAlongAxis
+    '                   ReduceArgAxis, ReduceGlobal, Relu, Sigmoid, SigmoidCrossEntropyWithLogits
+    '                   Sin, Slice, Softmax, SpMM, Sqrt
+    '                   Square, StdDev, Subtract, Sum, SumAll
+    '                   Swish, SyncFromDevice, SystemTauBatch, Tanh, TopK
+    '                   Transpose, TryAdamWStep, UnpinDevice, Wrap
     ' 
-    '         Sub: AxisLayout, RequireRank4, RequireSameShape
+    '         Sub: AxisLayout, LifRecurrentInput, LifUpdateInPlace, RequireRank4, RequireSameShape
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,56 +1,56 @@
-#Region "Microsoft.VisualBasic::41275b729b68bd3e1c7ef9fcc3535d3b, Data_science\Visualization\Plots-statistics\PCA\Ellipse.vb"
+﻿#Region "Microsoft.VisualBasic::9c1d385bfbfd074c6e7ad82542b4a12e, Data_science\Visualization\DataPlot\Canvas\Ellipse.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 158
-'    Code Lines: 89 (56.33%)
-' Comment Lines: 45 (28.48%)
-'    - Xml Docs: 71.11%
-' 
-'   Blank Lines: 24 (15.19%)
-'     File Size: 6.32 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Ellipse
-' 
-'         Properties: CenterX, CenterY, RotationAngle, SemiMajorAxis, SemiMinorAxis
-' 
-'         Function: BuildPath, ConfidenceEllipse, Covariance
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 63 (46.32%)
+    ' Comment Lines: 49 (36.03%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 24 (17.65%)
+    '     File Size: 5.29 KB
+
+
+    '     Class Ellipse
+    ' 
+    '         Properties: CenterX, CenterY, RotationAngle, SemiMajorAxis, SemiMinorAxis
+    ' 
+    '         Function: BuildPath, ConfidenceEllipse, Covariance
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

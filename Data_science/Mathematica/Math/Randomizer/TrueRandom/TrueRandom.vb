@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::TrueRandom, Data_science\Mathematica\Math\Randomizer\TrueRandom\TrueRandom.vb"
+﻿#Region "Microsoft.VisualBasic::d6a898cf20ad9d96ef318653f64e0ab6, Data_science\Mathematica\Math\Randomizer\TrueRandom\TrueRandom.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,20 +25,34 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '   Class TrueRandom
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 116 (53.21%)
+    ' Comment Lines: 67 (30.73%)
+    '    - Xml Docs: 91.04%
+    ' 
+    '   Blank Lines: 35 (16.06%)
+    '     File Size: 7.72 KB
+
+
+    ' Class TrueRandom
     ' 
     '     Properties: IsThreadSafe
     ' 
-    '     Constructor: Sub New
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: (+3 Overloads) [Next], GenerateBytes, GenerateDoubles, GenerateInt32s,
-    '               GenerateUInt32, NextDouble, NextFloat
+    '     Function: (+3 Overloads) [Next], GenerateBytes, GenerateDoubles, GenerateInt32s, GenerateUInt32
+    '               NextDouble, NextFloat
     ' 
-    '     Sub: NextBytes, NextFloats
+    '     Sub: NextBytes, NextFloats, RefreshKey
     ' 
     ' /********************************************************************************/
 

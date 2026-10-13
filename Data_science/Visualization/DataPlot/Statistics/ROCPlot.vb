@@ -1,20 +1,60 @@
-#Region "Microsoft.VisualBasic::b4d8c2e6a1f34907d5b8c1e3a7f9d2b6, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e084a06cce9f9f5fe5834fa311ffacce, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 92 (70.23%)
+    ' Comment Lines: 15 (11.45%)
+    '    - Xml Docs: 46.67%
+    ' 
+    '   Blank Lines: 24 (18.32%)
+    '     File Size: 5.28 KB
+
 
     ' Class ROCPlot
     ' 
-    '     Properties: Curves, FillAUC, ShowReference, ShowAUCValue, ShowDiagonal
+    '     Properties: Curves, FillAUC, ShowAUCValue, ShowDiagonal
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
+    '     Constructor: (+2 Overloads) Sub New
     ' 
+    '     Function: CurveList, EstimateAUC
+    ' 
+    '     Sub: DrawCurveLegend, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

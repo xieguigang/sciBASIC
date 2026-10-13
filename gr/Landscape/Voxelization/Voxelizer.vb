@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ae1de0010ab1ac35a67f6c3f6f59794, gr\Landscape\Voxelization\Voxelizer.vb"
+﻿#Region "Microsoft.VisualBasic::d901888725f5910781720a4c2fcd3bff, gr\Landscape\Voxelization\Voxelizer.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,31 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 413
-    '    Code Lines: 222 (53.75%)
-    ' Comment Lines: 111 (26.88%)
-    '    - Xml Docs: 67.57%
+    '   Total Lines: 679
+    '    Code Lines: 404 (59.50%)
+    ' Comment Lines: 156 (22.97%)
+    '    - Xml Docs: 74.36%
     ' 
-    '   Blank Lines: 80 (19.37%)
-    '     File Size: 17.93 KB
+    '   Blank Lines: 119 (17.53%)
+    '     File Size: 31.36 KB
 
 
     '     Module Voxelizer
     ' 
-    '         Function: CollectAllVertices, ComputeBoundingBox, ComputeVoxelGridDimensions, ExtractTriangles, MergeCloseIntersections
-    '                   RayTriangleIntersect, (+2 Overloads) Voxelize, VoxelizeTriangles
+    '         Function: BuildBatch, BuildColumnBins, ClampIndex, CollectAllVertices, ComputeBoundingBox
+    '                   ComputeVoxelGridDimensions, ExtractTriangles, MergeCloseIntersections, ScalarIntersect, (+2 Overloads) Voxelize
+    '                   VoxelizeTriangles
+    ' 
+    '         Sub: CollectIntersections
+    '     Class TriangleBatch
+    ' 
+    ' 
+    ' 
+    '     Class ColumnBins
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

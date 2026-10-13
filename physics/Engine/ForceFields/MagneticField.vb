@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::05a6764ebcb0b0f5f8ef3a42ae3af096, gr\physics\ForceFields\MagneticField.vb"
+﻿#Region "Microsoft.VisualBasic::2e8f142b3457ed991dabdd88c6d02b0b, physics\Engine\ForceFields\MagneticField.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 50
-'    Code Lines: 29 (58.00%)
-' Comment Lines: 10 (20.00%)
-'    - Xml Docs: 80.00%
-' 
-'   Blank Lines: 11 (22.00%)
-'     File Size: 1.82 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MagneticField
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Apply
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 26 (56.52%)
+    ' Comment Lines: 10 (21.74%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 10 (21.74%)
+    '     File Size: 1.72 KB
+
+
+    '     Class MagneticField
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Apply
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::183561ec5d88c677c66346173913dc83, Data_science\Visualization\DataPlot\Advanced\BubblePlot.vb"
+﻿#Region "Microsoft.VisualBasic::04e834e9134aef1fc1778844fba2861a, Data_science\Visualization\DataPlot\Advanced\BubblePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 99 (76.74%)
-    ' Comment Lines: 15 (11.63%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 134
+    '    Code Lines: 102 (76.12%)
+    ' Comment Lines: 16 (11.94%)
+    '    - Xml Docs: 68.75%
     ' 
-    '   Blank Lines: 15 (11.63%)
-    '     File Size: 5.55 KB
+    '   Blank Lines: 16 (11.94%)
+    '     File Size: 5.91 KB
 
 
     ' Class BubbleSeries
@@ -51,7 +51,7 @@
     ' 
     '     Properties: FillAlpha, MaxBubbleSize, MinBubbleSize, ShowSizeLegend, SizeLegendCount
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: SizeToRadius
     ' 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::8b529d79ce99d1743d701ddabf81fd2e, Data_science\Visualization\Plots-statistics\HeatMap\HeatMap.vb"
+﻿#Region "Microsoft.VisualBasic::cb0277c1362529635439293d789ffe4c, Data_science\DataMining\hierarchical-clustering\HCTreePlot\HeatMapCompat.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 77 (60.63%)
-    ' Comment Lines: 43 (33.86%)
+    '   Total Lines: 128
+    '    Code Lines: 78 (60.94%)
+    ' Comment Lines: 43 (33.59%)
     '    - Xml Docs: 76.74%
     ' 
-    '   Blank Lines: 7 (5.51%)
-    '     File Size: 7.11 KB
+    '   Blank Lines: 7 (5.47%)
+    '     File Size: 7.21 KB
 
 
     '     Module HeatMap

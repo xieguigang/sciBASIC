@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f676060ae2602122277763bcdf8aa7e1, Data_science\MachineLearning\SNN\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::f35987facdc93910578ef34f1e674d08, Data_science\MachineLearning\SNN\Encoder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 54 (45.00%)
-    ' Comment Lines: 52 (43.33%)
-    '    - Xml Docs: 67.31%
+    '   Total Lines: 151
+    '    Code Lines: 69 (45.70%)
+    ' Comment Lines: 62 (41.06%)
+    '    - Xml Docs: 70.97%
     ' 
-    '   Blank Lines: 14 (11.67%)
-    '     File Size: 5.53 KB
+    '   Blank Lines: 20 (13.25%)
+    '     File Size: 6.81 KB
 
 
     ' Enum SpikeEncoding
@@ -53,7 +53,7 @@
     ' 
     ' Module SpikeEncoders
     ' 
-    '     Function: DirectCurrentEncode, LatencyEncode, RateEncode
+    '     Function: DirectCurrentEncode, LatencyEncode, MapScale, RateEncode
     ' 
     ' /********************************************************************************/
 

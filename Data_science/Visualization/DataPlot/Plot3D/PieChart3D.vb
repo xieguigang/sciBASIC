@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::fbddcc382215cc496d17fca1972b7bb4, Data_science\Visualization\DataPlot\Plot3D\PieChart3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 83 (67.48%)
+    ' Comment Lines: 25 (20.33%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 15 (12.20%)
+    '     File Size: 5.05 KB
+
+
+    '     Class PieSlice
+    ' 
+    '         Properties: Color, Name, Percentage, Value
+    ' 
+    '         Function: AsSlices, ToString
+    ' 
+    '     Module PieChart3D
+    ' 
+    '         Function: Plot3D
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 '  PieChart3D.vb - 3D 饼图
 '

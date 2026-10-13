@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdf3b27b5c95ed00539a6b968b2c00b8, cuda\ILCuda\Runtime\CudaEngine\CudaEngine.vb"
+﻿#Region "Microsoft.VisualBasic::6e4a023ca8c41922cf3ccabd6fbc8004, cuda\ILCuda\Runtime\CudaEngine\CudaEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 103 (71.53%)
-    ' Comment Lines: 16 (11.11%)
-    '    - Xml Docs: 81.25%
+    '   Total Lines: 169
+    '    Code Lines: 112 (66.27%)
+    ' Comment Lines: 28 (16.57%)
+    '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 25 (17.36%)
-    '     File Size: 5.42 KB
+    '   Blank Lines: 29 (17.16%)
+    '     File Size: 6.67 KB
 
 
     '     Class CudaEngine
@@ -49,9 +49,9 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetKernel, GetMemoryInfo, TryCreate, TryGetKernel
+    '         Function: GetKernel, GetMemoryInfo, IsCurrent, TryCreate, TryGetKernel
     ' 
-    '         Sub: Dispose, Synchronize
+    '         Sub: Dispose, MakeCurrent, Synchronize
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::910b5744da95a385023f04fe4d17d756, gr\Landscape\Voxelization\BVH.vb"
+﻿#Region "Microsoft.VisualBasic::4c498f2d2965c99d0c2408306577aca9, gr\Landscape\Voxelization\BVH.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 398
-    '    Code Lines: 244 (61.31%)
-    ' Comment Lines: 89 (22.36%)
-    '    - Xml Docs: 69.66%
+    '   Total Lines: 353
+    '    Code Lines: 218 (61.76%)
+    ' Comment Lines: 78 (22.10%)
+    '    - Xml Docs: 65.38%
     ' 
-    '   Blank Lines: 65 (16.33%)
-    '     File Size: 16.50 KB
+    '   Blank Lines: 57 (16.15%)
+    '     File Size: 14.70 KB
 
 
-    '     Structure SDFTriangle
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Normal
-    ' 
     '     Class BVH
     ' 
     '         Function: BuildRecursive, ClosestPtPointTriangle, GetTriangle, PointAABBDistanceSq, QueryNearest

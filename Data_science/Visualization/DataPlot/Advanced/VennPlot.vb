@@ -1,20 +1,65 @@
-#Region "Microsoft.VisualBasic::5d1c8f3a7e2b4906b9f4c1a8d3e7b0c5, Data_science\Visualization\DataPlot\Advanced\VennPlot.vb"
+﻿#Region "Microsoft.VisualBasic::791268a0ba717983fe2db58e19fd23ce, Data_science\Visualization\DataPlot\Advanced\VennPlot.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 207
+    '    Code Lines: 142 (68.60%)
+    ' Comment Lines: 22 (10.63%)
+    '    - Xml Docs: 31.82%
+    ' 
+    '   Blank Lines: 43 (20.77%)
+    '     File Size: 8.29 KB
+
 
     ' Class VennPlot
     ' 
-    '     Properties: FillAlpha, Sets, ShowLabels, ShowLegendImpl
+    '     Properties: FillAlpha, Sets, ShowLabels
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
+    '     Constructor: (+2 Overloads) Sub New
     ' 
+    '     Function: Layout, SetColor, SolveDistance
+    ' 
+    '     Sub: DrawCircle, DrawCircleLabel, DrawSetLegend, Fit, Plot
+    '     Structure CircleLayout
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

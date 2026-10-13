@@ -1,22 +1,62 @@
-#Region "Microsoft.VisualBasic::4f8a2c6e1b3d4907d9e5c1a8b2f7d3c6, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::eef6f7b135e983c855eab7c5b92f0938, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class ClusterHeatmapPlot
-' 
-'     Properties: Matrix, RowLabels, ColLabels, RowTree, ColTree
-'                 ColorMap, Scaling, ShowRowDendrogram, ShowColDendrogram
-'                 TreeFraction, ShowValues
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 213
+    '    Code Lines: 152 (71.36%)
+    ' Comment Lines: 28 (13.15%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 33 (15.49%)
+    '     File Size: 9.45 KB
+
+
+    ' Class ClusterHeatmapPlot
+    ' 
+    '     Properties: ColLabels, ColorMap, ColTree, Matrix, RowLabels
+    '                 RowTree, Scaling, ShowColDendrogram, ShowColorLegend, ShowRowDendrogram
+    '                 ShowValues, TreeFraction
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: MaxOf, MinOf, Reorder
+    ' 
+    '     Sub: DrawCentered, DrawColLabels, DrawRowLabels, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

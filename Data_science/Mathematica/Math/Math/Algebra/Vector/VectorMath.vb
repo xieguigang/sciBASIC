@@ -1,17 +1,54 @@
-#Region "Microsoft.VisualBasic::VectorMath.vb, Data_science\Mathematica\Math\Math\Algebra\Vector\VectorMath.vb"
+﻿#Region "Microsoft.VisualBasic::1579941b350e2f41a6aa159f7a20abd3, Data_science\Mathematica\Math\Math\Algebra\Vector\VectorMath.vb"
 
-' Copyright (c) 2018 GPL3 Licensed
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' /********************************************************************************/
 
-' Code Statistics:
+    ' /********************************************************************************/
 
-'   Module VectorMath
+    ' Summaries:
 
-'   Function: Cross, OuterProduct, Project, GramSchmidt, Orthonormalize
 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 71 (49.31%)
+    ' Comment Lines: 50 (34.72%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 23 (15.97%)
+    '     File Size: 6.09 KB
+
+
+    '     Module VectorMath
+    ' 
+    '         Function: Cross, GramSchmidt, Orthonormalize, OuterProduct, Project
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5965e6b9fa5b603f1ab4df89d5d6c3f, cuda\ILCuda\Runtime\LaunchConfig.vb"
+﻿#Region "Microsoft.VisualBasic::0fb17ac798358b08a8fee662d45f3153, cuda\ILCuda\Runtime\LaunchConfig.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 91 (59.48%)
-    ' Comment Lines: 38 (24.84%)
+    '   Total Lines: 155
+    '    Code Lines: 92 (59.35%)
+    ' Comment Lines: 38 (24.52%)
     '    - Xml Docs: 68.42%
     ' 
-    '   Blank Lines: 24 (15.69%)
-    '     File Size: 7.48 KB
+    '   Blank Lines: 25 (16.13%)
+    '     File Size: 7.53 KB
 
 
     '     Structure LaunchConfig

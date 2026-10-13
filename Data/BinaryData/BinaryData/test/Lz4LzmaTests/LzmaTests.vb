@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::2a39d632a9e3e12c57082e7585bafc88, Data\BinaryData\BinaryData\test\Lz4LzmaTests\LzmaTests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 206
+    '    Code Lines: 171 (83.01%)
+    ' Comment Lines: 12 (5.83%)
+    '    - Xml Docs: 33.33%
+    ' 
+    '   Blank Lines: 23 (11.17%)
+    '     File Size: 7.96 KB
+
+
+    ' Class LzmaTests
+    ' 
+    '     Sub: Corpus_AllFiles_DecodeToTheOriginalBytes, Corpus_ChunkedReads_Match, Corpus_ReadByte_WalksTheWholeStream, EmptyInputStream_IsRejected, Header_DeclaredSizeTooLarge_IsRejected
+    '          Header_InvalidPropertiesByte_IsRejected, Header_KnownSize_IsHonoured, Header_TruncatedHeader_IsRejected, Stream_Dispose_ClosesTheUnderlyingStream_UnlessLeaveOpen, Stream_KnownSizeIsExposed
+    '          Stream_ReadAfterFullDrain_ReturnsZeroForever, Stream_ReportedCapabilitiesAndProperties, Stream_ZeroCountRead_ReturnsZeroWithoutBlocking, TruncatedCompressedData_IsRejected
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 

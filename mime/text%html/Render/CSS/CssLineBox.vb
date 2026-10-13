@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3afc43a0caef15f31c1167d3434950b, mime\text%html\Render\CSS\CssLineBox.vb"
+﻿#Region "Microsoft.VisualBasic::c3e73a6639267ac465823aea1dd89d1f, mime\text%html\Render\CSS\CssLineBox.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 272
-    '    Code Lines: 152 (55.88%)
-    ' Comment Lines: 72 (26.47%)
+    '   Total Lines: 270
+    '    Code Lines: 151 (55.93%)
+    ' Comment Lines: 72 (26.67%)
     '    - Xml Docs: 91.67%
     ' 
-    '   Blank Lines: 48 (17.65%)
-    '     File Size: 9.21 KB
+    '   Blank Lines: 47 (17.41%)
+    '     File Size: 9.23 KB
 
 
     '     Class CssLineBox

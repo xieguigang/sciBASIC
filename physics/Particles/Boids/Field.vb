@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8491a05bc057d4554ac9419b297fdc4, gr\physics\Boids\Field.vb"
+﻿#Region "Microsoft.VisualBasic::82510ba56647818afe3738154ce99bc2, physics\Particles\Boids\Field.vb"
 
     ' Author:
     ' 
@@ -31,44 +31,42 @@
 
     ' Summaries:
 
-    ' The <see cref="Field"/> is the public facade of the flocking simulation. 
-    ' Internally it orchestrates three phases per frame:
-
-    '   1. <see cref="FlockGrid.Build"/>  - counting-sort spatial grid, O(N), zero allocation
-    '   2. <see cref="FlockSolver"/>     - the four flocking rules, parallel over boid ranges
-    '   3. <see cref="FlockIntegrate"/>  - SIMD streaming integration + wall rules
-
-    ' The public surface is source compatible with the legacy implementation 
-    ' except that <see cref="Boid"/> is now a value type view instead of a 
-    ' heap object (see the notes on <see cref="Boid"/>).
 
     ' Code Statistics:
 
-    '   Total Lines: 246
-    '    Code Lines: 148 (60.16%)
-    ' Comment Lines: 32 (13.01%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 170
+    '    Code Lines: 106 (62.35%)
+    ' Comment Lines: 32 (18.82%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 66 (26.83%)
-    '     File Size: 9.14 KB
+    '   Blank Lines: 32 (18.82%)
+    '     File Size: 5.99 KB
 
 
     '     Class Field
     ' 
-    '         Properties: Entity, Grid, Height, MaxSpeed, PredatorCount, State, Width
+    '         Properties: Entity, Grid, Height, MaxSpeed, PredatorCount
+    '                     State, Width
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Advance
+    ' 
+    '     Class BoidCollection
+    ' 
+    '         Properties: Count
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetEnumerator, GetEnumeratorObject
+    ' 
+    '     Class BoidEnumerator
+    ' 
+    '         Properties: Current, CurrentObject
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Sub: Advance
-    '         Class BoidCollection
+    '         Function: MoveNext
     ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: GetEnumerator
-    '             Class BoidEnumerator
-    ' 
-    '                 Constructor: (+1 Overloads) Sub New
-    '                 Sub: Dispose
-    '                 Function: MoveNext, get_Current
+    '         Sub: Dispose, Reset
     ' 
     ' 
     ' /********************************************************************************/

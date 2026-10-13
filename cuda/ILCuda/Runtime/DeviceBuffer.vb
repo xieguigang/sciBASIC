@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf4b1ab804d196de20bfd63480c19ec5, cuda\ILCuda\Runtime\DeviceBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::8814a3f1d4387a9e83f6d5a097e3d2e7, cuda\ILCuda\Runtime\DeviceBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 104 (62.65%)
-    ' Comment Lines: 32 (19.28%)
-    '    - Xml Docs: 53.12%
+    '   Total Lines: 194
+    '    Code Lines: 114 (58.76%)
+    ' Comment Lines: 42 (21.65%)
+    '    - Xml Docs: 64.29%
     ' 
-    '   Blank Lines: 30 (18.07%)
-    '     File Size: 7.04 KB
+    '   Blank Lines: 38 (19.59%)
+    '     File Size: 8.16 KB
 
 
     '     Class DeviceBuffer

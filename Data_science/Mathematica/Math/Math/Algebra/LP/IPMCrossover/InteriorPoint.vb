@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0eae3993fd8a559af81cefed305cd3e, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\InteriorPoint.vb"
+﻿#Region "Microsoft.VisualBasic::ce5f517abebd21cca78f559fcfa00690, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\InteriorPoint.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 636
-    '    Code Lines: 422 (66.35%)
-    ' Comment Lines: 73 (11.48%)
+    '   Total Lines: 634
+    '    Code Lines: 420 (66.25%)
+    ' Comment Lines: 73 (11.51%)
     '    - Xml Docs: 34.25%
     ' 
-    '   Blank Lines: 141 (22.17%)
-    '     File Size: 24.66 KB
+    '   Blank Lines: 141 (22.24%)
+    '     File Size: 24.60 KB
 
 
     '     Class IpResult

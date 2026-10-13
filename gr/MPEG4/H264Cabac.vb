@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::b3cdfb449721b2026bcddcd6084a79dd, gr\MPEG4\H264Cabac.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 228
+    '    Code Lines: 110 (48.25%)
+    ' Comment Lines: 81 (35.53%)
+    '    - Xml Docs: 61.73%
+    ' 
+    '   Blank Lines: 37 (16.23%)
+    '     File Size: 8.12 KB
+
+
+    ' Class H264Cabac
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: begin, encodeBin, encodeBypass, encodeBypassSign, encodeTerminate
+    '          initStates, putBit, renorm
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Author:
 ' 
 '       xieguigang (xie.guigang@live.com)

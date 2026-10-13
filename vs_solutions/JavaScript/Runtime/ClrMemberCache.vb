@@ -1,3 +1,69 @@
+﻿#Region "Microsoft.VisualBasic::756128125fc1209782564ca2103d01c2, vs_solutions\JavaScript\Runtime\ClrMemberCache.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 353
+    '    Code Lines: 264 (74.79%)
+    ' Comment Lines: 42 (11.90%)
+    '    - Xml Docs: 80.95%
+    ' 
+    '   Blank Lines: 47 (13.31%)
+    '     File Size: 16.10 KB
+
+
+    '     Class ClrMemberSet
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: HasMember
+    ' 
+    '     Class ClrCall
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Module ClrMembers
+    ' 
+    '         Function: Accepts, BindArgs, Build, CacheKey, Constructors
+    '                   HasAttribute, HasParamArray, IncludeMember, InstanceSet, IsEnumerableType
+    '                   Iterate, Resolve, ResolveConstructor, ResolveOverload, Score
+    '                   ScriptName, StaticSet, (+2 Overloads) ToBases, TryCount, WhitelistFor
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Reflection
 
 Namespace Runtime

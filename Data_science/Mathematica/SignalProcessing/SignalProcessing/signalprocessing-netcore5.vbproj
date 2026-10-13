@@ -14,8 +14,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <Title>Signal Processing: FFT, Wavelets, Filters and Peak Detection</Title>
     <Description>Algorithms for one-dimensional signals in sciBASIC#: FFT and wavelet transforms, Savitzky-Golay filtering, peak detection, baseline removal, resampling, DTW and COW alignment, plus Kalman filtering.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.SignalProcessing</AssemblyTitle>

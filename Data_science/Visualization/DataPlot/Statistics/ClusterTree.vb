@@ -1,18 +1,63 @@
-#Region "Microsoft.VisualBasic::3e7c1a9d5b2f4806c8e3a1d7b4f9c2e5, Data_science\Visualization\DataPlot\Statistics\ClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::c4cb0825fc823fb90a8dc2d95cd6e7c0, Data_science\Visualization\DataPlot\Statistics\ClusterTree.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 64 (59.81%)
+    ' Comment Lines: 24 (22.43%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 19 (17.76%)
+    '     File Size: 5.26 KB
+
 
     ' Module ClusterTree
     ' 
-    '     Function: Draw, MeasureLeafLayout
+    ' 
     '     Enum TreeOrientation
     ' 
+    '         LeftToRight, TopToBottom
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: Draw, LayoutAndDraw, MaxDistance
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de7e00d1b7c23a6fef30ddb54f2f5cf3, Data_science\MachineLearning\SNN\Network.vb"
+﻿#Region "Microsoft.VisualBasic::c4e2e8917a215311c81c9a9bf9a58ea6, Data_science\MachineLearning\SNN\Network.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 451
-    '    Code Lines: 284 (62.97%)
-    ' Comment Lines: 95 (21.06%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 478
+    '    Code Lines: 291 (60.88%)
+    ' Comment Lines: 111 (23.22%)
+    '    - Xml Docs: 74.77%
     ' 
-    '   Blank Lines: 72 (15.96%)
-    '     File Size: 18.43 KB
+    '   Blank Lines: 76 (15.90%)
+    '     File Size: 20.14 KB
 
 
     ' Structure LossGradient
@@ -65,7 +65,8 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Accuracy, AddLayer, (+2 Overloads) AddSparseLayer, ComputeGradients, Encode
-    '               ForwardSparse, ForwardSpikes, Predict, ScatterInput, TrainStep
+    '               ForwardSparse, ForwardSpikes, IsConstantSequence, Predict, ScatterInput
+    '               TrainStep
     ' 
     ' /********************************************************************************/
 

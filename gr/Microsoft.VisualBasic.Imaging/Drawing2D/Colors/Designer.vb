@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8012f2694ef96afbec56d66cd5d334f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1625fd672b785eabb859b9731ceb0aaa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 638
-    '    Code Lines: 327 (51.25%)
-    ' Comment Lines: 242 (37.93%)
-    '    - Xml Docs: 88.43%
+    '   Total Lines: 636
+    '    Code Lines: 324 (50.94%)
+    ' Comment Lines: 244 (38.36%)
+    '    - Xml Docs: 88.11%
     ' 
-    '   Blank Lines: 69 (10.82%)
-    '     File Size: 34.65 KB
+    '   Blank Lines: 68 (10.69%)
+    '     File Size: 34.70 KB
 
 
     '     Module Designer
@@ -56,8 +56,8 @@
     '         Sub: (+2 Overloads) Register
     '         Delegate Function
     ' 
-    '             Function: Colors, CubicSpline, FromNames, FromSchema, GetBrushes
-    '                       GetColors, internalFills, rangeConstraint
+    '             Function: Colors, CubicSpline, FromNames, (+2 Overloads) FromSchema, GetBrushes
+    '                       GetColors, internalFills
     ' 
     ' 
     ' 

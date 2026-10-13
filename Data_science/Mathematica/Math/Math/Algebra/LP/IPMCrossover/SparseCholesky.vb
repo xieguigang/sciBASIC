@@ -1,82 +1,82 @@
-﻿#Region "Microsoft.VisualBasic::0fa6a2c3906cfeaf6ceb8927e9174b2f, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseCholesky.vb"
+﻿#Region "Microsoft.VisualBasic::05290584b1cfb215a8b8ecc15b083a20, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\SparseCholesky.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 493
-'    Code Lines: 322 (65.31%)
-' Comment Lines: 35 (7.10%)
-'    - Xml Docs: 22.86%
-' 
-'   Blank Lines: 136 (27.59%)
-'     File Size: 15.77 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SparseChol
-' 
-'         Function: Factor, MinDegreeOrder
-'         Class SparseCholFactor
-' 
-'             Properties: NonZeros
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Function: Solve
-' 
-'         Class MinHeap
-' 
-'             Properties: Count
-' 
-'             Function: Pop
-' 
-'             Sub: Push
-' 
-' 
-' 
-'     Class Pcg
-' 
-'         Function: ResidualOk
-'         Class PcgSolver
-' 
-'             Properties: Converged, LastIters, MaxIter, Tol
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Function: Solve
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 491
+    '    Code Lines: 320 (65.17%)
+    ' Comment Lines: 35 (7.13%)
+    '    - Xml Docs: 22.86%
+    ' 
+    '   Blank Lines: 136 (27.70%)
+    '     File Size: 15.71 KB
+
+
+    '     Class SparseChol
+    ' 
+    '         Function: Factor, MinDegreeOrder
+    '         Class SparseCholFactor
+    ' 
+    '             Properties: NonZeros
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Solve
+    ' 
+    '         Class MinHeap
+    ' 
+    '             Properties: Count
+    ' 
+    '             Function: Pop
+    ' 
+    '             Sub: Push
+    ' 
+    ' 
+    ' 
+    '     Class Pcg
+    ' 
+    '         Function: ResidualOk
+    '         Class PcgSolver
+    ' 
+    '             Properties: Converged, LastIters, MaxIter, Tol
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Solve
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

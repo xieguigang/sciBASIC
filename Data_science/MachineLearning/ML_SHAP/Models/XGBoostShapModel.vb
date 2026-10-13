@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\Models\XGBoostShapModel.vb"
+﻿#Region "Microsoft.VisualBasic::0646f6c602d951b923d89c2f4fc0c803, Data_science\MachineLearning\ML_SHAP\Models\XGBoostShapModel.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 185
+    '    Code Lines: 118 (63.78%)
+    ' Comment Lines: 39 (21.08%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 28 (15.14%)
+    '     File Size: 6.87 KB
 
 
+    ' Class XGBoostShapModel
+    ' 
+    '     Properties: IsClassification, Model, Name, Training
+    ' 
+    '     Function: BuildExplainer, BuildNode, Cover, Output, Predict
+    '               PredictResult, Train
+    ' 
     ' /********************************************************************************/
 
 #End Region

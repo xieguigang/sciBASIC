@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::af8b3be1d827ce5a964f9c2e1eddad8d, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
+﻿#Region "Microsoft.VisualBasic::503700aeaf296622213f32498d152ebd, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 89 (79.46%)
-    ' Comment Lines: 10 (8.93%)
-    '    - Xml Docs: 60.00%
+    '   Total Lines: 117
+    '    Code Lines: 92 (78.63%)
+    ' Comment Lines: 11 (9.40%)
+    '    - Xml Docs: 63.64%
     ' 
-    '   Blank Lines: 13 (11.61%)
-    '     File Size: 4.56 KB
+    '   Blank Lines: 14 (11.97%)
+    '     File Size: 4.92 KB
 
 
     ' Class AreaPlot
     ' 
     '     Properties: Baseline, FillAlpha, Smooth, SmoothSegments
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: CatmullRom
     ' 

@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::EntropyMixer, Data_science\Mathematica\Math\Randomizer\TrueRandom\EntropyMixer.vb"
+﻿#Region "Microsoft.VisualBasic::21c166116fc71d427ad4adf392fd85fa, Data_science\Mathematica\Math\Randomizer\TrueRandom\EntropyMixer.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,15 +25,31 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '   Class EntropyMixer
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 42 (57.53%)
+    ' Comment Lines: 19 (26.03%)
+    '    - Xml Docs: 94.74%
     ' 
-    '     Constructor: Sub New
+    '   Blank Lines: 12 (16.44%)
+    '     File Size: 2.68 KB
+
+
+    ' Class EntropyMixer
     ' 
-    '     Function: Expand, MixKey
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Expand
+    ' 
+    '     Sub: MixKey
     ' 
     ' /********************************************************************************/
 

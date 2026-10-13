@@ -1,22 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::fd25df1f7685cc2f67ae020ddbe85a5f, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::bece5727b60461fa601743426272e1b1, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class ScatterPlot
-' 
-'     Properties: BubbleMaxSize, BubbleMinSize, AbLines, ShowErrorBars
-'                 HullAlpha, Jitter, JitterAmount, ShowConvexHull
-'                 Smooth, SmoothSamplesPerSegment
-' 
-'     Constructor: (+3 Overloads) Sub New
-'     Sub: Plot
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 266
+    '    Code Lines: 188 (70.68%)
+    ' Comment Lines: 36 (13.53%)
+    '    - Xml Docs: 41.67%
+    ' 
+    '   Blank Lines: 42 (15.79%)
+    '     File Size: 11.45 KB
+
+
+    ' Class ScatterPlot
+    ' 
+    '     Properties: AbLines, BubbleMaxSize, BubbleMinSize, HullAlpha, Jitter
+    '                 JitterAmount, ShowConvexHull, ShowErrorBars, Smooth, SmoothSamplesPerSegment
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: ApplyJitter, Plot, Project
+    ' 
+    '     Sub: ComputeRange, DrawAbLines, DrawErrorBars, DrawHull, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

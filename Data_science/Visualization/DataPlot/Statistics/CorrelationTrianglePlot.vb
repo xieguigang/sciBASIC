@@ -1,20 +1,57 @@
-#Region "Microsoft.VisualBasic::6b1d4f8c3e5a4909f2b7e1d4c6a8f3e5, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
+﻿#Region "Microsoft.VisualBasic::a97d44abf989a5bbaa05d1c23d218394, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class CorrelationTrianglePlot
-' 
-'     Properties: Correlation, ShowValues, ShowUpper, ColorMap
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 72 (71.29%)
+    ' Comment Lines: 12 (11.88%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 17 (16.83%)
+    '     File Size: 4.54 KB
+
+
+    ' Class CorrelationTrianglePlot
+    ' 
+    '     Properties: ColorMap, Correlation, ShowUpper, ShowValues, ValueRange
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Sub: DrawVariableNames, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging

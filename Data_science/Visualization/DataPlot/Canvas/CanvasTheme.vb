@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::099d0dbc372e5f8398ee0eb99bc69539, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::7552df3769e8e152e19f2dc1f1f13146, Data_science\Visualization\DataPlot\Canvas\CanvasTheme.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 228
-    '    Code Lines: 94 (41.23%)
+    '    Code Lines: 93 (40.79%)
     ' Comment Lines: 99 (43.42%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 35 (15.35%)
-    '     File Size: 8.06 KB
+    '   Blank Lines: 36 (15.79%)
+    '     File Size: 7.99 KB
 
 
     '     Class Theme

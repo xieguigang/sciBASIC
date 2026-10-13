@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::3b921d9bf9cbde809f4e0078ed63dddf, physics\Engine\test\BoidsSelfTest\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 630
+    '    Code Lines: 439 (69.68%)
+    ' Comment Lines: 52 (8.25%)
+    '    - Xml Docs: 61.54%
+    ' 
+    '   Blank Lines: 139 (22.06%)
+    '     File Size: 24.09 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: GeomDistance, MaxDiff
+    ' 
+    '     Sub: AdvanceOne, Benchmark, BenchmarkLegacy, BenchmarkRenderModel, Check
+    '          DebugDivergence, LegacyFrame, Main, PutBlock2Model, PutBlock3Model
+    '          RenderModelFrame, RenderModelRange, Report, TestCellRounding, TestEngineAgainstReference
+    '          TestViewApi
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Diagnostics
 Imports System.Linq
 Imports Microsoft.VisualBasic.Imaging.Physics
