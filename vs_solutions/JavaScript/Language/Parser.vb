@@ -99,6 +99,19 @@ Public NotInheritable Class Parser
         Return name
     End Function
 
+    ''' <summary>
+    ''' A property name after '.' — reserved words are legal member names in JS
+    ''' (<c>promise.catch(...)</c>, <c>x.delete</c>, ...).
+    ''' </summary>
+    Private Function ExpectMemberName() As String
+        If Cur.name <> TokenType.Identifier AndAlso Cur.name <> TokenType.Keyword Then
+            Throw New ParseException($"expected property name but found '{Cur.text}' at {Cur.Location}")
+        End If
+        Dim name = Cur.Text
+        _pos += 1
+        Return name
+    End Function
+
     ''' <summary>Consume ';' or accept ASI (line break / '}' / EOF before current token).</summary>
     Private Sub ConsumeStatementEnd()
         If Match(";") Then Return
@@ -963,7 +976,7 @@ Public NotInheritable Class Parser
         While True
             If At(".") Then
                 _pos += 1
-                Dim name = ExpectIdentifier()
+                Dim name = ExpectMemberName()
                 e = New MemberExpr(e, name, False)
             ElseIf At("?.") Then
                 _pos += 1
@@ -978,7 +991,7 @@ Public NotInheritable Class Parser
                     Eat("]")
                     e = New MemberExpr(e, idx, True, isOptional:=True)
                 Else
-                    Dim name = ExpectIdentifier()
+                    Dim name = ExpectMemberName()
                     e = New MemberExpr(e, name, False, isOptional:=True)
                 End If
             ElseIf At("(") Then
@@ -1088,7 +1101,7 @@ Public NotInheritable Class Parser
                     While At(".") OrElse At("[")
                         If At(".") Then
                             _pos += 1
-                            callee = New MemberExpr(callee, ExpectIdentifier(), False)
+                            callee = New MemberExpr(callee, ExpectMemberName(), False)
                         Else
                             _pos += 1
                             Dim idx = ParseExpression()
@@ -1103,7 +1116,7 @@ Public NotInheritable Class Parser
                     _pos += 1
                     If At(".") Then
                         _pos += 1
-                        Return New SuperExpr(ExpectIdentifier())
+                        Return New SuperExpr(ExpectMemberName())
                     End If
                     If At("[") Then
                         ' super[expr] — evaluated as a member name

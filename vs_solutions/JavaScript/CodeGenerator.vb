@@ -24,6 +24,8 @@ Public NotInheritable Class CodeGenerator
     Private ReadOnly _loopCont As New Stack(Of String)
     ' GoTo targets of labeled statements currently in scope (labeled break/continue)
     Private ReadOnly _labeledTargets As New Dictionary(Of String, LabelInfo)
+    ' promise variable of the innermost async function being generated ('return' fulfils it)
+    Private ReadOnly _asyncPromise As New Stack(Of String)
 
     Public Function Generate(program As Program, Optional className As String = "GeneratedScript") As String
         _temp = 0
@@ -53,6 +55,8 @@ Public NotInheritable Class CodeGenerator
         ' the top (VB Dim is block-scoped, JS var is function-scoped)
         EmitHoistedVars(program.Body, w, top)
         GenBlock(program.Body, w, top)
+        ' promise reactions queued by the body are microtasks — run them now
+        w.Line("JsRuntime.DrainMicrotasks()")
         w.UnIndent()
         w.Line("End Sub")
         w.UnIndent()
@@ -150,7 +154,15 @@ Public NotInheritable Class CodeGenerator
 
         ElseIf TypeOf s Is ReturnStmt Then
             Dim r = DirectCast(s, ReturnStmt)
-            w.Line($"Return {If(r.Value IsNot Nothing, GenExpr(r.Value, scope), "JsRuntime.Undef")}")
+            Dim valueTxt = If(r.Value IsNot Nothing, GenExpr(r.Value, scope), "JsRuntime.Undef")
+            If _asyncPromise.Count > 0 Then
+                ' inside an async function 'return x' settles the promise
+                Dim promise = _asyncPromise.Peek()
+                w.Line($"{promise}.Fulfill({valueTxt})")
+                w.Line($"Return {promise}")
+            Else
+                w.Line($"Return {valueTxt}")
+            End If
 
         ElseIf TypeOf s Is ThrowStmt Then
             w.Line($"Throw New LiteJs.Runtime.JsRuntimeException({GenExpr(DirectCast(s, ThrowStmt).Value, scope)})")
@@ -430,7 +442,8 @@ Public NotInheritable Class CodeGenerator
         w.WriteLine()
         w.Line($"Dim {vbName} As Func(Of Object(), Object) = Function({argsName} As JsValue())")
         w.Indent()
-        w.Paste(LambdaBody(New FuncExpr(f.Name, f.Parameters, f.Body, defaults:=f.Defaults, restParam:=f.RestParam),
+        w.Paste(LambdaBody(New FuncExpr(f.Name, f.Parameters, f.Body, defaults:=f.Defaults,
+                                        restParam:=f.RestParam, isAsync:=f.IsAsync),
                            scope, argsName))
         w.UnIndent()
         w.Line("End Function")
@@ -668,6 +681,9 @@ Public NotInheritable Class CodeGenerator
         ElseIf TypeOf e Is RegexExpr Then
             Dim rx = DirectCast(e, RegexExpr)
             Return $"New LiteJs.Runtime.JsRegExp({VbString(rx.Source)}, {VbString(rx.Flags)})"
+
+        ElseIf TypeOf e Is AwaitExpr Then
+            Return $"JsRuntime.JsAwait({GenExpr(DirectCast(e, AwaitExpr).Operand, scope)})"
 
         ElseIf TypeOf e Is OptionalChainExpr Then
             ' the chain root turns the short-circuit signal into undefined
@@ -979,10 +995,22 @@ Public NotInheritable Class CodeGenerator
         Dim saveExit = _loopExit.ToArray()
         Dim saveCont = _loopCont.ToArray()
         Dim saveLabels = _labeledTargets.ToArray()
-        _loopExit.Clear() : _loopCont.Clear() : _labeledTargets.Clear()
+        Dim saveAsync = _asyncPromise.ToArray()
+        _loopExit.Clear() : _loopCont.Clear() : _labeledTargets.Clear() : _asyncPromise.Clear()
 
         Dim w As New IndentWriter()
         Dim fscope = parent.Push()
+
+        ' async functions hand back a promise settled by their return value
+        Dim promiseVar As String = Nothing
+        Dim catchVar As String = Nothing
+        If f.IsAsync Then
+            promiseVar = UniqueName("promise")
+            catchVar = UniqueName("ax")
+            w.Line($"Dim {promiseVar} As New LiteJs.Runtime.JsPromise()")
+            w.Line("Try")
+            w.Indent()
+        End If
         For i = 0 To f.Parameters.Length - 1
             Dim vbParam = fscope.DefineLocal(f.Parameters(i))
             If i < f.Defaults.Length AndAlso f.Defaults(i) IsNot Nothing Then
@@ -1006,13 +1034,34 @@ Public NotInheritable Class CodeGenerator
         End If
         ' JS var hoisting: declare every 'var' of this function once at the top
         EmitHoistedVars(f.Body, w, fscope)
-        GenBlockInScope(f.Body, w, fscope)
-        w.Line("Return JsRuntime.Undef")
 
-        _loopExit.Clear() : _loopCont.Clear() : _labeledTargets.Clear()
+        If promiseVar Is Nothing Then
+            GenBlockInScope(f.Body, w, fscope)
+            w.Line("Return JsRuntime.Undef")
+        Else
+            _asyncPromise.Push(promiseVar)
+            Try
+                GenBlockInScope(f.Body, w, fscope)
+            Finally
+                _asyncPromise.Pop()
+            End Try
+            ' falling off the end fulfils with undefined
+            w.Line($"{promiseVar}.Fulfill(JsRuntime.Undef)")
+            w.Line($"Return {promiseVar}")
+            w.UnIndent()
+            w.Line($"Catch {catchVar} As LiteJs.Runtime.JsRuntimeException")
+            w.Indent()
+            w.Line($"{promiseVar}.Reject({catchVar}.Payload)")
+            w.Line($"Return {promiseVar}")
+            w.UnIndent()
+            w.Line("End Try")
+        End If
+
+        _loopExit.Clear() : _loopCont.Clear() : _labeledTargets.Clear() : _asyncPromise.Clear()
         For Each e In saveExit : _loopExit.Push(e) : Next
         For Each c In saveCont : _loopCont.Push(c) : Next
         For Each kv In saveLabels : _labeledTargets(kv.Key) = kv.Value : Next
+        For Each a In saveAsync : _asyncPromise.Push(a) : Next
         Return w.ToString()
     End Function
 
@@ -1173,6 +1222,7 @@ Public NotInheritable Class CodeGenerator
             Case "Date" : Return "JsRuntime.DateBuiltin"
             Case "RegExp" : Return "JsRuntime.RegExpBuiltin"
             Case "Error" : Return "JsRuntime.ErrorBuiltin"
+            Case "Promise" : Return "JsRuntime.PromiseBuiltin"
             Case "TypeError", "RangeError", "SyntaxError", "ReferenceError"
                 Return $"JsRuntime.JsGet(JsRuntime.GlobalObj, {VbString(name)})"
             Case "undefined" : Return "JsRuntime.Undef"
