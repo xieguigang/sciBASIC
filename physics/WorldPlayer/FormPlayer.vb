@@ -49,6 +49,8 @@ Public Class FormPlayer
     Private lastSyncInfo As String = ""
     ''' <summary>布局事件的逐步日志（仅 --shot 模式会输出）。</summary>
     Private ReadOnly layoutLog As New System.Text.StringBuilder()
+    ''' <summary>布局同步的重入守卫。</summary>
+    Private syncingLayout As Boolean = False
 
     ''' <summary>默认演示脚本名（位于输出目录）。</summary>
     Private Const DefaultScript As String = "demo\platform.js"
@@ -75,6 +77,10 @@ Public Class FormPlayer
 
         ' world / camera / sim / render 等全局必须在脚本顶层语句执行前注册
         script.BeforeRun = AddressOf api.Register
+
+        ' 画布尺寸由 SyncLayout 每帧显式钉住（原因见 SyncLayout 的注释）
+        viewport.Dock = DockStyle.None
+        viewport.Anchor = AnchorStyles.Top Or AnchorStyles.Left
 
         AddHandler viewport.MouseDown, AddressOf Viewport_MouseDown
         AddHandler viewport.MouseMove, AddressOf Viewport_MouseMove
@@ -370,24 +376,41 @@ Public Class FormPlayer
     ''' 并在切到编辑器页时补一次 <c>PerformLayout</c>。
     ''' </remarks>
     Private Sub SyncLayout()
+        If syncingLayout Then Return
         If tabs Is Nothing OrElse pageCanvas Is Nothing Then Return
         If tabs.IsDisposed OrElse pageCanvas.IsDisposed Then Return
 
+        ' 设置 Size 会同步触发 Resize 事件，而在事件处理里读到的仍可能是旧值，
+        ' 于是"再设一次"会形成每秒上百次的重入抖动。这里用一个标志位切断重入。
+        syncingLayout = True
+
+        Try
+            Call SyncLayoutCore()
+        Finally
+            syncingLayout = False
+        End Try
+    End Sub
+
+    Private Sub SyncLayoutCore()
+
+        ' 画布：不调用 pageCanvas.PerformLayout（实测它会在"正确尺寸"与"设计尺寸"
+        ' 之间来回跳），改为每帧把画布显式钉到页面的可用区域上。
         Dim area As Size = pageCanvas.DisplayRectangle.Size
 
-        If area <> lastCanvasArea AndAlso area.Width > 0 AndAlso area.Height > 0 Then
+        If area.Width > 0 AndAlso area.Height > 0 AndAlso viewport.Size <> area Then
+            viewport.Size = area
+            viewport.Location = Point.Empty
+
             lastCanvasArea = area
-
-            pageCanvas.PerformLayout()
-
-            lastSyncInfo = $"area={area.Width}x{area.Height} viewport={viewport.Width}x{viewport.Height}"
+            lastSyncInfo = $"canvas area={area.Width}x{area.Height} -> viewport={viewport.Width}x{viewport.Height}"
 
             Call RenderFrame(force:=True)
         End If
 
+        ' 编辑器页的停靠子控件则需要一次显式重排才会跟随（实测有效且稳定）
         Dim selected As TabPage = tabs.SelectedTab
 
-        If selected IsNot Nothing AndAlso selected.Size <> lastEditorPageSize Then
+        If selected Is pageScript AndAlso selected.Size <> lastEditorPageSize Then
             lastEditorPageSize = selected.Size
             selected.PerformLayout()
         End If

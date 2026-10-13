@@ -345,8 +345,11 @@ Partial Class FormPlayer
         '
         ' FormPlayer
         '
+        ' AutoScaleMode 必须是 None：Font 模式下 WinForms 会在布局过程中把设计尺寸
+        ' 反复写回子控件（3D 画布被在"当前尺寸"与"设计尺寸"之间来回拉扯，形成
+        ' 每秒上百次 Resize 的死循环）。窗体本身已是 PerMonitorV2 感知，不需要再缩放。
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0F, 15.0F)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(1180, 584)
         Me.Controls.Add(Me.split)
         Me.Controls.Add(Me.toolStrip)
