@@ -136,6 +136,7 @@ Namespace Runtime
             If TypeOf x Is NativeObject Then Return "[object " & DirectCast(x, NativeObject).Name & "]"
             If TypeOf x Is JsClass Then Return "class " & DirectCast(x, JsClass).Name & " { ... }"
             If TypeOf x Is JsError Then Return DirectCast(x, JsError).ToString()
+            If TypeOf x Is JsGenerator Then Return "[object Generator]"
             If TypeOf x Is JsDate Then Return DirectCast(x, JsDate).ToString()
             If TypeOf x Is JsRegExp Then Return DirectCast(x, JsRegExp).ToString()
             Return CStr(x)
@@ -408,6 +409,13 @@ Namespace Runtime
             If TypeOf obj Is JsPromise Then
                 Select Case name
                     Case "then", "catch", "finally"
+                        Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If TypeOf obj Is JsGenerator Then
+                Select Case name
+                    Case "next", "toString", "return"
                         Return New BuiltinMethod(obj, name)
                 End Select
                 Return Undef
@@ -1015,6 +1023,19 @@ Namespace Runtime
             End If
             If IsJsArray(target) Then Return BuiltinArrayMethod(DirectCast(target, List(Of Object)), name, args)
             If TypeOf target Is String Then Return BuiltinStringMethod(CStr(target), name, args)
+            If TypeOf target Is JsGenerator Then
+                Dim g = DirectCast(target, JsGenerator)
+                Select Case name
+                    Case "next" : Return g.Next2()
+                    Case "return"
+                        ' eager generators cannot resume: report exhaustion
+                        Return New Dictionary(Of String, Object) From {
+                            {"value", Arg(args, 0)}, {"done", True}
+                        }
+                    Case "toString" : Return g.ToString()
+                End Select
+                Throw JsRuntimeException.TypeError("Generator." & name & " is not a function")
+            End If
             If TypeOf target Is JsPromise Then
                 Dim p = DirectCast(target, JsPromise)
                 Select Case name
@@ -1895,6 +1916,42 @@ Namespace Runtime
         End Function
 
         ' ========================================================
+        ' T5: generators (eager collection)
+        ' ========================================================
+
+        <ThreadStatic>
+        Private _yieldStack As Stack(Of JsYieldCollector)
+
+        ''' <summary>
+        ''' Record a yielded value into the collector of the innermost running
+        ''' generator; the yield expression evaluates to the same value.
+        ''' </summary>
+        Public Function JsYieldValue(value As Object) As Object
+            If _yieldStack IsNot Nothing AndAlso _yieldStack.Count > 0 Then
+                Return _yieldStack.Peek().AddValue(value)
+            End If
+            Throw JsRuntimeException.SyntaxError("'yield' is only valid inside a generator function")
+        End Function
+
+        ''' <summary>Finish a generator call: wrap the collected values as the iterator.</summary>
+        Public Function JsGeneratorFrom(collector As JsYieldCollector) As Object
+            Return New JsGenerator(collector.Values)
+        End Function
+
+        ''' <summary>Run a generator body eagerly and return its iterator.</summary>
+        Public Function JsRunGenerator(body As Func(Of Object)) As Object
+            Dim collector As New JsYieldCollector()
+            If _yieldStack Is Nothing Then _yieldStack = New Stack(Of JsYieldCollector)
+            _yieldStack.Push(collector)
+            Try
+                body()
+            Finally
+                _yieldStack.Pop()
+            End Try
+            Return New JsGenerator(collector.Values)
+        End Function
+
+        ' ========================================================
         ' T4: Promise, async/await and the synchronous microtask queue
         ' ========================================================
 
@@ -2627,7 +2684,10 @@ Namespace Runtime
             Return False
         End Function
 
-        ''' <summary>Values for for-of: arrays (copy) and strings (chars) are iterable.</summary>
+        ''' <summary>
+        ''' Values for for-of and spread: arrays (copy), strings (chars) and
+        ''' generators (the remaining yielded values).
+        ''' </summary>
         Public Function JsIterableValues(iter As Object) As List(Of Object)
             If IsJsArray(iter) Then
                 Return New List(Of Object)(DirectCast(iter, List(Of Object)))
@@ -2638,6 +2698,9 @@ Namespace Runtime
                     list.Add(c.ToString())
                 Next
                 Return list
+            End If
+            If TypeOf iter Is JsGenerator Then
+                Return DirectCast(iter, JsGenerator).Remaining()
             End If
             Throw JsRuntimeException.TypeError(JsStr(iter) & " is not iterable")
         End Function

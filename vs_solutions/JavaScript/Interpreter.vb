@@ -98,7 +98,7 @@ Public NotInheritable Class Interpreter
                 env.Define(f.Name,
                            MakeFunction(New FuncExpr(f.Name, f.Parameters, f.Body,
                                                      defaults:=f.Defaults, restParam:=f.RestParam,
-                                                     isAsync:=f.IsAsync), env),
+                                                     isAsync:=f.IsAsync, isGenerator:=f.IsGenerator), env),
                            False)
             End If
         Next
@@ -451,6 +451,12 @@ Public NotInheritable Class Interpreter
 
     Private Function MakeFunction(f As FuncExpr, env As Environment) As Func(Of Object(), Object)
         Dim closure = env
+        If f.IsGenerator Then
+            ' eager generator: the body runs to completion, collecting yield values
+            Return Function(args As Object())
+                       Return JsRuntime.JsRunGenerator(Function() InvokeBody(f, closure, args))
+                   End Function
+        End If
         If f.IsAsync Then
             ' async: the body runs synchronously, its completion settles the promise
             Return Function(args As Object())
@@ -543,6 +549,13 @@ Public NotInheritable Class Interpreter
                 ' await unwraps a promise, draining the microtask queue first
                 Dim av = DirectCast(e, AwaitExpr)
                 Return JsRuntime.JsUnbox(JsRuntime.JsAwait(JsRuntime.JsBox(Eval(av.Operand, env))))
+
+            Case TypeOf e Is YieldExpr
+                ' eager collection: the value is recorded and the expression yields it
+                Dim yv = DirectCast(e, YieldExpr)
+                Dim yvalue As Object = JsRuntime.Undef
+                If yv.Operand IsNot Nothing Then yvalue = JsRuntime.JsBox(Eval(yv.Operand, env))
+                Return JsRuntime.JsUnbox(JsRuntime.JsYieldValue(yvalue))
 
             Case TypeOf e Is UnaryExpr
                 Dim u = DirectCast(e, UnaryExpr)
