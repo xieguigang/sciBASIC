@@ -52,6 +52,8 @@ Public Class ArtifactSyncTests
         Dim source = File.ReadAllText(System.IO.Path.Combine(ArtifactDirectory(), DemoFile))
         Dim io As ScriptIO = New LogTextIO
         Dim engine As New Interpreter(io)
+        ' the demo uses the CLR reflection bridge: hand it a real host object
+        engine.DefineGlobal("bridge", New ClrHostFixture())
         engine.Run(Parser.Parse(source))
         Dim lines = DirectCast(io, LogTextIO).Lines
         Assert.True(lines.Count > 0, "the demo script produced no output")

@@ -153,9 +153,30 @@ Namespace VBProj
         Public Function GetOutputDirectory(vbproj As VBProject, profileName$) As String
             Dim profile = vbproj.GetProfile(profileName)
             Dim base$ = DirectCast(vbproj, IFileReference).FilePath.ParentPath
-            Dim outputdir = $"{base}/{profile.OutputPath}"
+            Dim bin = If(profile Is Nothing, "bin/" & FallbackPath(profileName), profile.OutputPath)
+            Dim outputdir = $"{base}/{bin}"
+
+            If profile Is Nothing Then
+                Call Console.WriteLine($"Missing compiler config '{profileName}' inside the target project file, fallback to the default release folder: {outputdir}")
+            End If
 
             Return outputdir
+        End Function
+
+        Private Function FallbackPath(profileName As String) As String
+            Dim t = profileName.Split("|"c)
+            Dim profile As String
+            Dim platform As String
+
+            If t.Length = 1 Then
+                profile = t(0)
+                platform = ""
+            Else
+                profile = t(0)
+                platform = If(t(1) = "AnyCPU", "", t(1))
+            End If
+
+            Return $"{platform}/{profile}"
         End Function
 
         <Extension>

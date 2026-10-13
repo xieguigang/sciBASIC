@@ -53,9 +53,11 @@ Public NotInheritable Class CodeGenerator
         w.Line($"Public NotInheritable Class {className}")
         w.Indent()
         w.Line()
-        w.Line("Public Shared Sub Run(io As LiteJsRuntime.ScriptIO)")
+        w.Line("Public Shared Sub Run(io As LiteJsRuntime.ScriptIO, Optional host As LiteJsRuntime.ClrHost = Nothing)")
         w.Indent()
         w.Line("JsRuntime.Io = io")
+        ' host CLR objects (reflection bridge): publish them before the body runs
+        w.Line("If host IsNot Nothing Then host.Install()")
         ' JS var hoisting: every 'var' of this function body is declared once at
         ' the top (VB Dim is block-scoped, JS var is function-scoped)
         EmitHoistedVars(program.Body, w, top)
@@ -1272,7 +1274,10 @@ Public NotInheritable Class CodeGenerator
             Case "parseInt", "parseFloat", "isNaN", "isFinite", "String", "Number", "Boolean"
                 Return $"JsRuntime.JsGet(JsRuntime.GlobalObj, {VbString(name)})"
         End Select
-        Throw New NotSupportedException($"identifier '{name}' is not defined")
+        ' An identifier the generator does not know may be a host object injected through
+        ' the reflection bridge (ClrInterop.Register / ClrHost), so it resolves at run
+        ' time; an unregistered name raises a normal JS ReferenceError.
+        Return $"JsRuntime.ResolveHostGlobal({VbString(name)})"
     End Function
 
     Private Function UniqueName(base As String) As String
