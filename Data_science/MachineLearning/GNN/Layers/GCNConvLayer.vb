@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 
 ''' <summary>
 ''' GCN卷积层 (Graph Convolutional Layer)
@@ -133,7 +134,9 @@ Public Class GCNConvLayer
 
         ' 步骤1: 聚合邻居信息
         ' aggregated = A_norm * H
-        _aggregated = _normAdj.MatMul(input)
+        ' A_norm 是稠密 N×N，H 是 N×F：这是本层的主力 GEMM（O(N²F)），
+        ' 规模达标时走单精度计算再升回双精度。
+        _aggregated = MixedPrecisionOps.MatMulOr(_normAdj, input)
 
         ' 步骤2: 特征变换
         ' transformed = aggregated * W + b
@@ -152,7 +155,7 @@ Public Class GCNConvLayer
         _lastInput = input
         _normAdj = normalizedAdjacency
 
-        _aggregated = _normAdj.MatMul(input)
+        _aggregated = MixedPrecisionOps.MatMulOr(_normAdj, input)
         _transformed = _linear.Forward(_aggregated)
         Dim output = Apply(_transformed, _activation)
 
@@ -172,7 +175,7 @@ Public Class GCNConvLayer
 
         ' 邻接矩阵传播的梯度
         ' 因为 A_norm 是对称的，所以梯度传播使用 A_norm^T = A_norm
-        Dim inputGradient = normalizedAdjacency.MatMul(gradAfterLinear)
+        Dim inputGradient = MixedPrecisionOps.MatMulOr(normalizedAdjacency, gradAfterLinear)
 
         Return inputGradient
     End Function

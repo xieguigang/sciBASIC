@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports std = System.Math
 
 ''' <summary>
@@ -126,7 +127,10 @@ Public Class GATLayer
 
         ' 步骤1: 特征变换
         ' H' = H * W, shape: [numNodes, numHeads * outFeatures]
-        _transformedFeatures = input.MatMul(_W)
+        ' 这是本层唯一的大 GEMM（O(N·F·F')），规模达标时走单精度。
+        ' 注意力打分、softmax 与聚合仍保持双精度：前两者是数值敏感路径，
+        ' 后者的工作量由边数决定且在下方以标量循环实现。
+        _transformedFeatures = MixedPrecisionOps.MatMulOr(input, _W)
 
         ' 步骤2: 计算注意力系数
         ' 对于每条边，计算注意力权重

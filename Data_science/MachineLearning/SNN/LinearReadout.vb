@@ -84,6 +84,7 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports std = System.Math
 
 ''' <summary>
@@ -203,7 +204,8 @@ Public Class LinearReadout
         End If
 
         Dim batch = u.Shape(0)
-        Dim y = u.MatMul(Weight)
+        ' 读出层的主力 GEMM（O(batch·units·out)），规模达标时走单精度
+        Dim y = MixedPrecisionOps.MatMulOr(u, Weight)
         Dim b = Bias.Data
         Dim yd = y.Data
 
@@ -244,7 +246,7 @@ Public Class LinearReadout
 
         If Trainable Then
             ' dWout += uᵀ·dY
-            WeightGrad = WeightGrad + _u.Transpose().MatMul(dY)
+            WeightGrad = WeightGrad + MixedPrecisionOps.MatMulOr(_u.Transpose(), dY)
 
             ' db += Σ_batch dY（就地累加）
             Dim bgd = BiasGrad.Data
@@ -259,7 +261,7 @@ Public Class LinearReadout
         End If
 
         ' du = dY·Woutᵀ
-        Return dY.MatMul(Weight.Transpose())
+        Return MixedPrecisionOps.MatMulOr(dY, Weight.Transpose())
     End Function
 
 #End Region

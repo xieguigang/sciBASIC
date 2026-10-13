@@ -79,6 +79,7 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports std = System.Math
 
 
@@ -177,12 +178,21 @@ Public Class STDPLayer
         End If
 
         ' 1. 积分 + 泄漏：U = β·U + x·W
+        '
+        ' 这是本方法里**唯一**可以降精度的部分：它是一个货真价实的矩阵乘
+        ' x(1,in) × W(in,out)。规模达标（in·out 足够大）时走单精度内核。
+        '
+        ' 下面第 2~4 步刻意保持标量与双精度，原因不是惰性：
+        '   * 第 2 步是 WTA 的 argmax + 自适应阈值，属于**比较与状态**运算，
+        '     单精度会移动"谁发放"的判定边界；
+        '   * 第 3 步的 LTP/LTD 虽然是 rank-1 外积的形状，但每项都带
+        '     std.Min(WMax, ...) / std.Max(0.0, ...) 的逐元素钳位，
+        '     且 LTD 读取的是 LTP **更新之后**的权重 —— 是次序依赖的非线性更新，
+        '     无法表达成一次 GEMM（硬凑会改变语义）。
+        Dim drive = MixedPrecisionOps.MatMulOr(x, Weight)   ' (1, _out)
+
         For j = 0 To _out - 1
-            Dim s = 0.0
-            For i = 0 To _in - 1
-                s += x.Data(i) * Weight(i, j)
-            Next
-            _U(j) = Beta * _U(j) + s
+            _U(j) = Beta * _U(j) + drive.Data(j)
         Next
 
         ' 2. WTA 触发：有效阈值 θ_j = Threshold + 自适应分量；

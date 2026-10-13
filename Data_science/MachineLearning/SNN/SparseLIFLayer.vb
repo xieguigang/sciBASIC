@@ -83,6 +83,7 @@
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
+Imports tf = Microsoft.VisualBasic.MachineLearning.TensorFlow.Math
 Imports std = System.Math
 
 ''' <summary>
@@ -491,7 +492,8 @@ Public Class SparseLIFLayer
         End If
 
         ' 3. 泄漏积分：U = β·H + I
-        Dim U = I + (_H * CSng(Beta))
+        ' β / θ 保持双精度：它们是跨时间步递推的系数，单精度截断会在长仿真中指数漂移
+        Dim U = I + tf.multiply_scalar(_H, Beta)
 
         ' 4. 阈值触发：S = Θ(U − U_thr)
         Dim S = U.Apply(Function(v As Double) Surrogate.Spike(v - Threshold))
@@ -501,7 +503,7 @@ Public Class SparseLIFLayer
         If ResetMode = LIFResetMode.ZeroOnSpike Then
             H = U.ElementwiseMultiply(S.Apply(Function(v As Double) 1.0 - v))
         Else
-            H = U - (S * CSng(Threshold))
+            H = U - tf.multiply_scalar(S, Threshold)
         End If
 
         If KeepHistory Then

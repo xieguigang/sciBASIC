@@ -83,6 +83,7 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports tf = Microsoft.VisualBasic.MachineLearning.TensorFlow.Math
 Imports std = System.Math
 
 
@@ -131,9 +132,12 @@ Public Module Losses
             Next
         Next
 
+        ' 梯度缩放用 Double 标量：CSng(1.0/batch) 会先把缩放因子量化成单精度，
+        ' 之后整批梯度都带上这个 1e-8 量级的相对误差（batch 为非 2 的幂时尤其明显）。
+        ' 注：VB 的对象初始化器内不允许插入注释，故说明写在 Return 之前。
         Return New LossGradient With {
             .Loss = loss / batch,
-            .Grad = grad * CSng(1.0 / batch)
+            .Grad = tf.multiply_scalar(grad, 1.0 / batch)
         }
     End Function
 
@@ -192,7 +196,9 @@ Public Class AdamOptimizer
             vArr(i) = Beta2 * vArr(i) + (1.0 - Beta2) * g(i) * g(i)
             Dim mHat = m(i) / bc1
             Dim vHat = vArr(i) / bc2
-            param(i) = param(i) - CSng(LearningRate * mHat / (std.Sqrt(vHat) + Epsilon))
+            ' 更新量全程 Double：param / m / v 都是双精度存储，
+            ' 在最后一步套一个 CSng 只会白白丢掉有效位（主副本原则：更新在 Double 完成）
+            param(i) = param(i) - LearningRate * mHat / (std.Sqrt(vHat) + Epsilon)
         Next
     End Sub
 

@@ -144,6 +144,30 @@ Namespace Compute
             Return TensorF.computeKernelF.Conv2D(xf, ff, fb, stride, padding).ToTensor()
         End Function
 
+        ''' <summary>
+        ''' 二维矩阵乘的"总是有结果"版本：不适用降精度时自动走双精度。
+        ''' </summary>
+        ''' <remarks>
+        ''' 对绝大多数调用点来说，这是最省事的入口 —— 一行替换即可：
+        ''' <c>a.MatMul(b)</c> → <c>MixedPrecisionOps.MatMulOr(a, b)</c>。
+        ''' 只是调用方拿不到"是否真的降了精度"的信息，需要诊断时请用 <see cref="MatMul"/>。
+        ''' </remarks>
+        Public Function MatMulOr(a As Tensor, b As Tensor) As Tensor
+            Dim fast = MatMul(a, b)
+            If fast IsNot Nothing Then Return fast
+
+            Return a.MatMul(b)
+        End Function
+
+        ''' <summary>二维卷积的"总是有结果"版本。</summary>
+        Public Function Conv2DOr(x As Tensor, filters As Tensor, bias As Tensor,
+                                 stride As Integer, padding As Integer) As Tensor
+            Dim fast = Conv2D(x, filters, bias, stride, padding)
+            If fast IsNot Nothing Then Return fast
+
+            Return Tensor.computeKernel.Conv2D(x, filters, bias, stride, padding)
+        End Function
+
         ''' <summary>CSR 稀疏 × 稠密。判据用非零元个数（决定实际工作量）。</summary>
         Public Function SpMM(csr As SparseCsr, dense As Tensor) As Tensor
             If csr Is Nothing OrElse dense Is Nothing Then Return Nothing

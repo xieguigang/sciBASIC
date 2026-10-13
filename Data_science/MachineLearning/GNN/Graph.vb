@@ -160,6 +160,21 @@ Public Class Graph
     Private _inAdjacencyList As List(Of List(Of Integer))
 
     ''' <summary>
+    ''' 图结构版本号：任何加边都会自增。
+    ''' </summary>
+    ''' <remarks>
+    ''' 存在的理由：<see cref="GetNormalizedAdjacencyMatrix"/> 是 O(N²) 的
+    ''' （度归约 + 点乘 + 归一化三趟全矩阵扫描），而 GCN 层**每次前向**都会调用它。
+    ''' 在时序图里那就是每帧一次 O(N²)，纯属浪费 —— 图的拓扑在同一批数据内根本不变。
+    ''' 用版本号驱动缓存即可：只有真的加过边才重算。
+    ''' </remarks>
+    Private _structureVersion As Long = 0L
+
+    ''' <summary>归一化邻接矩阵的缓存（只读使用，调用方不得改写）</summary>
+    Private _normAdjCache As Tensor
+    Private _normAdjCacheVersion As Long = -1L
+
+    ''' <summary>
     ''' 创建一个空图
     ''' </summary>
     ''' <param name="numNodes">节点数量</param>
@@ -208,6 +223,9 @@ Public Class Graph
         Edges.Add(New Edge(source, target, weight))
         _adjacencyList(source).Add(target)
         _inAdjacencyList(target).Add(source)
+
+        ' 拓扑变了：让归一化邻接矩阵的缓存失效
+        _structureVersion += 1L
     End Sub
 
     ''' <summary>
@@ -254,16 +272,28 @@ Public Class Graph
     ''' 这种归一化有助于稳定训练过程
     ''' </summary>
     Public Function GetNormalizedAdjacencyMatrix() As Tensor
+        ' 拓扑没变就直接复用上一次的结果。
+        ' 这不是微优化：GCNConvLayer 每次前向都会调用本方法，时序图里等于每帧一次
+        ' O(N²) 的三趟全矩阵扫描（度归约 / 归一化 / 点乘）——
+        ' 而这些量只取决于图结构，与节点特征、时间步都无关。
+        If _normAdjCache IsNot Nothing AndAlso _normAdjCacheVersion = _structureVersion Then
+            Return _normAdjCache
+        End If
+
         Dim adjMatrix = GetAdjacencyMatrix()
 
         ' 添加自环（每个节点连接到自己）
         ' 这在GCN中很重要，确保节点能保留自己的信息
+        ' 注：Tensor 的索引器写入器会自增版本号，设备端缓存据此失效，
+        ' 所以这里不需要显式 MarkHostModified。
         For i = 0 To NumNodes - 1
-            adjMatrix(i, i) += 1.0F
+            adjMatrix(i, i) += 1.0
         Next
 
-        ' 计算度向量
-        Dim degree = New Single(NumNodes - 1) {}
+        ' 计算度向量。
+        ' 累加器用 Double：结点数大时用 Single 累加会丢掉尾部贡献，
+        ' 而度值直接进入 D^(-1/2)，会把误差放大到整行权重上。
+        Dim degree = New Double(NumNodes - 1) {}
         For i = 0 To NumNodes - 1
             For j = 0 To NumNodes - 1
                 degree(i) += adjMatrix(i, j)
@@ -271,9 +301,9 @@ Public Class Graph
         Next
 
         ' 计算D^(-1/2)
-        Dim dInvSqrt = New Single(NumNodes - 1) {}
+        Dim dInvSqrt = New Double(NumNodes - 1) {}
         For i = 0 To NumNodes - 1
-            dInvSqrt(i) = If(degree(i) > 0, CSng(1.0 / std.Sqrt(degree(i))), 0)
+            dInvSqrt(i) = If(degree(i) > 0, 1.0 / std.Sqrt(degree(i)), 0.0)
         Next
 
         ' 计算 D^(-1/2) * A * D^(-1/2)
@@ -283,6 +313,9 @@ Public Class Graph
                 normalizedAdj(i, j) = adjMatrix(i, j) * dInvSqrt(i) * dInvSqrt(j)
             Next
         Next
+
+        _normAdjCache = normalizedAdj
+        _normAdjCacheVersion = _structureVersion
 
         Return normalizedAdj
     End Function

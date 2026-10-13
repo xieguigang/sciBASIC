@@ -75,6 +75,7 @@
 ' ---------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports tpl = System.Threading.Tasks
 Imports std = System.Math
 
@@ -268,7 +269,10 @@ Namespace Transformer
                 ' 快路径：[rows, K] × [K, J]，直接复用 2D SIMD 后端
                 Dim rows As Integer = a.Length \ kmax
                 Dim a2 = Tensor.Wrap(a.Data, rows, kmax)
-                Dim c2 = a2.MatMul(b)
+
+                ' 规模够大时走单精度 + 后端内核（见 MixedPrecisionOps 的说明）；
+                ' 判据不成立时它返回 Nothing，这里自然落回双精度路径。
+                Dim c2 = If(MixedPrecisionOps.MatMul(a2, b), a2.MatMul(b))
 
                 Return Tensor.Wrap(c2.Data, outShape)
             End If
@@ -276,6 +280,12 @@ Namespace Transformer
             If b.Length \ (kmax * jmax) <> nrBlocks Then
                 Throw New ArgumentException("批量矩阵乘的 block 数量不一致")
             End If
+
+            ' 多 block 路径：注意力里 b 是 (batch, k, j) 的三维张量，走批量 GEMM。
+            ' 这里同样允许降到单精度（逐 block 调用 2D GEMM）。
+            Dim batched = MixedPrecisionOps.BatchedMatMul(a, b)
+
+            If batched IsNot Nothing Then Return batched
 
             Dim result = New Tensor(outShape)
             Dim aData = a.Data, bData = b.Data, cData = result.Data
@@ -344,10 +354,12 @@ Namespace Transformer
                 Dim dc2 = Tensor.Wrap(dC.Data, rows, jmax)
 
                 ' dB = Aᵀ · dC（对全部 block 求和）
-                dB = a2.Transpose().MatMul(dc2)
+                Dim aT = a2.Transpose()
+                dB = If(MixedPrecisionOps.MatMul(aT, dc2), aT.MatMul(dc2))
 
                 ' dA = dC · Bᵀ
-                Dim da2 = dc2.MatMul(b.Transpose())
+                Dim bT = b.Transpose()
+                Dim da2 = If(MixedPrecisionOps.MatMul(dc2, bT), dc2.MatMul(bT))
                 Array.Copy(da2.Data, dA.Data, dA.Length)
                 Call dA.MarkHostModified()
 

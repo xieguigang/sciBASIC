@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 
 ''' <summary>
 ''' 线性层（全连接层）
@@ -142,8 +143,9 @@ Public Class LinearLayer
         ' output: [batchSize, outFeatures]
 
         ' 计算 x * W^T
+        ' 这是全连接层的主力 GEMM（O(batch·in·out)），规模达标时走单精度
         Dim weightT = _weights.Transpose() ' [inFeatures, outFeatures]
-        Dim output = input.MatMul(weightT)
+        Dim output = MixedPrecisionOps.MatMulOr(input, weightT)
 
         ' 加上偏置
         If UseBias Then
@@ -166,7 +168,7 @@ Public Class LinearLayer
 
         ' 计算权重梯度: dW = gradient^T * input
         Dim gradientT = gradient.Transpose() ' [outFeatures, batchSize]
-        _weightGradient = gradientT.MatMul(_lastInput) ' [outFeatures, inFeatures]
+        _weightGradient = MixedPrecisionOps.MatMulOr(gradientT, _lastInput) ' [outFeatures, inFeatures]
 
         ' 计算偏置梯度: db = sum(gradient, axis=0)
         If UseBias Then
@@ -174,7 +176,7 @@ Public Class LinearLayer
         End If
 
         ' 计算输入梯度: dx = gradient * W
-        Dim inputGradient = gradient.MatMul(_weights) ' [batchSize, inFeatures]
+        Dim inputGradient = MixedPrecisionOps.MatMulOr(gradient, _weights) ' [batchSize, inFeatures]
 
         Return inputGradient
     End Function

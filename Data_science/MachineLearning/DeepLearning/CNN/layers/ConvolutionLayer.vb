@@ -61,6 +61,7 @@
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports Microsoft.VisualBasic.Parallel
 Imports tpl = System.Threading.Tasks
 Imports std = System.Math
@@ -191,7 +192,16 @@ Namespace CNN.layers
             ' 因此输入只需要一次零拷贝的形状重解释, 算完把结果整块拷回即可
             Dim x4 As Tensor = db.Value4D
             Dim packed As Tensor = PackFilters()
-            Dim y = Tensor.computeKernel.Conv2D(x4, packed, biases.Value, stride, padding)
+            Dim bias As Tensor = biases.Value
+
+            ' 卷积是典型的算力密集算子：规模达标时降到单精度计算再升回双精度。
+            ' MixedPrecisionOps 返回 Nothing 表示判据不成立（或数据里有非有限值），
+            ' 此时保持原来的双精度路径。
+            Dim y = MixedPrecisionOps.Conv2D(x4, packed, bias, stride, padding)
+
+            If y Is Nothing Then
+                y = Tensor.computeKernel.Conv2D(x4, packed, bias, stride, padding)
+            End If
 
             Call lA.SetValues(y.Data)
 

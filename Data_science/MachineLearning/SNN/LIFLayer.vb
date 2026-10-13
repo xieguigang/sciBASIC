@@ -87,6 +87,8 @@
 ' ============================================================================
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
+Imports tf = Microsoft.VisualBasic.MachineLearning.TensorFlow.Math
 
 ''' <summary>膜电位复位模式</summary>
 Public Enum LIFResetMode
@@ -207,8 +209,11 @@ Public Class LIFLayer
     ''' 积分 → 泄漏 → 触发 → 复位，并缓存中间量供 BPTT 使用。
     ''' </summary>
     Public Function ForwardStep(x As Tensor) As Tensor
-        Dim I = x.MatMul(Weight)                        ' 1. 积分：I = X·W
-        Dim U = I + (_H * CSng(Beta))                   ' 2. 泄漏：U = β·H + I
+        ' 1. 积分：I = X·W —— 每个时间步的主力 GEMM，规模达标时走单精度。
+        '    注意膜电位本身（下方 U / _H）必须保持双精度：它是跨时间步递推的状态，
+        '    系数被截断会在长序列上指数级漂移。
+        Dim I = MixedPrecisionOps.MatMulOr(x, Weight)
+        Dim U = I + tf.multiply_scalar(_H, Beta)        ' 2. 泄漏：U = β·H + I
 
         Dim S As Tensor                                 ' 3. 触发：S = Θ(U − U_thr)
         If SmoothForward Then
@@ -221,7 +226,8 @@ Public Class LIFLayer
         If ResetMode = LIFResetMode.ZeroOnSpike Then
             H = U.ElementwiseMultiply(S.Apply(Function(v As Double) 1.0 - v))
         Else
-            H = U - (S * CSng(Threshold))
+            ' 阈值同样保持双精度：它直接决定复位幅度，单精度截断会让长时间仿真的膜电位漂移
+        H = U - tf.multiply_scalar(S, Threshold)
         End If
 
         _X.Add(x)
@@ -273,14 +279,14 @@ Public Class LIFLayer
 
             ' dH[t] = β·dU[t+1]（t = T−1 时为 0）
             Dim dH As Tensor =
-                If(dU_next Is Nothing, New Tensor(U.Shape), dU_next * CSng(Beta))
+                If(dU_next Is Nothing, New Tensor(U.Shape), tf.multiply_scalar(dU_next, Beta))
 
             ' 复位路径给 S 带来的额外梯度
             Dim dS_total As Tensor
             If ResetMode = LIFResetMode.ZeroOnSpike Then
                 dS_total = dS_ext(T) - dH.ElementwiseMultiply(U)      ' ∂H/∂S = −U
             Else
-                dS_total = dS_ext(T) - (dH * CSng(Threshold))         ' ∂H/∂S = −θ
+                dS_total = dS_ext(T) - tf.multiply_scalar(dH, Threshold)   ' ∂H/∂S = −θ
             End If
 
             ' 替代导数 σ'(U[t] − θ)
@@ -296,10 +302,10 @@ Public Class LIFLayer
             End If
 
             ' dW += Xᵀ·dU（dL/dI[t] = dL/dU[t]，因为 U = β·H + I）
-            WeightGrad = WeightGrad + X.Transpose().MatMul(dU)
+            WeightGrad = WeightGrad + MixedPrecisionOps.MatMulOr(X.Transpose(), dU)
 
             ' dX[t] = dU·Wᵀ（传给更早一层作为 dS_ext）
-            dX.Add(dU.MatMul(Weight.Transpose()))
+            dX.Add(MixedPrecisionOps.MatMulOr(dU, Weight.Transpose()))
 
             dU_next = dU
         Next

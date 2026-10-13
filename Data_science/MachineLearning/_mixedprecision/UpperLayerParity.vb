@@ -13,8 +13,10 @@
 ' ---------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports Microsoft.VisualBasic.MachineLearning.Transformer
 Imports Microsoft.VisualBasic.MachineLearning.RNN
+Imports Microsoft.VisualBasic.DeepLearning.GNN
 Imports std = System.Math
 
 Namespace MixedPrecisionBench
@@ -23,7 +25,179 @@ Namespace MixedPrecisionBench
 
         Friend Sub RunAll(results As List(Of CaseResult))
             Call BatchedMatMulCase(results)
+            Call MixedPrecisionPathCase(results)
+            Call GnnLayerCase(results)
+            Call GraphCacheCase(results)
             Call RnnCase(results)
+        End Sub
+
+        ''' <summary>
+        ''' 归一化邻接矩阵的版本化缓存：同一拓扑下复用、加边后失效。
+        ''' </summary>
+        ''' <remarks>
+        ''' 缓存是"每次前向都重算 O(N²)"这个浪费的替代方案，但它引入了新的失效路径 ——
+        ''' 一旦失效判据漏掉，训练就会**静默**用着旧图，比慢更糟。
+        ''' 因此这里对两侧都做断言：命中时必须是同一个对象，加边后必须是新对象。
+        ''' </remarks>
+        Private Sub GraphCacheCase(results As List(Of CaseResult))
+            Dim g As New Graph(numNodes:=64, featureDim:=8)
+
+            ' 造一个环形 + 少量长边的稀疏图
+            For i = 0 To 63 - 1
+                Call g.AddUndirectedEdge(i, i + 1)
+            Next
+
+            Call g.AddUndirectedEdge(0, 32)
+            Call g.AddUndirectedEdge(7, 41)
+
+            Dim a1 = g.GetNormalizedAdjacencyMatrix()
+            Dim a2 = g.GetNormalizedAdjacencyMatrix()
+            Dim reused = Object.ReferenceEquals(a1, a2)
+
+            results.Add(New CaseResult("GNN 邻接矩阵缓存命中", reused,
+                                       If(reused, "两次调用返回同一实例", "未命中缓存（每次重算）")))
+
+            ' 加边后必须失效
+            Call g.AddUndirectedEdge(3, 59)
+            Dim a3 = g.GetNormalizedAdjacencyMatrix()
+            Dim invalidated = Not Object.ReferenceEquals(a1, a3)
+
+            results.Add(New CaseResult("GNN 邻接矩阵加边后失效", invalidated,
+                                       If(invalidated, "加边后重新计算", "加边后仍返回旧缓存 —— 失效判据失效")))
+
+            ' 归一化矩阵的对称性与行和为 1 的量级检查（D^(-1/2) A D^(-1/2) 对称）
+            Dim maxAsym As Double = 0
+
+            For i = 0 To 63 - 1
+                For j = 0 To 63 - 1
+                    maxAsym = std.Max(maxAsym, std.Abs(a3.Data(i * 64 + j) - a3.Data(j * 64 + i)))
+                Next
+            Next
+
+            results.Add(New CaseResult("GNN 归一化邻接对称性", maxAsym < 1.0E-12,
+                                       $"max|A(i,j)-A(j,i)|={maxAsym:E3}"))
+
+            ' 缓存路径下 GCN 前向仍可跑通且数值有限
+            Dim layer As New GCNConvLayer(8, 8)
+            Dim feat = New Tensor(Randoms(64 * 8, seed:=501, scale:=1.0), 64, 8)
+            Dim out1 = layer.Forward(feat, g.GetNormalizedAdjacencyMatrix())
+            Dim out2 = layer.Forward(feat, g.GetNormalizedAdjacencyMatrix())
+
+            Dim finite = True
+
+            For Each v In out2.Data
+                If Double.IsNaN(v) OrElse Double.IsInfinity(v) Then finite = False
+            Next
+
+            results.Add(New CaseResult("GNN 缓存下 GCN 前向有限", finite AndAlso out1.Length = out2.Length,
+                                       $"shape=[{out2.Shape(0)},{out2.Shape(1)}] 有限={finite}"))
+        End Sub
+
+        ''' <summary>
+        ''' GNN 全连接层的混合精度对拍：同一层在"开启降精度"与"关闭降精度"下前反向结果应一致。
+        ''' </summary>
+        ''' <remarks>
+        ''' 为什么不用自带的 Demo 做这件事：<c>GNN/test</c> 的时序演示当前存在**既有缺陷**
+        ''' （TGCNModel 按 16 维特征建层，而演示数据每节点只有 1 维，
+        ''' 触发"矩阵维度不匹配: 1 != 16"），与本轮改造无关，
+        ''' 因此这里直接对层做定量的开关对拍。
+        ''' <para>
+        ''' 用同一份权重构造两层（一层共享权重）比较麻烦，这里改用更直接的口径：
+        ''' 先在开启态跑一次得到结果 A，再关闭策略、用**同样的输入与权重**跑一次得到 B。
+        ''' 因为层内部的权重由构造时的随机初始化决定，所以做法是：
+        ''' 关掉策略跑出基准，再打开策略跑一遍 —— 权重在前向里不会被修改，
+        ''' 因此两次前向的权重是同一份。
+        ''' </para>
+        ''' </remarks>
+        Private Sub GnnLayerCase(results As List(Of CaseResult))
+            Dim n = 512, features = 128
+            Dim layer As New LinearLayer(features, features)
+            Dim input = New Tensor(Randoms(n * features, seed:=401, scale:=1.0), n, features)
+
+            Dim enabled = MixedPrecisionPolicy.Enabled
+            Dim reference As Tensor = Nothing
+            Dim got As Tensor = Nothing
+            Dim before = MixedPrecisionDiagnostics.[Of]("MatMul")
+            Dim after = before
+
+            Try
+                ' ---- 基准：关闭降精度（纯双精度路径）----
+                MixedPrecisionPolicy.Enabled = False
+                reference = layer.Forward(input)
+
+                ' ---- 被测：开启降精度 ----
+                MixedPrecisionPolicy.Enabled = True
+                before = MixedPrecisionDiagnostics.[Of]("MatMul")
+                got = layer.Forward(input)
+                after = MixedPrecisionDiagnostics.[Of]("MatMul")
+            Finally
+                ' 无论成败都要把全局开关还原，否则会污染后续用例
+                MixedPrecisionPolicy.Enabled = enabled
+            End Try
+
+            Dim maxDiff As Double = 0
+            Dim scaleRef As Double = 0
+
+            For i = 0 To reference.Length - 1
+                maxDiff = std.Max(maxDiff, std.Abs(reference.Data(i) - got.Data(i)))
+                scaleRef = std.Max(scaleRef, std.Abs(reference.Data(i)))
+            Next
+
+            Dim tol = std.Max(0.0001 * scaleRef, 0.000001)
+
+            results.Add(New CaseResult(
+                "GNN LinearLayer 降精度路径命中",
+                after.Accelerated > before.Accelerated,
+                $"加速 {before.Accelerated} -> {after.Accelerated}"))
+
+            results.Add(New CaseResult(
+                "GNN LinearLayer 双精度/混合精度一致",
+                maxDiff <= tol,
+                $"maxAbsDiff={maxDiff:E3} tol={tol:E3} 参考量级={scaleRef:F3}"))
+        End Sub
+
+        ''' <summary>
+        ''' 验证"降精度路径确实被走到，且结果仍在容差内"。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这一组存在的唯一理由是防**假通过**：
+        ''' 判据不成立时 MixedPrecisionOps 会安静地返回 Nothing 让调用方走双精度，
+        ''' 于是"逐位一致"的用例可以在降精度路径完全没生效的情况下通过。
+        ''' 因此这里同时断言两件事：
+        '''   1. 诊断计数器显示加速路径命中次数 > 0（真的走了 FP32）；
+        '''   2. 与双精度参考实现的偏差在单精度累积误差的合理范围内。
+        ''' </remarks>
+        Private Sub MixedPrecisionPathCase(results As List(Of CaseResult))
+            ' 规模必须显著超过 GemmOpsThreshold（262144），否则策略会拒绝降精度
+            Dim blocks = 4, imax = 128, kmax = 128, jmax = 128
+            Dim a = Randoms(blocks * imax * kmax, seed:=301, scale:=1.0)
+            Dim b = Randoms(blocks * kmax * jmax, seed:=302, scale:=1.0)
+
+            Dim aT = New Tensor(a, blocks, imax, kmax)
+            Dim bT = New Tensor(b, blocks, kmax, jmax)
+
+            Dim before = MixedPrecisionDiagnostics.[Of]("BatchedMatMul")
+            Dim got = TensorOps.BatchedMatMul(aT, bT)
+            Dim after = MixedPrecisionDiagnostics.[Of]("BatchedMatMul")
+            Dim tookFastPath = after.Accelerated > before.Accelerated
+
+            results.Add(New CaseResult("混合精度 BatchedMatMul 命中单精度路径", tookFastPath,
+                                       $"加速 {before.Accelerated} -> {after.Accelerated}，回退 {after.Fallback}"))
+
+            Dim reference = ReferenceBatchedMatMul(a, b, blocks, imax, kmax, jmax)
+            Dim maxDiff As Double = 0
+            Dim scaleRef As Double = 0
+
+            For i = 0 To reference.Length - 1
+                maxDiff = std.Max(maxDiff, std.Abs(reference(i) - got.Data(i)))
+                scaleRef = std.Max(scaleRef, std.Abs(reference(i)))
+            Next
+
+            ' 单精度沿 k=128 累加的相对误差量级约 1e-6，取 1e-4 作为宽松但有效的门槛
+            Dim tol = std.Max(0.0001 * scaleRef, 0.000001)
+
+            results.Add(New CaseResult("混合精度 BatchedMatMul 数值精度", maxDiff <= tol,
+                                       $"maxAbsDiff={maxDiff:E3} tol={tol:E3} 参考量级={scaleRef:F3}"))
         End Sub
 
         ''' <summary>

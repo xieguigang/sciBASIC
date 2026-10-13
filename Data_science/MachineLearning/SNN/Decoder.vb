@@ -125,6 +125,8 @@ Public Module SpikeDecoders
     ''' </summary>
     Public Function FiringRate(sHistory As List(Of Tensor)) As Tensor
         AssertHistory(sHistory)
+        ' 这里保持原样：SpikeCounts 返回的是 Tensor，`Tensor / Single` 走后端标量除法，
+        ' 除数是"时间步计数"（远小于 1600 万，Single 可精确表示），不构成精度损失。
         Return SpikeCounts(sHistory) / CSng(sHistory.Count)
     End Function
 
