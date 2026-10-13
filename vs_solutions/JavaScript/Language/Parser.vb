@@ -816,7 +816,11 @@ Public NotInheritable Class Parser
         Return e
     End Function
 
-    ''' <summary>Call argument list with spread elements and trailing commas.</summary>
+    ''' <summary>
+    ''' Call argument list with spread elements and trailing commas.
+    ''' Arguments are assignment-level expressions — the comma SEPARATES them
+    ''' rather than acting as the comma operator.
+    ''' </summary>
     Private Function ParseArguments() As List(Of Expression)
         Eat("(")
         Dim args As New List(Of Expression)
@@ -826,7 +830,7 @@ Public NotInheritable Class Parser
                     _pos += 1
                     args.Add(New SpreadElement(ParseAssignment()))
                 Else
-                    args.Add(ParseExpression())
+                    args.Add(ParseAssignment())
                 End If
             Loop While Match(",") AndAlso Not At(")")
         End If

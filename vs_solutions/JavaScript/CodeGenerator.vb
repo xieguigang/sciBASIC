@@ -129,7 +129,7 @@ Public NotInheritable Class CodeGenerator
         ElseIf TypeOf s Is BreakStmt Then
             Dim b = DirectCast(s, BreakStmt)
             If b.Label IsNot Nothing Then
-                w.Line(LabeledJump(b.Label, exit:=True))
+                w.Line(LabeledJump(b.Label, isExit:=True))
             Else
                 w.Line(If(_loopExit.Count > 0, _loopExit.Peek(), "Exit Do"))
             End If
@@ -137,7 +137,7 @@ Public NotInheritable Class CodeGenerator
         ElseIf TypeOf s Is ContinueStmt Then
             Dim c = DirectCast(s, ContinueStmt)
             If c.Label IsNot Nothing Then
-                w.Line(LabeledJump(c.Label, exit:=False))
+                w.Line(LabeledJump(c.Label, isExit:=False))
             Else
                 w.Line(If(_loopCont.Count > 0, _loopCont.Peek(), "Continue Do"))
             End If
@@ -347,12 +347,12 @@ Public NotInheritable Class CodeGenerator
     End Sub
 
     ''' <summary>Resolve a labeled break/continue into its GoTo target.</summary>
-    Private Function LabeledJump(label As String, exit As Boolean) As String
+    Private Function LabeledJump(label As String, isExit As Boolean) As String
         Dim info As LabelInfo = Nothing
         If Not _labeledTargets.TryGetValue(label, info) Then
             Throw New NotSupportedException($"label '{label}' is not visible in this function")
         End If
-        If exit Then Return $"GoTo {info.ExitLabel}"
+        If isExit Then Return $"GoTo {info.ExitLabel}"
         If info.ContLabel Is Nothing Then
             Throw New NotSupportedException($"'{label}' is not a loop label")
         End If
@@ -921,10 +921,10 @@ Public NotInheritable Class CodeGenerator
         Dim names As New List(Of String)
         CollectHoistedVars(body, names, New HashSet(Of String))
         For Each name In names
-            If scope.Resolve(name) Is Nothing Then
-                Dim vbName = scope.DefineLocal(name)
-                w.Line($"Dim {vbName} As JsValue = JsRuntime.Undef")
-            End If
+            ' a parameter (or the 'arguments' binding) already owns the name
+            If scope.IsDeclaredHere(name) Then Continue For
+            Dim vbName = scope.DefineLocal(name)
+            w.Line($"Dim {vbName} As JsValue = JsRuntime.Undef")
         Next
     End Sub
 
@@ -945,7 +945,7 @@ Public NotInheritable Class CodeGenerator
                 Dim v = DirectCast(s, VarStmt)
                 If v.Kind = "var" Then
                     For Each d In v.Declarations
-                        If seen.Add(d.Name) Then names.Add(d.Name)
+                        CollectTargetNames(d.Target, names, seen)
                     Next
                 End If
             Case TypeOf s Is BlockStmt
@@ -960,10 +960,20 @@ Public NotInheritable Class CodeGenerator
                 CollectHoistedVars(fr.Body, names, seen)
             Case TypeOf s Is ForInStmt
                 CollectHoistedVars(DirectCast(s, ForInStmt).Body, names, seen)
+            Case TypeOf s Is ForOfStmt
+                Dim fo = DirectCast(s, ForOfStmt)
+                If fo.Kind = "var" Then CollectTargetNames(fo.Target, names, seen)
+                CollectHoistedVars(fo.Body, names, seen)
             Case TypeOf s Is WhileStmt
                 CollectHoistedVars(DirectCast(s, WhileStmt).Body, names, seen)
             Case TypeOf s Is DoWhileStmt
                 CollectHoistedVars(DirectCast(s, DoWhileStmt).Body, names, seen)
+            Case TypeOf s Is SwitchStmt
+                For Each c In DirectCast(s, SwitchStmt).Cases
+                    CollectHoistedVars(c.Body, names, seen)
+                Next
+            Case TypeOf s Is LabeledStmt
+                CollectHoistedVars(DirectCast(s, LabeledStmt).Body, names, seen)
             Case TypeOf s Is TryStmt
                 Dim t = DirectCast(s, TryStmt)
                 CollectHoistedVars(t.TryBlock, names, seen)
@@ -971,8 +981,34 @@ Public NotInheritable Class CodeGenerator
                 If t.FinallyBlock IsNot Nothing Then CollectHoistedVars(t.FinallyBlock, names, seen)
             Case TypeOf s Is FuncDeclStmt
                 ' its own function scope — never hoisted into the enclosing one
-            Case Else
-                ' TODO: switch / labeled / for-of / class bodies (added in later tiers)
+        End Select
+    End Sub
+
+    ''' <summary>Collect the plain names bound by a (possibly destructuring) target.</summary>
+    Private Shared Sub CollectTargetNames(target As Object, names As List(Of String), seen As HashSet(Of String))
+        If target Is Nothing Then Return
+        If TypeOf target Is String Then
+            If seen.Add(CStr(target)) Then names.Add(CStr(target))
+            Return
+        End If
+        Select Case True
+            Case TypeOf target Is NameTarget
+                Dim n = DirectCast(target, NameTarget).Name
+                If seen.Add(n) Then names.Add(n)
+            Case TypeOf target Is ArrayTarget
+                Dim at = DirectCast(target, ArrayTarget)
+                For Each el In at.Elements
+                    CollectTargetNames(el, names, seen)
+                Next
+                CollectTargetNames(at.Rest, names, seen)
+            Case TypeOf target Is ObjectTarget
+                Dim ot = DirectCast(target, ObjectTarget)
+                For Each prop In ot.Properties
+                    CollectTargetNames(prop.Value, names, seen)
+                Next
+                CollectTargetNames(ot.Rest, names, seen)
+            Case TypeOf target Is DefaultTarget
+                CollectTargetNames(DirectCast(target, DefaultTarget).Target, names, seen)
         End Select
     End Sub
 
@@ -1162,6 +1198,11 @@ Public NotInheritable Class CodeGenerator
                 s = s._parent
             End While
             Return Nothing
+        End Function
+
+        ''' <summary>True when <paramref name="name"/> is declared in THIS scope only.</summary>
+        Public Function IsDeclaredHere(name As String) As Boolean
+            Return _names.ContainsKey(name)
         End Function
 
         Public Function ResolveOrThrow(name As String) As String

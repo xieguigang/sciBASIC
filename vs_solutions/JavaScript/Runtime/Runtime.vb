@@ -14,7 +14,22 @@ Namespace Runtime
         ''' <summary>JS function value in both worlds (interpreter closures and generated lambdas).</summary>
         Public ReadOnly Undef As Object = New UndefinedMarker()
 
-        Public Property Io As ScriptIO = New LogTextIO()
+        ' per-thread sink: two script engines on different threads must not
+        ' interleave their console output (ThreadStatic fields cannot have an
+        ' initialiser, hence the lazy default in the getter)
+        <ThreadStatic>
+        Private _io As ScriptIO
+
+        ''' <summary>console.log sink used by builtin dispatch and generated code.</summary>
+        Public Property Io As ScriptIO
+            Get
+                If _io Is Nothing Then _io = New LogTextIO()
+                Return _io
+            End Get
+            Set(value As ScriptIO)
+                _io = value
+            End Set
+        End Property
 
         Public ReadOnly ConsoleBuiltin As New NativeObject("console")
         Public ReadOnly MathBuiltin As New NativeObject("Math")
@@ -1102,17 +1117,17 @@ Namespace Runtime
             Return CDbl(Not ToInt32Bits(JsNum(a)))
         End Function
 
-        ''' <summary>Signed left shift (<<).</summary>
+        ''' <summary>Signed left shift, the &lt;&lt; operator.</summary>
         Public Function JsShl(a As Object, b As Object) As Object
             Return WrapInt32(ToInt32Bits(JsNum(a)) << ShiftAmount(b))
         End Function
 
-        ''' <summary>Signed right shift (>>, arithmetic).</summary>
+        ''' <summary>Signed right shift, the &gt;&gt; arithmetic operator.</summary>
         Public Function JsShr(a As Object, b As Object) As Object
             Return CDbl(ToInt32Bits(JsNum(a)) >> ShiftAmount(b))
         End Function
 
-        ''' <summary>Unsigned right shift (>>>, logical).</summary>
+        ''' <summary>Unsigned right shift, the &gt;&gt;&gt; logical operator.</summary>
         Public Function JsUshr(a As Object, b As Object) As Object
             Return CDbl(ToUint32Bits(JsNum(a)) >> ShiftAmount(b))
         End Function
@@ -1368,11 +1383,10 @@ Namespace Runtime
                 Select Case DirectCast(ctor, BuiltinMethod).Name
                     Case "Array" : Return IsJsArray(obj)
                     Case "Object" : Return IsJsObject(obj) OrElse IsJsArray(obj)
-                    Case "String" : Return TypeOf obj Is String
-                    Case "Number" : Return IsNumber(obj)
-                    Case "Boolean" : Return TypeOf obj Is Boolean
                     Case "Function" : Return TypeOf obj Is Func(Of Object(), Object) OrElse TypeOf obj Is BuiltinMethod
                 End Select
+                ' primitives have no wrapper objects here: String/Number/Boolean → false,
+                ' matching JS ('abc' instanceof String === false)
                 Return False
             End If
             If TypeOf ctor Is Func(Of Object(), Object) Then
