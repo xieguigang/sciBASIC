@@ -71,6 +71,7 @@
 ' ---------------------------------------------------------------------------
 
 Imports nv = System.Numerics
+Imports tpl = System.Threading.Tasks
 Imports std = System.Math
 
 Namespace Compute
@@ -371,6 +372,210 @@ Namespace Compute
             End While
 
             Return m
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' 逐轴归约：这是「内存带宽受限」类的典型算子，没有向量指令可用
+        ' （沿非最后一维的步长不是 1），但外层 outer×inner 之间没有数据依赖，
+        ' 因此把并行放在这里。
+        '
+        ' 阈值刻意设得比 GPU 侧的 MinGpuElementsF 低一个量级：CPU 上没有
+        ' 每次调用的显存往返成本，几千个元素就足以摊平 Parallel.For 的调度开销。
+        ' ------------------------------------------------------------------
+        Public Shared Property ReductionParallelThreshold As Integer = 4096
+
+        Public Overrides Function Sum(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF
+            If Not axis.HasValue Then Return TensorF.Scalar(CSng(SumAll(t)))
+            Return ReduceAxisParallel(t, axis.Value, keepdims, 0.0#, Function(acc, val) acc + val)
+        End Function
+
+        Public Overrides Function Mean(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF
+            If Not axis.HasValue Then Return TensorF.Scalar(CSng(MeanAll(t)))
+
+            Dim summed = ReduceAxisParallel(t, axis.Value, keepdims, 0.0#, Function(acc, val) acc + val)
+            Dim count As Double = t.Shape(axis.Value)
+            Return MultiplyScalar(summed, CSng(1.0 / count))
+        End Function
+
+        Public Overrides Function Max(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF
+            If Not axis.HasValue Then Return TensorF.Scalar(MaxAll(t))
+            Return ReduceAxisParallel(t, axis.Value, keepdims, Single.NegativeInfinity,
+                                      Function(acc, val) If(val > acc, val, acc))
+        End Function
+
+        Public Overrides Function Min(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF
+            If Not axis.HasValue Then Return TensorF.Scalar(MinAll(t))
+            Return ReduceAxisParallel(t, axis.Value, keepdims, Single.PositiveInfinity,
+                                      Function(acc, val) If(val < acc, val, acc))
+        End Function
+
+        ''' <summary>
+        ''' 沿指定轴的并行归约。累加统一在 <c>Double</c> 域进行，出口才降回 Single。
+        ''' </summary>
+        Private Shared Function ReduceAxisParallel(t As TensorF, axis As Integer, keepdims As Boolean,
+                                                   initValue As Double,
+                                                   reduce As Func(Of Double, Double, Double)) As TensorF
+            Dim shape = t.Shape
+            Dim rank = shape.Length
+
+            Dim outerSize = 1
+            For i = 0 To axis - 1
+                outerSize *= shape(i)
+            Next
+
+            Dim innerSize = 1
+            For i = axis + 1 To rank - 1
+                innerSize *= shape(i)
+            Next
+
+            Dim axisSize = shape(axis)
+            Dim src = t.Data
+
+            Dim outShape As New List(Of Integer)
+            For i = 0 To rank - 1
+                If i = axis Then
+                    If keepdims Then outShape.Add(1)
+                Else
+                    outShape.Add(shape(i))
+                End If
+            Next
+
+            ' 一维 + keepdims=False 退化成标量
+            If outShape.Count = 0 Then
+                Dim g = initValue
+                For Each sample As Single In src
+                    g = reduce(g, sample)
+                Next
+                Return TensorF.Scalar(CSng(g))
+            End If
+
+            Dim result = New TensorF(outShape.ToArray())
+            Dim dst = result.Data
+            Dim work = outerSize * innerSize
+
+            If work >= ReductionParallelThreshold Then
+                tpl.Parallel.For(0, work, Sub(wi)
+                                              Dim outer = wi \ innerSize
+                                              Dim inner = wi - outer * innerSize
+                                              Dim baseIdx = outer * axisSize * innerSize
+                                              Dim value = initValue
+
+                                              For k = 0 To axisSize - 1
+                                                  value = reduce(value, src(baseIdx + k * innerSize + inner))
+                                              Next
+
+                                              dst(wi) = CSng(value)
+                                          End Sub)
+            Else
+                For wi = 0 To work - 1
+                    Dim outer = wi \ innerSize
+                    Dim inner = wi - outer * innerSize
+                    Dim baseIdx = outer * axisSize * innerSize
+                    Dim value = initValue
+
+                    For k = 0 To axisSize - 1
+                        value = reduce(value, src(baseIdx + k * innerSize + inner))
+                    Next
+
+                    dst(wi) = CSng(value)
+                Next
+            End If
+
+            Return result
+        End Function
+
+#End Region
+
+#Region "矩阵运算"
+
+        ' ------------------------------------------------------------------
+        ' 这是本文件里收益最大的一处改动。
+        '
+        ' 标量兜底里的 MatMul 是纯三重 for 循环：既没有 SIMD 也没有并行。
+        ' 而「batch=1 的 GEMV」在 GPU 侧低于 MinGemmElementsF 也会直接回退，
+        ' 于是小矩阵在 GPU 和 CPU 两边都拿不到加速 —— 这正是 LNN 的 ODE 右端
+        ' 反复求值、以及 SNN 线性读出所处的区间。
+        '
+        ' 矩阵的每一行之间没有数据依赖，因此把外层行并行化；累加保持 Double，
+        ' 保证与标量路径的结果逐位一致（只是更快）。
+        ' ------------------------------------------------------------------
+        Public Shared Property MatMulParallelThreshold As Long = 10000L
+
+        Public Overrides Function MatMul(a As TensorF, b As TensorF) As TensorF
+            If a.Rank <> 2 OrElse b.Rank <> 2 Then
+                Throw New ArgumentException("矩阵乘法需要二维张量")
+            End If
+            If a.Shape(1) <> b.Shape(0) Then
+                Throw New ArgumentException($"矩阵维度不匹配: {a.Shape(1)} != {b.Shape(0)}")
+            End If
+
+            Dim m = a.Shape(0), k = a.Shape(1), n = b.Shape(1)
+            Dim x = a.Data, y = b.Data
+            Dim r(m * n - 1) As Single
+
+            If CLng(m) * CLng(k) * CLng(n) >= MatMulParallelThreshold Then
+                tpl.Parallel.For(0, m, Sub(i)
+                                           Dim iBase = i * k
+                                           Dim oBase = i * n
+
+                                           For j = 0 To n - 1
+                                               Dim acc As Double = 0
+                                               For p = 0 To k - 1
+                                                   acc += CDbl(x(iBase + p)) * y(p * n + j)
+                                               Next
+                                               r(oBase + j) = CSng(acc)
+                                           Next
+                                       End Sub)
+            Else
+                For i = 0 To m - 1
+                    Dim iBase = i * k
+                    Dim oBase = i * n
+
+                    For j = 0 To n - 1
+                        Dim acc As Double = 0
+                        For p = 0 To k - 1
+                            acc += CDbl(x(iBase + p)) * y(p * n + j)
+                        Next
+                        r(oBase + j) = CSng(acc)
+                    Next
+                Next
+            End If
+
+            Return Wrap(r, New Integer() {m, n})
+        End Function
+
+        ''' <summary>
+        ''' 二维转置。纯数据搬移，没有浮点累加因此不会引入任何数值差异，
+        ''' 适合直接并行。
+        ''' </summary>
+        Public Overrides Function Transpose(t As TensorF) As TensorF
+            If t.Rank <> 2 Then
+                Throw New ArgumentException("只支持二维张量转置")
+            End If
+
+            Dim rows = t.Shape(0)
+            Dim cols = t.Shape(1)
+            Dim result = New TensorF(cols, rows)
+            Dim src = t.Data
+            Dim dst = result.Data
+
+            If CLng(rows) * CLng(cols) >= ReductionParallelThreshold Then
+                tpl.Parallel.For(0, rows, Sub(i)
+                                              Dim iBase = i * cols
+                                              For j = 0 To cols - 1
+                                                  dst(j * rows + i) = src(iBase + j)
+                                              Next
+                                          End Sub)
+            Else
+                For i = 0 To rows - 1
+                    Dim iBase = i * cols
+                    For j = 0 To cols - 1
+                        dst(j * rows + i) = src(iBase + j)
+                    Next
+                Next
+            End If
+
+            Return result
         End Function
 
 #End Region

@@ -299,7 +299,7 @@ Namespace Compute
         ''' <summary>
         ''' 稀疏 × 稠密矩阵乘的标量参考实现。逐点运算次序与双精度栈
         ''' <see cref="TensorComputeBase.SpMM"/> 完全一致，因此 CPU 与 GPU 后端可以对拍。
-        ''' 因此在<span> <｜hy_place▁holder▁no▁813｜>可以逐比特对拍。
+        ''' 累加刻意用 Double：行长度很大时 Single 累加会先出现可见误差，而这个误差会在下游的阈值判定里被放大。
         ''' </summary>
         Public Overridable Function SpMM(csr As SparseCsr, dense As TensorF) As TensorF Implements ITensorComputeF.SpMM
             If csr Is Nothing Then Throw New ArgumentNullException(NameOf(csr))
@@ -463,6 +463,762 @@ Namespace Compute
                 If x(i) > m Then m = x(i)
             Next
             Return m
+        End Function
+
+        Public Overridable Function Sum(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF Implements ITensorComputeF.Sum
+            If Not axis.HasValue Then Return TensorF.Scalar(CSng(SumAll(t)))
+            Return ReduceAlongAxisF(t, axis.Value, keepdims, 0.0#, Function(acc, val) acc + val)
+        End Function
+
+        Public Overridable Function Mean(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF Implements ITensorComputeF.Mean
+            If Not axis.HasValue Then Return TensorF.Scalar(CSng(MeanAll(t)))
+
+            Dim sumResult = ReduceAlongAxisF(t, axis.Value, keepdims, 0.0#, Function(acc, val) acc + val)
+            Dim count As Double = t.Shape(axis.Value)
+            Return MultiplyScalar(sumResult, CSng(1.0 / count))
+        End Function
+
+        Public Overridable Function Max(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF Implements ITensorComputeF.Max
+            If Not axis.HasValue Then Return TensorF.Scalar(MaxAll(t))
+            Return ReduceAlongAxisF(t, axis.Value, keepdims, Single.NegativeInfinity, Function(acc, val) std.Max(acc, val))
+        End Function
+
+        Public Overridable Function Min(t As TensorF, axis As Integer?, keepdims As Boolean) As TensorF Implements ITensorComputeF.Min
+            If Not axis.HasValue Then Return TensorF.Scalar(MinAll(t))
+            Return ReduceAlongAxisF(t, axis.Value, keepdims, Single.PositiveInfinity, Function(acc, val) std.Min(acc, val))
+        End Function
+
+        Public Overridable Function ArgMax(t As TensorF, axis As Integer?) As TensorF Implements ITensorComputeF.ArgMax
+            If Not axis.HasValue Then Return TensorF.Scalar(CSng(ArgGlobalF(t, findMin:=False)))
+            Return ReduceArgAxisF(t, axis.Value, False)
+        End Function
+
+        Public Overridable Function ArgMin(t As TensorF, axis As Integer?) As TensorF Implements ITensorComputeF.ArgMin
+            If Not axis.HasValue Then Return TensorF.Scalar(CSng(ArgGlobalF(t, findMin:=True)))
+            Return ReduceArgAxisF(t, axis.Value, True)
+        End Function
+
+#End Region
+
+#Region "神经网络"
+
+        ' ------------------------------------------------------------------
+        ' 这一组算子的共同取舍：数据以 Single 存储，但**内部的中间量一律用 Double**。
+        '
+        '   存储精度 ≠ 计算精度。softmax 的最大值/exp/求和、-loss-bounded 的 log(1+e^-|x|)
+        '   这些中间步骤在 Single 下会先出现 E−7 量级的相对误差，虽小却足以改变
+        '   argmax 的并列判定。既然这里只占训练步的一小部分耗时，就没有理由省这一点。
+        ' ------------------------------------------------------------------
+
+        Public Overridable Function Softmax(t As TensorF, axis As Integer) As TensorF Implements ITensorComputeF.Softmax
+            If t Is Nothing Then Throw New ArgumentNullException(NameOf(t))
+
+            Dim rank = t.Rank
+            If axis < 0 Then axis = rank + axis
+            If axis < 0 OrElse axis >= rank Then
+                Throw New ArgumentOutOfRangeException(NameOf(axis), $"轴编号超出张量秩 {rank} 的合法范围")
+            End If
+
+            Dim shape = t.Shape
+            Dim axisSize = shape(axis)
+
+            Dim outerSize = 1
+            For i = 0 To axis - 1
+                outerSize *= shape(i)
+            Next
+
+            Dim innerSize = 1
+            For i = axis + 1 To rank - 1
+                innerSize *= shape(i)
+            Next
+
+            Dim src = t.Data
+            Dim dst(src.Length - 1) As Single
+            Dim exps(axisSize - 1) As Double
+
+            For outer = 0 To outerSize - 1
+                Dim baseIdx = outer * axisSize * innerSize
+
+                For inner = 0 To innerSize - 1
+                    ' 减最大值：既防 exp 溢出，也让最大元素的 e^0 = 1 保证 sumExp >= 1
+                    Dim maxVal As Double = src(baseIdx + inner)
+                    For k = 1 To axisSize - 1
+                        Dim v As Double = src(baseIdx + k * innerSize + inner)
+                        If v > maxVal Then maxVal = v
+                    Next
+
+                    Dim sumExp As Double = 0
+                    For k = 0 To axisSize - 1
+                        Dim e = std.Exp(src(baseIdx + k * innerSize + inner) - maxVal)
+                        exps(k) = e
+                        sumExp += e
+                    Next
+
+                    For k = 0 To axisSize - 1
+                        dst(baseIdx + k * innerSize + inner) = CSng(exps(k) / sumExp)
+                    Next
+                Next
+            Next
+
+            Return Wrap(dst, shape)
+        End Function
+
+        Public Overridable Function LogSoftmax(t As TensorF, axis As Integer) As TensorF Implements ITensorComputeF.LogSoftmax
+            If t Is Nothing Then Throw New ArgumentNullException(NameOf(t))
+
+            Dim rank = t.Rank
+            If axis < 0 Then axis = rank + axis
+            If axis < 0 OrElse axis >= rank Then
+                Throw New ArgumentOutOfRangeException(NameOf(axis), $"轴编号超出张量秩 {rank} 的合法范围")
+            End If
+
+            Dim shape = t.Shape
+            Dim axisSize = shape(axis)
+
+            Dim outerSize = 1
+            For i = 0 To axis - 1
+                outerSize *= shape(i)
+            Next
+
+            Dim innerSize = 1
+            For i = axis + 1 To rank - 1
+                innerSize *= shape(i)
+            Next
+
+            Dim src = t.Data
+            Dim dst(src.Length - 1) As Single
+
+            For outer = 0 To outerSize - 1
+                Dim baseIdx = outer * axisSize * innerSize
+
+                For inner = 0 To innerSize - 1
+                    Dim maxVal As Double = src(baseIdx + inner)
+                    For k = 1 To axisSize - 1
+                        Dim v As Double = src(baseIdx + k * innerSize + inner)
+                        If v > maxVal Then maxVal = v
+                    Next
+
+                    Dim sumExp As Double = 0
+                    For k = 0 To axisSize - 1
+                        sumExp += std.Exp(src(baseIdx + k * innerSize + inner) - maxVal)
+                    Next
+
+                    Dim logSumExp = maxVal + std.Log(sumExp)
+
+                    For k = 0 To axisSize - 1
+                        dst(baseIdx + k * innerSize + inner) = CSng(src(baseIdx + k * innerSize + inner) - logSumExp)
+                    Next
+                Next
+            Next
+
+            Return Wrap(dst, shape)
+        End Function
+
+        Public Overridable Function SigmoidCrossEntropyWithLogits(labels As TensorF, logits As TensorF) As TensorF Implements ITensorComputeF.SigmoidCrossEntropyWithLogits
+            RequireSameShape(labels, logits, "计算 sigmoid 交叉熵")
+
+            Dim z = labels.Data
+            Dim x = logits.Data
+            Dim r(x.Length - 1) As Single
+
+            For i = 0 To x.Length - 1
+                ' 稳定写法: max(x,0) - x*z + log(1 + exp(-|x|))
+                Dim xi As Double = x(i)
+                Dim zi As Double = z(i)
+                r(i) = CSng(std.Max(xi, 0.0) - xi * zi + std.Log(1.0 + std.Exp(-std.Abs(xi))))
+            Next
+
+            Return Wrap(r, labels.Shape)
+        End Function
+
+        Public Overridable Function MseLoss(predictions As TensorF, targets As TensorF) As TensorF Implements ITensorComputeF.MseLoss
+            RequireSameShape(predictions, targets, "计算均方误差")
+
+            Dim p = predictions.Data
+            Dim t = targets.Data
+            Dim r(p.Length - 1) As Single
+
+            For i = 0 To p.Length - 1
+                Dim d As Double = p(i) - t(i)
+                r(i) = CSng(d * d)
+            Next
+
+            Return Wrap(r, predictions.Shape)
+        End Function
+
+        Public Overridable Function L2Loss(t As TensorF) As TensorF Implements ITensorComputeF.L2Loss
+            Dim src = t.Data
+            Dim sumSq As Double = 0
+            For i = 0 To src.Length - 1
+                sumSq += CDbl(src(i)) * src(i)
+            Next
+            Return TensorF.Scalar(CSng(sumSq * 0.5))
+        End Function
+
+        Public Overridable Function HuberLoss(predictions As TensorF, targets As TensorF, delta As Single) As TensorF Implements ITensorComputeF.HuberLoss
+            RequireSameShape(predictions, targets, "计算 Huber 损失")
+
+            Dim p = predictions.Data
+            Dim t = targets.Data
+            Dim r(p.Length - 1) As Single
+            Dim d As Double = delta
+
+            For i = 0 To p.Length - 1
+                Dim diff As Double = p(i) - t(i)
+                Dim absDiff = std.Abs(diff)
+                r(i) = CSng(If(absDiff <= d, 0.5 * diff * diff, d * (absDiff - 0.5 * d)))
+            Next
+
+            Return Wrap(r, predictions.Shape)
+        End Function
+
+#End Region
+
+#Region "训练算子"
+
+        Public Overridable Function MaskedCrossEntropy(logits As TensorF,
+                                                       targets As Integer(),
+                                                       mask As Boolean(),
+                                                       ByRef dLogits As TensorF) As Double Implements ITensorComputeF.MaskedCrossEntropy
+            If logits Is Nothing Then Throw New ArgumentNullException(NameOf(logits))
+            If logits.Rank <> 2 Then Throw New ArgumentException("掩码交叉熵要求 [rows, vocab] 的二维 logits")
+
+            Dim rows = logits.Shape(0)
+            Dim vocab = logits.Shape(1)
+
+            dLogits = New TensorF(New Integer() {rows, vocab})
+
+            Dim src = logits.Data
+            Dim grad = dLogits.Data
+            Dim total As Double = 0.0
+            Dim count As Integer = 0
+
+            For r As Integer = 0 To rows - 1
+                If mask IsNot Nothing AndAlso r < mask.Length AndAlso Not mask(r) Then Continue For
+                If targets Is Nothing OrElse r >= targets.Length Then Continue For
+
+                Dim target = targets(r)
+                If target < 0 OrElse target >= vocab Then Continue For
+
+                count += 1
+
+                Dim offset = r * vocab
+                Dim maxVal As Double = Double.NegativeInfinity
+
+                For j = 0 To vocab - 1
+                    Dim v As Double = src(offset + j)
+                    If v > maxVal Then maxVal = v
+                Next
+
+                Dim sumExp As Double = 0.0
+                For j = 0 To vocab - 1
+                    Dim e = std.Exp(src(offset + j) - maxVal)
+                    grad(offset + j) = CSng(e)
+                    sumExp += e
+                Next
+
+                If sumExp <= 0 Then sumExp = 1.0
+
+                For j = 0 To vocab - 1
+                    grad(offset + j) = CSng(grad(offset + j) / sumExp)
+                Next
+
+                Dim pt As Double = grad(offset + target)
+                total -= std.Log(std.Max(pt, 1.0E-12))
+                grad(offset + target) = CSng(pt - 1.0)
+            Next
+
+            If count = 0 Then
+                Call dLogits.MarkHostModified()
+                Return 0.0
+            End If
+
+            ' 归一化：损失与梯度都除以有效位置数，使不同 batch 的损失可比
+            Dim inv As Double = 1.0 / count
+
+            For i = 0 To grad.Length - 1
+                grad(i) = CSng(grad(i) * inv)
+            Next
+
+            Call dLogits.MarkHostModified()
+
+            Return total * inv
+        End Function
+
+        ''' <summary>
+        ''' 标量兜底不做设备端 AdamW，返回 <c>False</c> 让调用方走主机循环
+        ''' （与双精度栈 <see cref="TensorComputeBase.TryAdamWStep"/> 的约定一致）。
+        ''' </summary>
+        Public Overridable Function TryAdamWStep(param As TensorF, gradient As TensorF,
+                                                 momentum As TensorF, velocity As TensorF,
+                                                 learningRate As Double, beta1 As Double, beta2 As Double,
+                                                 eps As Double, biasCorrection1 As Double,
+                                                 biasCorrection2 As Double,
+                                                 weightDecay As Double) As Boolean Implements ITensorComputeF.TryAdamWStep
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有"设备常驻"概念。</summary>
+        Public Overridable ReadOnly Property SupportsDeviceResidency As Boolean Implements ITensorComputeF.SupportsDeviceResidency
+            Get
+                Return False
+            End Get
+        End Property
+
+        ''' <summary>默认后端不支持钉住。</summary>
+        Public Overridable Function PinDevice(t As TensorF, label As String, zeroFill As Boolean) As Boolean Implements ITensorComputeF.PinDevice
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有常驻缓冲。</summary>
+        Public Overridable Function UnpinDevice(t As TensorF) As Boolean Implements ITensorComputeF.UnpinDevice
+            Return False
+        End Function
+
+        ''' <summary>默认后端没有任何张量被钉住。</summary>
+        Public Overridable Function IsDevicePinned(t As TensorF) As Boolean Implements ITensorComputeF.IsDevicePinned
+            Return False
+        End Function
+
+        ''' <summary>默认后端不占用显存。</summary>
+        Public Overridable ReadOnly Property PinnedDeviceBytes As Long Implements ITensorComputeF.PinnedDeviceBytes
+            Get
+                Return 0L
+            End Get
+        End Property
+
+        ''' <summary>默认后端没有设备副本，因此无需同步。</summary>
+        Public Overridable Function SyncFromDevice(t As TensorF) As Boolean Implements ITensorComputeF.SyncFromDevice
+            Return False
+        End Function
+
+#End Region
+
+#Region "卷积与池化"
+
+        ' ------------------------------------------------------------------
+        ' 标量参考实现（正确性优先），与双精度栈的 Conv2D / MaxPool2D 逐行列对应，
+        ' 唯一差异是累加器用 Double、存储落到 Single。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>卷积/池化的输出边长: (input + 2*padding - kernel) / stride + 1</summary>
+        Protected Shared Function ConvOutSizeF(inputSize As Integer, kernelSize As Integer,
+                                               stride As Integer, padding As Integer) As Integer
+            If stride <= 0 Then Throw New ArgumentException("stride 必须为正数")
+            Return (inputSize + 2 * padding - kernelSize) \ stride + 1
+        End Function
+
+        ''' <summary>卷积/池化的入参形状校验</summary>
+        Private Shared Sub RequireRank4F(t As TensorF, name As String)
+            If t Is Nothing OrElse t.Rank <> 4 Then
+                Throw New ArgumentException($"{name} 需要四维张量 (N,H,W,C)")
+            End If
+        End Sub
+
+        Public Overridable Function Conv2D(x As TensorF, filters As TensorF, bias As TensorF,
+                                           stride As Integer, padding As Integer) As TensorF Implements ITensorComputeF.Conv2D
+            RequireRank4F(x, "x")
+            RequireRank4F(filters, "filters")
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1)
+            Dim filtC = filters.Shape(2), outC = filters.Shape(3)
+
+            If filtC <> inC Then
+                Throw New ArgumentException($"卷积核通道数 {filtC} 与输入通道数 {inC} 不一致")
+            End If
+            If bias IsNot Nothing AndAlso bias.Length <> outC Then
+                Throw New ArgumentException($"偏置长度 {bias.Length} 与输出通道数 {outC} 不一致")
+            End If
+
+            Dim outH = ConvOutSizeF(inH, filtH, stride, padding)
+            Dim outW = ConvOutSizeF(inW, filtW, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then
+                Throw New ArgumentException($"卷积输出尺寸非法: {outH}x{outW}")
+            End If
+
+            Dim result = New TensorF(batch, outH, outW, outC)
+            Dim src = x.Data
+            Dim kern = filters.Data
+            Dim dst = result.Data
+            Dim biasData = If(bias Is Nothing, Nothing, bias.Data)
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        For oc As Integer = 0 To outC - 1
+                            Dim sum As Double = If(biasData Is Nothing, 0.0, CDbl(biasData(oc)))
+
+                            For kh As Integer = 0 To filtH - 1
+                                Dim ih As Integer = oh * stride + kh - padding
+                                If ih < 0 OrElse ih >= inH Then Continue For
+
+                                For kw As Integer = 0 To filtW - 1
+                                    Dim iw As Integer = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim xBase = ((n * inH + ih) * inW + iw) * inC
+                                    Dim kBase = ((kh * filtW + kw) * inC) * outC + oc
+
+                                    For c As Integer = 0 To inC - 1
+                                        sum += CDbl(src(xBase + c)) * kern(kBase + c * outC)
+                                    Next
+                                Next
+                            Next
+
+                            dst(((n * outH + oh) * outW + ow) * outC + oc) = CSng(sum)
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function Conv2DBackwardInput(gradOutput As TensorF, filters As TensorF,
+                                                        inputShape As Integer(), stride As Integer,
+                                                        padding As Integer) As TensorF Implements ITensorComputeF.Conv2DBackwardInput
+            RequireRank4F(gradOutput, "gradOutput")
+            RequireRank4F(filters, "filters")
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1)
+            Dim filtC = filters.Shape(2)
+
+            Dim inH = inputShape(1), inW = inputShape(2), inC = inputShape(3)
+
+            If filtC <> inC Then
+                Throw New ArgumentException($"卷积核通道数 {filtC} 与输入通道数 {inC} 不一致")
+            End If
+
+            Dim result = New TensorF(batch, inH, inW, inC)
+            Dim g = gradOutput.Data
+            Dim kern = filters.Data
+            Dim dst = result.Data
+
+            For n As Integer = 0 To batch - 1
+                For ih As Integer = 0 To inH - 1
+                    For iw As Integer = 0 To inW - 1
+                        For ic As Integer = 0 To inC - 1
+                            Dim sum As Double = 0.0
+
+                            For oh As Integer = 0 To outH - 1
+                                Dim kh As Integer = ih - oh * stride + padding
+                                If kh < 0 OrElse kh >= filtH Then Continue For
+
+                                For ow As Integer = 0 To outW - 1
+                                    Dim kw As Integer = iw - ow * stride + padding
+                                    If kw < 0 OrElse kw >= filtW Then Continue For
+
+                                    Dim gBase = ((n * outH + oh) * outW + ow) * outC
+
+                                    For oc As Integer = 0 To outC - 1
+                                        sum += CDbl(g(gBase + oc)) * kern(((kh * filtW + kw) * inC + ic) * outC + oc)
+                                    Next
+                                Next
+                            Next
+
+                            dst(((n * inH + ih) * inW + iw) * inC + ic) = CSng(sum)
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function Conv2DBackwardFilter(gradOutput As TensorF, x As TensorF,
+                                                         filterShape As Integer(), stride As Integer,
+                                                         padding As Integer) As TensorF Implements ITensorComputeF.Conv2DBackwardFilter
+            RequireRank4F(gradOutput, "gradOutput")
+            RequireRank4F(x, "x")
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+            Dim filtH = filterShape(0), filtW = filterShape(1)
+            Dim inC = filterShape(2)
+            Dim inH = x.Shape(1), inW = x.Shape(2)
+
+            If x.Shape(3) <> inC Then
+                Throw New ArgumentException($"输入通道数 {x.Shape(3)} 与卷积核通道数 {inC} 不一致")
+            End If
+
+            Dim result = New TensorF(filtH, filtW, inC, outC)
+            Dim g = gradOutput.Data
+            Dim src = x.Data
+            Dim dst = result.Data
+
+            For kh As Integer = 0 To filtH - 1
+                For kw As Integer = 0 To filtW - 1
+                    For ic As Integer = 0 To inC - 1
+                        For oc As Integer = 0 To outC - 1
+                            Dim sum As Double = 0.0
+
+                            For n As Integer = 0 To batch - 1
+                                For oh As Integer = 0 To outH - 1
+                                    Dim ih As Integer = oh * stride + kh - padding
+                                    If ih < 0 OrElse ih >= inH Then Continue For
+
+                                    For ow As Integer = 0 To outW - 1
+                                        Dim iw As Integer = ow * stride + kw - padding
+                                        If iw < 0 OrElse iw >= inW Then Continue For
+
+                                        sum += CDbl(g(((n * outH + oh) * outW + ow) * outC + oc)) *
+                                               src(((n * inH + ih) * inW + iw) * inC + ic)
+                                    Next
+                                Next
+                            Next
+
+                            dst(((kh * filtW + kw) * inC + ic) * outC + oc) = CSng(sum)
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function Conv2DBackwardBias(gradOutput As TensorF) As TensorF Implements ITensorComputeF.Conv2DBackwardBias
+            RequireRank4F(gradOutput, "gradOutput")
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+
+            Dim result = New TensorF(New Integer() {outC})
+            Dim g = gradOutput.Data
+            Dim dst = result.Data
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        Dim baseIndex = ((n * outH + oh) * outW + ow) * outC
+
+                        For oc As Integer = 0 To outC - 1
+                            dst(oc) = CSng(dst(oc) + g(baseIndex + oc))
+                        Next
+                    Next
+                Next
+            Next
+
+            Return result
+        End Function
+
+        Public Overridable Function MaxPool2D(x As TensorF, size As Integer, stride As Integer, padding As Integer,
+                                              ByRef argMax As TensorF) As TensorF Implements ITensorComputeF.MaxPool2D
+            RequireRank4F(x, "x")
+
+            If size <= 0 Then Throw New ArgumentException("池化窗口必须为正数")
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim outH = ConvOutSizeF(inH, size, stride, padding)
+            Dim outW = ConvOutSizeF(inW, size, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then
+                Throw New ArgumentException($"池化输出尺寸非法: {outH}x{outW}")
+            End If
+
+            Dim result = New TensorF(batch, outH, outW, inC)
+            Dim idx = New TensorF(batch, outH, outW, inC)
+            Dim src = x.Data
+            Dim dst = result.Data
+            Dim dstIdx = idx.Data
+
+            For n As Integer = 0 To batch - 1
+                For oh As Integer = 0 To outH - 1
+                    For ow As Integer = 0 To outW - 1
+                        For c As Integer = 0 To inC - 1
+                            ' 越界的窗口位置直接跳过（等价于 -inf），避免零填充在负数输入时错误胜出
+                            Dim best As Single = Single.NegativeInfinity
+                            Dim bestIdx As Integer = -1
+
+                            For kh As Integer = 0 To size - 1
+                                Dim ih As Integer = oh * stride + kh - padding
+                                If ih < 0 OrElse ih >= inH Then Continue For
+
+                                For kw As Integer = 0 To size - 1
+                                    Dim iw As Integer = ow * stride + kw - padding
+                                    If iw < 0 OrElse iw >= inW Then Continue For
+
+                                    Dim flat = ((n * inH + ih) * inW + iw) * inC + c
+                                    Dim v = src(flat)
+
+                                    If v > best Then
+                                        best = v
+                                        bestIdx = flat
+                                    End If
+                                Next
+                            Next
+
+                            Dim outIndex = ((n * outH + oh) * outW + ow) * inC + c
+
+                            If bestIdx < 0 Then
+                                ' 整个窗口都落在填充区（极小输入 + 大 padding 才会出现）
+                                dst(outIndex) = 0.0F
+                                dstIdx(outIndex) = 0.0F
+                            Else
+                                dst(outIndex) = best
+                                dstIdx(outIndex) = CSng(bestIdx)
+                            End If
+                        Next
+                    Next
+                Next
+            Next
+
+            argMax = idx
+
+            Return result
+        End Function
+
+        Public Overridable Function MaxPool2DBackward(gradOutput As TensorF, argMax As TensorF,
+                                                      inputShape As Integer()) As TensorF Implements ITensorComputeF.MaxPool2DBackward
+            RequireRank4F(gradOutput, "gradOutput")
+            If argMax Is Nothing Then Throw New ArgumentNullException(NameOf(argMax))
+
+            Dim result = New TensorF(inputShape)
+            Dim g = gradOutput.Data
+            Dim pos = argMax.Data
+            Dim dst = result.Data
+
+            ' 每个输出位置唯一对应一个输入位置，因此可以直接累加而无需原子操作
+            For i As Integer = 0 To g.Length - 1
+                Dim target As Integer = CInt(pos(i))
+
+                If target >= 0 AndAlso target < dst.Length Then
+                    dst(target) = CSng(dst(target) + g(i))
+                End If
+            Next
+
+            Return result
+        End Function
+
+#End Region
+
+#Region "内部工具（归约 / 极值下标）"
+
+        ''' <summary>整体极值下标。</summary>
+        Private Shared Function ArgGlobalF(t As TensorF, findMin As Boolean) As Integer
+            Dim src = t.Data
+            If src.Length = 0 Then Throw New ArgumentException("空张量没有极值下标")
+
+            Dim bestIdx = 0
+            Dim bestVal = src(0)
+
+            For i = 1 To src.Length - 1
+                If findMin Then
+                    If src(i) < bestVal Then
+                        bestVal = src(i)
+                        bestIdx = i
+                    End If
+                Else
+                    If src(i) > bestVal Then
+                        bestVal = src(i)
+                        bestIdx = i
+                    End If
+                End If
+            Next
+
+            Return bestIdx
+        End Function
+
+        ''' <summary>沿指定轴归约。累加 / 极值比较统一提升到 Double，出口再降回 Single。</summary>
+        Protected Shared Function ReduceAlongAxisF(t As TensorF, axis As Integer, keepdims As Boolean,
+                                                   initValue As Double,
+                                                   reduceFunc As Func(Of Double, Double, Double)) As TensorF
+            Dim rank = t.Rank
+            Dim origShape = t.Shape
+
+            Dim outerSize = 1
+            For i = 0 To axis - 1
+                outerSize *= origShape(i)
+            Next
+
+            Dim innerSize = 1
+            For i = axis + 1 To rank - 1
+                innerSize *= origShape(i)
+            Next
+
+            Dim axisSize = origShape(axis)
+
+            Dim outShapeList = New List(Of Integer)
+            For i = 0 To rank - 1
+                If i = axis Then
+                    If keepdims Then outShapeList.Add(1)
+                Else
+                    outShapeList.Add(origShape(i))
+                End If
+            Next
+
+            If outShapeList.Count = 0 Then
+                Return TensorF.Scalar(CSng(initValue))
+            End If
+
+            Dim result = New TensorF(outShapeList.ToArray())
+            Dim srcData = t.Data
+            Dim dstData = result.Data
+            Dim dstIdx = 0
+
+            For outer = 0 To outerSize - 1
+                Dim baseIdx = outer * axisSize * innerSize
+                For inner = 0 To innerSize - 1
+                    Dim value = initValue
+                    For k = 0 To axisSize - 1
+                        value = reduceFunc(value, srcData(baseIdx + k * innerSize + inner))
+                    Next
+                    dstData(dstIdx) = CSng(value)
+                    dstIdx += 1
+                Next
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>沿指定轴找极值下标（argmax / argmin）。</summary>
+        Protected Shared Function ReduceArgAxisF(t As TensorF, axis As Integer, findMin As Boolean) As TensorF
+            Dim rank = t.Rank
+            Dim origShape = t.Shape
+
+            Dim outerSize = 1
+            For i = 0 To axis - 1
+                outerSize *= origShape(i)
+            Next
+
+            Dim innerSize = 1
+            For i = axis + 1 To rank - 1
+                innerSize *= origShape(i)
+            Next
+
+            Dim axisSize = origShape(axis)
+
+            Dim outShapeList = New List(Of Integer)
+            For i = 0 To rank - 1
+                If i <> axis Then outShapeList.Add(origShape(i))
+            Next
+
+            Dim result = New TensorF(outShapeList.ToArray())
+            Dim srcData = t.Data
+            Dim dstData = result.Data
+            Dim dstIdx = 0
+
+            For outer = 0 To outerSize - 1
+                Dim baseIdx = outer * axisSize * innerSize
+                For inner = 0 To innerSize - 1
+                    Dim bestVal As Single = srcData(baseIdx + inner)
+                    Dim bestK = 0
+                    For k = 1 To axisSize - 1
+                        Dim val = srcData(baseIdx + k * innerSize + inner)
+                        If (findMin AndAlso val < bestVal) OrElse (Not findMin AndAlso val > bestVal) Then
+                            bestVal = val
+                            bestK = k
+                        End If
+                    Next
+                    dstData(dstIdx) = CSng(bestK)
+                    dstIdx += 1
+                Next
+            Next
+
+            Return result
         End Function
 
 #End Region
