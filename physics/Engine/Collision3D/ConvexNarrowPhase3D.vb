@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aa99d100c42e864edaa4ce9429c48a7, physics\Engine\Collision3D\ConvexNarrowPhase3D.vb"
+﻿#Region "Microsoft.VisualBasic::838a1c104da0ea3cc55e99ddaea6bd5b, physics\Engine\Collision3D\ConvexNarrowPhase3D.vb"
 
     ' Author:
     ' 
@@ -599,4 +599,3 @@ Namespace Collision3D
         End Function
     End Module
 End Namespace
-

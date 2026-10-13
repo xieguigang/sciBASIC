@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e6709a9011867ebe33561124b34501, Data\BinaryData\BinaryData\test\Lz4LzmaTests\XxHash32Tests.vb"
+﻿#Region "Microsoft.VisualBasic::f8e3a0caa942f8c0c372fed202433d99, Data\BinaryData\BinaryData\test\Lz4LzmaTests\XxHash32Tests.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Class XxHash32Tests
     End Function
 
 End Class
-

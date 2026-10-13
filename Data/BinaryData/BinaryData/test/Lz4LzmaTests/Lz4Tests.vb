@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a505d0d058242e5828b9b01765551fca, Data\BinaryData\BinaryData\test\Lz4LzmaTests\Lz4Tests.vb"
+﻿#Region "Microsoft.VisualBasic::a5335f367e42ce5251f6ea37cc22d4c2, Data\BinaryData\BinaryData\test\Lz4LzmaTests\Lz4Tests.vb"
 
     ' Author:
     ' 
@@ -413,4 +413,3 @@ Public Class Lz4Tests
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c71173a222f4209650d209b21c214fa4, vs_solutions\JavaScript\AST\Ast.vb"
+﻿#Region "Microsoft.VisualBasic::029dcc55497ab237b99eb807bf81e46b, vs_solutions\JavaScript\AST\Ast.vb"
 
     ' Author:
     ' 
@@ -1102,4 +1102,3 @@ Public NotInheritable Class DefaultTarget
         Me.[Default] = [default]
     End Sub
 End Class
-

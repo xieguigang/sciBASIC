@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::697c84e2c55ee7b403384432f09c6378, gr\MPEG4\H264CabacTables.vb"
+﻿#Region "Microsoft.VisualBasic::4870353b88236e9219c9ffd6cce88d0a, gr\MPEG4\H264CabacTables.vb"
 
     ' Author:
     ' 
@@ -684,4 +684,3 @@ Friend NotInheritable Class H264CabacTables
     }
 
 End Class
-

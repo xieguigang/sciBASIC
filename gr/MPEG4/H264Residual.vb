@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08ee6a9f2e941c1c302ffce65a11b3d8, gr\MPEG4\H264Residual.vb"
+﻿#Region "Microsoft.VisualBasic::fa7508530b95641e4673060488ba11e5, gr\MPEG4\H264Residual.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 59.15%
     ' 
     '   Blank Lines: 41 (20.00%)
-    '     File Size: 8.52 KB
+    '     File Size: 8.51 KB
 
 
     ' Class H264Residual
@@ -260,4 +260,3 @@ Friend NotInheritable Class H264Residual
     End Sub
 
 End Class
-

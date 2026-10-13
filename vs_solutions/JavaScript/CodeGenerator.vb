@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b3188d2ae14add447756408af364113, vs_solutions\JavaScript\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::759700073b4fa8608bb3ce88fafcc2af, vs_solutions\JavaScript\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -1527,4 +1527,3 @@ Public NotInheritable Class CodeGenerator
     End Class
 
 End Class
-

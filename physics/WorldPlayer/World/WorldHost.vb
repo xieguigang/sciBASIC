@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aebbda3065baf7e2dd9529532da4270d, physics\WorldPlayer\World\WorldHost.vb"
+﻿#Region "Microsoft.VisualBasic::e322e54b59a6f9a6a988ff7caf1fb53c, physics\WorldPlayer\World\WorldHost.vb"
 
     ' Author:
     ' 
@@ -361,4 +361,3 @@ Public Class WorldHost
         World.Add(PhysicsWorld3D.GroundPlane(height, New PhysicsMaterial(0.55, 0.0)))
     End Sub
 End Class
-

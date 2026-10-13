@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a30782f5d9b2d54d3d5f91064ca21f7d, gr\MPEG4\MP4Muxer.vb"
+﻿#Region "Microsoft.VisualBasic::f1d0c20bc8c3f7e7431dcf8d18b81f07, gr\MPEG4\MP4Muxer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 63.95%
     ' 
     '   Blank Lines: 89 (14.54%)
-    '     File Size: 25.87 KB
+    '     File Size: 25.86 KB
 
 
     ' Structure H264Sample
@@ -691,4 +691,3 @@ Friend Class MP4Muxer
     End Sub
 
 End Class
-

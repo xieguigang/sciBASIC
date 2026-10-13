@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a7764e3e1ae65ce8ef8ec4a09f8ca75, Data_science\Visualization\DataPlot\Engine\Geometry.vb"
+﻿#Region "Microsoft.VisualBasic::3c3924ea54d68414608845e031932b01, Data_science\Visualization\DataPlot\Engine\Geometry.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.54%
     ' 
     '   Blank Lines: 84 (15.79%)
-    '     File Size: 20.95 KB
+    '     File Size: 20.94 KB
 
 
     ' Module Geometry
@@ -603,4 +603,3 @@ Public Module Geometry
         Return (a.X - o.X) * (b.Y - o.Y) - (a.Y - o.Y) * (b.X - o.X)
     End Function
 End Module
-

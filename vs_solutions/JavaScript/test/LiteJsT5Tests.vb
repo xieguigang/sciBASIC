@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ecea98ce5373300baa2b007be90feab, vs_solutions\JavaScript\test\LiteJsT5Tests.vb"
+﻿#Region "Microsoft.VisualBasic::097b551c08b7e65da18cbbc88b74b941, vs_solutions\JavaScript\test\LiteJsT5Tests.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Public Class LiteJsT5Tests
     End Sub
 
 End Class
-

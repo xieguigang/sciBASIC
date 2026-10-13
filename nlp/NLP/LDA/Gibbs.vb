@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58cad0d9475b67934bfe80b15f7a6efc, nlp\NLP\LDA\Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::5e4586b55888e0c744b352b5c66c5be5, nlp\NLP\LDA\Gibbs.vb"
 
     ' Author:
     ' 
@@ -504,4 +504,3 @@ Namespace LDA
         End Sub
     End Module
 End Namespace
-

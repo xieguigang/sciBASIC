@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::059c1ef93f17cd0ed07726d9a7632907, physics\WorldPlayer\FormPlayer.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9027a46cf059c259fe7bd34804980bfc, physics\WorldPlayer\FormPlayer.Designer.vb"
 
     ' Author:
     ' 
@@ -457,4 +457,3 @@ Partial Class FormPlayer
     Friend WithEvents timer As System.Windows.Forms.Timer
     Friend WithEvents autoRunTimer As System.Windows.Forms.Timer
 End Class
-

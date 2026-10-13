@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aa82ba24c4a1e54f3189f690be59588, gr\avi\AviVideoCodec.vb"
+﻿#Region "Microsoft.VisualBasic::1b3e42cbfed261ce9cd60af21586cb95, gr\avi\AviVideoCodec.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Public MustInherit Class AviVideoCodec
     End Sub
 
 End Class
-

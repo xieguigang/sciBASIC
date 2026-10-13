@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::603683fb997827ccab6e230f7b2e31bb, physics\Engine\Math3D\Vector3Math.vb"
+﻿#Region "Microsoft.VisualBasic::e7191e007779ae3ffeb1561460c59138, physics\Engine\Math3D\Vector3Math.vb"
 
     ' Author:
     ' 
@@ -178,4 +178,3 @@ Namespace Math3D
         End Function
     End Module
 End Namespace
-

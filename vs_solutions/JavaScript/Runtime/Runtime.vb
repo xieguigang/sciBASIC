@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ba7f64f85cc13c27262834c3238c65, vs_solutions\JavaScript\Runtime\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::093826d64d17930d23c81f8eb1e81c58, vs_solutions\JavaScript\Runtime\Runtime.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 53.92%
     ' 
     '   Blank Lines: 246 (8.02%)
-    '     File Size: 149.35 KB
+    '     File Size: 149.34 KB
 
 
     '     Module JsRuntime
@@ -3148,4 +3148,3 @@ Namespace Runtime
     End Module
 
 End Namespace
-

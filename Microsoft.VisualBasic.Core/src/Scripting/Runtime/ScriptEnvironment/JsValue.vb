@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f82000b2cd34d9c9bc5cf494039ee104, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\JsValue.vb"
+﻿#Region "Microsoft.VisualBasic::33d3f4b55589b5934cb5711e62f0f95f, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\JsValue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 292
-    '    Code Lines: 181 (61.99%)
-    ' Comment Lines: 74 (25.34%)
+    '   Total Lines: 291
+    '    Code Lines: 181 (62.20%)
+    ' Comment Lines: 74 (25.43%)
     '    - Xml Docs: 62.16%
     ' 
-    '   Blank Lines: 37 (12.67%)
-    '     File Size: 12.47 KB
+    '   Blank Lines: 36 (12.37%)
+    '     File Size: 12.46 KB
 
 
     '     Structure JsValue
@@ -58,7 +58,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ' /********************************************************************************/
 '
@@ -351,4 +350,3 @@ Namespace Scripting.Runtime
         End Function
     End Structure
 End Namespace
-

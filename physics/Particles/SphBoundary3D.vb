@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2943f74eb73fb33ae3dc7f99d039fe09, physics\Particles\SphBoundary3D.vb"
+﻿#Region "Microsoft.VisualBasic::ac16e0ce20aa04afb9a9ca45c34622c0, physics\Particles\SphBoundary3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 59.68%
     ' 
     '   Blank Lines: 27 (14.59%)
-    '     File Size: 7.32 KB
+    '     File Size: 7.31 KB
 
 
     ' Class SphBoundary3D
@@ -257,4 +257,3 @@ Public Class CylinderBoundary3D : Inherits SphBoundary3D
     End Function
 
 End Class
-

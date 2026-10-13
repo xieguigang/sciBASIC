@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad542b2bf419904c58206b7de03e4344, vs_solutions\JavaScript\test\ArtifactSyncTests.vb"
+﻿#Region "Microsoft.VisualBasic::c400715298d23517e1b11c16a8016e2a, vs_solutions\JavaScript\test\ArtifactSyncTests.vb"
 
     ' Author:
     ' 
@@ -125,4 +125,3 @@ Public Class ArtifactSyncTests
     End Function
 
 End Class
-

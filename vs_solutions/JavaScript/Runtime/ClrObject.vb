@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::919c0c55b5dfc275525a7ab9edb9a2b2, vs_solutions\JavaScript\Runtime\ClrObject.vb"
+﻿#Region "Microsoft.VisualBasic::b304a565a8f83d5ed17fa50f04723732, vs_solutions\JavaScript\Runtime\ClrObject.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 43 (42.57%)
-    ' Comment Lines: 37 (36.63%)
+    '   Total Lines: 100
+    '    Code Lines: 43 (43.00%)
+    ' Comment Lines: 37 (37.00%)
     '    - Xml Docs: 94.59%
     ' 
-    '   Blank Lines: 21 (20.79%)
+    '   Blank Lines: 20 (20.00%)
     '     File Size: 4.05 KB
 
 
@@ -62,7 +62,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -164,4 +163,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

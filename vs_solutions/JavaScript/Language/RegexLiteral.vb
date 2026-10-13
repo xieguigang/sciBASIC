@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d1eba445126ef03640dcf8ef99646e, vs_solutions\JavaScript\Language\RegexLiteral.vb"
+﻿#Region "Microsoft.VisualBasic::e7acb17653a98f9ad634856c021e7002, vs_solutions\JavaScript\Language\RegexLiteral.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 8 (50.00%)
-    ' Comment Lines: 4 (25.00%)
+    '   Total Lines: 15
+    '    Code Lines: 8 (53.33%)
+    ' Comment Lines: 4 (26.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (25.00%)
-    '     File Size: 444 B
+    '   Blank Lines: 3 (20.00%)
+    '     File Size: 440 B
 
 
     ' Class RegexLiteral
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' A regular-expression literal <c>/pattern/flags</c> captured by the lexer
@@ -69,4 +68,3 @@ Public NotInheritable Class RegexLiteral
     End Sub
 
 End Class
-

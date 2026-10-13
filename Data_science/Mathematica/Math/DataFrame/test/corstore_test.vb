@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cd682fd344ef2bab31535656c019968, Data_science\Mathematica\Math\DataFrame\test\corstore_test.vb"
+﻿#Region "Microsoft.VisualBasic::ce9f2eeccbfa2c23e5d01fb26be03002, Data_science\Mathematica\Math\DataFrame\test\corstore_test.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 31.25%
     ' 
     '   Blank Lines: 39 (18.22%)
-    '     File Size: 9.86 KB
+    '     File Size: 9.85 KB
 
 
     ' Module corstore_test
@@ -267,4 +267,3 @@ Module corstore_test
         End Using
     End Sub
 End Module
-

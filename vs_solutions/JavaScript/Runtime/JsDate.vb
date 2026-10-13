@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f936e9af0a239b33c76035712ee70ba, vs_solutions\JavaScript\Runtime\JsDate.vb"
+﻿#Region "Microsoft.VisualBasic::47ecde4e13c54825d980832ff2635b2b, vs_solutions\JavaScript\Runtime\JsDate.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

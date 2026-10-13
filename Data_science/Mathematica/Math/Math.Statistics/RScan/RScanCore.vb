@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a6eb9c4c75f074367dbea05e2034b2f, Data_science\Mathematica\Math\Math.Statistics\RScan\RScanCore.vb"
+﻿#Region "Microsoft.VisualBasic::764663df3ab796d8ffd520c7c85b98b1, Data_science\Mathematica\Math\Math.Statistics\RScan\RScanCore.vb"
 
     ' Author:
     ' 
@@ -352,4 +352,3 @@ Namespace RScan
     End Module
 
 End Namespace
-

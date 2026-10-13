@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa7323ac8d1b67d9d978673121a9b708, physics\Engine\Collision3D\Collider3D.vb"
+﻿#Region "Microsoft.VisualBasic::0a39f49903b72d113bd68983216baf34, physics\Engine\Collision3D\Collider3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.65%
     ' 
     '   Blank Lines: 66 (18.86%)
-    '     File Size: 13.93 KB
+    '     File Size: 13.92 KB
 
 
     '     Enum ShapeKind3D
@@ -444,4 +444,3 @@ Namespace Collision3D
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad51a473a846941a6b36c5a200c83b23, Data_science\Mathematica\Math\DataFrame\Correlation\Persistency.vb"
+﻿#Region "Microsoft.VisualBasic::724e81deb382f2b6497e8e42d4c07899, Data_science\Mathematica\Math\DataFrame\Correlation\Persistency.vb"
 
     ' Author:
     ' 
@@ -1276,4 +1276,3 @@ Public Class CorrelationMatrixStore : Implements IDisposable
         End Sub
     End Class
 End Class
-

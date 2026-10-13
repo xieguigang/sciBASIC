@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e741be778bae45ece5835d854da075b, physics\Particles\Grid\IContainer2.vb"
+﻿#Region "Microsoft.VisualBasic::b391552fcf0e2a01a2d5300fc0d890bd, physics\Particles\Grid\IContainer2.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
-    '    Code Lines: 6 (54.55%)
+    '   Total Lines: 10
+    '    Code Lines: 6 (60.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (45.45%)
-    '     File Size: 249 B
+    '   Blank Lines: 4 (40.00%)
+    '     File Size: 245 B
 
 
     ' Interface IContainer
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging
 
@@ -62,4 +61,3 @@ Public Interface IContainer(Of T As Layout2D)
     ReadOnly Property Height As Double
 
 End Interface
-

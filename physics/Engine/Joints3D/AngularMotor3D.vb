@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::009889ce19623a4c2c0588fa3b7a245b, physics\Engine\Joints3D\AngularMotor3D.vb"
+﻿#Region "Microsoft.VisualBasic::4e54e43d6cc25ef488b0df44e077d5bf, physics\Engine\Joints3D\AngularMotor3D.vb"
 
     ' Author:
     ' 
@@ -225,4 +225,3 @@ Namespace Joints3D
         End Sub
     End Class
 End Namespace
-

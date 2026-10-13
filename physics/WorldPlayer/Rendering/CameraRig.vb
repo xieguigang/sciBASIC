@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcfd6f8aa2a311c65bdd3b4495384d06, physics\WorldPlayer\Rendering\CameraRig.vb"
+﻿#Region "Microsoft.VisualBasic::5978fd58113331b0c1144bf065d2bc51, physics\WorldPlayer\Rendering\CameraRig.vb"
 
     ' Author:
     ' 
@@ -367,4 +367,3 @@ Public Class CameraRig
         Public M11, M12, M13, M21, M22, M23, M31, M32, M33 As Double
     End Class
 End Class
-

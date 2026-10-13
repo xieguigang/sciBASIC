@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::764f22aa4fdca23c919bf4eb8455fe00, vs_solutions\JavaScript\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::d52fe847eb93f1722f25da4224f7d555, vs_solutions\JavaScript\Language\Token.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Public NotInheritable Class Token : Inherits CodeToken(Of TokenType)
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5acdeaf26672b9842c50b33e51ba4ff3, gr\MPEG4\H264SliceHeader.vb"
+﻿#Region "Microsoft.VisualBasic::a8ee6fdfcefb062f7beb39be1a2211d4, gr\MPEG4\H264SliceHeader.vb"
 
     ' Author:
     ' 
@@ -198,4 +198,3 @@ Friend NotInheritable Class H264SliceHeader
     End Sub
 
 End Class
-

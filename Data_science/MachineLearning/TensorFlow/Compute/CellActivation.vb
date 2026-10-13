@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0e26a7e58a0db147dc4055c6915cd21, Data_science\MachineLearning\TensorFlow\Compute\CellActivation.vb"
+﻿#Region "Microsoft.VisualBasic::a35d9dd5e83e445584749254ad1cd0cd, Data_science\MachineLearning\TensorFlow\Compute\CellActivation.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (12.20%)
-    '     File Size: 1.69 KB
+    '     File Size: 1.68 KB
 
 
     '     Module CellActivation
@@ -93,4 +93,3 @@ Namespace Compute
     End Module
 
 End Namespace
-

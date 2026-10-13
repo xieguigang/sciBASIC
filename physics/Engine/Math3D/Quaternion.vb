@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b479acce234a6382c9ef5195e67cc6, physics\Engine\Math3D\Quaternion.vb"
+﻿#Region "Microsoft.VisualBasic::19e07b170a91144e4033f35727bfec15, physics\Engine\Math3D\Quaternion.vb"
 
     ' Author:
     ' 
@@ -347,4 +347,3 @@ Namespace Math3D
         End Operator
     End Structure
 End Namespace
-

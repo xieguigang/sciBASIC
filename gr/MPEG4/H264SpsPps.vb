@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19da7e21b3dc1b6117d9956f76d49f00, gr\MPEG4\H264SpsPps.vb"
+﻿#Region "Microsoft.VisualBasic::e0a3f105f0464b071ddb2d1f1e23caee, gr\MPEG4\H264SpsPps.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 59.09%
     ' 
     '   Blank Lines: 34 (17.09%)
-    '     File Size: 9.56 KB
+    '     File Size: 9.55 KB
 
 
     ' Class H264SpsPps
@@ -255,4 +255,3 @@ Friend NotInheritable Class H264SpsPps
     End Function
 
 End Class
-

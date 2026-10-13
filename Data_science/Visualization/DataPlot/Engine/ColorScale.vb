@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb75e8a5a7e6475fda63fc1214c3b79, Data_science\Visualization\DataPlot\Engine\ColorScale.vb"
+﻿#Region "Microsoft.VisualBasic::091ef5a5a8369d76a9259af6549dc7cb, Data_science\Visualization\DataPlot\Engine\ColorScale.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 65.12%
     ' 
     '   Blank Lines: 23 (13.14%)
-    '     File Size: 7.51 KB
+    '     File Size: 7.50 KB
 
 
     ' Module ColorScale
@@ -229,4 +229,3 @@ Public Module ColorScale
         End If
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2be385373fdf9f3afc63fdc5b3a43919, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\TightOctree.vb"
+﻿#Region "Microsoft.VisualBasic::80a8084d9f00c324a63ed3242aa9b56c, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\TightOctree.vb"
 
     ' Author:
     ' 
@@ -334,4 +334,3 @@ Namespace ComponentModel.DataStructures
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c633bd9d986db0615a60ba47f7fe6c0, Data_science\Mathematica\Math\Math\test\AlgebraFixTest.vb"
+﻿#Region "Microsoft.VisualBasic::ec26363dcc9655c7fa41c486e376723d, Data_science\Mathematica\Math\Math\test\AlgebraFixTest.vb"
 
     ' Author:
     ' 
@@ -636,4 +636,3 @@ Public Module AlgebraFixTest
         Console.WriteLine($"--- {title} ---")
     End Sub
 End Module
-

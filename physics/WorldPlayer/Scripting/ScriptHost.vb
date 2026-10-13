@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3945ef461a4a047ec0b33eed8739574f, physics\WorldPlayer\Scripting\ScriptHost.vb"
+﻿#Region "Microsoft.VisualBasic::6832b7328aad3339343f77128d9c43c8, physics\WorldPlayer\Scripting\ScriptHost.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 38 (21.23%)
-    '     File Size: 6.86 KB
+    '     File Size: 6.85 KB
 
 
     ' Class ScriptHost
@@ -236,4 +236,3 @@ Public Class ScriptHost
         io.WriteError(text)
     End Sub
 End Class
-

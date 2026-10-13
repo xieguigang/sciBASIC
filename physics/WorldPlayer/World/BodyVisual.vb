@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07960ba6cb6a02792c386628efec856f, physics\WorldPlayer\World\BodyVisual.vb"
+﻿#Region "Microsoft.VisualBasic::fa9487de6a7351398040b04cf3d08362, physics\WorldPlayer\World\BodyVisual.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Public Class BodyVisual
         Return $"{Id} [{Label}]"
     End Function
 End Class
-

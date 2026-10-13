@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f293e5ae649d1b1038ab11628e4121, gr\avi\PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::684c81be6a9bba0f229b2274fabfb030, gr\avi\PixelData.vb"
 
     ' Author:
     ' 
@@ -151,4 +151,3 @@ Public NotInheritable Class PixelData
     End Function
 
 End Class
-

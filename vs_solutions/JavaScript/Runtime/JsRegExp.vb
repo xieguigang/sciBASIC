@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b1528cde846816b0f359e6b24ac34e7, vs_solutions\JavaScript\Runtime\JsRegExp.vb"
+﻿#Region "Microsoft.VisualBasic::807d51f45f3e8f915cb53e437948d149, vs_solutions\JavaScript\Runtime\JsRegExp.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

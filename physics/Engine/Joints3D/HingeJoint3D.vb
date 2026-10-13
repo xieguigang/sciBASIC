@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::882438ef62b24e290ab944aa31b561ce, physics\Engine\Joints3D\HingeJoint3D.vb"
+﻿#Region "Microsoft.VisualBasic::e63fc8caa18bfb9218e387e37754ac2f, physics\Engine\Joints3D\HingeJoint3D.vb"
 
     ' Author:
     ' 
@@ -164,4 +164,3 @@ Namespace Joints3D
         End Sub
     End Class
 End Namespace
-

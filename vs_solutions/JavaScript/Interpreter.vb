@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::579252e8cffd963ab8290ee3f9fd7494, vs_solutions\JavaScript\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::af0d26d92f9eac46bff4a3044b843b41, vs_solutions\JavaScript\Interpreter.vb"
 
     ' Author:
     ' 
@@ -1029,4 +1029,3 @@ Public NotInheritable Class Interpreter
     End Sub
 
 End Class
-

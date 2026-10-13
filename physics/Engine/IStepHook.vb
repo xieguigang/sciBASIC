@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::381860b88455ca3ed7cedb732df8147e, physics\Engine\IStepHook.vb"
+﻿#Region "Microsoft.VisualBasic::777e9be2c03d2e3ceb1bf4ec7d2f1d84, physics\Engine\IStepHook.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (5.56%)
-    '     File Size: 879 B
+    '     File Size: 877 B
 
 
     ' Interface IStepHook
@@ -69,4 +69,3 @@ Public Interface IStepHook
     ''' <param name="dt">当前子步长（秒）。</param>
     Sub BeforeSubstep(dt As Double)
 End Interface
-

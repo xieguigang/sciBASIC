@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58acaf66ffae4c6d55490f29a08dba6c, vs_solutions\JavaScript\Runtime\JsPromise.vb"
+﻿#Region "Microsoft.VisualBasic::5aec800299f1a18338d207f6bfd7f5ae, vs_solutions\JavaScript\Runtime\JsPromise.vb"
 
     ' Author:
     ' 
@@ -220,4 +220,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

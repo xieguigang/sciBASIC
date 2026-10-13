@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66c69568b58c1043e175616403955df8, gr\MPEG4\H264IntraPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::ca49245eb868e57e7a9430d07661d67d, gr\MPEG4\H264IntraPrediction.vb"
 
     ' Author:
     ' 
@@ -365,4 +365,3 @@ Friend NotInheritable Class H264IntraPrediction
     End Function
 
 End Class
-

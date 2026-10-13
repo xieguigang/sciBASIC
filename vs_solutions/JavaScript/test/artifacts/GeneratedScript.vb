@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e3c464dafe570eb20a56ae4d8bd98f5, vs_solutions\JavaScript\test\artifacts\GeneratedScript.vb"
+﻿#Region "Microsoft.VisualBasic::dd053a3bc996281352821fb1d38efe9f, vs_solutions\JavaScript\test\artifacts\GeneratedScript.vb"
 
     ' Author:
     ' 
@@ -335,4 +335,3 @@ End Function, Func(Of Object(), Object))}, False, False)
         JsRuntime.DrainMicrotasks()
     End Sub
 End Class
-

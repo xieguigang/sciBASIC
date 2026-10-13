@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef295b23c67300e024aa4c6cc5ba93b6, physics\Particles\SphState3D.vb"
+﻿#Region "Microsoft.VisualBasic::d3416685aec052517b9169c6d3b83fd0, physics\Particles\SphState3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 68.57%
     ' 
     '   Blank Lines: 35 (14.29%)
-    '     File Size: 8.43 KB
+    '     File Size: 8.42 KB
 
 
     ' Class SphState3D
@@ -302,4 +302,3 @@ Public Class SphState3D
 #End Region
 
 End Class
-

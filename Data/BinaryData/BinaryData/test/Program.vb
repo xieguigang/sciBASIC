@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::213328ff6298a3fab41665027bb84a51, Data\BinaryData\BinaryData\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::19c6f16169b6934d58fa984a4091162e, Data\BinaryData\BinaryData\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (14.29%)
-    '     File Size: 134 B
+    '     File Size: 132 B
 
 
     ' Module Program
@@ -58,4 +58,3 @@ Module Program
         Console.WriteLine("Hello World!")
     End Sub
 End Module
-

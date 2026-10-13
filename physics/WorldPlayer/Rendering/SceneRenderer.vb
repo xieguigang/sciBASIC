@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fc0303118323c97c26372619b7e9b19, physics\WorldPlayer\Rendering\SceneRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::e8c32a30178ab68b3977f48d22e2b396, physics\WorldPlayer\Rendering\SceneRenderer.vb"
 
     ' Author:
     ' 
@@ -427,4 +427,3 @@ Public Class SceneRenderer
         End Using
     End Sub
 End Class
-

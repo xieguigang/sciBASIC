@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4e9c16d79518ed3d07bcc497453c742, physics\Particles\SphImpeller3D.vb"
+﻿#Region "Microsoft.VisualBasic::5cb483cffda70d5aae88640bca2a3f0b, physics\Particles\SphImpeller3D.vb"
 
     ' Author:
     ' 
@@ -255,4 +255,3 @@ Public Class SphImpeller3D
     End Sub
 
 End Class
-

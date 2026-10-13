@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38ef72350b014fe0636888b2f00e85fb, physics\Engine\RigidBody3D\RigidBody3D.vb"
+﻿#Region "Microsoft.VisualBasic::7ecd15e7444749e7bda300978e26897d, physics\Engine\RigidBody3D\RigidBody3D.vb"
 
     ' Author:
     ' 
@@ -403,4 +403,3 @@ Public Class RigidBody3D
         Return $"{If(Label, ID)} @ {Position}"
     End Function
 End Class
-

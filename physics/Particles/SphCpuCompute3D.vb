@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::200903294b6c0b5e324efdfe5ef595c2, physics\Particles\SphCpuCompute3D.vb"
+﻿#Region "Microsoft.VisualBasic::db01b5a2e6c9cc65bafbeedc71f31f28, physics\Particles\SphCpuCompute3D.vb"
 
     ' Author:
     ' 
@@ -340,4 +340,3 @@ Public Class SphCpuCompute3D : Implements ISphCompute3D
     End Function
 
 End Class
-

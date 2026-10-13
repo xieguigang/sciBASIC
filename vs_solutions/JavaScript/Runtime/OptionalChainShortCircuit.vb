@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23f6d92a19800b4a5ebeb6f4de06a992, vs_solutions\JavaScript\Runtime\OptionalChainShortCircuit.vb"
+﻿#Region "Microsoft.VisualBasic::4292ced88c89b6e169afc9b6139acb0f, vs_solutions\JavaScript\Runtime\OptionalChainShortCircuit.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 8 (33.33%)
-    ' Comment Lines: 11 (45.83%)
+    '   Total Lines: 23
+    '    Code Lines: 8 (34.78%)
+    ' Comment Lines: 11 (47.83%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (20.83%)
-    '     File Size: 847 B
+    '   Blank Lines: 4 (17.39%)
+    '     File Size: 843 B
 
 
     '     Class OptionalChainShortCircuit
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -76,4 +75,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

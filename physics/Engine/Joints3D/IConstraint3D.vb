@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5896147eedba267bd7bdec57b3253a59, physics\Engine\Joints3D\IConstraint3D.vb"
+﻿#Region "Microsoft.VisualBasic::50cf1ef7f5acee3ec92ea867c812902f, physics\Engine\Joints3D\IConstraint3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (21.43%)
-    '     File Size: 554 B
+    '     File Size: 552 B
 
 
     '     Interface IConstraint3D
@@ -66,4 +66,3 @@ Namespace Joints3D
         Sub SolvePosition(dt As Double)
     End Interface
 End Namespace
-

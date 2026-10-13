@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe46201cb2f55c0a27f304205c7f36c1, gr\MPEG4\MP4Settings.vb"
+﻿#Region "Microsoft.VisualBasic::bd7aa7099ef71597e738b59d1cea00cb, gr\MPEG4\MP4Settings.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Class MP4Settings
     Public Property height As Integer
 
 End Class
-

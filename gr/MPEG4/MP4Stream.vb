@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0b9dea4f942ed55469b0c3bdb3e2fb3, gr\MPEG4\MP4Stream.vb"
+﻿#Region "Microsoft.VisualBasic::fb5cbae773411e46dcae73bce5791f9a, gr\MPEG4\MP4Stream.vb"
 
     ' Author:
     ' 
@@ -223,4 +223,3 @@ Public Class MP4Stream
     End Sub
 
 End Class
-

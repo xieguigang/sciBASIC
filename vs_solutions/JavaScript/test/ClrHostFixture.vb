@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8260a12cda38ade3b4e8cc8b615c9b25, vs_solutions\JavaScript\test\ClrHostFixture.vb"
+﻿#Region "Microsoft.VisualBasic::3083276e4092b8dd9f79f5a0b38920ca, vs_solutions\JavaScript\test\ClrHostFixture.vb"
 
     ' Author:
     ' 
@@ -283,4 +283,3 @@ Public Class ClrWhitelistFixture
     End Function
 
 End Class
-

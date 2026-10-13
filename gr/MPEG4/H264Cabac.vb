@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::223aa3f4ebb999939b495ef5bb4abe99, gr\MPEG4\H264Cabac.vb"
+﻿#Region "Microsoft.VisualBasic::b3cdfb449721b2026bcddcd6084a79dd, gr\MPEG4\H264Cabac.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 61.73%
     ' 
     '   Blank Lines: 37 (16.23%)
-    '     File Size: 8.13 KB
+    '     File Size: 8.12 KB
 
 
     ' Class H264Cabac
@@ -281,4 +281,3 @@ Friend Class H264Cabac
     End Sub
 
 End Class
-

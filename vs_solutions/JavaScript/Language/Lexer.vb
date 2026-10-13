@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce41e761d75b4087f1b630cafb2681a6, vs_solutions\JavaScript\Language\Lexer.vb"
+﻿#Region "Microsoft.VisualBasic::6599d138e0b9142a25d5ce7a5336f349, vs_solutions\JavaScript\Language\Lexer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 578
-    '    Code Lines: 457 (79.07%)
-    ' Comment Lines: 57 (9.86%)
+    '   Total Lines: 577
+    '    Code Lines: 457 (79.20%)
+    ' Comment Lines: 57 (9.88%)
     '    - Xml Docs: 63.16%
     ' 
-    '   Blank Lines: 64 (11.07%)
-    '     File Size: 22.55 KB
+    '   Blank Lines: 63 (10.92%)
+    '     File Size: 22.54 KB
 
 
     ' Class Lexer
@@ -54,7 +54,6 @@
     '               ScanTemplateExpressionSource
     ' 
     '     Sub: Advance, SkipStringLiteral, SkipTemplateExpression, SkipTemplateLiteral, ValidateNumericSeparators
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -637,5 +636,3 @@ Public NotInheritable Class Lexer
     End Sub
 
 End Class
-
-

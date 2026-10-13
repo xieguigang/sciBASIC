@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac5df14ed38df98226fa2f3fd596afde, physics\WorldPlayer\Scripting\JsApi.vb"
+﻿#Region "Microsoft.VisualBasic::244ea9e1b8b0c1d29d0ef3c577e6fe79, physics\WorldPlayer\Scripting\JsApi.vb"
 
     ' Author:
     ' 
@@ -687,4 +687,3 @@ Public Class JsApi
         Return bodyId
     End Function
 End Class
-

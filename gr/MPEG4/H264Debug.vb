@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b4cb3eeb330f667e6c9a3545bcee357, gr\MPEG4\H264Debug.vb"
+﻿#Region "Microsoft.VisualBasic::e96797edf45aa88732f6757301491791, gr\MPEG4\H264Debug.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Public NotInheritable Class H264Debug
     Public Shared ReconHeight As Integer = 0
 
 End Class
-

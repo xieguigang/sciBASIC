@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7e9605dac631d81b7325dd549b73604, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Delaunay3D\Tetrahedron.vb"
+﻿#Region "Microsoft.VisualBasic::3ff25a4790cd3c71767dca1c68c3d72d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Delaunay3D\Tetrahedron.vb"
 
     ' Author:
     ' 
@@ -260,4 +260,3 @@ Namespace Drawing3D.Math3D.Delaunay3D
         End Function
     End Structure
 End Namespace
-

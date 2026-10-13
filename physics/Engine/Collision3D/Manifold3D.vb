@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5394f3ea6b761aae0238afc95634326, physics\Engine\Collision3D\Manifold3D.vb"
+﻿#Region "Microsoft.VisualBasic::de9b9b6503fe2a59227e3c976042d36f, physics\Engine\Collision3D\Manifold3D.vb"
 
     ' Author:
     ' 
@@ -222,4 +222,3 @@ Namespace Collision3D
         End Function
     End Class
 End Namespace
-

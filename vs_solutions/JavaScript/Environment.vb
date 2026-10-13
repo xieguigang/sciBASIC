@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748b97dd29366d578d3ac0253a17bd36, vs_solutions\JavaScript\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::fdfa341db278dffd8c9bfc1a0db32c49, vs_solutions\JavaScript\Environment.vb"
 
     ' Author:
     ' 
@@ -209,4 +209,3 @@ Public NotInheritable Class Environment
         End If
     End Sub
 End Class
-

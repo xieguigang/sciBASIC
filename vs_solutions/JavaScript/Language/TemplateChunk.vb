@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0549110cb708b1f7ef436c37c2eca4fa, vs_solutions\JavaScript\Language\TemplateChunk.vb"
+﻿#Region "Microsoft.VisualBasic::9a83c01a0da8af1ff2eecf401145ac2f, vs_solutions\JavaScript\Language\TemplateChunk.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 21
-    '    Code Lines: 8 (38.10%)
-    ' Comment Lines: 9 (42.86%)
+    '   Total Lines: 20
+    '    Code Lines: 8 (40.00%)
+    ' Comment Lines: 9 (45.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (19.05%)
-    '     File Size: 725 B
+    '   Blank Lines: 3 (15.00%)
+    '     File Size: 721 B
 
 
     ' Class TemplateChunk
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' One chunk of a template literal token.
@@ -74,4 +73,3 @@ Public NotInheritable Class TemplateChunk
     End Sub
 
 End Class
-

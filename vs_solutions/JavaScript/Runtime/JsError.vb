@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04c9b5b8f673432cb819faaace6e228d, vs_solutions\JavaScript\Runtime\JsError.vb"
+﻿#Region "Microsoft.VisualBasic::318c9bf7afc65e3c9c26cd6a72705b39, vs_solutions\JavaScript\Runtime\JsError.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 16 (43.24%)
-    ' Comment Lines: 13 (35.14%)
+    '   Total Lines: 36
+    '    Code Lines: 16 (44.44%)
+    ' Comment Lines: 13 (36.11%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (21.62%)
+    '   Blank Lines: 7 (19.44%)
     '     File Size: 1.37 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -90,4 +89,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

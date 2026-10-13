@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb6ec9a23a2e79cc59eea86bea084307, physics\WorldPlayer\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::036bafa49a5ef3a52bd31e5aa1559772, physics\WorldPlayer\ApplicationEvents.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Namespace My
 
     End Class
 End Namespace
-

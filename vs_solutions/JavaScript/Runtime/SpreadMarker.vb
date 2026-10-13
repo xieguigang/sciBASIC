@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c036c031dab620506de252ee5144e6c, vs_solutions\JavaScript\Runtime\SpreadMarker.vb"
+﻿#Region "Microsoft.VisualBasic::2028e2531fca9cff74c7e3c821e3960d, vs_solutions\JavaScript\Runtime\SpreadMarker.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 8 (40.00%)
-    ' Comment Lines: 6 (30.00%)
+    '   Total Lines: 19
+    '    Code Lines: 8 (42.11%)
+    ' Comment Lines: 6 (31.58%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (30.00%)
-    '     File Size: 570 B
+    '   Blank Lines: 5 (26.32%)
+    '     File Size: 566 B
 
 
     '     Class SpreadMarker
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -72,4 +71,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

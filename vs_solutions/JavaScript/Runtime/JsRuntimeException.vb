@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ff103345bc31272995e892764a17f5a, vs_solutions\JavaScript\Runtime\JsRuntimeException.vb"
+﻿#Region "Microsoft.VisualBasic::2ea4761394bcb5eda8e71032ae5d831a, vs_solutions\JavaScript\Runtime\JsRuntimeException.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 30 (58.82%)
-    ' Comment Lines: 10 (19.61%)
+    '   Total Lines: 50
+    '    Code Lines: 30 (60.00%)
+    ' Comment Lines: 10 (20.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (21.57%)
+    '   Blank Lines: 10 (20.00%)
     '     File Size: 2.06 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -105,4 +104,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8ab0988c6c734daeabc8e9ca0ef3381, vs_solutions\JavaScript\test\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::af936f19966010367e5bdb369ca9bd9c, vs_solutions\JavaScript\test\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (16.67%)
-    '     File Size: 298 B
+    '     File Size: 296 B
 
 
     ' 
@@ -54,4 +54,3 @@ Imports Xunit
 ' classes in parallel would still race on the interpreter's global environment,
 ' so the suite runs serially and deterministically
 <Assembly: CollectionBehavior(DisableTestParallelization:=True)>
-

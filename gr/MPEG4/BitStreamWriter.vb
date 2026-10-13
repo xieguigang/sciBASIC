@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b57cd0341e6cc56339ea268d37892816, gr\MPEG4\BitStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::d06dbf9ea0f232e1233687d8c16a46c0, gr\MPEG4\BitStreamWriter.vb"
 
     ' Author:
     ' 
@@ -288,4 +288,3 @@ Friend Class BitStreamWriter
     End Function
 
 End Class
-

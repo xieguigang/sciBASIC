@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a4004faba52a7107b1c381670fb16b8, vs_solutions\JavaScript\Runtime\JsClass.vb"
+﻿#Region "Microsoft.VisualBasic::ec7c0bb3cf36ffa7edbf99076cf098fd, vs_solutions\JavaScript\Runtime\JsClass.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 18 (41.86%)
-    ' Comment Lines: 18 (41.86%)
+    '   Total Lines: 42
+    '    Code Lines: 18 (42.86%)
+    ' Comment Lines: 18 (42.86%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (16.28%)
-    '     File Size: 1.82 KB
+    '   Blank Lines: 6 (14.29%)
+    '     File Size: 1.81 KB
 
 
     '     Class JsClass
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -96,4 +95,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

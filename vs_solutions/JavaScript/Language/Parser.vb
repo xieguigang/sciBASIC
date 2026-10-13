@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58a45d60c1c7f445eacc0e519677ae8d, vs_solutions\JavaScript\Language\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::60c701fca03bf9f804c8085778076aa5, vs_solutions\JavaScript\Language\Parser.vb"
 
     ' Author:
     ' 
@@ -1553,4 +1553,3 @@ Public NotInheritable Class Parser
     End Class
 
 End Class
-

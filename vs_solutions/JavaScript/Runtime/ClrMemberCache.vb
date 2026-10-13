@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47aab6b9fdf169f6befa58488400b18a, vs_solutions\JavaScript\Runtime\ClrMemberCache.vb"
+﻿#Region "Microsoft.VisualBasic::756128125fc1209782564ca2103d01c2, vs_solutions\JavaScript\Runtime\ClrMemberCache.vb"
 
     ' Author:
     ' 
@@ -417,4 +417,3 @@ Namespace Runtime
     End Module
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2700492eee5d1b0254c81e2e0e59d7aa, physics\Engine\PhysicsWorld3D.vb"
+﻿#Region "Microsoft.VisualBasic::101c8919755ef2585f2a31fcc52037f7, physics\Engine\PhysicsWorld3D.vb"
 
     ' Author:
     ' 
@@ -507,4 +507,3 @@ Public Class PhysicsWorld3D
         Next
     End Sub
 End Class
-

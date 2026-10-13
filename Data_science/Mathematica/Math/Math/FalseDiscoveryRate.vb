@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::881f5fbca2a02e70aae3c1fabf3d2387, Data_science\Mathematica\Math\Math\FalseDiscoveryRate.vb"
+﻿#Region "Microsoft.VisualBasic::bf8627e6b71e62bd424c0bcb30993f4a, Data_science\Mathematica\Math\Math\FalseDiscoveryRate.vb"
 
     ' Author:
     ' 
@@ -431,4 +431,3 @@ Public Module FalseDiscoveryRate
         End Select
     End Function
 End Module
-

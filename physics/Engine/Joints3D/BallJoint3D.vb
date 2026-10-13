@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25bca9673d0c2d237dc1c5564a3df847, physics\Engine\Joints3D\BallJoint3D.vb"
+﻿#Region "Microsoft.VisualBasic::9c290dfa6a00ab2c7641f65d23d27b5c, physics\Engine\Joints3D\BallJoint3D.vb"
 
     ' Author:
     ' 
@@ -238,4 +238,3 @@ Namespace Joints3D
         End Function
     End Class
 End Namespace
-

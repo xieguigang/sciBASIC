@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27a5b8f7b49ffd684cad32d25c67758c, physics\Particles\Grid\IContainer3D.vb"
+﻿#Region "Microsoft.VisualBasic::09e07f5a5126ad925d8ac441a2ccfed6, physics\Particles\Grid\IContainer3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (20.00%)
-    '     File Size: 451 B
+    '     File Size: 449 B
 
 
     ' Interface IContainer3D
@@ -66,4 +66,3 @@ Public Interface IContainer3D(Of T)
     Property BoxSize As Vector3
 
 End Interface
-

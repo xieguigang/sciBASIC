@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd32d5ac35e6bf0cc15b43ec1f348918, gr\MPEG4\H264EncodedFrame.vb"
+﻿#Region "Microsoft.VisualBasic::d55eb004a762569c56830ac44f04aa78, gr\MPEG4\H264EncodedFrame.vb"
 
     ' Author:
     ' 
@@ -105,4 +105,3 @@ Friend Class H264EncodedFrame
     End Sub
 
 End Class
-

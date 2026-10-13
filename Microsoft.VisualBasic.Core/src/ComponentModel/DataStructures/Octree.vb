@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7fe88c56f33554f8c3ca7f134f705dd, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Octree.vb"
+﻿#Region "Microsoft.VisualBasic::8f1cfad134088cbf6510419f56015f9f, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Octree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.50%
     ' 
     '   Blank Lines: 52 (13.40%)
-    '     File Size: 15.90 KB
+    '     File Size: 15.89 KB
 
 
     '     Structure BoundingBox3D
@@ -461,4 +461,3 @@ Namespace ComponentModel.DataStructures
         End Function
     End Class
 End Namespace
-

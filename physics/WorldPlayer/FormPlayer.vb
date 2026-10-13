@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f465f402323b30b802781410f83b9c9, physics\WorldPlayer\FormPlayer.vb"
+﻿#Region "Microsoft.VisualBasic::937967b34947e109523148d042f420c0, physics\WorldPlayer\FormPlayer.vb"
 
     ' Author:
     ' 
@@ -864,4 +864,3 @@ Public Class FormPlayer
         End Using
     End Sub
 End Class
-

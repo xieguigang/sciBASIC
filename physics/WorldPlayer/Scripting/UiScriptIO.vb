@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86b7c3c9c5af7c98e0ad367a4fbf5389, physics\WorldPlayer\Scripting\UiScriptIO.vb"
+﻿#Region "Microsoft.VisualBasic::c758c9c725523a99fc803c75aebcf0ad, physics\WorldPlayer\Scripting\UiScriptIO.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (21.43%)
-    '     File Size: 887 B
+    '     File Size: 885 B
 
 
     ' Class UiScriptIO
@@ -80,4 +80,3 @@ Public Class UiScriptIO
         sink(text, True)
     End Sub
 End Class
-

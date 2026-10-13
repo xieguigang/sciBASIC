@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2663bd79ad7f022d3e71668140c003f2, vs_solutions\JavaScript\Language\ParseException.vb"
+﻿#Region "Microsoft.VisualBasic::1fb11aae0889fcb1d9ef46773e77c69c, vs_solutions\JavaScript\Language\ParseException.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 6 (60.00%)
-    ' Comment Lines: 1 (10.00%)
+    '   Total Lines: 9
+    '    Code Lines: 6 (66.67%)
+    ' Comment Lines: 1 (11.11%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (30.00%)
-    '     File Size: 259 B
+    '   Blank Lines: 2 (22.22%)
+    '     File Size: 257 B
 
 
     ' Class ParseException
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>Syntax error raised by the lexer and parser (carries source position).</summary>
 Public NotInheritable Class ParseException

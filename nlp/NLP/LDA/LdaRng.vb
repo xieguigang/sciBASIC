@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7fc2408ed5c00bc0eaddeef898ac92c, nlp\NLP\LDA\LdaRng.vb"
+﻿#Region "Microsoft.VisualBasic::3a32d405b22307bf1c28ee47214e23e0, nlp\NLP\LDA\LdaRng.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.77%
     ' 
     '   Blank Lines: 15 (14.56%)
-    '     File Size: 4.17 KB
+    '     File Size: 4.16 KB
 
 
     '     Class LdaRng
@@ -156,4 +156,3 @@ Namespace LDA
         End Function
     End Class
 End Namespace
-

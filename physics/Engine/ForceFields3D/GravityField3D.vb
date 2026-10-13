@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::648bb9fa08e43f69a7b9cbd609f68647, physics\Engine\ForceFields3D\GravityField3D.vb"
+﻿#Region "Microsoft.VisualBasic::f0d8c7a6e9c3363d9c1140bc8a298aa5, physics\Engine\ForceFields3D\GravityField3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (20.83%)
-    '     File Size: 824 B
+    '     File Size: 822 B
 
 
     '     Class GravityField3D
@@ -79,4 +79,3 @@ Namespace ForceFields3D
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\DataMining\DataMining\Evaluation\ModelEvaluation.vb"
+﻿#Region "Microsoft.VisualBasic::010f7c69979777920437784421cfa7e7, Data_science\DataMining\DataMining\Evaluation\ModelEvaluation.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 67
+    '    Code Lines: 25 (37.31%)
+    ' Comment Lines: 32 (47.76%)
+    '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 10 (14.93%)
+    '     File Size: 2.70 KB
 
 
+    '     Module ModelEvaluation
+    ' 
+    '         Function: (+4 Overloads) Evaluate
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Namespace Evaluation
 

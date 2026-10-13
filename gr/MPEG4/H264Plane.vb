@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::609071cc21d414876497ab9303a8f6bd, gr\MPEG4\H264Plane.vb"
+﻿#Region "Microsoft.VisualBasic::457c9cda1305124ce0fd133b252ecba4, gr\MPEG4\H264Plane.vb"
 
     ' Author:
     ' 
@@ -269,4 +269,3 @@ Friend Class H264Yuv420
     End Function
 
 End Class
-

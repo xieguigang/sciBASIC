@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0d5c008ed6bb3b943afde2f7478922, physics\Particles\SphParams3D.vb"
+﻿#Region "Microsoft.VisualBasic::772e4170d6ff45578325a6d602762201, physics\Particles\SphParams3D.vb"
 
     ' Author:
     ' 
@@ -218,4 +218,3 @@ Public Interface ISphCompute3D
     Function RunSubstep(state As SphState3D, grid As UniformGrid3D, params As SphParams3D, dt As Single) As Boolean
 
 End Interface
-

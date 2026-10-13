@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bc3691bccd3f94e0295fab7c382ca12, physics\Engine\Collision3D\ConvexMesh3D.vb"
+﻿#Region "Microsoft.VisualBasic::cbbde686b0e5ee706ce3a176bfdb1011, physics\Engine\Collision3D\ConvexMesh3D.vb"
 
     ' Author:
     ' 
@@ -546,4 +546,3 @@ Namespace Collision3D
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83604deefdef5879c60606c82d9e462a, physics\Engine\Collision3D\AABB3D.vb"
+﻿#Region "Microsoft.VisualBasic::2881fdbbd8cccee4daa7bb9f53cfa71f, physics\Engine\Collision3D\AABB3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 12 (16.67%)
-    '     File Size: 2.92 KB
+    '     File Size: 2.91 KB
 
 
     '     Structure AABB3D
@@ -128,4 +128,3 @@ Namespace Collision3D
         End Function
     End Structure
 End Namespace
-

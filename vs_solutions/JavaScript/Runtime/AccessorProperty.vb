@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9022d0d45d79d1be33b336d20cf0ef29, vs_solutions\JavaScript\Runtime\AccessorProperty.vb"
+﻿#Region "Microsoft.VisualBasic::67172528ea5811f2b23242e2cc8c8e50, vs_solutions\JavaScript\Runtime\AccessorProperty.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 10 (37.04%)
-    ' Comment Lines: 11 (40.74%)
+    '   Total Lines: 26
+    '    Code Lines: 10 (38.46%)
+    ' Comment Lines: 11 (42.31%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (22.22%)
-    '     File Size: 974 B
+    '   Blank Lines: 5 (19.23%)
+    '     File Size: 970 B
 
 
     '     Class AccessorProperty
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -79,4 +78,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

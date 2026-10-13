@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2e7f0099f5236f1589b700e23b1690e, gr\MPEG4\H264Transform.vb"
+﻿#Region "Microsoft.VisualBasic::e79523c6aa621e016994ebe2c962fda9, gr\MPEG4\H264Transform.vb"
 
     ' Author:
     ' 
@@ -518,4 +518,3 @@ Friend NotInheritable Class H264Transform
     End Property
 
 End Class
-

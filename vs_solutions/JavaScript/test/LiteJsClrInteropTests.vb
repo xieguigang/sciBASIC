@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ce149f5cde93df33718b6fe0794968, vs_solutions\JavaScript\test\LiteJsClrInteropTests.vb"
+﻿#Region "Microsoft.VisualBasic::d04c26f749a394504ca300260a3e2731, vs_solutions\JavaScript\test\LiteJsClrInteropTests.vb"
 
     ' Author:
     ' 
@@ -418,4 +418,3 @@ Public Class LiteJsClrInteropTests
     End Sub
 
 End Class
-

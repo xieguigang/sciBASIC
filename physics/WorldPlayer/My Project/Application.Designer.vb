@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b031e6261299193f2ea4effec34a3e98, physics\WorldPlayer\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::380820c2e4e67ef93a75e5abf2775631, physics\WorldPlayer\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -101,4 +101,3 @@ Namespace My
         End Function
     End Class
 End Namespace
-

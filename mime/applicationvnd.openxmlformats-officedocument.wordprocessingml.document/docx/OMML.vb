@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5719d5341c0f7a21bd836ce5f1d213d, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\OMML.vb"
+﻿#Region "Microsoft.VisualBasic::f017a7ab93a228b52b64dc13ccf70a72, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\OMML.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 46.15%
     ' 
     '   Blank Lines: 41 (13.95%)
-    '     File Size: 12.96 KB
+    '     File Size: 12.95 KB
 
 
     ' Module OmmlBuilder
@@ -348,4 +348,3 @@ Public Module OmmlBuilder
     End Function
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74b11c6d98beb098680b3af9f40a669e, physics\Engine\Collision3D\ContactSolver3D.vb"
+﻿#Region "Microsoft.VisualBasic::81c81874090098a1255fe16716ed06f4, physics\Engine\Collision3D\ContactSolver3D.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Namespace Collision3D
         End Sub
     End Module
 End Namespace
-

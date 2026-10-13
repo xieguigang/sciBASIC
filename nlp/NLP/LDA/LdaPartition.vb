@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::971dab97a9d1481bc0303298ad6d8395, nlp\NLP\LDA\LdaPartition.vb"
+﻿#Region "Microsoft.VisualBasic::4613a953dc5805a280d57ceeddb81b7a, nlp\NLP\LDA\LdaPartition.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.83%
     ' 
     '   Blank Lines: 17 (11.72%)
-    '     File Size: 5.68 KB
+    '     File Size: 5.67 KB
 
 
     '     Structure DocBlock
@@ -203,4 +203,3 @@ Namespace LDA
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30e4f48322ef3428550b14ea2a3ded05, gr\MPEG4\H264MotionEstimation.vb"
+﻿#Region "Microsoft.VisualBasic::979b7886b9dbab46152e0af459b46d6f, gr\MPEG4\H264MotionEstimation.vb"
 
     ' Author:
     ' 
@@ -138,4 +138,3 @@ Friend Class H264MotionEstimation
     End Sub
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::775bef079aeb88f20aa79f64efd330f5, physics\WorldPlayer\SelfTest.vb"
+﻿#Region "Microsoft.VisualBasic::f2ffe25a250efd6fdf98d5b7deead0f1, physics\WorldPlayer\SelfTest.vb"
 
     ' Author:
     ' 
@@ -790,4 +790,3 @@ Module SelfTest
         Call File.WriteAllText(out, report.ToString(), Encoding.UTF8)
     End Sub
 End Module
-

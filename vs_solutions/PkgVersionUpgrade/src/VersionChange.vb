@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae59f1645b76c179e90ff7f35dac8fd6, vs_solutions\PkgVersionUpgrade\src\VersionChange.vb"
+﻿#Region "Microsoft.VisualBasic::182627885a61fbba32be4c2a76e92ed4, vs_solutions\PkgVersionUpgrade\src\VersionChange.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 15 (55.56%)
-    ' Comment Lines: 7 (25.93%)
+    '   Total Lines: 26
+    '    Code Lines: 15 (57.69%)
+    ' Comment Lines: 7 (26.92%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (18.52%)
+    '   Blank Lines: 4 (15.38%)
     '     File Size: 1.06 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 单个版本元素的变更记录，用于 dry-run 预览以及最终的统计汇总

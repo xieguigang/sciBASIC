@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0577f2b7be747f6ebe98b71dc6fdfc3, vs_solutions\JavaScript\Language\TokenType.vb"
+﻿#Region "Microsoft.VisualBasic::4d8021011169e26d4d996fd6e027c544, vs_solutions\JavaScript\Language\TokenType.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 10 (62.50%)
-    ' Comment Lines: 5 (31.25%)
+    '   Total Lines: 15
+    '    Code Lines: 10 (66.67%)
+    ' Comment Lines: 5 (33.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (6.25%)
-    '     File Size: 531 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 527 B
 
 
     ' Enum TokenType
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>Token categories produced by <see cref="Lexer"/>.</summary>
 Public Enum TokenType
@@ -72,4 +71,3 @@ Public Enum TokenType
     Regex
     Eof
 End Enum
-

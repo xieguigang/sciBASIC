@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea29376318bd2bf0c4c54678110b0922, gr\MPEG4\MP4Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::d09ab0d9674a2de4362cb37977d53687, gr\MPEG4\MP4Encoder.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Public Class MP4Encoder
     End Sub
 
 End Class
-

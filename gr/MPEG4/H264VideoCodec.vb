@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5c058cc61c69813401e23fd8634952e, gr\MPEG4\H264VideoCodec.vb"
+﻿#Region "Microsoft.VisualBasic::06143a38fc07ea06989a871d4756ec0b, gr\MPEG4\H264VideoCodec.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 55.50%
     ' 
     '   Blank Lines: 329 (18.17%)
-    '     File Size: 86.64 KB
+    '     File Size: 86.63 KB
 
 
     ' Class H264MbInfo
@@ -1877,4 +1877,3 @@ Friend Class H264VideoCodec
     End Property
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09e15bf80eae3903e2bbe2e0e4a977e9, gr\avi\MjpegCodec.vb"
+﻿#Region "Microsoft.VisualBasic::8c16229c664d8fcc8c2a6bba1b564e9d, gr\avi\MjpegCodec.vb"
 
     ' Author:
     ' 
@@ -173,4 +173,3 @@ Public Class MjpegCodec : Inherits AviVideoCodec
     End Function
 
 End Class
-

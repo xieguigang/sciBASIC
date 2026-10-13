@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd68c71482db44471c840d1b7b40e37b, vs_solutions\JavaScript\Runtime\JsGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::23e25bf7a43ce4d665db7eb1ade09ea1, vs_solutions\JavaScript\Runtime\JsGenerator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 39 (54.93%)
-    ' Comment Lines: 19 (26.76%)
+    '   Total Lines: 70
+    '    Code Lines: 39 (55.71%)
+    ' Comment Lines: 19 (27.14%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (18.31%)
-    '     File Size: 2.47 KB
+    '   Blank Lines: 12 (17.14%)
+    '     File Size: 2.46 KB
 
 
     '     Class JsYieldCollector
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -128,4 +127,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

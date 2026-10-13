@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa698999095a12c10ac05ccd3f4cfb6f, physics\WorldPlayer\Rendering\CanvasTabPage.vb"
+﻿#Region "Microsoft.VisualBasic::2fea198deb98cec711fa7ea89b79b125, physics\WorldPlayer\Rendering\CanvasTabPage.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (12.50%)
-    '     File Size: 958 B
+    '     File Size: 956 B
 
 
     ' Class CanvasTabPage
@@ -75,4 +75,3 @@ Public Class CanvasTabPage
         Call UpdateStyles()
     End Sub
 End Class
-

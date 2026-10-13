@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9194f193dea8077d2020200896c91f4, vs_solutions\JavaScript\Runtime\ClrAttributes.vb"
+﻿#Region "Microsoft.VisualBasic::1f2cedaf32eb0b630ad559b02d7f0e47, vs_solutions\JavaScript\Runtime\ClrAttributes.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 24 (44.44%)
-    ' Comment Lines: 22 (40.74%)
+    '   Total Lines: 53
+    '    Code Lines: 24 (45.28%)
+    ' Comment Lines: 22 (41.51%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (14.81%)
+    '   Blank Lines: 7 (13.21%)
     '     File Size: 2.26 KB
 
 
@@ -61,7 +61,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Runtime
 
@@ -116,4 +115,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

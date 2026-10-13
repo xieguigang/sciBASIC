@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ce98006d3020405ca74d4737a82567, vs_solutions\JavaScript\Runtime\ClrConvert.vb"
+﻿#Region "Microsoft.VisualBasic::487c090fcd0b22b514480905a1684037, vs_solutions\JavaScript\Runtime\ClrConvert.vb"
 
     ' Author:
     ' 
@@ -461,4 +461,3 @@ Namespace Runtime
     End Module
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc9fd528d11f2970732e7cf3a886d9da, gr\avi\DibCodec.vb"
+﻿#Region "Microsoft.VisualBasic::1d7f758e31b35a812d32365a533af68b, gr\avi\DibCodec.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Public Class DibCodec : Inherits AviVideoCodec
     End Function
 
 End Class
-

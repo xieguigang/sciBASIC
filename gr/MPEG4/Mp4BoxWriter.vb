@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d2aafd46b165c33a14a5c0606104f98, gr\MPEG4\Mp4BoxWriter.vb"
+﻿#Region "Microsoft.VisualBasic::7fb3961106f5676be1cbfb26b5994069, gr\MPEG4\Mp4BoxWriter.vb"
 
     ' Author:
     ' 
@@ -209,4 +209,3 @@ Friend Class Mp4BoxWriter
     End Sub
 
 End Class
-

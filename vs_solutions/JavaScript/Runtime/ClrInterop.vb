@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc43165ced892533a4e8a4931f8d6c6a, vs_solutions\JavaScript\Runtime\ClrInterop.vb"
+﻿#Region "Microsoft.VisualBasic::19790798f6fca3cd25c6bd0a9c422357, vs_solutions\JavaScript\Runtime\ClrInterop.vb"
 
     ' Author:
     ' 
@@ -665,4 +665,3 @@ Namespace Runtime
     End Class
 
 End Namespace
-

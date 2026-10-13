@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb2e385f6064fed2957b8b190a285d04, Data\BinaryData\BinaryData\test\Lz4LzmaTests\LzmaTests.vb"
+﻿#Region "Microsoft.VisualBasic::2a39d632a9e3e12c57082e7585bafc88, Data\BinaryData\BinaryData\test\Lz4LzmaTests\LzmaTests.vb"
 
     ' Author:
     ' 
@@ -259,4 +259,3 @@ Public Class LzmaTests
     End Sub
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::add42d38fdb8cf61ccbb5c68d8000cf4, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\ThesisFormatting.vb"
+﻿#Region "Microsoft.VisualBasic::08f7f0c9c233909672caab35ef98fde3, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\ThesisFormatting.vb"
 
     ' Author:
     ' 
@@ -408,4 +408,3 @@ Public Class ThesisFormatting
     End Function
 
 End Class
-

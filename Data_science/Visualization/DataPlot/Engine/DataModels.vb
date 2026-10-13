@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::740bb5e6d8cff01eaf2d879bb448f344, Data_science\Visualization\DataPlot\Engine\DataModels.vb"
+﻿#Region "Microsoft.VisualBasic::ffe32a38309b26beee39df0c29fd5696, Data_science\Visualization\DataPlot\Engine\DataModels.vb"
 
     ' Author:
     ' 
@@ -676,4 +676,3 @@ Public Class SampleMoments
     Public Property StandardDeviation As Double = 1
     Public Property Data As Double() = {}
 End Class
-

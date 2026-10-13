@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b65249accf551fab85d8ec91f0a8c849, Data_science\Mathematica\Math\Randomizer\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::876c95af6b83573ac4a096bd318824b1, Data_science\Mathematica\Math\Randomizer\test\Program.vb"
 
     ' Author:
     ' 
@@ -284,4 +284,3 @@ Module Program
         Return c
     End Function
 End Module
-

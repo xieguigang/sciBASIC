@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c19a8882a341ee014e48b780db768e9f, gr\avi\AviCodec.vb"
+﻿#Region "Microsoft.VisualBasic::57f8a5967750976e53259726d6726e7e, gr\avi\AviCodec.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 61.54%
     ' 
     '   Blank Lines: 9 (8.04%)
-    '     File Size: 4.44 KB
+    '     File Size: 4.43 KB
 
 
     ' Enum AviCodec
@@ -171,4 +171,3 @@ Public NotInheritable Class AviVideoCodecs
     End Function
 
 End Class
-

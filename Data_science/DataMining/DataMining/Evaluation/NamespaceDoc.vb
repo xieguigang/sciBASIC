@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\DataMining\DataMining\Evaluation\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::1d355a8201c7ac4f126ebab4657a565e, Data_science\DataMining\DataMining\Evaluation\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 38
+    '    Code Lines: 4 (10.53%)
+    ' Comment Lines: 33 (86.84%)
+    '    - Xml Docs: 78.79%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 1 (2.63%)
+    '     File Size: 1.90 KB
 
 
+    '     Module NamespaceDoc
+    ' 
+    ' 
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Namespace Evaluation
 

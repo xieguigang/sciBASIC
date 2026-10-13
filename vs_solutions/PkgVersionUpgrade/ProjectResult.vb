@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::688019e14ad3e9fa4d40ed979d2b9214, vs_solutions\PkgVersionUpgrade\ProjectResult.vb"
+﻿#Region "Microsoft.VisualBasic::b22bdca1d5f260422b8b36249f2c5d90, vs_solutions\PkgVersionUpgrade\ProjectResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 27 (77.14%)
-    ' Comment Lines: 2 (5.71%)
+    '   Total Lines: 34
+    '    Code Lines: 27 (79.41%)
+    ' Comment Lines: 2 (5.88%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (17.14%)
-    '     File Size: 1.03 KB
+    '   Blank Lines: 5 (14.71%)
+    '     File Size: 1.02 KB
 
 
     ' Class ProjectResult
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>单个工程的处理结果</summary>
 Public Class ProjectResult
