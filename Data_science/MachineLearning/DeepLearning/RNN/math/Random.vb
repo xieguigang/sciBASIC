@@ -53,6 +53,7 @@
 #End Region
 
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace RNN
 
@@ -69,10 +70,14 @@ Namespace RNN
         ''' <param name="M">Number of rows; must be greater than zero.</param>
         ''' <param name="N">Number of columns; must be greater than zero.</param>
         ''' <returns>The random matrix.</returns>
-        Public Shared Function randn(M As Integer, N As Integer) As Matrix
-            Dim lM = Matrix.zeros(M, N)
-            lM.apply(Function(d) rand.NextDouble())
-            Return lM
+        Public Shared Function randn(M As Integer, N As Integer) As Tensor
+            Dim data(M * N - 1) As Double
+
+            For i = 0 To data.Length - 1
+                data(i) = rand.NextDouble()
+            Next
+
+            Return New Tensor(data, M, N)
         End Function
 
         ''' <summary>
@@ -80,8 +85,13 @@ Namespace RNN
         ''' </summary>
         ''' <param name="k">The vector length; must be greater than zero.</param>
         ''' <returns>The random vector.</returns>
-        Public Shared Function randn(k As Integer) As Matrix
-            Return randn(1, k)
+        ''' <remarks>
+        ''' 返回的是 **(k, 1) 列向量**。
+        ''' 旧实现返回 (1, k) 行向量，靠 <c>Matrix.dot</c> 的"向量自动转置"兜住；
+        ''' 改用 Tensor 之后没有这套隐式规则，形状必须在构造时就正确。
+        ''' </remarks>
+        Public Shared Function randn(k As Integer) As Tensor
+            Return randn(k, 1)
         End Function
 
         ''' <summary>
@@ -89,8 +99,9 @@ Namespace RNN
         ''' </summary>
         ''' <param name="m">The template matrix; it must not be <c>Nothing</c>.</param>
         ''' <returns>The random matrix.</returns>
-        Public Shared Function randomLike(m As Matrix) As Matrix
-            Return randn(m.M, m.N)
+        Public Shared Function randomLike(m As Tensor) As Tensor
+            Dim shape = m.Shape
+            Return randn(shape(0), shape(1))
         End Function
 
         ' Random choice 

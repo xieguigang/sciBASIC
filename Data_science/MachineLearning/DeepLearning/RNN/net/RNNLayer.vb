@@ -59,6 +59,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports tf = Microsoft.VisualBasic.MachineLearning.TensorFlow.Math
 Imports std = System.Math
 
 Namespace RNN
@@ -87,29 +89,42 @@ Namespace RNN
         Public Const defaultLearningRate As Double = 0.1
 
         ' Network state
+        '
+        ' 全部状态改用 TensorFlow 的 Tensor（双精度），自研的 RNN.Matrix 已被移除。
+        '
+        ' 形状约定（**列向量**）：
+        '     x[t] : (inputSize, 1)
+        '     h[t] : (hiddenSize, 1)
+        '     y[t] : (outputSize, 1)
+        '     Wxh  : (hiddenSize, inputSize)
+        '     Whh  : (hiddenSize, hiddenSize)
+        '     Why  : (outputSize, hiddenSize)
+        '     bh   : (hiddenSize, 1)
+        '     by   : (outputSize, 1)
+        ' 这样每一步的矩阵乘维度都是天然匹配的，不需要 Matrix 时代那种"向量自动转置"。
 
-        Private Wxh As Matrix ' input layer weights
-        Private Whh As Matrix ' hidden layer weights
-        Private Why As Matrix ' output layer weights
-        Private bh As Matrix ' hidden bias
-        Private by As Matrix ' output bias
+        Private Wxh As Tensor ' input layer weights
+        Private Whh As Tensor ' hidden layer weights
+        Private Why As Tensor ' output layer weights
+        Private bh As Tensor ' hidden bias
+        Private by As Tensor ' output bias
 
-        Private h As Matrix ' last hidden state
+        Private h As Tensor ' last hidden state
 
         ' Training state
 
-        Private gWxh As Matrix ' gradient descent params: input layer
-        Private gWhh As Matrix ' gradient descent params: hidden layer
-        Private gWhy As Matrix ' gradient descent params: output layer
-        Private gbh As Matrix ' gradient descent params: hidden bias
-        Private gby As Matrix ' gradient descent params: output bias
+        Private gWxh As Tensor ' gradient descent params: input layer
+        Private gWhh As Tensor ' gradient descent params: hidden layer
+        Private gWhy As Tensor ' gradient descent params: output layer
+        Private gbh As Tensor ' gradient descent params: hidden bias
+        Private gby As Tensor ' gradient descent params: output bias
 
-        Private xAt As Matrix() ' input vectors through time
-        Private hAt As Matrix() ' hidden state vectors through time
-        Private yAt As Matrix() ' unnormalized output probability vectors through
+        Private xAt As Tensor() ' input vectors through time
+        Private hAt As Tensor() ' hidden state vectors through time
+        Private yAt As Tensor() ' unnormalized output probability vectors through
         ' time
-        Private pAt As Matrix() ' normalized output probability vectors through time
-        Private dxAt As Matrix() ' output gradient from a backwards pass
+        Private pAt As Tensor() ' normalized output probability vectors through time
+        Private dxAt As Tensor() ' output gradient from a backwards pass
 
         Private lastSequenceLength As Integer ' Number of steps in the last forward pass
         ' (must match the steps for the backward
@@ -205,22 +220,70 @@ Namespace RNN
 
             Dim scale = 0.1
 
-            Wxh = Random.randn(m_hiddenSize, m_inputSize).mul(scale)
-            Whh = Random.randn(m_hiddenSize, m_hiddenSize).mul(scale)
-            Why = Random.randn(m_outputSize, m_hiddenSize).mul(scale)
-            bh = Matrix.zeros(m_hiddenSize)
-            by = Matrix.zeros(m_outputSize)
+            Wxh = tf.multiply_scalar(Random.randn(m_hiddenSize, m_inputSize), scale)
+            Whh = tf.multiply_scalar(Random.randn(m_hiddenSize, m_hiddenSize), scale)
+            Why = tf.multiply_scalar(Random.randn(m_outputSize, m_hiddenSize), scale)
+            bh = Col(m_hiddenSize, 0.0)
+            by = Col(m_outputSize, 0.0)
 
-            gWxh = Matrix.zerosLike(Wxh)
-            gWhh = Matrix.zerosLike(Whh)
-            gWhy = Matrix.zerosLike(Why)
-            gbh = Matrix.zerosLike(bh)
-            gby = Matrix.zerosLike(by)
+            gWxh = ZerosLike(Wxh)
+            gWhh = ZerosLike(Whh)
+            gWhy = ZerosLike(Why)
+            gbh = ZerosLike(bh)
+            gby = ZerosLike(by)
 
             h = Random.randn(m_hiddenSize)
 
             initialized = True
         End Sub
+
+        ' ---------------- 形状辅助 ----------------
+        '
+        ' 原 Matrix 用 zeros(M,N) / zeros(k) / zerosLike / oneHot 这些工厂方法隐藏形状细节，
+        ' 且带"行向量还是列向量"的隐式约定。改用 Tensor 之后形状必须显式，
+        ' 因此这里把四个常用构造收成具名的小工具，避免散落的字面量形状写错。
+
+        ''' <summary>构造一个 (n, 1) 的列向量，全部元素为 <paramref name="value"/></summary>
+        Private Shared Function Col(n As Integer, value As Double) As Tensor
+            Dim data(n - 1) As Double
+
+            For i = 0 To n - 1
+                data(i) = value
+            Next
+
+            Return New Tensor(data, n, 1)
+        End Function
+
+        ''' <summary>构造一个与 <paramref name="template"/> 同形的全零张量</summary>
+        ''' <remarks>参数名不能叫 like —— Like 是 VB 保留关键字。</remarks>
+        Private Shared Function ZerosLike(template As Tensor) As Tensor
+            Return Tensor.Zeros(template.Shape)
+        End Function
+
+        ''' <summary>构造一个与 <paramref name="template"/> 同形的全一张量</summary>
+        Private Shared Function OnesLike(template As Tensor) As Tensor
+            Return Tensor.Ones(template.Shape)
+        End Function
+
+        ''' <summary>
+        ''' 张量快照。
+        ''' </summary>
+        ''' <remarks>
+        ''' 原 Matrix 的算术方法是**原地**的，旧代码靠 <c>New Matrix(x)</c> 到处做防御性拷贝。
+        ''' Tensor 的算子返回新张量，正常路径已不需要拷贝；
+        ''' 但"把上一步的状态存进 <c>hAt(t)</c> 这种会被后续步骤覆盖的槽位"仍需一次快照，
+        ''' 否则 <c>hAt(0)</c> 会与 <c>h</c> 共享同一份数据。
+        ''' </remarks>
+        Private Shared Function CloneOf(t As Tensor) As Tensor
+            Return Tensor.Wrap(CType(t.Data.Clone(), Double()), t.Shape)
+        End Function
+
+        ''' <summary>one-hot 列向量 (size, 1)，第 <paramref name="index"/> 位为 1</summary>
+        Private Shared Function OneHot(size As Integer, index As Integer) As Tensor
+            Dim data(size - 1) As Double
+            data(index) = 1.0
+            Return New Tensor(data, size, 1)
+        End Function
 
         ' 
         ' 		    Converts the indices (x's) of a sequence to one-hot vectors
@@ -228,11 +291,11 @@ Namespace RNN
         ' 	
         ' 		    Requirement: ix can't be null, or empty. ix[i] < inputSize
         ' 		
-        Friend Overridable Function ixTox(ix As Integer()) As Matrix()
+        Friend Overridable Function ixTox(ix As Integer()) As Tensor()
             ' start at t = 1
-            Dim oneHot = New Matrix(ix.Length + 1 - 1) {}
+            Dim oneHot = New Tensor(ix.Length + 1 - 1) {}
             For t = 1 To ix.Length + 1 - 1
-                oneHot(t) = Matrix.oneHot(m_inputSize, ix(t - 1))
+                oneHot(t) = OneHot(m_inputSize, ix(t - 1))
             Next
 
             Return oneHot
@@ -243,8 +306,8 @@ Namespace RNN
         ''' </summary>
         ''' <param name="ix"></param>
         ''' <returns></returns>
-        Friend Overridable Function ixTox(ix As Integer) As Matrix
-            Return Matrix.oneHot(m_inputSize, ix)
+        Friend Overridable Function ixTox(ix As Integer) As Tensor
+            Return OneHot(m_inputSize, ix)
         End Function
 
         ' 
@@ -266,7 +329,7 @@ Namespace RNN
         ' 		    Requirement:
         ' 		    x came from ixTox or the previous layer's forward pass result y.
         ' 		
-        Friend Overridable Sub forward(x As Matrix())
+        Friend Overridable Sub forward(x As Tensor())
             Dim t = 1
 
             ' Initialize the forward pass 
@@ -278,25 +341,29 @@ Namespace RNN
             lastSequenceLength = x.Length - 1
 
             ' hidden state vectors through time
-            hAt = New Matrix(lastSequenceLength + 1 - 1) {}
+            hAt = New Tensor(lastSequenceLength + 1 - 1) {}
 
             ' normalized probability vectors through time
-            pAt = New Matrix(lastSequenceLength + 1 - 1) {}
+            pAt = New Tensor(lastSequenceLength + 1 - 1) {}
 
             ' normalized probability vectors through time
-            yAt = New Matrix(lastSequenceLength + 1 - 1) {}
+            yAt = New Tensor(lastSequenceLength + 1 - 1) {}
 
-            hAt(0) = New Matrix(h) ' copy the current state
+            ' copy the current state。
+            ' 注意：原 Matrix 的算术方法是**原地**的，所以旧代码到处用 New Matrix(x) 做防御性拷贝；
+            ' Tensor 的算子全部返回新张量，这里只需复制引用语义上的"快照"即可。
+            hAt(0) = CloneOf(h)
 
             ' Forward pass 
             t = 1
 
             While t < lastSequenceLength + 1
-                ' find the new hidden state
-                hAt(t) = Matrix.dot(Wxh, xAt(t)).add(Matrix.dot(Whh, hAt(t - 1))).add(bh).tanh()
+                ' find the new hidden state: tanh(Wxh·x[t] + Whh·h[t-1] + bh)
+                Dim pre = tf.add(tf.add(Wxh.MatMul(xAt(t)), Whh.MatMul(hAt(t - 1))), bh)
+                hAt(t) = tf.tanh(pre)
 
                 ' find unnormalized output probabilities
-                yAt(t) = Matrix.dot(Why, hAt(t)).add(by)
+                yAt(t) = tf.add(Why.MatMul(hAt(t)), by)
 
                 ' normalize output probabilities
                 pAt(t) = Math.softmax(yAt(t))
@@ -312,8 +379,8 @@ Namespace RNN
         ''' Forward pass for a single seed.
         ''' </summary>
         ''' <param name="x"></param>
-        Friend Overridable Sub forward(x As Matrix)
-            Dim xa = New Matrix(1) {}
+        Friend Overridable Sub forward(x As Tensor)
+            Dim xa = New Tensor(1) {}
             xa(1) = x
             forward(xa)
         End Sub
@@ -332,7 +399,8 @@ Namespace RNN
             Dim t = 1
 
             While t < lastSequenceLength + 1
-                loss += -std.Log(pAt(t).at(iy(t - 1))) ' calculate the cross-entropy loss
+                ' 列向量 (outputSize, 1) 的扁平下标就是类别编号
+                loss += -std.Log(pAt(t).Data(iy(t - 1))) ' calculate the cross-entropy loss
                 Threading.Interlocked.Increment(t) ' start at t = 1
             End While
 
@@ -341,13 +409,13 @@ Namespace RNN
 
         ' Returns y: the unnormalized probabilities - output of the last forward
         ' pass, starting at t = 1.
-        Friend Overridable Function gety() As Matrix()
+        Friend Overridable Function gety() As Tensor()
             Return yAt
         End Function
 
         ' Returns p: the normalized probabilities - output of the last forward
         ' pass, starting at t = 1.
-        Friend Overridable Function getp() As Matrix()
+        Friend Overridable Function getp() As Tensor()
             Return pAt
         End Function
 
@@ -358,18 +426,21 @@ Namespace RNN
         ' 		    Requirement:
         ' 		    iy must be the size of the last sequence length, iy[i] < outputSize
         ' 		
-        Friend Overridable Function getdy(iy As Integer()) As Matrix()
-            Dim dyAt = New Matrix(lastSequenceLength + 1 - 1) {} ' start at t = 1
+        Friend Overridable Function getdy(iy As Integer()) As Tensor()
+            Dim dyAt = New Tensor(lastSequenceLength + 1 - 1) {} ' start at t = 1
 
             Dim t = 1
 
             While t < lastSequenceLength + 1
                 ' backprop into y,
                 ' http://cs231n.github.io/neural-networks-case-study/#grad
-                dyAt(t) = New Matrix(pAt(t))
-
+                Dim probs = CloneOf(pAt(t))
                 Dim expected = iy(t - 1)
-                dyAt(t).setAt(expected, dyAt(t).at(expected) - 1)
+
+                probs.Data(expected) = probs.Data(expected) - 1.0
+                Call probs.MarkHostModified()
+
+                dyAt(t) = probs
                 Threading.Interlocked.Increment(t)
             End While
 
@@ -387,84 +458,111 @@ Namespace RNN
         ' 		    Requirement: x came from this layer's getdy() or the next layer's
         ' 		    backward pass result dx.
         ' 		
-        Friend Overridable Sub backward(dy As Matrix())
+        Friend Overridable Sub backward(dy As Tensor())
             Dim t = 1
 
             ' Initialize backward pass 
 
             Dim dyAt = dy ' just an alias
 
-            Dim dWxh = Matrix.zerosLike(Wxh)
-            Dim dWhh = Matrix.zerosLike(Whh)
-            Dim dWhy = Matrix.zerosLike(Why)
-            Dim dbh = Matrix.zerosLike(bh)
-            Dim dby = Matrix.zerosLike(by)
+            Dim dWxh = ZerosLike(Wxh)
+            Dim dWhh = ZerosLike(Whh)
+            Dim dWhy = ZerosLike(Why)
+            Dim dbh = ZerosLike(bh)
+            Dim dby = ZerosLike(by)
 
-            Dim dhNext = Matrix.zerosLike(h)
+            Dim dhNext = ZerosLike(h)
 
             ' gradients to be passed to the next backwards pass
-            dxAt = New Matrix(lastSequenceLength + 1 - 1) {}
+            dxAt = New Tensor(lastSequenceLength + 1 - 1) {}
 
             ' Backward pass 
 
             t = lastSequenceLength
 
             While t >= 1
-                ' y updates
-                dWhy.add(Matrix.dot(dyAt(t), hAt(t).T()))
-                dby.add(dyAt(t))
+                ' y updates: dWhy += dy[t] · h[t]ᵀ   (out,1)×(1,hid) = (out,hid)
+                dWhy = tf.add(dWhy, dyAt(t).MatMul(hAt(t).Transpose()))
+                dby = tf.add(dby, dyAt(t))
 
                 ' backprop into h and through tanh nonlinearity
-                Dim dh As Matrix = Matrix.dot(Why.T(), dyAt(t)).add(dhNext)
-                Dim dhRaw As Matrix = Matrix.onesLike(hAt(t)).add((New Matrix(hAt(t))).mul(hAt(t)).neg()).mul(dh)
+                Dim dh As Tensor = tf.add(Why.Transpose().MatMul(dyAt(t)), dhNext)
+
+                ' tanh' = 1 - h²；逐元素乘 dh
+                Dim dhRaw As Tensor = tf.multiply(
+                    tf.subtract(OnesLike(hAt(t)), tf.multiply(hAt(t), hAt(t))),
+                    dh)
 
                 ' h updates
-                dWxh.add(Matrix.dot(dhRaw, xAt(t).T()))
-                dWhh.add(Matrix.dot(dhRaw, hAt(t - 1).T()))
-                dbh.add(dhRaw)
+                dWxh = tf.add(dWxh, dhRaw.MatMul(xAt(t).Transpose()))
+                dWhh = tf.add(dWhh, dhRaw.MatMul(hAt(t - 1).Transpose()))
+                dbh = tf.add(dbh, dhRaw)
 
                 ' save dhNext for the next iteration
-                dhNext = Matrix.dot(Whh.T(), dhRaw)
+                dhNext = Whh.Transpose().MatMul(dhRaw)
 
                 ' multi-layer only - save dx
-                dxAt(t) = Matrix.dot(Wxh.T(), dh)
+                dxAt(t) = Wxh.Transpose().MatMul(dh)
                 Threading.Interlocked.Decrement(t)
             End While
 
             ' clip exploding gradients
 
             Dim clip_a = -5.0
-            Dim dparams = New Matrix() {dWxh, dWhh, dWhy, dbh, dby}
+            Dim dparams = New Tensor() {dWxh, dWhh, dWhy, dbh, dby}
 
-            For Each m In dparams
-                m.clip(clip_a, -clip_a)
+            For i = 0 To dparams.Length - 1
+                dparams(i) = tf.clip_by_value(dparams(i), clip_a, -clip_a)
             Next
 
             t = 1
 
             While t < lastSequenceLength + 1
-                dxAt(t).clip(clip_a, -clip_a)
+                dxAt(t) = tf.clip_by_value(dxAt(t), clip_a, -clip_a)
                 Threading.Interlocked.Increment(t)
             End While
 
 
-            ' Update weights with Adagrad 
+            ' Update weights with Adagrad
+            '
+            ' gparam += dparam²
+            ' param  += -lr · dparam / (sqrt(gparam) + eps)
+            '
+            ' 原实现全程**原地**修改（Matrix 的 add/mul/div 返回 Me），
+            ' 这里改成"算出新值再写回字段" —— 语义等价，但要注意每个字段都要真的写回。
 
-            Dim params = New Matrix() {Wxh, Whh, Why, bh, by}
-            Dim gparams = New Matrix() {gWxh, gWhh, gWhy, gbh, gby}
+            Dim params = New Tensor() {Wxh, Whh, Why, bh, by}
+            Dim gparams = New Tensor() {gWxh, gWhh, gWhy, gbh, gby}
 
             Dim i = 0
 
             While i < dparams.Length
-                Dim param = params(i)
                 Dim dparam = dparams(i)
                 Dim gparam = gparams(i)
 
-                gparam.add((New Matrix(dparam)).mul(dparam))
-                Dim tmp As Matrix = (New Matrix(gparam)).apply(Function(elem) std.Sqrt(elem) + 0.00000001)
-                param.add((New Matrix(dparam)).mul(-LearningRate).div(tmp))
+                ' 二阶矩累积：g += d²
+                gparam = tf.add(gparam, tf.multiply(dparam, dparam))
+                gparams(i) = gparam
+
+                Dim tmp As Tensor = gparam.Apply(Function(elem As Double) std.Sqrt(elem) + 0.00000001)
+                Dim step As Tensor = tf.divide(tf.multiply_scalar(dparam, -LearningRate), tmp)
+
+                params(i) = tf.add(params(i), step)
                 Threading.Interlocked.Increment(i)
             End While
+
+            ' 把更新后的参数与二阶矩写回字段
+            Wxh = params(0)
+            Whh = params(1)
+            Why = params(2)
+            bh = params(3)
+            by = params(4)
+
+            gWxh = gparams(0)
+            gWhh = gparams(1)
+            gWhy = gparams(2)
+            gbh = gparams(3)
+            gby = gparams(4)
         End Sub
 
         ''' <summary>
@@ -472,7 +570,7 @@ Namespace RNN
         ''' backward pass.
         ''' </summary>
         ''' <returns></returns>
-        Friend Overridable Function getdx() As Matrix()
+        Friend Overridable Function getdx() As Tensor()
             Return dxAt
         End Function
 
@@ -483,22 +581,22 @@ Namespace RNN
         ' the probabilities of the next indices are normalized using a softmax
         ' with temperature = temp in (0.0,1.0].
         Friend Overridable Function getProbabilities(temp As Double) As Double()
-            Return Math.softmax(New Matrix(yAt(yAt.Length - 1)), temp).unravel()
+            Return Math.softmax(yAt(yAt.Length - 1), temp).Data
         End Function
 
         ''' <summary>
         ''' Save the hidden state before sampling.
         ''' </summary>
         ''' <returns></returns>
-        Friend Overridable Function saveHiddenState() As Matrix
-            Return New Matrix(h)
+        Friend Overridable Function saveHiddenState() As Tensor
+            Return CloneOf(h)
         End Function
 
         ''' <summary>
         ''' Restore the hidden state after sampling.
         ''' </summary>
         ''' <param name="h"></param>
-        Friend Overridable Sub restoreHiddenState(h As Matrix)
+        Friend Overridable Sub restoreHiddenState(h As Tensor)
             Me.h = h
         End Sub
 

@@ -53,6 +53,7 @@
 
 Imports System
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Module Program
 
@@ -64,6 +65,15 @@ Module Program
         Console.WriteLine("SMOKE TEST DONE")
     End Sub
 
+    ''' <summary>
+    ''' 把一组双精度字面量包成单精度张量。
+    ''' Netz / Network 的公开入口在混合精度改造后统一接收 <see cref="TensorF"/>，
+    ''' 这里保留双精度字面量只是为了读起来方便。
+    ''' </summary>
+    Private Function Vec(ParamArray values As Double()) As TensorF
+        Return TensorF.FromDoubles(values, New Integer() {values.Length})
+    End Function
+
     Private Sub TestNetz()
         Console.WriteLine("=== Netz (online SGD, CNN kernel) ===")
 
@@ -74,10 +84,10 @@ Module Program
         For i As Integer = 1 To 8000
             Dim x0 = rnd.NextDouble()
             Dim x1 = rnd.NextDouble()
-            Call net.train({x0, x1}, {x0 + x1})
+            Call net.train(Vec(x0, x1), Vec(x0 + x1))
         Next
 
-        Dim p = net.predict({0.3, 0.5})
+        Dim p = net.predict(Vec(0.3, 0.5))
         Console.WriteLine($"  predict(0.3,0.5) = {p(0):F4}  (target 0.8)  TotalError={net.TotalError:F4}")
         Call AssertFinite("Netz.predict", p(0))
         Call AssertClose("Netz.predict", p(0), 0.8, 0.3)
@@ -85,7 +95,7 @@ Module Program
         Dim path = "netz_model.cnn"
         Call net.Save(path)
         Dim net2 = Netz.Load(path)
-        Dim p2 = net2.predict({0.3, 0.5})
+        Dim p2 = net2.predict(Vec(0.3, 0.5))
         Console.WriteLine($"  loaded predict   = {p2(0):F4}")
         Call AssertFinite("Netz.Load.predict", p2(0))
         Call AssertClose("Netz.Load.predict", p2(0), p(0), 0.05)
@@ -103,18 +113,18 @@ Module Program
         For i As Integer = 1 To 8000
             Dim a = rnd.NextDouble()
             Dim b = rnd.NextDouble()
-            Call net.ForwardPropagate({a, b}, parallel:=False)
-            Call net.BackPropagate({a + b}, parallel:=False)
+            Call net.ForwardPropagate(Vec(a, b), parallel:=False)
+            Call net.BackPropagate(Vec(a + b), parallel:=False)
         Next
 
-        Dim err = net.Compute(0.3, 0.5)
+        Dim err = net.Compute(CSng(0.3), CSng(0.5))
         Console.WriteLine($"  online  predict = {err(0):F4}  (target 0.8)")
         Call AssertFinite("Network.online.Compute", err(0))
         Call AssertClose("Network.online.Compute", err(0), 0.8, 0.3)
 
         ' 验证网络确实学到了输入->输出的映射（而非退化为常数解）
-        Dim y00 = net.Compute(0, 0)(0)
-        Dim y11 = net.Compute(1, 1)(0)
+        Dim y00 = net.Compute(0.0F, 0.0F)(0)
+        Dim y11 = net.Compute(1.0F, 1.0F)(0)
         Console.WriteLine($"  DBG online (0,0)={y00:F4} (1,1)={y11:F4}")
         Call AssertClose("Network.online.(1,1)>(0,0)", y11, y00, -0.5)
 
@@ -122,15 +132,15 @@ Module Program
         Dim network2 As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.1, active:="relu")
 
         Dim batchSize As Integer = 200
-        Dim batch(batchSize - 1) As (input As Double(), target As Double())
+        Dim batch(batchSize - 1) As (input As TensorF, target As TensorF)
         For i As Integer = 0 To batchSize - 1
             Dim a = rnd.NextDouble()
             Dim b = rnd.NextDouble()
-            batch(i) = ({a, b}, {a + b})
+            batch(i) = (Vec(a, b), Vec(a + b))
         Next
         Call network2.TrainBatch(batch, 200)
 
-        Dim err2 = network2.Compute(0.3, 0.5)
+        Dim err2 = network2.Compute(CSng(0.3), CSng(0.5))
         Console.WriteLine($"  batch   predict = {err2(0):F4}")
         Call AssertFinite("Network.batch.Compute", err2(0))
         Call AssertClose("Network.batch.Compute", err2(0), 0.8, 0.3)
@@ -139,7 +149,7 @@ Module Program
         Dim npath = "network_model.cnn"
         Call network2.Save(npath)
         Dim network3 = Network.Load(npath)
-        Dim err3 = network3.Compute(0.3, 0.5)
+        Dim err3 = network3.Compute(CSng(0.3), CSng(0.5))
         Console.WriteLine($"  loaded  predict = {err3(0):F4}")
         Call AssertFinite("Network.Load.Compute", err3(0))
         Call AssertClose("Network.Load.Compute", err3(0), err2(0), 0.05)

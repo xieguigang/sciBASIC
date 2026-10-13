@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 Namespace RNN
@@ -105,10 +106,8 @@ Namespace RNN
 		''' </summary>
 		''' <param name="yAtt">The input matrix, interpreted as a score vector.</param>
 		''' <returns>The normalized probability matrix.</returns>
-		Public Shared Function softmax(yAtt As Matrix) As Matrix
-			Dim e_to_x As Matrix = (New Matrix(yAtt)).exp()
-			e_to_x = e_to_x.div(e_to_x.sum())
-			Return e_to_x
+		Public Shared Function softmax(yAtt As Tensor) As Tensor
+			Return SoftmaxCore(yAtt, 1.0)
 		End Function
 
 		''' <summary>
@@ -117,10 +116,48 @@ Namespace RNN
 		''' <param name="yAtt">The input matrix, interpreted as a score vector.</param>
 		''' <param name="temperature">The temperature; it must not be close to zero.</param>
 		''' <returns>The normalized probability matrix.</returns>
-		Public Shared Function softmax(yAtt As Matrix, temperature As Double) As Matrix
-			Dim e_to_x As Matrix = (New Matrix(yAtt)).div(temperature).exp()
-			e_to_x = e_to_x.div(e_to_x.sum())
-			Return e_to_x
+		Public Shared Function softmax(yAtt As Tensor, temperature As Double) As Tensor
+			Return SoftmaxCore(yAtt, temperature)
+		End Function
+
+		''' <summary>
+		''' softmax 的共同实现：<c>exp((x - max)/T) / Σ exp((x - max)/T)</c>
+		''' </summary>
+		''' <remarks>
+		''' 相比旧实现（直接 exp 再除总和）多了两步，但都是必需的：
+		'''   * **减最大值**：旧写法在 logits 量级较大时会溢出成 Infinity，
+		'''     进而让整个概率向量变成 NaN；减最大值后最大项的 e⁰ = 1，
+		'''     既不会溢出，也保证分母至少为 1。数值上两者完全等价（分子分母同乘常数）。
+		'''   * **温度守卫**：temperature 趋近 0 时除法会放大到无穷，这里夹一个下限。
+		''' </remarks>
+		Private Shared Function SoftmaxCore(yAtt As Tensor, temperature As Double) As Tensor
+			Dim t As Double = temperature
+
+			If t <= 0.0 OrElse Double.IsNaN(t) Then t = 1.0
+
+			Dim src = yAtt.Data
+			Dim maxVal As Double = src(0)
+
+			For Each v In src
+				If v > maxVal Then maxVal = v
+			Next
+
+			Dim out(src.Length - 1) As Double
+			Dim sumExp As Double = 0.0
+
+			For i = 0 To src.Length - 1
+				Dim e = std.Exp((src(i) - maxVal) / t)
+				out(i) = e
+				sumExp += e
+			Next
+
+			If sumExp <= 0.0 Then sumExp = 1.0
+
+			For i = 0 To out.Length - 1
+				out(i) = out(i) / sumExp
+			Next
+
+			Return Tensor.Wrap(out, yAtt.Shape)
 		End Function
 	End Class
 

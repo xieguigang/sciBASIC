@@ -75,6 +75,7 @@
 ' ---------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports tpl = System.Threading.Tasks
 Imports std = System.Math
 
 Namespace Transformer
@@ -282,10 +283,16 @@ Namespace Transformer
             Dim bsB As Integer = kmax * jmax
             Dim bsC As Integer = imax * jmax
 
-            For blk As Integer = 0 To nrBlocks - 1
-                Dim offsetA = blk * bsA, offsetB = blk * bsB, offsetC = blk * bsC
+            ' 按"输出行"并行：第 (blk, bi) 行只写 cData 的 rowC 段，
+            ' 各行写入区间互不相交，因此不需要锁；
+            ' 每个输出元素内部的累加次序（bk 由小到大、且保留零值跳过）不变，
+            ' 结果与串行版本逐位一致。
+            tpl.Parallel.For(0, nrBlocks * imax,
+                Sub(task As Integer)
+                    Dim blk = task \ imax
+                    Dim bi = task - blk * imax
 
-                For bi As Integer = 0 To imax - 1
+                    Dim offsetA = blk * bsA, offsetB = blk * bsB, offsetC = blk * bsC
                     Dim rowA = offsetA + bi * kmax
                     Dim rowC = offsetC + bi * jmax
 
@@ -300,8 +307,7 @@ Namespace Transformer
                             Next
                         End If
                     Next
-                Next
-            Next
+                End Sub)
 
             Call result.MarkHostModified()
 
@@ -356,22 +362,28 @@ Namespace Transformer
             Dim bsB As Integer = kmax * jmax
             Dim bsC As Integer = imax * jmax
 
-            For blk As Integer = 0 To nrBlocks - 1
-                Dim offsetA = blk * bsA, offsetB = blk * bsB, offsetC = blk * bsC
+            ' 只能按 block 并行，不能按 (blk, bi) 并行：
+            '   dA(blk, bi, ·) 的累加只依赖 bi            -> 按行并行安全
+            '   dB(blk, ·, bj) 的累加要跨 bi 求和         -> 按行并行会写冲突
+            ' 因此取"按 block 并行"这个两者都安全的粒度：
+            ' 不同 block 的 dA / dB 切片互不相交。
+            tpl.Parallel.For(0, nrBlocks,
+                Sub(blk As Integer)
+                    Dim offsetA = blk * bsA, offsetB = blk * bsB, offsetC = blk * bsC
 
-                For bi As Integer = 0 To imax - 1
-                    For bj As Integer = 0 To jmax - 1
-                        Dim gval = cData(offsetC + bi * jmax + bj)
+                    For bi As Integer = 0 To imax - 1
+                        For bj As Integer = 0 To jmax - 1
+                            Dim gval = cData(offsetC + bi * jmax + bj)
 
-                        If gval <> 0.0 Then
-                            For bk As Integer = 0 To kmax - 1
-                                daData(offsetA + bi * kmax + bk) += gval * bData(offsetB + bk * jmax + bj)
-                                dbData(offsetB + bk * jmax + bj) += aData(offsetA + bi * kmax + bk) * gval
-                            Next
-                        End If
+                            If gval <> 0.0 Then
+                                For bk As Integer = 0 To kmax - 1
+                                    daData(offsetA + bi * kmax + bk) += gval * bData(offsetB + bk * jmax + bj)
+                                    dbData(offsetB + bk * jmax + bj) += aData(offsetA + bi * kmax + bk) * gval
+                                Next
+                            End If
+                        Next
                     Next
-                Next
-            Next
+                End Sub)
 
             Call dA.MarkHostModified()
             Call dB.MarkHostModified()

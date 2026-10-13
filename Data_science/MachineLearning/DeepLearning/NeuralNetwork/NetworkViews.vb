@@ -64,6 +64,7 @@
 
 Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace NeuralNetwork
 
@@ -79,7 +80,12 @@ Namespace NeuralNetwork
     Public Class NetworkLayerView
 
         Private ReadOnly m_count As Integer
-        Private m_output As Double()
+
+        ''' <summary>
+        ''' 层的激活向量。已从裸 <c>Double()</c> 迁到 <see cref="TensorF"/>（单精度）：
+        ''' 视图只做**镜像**，不参与任何算术，因此单精度存储不涉及舍入风险。
+        ''' </summary>
+        Private m_output As TensorF
 
         ''' <summary>Number of neuron nodes in this layer.</summary>
         Public ReadOnly Property Count As Integer
@@ -92,11 +98,11 @@ Namespace NeuralNetwork
         ''' The activation vector produced by the most recent forward pass of this layer (a read-only
         ''' mirror derived from the CNN kernel).
         ''' </summary>
-        Public Property Output As Double()
+        Public Property Output As TensorF
             Get
                 Return m_output
             End Get
-            Friend Set(value As Double())
+            Friend Set(value As TensorF)
                 m_output = value
             End Set
         End Property
@@ -107,7 +113,7 @@ Namespace NeuralNetwork
         ''' <param name="count">Number of neuron nodes in the layer.</param>
         Sub New(count As Integer)
             m_count = count
-            m_output = New Double(System.Math.Max(count, 1) - 1) {}
+            m_output = TensorF.Zeros(New Integer() {System.Math.Max(count, 1)})
         End Sub
 
         ''' <summary>Returns a short description of the layer size.</summary>

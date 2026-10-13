@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.SaveModelCNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.ReadModelCNN
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 Namespace NeuralNetwork
@@ -102,8 +103,20 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' cache for the last forward propagation result
         ''' </summary>
-        Private m_lastInput As Double()
-        Private m_output As Double()
+        ''' <remarks>
+        ''' 这两个缓存已从裸 <c>Double()</c> 迁到 <see cref="TensorF"/>（单精度）。
+        ''' 理由：本类型是传统全连接 ANN 的**数据管道**，本身不做任何算术
+        ''' （矩阵乘 / 激活 / 反传全部由 CNN 内核承担），
+        ''' 因此把存储降到 Single 不会引入新的舍入热点，
+        ''' 却能让整条前向链路在后续接入 CUDA 后端时免掉一次精度转换。
+        ''' <para>
+        ''' 精度边界只有一处：<see cref="BuildDataBlock"/> 把 Single 输入写进
+        ''' CNN 内核的 <c>DataBlock.w</c>（仍是 <c>Double()</c>），
+        ''' 那里是**加宽**转换，不损失信息。
+        ''' </para>
+        ''' </remarks>
+        Private m_lastInput As TensorF
+        Private m_output As TensorF
         Private m_lastError As Double
 
         ''' <summary>
@@ -151,7 +164,7 @@ Namespace NeuralNetwork
             alg.learning_rate = LERNRATE
             alg.momentum = 0
 
-            m_output = New Double(outputNeurons - 1) {}
+            m_output = TensorF.Zeros(New Integer() {outputNeurons})
         End Sub
 
         ''' <summary>
@@ -186,19 +199,28 @@ Namespace NeuralNetwork
             alg.learning_rate = LERNRATE
             alg.momentum = 0
 
-            m_output = New Double(m_OUTPUTNEURONCOUNT - 1) {}
+            m_output = TensorF.Zeros(New Integer() {m_OUTPUTNEURONCOUNT})
         End Sub
 
         ''' <summary>
         ''' 构造一个与输入规模一致的数据块；直接写入原始输入，不做图像归一化（避免 -0.5 偏移）
         ''' </summary>
-        Private Shared Function BuildDataBlock(inputs As Double()) As DataBlock
-            Dim db As New DataBlock(inputs.Length, 1, 1, 0)
-            Call Array.ConstrainedCopy(inputs, 0, db.w, 0, inputs.Length)
+        ''' <remarks>
+        ''' 这里是唯一一处精度边界：CNN 内核的 <c>DataBlock.w</c> 仍是 <c>Double()</c>，
+        ''' 因此单精度输入在此**加宽**为双精度 —— 属于无损转换，不是精度损失点。
+        ''' </remarks>
+        Private Shared Function BuildDataBlock(inputs As TensorF) As DataBlock
+            Dim src = inputs.Data
+            Dim db As New DataBlock(src.Length, 1, 1, 0)
+
+            For i As Integer = 0 To src.Length - 1
+                db.w(i) = src(i)
+            Next
+
             Return db
         End Function
 
-        Private Sub addInput(input As Double())
+        Private Sub addInput(input As TensorF)
             m_lastInput = input
         End Sub
 
@@ -206,17 +228,18 @@ Namespace NeuralNetwork
         ''' Runs a forward pass for one input sample and stores the result in <see cref="Output"/>.
         ''' </summary>
         ''' <param name="input">The input vector.</param>
-        Public Overridable Sub run(input As Double())
+        Public Overridable Sub run(input As TensorF)
             Call addInput(input)
 
             Dim db = BuildDataBlock(input)
-            m_output = cnn.forward(db, training:=Nothing).Weights
+            m_output = TensorF.FromDoubles(cnn.forward(db, training:=Nothing).Weights,
+                                           New Integer() {m_OUTPUTNEURONCOUNT})
         End Sub
 
         ''' <summary>Gets a copy of the output vector produced by the most recent forward pass.</summary>
-        Public Overridable ReadOnly Property Output As Double()
+        Public Overridable ReadOnly Property Output As TensorF
             Get
-                Return m_output.Clone
+                Return m_output.CloneT()
             End Get
         End Property
 
@@ -225,7 +248,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="input">The input vector.</param>
         ''' <returns>The network output for <paramref name="input"/>.</returns>
-        Public Overridable Function predict(input As Double()) As Double()
+        Public Overridable Function predict(input As TensorF) As TensorF
             Call run(input)
             Return Output
         End Function
@@ -236,13 +259,14 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="input">The input vector.</param>
         ''' <param name="goodOutput">The expected (target) output vector.</param>
-        Public Overridable Sub train(input As Double(), goodOutput As Double())
+        Public Overridable Sub train(input As TensorF, goodOutput As TensorF)
             Call addInput(input)
 
             Dim db = BuildDataBlock(input)
 
             ' 先得到当前输入的前向结果（与旧 Netz 一致：Output 反映的是本次输入的前向值）
-            m_output = cnn.forward(db, training:=Nothing).Weights
+            m_output = TensorF.FromDoubles(cnn.forward(db, training:=Nothing).Weights,
+                                           New Integer() {m_OUTPUTNEURONCOUNT})
 
             ' 在线逐样本 SGD：batch_size=1 时每个样本都立即更新权重，
             ' 学习率使用 LERNRATE，动量置零（与旧 Netz 简单在线训练语义一致）
@@ -260,15 +284,22 @@ Namespace NeuralNetwork
         ''' 将单输出回归目标调整为 CNN 训练器可正确处理的格式（详见
         ''' <see cref="Network.EnsureRegressionTarget"/>）。
         ''' </summary>
-        Private Function EnsureRegressionTarget(raw As Double()) As Double()
+        ''' <remarks>
+        ''' 返回类型仍是 <c>Double()</c>：CNN 训练器的反传入口 <c>alg.train</c>
+        ''' 接受的是双精度目标数组，转换发生在**训练器边界**而不是存储边界。
+        ''' </remarks>
+        Private Function EnsureRegressionTarget(raw As TensorF) As Double()
+            If raw Is Nothing Then Return Nothing
+
+            Dim values = raw.ToDoubles()
+
             If cnn IsNot Nothing AndAlso
                cnn.output.Type = LayerTypes.Regression AndAlso
-               raw IsNot Nothing AndAlso
-               raw.Length = 1 Then
-                Return New Double(1) {raw(0), 0.0}
+               values.Length = 1 Then
+                Return New Double(1) {values(0), 0.0}
             End If
 
-            Return raw
+            Return values
         End Function
 
         ''' <summary>
@@ -308,9 +339,9 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>Gets the output activations of the network as a mutable list.</summary>
-        Public Overridable ReadOnly Property Neurons As List(Of Double)
+        Public Overridable ReadOnly Property Neurons As List(Of Single)
             Get
-                Return New List(Of Double)(m_output)
+                Return New List(Of Single)(m_output.Data)
             End Get
         End Property
 
@@ -362,7 +393,9 @@ Namespace NeuralNetwork
         ''' </summary>
         Public Overridable ReadOnly Property MaxOutputNeuronIndex As Integer
             Get
-                Dim output = m_output
+                Dim output = m_output.Data
+                If output Is Nothing OrElse output.Length = 0 Then Return 0
+
                 Dim maximumOutput = 0
 
                 For i As Integer = 1 To output.Length - 1

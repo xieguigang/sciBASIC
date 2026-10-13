@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork</RootNamespace>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork</AssemblyName>

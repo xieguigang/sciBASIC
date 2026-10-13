@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace NeuralNetwork
 
@@ -134,7 +135,7 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 缓存上一次前向传播所使用的输入样本
         ''' </summary>
-        Private m_lastInput As Double()
+        Private m_lastInput As TensorF
         Private m_inputSize As Integer
         Private m_hiddenSize As Integer()
         Private m_outputSize As Integer
@@ -333,7 +334,7 @@ Namespace NeuralNetwork
         ''' </param>
         ''' <param name="parallel">Reserved for compatibility; the current kernel runs the pass sequentially.</param>
         ''' <returns>The <see cref="OutputLayer"/> view after the forward pass.</returns>
-        Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As NetworkLayerView
+        Public Function ForwardPropagate(inputs As TensorF, parallel As Boolean) As NetworkLayerView
             If cnn Is Nothing Then
                 Return OutputLayer
             End If
@@ -342,9 +343,11 @@ Namespace NeuralNetwork
 
             Dim db = NetworkKernel.BuildDataBlock(inputs)
 
-            ' 逐层前向传播，将各层（输入/隐藏/输出）的激活向量填充到只读视图
+            ' 逐层前向传播，将各层（输入/隐藏/输出）的激活向量填充到只读视图。
+            ' 内核返回的激活是 Double()，这里降到单精度存入视图 ——
+            ' 视图只做镜像，不参与算术，因此这一处窄化是安全的。
             Dim act = cnn.Layer(0).forward(db, training:=Nothing)
-            InputLayer.Output = act.Weights
+            InputLayer.Output = TensorF.FromDoubles(act.Weights, New Integer() {act.Weights.Length})
 
             Dim hIdx As Integer = 0
             For i As Integer = 1 To cnn.LayerNum - 1
@@ -352,10 +355,10 @@ Namespace NeuralNetwork
 
                 If cnn.Layer(i).Type = LayerTypes.FullyConnected Then
                     If hIdx < HiddenLayer.Count Then
-                        HiddenLayer(hIdx).Output = act.Weights
+                        HiddenLayer(hIdx).Output = TensorF.FromDoubles(act.Weights, New Integer() {act.Weights.Length})
                         hIdx += 1
                     Else
-                        OutputLayer.Output = act.Weights
+                        OutputLayer.Output = TensorF.FromDoubles(act.Weights, New Integer() {act.Weights.Length})
                     End If
                 End If
             Next
@@ -372,7 +375,7 @@ Namespace NeuralNetwork
         ''' After the backward pass only the synapse weights and the gradients are modified; the neuron output
         ''' values are left unchanged.
         ''' </remarks>
-        Public Sub BackPropagate(targets As Double(), parallel As Boolean)
+        Public Sub BackPropagate(targets As TensorF, parallel As Boolean)
             If cnn Is Nothing Then
                 Return
             End If
@@ -399,15 +402,22 @@ Namespace NeuralNetwork
         ''' （第二个元素为占位，会被 <see cref="RegressionLayer"/> 忽略），从而避免
         ''' <see cref="CNN.trainers.TrainerAlgorithm.train"/> 把目标误当作分类类别索引。
         ''' </summary>
-        Private Function EnsureRegressionTarget(raw As Double()) As Double()
+        ''' <remarks>
+        ''' 返回类型仍是 <c>Double()</c>：CNN 训练器的反传入口接受双精度目标数组，
+        ''' 因此精度边界落在训练器调用处，而不是存储处。
+        ''' </remarks>
+        Private Function EnsureRegressionTarget(raw As TensorF) As Double()
+            If raw Is Nothing Then Return Nothing
+
+            Dim values = raw.ToDoubles()
+
             If cnn IsNot Nothing AndAlso
                cnn.output.Type = LayerTypes.Regression AndAlso
-               raw IsNot Nothing AndAlso
-               raw.Length = 1 Then
-                Return New Double(1) {raw(0), 0.0}
+               values.Length = 1 Then
+                Return New Double(1) {values(0), 0.0}
             End If
 
-            Return raw
+            Return values
         End Function
 
         ''' <summary>
@@ -421,8 +431,9 @@ Namespace NeuralNetwork
         ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Compute(ParamArray inputs As Double()) As Double()
-            Return ForwardPropagate(inputs, parallel:=False).Output
+        Public Function Compute(ParamArray inputs As Single()) As TensorF
+            Dim vec = TensorF.Wrap(inputs, New Integer() {inputs.Length})
+            Return ForwardPropagate(vec, parallel:=False).Output
         End Function
 
         ''' <summary>
@@ -435,7 +446,7 @@ Namespace NeuralNetwork
         ''' The loop drives the trainer directly instead of <see cref="CNN.Trainer"/> so that no progress is written
         ''' to the console, which would fail with an "handle is invalid" IO exception on redirected or non-console hosts.
         ''' </remarks>
-        Public Sub TrainBatch(samples As (input As Double(), target As Double())(), maxLoops As Integer)
+        Public Sub TrainBatch(samples As (input As TensorF, target As TensorF)(), maxLoops As Integer)
             If cnn Is Nothing Then
                 Return
             End If
@@ -444,7 +455,7 @@ Namespace NeuralNetwork
             alg.momentum = Momentum
 
             For loopIter As Integer = 1 To maxLoops
-                For Each s As (input As Double(), target As Double()) In samples
+                For Each s As (input As TensorF, target As TensorF) In samples
                     Dim db = NetworkKernel.BuildDataBlock(s.input)
 
                     ' 单输出回归：目标填充为长度 2 以走正确的 double 数组反传分支

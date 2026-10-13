@@ -31,7 +31,8 @@ Namespace MixedPrecisionBench
                 AddressOf ConvCases,
                 AddressOf PoolCases,
                 AddressOf LossCases,
-                AddressOf ResidencyCases.RunAll
+                AddressOf ResidencyCases.RunAll,
+                AddressOf UpperLayerParity.RunAll
             }
 
             For Each g In groups

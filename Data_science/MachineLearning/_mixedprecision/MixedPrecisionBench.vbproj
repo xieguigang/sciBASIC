@@ -18,6 +18,10 @@
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\DeepLearning\DeepLearning.NET6.vbproj" />
+    <ProjectReference Include="..\GNN\GNN.vbproj" />
+    <ProjectReference Include="..\SNN\SNN.vbproj" />
+    <ProjectReference Include="..\LNN\LNN.vbproj" />
     <!-- CUDA 后端仅在本工程引用：上层深度学习库不应被迫依赖 ILCuda -->
     <ProjectReference Include="..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
   </ItemGroup>
