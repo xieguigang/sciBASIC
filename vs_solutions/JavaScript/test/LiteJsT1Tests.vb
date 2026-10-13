@@ -107,8 +107,8 @@ Public Class LiteJsT1Tests
         Assert.Equal("a" & vbLf & "b", OneLine("console.log(`a` + '\n' + `b`);"))
         Assert.Equal("a`b", OneLine("console.log(`a\`b`);"))
         Assert.Equal("$x", OneLine("console.log(`\$x`);"))
-        ' multiline template literal (real line break inside the backticks)
-        Assert.Equal(2, RunJs("console.log(`line1" & vbLf & "line2`);").Count)
+        ' multiline template literal (a real line break inside the backticks is kept)
+        Assert.Equal("line1" & vbLf & "line2", OneLine("console.log(`line1" & vbLf & "line2`);"))
     End Sub
 
     ' --------------------------------------------------------------- bitwise
@@ -126,12 +126,14 @@ Public Class LiteJsT1Tests
         Assert.Equal("4294967295", OneLine("console.log(-1 >>> 0);"))
         ' shift count is masked to 5 bits
         Assert.Equal("2", OneLine("console.log(1 << 33);"))
-        ' non-numeric operands go through ToInt32
-        Assert.Equal("6", OneLine("console.log('5' & 3);"))
+        ' non-numeric operands go through ToInt32 ('5' → 5; 5 & 3 = 1)
+        Assert.Equal("1", OneLine("console.log('5' & 3);"))
         Assert.Equal("0", OneLine("console.log(NaN & 5);"))
         ' precedence: & binds tighter than | but looser than ==
         Assert.Equal("1", OneLine("console.log(1 | 2 & 0);"))
-        Assert.Equal("true", OneLine("console.log((1 | 0) == 1 & 3);"))
+        ' ((1 | 0) == 1) & 3 → true & 3 → 1
+        Assert.Equal("1", OneLine("console.log((1 | 0) == 1 & 3);"))
+        Assert.Equal("true", OneLine("console.log((1 | 0) == (1 & 3));"))
     End Sub
 
     ' ------------------------------------------------------------ nullish ??
@@ -143,8 +145,8 @@ Public Class LiteJsT1Tests
         Assert.Equal("0", OneLine("console.log(0 ?? 5);"))
         Assert.Equal("", OneLine("console.log('' ?? 5);"))
         Assert.Equal("false", OneLine("console.log(false ?? true);"))
-        ' short-circuit: the right side is not evaluated
-        Assert.Equal("1", OneLine("var n = 0; var v = 1 ?? (n = 9); console.log(n);"))
+        ' short-circuit: the right side is not evaluated (n stays 0)
+        Assert.Equal("0", OneLine("var n = 0; var v = 1 ?? (n = 9); console.log(n);"))
     End Sub
 
     ' ------------------------------------------------------- optional chain
@@ -255,7 +257,7 @@ Public Class LiteJsT1Tests
 
     <Fact>
     Public Sub DeleteAndVoid()
-        Assert.Equal("undefined", OneLine("var o = {a: 1}; console.log(delete o.a, o.a);"))
+        Assert.Equal("true undefined", OneLine("var o = {a: 1}; console.log(delete o.a, o.a);"))
         Assert.Equal("true", OneLine("var o = {a: 1}; console.log(delete o.a);"))
         Assert.Equal("true", OneLine("var a = 1; console.log(delete a);"))
         Assert.Equal("undefined", OneLine("console.log(void 0);"))
@@ -284,7 +286,7 @@ Public Class LiteJsT1Tests
 
     <Fact>
     Public Sub CodeGen_SwitchUsesIfGotoChain()
-        Dim code = Generate("switch (x) { case 1: console.log(1); break; default: console.log('d'); }")
+        Dim code = Generate("var x = 1; switch (x) { case 1: console.log(1); break; default: console.log('d'); }")
         Assert.Contains("JsRuntime.JsStrictEq", code)
         Assert.Contains("__case", code)
         Assert.Contains("__swend", code)
@@ -293,7 +295,7 @@ Public Class LiteJsT1Tests
 
     <Fact>
     Public Sub CodeGen_LoopsAndLabels()
-        Dim forOf = Generate("for (const x of xs) { console.log(x); }")
+        Dim forOf = Generate("var xs = [1, 2]; for (const x of xs) { console.log(x); }")
         Assert.Contains("JsRuntime.JsIterableValues(", forOf)
 
         Dim labeled = Generate("outer: for (var i = 0; i < 3; i++) { continue outer; }")
@@ -309,14 +311,14 @@ Public Class LiteJsT1Tests
         Dim tpl = Generate("console.log(`a${1 + 1}b`);")
         Assert.Contains("JsRuntime.JsStr(", tpl)
 
-        Dim spreadCall = Generate("f(...xs);")
+        Dim spreadCall = Generate("function f() { } var xs = [1, 2]; f(...xs);")
         Assert.Contains("JsRuntime.JsSpread(", spreadCall)
         Assert.Contains("JsRuntime.JsBuildArgs(", spreadCall)
 
-        Dim spreadArr = Generate("var a = [...xs, 1];")
+        Dim spreadArr = Generate("var xs = [1, 2]; var a = [...xs, 1];")
         Assert.Contains("JsRuntime.JsArrayFrom(", spreadArr)
 
-        Dim spreadObj = Generate("var o = {...base, a: 1};")
+        Dim spreadObj = Generate("var base = {a: 1}; var o = {...base, a: 2};")
         Assert.Contains("JsRuntime.JsObjFrom(", spreadObj)
 
         Dim rest = Generate("function f(a, ...r) { return r; }")
@@ -328,28 +330,30 @@ Public Class LiteJsT1Tests
 
     <Fact>
     Public Sub CodeGen_DestructuringAndOptionalChain()
-        Dim arr = Generate("var [a, b] = pair;")
+        Dim arr = Generate("var pair = [1, 2]; var [a, b] = pair;")
         Assert.Contains("JsRuntime.JsIndex(", arr)
-        Assert.Contains("JsRuntime.JsArrayRest(", Generate("var [a, ...r] = pair;"))
+        Assert.Contains("JsRuntime.JsArrayRest(", Generate("var pair = [1, 2, 3]; var [a, ...r] = pair;"))
 
-        Dim obj = Generate("var {a, ...rest} = o;")
+        Dim obj = Generate("var o = {a: 1, b: 2}; var {a, ...rest} = o;")
         Assert.Contains("JsRuntime.JsGet(", obj)
         Assert.Contains("JsRuntime.JsObjectRest(", obj)
 
-        Dim oc = Generate("console.log(a?.b.c);")
+        Dim oc = Generate("var a = {b: {c: 1}}; console.log(a?.b.c);")
         Assert.Contains("JsRuntime.JsChainGet(", oc)
         Assert.Contains("OptionalChainShortCircuit", oc)
-        Assert.Contains("JsRuntime.JsChainInvoke(", Generate("f?.();"))
+
+        Dim ocCall = Generate("function f() { } f?.();")
+        Assert.Contains("JsRuntime.JsChainInvoke(", ocCall)
     End Sub
 
     <Fact>
     Public Sub CodeGen_OperatorsAndBuiltins()
-        Assert.Contains("JsRuntime.JsBitAnd(", Generate("var x = a & b;"))
-        Assert.Contains("JsRuntime.JsBitNot(", Generate("var x = ~a;"))
-        Assert.Contains("JsRuntime.JsNullish(", Generate("var x = a ?? b;"))
-        Assert.Contains("JsRuntime.JsIn(", Generate("var x = k in o;"))
-        Assert.Contains("JsRuntime.JsInstanceOf(", Generate("var x = a instanceof B;"))
-        Assert.Contains("JsRuntime.JsDelete(", Generate("delete o.a;"))
+        Assert.Contains("JsRuntime.JsBitAnd(", Generate("var a = 1, b = 2; var x = a & b;"))
+        Assert.Contains("JsRuntime.JsBitNot(", Generate("var a = 1; var x = ~a;"))
+        Assert.Contains("JsRuntime.JsNullish(", Generate("var a = 1, b = 2; var x = a ?? b;"))
+        Assert.Contains("JsRuntime.JsIn(", Generate("var k = 'a', o = {a: 1}; var x = k in o;"))
+        Assert.Contains("JsRuntime.JsInstanceOf(", Generate("var a = [], B = Array; var x = a instanceof B;"))
+        Assert.Contains("JsRuntime.JsDelete(", Generate("var o = {a: 1}; delete o.a;"))
         Assert.Contains("JsRuntime.JsVoid(", Generate("void 0;"))
         Assert.Contains("JsRuntime.JsAccessor(", Generate("var o = {get x() { return 1; }};"))
     End Sub

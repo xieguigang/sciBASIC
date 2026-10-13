@@ -36,6 +36,7 @@ Namespace Runtime
         Public ReadOnly Json As New NativeObject("JSON")
         Public ReadOnly ObjectBuiltin As New NativeObject("Object")
         Public ReadOnly ArrayBuiltin As New NativeObject("Array")
+        Public ReadOnly FunctionBuiltin As New NativeObject("Function")
         Public ReadOnly GlobalObj As New NativeObject("global")
 
         ' math constants exposed as properties (System.Math qualified — the
@@ -49,7 +50,7 @@ Namespace Runtime
         Public Function GlobalIdentifiers() As IDictionary(Of String, Object)
             Dim g As New Dictionary(Of String, Object) From {
                 {"console", ConsoleBuiltin}, {"Math", MathBuiltin}, {"JSON", Json},
-                {"Object", ObjectBuiltin}, {"Array", ArrayBuiltin},
+                {"Object", ObjectBuiltin}, {"Array", ArrayBuiltin}, {"Function", FunctionBuiltin},
                 {"undefined", Undef}, {"NaN", Double.NaN}, {"Infinity", Double.PositiveInfinity}
             }
             For Each name In {"parseInt", "parseFloat", "isNaN", "isFinite",
@@ -123,6 +124,7 @@ Namespace Runtime
             If TypeOf x Is Dictionary(Of String, Object) Then Return "[object Object]"
             If TypeOf x Is BuiltinMethod Then Return "[function: " & DirectCast(x, BuiltinMethod).Name & "]"
             If TypeOf x Is NativeObject Then Return "[object " & DirectCast(x, NativeObject).Name & "]"
+            If TypeOf x Is JsClass Then Return "class " & DirectCast(x, JsClass).Name & " { ... }"
             Return CStr(x)
         End Function
 
@@ -163,7 +165,7 @@ Namespace Runtime
             If TypeOf x Is Double Then Return "number"
             If TypeOf x Is String Then Return "string"
             If TypeOf x Is Boolean Then Return "boolean"
-            If TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod Then Return "function"
+            If IsJsFunction(x) Then Return "function"       ' classes are functions too
             If x Is Undef Then Return "undefined"
             If x Is Nothing Then Return "object"     ' JS: typeof null === "object"
             Return "object"
@@ -329,14 +331,26 @@ Namespace Runtime
                 Dim d = DirectCast(obj, Dictionary(Of String, Object))
                 Dim v As Object = Nothing
                 If d.TryGetValue(name, v) Then
-                    Dim acc = TryCast(v, AccessorProperty)
-                    If acc IsNot Nothing Then
-                        ' accessor property: read through its getter
-                        If acc.Getter Is Nothing Then Return Undef
-                        Return JsInvoke(acc.Getter, New Object() {})
-                    End If
-                    Return v
+                    ' accessor property: read through its getter (receiver = the object)
+                    Return ReadMember(v, obj, InstanceClass(obj))
                 End If
+                ' class instances resolve inherited members through the __proto__ chain
+                Dim owner As JsClass = Nothing
+                Dim found As Boolean = False
+                Dim inherited = LookupInstanceMember(d, name, owner, found)
+                If found Then Return ReadMember(inherited, obj, owner)
+                Return Undef
+            End If
+            If TypeOf obj Is JsClass Then
+                Dim c = DirectCast(obj, JsClass)
+                If name = "name" Then Return c.Name
+                If name = "prototype" Then Return c.Prototype
+                Dim v As Object = Nothing
+                Dim cur = c
+                While cur IsNot Nothing
+                    If cur.Statics.TryGetValue(name, v) Then Return ReadMember(v, obj, cur)
+                    cur = cur.SuperClass
+                End While
                 Return Undef
             End If
             If TypeOf obj Is NativeObject Then
@@ -383,17 +397,32 @@ Namespace Runtime
                 Dim d = DirectCast(obj, Dictionary(Of String, Object))
                 Dim existing As Object = Nothing
                 If d.TryGetValue(name, existing) Then
-                    Dim acc = TryCast(existing, AccessorProperty)
-                    If acc IsNot Nothing Then
-                        ' accessor property: write through its setter
-                        If acc.Setter IsNot Nothing Then JsInvoke(acc.Setter, New Object() {value})
-                        Return
-                    End If
+                    If TryWriteAccessor(existing, value, obj, InstanceClass(obj)) Then Return
                 End If
+                ' a setter may also live on the prototype chain
+                Dim owner As JsClass = Nothing
+                Dim found As Boolean = False
+                Dim inherited = LookupInstanceMember(d, name, owner, found)
+                If found AndAlso TryWriteAccessor(inherited, value, obj, owner) Then Return
                 d(name) = value
+            ElseIf TypeOf obj Is JsClass Then
+                Dim c = DirectCast(obj, JsClass)
+                Dim existingStatic As Object = Nothing
+                If c.Statics.TryGetValue(name, existingStatic) Then
+                    If TryWriteAccessor(existingStatic, value, obj, c) Then Return
+                End If
+                c.Statics(name) = value
             End If
             ' other targets: silently ignored (non-strict JS)
         End Sub
+
+        ''' <summary>Write through an accessor setter when the value is one; False otherwise.</summary>
+        Private Function TryWriteAccessor(existing As Object, value As Object, receiver As Object, home As JsClass) As Boolean
+            Dim acc = TryCast(existing, AccessorProperty)
+            If acc Is Nothing Then Return False
+            If acc.Setter IsNot Nothing Then JsInvokeCore(acc.Setter, New Object() {value}, receiver, home)
+            Return True
+        End Function
 
         Public Sub JsSetIndex(obj As Object, index As Object, value As Object)
             If obj Is Nothing OrElse obj Is Undef Then
@@ -415,7 +444,96 @@ Namespace Runtime
 
         ' ================= invocation =================
 
+        ' receiver / home-object context of the innermost in-flight call. A
+        ' stack discipline (save/restore around every call) keeps nested calls
+        ' correct; per-thread so independent engines never collide.
+        <ThreadStatic>
+        Private _thisValue As Object
+
+        <ThreadStatic>
+        Private _homeClass As JsClass
+
+        ''' <summary>
+        ''' Receiver of the innermost in-flight call — the value of <c>this</c>.
+        ''' A plain call (non-strict JS) sees the global object.
+        ''' </summary>
+        Public ReadOnly Property CurrentThis As Object
+            Get
+                If _thisValue Is Nothing Then Return GlobalObj
+                Return _thisValue
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The class that provided the innermost in-flight method — the anchor of
+        ''' <c>super</c> lookups.
+        ''' </summary>
+        Public ReadOnly Property CurrentHomeClass As JsClass
+            Get
+                Return _homeClass
+            End Get
+        End Property
+
         Public Function JsInvoke(f As Object, args As Object()) As Object
+            ' plain call: this = global object (non-strict JS)
+            Return JsInvokeCore(f, args, GlobalObj, Nothing)
+        End Function
+
+        ''' <summary>Invoke with an explicit receiver (method call).</summary>
+        Public Function JsInvoke(f As Object, args As Object(), receiver As Object) As Object
+            Return JsInvokeCore(f, args, receiver, FindMethodHome(receiver, Nothing))
+        End Function
+
+        ''' <summary>
+        ''' Method call helper: resolves the member on <paramref name="obj"/> and binds
+        ''' <c>this</c> to it.
+        ''' <paramref name="accessOptional"/> mirrors <c>a?.b()</c> — short-circuit when the
+        ''' OBJECT is nullish; <paramref name="callOptional"/> mirrors <c>a.b?.()</c> —
+        ''' short-circuit when the METHOD is nullish.
+        ''' </summary>
+        Public Function JsInvokeMethod(obj As Object, name As String, args As Object(),
+                                       Optional accessOptional As Boolean = False,
+                                       Optional callOptional As Boolean = False) As Object
+            If accessOptional AndAlso (obj Is Nothing OrElse obj Is Undef) Then
+                Throw New OptionalChainShortCircuit()
+            End If
+            Dim f = JsGet(obj, name)
+            If callOptional AndAlso (f Is Nothing OrElse f Is Undef) Then
+                Throw New OptionalChainShortCircuit()
+            End If
+            Return JsInvokeCore(f, args, obj, FindMethodHome(obj, name))
+        End Function
+
+        ''' <summary>Indexed method call: <c>obj[key](args)</c> with the receiver bound.</summary>
+        Public Function JsInvokeIndex(obj As Object, index As Object, args As Object(),
+                                      Optional accessOptional As Boolean = False,
+                                      Optional callOptional As Boolean = False) As Object
+            If accessOptional AndAlso (obj Is Nothing OrElse obj Is Undef) Then
+                Throw New OptionalChainShortCircuit()
+            End If
+            Dim f = JsIndex(obj, index)
+            If callOptional AndAlso (f Is Nothing OrElse f Is Undef) Then
+                Throw New OptionalChainShortCircuit()
+            End If
+            Dim name As String = Nothing
+            If IsJsObject(obj) OrElse TypeOf obj Is JsClass Then name = JsStr(index)
+            Return JsInvokeCore(f, args, obj, FindMethodHome(obj, name))
+        End Function
+
+        Private Function JsInvokeCore(f As Object, args As Object(), receiver As Object, home As JsClass) As Object
+            Dim savedThis = _thisValue
+            Dim savedHome = _homeClass
+            _thisValue = receiver
+            _homeClass = home
+            Try
+                Return DispatchCall(f, args)
+            Finally
+                _thisValue = savedThis
+                _homeClass = savedHome
+            End Try
+        End Function
+
+        Private Function DispatchCall(f As Object, args As Object()) As Object
             If TypeOf f Is Func(Of Object(), Object) Then
                 Return DirectCast(f, Func(Of Object(), Object)).Invoke(args)
             End If
@@ -423,7 +541,243 @@ Namespace Runtime
                 Dim m = DirectCast(f, BuiltinMethod)
                 Return DispatchBuiltin(m.Target, m.Name, args)
             End If
+            If TypeOf f Is JsClass Then
+                Throw JsRuntimeException.TypeError(
+                    "Class constructor " & DirectCast(f, JsClass).Name & " cannot be invoked without 'new'")
+            End If
             Throw JsRuntimeException.TypeError(JsStr(f) & " is not a function")
+        End Function
+
+        ' ================= construction =================
+
+        ''' <summary>
+        ''' The <c>new</c> operator: construct a class instance or a builtin object,
+        ''' or run a plain function with a fresh object as <c>this</c>.
+        ''' </summary>
+        Public Function JsNew(ctor As Object, args As Object()) As Object
+            Dim cls = TryCast(ctor, JsClass)
+            If cls IsNot Nothing Then Return Instantiate(cls, args)
+
+            If TypeOf ctor Is Func(Of Object(), Object) Then
+                ' function used as a constructor: fresh object bound to 'this'
+                Dim inst As New Dictionary(Of String, Object)
+                Call JsInvokeCore(ctor, args, inst, Nothing)
+                Return inst
+            End If
+
+            If TypeOf ctor Is BuiltinMethod Then
+                Return ConstructBuiltin(DirectCast(ctor, BuiltinMethod).Name, args)
+            End If
+
+            Throw JsRuntimeException.TypeError(JsStr(ctor) & " is not a constructor")
+        End Function
+
+        Private Function Instantiate(cls As JsClass, args As Object()) As Object
+            Dim inst As New Dictionary(Of String, Object)
+            inst("__proto__") = cls.Prototype
+            inst("__class__") = cls
+
+            ' field initialisers run base-class first, before the constructor body
+            Dim chain As New List(Of JsClass)
+            Dim c = cls
+            While c IsNot Nothing
+                chain.Insert(0, c)
+                c = c.SuperClass
+            End While
+            For Each cc In chain
+                For Each f In cc.Fields
+                    If f.Value Is Nothing Then
+                        inst(f.Key) = Undef
+                    Else
+                        inst(f.Key) = JsInvokeCore(f.Value, New Object() {}, inst, cc)
+                    End If
+                Next
+            Next
+
+            If cls.Constructor IsNot Nothing Then
+                Call JsInvokeCore(cls.Constructor, args, inst, cls)
+            End If
+            Return inst
+        End Function
+
+        ''' <summary>Builtin constructors reachable through <c>new</c>.</summary>
+        Private Function ConstructBuiltin(name As String, args As Object()) As Object
+            Select Case name
+                Case "Array"
+                    If args.Length = 1 AndAlso IsNumber(args(0)) Then
+                        Dim n = CInt(CDbl(args(0)))
+                        Dim list As New List(Of Object)
+                        For i = 1 To n
+                            list.Add(Undef)
+                        Next
+                        Return list
+                    End If
+                    Return New List(Of Object)(args)
+                Case "Object" : Return New Dictionary(Of String, Object)
+                Case "String" : Return JsStr(Arg(args, 0))
+                Case "Number" : Return JsNum(Arg(args, 0))
+                Case "Boolean" : Return JsTruthy(Arg(args, 0))
+            End Select
+            Throw JsRuntimeException.TypeError("'" & name & "' is not a constructor")
+        End Function
+
+        ''' <summary>
+        ''' Build a class value. <paramref name="parts"/> triples are
+        ''' <c>("i", name, value)</c> instance members, <c>("s", name, value)</c> statics and
+        ''' <c>("f", name, initialiser)</c> instance fields. Shared by the interpreter and
+        ''' generated code so both build identical classes.
+        ''' </summary>
+        Public Function JsDefineClass(name As String, ctor As Object, superClass As Object,
+                                     ParamArray parts As (Kind As String, Name As String, Value As Object)()) As Object
+            Dim sup As JsClass = Nothing
+            If superClass IsNot Nothing AndAlso Not (superClass Is Undef) Then
+                sup = TryCast(superClass, JsClass)
+                If sup Is Nothing Then
+                    Throw JsRuntimeException.TypeError("Class extends value is not a constructor")
+                End If
+            End If
+
+            Dim cls As New JsClass(name, ctor, sup)
+            ' the derived prototype links to the base prototype
+            If sup IsNot Nothing Then cls.Prototype("__proto__") = sup.Prototype
+
+            For Each p In parts
+                Select Case p.Kind
+                    Case "i"
+                        Dim acc = TryCast(p.Value, AccessorProperty)
+                        If acc Is Nothing Then
+                            cls.Prototype(p.Name) = p.Value
+                        Else
+                            JsAccessorDefine(cls.Prototype, p.Name, acc.Getter, acc.Setter)
+                        End If
+                    Case "s"
+                        Dim acc = TryCast(p.Value, AccessorProperty)
+                        If acc Is Nothing Then
+                            cls.Statics(p.Name) = p.Value
+                        Else
+                            JsAccessorDefine(cls.Statics, p.Name, acc.Getter, acc.Setter)
+                        End If
+                    Case "f"
+                        cls.Fields.Add(New KeyValuePair(Of String, Object)(p.Name, p.Value))
+                End Select
+            Next
+            Return cls
+        End Function
+
+        ' ================= super =================
+
+        ''' <summary>super(...) — run the superclass constructor against the current this.</summary>
+        Public Function JsSuperConstructor(args As Object()) As Object
+            Dim home = _homeClass
+            If home Is Nothing OrElse home.SuperClass Is Nothing Then
+                Throw JsRuntimeException.TypeError("'super' is only valid in a derived class")
+            End If
+            If home.SuperClass.Constructor IsNot Nothing Then
+                Call JsInvokeCore(home.SuperClass.Constructor, args, _thisValue, home.SuperClass)
+            End If
+            Return _thisValue
+        End Function
+
+        ''' <summary>super.member — read the member from the superclass.</summary>
+        Public Function JsSuperGet(name As String) As Object
+            Dim home = _homeClass
+            If home Is Nothing OrElse home.SuperClass Is Nothing Then Return Undef
+            Return LookupSuperMember(home.SuperClass, name)
+        End Function
+
+        ''' <summary>super.member(args) — invoke with the current receiver.</summary>
+        Public Function JsSuperInvoke(name As String, args As Object()) As Object
+            Dim home = _homeClass
+            If home Is Nothing OrElse home.SuperClass Is Nothing Then
+                Throw JsRuntimeException.TypeError("'super." & name & "' is only valid in a derived class")
+            End If
+            Dim f = LookupSuperMember(home.SuperClass, name)
+            Return JsInvokeCore(f, args, _thisValue, home.SuperClass)
+        End Function
+
+        ''' <summary>Look a member up on a class's prototype chain, then its statics.</summary>
+        Private Function LookupSuperMember(cls As JsClass, name As String) As Object
+            Dim v As Object = Nothing
+            Dim c = cls
+            While c IsNot Nothing
+                If c.Prototype.TryGetValue(name, v) Then Return v
+                c = c.SuperClass
+            End While
+            c = cls
+            While c IsNot Nothing
+                If c.Statics.TryGetValue(name, v) Then Return v
+                c = c.SuperClass
+            End While
+            Return Undef
+        End Function
+
+        ' ================= prototype plumbing =================
+
+        ''' <summary>The class of an instance dictionary, or Nothing for a plain object.</summary>
+        Public Function InstanceClass(obj As Object) As JsClass
+            Dim d = TryCast(obj, Dictionary(Of String, Object))
+            If d Is Nothing Then Return Nothing
+            Dim c As Object = Nothing
+            If d.TryGetValue("__class__", c) Then Return TryCast(c, JsClass)
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' The class that provides member <paramref name="name"/> for <paramref name="obj"/> —
+        ''' the anchor used by <c>super</c> inside that method.
+        ''' </summary>
+        Private Function FindMethodHome(obj As Object, name As String) As JsClass
+            Dim cls = TryCast(obj, JsClass)
+            If cls IsNot Nothing Then
+                If name Is Nothing Then Return cls
+                Dim c = cls
+                While c IsNot Nothing
+                    If c.Statics.ContainsKey(name) Then Return c
+                    c = c.SuperClass
+                End While
+                Return Nothing
+            End If
+
+            Dim inst = InstanceClass(obj)
+            If inst Is Nothing OrElse name Is Nothing Then Return inst
+            Dim cur = inst
+            While cur IsNot Nothing
+                If cur.Prototype.ContainsKey(name) Then Return cur
+                cur = cur.SuperClass
+            End While
+            Return Nothing
+        End Function
+
+        ''' <summary>Read a value that may be an accessor property.</summary>
+        Private Function ReadMember(v As Object, receiver As Object, home As JsClass) As Object
+            Dim acc = TryCast(v, AccessorProperty)
+            If acc Is Nothing Then Return v
+            If acc.Getter Is Nothing Then Return Undef
+            Return JsInvokeCore(acc.Getter, New Object() {}, receiver, home)
+        End Function
+
+        ''' <summary>
+        ''' Walk the <c>__proto__</c> chain of an instance dictionary looking for a
+        ''' property; returns the raw value (accessors are not yet invoked).
+        ''' </summary>
+        Private Function LookupInstanceMember(d As Dictionary(Of String, Object), name As String,
+                                              ByRef owner As JsClass, ByRef found As Boolean) As Object
+            found = False
+            Dim cur As Object = Nothing
+            owner = InstanceClass(d)
+            If Not d.TryGetValue("__proto__", cur) Then Return Nothing
+            Dim guard = 0
+            While IsJsObject(cur) AndAlso guard < 1000
+                Dim pd = DirectCast(cur, Dictionary(Of String, Object))
+                Dim v As Object = Nothing
+                If pd.TryGetValue(name, v) Then
+                    found = True
+                    Return v
+                End If
+                If Not pd.TryGetValue("__proto__", cur) Then Exit While
+                guard += 1
+            End While
+            Return Nothing
         End Function
 
         ' ================= construction helpers (used by generated code) =================
@@ -436,10 +790,32 @@ Namespace Runtime
         Public Function JsObj(pairs As (Key As String, Value As Object)()) As Object
             Dim d As New Dictionary(Of String, Object)
             For Each p In pairs
-                d(p.Key) = p.Value
+                Dim acc = TryCast(p.Value, AccessorProperty)
+                If acc Is Nothing Then
+                    d(p.Key) = p.Value
+                Else
+                    ' merge get/set pairs declared for the same key
+                    JsAccessorDefine(d, p.Key, acc.Getter, acc.Setter)
+                End If
             Next
             Return d
         End Function
+
+        ''' <summary>
+        ''' Define a getter/setter on an object dictionary, merging with an
+        ''' existing accessor pair ({get x(){}, set x(v){}} share one property).
+        ''' </summary>
+        Public Sub JsAccessorDefine(target As Dictionary(Of String, Object), key As String,
+                                    getter As Object, setter As Object)
+            Dim existing As Object = Nothing
+            Dim acc As AccessorProperty = Nothing
+            If target.TryGetValue(key, existing) Then acc = TryCast(existing, AccessorProperty)
+            If acc Is Nothing Then
+                target(key) = New AccessorProperty(getter, setter)
+            Else
+                target(key) = New AccessorProperty(If(getter, acc.Getter), If(setter, acc.Setter))
+            End If
+        End Sub
 
         ''' <summary>Keys for for-in: array/string indices (as strings) or object keys.</summary>
         Public Function JsForInKeys(obj As Object) As Object()
@@ -460,7 +836,13 @@ Namespace Runtime
                 Return keys
             End If
             If IsJsObject(obj) Then
-                Return New List(Of Object)(DirectCast(obj, Dictionary(Of String, Object)).Keys.Cast(Of Object)()).ToArray()
+                ' internal keys (__proto__ / __class__) are not enumerable
+                Dim keys As New List(Of Object)
+                For Each k In DirectCast(obj, Dictionary(Of String, Object)).Keys
+                    If k.StartsWith("__", StringComparison.Ordinal) Then Continue For
+                    keys.Add(k)
+                Next
+                Return keys.ToArray()
             End If
             Return New Object() {}
         End Function
@@ -1241,7 +1623,12 @@ Namespace Runtime
                 Dim m = TryCast(p, SpreadMarker)
                 If m Is Nothing Then
                     Dim pair = DirectCast(p, (Key As String, Value As Object))
-                    d(pair.Key) = pair.Value
+                    Dim acc = TryCast(pair.Value, AccessorProperty)
+                    If acc Is Nothing Then
+                        d(pair.Key) = pair.Value
+                    Else
+                        JsAccessorDefine(d, pair.Key, acc.Getter, acc.Setter)
+                    End If
                 Else
                     JsSpreadInto(d, m.Value)
                 End If
@@ -1379,20 +1766,36 @@ Namespace Runtime
             If ctor Is Nothing OrElse ctor Is Undef Then
                 Throw JsRuntimeException.TypeError("Right-hand side of 'instanceof' is not callable")
             End If
-            If TypeOf ctor Is BuiltinMethod Then
-                Select Case DirectCast(ctor, BuiltinMethod).Name
+
+            ' user classes: walk the instance's __proto__ chain for the class prototype
+            Dim cls = TryCast(ctor, JsClass)
+            If cls IsNot Nothing Then Return JsProtoChainContains(obj, cls.Prototype)
+
+            ' builtin constructors are either bound builtins (String/Number/...) or
+            ' container objects (Array/Object/Function)
+            Dim ctorName As String = Nothing
+            If TypeOf ctor Is BuiltinMethod Then ctorName = DirectCast(ctor, BuiltinMethod).Name
+            If TypeOf ctor Is NativeObject Then ctorName = DirectCast(ctor, NativeObject).Name
+            If ctorName IsNot Nothing Then
+                Select Case ctorName
                     Case "Array" : Return IsJsArray(obj)
                     Case "Object" : Return IsJsObject(obj) OrElse IsJsArray(obj)
-                    Case "Function" : Return TypeOf obj Is Func(Of Object(), Object) OrElse TypeOf obj Is BuiltinMethod
+                    Case "Function" : Return IsJsFunction(obj)
                 End Select
                 ' primitives have no wrapper objects here: String/Number/Boolean → false,
                 ' matching JS ('abc' instanceof String === false)
                 Return False
             End If
+
             If TypeOf ctor Is Func(Of Object(), Object) Then
                 Return JsProtoChainContains(obj, JsGet(ctor, "prototype"))
             End If
             Throw JsRuntimeException.TypeError("Right-hand side of 'instanceof' is not callable")
+        End Function
+
+        ''' <summary>True for callable values (closures, builtin methods and classes).</summary>
+        Public Function IsJsFunction(x As Object) As Boolean
+            Return TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod OrElse TypeOf x Is JsClass
         End Function
 
         ''' <summary>Walk the __proto__ chain of obj looking for a prototype object.</summary>

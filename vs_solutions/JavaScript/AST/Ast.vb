@@ -514,6 +514,83 @@ Public NotInheritable Class ForOfStmt
     End Sub
 End Class
 
+''' <summary>class Foo extends Bar { ... } — a class definition statement (not hoisted).</summary>
+Public NotInheritable Class ClassDeclStmt
+    Inherits Statement
+
+    Public ReadOnly Spec As ClassSpec
+
+    Public Sub New(spec As ClassSpec)
+        Me.Spec = spec
+    End Sub
+End Class
+
+''' <summary>Class expression: <c>var C = class { ... }</c>.</summary>
+Public NotInheritable Class ClassExpr
+    Inherits Expression
+
+    Public ReadOnly Spec As ClassSpec
+
+    Public Sub New(spec As ClassSpec)
+        Me.Spec = spec
+    End Sub
+End Class
+
+''' <summary>Structural description shared by class declarations and expressions.</summary>
+Public NotInheritable Class ClassSpec
+
+    Public ReadOnly Name As String
+    ''' <summary>Superclass expression, or Nothing for a base class.</summary>
+    Public ReadOnly SuperClass As Expression
+    ''' <summary>Constructor body, or Nothing (implicit empty constructor).</summary>
+    Public ReadOnly Constructor As FuncExpr
+    Public ReadOnly Members As List(Of ClassMember)
+
+    Public Sub New(name As String, superClass As Expression, ctor As FuncExpr, members As List(Of ClassMember))
+        Me.Name = name
+        Me.SuperClass = superClass
+        Me.Constructor = ctor
+        Me.Members = members
+    End Sub
+End Class
+
+Public Enum ClassMemberKind
+    ''' <summary>Regular method (instance unless <see cref="ClassMember.IsStatic"/>).</summary>
+    Method
+    Getter
+    Setter
+    ''' <summary>Field with an initialiser expression (instance or static).</summary>
+    Field
+End Enum
+
+Public NotInheritable Class ClassMember
+
+    Public ReadOnly Kind As ClassMemberKind
+    Public ReadOnly Name As String
+    ''' <summary>FuncExpr for methods/accessors; initialiser expression for fields.</summary>
+    Public ReadOnly Value As Expression
+    Public ReadOnly IsStatic As Boolean
+
+    Public Sub New(kind As ClassMemberKind, name As String, value As Expression, isStatic As Boolean)
+        Me.Kind = kind
+        Me.Name = name
+        Me.Value = value
+        Me.IsStatic = isStatic
+    End Sub
+End Class
+
+''' <summary>super / super.member inside a derived class.</summary>
+Public NotInheritable Class SuperExpr
+    Inherits Expression
+
+    ''' <summary>Member name, or Nothing for a bare <c>super(...)</c> constructor call.</summary>
+    Public ReadOnly Member As String
+
+    Public Sub New(member As String)
+        Me.Member = member
+    End Sub
+End Class
+
 ''' <summary>label: statement — target of labeled break/continue.</summary>
 Public NotInheritable Class LabeledStmt
     Inherits Statement

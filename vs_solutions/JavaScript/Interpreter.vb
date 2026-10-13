@@ -126,6 +126,11 @@ Public NotInheritable Class Interpreter
             Case TypeOf s Is FuncDeclStmt
                 ' already hoisted; the statement itself does nothing
 
+            Case TypeOf s Is ClassDeclStmt
+                ' class declarations are block-scoped and NOT hoisted
+                Dim spec = DirectCast(s, ClassDeclStmt).Spec
+                env.Define(spec.Name, JsRuntime.JsUnbox(BuildClass(spec, env)), False)
+
             Case TypeOf s Is IfStmt
                 Dim i = DirectCast(s, IfStmt)
                 If JsRuntime.JsTruthy(Eval(i.Test, env)) Then
@@ -466,7 +471,8 @@ Public NotInheritable Class Interpreter
                        fenv.Define(f.RestParam, JsValue.OfObject(rest), False)
                    End If
                    If Not f.IsArrow Then
-                       ' arrow functions inherit 'arguments' lexically — no own binding
+                       ' arrow functions inherit 'this' and 'arguments' lexically
+                       fenv.Define("this", JsRuntime.JsUnbox(JsRuntime.CurrentThis), False)
                        fenv.Define("arguments", New List(Of Object)(args), False)
                    End If
                    HoistFunctions(f.Body, fenv)
@@ -491,8 +497,25 @@ Public NotInheritable Class Interpreter
                 Return env.LookupOrThrow(i.Name)
 
             Case TypeOf e Is ThisExpr
-                ' class support arrives in tier 2 — a bare 'this' resolves to undefined
-                Return JsValue.Undef
+                ' lexical 'this' (defined in every non-arrow function scope); at the top
+                ' level of a script it is the global object
+                Dim tv As JsValue = Nothing
+                If env.TryGet("this", tv) Then Return tv
+                Return JsRuntime.JsUnbox(JsRuntime.CurrentThis)
+
+            Case TypeOf e Is SuperExpr
+                Dim sp = DirectCast(e, SuperExpr)
+                If sp.Member Is Nothing Then Return JsValue.Undef     ' bare super is only a call
+                Return JsRuntime.JsUnbox(JsRuntime.JsSuperGet(sp.Member))
+
+            Case TypeOf e Is NewExpr
+                Dim ne = DirectCast(e, NewExpr)
+                Dim ctor = JsRuntime.JsBox(Eval(ne.Callee, env))
+                Dim ctorArgs = EvalArguments(ne.Arguments, env)
+                Return JsRuntime.JsUnbox(JsRuntime.JsNew(ctor, ctorArgs))
+
+            Case TypeOf e Is ClassExpr
+                Return JsValue.OfObject(BuildClass(DirectCast(e, ClassExpr).Spec, env))
 
             Case TypeOf e Is UnaryExpr
                 Dim u = DirectCast(e, UnaryExpr)
@@ -637,13 +660,7 @@ Public NotInheritable Class Interpreter
                 Return v
 
             Case TypeOf e Is CallExpr
-                Dim c = DirectCast(e, CallExpr)
-                Dim f = JsRuntime.JsBox(Eval(c.Callee, env))
-                Dim args = EvalArguments(c.Arguments, env)
-                If c.IsOptional Then
-                    Return JsRuntime.JsUnbox(JsRuntime.JsChainInvoke(f, args))
-                End If
-                Return JsRuntime.JsUnbox(JsRuntime.JsInvoke(f, args))
+                Return JsRuntime.JsUnbox(EvalCall(DirectCast(e, CallExpr), env))
 
             Case TypeOf e Is OptionalChainExpr
                 ' chain root: a nullish optional link short-circuits to undefined
@@ -687,6 +704,88 @@ Public NotInheritable Class Interpreter
         End Select
 
         Throw New InvalidOperationException("unknown expression type " & e.GetType().Name)
+    End Function
+
+    ''' <summary>
+    ''' Build a class value from its spec: methods and accessors go to the prototype,
+    ''' static members onto the class, instance fields become per-construction
+    ''' initialiser callables (so <c>this</c> binds to the new instance).
+    ''' </summary>
+    Private Function BuildClass(spec As ClassSpec, env As Environment) As Object
+        Dim sup As Object = Nothing
+        If spec.SuperClass IsNot Nothing Then sup = JsRuntime.JsBox(Eval(spec.SuperClass, env))
+
+        Dim ctor As Object = Nothing
+        If spec.Constructor IsNot Nothing Then ctor = MakeFunction(spec.Constructor, env)
+
+        Dim parts As New List(Of (Kind As String, Name As String, Value As Object))
+        For Each m In spec.Members
+            Select Case m.Kind
+                Case ClassMemberKind.Method
+                    parts.Add((If(m.IsStatic, "s", "i"), m.Name,
+                               MakeFunction(DirectCast(m.Value, FuncExpr), env)))
+                Case ClassMemberKind.Getter
+                    parts.Add((If(m.IsStatic, "s", "i"), m.Name,
+                               New AccessorProperty(MakeFunction(DirectCast(m.Value, FuncExpr), env), Nothing)))
+                Case ClassMemberKind.Setter
+                    parts.Add((If(m.IsStatic, "s", "i"), m.Name,
+                               New AccessorProperty(Nothing, MakeFunction(DirectCast(m.Value, FuncExpr), env))))
+                Case ClassMemberKind.Field
+                    If m.IsStatic Then
+                        ' static field: evaluated once, at class definition time
+                        Dim v As Object = JsRuntime.Undef
+                        If m.Value IsNot Nothing Then
+                            v = JsRuntime.JsBox(Eval(m.Value, New Environment(env, isFunctionScope:=True)))
+                        End If
+                        parts.Add(("s", m.Name, v))
+                    Else
+                        Dim init As Object = Nothing
+                        If m.Value IsNot Nothing Then
+                            ' wrap the initialiser as a zero-argument function so that
+                            ' 'this' resolves to the instance being constructed
+                            init = MakeFunction(New FuncExpr(Nothing, New String() {},
+                                                             New List(Of Statement) From {New ReturnStmt(m.Value)}),
+                                                env)
+                        End If
+                        parts.Add(("f", m.Name, init))
+                    End If
+            End Select
+        Next
+
+        Return JsRuntime.JsDefineClass(spec.Name, ctor, sup, parts.ToArray())
+    End Function
+
+    ''' <summary>
+    ''' Evaluate a call: super(...), method calls (receiver bound to the owning
+    ''' object for <c>this</c>) and plain calls.
+    ''' </summary>
+    Private Function EvalCall(c As CallExpr, env As Environment) As Object
+        ' super(...) / super.m(...)
+        Dim sup = TryCast(c.Callee, SuperExpr)
+        If sup IsNot Nothing Then
+            Dim supArgs = EvalArguments(c.Arguments, env)
+            If sup.Member Is Nothing Then Return JsRuntime.JsSuperConstructor(supArgs)
+            Return JsRuntime.JsSuperInvoke(sup.Member, supArgs)
+        End If
+
+        ' method call: this = the object the method was read from
+        Dim m = TryCast(c.Callee, MemberExpr)
+        If m IsNot Nothing Then
+            Dim obj = JsRuntime.JsBox(Eval(m.Obj, env))
+            Dim args1 = EvalArguments(c.Arguments, env)
+            If m.Computed Then
+                Dim key = JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env))
+                Return JsRuntime.JsInvokeIndex(obj, key, args1, m.IsOptional, c.IsOptional)
+            End If
+            Return JsRuntime.JsInvokeMethod(obj, CStr(m.Name), args1, m.IsOptional, c.IsOptional)
+        End If
+
+        Dim f = JsRuntime.JsBox(Eval(c.Callee, env))
+        Dim args = EvalArguments(c.Arguments, env)
+        If c.IsOptional Then
+            Return JsRuntime.JsChainInvoke(f, args)
+        End If
+        Return JsRuntime.JsInvoke(f, args)
     End Function
 
     ''' <summary>Evaluate a call argument list, expanding spread elements when present.</summary>
@@ -761,9 +860,10 @@ Public NotInheritable Class Interpreter
                 Case ObjectPropertyKind.Spread
                     JsRuntime.JsSpreadInto(d, JsRuntime.JsBox(Eval(p.Value, env)))
                 Case ObjectPropertyKind.Getter
-                    d(p.Key) = New AccessorProperty(MakeFunction(DirectCast(p.Value, FuncExpr), env), Nothing)
+                    ' merge with an existing setter for the same key
+                    JsRuntime.JsAccessorDefine(d, p.Key, MakeFunction(DirectCast(p.Value, FuncExpr), env), Nothing)
                 Case ObjectPropertyKind.Setter
-                    d(p.Key) = New AccessorProperty(Nothing, MakeFunction(DirectCast(p.Value, FuncExpr), env))
+                    JsRuntime.JsAccessorDefine(d, p.Key, Nothing, MakeFunction(DirectCast(p.Value, FuncExpr), env))
                 Case ObjectPropertyKind.Shorthand
                     Dim v = If(p.Value Is Nothing, Eval(New IdentExpr(p.Key), env), Eval(p.Value, env))
                     d(p.Key) = JsRuntime.JsBox(v)

@@ -1063,6 +1063,7 @@ Public NotInheritable Class CodeGenerator
             Case "JSON" : Return "JsRuntime.Json"
             Case "Object" : Return "JsRuntime.ObjectBuiltin"
             Case "Array" : Return "JsRuntime.ArrayBuiltin"
+            Case "Function" : Return "JsRuntime.FunctionBuiltin"
             Case "undefined" : Return "JsRuntime.Undef"
             Case "NaN" : Return "Double.NaN"
             Case "Infinity" : Return "Double.PositiveInfinity"

@@ -193,10 +193,7 @@ Public NotInheritable Class Parser
                     ConsumeStatementEnd()
                     Return New ThrowStmt(v)
                 Case "try" : Return ParseTry()
-                Case "this"
-                    Throw New ParseException("'this' is not supported by this parser (line " & Cur.span.line & ")")
-                Case "new"
-                    Throw New ParseException("'new' is not supported by this parser (line " & Cur.span.line & ")")
+                Case "class" : Return ParseClassDecl()
             End Select
         End If
         Dim expr = ParseExpression()
@@ -293,6 +290,109 @@ Public NotInheritable Class Parser
         End If
         Eat(")")
         Return spec
+    End Function
+
+    ' ---------------- classes ----------------
+
+    Private Function ParseClassDecl() As Statement
+        EatKeyword("class")
+        Dim name = ExpectIdentifier()
+        Return New ClassDeclStmt(ParseClassBody(name))
+    End Function
+
+    ''' <summary>Class expression: the name is optional (<c>class extends X {}</c>).</summary>
+    Private Function ParseClassExpression() As Expression
+        EatKeyword("class")
+        Dim name As String = Nothing
+        If Cur.name = TokenType.Identifier Then
+            name = Cur.text
+            _pos += 1
+        End If
+        Return New ClassExpr(ParseClassBody(name))
+    End Function
+
+    Private Function ParseClassBody(name As String) As ClassSpec
+        Dim superClass As Expression = Nothing
+        If MatchKeyword("extends") Then
+            ' LeftHandSideExpression: a member/call chain, no assignment/comma
+            superClass = ParsePostfix()
+        End If
+
+        Eat("{")
+        Dim ctor As FuncExpr = Nothing
+        Dim members As New List(Of ClassMember)
+
+        While Not At("}")
+            If Cur.name = TokenType.Eof Then
+                Throw New ParseException("missing '}' — unexpected end of input in class body")
+            End If
+            If Match(";") Then Continue While          ' empty class element
+
+            ' 'static' modifier: not a modifier when the member itself is named
+            ' 'static' (static() {} or static = 1)
+            Dim isStatic = False
+            If Cur.name = TokenType.Identifier AndAlso Cur.text = "static" AndAlso
+               Not (NextIsPunct("(") OrElse NextIsPunct("=")) Then
+                isStatic = True
+                _pos += 1
+            End If
+
+            If Cur.name = TokenType.Identifier AndAlso (Cur.text = "get" OrElse Cur.text = "set") AndAlso
+               IsAccessorHeader() Then
+                Dim isGetter = Cur.text = "get"
+                _pos += 1
+                Dim mname = ParsePropertyName()
+                Dim spec = ParseParameterList()
+                If isGetter AndAlso spec.Parameters.Count <> 0 Then
+                    Throw New ParseException("class getter must not take parameters")
+                End If
+                If Not isGetter AndAlso spec.Parameters.Count <> 1 Then
+                    Throw New ParseException("class setter must take exactly one parameter")
+                End If
+                Dim fn = ParseMethodBody(spec)
+                members.Add(New ClassMember(If(isGetter, ClassMemberKind.Getter, ClassMemberKind.Setter),
+                                            mname, fn, isStatic))
+            ElseIf IsMethodHeader() Then
+                Dim mname = ParsePropertyName()
+                Dim spec = ParseParameterList()
+                Dim fn = ParseMethodBody(spec)
+                If Not isStatic AndAlso mname = "constructor" Then
+                    If ctor IsNot Nothing Then Throw New ParseException("class may only have one constructor")
+                    ctor = fn
+                Else
+                    members.Add(New ClassMember(ClassMemberKind.Method, mname, fn, isStatic))
+                End If
+            Else
+                ' field: name (= initialiser)?
+                Dim fname = ParsePropertyName()
+                Dim init As Expression = Nothing
+                If Match("=") Then init = ParseAssignment()
+                members.Add(New ClassMember(ClassMemberKind.Field, fname, init, isStatic))
+                ConsumeStatementEnd()
+            End If
+        End While
+
+        Eat("}")
+        Return New ClassSpec(name, superClass, ctor, members)
+    End Function
+
+    ''' <summary>Method body with its own function scope (like a function declaration).</summary>
+    Private Function ParseMethodBody(spec As ParamSpec) As FuncExpr
+        Dim outerFunc = _funcDepth, outerLoop = _loopDepth
+        _funcDepth += 1
+        _loopDepth = 0
+        Dim body = ParseBlock()
+        _funcDepth = outerFunc
+        _loopDepth = outerLoop
+        Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body,
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+    End Function
+
+    ''' <summary>True when the token right after the current one is the given punctuator.</summary>
+    Private Function NextIsPunct(text As String) As Boolean
+        If _pos + 1 >= _tokens.Count Then Return False
+        Dim nxt = _tokens(_pos + 1)
+        Return nxt.name = TokenType.Punct AndAlso nxt.text = text
     End Function
 
     Private Function ParseIf() As Statement
@@ -887,6 +987,46 @@ Public NotInheritable Class Parser
                         _pos += 1
                     End If
                     Return ParseFunctionRest(name)
+                Case "class"
+                    Return ParseClassExpression()
+                Case "this"
+                    _pos += 1
+                    Return New ThisExpr()
+                Case "new"
+                    _pos += 1
+                    ' the callee may be a member chain but NOT a call: new a.b.C(x)
+                    Dim callee = ParsePrimary()
+                    While At(".") OrElse At("[")
+                        If At(".") Then
+                            _pos += 1
+                            callee = New MemberExpr(callee, ExpectIdentifier(), False)
+                        Else
+                            _pos += 1
+                            Dim idx = ParseExpression()
+                            Eat("]")
+                            callee = New MemberExpr(callee, idx, True)
+                        End If
+                    End While
+                    Dim ctorArgs As New List(Of Expression)
+                    If At("(") Then ctorArgs = ParseArguments()
+                    Return New NewExpr(callee, ctorArgs)
+                Case "super"
+                    _pos += 1
+                    If At(".") Then
+                        _pos += 1
+                        Return New SuperExpr(ExpectIdentifier())
+                    End If
+                    If At("[") Then
+                        ' super[expr] — evaluated as a member name
+                        _pos += 1
+                        Dim e = ParseExpression()
+                        Eat("]")
+                        If Not TypeOf e Is LiteralExpr Then
+                            Throw New ParseException("super[] requires a literal member name")
+                        End If
+                        Return New SuperExpr(JsRuntime.JsStr(DirectCast(e, LiteralExpr).Value))
+                    End If
+                    Return New SuperExpr(Nothing)
             End Select
         End If
         Throw New ParseException($"unexpected token '{Cur.text}' at {Cur.Location}")
