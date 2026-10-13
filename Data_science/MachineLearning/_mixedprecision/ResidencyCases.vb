@@ -76,16 +76,27 @@ Namespace MixedPrecisionBench
         ''' AdamW：把设备端内核结果与主机上的参考公式对照。
         ''' </summary>
         ''' <remarks>
-        ''' 内核里有一条"单元素更新幅度不超过 10 倍学习率"的自愈钳位
-        ''' （专治单精度下 v 下溢导致的爆炸）。为了让对照不受它干扰，
-        ''' 这里刻意用中等量级的梯度 —— 正常训练下该钳位本就不该被触发。
+        ''' 内核里有一条"单元素更新幅度不超过 10 倍学习率"的自愈钳位，
+        ''' 专治单精度下二阶矩 v 下溢导致的爆炸（v→0 时 m/√v 会被放大好几个数量级）。
+        ''' 这条钳位是**纯单精度特有的语义差异**：双精度栈的 AdamW 没有它。
+        ''' 因此本用例把 v 的初值抬到明显远离 0 的区间，让钳位不被触发，
+        ''' 从而在"与教科书公式等价"的前提下验证内核接线是否正确。
+        ''' <para>
+        ''' 实施时务必记住：把优化器切到 FP32 后，一旦 v 下溢，
+        ''' 参数更新会被这条上限悄悄改写 —— 这是设计如此，不是缺陷。
+        ''' </para>
         ''' </remarks>
         Private Sub AdamWCase(results As List(Of CaseResult))
             Dim n = 4096
             Dim param = Randoms(n, seed:=101, scale:=1.0)
             Dim grad = Randoms(n, seed:=102, scale:=0.3)
-            Dim mom = Randoms(n, seed:=103, scale:=0.05)
-            Dim vel = Randoms(n, seed:=104, scale:=0.02)
+            Dim mom = Randoms(n, seed:=103, scale:=0.1)
+
+            ' v 恒为正且远离 0：让 sqrt(vHat) 有稳定的量级
+            Dim vel = Randoms(n, seed:=104, scale:=0.3)
+            For i = 0 To vel.Length - 1
+                vel(i) = 0.2 + std.Abs(vel(i))
+            Next
 
             Dim lr = 0.01, b1 = 0.9, b2 = 0.999, eps = 0.00000001
             Dim bc1 = 0.1, bc2 = 0.01, wd = 0.001
