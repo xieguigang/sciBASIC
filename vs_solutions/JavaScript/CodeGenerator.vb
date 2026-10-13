@@ -830,8 +830,8 @@ Public NotInheritable Class CodeGenerator
 
     ''' <summary>
     ''' Template literal → VB string concatenation with JsStr conversion.
-    ''' Every element after the first is joined with ' & ' (a literal chunk that
-    ''' FOLLOWS an interpolation needs the connector too).
+    ''' Every chunk after the first is joined with a concatenation operator; a
+    ''' literal chunk that follows an interpolation needs the connector as well.
     ''' </summary>
     Private Function GenTemplate(t As TemplateExpr, scope As Scope) As String
         Dim sb As New StringBuilder()
