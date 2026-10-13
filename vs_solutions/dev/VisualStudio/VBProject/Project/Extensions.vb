@@ -156,6 +156,10 @@ Namespace VBProj
             Dim bin = If(profile Is Nothing, "bin", profile.OutputPath)
             Dim outputdir = $"{base}/{bin}"
 
+            If profile Is Nothing Then
+                Call Console.WriteLine($"Missing compiler config '{profileName}' inside the target project file, fallback to the default release folder: {outputdir}")
+            End If
+
             Return outputdir
         End Function
 
