@@ -231,14 +231,16 @@ Public Class LiteJsTests
     Public Sub Interp_UpdateUndeclared_ImplicitGlobal()
         ' non-strict JS: x++ on an undeclared x assigns NaN to the implicit global
         Assert.Equal("NaN", OneLine("x++; console.log(x);"))
-        Assert.Equal("NaN", OneLine("var a = 1; a--; a--; console.log(a - 1);"))
+        Assert.Equal("NaN", OneLine("y--; console.log(y);"))
+        Assert.Equal("NaN", OneLine("console.log(++undeclaredCounter);"))
     End Sub
 
     <Fact>
     Public Sub Interp_NeAndStrictNe()
         Assert.Equal("true false", OneLine("console.log(1 != 2, 1 !== 1);"))
         Assert.Equal("true", OneLine("console.log('a' != 'b');"))
-        Assert.Equal("false", OneLine("console.log(NaN != NaN);"))
+        Assert.Equal("true", OneLine("console.log(NaN != NaN);"))     ' NaN equals nothing
+        Assert.Equal("false", OneLine("console.log(NaN == NaN);"))
     End Sub
 
     ' --------------------------------------------------------- codegen (text)
