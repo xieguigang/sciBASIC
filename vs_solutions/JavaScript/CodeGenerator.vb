@@ -22,6 +22,8 @@ Public NotInheritable Class CodeGenerator
     ' what 'break'/'continue' compile to in the innermost loop being generated
     Private ReadOnly _loopExit As New Stack(Of String)
     Private ReadOnly _loopCont As New Stack(Of String)
+    ' GoTo targets of labeled statements currently in scope (labeled break/continue)
+    Private ReadOnly _labeledTargets As New Dictionary(Of String, LabelInfo)
 
     Public Function Generate(program As Program, Optional className As String = "GeneratedScript") As String
         _temp = 0
@@ -104,63 +106,41 @@ Public NotInheritable Class CodeGenerator
             GenIf(DirectCast(s, IfStmt), w, scope)
 
         ElseIf TypeOf s Is WhileStmt Then
-            Dim n = DirectCast(s, WhileStmt)
-            w.Line($"While JsTruthy({GenExpr(n.Test, scope)})")
-            w.Indent()
-            _loopExit.Push("Exit While") : _loopCont.Push("Continue While")
-            GenBody(n.Body, w, scope)
-            _loopCont.Pop() : _loopExit.Pop()
-            w.UnIndent()
-            w.Line("End While")
+            GenWhileLoop(DirectCast(s, WhileStmt), w, scope)
 
         ElseIf TypeOf s Is DoWhileStmt Then
-            Dim n = DirectCast(s, DoWhileStmt)
-            w.Line("Do")
-            w.Indent()
-            _loopExit.Push("Exit Do") : _loopCont.Push("Continue Do")
-            GenBody(n.Body, w, scope)
-            _loopCont.Pop() : _loopExit.Pop()
-            w.UnIndent()
-            w.Line($"Loop While JsTruthy({GenExpr(n.Test, scope)})")
+            GenDoWhileLoop(DirectCast(s, DoWhileStmt), w, scope)
 
         ElseIf TypeOf s Is ForStmt Then
-            Dim n = DirectCast(s, ForStmt)
-            If TypeOf n.Init Is VarStmt Then
-                GenStmt(DirectCast(n.Init, VarStmt), w, scope)
-            ElseIf n.Init IsNot Nothing Then
-                GenExprAsStatement(DirectCast(n.Init, Expression), w, scope)
-            End If
-            ' JS 'continue' inside a for-loop still runs the update clause,
-            ' so the update is placed at a label the generated GoTo targets.
-            _label += 1
-            Dim updLabel = $"__upd{_label}"
-            w.Line("Do")
-            w.Indent()
-            w.Line($"If Not JsTruthy({GenExpr(n.Test, scope)}) Then Exit Do")
-            _loopExit.Push("Exit Do") : _loopCont.Push($"GoTo {updLabel}")
-            GenBody(n.Body, w, scope)
-            _loopCont.Pop() : _loopExit.Pop()
-            w.Line($"{updLabel}:")
-            If n.Update IsNot Nothing Then GenExprAsStatement(n.Update, w, scope)
-            w.UnIndent()
-            w.Line("Loop")
+            GenForLoop(DirectCast(s, ForStmt), w, scope)
 
         ElseIf TypeOf s Is ForInStmt Then
-            Dim n = DirectCast(s, ForInStmt)
-            Dim vbVar = scope.DefineLocal(n.VarName)
-            w.Line($"For Each {vbVar} As JsValue In JsRuntime.JsForInKeys({GenExpr(n.ObjectExpr, scope)})")
-            w.Indent()
-            _loopExit.Push("Exit For") : _loopCont.Push("Continue For")
-            GenBody(n.Body, w, scope)
-            _loopCont.Pop() : _loopExit.Pop()
-            w.UnIndent()
-            w.Line("Next")
+            GenForInLoop(DirectCast(s, ForInStmt), w, scope)
+
+        ElseIf TypeOf s Is ForOfStmt Then
+            GenForOfLoop(DirectCast(s, ForOfStmt), w, scope)
+
+        ElseIf TypeOf s Is SwitchStmt Then
+            GenSwitch(DirectCast(s, SwitchStmt), w, scope)
+
+        ElseIf TypeOf s Is LabeledStmt Then
+            GenLabeled(DirectCast(s, LabeledStmt), w, scope)
 
         ElseIf TypeOf s Is BreakStmt Then
-            w.Line(If(_loopExit.Count > 0, _loopExit.Peek(), "Exit Do"))
+            Dim b = DirectCast(s, BreakStmt)
+            If b.Label IsNot Nothing Then
+                w.Line(LabeledJump(b.Label, exit:=True))
+            Else
+                w.Line(If(_loopExit.Count > 0, _loopExit.Peek(), "Exit Do"))
+            End If
 
         ElseIf TypeOf s Is ContinueStmt Then
-            w.Line(If(_loopCont.Count > 0, _loopCont.Peek(), "Continue Do"))
+            Dim c = DirectCast(s, ContinueStmt)
+            If c.Label IsNot Nothing Then
+                w.Line(LabeledJump(c.Label, exit:=False))
+            Else
+                w.Line(If(_loopCont.Count > 0, _loopCont.Peek(), "Continue Do"))
+            End If
 
         ElseIf TypeOf s Is ReturnStmt Then
             Dim r = DirectCast(s, ReturnStmt)
@@ -179,6 +159,215 @@ Public NotInheritable Class CodeGenerator
             Throw New NotSupportedException($"unsupported statement {s.GetType().Name}")
         End If
     End Sub
+
+    ' ======================================================= loops
+
+    ''' <summary>while (test) body — <paramref name="lc"/>/<paramref name="lx"/> are the
+    ''' GoTo targets used by a labeled break/continue (nested loops included).</summary>
+    Private Sub GenWhileLoop(n As WhileStmt, w As IndentWriter, scope As Scope,
+                             Optional lc As String = Nothing, Optional lx As String = Nothing)
+        w.Line($"While JsTruthy({GenExpr(n.Test, scope)})")
+        w.Indent()
+        _loopExit.Push(If(lx IsNot Nothing, $"GoTo {lx}", "Exit While"))
+        _loopCont.Push(If(lc IsNot Nothing, $"GoTo {lc}", "Continue While"))
+        GenBody(n.Body, w, scope)
+        _loopCont.Pop() : _loopExit.Pop()
+        w.UnIndent()
+        If lc IsNot Nothing Then w.Line($"{lc}:")
+        w.Line("End While")
+        If lx IsNot Nothing Then w.Line($"{lx}:")
+    End Sub
+
+    Private Sub GenDoWhileLoop(n As DoWhileStmt, w As IndentWriter, scope As Scope,
+                               Optional lc As String = Nothing, Optional lx As String = Nothing)
+        w.Line("Do")
+        w.Indent()
+        _loopExit.Push(If(lx IsNot Nothing, $"GoTo {lx}", "Exit Do"))
+        _loopCont.Push(If(lc IsNot Nothing, $"GoTo {lc}", "Continue Do"))
+        GenBody(n.Body, w, scope)
+        _loopCont.Pop() : _loopExit.Pop()
+        If lc IsNot Nothing Then w.Line($"{lc}:")
+        w.UnIndent()
+        w.Line($"Loop While JsTruthy({GenExpr(n.Test, scope)})")
+        If lx IsNot Nothing Then w.Line($"{lx}:")
+    End Sub
+
+    Private Sub GenForLoop(n As ForStmt, w As IndentWriter, scope As Scope,
+                           Optional lc As String = Nothing, Optional lx As String = Nothing)
+        If TypeOf n.Init Is VarStmt Then
+            GenStmt(DirectCast(n.Init, VarStmt), w, scope)
+        ElseIf n.Init IsNot Nothing Then
+            GenExprAsStatement(DirectCast(n.Init, Expression), w, scope)
+        End If
+        ' JS 'continue' inside a for-loop still runs the update clause,
+        ' so the update is placed at a label the generated GoTo targets.
+        _label += 1
+        Dim updLabel = $"__upd{_label}"
+        w.Line("Do")
+        w.Indent()
+        Dim condExit = If(lx IsNot Nothing, $"GoTo {lx}", "Exit Do")
+        w.Line($"If Not JsTruthy({GenExpr(n.Test, scope)}) Then {condExit}")
+        _loopExit.Push(If(lx IsNot Nothing, $"GoTo {lx}", "Exit Do"))
+        _loopCont.Push($"GoTo {updLabel}")
+        GenBody(n.Body, w, scope)
+        _loopCont.Pop() : _loopExit.Pop()
+        If lc IsNot Nothing AndAlso lc <> updLabel Then w.Line($"{lc}:")
+        w.Line($"{updLabel}:")
+        If n.Update IsNot Nothing Then GenExprAsStatement(n.Update, w, scope)
+        w.UnIndent()
+        w.Line("Loop")
+        If lx IsNot Nothing Then w.Line($"{lx}:")
+    End Sub
+
+    Private Sub GenForInLoop(n As ForInStmt, w As IndentWriter, scope As Scope,
+                             Optional lc As String = Nothing, Optional lx As String = Nothing)
+        Dim vbVar = scope.DefineLocal(n.VarName)
+        w.Line($"For Each {vbVar} As JsValue In JsRuntime.JsForInKeys({GenExpr(n.ObjectExpr, scope)})")
+        w.Indent()
+        _loopExit.Push(If(lx IsNot Nothing, $"GoTo {lx}", "Exit For"))
+        _loopCont.Push(If(lc IsNot Nothing, $"GoTo {lc}", "Continue For"))
+        GenBody(n.Body, w, scope)
+        _loopCont.Pop() : _loopExit.Pop()
+        If lc IsNot Nothing Then w.Line($"{lc}:")
+        w.UnIndent()
+        w.Line("Next")
+        If lx IsNot Nothing Then w.Line($"{lx}:")
+    End Sub
+
+    Private Sub GenForOfLoop(n As ForOfStmt, w As IndentWriter, scope As Scope,
+                             Optional lc As String = Nothing, Optional lx As String = Nothing)
+        Dim iterExpr = $"JsRuntime.JsIterableValues({GenExpr(n.Iterable, scope)})"
+        Dim targetExpr As String = Nothing
+
+        If TypeOf n.Target Is String AndAlso n.Kind IsNot Nothing Then
+            ' declaration with a simple name: the loop variable itself
+            Dim vbVar = scope.DefineLocal(CStr(n.Target))
+            w.Line($"For Each {vbVar} As JsValue In {iterExpr}")
+        Else
+            ' destructuring target, or assignment to an existing variable
+            Dim t = UniqueName("item")
+            w.Line($"For Each {t} As JsValue In {iterExpr}")
+            targetExpr = t
+        End If
+
+        w.Indent()
+        If targetExpr IsNot Nothing Then
+            GenBindTarget(n.Target, targetExpr, w, scope, n.Kind, isDeclaration:=(n.Kind IsNot Nothing))
+        End If
+        _loopExit.Push(If(lx IsNot Nothing, $"GoTo {lx}", "Exit For"))
+        _loopCont.Push(If(lc IsNot Nothing, $"GoTo {lc}", "Continue For"))
+        GenBody(n.Body, w, scope)
+        _loopCont.Pop() : _loopExit.Pop()
+        If lc IsNot Nothing Then w.Line($"{lc}:")
+        w.UnIndent()
+        w.Line("Next")
+        If lx IsNot Nothing Then w.Line($"{lx}:")
+    End Sub
+
+    ' ======================================================= switch
+
+    ''' <summary>
+    ''' switch → If + GoTo label chain (VB Select Case has no fall-through and uses
+    ''' loose comparison, neither of which matches JS).
+    ''' </summary>
+    Private Sub GenSwitch(n As SwitchStmt, w As IndentWriter, scope As Scope)
+        Dim discVar = UniqueName("sw")
+        w.Line($"Dim {discVar} As JsValue = {GenExpr(n.Discriminant, scope)}")
+
+        _label += 1
+        Dim tagN = _label
+        Dim exitLabel = $"__swend{tagN}"
+        Dim defaultLabel As String = Nothing
+        Dim labels(n.Cases.Count - 1) As String
+
+        ' dispatch chain: evaluate case tests in order until one matches
+        For i = 0 To n.Cases.Count - 1
+            labels(i) = $"__case{tagN}_{i}"
+            If n.Cases(i).Test Is Nothing Then
+                defaultLabel = labels(i)
+            Else
+                w.Line($"If JsRuntime.JsStrictEq({discVar}, {GenExpr(n.Cases(i).Test, scope)}) Then GoTo {labels(i)}")
+            End If
+        Next
+        w.Line($"GoTo {If(defaultLabel IsNot Nothing, defaultLabel, exitLabel)}")
+
+        ' bodies: fall through to the next arm unless a break jumps to the end
+        _loopExit.Push($"GoTo {exitLabel}")
+        For i = 0 To n.Cases.Count - 1
+            w.Line($"{labels(i)}:")
+            w.Indent()
+            For Each st In n.Cases(i).Body
+                GenStmt(st, w, scope)
+            Next
+            If i < n.Cases.Count - 1 Then w.Line($"GoTo {labels(i + 1)}")     ' fall-through
+            w.UnIndent()
+        Next
+        _loopExit.Pop()
+        w.Line($"{exitLabel}:")
+    End Sub
+
+    ' ======================================================= labels
+
+    Private Sub GenLabeled(lb As LabeledStmt, w As IndentWriter, scope As Scope)
+        _label += 1
+        Dim n = _label
+        Dim exitL = $"__lexit{n}"
+        Dim contL = $"__lcont{n}"
+        Dim body = lb.Body
+        Dim isLoop = TypeOf body Is WhileStmt OrElse TypeOf body Is DoWhileStmt OrElse
+                     TypeOf body Is ForStmt OrElse TypeOf body Is ForInStmt OrElse TypeOf body Is ForOfStmt
+
+        Dim hadPrev = _labeledTargets.ContainsKey(lb.Label)
+        Dim prev As LabelInfo = Nothing
+        If hadPrev Then prev = _labeledTargets(lb.Label)
+        _labeledTargets(lb.Label) = New LabelInfo(exitL, If(isLoop, contL, Nothing))
+        Try
+            If TypeOf body Is WhileStmt Then
+                GenWhileLoop(DirectCast(body, WhileStmt), w, scope, contL, exitL)
+            ElseIf TypeOf body Is DoWhileStmt Then
+                GenDoWhileLoop(DirectCast(body, DoWhileStmt), w, scope, contL, exitL)
+            ElseIf TypeOf body Is ForStmt Then
+                ' the for-loop's own update label doubles as the continue target
+                GenForLoop(DirectCast(body, ForStmt), w, scope, contL, exitL)
+            ElseIf TypeOf body Is ForInStmt Then
+                GenForInLoop(DirectCast(body, ForInStmt), w, scope, contL, exitL)
+            ElseIf TypeOf body Is ForOfStmt Then
+                GenForOfLoop(DirectCast(body, ForOfStmt), w, scope, contL, exitL)
+            Else
+                GenStmt(body, w, scope)
+                w.Line($"{exitL}:")
+            End If
+        Finally
+            If hadPrev Then
+                _labeledTargets(lb.Label) = prev
+            Else
+                _labeledTargets.Remove(lb.Label)
+            End If
+        End Try
+    End Sub
+
+    ''' <summary>Resolve a labeled break/continue into its GoTo target.</summary>
+    Private Function LabeledJump(label As String, exit As Boolean) As String
+        Dim info As LabelInfo = Nothing
+        If Not _labeledTargets.TryGetValue(label, info) Then
+            Throw New NotSupportedException($"label '{label}' is not visible in this function")
+        End If
+        If exit Then Return $"GoTo {info.ExitLabel}"
+        If info.ContLabel Is Nothing Then
+            Throw New NotSupportedException($"'{label}' is not a loop label")
+        End If
+        Return $"GoTo {info.ContLabel}"
+    End Function
+
+    ''' <summary>GoTo targets of a labeled statement (exit label, optional continue label).</summary>
+    Private NotInheritable Class LabelInfo
+        Public ReadOnly ExitLabel As String
+        Public ReadOnly ContLabel As String
+        Public Sub New(exitLabel As String, contLabel As String)
+            Me.ExitLabel = exitLabel
+            Me.ContLabel = contLabel
+        End Sub
+    End Class
 
     Private Sub GenIf(n As IfStmt, w As IndentWriter, scope As Scope)
         w.Line($"If JsTruthy({GenExpr(n.Test, scope)}) Then")
@@ -235,7 +424,8 @@ Public NotInheritable Class CodeGenerator
         w.WriteLine()
         w.Line($"Dim {vbName} As Func(Of Object(), Object) = Function({argsName} As JsValue())")
         w.Indent()
-        w.Paste(LambdaBody(f.Parameters, f.Body, scope, argsName))
+        w.Paste(LambdaBody(New FuncExpr(f.Name, f.Parameters, f.Body, defaults:=f.Defaults, restParam:=f.RestParam),
+                           scope, argsName))
         w.UnIndent()
         w.Line("End Function")
     End Sub
@@ -313,11 +503,28 @@ Public NotInheritable Class CodeGenerator
 
         ElseIf TypeOf e Is UnaryExpr Then
             Dim u = DirectCast(e, UnaryExpr)
+            Select Case u.Op
+                Case "delete"
+                    ' delete needs the reference, not the value
+                    If TypeOf u.Operand Is MemberExpr Then
+                        Dim m = DirectCast(u.Operand, MemberExpr)
+                        Dim objTxt = GenExpr(m.Obj, scope)
+                        If m.Computed Then
+                            Return $"JsRuntime.JsDelete({objTxt}, {GenExpr(DirectCast(m.Name, Expression), scope)})"
+                        End If
+                        Return $"JsRuntime.JsDelete({objTxt}, {VbString(CStr(m.Name))})"
+                    End If
+                    ' non-reference operand: evaluate for side effects (JS returns true)
+                    Return $"JsRuntime.JsDeleteValue({GenExpr(u.Operand, scope)})"
+                Case "void"
+                    Return $"JsRuntime.JsVoid({GenExpr(u.Operand, scope)})"
+            End Select
             Dim x = GenExpr(u.Operand, scope)
             Select Case u.Op
                 Case "-" : Return $"JsRuntime.JsNeg({x})"
                 Case "+" : Return $"JsRuntime.JsNum({x})"
                 Case "!" : Return $"JsRuntime.JsNot({x})"
+                Case "~" : Return $"JsRuntime.JsBitNot({x})"
                 Case "typeof" : Return $"JsRuntime.JsTypeOf({x})"
             End Select
             Throw New NotSupportedException("unary " & u.Op)
@@ -355,6 +562,14 @@ Public NotInheritable Class CodeGenerator
                 Case "<=" : Return $"JsRuntime.JsLe({x}, {y})"
                 Case ">" : Return $"JsRuntime.JsGt({x}, {y})"
                 Case ">=" : Return $"JsRuntime.JsGe({x}, {y})"
+                Case "&" : Return $"JsRuntime.JsBitAnd({x}, {y})"
+                Case "|" : Return $"JsRuntime.JsBitOr({x}, {y})"
+                Case "^" : Return $"JsRuntime.JsBitXor({x}, {y})"
+                Case "<<" : Return $"JsRuntime.JsShl({x}, {y})"
+                Case ">>" : Return $"JsRuntime.JsShr({x}, {y})"
+                Case ">>>" : Return $"JsRuntime.JsUshr({x}, {y})"
+                Case "in" : Return $"JsRuntime.JsIn({x}, {y})"
+                Case "instanceof" : Return $"JsRuntime.JsInstanceOf({x}, {y})"
             End Select
             Throw New NotSupportedException("binary " & b.Op)
 
@@ -363,7 +578,8 @@ Public NotInheritable Class CodeGenerator
             Dim x = GenExpr(l.Left, scope)
             Dim yLazy = $"Function() {GenExpr(l.Right, scope)}"
             If l.Op = "&&" Then Return $"JsRuntime.JsAnd({x}, {yLazy})"
-            Return $"JsRuntime.JsOr({x}, {yLazy})"
+            If l.Op = "||" Then Return $"JsRuntime.JsOr({x}, {yLazy})"
+            Return $"JsRuntime.JsNullish({x}, {yLazy})"
 
         ElseIf TypeOf e Is CondExpr Then
             Dim c = DirectCast(e, CondExpr)
@@ -397,45 +613,253 @@ Public NotInheritable Class CodeGenerator
 
         ElseIf TypeOf e Is CallExpr Then
             Dim c = DirectCast(e, CallExpr)
-            Return $"JsRuntime.JsInvoke({GenExpr(c.Callee, scope)}, {GenArgs(c.Arguments, scope)})"
+            Dim callee = GenExpr(c.Callee, scope)
+            Dim args = GenArgs(c.Arguments, scope)
+            If c.IsOptional Then Return $"JsRuntime.JsChainInvoke({callee}, {args})"
+            Return $"JsRuntime.JsInvoke({callee}, {args})"
+
+        ElseIf TypeOf e Is OptionalChainExpr Then
+            ' the chain root turns the short-circuit signal into undefined
+            Dim chain = GenExpr(DirectCast(e, OptionalChainExpr).Chain, scope)
+            Dim exName = UniqueName("oc")
+            Dim sb As New StringBuilder()
+            sb.Append("CType(Function() As JsValue" & vbLf)
+            sb.Append("Try" & vbLf)
+            sb.Append($"Return {chain}" & vbLf)
+            sb.Append($"Catch {exName} As LiteJs.Runtime.OptionalChainShortCircuit" & vbLf)
+            sb.Append("Return JsRuntime.Undef" & vbLf)
+            sb.Append("End Try" & vbLf)
+            sb.Append("End Function, Func(Of Object(), Object)).Invoke(New Object() {})")
+            Return sb.ToString()
 
         ElseIf TypeOf e Is MemberExpr Then
             Dim m = DirectCast(e, MemberExpr)
             Dim objTxt = GenExpr(m.Obj, scope)
             If m.Computed Then
-                Return $"JsRuntime.JsIndex({objTxt}, {GenExpr(DirectCast(m.Name, Expression), scope)})"
+                Dim keyTxt = GenExpr(DirectCast(m.Name, Expression), scope)
+                If m.IsOptional Then Return $"JsRuntime.JsChainIndex({objTxt}, {keyTxt})"
+                Return $"JsRuntime.JsIndex({objTxt}, {keyTxt})"
             End If
+            If m.IsOptional Then Return $"JsRuntime.JsChainGet({objTxt}, {VbString(CStr(m.Name))})"
             Return $"JsRuntime.JsGet({objTxt}, {VbString(CStr(m.Name))})"
 
+        ElseIf TypeOf e Is TemplateExpr Then
+            Return GenTemplate(DirectCast(e, TemplateExpr), scope)
+
+        ElseIf TypeOf e Is SequenceExpr Then
+            Dim sq = DirectCast(e, SequenceExpr)
+            Dim sb As New StringBuilder()
+            sb.Append("CType(Function() As JsValue" & vbLf)
+            For i = 0 To sq.Expressions.Count - 2
+                sb.Append(GenExpr(sq.Expressions(i), scope) & vbLf)
+            Next
+            sb.Append($"Return {GenExpr(sq.Expressions(sq.Expressions.Count - 1), scope)}" & vbLf)
+            sb.Append("End Function, Func(Of Object(), Object)).Invoke(New Object() {})")
+            Return sb.ToString()
+
+        ElseIf TypeOf e Is DestructureAssignExpr Then
+            Dim d = DirectCast(e, DestructureAssignExpr)
+            Dim v = UniqueName("dv")
+            Dim bind As New IndentWriter()
+            GenBindTarget(d.Target, v, bind, scope, Nothing, isDeclaration:=False)
+            Dim sb As New StringBuilder()
+            sb.Append("CType(Function() As JsValue" & vbLf)
+            sb.Append($"Dim {v} As JsValue = {GenExpr(d.Value, scope)}" & vbLf)
+            sb.Append(bind.ToString())
+            sb.Append($"Return {v}" & vbLf)
+            sb.Append("End Function, Func(Of Object(), Object)).Invoke(New Object() {})")
+            Return sb.ToString()
+
         ElseIf TypeOf e Is ArrayExpr Then
-            Dim a = DirectCast(e, ArrayExpr)
-            If a.Elements.Count = 0 Then Return "JsRuntime.JsArray()"
-            Dim items = a.Elements.Select(Function(x) GenExpr(x, scope)).ToArray()
-            Return "JsRuntime.JsArray(" & String.Join(", ", items) & ")"
+            Return GenArrayLiteral(DirectCast(e, ArrayExpr), scope)
 
         ElseIf TypeOf e Is ObjectExpr Then
-            Dim o = DirectCast(e, ObjectExpr)
-            If o.Properties.Count = 0 Then Return "JsRuntime.JsObj(New (String, Object)() {})"
-            Dim pairs = o.Properties.
-                Select(Function(p) $"({VbString(p.Key)}, {GenExpr(p.Value, scope)})").ToArray()
-            Return "JsRuntime.JsObj(New (String, Object)() {" & String.Join(", ", pairs) & "})"
+            Return GenObjectLiteral(DirectCast(e, ObjectExpr), scope)
 
         ElseIf TypeOf e Is FuncExpr Then
             Dim f = DirectCast(e, FuncExpr)
             Dim argsName = ArgsParam()
             Return "CType(Function(" & argsName & " As JsValue())" & vbLf &
-                   LambdaBody(f.Parameters, f.Body, scope, argsName, f.IsArrow) & vbLf &
+                   LambdaBody(f, scope, argsName) & vbLf &
                    "End Function, Func(Of Object(), Object))"
+
+        ElseIf TypeOf e Is SpreadElement Then
+            Throw New NotSupportedException("spread element outside an argument/array/object literal")
         End If
 
         Throw New NotSupportedException("unsupported expression " & e.GetType().Name)
     End Function
 
+    ''' <summary>Template literal → VB string concatenation with JsStr conversion.</summary>
+    Private Function GenTemplate(t As TemplateExpr, scope As Scope) As String
+        Dim sb As New StringBuilder()
+        For Each chunk In t.Chunks
+            If TypeOf chunk Is String Then
+                sb.Append(VbString(CStr(chunk)))
+            Else
+                sb.Append(" & ").Append("JsRuntime.JsStr(").
+                   Append(GenExpr(DirectCast(chunk, Expression), scope)).
+                   Append(")")
+            End If
+        Next
+        Dim result = sb.ToString()
+        If result.StartsWith(" & ", StringComparison.Ordinal) Then result = result.Substring(3)
+        If result = "" Then Return """"""
+        Return result
+    End Function
+
+    ''' <summary>Array literal with holes and spread elements.</summary>
+    Private Function GenArrayLiteral(a As ArrayExpr, scope As Scope) As String
+        Dim hasSpread = a.Elements.Any(Function(x) TypeOf x Is SpreadElement)
+        If hasSpread Then
+            Dim parts = a.Elements.Select(Function(x) GenArrayPart(x, scope)).ToArray()
+            Return "JsRuntime.JsArrayFrom(" & String.Join(", ", parts) & ")"
+        End If
+        If a.Elements.Count = 0 Then Return "JsRuntime.JsArray()"
+        Dim items = a.Elements.Select(Function(x) GenArrayPart(x, scope)).ToArray()
+        Return "JsRuntime.JsArray(" & String.Join(", ", items) & ")"
+    End Function
+
+    Private Function GenArrayPart(x As Expression, scope As Scope) As String
+        If x Is Nothing Then Return "JsRuntime.Undef"        ' hole reads as undefined
+        If TypeOf x Is SpreadElement Then
+            Return $"JsRuntime.JsSpread({GenExpr(DirectCast(x, SpreadElement).Argument, scope)})"
+        End If
+        Return GenExpr(x, scope)
+    End Function
+
+    ''' <summary>Object literal with spread / accessors / computed keys / shorthand.</summary>
+    Private Function GenObjectLiteral(o As ObjectExpr, scope As Scope) As String
+        Dim needsFrom = o.Properties.Any(Function(p) p.Kind = ObjectPropertyKind.Spread OrElse
+                                                    p.Kind = ObjectPropertyKind.Getter OrElse
+                                                    p.Kind = ObjectPropertyKind.Setter)
+        If o.Properties.Count = 0 Then Return "JsRuntime.JsObj(New (String, Object)() {})"
+        Dim parts = o.Properties.Select(Function(p) GenObjectPart(p, scope)).ToArray()
+        If needsFrom Then
+            Return "JsRuntime.JsObjFrom(" & String.Join(", ", parts) & ")"
+        End If
+        Return "JsRuntime.JsObj(New (String, Object)() {" & String.Join(", ", parts) & "})"
+    End Function
+
+    Private Function GenObjectPart(p As ObjectProperty, scope As Scope) As String
+        Select Case p.Kind
+            Case ObjectPropertyKind.Spread
+                Return $"JsRuntime.JsSpread({GenExpr(p.Value, scope)})"
+            Case ObjectPropertyKind.Getter
+                Return $"({KeyText(p, scope)}, JsRuntime.JsAccessor({GenExpr(p.Value, scope)}, Nothing))"
+            Case ObjectPropertyKind.Setter
+                Return $"({KeyText(p, scope)}, JsRuntime.JsAccessor(Nothing, {GenExpr(p.Value, scope)}))"
+            Case ObjectPropertyKind.Shorthand
+                Dim v = If(p.Value Is Nothing, ResolveIdent(p.Key, scope), GenExpr(p.Value, scope))
+                Return $"({VbString(p.Key)}, {v})"
+            Case Else
+                Return $"({KeyText(p, scope)}, {GenExpr(p.Value, scope)})"
+        End Select
+    End Function
+
+    ''' <summary>Property key text: literal name or a computed JsStr(expr).</summary>
+    Private Function KeyText(p As ObjectProperty, scope As Scope) As String
+        If p.KeyExpr IsNot Nothing Then Return $"JsRuntime.JsStr({GenExpr(p.KeyExpr, scope)})"
+        Return VbString(p.Key)
+    End Function
+
+    ''' <summary>Call argument list, expanding spread elements when present.</summary>
     Private Function GenArgs(args As List(Of Expression), scope As Scope) As String
+        Dim hasSpread = args.Any(Function(a) TypeOf a Is SpreadElement)
+        If hasSpread Then
+            Dim parts = args.Select(Function(a) GenArrayPart(a, scope)).ToArray()
+            Return "JsRuntime.JsBuildArgs(" & String.Join(", ", parts) & ")"
+        End If
         If args.Count = 0 Then Return "New JsValue() {}"
         Dim items = args.Select(Function(a) GenExpr(a, scope)).ToArray()
         Return "New JsValue() {" & String.Join(", ", items) & "}"
     End Function
+
+    ' ======================================================= binding targets
+
+    ''' <summary>
+    ''' Emit the statements binding a (possibly destructuring) target.
+    ''' <paramref name="isDeclaration"/> selects declaration semantics
+    ''' (let/const Dim, var hoisted assignment) versus plain assignment.
+    ''' </summary>
+    Private Sub GenBindTarget(target As Object, valueExpr As String, w As IndentWriter, scope As Scope,
+                              kind As String, isDeclaration As Boolean)
+        If TypeOf target Is String Then
+            GenBindName(CStr(target), valueExpr, w, scope, kind, isDeclaration)
+            Return
+        End If
+
+        Dim bt = DirectCast(target, BindingTarget)
+        Select Case True
+            Case TypeOf bt Is NameTarget
+                GenBindName(DirectCast(bt, NameTarget).Name, valueExpr, w, scope, kind, isDeclaration)
+
+            Case TypeOf bt Is MemberTarget
+                Dim m = DirectCast(bt, MemberTarget)
+                Dim objTxt = GenExpr(m.Obj, scope)
+                If m.Computed Then
+                    w.Line($"JsRuntime.JsSetIndex({objTxt}, {GenExpr(DirectCast(m.Name, Expression), scope)}, {valueExpr})")
+                Else
+                    w.Line($"JsRuntime.JsSet({objTxt}, {VbString(CStr(m.Name))}, {valueExpr})")
+                End If
+
+            Case TypeOf bt Is ArrayTarget
+                Dim at = DirectCast(bt, ArrayTarget)
+                Dim t = UniqueName("arr")
+                w.Line($"Dim {t} As JsValue = {valueExpr}")
+                For i = 0 To at.Elements.Count - 1
+                    If at.Elements(i) Is Nothing Then Continue For      ' hole
+                    GenBindTarget(at.Elements(i), $"JsRuntime.JsIndex({t}, {i}.0R)", w, scope, kind, isDeclaration)
+                Next
+                If at.Rest IsNot Nothing Then
+                    GenBindTarget(at.Rest, $"JsRuntime.JsArrayRest({t}, {at.Elements.Count})", w, scope, kind, isDeclaration)
+                End If
+
+            Case TypeOf bt Is ObjectTarget
+                Dim ot = DirectCast(bt, ObjectTarget)
+                Dim t = UniqueName("obj")
+                w.Line($"Dim {t} As JsValue = {valueExpr}")
+                Dim keys As New List(Of String)
+                For Each prop In ot.Properties
+                    keys.Add(VbString(prop.Key))
+                    GenBindTarget(prop.Value, $"JsRuntime.JsGet({t}, {VbString(prop.Key)})", w, scope, kind, isDeclaration)
+                Next
+                If ot.Rest IsNot Nothing Then
+                    Dim restKeys = If(keys.Count = 0, "", ", " & String.Join(", ", keys))
+                    GenBindTarget(ot.Rest, $"JsRuntime.JsObjectRest({t}{restKeys})", w, scope, kind, isDeclaration)
+                End If
+
+            Case TypeOf bt Is DefaultTarget
+                Dim dt = DirectCast(bt, DefaultTarget)
+                Dim t = UniqueName("dv")
+                w.Line($"Dim {t} As JsValue = {valueExpr}")
+                GenBindTarget(dt.Target, $"If({t} Is JsRuntime.Undef, {GenExpr(dt.Default, scope)}, {t})",
+                              w, scope, kind, isDeclaration)
+
+            Case Else
+                Throw New NotSupportedException("unknown binding target")
+        End Select
+    End Sub
+
+    Private Sub GenBindName(name As String, valueExpr As String, w As IndentWriter, scope As Scope,
+                            kind As String, isDeclaration As Boolean)
+        If Not isDeclaration Then
+            w.Line($"{scope.ResolveOrThrow(name)} = {valueExpr}")
+            Return
+        End If
+        If kind = "var" Then
+            ' hoisted by EmitHoistedVars → plain assignment
+            Dim vb = scope.Resolve(name)
+            If vb Is Nothing Then
+                vb = scope.DefineLocal(name)
+                w.Line($"Dim {vb} As JsValue = JsRuntime.Undef")
+            End If
+            w.Line($"{vb} = {valueExpr}")
+        Else
+            Dim vb = scope.DefineLocal(name)
+            w.Line($"Dim {vb} As JsValue = {valueExpr}")
+        End If
+    End Sub
 
     ' ======================================================= lambda bodies
 
@@ -445,31 +869,44 @@ Public NotInheritable Class CodeGenerator
     End Function
 
     ''' <summary>Parameter binding + function-hoisted block + trailing Return Undef, as plain lines.</summary>
-    Private Function LambdaBody(parameters As String(), body As List(Of Statement), parent As Scope, argsName As String,
-                                Optional isArrow As Boolean = False) As String
-        ' a function body is a loop boundary in JS: break/continue inside can
-        ' only target the function's own loops, never the caller's
+    Private Function LambdaBody(f As FuncExpr, parent As Scope, argsName As String) As String
+        ' a function body is a loop boundary in JS: break/continue (even labeled)
+        ' inside can only target the function's own loops, never the caller's
         Dim saveExit = _loopExit.ToArray()
         Dim saveCont = _loopCont.ToArray()
-        _loopExit.Clear() : _loopCont.Clear()
+        Dim saveLabels = _labeledTargets.ToArray()
+        _loopExit.Clear() : _loopCont.Clear() : _labeledTargets.Clear()
+
         Dim w As New IndentWriter()
         Dim fscope = parent.Push()
-        For i = 0 To parameters.Length - 1
-            Dim vbParam = fscope.DefineLocal(parameters(i))
-            w.Line($"Dim {vbParam} As JsValue = If({argsName}.Length > {i}, {argsName}({i}), JsRuntime.Undef)")
+        For i = 0 To f.Parameters.Length - 1
+            Dim vbParam = fscope.DefineLocal(f.Parameters(i))
+            If i < f.Defaults.Length AndAlso f.Defaults(i) IsNot Nothing Then
+                ' a missing / explicitly-undefined argument falls back to the default
+                Dim dflt = GenExpr(f.Defaults(i), fscope)
+                w.Line($"Dim {vbParam} As JsValue = If({argsName}.Length > {i} AndAlso {argsName}({i}) IsNot JsRuntime.Undef, {argsName}({i}), {dflt})")
+            Else
+                w.Line($"Dim {vbParam} As JsValue = If({argsName}.Length > {i}, {argsName}({i}), JsRuntime.Undef)")
+            End If
         Next
-        If Not isArrow Then
+        If f.RestParam IsNot Nothing Then
+            Dim vbRest = fscope.DefineLocal(f.RestParam)
+            w.Line($"Dim {vbRest} As JsValue = JsRuntime.JsRestArgs({argsName}, {f.Parameters.Length})")
+        End If
+        If Not f.IsArrow Then
             ' the 'arguments' object: arrow functions inherit it lexically
             Dim vbArgs = fscope.DefineLocal("arguments")
             w.Line($"Dim {vbArgs} As JsValue = New List(Of Object)({argsName})")
         End If
         ' JS var hoisting: declare every 'var' of this function once at the top
-        EmitHoistedVars(body, w, fscope)
-        GenBlockInScope(body, w, fscope)
+        EmitHoistedVars(f.Body, w, fscope)
+        GenBlockInScope(f.Body, w, fscope)
         w.Line("Return JsRuntime.Undef")
-        _loopExit.Clear() : _loopCont.Clear()
+
+        _loopExit.Clear() : _loopCont.Clear() : _labeledTargets.Clear()
         For Each e In saveExit : _loopExit.Push(e) : Next
         For Each c In saveCont : _loopCont.Push(c) : Next
+        For Each kv In saveLabels : _labeledTargets(kv.Key) = kv.Value : Next
         Return w.ToString()
     End Function
 
