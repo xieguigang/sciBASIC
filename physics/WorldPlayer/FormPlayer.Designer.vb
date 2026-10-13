@@ -42,8 +42,7 @@ Partial Class FormPlayer
 
         Me.split = New System.Windows.Forms.SplitContainer()
         Me.tabs = New System.Windows.Forms.TabControl()
-        Me.pageCanvas = New System.Windows.Forms.TabPage()
-        Me.viewport = New System.Windows.Forms.PictureBox()
+        Me.pageCanvas = New WorldPlayer.CanvasTabPage()
         Me.pageScript = New System.Windows.Forms.TabPage()
         Me.editorBox = New System.Windows.Forms.RichTextBox()
         Me.editorBar = New System.Windows.Forms.FlowLayoutPanel()
@@ -68,7 +67,6 @@ Partial Class FormPlayer
         Me.tabs.SuspendLayout()
         Me.pageCanvas.SuspendLayout()
         Me.pageScript.SuspendLayout()
-        CType(Me.viewport, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.editorBar.SuspendLayout()
         Me.consolePanel.SuspendLayout()
         Me.statusStrip.SuspendLayout()
@@ -149,9 +147,12 @@ Partial Class FormPlayer
         '
         ' split
         '
+        Me.split.BackColor = System.Drawing.Color.FromArgb(11, 18, 32)
         Me.split.Dock = System.Windows.Forms.DockStyle.Fill
         Me.split.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
         Me.split.Location = New System.Drawing.Point(0, 32)
+        Me.split.Panel1.BackColor = System.Drawing.Color.FromArgb(11, 18, 32)
+        Me.split.Panel2.BackColor = System.Drawing.Color.FromArgb(11, 18, 32)
         Me.split.Name = "split"
         Me.split.Panel1.Controls.Add(Me.tabs)
         Me.split.Panel2.Controls.Add(Me.consolePanel)
@@ -166,31 +167,26 @@ Partial Class FormPlayer
         Me.tabs.Controls.Add(Me.pageCanvas)
         Me.tabs.Controls.Add(Me.pageScript)
         Me.tabs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
+        Me.tabs.Font = New System.Drawing.Font("Segoe UI", 9.5F)
+        Me.tabs.ItemSize = New System.Drawing.Size(132, 28)
         Me.tabs.Location = New System.Drawing.Point(0, 0)
         Me.tabs.Name = "tabs"
+        Me.tabs.Padding = New System.Drawing.Point(14, 5)
         Me.tabs.SelectedIndex = 0
         Me.tabs.Size = New System.Drawing.Size(900, 528)
+        Me.tabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.tabs.TabIndex = 0
 
         '
-        ' pageCanvas
+        ' pageCanvas（画布就是页面本身，见 CanvasTabPage 说明）
         '
         Me.pageCanvas.BackColor = System.Drawing.Color.FromArgb(11, 18, 32)
-        Me.pageCanvas.Controls.Add(Me.viewport)
         Me.pageCanvas.Location = New System.Drawing.Point(4, 26)
         Me.pageCanvas.Name = "pageCanvas"
-        Me.pageCanvas.Padding = New System.Windows.Forms.Padding(3)
         Me.pageCanvas.Size = New System.Drawing.Size(892, 498)
         Me.pageCanvas.TabIndex = 0
         Me.pageCanvas.Text = "三维画布"
-
-        Me.viewport.BackColor = System.Drawing.Color.FromArgb(11, 18, 32)
-        Me.viewport.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.viewport.Location = New System.Drawing.Point(3, 3)
-        Me.viewport.Name = "viewport"
-        Me.viewport.Size = New System.Drawing.Size(886, 492)
-        Me.viewport.TabIndex = 0
-        Me.viewport.TabStop = False
 
         '
         ' pageScript
@@ -209,11 +205,13 @@ Partial Class FormPlayer
         ' editorBar（先加 textbox 再加 bar，保证 bar 靠上、textbox 填满剩余）
         '
         Me.editorBar.BackColor = System.Drawing.Color.FromArgb(17, 28, 46)
+        ' 顺序很关键：FlowLayoutPanel 溢出的项会被裁掉，
+        ' 因此把重要的控件排在前面、说明文字排在最后
         Me.editorBar.Controls.Add(Me.btnLoadJs)
         Me.editorBar.Controls.Add(Me.btnSaveJs)
         Me.editorBar.Controls.Add(Me.btnRunJs)
-        Me.editorBar.Controls.Add(Me.lblAutoRun)
         Me.editorBar.Controls.Add(Me.chkAutoRun)
+        Me.editorBar.Controls.Add(Me.lblAutoRun)
         Me.editorBar.Dock = System.Windows.Forms.DockStyle.Top
         Me.editorBar.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight
         Me.editorBar.Location = New System.Drawing.Point(3, 3)
@@ -259,26 +257,26 @@ Partial Class FormPlayer
         Me.btnRunJs.Text = "运行 (F5)"
         Me.btnRunJs.UseVisualStyleBackColor = False
 
-        Me.lblAutoRun.AutoSize = True
-        Me.lblAutoRun.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184)
-        Me.lblAutoRun.Location = New System.Drawing.Point(334, 12)
-        Me.lblAutoRun.Margin = New System.Windows.Forms.Padding(6, 6, 0, 0)
-        Me.lblAutoRun.Name = "lblAutoRun"
-        Me.lblAutoRun.Size = New System.Drawing.Size(200, 17)
-        Me.lblAutoRun.TabIndex = 3
-        Me.lblAutoRun.Text = "（编辑器内容即为运行时脚本）"
-
         Me.chkAutoRun.AutoSize = True
         Me.chkAutoRun.Checked = True
         Me.chkAutoRun.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkAutoRun.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184)
-        Me.chkAutoRun.Location = New System.Drawing.Point(540, 12)
+        Me.chkAutoRun.Location = New System.Drawing.Point(334, 12)
         Me.chkAutoRun.Margin = New System.Windows.Forms.Padding(6, 6, 0, 0)
         Me.chkAutoRun.Name = "chkAutoRun"
         Me.chkAutoRun.Size = New System.Drawing.Size(160, 21)
-        Me.chkAutoRun.TabIndex = 4
+        Me.chkAutoRun.TabIndex = 3
         Me.chkAutoRun.Text = "停止输入后自动运行"
         Me.chkAutoRun.UseVisualStyleBackColor = True
+
+        Me.lblAutoRun.AutoSize = True
+        Me.lblAutoRun.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139)
+        Me.lblAutoRun.Location = New System.Drawing.Point(500, 12)
+        Me.lblAutoRun.Margin = New System.Windows.Forms.Padding(14, 6, 0, 0)
+        Me.lblAutoRun.Name = "lblAutoRun"
+        Me.lblAutoRun.Size = New System.Drawing.Size(200, 17)
+        Me.lblAutoRun.TabIndex = 4
+        Me.lblAutoRun.Text = "编辑器内容就是运行时脚本"
 
         '
         ' editorBox
@@ -368,7 +366,6 @@ Partial Class FormPlayer
         Me.tabs.ResumeLayout(False)
         Me.pageCanvas.ResumeLayout(False)
         Me.pageScript.ResumeLayout(False)
-        CType(Me.viewport, System.ComponentModel.ISupportInitialize).EndInit()
         Me.editorBar.ResumeLayout(False)
         Me.editorBar.PerformLayout()
         Me.consolePanel.ResumeLayout(False)
@@ -391,8 +388,7 @@ Partial Class FormPlayer
     Friend WithEvents lblStatus As System.Windows.Forms.ToolStripLabel
     Friend WithEvents split As System.Windows.Forms.SplitContainer
     Friend WithEvents tabs As System.Windows.Forms.TabControl
-    Friend WithEvents pageCanvas As System.Windows.Forms.TabPage
-    Friend WithEvents viewport As System.Windows.Forms.PictureBox
+    Friend WithEvents pageCanvas As WorldPlayer.CanvasTabPage
     Friend WithEvents pageScript As System.Windows.Forms.TabPage
     Friend WithEvents editorBox As System.Windows.Forms.RichTextBox
     Friend WithEvents editorBar As System.Windows.Forms.FlowLayoutPanel
