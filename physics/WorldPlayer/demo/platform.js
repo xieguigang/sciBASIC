@@ -118,7 +118,7 @@ function spawnRandom(sx, sy) {
     var angle = rand(0, Math.PI * 2);
     var color = pick(PALETTE);
     var mass = rand(0.8, 3.0);
-    var size = rand(0.55, 1.25);
+    var size = rand(0.85, 1.8);
 
     var cfg = {
         x: clamp(p.x, -SPAWN_RANGE, SPAWN_RANGE),

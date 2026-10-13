@@ -50,6 +50,40 @@ Public Class SceneRenderer
     '  刚体 → Surface
     ' /********************************************************************************/
 
+    ''' <summary>着色用的环境光强度与光源方向（渲染空间，Y 向下）。</summary>
+    Private Const Ambient As Double = 0.34
+    Private Shared ReadOnly LightDir As Double() = Normalize(-0.42, -0.58, -0.7)
+
+    Private Shared Function Normalize(x As Double, y As Double, z As Double) As Double()
+        Dim n As Double = std.Sqrt(x * x + y * y + z * z)
+
+        If n < 1.0E-9 Then Return New Double() {0, -1, 0}
+
+        Return New Double() {x / n, y / n, z / n}
+    End Function
+
+    ''' <summary>
+    ''' 逐面平面着色：<c>factor = ambient + (1-ambient)·max(0, n·L)</c>，
+    ''' 直接把基色按 factor 缩放。
+    ''' </summary>
+    ''' <remarks>
+    ''' 不使用库内的 <c>Camera.Lighting</c>：它是把基色朝"灯光颜色"混合，
+    ''' 受光面会被直接混成纯白，深色材质（如 #1E293B 的平台）会整片发白。
+    ''' </remarks>
+    Private Function ShadeVertexColor(baseColor As Color, normal As Point3D) As Color
+        Dim diff As Double = normal.X * LightDir(0) + normal.Y * LightDir(1) + normal.Z * LightDir(2)
+
+        If diff < 0.0 Then diff = 0.0
+
+        Dim f As Double = Ambient + (1.0 - Ambient) * diff
+        Dim scale As Double = std.Pow(f, 0.9)
+
+        Return Color.FromArgb(baseColor.A,
+                              Channel(baseColor.R * scale),
+                              Channel(baseColor.G * scale),
+                              Channel(baseColor.B * scale))
+    End Function
+
     Private Function BuildSurfaces(v As BodyVisual) As List(Of Surface3D)
         Dim out As New List(Of Surface3D)()
         Dim mesh As ConvexMesh3D = TryCast(v.Mesh, ConvexMesh3D)
@@ -61,7 +95,9 @@ Public Class SceneRenderer
         Dim pos As Vector3 = body.Position
         Dim verts As Vector3() = mesh.Vertices
         Dim faces As Integer()() = mesh.Faces
-        Dim brush As New SolidBrush3D(Tint(v))
+        Dim normals As Vector3() = mesh.FaceNormals
+        ' 注意：局部变量名不能与 Tint 同名（VB 大小写不敏感，会把调用解析成索引访问）
+        Dim baseTint As Color = Tint(v)
 
         For i As Integer = 0 To faces.Length - 1
             Dim f As Integer() = faces(i)
@@ -72,6 +108,11 @@ Public Class SceneRenderer
 
                 pts(k) = rig.ToRender(w.x, w.y, w.z)
             Next
+
+            ' 面法向：物理局部 → 世界 → 渲染空间（纯旋转，不含平移）
+            Dim wn As Vector3 = q.Rotate(normals(i))
+            Dim rn As New Point3D(wn.x, -wn.z, wn.y)
+            Dim brush As New SolidBrush3D(ShadeVertexColor(baseTint, rn))
 
             out.Add(New Surface3D(pts, brush))
         Next
@@ -209,7 +250,8 @@ Public Class SceneRenderer
 
         If all.Count > 0 Then
             Try
-                Call rig.Camera.Draw(g, all, Wireframe, illumination:=Not Wireframe)
+                ' 面颜色已在 BuildSurfaces 里做过平面着色，这里关闭库内光照
+                Call rig.Camera.Draw(g, all, Wireframe, illumination:=False)
             Catch
                 ' 单帧渲染失败不应让模拟器崩溃
             End Try
