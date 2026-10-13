@@ -105,15 +105,27 @@ function setup() {
 
 // ---------------------------------------------------------------- 随机生成
 
-function spawnRandom(sx, sy) {
-    // 把屏幕点投射到高度为 SPAWN_HEIGHT 的水平面上，得到三维生成位置
-    var p = camera.screenToPlane(sx, sy, 0, 1, 0, SPAWN_HEIGHT);
+/// 把鼠标点打到的三维位置找出来：
+/// 先试平台顶面，命中平台范围内就用它，否则退回地面。物体从该点的正上方落下。
+function pickSpawnPoint(sx, sy) {
+    var onPlatform = camera.screenToPlane(sx, sy, 0, 1, 0, PLATFORM_TOP);
 
-    if (!p) {
-        print("无法把鼠标点投射到生成平面");
+    if (onPlatform && Math.abs(onPlatform.x) <= 8 && Math.abs(onPlatform.z) <= 8) {
+        return onPlatform;
+    }
+
+    return camera.screenToPlane(sx, sy, 0, 1, 0, GROUND_Y);
+}
+
+function spawnRandom(sx, sy) {
+    var hit = pickSpawnPoint(sx, sy);
+
+    if (!hit) {
+        print("这个方向没有可用的落点（射线与地面平行或指向天空）");
         return;
     }
 
+    var p = hit;
     var kind = pick(SHAPES);
     var axis = randomUnitVector();
     var angle = rand(0, Math.PI * 2);
