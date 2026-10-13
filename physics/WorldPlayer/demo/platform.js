@@ -98,6 +98,7 @@ function setup() {
     camera.angles(26, -38);
     camera.distance(30);
     camera.focus(0, 3.2, 0);
+    camera.home();          // 登记主视角：之后按 R 会回到这里
 
     print("场景已就绪：左键点击视口即可生成随机刚体");
 }

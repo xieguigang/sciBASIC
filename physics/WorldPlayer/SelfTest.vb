@@ -93,6 +93,7 @@ Module SelfTest
             Call SimulateClicks(host, rig, script)
             Call AdvancePhysics(host, script)
             Call RenderShot(rig, renderer)
+            Call TopLevelApiAndRampSlide(host, script)
             Call ErrorHandling(script)
         Catch ex As Exception
             Failed += 1
@@ -450,6 +451,48 @@ Module SelfTest
         Finally
             bmp.Dispose()
         End Try
+    End Sub
+
+    ''' <summary>
+    ''' 验证两件事：
+    ''' ① 脚本顶层语句可以直接使用 host API（<c>world.addBox(...)</c> 不需要写在回调里）；
+    ''' ② 落在楔形斜坡上的方块会因重力沿斜面下滑，而不是停在原地或穿透。
+    ''' </summary>
+    Private Sub TopLevelApiAndRampSlide(host As WorldHost, script As ScriptHost)
+        Call report.AppendLine("-- 顶层 API 与斜面下滑")
+
+        Call host.ClearDynamic()
+
+        Dim before As Integer = host.DynamicCount
+
+        ' 顶层语句直接调用 API
+        Dim ok As Boolean = script.Load("var id = world.addBox({ x: 4, y: 8, z: 0, w: 1, h: 1, d: 1, mass: 1, friction: 0.15, " &
+                                        "rot: { axis: [0, 1, 0], angle: 0.4 } });" & vbCrLf &
+                                        "print('顶层语句创建了 ' + id);")
+
+        Check("顶层语句可调用 host API", ok AndAlso host.DynamicCount = before + 1,
+              If(script.LastError, $"dynamic={host.DynamicCount}"))
+
+        If host.DynamicCount = before Then Return
+
+        Dim box As BodyVisual = host.Bodies.FirstOrDefault(Function(v) Not v.IsStaticGeometry)
+
+        If box Is Nothing Then Return
+
+        Dim x0 As Double = box.Body.Position.x
+        Dim minLow As Double = Double.MaxValue
+
+        For i As Integer = 1 To 300
+            Call host.Update(1.0 / 60.0)
+            minLow = std.Min(minLow, LowestVertex(box))
+        Next
+
+        Call report.AppendLine($"     起点 x={x0:F2} → 终点 x={box.Body.Position.x:F2} y={box.Body.Position.y:F2} 最低顶点历史最小值={minLow:F3}")
+
+        Check("方块沿斜面下滑（-x 方向位移 > 0.4）", box.Body.Position.x < x0 - 0.4,
+              $"x0={x0:F3} x={box.Body.Position.x:F3}")
+        Check("下滑过程中没有穿透斜坡", minLow > -0.15, $"minLow={minLow:F3}")
+        Check("方块最终停在支撑面上", box.Body.Position.y > 0.0, $"y={box.Body.Position.y:F3}")
     End Sub
 
     ''' <summary>脚本错误必须被捕获而不是崩溃。</summary>

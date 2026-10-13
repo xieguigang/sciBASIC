@@ -475,6 +475,10 @@ Public Class JsApi
                             Call rig.Reset()
                             Return JsRuntime.Undef
                         End Function)},
+            {"home", F(Function(a As Object()) As Object
+                           Call rig.CaptureHome()
+                           Return JsRuntime.Undef
+                       End Function)},
             {"screenToRay", F(Function(a As Object()) As Object
                                   Dim ox, oy, oz, dx, dy, dz As Double
 

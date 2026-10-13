@@ -74,14 +74,36 @@ Public Class CameraRig
         TargetViewDistance = std.Max(MinDistance, std.Min(MaxDistance, TargetViewDistance * factor))
     End Sub
 
-    ''' <summary>重置为默认机位。</summary>
+    ' 脚本登记的"主视角"，camera.reset() 会恢复到这里
+    Private homeX As Double = 24.0
+    Private homeY As Double = -38.0
+    Private homeDistance As Double = 48.0
+    Private homeFx As Double = 0.0
+    Private homeFy As Double = 2.5
+    Private homeFz As Double = 0.0
+
+    ''' <summary>
+    ''' 把当前目标机位登记为"主视角"。脚本在 <c>setup()</c> 末尾调用一次，
+    ''' 之后无论用户怎么转视角，<c>camera.reset()</c> 都能回到这个机位。
+    ''' </summary>
+    Public Sub CaptureHome()
+        homeX = TargetAngleX
+        homeY = TargetAngleY
+        homeDistance = TargetViewDistance
+
+        homeFx = FocusX
+        homeFy = FocusY
+        homeFz = FocusZ
+    End Sub
+
+    ''' <summary>重置为脚本登记的主视角。</summary>
     Public Sub Reset()
-        TargetAngleX = 24.0
-        TargetAngleY = -38.0
-        TargetViewDistance = 48.0
-        FocusX = 0.0
-        FocusY = 2.5
-        FocusZ = 0.0
+        TargetAngleX = homeX
+        TargetAngleY = homeY
+        TargetViewDistance = homeDistance
+        FocusX = homeFx
+        FocusY = homeFy
+        FocusZ = homeFz
     End Sub
 
     ''' <summary>设置焦点（物理坐标）。</summary>
