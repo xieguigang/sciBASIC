@@ -1,4 +1,4 @@
-﻿// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 // tensor_f32.cu —— 单精度（float32）张量栈的手写 CUDA 内核
 //
 // 与 tensor.cu（双精度栈）的分工完全相同：只写 IL2Cuda 表达不了的那部分。
@@ -302,4 +302,129 @@ extern "C" __global__ void tensorApplyMaskFp32Kernel(const unsigned char* __rest
     if (idx >= n) return;
 
     if (mask[idx] == 0) field[idx] = 0.0f;
+}
+// ---------------------------------------------------------------------------
+// 3. 沿指定轴的 softmax / log-softmax（单精度）
+//
+// 为什么用"一个 block 处理一根轴"而不是"一个线程处理一根轴"：
+//   softmax 要先求该轴最大值、再求 exp 之和，最后归一化 —— 是**三次遍历**。
+//   一根轴一个线程会重复读三遍全局内存；一个 block 处理一根轴时前两遍的结果
+//   可以留在共享内存里。block 数与 work 无关（grid-stride），因此 work 任意大。
+//
+// 数值约定（与 Compute\TensorComputeFBase.vb 的 CPU 参考实现逐项对应）：
+//   * 先减最大值再 exp —— 即便 logits 量级很大也不会溢出；
+//   * max / sumExp 一律用 double 累加，与 CPU 侧的"Double 中间量"口径一致；
+//   * sumExp <= 0 时兜底取 1.0（只有全 -inf 输入才会命中），避免除零；
+//   * log-softmax 走 log-sum-exp：x - (m + log(sumExp))。
+//
+// 索引分解（行主序）：第 outer 块的第 inner 个元素沿第 axis 维的第 k 项位于
+//     base = outer * axisSize * innerSize + inner
+//     x[base + k * innerSize]      (k = 0 .. axisSize-1)
+// 沿最后一维时 innerSize == 1，恰好退化为连续访问。
+//
+// 启动：grid = (min(work, blocks 上限), 1)，block = (ROW_SOFTMAX_BLOCK, 1)
+// ---------------------------------------------------------------------------
+
+#define ROW_SOFTMAX_BLOCK 256
+
+__device__ __forceinline__ double rowSoftmaxSum(double* cache, double value) {
+    const int tid = threadIdx.x;
+    cache[tid] = value;
+    __syncthreads();
+
+    for (int s = blockDim.x >> 1; s > 0; s >>= 1) {
+        if (tid < s) cache[tid] += cache[tid + s];
+        __syncthreads();
+    }
+
+    const double result = cache[0];
+    __syncthreads();
+    return result;
+}
+
+__device__ __forceinline__ double rowSoftmaxMax(double* cache, double value) {
+    const int tid = threadIdx.x;
+    cache[tid] = value;
+    __syncthreads();
+
+    for (int s = blockDim.x >> 1; s > 0; s >>= 1) {
+        if (tid < s && cache[tid + s] > cache[tid]) cache[tid] = cache[tid + s];
+        __syncthreads();
+    }
+
+    const double result = cache[0];
+    __syncthreads();
+    return result;
+}
+
+extern "C" __global__ void tensorRowSoftmaxFp32Kernel(const float* __restrict__ x,
+                                                     float* __restrict__ y,
+                                                     int work, int axisSize, int innerSize) {
+    __shared__ double cache[ROW_SOFTMAX_BLOCK];
+    const int tid = threadIdx.x;
+
+    for (int w = blockIdx.x; w < work; w += gridDim.x) {
+        const int outer = w / innerSize;
+        const int inner = w - outer * innerSize;
+        const long long base = (long long)outer * axisSize * innerSize + inner;
+        const long long step = (long long)innerSize;
+
+        double localMax = -1.0e308;
+        for (int k = tid; k < axisSize; k += blockDim.x) {
+            const double v = (double)x[base + (long long)k * step];
+            if (v > localMax) localMax = v;
+        }
+        const double maxVal = rowSoftmaxMax(cache, localMax);
+
+        double localSum = 0.0;
+        for (int k = tid; k < axisSize; k += blockDim.x) {
+            localSum += exp((double)x[base + (long long)k * step] - maxVal);
+        }
+        double sumExp = rowSoftmaxSum(cache, localSum);
+        if (sumExp <= 0.0) sumExp = 1.0;
+
+        for (int k = tid; k < axisSize; k += blockDim.x) {
+            const double v = (double)x[base + (long long)k * step];
+            y[base + (long long)k * step] = (float)(exp(v - maxVal) / sumExp);
+        }
+
+        __syncthreads();
+    }
+}
+
+extern "C" __global__ void tensorRowLogSoftmaxFp32Kernel(const float* __restrict__ x,
+                                                        float* __restrict__ y,
+                                                        int work, int axisSize, int innerSize) {
+    __shared__ double cache[ROW_SOFTMAX_BLOCK];
+    const int tid = threadIdx.x;
+
+    for (int w = blockIdx.x; w < work; w += gridDim.x) {
+        const int outer = w / innerSize;
+        const int inner = w - outer * innerSize;
+        const long long base = (long long)outer * axisSize * innerSize + inner;
+        const long long step = (long long)innerSize;
+
+        double localMax = -1.0e308;
+        for (int k = tid; k < axisSize; k += blockDim.x) {
+            const double v = (double)x[base + (long long)k * step];
+            if (v > localMax) localMax = v;
+        }
+        const double maxVal = rowSoftmaxMax(cache, localMax);
+
+        double localSum = 0.0;
+        for (int k = tid; k < axisSize; k += blockDim.x) {
+            localSum += exp((double)x[base + (long long)k * step] - maxVal);
+        }
+        double sumExp = rowSoftmaxSum(cache, localSum);
+        if (sumExp <= 0.0) sumExp = 1.0;
+
+        const double logSumExp = maxVal + log(sumExp);
+
+        for (int k = tid; k < axisSize; k += blockDim.x) {
+            const double v = (double)x[base + (long long)k * step];
+            y[base + (long long)k * step] = (float)(v - logSumExp);
+        }
+
+        __syncthreads();
+    }
 }

@@ -40,9 +40,13 @@ Namespace GPUTensor
             ''' <summary>钉住时刻的数据版本号，仅用于诊断（不参与失效判定）</summary>
             Public ReadOnly Version As Long
             Public ReadOnly Label As String
+            ''' <summary>缓冲的元素个数（DeviceBuffer 本身不保留长度语义，这里显式记下以便统计字节数）</summary>
+            Public ReadOnly Count As Integer
 
-            Public Sub New(buffer As ILCudaRuntime.DeviceBuffer(Of Single), version As Long, label As String)
+            Public Sub New(buffer As ILCudaRuntime.DeviceBuffer(Of Single), count As Integer,
+                           version As Long, label As String)
                 Me.Buffer = buffer
+                Me.Count = count
                 Me.Version = version
                 Me.Label = label
             End Sub
@@ -167,7 +171,7 @@ Namespace GPUTensor
                     buf.Write(host)
                 End If
 
-                _map(host) = New Entry(buf, version, label)
+                _map(host) = New Entry(buf, host.Length, version, label)
                 _bytes += CLng(host.Length) * 4L
 
                 Return True
@@ -184,7 +188,7 @@ Namespace GPUTensor
                 If Not _map.TryGetValue(host, entry) Then Return False
 
                 _map.Remove(host)
-                _bytes -= CLng(entry.Buffer.Length) * 4L
+                _bytes -= CLng(entry.Count) * 4L
                 entry.Buffer.Dispose()
 
                 Return True

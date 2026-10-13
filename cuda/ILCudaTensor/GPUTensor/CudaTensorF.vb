@@ -96,6 +96,12 @@ Namespace GPUTensor
         Private ReadOnly _resident As New DeviceResidentStoreF()
 
         ''' <summary>
+        ''' 整型辅助数组（CSR 的行偏移 / 列下标、交叉熵的 targets 与掩码）的显存缓存。
+        ''' CSR 的结构在整个仿真过程中不变，这里按数组引用 + 版本号缓存，避免逐步上传。
+        ''' </summary>
+        Private ReadOnly _idx As New DeviceCache(Of Integer)(16L * 1024L * 1024L)
+
+        ''' <summary>
         ''' "全流体"掩膜的替身。
         ''' </summary>
         ''' <remarks>
@@ -619,6 +625,596 @@ Namespace GPUTensor
             If kernel Is Nothing Then Return MyBase.MaxAll(t)
 
             Return ReduceExtreme(t, TensorKernelNames.PartialMaxF32, TensorKernelNames.FinalMaxF32)
+        End Function
+
+        ''' <summary>
+        ''' 把常驻缓冲的内容同步回主机数组；未被钉住时也按"设备刚被写过"处理。
+        ''' </summary>
+        Private Shared Sub CopyBackToHost(buf As ILCudaRuntime.DeviceBuffer(Of Single), target As Single())
+            If buf Is Nothing OrElse target Is Nothing Then Return
+
+            Dim device = buf.Read()
+            Array.Copy(device, target, std.Min(device.Length, target.Length))
+        End Sub
+
+#End Region
+
+#Region "神经网络与训练算子"
+
+        ' ------------------------------------------------------------------
+        ' 这一组是从双精度栈对齐过来的算子。
+        '
+        ' 它们有一个共同点：**要么能省下整趟显存往返，要么就不值得上 GPU**。
+        ' 所以每个 override 的第一件事都是 SyncIfPinned —— 让走 CPU 分支时的
+        ' 主机副本一定是新的（这条红线来自 CudaTensor 的 KV-Cache 一致性教训）。
+        ' ------------------------------------------------------------------
+
+        Public Overrides Function Transpose(t As tf.TensorF) As tf.TensorF
+            If t Is Nothing OrElse t.Rank <> 2 Then Return MyBase.Transpose(t)
+
+            Dim rows = t.Shape(0), cols = t.Shape(1)
+            Dim elements As Long = CLng(rows) * CLng(cols)
+
+            If elements > Integer.MaxValue OrElse elements < MinGpuElementsF Then
+                Return MyBase.Transpose(t)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.TrainTranspose)
+            If kernel Is Nothing Then Return MyBase.Transpose(t)
+
+            Dim dx = Device(t)
+
+            Using dy As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(elements))
+                ' For2D 的签名是 (rows, cols)：grid.x 覆盖列、grid.y 覆盖行，
+                ' 与 tensorTransposeFp32Kernel 里 blockIdx.x -> 列 j / blockIdx.y -> 行 i 的约定一致。
+                kernel.Launch(ILCudaRuntime.LaunchPlanner.For2D(rows, cols), dx, dy, rows, cols)
+                Return Wrap(dy.Read(), New Integer() {cols, rows})
+            End Using
+        End Function
+
+        Public Overrides Function SpMM(csr As tfCompute.SparseCsr, dense As tf.TensorF) As tf.TensorF
+            If csr Is Nothing OrElse dense Is Nothing Then Return MyBase.SpMM(csr, dense)
+            If dense.Rank <> 2 OrElse dense.Shape(1) <> csr.Rows Then Return MyBase.SpMM(csr, dense)
+
+            Dim batch = dense.Shape(0), cols = csr.Columns
+            Dim elements As Long = CLng(batch) * CLng(cols)
+
+            If elements > Integer.MaxValue OrElse csr.NonZeros < MinGpuElementsF Then
+                Return MyBase.SpMM(csr, dense)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.SpmmF32)
+            If kernel Is Nothing Then Return MyBase.SpMM(csr, dense)
+
+            Dim dx = Device(dense)
+
+            ' CSR 结构整个训练过程不变：入 acont99 -idx 缓存 + version 判定失效，
+            ' 重复调用不需要重新上传。
+            Dim dRowPtr = _idx.GetBufferF(_engine, csr.RowPointers, csr.Version, Function(a) a)
+            Dim dColIdx = _idx.GetBufferF(_engine, csr.ColumnIndices, csr.Version, Function(a) a)
+            Dim dValues = _f32.GetBuffer(_engine, csr.Values, csr.Version,
+                                         Function(d) Array.ConvertAll(d, Function(x) CSng(x)))
+
+            Using dy As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(elements))
+                dy.Fill(0.0F)
+
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(CInt(CLng(batch) * CLng(csr.Rows)), ElementBlockSize),
+                    dx, dRowPtr, dColIdx, dValues, dy, batch, csr.Rows, cols)
+
+                Return Wrap(dy.Read(), New Integer() {batch, cols})
+            End Using
+        End Function
+
+        Public Overrides Function Softmax(t As tf.TensorF, axis As Integer) As tf.TensorF
+            Return RowSoftmaxCore(t, axis, TensorKernelNames.RowSoftmaxF32)
+        End Function
+
+        Public Overrides Function LogSoftmax(t As tf.TensorF, axis As Integer) As tf.TensorF
+            Return RowSoftmaxCore(t, axis, TensorKernelNames.RowLogSoftmaxF32)
+        End Function
+
+        ''' <summary>
+        ''' softmax / log-softmax 的共同实现：把 work = outer×inner 条归约任务打到设备上。
+        ''' </summary>
+        Private Function RowSoftmaxCore(t As tf.TensorF, axis As Integer, kernelName As String) As tf.TensorF
+            If t Is Nothing Then Return MyBase.Softmax(t, axis)
+
+            Dim rank = t.Rank
+            If axis < 0 Then axis = rank + axis
+            If axis < 0 OrElse axis >= rank Then Return MyBase.Softmax(t, axis)
+
+            Dim kernel = TryKernel(kernelName)
+            If kernel Is Nothing Then
+                Call SyncIfPinned(t)
+                If kernelName = TensorKernelNames.RowSoftmaxF32 Then
+                    Return MyBase.Softmax(t, axis)
+                End If
+                Return MyBase.LogSoftmax(t, axis)
+            End If
+
+            ' 单行的标量路径：work 很小而 axisSize 很大时 GPU 的块内归约反而不划算
+            Dim shape = t.Shape
+            Dim axisSize = shape(axis)
+
+            Dim outerSize = 1
+            For i = 0 To axis - 1
+                outerSize *= shape(i)
+            Next
+
+            Dim innerSize = 1
+            For i = axis + 1 To rank - 1
+                innerSize *= shape(i)
+            Next
+
+            Dim work As Long = CLng(outerSize) * CLng(innerSize)
+            If work > Integer.MaxValue Then Return MyBase.Softmax(t, axis)
+            If t.Length < MinGpuElementsF Then
+                Call SyncIfPinned(t)
+                Return If(kernelName = TensorKernelNames.RowSoftmaxF32,
+                          MyBase.Softmax(t, axis), MyBase.LogSoftmax(t, axis))
+            End If
+
+            Dim dx = Device(t)
+
+            Using dy As New ILCudaRuntime.DeviceBuffer(Of Single)(t.Length)
+                Dim blocks = std.Min(ILCudaRuntime.LaunchPlanner.CeilDiv(CInt(work), ElementBlockSize), MaxStageBlocks)
+                If blocks <= 0 Then blocks = 1
+
+                Dim cfg As New ILCudaRuntime.LaunchConfig(blocks, 1, ElementBlockSize, 1, 0)
+                kernel.Launch(cfg, dx, dy, CInt(work), axisSize, innerSize)
+
+                Return Wrap(dy.Read(), shape)
+            End Using
+        End Function
+
+        Public Overrides Function MaskedCrossEntropy(logits As tf.TensorF, targets As Integer(),
+                                                     mask As Boolean(), ByRef dLogits As tf.TensorF) As Double
+            If logits Is Nothing OrElse logits.Rank <> 2 Then
+                Return MyBase.MaskedCrossEntropy(logits, targets, mask, dLogits)
+            End If
+
+            Dim rows = logits.Shape(0), vocab = logits.Shape(1)
+
+            Dim kernel = TryKernel(TensorKernelNames.TrainMaskedCrossEntropy)
+            If kernel Is Nothing Then
+                Call SyncIfPinned(logits)
+                Return MyBase.MaskedCrossEntropy(logits, targets, mask, dLogits)
+            End If
+
+            If rows = 0 OrElse vocab = 0 OrElse logits.Length < MinGpuElementsF Then
+                Call SyncIfPinned(logits)
+                Return MyBase.MaskedCrossEntropy(logits, targets, mask, dLogits)
+            End If
+
+            ' 有效位置数必须先在主机侧统计：内核要拿它做 1/count 归一化
+            Dim count As Integer = 0
+            Dim useMask As Integer = If(mask Is Nothing, 0, 1)
+
+            For r = 0 To rows - 1
+                If targets Is Nothing OrElse r >= targets.Length Then Exit For
+                If useMask = 1 AndAlso r < mask.Length AndAlso Not mask(r) Then Continue For
+
+                Dim target = targets(r)
+                If target < 0 OrElse target >= vocab Then Continue For
+
+                count += 1
+            Next
+
+            If count = 0 Then
+                Call SyncIfPinned(logits)
+                Return MyBase.MaskedCrossEntropy(logits, targets, mask, dLogits)
+            End If
+
+            Dim dx = Device(logits)
+            Dim dTargets = _idx.GetBufferF(_engine, PadTargets(targets, rows), 0L, Function(a) a)
+            Dim dMask = _idx.GetBufferF(_engine, ToIntMask(mask, rows), 0L, Function(a) a)
+
+            Using dGrad As New ILCudaRuntime.DeviceBuffer(Of Single)(logits.Length),
+                  dRowLoss As New ILCudaRuntime.DeviceBuffer(Of Single)(rows)
+
+                dGrad.Fill(0.0F)
+                dRowLoss.Fill(0.0F)
+
+                ' 每行一个 block；块大小固定 256（张量与 train.cu 的 TCE_BLOCK 一致）
+                Dim cfg As New ILCudaRuntime.LaunchConfig(rows, 1, MaskedCeBlockSize, 1, 0)
+                kernel.Launch(cfg, dx, dTargets, dMask, dGrad, dRowLoss,
+                              rows, vocab, useMask, CSng(1.0 / count))
+
+                dLogits = Wrap(dGrad.Read(), logits.Shape)
+
+                ' 行损失只有 rows 个，直接在主机侧累加（rows 通常远小于 vocab）
+                Dim rowLoss = dRowLoss.Read()
+                Dim total As Double = 0
+
+                For i = 0 To rowLoss.Length - 1
+                    total += rowLoss(i)
+                Next
+
+                Return total
+            End Using
+        End Function
+
+        ''' <summary>掩码交叉熵内核的块大小，必须与 train.cu 的 TCE_BLOCK 一致</summary>
+        Public Const MaskedCeBlockSize As Integer = 256
+
+        ''' <summary>把可能短于 rows 的 targets 补齐成长度 rows 的数组（越界位置填 -1）</summary>
+        Private Shared Function PadTargets(targets As Integer(), rows As Integer) As Integer()
+            Dim padded(rows - 1) As Integer
+
+            For i = 0 To rows - 1
+                padded(i) = -1
+            Next
+
+            If targets IsNot Nothing Then
+                For i = 0 To std.Min(targets.Length, rows) - 1
+                    padded(i) = targets(i)
+                Next
+            End If
+
+            Return padded
+        End Function
+
+        ''' <summary>把 Boolean 掩码转成内核要求的 int 掩码</summary>
+        Private Shared Function ToIntMask(mask As Boolean(), rows As Integer) As Integer()
+            Dim converted(rows - 1) As Integer
+
+            For i = 0 To rows - 1
+                converted(i) = If(mask IsNot Nothing AndAlso i < mask.Length AndAlso mask(i), 1, 0)
+            Next
+
+            Return converted
+        End Function
+
+        ''' <summary>
+        ''' AdamW 参数更新。
+        ''' </summary>
+        ''' <remarks>
+        ''' 超参数由调用方以 <c>Double</c> 传入（eps 常在 1e-8 量级），
+        ''' 这里才降到 Single 交给内核 —— 顺序很重要，若 eps 在主机侧被先量化，
+        ''' 它与 vHat 相加时会被直接吸收。
+        ''' <para>
+        ''' 未被钉住时每次调用要付出一趟完整的往返，通常不划算，因此小规模直接返回
+        ''' <c>False</c> 让调用方走主机循环。
+        ''' </para>
+        ''' </remarks>
+        Public Overrides Function TryAdamWStep(param As tf.TensorF, gradient As tf.TensorF,
+                                               momentum As tf.TensorF, velocity As tf.TensorF,
+                                               learningRate As Double, beta1 As Double, beta2 As Double,
+                                               eps As Double, biasCorrection1 As Double,
+                                               biasCorrection2 As Double, weightDecay As Double) As Boolean
+            If param Is Nothing OrElse gradient Is Nothing Then Return False
+            If momentum Is Nothing OrElse velocity Is Nothing Then Return False
+
+            Dim n = param.Length
+            If n = 0 Then Return False
+            If gradient.Length <> n OrElse momentum.Length <> n OrElse velocity.Length <> n Then Return False
+            If n < MinGpuElementsF Then Return False
+
+            Dim kernel = TryKernel(TensorKernelNames.TrainAdamW)
+            If kernel Is Nothing Then Return False
+
+            Dim dp = Device(param)
+            Dim dg = Device(gradient)
+            Dim dm = Device(momentum)
+            Dim dv = Device(velocity)
+
+            kernel.Launch(
+                ILCudaRuntime.LaunchPlanner.For1D(n, ElementBlockSize),
+                dp, dg, dm, dv, n,
+                CSng(learningRate), CSng(beta1), CSng(beta2), CSng(eps),
+                CSng(biasCorrection1), CSng(biasCorrection2), CSng(weightDecay))
+
+            ' 内核同时改写了 param / momentum / velocity 并清零了 gradient：
+            ' 未被钉住时主机仍是主副本，必须逐个回写，否则调用方读到更新前的旧值。
+            CopyBackToHost(dp, param.Data)
+            CopyBackToHost(dg, gradient.Data)
+            CopyBackToHost(dm, momentum.Data)
+            CopyBackToHost(dv, velocity.Data)
+
+            Return True
+        End Function
+
+        ''' <summary>单精度栈<b>提供</b> FP32 设备常驻。</summary>
+        Public Overrides ReadOnly Property SupportsDeviceResidency As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 把张量钉成设备常驻缓冲。
+        ''' </summary>
+        ''' <remarks>
+        ''' 钉住之后<b>设备成为主副本</b>，主机 <c>Data</c> 不再被后续算子刷新；
+        ''' 检查点落盘或主机侧统计之前必须先 <see cref="SyncFromDevice"/>。
+        ''' </remarks>
+        Public Overrides Function PinDevice(t As tf.TensorF, label As String, zeroFill As Boolean) As Boolean
+            If t Is Nothing OrElse t.Length = 0 Then Return False
+            Return _resident.Pin(t.Data, t.Version, label, zeroFill)
+        End Function
+
+        Public Overrides Function UnpinDevice(t As tf.TensorF) As Boolean
+            If t Is Nothing Then Return False
+            Return _resident.Unpin(t.Data)
+        End Function
+
+        Public Overrides Function IsDevicePinned(t As tf.TensorF) As Boolean
+            If t Is Nothing Then Return False
+            Return _resident.IsPinned(t.Data)
+        End Function
+
+        Public Overrides ReadOnly Property PinnedDeviceBytes As Long
+            Get
+                Return _resident.TotalBytes
+            End Get
+        End Property
+
+        Public Overrides Function SyncFromDevice(t As tf.TensorF) As Boolean
+            If t Is Nothing Then Return False
+            Return _resident.ReadBack(t.Data)
+        End Function
+
+#End Region
+
+#Region "卷积与池化"
+
+        ' ------------------------------------------------------------------
+        ' 布局与 CPU 参考实现完全一致（channel-last）：
+        '     x (N,H,W,C) / filters (KH,KW,C,OutC) / bias (OutC) / y (N,OH,OW,OutC)
+        '
+        ' 阈值口径：卷积的算术强度随 KH*KW*C 增长，因此只要输出体量够大就值得上 GPU；
+        ' 池化几乎不做浮点运算（每格点只有 size² 次比较），纯粹是带宽受限，
+        ' 这里要求输入体量明显更大才不赔本。
+        ' ------------------------------------------------------------------
+
+        ''' <summary>卷积类算子走到 GPU 的最小输出元素数</summary>
+        Public Shared Property MinConvElementsF As Integer = 16384
+        ''' <summary>池化类算子走到 GPU 的最小输入元素数</summary>
+        Public Shared Property MinPoolElementsF As Integer = 65536
+
+        Public Overrides Function Conv2D(x As tf.TensorF, filters As tf.TensorF, bias As tf.TensorF,
+                                         stride As Integer, padding As Integer) As tf.TensorF
+            If x Is Nothing OrElse filters Is Nothing Then Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            If x.Rank <> 4 OrElse filters.Rank <> 4 Then Return MyBase.Conv2D(x, filters, bias, stride, padding)
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1), outC = filters.Shape(3)
+
+            If filters.Shape(2) <> inC Then Return MyBase.Conv2D(x, filters, bias, stride, padding)
+
+            Dim outH = ConvOutSizeF(inH, filtH, stride, padding)
+            Dim outW = ConvOutSizeF(inW, filtW, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then Return MyBase.Conv2D(x, filters, bias, stride, padding)
+
+            Dim total As Long = CLng(batch) * outH * outW * outC
+            If total > Integer.MaxValue OrElse total < MinConvElementsF Then
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DF32)
+            If kernel Is Nothing Then
+                Call SyncAll(x, filters, bias)
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            If bias IsNot Nothing AndAlso bias.Length <> outC Then
+                Return MyBase.Conv2D(x, filters, bias, stride, padding)
+            End If
+
+            Dim dx = Device(x)
+            Dim dW = Device(filters)
+
+            Using dy As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(total)),
+                  dBias = BiasBuffer(bias, outC)
+
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(CInt(total), ElementBlockSize),
+                    dx, dW, dBias, dy,
+                    batch, inH, inW, inC, filtH, filtW, outC, outH, outW,
+                    stride, padding, If(bias Is Nothing, 0, 1))
+
+                Return Wrap(dy.Read(), New Integer() {batch, outH, outW, outC})
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' 偏置缓冲。<c>bias</c> 为 Nothing 时仍然给一段全零缓冲 ——
+        ''' 内核参数不能传空指针，而 hasBias 开关已经让它的值不被读取。
+        ''' </summary>
+        Private Function BiasBuffer(bias As tf.TensorF, outC As Integer) As ILCudaRuntime.DeviceBuffer(Of Single)
+            If bias IsNot Nothing Then Return Device(bias)
+
+            Dim buf As New ILCudaRuntime.DeviceBuffer(Of Single)(outC)
+            buf.Fill(0.0F)
+            Return buf
+        End Function
+
+        Public Overrides Function Conv2DBackwardInput(gradOutput As tf.TensorF, filters As tf.TensorF,
+                                                      inputShape As Integer(), stride As Integer,
+                                                      padding As Integer) As tf.TensorF
+            If gradOutput Is Nothing OrElse filters Is Nothing Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+            If gradOutput.Rank <> 4 OrElse filters.Rank <> 4 Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+            Dim filtH = filters.Shape(0), filtW = filters.Shape(1), filtC = filters.Shape(2)
+            Dim inH = inputShape(1), inW = inputShape(2), inC = inputShape(3)
+
+            If filtC <> inC Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim total As Long = CLng(batch) * inH * inW * inC
+            If total > Integer.MaxValue OrElse total < MinConvElementsF Then
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DBackwardInputF32)
+            If kernel Is Nothing Then
+                Call SyncAll(gradOutput, filters)
+                Return MyBase.Conv2DBackwardInput(gradOutput, filters, inputShape, stride, padding)
+            End If
+
+            Dim dG = Device(gradOutput)
+            Dim dW = Device(filters)
+
+            Using dX As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(total))
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(CInt(total), ElementBlockSize),
+                    dG, dW, dX,
+                    batch, inH, inW, inC, filtH, filtW, outC, outH, outW, stride, padding)
+
+                Return Wrap(dX.Read(), New Integer() {batch, inH, inW, inC})
+            End Using
+        End Function
+
+        Public Overrides Function Conv2DBackwardFilter(gradOutput As tf.TensorF, x As tf.TensorF,
+                                                       filterShape As Integer(), stride As Integer,
+                                                       padding As Integer) As tf.TensorF
+            If gradOutput Is Nothing OrElse x Is Nothing Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+            If gradOutput.Rank <> 4 OrElse x.Rank <> 4 Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+            Dim filtH = filterShape(0), filtW = filterShape(1), inC = filterShape(2)
+            Dim inH = x.Shape(1), inW = x.Shape(2)
+
+            If x.Shape(3) <> inC OrElse gradOutput.Shape(3) <> filterShape(3) Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim total As Long = CLng(filtH) * filtW * inC * outC
+            If total > Integer.MaxValue OrElse gradOutput.Length < MinConvElementsF Then
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DBackwardFilterF32)
+            If kernel Is Nothing Then
+                Call SyncAll(gradOutput, x)
+                Return MyBase.Conv2DBackwardFilter(gradOutput, x, filterShape, stride, padding)
+            End If
+
+            Dim dG = Device(gradOutput)
+            Dim dX = Device(x)
+
+            Using dW As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(total))
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(CInt(total), ElementBlockSize),
+                    dG, dX, dW,
+                    batch, inH, inW, inC, filtH, filtW, outC, outH, outW, stride, padding)
+
+                Return Wrap(dW.Read(), New Integer() {filtH, filtW, inC, outC})
+            End Using
+        End Function
+
+        Public Overrides Function Conv2DBackwardBias(gradOutput As tf.TensorF) As tf.TensorF
+            If gradOutput Is Nothing OrElse gradOutput.Rank <> 4 Then
+                Return MyBase.Conv2DBackwardBias(gradOutput)
+            End If
+
+            Dim batch = gradOutput.Shape(0), outH = gradOutput.Shape(1)
+            Dim outW = gradOutput.Shape(2), outC = gradOutput.Shape(3)
+
+            If gradOutput.Length < MinConvElementsF Then Return MyBase.Conv2DBackwardBias(gradOutput)
+
+            Dim kernel = TryKernel(TensorKernelNames.Conv2DBackwardBiasF32)
+            If kernel Is Nothing Then
+                Call SyncIfPinned(gradOutput)
+                Return MyBase.Conv2DBackwardBias(gradOutput)
+            End If
+
+            Dim dG = Device(gradOutput)
+
+            Using dBias As New ILCudaRuntime.DeviceBuffer(Of Single)(outC)
+                dBias.Fill(0.0F)
+
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(outC, ElementBlockSize),
+                    dG, dBias, outC, CLng(batch) * outH * outW)
+
+                Return Wrap(dBias.Read(), New Integer() {outC})
+            End Using
+        End Function
+
+        Public Overrides Function MaxPool2D(x As tf.TensorF, size As Integer, stride As Integer,
+                                            padding As Integer, ByRef argMax As tf.TensorF) As tf.TensorF
+            If x Is Nothing OrElse x.Rank <> 4 OrElse size <= 0 Then
+                Return MyBase.MaxPool2D(x, size, stride, padding, argMax)
+            End If
+
+            Dim batch = x.Shape(0), inH = x.Shape(1), inW = x.Shape(2), inC = x.Shape(3)
+            Dim outH = ConvOutSizeF(inH, size, stride, padding)
+            Dim outW = ConvOutSizeF(inW, size, stride, padding)
+
+            If outH <= 0 OrElse outW <= 0 Then Return MyBase.MaxPool2D(x, size, stride, padding, argMax)
+
+            Dim total As Long = CLng(batch) * outH * outW * inC
+            If total > Integer.MaxValue OrElse x.Length < MinPoolElementsF Then
+                Return MyBase.MaxPool2D(x, size, stride, padding, argMax)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.MaxPool2DF32)
+            If kernel Is Nothing Then
+                Call SyncIfPinned(x)
+                Return MyBase.MaxPool2D(x, size, stride, padding, argMax)
+            End If
+
+            Dim dx = Device(x)
+
+            Using dy As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(total)),
+                  dIdx As New ILCudaRuntime.DeviceBuffer(Of Single)(CInt(total))
+
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(CInt(total), ElementBlockSize),
+                    dx, dy, dIdx, inH, inW, inC, outH, outW, batch, size, stride, padding)
+
+                Dim shape = New Integer() {batch, outH, outW, inC}
+
+                argMax = Wrap(dIdx.Read(), shape)
+                Return Wrap(dy.Read(), shape)
+            End Using
+        End Function
+
+        Public Overrides Function MaxPool2DBackward(gradOutput As tf.TensorF, argMax As tf.TensorF,
+                                                    inputShape As Integer()) As tf.TensorF
+            If gradOutput Is Nothing OrElse argMax Is Nothing Then
+                Return MyBase.MaxPool2DBackward(gradOutput, argMax, inputShape)
+            End If
+
+            Dim inputLength = inputShape(0) * inputShape(1) * inputShape(2) * inputShape(3)
+            If gradOutput.Length < MinPoolElementsF Then
+                Return MyBase.MaxPool2DBackward(gradOutput, argMax, inputShape)
+            End If
+
+            Dim kernel = TryKernel(TensorKernelNames.MaxPool2DBackwardF32)
+            If kernel Is Nothing Then
+                Call SyncAll(gradOutput, argMax)
+                Return MyBase.MaxPool2DBackward(gradOutput, argMax, inputShape)
+            End If
+
+            Dim dG = Device(gradOutput)
+            Dim dIdx = Device(argMax)
+
+            Using dX As New ILCudaRuntime.DeviceBuffer(Of Single)(inputLength)
+                ' 同一个输入位置可能被多个输出窗口选中，内核用 atomicAdd 累加，因此必须清零
+                dX.Fill(0.0F)
+
+                kernel.Launch(
+                    ILCudaRuntime.LaunchPlanner.For1D(gradOutput.Length, ElementBlockSize),
+                    dG, dIdx, dX, gradOutput.Length, inputLength)
+
+                Return Wrap(dX.Read(), inputShape)
+            End Using
         End Function
 
 #End Region

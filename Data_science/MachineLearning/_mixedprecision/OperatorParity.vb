@@ -20,14 +20,26 @@ Namespace MixedPrecisionBench
     Module OperatorParity
 
         Friend Sub RunAll(results As List(Of CaseResult))
-            Call MatMulCases(results)
-            Call TransposeCase(results)
-            Call ReductionCases(results)
-            Call SoftmaxCases(results)
-            Call SparseCases(results)
-            Call ConvCases(results)
-            Call PoolCases(results)
-            Call LossCases(results)
+            ' 每组用例独立兜异常：GPU 路径上一旦某个内核真的算错，
+            ' 应当被记成一条失败项，而不是让整个套件崩掉看不到其余结果。
+            Dim groups As New List(Of Action(Of List(Of CaseResult))) From {
+                AddressOf MatMulCases,
+                AddressOf TransposeCase,
+                AddressOf ReductionCases,
+                AddressOf SoftmaxCases,
+                AddressOf SparseCases,
+                AddressOf ConvCases,
+                AddressOf PoolCases,
+                AddressOf LossCases
+            }
+
+            For Each g In groups
+                Try
+                    Call g(results)
+                Catch ex As Exception
+                    results.Add(New CaseResult("用例组异常 " & g.Method.Name, False, ex.Message))
+                End Try
+            Next
         End Sub
 
         Private ReadOnly Property KD As ITensorCompute

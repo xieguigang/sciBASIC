@@ -163,6 +163,32 @@ Namespace GPUTensor
         ''' <summary>按掩膜把固体单元置零（就地）</summary>
         Public Const ApplyMaskF32 As String = "tensorApplyMaskFp32Kernel"
 
+        ' ---- 神经网络 / 训练 / 卷积（Kernels\*_f32.cu，单精度）----
+        '
+        ' 这一组是为混合精度改造新加的：上层要用 tensorF 端到端跑训练步，
+        ' 就必须把注意力 / 损失 / 卷积 / 稀疏传播这几类热点也放到 FP32 上。
+        ' 它们的双精度版本早已存在于 tensor.cu / conv.cu / pool.cu / spmm.cu，
+        ' 这里是同名 sandwich 的单精度对位实现。
+
+        ''' <summary>沿指定轴的 softmax（Kernels\tensor_f32.cu）</summary>
+        Public Const RowSoftmaxF32 As String = "tensorRowSoftmaxFp32Kernel"
+        ''' <summary>沿指定轴的 log-softmax（Kernels\tensor_f32.cu）</summary>
+        Public Const RowLogSoftmaxF32 As String = "tensorRowLogSoftmaxFp32Kernel"
+        ''' <summary>二维卷积正向（Kernels\conv_f32.cu）</summary>
+        Public Const Conv2DF32 As String = "tensorConv2DFp32Kernel"
+        ''' <summary>卷积反向：对输入的梯度（Kernels\conv_f32.cu）</summary>
+        Public Const Conv2DBackwardInputF32 As String = "tensorConv2DBackwardInputFp32Kernel"
+        ''' <summary>卷积反向：对卷积核的梯度（Kernels\conv_f32.cu）</summary>
+        Public Const Conv2DBackwardFilterF32 As String = "tensorConv2DBackwardFilterFp32Kernel"
+        ''' <summary>卷积反向：对偏置的梯度（Kernels\conv_f32.cu）</summary>
+        Public Const Conv2DBackwardBiasF32 As String = "tensorConv2DBackwardBiasFp32Kernel"
+        ''' <summary>二维最大池化正向（同时产出 argMax，Kernels\pool_f32.cu）</summary>
+        Public Const MaxPool2DF32 As String = "tensorMaxPool2DFp32Kernel"
+        ''' <summary>二维最大池化反向（Kernels\pool_f32.cu）</summary>
+        Public Const MaxPool2DBackwardF32 As String = "tensorMaxPool2DBackwardFp32Kernel"
+        ''' <summary>CSR 稀疏 × 稠密（Kernels\spmm_f32.cu）</summary>
+        Public Const SpmmF32 As String = "tensorCsrSpmmFp32Kernel"
+
         ' ---- 两段式全局归约 ----
         ''' <summary>全局求和 - 阶段一（部分结果）</summary>
         Public Const PartialSum As String = "tensorReducePartialSumKernel"

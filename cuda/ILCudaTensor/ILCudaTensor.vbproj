@@ -67,6 +67,9 @@
       只有"块内共享内存归约"与"三维 stencil"这两类 IL2Cuda 表达不了的才放这里。
     -->
     <EmbeddedResource Include="Kernels\tensor_f32.cu" />
+    <EmbeddedResource Include="Kernels\conv_f32.cu" />
+    <EmbeddedResource Include="Kernels\pool_f32.cu" />
+    <EmbeddedResource Include="Kernels\spmm_f32.cu" />
     <!--
       CSR 稀疏 × 稠密内核（double）：脉冲神经网络加载真实突触连接组
       （FlyWire 等）时的核心算子，行并行 + atomicAdd(double)。

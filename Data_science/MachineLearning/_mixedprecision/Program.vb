@@ -1,4 +1,4 @@
-' ---------------------------------------------------------------------------
+﻿' ---------------------------------------------------------------------------
 ' 混合精度重构的验证装置
 '
 ' 用途：把同一个算子分别在「双精度栈 tensor」与「单精度栈 tensorF」上跑一遍，
@@ -18,6 +18,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
+Imports gpu = Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
 Imports std = System.Math
 
 Namespace MixedPrecisionBench
@@ -43,6 +44,15 @@ Namespace MixedPrecisionBench
         Function Main(args As String()) As Integer
             Verbose = args IsNot Nothing AndAlso args.Contains("-v")
 
+            ' -gpu：把单精度栈切到 CUDA 后端，跑同一批用例。
+            ' 此时参与比较的是「双精度 SIMD（参考）」 vs 「单精度 CUDA（被测）」。
+            Dim useGpu = args IsNot Nothing AndAlso args.Contains("-gpu")
+            Dim gpuReady = False
+
+            If useGpu Then
+                gpuReady = SetupGpuBackend(args.Contains("-small"))
+            End If
+
             Dim results As New List(Of CaseResult)
 
             Call OperatorParity.RunAll(results)
@@ -51,6 +61,13 @@ Namespace MixedPrecisionBench
 
             Console.WriteLine()
             Console.WriteLine("================ 混合精度双/单精度算子对拍 ================")
+            Console.WriteLine($"  参考: tensor  (Double, {Tensor.computeKernel.Name})")
+            Console.WriteLine($"  被测: tensorF (Single, {TensorF.computeKernelF.Name})")
+
+            If useGpu Then
+                Console.WriteLine($"  GPU:  {If(gpuReady, "已注册并把阈值压到 0（强制走内核）", "不可用，本次退化为纯 CPU 对拍")}")
+            End If
+
             Console.WriteLine()
 
             For Each r In results
@@ -63,6 +80,44 @@ Namespace MixedPrecisionBench
 
             If failed.Count > 0 Then Return 1
             Return 0
+        End Function
+
+        ''' <summary>
+        ''' 注册单精度 CUDA 后端。
+        ''' </summary>
+        ''' <param name="forceSmall">
+        ''' 把所有规模阈值压到 0，让每个算子都<b>必须</b>走内核路径。
+        ''' 默认的用例尺寸是为了跑得快而设的，普遍低于 GPU 阈值；
+        ''' 不压阈值的话这套用例会全部静默回退 CPU，
+        ''' 而"跑通了"完全不能证明内核写对了 —— 这正是本次改造最需要防的那种假象。
+        ''' </param>
+        Friend Function SetupGpuBackend(forceSmall As Boolean) As Boolean
+            '  -small 之外还允许用 -all-gpu 显式表达同一语义
+            Dim ok As Boolean
+
+            Try
+                ok = gpu.CudaTensorF.Register()
+            Catch ex As Exception
+                Console.WriteLine($"CUDA 后端注册异常: {ex.Message}")
+                Return False
+            End Try
+
+            If Not ok Then
+                Console.WriteLine($"CUDA 后端不可用: {gpu.CudaTensorF.LastError}")
+                Return False
+            End If
+
+            If forceSmall Then
+                gpu.CudaTensorF.MinGpuElementsF = 0
+                gpu.CudaTensorF.MinGemmElementsF = 0
+                gpu.CudaTensorF.MinConvElementsF = 0
+                gpu.CudaTensorF.MinPoolElementsF = 0
+            End If
+
+            Console.WriteLine(gpu.CudaTensorF.Current.DescribeKernels())
+            Console.WriteLine()
+
+            Return True
         End Function
 
         ' ---------------- 工具 ----------------
