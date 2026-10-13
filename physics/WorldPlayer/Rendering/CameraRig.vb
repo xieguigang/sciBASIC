@@ -124,6 +124,15 @@ Public Class CameraRig
         TargetViewDistance = std.Max(MinDistance, std.Min(MaxDistance, d))
     End Sub
 
+    ''' <summary>
+    ''' 设置投影放大系数（Drawing3D 里叫 FieldOfView）。
+    ''' 库内公式是 <c>factor = FieldOfView / depth</c>，因此<b>值越大画面越近</b>，
+    ''' 与真实相机"FOV 越大视野越宽"的直觉相反。
+    ''' </summary>
+    Public Sub SetFieldOfView(v As Double)
+        Camera.FieldOfView = CSng(std.Max(16.0, std.Min(4000.0, v)))
+    End Sub
+
     ''' <summary>当前视距（瞬时值）。</summary>
     Public ReadOnly Property Distance As Double
         Get

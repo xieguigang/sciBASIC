@@ -467,6 +467,10 @@ Public Class JsApi
                                rig.SetDistance(JsRuntime.JsNum(Arg(a, 0)))
                                Return JsRuntime.Undef
                            End Function)},
+            {"fov", F(Function(a As Object()) As Object
+                          rig.SetFieldOfView(JsRuntime.JsNum(Arg(a, 0)))
+                          Return JsRuntime.Undef
+                      End Function)},
             {"focus", F(Function(a As Object()) As Object
                             rig.SetFocus(JsRuntime.JsNum(Arg(a, 0)), JsRuntime.JsNum(Arg(a, 1)), JsRuntime.JsNum(Arg(a, 2)))
                             Return JsRuntime.Undef

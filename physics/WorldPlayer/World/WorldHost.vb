@@ -78,6 +78,14 @@ Public Class WorldHost
     ''' <summary>上一次运行的脚本错误（Nothing 表示正常）。</summary>
     Public Property LastError As String = Nothing
 
+    Public Sub New()
+        ' 交互式场景的实时性优先：配合跨帧热启动，8 次迭代 × 2 个子步
+        ' 已能让堆叠稳定静止，而求解开销只有库默认值（16 × 4）的四分之一。
+        ' 脚本可以用 sim.iterations(n) / sim.substeps(n) 再调整。
+        World.Iterations = 8
+        World.Substeps = 2
+    End Sub
+
     ' /********************************************************************************/
     '  生命周期
     ' /********************************************************************************/

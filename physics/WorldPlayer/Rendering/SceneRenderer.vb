@@ -50,9 +50,15 @@ Public Class SceneRenderer
     '  刚体 → Surface
     ' /********************************************************************************/
 
-    ''' <summary>着色用的环境光强度与光源方向（渲染空间，Y 向下）。</summary>
+    ''' <summary>着色用的环境光强度。</summary>
     Private Const Ambient As Double = 0.34
-    Private Shared ReadOnly LightDir As Double() = Normalize(-0.42, -0.58, -0.7)
+
+    ''' <summary>
+    ''' 光源方向（渲染空间，由表面指向光源）。
+    ''' 注意渲染空间是 <b>Y 向下</b>、<b>+Z 为上</b>（物理 Y-up 被映射到渲染 +Z），
+    ''' 因此"从上方打光"的竖直分量是 +Z 而不是 -Y。
+    ''' </summary>
+    Private Shared ReadOnly LightDir As Double() = Normalize(-0.4, -0.25, 0.88)
 
     Private Shared Function Normalize(x As Double, y As Double, z As Double) As Double()
         Dim n As Double = std.Sqrt(x * x + y * y + z * z)
@@ -99,22 +105,33 @@ Public Class SceneRenderer
         ' 注意：局部变量名不能与 Tint 同名（VB 大小写不敏感，会把调用解析成索引访问）
         Dim baseTint As Color = Tint(v)
 
+        ' 先把所有顶点变换到渲染空间，避免重复计算
+        Dim rv(verts.Length - 1) As Point3D
+
+        For k As Integer = 0 To verts.Length - 1
+            Dim w As Vector3 = pos + q.Rotate(verts(k))
+
+            rv(k) = rig.ToRender(w.x, w.y, w.z)
+        Next
+
         For i As Integer = 0 To faces.Length - 1
             Dim f As Integer() = faces(i)
-            Dim pts(f.Length - 1) As Point3D
-
-            For k As Integer = 0 To f.Length - 1
-                Dim w As Vector3 = pos + q.Rotate(verts(f(k)))
-
-                pts(k) = rig.ToRender(w.x, w.y, w.z)
-            Next
 
             ' 面法向：物理局部 → 世界 → 渲染空间（纯旋转，不含平移）
             Dim wn As Vector3 = q.Rotate(normals(i))
             Dim rn As New Point3D(wn.x, -wn.z, wn.y)
             Dim brush As New SolidBrush3D(ShadeVertexColor(baseTint, rn))
 
-            out.Add(New Surface3D(pts, brush))
+            If f.Length = 3 Then
+                out.Add(New Surface3D({rv(f(0)), rv(f(1)), rv(f(2))}, brush))
+            Else
+                ' 扇形三角化：画家算法按"面平均深度"排序，单个大多边形（例如 12x12 的平台顶面）
+                ' 的平均深度可能比它上面的小物体更近，从而把后者整块盖住。
+                ' 拆成三角形后排序精度足够，这是画家算法的标准缓解手段。
+                For k As Integer = 1 To f.Length - 2
+                    out.Add(New Surface3D({rv(f(0)), rv(f(k)), rv(f(k + 1))}, brush))
+                Next
+            End If
         Next
 
         Return out
@@ -190,26 +207,57 @@ Public Class SceneRenderer
     '  辅助几何
     ' /********************************************************************************/
 
-    ''' <summary>把物理坐标的点投影到屏幕。</summary>
-    Private Function Project(x As Double, y As Double, z As Double) As PointF
-        Dim r As Point3D = rig.ToRender(x, y, z)
+    ''' <summary>
+    ''' 相机前方的最近可见深度。库内投影在 <c>depth <= 0</c> 时会把点塌缩到屏幕中心，
+    ''' 因此相机后方的几何必须由我们剔除，否则会画出"糊在屏幕上"的退化形状。
+    ''' </summary>
+    Private Const MinDepth As Double = 1.0
 
-        Return rig.Camera.Project(rig.Camera.Rotate(r)).PointXY(rig.Camera.Screen)
+    ''' <summary>把物理坐标的点投影到屏幕；点在相机后方或近平面上时返回 False。</summary>
+    Private Function TryProject(x As Double, y As Double, z As Double, ByRef p As PointF) As Boolean
+        Dim r As Point3D = rig.ToRender(x, y, z)
+        Dim rot As Point3D = rig.Camera.Rotate(r)
+        Dim depth As Double = rig.Camera.ViewDistance + rot.Z
+
+        If depth < MinDepth Then Return False
+
+        p = rig.Camera.Project(rot).PointXY(rig.Camera.Screen)
+
+        Return True
+    End Function
+
+    ''' <summary>刚体是否整个位于近平面前方。</summary>
+    Private Function Visible(v As BodyVisual) As Boolean
+        Dim mesh As ConvexMesh3D = TryCast(v.Mesh, ConvexMesh3D)
+        Dim margin As Double = If(mesh Is Nothing, 0.0, mesh.BoundRadius)
+        Dim r As Point3D = rig.ToRender(v.Body.Position.x, v.Body.Position.y, v.Body.Position.z)
+        Dim depth As Double = rig.Camera.ViewDistance + rig.Camera.Rotate(r).Z
+
+        Return depth > (MinDepth + margin)
     End Function
 
     Private Sub DrawGrid(g As Graphics)
         If Not ShowGrid Then Return
 
-        Dim extent As Integer = 30
+        Dim extent As Integer = 16
         Dim stride As Integer = 2
+        Dim a As PointF
+        Dim b As PointF
+        Dim c As PointF
+        Dim d As PointF
 
         Using minor As New Pen(Color.FromArgb(38, 56, 84), 1.0F)
             Using major As New Pen(Color.FromArgb(58, 86, 120), 1.0F)
                 For i As Integer = -extent To extent Step stride
                     Dim pen As Pen = If(i = 0, major, minor)
 
-                    Call g.DrawLine(pen, Project(i, GroundY, -extent), Project(i, GroundY, extent))
-                    Call g.DrawLine(pen, Project(-extent, GroundY, i), Project(extent, GroundY, i))
+                    If TryProject(i, GroundY, -extent, a) AndAlso TryProject(i, GroundY, extent, b) Then
+                        Call g.DrawLine(pen, a, b)
+                    End If
+
+                    If TryProject(-extent, GroundY, i, c) AndAlso TryProject(extent, GroundY, i, d) Then
+                        Call g.DrawLine(pen, c, d)
+                    End If
                 Next
             End Using
         End Using
@@ -218,12 +266,19 @@ Public Class SceneRenderer
     Private Sub DrawAxes(g As Graphics)
         If Not ShowAxes Then Return
 
+        Dim o As PointF
+        Dim ax As PointF
+        Dim az As PointF
+        Dim ay As PointF
+
+        If Not TryProject(0, GroundY, 0, o) Then Return
+
         Using xPen As New Pen(Color.FromArgb(210, 96, 120), 1.5F)
             Using zPen As New Pen(Color.FromArgb(120, 160, 210), 1.5F)
                 Using yPen As New Pen(Color.FromArgb(96, 210, 170), 1.5F)
-                    Call g.DrawLine(xPen, Project(0, GroundY, 0), Project(6, GroundY, 0))
-                    Call g.DrawLine(zPen, Project(0, GroundY, 0), Project(0, GroundY, 6))
-                    Call g.DrawLine(yPen, Project(0, GroundY, 0), Project(0, GroundY + 6, 0))
+                    If TryProject(6, GroundY, 0, ax) Then Call g.DrawLine(xPen, o, ax)
+                    If TryProject(0, GroundY, 6, az) Then Call g.DrawLine(zPen, o, az)
+                    If TryProject(0, GroundY + 6, 0, ay) Then Call g.DrawLine(yPen, o, ay)
                 End Using
             End Using
         End Using
@@ -245,6 +300,9 @@ Public Class SceneRenderer
         Dim all As New List(Of Surface3D)()
 
         For Each v In host.Bodies
+            ' 相机后方的几何必须整体丢弃，否则投影会塌缩成贴在屏幕上的假形状
+            If Not Visible(v) Then Continue For
+
             all.AddRange(BuildSurfaces(v))
         Next
 

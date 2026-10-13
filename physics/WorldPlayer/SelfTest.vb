@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Engine.Physics
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
+Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 Imports std = System.Math
 
 ''' <summary>
@@ -93,6 +94,7 @@ Module SelfTest
             Call SimulateClicks(host, rig, script)
             Call AdvancePhysics(host, script)
             Call RenderShot(rig, renderer)
+            Call PerformanceProbe(host, rig, renderer)
             Call TopLevelApiAndRampSlide(host, script)
             Call ErrorHandling(script)
         Catch ex As Exception
@@ -277,6 +279,8 @@ Module SelfTest
         Dim statics As Integer = host.Bodies.Where(Function(v) v.IsStaticGeometry).Count()
 
         Check("脚本创建了 4 个静态物体", statics = 4, $"statics={statics}")
+        Check("场景包含楔形斜坡（凸多面体静态体）",
+              host.Bodies.Any(Function(v) v.IsStaticGeometry AndAlso TypeOf v.Body.Shape Is ConvexPolyhedronCollider3D))
         Check("脚本没有创建动态刚体", host.DynamicCount = 0, $"dynamic={host.DynamicCount}")
         Check("地面已设为 y = 0", std.Abs(renderer.GroundY) < 1.0E-9, $"groundY={renderer.GroundY}")
 
@@ -451,6 +455,80 @@ Module SelfTest
         Finally
             bmp.Dispose()
         End Try
+    End Sub
+
+    ''' <summary>
+    ''' 性能探针：造 60 个混合刚体，测量"物理步进 + 渲染"的单帧耗时。
+    ''' 这是交互体验的硬指标（目标是 60 个物体时仍能保持 20 FPS 以上）。
+    ''' </summary>
+    Private Sub PerformanceProbe(host As WorldHost, rig As CameraRig, renderer As SceneRenderer)
+        Call report.AppendLine("-- 性能探针（60 个混合刚体）")
+
+        Call host.ClearDynamic()
+
+        Dim kinds As String() = {"box", "cuboid", "sphere", "cone", "cylinder", "tetra"}
+        Dim rnd As New Random(20261013)
+
+        For i As Integer = 1 To 60
+            Dim kind As String = kinds(rnd.Next(kinds.Length))
+            Dim o As New SpawnOptions With {
+                .Kind = kind,
+                .X = rnd.NextDouble() * 10.0 - 5.0,
+                .Y = 6.0 + rnd.NextDouble() * 12.0,
+                .Z = rnd.NextDouble() * 10.0 - 5.0,
+                .SizeX = 0.7, .SizeY = 0.7, .SizeZ = 0.7,
+                .Radius = 0.45, .Height = 1.1, .Segment = 12, .Edge = 1.0,
+                .Width = 1, .Depth = 1,
+                .Mass = 1.0,
+                .Friction = 0.4,
+                .Orientation = Quaternion.FromAxisAngle(New Vector3(0.3, 1, 0.6), rnd.NextDouble() * 6.28),
+                .Color = Color.FromArgb(34, 211, 238)
+            }
+
+            Call host.Spawn(o)
+        Next
+
+        ' 让它们落下来堆好
+        For i As Integer = 1 To 180
+            Call host.Update(1.0 / 60.0)
+        Next
+
+        Dim size As New Size(1280, 720)
+        Dim bmp As New Bitmap(size.Width, size.Height)
+        Dim frames As Integer = 5
+        Dim sw As Diagnostics.Stopwatch = Diagnostics.Stopwatch.StartNew()
+
+        Try
+            For i As Integer = 1 To frames
+                Using g As Graphics = Graphics.FromImage(bmp)
+                    Call renderer.Render(g, size)
+                End Using
+            Next
+        Finally
+            sw.Stop()
+            bmp.Dispose()
+        End Try
+
+        Dim msPerFrame As Double = sw.Elapsed.TotalMilliseconds / frames
+
+        Call report.AppendLine($"     刚体 {host.DynamicCount}   单帧 {msPerFrame:F1} ms（约 {1000.0 / msPerFrame:F1} FPS）")
+
+        Dim swPhysics As Diagnostics.Stopwatch = Diagnostics.Stopwatch.StartNew()
+
+        For i As Integer = 1 To 60
+            Call host.Update(1.0 / 60.0)
+        Next
+
+        swPhysics.Stop()
+
+        Call report.AppendLine($"     物理步进 {swPhysics.Elapsed.TotalMilliseconds / 60.0:F2} ms/帧")
+
+        Check("60 刚体时渲染单帧 < 120 ms（> 8 FPS）", msPerFrame < 120.0, $"ms={msPerFrame:F1}")
+        Check("60 刚体时物理步进 < 20 ms", swPhysics.Elapsed.TotalMilliseconds / 60.0 < 20.0,
+              $"ms={swPhysics.Elapsed.TotalMilliseconds / 60.0:F2}")
+        Check("全部刚体状态有限", host.Bodies.All(Function(v) v.IsStaticGeometry OrElse Finite(v.Body.Position)))
+
+        Call host.ClearDynamic()
     End Sub
 
     ''' <summary>

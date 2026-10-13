@@ -23,11 +23,12 @@ var PALETTE = ["#22D3EE", "#0EA5E9", "#6366F1", "#34D399",
 
 var SHAPES = ["cube", "cuboid", "tetra", "sphere", "cone", "cylinder"];
 
-var SPAWN_HEIGHT = 7.0;      // 生成平面高度
+var SPAWN_HEIGHT = 7.0;      // 生成高度（物体从该高度落下）
 var GROUND_Y = 0.0;
 var PLATFORM_TOP = 2.0;
-var RAMP_RISE = 3.0;
-var SPAWN_RANGE = 9.0;       // 生成点的水平范围限制
+var PLATFORM_HALF = 6.0;     // 平台水平半宽，用于判断点击是否落在平台上
+var RAMP_RISE = 2.5;
+var SPAWN_RANGE = 7.5;       // 生成点的水平范围限制
 
 var spawned = 0;
 var wireframe = false;
@@ -65,13 +66,16 @@ function randomUnitVector() {
 function setup() {
     world.gravity(0, -9.81, 0);
 
+    // 宽相位是 O(n²) 的，超出上限后自动回收最老的物体，避免越堆越卡
+    world.bodyLimit(120);
+
     // 地面：无限平面 y = 0
     world.ground(GROUND_Y);
 
     // 平台：一块静态长方体，顶面在 y = PLATFORM_TOP
     world.addStaticBox({
         x: 0, y: 1.0, z: 0,
-        w: 16, h: 2, d: 16,
+        w: 12, h: 2, d: 12,
         color: "#223046",
         friction: 0.55
     });
@@ -80,14 +84,14 @@ function setup() {
     //       物体落在斜面上会因重力沿斜面下滑，撞到低端边缘后落到平台顶面
     world.addStaticRamp({
         x: 0, y: PLATFORM_TOP, z: 0,
-        w: 12, h: RAMP_RISE, d: 8,
-        color: "#3B4E63",
-        friction: 0.3
+        w: 9, h: RAMP_RISE, d: 7,
+        color: "#5B7C9B",
+        friction: 0.28
     });
 
     // 两根立柱，用来观察物体与竖直面的碰撞
-    world.addStaticBox({ x: -6.5, y: PLATFORM_TOP + 0.9, z: -5, w: 1, h: 1.8, d: 1, color: "#55677D", friction: 0.5 });
-    world.addStaticBox({ x: 6.5, y: PLATFORM_TOP + 0.9, z: 5, w: 1, h: 1.8, d: 1, color: "#55677D", friction: 0.5 });
+    world.addStaticBox({ x: -4.6, y: PLATFORM_TOP + 0.9, z: -4.2, w: 0.9, h: 1.8, d: 0.9, color: "#55677D", friction: 0.5 });
+    world.addStaticBox({ x: 4.6, y: PLATFORM_TOP + 0.9, z: 4.2, w: 0.9, h: 1.8, d: 0.9, color: "#55677D", friction: 0.5 });
 
     render.background("#0B1220");
     render.grid(gridVisible);
@@ -95,9 +99,11 @@ function setup() {
     render.wireframe(wireframe);
     render.hud("左键生成随机物体 · 右键拖拽旋转 · 滚轮缩放 · C 清空 · P 暂停 · W 线框");
 
-    camera.angles(26, -38);
-    camera.distance(30);
-    camera.focus(0, 3.2, 0);
+    // 注意：camera.fov 在 Drawing3D 里是投影放大系数，值越大画面越近
+    camera.fov(760);
+    camera.angles(30, -40);
+    camera.distance(36);
+    camera.focus(0, 3.0, 0);
     camera.home();          // 登记主视角：之后按 R 会回到这里
 
     print("场景已就绪：左键点击视口即可生成随机刚体");
@@ -110,7 +116,7 @@ function setup() {
 function pickSpawnPoint(sx, sy) {
     var onPlatform = camera.screenToPlane(sx, sy, 0, 1, 0, PLATFORM_TOP);
 
-    if (onPlatform && Math.abs(onPlatform.x) <= 8 && Math.abs(onPlatform.z) <= 8) {
+    if (onPlatform && Math.abs(onPlatform.x) <= PLATFORM_HALF && Math.abs(onPlatform.z) <= PLATFORM_HALF) {
         return onPlatform;
     }
 
