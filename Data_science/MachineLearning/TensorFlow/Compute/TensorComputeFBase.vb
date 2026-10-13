@@ -275,6 +275,154 @@ Namespace Compute
             Return Wrap(r, New Integer() {m, n})
         End Function
 
+        ''' <summary>二维张量转置</summary>
+        Public Overridable Function Transpose(t As TensorF) As TensorF Implements ITensorComputeF.Transpose
+            If t.Rank <> 2 Then
+                Throw New ArgumentException("只支持二维张量转置")
+            End If
+
+            Dim rows = t.Shape(0)
+            Dim cols = t.Shape(1)
+            Dim result = New TensorF(cols, rows)
+            Dim src = t.Data
+            Dim dst = result.Data
+
+            For i As Integer = 0 To rows - 1
+                For j As Integer = 0 To cols - 1
+                    dst(j * rows + i) = src(i * cols + j)
+                Next
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 稀疏 × 稠密矩阵乘的标量参考实现。逐点运算次序与双精度栈
+        ''' <see cref="TensorComputeBase.SpMM"/> 完全一致，因此 CPU 与 GPU 后端可以对拍。
+        ''' 因此在<span> <｜hy_place▁holder▁no▁813｜>可以逐比特对拍。
+        ''' </summary>
+        Public Overridable Function SpMM(csr As SparseCsr, dense As TensorF) As TensorF Implements ITensorComputeF.SpMM
+            If csr Is Nothing Then Throw New ArgumentNullException(NameOf(csr))
+            If dense Is Nothing Then Throw New ArgumentNullException(NameOf(dense))
+            If dense.Rank <> 2 OrElse dense.Shape(1) <> csr.Rows Then
+                Throw New ArgumentException(
+                    $"SpMM 输入形状应为 [batch, {csr.Rows}]，实际 [{String.Join(",", dense.Shape)}]")
+            End If
+
+            Dim batch = dense.Shape(0)
+            Dim rows = csr.Rows
+            Dim cols = csr.Columns
+            Dim rp = csr.RowPointers
+            Dim ci = csr.ColumnIndices
+            Dim vv = csr.Values
+
+            Dim acc(batch * cols - 1) As Double
+            Dim xd = dense.Data
+
+            For b As Integer = 0 To batch - 1
+                Dim bo = b * cols
+                Dim ro = b * rows
+                For r As Integer = 0 To rows - 1
+                    Dim xv As Double = xd(ro + r)
+                    If xv = 0.0 Then Continue For    ' 脉冲输入高度稀疏：跳过零源
+                    Dim kEnd = rp(r + 1)
+                    For k As Integer = rp(r) To kEnd - 1
+                        acc(bo + ci(k)) += xv * vv(k)
+                    Next
+                Next
+            Next
+
+            Dim od(batch * cols - 1) As Single
+            For i As Integer = 0 To od.Length - 1
+                od(i) = CSng(acc(i))
+            Next
+
+            Return Wrap(od, New Integer() {batch, cols})
+        End Function
+
+        ''' <summary>
+        ''' 融合的稀疏递归 LIF 单步（主机标量实现，就地更新状态张量）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 语义与「SpMM + Add + MultiplyScalar + Heaviside + ElementwiseMultiply」逐算子路径
+        ''' 逐比特等价，但把每步 6 个 <c>[batch, Units]</c> 中间张量的分配与 5 次全量遍历
+        ''' 压缩为 1 个双精度累加缓冲 + 1 次融合遍历。
+        ''' <para>
+        ''' β 与 θ 由调用方以 <c>Double</c> 传入，本实现全程用 <c>Double</c> 计算后再
+        ''' 落到 <c>Single</c> 存储——这是刻意的设计：膜电位是逐时间步累积量，
+        ''' 中间项的单精度舍入会改变阈值判定，历史上 SNN 的 CSng(Beta) 截断正是漂移根因。
+        ''' </para>
+        ''' </remarks>
+        Public Overridable Function LifStep(synapses As SparseCsr,
+                                            sPrev As TensorF,
+                                            externalCurrent As TensorF,
+                                            h As TensorF,
+                                            s As TensorF,
+                                            counts As TensorF,
+                                            beta As Double,
+                                            threshold As Double,
+                                            subtractThreshold As Boolean) As Boolean Implements ITensorComputeF.LifStep
+            If synapses Is Nothing Then Throw New ArgumentNullException(NameOf(synapses))
+            If sPrev Is Nothing Then Throw New ArgumentNullException(NameOf(sPrev))
+            If h Is Nothing Then Throw New ArgumentNullException(NameOf(h))
+            If s Is Nothing Then Throw New ArgumentNullException(NameOf(s))
+
+            Dim batch = sPrev.Shape(0)
+            Dim units = sPrev.Shape(1)
+            If h.Shape(0) <> batch OrElse h.Shape(1) <> units Then
+                Throw New ArgumentException("膜电位与脉冲张量形状不一致")
+            End If
+            If externalCurrent IsNot Nothing AndAlso externalCurrent.Length <> sPrev.Length Then
+                Throw New ArgumentException("外部注入电流形状与脉冲张量不一致")
+            End If
+
+            Dim rp = synapses.RowPointers
+            Dim ci = synapses.ColumnIndices
+            Dim vv = synapses.Values
+            Dim sp = sPrev.Data
+            Dim hp = h.Data
+            Dim sOut = s.Data
+            Dim ext = If(externalCurrent Is Nothing, Nothing, externalCurrent.Data)
+            Dim cnt = If(counts Is Nothing, Nothing, counts.Data)
+
+            Dim current(units - 1) As Double
+
+            For b As Integer = 0 To batch - 1
+                Array.Clear(current, 0, units)
+                Dim ro = b * units
+
+                For i As Integer = 0 To units - 1
+                    Dim xv As Double = sp(ro + i)
+                    If xv = 0.0 Then Continue For
+                    Dim kEnd = rp(i + 1)
+                    For k As Integer = rp(i) To kEnd - 1
+                        current(ci(k)) += xv * vv(k)
+                    Next
+                Next
+
+                For i As Integer = 0 To units - 1
+                    Dim idx = ro + i
+                    Dim u As Double = beta * hp(idx) + current(i) + If(ext Is Nothing, 0.0, CDbl(ext(idx)))
+
+                    If u >= threshold Then
+                        sOut(idx) = 1.0F
+                        hp(idx) = CSng(If(subtractThreshold, u - threshold, 0.0))
+                    Else
+                        sOut(idx) = 0.0F
+                        hp(idx) = CSng(u)
+                    End If
+
+                    If cnt IsNot Nothing Then cnt(idx) += sOut(idx)
+                Next
+            Next
+
+            Call h.MarkHostModified()
+            Call s.MarkHostModified()
+            If counts IsNot Nothing Then Call counts.MarkHostModified()
+
+            Return True
+        End Function
+
 #End Region
 
 #Region "归约运算"
