@@ -76,6 +76,8 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -222,7 +224,7 @@ Public Class PlotEngine : Implements IDisposable
     ''' 直接使用已有的 System.Drawing.Bitmap 作为绘图设备（GDI 驱动）。
     ''' 渲染结果即绘制在该位图上，可通过 ToBitmap() 取回。
     ''' </summary>
-    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
+    Public Sub New(bmp As Bitmap)
         If bmp Is Nothing Then Throw New ArgumentNullException(NameOf(bmp))
         _bitmap = bmp
         _width = bmp.Width
@@ -259,7 +261,10 @@ Public Class PlotEngine : Implements IDisposable
     End Sub
 
     ''' <summary>取回底层绘图位图（若由 New(bmp) 构造则有值，否则为 Nothing）。</summary>
-    Public Function ToBitmap() As Microsoft.VisualBasic.Imaging.Bitmap
+    Public Function ToBitmap() As Bitmap
+        If _bitmap Is Nothing AndAlso _g.GetType.ImplementInterface(Of GdiRasterGraphics) Then
+            Return New Bitmap(DirectCast(_g, GdiRasterGraphics).ImageResource)
+        End If
         Return _bitmap
     End Function
 
@@ -312,7 +317,11 @@ Public Class PlotEngine : Implements IDisposable
         _plotArea = New RectangleF(x, y, w, h)
     End Sub
 
-    ''' <summary>数据坐标 -> 像素坐标</summary>
+    ''' <summary>
+    ''' 数据坐标 -> 像素坐标
+    ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Protected Function ToPixelX(x As Double, xmin As Double, xmax As Double) As Single
         Return _plotArea.Left + CSng((x - xmin) / (xmax - xmin) * _plotArea.Width)
     End Function
