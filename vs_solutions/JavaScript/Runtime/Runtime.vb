@@ -37,6 +37,10 @@ Namespace Runtime
         Public ReadOnly ObjectBuiltin As New NativeObject("Object")
         Public ReadOnly ArrayBuiltin As New NativeObject("Array")
         Public ReadOnly FunctionBuiltin As New NativeObject("Function")
+        Public ReadOnly DateBuiltin As New NativeObject("Date")
+        Public ReadOnly RegExpBuiltin As New NativeObject("RegExp")
+        Public ReadOnly ErrorBuiltin As New NativeObject("Error")
+        Public ReadOnly PromiseBuiltin As New NativeObject("Promise")
         Public ReadOnly GlobalObj As New NativeObject("global")
 
         ' math constants exposed as properties (System.Math qualified — the
@@ -51,10 +55,16 @@ Namespace Runtime
             Dim g As New Dictionary(Of String, Object) From {
                 {"console", ConsoleBuiltin}, {"Math", MathBuiltin}, {"JSON", Json},
                 {"Object", ObjectBuiltin}, {"Array", ArrayBuiltin}, {"Function", FunctionBuiltin},
+                {"Date", DateBuiltin}, {"RegExp", RegExpBuiltin}, {"Error", ErrorBuiltin},
+                {"Promise", PromiseBuiltin},
                 {"undefined", Undef}, {"NaN", Double.NaN}, {"Infinity", Double.PositiveInfinity}
             }
             For Each name In {"parseInt", "parseFloat", "isNaN", "isFinite",
                               "String", "Number", "Boolean"}
+                g(name) = New BuiltinMethod(GlobalObj, name)
+            Next
+            ' the Error hierarchy: each name is its own constructor
+            For Each name In {"TypeError", "RangeError", "SyntaxError", "ReferenceError"}
                 g(name) = New BuiltinMethod(GlobalObj, name)
             Next
             Return g
@@ -125,6 +135,9 @@ Namespace Runtime
             If TypeOf x Is BuiltinMethod Then Return "[function: " & DirectCast(x, BuiltinMethod).Name & "]"
             If TypeOf x Is NativeObject Then Return "[object " & DirectCast(x, NativeObject).Name & "]"
             If TypeOf x Is JsClass Then Return "class " & DirectCast(x, JsClass).Name & " { ... }"
+            If TypeOf x Is JsError Then Return DirectCast(x, JsError).ToString()
+            If TypeOf x Is JsDate Then Return DirectCast(x, JsDate).ToString()
+            If TypeOf x Is JsRegExp Then Return DirectCast(x, JsRegExp).ToString()
             Return CStr(x)
         End Function
 
@@ -166,6 +179,14 @@ Namespace Runtime
             If TypeOf x Is String Then Return "string"
             If TypeOf x Is Boolean Then Return "boolean"
             If IsJsFunction(x) Then Return "function"       ' classes are functions too
+            ' the builtin constructors are functions; Math / JSON / console are objects
+            If TypeOf x Is NativeObject Then
+                Select Case DirectCast(x, NativeObject).Name
+                    Case "Array", "Object", "Function", "Date", "RegExp", "Error", "Promise"
+                        Return "function"
+                End Select
+                Return "object"
+            End If
             If x Is Undef Then Return "undefined"
             If x Is Nothing Then Return "object"     ' JS: typeof null === "object"
             Return "object"
@@ -356,10 +377,76 @@ Namespace Runtime
             If TypeOf obj Is NativeObject Then
                 Dim n = DirectCast(obj, NativeObject)
                 If n.Name = "Math" AndAlso _mathProps.TryGetValue(name, Nothing) Then Return _mathProps(name)
-                If n.Name = "Math" Then Return New BuiltinMethod(obj, name)
+                ' the global object has no builtin methods beyond the registered globals
+                If n.Name = "global" Then Return Undef
                 Return New BuiltinMethod(obj, name)
             End If
-            If IsNumber(obj) AndAlso name = "toFixed" Then Return New BuiltinMethod(obj, name)
+            If TypeOf obj Is JsRegExp Then
+                Dim re = DirectCast(obj, JsRegExp)
+                Select Case name
+                    Case "source" : Return re.Source
+                    Case "flags" : Return re.Flags
+                    Case "global" : Return re.IsGlobal
+                    Case "ignoreCase" : Return re.IgnoreCase
+                    Case "sticky" : Return re.Sticky
+                    Case "lastIndex" : Return CDbl(re.LastIndex)
+                    Case "test", "exec", "toString", "compile"
+                        Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If TypeOf obj Is JsDate Then
+                Select Case name
+                    Case "getTime", "getFullYear", "getMonth", "getDate", "getDay", "getHours",
+                         "getMinutes", "getSeconds", "getMilliseconds", "getTimezoneOffset",
+                         "toISOString", "toString", "toDateString", "toTimeString",
+                         "toJSON", "toLocaleDateString", "toLocaleTimeString", "valueOf"
+                        Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If TypeOf obj Is JsPromise Then
+                Select Case name
+                    Case "then", "catch", "finally"
+                        Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If TypeOf obj Is JsError Then
+                Dim err = DirectCast(obj, JsError)
+                Select Case name
+                    Case "name" : Return err.Name
+                    Case "message" : Return err.Message
+                    Case "stack" : Return err.ToString()
+                    Case "toString" : Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            ' static helpers live on the builtin function objects (Number.isInteger, ...)
+            If TypeOf obj Is BuiltinMethod Then
+                Dim bm = DirectCast(obj, BuiltinMethod)
+                If bm.Name = "Number" Then
+                    ' numeric constants are values, not methods
+                    Select Case name
+                        Case "MAX_SAFE_INTEGER" : Return 9007199254740991.0
+                        Case "MIN_SAFE_INTEGER" : Return -9007199254740991.0
+                        Case "MAX_VALUE" : Return Double.MaxValue
+                        Case "MIN_VALUE" : Return Double.Epsilon
+                        Case "EPSILON" : Return 2.2204460492503131E-16
+                        Case "POSITIVE_INFINITY" : Return Double.PositiveInfinity
+                        Case "NEGATIVE_INFINITY" : Return Double.NegativeInfinity
+                        Case "NaN" : Return Double.NaN
+                    End Select
+                End If
+                Select Case bm.Name
+                    Case "Number", "String", "Boolean"
+                        Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If IsNumber(obj) AndAlso (name = "toFixed" OrElse name = "toString" OrElse name = "toPrecision") Then
+                Return New BuiltinMethod(obj, name)
+            End If
             Return Undef
         End Function
 
@@ -569,6 +656,10 @@ Namespace Runtime
                 Return ConstructBuiltin(DirectCast(ctor, BuiltinMethod).Name, args)
             End If
 
+            ' container constructors (Array / Object / Function / ...)
+            Dim nativeCtor = TryCast(ctor, NativeObject)
+            If nativeCtor IsNot Nothing Then Return ConstructBuiltin(nativeCtor.Name, args)
+
             Throw JsRuntimeException.TypeError(JsStr(ctor) & " is not a constructor")
         End Function
 
@@ -594,8 +685,22 @@ Namespace Runtime
                 Next
             Next
 
-            If cls.Constructor IsNot Nothing Then
-                Call JsInvokeCore(cls.Constructor, args, inst, cls)
+            ' an absent constructor forwards to the superclass (JS derived-class default)
+            Dim ctorToRun = cls.Constructor
+            Dim ctorHome = cls
+            If ctorToRun Is Nothing Then
+                Dim base = cls.SuperClass
+                While base IsNot Nothing AndAlso base.Constructor Is Nothing
+                    base = base.SuperClass
+                End While
+                If base IsNot Nothing Then
+                    ctorToRun = base.Constructor
+                    ctorHome = base
+                End If
+            End If
+
+            If ctorToRun IsNot Nothing Then
+                Call JsInvokeCore(ctorToRun, args, inst, ctorHome)
             End If
             Return inst
         End Function
@@ -617,6 +722,22 @@ Namespace Runtime
                 Case "String" : Return JsStr(Arg(args, 0))
                 Case "Number" : Return JsNum(Arg(args, 0))
                 Case "Boolean" : Return JsTruthy(Arg(args, 0))
+                Case "RegExp"
+                    If args.Length = 0 Then Return New JsRegExp("")
+                    Dim src = Arg(args, 0)
+                    If TypeOf src Is JsRegExp Then
+                        Return New JsRegExp(DirectCast(src, JsRegExp).Source,
+                                            If(args.Length > 1, JsStr(args(1)), DirectCast(src, JsRegExp).Flags))
+                    End If
+                    Return New JsRegExp(JsStr(src), If(args.Length > 1, JsStr(args(1)), ""))
+                Case "Date"
+                    If args.Length = 0 Then Return JsDate.Now()
+                    If IsNumber(args(0)) Then Return JsDate.FromEpochMs(CDbl(args(0)))
+                    Dim parsed = JsDate.Parse(JsStr(args(0)))
+                    Return If(parsed IsNot Nothing, parsed, JsDate.FromEpochMs(Double.NaN))
+                Case "Error", "TypeError", "RangeError", "SyntaxError", "ReferenceError"
+                    Return New JsError(name, If(args.Length > 0 AndAlso args(0) IsNot Undef, JsStr(args(0)), ""))
+                Case "Promise" : Return ConstructPromise(args)
             End Select
             Throw JsRuntimeException.TypeError("'" & name & "' is not a constructor")
         End Function
@@ -851,13 +972,18 @@ Namespace Runtime
 
         Private ReadOnly ArrayMethodNames As New HashSet(Of String) From {
             "push", "pop", "shift", "unshift", "join", "concat", "slice", "indexOf",
-            "includes", "reverse", "sort", "map", "filter", "reduce", "forEach"
+            "includes", "reverse", "sort", "map", "filter", "reduce", "forEach",
+            "find", "findIndex", "findLast", "findLastIndex", "some", "every",
+            "flat", "flatMap", "fill", "splice", "lastIndexOf", "reduceRight", "at",
+            "keys", "values", "entries", "toString"
         }
 
         Private ReadOnly StringMethodNames As New HashSet(Of String) From {
             "charAt", "charCodeAt", "substring", "slice", "indexOf", "toUpperCase",
             "toLowerCase", "trim", "split", "replace", "includes", "startsWith",
-            "endsWith", "repeat", "padStart", "toString"
+            "endsWith", "repeat", "padStart", "toString",
+            "at", "lastIndexOf", "padEnd", "trimStart", "trimEnd", "replaceAll",
+            "match", "matchAll", "search", "concat", "codePointAt", "valueOf"
         }
 
         Private Function Arg(args As Object(), i As Integer) As Object
@@ -873,16 +999,73 @@ Namespace Runtime
                     Case "JSON" : Return BuiltinJson(name, args)
                     Case "Object" : Return BuiltinObject(name, args)
                     Case "Array" : Return BuiltinArrayCtor(name, args)
+                    Case "Error" : Return BuiltinErrorCtor(name, args)
+                    Case "Date" : Return BuiltinDateStatic(name, args)
+                    Case "RegExp" : Return New JsRegExp(JsStr(Arg(args, 0)), If(args.Length > 1, JsStr(args(1)), ""))
+                    Case "Promise" : Return BuiltinPromiseStatic(name, args)
                     Case "global" : Return BuiltinGlobalFn(name, args)
+                End Select
+            End If
+            ' static helpers on the Number / String / Boolean function objects
+            If TypeOf target Is BuiltinMethod Then
+                Select Case DirectCast(target, BuiltinMethod).Name
+                    Case "Number" : Return BuiltinNumberStatic(name, args)
+                    Case "String" : Return BuiltinStringStatic(name, args)
                 End Select
             End If
             If IsJsArray(target) Then Return BuiltinArrayMethod(DirectCast(target, List(Of Object)), name, args)
             If TypeOf target Is String Then Return BuiltinStringMethod(CStr(target), name, args)
-            If IsNumber(target) AndAlso name = "toFixed" Then
-                Dim digits = CInt(JsNum(Arg(args, 0)))
-                Return CDbl(target).ToString("F" & digits.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
+            If TypeOf target Is JsPromise Then
+                Dim p = DirectCast(target, JsPromise)
+                Select Case name
+                    Case "then" : Return p.Then(Arg(args, 0), Arg(args, 1))
+                    Case "catch" : Return p.Catch(Arg(args, 0))
+                    Case "finally" : Return p.Finally(Arg(args, 0))
+                End Select
+                Throw JsRuntimeException.TypeError("Promise." & name & " is not a function")
+            End If
+            If TypeOf target Is JsRegExp Then Return BuiltinRegExpMethod(DirectCast(target, JsRegExp), name, args)
+            If TypeOf target Is JsDate Then Return BuiltinDateMethod(DirectCast(target, JsDate), name, args)
+            If TypeOf target Is JsError Then
+                If name = "toString" Then Return JsStr(target)
+            End If
+            If IsNumber(target) Then
+                Dim d = CDbl(target)
+                Select Case name
+                    Case "toFixed"
+                        Dim digits = CInt(JsNum(Arg(args, 0)))
+                        Return d.ToString("F" & digits.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
+                    Case "toString"
+                        Dim radix = CInt(JsNum(Arg(args, 0)))
+                        If radix >= 2 AndAlso radix <= 36 Then Return RadixString(d, radix)
+                        Return NumToString(d)
+                    Case "toPrecision"
+                        If args.Length = 0 OrElse Arg(args, 0) Is Undef Then Return NumToString(d)
+                        Return d.ToString("G" & CInt(JsNum(args(0))).ToString(CultureInfo.InvariantCulture),
+                                          CultureInfo.InvariantCulture)
+                End Select
             End If
             Throw JsRuntimeException.TypeError($"{JsStr(target)}.{name} is not a function")
+        End Function
+
+        ''' <summary>Number.prototype.toString(radix) for 2..36.</summary>
+        Private Function RadixString(d As Double, radix As Integer) As String
+            If Double.IsNaN(d) Then Return "NaN"
+            If Double.IsInfinity(d) Then Return If(d > 0, "Infinity", "-Infinity")
+            If d = System.Math.Truncate(d) AndAlso System.Math.Abs(d) < 9.0E+15 Then
+                Dim n = CLng(d)
+                Dim negative = n < 0
+                If negative Then n = -n
+                Dim digits = "0123456789abcdefghijklmnopqrstuvwxyz"
+                Dim sb As New StringBuilder()
+                If n = 0 Then Return "0"
+                While n > 0
+                    sb.Insert(0, digits(CInt(n Mod radix)))
+                    n = n \ radix
+                End While
+                Return If(negative, "-", "") & sb.ToString()
+            End If
+            Return NumToString(d)
         End Function
 
         Private Function BuiltinConsole(name As String, args As Object()) As Object
@@ -906,7 +1089,26 @@ Namespace Runtime
                     Return System.Math.Floor(d + 0.5)
                 Case "trunc" : Return System.Math.Truncate(JsNum(Arg(args, 0)))
                 Case "sqrt" : Return System.Math.Sqrt(JsNum(Arg(args, 0)))
+                Case "cbrt"
+                    Dim d = JsNum(Arg(args, 0))
+                    Return If(d < 0, -System.Math.Pow(-d, 1.0 / 3.0), System.Math.Pow(d, 1.0 / 3.0))
                 Case "pow" : Return System.Math.Pow(JsNum(Arg(args, 0)), JsNum(Arg(args, 1)))
+                Case "exp" : Return System.Math.Exp(JsNum(Arg(args, 0)))
+                Case "expm1" : Return System.Math.Exp(JsNum(Arg(args, 0))) - 1.0
+                Case "log" : Return System.Math.Log(JsNum(Arg(args, 0)))
+                Case "log1p" : Return System.Math.Log(1.0 + JsNum(Arg(args, 0)))
+                Case "log2" : Return System.Math.Log(JsNum(Arg(args, 0)), 2.0)
+                Case "log10" : Return System.Math.Log10(JsNum(Arg(args, 0)))
+                Case "sin" : Return System.Math.Sin(JsNum(Arg(args, 0)))
+                Case "cos" : Return System.Math.Cos(JsNum(Arg(args, 0)))
+                Case "tan" : Return System.Math.Tan(JsNum(Arg(args, 0)))
+                Case "asin" : Return System.Math.Asin(JsNum(Arg(args, 0)))
+                Case "acos" : Return System.Math.Acos(JsNum(Arg(args, 0)))
+                Case "atan" : Return System.Math.Atan(JsNum(Arg(args, 0)))
+                Case "atan2" : Return System.Math.Atan2(JsNum(Arg(args, 0)), JsNum(Arg(args, 1)))
+                Case "sinh" : Return System.Math.Sinh(JsNum(Arg(args, 0)))
+                Case "cosh" : Return System.Math.Cosh(JsNum(Arg(args, 0)))
+                Case "tanh" : Return System.Math.Tanh(JsNum(Arg(args, 0)))
                 Case "sign"
                     Dim d = JsNum(Arg(args, 0))
                     Return If(Double.IsNaN(d) OrElse d = 0.0, If(d = 0.0, 0.0, Double.NaN), System.Math.Sign(d))
@@ -914,6 +1116,7 @@ Namespace Runtime
                     Dim r = Double.PositiveInfinity
                     For Each a In args
                         Dim v = JsNum(a)
+                        If Double.IsNaN(v) Then Return Double.NaN
                         If v < r Then r = v
                     Next
                     Return r
@@ -921,6 +1124,7 @@ Namespace Runtime
                     Dim r = Double.NegativeInfinity
                     For Each a In args
                         Dim v = JsNum(a)
+                        If Double.IsNaN(v) Then Return Double.NaN
                         If v > r Then r = v
                     Next
                     Return r
@@ -932,13 +1136,32 @@ Namespace Runtime
                         s += v * v
                     Next
                     Return System.Math.Sqrt(s)
+                Case "imul"
+                    ' 32 bit integer multiplication of the ToInt32 operands
+                    Dim x = ToInt32Bits(JsNum(Arg(args, 0))), y = ToInt32Bits(JsNum(Arg(args, 1)))
+                    Return WrapInt32(x * y)
+                Case "clz32"
+                    Dim u = ToUint32Bits(JsNum(Arg(args, 0)))
+                    If u = 0 Then Return 32.0
+                    Dim n = 0
+                    While (u And &H80000000L) = 0
+                        u <<= 1
+                        n += 1
+                    End While
+                    Return CDbl(n)
+                Case "fround"
+                    ' Math.fround: round to the nearest 32 bit float
+                    Return CDbl(CSng(JsNum(Arg(args, 0))))
             End Select
-            Throw JsRuntimeException.TypeError("System.Math." & name & " is not a function")
+            Throw JsRuntimeException.TypeError("Math." & name & " is not a function")
         End Function
 
         Private Function BuiltinJson(name As String, args As Object()) As Object
             Select Case name
-                Case "stringify" : Return JsonStringify(Arg(args, 0))
+                Case "stringify"
+                    ' the optional third argument (space) switches to indented output
+                    Dim space = args.Length > 2 AndAlso Not (args(2) Is Undef) AndAlso JsTruthy(args(2))
+                    Return JsonStringify(Arg(args, 0), space)
                 Case "parse" : Return JsParseJson(JsStr(Arg(args, 0)))
             End Select
             Throw JsRuntimeException.TypeError("JSON." & name & " is not a function")
@@ -958,9 +1181,11 @@ Namespace Runtime
         End Function
 
         ''' <summary>对象/数组的 JSON 风格文本（console 显示与 JSON.stringify 共用）</summary>
-        Private Function DisplayJson(x As Object) As String
+        Private Function DisplayJson(x As Object, Optional indent As Boolean = False) As String
+            Dim opts = JsonOpts()
+            opts.indent = indent
             ' TrimEnd: the json writer terminates the document with a newline
-            Return ToJsonElement(x, New HashSet(Of Object)).BuildJsonString(JsonOpts()).TrimEnd()
+            Return ToJsonElement(x, New HashSet(Of Object)).BuildJsonString(opts).TrimEnd()
         End Function
 
         ''' <summary>
@@ -1145,13 +1370,13 @@ Namespace Runtime
         ''' 顶层 undefined/函数返回 undefined 值本身；对象中 undefined/函数成员省略；
         ''' 数组中转 null；NaN/±Infinity 转 null；循环引用抛 TypeError。
         ''' </summary>
-        Private Function JsonStringify(x As Object) As Object
+        Private Function JsonStringify(x As Object, Optional indent As Boolean = False) As Object
             If x Is Nothing Then
                 Return "null"
             ElseIf x Is Undef OrElse TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod Then
                 Return Undef
             Else
-                Return DisplayJson(x)
+                Return DisplayJson(x, indent)
             End If
         End Function
 
@@ -1164,9 +1389,69 @@ Namespace Runtime
                 Case "values"
                     Dim o = Arg(args, 0)
                     If IsJsObject(o) Then
-                        Return New List(Of Object)(DirectCast(o, Dictionary(Of String, Object)).Values)
+                        Dim vals As New List(Of Object)
+                        For Each k In JsForInKeys(o)
+                            vals.Add(JsGet(o, JsStr(k)))
+                        Next
+                        Return vals
                     End If
                     Return New List(Of Object)()
+                Case "entries"
+                    Dim o = Arg(args, 0)
+                    Dim entries As New List(Of Object)
+                    For Each k In JsForInKeys(o)
+                        entries.Add(New List(Of Object) From {k, JsGet(o, JsStr(k))})
+                    Next
+                    Return entries
+                Case "fromEntries"
+                    Dim src = Arg(args, 0)
+                    Dim d As New Dictionary(Of String, Object)
+                    If IsJsArray(src) Then
+                        For Each pair In DirectCast(src, List(Of Object))
+                            If IsJsArray(pair) Then
+                                Dim p = DirectCast(pair, List(Of Object))
+                                If p.Count >= 2 Then d(JsStr(p(0))) = p(1)
+                            End If
+                        Next
+                    End If
+                    Return d
+                Case "assign"
+                    Dim target = Arg(args, 0)
+                    If IsJsObject(target) Then
+                        Dim d = DirectCast(target, Dictionary(Of String, Object))
+                        For i = 1 To args.Length - 1
+                            Dim src = args(i)
+                            If IsJsObject(src) Then
+                                For Each kv In DirectCast(src, Dictionary(Of String, Object))
+                                    If kv.Key.StartsWith("__", StringComparison.Ordinal) Then Continue For
+                                    d(kv.Key) = ReadMember(kv.Value, src, Nothing)
+                                Next
+                            End If
+                        Next
+                    End If
+                    Return target
+                Case "getOwnPropertyNames"
+                    Dim o = Arg(args, 0)
+                    Dim names As New List(Of Object)
+                    If IsJsObject(o) Then
+                        For Each k In DirectCast(o, Dictionary(Of String, Object)).Keys
+                            If k.StartsWith("__", StringComparison.Ordinal) Then Continue For
+                            names.Add(k)
+                        Next
+                    End If
+                    Return names
+                Case "freeze", "seal"
+                    ' the object model is mutable; freeze/seal return the object unchanged
+                    Return Arg(args, 0)
+                Case "isFrozen", "isSealed"
+                    Return False
+                Case "create"
+                    Dim d As New Dictionary(Of String, Object)
+                    Dim proto = Arg(args, 0)
+                    If proto IsNot Nothing AndAlso Not (proto Is Undef) Then
+                        If IsJsObject(proto) Then d("__proto__") = proto
+                    End If
+                    Return d
             End Select
             Throw JsRuntimeException.TypeError("Object." & name & " is not a function")
         End Function
@@ -1191,6 +1476,9 @@ Namespace Runtime
                 Case "isFinite" : Return Not Double.IsNaN(JsNum(Arg(args, 0)))
                 Case "parseInt" : Return ParseIntPrefix(JsStr(Arg(args, 0)))
                 Case "parseFloat" : Return ParseFloatPrefix(JsStr(Arg(args, 0)))
+                ' the Error hierarchy is callable without 'new', returning an error object
+                Case "Error", "TypeError", "RangeError", "SyntaxError", "ReferenceError"
+                    Return BuiltinErrorCtor(name, args)
             End Select
             Throw JsRuntimeException.TypeError(name & " is not a function")
         End Function
@@ -1353,8 +1641,132 @@ Namespace Runtime
                         JsInvoke(fn, {a(i), CDbl(i), a})
                     Next
                     Return Undef
+                Case "find", "findIndex", "findLast", "findLastIndex"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    Dim backwards = name = "findLast" OrElse name = "findLastIndex"
+                    Dim from = If(backwards, a.Count - 1, 0)
+                    Dim [to] = If(backwards, 0, a.Count - 1)
+                    Dim delta = If(backwards, -1, 1)
+                    Dim i = from
+                    While If(backwards, i >= [to], i <= [to])
+                        If JsTruthy(JsInvoke(fn, {a(i), CDbl(i), a})) Then
+                            If name = "findIndex" OrElse name = "findLastIndex" Then Return CDbl(i)
+                            Return a(i)
+                        End If
+                        i += delta
+                    End While
+                    If name = "findIndex" OrElse name = "findLastIndex" Then Return -1.0
+                    Return Undef
+                Case "some", "every"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    For i = 0 To a.Count - 1
+                        Dim hit = JsTruthy(JsInvoke(fn, {a(i), CDbl(i), a}))
+                        If name = "some" AndAlso hit Then Return True
+                        If name = "every" AndAlso Not hit Then Return False
+                    Next
+                    Return name = "every"
+                Case "flat"
+                    Dim depth = If(args.Length > 0 AndAlso Arg(args, 0) IsNot Undef, CInt(JsNum(args(0))), 1)
+                    Return FlattenArray(a, depth)
+                Case "flatMap"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    Dim mapped As New List(Of Object)
+                    For i = 0 To a.Count - 1
+                        mapped.Add(JsInvoke(fn, {a(i), CDbl(i), a}))
+                    Next
+                    Return FlattenArray(mapped, 1)
+                Case "fill"
+                    Dim value = Arg(args, 0)
+                    Dim start = NormIndex(JsNum(Arg(args, 1)), a.Count)
+                    Dim ending = If(args.Length > 2 AndAlso Arg(args, 2) IsNot Undef,
+                                    NormIndex(JsNum(args(2)), a.Count), a.Count)
+                    For i = start To ending - 1
+                        a(i) = value
+                    Next
+                    Return a
+                Case "splice"
+                    ' splice(start, deleteCount, ...items)
+                    Dim start = NormIndex(JsNum(Arg(args, 0)), a.Count)
+                    Dim deleteCount As Integer
+                    If args.Length <= 1 Then
+                        deleteCount = a.Count - start
+                    ElseIf Arg(args, 1) Is Undef Then
+                        deleteCount = 0
+                    Else
+                        deleteCount = System.Math.Max(0, System.Math.Min(CInt(JsNum(args(1))), a.Count - start))
+                    End If
+                    Dim removed As New List(Of Object)
+                    For i = 1 To deleteCount
+                        removed.Add(a(start))
+                        a.RemoveAt(start)
+                    Next
+                    Dim inserts As New List(Of Object)
+                    For i = 2 To args.Length - 1
+                        inserts.Add(args(i))
+                    Next
+                    If inserts.Count > 0 Then a.InsertRange(start, inserts)
+                    Return removed
+                Case "lastIndexOf"
+                    Dim from = If(args.Length > 1 AndAlso Arg(args, 1) IsNot Undef,
+                                  System.Math.Min(CInt(JsNum(args(1))), a.Count - 1), a.Count - 1)
+                    For i = from To 0 Step -1
+                        If JsStrictEq(a(i), Arg(args, 0)) Then Return CDbl(i)
+                    Next
+                    Return -1.0
+                Case "reduceRight"
+                    Dim fn = DirectCast(Arg(args, 0), Func(Of Object(), Object))
+                    Dim acc As Object
+                    Dim startIdx As Integer
+                    If args.Length > 1 Then
+                        acc = args(1)
+                        startIdx = a.Count - 1
+                    ElseIf a.Count > 0 Then
+                        acc = a(a.Count - 1)
+                        startIdx = a.Count - 2
+                    Else
+                        Throw JsRuntimeException.TypeError("reduce of empty array with no initial value")
+                    End If
+                    For i = startIdx To 0 Step -1
+                        acc = JsInvoke(fn, {acc, a(i), CDbl(i), a})
+                    Next
+                    Return acc
+                Case "at"
+                    Dim i = CInt(JsNum(Arg(args, 0)))
+                    If i < 0 Then i += a.Count
+                    If i < 0 OrElse i >= a.Count Then Return Undef
+                    Return a(i)
+                Case "keys"
+                    Dim ks As New List(Of Object)
+                    For i = 0 To a.Count - 1
+                        ks.Add(CDbl(i))
+                    Next
+                    Return ks
+                Case "values"
+                    Return New List(Of Object)(a)
+                Case "entries"
+                    Dim es As New List(Of Object)
+                    For i = 0 To a.Count - 1
+                        es.Add(New List(Of Object) From {CDbl(i), a(i)})
+                    Next
+                    Return es
+                Case "toString"
+                    Return JoinArray(a, ",")
             End Select
             Throw JsRuntimeException.TypeError("array." & name & " is not a function")
+        End Function
+
+        ''' <summary>Array.prototype.flat — flatten nested arrays up to <paramref name="depth"/>.</summary>
+        Private Function FlattenArray(a As List(Of Object), depth As Integer) As Object
+            Dim result As New List(Of Object)
+            For Each v In a
+                If depth > 0 AndAlso IsJsArray(v) Then
+                    Dim inner = DirectCast(FlattenArray(DirectCast(v, List(Of Object)), depth - 1), List(Of Object))
+                    result.AddRange(inner)
+                Else
+                    result.Add(v)
+                End If
+            Next
+            Return result
         End Function
 
         Private Function NormIndex(d As Double, len As Integer) As Integer
@@ -1403,17 +1815,64 @@ Namespace Runtime
                 Case "trim" : Return s.Trim()
                 Case "split"
                     If args.Length = 0 OrElse Arg(args, 0) Is Undef Then Return New List(Of Object) From {s}
-                    Dim sep = JsStr(args(0))
-                    If sep = "" Then
-                        Dim chars As New List(Of Object)
-                        For Each c In s
-                            chars.Add(c.ToString())
+                    Dim limit = If(args.Length > 1 AndAlso Arg(args, 1) IsNot Undef, CInt(JsNum(args(1))), -1)
+                    Dim sepRe = TryCast(args(0), JsRegExp)
+                    Dim parts As New List(Of Object)
+                    If sepRe IsNot Nothing Then
+                        For Each piece In sepRe.Engine.Split(s)
+                            parts.Add(piece)
                         Next
-                        Return chars
+                    Else
+                        Dim sep = JsStr(args(0))
+                        If sep = "" Then
+                            For Each c In s
+                                parts.Add(c.ToString())
+                            Next
+                        Else
+                            For Each piece In s.Split({sep}, StringSplitOptions.None)
+                                parts.Add(piece)
+                            Next
+                        End If
                     End If
-                    Return New List(Of Object)(s.Split({sep}, StringSplitOptions.None).Cast(Of Object)())
-                Case "replace"
-                    Return s.Replace(JsStr(Arg(args, 0)), JsStr(Arg(args, 1)))
+                    If limit >= 0 AndAlso parts.Count > limit Then parts = parts.GetRange(0, limit)
+                    Return parts
+                Case "replace" : Return JsStringReplace(s, Arg(args, 0), Arg(args, 1), replaceAll:=False)
+                Case "replaceAll" : Return JsStringReplace(s, Arg(args, 0), Arg(args, 1), replaceAll:=True)
+                Case "match" : Return JsStringMatch(s, Arg(args, 0))
+                Case "matchAll" : Return JsStringMatchAll(s, Arg(args, 0))
+                Case "search"
+                    Dim searchRe = TryCast(args(0), JsRegExp)
+                    If searchRe IsNot Nothing Then Return CDbl(searchRe.Engine.Match(s).Index)
+                    Return CDbl(s.IndexOf(JsStr(Arg(args, 0)), StringComparison.Ordinal))
+                Case "at"
+                    Dim ai = CInt(JsNum(Arg(args, 0)))
+                    If ai < 0 Then ai += s.Length
+                    If ai < 0 OrElse ai >= s.Length Then Return Undef
+                    Return s.Substring(ai, 1)
+                Case "lastIndexOf"
+                    Return CDbl(s.LastIndexOf(JsStr(Arg(args, 0)), StringComparison.Ordinal))
+                Case "padEnd"
+                    Dim padLen = CInt(JsNum(Arg(args, 0)))
+                    Dim padText = If(args.Length > 1 AndAlso Arg(args, 1) IsNot Undef, JsStr(args(1)), " ")
+                    If s.Length >= padLen OrElse padText = "" Then Return s
+                    Dim padded As New StringBuilder(s)
+                    While padded.Length < padLen
+                        padded.Append(padText)
+                    End While
+                    Return padded.ToString().Substring(0, padLen)
+                Case "trimStart" : Return s.TrimStart()
+                Case "trimEnd" : Return s.TrimEnd()
+                Case "concat"
+                    Dim joined As New StringBuilder(s)
+                    For Each a In args
+                        joined.Append(JsStr(a))
+                    Next
+                    Return joined.ToString()
+                Case "codePointAt"
+                    Dim ci = CInt(JsNum(Arg(args, 0)))
+                    If ci < 0 OrElse ci >= s.Length Then Return Undef
+                    Return CDbl(AscW(s(ci)))
+                Case "valueOf" : Return s
                 Case "includes" : Return s.Contains(JsStr(Arg(args, 0)))
                 Case "startsWith" : Return s.StartsWith(JsStr(Arg(args, 0)), StringComparison.Ordinal)
                 Case "endsWith" : Return s.EndsWith(JsStr(Arg(args, 0)), StringComparison.Ordinal)
@@ -1433,6 +1892,355 @@ Namespace Runtime
                 Case "toString" : Return s
             End Select
             Throw JsRuntimeException.TypeError("string." & name & " is not a function")
+        End Function
+
+        ' ========================================================
+        ' T4: Promise, async/await and the synchronous microtask queue
+        ' ========================================================
+
+        <ThreadStatic>
+        Private _microtasks As Queue(Of Action)
+
+        ''' <summary>Queue a microtask (promise reactions run here).</summary>
+        Public Sub QueueMicrotask(job As Action)
+            If _microtasks Is Nothing Then _microtasks = New Queue(Of Action)
+            _microtasks.Enqueue(job)
+        End Sub
+
+        ''' <summary>
+        ''' Run pending microtasks until the queue is empty. Promise reactions are
+        ''' queued when their promise settles, so draining makes <c>then</c> callbacks
+        ''' observable — JS runs them as microtasks too, just after the current job.
+        ''' </summary>
+        Public Sub DrainMicrotasks()
+            If _microtasks Is Nothing Then Return
+            Dim guard = 0
+            While _microtasks.Count > 0 AndAlso guard < 1000000
+                Dim job = _microtasks.Dequeue()
+                Try
+                    job()
+                Catch ex As Exception
+                    ' a rejected microtask must not abort the remaining queue
+                End Try
+                guard += 1
+            End While
+        End Sub
+
+        ''' <summary>
+        ''' <c>await</c>: unwrap a promise. Non-promises pass through; a rejected
+        ''' promise throws the reason, so it is catchable by try/catch.
+        ''' </summary>
+        Public Function JsAwait(value As Object) As Object
+            Dim p = TryCast(value, JsPromise)
+            If p Is Nothing Then Return value
+
+            DrainMicrotasks()
+            If p.State = JsPromise.PromiseState.Rejected Then
+                Throw New JsRuntimeException(p.Result)
+            End If
+            Return p.Result
+        End Function
+
+        ''' <summary>new Promise(executor) — the executor runs immediately.</summary>
+        Private Function ConstructPromise(args As Object()) As Object
+            Dim p As New JsPromise()
+            Dim executor = Arg(args, 0)
+            If Not IsJsFunction(executor) Then
+                Throw JsRuntimeException.TypeError("Promise resolver " & JsStr(executor) & " is not a function")
+            End If
+
+            Dim resolve As Func(Of Object(), Object) =
+                Function(a As Object())
+                    p.Fulfill(If(a.Length > 0, a(0), Undef))
+                    Return Undef
+                End Function
+            Dim reject As Func(Of Object(), Object) =
+                Function(a As Object())
+                    p.Reject(If(a.Length > 0, a(0), Undef))
+                    Return Undef
+                End Function
+
+            Try
+                Call JsInvoke(executor, New Object() {CObj(resolve), CObj(reject)})
+            Catch ex As JsRuntimeException
+                p.Reject(ex.Payload)
+            End Try
+            Return p
+        End Function
+
+        ''' <summary>Promise.resolve / reject / all / allSettled / race / any.</summary>
+        Private Function BuiltinPromiseStatic(name As String, args As Object()) As Object
+            Select Case name
+                Case "resolve"
+                    Dim p As New JsPromise()
+                    p.ResolveWith(Arg(args, 0))
+                    Return p
+                Case "reject"
+                    Dim p As New JsPromise()
+                    p.Reject(Arg(args, 0))
+                    Return p
+                Case "all", "allSettled", "race", "any"
+                    Dim items = JsIterableValues(Arg(args, 0))
+                    DrainMicrotasks()
+                    Select Case name
+                        Case "race"
+                            For Each item In items
+                                Dim rp = TryCast(item, JsPromise)
+                                If rp Is Nothing Then Return JsPromiseOf(item, True)
+                                If rp.State = JsPromise.PromiseState.Fulfilled Then Return JsPromiseOf(rp.Result, True)
+                                If rp.State = JsPromise.PromiseState.Rejected Then Return JsPromiseOf(rp.Result, False)
+                            Next
+                            Return New JsPromise()
+                        Case "any"
+                            Dim rejections As New List(Of Object)
+                            For Each item In items
+                                Dim rp = TryCast(item, JsPromise)
+                                If rp Is Nothing Then Return JsPromiseOf(item, True)
+                                If rp.State = JsPromise.PromiseState.Fulfilled Then Return JsPromiseOf(rp.Result, True)
+                                If rp.State = JsPromise.PromiseState.Rejected Then rejections.Add(rp.Result)
+                            Next
+                            Return JsPromiseOf(rejections, False)
+                        Case "all"
+                            Dim values As New List(Of Object)
+                            For Each item In items
+                                Dim rp = TryCast(item, JsPromise)
+                                If rp Is Nothing Then
+                                    values.Add(item)
+                                ElseIf rp.State = JsPromise.PromiseState.Rejected Then
+                                    Return JsPromiseOf(rp.Result, False)
+                                Else
+                                    values.Add(rp.Result)
+                                End If
+                            Next
+                            Return JsPromiseOf(values, True)
+                        Case Else ' allSettled
+                            Dim settled As New List(Of Object)
+                            For Each item In items
+                                Dim rp = TryCast(item, JsPromise)
+                                Dim entry As New Dictionary(Of String, Object)
+                                If rp Is Nothing OrElse rp.State = JsPromise.PromiseState.Fulfilled Then
+                                    entry("status") = "fulfilled"
+                                    entry("value") = If(rp Is Nothing, item, rp.Result)
+                                Else
+                                    entry("status") = "rejected"
+                                    entry("reason") = rp.Result
+                                End If
+                                settled.Add(entry)
+                            Next
+                            Return JsPromiseOf(settled, True)
+                    End Select
+            End Select
+            Throw JsRuntimeException.TypeError("Promise." & name & " is not a function")
+        End Function
+
+        ''' <summary>A settled promise carrying <paramref name="value"/>.</summary>
+        Public Function JsPromiseOf(value As Object, fulfilled As Boolean) As Object
+            Dim p As New JsPromise()
+            If fulfilled Then p.ResolveWith(value) Else p.Reject(value)
+            Return p
+        End Function
+
+        ''' <summary>
+        ''' Wrap an <c>async function</c> body: running it yields a promise which is
+        ''' fulfilled with the return value (or rejected with a thrown value).
+        ''' </summary>
+        Public Function JsAsyncWrapper(run As Func(Of Object)) As Object
+            Dim p As New JsPromise()
+            Try
+                p.ResolveWith(run())
+            Catch ex As JsRuntimeException
+                p.Reject(ex.Payload)
+            Catch ex As Exception
+                p.Reject(ex.Message)
+            End Try
+            Return p
+        End Function
+
+        ' ========================================================
+        ' T3: RegExp / Date / Error interop and library completion
+        ' ========================================================
+
+        ''' <summary>
+        ''' String.prototype.replace / replaceAll: string or RegExp pattern, string or
+        ''' function replacement (<c>$&amp;</c> / <c>$1</c>..<c>$9</c> substitution).
+        ''' </summary>
+        Private Function JsStringReplace(s As String, pattern As Object, replacement As Object,
+                                         replaceAll As Boolean) As String
+            Dim fn = If(TypeOf replacement Is Func(Of Object(), Object),
+                        DirectCast(replacement, Func(Of Object(), Object)), Nothing)
+            Dim re = TryCast(pattern, JsRegExp)
+
+            If re Is Nothing Then
+                Dim needle = JsStr(pattern)
+                If needle = "" Then Return s
+                Dim sb As New StringBuilder()
+                Dim pos = 0
+                While True
+                    Dim idx = s.IndexOf(needle, pos, StringComparison.Ordinal)
+                    If idx < 0 Then Exit While
+                    sb.Append(s.Substring(pos, idx - pos))
+                    sb.Append(If(fn IsNot Nothing, JsStr(JsInvoke(fn, {needle, CDbl(idx), s})), JsStr(replacement)))
+                    pos = idx + needle.Length
+                    If Not replaceAll Then Exit While
+                End While
+                sb.Append(s.Substring(pos))
+                Return sb.ToString()
+            End If
+
+            Dim evaluator As MatchEvaluator =
+                Function(m As Match)
+                    If fn IsNot Nothing Then
+                        Dim callArgs As New List(Of Object) From {m.Value}
+                        For i = 1 To m.Groups.Count - 1
+                            Dim g = m.Groups(i)
+                            callArgs.Add(If(g.Success, CObj(g.Value), Nothing))
+                        Next
+                        callArgs.Add(CDbl(m.Index))
+                        callArgs.Add(s)
+                        Return JsStr(JsInvoke(fn, callArgs.ToArray()))
+                    End If
+                    ' $-substitution is performed by the .NET engine
+                    Return m.Result(JsStr(replacement))
+                End Function
+
+            Dim count = If(replaceAll OrElse re.IsGlobal, Integer.MaxValue, 1)
+            Return re.Engine.Replace(s, evaluator, count)
+        End Function
+
+        ''' <summary>String.prototype.match — Nothing, a match array, or all matches for /g.</summary>
+        Private Function JsStringMatch(s As String, pattern As Object) As Object
+            Dim re = TryCast(pattern, JsRegExp)
+            If re Is Nothing Then re = New JsRegExp(JsStr(pattern))
+            If re.IsGlobal Then
+                Dim all As New List(Of Object)
+                For Each m As Match In re.Engine.Matches(s)
+                    all.Add(m.Value)
+                Next
+                Return If(all.Count = 0, CObj(Nothing), all)
+            End If
+            Dim m0 = re.Engine.Match(s)
+            If Not m0.Success Then Return Nothing
+            Return MatchToArray(m0)
+        End Function
+
+        ''' <summary>String.prototype.matchAll — an array of match arrays (no iterator object).</summary>
+        Private Function JsStringMatchAll(s As String, pattern As Object) As Object
+            Dim re = TryCast(pattern, JsRegExp)
+            If re Is Nothing Then re = New JsRegExp(JsStr(pattern), "g")
+            Dim all As New List(Of Object)
+            For Each m As Match In re.Engine.Matches(s)
+                all.Add(MatchToArray(m))
+            Next
+            Return all
+        End Function
+
+        Private Function BuiltinRegExpMethod(re As JsRegExp, name As String, args As Object()) As Object
+            Select Case name
+                Case "test"
+                    Dim m = re.MatchFromState(JsStr(Arg(args, 0)))
+                    Return m IsNot Nothing AndAlso m.Success
+                Case "exec"
+                    Dim m = re.MatchFromState(JsStr(Arg(args, 0)))
+                    If m Is Nothing OrElse Not m.Success Then Return Nothing
+                    Return MatchToArray(m)
+                Case "toString" : Return re.ToString()
+            End Select
+            Throw JsRuntimeException.TypeError("RegExp." & name & " is not a function")
+        End Function
+
+        ''' <summary>RegExp match → JS result array [match, ...groups].</summary>
+        Private Function MatchToArray(m As Match) As Object
+            Dim list As New List(Of Object) From {CObj(m.Value)}
+            For i = 1 To m.Groups.Count - 1
+                Dim g = m.Groups(i)
+                list.Add(If(g.Success, CObj(g.Value), Nothing))
+            Next
+            Return list
+        End Function
+
+        Private Function BuiltinErrorCtor(name As String, args As Object()) As Object
+            Return New JsError(name, If(args.Length > 0 AndAlso Not (args(0) Is Undef), JsStr(args(0)), ""))
+        End Function
+
+        Private Function BuiltinDateStatic(name As String, args As Object()) As Object
+            Select Case name
+                Case "now" : Return CDbl(JsDate.Now().EpochMs)
+                Case "parse"
+                    Dim parsed = JsDate.Parse(JsStr(Arg(args, 0)))
+                    If parsed Is Nothing Then Return Double.NaN
+                    Return CDbl(parsed.EpochMs)
+                Case "UTC"
+                    Dim d As New Date(CInt(JsNum(Arg(args, 0))), CInt(JsNum(Arg(args, 1))) + 1,
+                                      If(args.Length > 2, CInt(JsNum(args(2))), 1),
+                                      If(args.Length > 3, CInt(JsNum(args(3))), 0),
+                                      If(args.Length > 4, CInt(JsNum(args(4))), 0),
+                                      If(args.Length > 5, CInt(JsNum(args(5))), 0), DateTimeKind.Utc)
+                    Return CDbl((d - New Date(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)
+            End Select
+            Throw JsRuntimeException.TypeError("Date." & name & " is not a function")
+        End Function
+
+        Private Function BuiltinDateMethod(d As JsDate, name As String, args As Object()) As Object
+            ' calendar accessors read the LOCAL time view, like JavaScript
+            Dim v = d.Local
+            Select Case name
+                Case "getFullYear" : Return CDbl(v.Year)
+                Case "getMonth" : Return CDbl(v.Month - 1)
+                Case "getDate" : Return CDbl(v.Day)
+                Case "getDay" : Return CDbl(CInt(v.DayOfWeek))
+                Case "getHours" : Return CDbl(v.Hour)
+                Case "getMinutes" : Return CDbl(v.Minute)
+                Case "getSeconds" : Return CDbl(v.Second)
+                Case "getMilliseconds" : Return CDbl(v.Millisecond)
+                Case "getTime", "valueOf" : Return CDbl(d.EpochMs)
+                Case "getTimezoneOffset" : Return CDbl(-TimeZoneInfo.Local.GetUtcOffset(v).TotalMinutes)
+                Case "toISOString", "toJSON"
+                    Return v.ToUniversalTime().ToString("yyyy-MM-dd\THH:mm:ss.fff\Z", CultureInfo.InvariantCulture)
+                Case "toString" : Return d.ToString()
+                Case "toDateString" : Return v.ToString("ddd MMM dd yyyy")
+                Case "toTimeString" : Return v.ToString("HH:mm:ss")
+                Case "toLocaleDateString" : Return v.ToString("d")
+                Case "toLocaleTimeString" : Return v.ToString("T")
+            End Select
+            Throw JsRuntimeException.TypeError("Date." & name & " is not a function")
+        End Function
+
+        Private Function BuiltinNumberStatic(name As String, args As Object()) As Object
+            Select Case name
+                Case "isInteger"
+                    Dim d = JsNum(Arg(args, 0))
+                    Return Not Double.IsNaN(d) AndAlso Not Double.IsInfinity(d) AndAlso d = System.Math.Floor(d)
+                Case "isSafeInteger"
+                    Dim d = JsNum(Arg(args, 0))
+                    Return d = System.Math.Floor(d) AndAlso System.Math.Abs(d) <= 9007199254740991.0
+                Case "isFinite"
+                    Dim d = JsNum(Arg(args, 0))
+                    Return Not Double.IsNaN(d) AndAlso Not Double.IsInfinity(d)
+                Case "isNaN"
+                    Dim o = Arg(args, 0)
+                    Return TypeOf o Is Double AndAlso Double.IsNaN(CDbl(o))
+                Case "parseFloat" : Return ParseFloatPrefix(JsStr(Arg(args, 0)))
+                Case "parseInt" : Return ParseIntPrefix(JsStr(Arg(args, 0)))
+            End Select
+            Throw JsRuntimeException.TypeError("Number." & name & " is not a function")
+        End Function
+
+        Private Function BuiltinStringStatic(name As String, args As Object()) As Object
+            Select Case name
+                Case "fromCharCode"
+                    Dim sb As New StringBuilder()
+                    For Each a In args
+                        sb.Append(ChrW(CInt(JsNum(a))))
+                    Next
+                    Return sb.ToString()
+                Case "fromCodePoint"
+                    Dim sb As New StringBuilder()
+                    For Each a In args
+                        sb.Append(ChrW(CInt(JsNum(a))))
+                    Next
+                    Return sb.ToString()
+            End Select
+            Throw JsRuntimeException.TypeError("String." & name & " is not a function")
         End Function
 
         ' ========================================================
@@ -1781,6 +2589,11 @@ Namespace Runtime
                     Case "Array" : Return IsJsArray(obj)
                     Case "Object" : Return IsJsObject(obj) OrElse IsJsArray(obj)
                     Case "Function" : Return IsJsFunction(obj)
+                    Case "RegExp" : Return TypeOf obj Is JsRegExp
+                    Case "Date" : Return TypeOf obj Is JsDate
+                    Case "Error" : Return TypeOf obj Is JsError
+                    Case "TypeError", "RangeError", "SyntaxError", "ReferenceError"
+                        Return TypeOf obj Is JsError AndAlso DirectCast(obj, JsError).Name = ctorName
                 End Select
                 ' primitives have no wrapper objects here: String/Number/Boolean → false,
                 ' matching JS ('abc' instanceof String === false)
@@ -1896,9 +2709,8 @@ Namespace Runtime
                 Case TypeCode.Empty : Return "undefined"
                 Case TypeCode.DBNull : Return "object"      ' JS: typeof null === "object"
                 Case Else
-                    Dim o = v.AsObject()
-                    If TypeOf o Is Func(Of Object(), Object) OrElse TypeOf o Is BuiltinMethod Then Return "function"
-                    Return "object"
+                    ' reuse the object overload (handles callables, classes and builtins)
+                    Return JsTypeOf(v.AsObject())
             End Select
         End Function
 

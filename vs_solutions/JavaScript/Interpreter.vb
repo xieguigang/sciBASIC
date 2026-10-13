@@ -517,6 +517,11 @@ Public NotInheritable Class Interpreter
             Case TypeOf e Is ClassExpr
                 Return JsValue.OfObject(BuildClass(DirectCast(e, ClassExpr).Spec, env))
 
+            Case TypeOf e Is RegexExpr
+                ' each evaluation yields a fresh RegExp object, like JS
+                Dim rx = DirectCast(e, RegexExpr)
+                Return JsValue.OfObject(New JsRegExp(rx.Source, rx.Flags))
+
             Case TypeOf e Is UnaryExpr
                 Dim u = DirectCast(e, UnaryExpr)
                 If u.Op = "typeof" Then

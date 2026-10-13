@@ -26,6 +26,8 @@ Public NotInheritable Class Lexer
     Private _pos As Integer
     Private _line As Integer = 1
     Private _col As Integer = 1
+    ''' <summary>Last significant token — decides '/' as division vs regex start.</summary>
+    Private _lastToken As Token
 
     Private Sub New(source As String)
         _src = source
@@ -38,6 +40,7 @@ Public NotInheritable Class Lexer
         While True
             Dim t = lx.NextToken(False)      ' line-break detection restarts per token
             tokens.Add(t)
+            lx._lastToken = t
             If t.name = TokenType.Eof Then Exit While
         End While
         Return tokens
@@ -141,6 +144,11 @@ Public NotInheritable Class Lexer
         ' template literals: `cooked ${expr} text`
         If cur = "`"c Then
             Return ScanTemplate(sl, sc, brk)
+        End If
+
+        ' regular-expression literal (context dependent: '/' after a value is division)
+        If cur = "/"c AndAlso RegexAllowed() Then
+            Return ScanRegex(sl, sc, brk)
         End If
 
         ' multi-char operators first (3 → 2 → 1)
@@ -312,6 +320,92 @@ Public NotInheritable Class Lexer
             End If
         End While
         Return Make(TokenType.String, sb.ToString(), sb.ToString(), sl, sc, brk)
+    End Function
+
+    ' ---- regular expressions ----
+
+    ''' <summary>
+    ''' '/' starts a regex unless the previous token can end an expression
+    ''' (identifier, literal, ')', ']', '}', '++'/'--' or a value keyword) —
+    ''' the standard heuristic used by acorn/esprima.
+    ''' </summary>
+    Private Function RegexAllowed() As Boolean
+        Dim t = _lastToken
+        If t Is Nothing Then Return True            ' start of input
+
+        If t.name = TokenType.Number OrElse t.name = TokenType.String OrElse
+           t.name = TokenType.Template OrElse t.name = TokenType.Regex OrElse
+           t.name = TokenType.Identifier Then
+            Return False
+        End If
+
+        If t.name = TokenType.Keyword Then
+            ' value keywords end an expression → the '/' divides
+            Select Case t.text
+                Case "this", "super", "true", "false", "null", "undefined"
+                    Return False
+            End Select
+            Return True
+        End If
+
+        If t.name = TokenType.Punct Then
+            Select Case t.text
+                Case ")", "]", "}", "++", "--"
+                    Return False
+            End Select
+            Return True
+        End If
+
+        Return True
+    End Function
+
+    ''' <summary>Scan <c>/pattern/flags</c> (character classes keep '/' literal).</summary>
+    Private Function ScanRegex(sl As Integer, sc As Integer, brk As Boolean) As Token
+        Advance()   ' consume the opening '/'
+        Dim sb As New StringBuilder()
+        Dim inClass = False
+
+        While True
+            If _pos >= _src.Length Then
+                Throw New ParseException($"unterminated regular expression at {sl}:{sc}")
+            End If
+            Dim c = Cur
+            If c = vbLf OrElse c = vbCr Then
+                Throw New ParseException($"unterminated regular expression at {sl}:{sc}")
+            End If
+
+            If c = "\"c Then
+                sb.Append(c)
+                Advance()
+                If _pos >= _src.Length Then
+                    Throw New ParseException($"unterminated regular expression escape at {sl}:{sc}")
+                End If
+                sb.Append(Cur)
+                Advance()
+                Continue While
+            End If
+
+            If c = "["c Then inClass = True
+            If c = "]"c Then inClass = False
+
+            If c = "/"c AndAlso Not inClass Then
+                Advance()
+                Exit While
+            End If
+
+            sb.Append(c)
+            Advance()
+        End While
+
+        Dim flags As New StringBuilder()
+        While _pos < _src.Length AndAlso Char.IsLetter(_src(_pos))
+            flags.Append(_src(_pos))
+            Advance()
+        End While
+
+        Dim pattern = sb.ToString(), flagText = flags.ToString()
+        Return Make(TokenType.Regex, "/" & pattern & "/" & flagText,
+                    New RegexLiteral(pattern, flagText), sl, sc, brk)
     End Function
 
     ' ---- template literals ----

@@ -593,6 +593,41 @@ Public NotInheritable Class Parser
 
     ' ---------------- expressions (precedence climbing) ----------------
 
+    ''' <summary>True when an operand follows <c>await</c> (contextual keyword detection).</summary>
+    Private Function AwaitOperandFollows() As Boolean
+        If _pos + 1 >= _tokens.Count Then Return False
+        Dim nxt = _tokens(_pos + 1)
+        Select Case nxt.name
+            Case TokenType.Identifier, TokenType.Number, TokenType.String, TokenType.Template, TokenType.Regex
+                Return True
+            Case TokenType.Keyword
+                Select Case nxt.text
+                    Case "this", "new", "function", "class", "super", "typeof", "void", "delete",
+                         "true", "false", "null", "undefined"
+                        Return True
+                End Select
+                Return False
+            Case TokenType.Punct
+                Select Case nxt.text
+                    Case "(", "[", "{", "!", "~", "+", "-", "++", "--"
+                        Return True
+                End Select
+                Return False
+        End Select
+        Return False
+    End Function
+
+    ''' <summary>True when the current token is the contextual keyword <c>async</c>.</summary>
+    Private Function AtAsync() As Boolean
+        Return Cur.name = TokenType.Identifier AndAlso Cur.text = "async"
+    End Function
+
+    ''' <summary>The token after the current one is the keyword 'function'.</summary>
+    Private Function AsyncFunctionAhead() As Boolean
+        Return AtAsync() AndAlso _pos + 1 < _tokens.Count AndAlso
+               _tokens(_pos + 1).name = TokenType.Keyword AndAlso _tokens(_pos + 1).text = "function"
+    End Function
+
     Private Function ParseExpression() As Expression
         Dim first = ParseAssignment()
         If Not At(",") Then Return first
@@ -955,6 +990,10 @@ Public NotInheritable Class Parser
                 Return New LiteralExpr(JsValue.Str(s))
             Case TokenType.Template
                 Return ParseTemplate()
+            Case TokenType.Regex
+                Dim re = DirectCast(Cur.Value, RegexLiteral)
+                _pos += 1
+                Return New RegexExpr(re.Source, re.Flags)
             Case TokenType.Identifier
                 Dim name = Cur.text
                 _pos += 1

@@ -191,18 +191,46 @@ Public NotInheritable Class FuncExpr
     ''' bindings — both resolve lexically through the enclosing scope.
     ''' </summary>
     Public ReadOnly IsArrow As Boolean
+    ''' <summary>async function — calling it yields a Promise.</summary>
+    Public ReadOnly IsAsync As Boolean
     Public ReadOnly Body As List(Of Statement)
 
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
                    Optional isArrow As Boolean = False,
                    Optional defaults As Expression() = Nothing,
-                   Optional restParam As String = Nothing)
+                   Optional restParam As String = Nothing,
+                   Optional isAsync As Boolean = False)
         Me.Name = name
         Me.Parameters = parameters
         Me.Defaults = If(defaults, New Expression(System.Math.Max(0, parameters.Length - 1)) {})
         Me.RestParam = restParam
         Me.IsArrow = isArrow
+        Me.IsAsync = isAsync
         Me.Body = body
+    End Sub
+End Class
+
+''' <summary>await expr — unwrap a promise (drains the microtask queue).</summary>
+Public NotInheritable Class AwaitExpr
+    Inherits Expression
+
+    Public ReadOnly Operand As Expression
+
+    Public Sub New(operand As Expression)
+        Me.Operand = operand
+    End Sub
+End Class
+
+''' <summary>Regular-expression literal: each evaluation yields a fresh RegExp object.</summary>
+Public NotInheritable Class RegexExpr
+    Inherits Expression
+
+    Public ReadOnly Source As String
+    Public ReadOnly Flags As String
+
+    Public Sub New(source As String, flags As String)
+        Me.Source = source
+        Me.Flags = flags
     End Sub
 End Class
 
@@ -385,14 +413,18 @@ Public NotInheritable Class FuncDeclStmt
     Public ReadOnly Defaults As Expression()
     ''' <summary>Rest parameter name (<c>...args</c>), or Nothing.</summary>
     Public ReadOnly RestParam As String
+    ''' <summary>async function — calling it yields a Promise.</summary>
+    Public ReadOnly IsAsync As Boolean
     Public ReadOnly Body As List(Of Statement)
 
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
-                   Optional defaults As Expression() = Nothing, Optional restParam As String = Nothing)
+                   Optional defaults As Expression() = Nothing, Optional restParam As String = Nothing,
+                   Optional isAsync As Boolean = False)
         Me.Name = name
         Me.Parameters = parameters
         Me.Defaults = If(defaults, New Expression(System.Math.Max(0, parameters.Length - 1)) {})
         Me.RestParam = restParam
+        Me.IsAsync = isAsync
         Me.Body = body
     End Sub
 End Class

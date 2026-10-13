@@ -665,6 +665,10 @@ Public NotInheritable Class CodeGenerator
         ElseIf TypeOf e Is ClassExpr Then
             Return GenClassValue(DirectCast(e, ClassExpr).Spec, scope)
 
+        ElseIf TypeOf e Is RegexExpr Then
+            Dim rx = DirectCast(e, RegexExpr)
+            Return $"New LiteJs.Runtime.JsRegExp({VbString(rx.Source)}, {VbString(rx.Flags)})"
+
         ElseIf TypeOf e Is OptionalChainExpr Then
             ' the chain root turns the short-circuit signal into undefined
             Dim chain = GenExpr(DirectCast(e, OptionalChainExpr).Chain, scope)
@@ -1166,6 +1170,11 @@ Public NotInheritable Class CodeGenerator
             Case "Object" : Return "JsRuntime.ObjectBuiltin"
             Case "Array" : Return "JsRuntime.ArrayBuiltin"
             Case "Function" : Return "JsRuntime.FunctionBuiltin"
+            Case "Date" : Return "JsRuntime.DateBuiltin"
+            Case "RegExp" : Return "JsRuntime.RegExpBuiltin"
+            Case "Error" : Return "JsRuntime.ErrorBuiltin"
+            Case "TypeError", "RangeError", "SyntaxError", "ReferenceError"
+                Return $"JsRuntime.JsGet(JsRuntime.GlobalObj, {VbString(name)})"
             Case "undefined" : Return "JsRuntime.Undef"
             Case "NaN" : Return "Double.NaN"
             Case "Infinity" : Return "Double.PositiveInfinity"
