@@ -34,9 +34,11 @@ Public Class LiteJsT5Tests
         Assert.Equal("1 2", OneLine(
             "function* g() { yield 1; yield 2; }" &
             "var it = g(); console.log(it.next().value, it.next().value);"))
-        Assert.Equal("false true", OneLine(
+        ' the first next() consumes the only value; every later call reports done
+        Assert.Equal("false true false true", OneLine(
             "function* g() { yield 1; }" &
-            "var it = g(); it.next(); console.log(it.next().done, it.next().done);"))
+            "var it = g();" &
+            "var a = it.next(); console.log(a.done, it.next().done, a.done, it.next().done);"))
         ' spread and for-of consume the whole iterator
         Assert.Equal("1,2", OneLine("function* g() { yield 1; yield 2; } console.log([...g()].join(','));"))
         Assert.Equal("012", OneLine(
