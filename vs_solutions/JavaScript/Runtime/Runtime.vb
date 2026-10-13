@@ -607,6 +607,8 @@ Namespace Runtime
                     If v Is Undef OrElse TypeOf v Is Func(Of Object(), Object) OrElse TypeOf v Is BuiltinMethod Then
                         Continue For
                     End If
+                    ' accessors are not own data properties → JSON.stringify skips them
+                    If TypeOf v Is AccessorProperty Then Continue For
                     obj.Add(kv.Key, ToJsonElement(v, ancestors))
                 Next
                 Call ancestors.Remove(x)
@@ -1062,7 +1064,7 @@ Namespace Runtime
         Private Function ToInt32Bits(d As Double) As Long
             If Double.IsNaN(d) OrElse Double.IsInfinity(d) Then Return 0
             Dim m = d - System.Math.Floor(d / 4294967296.0) * 4294967296.0      ' [0, 2^32)
-            If m >= 2147483648.0 Then Return CLng(m) - 4294967296.0
+            If m >= 2147483648.0 Then Return CLng(m) - 4294967296L
             Return CLng(m)
         End Function
 

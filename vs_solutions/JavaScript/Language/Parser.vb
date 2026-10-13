@@ -112,7 +112,7 @@ Public NotInheritable Class Parser
         Dim body As New List(Of Statement)
         While Cur.name <> TokenType.Eof
             body.Add(ParseStatement())
-        Loop
+        End While
         Return New Program(body)
     End Function
 
@@ -202,7 +202,7 @@ Public NotInheritable Class Parser
         Dim expr = ParseExpression()
         ConsumeStatementEnd()
         Return New ExprStmt(expr)
-    End Sub
+    End Function
 
     ''' <summary>Consume an identifier naming a label in scope; Nothing when absent.</summary>
     Private Function TryParseLabelRef() As String
@@ -221,7 +221,7 @@ Public NotInheritable Class Parser
         While Not At("}")
             If Cur.name = TokenType.Eof Then Throw New ParseException("missing '}' — unexpected end of input")
             body.Add(ParseStatement())
-        Loop
+        End While
         Eat("}")
         Return body
     End Function
@@ -237,7 +237,7 @@ Public NotInheritable Class Parser
             decls.Add(New VarDeclarant(target, init))
         Loop While Match(",")
         Return New VarStmt(kind, decls)
-    End Sub
+    End Function
 
     ''' <summary>A declaration target: simple name or destructuring pattern.</summary>
     Private Function ParseBindingTarget() As Object
@@ -256,7 +256,7 @@ Public NotInheritable Class Parser
         EatKeyword("function")
         Dim name = ExpectIdentifier()
         Dim f = ParseFunctionRest(name)
-        Return New FuncDeclStmt(name, f.Parameters, f.Body)
+        Return New FuncDeclStmt(name, f.Parameters, f.Body, f.Defaults, f.RestParam)
     End Function
 
     ''' <summary>Parse "(params) { body }" (function keyword already consumed).</summary>
@@ -413,7 +413,7 @@ Public NotInheritable Class Parser
         Eat(")")
         Dim body = ParseLoopBody()
         Return New WhileStmt(test, body)
-    End Sub
+    End Function
 
     Private Function ParseDoWhile() As Statement
         EatKeyword("do")
@@ -465,7 +465,7 @@ Public NotInheritable Class Parser
                 Throw New ParseException("missing '}' — unexpected end of input in switch")
             End If
             body.Add(ParseStatement())
-        Loop
+        End While
         Return body
     End Function
 
@@ -500,7 +500,7 @@ Public NotInheritable Class Parser
         Dim exprs As New List(Of Expression) From {first}
         While Match(",")
             exprs.Add(ParseAssignment())
-        Loop
+        End While
         Return New SequenceExpr(exprs)
     End Function
 
@@ -511,7 +511,7 @@ Public NotInheritable Class Parser
             If nxt.name = TokenType.Punct AndAlso nxt.text = "=>" AndAlso Not nxt.LineBreakBefore Then
                 Dim pname = Cur.text
                 _pos += 2
-                Return ParseArrowBody(ParamSpec.Single(pname))
+                Return ParseArrowBody(ParamSpec.FromName(pname))
             End If
         End If
         ' arrow function: "(params) =>" (params may carry defaults / rest)
@@ -614,7 +614,7 @@ Public NotInheritable Class Parser
         While At("||")
             _pos += 1
             left = New LogicalExpr("||", left, ParseNullishCoalescing())
-        Loop
+        End While
         Return left
     End Function
 
@@ -624,7 +624,7 @@ Public NotInheritable Class Parser
         While At("??")
             _pos += 1
             left = New LogicalExpr("??", left, ParseLogicalAnd())
-        Loop
+        End While
         Return left
     End Function
 
@@ -633,7 +633,7 @@ Public NotInheritable Class Parser
         While At("&&")
             _pos += 1
             left = New LogicalExpr("&&", left, ParseBitwiseOr())
-        Loop
+        End While
         Return left
     End Function
 
@@ -642,7 +642,7 @@ Public NotInheritable Class Parser
         While At("|")
             _pos += 1
             left = New BinaryExpr("|", left, ParseBitwiseXor())
-        Loop
+        End While
         Return left
     End Function
 
@@ -651,7 +651,7 @@ Public NotInheritable Class Parser
         While At("^")
             _pos += 1
             left = New BinaryExpr("^", left, ParseBitwiseAnd())
-        Loop
+        End While
         Return left
     End Function
 
@@ -660,7 +660,7 @@ Public NotInheritable Class Parser
         While At("&")
             _pos += 1
             left = New BinaryExpr("&", left, ParseEquality())
-        Loop
+        End While
         Return left
     End Function
 
@@ -671,7 +671,7 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseRelational())
-        Loop
+        End While
         Return left
     End Function
 
@@ -703,7 +703,7 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseAdditive())
-        Loop
+        End While
         Return left
     End Function
 
@@ -713,7 +713,7 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseMultiplicative())
-        Loop
+        End While
         Return left
     End Function
 
@@ -723,7 +723,7 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseExponent())
-        Loop
+        End While
         Return left
     End Function
 
@@ -945,7 +945,7 @@ Public NotInheritable Class Parser
         End If
         Eat("}")
         Return New ObjectExpr(props)
-    End Sub
+    End Function
 
     Private Function ParseObjectProperty() As ObjectProperty
         ' {...expr} object spread
@@ -1143,9 +1143,10 @@ Public NotInheritable Class Parser
 
         Public ReadOnly Parameters As New List(Of String)
         Public ReadOnly Defaults As New List(Of Expression)
-        Public ReadOnly Rest As String
+        ''' <summary>Rest parameter name (...args), or Nothing.</summary>
+        Public Rest As String
 
-        Public Shared Function Single(name As String) As ParamSpec
+        Public Shared Function FromName(name As String) As ParamSpec
             Dim spec As New ParamSpec()
             spec.Parameters.Add(name)
             spec.Defaults.Add(Nothing)

@@ -1,3 +1,4 @@
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -12,6 +13,9 @@ Public NotInheritable Class Interpreter
 
     Private ReadOnly _globals As Environment
     Public ReadOnly Io As ScriptIO
+
+    ''' <summary>Label of the statement currently being entered (see labeled break/continue).</summary>
+    Private _pendingLabel As String
 
     Public Sub New(Optional io As ScriptIO = Nothing)
         Me.Io = If(io, New LogTextIO)
@@ -43,10 +47,22 @@ Public NotInheritable Class Interpreter
 
     Private NotInheritable Class BreakSignal
         Inherits Exception
+        ''' <summary>Target label, or Nothing for the innermost loop/switch.</summary>
+        Public ReadOnly Label As String
+        Public Sub New(Optional label As String = Nothing)
+            MyBase.New()
+            Me.Label = label
+        End Sub
     End Class
 
     Private NotInheritable Class ContinueSignal
         Inherits Exception
+        ''' <summary>Target label, or Nothing for the innermost loop.</summary>
+        Public ReadOnly Label As String
+        Public Sub New(Optional label As String = Nothing)
+            MyBase.New()
+            Me.Label = label
+        End Sub
     End Class
 
     Private NotInheritable Class ReturnSignal
@@ -58,13 +74,28 @@ Public NotInheritable Class Interpreter
         End Sub
     End Class
 
+    ''' <summary>Take (and clear) the label announced by an enclosing labeled statement.</summary>
+    Private Function TakePendingLabel() As String
+        Dim l = _pendingLabel
+        _pendingLabel = Nothing
+        Return l
+    End Function
+
+    ''' <summary>True when a break/continue signal is aimed at this loop.</summary>
+    Private Shared Function TargetsLoop(label As String, myLabel As String) As Boolean
+        Return label Is Nothing OrElse label = myLabel
+    End Function
+
     ' ---------------- statements ----------------
 
     Private Sub HoistFunctions(body As List(Of Statement), env As Environment)
         For Each s In body
             If TypeOf s Is FuncDeclStmt Then
                 Dim f = DirectCast(s, FuncDeclStmt)
-                env.Define(f.Name, MakeFunction(New FuncExpr(f.Name, f.Parameters, f.Body), env), False)
+                env.Define(f.Name,
+                           MakeFunction(New FuncExpr(f.Name, f.Parameters, f.Body,
+                                                     defaults:=f.Defaults, restParam:=f.RestParam), env),
+                           False)
             End If
         Next
     End Sub
@@ -81,22 +112,20 @@ Public NotInheritable Class Interpreter
         Select Case True
             Case TypeOf s Is ExprStmt
                 Eval(DirectCast(s, ExprStmt).Expr, env)
+
             Case TypeOf s Is VarStmt
                 Dim v = DirectCast(s, VarStmt)
                 For Each d In v.Declarations
                     Dim value = If(d.Init IsNot Nothing, Eval(d.Init, env), JsValue.Undef)
-                    If v.Kind = "var" Then
-                        ' var is function-scoped: declare in the nearest function scope
-                        env.DefineVar(d.Name, value)
-                    Else
-                        ' let / const are block-scoped
-                        env.Define(d.Name, value, v.Kind = "const")
-                    End If
+                    BindTarget(d.Target, value, env, v.Kind)
                 Next
+
             Case TypeOf s Is BlockStmt
                 ExecuteBlock(DirectCast(s, BlockStmt).Body, env)
+
             Case TypeOf s Is FuncDeclStmt
                 ' already hoisted; the statement itself does nothing
+
             Case TypeOf s Is IfStmt
                 Dim i = DirectCast(s, IfStmt)
                 If JsRuntime.JsTruthy(Eval(i.Test, env)) Then
@@ -104,30 +133,60 @@ Public NotInheritable Class Interpreter
                 ElseIf i.ElseBranch IsNot Nothing Then
                     Execute(i.ElseBranch, env)
                 End If
+
+            Case TypeOf s Is LabeledStmt
+                Dim lb = DirectCast(s, LabeledStmt)
+                ' announce the label: the loop statement that follows consumes it
+                _pendingLabel = lb.Label
+                Try
+                    Execute(lb.Body, env)
+                Catch ex As BreakSignal
+                    ' a matching labeled break of a labeled (non-loop) statement
+                    If ex.Label Is Nothing OrElse ex.Label <> lb.Label Then Throw
+                Catch ex As ContinueSignal
+                    ' labeled continue must target a loop; reaching here means unmatched
+                    Throw
+                Finally
+                    _pendingLabel = Nothing
+                End Try
+
             Case TypeOf s Is WhileStmt
                 Dim w = DirectCast(s, WhileStmt)
+                Dim myLabel = TakePendingLabel()
                 While JsRuntime.JsTruthy(Eval(w.Test, env))
                     Try
                         Execute(w.Body, env)
                     Catch ex As BreakSignal
-                        Exit While
+                        If TargetsLoop(ex.Label, myLabel) Then
+                            Exit While
+                        Else
+                            Throw
+                        End If
                     Catch ex As ContinueSignal
-                        ' next iteration
+                        If Not TargetsLoop(ex.Label, myLabel) Then Throw
                     End Try
                 End While
+
             Case TypeOf s Is DoWhileStmt
                 Dim d = DirectCast(s, DoWhileStmt)
+                Dim myLabel = TakePendingLabel()
                 Do
                     Try
                         Execute(d.Body, env)
                     Catch ex As BreakSignal
-                        Exit Do
+                        If TargetsLoop(ex.Label, myLabel) Then
+                            Exit Do
+                        Else
+                            Throw
+                        End If
                     Catch ex As ContinueSignal
-                        ' check condition and continue
+                        If Not TargetsLoop(ex.Label, myLabel) Then Throw
                     End Try
                 Loop While JsRuntime.JsTruthy(Eval(d.Test, env))
+
             Case TypeOf s Is ForStmt
                 Dim f = DirectCast(s, ForStmt)
+                Dim myLabel = TakePendingLabel()
                 Dim fenv As New Environment(env)
                 If TypeOf f.Init Is VarStmt Then
                     Execute(DirectCast(f.Init, Statement), fenv)
@@ -142,7 +201,11 @@ Public NotInheritable Class Interpreter
                     Dim lv = DirectCast(f.Init, VarStmt)
                     If lv.Kind <> "var" Then
                         For Each d In lv.Declarations
-                            loopNames.Add(d.Name)
+                            If TypeOf d.Target Is String Then
+                                loopNames.Add(CStr(d.Target))
+                            ElseIf TypeOf d.Target Is NameTarget Then
+                                loopNames.Add(DirectCast(d.Target, NameTarget).Name)
+                            End If
                             loopConst.Add(lv.Kind = "const")
                         Next
                     End If
@@ -151,7 +214,7 @@ Public NotInheritable Class Interpreter
                     While f.Test Is Nothing OrElse JsRuntime.JsTruthy(Eval(f.Test, fenv))
                         Dim bodyEnv As New Environment(env)
                         For i = 0 To loopNames.Count - 1
-                            Dim lv As JsValue = Nothing
+                            Dim lv As JsValue = JsValue.Undef
                             If fenv.TryGet(loopNames(i), lv) Then
                                 bodyEnv.Define(loopNames(i), lv, loopConst(i))
                             End If
@@ -159,11 +222,12 @@ Public NotInheritable Class Interpreter
                         Try
                             Execute(f.Body, bodyEnv)
                         Catch ex As ContinueSignal
+                            If Not TargetsLoop(ex.Label, myLabel) Then Throw
                             ' fall through to update (JS semantics)
                         End Try
                         ' copy mutated let bindings back before running the update clause
                         For i = 0 To loopNames.Count - 1
-                            Dim lv As JsValue = Nothing
+                            Dim lv As JsValue = JsValue.Undef
                             If bodyEnv.TryGet(loopNames(i), lv) Then
                                 fenv.Define(loopNames(i), lv, loopConst(i))
                             End If
@@ -171,32 +235,69 @@ Public NotInheritable Class Interpreter
                         If f.Update IsNot Nothing Then Eval(f.Update, fenv)
                     End While
                 Catch ex As BreakSignal
+                    If Not TargetsLoop(ex.Label, myLabel) Then Throw
                     ' loop done
                 End Try
+
             Case TypeOf s Is ForInStmt
                 Dim fin = DirectCast(s, ForInStmt)
+                Dim myLabel = TakePendingLabel()
                 Dim obj = Eval(fin.ObjectExpr, env)
                 For Each key In JsRuntime.JsForInKeys(JsRuntime.JsBox(obj))
                     Dim bodyEnv As New Environment(env)
-                    bodyEnv.Define(fin.VarName, key, False)
+                    bodyEnv.Define(fin.VarName, JsRuntime.JsUnbox(key), False)
                     Try
                         Execute(fin.Body, bodyEnv)
                     Catch ex As BreakSignal
-                        Exit For
+                        If TargetsLoop(ex.Label, myLabel) Then
+                            Exit For
+                        Else
+                            Throw
+                        End If
                     Catch ex As ContinueSignal
+                        If Not TargetsLoop(ex.Label, myLabel) Then Throw
                         ' next key
                     End Try
                 Next
+
+            Case TypeOf s Is ForOfStmt
+                Dim fo = DirectCast(s, ForOfStmt)
+                Dim myLabel = TakePendingLabel()
+                Dim iter = JsRuntime.JsBox(Eval(fo.Iterable, env))
+                For Each item In JsRuntime.JsIterableValues(iter)
+                    Dim bodyEnv As New Environment(env)
+                    BindTarget(fo.Target, JsRuntime.JsUnbox(item), bodyEnv, fo.Kind)
+                    Try
+                        Execute(fo.Body, bodyEnv)
+                    Catch ex As BreakSignal
+                        If TargetsLoop(ex.Label, myLabel) Then
+                            Exit For
+                        Else
+                            Throw
+                        End If
+                    Catch ex As ContinueSignal
+                        If Not TargetsLoop(ex.Label, myLabel) Then Throw
+                        ' next item
+                    End Try
+                Next
+
+            Case TypeOf s Is SwitchStmt
+                ExecuteSwitch(DirectCast(s, SwitchStmt), env)
+
             Case TypeOf s Is ReturnStmt
                 Dim r = DirectCast(s, ReturnStmt)
                 Throw New ReturnSignal(If(r.Value IsNot Nothing, Eval(r.Value, env), JsValue.Undef))
+
             Case TypeOf s Is BreakStmt
-                Throw New BreakSignal()
+                Throw New BreakSignal(DirectCast(s, BreakStmt).Label)
+
             Case TypeOf s Is ContinueStmt
-                Throw New ContinueSignal()
+                Throw New ContinueSignal(DirectCast(s, ContinueStmt).Label)
+
             Case TypeOf s Is ThrowStmt
                 Dim t = DirectCast(s, ThrowStmt)
                 Throw New JsRuntimeException(JsRuntime.JsBox(Eval(t.Value, env)))
+
             Case TypeOf s Is TryStmt
                 Dim t = DirectCast(s, TryStmt)
                 Try
@@ -216,11 +317,125 @@ Public NotInheritable Class Interpreter
                 Finally
                     If t.FinallyBlock IsNot Nothing Then ExecuteBlock(t.FinallyBlock, env)
                 End Try
+
             Case TypeOf s Is EmptyStmt
                 ' nothing
+
             Case Else
                 Throw New InvalidOperationException("unknown statement type " & s.GetType().Name)
         End Select
+    End Sub
+
+    ''' <summary>
+    ''' switch: strict-equality matching, one shared block scope, fall-through,
+    ''' and 'break' (unlabeled) exiting the switch.
+    ''' </summary>
+    Private Sub ExecuteSwitch(sw As SwitchStmt, env As Environment)
+        Dim disc = Eval(sw.Discriminant, env)
+        Dim matched = -1
+
+        ' case tests are evaluated in source order until one matches (indices are
+        ' evaluated lazily — a match stops the scan, like the JS If-chain below)
+        Dim defaultIndex = -1
+        For i = 0 To sw.Cases.Count - 1
+            If sw.Cases(i).Test Is Nothing Then
+                defaultIndex = i
+                Continue For
+            End If
+            If JsRuntime.JsStrictEq(disc, Eval(sw.Cases(i).Test, env)) Then
+                matched = i
+                Exit For
+            End If
+        Next
+        If matched < 0 Then matched = defaultIndex
+        If matched < 0 Then Return          ' no match and no default
+
+        ' all arms share one block scope (JS switch semantics) so that
+        ' fall-through can observe variables declared in earlier arms
+        Dim swenv As New Environment(env)
+        For Each c In sw.Cases
+            HoistFunctions(c.Body, swenv)
+        Next
+        Try
+            For i = matched To sw.Cases.Count - 1
+                For Each st In sw.Cases(i).Body
+                    Execute(st, swenv)
+                Next
+            Next
+        Catch ex As BreakSignal
+            If ex.Label IsNot Nothing Then Throw    ' labeled break targets an outer label
+            ' plain break exits the switch
+        End Try
+    End Sub
+
+    ' ---------------- destructuring / binding ----------------
+
+    ''' <summary>
+    ''' Bind a (possibly destructuring) target. <paramref name="kind"/> = "var" /
+    ''' "let" / "const" declares; Nothing assigns to an existing reference.
+    ''' </summary>
+    Private Sub BindTarget(target As Object, value As JsValue, env As Environment, kind As String)
+        Select Case True
+            Case TypeOf target Is String
+                BindName(CStr(target), value, env, kind)
+
+            Case TypeOf target Is NameTarget
+                BindName(DirectCast(target, NameTarget).Name, value, env, kind)
+
+            Case TypeOf target Is MemberTarget
+                Dim m = DirectCast(target, MemberTarget)
+                Dim obj = JsRuntime.JsBox(Eval(m.Obj, env))
+                If m.Computed Then
+                    JsRuntime.JsSetIndex(obj,
+                                         JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env)),
+                                         JsRuntime.JsBox(value))
+                Else
+                    JsRuntime.JsSet(obj, CStr(m.Name), JsRuntime.JsBox(value))
+                End If
+
+            Case TypeOf target Is ArrayTarget
+                Dim at = DirectCast(target, ArrayTarget)
+                Dim arr = JsRuntime.JsBox(value)
+                For i = 0 To at.Elements.Count - 1
+                    If at.Elements(i) Is Nothing Then Continue For    ' hole
+                    BindTarget(at.Elements(i), JsRuntime.JsUnbox(JsRuntime.JsIndex(arr, CDbl(i))), env, kind)
+                Next
+                If at.Rest IsNot Nothing Then
+                    BindTarget(at.Rest, JsRuntime.JsUnbox(JsRuntime.JsArrayRest(arr, at.Elements.Count)), env, kind)
+                End If
+
+            Case TypeOf target Is ObjectTarget
+                Dim ot = DirectCast(target, ObjectTarget)
+                Dim obj = JsRuntime.JsBox(value)
+                Dim used As New List(Of String)
+                For Each prop In ot.Properties
+                    used.Add(prop.Key)
+                    BindTarget(prop.Value, JsRuntime.JsUnbox(JsRuntime.JsGet(obj, prop.Key)), env, kind)
+                Next
+                If ot.Rest IsNot Nothing Then
+                    BindTarget(ot.Rest,
+                               JsRuntime.JsUnbox(JsRuntime.JsObjectRest(obj, used.ToArray())), env, kind)
+                End If
+
+            Case TypeOf target Is DefaultTarget
+                Dim dt = DirectCast(target, DefaultTarget)
+                Dim v = value
+                If v.IsUndef Then v = Eval(dt.Default, env)     ' default when undefined
+                BindTarget(dt.Target, v, env, kind)
+
+            Case Else
+                Throw New InvalidOperationException("unknown binding target")
+        End Select
+    End Sub
+
+    Private Sub BindName(name As String, value As JsValue, env As Environment, kind As String)
+        If kind Is Nothing Then
+            env.Assign(name, value)
+        ElseIf kind = "var" Then
+            env.DefineVar(name, value)
+        Else
+            env.Define(name, value, kind = "const")
+        End If
     End Sub
 
     ' ---------------- expressions ----------------
@@ -230,9 +445,26 @@ Public NotInheritable Class Interpreter
         Return Function(args As Object())
                    Dim fenv As New Environment(closure, isFunctionScope:=True)
                    For i = 0 To f.Parameters.Length - 1
-                       fenv.Define(f.Parameters(i),
-                                   If(i < args.Length, args(i), JsRuntime.Undef), False)
+                       Dim v As JsValue
+                       ' a missing or explicitly-undefined argument triggers the default
+                       If i >= args.Length OrElse args(i) Is JsRuntime.Undef Then
+                           If i < f.Defaults.Length AndAlso f.Defaults(i) IsNot Nothing Then
+                               v = Eval(f.Defaults(i), fenv)
+                           Else
+                               v = JsValue.Undef
+                           End If
+                       Else
+                           v = JsRuntime.JsUnbox(args(i))
+                       End If
+                       fenv.Define(f.Parameters(i), v, False)
                    Next
+                   If f.RestParam IsNot Nothing Then
+                       Dim rest As New List(Of Object)
+                       For i = f.Parameters.Length To args.Length - 1
+                           rest.Add(args(i))
+                       Next
+                       fenv.Define(f.RestParam, JsValue.OfObject(rest), False)
+                   End If
                    If Not f.IsArrow Then
                        ' arrow functions inherit 'arguments' lexically — no own binding
                        fenv.Define("arguments", New List(Of Object)(args), False)
@@ -258,6 +490,10 @@ Public NotInheritable Class Interpreter
                 Dim i = DirectCast(e, IdentExpr)
                 Return env.LookupOrThrow(i.Name)
 
+            Case TypeOf e Is ThisExpr
+                ' class support arrives in tier 2 — a bare 'this' resolves to undefined
+                Return JsValue.Undef
+
             Case TypeOf e Is UnaryExpr
                 Dim u = DirectCast(e, UnaryExpr)
                 If u.Op = "typeof" Then
@@ -270,11 +506,29 @@ Public NotInheritable Class Interpreter
                     End If
                     Return JsValue.Str(JsRuntime.JsTypeOf(Eval(u.Operand, env)))
                 End If
+                If u.Op = "delete" Then
+                    If TypeOf u.Operand Is MemberExpr Then
+                        Dim m = DirectCast(u.Operand, MemberExpr)
+                        Dim obj = JsRuntime.JsBox(Eval(m.Obj, env))
+                        Dim key As Object
+                        If m.Computed Then
+                            key = JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env))
+                        Else
+                            key = CStr(m.Name)
+                        End If
+                        Return JsValue.Boolean_(JsRuntime.JsDelete(obj, key))
+                    End If
+                    ' deleting a non-reference: evaluate for side effects, always true
+                    Eval(u.Operand, env)
+                    Return JsValue.Boolean_(True)
+                End If
                 Dim operand = Eval(u.Operand, env)
                 Select Case u.Op
                     Case "-" : Return JsRuntime.JsNeg(operand)
                     Case "+" : Return JsValue.Number(JsRuntime.JsNum(operand))
                     Case "!" : Return JsRuntime.JsNot(operand)
+                    Case "~" : Return JsRuntime.JsBitNot(operand)
+                    Case "void" : Return JsValue.Undef
                 End Select
                 Throw New InvalidOperationException("unknown unary operator " & u.Op)
 
@@ -311,27 +565,47 @@ Public NotInheritable Class Interpreter
                     Case ">" : Return JsValue.Boolean_(JsRuntime.JsGt(l, r))
                     Case ">=" : Return JsValue.Boolean_(JsRuntime.JsGe(l, r))
                     Case "==" : Return JsValue.Boolean_(JsRuntime.JsEq(l, r))
-                    Case "!=" : Return JsValue.Boolean_(Not JsRuntime.JsEq(l, r))
+                    Case "!=" : Return JsValue.Boolean_(JsRuntime.JsNe(l, r))
                     Case "===" : Return JsValue.Boolean_(JsRuntime.JsStrictEq(l, r))
-                    Case "!==" : Return JsValue.Boolean_(Not JsRuntime.JsStrictEq(l, r))
+                    Case "!==" : Return JsValue.Boolean_(JsRuntime.JsStrictNe(l, r))
+                    Case "&" : Return JsRuntime.JsBitAnd(l, r)
+                    Case "|" : Return JsRuntime.JsBitOr(l, r)
+                    Case "^" : Return JsRuntime.JsBitXor(l, r)
+                    Case "<<" : Return JsRuntime.JsShl(l, r)
+                    Case ">>" : Return JsRuntime.JsShr(l, r)
+                    Case ">>>" : Return JsRuntime.JsUshr(l, r)
+                    Case "in" : Return JsValue.Boolean_(JsRuntime.JsIn(JsRuntime.JsBox(l), JsRuntime.JsBox(r)))
+                    Case "instanceof" : Return JsValue.Boolean_(JsRuntime.JsInstanceOf(JsRuntime.JsBox(l), JsRuntime.JsBox(r)))
                 End Select
                 Throw New InvalidOperationException("unknown binary operator " & b.Op)
 
             Case TypeOf e Is LogicalExpr
                 Dim l = DirectCast(e, LogicalExpr)
                 Dim left = Eval(l.Left, env)
-                If l.Op = "&&" Then
-                    If Not JsRuntime.JsTruthy(left) Then Return left
-                    Return Eval(l.Right, env)
-                Else
-                    If JsRuntime.JsTruthy(left) Then Return left
-                    Return Eval(l.Right, env)
-                End If
+                Select Case l.Op
+                    Case "&&"
+                        If Not JsRuntime.JsTruthy(left) Then Return left
+                        Return Eval(l.Right, env)
+                    Case "||"
+                        If JsRuntime.JsTruthy(left) Then Return left
+                        Return Eval(l.Right, env)
+                    Case Else ' ??
+                        If Not JsRuntime.JsIsNullish(left) Then Return left
+                        Return Eval(l.Right, env)
+                End Select
 
             Case TypeOf e Is CondExpr
                 Dim c = DirectCast(e, CondExpr)
                 If JsRuntime.JsTruthy(Eval(c.Test, env)) Then Return Eval(c.Consequent, env)
                 Return Eval(c.Alternate, env)
+
+            Case TypeOf e Is SequenceExpr
+                Dim sq = DirectCast(e, SequenceExpr)
+                Dim v As JsValue = JsValue.Undef
+                For Each x In sq.Expressions
+                    v = Eval(x, env)
+                Next
+                Return v
 
             Case TypeOf e Is AssignExpr
                 Dim a = DirectCast(e, AssignExpr)
@@ -356,44 +630,151 @@ Public NotInheritable Class Interpreter
                     Return v
                 End If
 
+            Case TypeOf e Is DestructureAssignExpr
+                Dim d = DirectCast(e, DestructureAssignExpr)
+                Dim v = Eval(d.Value, env)
+                BindTarget(d.Target, v, env, Nothing)
+                Return v
+
             Case TypeOf e Is CallExpr
                 Dim c = DirectCast(e, CallExpr)
                 Dim f = JsRuntime.JsBox(Eval(c.Callee, env))
-                Dim args(c.Arguments.Count - 1) As Object
-                For i = 0 To c.Arguments.Count - 1
-                    args(i) = JsRuntime.JsBox(Eval(c.Arguments(i), env))
-                Next
+                Dim args = EvalArguments(c.Arguments, env)
+                If c.IsOptional Then
+                    Return JsRuntime.JsUnbox(JsRuntime.JsChainInvoke(f, args))
+                End If
                 Return JsRuntime.JsUnbox(JsRuntime.JsInvoke(f, args))
+
+            Case TypeOf e Is OptionalChainExpr
+                ' chain root: a nullish optional link short-circuits to undefined
+                Try
+                    Return Eval(DirectCast(e, OptionalChainExpr).Chain, env)
+                Catch ex As OptionalChainShortCircuit
+                    Return JsValue.Undef
+                End Try
 
             Case TypeOf e Is MemberExpr
                 Dim m = DirectCast(e, MemberExpr)
                 Dim obj = JsRuntime.JsBox(Eval(m.Obj, env))
                 If m.Computed Then
-                    Return JsRuntime.JsUnbox(JsRuntime.JsIndex(obj, JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env))))
+                    Dim key = JsRuntime.JsBox(Eval(DirectCast(m.Name, Expression), env))
+                    If m.IsOptional Then Return JsRuntime.JsUnbox(JsRuntime.JsChainIndex(obj, key))
+                    Return JsRuntime.JsUnbox(JsRuntime.JsIndex(obj, key))
                 End If
+                If m.IsOptional Then Return JsRuntime.JsUnbox(JsRuntime.JsChainGet(obj, CStr(m.Name)))
                 Return JsRuntime.JsUnbox(JsRuntime.JsGet(obj, CStr(m.Name)))
 
             Case TypeOf e Is FuncExpr
                 Return JsValue.OfObject(MakeFunction(DirectCast(e, FuncExpr), env))
 
-            Case TypeOf e Is ArrayExpr
-                Dim arr = DirectCast(e, ArrayExpr)
-                Dim list As New List(Of Object)
-                For Each el In arr.Elements
-                    list.Add(JsRuntime.JsBox(Eval(el, env)))
+            Case TypeOf e Is TemplateExpr
+                Dim t = DirectCast(e, TemplateExpr)
+                Dim sb As New StringBuilder()
+                For Each chunk In t.Chunks
+                    If TypeOf chunk Is String Then
+                        sb.Append(CStr(chunk))
+                    Else
+                        sb.Append(JsRuntime.JsStr(Eval(DirectCast(chunk, Expression), env)))
+                    End If
                 Next
-                Return JsValue.OfObject(list)
+                Return JsValue.Str(sb.ToString())
+
+            Case TypeOf e Is ArrayExpr
+                Return EvalArrayLiteral(DirectCast(e, ArrayExpr), env)
 
             Case TypeOf e Is ObjectExpr
-                Dim o = DirectCast(e, ObjectExpr)
-                Dim d As New Dictionary(Of String, Object)
-                For Each p In o.Properties
-                    d(p.Key) = JsRuntime.JsBox(Eval(p.Value, env))
-                Next
-                Return JsValue.OfObject(d)
+                Return EvalObjectLiteral(DirectCast(e, ObjectExpr), env)
         End Select
 
         Throw New InvalidOperationException("unknown expression type " & e.GetType().Name)
+    End Function
+
+    ''' <summary>Evaluate a call argument list, expanding spread elements when present.</summary>
+    Private Function EvalArguments(args As List(Of Expression), env As Environment) As Object()
+        Dim hasSpread = False
+        For Each a In args
+            If TypeOf a Is SpreadElement Then
+                hasSpread = True
+                Exit For
+            End If
+        Next
+
+        If Not hasSpread Then
+            Dim boxed(args.Count - 1) As Object
+            For i = 0 To args.Count - 1
+                boxed(i) = JsRuntime.JsBox(Eval(args(i), env))
+            Next
+            Return boxed
+        End If
+
+        Dim parts(args.Count - 1) As Object
+        For i = 0 To args.Count - 1
+            Dim a = args(i)
+            If TypeOf a Is SpreadElement Then
+                parts(i) = JsRuntime.JsSpread(JsRuntime.JsBox(Eval(DirectCast(a, SpreadElement).Argument, env)))
+            Else
+                parts(i) = JsRuntime.JsBox(Eval(a, env))
+            End If
+        Next
+        Return JsRuntime.JsBuildArgs(parts)
+    End Function
+
+    Private Function EvalArrayLiteral(arr As ArrayExpr, env As Environment) As JsValue
+        Dim hasSpread = False
+        For Each el In arr.Elements
+            If TypeOf el Is SpreadElement Then
+                hasSpread = True
+                Exit For
+            End If
+        Next
+
+        If Not hasSpread Then
+            Dim list As New List(Of Object)
+            For Each el In arr.Elements
+                If el Is Nothing Then
+                    list.Add(JsRuntime.Undef)       ' hole reads as undefined
+                Else
+                    list.Add(JsRuntime.JsBox(Eval(el, env)))
+                End If
+            Next
+            Return JsValue.OfObject(list)
+        End If
+
+        Dim parts(arr.Elements.Count - 1) As Object
+        For i = 0 To arr.Elements.Count - 1
+            Dim el = arr.Elements(i)
+            If el Is Nothing Then
+                parts(i) = JsRuntime.Undef
+            ElseIf TypeOf el Is SpreadElement Then
+                parts(i) = JsRuntime.JsSpread(JsRuntime.JsBox(Eval(DirectCast(el, SpreadElement).Argument, env)))
+            Else
+                parts(i) = JsRuntime.JsBox(Eval(el, env))
+            End If
+        Next
+        Return JsRuntime.JsUnbox(JsRuntime.JsArrayFrom(parts))
+    End Function
+
+    Private Function EvalObjectLiteral(o As ObjectExpr, env As Environment) As JsValue
+        Dim d As New Dictionary(Of String, Object)
+        For Each p In o.Properties
+            Select Case p.Kind
+                Case ObjectPropertyKind.Spread
+                    JsRuntime.JsSpreadInto(d, JsRuntime.JsBox(Eval(p.Value, env)))
+                Case ObjectPropertyKind.Getter
+                    d(p.Key) = New AccessorProperty(MakeFunction(DirectCast(p.Value, FuncExpr), env), Nothing)
+                Case ObjectPropertyKind.Setter
+                    d(p.Key) = New AccessorProperty(Nothing, MakeFunction(DirectCast(p.Value, FuncExpr), env))
+                Case ObjectPropertyKind.Shorthand
+                    Dim v = If(p.Value Is Nothing, Eval(New IdentExpr(p.Key), env), Eval(p.Value, env))
+                    d(p.Key) = JsRuntime.JsBox(v)
+                Case Else ' Normal (incl. computed keys)
+                    Dim key = If(p.KeyExpr IsNot Nothing,
+                                 JsRuntime.JsStr(Eval(p.KeyExpr, env)),
+                                 p.Key)
+                    d(key) = JsRuntime.JsBox(Eval(p.Value, env))
+            End Select
+        Next
+        Return JsValue.OfObject(d)
     End Function
 
     Private Sub AssignTo(target As Expression, value As JsValue, env As Environment)

@@ -88,26 +88,11 @@ Public NotInheritable Class CodeGenerator
     Private Sub GenStmt(s As Statement, w As IndentWriter, scope As Scope)
         If TypeOf s Is VarStmt Then
             Dim v = DirectCast(s, VarStmt)
-            If v.Kind = "var" Then
-                ' var was hoisted to the function top by EmitHoistedVars — assign only
-                For Each d In v.Declarations
-                    Dim vbName = scope.Resolve(d.Name)
-                    If vbName Is Nothing Then
-                        vbName = scope.DefineLocal(d.Name)
-                        w.Line($"Dim {vbName} As JsValue = JsRuntime.Undef")
-                    End If
-                    If d.Init IsNot Nothing Then
-                        w.Line($"{vbName} = {GenExpr(d.Init, scope)}")
-                    End If
-                Next
-            Else
-                ' let / const — block-scoped declaration
-                For Each d In v.Declarations
-                    Dim vbName = scope.DefineLocal(d.Name)
-                    Dim init = If(d.Init IsNot Nothing, GenExpr(d.Init, scope), "JsRuntime.Undef")
-                    w.Line($"Dim {vbName} As JsValue = {init}")
-                Next
-            End If
+            For Each d In v.Declarations
+                ' let / const declare here; var names were hoisted by EmitHoistedVars
+                Dim init = If(d.Init IsNot Nothing, GenExpr(d.Init, scope), "JsRuntime.Undef")
+                GenBindTarget(d.Target, init, w, scope, v.Kind, isDeclaration:=True)
+            Next
 
         ElseIf TypeOf s Is ExprStmt Then
             GenExprAsStatement(DirectCast(s, ExprStmt).Expr, w, scope)

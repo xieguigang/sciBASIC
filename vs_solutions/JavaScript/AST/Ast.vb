@@ -206,6 +206,24 @@ Public NotInheritable Class FuncExpr
     End Sub
 End Class
 
+''' <summary><c>this</c> — bound by method calls / construction (tier 2).</summary>
+Public NotInheritable Class ThisExpr
+    Inherits Expression
+End Class
+
+''' <summary><c>new Ctor(args...)</c> — construction (tier 2).</summary>
+Public NotInheritable Class NewExpr
+    Inherits Expression
+
+    Public ReadOnly Callee As Expression
+    Public ReadOnly Arguments As List(Of Expression)
+
+    Public Sub New(callee As Expression, args As List(Of Expression))
+        Me.Callee = callee
+        Me.Arguments = args
+    End Sub
+End Class
+
 Public NotInheritable Class ArrayExpr
     Inherits Expression
 
@@ -363,11 +381,18 @@ Public NotInheritable Class FuncDeclStmt
 
     Public ReadOnly Name As String
     Public ReadOnly Parameters As String()
+    ''' <summary>Per-parameter default expressions, aligned with <see cref="Parameters"/>.</summary>
+    Public ReadOnly Defaults As Expression()
+    ''' <summary>Rest parameter name (<c>...args</c>), or Nothing.</summary>
+    Public ReadOnly RestParam As String
     Public ReadOnly Body As List(Of Statement)
 
-    Public Sub New(name As String, parameters As String(), body As List(Of Statement))
+    Public Sub New(name As String, parameters As String(), body As List(Of Statement),
+                   Optional defaults As Expression() = Nothing, Optional restParam As String = Nothing)
         Me.Name = name
         Me.Parameters = parameters
+        Me.Defaults = If(defaults, New Expression(System.Math.Max(0, parameters.Length - 1)) {})
+        Me.RestParam = restParam
         Me.Body = body
     End Sub
 End Class
