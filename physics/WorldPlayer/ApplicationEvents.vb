@@ -25,5 +25,22 @@ Namespace My
 
     Partial Friend Class MyApplication
 
+        ''' <summary>
+        ''' 物理仿真是一个长时间运行的循环，任何未捕获异常都会让整个模拟器消失。
+        ''' 这里统一兜底：提示 + 标记为已处理，让用户能继续保存脚本内容。
+        ''' </summary>
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            Dim text As String = $"{e.Exception.GetType().Name}: {e.Exception.Message}"
+
+            Try
+                If My.Application.MainForm IsNot Nothing Then
+                    My.Application.MainForm.Text = "World Player · 发生异常: " & text
+                End If
+            Catch
+            End Try
+
+            e.ExitApplication = False
+        End Sub
+
     End Class
 End Namespace
