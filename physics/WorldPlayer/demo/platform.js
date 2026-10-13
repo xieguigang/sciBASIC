@@ -191,9 +191,10 @@ on("wheel", function (delta) {
 
 on("keydown", function (key) {
     if (key === "C") {
-        world.clear();
+        // 只清掉玩家生成的物体，保留地面 / 平台 / 斜坡等关卡几何
+        world.clearDynamic();
         spawned = 0;
-        print("世界已清空");
+        print("已清空全部动态刚体（关卡几何保留）");
     } else if (key === "P") {
         if (sim.isPaused()) {
             sim.resume();

@@ -23,6 +23,12 @@ Public Class ScriptHost
     ''' <summary>最近一次装载错误；Nothing 表示正常。</summary>
     Public Property LastError As String = Nothing
 
+    ''' <summary>
+    ''' 脚本执行前调用一次的回调（宿主用它注册 world / camera / sim 等全局 API）。
+    ''' 必须在 <c>Run</c> 之前注册，脚本的顶层语句才能直接引用这些 API。
+    ''' </summary>
+    Public Property BeforeRun As Action = Nothing
+
     Public Sub New(onLog As Action(Of String, Boolean))
         Me.onLog = onLog
         Me.io = New UiScriptIO(onLog)
@@ -52,22 +58,32 @@ Public Class ScriptHost
     End Sub
 
     ''' <summary>注册 <c>on(event, fn)</c>：JS 用它把回调交给宿主。</summary>
+    ''' <remarks>
+    ''' 必须先把 lambda 显式赋给 <see cref="Func(Of Object(), Object)"/> 变量再传出去。
+    ''' 若直接写成 <c>DefineGlobal("on", Function(...) ... End Function)</c>，
+    ''' 由于参数类型是 Object，VB 会生成合成委托类型
+    ''' <c>VB$AnonymousDelegate_0(Of Object(), Object)</c>，
+    ''' LiteJs 的 <c>TypeOf ... Is Func(Of Object(), Object)</c> 判定会失败并抛 InvalidCastException。
+    ''' </remarks>
     Public Sub DefineEventHook()
-        DefineGlobal("on", Function(args As Object()) As Object
-                                If args Is Nothing OrElse args.Length < 2 Then Return JsRuntime.Undef
+        Dim handler As Func(Of Object(), Object) =
+            Function(args As Object()) As Object
+                If args Is Nothing OrElse args.Length < 2 Then Return JsRuntime.Undef
 
-                                Dim name As String = JsRuntime.JsStr(args(0))
-                                Dim fn As Object = args(1)
+                Dim name As String = JsRuntime.JsStr(args(0))
+                Dim fn As Object = args(1)
 
-                                If Not TypeOf fn Is Func(Of Object(), Object) Then
-                                    Call io.WriteError($"on('{name}') 的第二个参数必须是函数")
-                                    Return JsRuntime.Undef
-                                End If
+                If Not TypeOf fn Is Func(Of Object(), Object) Then
+                    Call io.WriteError($"on('{name}') 的第二个参数必须是函数")
+                    Return JsRuntime.Undef
+                End If
 
-                                Handlers(name) = DirectCast(fn, Func(Of Object(), Object))
+                Handlers(name) = DirectCast(fn, Func(Of Object(), Object))
 
-                                Return JsRuntime.Undef
-                            End Function)
+                Return JsRuntime.Undef
+            End Function
+
+        Call DefineGlobal("on", handler)
     End Sub
 
     ' /********************************************************************************/
@@ -87,6 +103,11 @@ Public Class ScriptHost
 
             Call DefineEventHook()
 
+            ' API 全局必须在 Run 之前注册
+            If BeforeRun IsNot Nothing Then
+                Call BeforeRun.Invoke()
+            End If
+
             Dim program As Program = Parser.Parse(source)
 
             Call engine.Run(program)
@@ -97,7 +118,7 @@ Public Class ScriptHost
         Catch ex As JsRuntimeException
             LastError = $"运行时错误: {ex.Message}"
         Catch ex As Exception
-            LastError = $"宿主错误: {ex.Message}"
+            LastError = $"宿主错误: {ex.GetType().Name}: {ex.Message} @ {FirstFrame(ex)}"
         End Try
 
         engine = Nothing
@@ -133,6 +154,17 @@ Public Class ScriptHost
     ''' <summary>是否存在某个事件的回调。</summary>
     Public Function Has(name As String) As Boolean
         Return Handlers.ContainsKey(name)
+    End Function
+
+    ''' <summary>取异常栈里第一条不属于本文件的帧，便于定位脚本错误来源。</summary>
+    Private Shared Function FirstFrame(ex As Exception) As String
+        If ex.StackTrace Is Nothing Then Return "?"
+
+        For Each line As String In ex.StackTrace.Split(ControlChars.Lf)
+            If line.Contains("JavaScript") Then Return line.Trim()
+        Next
+
+        Return ex.StackTrace.Split(ControlChars.Lf)(0).Trim()
     End Function
 
     ''' <summary>写一行日志到宿主控制台。</summary>

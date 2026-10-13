@@ -73,6 +73,7 @@ Module SelfTest
             Call report.AppendLine($"脚本: {scriptPath}")
             Call CameraRoundTrip(rig)
             Call ShapeSpawning(host)
+            Call ScriptSmoke(script, api)
             Call LoadDemoScript(host, rig, renderer, script, api, scriptPath)
             Call SimulateClicks(host, rig, script)
             Call AdvancePhysics(host, script)
@@ -214,6 +215,27 @@ Module SelfTest
         Call host.Clear()
     End Sub
 
+    ''' <summary>逐步验证 LiteJs 侧的基础能力，便于定位脚本环境问题。</summary>
+    Private Sub ScriptSmoke(script As ScriptHost, api As JsApi)
+        Call report.AppendLine("-- 脚本环境冒烟")
+
+        Dim cases As (String, String)() = {
+            ("空脚本", ""),
+            ("变量与算术", "var a = 1 + 2;"),
+            ("函数声明与调用", "function f(x) { return x * 2; } var b = f(3);"),
+            ("on 注册", "on('init', function () { });"),
+            ("数组与 Math", "var v = [1, 2, 3]; var r = Math.random();"),
+            ("箭头函数", "var g = function (x) { return x + 1; }; var c = g(1);"),
+            ("对象字面量", "var o = { x: 1, y: 2 };")
+        }
+
+        For Each c In cases
+            Dim ok As Boolean = script.Load(c.Item2)
+
+            Check($"脚本环境: {c.Item1}", ok, If(script.LastError, ""))
+        Next
+    End Sub
+
     ''' <summary>装载 demo 脚本并检查场景内容。</summary>
     Private Sub LoadDemoScript(host As WorldHost, rig As CameraRig, renderer As SceneRenderer,
                                script As ScriptHost, api As JsApi, scriptPath As String)
@@ -228,7 +250,6 @@ Module SelfTest
 
         If Not ok Then Return
 
-        api.Register()
         host.LastError = Nothing
 
         Call script.Fire("init")
@@ -286,10 +307,10 @@ Module SelfTest
         Call script.Fire("mousedown", 500.0, 400.0, 2.0)
         Check("右键不生成物体", host.DynamicCount = n, $"after={host.DynamicCount}")
 
-        ' 键盘事件：C 清空
+        ' 键盘事件：C 只清除动态刚体，关卡几何必须保留
         Call script.Fire("keydown", "C")
-        Check("按下 C 清空世界", host.DynamicCount = 0, $"dynamic={host.DynamicCount}")
-        Check("静态物体被保留", host.Bodies.Where(Function(v) v.IsStaticGeometry).Count() = 4)
+        Check("按下 C 清空动态刚体", host.DynamicCount = 0, $"dynamic={host.DynamicCount}")
+        Check("静态关卡几何被保留", host.Bodies.Where(Function(v) v.IsStaticGeometry).Count() = 4)
 
         ' 重新生成一批用于物理推进
         For Each p As Integer() In points
@@ -352,14 +373,16 @@ Module SelfTest
         Call script.Fire("keydown", "P")
         Check("再按 P 恢复运行", Not host.Paused)
 
-        If host.Bodies.Count > 0 Then
-            Dim victim As BodyVisual = host.Bodies(0)
+        ' 只移除一个动态刚体，保证最后的截图里关卡几何完整
+        Dim victim As BodyVisual = host.Bodies.FirstOrDefault(Function(v) Not v.IsStaticGeometry)
+
+        If victim IsNot Nothing Then
             Dim n As Integer = host.Bodies.Count
 
             Check("Remove 生效", host.Remove(victim.Id) AndAlso host.Bodies.Count = n - 1)
             Check("Remove 后按 id 不再可查", host.Find(victim.Id) Is Nothing)
         Else
-            Check("Remove 生效", False, "世界为空，无法验证")
+            Check("Remove 生效", False, "世界中没有动态刚体，无法验证")
         End If
     End Sub
 
@@ -410,8 +433,8 @@ Module SelfTest
         Check("运行时错误被捕获", Not script.Load("undefinedFunctionCall();"), "本应失败")
         Check("运行时错误有可读信息", script.LastError IsNot Nothing, If(script.LastError, ""))
 
-        ' 正常脚本恢复
-        Check("随后仍能装载正常脚本", script.Load("var a = 1 + 1; print('ok');"))
+        ' 正常脚本恢复（宿主 API 由 BeforeRun 在运行前重新注册，因此这里可以直接用 print）
+        Check("随后仍能装载正常脚本", script.Load("var a = 1 + 1; print('ok ' + a);"), If(script.LastError, ""))
     End Sub
 
     Private Sub WriteReport(code As Integer)

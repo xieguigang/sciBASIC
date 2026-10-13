@@ -389,6 +389,10 @@ Public Class JsApi
                             Call host.Clear()
                             Return JsRuntime.Undef
                         End Function)},
+            {"clearDynamic", F(Function(a As Object()) As Object
+                                   Call host.ClearDynamic()
+                                   Return JsRuntime.Undef
+                               End Function)},
             {"count", F(Function(a As Object()) As Object
                             Return CDbl(host.Bodies.Count)
                         End Function)},

@@ -57,6 +57,9 @@ Public Class FormPlayer
         script = New ScriptHost(AddressOf AppendConsole)
         api = New JsApi(host, rig, renderer, script)
 
+        ' world / camera / sim / render 等全局必须在脚本顶层语句执行前注册
+        script.BeforeRun = AddressOf api.Register
+
         AddHandler viewport.MouseDown, AddressOf Viewport_MouseDown
         AddHandler viewport.MouseMove, AddressOf Viewport_MouseMove
         AddHandler viewport.MouseUp, AddressOf Viewport_MouseUp
@@ -151,7 +154,6 @@ Public Class FormPlayer
             Return
         End If
 
-        api.Register()
         api.PendingSteps = 0.0
 
         Call script.Fire("init")
@@ -190,11 +192,9 @@ Public Class FormPlayer
 
             For i As Integer = 1 To n
                 Call host.Update(dt)
-                Call AgeBodies(dt)
             Next
         Else
             Call host.Update(dt)
-            Call AgeBodies(dt)
         End If
 
         ' 3) 相机缓动
@@ -212,12 +212,6 @@ Public Class FormPlayer
             lastFpsTick = now
             Call UpdateStatus()
         End If
-    End Sub
-
-    Private Sub AgeBodies(dt As Double)
-        For Each v In host.Bodies
-            v.Age += dt
-        Next
     End Sub
 
     Private Sub RenderFrame()

@@ -92,12 +92,27 @@ Public Class WorldHost
         SimTime = 0.0
     End Sub
 
-    ''' <summary>推进一个真实帧：调用 update 钩子（由外部注入）并步进物理。</summary>
+    ''' <summary>只移除动态刚体，保留地面 / 平台 / 斜坡等关卡几何。</summary>
+    Public Sub ClearDynamic()
+        For i As Integer = Bodies.Count - 1 To 0 Step -1
+            If Not Bodies(i).IsStaticGeometry Then
+                Call Remove(Bodies(i).Id)
+            End If
+        Next
+    End Sub
+
+    ''' <summary>推进一个真实帧：步进物理、累加物体年龄并回收越界物体。</summary>
     Public Sub Update(dt As Double)
         If Paused Then Return
 
         World.Step(dt)
         SimTime += dt
+
+        ' 年龄用于"刚生成时高亮、随后渐变回本色"的表现
+        For Each v In Bodies
+            v.Age += dt
+        Next
+
         Call Cull()
     End Sub
 

@@ -87,7 +87,7 @@ Public Class SceneRenderer
         If v.Age < 0.6 Then
             Dim t As Double = 1.0 - v.Age / 0.6
 
-            c = Blend(c, Color.FromArgb(34, 211, 238), t * 0.75)
+            c = Mix(c, Color.FromArgb(34, 211, 238), t * 0.75)
         End If
 
         ' 休眠刚体降饱和度
@@ -98,22 +98,51 @@ Public Class SceneRenderer
         Return c
     End Function
 
-    Private Shared Function Blend(a As Color, b As Color, t As Double) As Color
+    ''' <summary>
+    ''' 把任意实数安全地收敛到 0..255。
+    ''' <see cref="Color.FromArgb(Integer, Integer, Integer, Integer)"/> 对越界值不友好，
+    ''' 而 <c>CInt(NaN)</c> 会直接抛 OverflowException，因此所有通道都要经过这里。
+    ''' </summary>
+    ''' <summary>
+    ''' 通道线性插值。
+    ''' </summary>
+    ''' <remarks>
+    ''' 注意：<see cref="Color.R"/> 等属性是 Byte，VB 中 <c>Byte - Byte</c> 仍是 Byte 的
+    ''' <b>受检算术</b>，当 <paramref name="to"/> 的分量小于 <paramref name="from"/> 时
+    ''' 会直接下溢抛 OverflowException。因此必须先提升为 Integer 再参与运算。
+    ''' </remarks>
+    Private Shared Function Mix(src As Color, dst As Color, t As Double) As Color
         Dim x As Double = std.Max(0.0, std.Min(1.0, t))
+        Dim fr As Integer = src.R
+        Dim fg As Integer = src.G
+        Dim fb As Integer = src.B
+        Dim tr As Integer = dst.R
+        Dim tg As Integer = dst.G
+        Dim tb As Integer = dst.B
 
-        Return Color.FromArgb(a.A,
-                              CInt(a.R + (b.R - a.R) * x),
-                              CInt(a.G + (b.G - a.G) * x),
-                              CInt(a.B + (b.B - a.B) * x))
+        Return Color.FromArgb(src.A,
+                              Channel(fr + (tr - fr) * x),
+                              Channel(fg + (tg - fg) * x),
+                              Channel(fb + (tb - fb) * x))
     End Function
 
     Private Shared Function Desaturate(c As Color, t As Double) As Color
-        Dim g As Integer = CInt(0.299 * c.R + 0.587 * c.G + 0.114 * c.B)
+        Dim r As Integer = c.R, g As Integer = c.G, b As Integer = c.B
+        Dim gray As Double = 0.299 * r + 0.587 * g + 0.114 * b
+        Dim x As Double = std.Max(0.0, std.Min(1.0, t))
 
         Return Color.FromArgb(c.A,
-                              CInt(c.R + (g - c.R) * t),
-                              CInt(c.G + (g - c.G) * t),
-                              CInt(c.B + (g - c.B) * t))
+                              Channel(r + (gray - r) * x),
+                              Channel(g + (gray - g) * x),
+                              Channel(b + (gray - b) * x))
+    End Function
+
+    Private Shared Function Channel(v As Double) As Integer
+        If Double.IsNaN(v) Then Return 0
+        If v <= 0.0 Then Return 0
+        If v >= 255.0 Then Return 255
+
+        Return CInt(std.Round(v))
     End Function
 
     ' /********************************************************************************/
