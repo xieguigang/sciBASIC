@@ -636,14 +636,15 @@ Namespace Compute
 
             Dim p = predictions.Data
             Dim t = targets.Data
-            Dim r(p.Length - 1) As Single
+            Dim sumSq As Double = 0
 
             For i = 0 To p.Length - 1
-                Dim d As Double = p(i) - t(i)
-                r(i) = CSng(d * d)
+                Dim diff As Double = p(i) - t(i)
+                sumSq += diff * diff
             Next
 
-            Return Wrap(r, predictions.Shape)
+            ' 与双精度栈严格一致：返回的是**均值标量**而不是逐元素误差
+            Return TensorF.Scalar(CSng(sumSq / p.Length))
         End Function
 
         Public Overridable Function L2Loss(t As TensorF) As TensorF Implements ITensorComputeF.L2Loss
@@ -660,16 +661,21 @@ Namespace Compute
 
             Dim p = predictions.Data
             Dim t = targets.Data
-            Dim r(p.Length - 1) As Single
             Dim d As Double = delta
+            Dim totalLoss As Double = 0
 
             For i = 0 To p.Length - 1
-                Dim diff As Double = p(i) - t(i)
-                Dim absDiff = std.Abs(diff)
-                r(i) = CSng(If(absDiff <= d, 0.5 * diff * diff, d * (absDiff - 0.5 * d)))
+                Dim diff As Double = std.Abs(CDbl(p(i)) - t(i))
+
+                If diff <= d Then
+                    totalLoss += 0.5 * diff * diff
+                Else
+                    totalLoss += d * (diff - 0.5 * d)
+                End If
             Next
 
-            Return Wrap(r, predictions.Shape)
+            ' 与双精度栈严格一致：先把每段损失求和再平均，结果是一个标量
+            Return TensorF.Scalar(CSng(totalLoss / p.Length))
         End Function
 
 #End Region

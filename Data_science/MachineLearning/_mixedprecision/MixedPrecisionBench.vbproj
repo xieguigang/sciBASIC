@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MixedPrecisionBench</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release</Configurations>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <OptionStrict>Off</OptionStrict>
+    <Title>Mixed Precision Bench for TensorFlow / tensorF operator parity</Title>
+    <Description>双精度 tensor 与单精度 tensorF 两条算子栈的数值对拍装置，同时承担混合精度重构的性能基准。</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+    <!-- CUDA 后端仅在本工程引用：上层深度学习库不应被迫依赖 ILCuda -->
+    <ProjectReference Include="..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
+  </ItemGroup>
+
+</Project>

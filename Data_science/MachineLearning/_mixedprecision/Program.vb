@@ -50,7 +50,7 @@ Namespace MixedPrecisionBench
             Dim failed = results.Where(Function(r) Not r.Passed).ToList()
 
             Console.WriteLine()
-            Console.WriteLine("================ 混合精度双/单 mic 对拍 ================")
+            Console.WriteLine("================ 混合精度双/单精度算子对拍 ================")
             Console.WriteLine()
 
             For Each r In results

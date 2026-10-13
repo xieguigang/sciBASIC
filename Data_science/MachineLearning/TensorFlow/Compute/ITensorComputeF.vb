@@ -255,12 +255,16 @@ Namespace Compute
         Function LogSoftmax(t As TensorF, axis As Integer) As TensorF
         ''' <summary>逐元素的 sigmoid 交叉熵（logits 形式，内部按 <c>max(x,0) − x·z + log(1+e^−|x|)</c> 稳定计算）</summary>
         Function SigmoidCrossEntropyWithLogits(labels As TensorF, logits As TensorF) As TensorF
-        ''' <summary>逐元素均方误差 <c>(pred − target)²</c></summary>
+        ''' <summary>
+        ''' 均方误差损失。注意返回的是**标量张量**（全部元素的平均值），
+        ''' 与双精度栈 <see cref="ITensorCompute.MseLoss"/> 的语义一致，而非逐元素误差。
+        ''' </summary>
         Function MseLoss(predictions As TensorF, targets As TensorF) As TensorF
         ''' <summary>整体 L2 损失的一半 <c>Σ x² / 2</c>，返回标量张量</summary>
         Function L2Loss(t As TensorF) As TensorF
         ''' <summary>
-        ''' Huber 损失：<c>|d| &lt;= delta</c> 时取 <c>0.5·d²</c>，否则取 <c>delta·(|d| − 0.5·delta)</c>。
+        ''' Huber 损失。<c>|d| &lt;= delta</c> 时取 <c>0.5·d²</c>，否则取 <c>delta·(|d| − 0.5·delta)</c>；
+        ''' 同样返回**标量张量**（平均值），与双精度栈一致。
         ''' </summary>
         Function HuberLoss(predictions As TensorF, targets As TensorF, delta As Single) As TensorF
 

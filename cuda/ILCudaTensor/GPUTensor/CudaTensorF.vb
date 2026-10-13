@@ -86,6 +86,16 @@ Namespace GPUTensor
         Private ReadOnly _maskCache As DeviceCache(Of Byte)
 
         ''' <summary>
+        ''' 钉住张量的设备常驻缓冲表。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这是混合精度能真正拿到收益的<b>前提</b>而不是锦上添花：
+        ''' 未钉住时每个算子的输出都要做一次完整的 D2H 回读，
+        ''' 单层 tensorF 的算子链会退化成"每步来回搬数据"，比原双精度 SIMD 更慢。
+        ''' </remarks>
+        Private ReadOnly _resident As New DeviceResidentStoreF()
+
+        ''' <summary>
         ''' "全流体"掩膜的替身。
         ''' </summary>
         ''' <remarks>
@@ -214,10 +224,45 @@ Namespace GPUTensor
             End Try
         End Function
 
-        ''' <summary>取张量底层数据对应的显存缓冲（单精度，零转换）</summary>
+        ''' <summary>
+        ''' 取张量底层数据对应的显存缓冲（单精度，零转换）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 被钉住的张量直接返回常驻缓冲，**跳过版本号驱动的上传**——
+        ''' 这正是常驻的全部意义：设备此时是主副本，主机内容可能是陈旧的。
+        ''' </remarks>
         Private Function Device(t As tf.TensorF) As ILCudaRuntime.DeviceBuffer(Of Single)
+            Dim pinned As ILCudaRuntime.DeviceBuffer(Of Single) = Nothing
+
+            If _resident.TryGet(t.Data, pinned) Then
+                Return pinned
+            End If
+
             Return _f32.GetBufferF(_engine, t.Data, t.Version, Function(s) s)
         End Function
+
+        ''' <summary>
+        ''' 在算子**要读主机数组**之前调用：把被钉住的张量同步回主机。
+        ''' </summary>
+        ''' <returns>该张量未被钉住时返回 <c>False</c>（主机内容本来就是新的）</returns>
+        ''' <remarks>
+        ''' 这是 CudaTensor.SyncIfPinned 在单精度栈的对等形式。
+        ''' 漏掉这一步的症状是"结果偶尔落后一步"而不是崩溃 —— 极难排查，
+        ''' 因此所有走 CPU 兜底分支的算子都必须在回退之前先过这里。
+        ''' </remarks>
+        Private Function SyncIfPinned(t As tf.TensorF) As Boolean
+            If t Is Nothing Then Return False
+            Return _resident.ReadBack(t.Data)
+        End Function
+
+        ''' <summary>在回退到 CPU 参考实现之前同步<paramref name="items"/>里所有被钉住的张量。</summary>
+        Private Sub SyncAll(ParamArray items As tf.TensorF())
+            If items Is Nothing Then Return
+
+            For Each item In items
+                Call SyncIfPinned(item)
+            Next
+        End Sub
 
         ''' <summary>取掩膜对应的显存缓冲；<paramref name="mask"/> 为 Nothing 时补一份"全流体"掩膜</summary>
         Private Function MaskBuf(mask As Byte(), n As Integer) As ILCudaRuntime.DeviceBuffer(Of Byte)
@@ -852,6 +897,7 @@ Namespace GPUTensor
 
         ''' <summary>释放单精度栈占用的全部显存缓冲</summary>
         Public Sub Dispose() Implements IDisposable.Dispose
+            _resident.Dispose()
             _f32.Dispose()
             _maskCache.Dispose()
         End Sub
