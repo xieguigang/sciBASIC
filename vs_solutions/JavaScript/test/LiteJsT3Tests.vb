@@ -173,7 +173,7 @@ Public Class LiteJsT3Tests
 
     <Fact>
     Public Sub CodeGen_RegexAndBuiltins()
-        Assert.Contains("New LiteJs.Runtime.JsRegExp(", Generate("var re = /a+/g;"))
+        Assert.Contains("New LiteJsRuntime.JsRegExp(", Generate("var re = /a+/g;"))
         Assert.Contains("JsRuntime.JsInvokeMethod(", Generate("'x'.replace(/a/, 'b');"))
         Assert.Contains("JsRuntime.JsNew(", Generate("var e = new Error('x');"))
         Assert.Contains("JsRuntime.JsNew(", Generate("var d = new Date();"))

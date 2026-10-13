@@ -37,20 +37,23 @@ Public NotInheritable Class CodeGenerator
         Dim top = Scope.NewRoot()
 
         w.Line("' Auto-generated from JavaScript by LiteJs — do not edit.")
-        w.Line("' All dynamic semantics come from LiteJs.Runtime.JsRuntime (shared with the interpreter).")
+        w.Line("' All dynamic semantics come from the LiteJs runtime (shared with the interpreter).")
         w.Line("Option Strict On")
         w.Line("Option Explicit On")
         w.Line("Option Infer On")
         w.Line()
         w.Line("Imports System")
-        w.Line("Imports LiteJs.Runtime")
+        ' the runtime namespace is imported twice: once plainly (bare JsRuntime calls)
+        ' and once under an alias the generated type references use
+        w.Line("Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime")
+        w.Line("Imports LiteJsRuntime = Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime")
         w.Line("Imports JsValue = System.Object")
         w.Line("' function values are Func(Of Object(), Object); VB Imports aliases cannot target generic types")
         w.Line()
         w.Line($"Public NotInheritable Class {className}")
         w.Indent()
         w.Line()
-        w.Line("Public Shared Sub Run(io As LiteJs.Runtime.ScriptIO)")
+        w.Line("Public Shared Sub Run(io As LiteJsRuntime.ScriptIO)")
         w.Indent()
         w.Line("JsRuntime.Io = io")
         ' JS var hoisting: every 'var' of this function body is declared once at
@@ -130,10 +133,13 @@ Public NotInheritable Class CodeGenerator
             GenSwitch(DirectCast(s, SwitchStmt), w, scope)
 
         ElseIf TypeOf s Is ClassDeclStmt Then
-            ' class declarations are block-scoped and not hoisted
+            ' class declarations are block-scoped and not hoisted. The binding is
+            ' declared first so that the member closures can capture it (a method
+            ' referring to its own class resolves it at call time).
             Dim cls = DirectCast(s, ClassDeclStmt)
             Dim vbCls = scope.DefineLocal(cls.Spec.Name)
-            w.Line($"Dim {vbCls} As JsValue = {GenClassValue(cls.Spec, scope)}")
+            w.Line($"Dim {vbCls} As JsValue = Nothing")
+            w.Line($"{vbCls} = {GenClassValue(cls.Spec, scope)}")
 
         ElseIf TypeOf s Is LabeledStmt Then
             GenLabeled(DirectCast(s, LabeledStmt), w, scope)
@@ -167,7 +173,7 @@ Public NotInheritable Class CodeGenerator
             End If
 
         ElseIf TypeOf s Is ThrowStmt Then
-            w.Line($"Throw New LiteJs.Runtime.JsRuntimeException({GenExpr(DirectCast(s, ThrowStmt).Value, scope)})")
+            w.Line($"Throw New LiteJsRuntime.JsRuntimeException({GenExpr(DirectCast(s, ThrowStmt).Value, scope)})")
 
         ElseIf TypeOf s Is TryStmt Then
             GenTry(DirectCast(s, TryStmt), w, scope)
@@ -420,7 +426,7 @@ Public NotInheritable Class CodeGenerator
         GenBlock(t.TryBlock, w, scope)
         w.UnIndent()
         If t.CatchBlock IsNot Nothing Then
-            w.Line($"Catch {exName} As LiteJs.Runtime.JsRuntimeException")
+            w.Line($"Catch {exName} As LiteJsRuntime.JsRuntimeException")
             w.Indent()
             If t.CatchParam IsNot Nothing Then
                 Dim vbParam = scope.DefineLocal(t.CatchParam)
@@ -683,7 +689,7 @@ Public NotInheritable Class CodeGenerator
 
         ElseIf TypeOf e Is RegexExpr Then
             Dim rx = DirectCast(e, RegexExpr)
-            Return $"New LiteJs.Runtime.JsRegExp({VbString(rx.Source)}, {VbString(rx.Flags)})"
+            Return $"New LiteJsRuntime.JsRegExp({VbString(rx.Source)}, {VbString(rx.Flags)})"
 
         ElseIf TypeOf e Is AwaitExpr Then
             Return $"JsRuntime.JsAwait({GenExpr(DirectCast(e, AwaitExpr).Operand, scope)})"
@@ -705,7 +711,7 @@ Public NotInheritable Class CodeGenerator
             sb.Append("CType(Function() As JsValue" & vbLf)
             sb.Append("Try" & vbLf)
             sb.Append($"Return {chain}" & vbLf)
-            sb.Append($"Catch {exName} As LiteJs.Runtime.OptionalChainShortCircuit" & vbLf)
+            sb.Append($"Catch {exName} As LiteJsRuntime.OptionalChainShortCircuit" & vbLf)
             sb.Append("Return JsRuntime.Undef" & vbLf)
             sb.Append("End Try" & vbLf)
             sb.Append("End Function, Func(Of Object(), Object)).Invoke(New Object() {})")
@@ -822,11 +828,16 @@ Public NotInheritable Class CodeGenerator
         Return $"JsRuntime.JsDefineClass({VbString(spec.Name)}, {ctorTxt}, {superTxt}, {partsTxt})"
     End Function
 
-    ''' <summary>Template literal → VB string concatenation with JsStr conversion.</summary>
+    ''' <summary>
+    ''' Template literal → VB string concatenation with JsStr conversion.
+    ''' Every element after the first is joined with ' & ' (a literal chunk that
+    ''' FOLLOWS an interpolation needs the connector too).
+    ''' </summary>
     Private Function GenTemplate(t As TemplateExpr, scope As Scope) As String
         Dim sb As New StringBuilder()
         For Each chunk In t.Chunks
             If TypeOf chunk Is String Then
+                If sb.Length > 0 Then sb.Append(" & ")
                 sb.Append(VbString(CStr(chunk)))
             Else
                 sb.Append(" & ").Append("JsRuntime.JsStr(").
@@ -1018,7 +1029,7 @@ Public NotInheritable Class CodeGenerator
         Dim generatorVar As String = Nothing
         If f.IsGenerator Then
             generatorVar = UniqueName("gen")
-            w.Line($"Dim {generatorVar} As New LiteJs.Runtime.JsYieldCollector()")
+            w.Line($"Dim {generatorVar} As New LiteJsRuntime.JsYieldCollector()")
         End If
 
         ' async functions hand back a promise settled by their return value
@@ -1027,7 +1038,7 @@ Public NotInheritable Class CodeGenerator
         If f.IsAsync Then
             promiseVar = UniqueName("promise")
             catchVar = UniqueName("ax")
-            w.Line($"Dim {promiseVar} As New LiteJs.Runtime.JsPromise()")
+            w.Line($"Dim {promiseVar} As New LiteJsRuntime.JsPromise()")
             w.Line("Try")
             w.Indent()
         End If
@@ -1077,7 +1088,7 @@ Public NotInheritable Class CodeGenerator
             w.Line($"{promiseVar}.Fulfill(JsRuntime.Undef)")
             w.Line($"Return {promiseVar}")
             w.UnIndent()
-            w.Line($"Catch {catchVar} As LiteJs.Runtime.JsRuntimeException")
+            w.Line($"Catch {catchVar} As LiteJsRuntime.JsRuntimeException")
             w.Indent()
             w.Line($"{promiseVar}.Reject({catchVar}.Payload)")
             w.Line($"Return {promiseVar}")

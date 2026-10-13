@@ -310,6 +310,8 @@ Public Class LiteJsT1Tests
     Public Sub CodeGen_TemplateSpreadAndParameters()
         Dim tpl = Generate("console.log(`a${1 + 1}b`);")
         Assert.Contains("JsRuntime.JsStr(", tpl)
+        ' the literal chunk after the interpolation must be joined with ' & '
+        Assert.Contains(") & ""b""", tpl)
 
         Dim spreadCall = Generate("function f() { } var xs = [1, 2]; f(...xs);")
         Assert.Contains("JsRuntime.JsSpread(", spreadCall)

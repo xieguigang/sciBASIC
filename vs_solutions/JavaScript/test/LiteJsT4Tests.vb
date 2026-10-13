@@ -105,7 +105,7 @@ Public Class LiteJsT4Tests
     <Fact>
     Public Sub CodeGen_AsyncAndAwait()
         Dim code = Generate("async function f() { return 1; }")
-        Assert.Contains("New LiteJs.Runtime.JsPromise()", code)
+        Assert.Contains("New LiteJsRuntime.JsPromise()", code)
         Assert.Contains(".Fulfill(", code)
         Assert.Contains(".Reject(", code)
 

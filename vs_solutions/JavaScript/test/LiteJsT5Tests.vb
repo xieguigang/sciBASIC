@@ -84,7 +84,7 @@ Public Class LiteJsT5Tests
     <Fact>
     Public Sub CodeGen_Generators()
         Dim code = Generate("function* g() { yield 1; }")
-        Assert.Contains("New LiteJs.Runtime.JsYieldCollector()", code)
+        Assert.Contains("New LiteJsRuntime.JsYieldCollector()", code)
         Assert.Contains(".AddValue(", code)
         Assert.Contains("JsRuntime.JsGeneratorFrom(", code)
     End Sub
