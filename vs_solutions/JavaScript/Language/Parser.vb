@@ -369,6 +369,13 @@ Public NotInheritable Class Parser
                 _pos += 1
             End If
 
+            ' generator method: *m() {}
+            Dim isGeneratorMember = False
+            If At("*") Then
+                isGeneratorMember = True
+                _pos += 1
+            End If
+
             If Cur.name = TokenType.Identifier AndAlso (Cur.text = "get" OrElse Cur.text = "set") AndAlso
                IsAccessorHeader() Then
                 Dim isGetter = Cur.text = "get"
@@ -387,7 +394,7 @@ Public NotInheritable Class Parser
             ElseIf IsMethodHeader() Then
                 Dim mname = ParsePropertyName()
                 Dim spec = ParseParameterList()
-                Dim fn = ParseMethodBody(spec, isAsyncMember)
+                Dim fn = ParseMethodBody(spec, isAsyncMember, isGeneratorMember)
                 If Not isStatic AndAlso mname = "constructor" Then
                     If ctor IsNot Nothing Then Throw New ParseException("class may only have one constructor")
                     ctor = fn
@@ -409,7 +416,8 @@ Public NotInheritable Class Parser
     End Function
 
     ''' <summary>Method body with its own function scope (like a function declaration).</summary>
-    Private Function ParseMethodBody(spec As ParamSpec, Optional isAsync As Boolean = False) As FuncExpr
+    Private Function ParseMethodBody(spec As ParamSpec, Optional isAsync As Boolean = False,
+                                     Optional isGenerator As Boolean = False) As FuncExpr
         Dim outerFunc = _funcDepth, outerLoop = _loopDepth
         _funcDepth += 1
         _loopDepth = 0
@@ -417,7 +425,8 @@ Public NotInheritable Class Parser
         _funcDepth = outerFunc
         _loopDepth = outerLoop
         Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body,
-                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest,
+                            isAsync:=isAsync, isGenerator:=isGenerator)
     End Function
 
     ''' <summary>True when 'async' is followed by a method header (async m() {}).</summary>
@@ -635,28 +644,37 @@ Public NotInheritable Class Parser
 
     ' ---------------- expressions (precedence climbing) ----------------
 
-    ''' <summary>True when an operand follows <c>await</c> (contextual keyword detection).</summary>
-    Private Function AwaitOperandFollows() As Boolean
-        If _pos + 1 >= _tokens.Count Then Return False
-        Dim nxt = _tokens(_pos + 1)
-        Select Case nxt.name
+    ''' <summary>True when a token can begin an expression.</summary>
+    Private Shared Function StartsExpression(t As Token) As Boolean
+        Select Case t.name
             Case TokenType.Identifier, TokenType.Number, TokenType.String, TokenType.Template, TokenType.Regex
                 Return True
             Case TokenType.Keyword
-                Select Case nxt.text
+                Select Case t.text
                     Case "this", "new", "function", "class", "super", "typeof", "void", "delete",
                          "true", "false", "null", "undefined"
                         Return True
                 End Select
                 Return False
             Case TokenType.Punct
-                Select Case nxt.text
+                Select Case t.text
                     Case "(", "[", "{", "!", "~", "+", "-", "++", "--"
                         Return True
                 End Select
                 Return False
         End Select
         Return False
+    End Function
+
+    ''' <summary>True when the CURRENT token can begin an expression.</summary>
+    Private Function CanStartExpression() As Boolean
+        Return StartsExpression(Cur)
+    End Function
+
+    ''' <summary>True when an operand follows <c>await</c> (contextual keyword detection).</summary>
+    Private Function AwaitOperandFollows() As Boolean
+        If _pos + 1 >= _tokens.Count Then Return False
+        Return StartsExpression(_tokens(_pos + 1))
     End Function
 
     ''' <summary>True when the current token is the contextual keyword <c>async</c>.</summary>
@@ -955,7 +973,7 @@ Public NotInheritable Class Parser
         If YieldIsOperator() Then
             _pos += 1
             Dim yoperand As Expression = Nothing
-            If AwaitOperandFollows() Then yoperand = ParseUnary()
+            If CanStartExpression() Then yoperand = ParseUnary()
             Return New YieldExpr(yoperand)
         End If
         If Cur.name = TokenType.Keyword AndAlso Cur.text = "typeof" Then
@@ -1245,6 +1263,15 @@ Public NotInheritable Class Parser
             Dim akey = ParsePropertyName()
             Dim aspec = ParseParameterList()
             Return New ObjectProperty(akey, Nothing, ParseMethodBody(aspec, isAsync:=True),
+                                      ObjectPropertyKind.Normal)
+        End If
+
+        ' generator method: { *m() {} }
+        If At("*") Then
+            _pos += 1
+            Dim gkey = ParsePropertyName()
+            Dim gspec = ParseParameterList()
+            Return New ObjectProperty(gkey, Nothing, ParseMethodBody(gspec, isGenerator:=True),
                                       ObjectPropertyKind.Normal)
         End If
 

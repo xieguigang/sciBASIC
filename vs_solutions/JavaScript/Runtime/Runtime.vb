@@ -2468,6 +2468,8 @@ Namespace Runtime
                 For Each c In CStr(value)
                     list.Add(c.ToString())
                 Next
+            ElseIf TypeOf value Is JsGenerator Then
+                list.AddRange(DirectCast(value, JsGenerator).Remaining())
             Else
                 Throw JsRuntimeException.TypeError(JsStr(value) & " is not iterable")
             End If
