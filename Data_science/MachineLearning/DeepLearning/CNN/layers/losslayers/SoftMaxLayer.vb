@@ -146,7 +146,11 @@ Namespace CNN.losslayers
             Call x.setGradient(mul.Data)
 
             ' loss is the class negative log likelihood
-            Return -std.Log(es(y))
+            '
+            ' 必须夹下限：softmax 的输出在极端 logits 下会下溢到 0（单精度下更早），
+            ' 而 -log(0) = +Inf 会顺着损失一路污染到梯度与权重。
+            ' 这里取 1e-12 与后端里 MaskedCrossEntropy 的保护口径一致。
+            Return -std.Log(std.Max(es(y), 1.0E-12))
         End Function
 
         ''' <summary>

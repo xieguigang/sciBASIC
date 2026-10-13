@@ -144,7 +144,7 @@ Namespace MixedPrecisionBench
 
         ' ---------------- 稀疏 ----------------
 
-        Private Function BuildCsr(rows As Integer, cols As Integer, nnz As Integer, seed As Integer) As SparseCsr
+        Friend Function BuildCsr(rows As Integer, cols As Integer, nnz As Integer, seed As Integer) As SparseCsr
             Dim rnd As New Random(seed)
             Dim counts(rows - 1) As Integer
 

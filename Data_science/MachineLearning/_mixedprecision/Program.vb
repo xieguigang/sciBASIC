@@ -53,6 +53,11 @@ Namespace MixedPrecisionBench
                 gpuReady = SetupGpuBackend(args.Contains("-small"))
             End If
 
+            If args IsNot Nothing AndAlso args.Contains("-bench") Then
+                Call Bench.Run(useGpu)
+                Return 0
+            End If
+
             Dim results As New List(Of CaseResult)
 
             Call OperatorParity.RunAll(results)
