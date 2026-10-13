@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DataMining.UMAP</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.6.9781.24297</Version>
+		<Version>10.6.9782.41217</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -20,7 +20,7 @@
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>UMAP Uniform Manifold Approximation and Projection</Title>
-		<AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+		<AssemblyVersion>1.0.9782.41217</AssemblyVersion>
 		<AssemblyTitle>Microsoft.VisualBasic.DataMining.UMAP</AssemblyTitle>
 		<PackageTags>scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor</PackageTags>
     <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>

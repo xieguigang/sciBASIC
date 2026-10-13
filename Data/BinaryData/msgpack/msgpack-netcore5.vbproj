@@ -19,8 +19,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.6.9782.41217</Version>
+    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
     <Title>MessagePack Binary Object Serialization Library</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.IO.MessagePack</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

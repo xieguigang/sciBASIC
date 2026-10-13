@@ -9,6 +9,13 @@
     <AssemblyTitle>Particle System</AssemblyTitle>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
+    <Version>1.0.9782.41217</Version>
+    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -15,8 +15,8 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.6.9782.41217</Version>
+    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
     <Title>Data Mining Toolkit: Clustering, Association Rules and Evaluation</Title>
     <Description>A data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, ID3 decision trees, self-organizing maps, plus a unified evaluation framework with ROC/AUC curves and clustering quality indices.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining</AssemblyTitle>

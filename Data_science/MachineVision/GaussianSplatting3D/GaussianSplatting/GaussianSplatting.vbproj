@@ -14,8 +14,8 @@
     <UseSystemDrawing>true</UseSystemDrawing>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyTitle>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</AssemblyTitle>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.6.9782.41217</Version>
+    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
     <Configurations>nuget_release;Debug</Configurations>
     <Title>3D Gaussian Splatting Scene Reconstruction and Rendering</Title>
     <Description>3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.</Description>

@@ -12,8 +12,8 @@
     <Import>System.Collections.Generic</Import>
     <Import>System.Linq</Import>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>10.6.9781.24297</Version>
-    <AssemblyVersion>1.0.9781.24297</AssemblyVersion>
+    <Version>10.6.9782.41217</Version>
+    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
 
   
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
