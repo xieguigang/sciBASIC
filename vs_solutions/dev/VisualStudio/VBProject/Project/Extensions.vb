@@ -153,7 +153,8 @@ Namespace VBProj
         Public Function GetOutputDirectory(vbproj As VBProject, profileName$) As String
             Dim profile = vbproj.GetProfile(profileName)
             Dim base$ = DirectCast(vbproj, IFileReference).FilePath.ParentPath
-            Dim outputdir = $"{base}/{profile.OutputPath}"
+            Dim bin = If(profile Is Nothing, "bin", profile.OutputPath)
+            Dim outputdir = $"{base}/{bin}"
 
             Return outputdir
         End Function
