@@ -19,6 +19,8 @@ JavaScript 源码
 
 **单一语义源**：`Runtime.JsRuntime` 同时服务解释器与生成代码——弱类型转换、Truthy、`==`/`===`、字符串拼接规则、数组/字符串方法、内置对象（console/Math/JSON/Object/Array/Date/RegExp/Error/Promise）只有一份实现，保证两条执行路径行为一致。
 
+**宿主互操作**：`Runtime/ClrInterop.vb`、`ClrObject.vb`、`ClrMemberCache.vb`、`ClrConvert.vb`、`ClrAttributes.vb` 把 .NET 对象/类型以反射方式桥接成脚本对象，两条执行路径共用同一套成员解析与类型转换。
+
 ## 支持的语言元素
 
 **声明与赋值**：`var`（函数级提升）/ `let` / `const`（块级、每次迭代新绑定）· 赋值（含 `+= -= *= /= %=`）· 解构赋值 `[a, b] = x` / `({a, b} = o)` · 后缀/前缀 `++ --`
@@ -47,7 +49,48 @@ engine.Run(Parser.Parse(scriptText))
 Dim vbCode = New CodeGenerator().Generate(Parser.Parse(scriptText), "GeneratedScript")
 ```
 
-`Interpreter.DefineGlobal(name, value)` 可注册宿主委托（`Func(Of Object(), Object)`)作为脚本可见的全局函数。
+`Interpreter.DefineGlobal(name, value)` 可注册宿主委托（`Func(Of Object(), Object)`)作为脚本可见的全局函数；传入任意 CLR 对象或 `Type` 时，则通过下面的反射桥接暴露给脚本。
+
+## 宿主互操作：CLR 反射桥接
+
+把一个 .NET 对象（或类型）交给脚本，脚本即可像操作普通 JS 对象一样读写它的成员——成员由反射解析，无需接口、包装类或胶水代码。
+
+```vb
+Dim io As ScriptIO = New LogTextIO
+Dim engine As New Interpreter(io)
+
+' 1) 注入单个对象（或 Type）：属性/字段读写 + 方法调用
+engine.DefineGlobal("host", myObject)
+engine.DefineGlobal("Console", GetType(Console))     ' 静态成员 + new Console()
+
+' 2) 批量注入并同时发布到宿主注册表，翻译产物也能取到同一批对象
+Dim host As New ClrHost()
+host.Add("host", myObject)
+host.Add("json", GetType(JSON))
+engine.InstallHost(host)
+```
+
+```javascript
+host.Title                      // 读属性
+host.Title = 'x'                // 写属性（只读成员写入抛 TypeError）
+host.Counter++                  // 公开字段与属性一视同仁
+host.Add(1, 2)                  // 重载按实参数量/类型择优，支持 params 与可选参数
+host.items[0]; host.items.length; for (const v of host.items) {}   // 索引器 / IEnumerable
+'Title' in host; Object.keys(host); var copy = { ...host };        // 成员枚举与展开
+JSON.stringify(host)            // 序列化可见成员（方法被跳过）
+Console.WriteLine('x')          // 静态成员
+var c = new MyType(); c instanceof MyType                          // new / instanceof
+try { host.Explode(); } catch (e) { e.name }                       // .NET 异常 → 可捕获的 JS 错误
+host.Fetch().then(v => ...)     // Task(Of T) → Promise（await 同样可用）
+```
+
+**成员可见性**：默认暴露全部公开成员（含继承成员）。`<JsName("x")>` 起别名（成员名精确匹配，不做驼峰隐式映射），`<JsIgnore>` 隐藏成员；某类型上只要出现一个 `<JsExpose>` 成员，该类型即切换为白名单模式（仅标注成员可见），也可用 `ClrInterop.ExplicitOnly = True` 对所有类型强制白名单。
+
+**类型转换**：数值 ↔ `Double/Int32/Int64/Single/Decimal`/枚举（按名或数值赋值）/`Nullable`；字符串 ↔ `String/Char/Guid/Date`；布尔 ↔ `Boolean`；`null`/`undefined` ↔ `Nothing`（值类型参数除外）。返回值中的嵌套对象保持为代理（可继续点号访问），`DateTime` → `JsDate`，`Task`/`Task(Of T)` → `Promise`。
+
+**错误边界**：桥接调用抛出的 .NET 异常被规范化为带 `name`（.NET 异常类型名）与 `message` 的 JS 错误对象，脚本可直接 `catch`；`e.clrException` 取原始异常实例，宿主侧用 `ClrInterop.ToHostException(ex)` 还原为原始 .NET 异常。
+
+**翻译路径一致**：生成代码的入口为 `Run(io As ScriptIO, Optional host As ClrHost = Nothing)`，接受同一批宿主对象；脚本中的未知全局名解析到宿主注册表（`ClrInterop.Register`），未注册的名字抛普通 `ReferenceError`。
 
 ## 生成代码示例
 
@@ -80,15 +123,22 @@ Square = JsRuntime.JsDefineClass("Square", CType(Function(args__9 As JsValue())
 - **正则**：由 .NET `Regex` 承载；`g`/`i`/`m`/`s` 支持，`y`（sticky）近似实现，`u` 等价于 .NET 的默认 unicode 行为。
 - **Promise.any 拒绝值**：返回拒绝原因数组（无 AggregateError 类型）。
 - **类的静态字段**：在类定义时求值；`class A { static x = A }` 这类自引用会拿到未绑定的类名（罕用）。
+- **CLR 桥接的取舍**：
+  - **脚本函数不转 .NET 委托**：需要委托/回调（如 LINQ `Where`）的 .NET 方法无法从脚本调用，命中委托形参时报可读错误（可从宿主传入委托实例代替）。
+  - **值类型（struct）写入不回写**：`host.point.X = 1` 只作用于桥接持有的装箱副本，不改变来源属性；引用类型对象即本体，写入对宿主可见。
+  - **Task 需能同步完成**：`Task`/`Task(Of T)` 在 `ClrInterop.TaskWaitTimeoutMs`（默认 5000ms）内未结算则报错——引擎没有事件循环，无法等待。
+  - **成员名精确匹配**：不做 camelCase↔PascalCase 隐式映射，别名请用 `<JsName>`。
+  - **索引器限单参数**：`obj[i]` 映射到单参数索引器；`Item(x, y)` 这类多参数索引器不可用。
+  - **集合不是 JS 数组**：集合代理支持下标、`length`、for-of 与展开，`Object.keys` 给出索引，但没有 `map`/`filter`/`push` 等数组方法（需先 `[...host.items]` 转换为数组）。
 - **无模块系统**：`import` / `export` 未实现（脚本按单文件执行）。
 
 ## 测试
 
 ```
-dotnet test        ' 79 项全绿
+dotnet test        ' 115 项全绿
 ```
 
-覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）。
+覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）。
 
 ## 实现要点（踩坑记录）
 

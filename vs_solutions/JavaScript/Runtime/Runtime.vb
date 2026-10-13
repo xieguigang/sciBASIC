@@ -70,6 +70,26 @@ Namespace Runtime
             Return g
         End Function
 
+        ''' <summary>
+        ''' Resolve an identifier that is not one of the builtins: a CLR object the host
+        ''' published through <see cref="ClrInterop.Register"/> (or a <see cref="ClrHost"/>).
+        ''' <para>
+        ''' Generated code calls this for unknown globals, so translated scripts can use
+        ''' injected host objects exactly like interpreted ones; an unregistered name
+        ''' raises a normal JS ReferenceError at run time.
+        ''' </para>
+        ''' </summary>
+        Public Function ResolveHostGlobal(name As String) As Object
+            Dim value As Object = Nothing
+            If ClrInterop.TryGetHostGlobal(name, value) Then Return value
+            Throw New JsRuntimeException(New JsError("ReferenceError", name & " is not defined"))
+        End Function
+
+        ''' <summary>Names of the host globals currently registered (see <see cref="ClrInterop"/>).</summary>
+        Public Function HostGlobalNames() As List(Of String)
+            Return ClrInterop.HostGlobalNames()
+        End Function
+
         ' ================= type predicates =================
 
         Public Function IsNumber(x As Object) As Boolean
@@ -139,6 +159,10 @@ Namespace Runtime
             If TypeOf x Is JsGenerator Then Return "[object Generator]"
             If TypeOf x Is JsDate Then Return DirectCast(x, JsDate).ToString()
             If TypeOf x Is JsRegExp Then Return DirectCast(x, JsRegExp).ToString()
+            ' ---- CLR reflection bridge ----
+            If TypeOf x Is ClrObject Then Return "[object Object]"
+            If TypeOf x Is ClrType Then Return "class " & DirectCast(x, ClrType).UnderlyingType.Name
+            If TypeOf x Is ClrBoundMethod Then Return "[function: " & DirectCast(x, ClrBoundMethod).Name & "]"
             Return CStr(x)
         End Function
 
@@ -171,6 +195,10 @@ Namespace Runtime
                     ' circular reference in displayed graph
                     Return "[Circular]"
                 End Try
+            End If
+            ' ---- CLR reflection bridge: show the wrapped CLR type ----
+            If TypeOf x Is ClrObject Then
+                Return "[object " & DirectCast(x, ClrObject).TargetType.ToString() & "]"
             End If
             Return JsStr(x)
         End Function
@@ -266,7 +294,10 @@ Namespace Runtime
             If a Is Undef AndAlso b Is Undef Then Return True
             If IsJsArray(a) OrElse IsJsObject(a) OrElse IsJsArray(b) OrElse IsJsObject(b) OrElse
                TypeOf a Is Func(Of Object(), Object) OrElse TypeOf b Is Func(Of Object(), Object) OrElse
-               TypeOf a Is BuiltinMethod OrElse TypeOf b Is BuiltinMethod Then
+               TypeOf a Is BuiltinMethod OrElse TypeOf b Is BuiltinMethod OrElse
+               ClrInterop.IsClrProxy(a) OrElse ClrInterop.IsClrProxy(b) OrElse
+               TypeOf a Is ClrBoundMethod OrElse TypeOf b Is ClrBoundMethod Then
+                ' bridged values are objects/functions: identity comparison, like JS
                 Return ReferenceEquals(a, b)
             End If
             Return False
@@ -285,8 +316,8 @@ Namespace Runtime
             If (IsNumber(a) AndAlso IsNumber(b)) OrElse
                (TypeOf a Is String AndAlso TypeOf b Is String) OrElse
                (TypeOf a Is Boolean AndAlso TypeOf b Is Boolean) OrElse
-               (IsJsArray(a) OrElse IsJsObject(a) OrElse TypeOf a Is Func(Of Object(), Object) OrElse TypeOf a Is BuiltinMethod) AndAlso
-               (IsJsArray(b) OrElse IsJsObject(b) OrElse TypeOf b Is Func(Of Object(), Object) OrElse TypeOf b Is BuiltinMethod) Then
+               (IsJsArray(a) OrElse IsJsObject(a) OrElse TypeOf a Is Func(Of Object(), Object) OrElse TypeOf a Is BuiltinMethod OrElse ClrInterop.IsClrProxy(a)) AndAlso
+               (IsJsArray(b) OrElse IsJsObject(b) OrElse TypeOf b Is Func(Of Object(), Object) OrElse TypeOf b Is BuiltinMethod OrElse ClrInterop.IsClrProxy(b)) Then
                 Return JsStrictEq(a, b)
             End If
             ' null / undefined family
@@ -338,6 +369,12 @@ Namespace Runtime
             If obj Is Nothing OrElse obj Is Undef Then
                 Throw JsRuntimeException.TypeError("cannot read property '" & name & "' of " & JsStr(obj))
             End If
+            ' ---- CLR reflection bridge: host-injected .NET objects (see ClrInterop) ----
+            Dim clrObj = TryCast(obj, ClrObject)
+            If clrObj IsNot Nothing Then Return ClrInterop.GetMember(clrObj, name)
+            Dim clrType = TryCast(obj, ClrType)
+            If clrType IsNot Nothing Then Return ClrInterop.GetStaticMember(clrType, name)
+
             If IsJsArray(obj) Then
                 Dim a = DirectCast(obj, List(Of Object))
                 If name = "length" Then Return CDbl(a.Count)
@@ -426,6 +463,8 @@ Namespace Runtime
                     Case "name" : Return err.Name
                     Case "message" : Return err.Message
                     Case "stack" : Return err.ToString()
+                    ' the .NET exception a CLR bridge call raised (Nothing for engine errors)
+                    Case "clrException" : Return err.Original
                     Case "toString" : Return New BuiltinMethod(obj, name)
                 End Select
                 Return Undef
@@ -462,6 +501,10 @@ Namespace Runtime
             If obj Is Nothing OrElse obj Is Undef Then
                 Throw JsRuntimeException.TypeError("cannot index " & JsStr(obj))
             End If
+            ' ---- CLR reflection bridge: array elements and indexers ----
+            Dim clrObj = TryCast(obj, ClrObject)
+            If clrObj IsNot Nothing Then Return ClrInterop.GetIndex(clrObj, index)
+
             If IsJsArray(obj) Then
                 Dim a = DirectCast(obj, List(Of Object))
                 Dim i = CInt(System.Math.Floor(JsNum(index)))
@@ -488,6 +531,18 @@ Namespace Runtime
             If obj Is Nothing OrElse obj Is Undef Then
                 Throw JsRuntimeException.TypeError("cannot set property '" & name & "' of " & JsStr(obj))
             End If
+            ' ---- CLR reflection bridge: property / field writes ----
+            Dim clrObj = TryCast(obj, ClrObject)
+            If clrObj IsNot Nothing Then
+                ClrInterop.SetMember(clrObj, name, value)
+                Return
+            End If
+            Dim clrType = TryCast(obj, ClrType)
+            If clrType IsNot Nothing Then
+                ClrInterop.SetStaticMember(clrType, name, value)
+                Return
+            End If
+
             If IsJsObject(obj) Then
                 Dim d = DirectCast(obj, Dictionary(Of String, Object))
                 Dim existing As Object = Nothing
@@ -523,6 +578,13 @@ Namespace Runtime
             If obj Is Nothing OrElse obj Is Undef Then
                 Throw JsRuntimeException.TypeError("cannot index " & JsStr(obj))
             End If
+            ' ---- CLR reflection bridge: element / indexer writes ----
+            Dim clrObj = TryCast(obj, ClrObject)
+            If clrObj IsNot Nothing Then
+                ClrInterop.SetIndex(clrObj, index, value)
+                Return
+            End If
+
             If IsJsArray(obj) Then
                 Dim a = DirectCast(obj, List(Of Object))
                 Dim i = CInt(System.Math.Floor(JsNum(index)))
@@ -640,6 +702,14 @@ Namespace Runtime
                 Throw JsRuntimeException.TypeError(
                     "Class constructor " & DirectCast(f, JsClass).Name & " cannot be invoked without 'new'")
             End If
+            ' ---- CLR reflection bridge: bound CLR methods ----
+            If TypeOf f Is ClrBoundMethod Then
+                Return ClrInterop.InvokeBound(DirectCast(f, ClrBoundMethod), args)
+            End If
+            If TypeOf f Is ClrType Then
+                Throw JsRuntimeException.TypeError(
+                    "Class constructor " & DirectCast(f, ClrType).UnderlyingType.Name & " cannot be invoked without 'new'")
+            End If
             Throw JsRuntimeException.TypeError(JsStr(f) & " is not a function")
         End Function
 
@@ -650,6 +720,10 @@ Namespace Runtime
         ''' or run a plain function with a fresh object as <c>this</c>.
         ''' </summary>
         Public Function JsNew(ctor As Object, args As Object()) As Object
+            ' ---- CLR reflection bridge: new T(...) runs a public constructor ----
+            Dim clrType = TryCast(ctor, ClrType)
+            If clrType IsNot Nothing Then Return ClrInterop.Construct(clrType, args)
+
             Dim cls = TryCast(ctor, JsClass)
             If cls IsNot Nothing Then Return Instantiate(cls, args)
 
@@ -973,6 +1047,10 @@ Namespace Runtime
                 Next
                 Return keys.ToArray()
             End If
+            ' ---- CLR reflection bridge: indices for collections, data-member names otherwise ----
+            Dim clrObj = TryCast(obj, ClrObject)
+            If clrObj IsNot Nothing Then Return ClrInterop.MemberKeys(clrObj)
+
             Return New Object() {}
         End Function
 
@@ -1256,6 +1334,28 @@ Namespace Runtime
                 Next
                 Call ancestors.Remove(x)
                 Return obj
+            ElseIf TypeOf x Is ClrObject Then
+                ' ---- CLR reflection bridge: visible members (collections as arrays) ----
+                Dim clr = DirectCast(x, ClrObject)
+                If Not ancestors.Add(x) Then
+                    Throw JsRuntimeException.TypeError("Converting circular structure to JSON")
+                End If
+                Dim el As JsonElement
+                If ClrInterop.IsCollection(clr) Then
+                    Dim items As New JsonArray
+                    For Each item In ClrInterop.JsonItems(clr)
+                        items.Add(ToJsonElement(item, ancestors))
+                    Next
+                    el = items
+                Else
+                    Dim members As New JsonObject
+                    For Each kv In ClrInterop.JsonMembers(clr)
+                        members.Add(kv.Key, ToJsonElement(kv.Value, ancestors))
+                    Next
+                    el = members
+                End If
+                Call ancestors.Remove(x)
+                Return el
             Else
                 ' functions and other opaque clr objects → null
                 Return JsonValue.NULL
@@ -1459,6 +1559,9 @@ Namespace Runtime
                             If k.StartsWith("__", StringComparison.Ordinal) Then Continue For
                             names.Add(k)
                         Next
+                    ElseIf TypeOf o Is ClrObject Then
+                        ' ---- CLR reflection bridge ----
+                        names.AddRange(ClrInterop.MemberKeys(DirectCast(o, ClrObject)))
                     End If
                     Return names
                 Case "freeze", "seal"
@@ -2470,6 +2573,13 @@ Namespace Runtime
                 Next
             ElseIf TypeOf value Is JsGenerator Then
                 list.AddRange(DirectCast(value, JsGenerator).Remaining())
+            ElseIf TypeOf value Is ClrObject Then
+                ' ---- CLR reflection bridge: spread an enumerable CLR collection ----
+                Dim values As List(Of Object) = Nothing
+                If Not ClrInterop.TryIterate(DirectCast(value, ClrObject), values) Then
+                    Throw JsRuntimeException.TypeError(JsStr(value) & " is not iterable")
+                End If
+                list.AddRange(values)
             Else
                 Throw JsRuntimeException.TypeError(JsStr(value) & " is not iterable")
             End If
@@ -2527,6 +2637,9 @@ Namespace Runtime
                 For i = 0 To s.Length - 1
                     target(i.ToString(CultureInfo.InvariantCulture)) = s(i).ToString()
                 Next
+            ElseIf TypeOf src Is ClrObject Then
+                ' ---- CLR reflection bridge: {...host} copies members (indices for collections) ----
+                ClrInterop.SpreadInto(target, DirectCast(src, ClrObject))
             ElseIf src Is Nothing OrElse src Is Undef Then
                 ' {...null} / {...undefined} are no-ops in JS
             Else
@@ -2577,6 +2690,11 @@ Namespace Runtime
         ''' <summary>delete obj.prop / delete arr[i] — non-strict JS result rules.</summary>
         Public Function JsDelete(obj As Object, key As Object) As Boolean
             If obj Is Nothing OrElse obj Is Undef Then Return True
+            ' ---- CLR reflection bridge: bridged members cannot be removed ----
+            If TypeOf obj Is ClrObject OrElse TypeOf obj Is ClrType Then
+                Throw JsRuntimeException.TypeError(
+                    "cannot delete CLR member '" & JsStr(key) & "' of " & JsStr(obj))
+            End If
             If IsJsObject(obj) Then
                 Return DirectCast(obj, Dictionary(Of String, Object)).Remove(JsStr(key))
             End If
@@ -2621,6 +2739,12 @@ Namespace Runtime
             If IsJsObject(container) Then
                 Return DirectCast(container, Dictionary(Of String, Object)).ContainsKey(JsStr(key))
             End If
+            ' ---- CLR reflection bridge: member presence ----
+            Dim clrObj = TryCast(container, ClrObject)
+            If clrObj IsNot Nothing Then Return ClrInterop.HasMember(clrObj, JsStr(key))
+            Dim clrType = TryCast(container, ClrType)
+            If clrType IsNot Nothing Then Return ClrInterop.HasStaticMember(clrType, JsStr(key))
+
             If container Is Nothing OrElse container Is Undef Then
                 Throw JsRuntimeException.TypeError(
                     "Cannot use 'in' operator to search for '" & JsStr(key) & "' in " & JsStr(container))
@@ -2634,6 +2758,10 @@ Namespace Runtime
                 Throw JsRuntimeException.TypeError("Right-hand side of 'instanceof' is not callable")
             End If
 
+            ' ---- CLR reflection bridge: x instanceof T tests the CLR type relation ----
+            Dim clrType = TryCast(ctor, ClrType)
+            If clrType IsNot Nothing Then Return ClrInterop.IsInstanceOf(obj, clrType)
+
             ' user classes: walk the instance's __proto__ chain for the class prototype
             Dim cls = TryCast(ctor, JsClass)
             If cls IsNot Nothing Then Return JsProtoChainContains(obj, cls.Prototype)
@@ -2646,7 +2774,7 @@ Namespace Runtime
             If ctorName IsNot Nothing Then
                 Select Case ctorName
                     Case "Array" : Return IsJsArray(obj)
-                    Case "Object" : Return IsJsObject(obj) OrElse IsJsArray(obj)
+                    Case "Object" : Return IsJsObject(obj) OrElse IsJsArray(obj) OrElse TypeOf obj Is ClrObject
                     Case "Function" : Return IsJsFunction(obj)
                     Case "RegExp" : Return TypeOf obj Is JsRegExp
                     Case "Date" : Return TypeOf obj Is JsDate
@@ -2667,7 +2795,9 @@ Namespace Runtime
 
         ''' <summary>True for callable values (closures, builtin methods and classes).</summary>
         Public Function IsJsFunction(x As Object) As Boolean
-            Return TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod OrElse TypeOf x Is JsClass
+            ' bridged CLR methods are callable, an exposed type is callable through 'new'
+            Return TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod OrElse TypeOf x Is JsClass OrElse
+                   TypeOf x Is ClrBoundMethod OrElse TypeOf x Is ClrType
         End Function
 
         ''' <summary>Walk the __proto__ chain of obj looking for a prototype object.</summary>
@@ -2703,6 +2833,11 @@ Namespace Runtime
             End If
             If TypeOf iter Is JsGenerator Then
                 Return DirectCast(iter, JsGenerator).Remaining()
+            End If
+            ' ---- CLR reflection bridge: an enumerable CLR value iterates like an array ----
+            If TypeOf iter Is ClrObject Then
+                Dim values As List(Of Object) = Nothing
+                If ClrInterop.TryIterate(DirectCast(iter, ClrObject), values) Then Return values
             End If
             Throw JsRuntimeException.TypeError(JsStr(iter) & " is not iterable")
         End Function

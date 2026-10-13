@@ -94,3 +94,15 @@ async function main() {
 main().then(() => console.log('done'));
 Promise.all([Promise.resolve(1), Promise.resolve(2)])
     .then(values => console.log('all:', values.join('+')));
+
+// ---- CLR reflection bridge ----
+// 'bridge' is a host-injected .NET object: the engine resolves its properties,
+// fields and methods through reflection, so it reads like a plain JS object.
+// (Interpreted runs get it from Interpreter.DefineGlobal; translated runs get it
+// from the optional ClrHost argument of Run.)
+console.log('clr:', bridge.Title, bridge.Add(1, 2), bridge.Items.length);
+bridge.Title = 'updated';
+var clrSum = 0;
+for (const item of bridge.Items) { clrSum += item; }
+console.log('clr sum:', clrSum, Object.keys(bridge).indexOf('Title') >= 0, bridge[1]);
+try { bridge.Explode(); } catch (e) { console.log('clr error:', e.name); }

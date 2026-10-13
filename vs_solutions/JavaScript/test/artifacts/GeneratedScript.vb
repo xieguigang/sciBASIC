@@ -12,8 +12,9 @@ Imports JsValue = System.Object
 
 Public NotInheritable Class GeneratedScript
 
-    Public Shared Sub Run(io As LiteJsRuntime.ScriptIO)
+    Public Shared Sub Run(io As LiteJsRuntime.ScriptIO, Optional host As LiteJsRuntime.ClrHost = Nothing)
         JsRuntime.Io = io
+        If host IsNot Nothing Then host.Install()
         Dim total As JsValue = JsRuntime.Undef
         Dim leaked As JsValue = JsRuntime.Undef
         Dim counter As JsValue = JsRuntime.Undef
@@ -34,6 +35,7 @@ Public NotInheritable Class GeneratedScript
         Dim [date] As JsValue = JsRuntime.Undef
         Dim sq As JsValue = JsRuntime.Undef
         Dim maybe As JsValue = JsRuntime.Undef
+        Dim clrSum As JsValue = JsRuntime.Undef
 
         Dim makeCounter As Func(Of Object(), Object) = Function(args__1 As JsValue())
             Dim this As JsValue = JsRuntime.CurrentThis
@@ -264,6 +266,19 @@ Return JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {
 Return JsRuntime.Undef
 
 End Function, Func(Of Object(), Object))}, False, False)
+        JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"clr:", JsRuntime.JsGet(JsRuntime.ResolveHostGlobal("bridge"), "Title"), JsRuntime.JsInvokeMethod(JsRuntime.ResolveHostGlobal("bridge"), "Add", New JsValue() {1R, 2R}, False, False), JsRuntime.JsGet(JsRuntime.JsGet(JsRuntime.ResolveHostGlobal("bridge"), "Items"), "length")}, False, False)
+        JsRuntime.JsSet(JsRuntime.ResolveHostGlobal("bridge"), "Title", "updated")
+        clrSum = 0R
+        For Each item As JsValue In JsRuntime.JsIterableValues(JsRuntime.JsGet(JsRuntime.ResolveHostGlobal("bridge"), "Items"))
+            clrSum = JsRuntime.JsAdd(clrSum, item)
+        Next
+        JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"clr sum:", clrSum, JsRuntime.JsGe(JsRuntime.JsInvokeMethod(JsRuntime.JsInvokeMethod(JsRuntime.ObjectBuiltin, "keys", New JsValue() {JsRuntime.ResolveHostGlobal("bridge")}, False, False), "indexOf", New JsValue() {"Title"}, False, False), 0R), JsRuntime.JsIndex(JsRuntime.ResolveHostGlobal("bridge"), 1R)}, False, False)
+        Try
+            JsRuntime.JsInvokeMethod(JsRuntime.ResolveHostGlobal("bridge"), "Explode", New JsValue() {}, False, False)
+        Catch jsex28 As LiteJsRuntime.JsRuntimeException
+            Dim e As JsValue = jsex28.Payload
+            JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"clr error:", JsRuntime.JsGet(e, "name")}, False, False)
+        End Try
         JsRuntime.DrainMicrotasks()
     End Sub
 End Class

@@ -1,0 +1,101 @@
+
+Namespace Runtime
+
+    ''' <summary>
+    ''' A .NET object exposed to script through reflection (see <see cref="ClrInterop"/>).
+    ''' <para>
+    ''' Script member access (<c>obj.Name</c>, <c>obj.Name = v</c>, <c>obj.Method(...)</c>,
+    ''' <c>obj[i]</c>) is resolved by <see cref="ClrInterop"/> against the cached
+    ''' reflection view of <see cref="TargetType"/>. The proxy is neither a
+    ''' <c>Dictionary</c> nor a <c>List</c>, so the engine's native object model keeps
+    ''' working unchanged and every dispatch point simply gains one explicit branch.
+    ''' </para>
+    ''' <para>
+    ''' A VALUE-TYPE target lives here as a BOXED COPY: writing a struct member
+    ''' (<c>host.point.X = 1</c>) mutates that copy only and never writes back to the
+    ''' property/field the copy came from. Reference-type targets are the object
+    ''' itself, so their writes are visible to host code.
+    ''' </para>
+    ''' </summary>
+    Public NotInheritable Class ClrObject
+
+        ''' <summary>The wrapped instance (never Nothing).</summary>
+        Public ReadOnly Target As Object
+
+        ''' <summary>Runtime type of <see cref="Target"/>.</summary>
+        Public ReadOnly TargetType As Type
+
+        ' bound methods are cached per name so that obj.m === obj.m holds (JS prototype
+        ' methods have a stable identity) and repeated member reads stay allocation-free
+        Private ReadOnly _methods As New Dictionary(Of String, ClrBoundMethod)
+
+        Public Sub New(target As Object)
+            Me.Target = target
+            Me.TargetType = target.GetType()
+        End Sub
+
+        ''' <summary>The bound method value for a member name (cached per name).</summary>
+        Friend Function BoundMethod(name As String) As ClrBoundMethod
+            SyncLock _methods
+                Dim m As ClrBoundMethod = Nothing
+                If _methods.TryGetValue(name, m) Then Return m
+                m = New ClrBoundMethod(Me, name)
+                _methods(name) = m
+                Return m
+            End SyncLock
+        End Function
+
+        ''' <summary>Script rendering — <c>console.log</c> uses <see cref="JsRuntime.JsDisplay"/>.</summary>
+        Public Overrides Function ToString() As String
+            Return "[object Object]"
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' A .NET <see cref="System.Type"/> exposed to script: its static members are
+    ''' reachable by name and <c>new T(...)</c> runs one of its public constructors.
+    ''' <c>typeof T</c> reports "function" and <c>x instanceof T</c> tests the CLR
+    ''' type relation, mirroring how a JS class behaves.
+    ''' </summary>
+    Public NotInheritable Class ClrType
+
+        ''' <summary>The exposed type.</summary>
+        Public ReadOnly UnderlyingType As Type
+
+        Public Sub New(underlyingType As Type)
+            Me.UnderlyingType = underlyingType
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return "class " & UnderlyingType.Name
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' A CLR method bound to its receiver (a <see cref="ClrObject"/> or a
+    ''' <see cref="ClrType"/>). Member access creates it; <see cref="JsRuntime.JsInvoke"/>
+    ''' dispatches it, so overload resolution happens at call time against the actual
+    ''' script arguments.
+    ''' </summary>
+    Public NotInheritable Class ClrBoundMethod
+
+        ''' <summary>Receiver of the call: a <see cref="ClrObject"/> or a <see cref="ClrType"/>.</summary>
+        Public ReadOnly Receiver As Object
+
+        ''' <summary>The CLR member name this value was read from.</summary>
+        Public ReadOnly Name As String
+
+        Public Sub New(receiver As Object, name As String)
+            Me.Receiver = receiver
+            Me.Name = name
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return "[function: " & Name & "]"
+        End Function
+
+    End Class
+
+End Namespace

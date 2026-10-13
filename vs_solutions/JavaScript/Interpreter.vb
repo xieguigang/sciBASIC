@@ -25,6 +25,11 @@ Public NotInheritable Class Interpreter
         For Each kv In JsRuntime.GlobalIdentifiers()
             _globals.Define(kv.Key, kv.Value, False)
         Next
+        ' host objects published before this engine was built (ClrInterop.Register / ClrHost)
+        For Each name In JsRuntime.HostGlobalNames()
+            Dim hostValue As Object = Nothing
+            If ClrInterop.TryGetHostGlobal(name, hostValue) Then _globals.Define(name, hostValue, False)
+        Next
     End Sub
 
     ''' <summary>Run a parsed program; output goes to <see cref="Io"/>.</summary>
@@ -37,13 +42,31 @@ Public NotInheritable Class Interpreter
     End Sub
 
     ''' <summary>
-    ''' Register a host-side value (e.g. a <see cref="Func(Of Object(), Object)"/>
-    ''' delegate wrapping a .NET method) as a global identifier visible to scripts.
+    ''' Register a host-side value as a global identifier visible to scripts.
+    ''' <para>
+    ''' A <see cref="Func(Of Object(), Object)"/> delegate is bound as a script
+    ''' function; any other CLR object (or a <see cref="Type"/>) is wrapped by the
+    ''' reflection bridge, so the script can read/write its members and call its
+    ''' methods (see <see cref="ClrInterop"/>).
+    ''' </para>
     ''' </summary>
     ''' <param name="name">the global name that the script references.</param>
-    ''' <param name="value">the host value/closure to bind.</param>
+    ''' <param name="value">the host value/CLR instance to bind.</param>
     Public Sub DefineGlobal(name As String, value As Object)
-        _globals.Define(name, value, False)
+        _globals.Define(name, ClrInterop.Wrap(value), False)
+    End Sub
+
+    ''' <summary>
+    ''' Inject a batch of host CLR objects (see <see cref="ClrHost"/>): each is published
+    ''' to the process-wide registry — which makes it resolvable from translated code as
+    ''' well — and bound into this engine's globals.
+    ''' </summary>
+    Public Sub InstallHost(host As ClrHost)
+        If host Is Nothing Then Return
+        host.Install()
+        For Each kv In host.Items
+            _globals.Define(kv.Key, ClrInterop.Wrap(kv.Value), False)
+        Next
     End Sub
 
     ' ---------------- control-flow signals ----------------

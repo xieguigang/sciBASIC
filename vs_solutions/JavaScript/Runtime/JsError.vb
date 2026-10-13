@@ -14,9 +14,17 @@ Namespace Runtime
         Public ReadOnly Name As String
         Public ReadOnly Message As String
 
-        Public Sub New(name As String, Optional message As String = "")
+        ''' <summary>
+        ''' The .NET exception this error was raised from (CLR bridge calls), or Nothing
+        ''' for engine-raised errors. <see cref="ClrInterop.ToHostException"/> hands it
+        ''' back to host code, so a script rethrow keeps the original exception type.
+        ''' </summary>
+        Public ReadOnly Original As Exception
+
+        Public Sub New(name As String, Optional message As String = "", Optional original As Exception = Nothing)
             Me.Name = name
             Me.Message = If(message, "")
+            Me.Original = original
         End Sub
 
         Public Overrides Function ToString() As String
