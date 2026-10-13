@@ -142,7 +142,7 @@ Public Class FormPlayer
 
         Call script.Fire("init")
 
-        lblScript.Text = "脚本: " & IO.Path.GetFileName(path)
+        lblScript.Text = "脚本: " & System.IO.Path.GetFileName(path)
         lblStatus.Text = "运行中"
         lblStatus.ForeColor = Color.FromArgb(52, 211, 153)
 
