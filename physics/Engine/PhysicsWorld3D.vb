@@ -297,9 +297,15 @@ Public Class PhysicsWorld3D
     End Function
 
     ''' <summary>
-    ''' 继承上一子步同一接触点上的累积冲量并立即施加到速度上。
+    ''' 继承上一子步同一接触点上的法向累积冲量并立即施加到速度上。
     ''' 只继承位置足够接近、且法向没有大幅翻转的接触点。
     ''' </summary>
+    ''' <remarks>
+    ''' 这里刻意<b>不</b>继承摩擦冲量：摩擦是"有方向记忆"的冲量，一旦继承，
+    ''' 求解器在切向速度已接近 0 时几乎不再修正，于是上一子步的摩擦方向会被
+    ''' 原样反复施加，物体沿该方向被持续加速（实测球体落在斜面上会被"推"上坡）。
+    ''' 法向冲量没有这个问题：过量时求解器会在同一子步内用负冲量把它扣回去。
+    ''' </remarks>
     Private Sub ApplyWarmStart(m As Manifold3D)
         Dim prev As Manifold3D = Nothing
 
@@ -324,12 +330,8 @@ Public Class PhysicsWorld3D
             If best Is Nothing Then Continue For
 
             c.NormalImpulse = best.NormalImpulse
-            c.TangentImpulse1 = best.TangentImpulse1
-            c.TangentImpulse2 = best.TangentImpulse2
 
-            Dim P As Vector3 = m.Normal * c.NormalImpulse +
-                               c.tangent1 * c.TangentImpulse1 +
-                               c.tangent2 * c.TangentImpulse2
+            Dim P As Vector3 = m.Normal * c.NormalImpulse
 
             Call m.A.ApplyImpulse(P * -1.0, c.rA)
             Call m.B.ApplyImpulse(P, c.rB)
