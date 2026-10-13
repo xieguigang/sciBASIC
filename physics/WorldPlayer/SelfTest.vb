@@ -66,8 +66,13 @@ Module SelfTest
     End Function
 
     ''' <summary>执行全部自测，返回进程退出码。</summary>
+    ''' <param name="editorProbe">
+    ''' 由宿主提供：把源码放进脚本编辑器并运行，返回 <c>ok|动态数|总数</c> 或 <c>error|信息</c>。
+    ''' 用于验证"运行时编辑脚本"这条链路。
+    ''' </param>
     Public Function Run(host As WorldHost, rig As CameraRig, renderer As SceneRenderer,
-                        script As ScriptHost, api As JsApi) As Integer
+                        script As ScriptHost, api As JsApi,
+                        Optional editorProbe As Func(Of String, String) = Nothing) As Integer
         Passed = 0
         Failed = 0
         report.Clear()
@@ -97,6 +102,11 @@ Module SelfTest
             Call RenderShot(rig, renderer)
             Call PerformanceProbe(host, rig, renderer)
             Call TopLevelApiAndRampSlide(host, script)
+
+            If editorProbe IsNot Nothing Then
+                Call ScriptEditorRoundTrip(host, editorProbe)
+            End If
+
             Call ErrorHandling(script)
         Catch ex As Exception
             Failed += 1
@@ -656,6 +666,46 @@ Module SelfTest
               $"x0={x0:F3} x={box.Body.Position.x:F3}")
         Check("下滑过程中没有穿透斜坡", minLow > -0.15, $"minLow={minLow:F3}")
         Check("方块最终停在支撑面上", box.Body.Position.y > 0.0, $"y={box.Body.Position.y:F3}")
+    End Sub
+
+    ''' <summary>
+    ''' 验证"运行时编辑脚本"链路：把源码放进编辑器 → 运行 → 观察世界变化。
+    ''' 这是模拟器"实时编辑、实时观察"的核心交互。
+    ''' </summary>
+    Private Sub ScriptEditorRoundTrip(host As WorldHost, probe As Func(Of String, String))
+        Call report.AppendLine("-- 脚本编辑器往返")
+
+        Dim good As String = probe(
+            "world.gravity(0, -9.81, 0);" & vbCrLf &
+            "world.ground(0);" & vbCrLf &
+            "world.addBox({ x: 0, y: 6, z: 0, size: 1, mass: 1 });" & vbCrLf &
+            "world.addBox({ x: 1.5, y: 8, z: 0, size: 1, mass: 1 });" & vbCrLf &
+            "world.addSphere({ x: -1.5, y: 10, z: 0, r: 0.6, mass: 1 });" & vbCrLf &
+            "print('编辑器脚本已运行');")
+
+        Check("编辑器内容可直接运行", good.StartsWith("ok"), good)
+        Check("编辑器脚本创建了 3 个动态刚体", good = "ok|3|3", good)
+
+        ' 落下来之后应当有接触
+        For i As Integer = 1 To 240
+            Call host.Update(1.0 / 60.0)
+        Next
+
+        ' 注意：局部变量不能叫 finite（与 Finite 函数同名，VB 大小写不敏感）
+        Dim allFinite As Boolean = host.Bodies.All(Function(v) Finite(v.Body.Position))
+        Dim fell As Boolean = host.Bodies.Any(Function(v) Not v.IsStaticGeometry AndAlso v.Body.Position.y < 5.5)
+
+        Check("编辑器创建的刚体会下落并稳定", allFinite AndAlso fell, $"finite={allFinite} fell={fell}")
+
+        Dim bad As String = probe("function ( {")
+
+        Check("编辑器语法错误被报告", bad.StartsWith("error"), bad)
+
+        Dim runtime As String = probe("world.remove('不存在的id'); throw 'boom';")
+
+        Check("编辑器运行时错误被报告", runtime.StartsWith("error"), runtime)
+
+        Call host.Clear()
     End Sub
 
     ''' <summary>脚本错误必须被捕获而不是崩溃。</summary>

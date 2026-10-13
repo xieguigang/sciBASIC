@@ -10,12 +10,12 @@ Imports std = System.Math
 ''' 物理世界模拟器主窗体。
 ''' </summary>
 ''' <remarks>
-''' 本窗体只提供"引擎外壳"：视口、脚本编辑器、控制台、工具栏、事件转发与渲染循环。
+''' 本窗体只提供"引擎外壳"：3D 画布、脚本编辑器、控制台、工具栏、事件转发与渲染循环。
 ''' 场景搭建与交互逻辑全部来自 JavaScript 脚本（见 <c>demo/platform.js</c>）。
 ''' </remarks>
 Public Class FormPlayer
 
-    ''' <summary>离屏渲染缓冲，避免在 PictureBox 上直接绘制造成闪烁。</summary>
+    ''' <summary>离屏渲染缓冲，尺寸始终等于画布页的客户区。</summary>
     Private renderBuffer As Bitmap
 
     Private host As WorldHost
@@ -35,20 +35,14 @@ Public Class FormPlayer
     Private lastMouseX As Integer = 0
     Private lastMouseY As Integer = 0
 
-    ''' <summary>程序性改写编辑器内容时抑制自动运行，避免"加载即运行"以外的意外触发。</summary>
+    ''' <summary>程序性改写编辑器内容时抑制自动运行。</summary>
     Private suppressAutoRun As Boolean = False
 
     ''' <summary>编辑器里上一次成功运行过的源码，用于提示"有未运行的改动"。</summary>
     Private lastRunSource As String = ""
 
-    ''' <summary>上一次同步过的画布可用区域（用于避免每帧无谓重排）。</summary>
-    Private lastCanvasArea As Size = Size.Empty
     ''' <summary>上一次同步过的编辑器页尺寸。</summary>
     Private lastEditorPageSize As Size = Size.Empty
-    ''' <summary>布局同步的调试轨迹。</summary>
-    Private lastSyncInfo As String = ""
-    ''' <summary>布局事件的逐步日志（仅 --shot 模式会输出）。</summary>
-    Private ReadOnly layoutLog As New System.Text.StringBuilder()
     ''' <summary>布局同步的重入守卫。</summary>
     Private syncingLayout As Boolean = False
 
@@ -78,19 +72,17 @@ Public Class FormPlayer
         ' world / camera / sim / render 等全局必须在脚本顶层语句执行前注册
         script.BeforeRun = AddressOf api.Register
 
-        ' 画布尺寸由 SyncLayout 每帧显式钉住（原因见 SyncLayout 的注释）
-        viewport.Dock = DockStyle.None
-        viewport.Anchor = AnchorStyles.Top Or AnchorStyles.Left
-
-        AddHandler viewport.MouseDown, AddressOf Viewport_MouseDown
-        AddHandler viewport.MouseMove, AddressOf Viewport_MouseMove
-        AddHandler viewport.MouseUp, AddressOf Viewport_MouseUp
-        AddHandler viewport.MouseWheel, AddressOf Viewport_MouseWheel
-        AddHandler viewport.MouseEnter, AddressOf Viewport_MouseEnter
-        AddHandler viewport.MouseLeave, AddressOf Viewport_MouseLeave
-        AddHandler viewport.Resize, AddressOf Viewport_Resize
-        AddHandler split.SplitterMoved, AddressOf Viewport_Resize
+        AddHandler pageCanvas.MouseDown, AddressOf Canvas_MouseDown
+        AddHandler pageCanvas.MouseMove, AddressOf Canvas_MouseMove
+        AddHandler pageCanvas.MouseUp, AddressOf Canvas_MouseUp
+        AddHandler pageCanvas.MouseWheel, AddressOf Canvas_MouseWheel
+        AddHandler pageCanvas.MouseEnter, AddressOf Canvas_MouseEnter
+        AddHandler pageCanvas.MouseLeave, AddressOf Canvas_MouseLeave
+        AddHandler pageCanvas.Resize, AddressOf Canvas_Resize
+        AddHandler pageCanvas.Paint, AddressOf Canvas_Paint
+        AddHandler split.SplitterMoved, AddressOf Canvas_Resize
         AddHandler tabs.SelectedIndexChanged, AddressOf Tabs_SelectedIndexChanged
+        AddHandler tabs.DrawItem, AddressOf Tabs_DrawItem
 
         AddHandler Me.KeyDown, AddressOf FormPlayer_KeyDown
         AddHandler editorBox.KeyDown, AddressOf EditorBox_KeyDown
@@ -108,6 +100,13 @@ Public Class FormPlayer
         Dim shot As Size? = ParseShotRequest()
 
         If shot.HasValue Then
+            Dim demo As String = FindStartScript()
+
+            If demo IsNot Nothing Then
+                Call OpenScriptIntoEditor(demo)
+                Call RunEditorSource()
+            End If
+
             Call SetupShotCapture(shot.Value)
             Return
         End If
@@ -117,7 +116,7 @@ Public Class FormPlayer
             timer.Stop()
 
             AddHandler Me.Shown, Sub(s, ev)
-                                     Dim code As Integer = SelfTest.Run(host, rig, renderer, script, api)
+                                     Dim code As Integer = SelfTest.Run(host, rig, renderer, script, api, AddressOf ProbeEditor)
 
                                      Environment.ExitCode = code
                                      Me.Close()
@@ -171,7 +170,34 @@ Public Class FormPlayer
     '  脚本编辑器
     ' /********************************************************************************/
 
-    ''' <summary>把脚本文件内容读进编辑器（不会自动运行，自动运行由编辑器事件负责）。</summary>
+    ''' <summary>
+    ''' 自测用：把源码放进编辑器并走一次真实的"运行"路径。
+    ''' 返回 <c>ok|动态数|总数</c> 或 <c>error|错误信息</c>。
+    ''' </summary>
+    Public Function ProbeEditor(source As String) As String
+        suppressAutoRun = True
+
+        Try
+            editorBox.Text = source
+        Finally
+            suppressAutoRun = False
+        End Try
+
+        Call RunEditorSource()
+
+        If host.LastError IsNot Nothing Then Return "error|" & host.LastError
+
+        Return $"ok|{host.DynamicCount}|{host.Bodies.Count}"
+    End Function
+
+    ''' <summary>自测用：编辑器当前内容（用于验证保存路径）。</summary>
+    Public ReadOnly Property EditorText As String
+        Get
+            Return editorBox.Text
+        End Get
+    End Property
+
+    ''' <summary>把脚本文件内容读进编辑器（自动运行由编辑器事件负责）。</summary>
     Private Sub OpenScriptIntoEditor(path As String)
         Dim source As String
 
@@ -262,7 +288,6 @@ Public Class FormPlayer
     Private Sub EditorBox_TextChanged(sender As Object, e As EventArgs)
         If suppressAutoRun Then Return
 
-        ' 编辑器内容与上次运行的源码存在差异时提示
         If lastRunSource <> editorBox.Text Then
             lblStatus.Text = "有未运行改动"
             lblStatus.ForeColor = Color.FromArgb(251, 191, 36)
@@ -349,13 +374,13 @@ Public Class FormPlayer
         ' 3) 相机缓动
         Call rig.Tick()
 
-        ' 4) 布局同步（详见 SyncLayout 的说明）
+        ' 4) 布局同步（页内停靠子控件需要显式重排）
         Call SyncLayout()
 
-        ' 5) 渲染（画布标签页不可见时跳过，省下整帧的投影与填充）
+        ' 5) 渲染（画布页不可见时跳过，省下整帧的投影与填充）
         Call RenderFrame()
 
-        ' 5) 统计
+        ' 6) 统计
         frames += 1
 
         If now - lastFpsTick >= 0.5 Then
@@ -370,102 +395,92 @@ Public Class FormPlayer
     ''' 显式同步页内布局。
     ''' </summary>
     ''' <remarks>
-    ''' <see cref="TabPage"/> 尺寸变化时，它内部的 <c>Dock=Fill</c> 子控件<b>不会</b>自动重排
-    ''' （实测页面已变成 1110x819，PictureBox 仍停留在设计尺寸 884x497），
-    ''' 因此这里按 <see cref="TabPage.DisplayRectangle"/> 显式设置画布边界，
-    ''' 并在切到编辑器页时补一次 <c>PerformLayout</c>。
+    ''' <see cref="TabControl.PageSizes"/> 之类的缓存会让 <see cref="TabPage"/> 里的
+    ''' <c>Dock</c> 子控件停留在设计尺寸，必须显式 <c>PerformLayout</c> 才会跟随。
+    ''' 3D 画布不使用子控件（见 <see cref="CanvasTabPage"/>），因此这里只处理编辑器页。
     ''' </remarks>
     Private Sub SyncLayout()
         If syncingLayout Then Return
-        If tabs Is Nothing OrElse pageCanvas Is Nothing Then Return
-        If tabs.IsDisposed OrElse pageCanvas.IsDisposed Then Return
+        If tabs Is Nothing OrElse pageScript Is Nothing Then Return
+        If tabs.IsDisposed OrElse pageScript.IsDisposed Then Return
 
-        ' 设置 Size 会同步触发 Resize 事件，而在事件处理里读到的仍可能是旧值，
-        ' 于是"再设一次"会形成每秒上百次的重入抖动。这里用一个标志位切断重入。
         syncingLayout = True
 
         Try
-            Call SyncLayoutCore()
+            Dim selected As TabPage = tabs.SelectedTab
+
+            If selected Is pageScript AndAlso selected.Size <> lastEditorPageSize Then
+                lastEditorPageSize = selected.Size
+                selected.PerformLayout()
+            End If
         Finally
             syncingLayout = False
         End Try
     End Sub
 
-    Private Sub SyncLayoutCore()
-
-        ' 画布：不调用 pageCanvas.PerformLayout（实测它会在"正确尺寸"与"设计尺寸"
-        ' 之间来回跳），改为每帧把画布显式钉到页面的可用区域上。
-        Dim area As Size = pageCanvas.DisplayRectangle.Size
-
-        If area.Width > 0 AndAlso area.Height > 0 AndAlso viewport.Size <> area Then
-            viewport.Size = area
-            viewport.Location = Point.Empty
-
-            lastCanvasArea = area
-            lastSyncInfo = $"canvas area={area.Width}x{area.Height} -> viewport={viewport.Width}x{viewport.Height}"
-
-            Call RenderFrame(force:=True)
-        End If
-
-        ' 编辑器页的停靠子控件则需要一次显式重排才会跟随（实测有效且稳定）
-        Dim selected As TabPage = tabs.SelectedTab
-
-        If selected Is pageScript AndAlso selected.Size <> lastEditorPageSize Then
-            lastEditorPageSize = selected.Size
-            selected.PerformLayout()
-        End If
-    End Sub
-
-    ''' <summary>渲染一帧到离屏缓冲并交给视口。</summary>
+    ''' <summary>
+    ''' 渲染一帧到离屏缓冲。缓冲尺寸始终跟随画布页客户区，
+    ''' 因此窗口缩放时画面会立即按新尺寸重绘。
+    ''' </summary>
     Private Sub RenderFrame(Optional force As Boolean = False)
-        If viewport.IsDisposed Then Return
-        If viewport.Width <= 0 OrElse viewport.Height <= 0 Then Return
+        If pageCanvas Is Nothing OrElse pageCanvas.IsDisposed Then Return
+
+        Dim size As Size = pageCanvas.ClientSize
+
+        If size.Width <= 0 OrElse size.Height <= 0 Then Return
 
         ' 画布不在前台时不渲染：切回来时由 SelectedIndexChanged 强制补一帧
         If Not force AndAlso tabs.SelectedTab IsNot pageCanvas Then Return
 
-        If renderBuffer Is Nothing OrElse
-           renderBuffer.Width <> viewport.Width OrElse
-           renderBuffer.Height <> viewport.Height Then
-
-            ' 先摘掉引用再释放，避免 PictureBox 绘制到已释放的位图
-            viewport.Image = Nothing
-
+        If renderBuffer Is Nothing OrElse renderBuffer.Size <> size Then
             If renderBuffer IsNot Nothing Then renderBuffer.Dispose()
 
-            renderBuffer = New Bitmap(viewport.Width, viewport.Height)
+            renderBuffer = New Bitmap(size.Width, size.Height)
         End If
 
         Try
             Using g As Graphics = Graphics.FromImage(renderBuffer)
                 renderer.HoverX = If(dragging, lastMouseX, CInt(api.MouseX))
                 renderer.HoverY = If(dragging, lastMouseY, CInt(api.MouseY))
-                Call renderer.Render(g, renderBuffer.Size)
+                Call renderer.Render(g, size)
             End Using
 
-            viewport.Image = renderBuffer
+            If tabs.SelectedTab Is pageCanvas Then
+                pageCanvas.Invalidate()
+            End If
         Catch
             ' 渲染失败不应中断仿真循环
         End Try
+    End Sub
+
+    ''' <summary>把离屏缓冲贴到画布页上。</summary>
+    Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs)
+        If renderBuffer Is Nothing OrElse renderBuffer.Size <> pageCanvas.ClientSize Then
+            Call RenderFrame(force:=True)
+        End If
+
+        If renderBuffer Is Nothing Then Return
+
+        Call e.Graphics.DrawImageUnscaled(renderBuffer, 0, 0)
     End Sub
 
     ' /********************************************************************************/
     '  鼠标 / 键盘
     ' /********************************************************************************/
 
-    Private Sub Viewport_MouseEnter(sender As Object, e As EventArgs)
+    Private Sub Canvas_MouseEnter(sender As Object, e As EventArgs)
         api.MouseX = -1.0
         api.MouseY = -1.0
     End Sub
 
-    Private Sub Viewport_MouseLeave(sender As Object, e As EventArgs)
+    Private Sub Canvas_MouseLeave(sender As Object, e As EventArgs)
         api.MouseX = -1.0
         api.MouseY = -1.0
         renderer.HoverX = -1
         renderer.HoverY = -1
     End Sub
 
-    Private Sub Viewport_MouseDown(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs)
         lastMouseX = e.X
         lastMouseY = e.Y
 
@@ -485,7 +500,7 @@ Public Class FormPlayer
         End If
     End Sub
 
-    Private Sub Viewport_MouseMove(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs)
         Dim dx As Double = e.X - lastMouseX
         Dim dy As Double = e.Y - lastMouseY
 
@@ -508,7 +523,7 @@ Public Class FormPlayer
         End If
     End Sub
 
-    Private Sub Viewport_MouseUp(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs)
         Dim button As Double = If(e.Button = MouseButtons.Left, 1.0, If(e.Button = MouseButtons.Right, 2.0, 3.0))
 
         If e.Button = MouseButtons.Right Then
@@ -522,7 +537,7 @@ Public Class FormPlayer
         End If
     End Sub
 
-    Private Sub Viewport_MouseWheel(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs)
         Dim delta As Double = e.Delta / 120.0
 
         Call rig.Zoom(std.Exp(-delta * 0.18))
@@ -532,12 +547,8 @@ Public Class FormPlayer
         End If
     End Sub
 
-    ''' <summary>视口 / 分割条尺寸变化：立刻按新尺寸同步并重画。</summary>
-    Private Sub Viewport_Resize(sender As Object, e As EventArgs)
-        layoutLog.AppendLine($"  viewport.Resize -> {viewport.Width}x{viewport.Height} " &
-                             $"(page={pageCanvas.Width}x{pageCanvas.Height} display={pageCanvas.DisplayRectangle.Width}x{pageCanvas.DisplayRectangle.Height} dock={viewport.Dock})")
-
-        Call SyncLayout()
+    ''' <summary>画布 / 分割条尺寸变化：立刻按新尺寸重建缓冲并重画。</summary>
+    Private Sub Canvas_Resize(sender As Object, e As EventArgs)
         Call RenderFrame(force:=True)
     End Sub
 
@@ -545,6 +556,36 @@ Public Class FormPlayer
         ' 切换标签页时补一次页内布局；切回画布立刻补一帧，避免看到旧内容
         Call SyncLayout()
         Call RenderFrame(force:=True)
+    End Sub
+
+    ''' <summary>自绘标签头，配合整体深色工程仿真风格。</summary>
+    Private Sub Tabs_DrawItem(sender As Object, e As DrawItemEventArgs)
+        If e.Index < 0 OrElse e.Index >= tabs.TabPages.Count Then Return
+
+        Dim page As TabPage = tabs.TabPages(e.Index)
+        Dim active As Boolean = (tabs.SelectedIndex = e.Index)
+        Dim back As Color = If(active, Color.FromArgb(30, 41, 59), Color.FromArgb(17, 28, 46))
+        Dim fore As Color = If(active, Color.FromArgb(34, 211, 238), Color.FromArgb(148, 163, 184))
+
+        Using fill As New SolidBrush(back)
+            Call e.Graphics.FillRectangle(fill, e.Bounds)
+        End Using
+
+        If active Then
+            Using accent As New SolidBrush(Color.FromArgb(34, 211, 238))
+                Call e.Graphics.FillRectangle(accent, e.Bounds.Left, e.Bounds.Bottom - 2, e.Bounds.Width, 2)
+            End Using
+        End If
+
+        Using border As New Pen(Color.FromArgb(51, 65, 85))
+            Call e.Graphics.DrawLine(border, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1)
+        End Using
+
+        Using text As New SolidBrush(fore)
+            Using format As New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
+                Call e.Graphics.DrawString(page.Text, tabs.Font, text, e.Bounds, format)
+            End Using
+        End Using
     End Sub
 
     Private Sub FormPlayer_KeyDown(sender As Object, e As KeyEventArgs)
@@ -697,8 +738,7 @@ Public Class FormPlayer
         Me.ClientSize = client
 
         AddHandler Me.Shown, Sub(s, ev)
-                                 ' 让布局与渲染循环跑起来
-                                 For i As Integer = 1 To 30
+                                 For i As Integer = 1 To 20
                                      Application.DoEvents()
                                      System.Threading.Thread.Sleep(16)
                                  Next
@@ -710,19 +750,15 @@ Public Class FormPlayer
                                      $"console = {consoleBox.Width} x {consoleBox.Height}"
                                  }
 
-                                 ' 先测画布页：切过去 → 同步布局 → 再测量（顺序很关键）
+                                 ' 画布页
                                  Call SwitchTo(0)
                                  text.Add($"  [canvas] page={pageCanvas.Width}x{pageCanvas.Height} " &
-                                          $"display={pageCanvas.DisplayRectangle.Width}x{pageCanvas.DisplayRectangle.Height} " &
-                                          $"viewport={viewport.Width}x{viewport.Height} " &
+                                          $"client={pageCanvas.ClientSize.Width}x{pageCanvas.ClientSize.Height} " &
                                           $"buffer={If(renderBuffer Is Nothing, "none", renderBuffer.Width & "x" & renderBuffer.Height)} " &
                                           $"camera={rig.Camera.Screen.Width}x{rig.Camera.Screen.Height}")
-                                 text.Add($"  [sync] {lastSyncInfo}")
-                                 text.Add("  [log]")
-                                 text.Add(layoutLog.ToString())
                                  Call Capture(Me, System.IO.Path.Combine(outDir, "shot-canvas.png"))
 
-                                 ' 再测编辑器页
+                                 ' 编辑器页
                                  Call SwitchTo(1)
                                  text.Add($"  [script] page={pageScript.Width}x{pageScript.Height} " &
                                           $"display={pageScript.DisplayRectangle.Width}x{pageScript.DisplayRectangle.Height} " &
@@ -736,18 +772,26 @@ Public Class FormPlayer
                              End Sub
     End Sub
 
-    ''' <summary>切到指定标签页并把布局推进到稳定状态。</summary>
+    ''' <summary>切到指定标签页、推进布局并强制同步绘制。</summary>
     Private Sub SwitchTo(index As Integer)
         tabs.SelectedIndex = index
 
         For i As Integer = 1 To 3
             Application.DoEvents()
             Call SyncLayout()
+            Call RenderFrame(force:=True)
+
+            ' 强制完成一次同步绘制，保证截图里是当前画面
+            If tabs.SelectedTab Is pageCanvas Then
+                pageCanvas.Invalidate()
+                pageCanvas.Update()
+            End If
+
             Application.DoEvents()
         Next
     End Sub
 
-    Private Shared Sub Capture(form As Form, path As String)
+    Private Shared Shadows Sub Capture(form As Form, path As String)
         Using bmp As New Bitmap(form.Width, form.Height)
             Call form.DrawToBitmap(bmp, New Rectangle(0, 0, form.Width, form.Height))
             Call bmp.Save(path, ImageFormat.Png)
