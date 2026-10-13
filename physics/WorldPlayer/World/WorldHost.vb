@@ -243,7 +243,7 @@ Public Class WorldHost
     ''' <summary>动态刚体数量。</summary>
     Public ReadOnly Property DynamicCount As Integer
         Get
-            Return Bodies.Count(Function(v) Not v.IsStaticGeometry)
+            Return Bodies.Where(Function(v) Not v.IsStaticGeometry).Count()
         End Get
     End Property
 
@@ -257,7 +257,7 @@ Public Class WorldHost
     ''' <summary>累计进入休眠的刚体数量。</summary>
     Public ReadOnly Property SleepingCount As Integer
         Get
-            Return Bodies.Count(Function(v) Not v.IsStaticGeometry AndAlso v.Body.IsSleeping)
+            Return Bodies.Where(Function(v) Not v.IsStaticGeometry AndAlso v.Body.IsSleeping).Count()
         End Get
     End Property
 

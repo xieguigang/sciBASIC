@@ -186,9 +186,9 @@ Public Class JsApi
 
     ''' <summary>把 JS 配置对象解析成 <see cref="SpawnOptions"/>。</summary>
     Private Shared Function ParseOptions(kind As String, o As Object) As SpawnOptions
+        ' "size" 是统一尺寸的简写：某个轴向单独给了键名就以该键名为准
+        Dim hasSize As Boolean = HasKey(o, {"size", "s"})
         Dim size As Double = Num(o, {"size", "s"}, 1.0)
-        Dim uniform As Boolean = (Num(o, {"size", "s"}, Double.NaN) = Num(o, {"size", "s"}, Double.NaN)) AndAlso
-                                 Not Double.IsNaN(Num(o, {"size", "s"}, Double.NaN))
 
         Dim opt As New SpawnOptions With {
             .Kind = kind,
@@ -196,9 +196,9 @@ Public Class JsApi
             .X = Num(o, {"x"}, 0.0),
             .Y = Num(o, {"y"}, 0.0),
             .Z = Num(o, {"z"}, 0.0),
-            .SizeX = If(uniform, size, Num(o, {"w", "width", "sx", "dx"}, size)),
-            .SizeY = If(uniform, size, Num(o, {"h", "height", "sy", "dy"}, size)),
-            .SizeZ = If(uniform, size, Num(o, {"d", "depth", "sz", "dz"}, size)),
+            .SizeX = If(HasKey(o, {"w", "width", "sx", "dx"}), Num(o, {"w", "width", "sx", "dx"}, 1.0), If(hasSize, size, 1.0)),
+            .SizeY = If(HasKey(o, {"h", "height", "sy", "dy"}), Num(o, {"h", "height", "sy", "dy"}, 1.0), If(hasSize, size, 1.0)),
+            .SizeZ = If(HasKey(o, {"d", "depth", "sz", "dz"}), Num(o, {"d", "depth", "sz", "dz"}, 1.0), If(hasSize, size, 1.0)),
             .Radius = Num(o, {"r", "radius"}, 0.5),
             .Height = Num(o, {"h", "height"}, 1.5),
             .Segment = CInt(Num(o, {"seg", "segments", "sides"}, 14)),
@@ -245,6 +245,19 @@ Public Class JsApi
         Return v
     End Function
 
+    ''' <summary>JS 对象里是否存在任意一个候选键。</summary>
+    Private Shared Function HasKey(o As Object, keys As String()) As Boolean
+        Dim d = TryCast(o, Dictionary(Of String, Object))
+
+        If d Is Nothing Then Return False
+
+        For Each k As String In keys
+            If d.ContainsKey(k) Then Return True
+        Next
+
+        Return False
+    End Function
+
     ''' <summary>把刚体状态打包成 JS 对象。</summary>
     Private Shared Function BodyState(v As BodyVisual) As Object
         Dim b As RigidBody3D = v.Body
@@ -273,8 +286,8 @@ Public Class JsApi
     '  全局对象树
     ' /********************************************************************************/
 
-    Private Shared Function F(f As Func(Of Object(), Object)) As Object
-        Return f
+    Private Shared Function F(fn As Func(Of Object(), Object)) As Object
+        Return fn
     End Function
 
     ''' <summary>构造并注册全部全局 API。</summary>
@@ -579,7 +592,7 @@ Public Class JsApi
     End Function
 
     ''' <summary>把刚体 id 交回脚本（字符串）。</summary>
-    Private Shared Function Id(id As String) As Object
-        Return id
+    Private Shared Function Id(bodyId As String) As Object
+        Return bodyId
     End Function
 End Class

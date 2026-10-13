@@ -1,4 +1,5 @@
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Engine.Physics
 Imports Microsoft.VisualBasic.Engine.Physics.Collision3D
 Imports Microsoft.VisualBasic.Engine.Physics.Math3D
@@ -130,11 +131,11 @@ Public Class SceneRenderer
         If Not ShowGrid Then Return
 
         Dim extent As Integer = 30
-        Dim step As Integer = 2
+        Dim stride As Integer = 2
 
         Using minor As New Pen(Color.FromArgb(38, 56, 84), 1.0F)
             Using major As New Pen(Color.FromArgb(58, 86, 120), 1.0F)
-                For i As Integer = -extent To extent Step step
+                For i As Integer = -extent To extent Step stride
                     Dim pen As Pen = If(i = 0, major, minor)
 
                     Call g.DrawLine(pen, Project(i, GroundY, -extent), Project(i, GroundY, extent))
@@ -166,7 +167,7 @@ Public Class SceneRenderer
         rig.SetScreen(size)
 
         Call g.Clear(BackgroundColor)
-        Call g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        g.SmoothingMode = SmoothingMode.AntiAlias
 
         Call DrawGrid(g)
         Call DrawAxes(g)
