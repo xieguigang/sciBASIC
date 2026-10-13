@@ -193,19 +193,23 @@ Public NotInheritable Class FuncExpr
     Public ReadOnly IsArrow As Boolean
     ''' <summary>async function — calling it yields a Promise.</summary>
     Public ReadOnly IsAsync As Boolean
+    ''' <summary>generator function (function*) — calling it yields an iterator.</summary>
+    Public ReadOnly IsGenerator As Boolean
     Public ReadOnly Body As List(Of Statement)
 
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
                    Optional isArrow As Boolean = False,
                    Optional defaults As Expression() = Nothing,
                    Optional restParam As String = Nothing,
-                   Optional isAsync As Boolean = False)
+                   Optional isAsync As Boolean = False,
+                   Optional isGenerator As Boolean = False)
         Me.Name = name
         Me.Parameters = parameters
         Me.Defaults = If(defaults, New Expression(System.Math.Max(0, parameters.Length - 1)) {})
         Me.RestParam = restParam
         Me.IsArrow = isArrow
         Me.IsAsync = isAsync
+        Me.IsGenerator = isGenerator
         Me.Body = body
     End Sub
 End Class
@@ -214,6 +218,18 @@ End Class
 Public NotInheritable Class AwaitExpr
     Inherits Expression
 
+    Public ReadOnly Operand As Expression
+
+    Public Sub New(operand As Expression)
+        Me.Operand = operand
+    End Sub
+End Class
+
+''' <summary>yield expr / yield — record a generator value (eager collection).</summary>
+Public NotInheritable Class YieldExpr
+    Inherits Expression
+
+    ''' <summary>May be Nothing for a bare <c>yield</c>.</summary>
     Public ReadOnly Operand As Expression
 
     Public Sub New(operand As Expression)
@@ -415,16 +431,19 @@ Public NotInheritable Class FuncDeclStmt
     Public ReadOnly RestParam As String
     ''' <summary>async function — calling it yields a Promise.</summary>
     Public ReadOnly IsAsync As Boolean
+    ''' <summary>generator function (function*) — calling it yields an iterator.</summary>
+    Public ReadOnly IsGenerator As Boolean
     Public ReadOnly Body As List(Of Statement)
 
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
                    Optional defaults As Expression() = Nothing, Optional restParam As String = Nothing,
-                   Optional isAsync As Boolean = False)
+                   Optional isAsync As Boolean = False, Optional isGenerator As Boolean = False)
         Me.Name = name
         Me.Parameters = parameters
         Me.Defaults = If(defaults, New Expression(System.Math.Max(0, parameters.Length - 1)) {})
         Me.RestParam = restParam
         Me.IsAsync = isAsync
+        Me.IsGenerator = isGenerator
         Me.Body = body
     End Sub
 End Class
