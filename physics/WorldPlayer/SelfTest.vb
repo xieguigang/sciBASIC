@@ -219,23 +219,50 @@ Module SelfTest
 
         Check("高处物体在屏幕上方", hiS.Y < loS.Y, $"hi.Y={hiS.Y:F1} lo.Y={loS.Y:F1}")
 
-        ' ③ 屏幕上方的落点应比屏幕下方的更远（相机在 +Z 侧看向 -Z）
+        ' ③ 俯视场景时地平线必须落在屏幕上半部分
+        '    （倒置的映射会让地平线出现在下半屏，导致在上半屏点击"指向天空"）
+        Dim ox, oy, oz, dx, dy, dz As Double
+        Dim rows As Integer = 120
+        Dim horizon As Double = -1.0
+
+        For k As Integer = 0 To rows - 1
+            Dim sy As Double = h * k / (rows - 1)
+
+            If rig.ScreenToRay(w / 2.0, sy, ox, oy, oz, dx, dy, dz) AndAlso dy < 0.0 Then
+                If horizon < 0.0 Then horizon = sy
+            End If
+        Next
+
+        Check("地平线位于屏幕上半部分（俯视且未倒置）", horizon > 0.0 AndAlso horizon < h * 0.5,
+              $"horizon={horizon:F1} h={h:F1}")
+
+        ' ④ 地平线以下的每一行都必须能命中地面，且落点随屏幕下移而变近
         Dim px, py, pz As Double
-        Dim okUp As Boolean = rig.ScreenToPlane(w / 2.0, h * 0.35, 0, 1, 0, 0.0, px, py, pz)
-        Dim farZ As Double = pz
-        Dim okDown As Boolean = rig.ScreenToPlane(w / 2.0, h * 0.62, 0, 1, 0, 0.0, px, py, pz)
-        Dim nearZ As Double = pz
+        Dim hit As Integer = 0
+        Dim miss As Integer = 0
+        Dim farZ As Double = Double.MaxValue
+        Dim nearZ As Double = Double.MinValue
+        Dim badY As Integer = 0
 
-        Check("屏幕上方与下方都能命中地面", okUp AndAlso okDown, $"up={okUp} down={okDown}")
-        Check("屏幕上方的落点更远", okUp AndAlso okDown AndAlso farZ < nearZ,
-              $"farZ={farZ:F2} nearZ={nearZ:F2}")
+        For k As Integer = 0 To rows - 1
+            Dim sy As Double = h * k / (rows - 1)
 
-        ' ④ "地面在屏幕中部偏下、上方是天空"才是正常观感：
-        '    屏幕下部点击应落在相机前方（而非提示"指向天空"）
-        Dim okLow As Boolean = rig.ScreenToPlane(w / 2.0, h * 0.85, 0, 1, 0, 0.0, px, py, pz)
+            If sy < horizon Then Continue For
 
-        Check("屏幕下部点击可命中地面", okLow, $"ok={okLow}")
-        Near("落点确实在地面上", py, 0.0, 1.0E-9)
+            If rig.ScreenToPlane(w / 2.0, sy, 0, 1, 0, 0.0, px, py, pz) Then
+                hit += 1
+                farZ = std.Min(farZ, pz)
+                nearZ = std.Max(nearZ, pz)
+
+                If std.Abs(py) > 1.0E-6 Then badY += 1
+            Else
+                miss += 1
+            End If
+        Next
+
+        Check("地平线以下全部命中地面", miss = 0 AndAlso hit > 20, $"hit={hit} miss={miss}")
+        Check("落点都在 y = 0 平面上", badY = 0, $"badY={badY}")
+        Check("越靠屏幕下方的落点越近", nearZ > farZ, $"farZ={farZ:F2} nearZ={nearZ:F2}")
     End Sub
 
     ''' <summary>各形状都能生成，并且质量 / 静态标志正确。</summary>
