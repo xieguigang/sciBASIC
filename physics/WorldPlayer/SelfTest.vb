@@ -413,6 +413,15 @@ Module SelfTest
     Private Sub RenderShot(rig As CameraRig, renderer As SceneRenderer)
         Call report.AppendLine("-- 离屏渲染")
 
+        ' 相机缓动在正常运行时由主循环驱动；自测里手动收敛到脚本设定的机位
+        Call rig.SetScreen(New Size(1280, 720))
+
+        For i As Integer = 1 To 240
+            Call rig.Tick()
+        Next
+
+        Call report.AppendLine($"     机位 angleX={rig.AngleX:F1} angleY={rig.AngleY:F1} distance={rig.Distance:F1}")
+
         Dim size As New Size(1280, 720)
         Dim bmp As New Bitmap(size.Width, size.Height)
 
