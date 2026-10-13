@@ -280,7 +280,7 @@ Public NotInheritable Class Interpreter
 
             Case TypeOf e Is UpdateExpr
                 Dim up = DirectCast(e, UpdateExpr)
-                Dim oldV As JsValue
+                Dim oldV As JsValue = JsValue.Undef
                 If TypeOf up.Target Is IdentExpr Then
                     Dim nm = DirectCast(up.Target, IdentExpr).Name
                     If Not env.TryGet(nm, oldV) Then
