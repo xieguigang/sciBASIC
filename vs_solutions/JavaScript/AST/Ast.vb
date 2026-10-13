@@ -132,10 +132,13 @@ Public NotInheritable Class CallExpr
 
     Public ReadOnly Callee As Expression
     Public ReadOnly Arguments As List(Of Expression)
+    ''' <summary>Optional call <c>a?.(args)</c> — short-circuits when the callee is nullish.</summary>
+    Public ReadOnly IsOptional As Boolean
 
-    Public Sub New(callee As Expression, args As List(Of Expression))
+    Public Sub New(callee As Expression, args As List(Of Expression), Optional isOptional As Boolean = False)
         Me.Callee = callee
         Me.Arguments = args
+        Me.IsOptional = isOptional
     End Sub
 End Class
 
@@ -147,11 +150,14 @@ Public NotInheritable Class MemberExpr
     ''' <summary>Member name; expression when <see cref="Computed"/> is true.</summary>
     Public ReadOnly Name As Object
     Public ReadOnly Computed As Boolean
+    ''' <summary>Optional access <c>obj?.name</c> — short-circuits when obj is nullish.</summary>
+    Public ReadOnly IsOptional As Boolean
 
-    Public Sub New(obj As Expression, name As Object, computed As Boolean)
+    Public Sub New(obj As Expression, name As Object, computed As Boolean, Optional isOptional As Boolean = False)
         Me.Obj = obj
         Me.Name = name
         Me.Computed = computed
+        Me.IsOptional = isOptional
     End Sub
 End Class
 
@@ -162,6 +168,11 @@ Public NotInheritable Class FuncExpr
     ''' <summary>Function name, or Nothing for anonymous/arrow functions.</summary>
     Public ReadOnly Name As String
     Public ReadOnly Parameters As String()
+    ''' <summary>Per-parameter default expressions, aligned with <see cref="Parameters"/>;
+    ''' Nothing entry = no default.</summary>
+    Public ReadOnly Defaults As Expression()
+    ''' <summary>Rest parameter name (<c>...args</c>), or Nothing.</summary>
+    Public ReadOnly RestParam As String
     ''' <summary>
     ''' Arrow function? Arrow functions have no own <c>this</c>/<c>arguments</c>
     ''' bindings — both resolve lexically through the enclosing scope.
@@ -170,9 +181,13 @@ Public NotInheritable Class FuncExpr
     Public ReadOnly Body As List(Of Statement)
 
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
-                   Optional isArrow As Boolean = False)
+                   Optional isArrow As Boolean = False,
+                   Optional defaults As Expression() = Nothing,
+                   Optional restParam As String = Nothing)
         Me.Name = name
         Me.Parameters = parameters
+        Me.Defaults = If(defaults, New Expression(System.Math.Max(0, parameters.Length - 1)) {})
+        Me.RestParam = restParam
         Me.IsArrow = isArrow
         Me.Body = body
     End Sub
@@ -192,10 +207,92 @@ End Class
 Public NotInheritable Class ObjectExpr
     Inherits Expression
 
-    Public ReadOnly Properties As List(Of KeyValuePair(Of String, Expression))
+    Public ReadOnly Properties As List(Of ObjectProperty)
 
-    Public Sub New(properties As List(Of KeyValuePair(Of String, Expression)))
+    Public Sub New(properties As List(Of ObjectProperty))
         Me.Properties = properties
+    End Sub
+End Class
+
+''' <summary>Property flavours of an object literal.</summary>
+Public Enum ObjectPropertyKind
+    ''' <summary>key: value (also covers methods — the value is a FuncExpr).</summary>
+    Normal
+    ''' <summary>Shorthand { a } or { a = default }.</summary>
+    Shorthand
+    Getter
+    Setter
+    ''' <summary>{...expr} object spread.</summary>
+    Spread
+End Enum
+
+''' <summary>
+''' One property of an object literal. <see cref="Key"/> is Nothing for spread
+''' and computed keys; <see cref="KeyExpr"/> is Nothing unless the key is computed;
+''' <see cref="Value"/> is Nothing only for plain shorthand.
+''' </summary>
+Public NotInheritable Class ObjectProperty
+
+    Public ReadOnly Key As String
+    Public ReadOnly KeyExpr As Expression
+    Public ReadOnly Value As Expression
+    Public ReadOnly Kind As ObjectPropertyKind
+
+    Public Sub New(key As String, keyExpr As Expression, value As Expression, kind As ObjectPropertyKind)
+        Me.Key = key
+        Me.KeyExpr = keyExpr
+        Me.Value = value
+        Me.Kind = kind
+    End Sub
+End Class
+
+''' <summary>Template literal `` `a${x}b` `` — alternating cooked text and expressions.</summary>
+Public NotInheritable Class TemplateExpr
+    Inherits Expression
+
+    ''' <summary>Chunks in source order: <see cref="String"/> = literal text,
+    ''' <see cref="Expression"/> = an embedded placeholder value.</summary>
+    Public ReadOnly Chunks As List(Of Object)
+
+    Public Sub New(chunks As List(Of Object))
+        Me.Chunks = chunks
+    End Sub
+End Class
+
+''' <summary>Comma operator <c>a, b</c> — evaluate all operands, return the last.</summary>
+Public NotInheritable Class SequenceExpr
+    Inherits Expression
+
+    Public ReadOnly Expressions As List(Of Expression)
+
+    Public Sub New(expressions As List(Of Expression))
+        Me.Expressions = expressions
+    End Sub
+End Class
+
+''' <summary>Spread element <c>...expr</c> (call arguments, array/object literals).</summary>
+Public NotInheritable Class SpreadElement
+    Inherits Expression
+
+    Public ReadOnly Argument As Expression
+
+    Public Sub New(argument As Expression)
+        Me.Argument = argument
+    End Sub
+End Class
+
+''' <summary>
+''' Wrapper marking the ROOT of a member/call chain that contains at least one
+''' optional link (<c>?.</c>). Evaluation short-circuits the whole chain to
+''' undefined when a nullish base is hit (via <see cref="Runtime.OptionalChainShortCircuit"/>).
+''' </summary>
+Public NotInheritable Class OptionalChainExpr
+    Inherits Expression
+
+    Public ReadOnly Chain As Expression
+
+    Public Sub New(chain As Expression)
+        Me.Chain = chain
     End Sub
 End Class
 
@@ -224,12 +321,13 @@ Public NotInheritable Class BlockStmt
 End Class
 
 Public NotInheritable Class VarDeclarant
-    Public ReadOnly Name As String
+    ''' <summary>Binding target: <see cref="String"/> name or a <see cref="BindingTarget"/> pattern.</summary>
+    Public ReadOnly Target As Object
     ''' <summary>Initialiser expression, or Nothing for "var x;".</summary>
     Public ReadOnly Init As Expression
 
-    Public Sub New(name As String, init As Expression)
-        Me.Name = name
+    Public Sub New(target As Object, init As Expression)
+        Me.Target = target
         Me.Init = init
     End Sub
 End Class
@@ -334,12 +432,83 @@ Public NotInheritable Class DoWhileStmt
     End Sub
 End Class
 
+''' <summary>switch (disc) { case x: ... default: ... } — with fall-through.</summary>
+Public NotInheritable Class SwitchStmt
+    Inherits Statement
+
+    Public ReadOnly Discriminant As Expression
+    Public ReadOnly Cases As List(Of SwitchCase)
+
+    Public Sub New(discriminant As Expression, cases As List(Of SwitchCase))
+        Me.Discriminant = discriminant
+        Me.Cases = cases
+    End Sub
+End Class
+
+''' <summary>One case arm; <see cref="Test"/> = Nothing marks the default arm.</summary>
+Public NotInheritable Class SwitchCase
+
+    Public ReadOnly Test As Expression
+    Public ReadOnly Body As List(Of Statement)
+
+    Public Sub New(test As Expression, body As List(Of Statement))
+        Me.Test = test
+        Me.Body = body
+    End Sub
+End Class
+
+''' <summary>for (const x of iterable) body</summary>
+Public NotInheritable Class ForOfStmt
+    Inherits Statement
+
+    ''' <summary>"var" / "let" / "const", or Nothing when assigning to an existing target.</summary>
+    Public ReadOnly Kind As String
+    ''' <summary><see cref="String"/> name or a <see cref="BindingTarget"/> pattern.</summary>
+    Public ReadOnly Target As Object
+    Public ReadOnly Iterable As Expression
+    Public ReadOnly Body As Statement
+
+    Public Sub New(kind As String, target As Object, iterable As Expression, body As Statement)
+        Me.Kind = kind
+        Me.Target = target
+        Me.Iterable = iterable
+        Me.Body = body
+    End Sub
+End Class
+
+''' <summary>label: statement — target of labeled break/continue.</summary>
+Public NotInheritable Class LabeledStmt
+    Inherits Statement
+
+    Public ReadOnly Label As String
+    Public ReadOnly Body As Statement
+
+    Public Sub New(label As String, body As Statement)
+        Me.Label = label
+        Me.Body = body
+    End Sub
+End Class
+
 Public NotInheritable Class BreakStmt
     Inherits Statement
+
+    ''' <summary>Target label, or Nothing for the innermost loop/switch.</summary>
+    Public ReadOnly Label As String
+
+    Public Sub New(Optional label As String = Nothing)
+        Me.Label = label
+    End Sub
 End Class
 
 Public NotInheritable Class ContinueStmt
     Inherits Statement
+
+    ''' <summary>Target label, or Nothing for the innermost loop.</summary>
+    Public ReadOnly Label As String
+
+    Public Sub New(Optional label As String = Nothing)
+        Me.Label = label
+    End Sub
 End Class
 
 Public NotInheritable Class ReturnStmt
@@ -394,4 +563,79 @@ End Class
 
 Public NotInheritable Class EmptyStmt
     Inherits Statement
+End Class
+
+' ============================ destructuring patterns ============================
+
+''' <summary>
+''' Destructuring binding target — shared by var/let/const declarations,
+''' assignment destructuring and for-of loop targets.
+''' </summary>
+Public MustInherit Class BindingTarget
+End Class
+
+''' <summary>Plain variable name.</summary>
+Public NotInheritable Class NameTarget
+    Inherits BindingTarget
+
+    Public ReadOnly Name As String
+
+    Public Sub New(name As String)
+        Me.Name = name
+    End Sub
+End Class
+
+''' <summary>Member/index assignment target: <c>obj.prop</c> or <c>obj[key]</c>.</summary>
+Public NotInheritable Class MemberTarget
+    Inherits BindingTarget
+
+    Public ReadOnly Obj As Expression
+    ''' <summary>Member name (String) or key expression.</summary>
+    Public ReadOnly Name As Object
+    Public ReadOnly Computed As Boolean
+
+    Public Sub New(obj As Expression, name As Object, computed As Boolean)
+        Me.Obj = obj
+        Me.Name = name
+        Me.Computed = computed
+    End Sub
+End Class
+
+''' <summary>Array pattern <c>[a, , b, ...rest]</c>; Nothing element = hole.</summary>
+Public NotInheritable Class ArrayTarget
+    Inherits BindingTarget
+
+    Public ReadOnly Elements As List(Of BindingTarget)
+    Public ReadOnly Rest As BindingTarget
+
+    Public Sub New(elements As List(Of BindingTarget), rest As BindingTarget)
+        Me.Elements = elements
+        Me.Rest = rest
+    End Sub
+End Class
+
+''' <summary>Object pattern <c>{ a, b: c, ...rest }</c>.</summary>
+Public NotInheritable Class ObjectTarget
+    Inherits BindingTarget
+
+    Public ReadOnly Properties As List(Of KeyValuePair(Of String, BindingTarget))
+    Public ReadOnly Rest As BindingTarget
+
+    Public Sub New(properties As List(Of KeyValuePair(Of String, BindingTarget)), rest As BindingTarget)
+        Me.Properties = properties
+        Me.Rest = rest
+    End Sub
+End Class
+
+''' <summary>Target with a default value: <c>a = 1</c> inside a pattern.</summary>
+Public NotInheritable Class DefaultTarget
+    Inherits BindingTarget
+
+    Public ReadOnly Target As BindingTarget
+    Public ReadOnly [Default] As Expression
+
+    Public Sub New(target As BindingTarget, [default] As Expression)
+        Me.Target = target
+        Me.[Default] = [default]
+    End Sub
 End Class

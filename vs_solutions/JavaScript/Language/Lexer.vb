@@ -6,12 +6,20 @@ Imports System.Text
 ''' identifiers/keywords, comments and every operator/punctuator the parser
 ''' supports. Tracks line breaks for automatic-semicolon-insertion.
 ''' </summary>
+''' <remarks>
+''' Reserved words are keyword tokens; CONTEXTUAL keywords (of/get/set/async/
+''' await/yield/static/from/as) stay identifier tokens so that legal code such
+''' as <c>var of = 1</c> or <c>obj.get</c> keeps working — the parser matches
+''' them by text.
+''' </remarks>
 Public NotInheritable Class Lexer
 
     Public Shared ReadOnly Keywords As New HashSet(Of String) From {
         "var", "let", "const", "function", "if", "else", "for", "while", "do",
         "break", "continue", "return", "throw", "try", "catch", "finally",
-        "true", "false", "null", "undefined", "typeof", "new", "in", "this"
+        "true", "false", "null", "undefined", "typeof", "new", "in", "this",
+        "switch", "case", "default", "class", "extends", "super",
+        "instanceof", "delete", "void"
     }
 
     Private ReadOnly _src As String
@@ -130,10 +138,15 @@ Public NotInheritable Class Lexer
             Return ScanString(sl, sc, brk)
         End If
 
+        ' template literals: `cooked ${expr} text`
+        If cur = "`"c Then
+            Return ScanTemplate(sl, sc, brk)
+        End If
+
         ' multi-char operators first (3 → 2 → 1)
         If _pos + 2 < _src.Length Then
             Dim three = _src.Substring(_pos, 3)
-            If three = "===" OrElse three = "!==" Then
+            If three = "===" OrElse three = "!==" OrElse three = "..." OrElse three = ">>>" Then
                 Advance() : Advance() : Advance()
                 Return Make(TokenType.Punct, three, Nothing, sl, sc, brk)
             End If
@@ -145,17 +158,27 @@ Public NotInheritable Class Lexer
             Advance() : Advance()
             Return Make(TokenType.Punct, "**", Nothing, sl, sc, brk)
         End If
+        If two = "??" Then
+            Advance() : Advance()
+            Return Make(TokenType.Punct, "??", Nothing, sl, sc, brk)
+        End If
+        ' '?.' is optional chaining, but '? .5' (conditional with a decimal) is not:
+        ' a digit right after '?.' means the '.' starts a number literal
+        If two = "?." AndAlso (_pos + 2 >= _src.Length OrElse Not Char.IsDigit(_src(_pos + 2))) Then
+            Advance() : Advance()
+            Return Make(TokenType.Punct, "?.", Nothing, sl, sc, brk)
+        End If
         If two = "==" OrElse two = "!=" OrElse two = "<=" OrElse two = ">=" OrElse
            two = "&&" OrElse two = "||" OrElse two = "++" OrElse two = "--" OrElse
            two = "+=" OrElse two = "-=" OrElse two = "*=" OrElse two = "/=" OrElse
-           two = "%=" OrElse two = "=>" Then
+           two = "%=" OrElse two = "=>" OrElse two = "<<" OrElse two = ">>" Then
             Dim op = two
             Advance() : Advance()
             Return Make(TokenType.Punct, op, Nothing, sl, sc, brk)
         End If
 
         ' single-char operators / punctuation
-        If "+-*/%=<>!?:.,;(){}[]".IndexOf(cur) >= 0 Then
+        If "+-*/%=<>!?:.,;(){}[]&|^~".IndexOf(cur) >= 0 Then
             Advance()
             Return Make(TokenType.Punct, cur.ToString(), Nothing, sl, sc, brk)
         End If
@@ -168,10 +191,12 @@ Public NotInheritable Class Lexer
         ' hex
         If Cur = "0"c AndAlso (Peek = "x"c OrElse Peek = "X"c) Then
             Advance() : Advance()
-            While _pos < _src.Length AndAlso Uri.IsHexDigit(_src(_pos))
+            While _pos < _src.Length AndAlso (Uri.IsHexDigit(_src(_pos)) OrElse _src(_pos) = "_"c)
                 Advance()
             End While
             Dim hx = _src.Substring(start + 2, _pos - start - 2)
+            ValidateNumericSeparators(hx, sl, sc)
+            hx = hx.Replace("_", "")
             Dim v As Long
             If Not Long.TryParse(hx, NumberStyles.HexNumber, CultureInfo.InvariantCulture, v) Then
                 Throw New ParseException($"invalid hex literal at {sl}:{sc}")
@@ -179,12 +204,12 @@ Public NotInheritable Class Lexer
             Return Make(TokenType.Number, _src.Substring(start, _pos - start), CDbl(v), sl, sc, brk)
         End If
 
-        While Char.IsDigit(Cur)
+        While Char.IsDigit(Cur) OrElse Cur = "_"c
             Advance()
         End While
         If Cur = "."c AndAlso Char.IsDigit(Peek) Then
             Advance()
-            While Char.IsDigit(Cur)
+            While Char.IsDigit(Cur) OrElse Cur = "_"c
                 Advance()
             End While
         ElseIf Cur = "."c AndAlso Not Char.IsLetter(Peek) AndAlso Peek <> "_"c AndAlso Peek <> "$"c Then
@@ -196,7 +221,7 @@ Public NotInheritable Class Lexer
             Advance()
             If Cur = "+"c OrElse Cur = "-"c Then Advance()
             If Char.IsDigit(Cur) Then
-                While Char.IsDigit(Cur)
+                While Char.IsDigit(Cur) OrElse Cur = "_"c
                     Advance()
                 End While
             Else
@@ -206,12 +231,28 @@ Public NotInheritable Class Lexer
         End If
 
         Dim text = _src.Substring(start, _pos - start)
+        ValidateNumericSeparators(text, sl, sc)
         Dim value As Double
-        If Not Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, value) Then
+        If Not Double.TryParse(text.Replace("_", ""), NumberStyles.Float, CultureInfo.InvariantCulture, value) Then
             Throw New ParseException($"invalid number literal '{text}' at {sl}:{sc}")
         End If
         Return Make(TokenType.Number, text, value, sl, sc, brk)
     End Function
+
+    ''' <summary>
+    ''' Numeric separators (ES2021 <c>1_000_000</c>) must sit between two digits —
+    ''' reject <c>1__0</c>, <c>_1</c>, <c>1_</c> and friends.
+    ''' </summary>
+    Private Shared Sub ValidateNumericSeparators(text As String, sl As Integer, sc As Integer)
+        For i = 0 To text.Length - 1
+            If text(i) = "_"c Then
+                If i = 0 OrElse i = text.Length - 1 OrElse
+                   Not Char.IsLetterOrDigit(text(i - 1)) OrElse Not Char.IsLetterOrDigit(text(i + 1)) Then
+                    Throw New ParseException($"invalid numeric separator in '{text}' at {sl}:{sc}")
+                End If
+            End If
+        Next
+    End Sub
 
     Private Function ScanString(sl As Integer, sc As Integer, brk As Boolean) As Token
         Dim quote = Cur
@@ -272,6 +313,172 @@ Public NotInheritable Class Lexer
         End While
         Return Make(TokenType.String, sb.ToString(), sb.ToString(), sl, sc, brk)
     End Function
+
+    ' ---- template literals ----
+
+    ''' <summary>
+    ''' Scan a backtick template literal into a <see cref="TemplateChunk"/> list:
+    ''' cooked text chunks plus the raw source of each <c>${...}</c> placeholder.
+    ''' Newlines are legal inside templates; nested templates/strings inside
+    ''' placeholders are skipped verbatim so brace matching stays correct.
+    ''' </summary>
+    Private Function ScanTemplate(sl As Integer, sc As Integer, brk As Boolean) As Token
+        Advance()   ' consume the opening backtick
+        Dim parts As New List(Of TemplateChunk)
+        Dim sb As New StringBuilder()
+
+        While True
+            If _pos >= _src.Length Then
+                Throw New ParseException($"unterminated template literal at {sl}:{sc}")
+            End If
+            Dim c = Cur
+
+            If c = "`"c Then
+                Advance()
+                Exit While
+            End If
+
+            If c = "$"c AndAlso Peek = "{"c Then
+                parts.Add(New TemplateChunk(False, sb.ToString()))
+                sb.Clear()
+                Advance() : Advance()   ' consume '${'
+                Dim src = ScanTemplateExpressionSource()
+                parts.Add(New TemplateChunk(True, src))
+                Continue While
+            End If
+
+            If c = "\"c Then
+                Advance()
+                Dim esc = Cur
+                Select Case esc
+                    Case "n"c : sb.Append(vbLf) : Advance()
+                    Case "t"c : sb.Append(vbTab) : Advance()
+                    Case "r"c : sb.Append(vbCr) : Advance()
+                    Case "b"c : sb.Append(ChrW(8)) : Advance()
+                    Case "f"c : sb.Append(ChrW(12)) : Advance()
+                    Case "v"c : sb.Append(ChrW(11)) : Advance()
+                    Case "0"c : sb.Append(ChrW(0)) : Advance()
+                    Case """"c, "'"c, "\"c, "/"c, "`"c, "$"c : sb.Append(esc) : Advance()
+                    Case ChrW(10)
+                        ' line continuation: the backslash-newline pair vanishes
+                        Advance()
+                    Case "u"c
+                        Advance()
+                        Dim hex As New StringBuilder()
+                        For i = 1 To 4
+                            If _pos >= _src.Length OrElse Not Uri.IsHexDigit(Cur) Then
+                                Throw New ParseException($"bad \u escape at {sl}:{sc}")
+                            End If
+                            hex.Append(Cur)
+                            Advance()
+                        Next
+                        sb.Append(ChrW(Convert.ToInt32(hex.ToString(), 16)))
+                    Case "x"c
+                        Advance()
+                        Dim hex As New StringBuilder()
+                        For i = 1 To 2
+                            If _pos >= _src.Length OrElse Not Uri.IsHexDigit(Cur) Then
+                                Throw New ParseException($"bad \x escape at {sl}:{sc}")
+                            End If
+                            hex.Append(Cur)
+                            Advance()
+                        Next
+                        sb.Append(ChrW(Convert.ToInt32(hex.ToString(), 16)))
+                    Case Else
+                        Throw New ParseException($"unknown escape '\{esc}' at {_line}:{_col}")
+                End Select
+                Continue While
+            End If
+
+            sb.Append(c)
+            Advance()
+        End While
+
+        parts.Add(New TemplateChunk(False, sb.ToString()))
+        Return Make(TokenType.Template, "<template>", parts, sl, sc, brk)
+    End Function
+
+    ''' <summary>
+    ''' Raw source of a <c>${...}</c> placeholder (the '${' is already consumed).
+    ''' Skips nested strings/templates and tracks brace depth so that
+    ''' <c>${ {a: 1} }</c> and <c>${ `x${y}z` }</c> scan correctly.
+    ''' </summary>
+    Private Function ScanTemplateExpressionSource() As String
+        Dim start = _pos
+        SkipTemplateExpression()
+        ' SkipTemplateExpression leaves _pos just past the matching '}'
+        Return _src.Substring(start, _pos - start - 1)
+    End Function
+
+    Private Sub SkipTemplateExpression()
+        Dim depth = 1
+
+        While _pos < _src.Length
+            Dim c = Cur
+
+            If c = "{"c Then
+                depth += 1
+                Advance()
+            ElseIf c = "}"c Then
+                depth -= 1
+                Advance()
+                If depth = 0 Then Exit Sub
+            ElseIf c = """"c OrElse c = "'"c Then
+                SkipStringLiteral()
+            ElseIf c = "`"c Then
+                SkipTemplateLiteral()
+            Else
+                Advance()
+            End If
+        End While
+
+        Throw New ParseException("unterminated template expression")
+    End Sub
+
+    ''' <summary>Skip a quoted string verbatim (opening quote is the current char).</summary>
+    Private Sub SkipStringLiteral()
+        Dim quote = Cur
+        Advance()
+
+        While _pos < _src.Length
+            Dim c = Cur
+            If c = "\"c Then
+                Advance() : Advance()
+                Continue While
+            End If
+            If c = quote Then
+                Advance()
+                Exit While
+            End If
+            If c = vbLf Then Throw New ParseException("unterminated string inside template expression")
+            Advance()
+        End While
+    End Sub
+
+    ''' <summary>Skip a nested template literal verbatim (opening backtick is current).</summary>
+    Private Sub SkipTemplateLiteral()
+        Advance()   ' consume '`'
+
+        While _pos < _src.Length
+            Dim c = Cur
+            If c = "`"c Then
+                Advance()
+                Exit Sub
+            End If
+            If c = "\"c Then
+                Advance() : Advance()
+                Continue While
+            End If
+            If c = "$"c AndAlso Peek = "{"c Then
+                Advance() : Advance()
+                SkipTemplateExpression()
+                Continue While
+            End If
+            Advance()
+        End While
+
+        Throw New ParseException("unterminated nested template literal")
+    End Sub
 
 End Class
 
