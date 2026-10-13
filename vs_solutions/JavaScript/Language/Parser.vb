@@ -145,6 +145,14 @@ Public NotInheritable Class Parser
                 End Try
             End If
         End If
+        ' async function declaration (async is contextual, not a keyword)
+        If AsyncFunctionAhead() Then
+            _pos += 1
+            EatKeyword("function")
+            Dim aname = ExpectIdentifier()
+            Dim af = ParseFunctionRest(aname, isAsync:=True)
+            Return New FuncDeclStmt(aname, af.Parameters, af.Body, af.Defaults, af.RestParam, isAsync:=True)
+        End If
         If Cur.name = TokenType.Keyword Then
             Select Case Cur.text
                 Case "var", "let", "const" : Dim s = ParseVar() : ConsumeStatementEnd() : Return s
@@ -257,7 +265,7 @@ Public NotInheritable Class Parser
     End Function
 
     ''' <summary>Parse "(params) { body }" (function keyword already consumed).</summary>
-    Private Function ParseFunctionRest(name As String) As FuncExpr
+    Private Function ParseFunctionRest(name As String, Optional isAsync As Boolean = False) As FuncExpr
         Dim spec = ParseParameterList()
         Dim outerFunc = _funcDepth
         Dim outerLoop = _loopDepth
@@ -267,7 +275,7 @@ Public NotInheritable Class Parser
         _funcDepth = outerFunc
         _loopDepth = outerLoop
         Return New FuncExpr(name, spec.Parameters.ToArray(), body,
-                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
     End Function
 
     ''' <summary>Parameter list with default values and a trailing rest parameter.</summary>
@@ -337,6 +345,13 @@ Public NotInheritable Class Parser
                 _pos += 1
             End If
 
+            ' async method modifier: async m() {}
+            Dim isAsyncMember = False
+            If AtAsync() AndAlso IsAsyncMethodHeader() Then
+                isAsyncMember = True
+                _pos += 1
+            End If
+
             If Cur.name = TokenType.Identifier AndAlso (Cur.text = "get" OrElse Cur.text = "set") AndAlso
                IsAccessorHeader() Then
                 Dim isGetter = Cur.text = "get"
@@ -355,7 +370,7 @@ Public NotInheritable Class Parser
             ElseIf IsMethodHeader() Then
                 Dim mname = ParsePropertyName()
                 Dim spec = ParseParameterList()
-                Dim fn = ParseMethodBody(spec)
+                Dim fn = ParseMethodBody(spec, isAsyncMember)
                 If Not isStatic AndAlso mname = "constructor" Then
                     If ctor IsNot Nothing Then Throw New ParseException("class may only have one constructor")
                     ctor = fn
@@ -377,7 +392,7 @@ Public NotInheritable Class Parser
     End Function
 
     ''' <summary>Method body with its own function scope (like a function declaration).</summary>
-    Private Function ParseMethodBody(spec As ParamSpec) As FuncExpr
+    Private Function ParseMethodBody(spec As ParamSpec, Optional isAsync As Boolean = False) As FuncExpr
         Dim outerFunc = _funcDepth, outerLoop = _loopDepth
         _funcDepth += 1
         _loopDepth = 0
@@ -385,7 +400,17 @@ Public NotInheritable Class Parser
         _funcDepth = outerFunc
         _loopDepth = outerLoop
         Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body,
-                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
+    End Function
+
+    ''' <summary>True when 'async' is followed by a method header (async m() {}).</summary>
+    Private Function IsAsyncMethodHeader() As Boolean
+        If _pos + 2 >= _tokens.Count Then Return False
+        Dim keyTok = _tokens(_pos + 1)
+        Dim parenTok = _tokens(_pos + 2)
+        If Not (keyTok.name = TokenType.Identifier OrElse keyTok.name = TokenType.Keyword OrElse
+                keyTok.name = TokenType.String OrElse keyTok.name = TokenType.Number) Then Return False
+        Return parenTok.name = TokenType.Punct AndAlso parenTok.text = "("
     End Function
 
     ''' <summary>True when the token right after the current one is the given punctuator.</summary>
@@ -640,16 +665,24 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParseAssignment() As Expression
-        ' arrow function: single identifier followed by "=>" on the same line
+        ' arrow functions: ident => ... / (params) => ... — optionally async
+        Dim arrowStart = _pos
+        Dim isAsync = False
+        If AtAsync() AndAlso _pos + 1 < _tokens.Count AndAlso Not _tokens(_pos + 1).LineBreakBefore Then
+            isAsync = True
+            _pos += 1
+        End If
+
+        ' single identifier followed by "=>" on the same line
         If Cur.name = TokenType.Identifier AndAlso _pos + 1 < _tokens.Count Then
             Dim nxt = _tokens(_pos + 1)
             If nxt.name = TokenType.Punct AndAlso nxt.text = "=>" AndAlso Not nxt.LineBreakBefore Then
                 Dim pname = Cur.text
                 _pos += 2
-                Return ParseArrowBody(ParamSpec.FromName(pname))
+                Return ParseArrowBody(ParamSpec.FromName(pname), isAsync)
             End If
         End If
-        ' arrow function: "(params) =>" (params may carry defaults / rest)
+        ' "(params) =>" (params may carry defaults / rest)
         If At("(") Then
             Dim save = _pos
             Dim ok = True
@@ -692,10 +725,12 @@ Public NotInheritable Class Parser
             End If
             If ok AndAlso At("=>") AndAlso Not Cur.LineBreakBefore Then
                 _pos += 1
-                Return ParseArrowBody(spec)
+                Return ParseArrowBody(spec, isAsync)
             End If
             _pos = save   ' backtrack: it is a parenthesised expression / call
         End If
+
+        If isAsync Then _pos = arrowStart      ' 'async' was an ordinary identifier
 
         Dim left = ParseConditional()
         If Cur.name = TokenType.Punct AndAlso
@@ -720,7 +755,7 @@ Public NotInheritable Class Parser
         Return left
     End Function
 
-    Private Function ParseArrowBody(spec As ParamSpec) As FuncExpr
+    Private Function ParseArrowBody(spec As ParamSpec, Optional isAsync As Boolean = False) As FuncExpr
         If At("{") Then
             Dim outerFunc = _funcDepth, outerLoop = _loopDepth
             _funcDepth += 1
@@ -729,13 +764,13 @@ Public NotInheritable Class Parser
             _funcDepth = outerFunc
             _loopDepth = outerLoop
             Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body, isArrow:=True,
-                                defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+                                defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
         End If
         ' expression body → { return expr; }
         Dim expr = ParseAssignment()
         Dim body2 As New List(Of Statement) From {New ReturnStmt(expr)}
         Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body2, isArrow:=True,
-                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
     End Function
 
     Private Function ParseConditional() As Expression
@@ -878,6 +913,11 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParseUnary() As Expression
+        ' await (contextual keyword: only when an operand follows)
+        If Cur.name = TokenType.Identifier AndAlso Cur.text = "await" AndAlso AwaitOperandFollows() Then
+            _pos += 1
+            Return New AwaitExpr(ParseUnary())
+        End If
         If Cur.name = TokenType.Keyword AndAlso Cur.text = "typeof" Then
             _pos += 1
             Return New UnaryExpr("typeof", ParseUnary())
@@ -995,6 +1035,16 @@ Public NotInheritable Class Parser
                 _pos += 1
                 Return New RegexExpr(re.Source, re.Flags)
             Case TokenType.Identifier
+                ' async function expression
+                If AsyncFunctionAhead() Then
+                    _pos += 2      ' consume 'async' and 'function'
+                    Dim fname As String = Nothing
+                    If Cur.name = TokenType.Identifier Then
+                        fname = Cur.text
+                        _pos += 1
+                    End If
+                    Return ParseFunctionRest(fname, isAsync:=True)
+                End If
                 Dim name = Cur.text
                 _pos += 1
                 Return New IdentExpr(name)
@@ -1146,6 +1196,15 @@ Public NotInheritable Class Parser
         If At("...") Then
             _pos += 1
             Return New ObjectProperty(Nothing, Nothing, ParseAssignment(), ObjectPropertyKind.Spread)
+        End If
+
+        ' async method: { async m() {} }
+        If AtAsync() AndAlso IsAsyncMethodHeader() Then
+            _pos += 1
+            Dim akey = ParsePropertyName()
+            Dim aspec = ParseParameterList()
+            Return New ObjectProperty(akey, Nothing, ParseMethodBody(aspec, isAsync:=True),
+                                      ObjectPropertyKind.Normal)
         End If
 
         ' get/set accessors — contextual keywords: they only count when a key
