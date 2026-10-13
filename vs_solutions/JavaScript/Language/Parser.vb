@@ -4,9 +4,10 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' Recursive-descent parser: token stream → <see cref="Program"/> AST.
-''' <para>Operator precedence (low→high): assignment, ternary, ||, &amp;&amp;,
-''' equality, relational, additive, multiplicative, unary, postfix,
-''' call/member, primary.</para>
+''' <para>Operator precedence (low→high): sequence (comma), assignment, ternary,
+''' <c>||</c>, <c>??</c>, <c>&amp;&amp;</c>, bitwise-or, bitwise-xor, bitwise-and,
+''' equality, relational (<c>in</c>/<c>instanceof</c>), shift, additive,
+''' multiplicative, unary, postfix, call/member, primary.</para>
 ''' <para>Automatic-semicolon-insertion: a missing ';' is accepted before a
 ''' line break, '}' or EOF. Arrow functions are parsed with backtracking.</para>
 ''' </summary>
@@ -16,6 +17,11 @@ Public NotInheritable Class Parser
     Private _pos As Integer
     Private _loopDepth As Integer
     Private _funcDepth As Integer
+    Private _switchDepth As Integer
+    ''' <summary>Suppresses the 'in' operator inside a for-header (for-in grammar).</summary>
+    Private _noIn As Boolean
+    ''' <summary>Labels in scope: (name, isLoopLabel) — targets of labeled break/continue.</summary>
+    Private ReadOnly _labels As New List(Of KeyValuePair(Of String, Boolean))
 
     Private Sub New(tokens As List(Of Token))
         _tokens = tokens
@@ -45,6 +51,11 @@ Public NotInheritable Class Parser
 
     Private Function AtKeyword(word As String) As Boolean
         Return Cur.name = TokenType.Keyword AndAlso Cur.text = word
+    End Function
+
+    ''' <summary>Contextual keyword 'of' (for-of header) — kept as an identifier token.</summary>
+    Private Function IsAtOf() As Boolean
+        Return Cur.name = TokenType.Identifier AndAlso Cur.text = "of"
     End Function
 
     Private Function Match(text As String) As Boolean
@@ -101,7 +112,7 @@ Public NotInheritable Class Parser
         Dim body As New List(Of Statement)
         While Cur.name <> TokenType.Eof
             body.Add(ParseStatement())
-        End While
+        Loop
         Return New Program(body)
     End Function
 
@@ -116,6 +127,24 @@ Public NotInheritable Class Parser
             Dim b = ParseBlock()
             Return New BlockStmt(b)
         End If
+        ' labeled statement: `identifier ':'` at statement start is unambiguously a
+        ' label (no expression statement can begin with `ident :`)
+        If Cur.name = TokenType.Identifier AndAlso _pos + 1 < _tokens.Count Then
+            Dim nxt = _tokens(_pos + 1)
+            If nxt.name = TokenType.Punct AndAlso nxt.text = ":" Then
+                Dim label = Cur.text
+                _pos += 2
+                ' a label wrapping a loop may be the target of a labeled continue
+                Dim isLoopLabel = AtKeyword("while") OrElse AtKeyword("do") OrElse AtKeyword("for")
+                _labels.Add(New KeyValuePair(Of String, Boolean)(label, isLoopLabel))
+                Try
+                    Dim body = ParseStatement()
+                    Return New LabeledStmt(label, body)
+                Finally
+                    _labels.RemoveAt(_labels.Count - 1)
+                End Try
+            End If
+        End If
         If Cur.name = TokenType.Keyword Then
             Select Case Cur.text
                 Case "var", "let", "const" : Dim s = ParseVar() : ConsumeStatementEnd() : Return s
@@ -124,16 +153,28 @@ Public NotInheritable Class Parser
                 Case "for" : Return ParseFor()
                 Case "while" : Return ParseWhile()
                 Case "do" : Return ParseDoWhile()
+                Case "switch" : Return ParseSwitch()
                 Case "break"
                     _pos += 1
-                    If _loopDepth = 0 Then Throw New ParseException("'break' outside of a loop")
+                    Dim blabel = TryParseLabelRef()
+                    If blabel Is Nothing AndAlso _loopDepth = 0 AndAlso _switchDepth = 0 Then
+                        Throw New ParseException("'break' outside of a loop or switch")
+                    End If
                     ConsumeStatementEnd()
-                    Return New BreakStmt()
+                    Return New BreakStmt(blabel)
                 Case "continue"
                     _pos += 1
-                    If _loopDepth = 0 Then Throw New ParseException("'continue' outside of a loop")
+                    Dim clabel = TryParseLabelRef()
+                    If clabel Is Nothing Then
+                        If _loopDepth = 0 Then Throw New ParseException("'continue' outside of a loop")
+                    Else
+                        Dim entry = _labels.Find(Function(kv) kv.Key = clabel)
+                        If Not entry.Value Then
+                            Throw New ParseException($"'{clabel}' is not a loop label — continue requires a loop")
+                        End If
+                    End If
                     ConsumeStatementEnd()
-                    Return New ContinueStmt()
+                    Return New ContinueStmt(clabel)
                 Case "return"
                     _pos += 1
                     If _funcDepth = 0 Then Throw New ParseException("'return' outside of a function")
@@ -161,6 +202,17 @@ Public NotInheritable Class Parser
         Dim expr = ParseExpression()
         ConsumeStatementEnd()
         Return New ExprStmt(expr)
+    End Sub
+
+    ''' <summary>Consume an identifier naming a label in scope; Nothing when absent.</summary>
+    Private Function TryParseLabelRef() As String
+        If Cur.name = TokenType.Identifier AndAlso Not Cur.LineBreakBefore AndAlso
+           _labels.Exists(Function(kv) kv.Key = Cur.text) Then
+            Dim label = Cur.text
+            _pos += 1
+            Return label
+        End If
+        Return Nothing
     End Function
 
     Private Function ParseBlock() As List(Of Statement)
@@ -169,7 +221,7 @@ Public NotInheritable Class Parser
         While Not At("}")
             If Cur.name = TokenType.Eof Then Throw New ParseException("missing '}' — unexpected end of input")
             body.Add(ParseStatement())
-        End While
+        Loop
         Eat("}")
         Return body
     End Function
@@ -179,12 +231,25 @@ Public NotInheritable Class Parser
         _pos += 1
         Dim decls As New List(Of VarDeclarant)
         Do
-            Dim name = ExpectIdentifier()
+            Dim target = ParseBindingTarget()
             Dim init As Expression = Nothing
             If Match("=") Then init = ParseAssignment()
-            decls.Add(New VarDeclarant(name, init))
+            decls.Add(New VarDeclarant(target, init))
         Loop While Match(",")
         Return New VarStmt(kind, decls)
+    End Sub
+
+    ''' <summary>A declaration target: simple name or destructuring pattern.</summary>
+    Private Function ParseBindingTarget() As Object
+        If At("[") OrElse At("{") Then
+            Dim e = ParseConditional()
+            Dim p = TryConvertToPattern(e)
+            If p Is Nothing Then
+                Throw New ParseException($"invalid destructuring target at {Cur.Location}")
+            End If
+            Return p
+        End If
+        Return ExpectIdentifier()
     End Function
 
     Private Function ParseFunctionDecl() As Statement
@@ -196,14 +261,7 @@ Public NotInheritable Class Parser
 
     ''' <summary>Parse "(params) { body }" (function keyword already consumed).</summary>
     Private Function ParseFunctionRest(name As String) As FuncExpr
-        Eat("(")
-        Dim parameters As New List(Of String)
-        If Not At(")") Then
-            Do
-                parameters.Add(ExpectIdentifier())
-            Loop While Match(",")
-        End If
-        Eat(")")
+        Dim spec = ParseParameterList()
         Dim outerFunc = _funcDepth
         Dim outerLoop = _loopDepth
         _funcDepth += 1
@@ -211,7 +269,30 @@ Public NotInheritable Class Parser
         Dim body = ParseBlock()
         _funcDepth = outerFunc
         _loopDepth = outerLoop
-        Return New FuncExpr(name, parameters.ToArray(), body)
+        Return New FuncExpr(name, spec.Parameters.ToArray(), body,
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+    End Function
+
+    ''' <summary>Parameter list with default values and a trailing rest parameter.</summary>
+    Private Function ParseParameterList() As ParamSpec
+        Dim spec As New ParamSpec()
+        Eat("(")
+        If Not At(")") Then
+            Do
+                If At("...") Then
+                    _pos += 1
+                    spec.Rest = ExpectIdentifier()
+                    Exit Do          ' rest must be the last parameter
+                End If
+                Dim pname = ExpectIdentifier()
+                Dim dflt As Expression = Nothing
+                If Match("=") Then dflt = ParseAssignment()
+                spec.Parameters.Add(pname)
+                spec.Defaults.Add(dflt)
+            Loop While Match(",") AndAlso Not At(")")
+        End If
+        Eat(")")
+        Return spec
     End Function
 
     Private Function ParseIf() As Statement
@@ -231,39 +312,83 @@ Public NotInheritable Class Parser
         EatKeyword("for")
         Eat("(")
 
-        Dim initVar As VarStmt = Nothing
-        Dim initExpr As Expression = Nothing
         If At(";") Then
             _pos += 1
-        ElseIf AtKeyword("var") OrElse AtKeyword("let") OrElse AtKeyword("const") Then
-            initVar = ParseVar()
-            If AtKeyword("in") Then
-                ' for (var k in obj)
-                If initVar.Declarations.Count <> 1 OrElse initVar.Declarations(0).Init IsNot Nothing Then
-                    Throw New ParseException("for-in header must declare a single uninitialised variable")
-                End If
-                _pos += 1
-                Dim obj = ParseExpression()
-                Eat(")")
-                Dim body = ParseLoopBody()
-                Return New ForInStmt(initVar.Declarations(0).Name, obj, body)
-            End If
-            Eat(";")
-        Else
-            initExpr = ParseExpression()
-            If AtKeyword("in") Then
-                _pos += 1
-                Dim obj = ParseExpression()
-                Eat(")")
-                Dim body = ParseLoopBody()
-                If TypeOf initExpr IsNot IdentExpr Then
-                    Throw New ParseException("for-in target must be an identifier")
-                End If
-                Return New ForInStmt(DirectCast(initExpr, IdentExpr).Name, obj, body)
-            End If
-            Eat(";")
+            Return ParseForRest(Nothing, Nothing)
         End If
 
+        ' ---- declaration head: var / let / const ----
+        If AtKeyword("var") OrElse AtKeyword("let") OrElse AtKeyword("const") Then
+            Dim kind = Cur.text
+            _pos += 1
+            Dim target = ParseBindingTarget()
+
+            If IsAtOf() Then
+                _pos += 1
+                Dim iter = ParseAssignment()
+                Eat(")")
+                Return New ForOfStmt(kind, target, iter, ParseLoopBody())
+            End If
+            If AtKeyword("in") Then
+                If TypeOf target IsNot String Then
+                    Throw New ParseException("for-in target must be a simple variable name")
+                End If
+                _pos += 1
+                Dim obj = ParseExpression()
+                Eat(")")
+                Return New ForInStmt(CStr(target), obj, ParseLoopBody())
+            End If
+
+            ' plain for: first declarator, then optional more
+            Dim decls As New List(Of VarDeclarant)
+            Dim init1 As Expression = Nothing
+            If Match("=") Then init1 = ParseAssignment()
+            decls.Add(New VarDeclarant(target, init1))
+            While Match(",")
+                Dim t2 = ParseBindingTarget()
+                Dim init2 As Expression = Nothing
+                If Match("=") Then init2 = ParseAssignment()
+                decls.Add(New VarDeclarant(t2, init2))
+            End While
+            Eat(";")
+            Return ParseForRest(New VarStmt(kind, decls), Nothing)
+        End If
+
+        ' ---- expression head (assignment target or plain expression) ----
+        ' 'in' is NOT an operator inside a for header (for-in grammar)
+        _noIn = True
+        Dim initExpr As Expression = Nothing
+        Try
+            initExpr = ParseExpression()
+        Finally
+            _noIn = False
+        End Try
+
+        If IsAtOf() Then
+            _pos += 1
+            Dim iter = ParseAssignment()
+            Eat(")")
+            Dim ofTarget = TryConvertToPattern(initExpr)
+            If ofTarget Is Nothing Then
+                Throw New ParseException("invalid for-of assignment target")
+            End If
+            Return New ForOfStmt(Nothing, ofTarget, iter, ParseLoopBody())
+        End If
+        If AtKeyword("in") Then
+            _pos += 1
+            Dim obj = ParseExpression()
+            Eat(")")
+            If TypeOf initExpr IsNot IdentExpr Then
+                Throw New ParseException("for-in target must be an identifier")
+            End If
+            Return New ForInStmt(DirectCast(initExpr, IdentExpr).Name, obj, ParseLoopBody())
+        End If
+        Eat(";")
+        Return ParseForRest(Nothing, initExpr)
+    End Function
+
+    ''' <summary>Shared tail of the plain for-loop grammar (test / update / body).</summary>
+    Private Function ParseForRest(initVar As VarStmt, initExpr As Expression) As Statement
         Dim test As Expression = Nothing
         If Not At(";") Then test = ParseExpression()
         Eat(";")
@@ -288,7 +413,7 @@ Public NotInheritable Class Parser
         Eat(")")
         Dim body = ParseLoopBody()
         Return New WhileStmt(test, body)
-    End Function
+    End Sub
 
     Private Function ParseDoWhile() As Statement
         EatKeyword("do")
@@ -299,6 +424,49 @@ Public NotInheritable Class Parser
         Eat(")")
         ConsumeStatementEnd()
         Return New DoWhileStmt(body, test)
+    End Function
+
+    Private Function ParseSwitch() As Statement
+        EatKeyword("switch")
+        Eat("(")
+        Dim disc = ParseExpression()
+        Eat(")")
+        Eat("{")
+        Dim cases As New List(Of SwitchCase)
+        _switchDepth += 1
+        Try
+            While Not At("}")
+                If Cur.name = TokenType.Eof Then
+                    Throw New ParseException("missing '}' — unexpected end of input in switch")
+                End If
+                If MatchKeyword("case") Then
+                    Dim test = ParseExpression()
+                    Eat(":")
+                    cases.Add(New SwitchCase(test, ParseCaseBody()))
+                ElseIf MatchKeyword("default") Then
+                    Eat(":")
+                    cases.Add(New SwitchCase(Nothing, ParseCaseBody()))
+                Else
+                    Throw New ParseException($"expected 'case' or 'default' but found '{Cur.text}' at {Cur.Location}")
+                End If
+            End While
+        Finally
+            _switchDepth -= 1
+        End Try
+        Eat("}")
+        Return New SwitchStmt(disc, cases)
+    End Function
+
+    ''' <summary>Statements up to the next case/default arm or the closing '}'.</summary>
+    Private Function ParseCaseBody() As List(Of Statement)
+        Dim body As New List(Of Statement)
+        While Not At("}") AndAlso Not AtKeyword("case") AndAlso Not AtKeyword("default")
+            If Cur.name = TokenType.Eof Then
+                Throw New ParseException("missing '}' — unexpected end of input in switch")
+            End If
+            body.Add(ParseStatement())
+        Loop
+        Return body
     End Function
 
     Private Function ParseTry() As Statement
@@ -326,7 +494,14 @@ Public NotInheritable Class Parser
     ' ---------------- expressions (precedence climbing) ----------------
 
     Private Function ParseExpression() As Expression
-        Return ParseAssignment()
+        Dim first = ParseAssignment()
+        If Not At(",") Then Return first
+        ' comma operator: evaluate all, return the last
+        Dim exprs As New List(Of Expression) From {first}
+        While Match(",")
+            exprs.Add(ParseAssignment())
+        Loop
+        Return New SequenceExpr(exprs)
     End Function
 
     Private Function ParseAssignment() As Expression
@@ -336,22 +511,35 @@ Public NotInheritable Class Parser
             If nxt.name = TokenType.Punct AndAlso nxt.text = "=>" AndAlso Not nxt.LineBreakBefore Then
                 Dim pname = Cur.text
                 _pos += 2
-                Return ParseArrowBody({pname})
+                Return ParseArrowBody(ParamSpec.Single(pname))
             End If
         End If
-        ' arrow function: "(a, b) =>"
+        ' arrow function: "(params) =>" (params may carry defaults / rest)
         If At("(") Then
             Dim save = _pos
             Dim ok = True
+            Dim spec As New ParamSpec()
             _pos += 1
-            Dim parameters As New List(Of String)
             If At(")") Then
                 _pos += 1
             Else
                 Do
+                    If At("...") Then
+                        _pos += 1
+                        If Cur.name <> TokenType.Identifier Then ok = False : Exit Do
+                        spec.Rest = Cur.text
+                        _pos += 1
+                        Exit Do          ' rest must be last
+                    End If
                     If Cur.name <> TokenType.Identifier Then ok = False : Exit Do
-                    parameters.Add(Cur.Text)
+                    spec.Parameters.Add(Cur.text)
                     _pos += 1
+                    Dim dflt As Expression = Nothing
+                    If At("=") Then
+                        _pos += 1
+                        dflt = ParseAssignment()
+                    End If
+                    spec.Defaults.Add(dflt)
                     If At(",") Then
                         _pos += 1
                     ElseIf At(")") Then
@@ -364,7 +552,7 @@ Public NotInheritable Class Parser
             End If
             If ok AndAlso At("=>") AndAlso Not Cur.LineBreakBefore Then
                 _pos += 1
-                Return ParseArrowBody(parameters.ToArray())
+                Return ParseArrowBody(spec)
             End If
             _pos = save   ' backtrack: it is a parenthesised expression / call
         End If
@@ -376,6 +564,14 @@ Public NotInheritable Class Parser
             Dim op = Cur.text
             _pos += 1
             Dim right = ParseAssignment()
+            If op = "=" AndAlso Not (TypeOf left Is IdentExpr OrElse TypeOf left Is MemberExpr) Then
+                ' destructuring assignment: [a, b] = expr / ({a} = expr)
+                Dim pattern = TryConvertToPattern(left)
+                If pattern Is Nothing Then
+                    Throw New ParseException("invalid assignment target")
+                End If
+                Return New DestructureAssignExpr(pattern, right)
+            End If
             If Not (TypeOf left Is IdentExpr OrElse TypeOf left Is MemberExpr) Then
                 Throw New ParseException("invalid assignment target")
             End If
@@ -384,7 +580,7 @@ Public NotInheritable Class Parser
         Return left
     End Function
 
-    Private Function ParseArrowBody(parameters As String()) As FuncExpr
+    Private Function ParseArrowBody(spec As ParamSpec) As FuncExpr
         If At("{") Then
             Dim outerFunc = _funcDepth, outerLoop = _loopDepth
             _funcDepth += 1
@@ -392,12 +588,14 @@ Public NotInheritable Class Parser
             Dim body = ParseBlock()
             _funcDepth = outerFunc
             _loopDepth = outerLoop
-            Return New FuncExpr(Nothing, parameters, body, isArrow:=True)
+            Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body, isArrow:=True,
+                                defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
         End If
         ' expression body → { return expr; }
         Dim expr = ParseAssignment()
         Dim body2 As New List(Of Statement) From {New ReturnStmt(expr)}
-        Return New FuncExpr(Nothing, parameters, body2, isArrow:=True)
+        Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body2, isArrow:=True,
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
     End Function
 
     Private Function ParseConditional() As Expression
@@ -412,20 +610,57 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParseLogicalOr() As Expression
-        Dim left = ParseLogicalAnd()
+        Dim left = ParseNullishCoalescing()
         While At("||")
             _pos += 1
-            left = New LogicalExpr("||", left, ParseLogicalAnd())
-        End While
+            left = New LogicalExpr("||", left, ParseNullishCoalescing())
+        Loop
+        Return left
+    End Function
+
+    ''' <summary>Nullish coalescing (??) — short-circuits on null/undefined.</summary>
+    Private Function ParseNullishCoalescing() As Expression
+        Dim left = ParseLogicalAnd()
+        While At("??")
+            _pos += 1
+            left = New LogicalExpr("??", left, ParseLogicalAnd())
+        Loop
         Return left
     End Function
 
     Private Function ParseLogicalAnd() As Expression
-        Dim left = ParseEquality()
+        Dim left = ParseBitwiseOr()
         While At("&&")
             _pos += 1
-            left = New LogicalExpr("&&", left, ParseEquality())
-        End While
+            left = New LogicalExpr("&&", left, ParseBitwiseOr())
+        Loop
+        Return left
+    End Function
+
+    Private Function ParseBitwiseOr() As Expression
+        Dim left = ParseBitwiseXor()
+        While At("|")
+            _pos += 1
+            left = New BinaryExpr("|", left, ParseBitwiseXor())
+        Loop
+        Return left
+    End Function
+
+    Private Function ParseBitwiseXor() As Expression
+        Dim left = ParseBitwiseAnd()
+        While At("^")
+            _pos += 1
+            left = New BinaryExpr("^", left, ParseBitwiseAnd())
+        Loop
+        Return left
+    End Function
+
+    Private Function ParseBitwiseAnd() As Expression
+        Dim left = ParseEquality()
+        While At("&")
+            _pos += 1
+            left = New BinaryExpr("&", left, ParseEquality())
+        Loop
         Return left
     End Function
 
@@ -436,18 +671,39 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseRelational())
+        Loop
+        Return left
+    End Function
+
+    ''' <summary>Relational level: &lt; &lt;= &gt; &gt;= plus the in/instanceof keywords.</summary>
+    Private Function ParseRelational() As Expression
+        Dim left = ParseShift()
+        While True
+            If Cur.name = TokenType.Punct AndAlso
+               (Cur.text = "<" OrElse Cur.text = "<=" OrElse Cur.text = ">" OrElse Cur.text = ">=") Then
+                Dim op = Cur.Text
+                _pos += 1
+                left = New BinaryExpr(op, left, ParseShift())
+            ElseIf Not _noIn AndAlso AtKeyword("in") Then
+                _pos += 1
+                left = New BinaryExpr("in", left, ParseShift())
+            ElseIf AtKeyword("instanceof") Then
+                _pos += 1
+                left = New BinaryExpr("instanceof", left, ParseShift())
+            Else
+                Exit While
+            End If
         End While
         Return left
     End Function
 
-    Private Function ParseRelational() As Expression
+    Private Function ParseShift() As Expression
         Dim left = ParseAdditive()
-        While Cur.name = TokenType.Punct AndAlso
-              (Cur.text = "<" OrElse Cur.text = "<=" OrElse Cur.text = ">" OrElse Cur.text = ">=")
+        While At("<<") OrElse At(">>") OrElse At(">>>")
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseAdditive())
-        End While
+        Loop
         Return left
     End Function
 
@@ -457,7 +713,7 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseMultiplicative())
-        End While
+        Loop
         Return left
     End Function
 
@@ -467,7 +723,7 @@ Public NotInheritable Class Parser
             Dim op = Cur.Text
             _pos += 1
             left = New BinaryExpr(op, left, ParseExponent())
-        End While
+        Loop
         Return left
     End Function
 
@@ -486,7 +742,12 @@ Public NotInheritable Class Parser
             _pos += 1
             Return New UnaryExpr("typeof", ParseUnary())
         End If
-        If At("!") OrElse At("-") OrElse At("+") Then
+        If AtKeyword("delete") OrElse AtKeyword("void") Then
+            Dim op = Cur.Text
+            _pos += 1
+            Return New UnaryExpr(op, ParseUnary())
+        End If
+        If At("!") OrElse At("-") OrElse At("+") OrElse At("~") Then
             Dim op = Cur.Text
             _pos += 1
             Return New UnaryExpr(op, ParseUnary())
@@ -518,21 +779,30 @@ Public NotInheritable Class Parser
 
     Private Function ParseCallOrMember() As Expression
         Dim e = ParsePrimary()
+        Dim anyOptional = False
         While True
             If At(".") Then
                 _pos += 1
                 Dim name = ExpectIdentifier()
                 e = New MemberExpr(e, name, False)
-            ElseIf At("(") Then
+            ElseIf At("?.") Then
                 _pos += 1
-                Dim args As New List(Of Expression)
-                If Not At(")") Then
-                    Do
-                        args.Add(ParseExpression())
-                    Loop While Match(",")
+                anyOptional = True
+                If At("(") Then
+                    ' optional call: a?.(args)
+                    Dim args2 = ParseArguments()
+                    e = New CallExpr(e, args2, isOptional:=True)
+                ElseIf At("[") Then
+                    _pos += 1
+                    Dim idx = ParseExpression()
+                    Eat("]")
+                    e = New MemberExpr(e, idx, True, isOptional:=True)
+                Else
+                    Dim name = ExpectIdentifier()
+                    e = New MemberExpr(e, name, False, isOptional:=True)
                 End If
-                Eat(")")
-                e = New CallExpr(e, args)
+            ElseIf At("(") Then
+                e = New CallExpr(e, ParseArguments(), isOptional:=False)
             ElseIf At("[") Then
                 _pos += 1
                 Dim idx = ParseExpression()
@@ -542,7 +812,26 @@ Public NotInheritable Class Parser
                 Exit While
             End If
         End While
+        If anyOptional Then Return New OptionalChainExpr(e)
         Return e
+    End Function
+
+    ''' <summary>Call argument list with spread elements and trailing commas.</summary>
+    Private Function ParseArguments() As List(Of Expression)
+        Eat("(")
+        Dim args As New List(Of Expression)
+        If Not At(")") Then
+            Do
+                If At("...") Then
+                    _pos += 1
+                    args.Add(New SpreadElement(ParseAssignment()))
+                Else
+                    args.Add(ParseExpression())
+                End If
+            Loop While Match(",") AndAlso Not At(")")
+        End If
+        Eat(")")
+        Return args
     End Function
 
     Private Function ParsePrimary() As Expression
@@ -555,6 +844,8 @@ Public NotInheritable Class Parser
                 Dim s = CStr(Cur.Value)
                 _pos += 1
                 Return New LiteralExpr(JsValue.Str(s))
+            Case TokenType.Template
+                Return ParseTemplate()
             Case TokenType.Identifier
                 Dim name = Cur.text
                 _pos += 1
@@ -567,35 +858,10 @@ Public NotInheritable Class Parser
                     Return e
                 End If
                 If At("[") Then
-                    _pos += 1
-                    Dim elements As New List(Of Expression)
-                    If Not At("]") Then
-                        Do
-                            elements.Add(ParseExpression())
-                        Loop While Match(",")
-                    End If
-                    Eat("]")
-                    Return New ArrayExpr(elements)
+                    Return ParseArrayLiteral()
                 End If
                 If At("{") Then
-                    _pos += 1
-                    Dim props As New List(Of KeyValuePair(Of String, Expression))
-                    If Not At("}") Then
-                        Do
-                            Dim key As String
-                            Select Case Cur.name
-                                Case TokenType.Identifier, TokenType.Keyword : key = Cur.text : _pos += 1
-                                Case TokenType.String : key = CStr(Cur.Value) : _pos += 1
-                                Case TokenType.Number : key = JsRuntime.JsStr(CDbl(Cur.Value)) : _pos += 1
-                                Case Else
-                                    Throw New ParseException($"bad object key '{Cur.text}' at {Cur.Location}")
-                            End Select
-                            Eat(":")
-                            props.Add(New KeyValuePair(Of String, Expression)(key, ParseAssignment()))
-                        Loop While Match(",")
-                    End If
-                    Eat("}")
-                    Return New ObjectExpr(props)
+                    Return ParseObjectLiteral()
                 End If
         End Select
         If Cur.name = TokenType.Keyword Then
@@ -616,5 +882,275 @@ Public NotInheritable Class Parser
         End If
         Throw New ParseException($"unexpected token '{Cur.text}' at {Cur.Location}")
     End Function
+
+    ''' <summary>Template literal token → chunks of cooked text and parsed expressions.</summary>
+    Private Function ParseTemplate() As Expression
+        Dim parts = DirectCast(Cur.Value, List(Of TemplateChunk))
+        _pos += 1
+        Dim chunks As New List(Of Object)
+        For Each part In parts
+            If part.IsExpression Then
+                chunks.Add(ParseEmbeddedExpression(part.Text))
+            Else
+                chunks.Add(part.Text)
+            End If
+        Next
+        Return New TemplateExpr(chunks)
+    End Function
+
+    ''' <summary>Recursively parse the raw source of a ${...} placeholder.</summary>
+    Private Shared Function ParseEmbeddedExpression(source As String) As Expression
+        Dim program = Parser.Parse(source)
+        If program.Body.Count <> 1 OrElse Not TypeOf program.Body(0) Is ExprStmt Then
+            Throw New ParseException("invalid template expression placeholder")
+        End If
+        Return DirectCast(program.Body(0), ExprStmt).Expr
+    End Function
+
+    ''' <summary>Array literal with holes ([a, , b]) and spread elements ([...xs]).</summary>
+    Private Function ParseArrayLiteral() As Expression
+        Eat("[")
+        Dim elements As New List(Of Expression)
+        If Not At("]") Then
+            Do
+                If At("]") Then Exit Do               ' trailing comma — no hole
+                If At(",") Then
+                    elements.Add(Nothing)             ' hole
+                    _pos += 1
+                    Continue Do
+                End If
+                If At("...") Then
+                    _pos += 1
+                    elements.Add(New SpreadElement(ParseAssignment()))
+                Else
+                    elements.Add(ParseAssignment())
+                End If
+            Loop While Match(",")
+        End If
+        Eat("]")
+        Return New ArrayExpr(elements)
+    End Function
+
+    ''' <summary>
+    ''' Object literal: spread, getter/setter, methods, computed keys,
+    ''' key:value and shorthand (incl. shorthand-with-default sugar).
+    ''' </summary>
+    Private Function ParseObjectLiteral() As Expression
+        Eat("{")
+        Dim props As New List(Of ObjectProperty)
+        If Not At("}") Then
+            Do
+                props.Add(ParseObjectProperty())
+            Loop While Match(",") AndAlso Not At("}")
+        End If
+        Eat("}")
+        Return New ObjectExpr(props)
+    End Sub
+
+    Private Function ParseObjectProperty() As ObjectProperty
+        ' {...expr} object spread
+        If At("...") Then
+            _pos += 1
+            Return New ObjectProperty(Nothing, Nothing, ParseAssignment(), ObjectPropertyKind.Spread)
+        End If
+
+        ' get/set accessors — contextual keywords: they only count when a key
+        ' and '(' follow ('{get: 1}' stays a normal property named "get")
+        If Cur.name = TokenType.Identifier AndAlso (Cur.text = "get" OrElse Cur.text = "set") AndAlso
+           IsAccessorHeader() Then
+            Dim isGetter = Cur.text = "get"
+            _pos += 1
+            Dim key = ParsePropertyName()
+            Dim spec = ParseParameterList()
+            If isGetter AndAlso spec.Parameters.Count <> 0 Then
+                Throw New ParseException("getter must not take parameters")
+            End If
+            If Not isGetter AndAlso spec.Parameters.Count <> 1 Then
+                Throw New ParseException("setter must take exactly one parameter")
+            End If
+            Dim outerFunc = _funcDepth, outerLoop = _loopDepth
+            _funcDepth += 1
+            _loopDepth = 0
+            Dim body = ParseBlock()
+            _funcDepth = outerFunc
+            _loopDepth = outerLoop
+            Dim fn = New FuncExpr(Nothing, spec.Parameters.ToArray(), body)
+            Return New ObjectProperty(key, Nothing, fn,
+                                      If(isGetter, ObjectPropertyKind.Getter, ObjectPropertyKind.Setter))
+        End If
+
+        ' computed key: [expr]: value
+        If At("[") Then
+            _pos += 1
+            Dim keyExpr = ParseAssignment()
+            Eat("]")
+            Eat(":")
+            Return New ObjectProperty(Nothing, keyExpr, ParseAssignment(), ObjectPropertyKind.Normal)
+        End If
+
+        ' method: key(params) { body }
+        If IsMethodHeader() Then
+            Dim key = ParsePropertyName()
+            Dim spec = ParseParameterList()
+            Dim outerFunc = _funcDepth, outerLoop = _loopDepth
+            _funcDepth += 1
+            _loopDepth = 0
+            Dim body = ParseBlock()
+            _funcDepth = outerFunc
+            _loopDepth = outerLoop
+            Dim fn = New FuncExpr(Nothing, spec.Parameters.ToArray(), body,
+                                  defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+            Return New ObjectProperty(key, Nothing, fn, ObjectPropertyKind.Normal)
+        End If
+
+        ' plain key
+        Dim k = ParsePropertyName()
+        If Match(":") Then
+            Return New ObjectProperty(k, Nothing, ParseAssignment(), ObjectPropertyKind.Normal)
+        End If
+        ' shorthand { a } — or { a = default } (destructuring sugar; evaluated as
+        ' an assignment when the literal lands in expression position)
+        If Match("=") Then
+            Return New ObjectProperty(k, Nothing,
+                                      New AssignExpr("=", New IdentExpr(k), ParseAssignment()),
+                                      ObjectPropertyKind.Shorthand)
+        End If
+        Return New ObjectProperty(k, Nothing, Nothing, ObjectPropertyKind.Shorthand)
+    End Function
+
+    ''' <summary>Identifier / keyword / string / numeric property name.</summary>
+    Private Function ParsePropertyName() As String
+        Select Case Cur.name
+            Case TokenType.Identifier, TokenType.Keyword
+                Dim n = Cur.text
+                _pos += 1
+                Return n
+            Case TokenType.String
+                Dim s = CStr(Cur.Value)
+                _pos += 1
+                Return s
+            Case TokenType.Number
+                Dim n = JsRuntime.JsStr(CDbl(Cur.Value))
+                _pos += 1
+                Return n
+            Case Else
+                Throw New ParseException($"bad object key '{Cur.text}' at {Cur.Location}")
+        End Select
+    End Function
+
+    ''' <summary>True when the current token starts a get/set accessor header.</summary>
+    Private Function IsAccessorHeader() As Boolean
+        If _pos + 2 >= _tokens.Count Then Return False
+        Dim keyTok = _tokens(_pos + 1)
+        Dim parenTok = _tokens(_pos + 2)
+        If Not (keyTok.name = TokenType.Identifier OrElse keyTok.name = TokenType.Keyword OrElse
+                keyTok.name = TokenType.String OrElse keyTok.name = TokenType.Number) Then Return False
+        Return parenTok.name = TokenType.Punct AndAlso parenTok.text = "("
+    End Function
+
+    ''' <summary>True when the current key token is directly followed by '(' (method).</summary>
+    Private Function IsMethodHeader() As Boolean
+        If _pos + 1 >= _tokens.Count Then Return False
+        If Not (Cur.name = TokenType.Identifier OrElse Cur.name = TokenType.Keyword OrElse
+                Cur.name = TokenType.String OrElse Cur.name = TokenType.Number) Then Return False
+        Dim nxt = _tokens(_pos + 1)
+        Return nxt.name = TokenType.Punct AndAlso nxt.text = "("
+    End Function
+
+    ' ---------------- destructuring conversion ----------------
+
+    ''' <summary>
+    ''' Convert an already-parsed expression into a destructuring target
+    ''' (JS parses the pattern as an expression, then reinterprets it):
+    ''' identifier / member → target; array literal → array pattern;
+    ''' object literal → object pattern; <c>target = default</c> → default pattern.
+    ''' Returns Nothing when the expression is not a valid target.
+    ''' </summary>
+    Private Shared Function TryConvertToPattern(e As Expression) As BindingTarget
+        Select Case True
+            Case TypeOf e Is IdentExpr
+                Return New NameTarget(DirectCast(e, IdentExpr).Name)
+            Case TypeOf e Is MemberExpr
+                Dim m = DirectCast(e, MemberExpr)
+                Return New MemberTarget(m.Obj, m.Name, m.Computed)
+            Case TypeOf e Is ArrayExpr
+                Dim a = DirectCast(e, ArrayExpr)
+                Dim els As New List(Of BindingTarget)
+                Dim rest As BindingTarget = Nothing
+                For Each el In a.Elements
+                    If el Is Nothing Then
+                        els.Add(Nothing)                       ' hole
+                    ElseIf TypeOf el Is SpreadElement Then
+                        rest = ConvertRestTarget(DirectCast(el, SpreadElement).Argument)
+                        If rest Is Nothing Then Return Nothing
+                    Else
+                        Dim t = TryConvertToPattern(el)
+                        If t Is Nothing Then Return Nothing
+                        els.Add(t)
+                    End If
+                Next
+                Return New ArrayTarget(els, rest)
+            Case TypeOf e Is ObjectExpr
+                Dim o = DirectCast(e, ObjectExpr)
+                Dim props As New List(Of KeyValuePair(Of String, BindingTarget))
+                Dim rest As BindingTarget = Nothing
+                For Each p In o.Properties
+                    Select Case p.Kind
+                        Case ObjectPropertyKind.Shorthand
+                            If p.Value Is Nothing Then
+                                props.Add(New KeyValuePair(Of String, BindingTarget)(p.Key, New NameTarget(p.Key)))
+                            Else
+                                ' { a = default } sugar
+                                Dim dflt = DirectCast(p.Value, AssignExpr)
+                                props.Add(New KeyValuePair(Of String, BindingTarget)(
+                                          p.Key, New DefaultTarget(New NameTarget(p.Key), dflt.Value)))
+                            End If
+                        Case ObjectPropertyKind.Normal
+                            If p.KeyExpr IsNot Nothing Then Return Nothing   ' computed keys are not patterns
+                            Dim t = TryConvertToPattern(p.Value)
+                            If t Is Nothing Then Return Nothing
+                            props.Add(New KeyValuePair(Of String, BindingTarget)(p.Key, t))
+                        Case ObjectPropertyKind.Spread
+                            rest = ConvertRestTarget(p.Value)
+                            If rest Is Nothing Then Return Nothing
+                        Case Else
+                            Return Nothing       ' getters/setters cannot be patterns
+                    End Select
+                Next
+                Return New ObjectTarget(props, rest)
+            Case TypeOf e Is AssignExpr
+                Dim a = DirectCast(e, AssignExpr)
+                If a.Op <> "=" Then Return Nothing
+                Dim t = TryConvertToPattern(a.Target)
+                If t Is Nothing Then Return Nothing
+                Return New DefaultTarget(t, a.Value)
+        End Select
+        Return Nothing
+    End Function
+
+    ''' <summary>Rest targets must be a plain name or a member reference.</summary>
+    Private Shared Function ConvertRestTarget(e As Expression) As BindingTarget
+        If TypeOf e Is IdentExpr Then Return New NameTarget(DirectCast(e, IdentExpr).Name)
+        If TypeOf e Is MemberExpr Then
+            Dim m = DirectCast(e, MemberExpr)
+            Return New MemberTarget(m.Obj, m.Name, m.Computed)
+        End If
+        Return Nothing
+    End Function
+
+    ''' <summary>Parsed parameter list: names + aligned defaults + optional rest.</summary>
+    Private NotInheritable Class ParamSpec
+
+        Public ReadOnly Parameters As New List(Of String)
+        Public ReadOnly Defaults As New List(Of Expression)
+        Public ReadOnly Rest As String
+
+        Public Shared Function Single(name As String) As ParamSpec
+            Dim spec As New ParamSpec()
+            spec.Parameters.Add(name)
+            spec.Defaults.Add(Nothing)
+            Return spec
+        End Function
+    End Class
 
 End Class

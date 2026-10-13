@@ -111,6 +111,19 @@ Public NotInheritable Class AssignExpr
     End Sub
 End Class
 
+''' <summary>Destructuring assignment: <c>[a, b] = expr</c> or <c>({a} = expr)</c>.</summary>
+Public NotInheritable Class DestructureAssignExpr
+    Inherits Expression
+
+    Public ReadOnly Target As BindingTarget
+    Public ReadOnly Value As Expression
+
+    Public Sub New(target As BindingTarget, value As Expression)
+        Me.Target = target
+        Me.Value = value
+    End Sub
+End Class
+
 ''' <summary>Conditional (ternary) expression.</summary>
 Public NotInheritable Class CondExpr
     Inherits Expression

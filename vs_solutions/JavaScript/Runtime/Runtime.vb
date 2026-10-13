@@ -313,7 +313,15 @@ Namespace Runtime
             If IsJsObject(obj) Then
                 Dim d = DirectCast(obj, Dictionary(Of String, Object))
                 Dim v As Object = Nothing
-                If d.TryGetValue(name, v) Then Return v
+                If d.TryGetValue(name, v) Then
+                    Dim acc = TryCast(v, AccessorProperty)
+                    If acc IsNot Nothing Then
+                        ' accessor property: read through its getter
+                        If acc.Getter Is Nothing Then Return Undef
+                        Return JsInvoke(acc.Getter, New Object() {})
+                    End If
+                    Return v
+                End If
                 Return Undef
             End If
             If TypeOf obj Is NativeObject Then
@@ -357,7 +365,17 @@ Namespace Runtime
                 Throw JsRuntimeException.TypeError("cannot set property '" & name & "' of " & JsStr(obj))
             End If
             If IsJsObject(obj) Then
-                DirectCast(obj, Dictionary(Of String, Object))(name) = value
+                Dim d = DirectCast(obj, Dictionary(Of String, Object))
+                Dim existing As Object = Nothing
+                If d.TryGetValue(name, existing) Then
+                    Dim acc = TryCast(existing, AccessorProperty)
+                    If acc IsNot Nothing Then
+                        ' accessor property: write through its setter
+                        If acc.Setter IsNot Nothing Then JsInvoke(acc.Setter, New Object() {value})
+                        Return
+                    End If
+                End If
+                d(name) = value
             End If
             ' other targets: silently ignored (non-strict JS)
         End Sub
@@ -408,12 +426,20 @@ Namespace Runtime
             Return d
         End Function
 
-        ''' <summary>Keys for for-in: array indices (as strings) or object keys.</summary>
+        ''' <summary>Keys for for-in: array/string indices (as strings) or object keys.</summary>
         Public Function JsForInKeys(obj As Object) As Object()
             If IsJsArray(obj) Then
                 Dim a = DirectCast(obj, List(Of Object))
                 Dim keys(a.Count - 1) As Object
                 For i = 0 To a.Count - 1
+                    keys(i) = i.ToString(CultureInfo.InvariantCulture)
+                Next
+                Return keys
+            End If
+            If TypeOf obj Is String Then
+                Dim s = CStr(obj)
+                Dim keys(s.Length - 1) As Object
+                For i = 0 To s.Length - 1
                     keys(i) = i.ToString(CultureInfo.InvariantCulture)
                 Next
                 Return keys
@@ -1008,6 +1034,380 @@ Namespace Runtime
                 Case "toString" : Return s
             End Select
             Throw JsRuntimeException.TypeError("string." & name & " is not a function")
+        End Function
+
+        ' ========================================================
+        ' T1 syntax support: nullish / bitwise / spread / destructuring /
+        ' delete / void / in / instanceof / optional chaining / for-of
+        ' ========================================================
+
+        ''' <summary>JS nullish test: null or undefined (the ?? trigger condition).</summary>
+        Public Function JsIsNullish(x As Object) As Boolean
+            Return x Is Nothing OrElse x Is Undef
+        End Function
+
+        Public Function JsIsNullish(v As JsValue) As Boolean
+            Return v.IsNull OrElse v.IsUndef
+        End Function
+
+        ''' <summary>Short-circuit ?? — evaluates b lazily only when a is nullish.</summary>
+        Public Function JsNullish(a As Object, b As Func(Of Object)) As Object
+            If a Is Nothing OrElse a Is Undef Then Return b()
+            Return a
+        End Function
+
+        ' ---------------- bitwise (ECMAScript ToInt32 / ToUint32) ----------------
+
+        ''' <summary>ECMAScript ToInt32: NaN/±Infinity → 0, otherwise modulo 2^32 as signed.</summary>
+        Private Function ToInt32Bits(d As Double) As Long
+            If Double.IsNaN(d) OrElse Double.IsInfinity(d) Then Return 0
+            Dim m = d - System.Math.Floor(d / 4294967296.0) * 4294967296.0      ' [0, 2^32)
+            If m >= 2147483648.0 Then Return CLng(m) - 4294967296.0
+            Return CLng(m)
+        End Function
+
+        ''' <summary>ECMAScript ToUint32: NaN/±Infinity → 0, otherwise modulo 2^32.</summary>
+        Private Function ToUint32Bits(d As Double) As Long
+            If Double.IsNaN(d) OrElse Double.IsInfinity(d) Then Return 0
+            Return CLng(d - System.Math.Floor(d / 4294967296.0) * 4294967296.0)
+        End Function
+
+        ''' <summary>Wrap a 64-bit shift intermediate back into the signed 32-bit range.</summary>
+        Private Function WrapInt32(v As Long) As Double
+            If v >= 2147483648.0 Then Return v - 4294967296.0
+            If v < -2147483648.0 Then Return v + 4294967296.0
+            Return v
+        End Function
+
+        ''' <summary>Shift distance: ToUint32(b) And 31 (JS masks the count to 5 bits).</summary>
+        Private Function ShiftAmount(b As Object) As Integer
+            Return CInt(ToUint32Bits(JsNum(b)) And 31)
+        End Function
+
+        Public Function JsBitAnd(a As Object, b As Object) As Object
+            Return CDbl(ToInt32Bits(JsNum(a)) And ToInt32Bits(JsNum(b)))
+        End Function
+
+        Public Function JsBitOr(a As Object, b As Object) As Object
+            Return CDbl(ToInt32Bits(JsNum(a)) Or ToInt32Bits(JsNum(b)))
+        End Function
+
+        Public Function JsBitXor(a As Object, b As Object) As Object
+            Return CDbl(ToInt32Bits(JsNum(a)) Xor ToInt32Bits(JsNum(b)))
+        End Function
+
+        Public Function JsBitNot(a As Object) As Object
+            Return CDbl(Not ToInt32Bits(JsNum(a)))
+        End Function
+
+        ''' <summary>Signed left shift (<<).</summary>
+        Public Function JsShl(a As Object, b As Object) As Object
+            Return WrapInt32(ToInt32Bits(JsNum(a)) << ShiftAmount(b))
+        End Function
+
+        ''' <summary>Signed right shift (>>, arithmetic).</summary>
+        Public Function JsShr(a As Object, b As Object) As Object
+            Return CDbl(ToInt32Bits(JsNum(a)) >> ShiftAmount(b))
+        End Function
+
+        ''' <summary>Unsigned right shift (>>>, logical).</summary>
+        Public Function JsUshr(a As Object, b As Object) As Object
+            Return CDbl(ToUint32Bits(JsNum(a)) >> ShiftAmount(b))
+        End Function
+
+        ' JsValue overloads: interpreter hot path, zero boxing
+        Public Function JsBitAnd(a As JsValue, b As JsValue) As JsValue
+            Return JsValue.Number(CDbl(ToInt32Bits(JsNum(a)) And ToInt32Bits(JsNum(b))))
+        End Function
+
+        Public Function JsBitOr(a As JsValue, b As JsValue) As JsValue
+            Return JsValue.Number(CDbl(ToInt32Bits(JsNum(a)) Or ToInt32Bits(JsNum(b))))
+        End Function
+
+        Public Function JsBitXor(a As JsValue, b As JsValue) As JsValue
+            Return JsValue.Number(CDbl(ToInt32Bits(JsNum(a)) Xor ToInt32Bits(JsNum(b))))
+        End Function
+
+        Public Function JsBitNot(a As JsValue) As JsValue
+            Return JsValue.Number(CDbl(Not ToInt32Bits(JsNum(a))))
+        End Function
+
+        Public Function JsShl(a As JsValue, b As JsValue) As JsValue
+            Return JsValue.Number(WrapInt32(ToInt32Bits(JsNum(a)) << ShiftAmount(JsBox(b))))
+        End Function
+
+        Public Function JsShr(a As JsValue, b As JsValue) As JsValue
+            Return JsValue.Number(CDbl(ToInt32Bits(JsNum(a)) >> ShiftAmount(JsBox(b))))
+        End Function
+
+        Public Function JsUshr(a As JsValue, b As JsValue) As JsValue
+            Return JsValue.Number(CDbl(ToUint32Bits(JsNum(a)) >> ShiftAmount(JsBox(b))))
+        End Function
+
+        ' ---------------- optional chaining ----------------
+
+        ''' <summary>Optional member access a?.b — a nullish base short-circuits the chain.</summary>
+        Public Function JsChainGet(obj As Object, name As String) As Object
+            If obj Is Nothing OrElse obj Is Undef Then Throw New OptionalChainShortCircuit()
+            Return JsGet(obj, name)
+        End Function
+
+        ''' <summary>Optional index access a?.[i].</summary>
+        Public Function JsChainIndex(obj As Object, index As Object) As Object
+            If obj Is Nothing OrElse obj Is Undef Then Throw New OptionalChainShortCircuit()
+            Return JsIndex(obj, index)
+        End Function
+
+        ''' <summary>Optional call a?.(args).</summary>
+        Public Function JsChainInvoke(f As Object, args As Object()) As Object
+            If f Is Nothing OrElse f Is Undef Then Throw New OptionalChainShortCircuit()
+            Return JsInvoke(f, args)
+        End Function
+
+        ' ---------------- spread / rest ----------------
+
+        ''' <summary>
+        ''' Build a call argument array: <see cref="SpreadMarker"/> entries are
+        ''' expanded (arrays → elements, strings → chars).
+        ''' </summary>
+        Public Function JsBuildArgs(ParamArray parts As Object()) As Object()
+            Dim list As New List(Of Object)
+            For Each p In parts
+                Dim m = TryCast(p, SpreadMarker)
+                If m Is Nothing Then
+                    list.Add(p)
+                Else
+                    AppendSpreadValues(list, m.Value)
+                End If
+            Next
+            Return list.ToArray()
+        End Function
+
+        ''' <summary>Array literal carrying spread elements.</summary>
+        Public Function JsArrayFrom(ParamArray parts As Object()) As Object
+            Dim list As New List(Of Object)
+            For Each p In parts
+                Dim m = TryCast(p, SpreadMarker)
+                If m Is Nothing Then
+                    list.Add(p)
+                Else
+                    AppendSpreadValues(list, m.Value)
+                End If
+            Next
+            Return list
+        End Function
+
+        Private Sub AppendSpreadValues(list As List(Of Object), value As Object)
+            If IsJsArray(value) Then
+                list.AddRange(DirectCast(value, List(Of Object)))
+            ElseIf TypeOf value Is String Then
+                For Each c In CStr(value)
+                    list.Add(c.ToString())
+                Next
+            Else
+                Throw JsRuntimeException.TypeError(JsStr(value) & " is not iterable")
+            End If
+        End Sub
+
+        ''' <summary>Wrap a value as a spread part for JsBuildArgs / JsArrayFrom / JsObjFrom.</summary>
+        Public Function JsSpread(value As Object) As Object
+            Return New SpreadMarker(value)
+        End Function
+
+        ''' <summary>
+        ''' Object literal variant of <see cref="JsObj"/> that also accepts
+        ''' <see cref="SpreadMarker"/> (object spread) parts.
+        ''' </summary>
+        Public Function JsObjFrom(ParamArray parts As Object()) As Object
+            Dim d As New Dictionary(Of String, Object)
+            For Each p In parts
+                Dim m = TryCast(p, SpreadMarker)
+                If m Is Nothing Then
+                    Dim pair = DirectCast(p, (Key As String, Value As Object))
+                    d(pair.Key) = pair.Value
+                Else
+                    JsSpreadInto(d, m.Value)
+                End If
+            Next
+            Return d
+        End Function
+
+        ''' <summary>Copy own enumerable properties of src into target (object spread).</summary>
+        Public Sub JsSpreadInto(target As Dictionary(Of String, Object), src As Object)
+            If IsJsObject(src) Then
+                For Each kv In DirectCast(src, Dictionary(Of String, Object))
+                    Dim acc = TryCast(kv.Value, AccessorProperty)
+                    If acc IsNot Nothing Then
+                        ' spread materialises getters as data properties
+                        If acc.Getter IsNot Nothing Then
+                            target(kv.Key) = JsInvoke(acc.Getter, New Object() {})
+                        End If
+                    Else
+                        target(kv.Key) = kv.Value
+                    End If
+                Next
+            ElseIf IsJsArray(src) Then
+                Dim a = DirectCast(src, List(Of Object))
+                For i = 0 To a.Count - 1
+                    target(i.ToString(CultureInfo.InvariantCulture)) = a(i)
+                Next
+            ElseIf TypeOf src Is String Then
+                Dim s = CStr(src)
+                For i = 0 To s.Length - 1
+                    target(i.ToString(CultureInfo.InvariantCulture)) = s(i).ToString()
+                Next
+            ElseIf src Is Nothing OrElse src Is Undef Then
+                ' {...null} / {...undefined} are no-ops in JS
+            Else
+                Throw JsRuntimeException.TypeError("cannot spread " & JsStr(src) & " into an object literal")
+            End If
+        End Sub
+
+        ''' <summary>Array rest pattern [a, ...rest] — elements from index skip on.</summary>
+        Public Function JsArrayRest(arr As Object, skip As Integer) As Object
+            Dim list As New List(Of Object)
+            Dim src = TryCast(arr, List(Of Object))
+            If src IsNot Nothing Then
+                For i = System.Math.Max(0, skip) To src.Count - 1
+                    list.Add(src(i))
+                Next
+            End If
+            Return list
+        End Function
+
+        ''' <summary>Object rest pattern {a, ...rest} — own keys minus the bound ones.</summary>
+        Public Function JsObjectRest(obj As Object, ParamArray usedKeys As String()) As Object
+            Dim d As New Dictionary(Of String, Object)
+            If IsJsObject(obj) Then
+                Dim used As New HashSet(Of String)(usedKeys)
+                For Each kv In DirectCast(obj, Dictionary(Of String, Object))
+                    If Not used.Contains(kv.Key) Then d(kv.Key) = kv.Value
+                Next
+            End If
+            Return d
+        End Function
+
+        ''' <summary>Rest parameters (...args) — the tail of the call arguments.</summary>
+        Public Function JsRestArgs(args As Object(), skip As Integer) As Object
+            Dim list As New List(Of Object)
+            For i = System.Math.Max(0, skip) To args.Length - 1
+                list.Add(args(i))
+            Next
+            Return list
+        End Function
+
+        ''' <summary>Object-literal accessor value ({get x(){}} / {set x(v){}}).</summary>
+        Public Function JsAccessor(getter As Object, setter As Object) As Object
+            Return New AccessorProperty(getter, setter)
+        End Function
+
+        ' ---------------- delete / void / in / instanceof ----------------
+
+        ''' <summary>delete obj.prop / delete arr[i] — non-strict JS result rules.</summary>
+        Public Function JsDelete(obj As Object, key As Object) As Boolean
+            If obj Is Nothing OrElse obj Is Undef Then Return True
+            If IsJsObject(obj) Then
+                Return DirectCast(obj, Dictionary(Of String, Object)).Remove(JsStr(key))
+            End If
+            If IsJsArray(obj) Then
+                Dim a = DirectCast(obj, List(Of Object))
+                Dim d = JsNum(key)
+                If Double.IsNaN(d) Then Return True
+                Dim i = CInt(System.Math.Floor(d))
+                If i < 0 OrElse i >= a.Count Then Return True
+                a(i) = Undef          ' JS leaves a hole; reading it yields undefined
+                Return True
+            End If
+            Return True
+        End Function
+
+        ''' <summary>Non-reference delete evaluates its operand for side effects and yields true.</summary>
+        Public Function JsDeleteValue(value As Object) As Boolean
+            Return True
+        End Function
+
+        ''' <summary>void expr — evaluate for side effects, yield undefined.</summary>
+        Public Function JsVoid(value As Object) As Object
+            Return Undef
+        End Function
+
+        ''' <summary>The 'in' operator: property/index presence test.</summary>
+        Public Function JsIn(key As Object, container As Object) As Boolean
+            If IsJsArray(container) Then
+                Dim a = DirectCast(container, List(Of Object))
+                Dim d = JsNum(key)
+                If Double.IsNaN(d) Then Return False
+                Dim i = CInt(System.Math.Floor(d))
+                Return i >= 0 AndAlso i < a.Count
+            End If
+            If TypeOf container Is String Then
+                Dim s = CStr(container)
+                Dim d = JsNum(key)
+                If Double.IsNaN(d) Then Return False
+                Dim i = CInt(System.Math.Floor(d))
+                Return i >= 0 AndAlso i < s.Length
+            End If
+            If IsJsObject(container) Then
+                Return DirectCast(container, Dictionary(Of String, Object)).ContainsKey(JsStr(key))
+            End If
+            If container Is Nothing OrElse container Is Undef Then
+                Throw JsRuntimeException.TypeError(
+                    "Cannot use 'in' operator to search for '" & JsStr(key) & "' in " & JsStr(container))
+            End If
+            Return False
+        End Function
+
+        ''' <summary>instanceof — builtin constructors plus the user-class __proto__ chain.</summary>
+        Public Function JsInstanceOf(obj As Object, ctor As Object) As Boolean
+            If ctor Is Nothing OrElse ctor Is Undef Then
+                Throw JsRuntimeException.TypeError("Right-hand side of 'instanceof' is not callable")
+            End If
+            If TypeOf ctor Is BuiltinMethod Then
+                Select Case DirectCast(ctor, BuiltinMethod).Name
+                    Case "Array" : Return IsJsArray(obj)
+                    Case "Object" : Return IsJsObject(obj) OrElse IsJsArray(obj)
+                    Case "String" : Return TypeOf obj Is String
+                    Case "Number" : Return IsNumber(obj)
+                    Case "Boolean" : Return TypeOf obj Is Boolean
+                    Case "Function" : Return TypeOf obj Is Func(Of Object(), Object) OrElse TypeOf obj Is BuiltinMethod
+                End Select
+                Return False
+            End If
+            If TypeOf ctor Is Func(Of Object(), Object) Then
+                Return JsProtoChainContains(obj, JsGet(ctor, "prototype"))
+            End If
+            Throw JsRuntimeException.TypeError("Right-hand side of 'instanceof' is not callable")
+        End Function
+
+        ''' <summary>Walk the __proto__ chain of obj looking for a prototype object.</summary>
+        Public Function JsProtoChainContains(obj As Object, proto As Object) As Boolean
+            If proto Is Nothing OrElse proto Is Undef Then Return False
+            Dim cur = obj
+            Dim guard = 0
+            While IsJsObject(cur) AndAlso guard < 1000
+                Dim d = DirectCast(cur, Dictionary(Of String, Object))
+                Dim p As Object = Nothing
+                If Not d.TryGetValue("__proto__", p) Then Return False
+                If ReferenceEquals(p, proto) Then Return True
+                cur = p
+                guard += 1
+            End While
+            Return False
+        End Function
+
+        ''' <summary>Values for for-of: arrays (copy) and strings (chars) are iterable.</summary>
+        Public Function JsIterableValues(iter As Object) As List(Of Object)
+            If IsJsArray(iter) Then
+                Return New List(Of Object)(DirectCast(iter, List(Of Object)))
+            End If
+            If TypeOf iter Is String Then
+                Dim list As New List(Of Object)
+                For Each c In CStr(iter)
+                    list.Add(c.ToString())
+                Next
+                Return list
+            End If
+            Throw JsRuntimeException.TypeError(JsStr(iter) & " is not iterable")
         End Function
 
         ' ========================================================
