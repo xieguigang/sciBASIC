@@ -123,6 +123,12 @@ Public NotInheritable Class CodeGenerator
         ElseIf TypeOf s Is SwitchStmt Then
             GenSwitch(DirectCast(s, SwitchStmt), w, scope)
 
+        ElseIf TypeOf s Is ClassDeclStmt Then
+            ' class declarations are block-scoped and not hoisted
+            Dim cls = DirectCast(s, ClassDeclStmt)
+            Dim vbCls = scope.DefineLocal(cls.Spec.Name)
+            w.Line($"Dim {vbCls} As JsValue = {GenClassValue(cls.Spec, scope)}")
+
         ElseIf TypeOf s Is LabeledStmt Then
             GenLabeled(DirectCast(s, LabeledStmt), w, scope)
 
@@ -613,10 +619,51 @@ Public NotInheritable Class CodeGenerator
 
         ElseIf TypeOf e Is CallExpr Then
             Dim c = DirectCast(e, CallExpr)
+
+            ' super(...) / super.m(...)
+            Dim sup = TryCast(c.Callee, SuperExpr)
+            If sup IsNot Nothing Then
+                Dim supArgs = GenArgs(c.Arguments, scope)
+                If sup.Member Is Nothing Then Return $"JsRuntime.JsSuperConstructor({supArgs})"
+                Return $"JsRuntime.JsSuperInvoke({VbString(sup.Member)}, {supArgs})"
+            End If
+
+            ' method call: pass the receiver so that 'this' binds correctly
+            Dim m = TryCast(c.Callee, MemberExpr)
+            If m IsNot Nothing Then
+                Dim objTxt = GenExpr(m.Obj, scope)
+                Dim callArgs = GenArgs(c.Arguments, scope)
+                If m.Computed Then
+                    Dim keyTxt = GenExpr(DirectCast(m.Name, Expression), scope)
+                    Return $"JsRuntime.JsInvokeIndex({objTxt}, {keyTxt}, {callArgs}, {VbBool(m.IsOptional)}, {VbBool(c.IsOptional)})"
+                End If
+                Return $"JsRuntime.JsInvokeMethod({objTxt}, {VbString(CStr(m.Name))}, {callArgs}, {VbBool(m.IsOptional)}, {VbBool(c.IsOptional)})"
+            End If
+
             Dim callee = GenExpr(c.Callee, scope)
             Dim args = GenArgs(c.Arguments, scope)
             If c.IsOptional Then Return $"JsRuntime.JsChainInvoke({callee}, {args})"
             Return $"JsRuntime.JsInvoke({callee}, {args})"
+
+        ElseIf TypeOf e Is ThisExpr Then
+            ' lexical 'this': a local inside non-arrow functions, the global object otherwise
+            Dim vbThis = scope.Resolve("this")
+            If vbThis Is Nothing Then Return "JsRuntime.CurrentThis"
+            Return vbThis
+
+        ElseIf TypeOf e Is SuperExpr Then
+            Dim sup = DirectCast(e, SuperExpr)
+            If sup.Member Is Nothing Then
+                Throw New NotSupportedException("bare super is only valid as a call")
+            End If
+            Return $"JsRuntime.JsSuperGet({VbString(sup.Member)})"
+
+        ElseIf TypeOf e Is NewExpr Then
+            Dim ne = DirectCast(e, NewExpr)
+            Return $"JsRuntime.JsNew({GenExpr(ne.Callee, scope)}, {GenArgs(ne.Arguments, scope)})"
+
+        ElseIf TypeOf e Is ClassExpr Then
+            Return GenClassValue(DirectCast(e, ClassExpr).Spec, scope)
 
         ElseIf TypeOf e Is OptionalChainExpr Then
             ' the chain root turns the short-circuit signal into undefined
@@ -677,17 +724,70 @@ Public NotInheritable Class CodeGenerator
             Return GenObjectLiteral(DirectCast(e, ObjectExpr), scope)
 
         ElseIf TypeOf e Is FuncExpr Then
-            Dim f = DirectCast(e, FuncExpr)
-            Dim argsName = ArgsParam()
-            Return "CType(Function(" & argsName & " As JsValue())" & vbLf &
-                   LambdaBody(f, scope, argsName) & vbLf &
-                   "End Function, Func(Of Object(), Object))"
+            Return GenLambda(DirectCast(e, FuncExpr), scope)
 
         ElseIf TypeOf e Is SpreadElement Then
             Throw New NotSupportedException("spread element outside an argument/array/object literal")
         End If
 
         Throw New NotSupportedException("unsupported expression " & e.GetType().Name)
+    End Function
+
+    ''' <summary>VB Booleans for the generated runtime-helper flags.</summary>
+    Private Shared Function VbBool(b As Boolean) As String
+        Return If(b, "True", "False")
+    End Function
+
+    ''' <summary>Multi-line lambda expression for a function value.</summary>
+    Private Function GenLambda(f As FuncExpr, scope As Scope) As String
+        Dim argsName = ArgsParam()
+        Return "CType(Function(" & argsName & " As JsValue())" & vbLf &
+               LambdaBody(f, scope, argsName) & vbLf &
+               "End Function, Func(Of Object(), Object))"
+    End Function
+
+    ''' <summary>
+    ''' A class definition as an expression:
+    ''' <c>JsRuntime.JsDefineClass(name, ctor, super, ("i"/"s"/"f", name, value)...)</c>.
+    ''' The interpreter builds classes through the same helper.
+    ''' </summary>
+    Private Function GenClassValue(spec As ClassSpec, scope As Scope) As String
+        Dim ctorTxt = "Nothing"
+        If spec.Constructor IsNot Nothing Then ctorTxt = GenLambda(spec.Constructor, scope)
+
+        Dim superTxt = "Nothing"
+        If spec.SuperClass IsNot Nothing Then superTxt = GenExpr(spec.SuperClass, scope)
+
+        Dim parts As New List(Of String)
+        For Each m In spec.Members
+            Dim tag = VbString(If(m.IsStatic, "s", "i"))
+            Select Case m.Kind
+                Case ClassMemberKind.Method
+                    parts.Add($"({tag}, {VbString(m.Name)}, {GenLambda(DirectCast(m.Value, FuncExpr), scope)})")
+                Case ClassMemberKind.Getter
+                    parts.Add($"({tag}, {VbString(m.Name)}, JsRuntime.JsAccessor({GenLambda(DirectCast(m.Value, FuncExpr), scope)}, Nothing))")
+                Case ClassMemberKind.Setter
+                    parts.Add($"({tag}, {VbString(m.Name)}, JsRuntime.JsAccessor(Nothing, {GenLambda(DirectCast(m.Value, FuncExpr), scope)}))")
+                Case ClassMemberKind.Field
+                    If m.IsStatic Then
+                        ' static fields are initialised once, at definition time
+                        Dim v = If(m.Value Is Nothing, "JsRuntime.Undef", GenExpr(m.Value, scope))
+                        parts.Add($"(""s"", {VbString(m.Name)}, {v})")
+                    Else
+                        Dim init = "Nothing"
+                        If m.Value IsNot Nothing Then
+                            ' zero-argument wrapper so 'this' binds to the new instance
+                            Dim wrapper As New FuncExpr(Nothing, New String() {},
+                                                        New List(Of Statement) From {New ReturnStmt(m.Value)})
+                            init = GenLambda(wrapper, scope)
+                        End If
+                        parts.Add($"(""f"", {VbString(m.Name)}, {init})")
+                    End If
+            End Select
+        Next
+
+        Dim partsTxt = $"New (String, String, Object)() {{{String.Join(", ", parts)}}}"
+        Return $"JsRuntime.JsDefineClass({VbString(spec.Name)}, {ctorTxt}, {superTxt}, {partsTxt})"
     End Function
 
     ''' <summary>Template literal → VB string concatenation with JsStr conversion.</summary>
@@ -894,7 +994,9 @@ Public NotInheritable Class CodeGenerator
             w.Line($"Dim {vbRest} As JsValue = JsRuntime.JsRestArgs({argsName}, {f.Parameters.Length})")
         End If
         If Not f.IsArrow Then
-            ' the 'arguments' object: arrow functions inherit it lexically
+            ' 'this' and 'arguments': arrow functions inherit both lexically
+            Dim vbThis = fscope.DefineLocal("this")
+            w.Line($"Dim {vbThis} As JsValue = JsRuntime.CurrentThis")
             Dim vbArgs = fscope.DefineLocal("arguments")
             w.Line($"Dim {vbArgs} As JsValue = New List(Of Object)({argsName})")
         End If
@@ -979,8 +1081,8 @@ Public NotInheritable Class CodeGenerator
                 CollectHoistedVars(t.TryBlock, names, seen)
                 If t.CatchBlock IsNot Nothing Then CollectHoistedVars(t.CatchBlock, names, seen)
                 If t.FinallyBlock IsNot Nothing Then CollectHoistedVars(t.FinallyBlock, names, seen)
-            Case TypeOf s Is FuncDeclStmt
-                ' its own function scope — never hoisted into the enclosing one
+            Case TypeOf s Is FuncDeclStmt, TypeOf s Is ClassDeclStmt
+                ' their own scope — never hoisted into the enclosing function
         End Select
     End Sub
 
