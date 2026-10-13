@@ -30,7 +30,8 @@ Namespace MixedPrecisionBench
                 AddressOf SparseCases,
                 AddressOf ConvCases,
                 AddressOf PoolCases,
-                AddressOf LossCases
+                AddressOf LossCases,
+                AddressOf ResidencyCases.RunAll
             }
 
             For Each g In groups
