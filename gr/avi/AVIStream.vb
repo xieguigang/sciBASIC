@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f92085c39e956f3ad65c4c31c48bfa03, gr\avi\AVIStream.vb"
+﻿#Region "Microsoft.VisualBasic::a0ce1d4ed59b12561ad99d4d08d3904b, gr\avi\AVIStream.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 106 (71.62%)
-    ' Comment Lines: 18 (12.16%)
-    '    - Xml Docs: 94.44%
+    '   Total Lines: 202
+    '    Code Lines: 121 (59.90%)
+    ' Comment Lines: 49 (24.26%)
+    '    - Xml Docs: 91.84%
     ' 
-    '   Blank Lines: 24 (16.22%)
-    '     File Size: 5.79 KB
+    '   Blank Lines: 32 (15.84%)
+    '     File Size: 8.27 KB
 
 
     ' Class AVIStream
     ' 
-    '     Properties: fps, frames, height, width
+    '     Properties: codec, codecType, fps, frames, height
+    '                 width
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: writeDataBuffer, writeHeaderBuffer
+    '     Function: prepend, writeDataBuffer, writeHeaderBuffer
     ' 
     '     Sub: (+2 Overloads) addFrame, addRGBFrame
     ' 

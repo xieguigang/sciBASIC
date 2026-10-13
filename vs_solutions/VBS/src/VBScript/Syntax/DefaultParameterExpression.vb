@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::711d977c1bf22849de760fd7ed8289f1, vs_solutions\VBS\src\VBScript\Syntax\DefaultParameterExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a8d7287c3f90c8e993b7b9ee54601273, vs_solutions\VBS\src\VBScript\Syntax\DefaultParameterExpression.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
     '   Total Lines: 923
     '    Code Lines: 590 (63.92%)
     ' Comment Lines: 140 (15.17%)
-    '    - Xml Docs: 62.14%
+    '    - Xml Docs: 61.43%
     ' 
     '   Blank Lines: 193 (20.91%)
-    '     File Size: 39.63 KB
+    '     File Size: 39.61 KB
 
 
     '     Class DefaultParameterReport

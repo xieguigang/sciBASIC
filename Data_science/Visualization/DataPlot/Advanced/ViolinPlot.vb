@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::058868afd6ef0b53252c8ec3760c0105, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b8fa8e3f7d4886faf1ea39d9deb2f739, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 91 (82.73%)
-    ' Comment Lines: 5 (4.55%)
-    '    - Xml Docs: 20.00%
+    '   Total Lines: 115
+    '    Code Lines: 94 (81.74%)
+    ' Comment Lines: 6 (5.22%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 14 (12.73%)
-    '     File Size: 4.50 KB
+    '   Blank Lines: 15 (13.04%)
+    '     File Size: 4.87 KB
 
 
     ' Class ViolinPlot
     ' 
     '     Properties: Groups, ShowBoxInside
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: Quantile
     ' 

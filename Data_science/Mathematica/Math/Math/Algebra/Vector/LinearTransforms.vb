@@ -1,18 +1,55 @@
-#Region "Microsoft.VisualBasic::LinearTransforms.vb, Data_science\Mathematica\Math\Math\Algebra\Vector\LinearTransforms.vb"
+﻿#Region "Microsoft.VisualBasic::03dd03a0412bed62ac9d2610163ba2d0, Data_science\Mathematica\Math\Math\Algebra\Vector\LinearTransforms.vb"
 
-' Copyright (c) 2018 GPL3 Licensed
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' /********************************************************************************/
 
-' Code Statistics:
+    ' /********************************************************************************/
 
-'   Module LinearTransforms
+    ' Summaries:
 
-'   Function: Reflection2D, Reflection3D, Rotation2D, Rotation3D, Scaling, Scaling2D
-'             Translation, Transform
 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 232
+    '    Code Lines: 130 (56.03%)
+    ' Comment Lines: 71 (30.60%)
+    '    - Xml Docs: 97.18%
+    ' 
+    '   Blank Lines: 31 (13.36%)
+    '     File Size: 9.88 KB
+
+
+    '     Module LinearTransforms
+    ' 
+    '         Function: Reflection2D, Reflection3D, Rotation2D, Rotation3D, Scaling
+    '                   Scaling2D, Transform, Translation
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

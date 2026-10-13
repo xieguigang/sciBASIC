@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ecd493974c83c18bbe63ebe65faedf4, cuda\ILCuda\Runtime\PinnedHostBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::b43d9fda1de2b27e6b567633996dcaaf, cuda\ILCuda\Runtime\PinnedHostBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 117 (65.00%)
-    ' Comment Lines: 31 (17.22%)
-    '    - Xml Docs: 25.81%
+    '   Total Lines: 185
+    '    Code Lines: 119 (64.32%)
+    ' Comment Lines: 32 (17.30%)
+    '    - Xml Docs: 25.00%
     ' 
-    '   Blank Lines: 32 (17.78%)
-    '     File Size: 7.39 KB
+    '   Blank Lines: 34 (18.38%)
+    '     File Size: 7.58 KB
 
 
     '     Class PinnedHostBuffer

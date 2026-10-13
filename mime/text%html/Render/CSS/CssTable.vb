@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d34ee041c8a676bdb40e880cfec9f931, mime\text%html\Render\CSS\CssTable.vb"
+﻿#Region "Microsoft.VisualBasic::6d6ce06388db16f42ba68d9e2d361f22, mime\text%html\Render\CSS\CssTable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 878
-    '    Code Lines: 524 (59.68%)
-    ' Comment Lines: 205 (23.35%)
+    '   Total Lines: 877
+    '    Code Lines: 523 (59.64%)
+    ' Comment Lines: 205 (23.38%)
     '    - Xml Docs: 69.76%
     ' 
-    '   Blank Lines: 149 (16.97%)
-    '     File Size: 32.16 KB
+    '   Blank Lines: 149 (16.99%)
+    '     File Size: 32.18 KB
 
 
     '     Class CssTable

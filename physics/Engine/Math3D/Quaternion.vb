@@ -1,3 +1,67 @@
+﻿#Region "Microsoft.VisualBasic::f1b479acce234a6382c9ef5195e67cc6, physics\Engine\Math3D\Quaternion.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 285
+    '    Code Lines: 190 (66.67%)
+    ' Comment Lines: 47 (16.49%)
+    '    - Xml Docs: 95.74%
+    ' 
+    '   Blank Lines: 48 (16.84%)
+    '     File Size: 11.51 KB
+
+
+    '     Structure Quaternion
+    ' 
+    '         Properties: Identity, LengthSquared
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AngleBetween, Compose, Conjugate, FromAxisAngle, FromForwardUp
+    '                   FromRotationMatrix, Integrate, Inverse, Normalize, Rotate
+    '                   Slerp, ToMatrix3x3, ToString, Unrotate
+    ' 
+    '         Sub: ToAxisAngle
+    ' 
+    '         Operators: (+2 Overloads) *
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
@@ -283,3 +347,4 @@ Namespace Math3D
         End Operator
     End Structure
 End Namespace
+

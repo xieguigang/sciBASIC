@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::208541be200f5fa2ef5cf00f9c2edbb8, Data_science\Mathematica\Math\CVODE_Solver\RootFindingResult.vb"
+﻿#Region "Microsoft.VisualBasic::b3e341da7c9819f5c9e09a1cb18386cd, Data_science\Mathematica\Math\CVODE_Solver\RootFindingResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 6 (25.00%)
-    ' Comment Lines: 15 (62.50%)
+    '   Total Lines: 26
+    '    Code Lines: 7 (26.92%)
+    ' Comment Lines: 15 (57.69%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (12.50%)
-    '     File Size: 513 B
+    '   Blank Lines: 4 (15.38%)
+    '     File Size: 564 B
 
 
     ' Class RootFindingResult

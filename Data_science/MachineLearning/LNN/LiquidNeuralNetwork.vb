@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::319c00ba4d1d7770b981ffeca2a0521d, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::b01660e0fee99bd3b4aac2ba561cea3e, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 533
-    '    Code Lines: 269 (50.47%)
-    ' Comment Lines: 160 (30.02%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 600
+    '    Code Lines: 303 (50.50%)
+    ' Comment Lines: 187 (31.17%)
+    '    - Xml Docs: 89.30%
     ' 
-    '   Blank Lines: 104 (19.51%)
-    '     File Size: 17.28 KB
+    '   Blank Lines: 110 (18.33%)
+    '     File Size: 21.03 KB
 
 
     ' Class LiquidNeuralNetwork
@@ -53,10 +53,11 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: BackwardLiquid, BackwardOutput, ComputeOutput, ComputeOutputFrom, Forward
-    '               ForwardSequence, GetParameterCount, GetParameterPairs, GetParameters, ProcessSequence
-    '               RowVector
+    '               ForwardBatch, ForwardSequence, GetParameterCount, GetParameterPairs, GetParameters
+    '               ProcessSequence, RowVector
     ' 
-    '     Sub: ClearHistory, ClearRecords, Dispose, ResetState, ZeroGradients
+    '     Sub: ClearHistory, ClearRecords, ComputeOutputFromBatch, Dispose, ResetState
+    '          ZeroGradients
     ' 
     ' /********************************************************************************/
 

@@ -1,3 +1,161 @@
+﻿#Region "Microsoft.VisualBasic::740bb5e6d8cff01eaf2d879bb448f344, Data_science\Visualization\DataPlot\Engine\DataModels.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 520
+    '    Code Lines: 325 (62.50%)
+    ' Comment Lines: 118 (22.69%)
+    '    - Xml Docs: 83.90%
+    ' 
+    '   Blank Lines: 77 (14.81%)
+    '     File Size: 20.41 KB
+
+
+    ' Class ClusterTreeNode
+    ' 
+    '     Properties: Height, IsLeaf, LeafNames, Left, Name
+    '                 Right
+    ' 
+    '     Function: Depth, Join, Leaf, Leaves
+    ' 
+    ' Interface IRegressionFit
+    ' 
+    '     Properties: BandLower, BandUpper, EquationText, X, Y
+    '                 Yfit
+    ' 
+    ' Class RegressionFit
+    ' 
+    '     Properties: BandLower, BandUpper, Color, EquationText, Fit_BandLower
+    '                 Fit_BandUpper, Fit_EquationText, Fit_X, Fit_Y, Fit_Yfit
+    '                 Name, X, Y, Yfit
+    ' 
+    ' Interface IPCAScore
+    ' 
+    '     Properties: Contributions, Groups, PC1, PC2, SampleNames
+    ' 
+    ' Class PCAScoreSet
+    ' 
+    '     Properties: Contributions, Groups, PC1, PC2, SampleNames
+    '                 Score_Contributions, Score_Groups, Score_Names, Score_PC1, Score_PC2
+    ' 
+    ' Class CorrelationMatrix
+    ' 
+    '     Properties: Matrix, Names, Size
+    ' 
+    '     Function: ValidateShape
+    ' 
+    '     Sub: ForceDiagonalOne, Validate
+    ' 
+    ' Class CategoryGroup
+    ' 
+    '     Properties: Color, Data, Name
+    ' 
+    ' Class ROCCurve
+    ' 
+    '     Properties: AUC, Color, FPR, Name, Thresholds
+    '                 TPR
+    ' 
+    '     Function: FromRates
+    ' 
+    ' Class ForestEntry
+    ' 
+    '     Properties: Effect, Label, Lower, Note, Upper
+    '                 Weight
+    ' 
+    ' Class ManhattanPoint
+    ' 
+    '     Properties: Chromosome, Label, Position, PValue
+    ' 
+    ' Class BiHistogramSample
+    ' 
+    '     Properties: Color, Data, Name
+    ' 
+    ' Class VariableBarData
+    ' 
+    '     Properties: Color, Name, Value, Width
+    ' 
+    ' Structure TimePoint
+    ' 
+    '     Properties: Label, Time, Value
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class PolygonGroup
+    ' 
+    '     Properties: Alpha, Color, Label, SubRegions
+    ' 
+    ' Class BarSerial
+    ' 
+    '     Properties: Brush, Color, Label, Value
+    ' 
+    ' Class ODESeries
+    ' 
+    '     Properties: Color, Name, X, Y
+    ' 
+    ' Class ZScoreEntry
+    ' 
+    '     Properties: Color, Group, Name, Values
+    ' 
+    ' Class VennSet
+    ' 
+    '     Properties: Color, Intersections, Name, Size
+    ' 
+    '     Function: IntersectWith
+    ' 
+    '     Sub: FixSetCompleteness
+    ' 
+    ' Class BarDataSample
+    ' 
+    '     Properties: data, StackedSum, tag
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class BarDataGroup
+    ' 
+    '     Properties: Samples, Serials
+    ' 
+    '     Function: Desc, Reorder, ToMatrix
+    ' 
+    ' Class SampleMoments
+    ' 
+    '     Properties: Data, Mean, SampleName, StandardDeviation
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 '  DataPlot / Engine / DataModels.vb
 '  Copyright (c) 2018-2026 sciBASIC.NET Foundation, GPL3 Licensed
@@ -518,3 +676,4 @@ Public Class SampleMoments
     Public Property StandardDeviation As Double = 1
     Public Property Data As Double() = {}
 End Class
+

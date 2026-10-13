@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e35885b897a4f182a9be68ec3ba8b5d7, mime\application%xml\MathML\contentBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::aa5024012873c9594d75a1f9f9364c54, mime\application%xml\MathML\contentBuilder.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 163 (79.90%)
-    ' Comment Lines: 13 (6.37%)
-    '    - Xml Docs: 61.54%
+    '   Total Lines: 266
+    '    Code Lines: 192 (72.18%)
+    ' Comment Lines: 38 (14.29%)
+    '    - Xml Docs: 73.68%
     ' 
-    '   Blank Lines: 28 (13.73%)
-    '     File Size: 8.09 KB
+    '   Blank Lines: 36 (13.53%)
+    '     File Size: 11.50 KB
 
 
     '     Module ContentBuilder
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ExpressionComponent, getTextSymbol, parseInternal, ParseXml, safeGetOperator
-    '                   SimplyOperator, ToString, TrimWhitespace
+    '         Function: ExpressionComponent, foldChain, getTextSymbol, isChainable, parseInternal
+    '                   ParseXml, safeGetOperator, SimplyOperator, ToString, TrimWhitespace
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::80e232f9be0420ebe85aa6e23e7b0690, Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::bc00f708dc9d375661a63dc8dd98d7b6, Data_science\Visualization\DataPlot\Legacy\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 133 (77.78%)
-    ' Comment Lines: 19 (11.11%)
+    '   Total Lines: 170
+    '    Code Lines: 133 (78.24%)
+    ' Comment Lines: 19 (11.18%)
     '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 19 (11.11%)
-    '     File Size: 7.01 KB
+    '   Blank Lines: 18 (10.59%)
+    '     File Size: 7.02 KB
 
 
     '     Module BarPlotDataExtensions

@@ -1,57 +1,58 @@
-#Region "Microsoft.VisualBasic::2391e61a3db0bb1443641c7f768daa3d, Data_science\Visualization\Plots\Scatter\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::5d7b839e492ece545a79e57d28b52781, Data_science\Visualization\DataPlot\Legacy\Bubble.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 358
-'    Code Lines: 294 (82.12%)
-' Comment Lines: 21 (5.87%)
-'    - Xml Docs: 80.95%
-' 
-'   Blank Lines: 43 (12.01%)
-'     File Size: 14.88 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Bubble
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: logRadius, Plot
-' 
-'     Sub: drawLegend, Plot, PlotInternal
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 334
+    '    Code Lines: 269 (80.54%)
+    ' Comment Lines: 21 (6.29%)
+    '    - Xml Docs: 80.95%
+    ' 
+    '   Blank Lines: 44 (13.17%)
+    '     File Size: 14.34 KB
+
+
+    '     Class Bubble
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: logRadius, Plot
+    ' 
+    '         Sub: drawLegend, Plot, PlotInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

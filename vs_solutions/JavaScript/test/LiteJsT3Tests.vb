@@ -1,3 +1,59 @@
+﻿#Region "Microsoft.VisualBasic::0197abc76ff5dc6effd8d864cae02b6b, vs_solutions\JavaScript\test\LiteJsT3Tests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 182
+    '    Code Lines: 138 (75.82%)
+    ' Comment Lines: 21 (11.54%)
+    '    - Xml Docs: 23.81%
+    ' 
+    '   Blank Lines: 23 (12.64%)
+    '     File Size: 10.48 KB
+
+
+    ' Class LiteJsT3Tests
+    ' 
+    '     Function: Generate, OneLine, RunJs
+    ' 
+    '     Sub: ArrayLibrary, CodeGen_RegexAndBuiltins, Date_Basics, Errors_ConstructionAndProperties, ObjectMathNumberJsonLibrary
+    '          Regex_LiteralsAndDivisionDisambiguation, Regex_StringInterop, StringLibrary
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 
@@ -180,3 +236,4 @@ Public Class LiteJsT3Tests
     End Sub
 
 End Class
+

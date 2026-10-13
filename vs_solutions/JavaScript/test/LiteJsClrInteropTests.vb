@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::d0ce149f5cde93df33718b6fe0794968, vs_solutions\JavaScript\test\LiteJsClrInteropTests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 358
+    '    Code Lines: 273 (76.26%)
+    ' Comment Lines: 33 (9.22%)
+    '    - Xml Docs: 45.45%
+    ' 
+    '   Blank Lines: 52 (14.53%)
+    '     File Size: 15.80 KB
+
+
+    ' Class LiteJsClrInteropTests
+    ' 
+    '     Function: ErrorName, Fixture, OneLine, RunJs
+    ' 
+    '     Sub: Clr_CollectionLengthIndexLoopAndSpread, Clr_DelegateParameterIsRejectedWithReadableError, Clr_DeleteIsRejected, Clr_EnumAndDateAndGuidConversion, Clr_ExceptionIsCatchableFromScript
+    '          Clr_ExplicitOnlyForcesWhitelistModeForEveryType, Clr_FaultedTaskBecomesRejection, Clr_IdentityIsStable, Clr_IndexerIsReachedWithBrackets, Clr_InOperatorAndKeys
+    '          Clr_InstallHostBatchBindsAllObjects, Clr_JsExposeSwitchesTheTypeToWhitelistMode, Clr_JsIgnoreAndJsNameAreHonoured, Clr_NestedObjectStaysReachable, Clr_NewCreatesAnInstanceAndInstanceofWorks
+    '          Clr_NoMatchingOverloadReportsCandidates, Clr_OverloadResolutionPicksByArgumentType, Clr_ParamsAndOptionalParameters, Clr_PlainEnumerableIteratesWithoutIndexer, Clr_ReadOnlyPropertyWriteIsTypeError
+    '          Clr_ReadsPropertiesAndFields, Clr_RegisteredHostGlobalIsVisibleToNewEngines, Clr_RethrownErrorKeepsTheOriginalException, Clr_SpreadCopiesDataMembers, Clr_StaticMembersAndConstruction
+    '          Clr_StructWritesDoNotPersist, Clr_TaskBecomesPromise, Clr_TypeCannotBeCalledWithoutNew, Clr_TypeofDisplayAndJson, Clr_UnknownMemberReadIsUndefinedAndWriteIsTypeError
+    '          Clr_UnknownMethodCallIsTypeError, Clr_UnregisteredGlobalIsAReferenceError, Clr_WriteOnlyPropertyReadIsTypeError, Clr_WritesPropertiesAndFields, CodeGen_EntryPointTakesTheOptionalHostArgument
+    '          CodeGen_HostIdentifiersResolveAtRuntime
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports Xunit
@@ -356,3 +418,4 @@ Public Class LiteJsClrInteropTests
     End Sub
 
 End Class
+

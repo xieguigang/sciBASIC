@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01b6453c24d88ba62bb8afa00f92de01, Data_science\Visualization\Plots\3D\Serial3D.vb"
+﻿#Region "Microsoft.VisualBasic::8e64b2745b489baeeace4cf13f38e2f7, Data_science\Visualization\DataPlot\Plot3D\Serial3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (16.67%)
-    '     File Size: 1.03 KB
+    '     File Size: 1021 B
 
 
     '     Class Serial3D

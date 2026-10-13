@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::f7a2c9b41d3e5c8a0f6b2d91c4e7a3b2, cuda\ILCudaTensor\GPUTensor\DeviceResidentStore64.vb"
+﻿#Region "Microsoft.VisualBasic::67aaf9920d5598024906cd9644cc5918, cuda\ILCudaTensor\GPUTensor\DeviceResidentStore64.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,35 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (0.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 273
+    '    Code Lines: 155 (56.78%)
+    ' Comment Lines: 61 (22.34%)
+    '    - Xml Docs: 59.02%
     ' 
-    '   Blank Lines: 0 (0.00%)
-    '     File Size: 0.00 KB
+    '   Blank Lines: 57 (20.88%)
+    '     File Size: 11.54 KB
 
 
+    '     Class DeviceResidentStore64
+    ' 
+    '         Properties: Count, TotalBytes
+    ' 
+    '         Function: Describe, Download, FormatMb, IsPinned, Pin
+    '                   TryGet, Unpin, Upload
+    ' 
+    '         Sub: Clear, Dispose, EnsureCapacity
+    '         Class Entry
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Finalize
+    ' 
+    '         Class HostComparer
+    ' 
+    '             Function: Equals, GetHashCode
+    ' 
+    ' 
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

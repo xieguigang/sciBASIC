@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::3252ca651b6db7797969cfe16e944d7c, Data_science\DataMining\hierarchical-clustering\HCTreePlot\RadialDendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::50ad30e5840cd880faf06d2e9d7157ee, Data_science\DataMining\hierarchical-clustering\HCTreePlot\RadialDendrogram.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 17.39%
     ' 
     '   Blank Lines: 47 (18.01%)
-    '     File Size: 12.26 KB
+    '     File Size: 12.23 KB
 
 
     ' Class RadialDendrogram

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::06d2c4ea248fb8190a1b17753e61d093, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::958e96d8b79f17bb8485f9619cce7a75, Data_science\Visualization\DataPlot\Canvas\PlotBase.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 276
-    '    Code Lines: 191 (69.20%)
-    ' Comment Lines: 50 (18.12%)
+    '   Total Lines: 275
+    '    Code Lines: 190 (69.09%)
+    ' Comment Lines: 50 (18.18%)
     '    - Xml Docs: 94.00%
     ' 
-    '   Blank Lines: 35 (12.68%)
-    '     File Size: 11.75 KB
+    '   Blank Lines: 35 (12.73%)
+    '     File Size: 11.68 KB
 
 
     '     Class Plot

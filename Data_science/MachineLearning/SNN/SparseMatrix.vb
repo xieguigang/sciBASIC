@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be95c86909cfce2d33fa285a93ed7a70, Data_science\MachineLearning\SNN\SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::c4058ae86b95573878891696988dced7, Data_science\MachineLearning\SNN\SparseMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 322
-    '    Code Lines: 216 (67.08%)
-    ' Comment Lines: 66 (20.50%)
-    '    - Xml Docs: 59.09%
+    '   Total Lines: 353
+    '    Code Lines: 224 (63.46%)
+    ' Comment Lines: 87 (24.65%)
+    '    - Xml Docs: 68.97%
     ' 
-    '   Blank Lines: 40 (12.42%)
-    '     File Size: 12.41 KB
+    '   Blank Lines: 42 (11.90%)
+    '     File Size: 13.85 KB
 
 
     ' Enum SparseNormalization
@@ -53,14 +53,14 @@
     ' 
     ' Class SparseMatrix
     ' 
-    '     Properties: ColumnIndices, Columns, NonZeros, RowPointers, Rows
-    '                 Values
+    '     Properties: ColumnIndices, Columns, Csr, NonZeros, RowPointers
+    '                 Rows, Values
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: FromTriplets, SpMM, ToDense, ToString
     ' 
-    '     Sub: Normalize
+    '     Sub: MarkModified, Normalize
     ' 
     ' /********************************************************************************/
 

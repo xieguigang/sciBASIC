@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::d44d9532ee8f6421bde927aa40625310, Data_science\Visualization\Plots\BarPlot\Data\BiDirectionData.vb"
+﻿#Region "Microsoft.VisualBasic::0fcc8db8f3be208ea3e52d9da2e31bc9, Data_science\Visualization\DataPlot\Legacy\BiDirectionData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 17 (50.00%)
-    ' Comment Lines: 12 (35.29%)
+    '   Total Lines: 33
+    '    Code Lines: 17 (51.52%)
+    ' Comment Lines: 12 (36.36%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (14.71%)
-    '     File Size: 859 B
+    '   Blank Lines: 4 (12.12%)
+    '     File Size: 864 B
 
 
     '     Class BiDirectionData

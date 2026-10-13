@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c62335a7d04996c211d9e1da172eb29, sciBASIC#\Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e6b42cf611a9d850cb0ab68666f0915e, Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 213
-    '    Code Lines: 48
-    ' Comment Lines: 111
-    '   Blank Lines: 54
-    '     File Size: 6.80 KB
+    '    Code Lines: 48 (22.54%)
+    ' Comment Lines: 111 (52.11%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 54 (25.35%)
+    '     File Size: 6.75 KB
 
 
     ' Module Program

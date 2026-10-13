@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78281255344a7345622bf8098c043eaa, cuda\ILCuda\Runtime\CudaContext.vb"
+﻿#Region "Microsoft.VisualBasic::01044b28fb8c1b3900fa01ed5cf3eba9, cuda\ILCuda\Runtime\CudaContext.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 53 (72.60%)
-    ' Comment Lines: 6 (8.22%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 115
+    '    Code Lines: 71 (61.74%)
+    ' Comment Lines: 22 (19.13%)
+    '    - Xml Docs: 72.73%
     ' 
-    '   Blank Lines: 14 (19.18%)
-    '     File Size: 2.48 KB
+    '   Blank Lines: 22 (19.13%)
+    '     File Size: 4.54 KB
 
 
     '     Class CudaContext
     ' 
-    '         Properties: Device, Handle
+    '         Properties: Device, Handle, IsDisposed
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: (+2 Overloads) Dispose, Finalize, Synchronize
+    ' 
+    '         Function: IsCurrent
+    ' 
+    '         Sub: (+2 Overloads) Dispose, Finalize, MakeCurrent, Synchronize
     ' 
     ' 
     ' /********************************************************************************/

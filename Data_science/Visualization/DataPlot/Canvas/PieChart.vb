@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::2fadf555493ccefb38520991ae07f196, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::13b1ce70f5eb8f5d8e2206cdf359bfaf, Data_science\Visualization\DataPlot\Canvas\PieChart.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 41 (10.82%)
-    '     File Size: 16.69 KB
+    '     File Size: 16.68 KB
 
 
     '     Module PieChart

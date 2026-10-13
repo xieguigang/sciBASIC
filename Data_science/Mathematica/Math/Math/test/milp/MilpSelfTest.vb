@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::071ffd8ac7b9094af6e87ada8f5683d2, Data_science\Mathematica\Math\Math\test\milp\MilpSelfTest.vb"
+﻿#Region "Microsoft.VisualBasic::44d3a5422a409498f410774cc7b6926a, Data_science\Mathematica\Math\Math\test\milp\MilpSelfTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 648
-    '    Code Lines: 431 (66.51%)
-    ' Comment Lines: 60 (9.26%)
-    '    - Xml Docs: 21.67%
+    '   Total Lines: 700
+    '    Code Lines: 469 (67.00%)
+    ' Comment Lines: 65 (9.29%)
+    '    - Xml Docs: 20.00%
     ' 
-    '   Blank Lines: 157 (24.23%)
-    '     File Size: 26.63 KB
+    '   Blank Lines: 166 (23.71%)
+    '     File Size: 29.41 KB
 
 
     ' Module MilpSelfTest
@@ -50,8 +50,8 @@
     '               ProductionModel, RunAll
     ' 
     '     Sub: Check, T1, T10, T11, T12
-    '          T2, T3, T4, T5, T6
-    '          T7, T8, T9
+    '          T13, T2, T3, T4, T5
+    '          T6, T7, T8, T9
     ' 
     ' /********************************************************************************/
 

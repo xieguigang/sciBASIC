@@ -1,19 +1,60 @@
-#Region "Microsoft.VisualBasic::MilpKernels.vb, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpKernels.vb"
+﻿#Region "Microsoft.VisualBasic::e6310c7491b037661d0e63481d45ba99, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpKernels.vb"
 
-' Copyright (c) 2018 GPL3 Licensed
-'
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-'
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-'
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 371
+    '    Code Lines: 205 (55.26%)
+    ' Comment Lines: 96 (25.88%)
+    '    - Xml Docs: 60.42%
+    ' 
+    '   Blank Lines: 70 (18.87%)
+    '     File Size: 15.72 KB
+
+
+    '     Module MilpKernels
+    ' 
+    '         Properties: EnableParallel, MaxThreads, MinParallelWork, NestedParallelSuppressed
+    ' 
+    '         Function: Dot, LuFactorRows, LuFactorSimd, MakeOptions, ShouldParallelize
+    '                   ShouldParallelizeByWork, ToMatrix, ToRows, TransposeRows
+    ' 
+    '         Sub: AxpyInPlace, AxpyRange, BeginWorker, EndWorker, ForParallel
+    '              MatVec, MatVecRows
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::fb625e3046e55319ab26031aa371a555, Data_science\Visualization\test\Examples\ChartExamples.vb"
+﻿#Region "Microsoft.VisualBasic::fae6b7d664c6699c17327318ae78a5f7, Data_science\Visualization\test\Examples\ChartExamples.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 8.51%
     ' 
     '   Blank Lines: 22 (7.26%)
-    '     File Size: 14.60 KB
+    '     File Size: 14.62 KB
 
 
     ' Module ChartExamples

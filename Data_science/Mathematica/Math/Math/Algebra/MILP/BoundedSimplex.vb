@@ -1,80 +1,81 @@
-﻿#Region "Microsoft.VisualBasic::045be13124cfc82914059e72701acbf5, Data_science\Mathematica\Math\Math\Algebra\MILP\BoundedSimplex.vb"
+﻿#Region "Microsoft.VisualBasic::f81e060e3c1742dd833fbff6282f6c8d, Data_science\Mathematica\Math\Math\Algebra\MILP\BoundedSimplex.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 897
-'    Code Lines: 582 (64.88%)
-' Comment Lines: 111 (12.37%)
-'    - Xml Docs: 38.74%
-' 
-'   Blank Lines: 204 (22.74%)
-'     File Size: 33.44 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Enum BsStatus
-' 
-' 
-'  
-' 
-' 
-' 
-'     Class BsResult
-' 
-'         Properties: AtUpper, Basis, IsOptimal, Iters, Objective
-'                     ReducedCosts, Status, StatusText, X, Y
-' 
-'     Class BoundedSimplex
-' 
-'         Properties: Factorization
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ArtCost, BasicLower, BasicUpper, BasisColumn, BasisMatrix
-'                   CurrentX, LoadWarmStart, MakeResult, NonbasicBoundValue, NonbasicValue
-'                   ObjectiveValue, Phase1, Refresh, RunDual, RunPrimal
-'                   Solve, SolveWithBasis, StatusMessage, UnitVector, WorkCost
-' 
-'         Sub: BasicBounds, InitializeArtificialSigns, ResetState
-'         Class DualCandidate
-' 
-'             Properties: dist, g, j, ratio, sigma
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1067
+    '    Code Lines: 636 (59.61%)
+    ' Comment Lines: 196 (18.37%)
+    '    - Xml Docs: 58.16%
+    ' 
+    '   Blank Lines: 235 (22.02%)
+    '     File Size: 42.64 KB
+
+
+    '     Enum BsStatus
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class BsResult
+    ' 
+    '         Properties: AtUpper, Basis, IsOptimal, Iters, Objective
+    '                     ReducedCosts, Status, StatusText, X, Y
+    ' 
+    '     Class BoundedSimplex
+    ' 
+    '         Properties: Factorization, Updater
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ArtCost, BasicLower, BasicUpper, BasisColumn, BasisRows
+    '                   CurrentX, EnsureFactorization, LoadWarmStart, MakeResult, NonbasicBoundValue
+    '                   NonbasicValue, ObjectiveValue, Phase1, RefactorNow, Refresh
+    '                   RunDual, RunPrimal, Solve, SolveBasis, SolveBasisT
+    '                   SolveWithBasis, StatusMessage, UnitVector, WorkCost
+    ' 
+    '         Sub: ApplyBasisChange, BasicBounds, InitializeArtificialSigns, ResetState, SetBounds
+    '         Class DualCandidate
+    ' 
+    '             Properties: dist, g, j, ratio, sigma
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

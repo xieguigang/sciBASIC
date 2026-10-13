@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::744c60c922d2547ffce6b9c84fca024b, Data_science\Visualization\DataPlot\Advanced\RadarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::4a957b7c829a425c22ec5c6d6cbad0a7, Data_science\Visualization\DataPlot\Advanced\RadarPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 113 (79.02%)
-    ' Comment Lines: 16 (11.19%)
-    '    - Xml Docs: 37.50%
+    '   Total Lines: 148
+    '    Code Lines: 116 (78.38%)
+    ' Comment Lines: 17 (11.49%)
+    '    - Xml Docs: 41.18%
     ' 
-    '   Blank Lines: 14 (9.79%)
-    '     File Size: 5.65 KB
+    '   Blank Lines: 15 (10.14%)
+    '     File Size: 6.02 KB
 
 
     ' Class RadarPlot
@@ -48,7 +48,7 @@
     '     Properties: Categories, FillAlpha, GridLevels, MaxValue, MultiValues
     '                 SeriesNames, ShowScale
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Sub: Plot
     ' 
     ' /********************************************************************************/

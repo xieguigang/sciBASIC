@@ -1,67 +1,57 @@
-#Region "Microsoft.VisualBasic::dd962bc2891aebbb66ce14d150e21aee, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7d7b59c6b0a9611d6eedd46b82b8e475, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 196
-'    Code Lines: 169 (86.22%)
-' Comment Lines: 8 (4.08%)
-'    - Xml Docs: 12.50%
-' 
-'   Blank Lines: 19 (9.69%)
-'     File Size: 7.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class HeatmapPlot
-' 
-'     Properties: ColLabels, ColorMap, Matrix, MaxValue, MinValue
-'                 RowLabels, ShowValues
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-'     Enum ColorMapType
-' 
-'         CoolWarm, Grayscale, Inferno, Jet, Plasma
-'         Viridis
-' 
-' 
-' 
-'  
-' 
-'     Function: Brightness, GetColor, LerpPalette
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 93 (77.50%)
+    ' Comment Lines: 11 (9.17%)
+    '    - Xml Docs: 45.45%
+    ' 
+    '   Blank Lines: 16 (13.33%)
+    '     File Size: 4.93 KB
+
+
+    ' Class HeatmapPlot
+    ' 
+    '     Properties: ColLabels, ColorMap, Matrix, MaxValue, MinValue
+    '                 RowLabels, ShowColorLegend, ShowValues
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Sub: Plot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

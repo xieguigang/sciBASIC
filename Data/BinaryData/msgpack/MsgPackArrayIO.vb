@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::msgpack, Data\BinaryData\msgpack\MsgPackArrayIO.vb"
+﻿#Region "Microsoft.VisualBasic::bd0d3bd227bee2fedf0e0b0acc94f618, Data\BinaryData\msgpack\MsgPackArrayIO.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 
-    '    Code Lines: 
-    ' Comment Lines: 
-    '    - Xml Docs: 
+    '   Total Lines: 818
+    '    Code Lines: 546 (66.75%)
+    ' Comment Lines: 73 (8.92%)
+    '    - Xml Docs: 83.56%
     ' 
-    '   Blank Lines: 
-    '     File Size: 
+    '   Blank Lines: 199 (24.33%)
+    '     File Size: 30.99 KB
 
 
-    '     Module MsgPackArrayIO
+    ' Module MsgPackArrayIO
     ' 
-    '         Function: IsPrimitiveElement, TryReadArray, TryReadList, TryWriteArray
+    '     Function: integerSize, IsPrimitiveElement, readBlock, scratchOf, swapUInt
+    '               swapUShort, toSigned, tryDecodeInteger, TryReadArray, TryReadList
+    '               TryWriteArray, writeInteger
     ' 
+    '     Sub: ensure, putInt16, putInt32, putInt64, putUInt32
+    '          readBooleans, readBytes, readDoubles, readIntegers, readLongs
+    '          readShorts, readSingles, seekBack, writeArrayHeader
     ' 
     ' /********************************************************************************/
 

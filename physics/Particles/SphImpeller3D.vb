@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::c4e9c16d79518ed3d07bcc497453c742, physics\Particles\SphImpeller3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 87 (44.39%)
+    ' Comment Lines: 78 (39.80%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 31 (15.82%)
+    '     File Size: 7.66 KB
+
+
+    ' Class SphImpeller3D
+    ' 
+    '     Properties: Angle, AngularVelocity, AxialVelocity, BladeHeight, BlendRate
+    '                 CenterX, CenterY, Influence, RadialPumping, Radius
+    '                 Rpm, ShaftRadius, ShaftTop, ZCenter
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: DistanceToBody, IsInside
+    ' 
+    '     Sub: Advance, Drive, SetRpm
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '   SphImpeller3D.vb
@@ -194,3 +255,4 @@ Public Class SphImpeller3D
     End Sub
 
 End Class
+

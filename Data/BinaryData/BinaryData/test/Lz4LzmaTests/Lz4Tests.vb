@@ -1,3 +1,62 @@
+﻿#Region "Microsoft.VisualBasic::a505d0d058242e5828b9b01765551fca, Data\BinaryData\BinaryData\test\Lz4LzmaTests\Lz4Tests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 356
+    '    Code Lines: 292 (82.02%)
+    ' Comment Lines: 19 (5.34%)
+    '    - Xml Docs: 26.32%
+    ' 
+    '   Blank Lines: 45 (12.64%)
+    '     File Size: 13.84 KB
+
+
+    ' Class Lz4Tests
+    ' 
+    '     Function: BuildFrame, WordLE
+    ' 
+    '     Sub: Block_EmptyInput_DecodesToEmpty, Block_ExtendedLiteralLength, Block_ExtendedMatchLength, Block_LiteralsOnly, Block_OffsetBeyondWindow_IsRejected
+    '          Block_OverlappingMatchWithOffsetThree, Block_RunLengthWithOffsetOne, Block_ZeroOffset_IsRejected, BlockCorpus_AllFiles_DecodeToTheOriginalBytes, Frame_ConcatenatedFrames
+    '          Frame_ContentChecksumCorruptedInCorpus_IsRejected, Frame_ContentChecksumMismatch_IsRejected, Frame_EmptyInputStream_ReturnsNoData, Frame_HeaderChecksumMismatch_IsRejected, Frame_LegacyFormat
+    '          Frame_MinimalHandCrafted, Frame_SkippableFrameIsSkipped, Frame_StoredBlock, Frame_TruncatedStream_IsRejected, Frame_UnknownMagic_IsRejected
+    '          FrameCorpus_AllFiles_DecodeToTheOriginalBytes, FrameCorpus_ChunkedReads_Match, ReadByte_WalksTheWholeFrame, Stream_Dispose_ClosesTheUnderlyingStream_UnlessLeaveOpen, Stream_ReportedCapabilities
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 
@@ -354,3 +413,4 @@ Public Class Lz4Tests
     End Function
 
 End Class
+

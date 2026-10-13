@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6986f2d7d945f82d9380eb2d3dc6586, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\ScriptSlot.vb"
+﻿#Region "Microsoft.VisualBasic::5416f9a1121c02666949d11657e1d208, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\ScriptSlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 188
-    '    Code Lines: 128 (68.09%)
-    ' Comment Lines: 33 (17.55%)
-    '    - Xml Docs: 42.42%
+    '   Total Lines: 231
+    '    Code Lines: 150 (64.94%)
+    ' Comment Lines: 44 (19.05%)
+    '    - Xml Docs: 52.27%
     ' 
-    '   Blank Lines: 25 (14.97%)
-    '     File Size: 6.72 KB
+    '   Blank Lines: 37 (16.02%)
+    '     File Size: 7.38 KB
 
 
     '     Class ScriptSlot
@@ -54,8 +54,8 @@
     '         Function: GetJsValue, GetValue
     ' 
     '         Sub: ClearValues, (+2 Overloads) Dispose, SetBoolean, SetDate, SetDouble
-    '              SetInteger, SetJsValue, SetLong, SetObject, SetSingle, SetString
-    '              SetValue
+    '              SetInteger, SetJsValue, SetLong, SetObject, SetSingle
+    '              SetString, SetValue
     ' 
     ' 
     ' /********************************************************************************/

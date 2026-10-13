@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::50a11c14c627bd89aec86f36f560f720, Data_science\Visualization\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::3462229be918c0f653c8b9965a1c7b8f, Data_science\Visualization\DataPlot\Legacy\Scaling.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 222
-    '    Code Lines: 127 (57.21%)
-    ' Comment Lines: 63 (28.38%)
+    '   Total Lines: 220
+    '    Code Lines: 126 (57.27%)
+    ' Comment Lines: 63 (28.64%)
     '    - Xml Docs: 93.65%
     ' 
-    '   Blank Lines: 32 (14.41%)
-    '     File Size: 8.19 KB
+    '   Blank Lines: 31 (14.09%)
+    '     File Size: 8.37 KB
 
 
     '     Class Scaling

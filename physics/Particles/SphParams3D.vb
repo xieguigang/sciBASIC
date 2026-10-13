@@ -1,3 +1,67 @@
+﻿#Region "Microsoft.VisualBasic::4a0d5c008ed6bb3b943afde2f7478922, physics\Particles\SphParams3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 51 (32.69%)
+    ' Comment Lines: 86 (55.13%)
+    '    - Xml Docs: 69.77%
+    ' 
+    '   Blank Lines: 19 (12.18%)
+    '     File Size: 7.15 KB
+
+
+    ' Class SphParams3D
+    ' 
+    '     Properties: GradSpikyPow2, GradSpikyPow3, MaxAccel, MaxDensityRatio, MinDensityRatio
+    '                 MinPressureRatio, NearPressureK, Poly6, PressureK, RestDensity
+    '                 RestNearDensity, SelfDensity, SelfNearDensity, SmoothingRadius, SpikyPow2
+    '                 SpikyPow3, SqrRadius, Viscosity, VolumeScale
+    ' 
+    '     Function: FromKernels
+    ' 
+    ' Interface ISphCompute3D
+    ' 
+    '     Properties: Name
+    ' 
+    '     Function: RunSubstep
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '   SphParams3D.vb
@@ -154,3 +218,4 @@ Public Interface ISphCompute3D
     Function RunSubstep(state As SphState3D, grid As UniformGrid3D, params As SphParams3D, dt As Single) As Boolean
 
 End Interface
+

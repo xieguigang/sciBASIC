@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa357ba8680491ffdd2394551ef7c9e5, mime\text%html\Render\CSS\CssLayoutEngine.vb"
+﻿#Region "Microsoft.VisualBasic::cb9e8799108b8e89c4b6c6fae258a48f, mime\text%html\Render\CSS\CssLayoutEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 518
-    '    Code Lines: 245 (47.30%)
-    ' Comment Lines: 159 (30.69%)
-    '    - Xml Docs: 59.12%
+    '   Total Lines: 516
+    '    Code Lines: 240 (46.51%)
+    ' Comment Lines: 163 (31.59%)
+    '    - Xml Docs: 57.67%
     ' 
-    '   Blank Lines: 114 (22.01%)
-    '     File Size: 20.18 KB
+    '   Blank Lines: 113 (21.90%)
+    '     File Size: 20.21 KB
 
 
     '     Class CssLayoutEngine

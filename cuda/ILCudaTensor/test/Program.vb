@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ad420f467caa014e094af76d59b565d, cuda\ILCudaTensor\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a802efd82881fdc52594e033abb34fe9, cuda\ILCudaTensor\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 492
-    '    Code Lines: 325 (66.06%)
-    ' Comment Lines: 75 (15.24%)
-    '    - Xml Docs: 25.33%
+    '   Total Lines: 967
+    '    Code Lines: 639 (66.08%)
+    ' Comment Lines: 134 (13.86%)
+    '    - Xml Docs: 20.90%
     ' 
-    '   Blank Lines: 92 (18.70%)
-    '     File Size: 24.50 KB
+    '   Blank Lines: 194 (20.06%)
+    '     File Size: 47.12 KB
 
 
     ' Module Program
     ' 
-    '     Function: BuildRandomCsr, MaxDiff, NetShapeProbe, RelErr
+    '     Function: BuildRandomCsr, MaxDiff, MaxDiffF, NetShapeProbe, RelErr
+    '               RelMaxDiff
     ' 
     '     Sub: Check, Main
     '     Class ScalarProbe

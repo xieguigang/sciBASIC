@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a643ab7c3309d790881b89a644455af, Data_science\Visualization\DataPlot\Engine\Series.vb"
+﻿#Region "Microsoft.VisualBasic::6dbc261468b4eac80b13c871db548131, Data_science\Visualization\DataPlot\Engine\Series.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 11 (84.62%)
-    ' Comment Lines: 1 (7.69%)
+    '   Total Lines: 61
+    '    Code Lines: 40 (65.57%)
+    ' Comment Lines: 8 (13.11%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (7.69%)
-    '     File Size: 484 B
+    '   Blank Lines: 13 (21.31%)
+    '     File Size: 2.48 KB
 
 
     ' Class Series
     ' 
-    '     Properties: Color, LineStyle, MarkerShape, Name, Visible
-    '                 X, Y
+    '     Properties: Color, ErrorMinus, ErrorPlus, FillAlpha, FillColor
+    '                 LineStyle, MarkerShape, Name, PointLabels, PointSize
+    '                 Size, Visible, X, Y
+    ' 
+    '     Function: (+2 Overloads) FromPoints, ToString
     ' 
     ' /********************************************************************************/
 

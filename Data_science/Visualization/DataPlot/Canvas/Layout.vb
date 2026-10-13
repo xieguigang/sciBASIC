@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::d4182d965d1a7d1ac0f179d1c4b212c8, Data_science\Visualization\Plots\g\Theme\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::d5740def9ce4f885df4b770130af92a2, Data_science\Visualization\DataPlot\Canvas\Layout.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 70 (59.83%)
-    ' Comment Lines: 23 (19.66%)
+    '   Total Lines: 133
+    '    Code Lines: 83 (62.41%)
+    ' Comment Lines: 23 (17.29%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 24 (20.51%)
-    '     File Size: 3.87 KB
+    '   Blank Lines: 27 (20.30%)
+    '     File Size: 4.25 KB
 
 
     '     Class Layout
@@ -64,6 +64,10 @@
     '         Properties: isEmpty, target, x, y
     ' 
     '         Function: GetLocation
+    ' 
+    '     Module LayoutExtensions
+    ' 
+    '         Function: IsNullOrEmpty
     ' 
     ' 
     ' /********************************************************************************/

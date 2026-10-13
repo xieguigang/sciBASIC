@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fb51ff8ed72ff3c45ac80f26ce1c5f2, Data_science\Visualization\DataPlot\Basic\LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::464345792bb8dcf1e50d0311eb5d6267, Data_science\Visualization\DataPlot\Basic\LinePlot.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 62 (83.78%)
-    ' Comment Lines: 3 (4.05%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 137
+    '    Code Lines: 94 (68.61%)
+    ' Comment Lines: 24 (17.52%)
+    '    - Xml Docs: 91.67%
     ' 
-    '   Blank Lines: 9 (12.16%)
-    '     File Size: 2.79 KB
+    '   Blank Lines: 19 (13.87%)
+    '     File Size: 5.94 KB
 
 
     ' Class LinePlot
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Sub: Plot
+    '     Sub: DrawErrorBand, Plot
     ' 
     ' /********************************************************************************/
 

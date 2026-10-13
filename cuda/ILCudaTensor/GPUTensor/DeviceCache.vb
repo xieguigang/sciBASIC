@@ -1,72 +1,72 @@
-﻿#Region "Microsoft.VisualBasic::94359f453e5b41d365990ff975e057b3, cuda\ILCudaTensor\GPUTensor\DeviceCache.vb"
+﻿#Region "Microsoft.VisualBasic::d50aa62cb3ca08135540598774d7da5f, cuda\ILCudaTensor\GPUTensor\DeviceCache.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 195
-'    Code Lines: 108 (55.38%)
-' Comment Lines: 50 (25.64%)
-'    - Xml Docs: 60.00%
-' 
-'   Blank Lines: 37 (18.97%)
-'     File Size: 8.21 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DeviceCache
-' 
-'         Properties: Bytes, Count
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetBuffer
-' 
-'         Sub: Clear, Dispose, Evict
-'         Class Entry
-' 
-'             Properties: Ticks
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Sub: Finalize
-' 
-'         Class HostComparer
-' 
-'             Function: HashOf, ReferenceEqualsTo
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 239
+    '    Code Lines: 115 (48.12%)
+    ' Comment Lines: 83 (34.73%)
+    '    - Xml Docs: 75.90%
+    ' 
+    '   Blank Lines: 41 (17.15%)
+    '     File Size: 11.26 KB
+
+
+    '     Class DeviceCache
+    ' 
+    '         Properties: Bytes, Count
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetBuffer, GetBufferCore, GetBufferF
+    ' 
+    '         Sub: Clear, Dispose, Evict
+    '         Class Entry
+    ' 
+    '             Properties: Ticks
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Finalize
+    ' 
+    '         Class HostComparer
+    ' 
+    '             Function: HashOf, ReferenceEqualsTo
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

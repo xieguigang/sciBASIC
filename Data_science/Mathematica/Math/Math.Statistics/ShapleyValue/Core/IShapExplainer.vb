@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\IShapExplainer.vb"
+﻿#Region "Microsoft.VisualBasic::a7a7ef49c5f526e7fe4eaa17cf7d1d17, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\IShapExplainer.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 44
+    '    Code Lines: 8 (18.18%)
+    ' Comment Lines: 29 (65.91%)
+    '    - Xml Docs: 89.66%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 7 (15.91%)
+    '     File Size: 1.62 KB
 
 
+    '     Interface IShapExplainer
+    ' 
+    '         Properties: Baseline, FeatureNames, Size
+    ' 
+    '         Function: Explain
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace ShapleyValue
 

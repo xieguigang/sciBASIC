@@ -1,3 +1,87 @@
+﻿#Region "Microsoft.VisualBasic::d5ba7f64f85cc13c27262834c3238c65, vs_solutions\JavaScript\Runtime\Runtime.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3066
+    '    Code Lines: 2527 (82.42%)
+    ' Comment Lines: 293 (9.56%)
+    '    - Xml Docs: 53.92%
+    ' 
+    '   Blank Lines: 246 (8.02%)
+    '     File Size: 149.35 KB
+
+
+    '     Module JsRuntime
+    ' 
+    '         Properties: CurrentHomeClass, CurrentThis, Io
+    ' 
+    '         Function: Arg, BuiltinArrayCtor, BuiltinArrayMethod, BuiltinConsole, BuiltinDateMethod
+    '                   BuiltinDateStatic, BuiltinErrorCtor, BuiltinGlobalFn, BuiltinJson, BuiltinMath
+    '                   BuiltinNumberStatic, BuiltinObject, BuiltinPromiseStatic, BuiltinRegExpMethod, BuiltinStringMethod
+    '                   BuiltinStringStatic, ConstructBuiltin, ConstructPromise, DispatchBuiltin, DispatchCall
+    '                   DisplayJson, FindMethodHome, FlattenArray, FromJsonElement, GlobalIdentifiers
+    '                   HostGlobalNames, InstanceClass, Instantiate, IsJsArray, IsJsFunction
+    '                   IsJsObject, IsNumber, JoinArray, JsAccessor, (+2 Overloads) JsAdd
+    '                   JsAnd, JsArray, JsArrayFrom, JsArrayRest, JsAsyncWrapper
+    '                   JsAwait, (+2 Overloads) JsBitAnd, (+2 Overloads) JsBitNot, (+2 Overloads) JsBitOr, (+2 Overloads) JsBitXor
+    '                   (+2 Overloads) JsBool, JsBox, JsBuildArgs, JsChainGet, JsChainIndex
+    '                   JsChainInvoke, JsDefineClass, JsDelete, JsDeleteValue, JsDisplay
+    '                   (+2 Overloads) JsDiv, (+2 Overloads) JsEq, JsForInKeys, (+2 Overloads) JsGe, JsGeneratorFrom
+    '                   JsGet, (+2 Overloads) JsGt, JsIn, JsIndex, JsInstanceOf
+    '                   (+2 Overloads) JsInvoke, JsInvokeCore, JsInvokeIndex, JsInvokeMethod, (+2 Overloads) JsIsNullish
+    '                   JsIterableValues, (+2 Overloads) JsLe, (+2 Overloads) JsLt, (+2 Overloads) JsMod, (+2 Overloads) JsMul
+    '                   (+2 Overloads) JsNe, (+2 Overloads) JsNeg, JsNew, (+2 Overloads) JsNot, JsNullish
+    '                   (+2 Overloads) JsNum, JsObj, JsObjectRest, JsObjFrom, JsonOpts
+    '                   JsonStringify, JsOr, JsParseJson, (+2 Overloads) JsPow, JsPromiseOf
+    '                   JsProtoChainContains, JsRestArgs, JsRunGenerator, (+2 Overloads) JsShl, (+2 Overloads) JsShr
+    '                   JsSpread, (+2 Overloads) JsStr, (+2 Overloads) JsStrictEq, (+2 Overloads) JsStrictNe, JsStringMatch
+    '                   JsStringMatchAll, JsStringReplace, (+2 Overloads) JsSub, JsSuperConstructor, JsSuperGet
+    '                   JsSuperInvoke, (+2 Overloads) JsTruthy, (+2 Overloads) JsTypeOf, JsUnbox, (+2 Overloads) JsUshr
+    '                   JsVoid, JsYieldValue, LookupInstanceMember, LookupSuperMember, MatchToArray
+    '                   NormIndex, NumToString, ParseFloatPrefix, ParseIntPrefix, ParseNumberString
+    '                   ParseScalarLiteral, RadixString, ReadMember, ResolveHostGlobal, ShiftAmount
+    '                   ToInt32Bits, ToJsonElement, ToUint32Bits, TryWriteAccessor, WrapInt32
+    ' 
+    '         Sub: AppendSpreadValues, DrainMicrotasks, JsAccessorDefine, JsSet, JsSetIndex
+    '              JsSpreadInto, QueueMicrotask
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Globalization
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -3064,3 +3148,4 @@ Namespace Runtime
     End Module
 
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1fb646fdf8d8ec49d3ba41d742a4727, cuda\ILCudaTensor\GPUTensor\CudaTensor.vb"
+﻿#Region "Microsoft.VisualBasic::dca500f8dd53fbc72625e9afcefa0509, cuda\ILCudaTensor\GPUTensor\CudaTensor.vb"
 
     ' Author:
     ' 
@@ -34,40 +34,49 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1532
-    '    Code Lines: 883 (57.64%)
-    ' Comment Lines: 329 (21.48%)
-    '    - Xml Docs: 76.90%
+    '   Total Lines: 2177
+    '    Code Lines: 1241 (57.01%)
+    ' Comment Lines: 510 (23.43%)
+    '    - Xml Docs: 80.39%
     ' 
-    '   Blank Lines: 320 (20.89%)
-    '     File Size: 70.08 KB
+    '   Blank Lines: 426 (19.57%)
+    '     File Size: 105.19 KB
 
 
     '     Class CudaTensor
     ' 
-    '         Properties: Current, Engine, KernelFailures, LastError, MaxStageBlocks
-    '                     MinGemmElements, MinGpuElements, MinSparseNnz, Name, PinnedDeviceBytes
-    '                     Resident, SupportsDeviceResidency, UseFp32Gemm, UseResidentStore
+    '         Properties: Current, Engine, IsFusedLifAvailable, IsSparseSpmmAvailable, KernelFailures
+    '                     LastError, LifWorkspaceCount, MaxStageBlocks, MinGemmElements, MinGpuElements
+    '                     MinSparseNnz, Name, PinnedDeviceBytes, PinnedDeviceBytes64, Resident
+    '                     SupportsDeviceResidency, UseFp32Gemm, UseFp64Residency, UseResidentStore
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: Abs, AdaptiveCacheBytes, Add, AddScalar, ArgMax
     '                   ArgMin, Clip, Conv2D, Conv2DBackwardBias, Conv2DBackwardFilter
     '                   Conv2DBackwardInput, ConvOutSize, Cos, DescribeDevice, DescribeKernels
-    '                   Device, DeviceF32, Divide, DivideScalar, ElementCount
-    '                   Elu, EwBinary, EwUnary, Exp, Gelu
-    '                   Heaviside, IsDevicePinned, IsLastAxis, LeakyRelu, Log
-    '                   LogSoftmax, MaskedCrossEntropy, MaskedCrossEntropyFp32Core, MatMul, MatMulFp32
-    '                   Max, MaxPool2D, MaxPool2DBackward, Mean, MeanAll
-    '                   Min, Multiply, MultiplyScalar, Negate, OnGpu
-    '                   PinDevice, Pow, Reciprocal, ReducedShape, ReduceGlobal
-    '                   Register, Relu, RowReduce, RowSoftmax, Sigmoid
-    '                   Sin, Softmax, SpMM, Sqrt, Square
-    '                   Subtract, Sum, SumAll, Swish, SyncFromDevice
-    '                   Tanh, Transpose, TryAccumulateFp32, TryAdamWStep, TryKernel
-    '                   UnpinDevice, ZeroBias
+    '                   Device, Device64, DeviceF32, Divide, DivideScalar
+    '                   ElementCount, Elu, EnsureResident64, EwBinary, EwUnary
+    '                   Exp, FluxHeadBatch, Gelu, GetLifWorkspace, GraphFeatureBatch
+    '                   GraphLayerBatch, Heaviside, IsDevicePinned, IsKernelAvailable, IsLastAxis
+    '                   LeakyRelu, LifStep, Log, LogSoftmax, LtcRk4Batch
+    '                   MaskedCrossEntropy, MaskedCrossEntropyFp32Core, MatMul, MatMulFp32, Max
+    '                   MaxPool2D, MaxPool2DBackward, Mean, MeanAll, Min
+    '                   Multiply, MultiplyScalar, Negate, OnGpu, PinDevice
+    '                   PinDevice64, Pow, Reciprocal, ReducedShape, ReduceGlobal
+    '                   Register, ReleaseLifWorkspace, Relu, RowReduce, RowSoftmax
+    '                   Sigmoid, Sin, Softmax, SpMM, Sqrt
+    '                   Square, Subtract, Sum, SumAll, Swish
+    '                   SyncFromDevice, SystemTauBatch, Tanh, Transpose, TryAccumulateFp32
+    '                   TryAdamWStep, TryKernel, UnpinDevice, ZeroBias
     ' 
     '         Sub: Dispose, EnsureDeviceCount, LaunchRow, SyncIfPinned, Unregister
+    '         Class LifWorkspace
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Dispose
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

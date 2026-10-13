@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11f113c37f0dbe336b2e8f993c10276f, cuda\ILCuda\Runtime\DeviceMemory.vb"
+﻿#Region "Microsoft.VisualBasic::1c95462e5b1ba682776bd2e578cba3e6, cuda\ILCuda\Runtime\DeviceMemory.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 45 (80.36%)
-    ' Comment Lines: 2 (3.57%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 66
+    '    Code Lines: 48 (72.73%)
+    ' Comment Lines: 6 (9.09%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 9 (16.07%)
-    '     File Size: 1.82 KB
+    '   Blank Lines: 12 (18.18%)
+    '     File Size: 2.35 KB
 
 
     '     Class DeviceMemory

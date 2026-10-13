@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::df98c3da0435e5e2186a7ac52cef9131, Data_science\Visualization\Plots-statistics\HeatMap\Models.vb"
+﻿#Region "Microsoft.VisualBasic::4e6d39a1ae4ca33f3e43e72af7cec2ee, Data_science\Visualization\DataPlot\Legacy\Models.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 9 (15.00%)
-    '     File Size: 1.71 KB
+    '     File Size: 1.72 KB
 
 
     '     Class PlotArguments

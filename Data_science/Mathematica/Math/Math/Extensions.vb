@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44807c43d93bcf720b92b2e3df07af8f, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::04adfec7436e8855180aaeb542b46ba5, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,33 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 706
-    '    Code Lines: 401 (56.80%)
-    ' Comment Lines: 195 (27.62%)
-    '    - Xml Docs: 91.28%
+    '   Total Lines: 344
+    '    Code Lines: 195 (56.69%)
+    ' Comment Lines: 108 (31.40%)
+    '    - Xml Docs: 96.30%
     ' 
-    '   Blank Lines: 110 (15.58%)
-    '     File Size: 26.14 KB
+    '   Blank Lines: 41 (11.92%)
+    '     File Size: 12.25 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, BHCorrection, (+2 Overloads) FDR
-    '               FlipCoin, SSM, SSM_SIMD
-    '     Enum PValueAdjustMethod
-    ' 
-    '         BH, Bonferroni, BY, FDR, Hochberg
-    '         Holm, Hommel, None
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: BenjaminiHochbergCorrection, BenjaminiYekutieliCorrection, BonferroniCorrection, DoubleRange, FilterNaN
-    '               FirstDecrease, FirstIncrease, HochbergCorrection, HolmCorrection, HommelCorrection
-    '               ImputeNA, IntRange, IsInside, Iterates, PValueAdjust
-    '               (+2 Overloads) Range, Reach, seq2, Sim, Tanimoto
-    '               X, Y
+    '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FilterNaN
+    '               FirstDecrease, FirstIncrease, FlipCoin, ImputeNA, IntRange
+    '               IsInside, Iterates, (+2 Overloads) Range, Reach, seq2
+    '               Sim, SSM, SSM_SIMD, Tanimoto, X
+    '               Y
     ' 
     ' /********************************************************************************/
 

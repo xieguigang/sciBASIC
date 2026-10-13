@@ -1,21 +1,61 @@
-#Region "Microsoft.VisualBasic::7c2e5a9b4f6b4910a3c8f2e5d7b9a4f6, Data_science\Visualization\DataPlot\Statistics\BubbleHeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::97e7fda763df9836d70714544bd6e500, Data_science\Visualization\DataPlot\Statistics\BubbleHeatmapPlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class BubbleHeatmapPlot
-' 
-'     Properties: Matrix, RowLabels, ColLabels, ColorMap, ShowColorLegend
-'                 MinRadiusFraction
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 111 (74.00%)
+    ' Comment Lines: 18 (12.00%)
+    '    - Xml Docs: 55.56%
+    ' 
+    '   Blank Lines: 21 (14.00%)
+    '     File Size: 6.53 KB
+
+
+    ' Class BubbleHeatmapPlot
+    ' 
+    '     Properties: ColLabels, ColorMap, Matrix, MaxBubbleFraction, RowLabels
+    '                 ShowColorLegend, ShowValues, UseAbsoluteRadius
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: MaxValue, MinValue
+    ' 
+    '     Sub: DrawLabels, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging

@@ -1,3 +1,72 @@
+﻿#Region "Microsoft.VisualBasic::d190bdc6246e3c8af96835a3e36bfbf5, Data\BinaryData\BinaryData\LZ77Stream\Lzma1Decoder.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 479
+    '    Code Lines: 354 (73.90%)
+    ' Comment Lines: 64 (13.36%)
+    '    - Xml Docs: 46.88%
+    ' 
+    '   Blank Lines: 61 (12.73%)
+    '     File Size: 20.46 KB
+
+
+    '     Class Lzma1Decoder
+    ' 
+    '         Properties: DictionarySize, Finished, Lc, Lp, Pb
+    '                     TotalProduced
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: BitTreeDecode, BitTreeReverseDecode, DecodeDistance, DecodeLength, GetByte
+    ' 
+    '         Sub: CopyMatch, CopyOut, DecodeSymbol, InitProbs, PutByte
+    ' 
+    '     Class LzmaRangeDecoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: DecodeBit, DecodeDirectBits
+    ' 
+    '         Sub: Normalize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 

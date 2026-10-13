@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd14acc39759f152442ae2b26329cd02, mime\text%html\Render\CSS\CssBox.vb"
+﻿#Region "Microsoft.VisualBasic::2db0ed2e0b8b27b96d581821671eae05, mime\text%html\Render\CSS\CssBox.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 3170
-    '    Code Lines: 2183 (68.86%)
-    ' Comment Lines: 463 (14.61%)
-    '    - Xml Docs: 81.86%
+    '   Total Lines: 3367
+    '    Code Lines: 2282 (67.78%)
+    ' Comment Lines: 547 (16.25%)
+    '    - Xml Docs: 81.54%
     ' 
-    '   Blank Lines: 524 (16.53%)
-    '     File Size: 109.97 KB
+    '   Blank Lines: 538 (15.98%)
+    '     File Size: 119.63 KB
 
 
     '     Class CssBox
@@ -54,24 +54,25 @@
     '                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
     '                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
     '                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
-    '                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
-    '                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
-    '                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
-    '                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
-    '                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
-    '                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
-    '                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
-    '                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
-    '                     FontSize, FontStyle, FontVariant, FontWeight, Height
-    '                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
-    '                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
-    '                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
-    '                     Location, Margin, MarginBottom, MarginLeft, MarginRight
-    '                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
-    '                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
-    '                     Size, Text, TextAlign, TextDecoration, TextIndent
-    '                     Top, VerticalAlign, WhiteSpace, Width, Words
-    '                     WordSpacing
+    '                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRadius
+    '                     BorderRight, BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing
+    '                     BorderStyle, BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth
+    '                     BorderWidth, Bottom, Bounds, Boxes, BoxShadow
+    '                     ClientBottom, ClientLeft, ClientRectangle, ClientRight, ClientTop
+    '                     Color, ContainingBlock, CornerNERadius, CornerNWRadius, CornerRadius
+    '                     CornerSERadius, CornerSWRadius, Direction, Display, EmptyCells
+    '                     FirstHostingLineBox, FirstWord, Float, Font, FontAscent
+    '                     FontDescent, FontFamily, FontLineSpacing, FontSize, FontStyle
+    '                     FontVariant, FontWeight, Height, HtmlTag, InitialContainer
+    '                     IsAbsolutelyPositioned, IsImage, IsRounded, IsSpaceOrEmpty, LastHostingLineBox
+    '                     LastWord, Left, LineBoxes, LineHeight, ListItemBox
+    '                     ListStyle, ListStyleImage, ListStylePosition, ListStyleType, Location
+    '                     Margin, MarginBottom, MarginLeft, MarginRight, MarginTop
+    '                     Padding, PaddingBottom, PaddingLeft, PaddingRight, PaddingTop
+    '                     PaintBounds, ParentBox, ParentLineBoxes, Position, Rectangles
+    '                     Right, Size, Text, TextAlign, TextDecoration
+    '                     TextIndent, Top, VerticalAlign, WhiteSpace, Width
+    '                     Words, WordSpacing, ZIndex
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
@@ -80,10 +81,11 @@
     '                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
     '                   ToString
     ' 
-    '         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
-    '              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
-    '              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
-    '              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
+    '         Sub: ApplyAbsolutePosition, ApplyCssHeight, CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding
+    '              GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle, MeasureBounds, MeasureWordSpacing, MeasureWordsSize
+    '              OffsetRectangle, OffsetTop, Paint, PaintBackground, PaintBorder
+    '              PaintDecoration, RectanglesReset, RemoveAnonymousSpaces, SetBackgroundColor, (+2 Overloads) SetBounds
+    '              SetInitialContainer, UpdateWords
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,21 +1,58 @@
-#Region "Microsoft.VisualBasic::d2e6a8c4b1f74905c6a3e8d2b7f1c9a5, Data_science\Visualization\DataPlot\Statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::8c2f7d879ba46289136906a972c911d3, Data_science\Visualization\DataPlot\Statistics\RegressionPlot.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 97 (69.29%)
+    ' Comment Lines: 16 (11.43%)
+    '    - Xml Docs: 56.25%
+    ' 
+    '   Blank Lines: 27 (19.29%)
+    '     File Size: 6.03 KB
+
 
     ' Class RegressionPlot
     ' 
-    '     Properties: Fit, ShowConfidenceBand, ShowEquation, ShowPoints
-    '                 PointColor, FitColor
+    '     Properties: Fit, FitColor, MarkerSize, PointColor, ShowConfidenceBand
+    '                 ShowEquation, ShowPoints
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
+    '     Constructor: (+2 Overloads) Sub New
+    '     Sub: DrawBand, DrawEquationLabel, DrawFitLegend, Plot
     ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

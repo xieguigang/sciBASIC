@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::37e6cefc043dfa74bcde785947cc4075, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
+﻿#Region "Microsoft.VisualBasic::1104ae82d51455d2fc0d6c4993acd862, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 113 (79.58%)
-    ' Comment Lines: 12 (8.45%)
-    '    - Xml Docs: 33.33%
+    '   Total Lines: 147
+    '    Code Lines: 116 (78.91%)
+    ' Comment Lines: 13 (8.84%)
+    '    - Xml Docs: 38.46%
     ' 
-    '   Blank Lines: 17 (11.97%)
-    '     File Size: 5.84 KB
+    '   Blank Lines: 18 (12.24%)
+    '     File Size: 6.21 KB
 
 
     ' Class StackedAreaPlot
@@ -48,7 +48,7 @@
     '     Properties: Categories, FillAlpha, MultiValues, SeriesNames, ShowValueLabels
     '                 Smooth, SmoothSegments
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: CatmullRom
     ' 

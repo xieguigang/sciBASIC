@@ -1,20 +1,61 @@
-#Region "Microsoft.VisualBasic::3d7b1e4a9c5f4915f8b4d7e1a3c6f9e2, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
+﻿#Region "Microsoft.VisualBasic::18aaca57d87adff7f775f28b911a48f9, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 139
+    '    Code Lines: 100 (71.94%)
+    ' Comment Lines: 17 (12.23%)
+    '    - Xml Docs: 52.94%
+    ' 
+    '   Blank Lines: 22 (15.83%)
+    '     File Size: 6.33 KB
+
 
     ' Class ZScorePlot
     ' 
-    '     Properties: Entries, VariableNames, DisplayZERO, ColorMap, ShowValues
+    '     Properties: ColorMap, DisplayZERO, Entries, GroupBarWidth, ShowColorLegend
+    '                 ShowValues, VariableNames
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
+    '     Constructor: (+2 Overloads) Sub New
     ' 
+    '     Function: GroupColor
+    ' 
+    '     Sub: DrawColumnLabels, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

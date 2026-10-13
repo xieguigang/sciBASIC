@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9bba9c4386bfc0d1b3db8f94ae14bae, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::bc9463e7e4c9638e50ce4adb0466817c, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 415
-    '    Code Lines: 309 (74.46%)
-    ' Comment Lines: 55 (13.25%)
+    '   Total Lines: 760
+    '    Code Lines: 524 (68.95%)
+    ' Comment Lines: 154 (20.26%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 51 (12.29%)
-    '     File Size: 18.09 KB
+    '   Blank Lines: 82 (10.79%)
+    '     File Size: 48.13 KB
 
 
     ' Module Program
     ' 
     '     Function: Main
     ' 
-    '     Sub: DemoBlockModel, DemoFullFeatures, DemoTextExtraction
+    '     Sub: DemoBlockModel, DemoFullFeatures, DemoTextExtraction, DemoThesisFormatting
     ' 
     ' /********************************************************************************/
 

@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::d2f385e0e0381f2f739956ff2d2c989a, gr\physics\Joints\PrismaticJoint.vb"
+﻿#Region "Microsoft.VisualBasic::e50073a7d6783a2b840e4c85da07ab0b, physics\Engine\Joints\PrismaticJoint.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 76
-'    Code Lines: 55 (72.37%)
-' Comment Lines: 9 (11.84%)
-'    - Xml Docs: 55.56%
-' 
-'   Blank Lines: 12 (15.79%)
-'     File Size: 2.81 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PrismaticJoint
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: WrapAngle
-' 
-'         Sub: SolvePosition, SolveVelocity
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 53 (71.62%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 55.56%
+    ' 
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 2.75 KB
+
+
+    '     Class PrismaticJoint
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: WrapAngle
+    ' 
+    '         Sub: SolvePosition, SolveVelocity
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

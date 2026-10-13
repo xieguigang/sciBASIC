@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ee4d1dc1555adc88a53fb74a1b8a8a2, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxPackager.vb"
+﻿#Region "Microsoft.VisualBasic::44a6bd00fa4355ab1185cf278f633da8, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxPackager.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 319
-    '    Code Lines: 222 (69.59%)
-    ' Comment Lines: 57 (17.87%)
-    '    - Xml Docs: 24.56%
+    '   Total Lines: 383
+    '    Code Lines: 268 (69.97%)
+    ' Comment Lines: 69 (18.02%)
+    '    - Xml Docs: 26.09%
     ' 
-    '   Blank Lines: 40 (12.54%)
-    '     File Size: 16.98 KB
+    '   Blank Lines: 46 (12.01%)
+    '     File Size: 21.23 KB
 
 
     ' Class DocxPackager
     ' 
     '     Function: BuildAppProps, BuildContentTypes, BuildCoreProps, BuildDocumentRels, BuildDocumentXml
-    '               BuildRootRels, BuildSettingsXml, BuildStylesXml, GetImageContentType, PtToTwip
-    '               XEsc
+    '               BuildRootRels, BuildSettingsXml, BuildStylesXml, GetImageContentType, JcVal
+    '               PtToTwip, XEsc
     ' 
     '     Sub: Save, WriteEntry
     ' 

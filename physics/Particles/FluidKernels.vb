@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bad39784353aeb961d839c95e8c59873, gr\physics\Particles\FluidKernels.vb"
+﻿#Region "Microsoft.VisualBasic::1b20364392611268ff5f2e07992cb452, physics\Particles\FluidKernels.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 50 (79.37%)
-    ' Comment Lines: 5 (7.94%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 205
+    '    Code Lines: 106 (51.71%)
+    ' Comment Lines: 76 (37.07%)
+    '    - Xml Docs: 88.16%
     ' 
-    '   Blank Lines: 8 (12.70%)
-    '     File Size: 2.29 KB
+    '   Blank Lines: 23 (11.22%)
+    '     File Size: 9.05 KB
 
 
     ' Class FluidKernels
     ' 
+    '     Properties: Dimension, GradSpikyPow2Factor, GradSpikyPow3Factor, Poly6Factor, SpikyPow2Factor
+    '                 SpikyPow3Factor
+    ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: DerivativeSpikyPow2, DerivativeSpikyPow3, SmoothingKernelPoly6, SpikyKernelPow2, SpikyKernelPow3
+    '     Function: DerivativeSpikyPow2, DerivativeSpikyPow3, For2D, For3D, SelfDensityKernel
+    '               SelfNearDensityKernel, SmoothingKernelPoly6, SpikyKernelPow2, SpikyKernelPow3
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f007d0f30e3e12704d3683ed5da781e2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::e884650e3726631908a20c861b4653c6, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1801
-    '    Code Lines: 881 (48.92%)
-    ' Comment Lines: 665 (36.92%)
-    '    - Xml Docs: 91.73%
+    '   Total Lines: 1809
+    '    Code Lines: 875 (48.37%)
+    ' Comment Lines: 682 (37.70%)
+    '    - Xml Docs: 91.94%
     ' 
-    '   Blank Lines: 255 (14.16%)
-    '     File Size: 68.19 KB
+    '   Blank Lines: 252 (13.93%)
+    '     File Size: 68.65 KB
 
 
     '     Class NumericMatrix

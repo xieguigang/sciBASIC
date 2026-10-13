@@ -1,3 +1,99 @@
+﻿#Region "Microsoft.VisualBasic::fa7323ac8d1b67d9d978673121a9b708, physics\Engine\Collision3D\Collider3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 350
+    '    Code Lines: 216 (61.71%)
+    ' Comment Lines: 68 (19.43%)
+    '    - Xml Docs: 92.65%
+    ' 
+    '   Blank Lines: 66 (18.86%)
+    '     File Size: 13.93 KB
+
+
+    '     Enum ShapeKind3D
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class Collider3D
+    ' 
+    '         Function: RotatedExtents
+    ' 
+    '     Class SphereCollider3D
+    ' 
+    '         Properties: Kind
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ComputeInertia, GetAABB, Support
+    ' 
+    '     Class BoxCollider3D
+    ' 
+    '         Properties: AsConvex, HalfExtents, Kind, Size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ComputeInertia, GetAABB, Support
+    ' 
+    '     Class CapsuleCollider3D
+    ' 
+    '         Properties: Kind, LocalEndA, LocalEndB, TotalLength
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ComputeInertia, GetAABB, Support
+    ' 
+    '     Class PlaneCollider3D
+    ' 
+    '         Properties: Kind
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ComputeInertia, GetAABB, SignedDistance, Support
+    ' 
+    '     Class ConvexPolyhedronCollider3D
+    ' 
+    '         Properties: Kind, Mesh
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ComputeInertia, GetAABB, Support
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Engine.Physics.Math3D
 Imports std = System.Math
 
@@ -348,3 +444,4 @@ Namespace Collision3D
         End Function
     End Class
 End Namespace
+

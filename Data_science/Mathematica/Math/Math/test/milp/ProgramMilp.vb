@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0bd1750dd517fd062538b3ddca70820, Data_science\Mathematica\Math\Math\test\milp\ProgramMilp.vb"
+﻿#Region "Microsoft.VisualBasic::ba1884e08d0064f7fe9e1188eb540af6, Data_science\Mathematica\Math\Math\test\milp\ProgramMilp.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 333
-    '    Code Lines: 210 (63.06%)
-    ' Comment Lines: 48 (14.41%)
-    '    - Xml Docs: 6.25%
+    '   Total Lines: 347
+    '    Code Lines: 218 (62.82%)
+    ' Comment Lines: 54 (15.56%)
+    '    - Xml Docs: 5.56%
     ' 
-    '   Blank Lines: 75 (22.52%)
-    '     File Size: 14.59 KB
+    '   Blank Lines: 75 (21.61%)
+    '     File Size: 15.46 KB
 
 
     ' Module ProgramMilp

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::062a369060f91830fd36ab4dc7f57a00, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::6179d96fe79290b375c804894214b90e, Data_science\Visualization\DataPlot\Legacy\BarDataGroup.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 77 (70.00%)
-    ' Comment Lines: 19 (17.27%)
+    '   Total Lines: 109
+    '    Code Lines: 77 (70.64%)
+    ' Comment Lines: 19 (17.43%)
     '    - Xml Docs: 89.47%
     ' 
-    '   Blank Lines: 14 (12.73%)
+    '   Blank Lines: 13 (11.93%)
     '     File Size: 4.15 KB
 
 

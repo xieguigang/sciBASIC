@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::96ca66a28078728aec8284d72c5d0174, Data_science\Visualization\Plots\g\HeatMapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::8edee2663f2a5013b3a4d2a1c56b9908, Data_science\DataMining\hierarchical-clustering\HCTreePlot\HeatMapPlotBase.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 9 (10.47%)
-    '     File Size: 3.34 KB
+    '     File Size: 3.37 KB
 
 
     '     Class HeatMapPlot

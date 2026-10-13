@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::ecfee668298e727469b5a2ae9a76eb20, gr\physics\Particles2D\GameParticle.vb"
+﻿#Region "Microsoft.VisualBasic::fb256e711d83ce41abd87ca6c0e5e8e3, physics\Particles\Particles2D\GameParticle.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 32
-'    Code Lines: 21 (65.62%)
-' Comment Lines: 7 (21.88%)
-'    - Xml Docs: 71.43%
-' 
-'   Blank Lines: 4 (12.50%)
-'     File Size: 1.07 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GameParticle
-' 
-'         Sub: Reset
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 22 (66.67%)
+    ' Comment Lines: 7 (21.21%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 4 (12.12%)
+    '     File Size: 1.11 KB
+
+
+    '     Class GameParticle
+    ' 
+    '         Sub: Reset
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

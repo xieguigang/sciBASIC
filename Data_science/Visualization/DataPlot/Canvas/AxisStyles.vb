@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::e0ce23a30581c9c3b9043373de069721, Data_science\Visualization\Plots\g\Axis\Styles.vb"
+﻿#Region "Microsoft.VisualBasic::803b1c6d30bca273cb62f2a70bcc6082, Data_science\Visualization\DataPlot\Canvas\AxisStyles.vb"
 
     ' Author:
     ' 

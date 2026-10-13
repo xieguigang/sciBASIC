@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e814ef9aab60c74deeccb5c3a49f4e5a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Voronoi.vb"
+﻿#Region "Microsoft.VisualBasic::dca43647bb88f73285c68e945128ff27, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Voronoi.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 396
-    '    Code Lines: 296 (74.75%)
-    ' Comment Lines: 47 (11.87%)
-    '    - Xml Docs: 34.04%
+    '   Total Lines: 412
+    '    Code Lines: 308 (74.76%)
+    ' Comment Lines: 50 (12.14%)
+    '    - Xml Docs: 32.00%
     ' 
-    '   Blank Lines: 53 (13.38%)
-    '     File Size: 15.90 KB
+    '   Blank Lines: 54 (13.11%)
+    '     File Size: 16.70 KB
 
 
     '     Class Voronoi

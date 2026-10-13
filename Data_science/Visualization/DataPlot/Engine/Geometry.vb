@@ -1,3 +1,76 @@
+﻿#Region "Microsoft.VisualBasic::1a7764e3e1ae65ce8ef8ec4a09f8ca75, Data_science\Visualization\DataPlot\Engine\Geometry.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 532
+    '    Code Lines: 385 (72.37%)
+    ' Comment Lines: 63 (11.84%)
+    '    - Xml Docs: 82.54%
+    ' 
+    '   Blank Lines: 84 (15.79%)
+    '     File Size: 20.95 KB
+
+
+    ' Module Geometry
+    ' 
+    '     Function: Density1D, Density2D, MakeJitter, NiceStep, NiceTicks
+    '               NumberLabel, Quantile, QuantileOf, Remap, SmoothSpline
+    ' 
+    '     Sub: ExpandRange
+    '     Enum ScaleMode
+    ' 
+    '         ByColumn, ByGlobal, ByRow, None
+    ' 
+    ' 
+    ' 
+    '     Structure EllipseFit
+    ' 
+    '         Properties: Center, RadiusX, RadiusY, Rotation
+    ' 
+    '         Function: CircleOverlapArea, ConvexHull, Normalize, PackHorizontally, Standardize
+    ' 
+    '         Sub: NormalizeRange
+    ' 
+    '  
+    ' 
+    '     Function: Cross, EstimateEllipse
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 '  DataPlot / Engine / Geometry.vb
 '  Copyright (c) 2018-2026 sciBASIC.NET Foundation, GPL3 Licensed
@@ -530,3 +603,4 @@ Public Module Geometry
         Return (a.X - o.X) * (b.Y - o.Y) - (a.Y - o.Y) * (b.X - o.X)
     End Function
 End Module
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b347080c5f3019b22cf261edea978dfd, vs_solutions\PkgVersionUpgrade\CliOptions.vb"
+﻿#Region "Microsoft.VisualBasic::7930520e338a918ee692554ba657624e, vs_solutions\PkgVersionUpgrade\CliOptions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 12 (46.15%)
-    ' Comment Lines: 13 (50.00%)
+    '   Total Lines: 77
+    '    Code Lines: 57 (74.03%)
+    ' Comment Lines: 13 (16.88%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (3.85%)
-    '     File Size: 1.72 KB
+    '   Blank Lines: 7 (9.09%)
+    '     File Size: 5.44 KB
 
 
     ' Class CliOptions
     ' 
     '     Properties: [Error], DryRun, FixOutputPath, MakeClean, NamespacePrefix
-    '                 OutputDir, ShowHelp, Slnx, Version
+    '                 OutputDir, profile, ShowHelp, Slnx, Version
+    ' 
+    '     Function: CreateOutput
+    ' 
+    '     Sub: PrintUsage
     ' 
     ' /********************************************************************************/
 

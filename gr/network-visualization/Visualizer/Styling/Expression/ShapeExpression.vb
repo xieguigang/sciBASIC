@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61e94051835200f85416bd25f120cbd, gr\network-visualization\Visualizer\Styling\Expression\ShapeExpression.vb"
+﻿#Region "Microsoft.VisualBasic::dece69d3ac804f6ecfb61bdca600f001, gr\network-visualization\Visualizer\Styling\Expression\ShapeExpression.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 18 (22.50%)
-    '     File Size: 2.84 KB
+    '     File Size: 2.81 KB
 
 
     '     Interface IGetShape

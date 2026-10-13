@@ -1,71 +1,71 @@
-﻿#Region "Microsoft.VisualBasic::e22490f4736517034c3243d94592dbd7, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpModel.vb"
+﻿#Region "Microsoft.VisualBasic::e644e4ed6c2f4fbf7c40c484f8b9f8f2, Data_science\Mathematica\Math\Math\Algebra\MILP\MilpModel.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 267
-'    Code Lines: 136 (50.94%)
-' Comment Lines: 73 (27.34%)
-'    - Xml Docs: 78.08%
-' 
-'   Blank Lines: 58 (21.72%)
-'     File Size: 10.36 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Enum MilpVarType
-' 
-' 
-'  
-' 
-' 
-' 
-'     Class MilpVariable
-' 
-'         Properties: IsBinary, IsInteger, VarType
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class MilpModel
-' 
-'         Properties: Constraints, ObjectiveSense, Variables
-' 
-'         Function: AddConstraint, AddVariable, ObjectiveCoefficients, ToLppProblem, ToString
-'                   Validate, VariableIndex, VariableNames
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 265
+    '    Code Lines: 134 (50.57%)
+    ' Comment Lines: 73 (27.55%)
+    '    - Xml Docs: 78.08%
+    ' 
+    '   Blank Lines: 58 (21.89%)
+    '     File Size: 10.30 KB
+
+
+    '     Enum MilpVarType
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class MilpVariable
+    ' 
+    '         Properties: IsBinary, IsInteger, VarType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class MilpModel
+    ' 
+    '         Properties: Constraints, ObjectiveSense, Variables
+    ' 
+    '         Function: AddConstraint, AddVariable, ObjectiveCoefficients, ToLppProblem, ToString
+    '                   Validate, VariableIndex, VariableNames
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

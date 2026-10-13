@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf2804ff491fac69e4c4405f0db5553d, Data_science\MachineLearning\TensorFlow\Compute\ITensorCompute.vb"
+﻿#Region "Microsoft.VisualBasic::38a6452fd2c1650898794c2614bdb235, Data_science\MachineLearning\TensorFlow\Compute\ITensorCompute.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 379
-    '    Code Lines: 99 (26.12%)
-    ' Comment Lines: 229 (60.42%)
-    '    - Xml Docs: 83.84%
+    '   Total Lines: 582
+    '    Code Lines: 125 (21.48%)
+    ' Comment Lines: 396 (68.04%)
+    '    - Xml Docs: 86.62%
     ' 
-    '   Blank Lines: 51 (13.46%)
-    '     File Size: 20.36 KB
+    '   Blank Lines: 61 (10.48%)
+    '     File Size: 34.41 KB
 
 
     '     Interface ITensorCompute
@@ -50,16 +50,17 @@
     '         Function: Abs, Add, AddScalar, ArgMax, ArgMin
     '                   Clip, Concat, Conv2D, Conv2DBackwardBias, Conv2DBackwardFilter
     '                   Conv2DBackwardInput, Cos, Divide, DivideScalar, Elu
-    '                   Exp, Gelu, Heaviside, HuberLoss, IsDevicePinned
-    '                   L2Loss, L2Norm, LeakyRelu, LifStep, Log, LogSoftmax
+    '                   Exp, FluxHeadBatch, Gelu, GraphFeatureBatch, GraphLayerBatch
+    '                   Heaviside, HuberLoss, IsDevicePinned, L2Loss, L2Norm
+    '                   LeakyRelu, LifStep, Log, LogSoftmax, LtcRk4Batch
     '                   MaskedCrossEntropy, MatMul, Max, Maximum, MaxPool2D
     '                   MaxPool2DBackward, Mean, MeanAll, Min, Minimum
     '                   MseLoss, Multiply, MultiplyScalar, Negate, PinDevice
-    '                   PinDevice64, Pow, Prod, Reciprocal, Relu, Sigmoid
-    '                   SigmoidCrossEntropyWithLogits, Sin, Slice, Softmax, SpMM
-    '                   Sqrt, Square, StdDev, Subtract, Sum
-    '                   SumAll, Swish, SyncFromDevice, Tanh, TopK
-    '                   Transpose, TryAdamWStep, UnpinDevice
+    '                   PinDevice64, Pow, Prod, Reciprocal, Relu
+    '                   Sigmoid, SigmoidCrossEntropyWithLogits, Sin, Slice, Softmax
+    '                   SpMM, Sqrt, Square, StdDev, Subtract
+    '                   Sum, SumAll, Swish, SyncFromDevice, SystemTauBatch
+    '                   Tanh, TopK, Transpose, TryAdamWStep, UnpinDevice
     ' 
     ' 
     ' /********************************************************************************/

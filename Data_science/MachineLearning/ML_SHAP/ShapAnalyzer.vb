@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\ShapAnalyzer.vb"
+﻿#Region "Microsoft.VisualBasic::7bb3c3396ce3eefeef1ae4d5a17f57a2, Data_science\MachineLearning\ML_SHAP\ShapAnalyzer.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 144
+    '    Code Lines: 73 (50.69%)
+    ' Comment Lines: 45 (31.25%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 26 (18.06%)
+    '     File Size: 5.31 KB
 
 
+    ' Class ShapAnalysisResult
+    ' 
+    '     Properties: Baseline, DatasetName, Explanations, FeatureNames, IsClassification
+    '                 MeanAbsShap, MeanShap, ModelName
+    ' 
+    '     Function: GlobalImportance
+    ' 
+    ' Module ShapAnalyzer
+    ' 
+    '     Function: Analyze
+    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -191,4 +202,3 @@ Public Module ShapAnalyzer
     End Function
 
 End Module
-

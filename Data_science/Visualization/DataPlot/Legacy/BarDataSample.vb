@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::809e6e6a7177f207a1a5f136d7d7c050, Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
+﻿#Region "Microsoft.VisualBasic::1ef578eaaa28faf320f629a8db6badb8, Data_science\Visualization\DataPlot\Legacy\BarDataSample.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 16 (44.44%)
-    ' Comment Lines: 15 (41.67%)
+    '   Total Lines: 35
+    '    Code Lines: 16 (45.71%)
+    ' Comment Lines: 15 (42.86%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (13.89%)
-    '     File Size: 1.06 KB
+    '   Blank Lines: 4 (11.43%)
+    '     File Size: 1.07 KB
 
 
     '     Class BarDataSample

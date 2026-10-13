@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::eb3a88f15b5a545a9569d1f2058791a0, vs_solutions\JavaScript\test\LiteJsTests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 339
+    '    Code Lines: 266 (78.47%)
+    ' Comment Lines: 27 (7.96%)
+    '    - Xml Docs: 3.70%
+    ' 
+    '   Blank Lines: 46 (13.57%)
+    '     File Size: 15.11 KB
+
+
+    ' Class LiteJsTests
+    ' 
+    '     Function: OneLine, RunJs
+    ' 
+    '     Sub: CodeGen_ArrowFunction_NoOwnArguments, CodeGen_EscapesVbKeywords, CodeGen_NeAndStrictNe_RuntimeHelpers, CodeGen_VarHoisting_SingleTopDeclaration, Console_JsonStyleDisplay
+    '          Interp_ArraysAndMethods, Interp_ArrowArguments_Lexical, Interp_ControlFlow, Interp_FnWithNoParameters, Interp_FunctionsRecursionClosures
+    '          Interp_LetLoop_PerIterationBinding, Interp_NeAndStrictNe, Interp_ObjectsAndForIn, Interp_ReadUndeclared_Throws, Interp_TryCatchFinallyThrow
+    '          Interp_TryCatchSwallowsOnlyJsErrors, Interp_TypeofAndNullUndefined, Interp_TypeofNull_IsObject, Interp_UpdateUndeclared_ImplicitGlobal, Interp_VariablesAndArithmetic
+    '          Interp_VarIsFunctionScoped, Interp_WeakTypingAndTruthiness, Json_Parse_Composites, Json_Parse_Errors, Json_Parse_Scalars
+    '          Json_Stringify, Lexer_CommentsAndNumbers, Lexer_StringEscapes, Lexer_TokensAndLineBreakFlag, Lexer_UnclosedString_Throws
+    '          Parser_Asi_MissingSemicolonBeforeNewline, Parser_BreakOutsideLoop_Throws, Parser_ErrorCarriesPosition, Parser_Precedence_BuildsRightTree
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 
@@ -337,3 +398,4 @@ Public Class LiteJsTests
     End Sub
 
 End Class
+

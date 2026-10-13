@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fa45978bf337c23fb87a8e2c88e76c3, Data_science\Mathematica\Math\CVODE_Solver\Func.vb"
+﻿#Region "Microsoft.VisualBasic::a5a5d7a3cee4c0b249a03a62c921c8af, Data_science\Mathematica\Math\CVODE_Solver\Func.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 3 (11.54%)
-    ' Comment Lines: 21 (80.77%)
+    '   Total Lines: 28
+    '    Code Lines: 4 (14.29%)
+    ' Comment Lines: 21 (75.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (7.69%)
-    '     File Size: 1013 B
+    '   Blank Lines: 3 (10.71%)
+    '     File Size: 1.06 KB
 
 
     ' Delegate Sub

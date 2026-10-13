@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\ShapExplanation.vb"
+﻿#Region "Microsoft.VisualBasic::560e0023fce0ec8391fc71736d2cc863, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\ShapExplanation.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 110
+    '    Code Lines: 45 (40.91%)
+    ' Comment Lines: 46 (41.82%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 19 (17.27%)
+    '     File Size: 3.68 KB
 
 
+    '     Class ShapExplanation
+    ' 
+    '         Properties: AdditiveValue, Baseline, Contributions, FeatureNames, ID
+    '                     Output, Size
+    ' 
+    '         Function: FeatureName, GetContribution, Ranked
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Linq
 

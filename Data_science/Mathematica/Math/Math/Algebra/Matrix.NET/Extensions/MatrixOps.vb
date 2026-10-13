@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4557a139a37b8899897ec085e1cf1ac, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixOps.vb"
+﻿#Region "Microsoft.VisualBasic::1355c5e0c1224aed4b4173320c4db7eb, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixOps.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 366
-    '    Code Lines: 276 (75.41%)
-    ' Comment Lines: 44 (12.02%)
-    '    - Xml Docs: 72.73%
+    '   Total Lines: 434
+    '    Code Lines: 309 (71.20%)
+    ' Comment Lines: 68 (15.67%)
+    '    - Xml Docs: 72.06%
     ' 
-    '   Blank Lines: 46 (12.57%)
-    '     File Size: 13.24 KB
+    '   Blank Lines: 57 (13.13%)
+    '     File Size: 16.86 KB
 
 
     '     Module MatrixOps
     ' 
-    '         Function: Add, Determinant, Inverse, JacobiEigen, Multiply
-    '                   MultiplyVec, Scale, Subtract, Trace, Transpose
+    '         Function: Add, Determinant, Inverse, JacobiEigen, JaggedToRect
+    '                   Multiply, MultiplyVec, RectToJagged, Scale, Subtract
+    '                   Trace, Transpose
     ' 
     '         Sub: PrintMatrix
     ' 

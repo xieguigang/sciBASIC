@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::852ed83a7a62cdb046e039d787cb34d2, cuda\ILCuda\Runtime\CudaKernel.vb"
+﻿#Region "Microsoft.VisualBasic::5e0d46fc0eca44a4ee8a37d10cf93efc, cuda\ILCuda\Runtime\CudaKernel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 109 (71.24%)
-    ' Comment Lines: 15 (9.80%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 156
+    '    Code Lines: 110 (70.51%)
+    ' Comment Lines: 16 (10.26%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 29 (18.95%)
-    '     File Size: 7.00 KB
+    '   Blank Lines: 30 (19.23%)
+    '     File Size: 7.13 KB
 
 
     '     Class CudaKernel

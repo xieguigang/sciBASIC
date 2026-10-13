@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::140f627d2f00bd997850d7ad5ed29471, Data_science\Visualization\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::0ae2a143fcdca946557129650c25f4b9, Data_science\Visualization\DataPlot\Legacy\Scatter.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 625
-    '    Code Lines: 518 (82.88%)
-    ' Comment Lines: 65 (10.40%)
+    '   Total Lines: 627
+    '    Code Lines: 518 (82.62%)
+    ' Comment Lines: 65 (10.37%)
     '    - Xml Docs: 90.77%
     ' 
-    '   Blank Lines: 42 (6.72%)
-    '     File Size: 27.99 KB
+    '   Blank Lines: 44 (7.02%)
+    '     File Size: 27.92 KB
 
 
-    ' Module Scatter
+    '     Module Scatter
     ' 
-    '     Function: CreateAxisTicks, (+2 Overloads) FromPoints, FromVector, getSplinePoints, Jitter
-    '               MakeJitter, (+5 Overloads) Plot, PlotFunction
+    '         Function: CreateAxisTicks, (+2 Overloads) FromPoints, FromVector, getSplinePoints, Jitter
+    '                   MakeJitter, (+5 Overloads) Plot, PlotFunction
     ' 
-    '     Sub: Plot
+    '         Sub: Plot
+    ' 
     ' 
     ' /********************************************************************************/
 

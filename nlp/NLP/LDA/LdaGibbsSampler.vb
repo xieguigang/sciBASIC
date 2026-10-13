@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd2267064f79504ca8ad25d0fa583a1, nlp\NLP\LDA\LdaGibbsSampler.vb"
+﻿#Region "Microsoft.VisualBasic::be1f19745fe846a42c0d484fe532725f, nlp\NLP\LDA\LdaGibbsSampler.vb"
 
     ' Author:
     ' 
@@ -17,8 +17,8 @@
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
     ' 
-    ' This program is distributed in the hope that it will be useful, but
-    ' WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
     ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     ' GNU General Public License for more details.
     ' 
@@ -34,24 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 394
-    '    Code Lines: 173 (43.91%)
-    ' Comment Lines: 168 (42.64%)
-    '    - Xml Docs: 79.76%
+    '   Total Lines: 714
+    '    Code Lines: 344 (48.18%)
+    ' Comment Lines: 256 (35.85%)
+    '    - Xml Docs: 78.91%
     ' 
-    '   Blank Lines: 53 (13.45%)
-    '     File Size: 15.20 KB
+    '   Blank Lines: 114 (15.97%)
+    '     File Size: 30.90 KB
 
 
     '     Class LdaGibbsSampler
     ' 
-    '         Properties: K, Phi, Theta
+    '         Properties: K, Phi, RandomSeed, SyncInterval, Theta
+    '                     TopicTokenTotal, Workers
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: configure
+    '         Function: configure, NewVector
     ' 
-    '         Sub: (+2 Overloads) gibbs, initialState, sampling, update_params
+    '         Sub: AfterSweep, ForEachRow, (+2 Overloads) gibbs, initialState, RunSweeps
+    '              update_params
     ' 
     ' 
     ' /********************************************************************************/

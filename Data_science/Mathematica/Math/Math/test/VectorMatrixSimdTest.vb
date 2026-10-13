@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa044ab1b1591a94934b466bb8e18d6b, Data_science\Mathematica\Math\Math\test\VectorMatrixSimdTest.vb"
+﻿#Region "Microsoft.VisualBasic::812e8f16912fcb833d296b3c4d1a2425, Data_science\Mathematica\Math\Math\test\VectorMatrixSimdTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 799
-    '    Code Lines: 565 (70.71%)
-    ' Comment Lines: 59 (7.38%)
-    '    - Xml Docs: 28.81%
+    '   Total Lines: 813
+    '    Code Lines: 574 (70.60%)
+    ' Comment Lines: 61 (7.50%)
+    '    - Xml Docs: 29.51%
     ' 
-    '   Blank Lines: 175 (21.90%)
-    '     File Size: 34.00 KB
+    '   Blank Lines: 178 (21.89%)
+    '     File Size: 34.46 KB
 
 
     ' Module VectorMatrixSimdTest

@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::d61677b127cab6bf2729d00f1207e906, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiColor.vb"
+﻿#Region "Microsoft.VisualBasic::7765de00ac3ed1c488ff39f84a1160f3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ANSI\AnsiColor.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 197
-'    Code Lines: 141 (71.57%)
-' Comment Lines: 30 (15.23%)
-'    - Xml Docs: 70.00%
-' 
-'   Blank Lines: 26 (13.20%)
-'     File Size: 9.65 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure AnsiColor
-' 
-'         Properties: B, G, R
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) Equals, FromConsoleColor, GetCode, GetEscapeSequence, GetHashCode
-'                   Rgb, ToString, TryParse
-'         Operators: <>, =
-'         Enum Type
-' 
-'             Background, Foreground
-' 
-' 
-' 
-'  
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 204
+    '    Code Lines: 147 (72.06%)
+    ' Comment Lines: 30 (14.71%)
+    '    - Xml Docs: 70.00%
+    ' 
+    '   Blank Lines: 27 (13.24%)
+    '     File Size: 9.93 KB
+
+
+    '     Structure AnsiColor
+    ' 
+    '         Properties: B, G, R
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) Equals, FromConsoleColor, FromRgbColor, GetCode, GetEscapeSequence
+    '                   GetHashCode, Rgb, ToString, TryParse
+    '         Operators: <>, =
+    '         Enum Type
+    ' 
+    '             Background, Foreground
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

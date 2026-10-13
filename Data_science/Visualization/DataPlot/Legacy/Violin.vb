@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::5645b21bb871402260519296fc4509e7, Data_science\Visualization\Plots\BarPlot\Plots\Violin.vb"
+﻿#Region "Microsoft.VisualBasic::8f9debcb98105737d76e8485f2b7f69f, Data_science\Visualization\DataPlot\Legacy\Violin.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 295
-    '    Code Lines: 237 (80.34%)
-    ' Comment Lines: 16 (5.42%)
+    '   Total Lines: 297
+    '    Code Lines: 237 (79.80%)
+    ' Comment Lines: 16 (5.39%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 42 (14.24%)
-    '     File Size: 11.88 KB
+    '   Blank Lines: 44 (14.81%)
+    '     File Size: 11.80 KB
 
 
-    ' Class Violin
+    '     Class Violin
     ' 
-    '     Properties: showStats, splineDegree
+    '         Properties: showStats, splineDegree
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: removesOutliers
+    '         Function: removesOutliers
     ' 
-    '     Sub: PlotInternal, PlotViolin
+    '         Sub: PlotInternal, PlotViolin
+    ' 
     ' 
     ' /********************************************************************************/
 

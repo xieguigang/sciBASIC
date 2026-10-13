@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::02147588a6d2e53524ae7329c8f5b474, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Dendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::3b0c78710627f3b908b99c2658088e36, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Dendrogram.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (9.68%)
-    '     File Size: 2.78 KB
+    '     File Size: 2.77 KB
 
 
     ' Module Dendrogram

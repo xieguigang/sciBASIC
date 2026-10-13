@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::6842a35f3eb6f572208d536f112b79be, gr\physics\Vector2.vb"
+﻿#Region "Microsoft.VisualBasic::9ac58c72ce211c8ff49ccf1c2f19e273, physics\Engine\Vector2.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 141
-'    Code Lines: 118 (83.69%)
-' Comment Lines: 0 (0.00%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 23 (16.31%)
-'     File Size: 4.27 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Vector2
-' 
-'     Properties: Down, Left, Magnitude, One, Right
-'                 Up, Zero
-' 
-'     Constructor: (+3 Overloads) Sub New
-'     Function: (+2 Overloads) Random
-'     Operators: (+3 Overloads) -, (+3 Overloads) *, /, +
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 119 (83.80%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 23 (16.20%)
+    '     File Size: 4.31 KB
+
+
+    ' Class Vector2
+    ' 
+    '     Properties: Down, Left, Magnitude, One, Right
+    '                 Up, Zero
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: (+2 Overloads) Random
+    '     Operators: (+3 Overloads) -, (+3 Overloads) *, /, +
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

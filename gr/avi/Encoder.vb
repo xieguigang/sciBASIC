@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aad705cc49500f777372edcd446ab136, gr\avi\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::86311806e24e98336e08ffd6c8f3b4e0, gr\avi\Encoder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 71 (71.72%)
-    ' Comment Lines: 6 (6.06%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 102
+    '    Code Lines: 71 (69.61%)
+    ' Comment Lines: 9 (8.82%)
+    '    - Xml Docs: 77.78%
     ' 
-    '   Blank Lines: 22 (22.22%)
-    '     File Size: 3.05 KB
+    '   Blank Lines: 22 (21.57%)
+    '     File Size: 3.19 KB
 
 
     ' Class Encoder

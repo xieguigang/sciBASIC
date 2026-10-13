@@ -1,4 +1,68 @@
-﻿' ============================================================================
+﻿#Region "Microsoft.VisualBasic::36f813d1a0a02ef831e077ca31a90e35, Data_science\Visualization\DataPlot\Advanced\DendrogramPlot.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 260
+    '    Code Lines: 182 (70.00%)
+    ' Comment Lines: 35 (13.46%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 43 (16.54%)
+    '     File Size: 11.62 KB
+
+
+    '     Class DendrogramTheme
+    ' 
+    '         Properties: axisStroke, axisTickCSS, background, gridStrokeX, padding
+    '                     pointSize, tagCSS, XaxisTickFormat
+    ' 
+    '     Class DendrogramPlot
+    ' 
+    '         Properties: classinfo
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetColor, Plot
+    ' 
+    '         Sub: DendrogramTree, PlotInternal
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ============================================================================
 '  DendrogramPlot.vb - 层次聚类树图（竖直方向）
 '
 '  从 HCTreePlot 项目的 DendrogramPanel.vb + DendrogramPanelV2.vb 合并迁移而来：

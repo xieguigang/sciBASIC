@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::b323839644ad7962e000e0529004a168, Data_science\Visualization\Plots\BarPlot\Plots\StackedPercentageBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ab97b96d3b52788b298c834ad917c6b3, Data_science\Visualization\DataPlot\Legacy\StackedPercentageBarPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 157 (76.96%)
-    ' Comment Lines: 14 (6.86%)
+    '   Total Lines: 202
+    '    Code Lines: 156 (77.23%)
+    ' Comment Lines: 14 (6.93%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 33 (16.18%)
-    '     File Size: 9.38 KB
+    '   Blank Lines: 32 (15.84%)
+    '     File Size: 9.46 KB
 
 
     '     Class StackedPercentageBarPlot

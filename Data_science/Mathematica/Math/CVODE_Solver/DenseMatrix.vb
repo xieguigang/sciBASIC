@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::d7a013403ec76b21c5f7de652b68bdbd, Data_science\Mathematica\Math\CVODE_Solver\DenseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::c2cc62e1bf889d2ae9eab9c78513a437, Data_science\Mathematica\Math\CVODE_Solver\DenseMatrix.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 464
-'    Code Lines: 311 (67.03%)
-' Comment Lines: 103 (22.20%)
-'    - Xml Docs: 94.17%
-' 
-'   Blank Lines: 50 (10.78%)
-'     File Size: 14.03 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class DenseMatrix
-' 
-'     Properties: Columns, Data, IsSquare, Rows
-' 
-'     Constructor: (+3 Overloads) Sub New
-' 
-'     Function: Add, Clone, Diagonal, FrobeniusNorm, GetColumn
-'               GetRow, Identity, InfinityNorm, Multiply, MultiplyVector
-'               Norm1, Ones, Scale, Subtract, ToString
-'               Transpose, Zeros
-' 
-'     Sub: AddInPlace, CopyFrom, ScaleInPlace, SetColumn, SetConstant
-'          SetDiagonal, SetRow
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 466
+    '    Code Lines: 313 (67.17%)
+    ' Comment Lines: 103 (22.10%)
+    '    - Xml Docs: 94.17%
+    ' 
+    '   Blank Lines: 50 (10.73%)
+    '     File Size: 14.10 KB
+
+
+    ' Class DenseMatrix
+    ' 
+    '     Properties: Columns, Data, IsSquare, Rows
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: Add, Clone, Diagonal, FrobeniusNorm, GetColumn
+    '               GetRow, Identity, InfinityNorm, Multiply, MultiplyVector
+    '               Norm1, Ones, Scale, Subtract, ToString
+    '               Transpose, Zeros
+    ' 
+    '     Sub: AddInPlace, CopyFrom, ScaleInPlace, SetColumn, SetConstant
+    '          SetDiagonal, SetRow
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

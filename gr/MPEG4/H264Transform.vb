@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::e2e7f0099f5236f1589b700e23b1690e, gr\MPEG4\H264Transform.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 462
+    '    Code Lines: 209 (45.24%)
+    ' Comment Lines: 193 (41.77%)
+    '    - Xml Docs: 72.02%
+    ' 
+    '   Blank Lines: 60 (12.99%)
+    '     File Size: 19.88 KB
+
+
+    ' Class H264Transform
+    ' 
+    '     Properties: tmpBuffer
+    ' 
+    '     Function: buildPositionClass, dequantScale, lumaDcSignTable, qmul, quantClass
+    ' 
+    '     Sub: dequantize, dequantizeDc, forwardChromaDcTransform, forwardLumaDcTransform, forwardTransform
+    '          inverseChromaDcTransform, inverseLumaDcTransform, inverseTransform, quantize, quantizeDc
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Author:
 ' 
 '       xieguigang (xie.guigang@live.com)
@@ -460,3 +518,4 @@ Friend NotInheritable Class H264Transform
     End Property
 
 End Class
+

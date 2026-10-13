@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::8cd682fd344ef2bab31535656c019968, Data_science\Mathematica\Math\DataFrame\test\corstore_test.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 214
+    '    Code Lines: 159 (74.30%)
+    ' Comment Lines: 16 (7.48%)
+    '    - Xml Docs: 31.25%
+    ' 
+    '   Blank Lines: 39 (18.22%)
+    '     File Size: 9.86 KB
+
+
+    ' Module corstore_test
+    ' 
+    '     Function: MakeRandomMatrix
+    ' 
+    '     Sub: Check, Main, RunRoundTrip, RunStreamRoundTrip
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================
 ' corstore_test.vb — CorrelationMatrixWriter / Store round-trip 冒烟测试
 ' 运行: dotnet run --project test.vbproj -p:StartupObject=test.corstore_test
@@ -212,3 +267,4 @@ Module corstore_test
         End Using
     End Sub
 End Module
+

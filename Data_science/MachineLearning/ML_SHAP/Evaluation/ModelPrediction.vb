@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\Evaluation\ModelPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::ee502c8ba55db4839e80b9005fb58def, Data_science\MachineLearning\ML_SHAP\Evaluation\ModelPrediction.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 115
+    '    Code Lines: 77 (66.96%)
+    ' Comment Lines: 19 (16.52%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 19 (16.52%)
+    '     File Size: 3.15 KB
 
 
+    ' Class ModelPrediction
+    ' 
+    '     Properties: Accuracy, DatasetName, IDs, IsClassification, Labels
+    '                 ModelName, MSE, Predictions, R2, RMSE
+    '                 Size
+    ' 
+    '     Function: Predict, ToString
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Linq
 

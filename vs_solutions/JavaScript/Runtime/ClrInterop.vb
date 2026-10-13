@@ -1,3 +1,75 @@
+﻿#Region "Microsoft.VisualBasic::cc43165ced892533a4e8a4931f8d6c6a, vs_solutions\JavaScript\Runtime\ClrInterop.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 595
+    '    Code Lines: 413 (69.41%)
+    ' Comment Lines: 93 (15.63%)
+    '    - Xml Docs: 87.10%
+    ' 
+    '   Blank Lines: 89 (14.96%)
+    '     File Size: 28.22 KB
+
+
+    '     Module ClrInterop
+    ' 
+    '         Properties: ExplicitOnly, TaskWaitTimeoutMs
+    ' 
+    '         Function: CallToString, Construct, CreateObjectProxy, GetIndex, GetMember
+    '                   GetStaticMember, HasMember, HasStaticMember, HostGlobalNames, InvokeBound
+    '                   InvokeMember, IsClrProxy, IsCollection, IsInstanceOf, IsScriptValue
+    '                   JsonItems, JsonMembers, MemberKeys, ReadOnlyMessage, Reflect
+    '                   ToHostException, TryGetHostGlobal, TryGetLength, TryIndex, TryIterate
+    '                   TypeLabel, Unwrap, Wrap, WrapType
+    ' 
+    '         Sub: Clear, Reflect, Register, SetIndex, SetMember
+    '              SetStaticMember, SpreadInto, Unregister
+    ' 
+    '     Class ClrHost
+    ' 
+    '         Properties: Items
+    ' 
+    '         Function: Add
+    ' 
+    '         Sub: Install
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Globalization
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -593,3 +665,4 @@ Namespace Runtime
     End Class
 
 End Namespace
+

@@ -1,20 +1,58 @@
-#Region "Microsoft.VisualBasic::5a9c3e7b2d4f4808e1a6d9c3b5f7e2d4, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::13ea77985a450e03ef7ccd64c7205e54, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class CorrelationHeatmapPlot
-' 
-'     Properties: Correlation, RowTree, ColTree, ShowValues, ShowTrees
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 86 (71.67%)
+    ' Comment Lines: 15 (12.50%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 19 (15.83%)
+    '     File Size: 5.54 KB
+
+
+    ' Class CorrelationHeatmapPlot
+    ' 
+    '     Properties: ColorMap, Correlation, RowTree, ShowTrees, ShowValues
+    '                 TreeFraction, ValueRange
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Sub: DrawLabels, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

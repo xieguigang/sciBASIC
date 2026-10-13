@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5051c2efd2283b5055f1da424078fc44, mime\text%html\Render\CSS\CssBlock.vb"
+﻿#Region "Microsoft.VisualBasic::1ee628cf9563a9c2d0cc940e0ee1c78a, mime\text%html\Render\CSS\CssBlock.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 58 (49.57%)
-    ' Comment Lines: 37 (31.62%)
+    '   Total Lines: 116
+    '    Code Lines: 57 (49.14%)
+    ' Comment Lines: 37 (31.90%)
     '    - Xml Docs: 81.08%
     ' 
-    '   Blank Lines: 22 (18.80%)
-    '     File Size: 3.76 KB
+    '   Blank Lines: 22 (18.97%)
+    '     File Size: 3.78 KB
 
 
     '     Class CssBlock

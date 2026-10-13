@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::696a1a06f277c1e2a3a2f48dd2c333f8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\NumericTableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2990baad50a47ad02b6bce14ca5130b, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\NumericTableExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 490
-    '    Code Lines: 264 (53.88%)
-    ' Comment Lines: 154 (31.43%)
-    '    - Xml Docs: 90.26%
+    '   Total Lines: 531
+    '    Code Lines: 276 (51.98%)
+    ' Comment Lines: 179 (33.71%)
+    '    - Xml Docs: 89.39%
     ' 
-    '   Blank Lines: 72 (14.69%)
-    '     File Size: 21.23 KB
+    '   Blank Lines: 76 (14.31%)
+    '     File Size: 23.38 KB
 
 
     ' Module HierarchicalClusteringTableExtensions
@@ -49,7 +49,7 @@
     '               distanceMatrix, hca, hcaApprox, (+2 Overloads) hcut, (+2 Overloads) hcutApprox
     '               performApproxHca, writeClusterLabels, writePreclusterLabels
     ' 
-    '     Sub: assertDistanceMatrix
+    '     Sub: assertDistanceMatrix, fillSymmetricMatrix
     ' 
     ' /********************************************************************************/
 

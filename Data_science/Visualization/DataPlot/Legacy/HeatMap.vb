@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::5a97f8cb970f47a2678919f0ba2707cc, Data_science\Visualization\Plots\Scatter\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::7a91b8ebc4750d4732e95ab99d18762d, Data_science\Visualization\DataPlot\Legacy\Heatmap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 92 (77.31%)
-    ' Comment Lines: 18 (15.13%)
+    '   Total Lines: 122
+    '    Code Lines: 96 (78.69%)
+    ' Comment Lines: 18 (14.75%)
     '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 9 (7.56%)
-    '     File Size: 5.25 KB
+    '   Blank Lines: 8 (6.56%)
+    '     File Size: 5.39 KB
 
 
     ' Module Scatter
@@ -48,6 +48,7 @@
     '     Function: PlotHeatmap
     ' 
     '     Sub: __plotInternal
+    ' 
     ' 
     ' /********************************************************************************/
 

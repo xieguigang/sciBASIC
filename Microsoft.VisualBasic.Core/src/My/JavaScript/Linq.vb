@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d60664d81650c4bffb3e3dd4ce33c50, Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7f5dcc987316634741c548c127568bde, Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 109 (55.61%)
-    ' Comment Lines: 55 (28.06%)
-    '    - Xml Docs: 90.91%
+    '   Total Lines: 222
+    '    Code Lines: 113 (50.90%)
+    ' Comment Lines: 77 (34.68%)
+    '    - Xml Docs: 94.81%
     ' 
-    '   Blank Lines: 32 (16.33%)
-    '     File Size: 6.94 KB
+    '   Blank Lines: 32 (14.41%)
+    '     File Size: 9.39 KB
 
 
     '     Interface requestAnimationFrame

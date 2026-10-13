@@ -1,69 +1,70 @@
-﻿#Region "Microsoft.VisualBasic::b6cbdc1747b73b5991671a5b704ab4bb, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2ac38ab2a6c48f5245376d3b3048a85c, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 249
-'    Code Lines: 134 (53.82%)
-' Comment Lines: 79 (31.73%)
-'    - Xml Docs: 70.89%
-' 
-'   Blank Lines: 36 (14.46%)
-'     File Size: 9.83 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Delegate Function
-' 
-' 
-'     Module HelperExtensions
-' 
-'         Function: AsMatrix, GetColumn, IsNaNImaginary, (+2 Overloads) jaccard_coeff, jaccard_coeff_parallel
-'                   jaccard_row, JaccardIndex, NAremove, PrimitiveLinearEquation, Tangent
-'         Class JaccardTask
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Sub: Solve
-' 
-' 
-' 
-'     Enum ApplyOnAxis
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 261
+    '    Code Lines: 142 (54.41%)
+    ' Comment Lines: 81 (31.03%)
+    '    - Xml Docs: 71.60%
+    ' 
+    '   Blank Lines: 38 (14.56%)
+    '     File Size: 10.30 KB
+
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Module HelperExtensions
+    ' 
+    '         Function: AsMatrix, GetColumn, IsNaNImaginary, (+2 Overloads) jaccard_coeff, jaccard_coeff_parallel
+    '                   jaccard_row, JaccardIndex, Lerp, NAremove, PrimitiveLinearEquation
+    '                   SmoothStep, Tangent
+    '         Class JaccardTask
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Solve
+    ' 
+    ' 
+    ' 
+    '     Enum ApplyOnAxis
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

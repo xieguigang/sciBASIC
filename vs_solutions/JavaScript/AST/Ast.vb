@@ -1,3 +1,300 @@
+﻿#Region "Microsoft.VisualBasic::c71173a222f4209650d209b21c214fa4, vs_solutions\JavaScript\AST\Ast.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 807
+    '    Code Lines: 533 (66.05%)
+    ' Comment Lines: 107 (13.26%)
+    '    - Xml Docs: 98.13%
+    ' 
+    '   Blank Lines: 167 (20.69%)
+    '     File Size: 25.99 KB
+
+
+    ' Class Expression
+    ' 
+    ' 
+    ' 
+    ' Class LiteralExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class IdentExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class UnaryExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class UpdateExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class BinaryExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class LogicalExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class AssignExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class DestructureAssignExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class CondExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class CallExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class MemberExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class FuncExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class AwaitExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class YieldExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class RegexExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ThisExpr
+    ' 
+    ' 
+    ' 
+    ' Class NewExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ArrayExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ObjectExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Enum ObjectPropertyKind
+    ' 
+    '     Getter, Normal, Setter, Shorthand, Spread
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class ObjectProperty
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class TemplateExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class SequenceExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class SpreadElement
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class OptionalChainExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class Statement
+    ' 
+    ' 
+    ' 
+    ' Class Program
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class BlockStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class VarDeclarant
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class VarStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class FuncDeclStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class IfStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ForStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ForInStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class WhileStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class DoWhileStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class SwitchStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class SwitchCase
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ForOfStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ClassDeclStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ClassExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ClassSpec
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Enum ClassMemberKind
+    ' 
+    '     Field, Getter, Method, Setter
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class ClassMember
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class SuperExpr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class LabeledStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class BreakStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ContinueStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ReturnStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ThrowStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class TryStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ExprStmt
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class EmptyStmt
+    ' 
+    ' 
+    ' 
+    ' Class BindingTarget
+    ' 
+    ' 
+    ' 
+    ' Class NameTarget
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class MemberTarget
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ArrayTarget
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ObjectTarget
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class DefaultTarget
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 
@@ -805,3 +1102,4 @@ Public NotInheritable Class DefaultTarget
         Me.[Default] = [default]
     End Sub
 End Class
+

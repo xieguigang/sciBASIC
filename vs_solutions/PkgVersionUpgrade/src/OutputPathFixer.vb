@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d151fab3fa199df3f07fb958fcf20a54, vs_solutions\PkgVersionUpgrade\src\OutputPathFixer.vb"
+﻿#Region "Microsoft.VisualBasic::9c6ccdd3dc3b7ab106c5da07f11a46f4, vs_solutions\PkgVersionUpgrade\src\OutputPathFixer.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 238
-    '    Code Lines: 114 (47.90%)
-    ' Comment Lines: 84 (35.29%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 217
+    '    Code Lines: 102 (47.00%)
+    ' Comment Lines: 79 (36.41%)
+    '    - Xml Docs: 84.81%
     ' 
-    '   Blank Lines: 40 (16.81%)
-    '     File Size: 10.78 KB
+    '   Blank Lines: 36 (16.59%)
+    '     File Size: 9.89 KB
 
 
-    ' Module OutputPathFixer
+    ' Class OutputPathFixer
+    ' 
+    '     Properties: ReleaseConfiguration, ReleasePlatform
     ' 
     '     Function: Apply, ComputeOutputPath, EnsureDeclared, IsNugetReleaseX64
     ' 
     '     Sub: CreateReleaseGroup
-    '     Class OutputPathResult
-    ' 
-    '         Properties: Changed, Created, DeclarationsAdded, OutputPath, Updated
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 

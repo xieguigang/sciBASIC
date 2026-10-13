@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e2c7b1c7004a76319420fd4d867c25d, Data_science\Visualization\Plots\3D\g\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::8874436336e5edbbcba5a1bb183c857d, Data_science\Visualization\DataPlot\Plot3D\Model\Grid.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 25 (15.82%)
-    '     File Size: 6.77 KB
+    '     File Size: 6.76 KB
 
 
     '     Module Grids

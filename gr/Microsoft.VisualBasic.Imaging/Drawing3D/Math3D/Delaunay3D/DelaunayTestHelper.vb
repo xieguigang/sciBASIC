@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::0248299c14af1ba30cf3c871de449f63, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Delaunay3D\DelaunayTestHelper.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 262
+    '    Code Lines: 189 (72.14%)
+    ' Comment Lines: 25 (9.54%)
+    '    - Xml Docs: 84.00%
+    ' 
+    '   Blank Lines: 48 (18.32%)
+    '     File Size: 12.16 KB
+
+
+    '     Class DelaunayQualityStats
+    ' 
+    '         Function: ToString
+    ' 
+    '     Module DelaunayTestHelper
+    ' 
+    '         Function: ComputeQuality, Det3, Det4, FaceNormalOutward, InSphereNorm
+    '                   MinDihedralAngle, SignedVolume6, ValidateDelaunay
+    ' 
+    '         Sub: Normalize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports std = System.Math
 
 Namespace Drawing3D.Math3D.Delaunay3D
@@ -260,3 +321,4 @@ Namespace Drawing3D.Math3D.Delaunay3D
         End Function
     End Module
 End Namespace
+

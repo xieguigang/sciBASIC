@@ -1,22 +1,72 @@
-#Region "Microsoft.VisualBasic::3c8a1f6e9b2d4705a8c3e1f7d9b0a2c4, Data_science\Visualization\DataPlot\Basic\ContourPlot.vb"
+﻿#Region "Microsoft.VisualBasic::24abdace3ec58b31fcaccbde4c9ca44b, Data_science\Visualization\DataPlot\Basic\ContourPlot.vb"
 
+    ' Author:
     ' 
-    '       sciBASIC.NET Foundation, GPL3 Licensed
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 326
+    '    Code Lines: 235 (72.09%)
+    ' Comment Lines: 38 (11.66%)
+    '    - Xml Docs: 57.89%
+    ' 
+    '   Blank Lines: 53 (16.26%)
+    '     File Size: 15.20 KB
+
 
     ' Class ContourPlot
     ' 
-    '     Properties: ColorMap, DrawContourLines, GridResolution, Levels, Matrix
-    '                 Mode, Surface, ShowColorLegend, XRange, YRange
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Plot
     '     Enum ContourMode
     ' 
+    '         Filled, Heatmap, Lines
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: ColorMap, DrawContourLines, GridResolution, Levels, LineColor
+    '                 Matrix, Mode, ShowColorLegend, Surface, XRange
+    '                 YRange
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: CellPolygon, ContourSegment, GridValue, Interp, Sequence
+    ' 
+    '     Sub: BuildGrid, DrawBands, DrawLines, DrawSurface, FillAbove
+    '          Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

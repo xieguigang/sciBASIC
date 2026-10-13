@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dfcf6b58768902d92590cdc30d0567f, gr\Landscape\Data\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::91e381b7d790f75815f6f175dba847f6, gr\Landscape\Data\Surface.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 25 (49.02%)
-    ' Comment Lines: 20 (39.22%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 76
+    '    Code Lines: 43 (56.58%)
+    ' Comment Lines: 21 (27.63%)
+    '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 6 (11.76%)
-    '     File Size: 1.89 KB
+    '   Blank Lines: 12 (15.79%)
+    '     File Size: 2.85 KB
 
 
     '     Class Surface
     ' 
     '         Properties: Brush, paint, vertices
     ' 
-    '         Function: CreateObject, ToString
+    '         Function: CreateObject, GenericEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/

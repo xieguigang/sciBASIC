@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46a634395aec70b872c76b65745d4e12, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\BandLinearSolver.vb"
+﻿#Region "Microsoft.VisualBasic::8993562d4dc561362c08a030e17bfac2, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\BandLinearSolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 128 (64.65%)
-    ' Comment Lines: 40 (20.20%)
+    '   Total Lines: 199
+    '    Code Lines: 129 (64.82%)
+    ' Comment Lines: 40 (20.10%)
     '    - Xml Docs: 62.50%
     ' 
-    '   Blank Lines: 30 (15.15%)
-    '     File Size: 6.57 KB
+    '   Blank Lines: 30 (15.08%)
+    '     File Size: 6.62 KB
 
 
     ' Class BandLinearSolver

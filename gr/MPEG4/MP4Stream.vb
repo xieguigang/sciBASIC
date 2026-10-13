@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::c0b9dea4f942ed55469b0c3bdb3e2fb3, gr\MPEG4\MP4Stream.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 167
+    '    Code Lines: 72 (43.11%)
+    ' Comment Lines: 71 (42.51%)
+    '    - Xml Docs: 60.56%
+    ' 
+    '   Blank Lines: 24 (14.37%)
+    '     File Size: 6.45 KB
+
+
+    ' Class MP4Stream
+    ' 
+    '     Properties: codec, compositionOffsets, fps, height, quality
+    '                 samples, width
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: addBgraFrame, (+2 Overloads) addFrame, addRGBFrame, appendEncoded, Dispose
+    '          flush
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Author:
 ' 
 '       xieguigang (xie.guigang@live.com)
@@ -165,3 +223,4 @@ Public Class MP4Stream
     End Sub
 
 End Class
+

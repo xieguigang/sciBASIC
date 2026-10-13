@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee1594793836462f564cc264ea8e05f2, gr\avi\FrameStream.vb"
+﻿#Region "Microsoft.VisualBasic::5d39326ff13c5278ef6159fff172e3fa, gr\avi\FrameStream.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 25 (71.43%)
-    ' Comment Lines: 2 (5.71%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 49
+    '    Code Lines: 30 (61.22%)
+    ' Comment Lines: 10 (20.41%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 8 (22.86%)
-    '     File Size: 1.11 KB
+    '   Blank Lines: 9 (18.37%)
+    '     File Size: 1.82 KB
 
 
     ' Class FrameStream
     ' 
-    '     Properties: length
+    '     Properties: chunkSize, length
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ToString

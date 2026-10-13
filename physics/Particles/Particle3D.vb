@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::b2f7c33a82c04fcbb2a9fe97025e0919, gr\physics\Particles\Particle3D.vb"
+﻿#Region "Microsoft.VisualBasic::9aeffa1748a452dd521375e719d0463a, physics\Particles\Particle3D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 29
-'    Code Lines: 14 (48.28%)
-' Comment Lines: 11 (37.93%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 4 (13.79%)
-'     File Size: 971 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Particle3D
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 15 (48.39%)
+    ' Comment Lines: 11 (35.48%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (16.13%)
+    '     File Size: 1019 B
+
+
+    ' Class Particle3D
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

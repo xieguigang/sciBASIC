@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dba58e5313b88270744f1d2e9973b89d, Data_science\Visualization\Visualization\Tabular\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cc7b32e62feefce604803c473b398033, Data_science\Visualization\Visualization\Tabular\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 49 (77.78%)
-    ' Comment Lines: 6 (9.52%)
-    '    - Xml Docs: 83.33%
+    '   Total Lines: 75
+    '    Code Lines: 59 (78.67%)
+    ' Comment Lines: 6 (8.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (12.70%)
-    '     File Size: 2.28 KB
+    '   Blank Lines: 10 (13.33%)
+    '     File Size: 2.91 KB
 
 
     '     Module Extensions

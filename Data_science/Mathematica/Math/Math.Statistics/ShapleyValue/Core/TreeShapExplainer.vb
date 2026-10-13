@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\TreeShapExplainer.vb"
+﻿#Region "Microsoft.VisualBasic::b4e91cc63424e9a34bcee9df9bbaddca, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\TreeShapExplainer.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 137
+    '    Code Lines: 73 (53.28%)
+    ' Comment Lines: 37 (27.01%)
+    '    - Xml Docs: 89.19%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 27 (19.71%)
+    '     File Size: 5.19 KB
 
 
+    '     Class TreeShapExplainer
+    ' 
+    '         Properties: Baseline, FeatureNames, Intercept, Size, TreeBaselines
+    '                     Trees
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: expectedValue, ExpectedValue, Explain
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.ShapleyValue.TreeShap

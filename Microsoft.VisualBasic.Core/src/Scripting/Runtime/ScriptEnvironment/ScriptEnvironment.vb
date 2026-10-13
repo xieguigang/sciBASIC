@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcf03581386472bd0e7c140c36f66a4f, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\ScriptEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::cd690f686e710e0fab9d780fd1ee6185, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\ScriptEnvironment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 167
-    '    Code Lines: 102 (61.08%)
-    ' Comment Lines: 40 (23.95%)
-    '    - Xml Docs: 45.00%
+    '   Total Lines: 198
+    '    Code Lines: 116 (58.59%)
+    ' Comment Lines: 53 (26.77%)
+    '    - Xml Docs: 58.49%
     ' 
-    '   Blank Lines: 25 (14.97%)
-    '     File Size: 6.39 KB
+    '   Blank Lines: 29 (14.65%)
+    '     File Size: 7.62 KB
 
 
     '     Class ScriptEnvironment
@@ -51,8 +51,10 @@
     ' 
     '     Class NestedScriptEnvironment
     ' 
+    '         Properties: Parent
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: FindSlot
+    '         Function: FindSlot, Root
     ' 
     ' 
     ' /********************************************************************************/

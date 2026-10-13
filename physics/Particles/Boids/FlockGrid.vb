@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::7b2e41d0c95a4f83bb0a6d72e5c1f903, gr\physics\Boids\FlockGrid.vb"
+﻿#Region "Microsoft.VisualBasic::d76cffd6c49932fb736ef6ec9d2354e5, physics\Particles\Boids\FlockGrid.vb"
 
     ' Author:
     ' 
@@ -25,22 +25,31 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    ' A dense counting-sort uniform grid that replaces the legacy 
-    ' LINQ GroupBy + nested Dictionary spatial hash. Building the grid is two 
-    ' linear passes over the boid list and allocates nothing after warm-up; 
-    ' neighbor queries become flat index scans over <see cref="sortedIds"/>.
+
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 104 (51.23%)
+    ' Comment Lines: 72 (35.47%)
+    '    - Xml Docs: 94.44%
+    ' 
+    '   Blank Lines: 27 (13.30%)
+    '     File Size: 7.71 KB
+
 
     '     Class FlockGrid
     ' 
-    '         Properties: cellOfX, cellOfY, cellStart, minCx, minCy, nCells, nx, ny, sortedIds
-    ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CellId, CellRound
+    ' 
     '         Sub: Build
-    '         Function: CellRound
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,3 +1,83 @@
+﻿#Region "Microsoft.VisualBasic::7b3188d2ae14add447756408af364113, vs_solutions\JavaScript\CodeGenerator.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1449
+    '    Code Lines: 1171 (80.81%)
+    ' Comment Lines: 128 (8.83%)
+    '    - Xml Docs: 52.34%
+    ' 
+    '   Blank Lines: 150 (10.35%)
+    '     File Size: 68.67 KB
+
+
+    ' Class CodeGenerator
+    ' 
+    '     Function: ArgsParam, CompoundFn, GenArgs, GenArrayLiteral, GenArrayPart
+    '               GenClassValue, Generate, GenExpr, GenLambda, GenObjectLiteral
+    '               GenObjectPart, GenTemplate, KeyText, LabeledJump, LambdaBody
+    '               LiteralText, ResolveIdent, UniqueName, UpdateStatementCore, VbBool
+    '               VbString
+    ' 
+    '     Sub: (+2 Overloads) CollectHoistedVars, CollectTargetNames, EmitHoistedVars, GenAssignStatement, GenBindName
+    '          GenBindTarget, GenBlock, GenBlockInScope, GenBody, GenDoWhileLoop
+    '          GenExprAsStatement, GenForInLoop, GenForLoop, GenForOfLoop, GenFunctionDecl
+    '          GenIf, GenLabeled, GenStmt, GenSwitch, GenTry
+    '          GenWhileLoop
+    '     Class LabelInfo
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class IndentWriter
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: Indent, Line, Paste, UnIndent, WriteLine
+    ' 
+    '     Class Scope
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: DefineLocal, IsDeclaredHere, IsFreeInChain, NewRoot, Push
+    '                   Resolve, ResolveOrThrow, SafeIdent, UniqueSuffix, UniqueVariant
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 
@@ -1447,3 +1527,4 @@ Public NotInheritable Class CodeGenerator
     End Class
 
 End Class
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\MachineLearning\ML_SHAP\Data\ShapDataset.vb"
+﻿#Region "Microsoft.VisualBasic::3f59bda3900691c2488b4094fbcc459d, Data_science\MachineLearning\ML_SHAP\Data\ShapDataset.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 171
+    '    Code Lines: 81 (47.37%)
+    ' Comment Lines: 62 (36.26%)
+    '    - Xml Docs: 95.16%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 28 (16.37%)
+    '     File Size: 5.69 KB
 
 
+    ' Class ShapDataset
+    ' 
+    '     Properties: ClassLabels, FeatureNames, Features, IDs, IsCategorical
+    '                 Labels, Name, Size, Width
+    ' 
+    '     Function: LoadFile, Parse, ParseValue
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Globalization
 Imports System.IO

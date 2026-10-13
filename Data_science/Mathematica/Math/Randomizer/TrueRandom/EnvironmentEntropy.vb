@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::EnvironmentEntropy, Data_science\Mathematica\Math\Randomizer\TrueRandom\EnvironmentEntropy.vb"
+﻿#Region "Microsoft.VisualBasic::587a442dd9a9dbfd672b587dce222e7d, Data_science\Mathematica\Math\Randomizer\TrueRandom\EnvironmentEntropy.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,15 +25,28 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '   Class EnvironmentEntropy
+
+    ' Code Statistics:
+
+    '   Total Lines: 169
+    '    Code Lines: 100 (59.17%)
+    ' Comment Lines: 44 (26.04%)
+    '    - Xml Docs: 70.45%
     ' 
-    '     Constructor: Sub New
+    '   Blank Lines: 25 (14.79%)
+    '     File Size: 7.11 KB
+
+
+    ' Class EnvironmentEntropy
     ' 
-    '     Function: (+2 Overloads) GetBytes, GetSeed, Sample
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: GetBytes, GetSeed, Sample, SampleRaw
     ' 
     ' /********************************************************************************/
 

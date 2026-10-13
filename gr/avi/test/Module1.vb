@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee65924ddfde92acb04bac7168f1d9ac, gr\avi\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::f2e452e07f5b5b2163fd82e6f664e2a0, gr\avi\test\Module1.vb"
 
     ' Author:
     ' 
@@ -25,17 +25,30 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' 注意：本示例针对 net10.0 版本的 Microsoft.VisualBasic.Imaging.AVIMedia 程序集，
-    ' 需要将 test.vbproj 的 TargetFramework 升级到 net10.0 并引用 ..\AVI.NET5.vbproj 之后才能编译运行。
+
 
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '     Module Module1
 
-    '         Sub: Main, writeVideo, requestCodec
+    ' Code Statistics:
 
+    '   Total Lines: 59
+    '    Code Lines: 34 (57.63%)
+    ' Comment Lines: 14 (23.73%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 11 (18.64%)
+    '     File Size: 2.41 KB
+
+
+    ' Module Module1
+    ' 
+    '     Function: requestCodec
+    ' 
+    '     Sub: Main, writeVideo
+    ' 
     ' /********************************************************************************/
 
 #End Region

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bbcca03b7e26d6f8cdf907c2cb00d11, Data_science\Visualization\Visualization\Tabular\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::7221362c5da4f94a34e8e95daaa69d09, Data_science\Visualization\Visualization\Tabular\SerialData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 84 (77.78%)
-    ' Comment Lines: 11 (10.19%)
+    '   Total Lines: 107
+    '    Code Lines: 79 (73.83%)
+    ' Comment Lines: 15 (14.02%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (12.04%)
-    '     File Size: 4.34 KB
+    '   Blank Lines: 13 (12.15%)
+    '     File Size: 4.46 KB
 
 
     '     Class SerialData

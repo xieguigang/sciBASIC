@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::ad542b2bf419904c58206b7de03e4344, vs_solutions\JavaScript\test\ArtifactSyncTests.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 44 (61.11%)
+    ' Comment Lines: 19 (26.39%)
+    '    - Xml Docs: 84.21%
+    ' 
+    '   Blank Lines: 9 (12.50%)
+    '     File Size: 3.19 KB
+
+
+    ' Class ArtifactSyncTests
+    ' 
+    '     Function: ArtifactDirectory
+    ' 
+    '     Sub: ArtifactMatchesGeneratorOutput, DemoScriptRunsOnInterpreter
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 Option Explicit On
 
@@ -70,3 +125,4 @@ Public Class ArtifactSyncTests
     End Function
 
 End Class
+

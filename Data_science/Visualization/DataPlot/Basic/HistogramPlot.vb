@@ -1,21 +1,61 @@
-#Region "Microsoft.VisualBasic::7a3e9c1b5d2f4086ae1b7c9d0e3f5a2b, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3d3774fc10e671f3d3bb9de6dfe0bf1a, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
 
-' 
-'       sciBASIC.NET Foundation, GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-' Class HistogramPlot
-' 
-'     Properties: Bins, BinEdges, Color, Data, Density, Groups
-'                 Mirrored, ShowDensityCurve, ShowLegendImpl, ShowRug
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: Plot
-' 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 230
+    '    Code Lines: 166 (72.17%)
+    ' Comment Lines: 23 (10.00%)
+    '    - Xml Docs: 52.17%
+    ' 
+    '   Blank Lines: 41 (17.83%)
+    '     File Size: 9.48 KB
+
+
+    ' Class HistogramPlot
+    ' 
+    '     Properties: BinEdges, Bins, Color, Data, Density
+    '                 FillAlpha, Groups, Mirrored, ShowDensityCurve, ShowRug
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: CountBins, DensityOr, Plot, ResolveEdges, ResolveSources
+    ' 
+    '     Sub: DrawDensityCurve, Plot
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing

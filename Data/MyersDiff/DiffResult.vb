@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::15dd337ca01f584b97d2fca411de6e5a, Data\MyersDiff\DiffResult.vb"
+﻿#Region "Microsoft.VisualBasic::3cc636dbb43d6d1c4a5c729efc587e70, Data\MyersDiff\DiffResult.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 247
-'    Code Lines: 169 (68.42%)
-' Comment Lines: 43 (17.41%)
-'    - Xml Docs: 62.79%
-' 
-'   Blank Lines: 35 (14.17%)
-'     File Size: 9.84 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class DiffResult
-' 
-'     Properties: DeleteCount, EqualCount, InsertCount, Items, NewCount
-'                 OldCount, Similarity
-' 
-'     Function: BuildDiffBlocks, ToSideBySide, ToSummary, ToUnifiedDiff, TruncatePad
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 249
+    '    Code Lines: 170 (68.27%)
+    ' Comment Lines: 43 (17.27%)
+    '    - Xml Docs: 62.79%
+    ' 
+    '   Blank Lines: 36 (14.46%)
+    '     File Size: 9.86 KB
+
+
+    ' Class DiffResult
+    ' 
+    '     Properties: DeleteCount, EqualCount, InsertCount, Items, NewCount
+    '                 OldCount, Similarity
+    ' 
+    '     Function: BuildDiffBlocks, ToSideBySide, ToSummary, ToUnifiedDiff, TruncatePad
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

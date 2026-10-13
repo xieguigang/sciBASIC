@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df141690c5e45888cc472f653a55c947, Data_science\MachineLearning\TensorFlow\Compute\SIMDTensor.vb"
+﻿#Region "Microsoft.VisualBasic::dcc13026580c32749df4e90217711313, Data_science\MachineLearning\TensorFlow\Compute\SIMDTensor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 524
-    '    Code Lines: 328 (62.60%)
-    ' Comment Lines: 85 (16.22%)
-    '    - Xml Docs: 78.82%
+    '   Total Lines: 617
+    '    Code Lines: 384 (62.24%)
+    ' Comment Lines: 102 (16.53%)
+    '    - Xml Docs: 78.43%
     ' 
-    '   Blank Lines: 111 (21.18%)
-    '     File Size: 22.79 KB
+    '   Blank Lines: 131 (21.23%)
+    '     File Size: 27.26 KB
 
 
     '     Class SIMDTensor
@@ -49,13 +49,13 @@
     ' 
     '         Function: Abs, Add, AddScalar, CeilDiv, Clip
     '                   Conv2D, Conv2DBackwardFilter, Conv2DBackwardInput, Divide, DivideScalar
-    '                   Exp, L2Norm, Log, MatMul, Max
-    '                   Maximum, Mean, MeanAll, Min, Minimum
-    '                   Multiply, MultiplyScalar, Negate, Pow, Reciprocal
-    '                   Sqrt, Square, StdDev, Subtract, Sum
-    '                   SumAll, ToJagged
+    '                   Exp, L2Norm, LifStep, Log, MatMul
+    '                   Max, Maximum, Mean, MeanAll, Min
+    '                   Minimum, Multiply, MultiplyScalar, Negate, Pow
+    '                   Reciprocal, Sqrt, Square, StdDev, Subtract
+    '                   Sum, SumAll, ToJagged
     ' 
-    '         Sub: Axpy, Register
+    '         Sub: Axpy, LifUpdateInPlace, Register
     ' 
     ' 
     ' /********************************************************************************/

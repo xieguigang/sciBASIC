@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b498197964c1de58229c1ceb44a8d9a0, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\DenseLinearSolver.vb"
+﻿#Region "Microsoft.VisualBasic::7745e24c34d1d55314e5756f263ff12c, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\DenseLinearSolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 275
-    '    Code Lines: 167 (60.73%)
-    ' Comment Lines: 64 (23.27%)
+    '   Total Lines: 276
+    '    Code Lines: 168 (60.87%)
+    ' Comment Lines: 64 (23.19%)
     '    - Xml Docs: 70.31%
     ' 
-    '   Blank Lines: 44 (16.00%)
-    '     File Size: 8.10 KB
+    '   Blank Lines: 44 (15.94%)
+    '     File Size: 8.14 KB
 
 
     ' Class DenseLinearSolver

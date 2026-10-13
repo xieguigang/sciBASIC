@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::cb5de02a0583d1861dc728c32b9abddf, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::090c7c32291450074749722c7bc9b634, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 9 (14.52%)
-    '     File Size: 2.32 KB
+    '     File Size: 2.30 KB
 
 
     ' Class DendrogramPanel

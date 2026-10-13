@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::f82000b2cd34d9c9bc5cf494039ee104, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ScriptEnvironment\JsValue.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 292
+    '    Code Lines: 181 (61.99%)
+    ' Comment Lines: 74 (25.34%)
+    '    - Xml Docs: 62.16%
+    ' 
+    '   Blank Lines: 37 (12.67%)
+    '     File Size: 12.47 KB
+
+
+    '     Structure JsValue
+    ' 
+    '         Properties: VarType
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AsBoolean, AsDouble, AsInt32, AsInt64, AsObject
+    '                   AsSingle, AsString, Boolean_, Date_, Int32
+    '                   Int64, IsBoolean, IsNull, IsNumber, IsObject
+    '                   IsString, IsUndef, Number, OfObject, Single_
+    '                   Str, ToString, Truthy
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 
 ' /********************************************************************************/
 '
@@ -290,3 +351,4 @@ Namespace Scripting.Runtime
         End Function
     End Structure
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\LinearShapExplainer.vb"
+﻿#Region "Microsoft.VisualBasic::21bee8cc0736a9c5174d94050b52e36e, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Core\LinearShapExplainer.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (NaN%)
-    ' Comment Lines: 0 (NaN%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 145
+    '    Code Lines: 68 (46.90%)
+    ' Comment Lines: 49 (33.79%)
+    '    - Xml Docs: 93.88%
     ' 
-    '   Blank Lines: 0 (NaN%)
-    '     File Size: 0 B
+    '   Blank Lines: 28 (19.31%)
+    '     File Size: 5.11 KB
 
 
+    '     Class LinearShapExplainer
+    ' 
+    '         Properties: Baseline, Coefficients, FeatureMeans, FeatureNames, Intercept
+    '                     Link, Size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AdditiveValue, Explain, Output, Sigmoid
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Linq
 

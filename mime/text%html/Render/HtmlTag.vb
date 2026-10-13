@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e38a4aceb5269e421a1dbd6d2074ac1f, mime\text%html\Render\HtmlTag.vb"
+﻿#Region "Microsoft.VisualBasic::521f87170180bbf31aacadc59cac9a85, mime\text%html\Render\HtmlTag.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 250
-    '    Code Lines: 159 (63.60%)
-    ' Comment Lines: 37 (14.80%)
-    '    - Xml Docs: 89.19%
+    '   Total Lines: 252
+    '    Code Lines: 158 (62.70%)
+    ' Comment Lines: 39 (15.48%)
+    '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 54 (21.60%)
-    '     File Size: 8.46 KB
+    '   Blank Lines: 55 (21.83%)
+    '     File Size: 8.71 KB
 
 
     '     Class HtmlTag

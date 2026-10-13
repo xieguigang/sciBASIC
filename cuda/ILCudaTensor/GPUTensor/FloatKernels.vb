@@ -1,3 +1,68 @@
+﻿#Region "Microsoft.VisualBasic::aa9beb9123f194beacd5f0d70477ce81, cuda\ILCudaTensor\GPUTensor\FloatKernels.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 252
+    '    Code Lines: 172 (68.25%)
+    ' Comment Lines: 37 (14.68%)
+    '    - Xml Docs: 43.24%
+    ' 
+    '   Blank Lines: 43 (17.06%)
+    '     File Size: 10.42 KB
+
+
+    '     Module FloatKernels
+    ' 
+    '         Function: FAbs, FAdd, FAddScalar, FClip, FDiv
+    '                   FDivScalar, FExp, FLog, FMax, FMin
+    '                   FMul, FNeg, FRecip, FRelu, FScale
+    '                   FSigmoid, FSqrt, FSquare, FSub, FTanh
+    ' 
+    '     Module FloatKernelRegistry
+    ' 
+    '         Properties: Failures, Registry
+    ' 
+    '         Function: Available, KernelMethod
+    ' 
+    '         Sub: EnsureRegistered
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ---------------------------------------------------------------------------
 ' P2（单精度版）：用 IL2Cuda 自动生成的 float32 逐元素内核
 '
@@ -250,3 +315,4 @@ Namespace GPUTensor
     End Module
 
 End Namespace
+

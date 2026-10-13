@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67762ec5d32f240fd2618271fd950ba4, Microsoft.VisualBasic.Core\src\Drawing\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::10d38fa512fff4344162a357c54d1ea3, Microsoft.VisualBasic.Core\src\Drawing\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 85 (56.29%)
-    ' Comment Lines: 43 (28.48%)
-    '    - Xml Docs: 79.07%
+    '   Total Lines: 179
+    '    Code Lines: 101 (56.42%)
+    ' Comment Lines: 53 (29.61%)
+    '    - Xml Docs: 75.47%
     ' 
-    '   Blank Lines: 23 (15.23%)
-    '     File Size: 6.20 KB
+    '   Blank Lines: 25 (13.97%)
+    '     File Size: 7.51 KB
 
 
     '     Class FontFace
     ' 
-    '         Properties: InstalledFontFamilies
+    '         Properties: InstalledFontFamilies, WellknownFontFamilies
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetFontName, IsInstalled, MeasureString, PointSizeScale, (+2 Overloads) SVGPointSize

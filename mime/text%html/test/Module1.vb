@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::798d8b28423e607b4781d33ac2392b3a, mime\text%html\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::456ec9ee90cdc41dff6ab787d63474fc, mime\text%html\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 21 (36.21%)
-    '     File Size: 780 B
+    '     File Size: 782 B
 
 
     ' Module Module1

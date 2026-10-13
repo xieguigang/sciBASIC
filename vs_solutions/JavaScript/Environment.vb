@@ -1,4 +1,63 @@
-﻿' ---------------- environments ----------------
+﻿#Region "Microsoft.VisualBasic::748b97dd29366d578d3ac0253a17bd36, vs_solutions\JavaScript\Environment.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 89 (58.55%)
+    ' Comment Lines: 43 (28.29%)
+    '    - Xml Docs: 74.42%
+    ' 
+    '   Blank Lines: 20 (13.16%)
+    '     File Size: 6.20 KB
+
+
+    ' Class Environment
+    ' 
+    '     Properties: IsFunctionScope
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: FindSlot, FunctionScope, LookupObjectOrThrow, LookupOrThrow, (+2 Overloads) TryGet
+    ' 
+    '     Sub: (+2 Overloads) Assign, CheckReadOnly, (+2 Overloads) Define, DefineVar
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ---------------- environments ----------------
 
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -150,3 +209,4 @@ Public NotInheritable Class Environment
         End If
     End Sub
 End Class
+

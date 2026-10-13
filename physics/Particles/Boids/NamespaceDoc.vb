@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4bce0f5fe6ff01fbd141c6daa0f7f9, gr\physics\Boids\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7f4bce0f5fe6ff01fbd141c6daa0f7f9, physics\Particles\Boids\NamespaceDoc.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d34ff861846a767e9f63843ddaee8178, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppSolver.vb"
+﻿#Region "Microsoft.VisualBasic::930c1ee50946e5b3a84dc30dd83ecf1d, Data_science\Mathematica\Math\Math\Algebra\LP\IPMCrossover\LppSolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 321
-    '    Code Lines: 215 (66.98%)
-    ' Comment Lines: 40 (12.46%)
+    '   Total Lines: 318
+    '    Code Lines: 212 (66.67%)
+    ' Comment Lines: 40 (12.58%)
     '    - Xml Docs: 22.50%
     ' 
-    '   Blank Lines: 66 (20.56%)
-    '     File Size: 13.28 KB
+    '   Blank Lines: 66 (20.75%)
+    '     File Size: 13.19 KB
 
 
     '     Module LppSolver

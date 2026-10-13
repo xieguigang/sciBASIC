@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::028d1753d69f47c6286b9c6d2e8c66eb, Data_science\Visualization\Plots\Scatter\Plot\LinePlot2D.vb"
+﻿#Region "Microsoft.VisualBasic::9930c4fcefca36c7366c3cf1a6125af5, Data_science\Visualization\DataPlot\Legacy\LinePlot2D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 337
-    '    Code Lines: 250 (74.18%)
-    ' Comment Lines: 35 (10.39%)
+    '   Total Lines: 334
+    '    Code Lines: 248 (74.25%)
+    ' Comment Lines: 35 (10.48%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 52 (15.43%)
-    '     File Size: 14.22 KB
+    '   Blank Lines: 51 (15.27%)
+    '     File Size: 14.09 KB
 
 
     '     Class LinePlot2D

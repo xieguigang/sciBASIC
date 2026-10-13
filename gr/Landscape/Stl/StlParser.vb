@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efbd5a3c9fb640cbf8d5d9e36780bd08, gr\Landscape\STL\StlParser.vb"
+﻿#Region "Microsoft.VisualBasic::b97ced2f18bdf7bd18640dd38295b82b, gr\Landscape\STL\StlParser.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 37 (53.62%)
-    ' Comment Lines: 23 (33.33%)
-    '    - Xml Docs: 86.96%
+    '   Total Lines: 71
+    '    Code Lines: 38 (53.52%)
+    ' Comment Lines: 24 (33.80%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 9 (13.04%)
-    '     File Size: 2.76 KB
+    '   Blank Lines: 9 (12.68%)
+    '     File Size: 2.84 KB
 
 
     '     Module StlParser

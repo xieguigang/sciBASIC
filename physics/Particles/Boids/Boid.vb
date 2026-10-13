@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b12de272d14087a96b9296b58ac1857, gr\physics\Boids\Boid.vb"
+﻿#Region "Microsoft.VisualBasic::ebb2f4df116ef3b750d69c7c43e39a00, physics\Particles\Boids\Boid.vb"
 
     ' Author:
     ' 
@@ -31,27 +31,21 @@
 
     ' Summaries:
 
-    ' A boid is now a **value type view** (zero allocation) over one slot of the
-    ' <see cref="FlockState"/> structure-of-arrays simulation state, instead of a
-    ' heap object. This is a deliberate breaking change made for the SIMD/SoA
-    ' refactor: at 80k boids the old object-per-boid layout cost ~640k heap
-    ' allocations per frame and destroyed cache locality on every neighbor scan.
-    ' The public member surface (x/y/Xvel/Yvel/MoveForward/Accelerate/GetSpeed/
-    ' GetAngle/GetPosition) is preserved; all members now read/write the slot
-    ' that the view points at.
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 86 (72.88%)
-    ' Comment Lines: 10 (8.47%)
+    '   Total Lines: 122
+    '    Code Lines: 81 (66.39%)
+    ' Comment Lines: 23 (18.85%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (18.64%)
-    '     File Size: 4.61 KB
+    '   Blank Lines: 18 (14.75%)
+    '     File Size: 3.72 KB
 
 
     '     Structure Boid
+    ' 
+    '         Properties: x, Xvel, y, Yvel
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

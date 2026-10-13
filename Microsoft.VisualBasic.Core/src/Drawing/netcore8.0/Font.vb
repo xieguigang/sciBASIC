@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c2533b06f085fac445cdeb88c40c91c, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
+﻿#Region "Microsoft.VisualBasic::f41ae1f015ecb16fb0a8f45bb5ac0f54, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 130 (64.36%)
-    ' Comment Lines: 39 (19.31%)
-    '    - Xml Docs: 53.85%
+    '   Total Lines: 282
+    '    Code Lines: 151 (53.55%)
+    ' Comment Lines: 92 (32.62%)
+    '    - Xml Docs: 79.35%
     ' 
-    '   Blank Lines: 33 (16.34%)
-    '     File Size: 6.58 KB
+    '   Blank Lines: 39 (13.83%)
+    '     File Size: 9.95 KB
 
 
     '     Class Font
     ' 
-    '         Properties: Bold, Height, Italic, Name, Size
-    '                     SizeInPoints, Strikeout, Style, Underline, Unit
+    '         Properties: Bold, FontFamily, Height, Italic, Name
+    '                     Size, SizeInPoints, Strikeout, Style, Underline
+    '                     Unit
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: Clone, (+2 Overloads) GetHeight, ToHfont

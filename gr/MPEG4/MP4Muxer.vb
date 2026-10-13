@@ -1,3 +1,84 @@
+﻿#Region "Microsoft.VisualBasic::a30782f5d9b2d54d3d5f91064ca21f7d, gr\MPEG4\MP4Muxer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 612
+    '    Code Lines: 437 (71.41%)
+    ' Comment Lines: 86 (14.05%)
+    '    - Xml Docs: 63.95%
+    ' 
+    '   Blank Lines: 89 (14.54%)
+    '     File Size: 25.87 KB
+
+
+    ' Structure H264Sample
+    ' 
+    ' 
+    ' 
+    ' Class MP4SampleStore
+    ' 
+    '     Properties: count, samples, totalSize
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: add, copyTo, Dispose
+    ' 
+    ' Class MP4TrackSource
+    ' 
+    '     Properties: codec, compositionOffsets, fps, height, samples
+    '                 width
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class MP4Muxer
+    ' 
+    '     Properties: fastStart, height, width
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: BuildCompressorName, buildFtyp, buildMoov, totalSampleSize
+    ' 
+    '     Sub: computeOffsets, Dispose, writeAvcc, writeCtts, writeDinf
+    '          writeFile, writeHdlr, writeMdat, writeMdhd, writeMvhd
+    '          writeStbl, writeStco, writeStsc, writeStsd, writeStss
+    '          writeStsz, writeStts, writeTkhd, writeTrak, writeType
+    '          writeU32, writeU64
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Author:
 ' 
 '       xieguigang (xie.guigang@live.com)
@@ -610,3 +691,4 @@ Friend Class MP4Muxer
     End Sub
 
 End Class
+

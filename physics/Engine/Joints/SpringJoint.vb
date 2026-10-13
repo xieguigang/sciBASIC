@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::36b71413d06d09236cbb2bd23a82883b, gr\physics\Joints\SpringJoint.vb"
+﻿#Region "Microsoft.VisualBasic::7670f006d4dde8916f57de04357fcf1e, physics\Engine\Joints\SpringJoint.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 61
-'    Code Lines: 39 (63.93%)
-' Comment Lines: 11 (18.03%)
-'    - Xml Docs: 63.64%
-' 
-'   Blank Lines: 11 (18.03%)
-'     File Size: 2.42 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SpringJoint
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: SolvePosition, SolveVelocity
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 38 (64.41%)
+    ' Comment Lines: 11 (18.64%)
+    '    - Xml Docs: 63.64%
+    ' 
+    '   Blank Lines: 10 (16.95%)
+    '     File Size: 2.37 KB
+
+
+    '     Class SpringJoint
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SolvePosition, SolveVelocity
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

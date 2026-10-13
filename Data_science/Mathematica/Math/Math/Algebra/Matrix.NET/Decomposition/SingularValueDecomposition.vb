@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb73f5f808198ed96ad08351ba4cec77, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::b481e3229263eccff57d3f6ce11a06b7, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 566
-    '    Code Lines: 400 (70.67%)
-    ' Comment Lines: 91 (16.08%)
-    '    - Xml Docs: 54.95%
+    '   Total Lines: 644
+    '    Code Lines: 435 (67.55%)
+    ' Comment Lines: 110 (17.08%)
+    '    - Xml Docs: 54.55%
     ' 
-    '   Blank Lines: 75 (13.25%)
-    '     File Size: 21.92 KB
+    '   Blank Lines: 99 (15.37%)
+    '     File Size: 25.62 KB
 
 
     '     Class SingularValueDecomposition
@@ -49,6 +49,7 @@
     '                     U, V
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Sub: ApplyColumnAxpy, ExtractColumnFragment
     ' 
     ' 
     ' /********************************************************************************/

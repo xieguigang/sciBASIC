@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::80474b4a6b2df5134c63cf594bb17cc3, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a6bf8f3068916f15a210dc243d2d9b7a, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 138 (76.24%)
-    ' Comment Lines: 22 (12.15%)
-    '    - Xml Docs: 54.55%
+    '   Total Lines: 186
+    '    Code Lines: 141 (75.81%)
+    ' Comment Lines: 23 (12.37%)
+    '    - Xml Docs: 56.52%
     ' 
-    '   Blank Lines: 21 (11.60%)
-    '     File Size: 7.68 KB
+    '   Blank Lines: 22 (11.83%)
+    '     File Size: 8.04 KB
 
 
     ' Class ChordLink
@@ -52,7 +52,7 @@
     '     Properties: ChordAlpha, GapAngle, Links, Matrix, NodeColors
     '                 NodeLabels, ShowSelfLoops, StartAngle, Symmetric
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Sub: DrawArcBand, Plot
     ' 
     ' /********************************************************************************/

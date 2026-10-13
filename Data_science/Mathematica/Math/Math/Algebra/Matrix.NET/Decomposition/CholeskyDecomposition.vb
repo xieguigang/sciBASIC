@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83852c7657703bb4e0af1f7d742f10b9, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::fda9503cd7cdf3efca11b1c5aece60b7, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 85 (56.29%)
-    ' Comment Lines: 42 (27.81%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 155
+    '    Code Lines: 82 (52.90%)
+    ' Comment Lines: 47 (30.32%)
+    '    - Xml Docs: 76.60%
     ' 
-    '   Blank Lines: 24 (15.89%)
-    '     File Size: 5.46 KB
+    '   Blank Lines: 26 (16.77%)
+    '     File Size: 5.83 KB
 
 
     '     Class CholeskyDecomposition

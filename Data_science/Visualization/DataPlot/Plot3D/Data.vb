@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5335e479730c60f7b2efecd7b40bc8b0, Data_science\Visualization\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::5335e479730c60f7b2efecd7b40bc8b0, Data_science\Visualization\DataPlot\Plot3D\Data.vb"
 
     ' Author:
     ' 
