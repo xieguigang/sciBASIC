@@ -45,6 +45,21 @@ Module SelfTest
                Not Double.IsInfinity(v.x) AndAlso Not Double.IsInfinity(v.y) AndAlso Not Double.IsInfinity(v.z)
     End Function
 
+    ''' <summary>刚体最低顶点的世界 y。</summary>
+    Private Function LowestVertex(v As BodyVisual) As Double
+        Dim mesh As ConvexMesh3D = TryCast(v.Mesh, ConvexMesh3D)
+
+        If mesh Is Nothing Then Return v.Body.Position.y
+
+        Dim low As Double = Double.MaxValue
+
+        For Each p As Vector3 In mesh.WorldVertices(v.Body.Position, v.Body.Orientation)
+            low = std.Min(low, p.y)
+        Next
+
+        Return low
+    End Function
+
     Private Function Finite(p As Microsoft.VisualBasic.Imaging.Drawing3D.Point3D) As Boolean
         Return Not Double.IsNaN(p.X) AndAlso Not Double.IsNaN(p.Y) AndAlso Not Double.IsNaN(p.Z)
     End Function
@@ -346,17 +361,25 @@ Module SelfTest
         Call report.AppendLine($"     接触峰值 {maxContacts}   休眠过 {sawSleeping}   仿真 {host.SimTime:F1}s")
 
         Dim nonFinite As Integer = 0
-        Dim belowGround As Integer = 0
-        Dim minY As Double = Double.MaxValue
+        Dim sunk As Integer = 0
+        Dim minVertexY As Double = Double.MaxValue
 
         For Each v In dynamic
             If Not Finite(v.Body.Position) OrElse Not Finite(v.Body.Velocity) Then nonFinite += 1
-            minY = std.Min(minY, v.Body.Position.y)
-            If v.Body.Position.y < -2.0 Then belowGround += 1
+
+            ' 用最低顶点判断是否陷入支撑面：地面在 y = 0，允许 Baumgarte 的少量穿透
+            Dim low As Double = LowestVertex(v)
+
+            minVertexY = std.Min(minVertexY, low)
+
+            If low < -0.15 Then sunk += 1
         Next
 
         Check("全部刚体状态有限", nonFinite = 0, $"nonFinite={nonFinite}")
-        Check("没有物体穿透到地面以下 (< -2)", belowGround = 0, $"belowGround={belowGround} minY={minY:F3}")
+        Check("没有物体陷入支撑面以下 (最低顶点 >= -0.15)", sunk = 0,
+              $"sunk={sunk} minVertexY={minVertexY:F3}")
+        Check("有物体停在支撑面附近（确实发生了碰撞约束）",
+              std.Abs(minVertexY) < 0.15, $"minVertexY={minVertexY:F3}")
         Check("仿真过程中产生过接触", maxContacts > 0, $"maxContacts={maxContacts}")
         Check("仿真时间已推进", host.SimTime > 5.5, $"t={host.SimTime:F2}")
         Check("存在进入休眠的刚体（休眠机制生效）", sawSleeping)
@@ -390,7 +413,7 @@ Module SelfTest
     Private Sub RenderShot(rig As CameraRig, renderer As SceneRenderer)
         Call report.AppendLine("-- 离屏渲染")
 
-        Dim size As New Size(1100, 620)
+        Dim size As New Size(1280, 720)
         Dim bmp As New Bitmap(size.Width, size.Height)
 
         Try

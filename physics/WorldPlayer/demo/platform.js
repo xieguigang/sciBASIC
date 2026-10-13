@@ -72,7 +72,7 @@ function setup() {
     world.addStaticBox({
         x: 0, y: 1.0, z: 0,
         w: 16, h: 2, d: 16,
-        color: "#1E293B",
+        color: "#223046",
         friction: 0.55
     });
 
@@ -81,13 +81,13 @@ function setup() {
     world.addStaticRamp({
         x: 0, y: PLATFORM_TOP, z: 0,
         w: 12, h: RAMP_RISE, d: 8,
-        color: "#334155",
+        color: "#3B4E63",
         friction: 0.3
     });
 
-    // 高低两根立柱，用来观察物体与竖直面的碰撞
-    world.addStaticBox({ x: -6.5, y: PLATFORM_TOP + 0.9, z: -5, w: 1, h: 1.8, d: 1, color: "#475569", friction: 0.5 });
-    world.addStaticBox({ x: 6.5, y: PLATFORM_TOP + 0.9, z: 5, w: 1, h: 1.8, d: 1, color: "#475569", friction: 0.5 });
+    // 两根立柱，用来观察物体与竖直面的碰撞
+    world.addStaticBox({ x: -6.5, y: PLATFORM_TOP + 0.9, z: -5, w: 1, h: 1.8, d: 1, color: "#55677D", friction: 0.5 });
+    world.addStaticBox({ x: 6.5, y: PLATFORM_TOP + 0.9, z: 5, w: 1, h: 1.8, d: 1, color: "#55677D", friction: 0.5 });
 
     render.background("#0B1220");
     render.grid(gridVisible);
@@ -95,9 +95,9 @@ function setup() {
     render.wireframe(wireframe);
     render.hud("左键生成随机物体 · 右键拖拽旋转 · 滚轮缩放 · C 清空 · P 暂停 · W 线框");
 
-    camera.angles(24, -38);
-    camera.distance(46);
-    camera.focus(0, 2.5, 0);
+    camera.angles(26, -38);
+    camera.distance(30);
+    camera.focus(0, 3.2, 0);
 
     print("场景已就绪：左键点击视口即可生成随机刚体");
 }
