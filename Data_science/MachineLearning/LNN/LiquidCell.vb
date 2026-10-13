@@ -1002,28 +1002,61 @@ Public Class LiquidCell : Implements IDisposable
         Dim H = HiddenSize
         Dim N = InputSize
 
+        ' ------------------------------------------------------------------
+        ' 这里的改动只有两件事：**循环交换** 与 **把分支提出内层**。
+        ' 两者的数学结果都与原实现逐位相同：
+        '   * 交换循环顺序不改变任何元素的累加次序 —— 每个梯度分量在单次调用里
+        '     只会被加一次（不是求和），所以顺序无关；
+        '   * dzf 的分支原本位于 H×(H+N) 次内层迭代之中，提到循环外只是省掉判断。
+        '
+        ' 为什么不把这些外积交给 MixedPrecisionOps 走 GEMM：
+        ' 外积的 k = 1，规模 m·k·n = H² 在典型隐藏层尺寸（H ≤ 256）下是 65536 以下，
+        ' 达不到 SIMDTensor 的 MatrixDotThreshold（10000）之上也远够不着 GPU 的门槛
+        ' （CudaTensorF.MinGemmElementsF = 65536）。
+        ' 强行改成后端调用只会多付"打包 + 分配 + 逐元素索引"的代价，
+        ' 收益为负。LNN 真正的算力在 ODE 右端的 LinearForward，那部分本就走后端 GEMM。
+        ' ------------------------------------------------------------------
+
+        ' 偏置：与 i 一一对应，连续访问
         For i = 0 To H - 1
             _BiasGradient(i) += dz(i)
+        Next
+
+        If dzf IsNot Nothing Then
+            For i = 0 To H - 1
+                _BiasGateGradient(i) += dzf(i)
+            Next
+        End If
+
+        ' 递归权重 W_rec (H, H)：外层取行 j，内层走列 i —— 写的是连续段。
+        ' 原来的外层 i / 内层 j 版本每次写入都要跨 H 个元素，几乎每一笔都落在不同的缓存行上。
+        For j = 0 To H - 1
+            Dim sj = s(j)
+
+            For i = 0 To H - 1
+                _WeightRecurrentGradient(j, i) += sj * dz(i)
+            Next
 
             If dzf IsNot Nothing Then
-                _BiasGateGradient(i) += dzf(i)
+                For i = 0 To H - 1
+                    _WeightGateGradient(j, i) += sj * dzf(i)
+                Next
             End If
+        Next
 
-            For j = 0 To H - 1
-                _WeightRecurrentGradient(j, i) += s(j) * dz(i)
+        ' 输入权重 W_in (N, H)：同理按行连续写
+        For j = 0 To N - 1
+            Dim uj = u(j)
 
-                If dzf IsNot Nothing Then
-                    _WeightGateGradient(j, i) += s(j) * dzf(i)
-                End If
+            For i = 0 To H - 1
+                _WeightInputGradient(j, i) += uj * dz(i)
             Next
 
-            For j = 0 To N - 1
-                _WeightInputGradient(j, i) += u(j) * dz(i)
-
-                If dzf IsNot Nothing Then
-                    _WeightGateInputGradient(j, i) += u(j) * dzf(i)
-                End If
-            Next
+            If dzf IsNot Nothing Then
+                For i = 0 To H - 1
+                    _WeightGateInputGradient(j, i) += uj * dzf(i)
+                Next
+            End If
         Next
     End Sub
 
@@ -1034,30 +1067,54 @@ Public Class LiquidCell : Implements IDisposable
         Dim H = HiddenSize
         Dim N = InputSize
 
-        For i = 0 To H - 1
-            Dim acc As Double = 0.0
+        ' ------------------------------------------------------------------
+        ' 状态伴随：adjS(i) += Σ_j W_rec(j,i)·dz(j)   （即 W_recᵀ·dz）
+        '
+        ' 原实现把 i 放在外层：内层遍历 j 时按 (j,i) 取值，步长是 H ——
+        ' 每一次读取都跨一整行，是典型的"转置访问"，缓存命中率极差。
+        ' 改成 GEMV 的标准写法（外层 j 走行、内层 i 走列）之后读写都连续。
+        '
+        ' 逐位一致性：accS(i) 的累加次序仍然是 j 由小到大，
+        ' 且每个 j 内部仍然是"先 dz 项、后 dzf 项"两次加法 —— 与原实现完全一致。
+        ' ------------------------------------------------------------------
+        Dim accS = New Double(H - 1) {}
 
-            For j = 0 To H - 1
-                acc += _WeightRecurrent(j, i) * dz(j)
+        For j = 0 To H - 1
+            Dim dzj = dz(j)
 
-                If dzf IsNot Nothing Then
-                    acc += _WeightGate(j, i) * dzf(j)
-                End If
-            Next
+            If dzf IsNot Nothing Then
+                Dim dzfj = dzf(j)
 
-            adjS(i) += acc
+                For i = 0 To H - 1
+                    accS(i) += _WeightRecurrent(j, i) * dzj
+                    accS(i) += _WeightGate(j, i) * dzfj
+                Next
+            Else
+                For i = 0 To H - 1
+                    accS(i) += _WeightRecurrent(j, i) * dzj
+                Next
+            End If
         Next
 
+        For i = 0 To H - 1
+            adjS(i) += accS(i)
+        Next
+
+        ' 输入伴随：_lastInputGradient(j) += Σ_i W_in(j,i)·dz(i)
+        ' 这一侧本来就是"外层 j、内层 i"的连续访问，因此只把 dzf 分支提出内层。
         For j = 0 To N - 1
             Dim acc As Double = 0.0
 
-            For i = 0 To H - 1
-                acc += _WeightInput(j, i) * dz(i)
-
-                If dzf IsNot Nothing Then
+            If dzf IsNot Nothing Then
+                For i = 0 To H - 1
+                    acc += _WeightInput(j, i) * dz(i)
                     acc += _WeightGateInput(j, i) * dzf(i)
-                End If
-            Next
+                Next
+            Else
+                For i = 0 To H - 1
+                    acc += _WeightInput(j, i) * dz(i)
+                Next
+            End If
 
             _lastInputGradient(j) += acc
         Next

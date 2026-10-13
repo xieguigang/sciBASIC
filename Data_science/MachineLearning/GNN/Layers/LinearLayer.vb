@@ -118,8 +118,25 @@ Public Class LinearLayer
         Me.UseBias = useBias
         MyBase.Name = If(name, $"Linear_{inFeatures}_{outFeatures}")
 
-        ' 使用Xavier初始化权重
-        _weights = Tensor.XavierInit(inFeatures, outFeatures)
+        ' 使用Xavier初始化权重。
+        '
+        ' 形状必须是 (outFeatures, inFeatures)：本层的其余代码全部按这个布局写在
+        '   * Forward  : weightT = Wᵀ → [inFeatures, outFeatures]，再 x·Wᵀ
+        '   * Backward : dW = gᵀ·x → [outFeatures, inFeatures]
+        '                dx = g·W  → [batchSize, outFeatures]×[outFeatures, inFeatures]
+        '   * _weightGradient = New Tensor(outFeatures, inFeatures)
+        ' 原先写的是 XavierInit(inFeatures, outFeatures)，形状与上面三处**互为转置**。
+        ' 后果分两种：
+        '   * inFeatures ≠ outFeatures：Forward 的矩阵乘直接报"矩阵维度不匹配"
+        '     （TGCN 时序演示就是这样挂掉的，报 1 != 16）；
+        '   * inFeatures = outFeatures：形状恰好凑得上，不报错，但 W 与 dW 的布局相反，
+        '     而 AdamOptimizer 是按扁平下标 param(j) -= lr·grad(j) 更新的，
+        '     于是梯度被施加到了转置后的位置上 —— **静默地学错**。
+        ' 之所以一直没被发现，是因为此前的测试用例都是方阵（in == out）。
+        '
+        ' Xavier 的标准差是 sqrt(2/(fanIn+fanOut))，对两个参数对称，
+        ' 因此交换实参顺序不改变初始化分布，只是把形状摆正。
+        _weights = Tensor.XavierInit(outFeatures, inFeatures)
 
         If useBias Then
             _bias = New Tensor(1, outFeatures)
@@ -167,12 +184,29 @@ Public Class LinearLayer
         ' _lastInput: [batchSize, inFeatures]
 
         ' 计算权重梯度: dW = gradient^T * input
+        '
+        ' 注意：必须**写回构造函数里分配的持久张量**，不能把新张量赋给字段。
+        ' 各训练器（GNN 的 AdamOptimizer、TemporalGNNTrainer 等）是在开始训练**之前**
+        ' 用 model.GetGradients() 一次性拿到梯度张量引用的，之后每步只做
+        ' param(j) -= lr * grad(j) 的原地读写。
+        ' 原来的 `_weightGradient = <新张量>` 会把这份引用换掉，
+        ' 优化器此后一直在更新那个再也不会被写入的旧对象 —— 该层静默地停止学习
+        '（表现为损失卡住不动，且不报任何错）。
+        '
+        ' GRULayer / SimpleRNNLayer 用的是 `+=` 原地累加，所以没有这个问题；
+        ' 这里改为"算出新值后拷进持久缓冲"，既保留引用，语义又与注释一致（dW = …，不是 dW += …）。
         Dim gradientT = gradient.Transpose() ' [outFeatures, batchSize]
-        _weightGradient = MixedPrecisionOps.MatMulOr(gradientT, _lastInput) ' [outFeatures, inFeatures]
+        Dim computed = MixedPrecisionOps.MatMulOr(gradientT, _lastInput) ' [outFeatures, inFeatures]
+
+        Array.Copy(computed.Data, _weightGradient.Data, _weightGradient.Length)
+        Call _weightGradient.MarkHostModified()
 
         ' 计算偏置梯度: db = sum(gradient, axis=0)
         If UseBias Then
-            _biasGradient = gradient.Sum(0) ' [1, outFeatures]
+            Dim biasComputed = gradient.Sum(0) ' [1, outFeatures]
+
+            Array.Copy(biasComputed.Data, _biasGradient.Data, _biasGradient.Length)
+            Call _biasGradient.MarkHostModified()
         End If
 
         ' 计算输入梯度: dx = gradient * W

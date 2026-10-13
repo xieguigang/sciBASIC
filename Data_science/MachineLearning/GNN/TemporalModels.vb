@@ -133,6 +133,22 @@ Public MustInherit Class TemporalGNNModel
             layer.IsTraining = isTraining
         Next
     End Sub
+
+    ''' <summary>
+    ''' 把所有层的梯度归零。
+    ''' </summary>
+    ''' <remarks>
+    ''' 训练循环必须在**每个样本**反向之前调用一次。
+    ''' 层层往下的 GRU / RNN 层用的是 `grad += …` 的累加语义，
+    ''' 少了这一步，梯度会跨样本、跨 epoch 无界累积；
+    ''' Adam 要算 g²，单精度下很快溢出成 Infinity，再把 Inf/Inf 变成 NaN 污染全部参数
+    '''（A3T-GCN 演示在第 10~20 个 epoch 整体变 NaN 就有这个因素）。
+    ''' </remarks>
+    Public Overridable Sub ResetGradients()
+        For Each layer In _layers
+            layer.ResetGradients()
+        Next
+    End Sub
 End Class
 
 ''' <summary>
@@ -290,26 +306,39 @@ Public Class TGCNModel : Inherits TemporalGNNModel
     End Function
 
     Public Overrides Function Backward(gradient As Tensor, temporalGraph As TemporalGraph) As Tensor
+        Dim numTimeSteps = temporalGraph.NumTimeSteps
+        Dim numNodes = temporalGraph.NumNodes
+
         ' 输出层反向传播
         Dim gradGruHidden = _outputLayer.Backward(gradient)
 
-        ' GRU反向传播（简化版本，使用最后时间步的梯度）
-        Dim gruGradient = New Tensor(1, 1, _gruLayer.HiddenSize)
+        ' GRU 反向传播。
+        '
+        ' 前向只把**最后一个时间步**的隐藏状态送进了输出层
+        ' （见 Forward：output = _outputLayer.Forward(_gruFinalHidden)），
+        ' 所以进入 GRU 的梯度只有在 t = numTimeSteps - 1 处非零，其余时间步为 0。
+        '
+        ' 关键点：这个梯度张量的**时间维必须是完整序列长度**，不能只给 1 步。
+        ' GRULayer.BackwardSequence 是用 gradient.Shape(0) 当循环上界、
+        ' 并据此去索引前向阶段记录下来的 _inputs(t) / _hiddenStates(t)：
+        '   * 给少了（原实现给的是 1）→ 只回传最后一步，早期时间步的梯度被静默丢弃；
+        '   * 但调用方仍按 numTimeSteps 去读返回的 gradSequence → 直接越界。
+        ' 两者都错，只是前者更隐蔽。这里一次修好。
+        Dim gruGradient = New Tensor(numTimeSteps, 1, _gruLayer.HiddenSize)
         For j = 0 To _gruLayer.HiddenSize - 1
-            gruGradient(0, 0, j) = gradGruHidden(0, j)
+            gruGradient(numTimeSteps - 1, 0, j) = gradGruHidden(0, j)
         Next
 
         Dim gradSequence = _gruLayer.BackwardSequence(gruGradient)
 
-        ' GCN反向传播（简化版本）
-        Dim numTimeSteps = temporalGraph.NumTimeSteps
-        Dim numNodes = temporalGraph.NumNodes
-
+        ' GCN 反向传播（简化版本）
         For t = 0 To numTimeSteps - 1
             Dim graph = temporalGraph(t)
             Dim normAdj = graph.GetNormalizedAdjacencyMatrix()
 
-            ' 计算GCN的梯度
+            ' 计算GCN的梯度。
+            ' 前向里 aggregatedSequence(t,0,j) 是各节点 GCN 输出的**平均**，
+            ' 因此平均算子把 1/numNodes 分摊给每个节点。
             Dim gcnGrad = New Tensor(numNodes, _gcnLayer.OutFeatures)
             For i = 0 To numNodes - 1
                 For j = 0 To _gcnLayer.OutFeatures - 1
@@ -386,22 +415,45 @@ Public Class A3TGCNModel
         Dim gruResult = _gruLayer.ForwardSequence(gcnSequence)
         _gruAllHidden = gruResult.allHidden
 
-        ' 计算时间注意力
-        _attentionScores = New Tensor(numTimeSteps)
-        Dim scoreSum As Single = 0
+        ' 计算时间注意力（数值稳定的 softmax）
+        '
+        ' 必须先减去最大值再取指数：
+        ' score = Σ_i h(t,i)·w(i) 会随着训练推进增长到几十甚至上百，
+        ' 而 Single 的 exp 在自变量超过约 88 时就溢出成 Infinity。
+        ' 一旦某个 scoreSum 变成 Infinity，归一化就成了 Inf/Inf = NaN，
+        ' 并顺着上下文向量一路污染到整个网络 —— 这正是本演示在第 10~20 个 epoch
+        ' 突然全变 NaN 的原因（减最大值后最大项恒为 e⁰ = 1，既不会溢出，
+        ' 也顺带保证了分母 ≥ 1、不需要再单独防除零）。
+        Dim rawScores = New Double(numTimeSteps - 1) {}
+        Dim maxScore As Double = Double.NegativeInfinity
 
         For t = 0 To numTimeSteps - 1
-            Dim score As Single = 0
+            Dim score As Double = 0
+
             For i = 0 To _gruLayer.HiddenSize - 1
                 score += _gruAllHidden(t, 0, i) * _attentionWeights(i)
             Next
-            _attentionScores(t) = CSng(std.Exp(score)) ' softmax的分子
-            scoreSum += _attentionScores(t)
+
+            rawScores(t) = score
+            If score > maxScore Then maxScore = score
         Next
+
+        _attentionScores = New Tensor(numTimeSteps)
+
+        Dim scoreSum As Double = 0
+
+        For t = 0 To numTimeSteps - 1
+            Dim e = std.Exp(rawScores(t) - maxScore)
+
+            _attentionScores(t) = CSng(e)
+            scoreSum += e
+        Next
+
+        If scoreSum <= 0.0 Then scoreSum = 1.0
 
         ' 归一化
         For t = 0 To numTimeSteps - 1
-            _attentionScores(t) /= scoreSum
+            _attentionScores(t) = CSng(_attentionScores(t) / scoreSum)
         Next
 
         ' 计算上下文向量
@@ -417,13 +469,16 @@ Public Class A3TGCNModel
     End Function
 
     Public Overrides Function Backward(gradient As Tensor, temporalGraph As TemporalGraph) As Tensor
+        Dim numTimeSteps = temporalGraph.NumTimeSteps
+        Dim numNodes = temporalGraph.NumNodes
+
         ' 输出层反向传播
         Dim gradContext = _outputLayer.Backward(gradient)
 
         ' 注意力反向传播
-        Dim gruGradient = New Tensor(temporalGraph.NumTimeSteps, 1, _gruLayer.HiddenSize)
+        Dim gruGradient = New Tensor(numTimeSteps, 1, _gruLayer.HiddenSize)
 
-        For t = 0 To temporalGraph.NumTimeSteps - 1
+        For t = 0 To numTimeSteps - 1
             For i = 0 To _gruLayer.HiddenSize - 1
                 ' 对隐藏状态的梯度
                 gruGradient(t, 0, i) = _attentionScores(t) * gradContext(0, i)
@@ -433,8 +488,28 @@ Public Class A3TGCNModel
             Next
         Next
 
-        ' GRU反向传播
-        _gruLayer.BackwardSequence(gruGradient)
+        ' GRU反向传播。
+        ' 必须接收它返回的输入序列梯度 —— 那正是 GCN 输出的梯度来源。
+        ' 原实现把返回值丢掉了，结果 A3T-GCN 的 GCN 分支永远拿不到梯度、
+        ' 完全学不到东西（表现为损失只能缓慢下降，因为只有 GRU 与输出层在训练）。
+        Dim gradSequence = _gruLayer.BackwardSequence(gruGradient)
+
+        ' GCN反向传播。
+        ' 前向里 gcnSequence(t,0,j) 是各节点 GCN 输出的平均，
+        ' 因此平均算子把 1/numNodes 分摊给每个节点。
+        For t = 0 To numTimeSteps - 1
+            Dim graph = temporalGraph(t)
+            Dim normAdj = graph.GetNormalizedAdjacencyMatrix()
+            Dim gcnGrad = New Tensor(numNodes, _gcnLayer.OutFeatures)
+
+            For i = 0 To numNodes - 1
+                For j = 0 To _gcnLayer.OutFeatures - 1
+                    gcnGrad(i, j) = gradSequence(t, 0, j) / numNodes
+                Next
+            Next
+
+            _gcnLayer.Backward(gcnGrad, normAdj)
+        Next
 
         Return Nothing
     End Function
@@ -444,6 +519,27 @@ Public Class A3TGCNModel
         params.Add(_attentionWeights)
         Return params
     End Function
+
+    ''' <summary>
+    ''' 归零全部梯度（含注意力权重）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 必须覆写：<c>_attentionWeights</c> 不在基类的 <c>_layers</c> 列表里，
+    ''' 基类实现遍历 _layers 时会把它的梯度漏掉。
+    ''' 于是 <c>_attentionGrad</c> 会跨样本、跨 epoch 无界累积 ——
+    ''' 与之前 GRU 梯度未清零是同一类问题（最终会溢出成 ∞ 并被 Adam 变成 NaN）。
+    ''' </remarks>
+    Public Overrides Sub ResetGradients()
+        MyBase.ResetGradients()
+
+        Dim data = _attentionGrad.Data
+
+        For i = 0 To data.Length - 1
+            data(i) = 0.0
+        Next
+
+        Call _attentionGrad.MarkHostModified()
+    End Sub
 
     Public Overrides Function GetGradients() As List(Of Tensor)
         Dim grads = MyBase.GetGradients()
@@ -497,7 +593,10 @@ Public Class TemporalGNNTrainer
 
             totalLoss += loss / prediction.Length
 
-            ' 反向传播
+            ' 反向传播。
+            ' 先清零：上面每个样本都会走一次 Step()，属于"逐样本在线更新"，
+            ' 因此本样本的梯度不应叠加前一个样本的残留。
+            _model.ResetGradients()
             _model.Backward(gradient, graph)
 
             ' 参数更新

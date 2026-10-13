@@ -262,10 +262,16 @@ Public Class LNNTrainer
         Dim scale = GradientClipValue / norm
 
         For Each pair In _Network.GetParameterPairs()
+            ' 走底层数组批量写：索引器的 setter 每个元素都会自增一次版本号
+            ' （用于显存缓存失效），参数一大就是纯开销。
             Dim g = pair.Gradient
-            For i = 0 To g.Length - 1
-                g(i) = g(i) * scale
+            Dim data = g.Data
+
+            For i = 0 To data.Length - 1
+                data(i) = data(i) * scale
             Next
+
+            Call g.MarkHostModified()
         Next
     End Sub
 
@@ -306,20 +312,43 @@ Public Class LNNTrainer
             Dim p = pair.Value
             Dim g = pair.Gradient
 
-            For i = 0 To p.Length - 1
+            ' 状态与更新全部保持 Double（标准的"主副本在双精度"做法）。
+            '
+            ' 唯一的改动是绕过索引器：原写法对 m/v/p 三个张量各做一次逐元素赋写，
+            ' 而 Tensor 的索引器 setter 每写一个元素就 Interlocked.Increment 一次版本号
+            ' —— 每个参数点要付 3 次原子操作。改成直接写底层数组、每张量收尾时
+            ' 调用一次 MarkHostModified，失效语义不变但原子操作降到 3 次/参数张量。
+            '
+            ' 逐位一致性：读取顺序与写入顺序都与原实现相同
+            ' （先读旧 m/v，算得新值后写回，再用**新值**做偏差校正）。
+            Dim mData = m.Data
+            Dim vData = v.Data
+            Dim pData = p.Data
+            Dim gData = g.Data
+            Dim invBC1 = 1.0 - beta1Pow
+            Dim invBC2 = 1.0 - beta2Pow
+
+            For i = 0 To pData.Length - 1
                 ' 更新一阶矩估计
-                m(i) = AdamBeta1 * m(i) + (1 - AdamBeta1) * g(i)
+                Dim mi = AdamBeta1 * mData(i) + (1 - AdamBeta1) * gData(i)
 
                 ' 更新二阶矩估计
-                v(i) = AdamBeta2 * v(i) + (1 - AdamBeta2) * g(i) * g(i)
+                Dim vi = AdamBeta2 * vData(i) + (1 - AdamBeta2) * gData(i) * gData(i)
 
-                ' 偏差校正
-                Dim mHat = m(i) / (1 - beta1Pow)
-                Dim vHat = v(i) / (1 - beta2Pow)
+                mData(i) = mi
+                vData(i) = vi
+
+                ' 偏差校正（用更新后的矩）
+                Dim mHat = mi / invBC1
+                Dim vHat = vi / invBC2
 
                 ' 更新参数
-                p(i) -= LearningRate * mHat / (std.Sqrt(vHat) + AdamEpsilon)
+                pData(i) -= LearningRate * mHat / (std.Sqrt(vHat) + AdamEpsilon)
             Next
+
+            Call m.MarkHostModified()
+            Call v.MarkHostModified()
+            Call p.MarkHostModified()
         Next
     End Sub
 

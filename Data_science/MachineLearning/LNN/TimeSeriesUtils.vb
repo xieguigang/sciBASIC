@@ -95,15 +95,38 @@ Public Module TimeSeriesUtils
     ''' 归一化数据到[0, 1]范围
     ''' </summary>
     Public Function Normalize(data As Double()) As (normalized As Double(), min As Double, max As Double)
-        Dim minVal = data.Min()
-        Dim maxVal = data.Max()
+        ' data.Min() / data.Max() 各是一次完整枚举（两次 LINQ 遍历）；
+        ' 下面一趟同时求出极值，再把结果一次写进结果数组。
+        Dim n = data.Length
+
+        If n = 0 Then Return (New Double() {}, 0.0, 0.0)
+
+        Dim minVal = data(0)
+        Dim maxVal = data(0)
+
+        For i = 1 To n - 1
+            Dim v = data(i)
+
+            If v < minVal Then minVal = v
+            If v > maxVal Then maxVal = v
+        Next
+
         Dim range = maxVal - minVal
+        Dim normalized(n - 1) As Double
 
         If range = 0 Then
-            Return (data.Select(Function(x) 0.5).ToArray(), minVal, maxVal)
+            ' 全常量序列：归一化后退化为 0.5（与旧实现一致）
+            For i = 0 To n - 1
+                normalized(i) = 0.5
+            Next
+
+            Return (normalized, minVal, maxVal)
         End If
 
-        Dim normalized = data.Select(Function(x) (x - minVal) / range).ToArray()
+        For i = 0 To n - 1
+            normalized(i) = (data(i) - minVal) / range
+        Next
+
         Return (normalized, minVal, maxVal)
     End Function
 
@@ -112,22 +135,54 @@ Public Module TimeSeriesUtils
     ''' </summary>
     Public Function Denormalize(normalized As Double(), min As Double, max As Double) As Double()
         Dim range = max - min
-        Return normalized.Select(Function(x) x * range + min).ToArray()
+        Dim result(normalized.Length - 1) As Double
+
+        For i = 0 To result.Length - 1
+            result(i) = normalized(i) * range + min
+        Next
+
+        Return result
     End Function
 
     ''' <summary>
     ''' 标准化数据（零均值，单位方差）
     ''' </summary>
     Public Function Standardize(data As Double()) As (standardized As Double(), mean As Double, std As Double)
-        Dim mean = data.Average()
-        Dim variance = data.Select(Function(x) (x - mean) * (x - mean)).Average()
+        ' 全部改为显式循环：LINQ 版本每一步都要分配闭包与迭代器
+        ' （data.Select(...).Average() 是"委托 + 迭代器 + 再枚举一遍"），
+        ' 对长序列来说这些分配与虚调用开销远大于算术本身。
+        ' 累加次序与 LINQ Average 一致（下标由小到大），因此结果逐位相同。
+        Dim n = data.Length
+
+        If n = 0 Then Return (New Double() {}, 0.0, 0.0)
+
+        Dim sum As Double = 0
+
+        For i = 0 To n - 1
+            sum += data(i)
+        Next
+
+        Dim mean = sum / n
+        Dim sq As Double = 0
+
+        For i = 0 To n - 1
+            Dim d = data(i) - mean
+            sq += d * d
+        Next
+
+        Dim variance = sq / n
         Dim std As Double = System.Math.Sqrt(variance)
+        Dim standardized(n - 1) As Double
 
         If std = 0 Then
-            Return (data.Select(Function(x) 0.0).ToArray(), mean, std)
+            ' 全常量序列：标准化后退化为全零（与旧实现一致）
+            Return (standardized, mean, std)
         End If
 
-        Dim standardized = data.Select(Function(x) (x - mean) / std).ToArray()
+        For i = 0 To n - 1
+            standardized(i) = (data(i) - mean) / std
+        Next
+
         Return (standardized, mean, std)
     End Function
 
@@ -135,7 +190,13 @@ Public Module TimeSeriesUtils
     ''' 反标准化
     ''' </summary>
     Public Function Destandardize(standardized As Double(), mean As Double, std As Double) As Double()
-        Return standardized.Select(Function(x) x * std + mean).ToArray()
+        Dim result(standardized.Length - 1) As Double
+
+        For i = 0 To result.Length - 1
+            result(i) = standardized(i) * std + mean
+        Next
+
+        Return result
     End Function
 
     ''' <summary>

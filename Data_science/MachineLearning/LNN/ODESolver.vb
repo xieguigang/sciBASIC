@@ -163,9 +163,20 @@ Public Module ODESolver
     Private Function ScaleAdd(a As Tensor, b As Tensor, factor As Double) As Tensor
         Dim r = New Tensor(a.Shape)
 
-        For i = 0 To a.Length - 1
-            r(i) = a(i) + b(i) * factor
+        ' 走底层数组而不是索引器：
+        ' Tensor 的索引器写入器每次都会 Interlocked.Increment 一次版本号（用于显存缓存失效），
+        ' 逐元素写等于每个元素多付一次原子操作。这里批量写完后调用一次 MarkHostModified，
+        ' 失效语义完全相同，但省掉了 H 次原子操作。
+        ' 这个函数在 RK4 / Heun 的每个级里都会被调用，属于积分器内层。
+        Dim dst = r.Data
+        Dim da = a.Data
+        Dim db = b.Data
+
+        For i = 0 To dst.Length - 1
+            dst(i) = da(i) + db(i) * factor
         Next
+
+        Call r.MarkHostModified()
 
         Return r
     End Function

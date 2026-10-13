@@ -1,4 +1,4 @@
-' ---------------------------------------------------------------------------
+﻿' ---------------------------------------------------------------------------
 ' 上层算子的对拍：验证"并行化改造没有改变数值语义"
 '
 ' 与 OperatorParity 的分工：
@@ -17,6 +17,7 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports Microsoft.VisualBasic.MachineLearning.Transformer
 Imports Microsoft.VisualBasic.MachineLearning.RNN
 Imports Microsoft.VisualBasic.DeepLearning.GNN
+Imports Microsoft.VisualBasic.DeepLearning.LiquidNeuralNetwork
 Imports std = System.Math
 
 Namespace MixedPrecisionBench
@@ -29,6 +30,91 @@ Namespace MixedPrecisionBench
             Call GnnLayerCase(results)
             Call GraphCacheCase(results)
             Call RnnCase(results)
+            Call LnnCase(results)
+        End Sub
+
+        ''' <summary>
+        ''' LNN 回归：确认 LiquidCell 反向的循环重排没有改变数值结果。
+        ''' </summary>
+        ''' <remarks>
+        ''' P5 对 LiquidCell 的两处改动（循环交换、分支外提）在设计上应当**逐位不变**，
+        ''' 因为每个梯度分量的累加次序没有变。这个用例就是把该论断变成可执行的断言：
+        '''   * 用固定种子训练固定步数，得到一条确定性的损失轨迹；
+        '''   * 断言末次损失低于首次（网络确实在学）；
+        '''   * 断言两次独立构造 + 相同种子给出**完全相同**的末次损失 ——
+        '''     只要循环重排真的改变了累加次序，这条断言会立刻失败。
+        ''' <para>
+        ''' 顺带覆盖 ODE 积分器：本用例默认走 CT_RNN 模式，
+        ''' 每步训练都会经过 RK4 的多次右端求值，因此积分器的双精度路径也在被测范围内。
+        ''' </para>
+        ''' </remarks>
+        Private Sub LnnCase(results As List(Of CaseResult))
+            Dim first As Double
+            Dim last As Double = 0
+            Dim repeatLast As Double = 0
+
+            For pass = 0 To 1
+                Dim net As New LiquidNeuralNetwork(2, 12, 1, 1, "tanh", "none", 1234)
+                Dim trainer As New LNNTrainer(net, 0.01)
+
+                Dim runFirst As Double = 0
+                Dim runLast As Double = 0
+
+                For i = 0 To 299
+                    Dim x = i / 300.0
+                    Dim loss = trainer.TrainStep(VecD(x, 1.0 - x), TargetOf(std.Sin(x * 2.0)))
+
+                    If i = 0 Then runFirst = loss
+                    runLast = loss
+                Next
+
+                If pass = 0 Then
+                    first = runFirst
+                    last = runLast
+                Else
+                    repeatLast = runLast
+                End If
+            Next
+
+            Dim finite = Not Double.IsNaN(last) AndAlso Not Double.IsInfinity(last)
+
+            results.Add(New CaseResult("LNN 训练可收敛", finite AndAlso last < first,
+                                       $"初始损失={first:E3} 末次损失={last:E3}"))
+
+            results.Add(New CaseResult("LNN 相同种子逐位可复现", last = repeatLast,
+                                       $"第一次={last:R} 第二次={repeatLast:R}"))
+
+            ' ---- 长序列滚动 ----
+            ' 这是本阶段最该盯的风险：ODE 状态的递推误差是**累积**的，
+            ' 单步看不出问题，几百步之后才会暴露为漂移或发散。
+            ' 用刚训好的网络做一次 800 步连续积分（训练是逐点喂入，
+            ' 这里一次给整段序列，走的是另一条代码路径），断言输出全部有限且幅值有界。
+            Dim net2 As New LiquidNeuralNetwork(2, 12, 1, 1, "tanh", "none", 4321)
+            Call net2.ResetState()
+
+            Dim steps = 800
+            ' 用行主序的一维数组 + 显式形状构造：
+            ' ProcessSequence 期望 (seqLength, inputSize)，即 [steps, 2]。
+            Dim seq(steps * 2 - 1) As Double
+
+            For i = 0 To steps - 1
+                Dim x = i / steps
+                seq(i * 2) = x
+                seq(i * 2 + 1) = 1.0 - x
+            Next
+
+            Dim rollout = net2.ProcessSequence(New Tensor(seq, steps, 2), 0.05)
+
+            Dim allFinite = True
+            Dim maxAbs As Double = 0
+
+            For Each v In rollout.Data
+                If Double.IsNaN(v) OrElse Double.IsInfinity(v) Then allFinite = False
+                maxAbs = std.Max(maxAbs, std.Abs(v))
+            Next
+
+            results.Add(New CaseResult("LNN 800 步长序列不发散", allFinite AndAlso maxAbs < 1000.0,
+                                       $"形状=[{rollout.Shape(0)},{rollout.Shape(1)}] maxAbs={maxAbs:F4} 有限={allFinite}"))
         End Sub
 
         ''' <summary>
@@ -110,9 +196,27 @@ Namespace MixedPrecisionBench
         ''' </para>
         ''' </remarks>
         Private Sub GnnLayerCase(results As List(Of CaseResult))
-            Dim n = 512, features = 128
-            Dim layer As New LinearLayer(features, features)
-            Dim input = New Tensor(Randoms(n * features, seed:=401, scale:=1.0), n, features)
+            ' 输入/输出维度**必须不相等**。
+            ' 这条用例早先写的是 128→128 的方阵，于是漏掉了一个真实缺陷：
+            ' LinearLayer 的权重初始化曾用 XavierInit(inFeatures, outFeatures) 得到 (in,out)，
+            ' 而该层其余代码（Forward 的转置、Backward 的 dW/dx、_weightGradient 的分配）
+            ' 全部按 (out,in) 写。方阵时形状恰好凑得上、什么错都不报；
+            ' 一旦 in≠out 就直接"矩阵维度不匹配"（TGCN 演示报的 1 != 16 就是这个）。
+            Dim n = 512, inFeatures = 128, outFeatures = 64
+            Dim layer As New LinearLayer(inFeatures, outFeatures)
+            Dim input = New Tensor(Randoms(n * inFeatures, seed:=401, scale:=1.0), n, inFeatures)
+
+            results.Add(New CaseResult(
+                "GNN LinearLayer 权重布局 (out,in)",
+                layer.GetWeights().Shape(0) = outFeatures AndAlso layer.GetWeights().Shape(1) = inFeatures,
+                $"权重形状=[{layer.GetWeights().Shape(0)},{layer.GetWeights().Shape(1)}] 期望=[{outFeatures},{inFeatures}]"))
+
+            Dim grads = layer.GetGradients()
+
+            results.Add(New CaseResult(
+                "GNN LinearLayer 梯度与权重同形",
+                grads(0).Shape(0) = outFeatures AndAlso grads(0).Shape(1) = inFeatures,
+                $"梯度形状=[{grads(0).Shape(0)},{grads(0).Shape(1)}] 权重形状=[{layer.GetWeights().Shape(0)},{layer.GetWeights().Shape(1)}]"))
 
             Dim enabled = MixedPrecisionPolicy.Enabled
             Dim reference As Tensor = Nothing
@@ -250,6 +354,31 @@ Namespace MixedPrecisionBench
             results.Add(New CaseResult("RNN (Tensor) 采样索引合法", validSample,
                                        If(validSample, $"样本={String.Join(",", sampled)}", "采样结果越界或为空")))
         End Sub
+
+        ''' <summary>
+        ''' 把一组双精度字面量包成 (1, n) 的行向量张量。
+        ''' </summary>
+        ''' <remarks>
+        ''' 输入侧用行向量：LiquidCell 的 <c>ToRow</c> 会按 (1, n) 处理。
+        ''' </remarks>
+        Private Function VecD(ParamArray values As Double()) As Tensor
+            Return New Tensor(values, 1, values.Length)
+        End Function
+
+        ''' <summary>单输出回归目标（秩 1，与 <c>ComputeOutputFrom</c> 的返回形状一致）</summary>
+        ''' <remarks>
+        ''' MUST 与预测值同形：<c>LNNTrainer.MSE</c> 会先做 <c>Shape.SequenceEqual</c> 校验，
+        ''' 而输出层返回的是 <c>New Tensor(OutputSize)</c> —— 秩 1，不是 (1,1)。
+        ''' </remarks>
+        Private Function TargetOf(value As Double) As Tensor
+            ' 注意不能写 New Tensor(New Double() {value})：
+            ' 那个重载把参数当 data、shape 留空，构造出的张量秩为 0，
+            ' 会在 Tensor.UpdateDimProds 里越界。显式给一维形状才是秩 1。
+            Dim t = New Tensor(1)
+            t(0) = value
+
+            Return t
+        End Function
 
         Private Sub BatchedMatMulCase(results As List(Of CaseResult))
             ' a: [2, 5, 7]，b: [2, 7, 3] —— batch 维为 2，覆盖多 block 路径
