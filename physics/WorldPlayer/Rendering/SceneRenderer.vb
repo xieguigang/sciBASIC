@@ -55,10 +55,10 @@ Public Class SceneRenderer
 
     ''' <summary>
     ''' 光源方向（渲染空间，由表面指向光源）。
-    ''' 注意渲染空间是 <b>Y 向下</b>、<b>+Z 为上</b>（物理 Y-up 被映射到渲染 +Z），
-    ''' 因此"从上方打光"的竖直分量是 +Z 而不是 -Y。
+    ''' 渲染空间是 <b>Y 向下</b>、<b>Z 向远</b>，因此"从左上前方打光"即
+    ''' <c>(-x, -y, +z)</c>：-Y 表示来自上方，-X 表示来自左侧。
     ''' </summary>
-    Private Shared ReadOnly LightDir As Double() = Normalize(-0.4, -0.25, 0.88)
+    Private Shared ReadOnly LightDir As Double() = Normalize(-0.42, -0.68, 0.6)
 
     Private Shared Function Normalize(x As Double, y As Double, z As Double) As Double()
         Dim n As Double = std.Sqrt(x * x + y * y + z * z)

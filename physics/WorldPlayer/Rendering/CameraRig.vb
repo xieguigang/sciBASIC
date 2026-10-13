@@ -163,8 +163,20 @@ Public Class CameraRig
     ' /********************************************************************************/
 
     ''' <summary>物理坐标 → 渲染坐标（相对焦点）。</summary>
+    ''' <remarks>
+    ''' 物理空间：X 向右、Y 向上、Z 朝观察者；渲染空间：X 向右、Y 向下、Z 向远。
+    ''' 因此映射为 <c>(x, -y, -z)</c>：行列式 = (+1)·(-1)·(-1) = +1，是<b>真旋转</b>，
+    ''' 既不镜像也不翻转面绕向与光照。
+    ''' 若写成 <c>(x, -z, y)</c>（把"高度"映射到深度、"前后"映射到屏幕竖直方向），
+    ''' 得到的其实是俯视图，地面会呈现"近处在上、远处在下"的倒置观感。
+    ''' </remarks>
     Public Function ToRender(x As Double, y As Double, z As Double) As Point3D
-        Return New Point3D(x - FocusX, -(z - FocusZ), y - FocusY)
+        Return New Point3D(x - FocusX, -(y - FocusY), -(z - FocusZ))
+    End Function
+
+    ''' <summary>渲染坐标 → 物理坐标（<see cref="ToRender"/> 的逆变换）。</summary>
+    Public Function ToPhysics(r As Point3D) As Vector3
+        Return New Vector3(r.X + FocusX, -r.Y + FocusY, -r.Z + FocusZ)
     End Function
 
     ''' <summary>
@@ -193,14 +205,15 @@ Public Class CameraRig
         Dim eyeR As Point3D = Unrotate(0.0, 0.0, -vd, m)
         Dim hitR As Point3D = Unrotate(cx, cy, 0.0, m)
 
-        ' 渲染空间 → 物理空间：rx = px - Fx, ry = -(pz - Fz), rz = py - Fy
+        ' 渲染 → 物理：(rx, ry, rz) → (rx + Fx, -ry + Fy, -rz + Fz)
         ox = eyeR.X + FocusX
-        oy = eyeR.Z + FocusY
-        oz = -eyeR.Y + FocusZ
+        oy = -eyeR.Y + FocusY
+        oz = -eyeR.Z + FocusZ
 
+        ' 方向是线性部分：物理 = (drx, -dry, -drz)
         Dim rx As Double = hitR.X - eyeR.X
-        Dim ry As Double = hitR.Z - eyeR.Z
-        Dim rz As Double = -(hitR.Y - eyeR.Y)
+        Dim ry As Double = -(hitR.Y - eyeR.Y)
+        Dim rz As Double = -(hitR.Z - eyeR.Z)
         Dim len As Double = std.Sqrt(rx * rx + ry * ry + rz * rz)
 
         If len < 1.0E-9 Then Return False

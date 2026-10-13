@@ -88,6 +88,7 @@ Module SelfTest
 
             Call report.AppendLine($"脚本: {scriptPath}")
             Call CameraRoundTrip(rig)
+            Call CameraOrientation(rig)
             Call ShapeSpawning(host)
             Call ScriptSmoke(script, api)
             Call LoadDemoScript(host, rig, renderer, script, api, scriptPath)
@@ -178,6 +179,63 @@ Module SelfTest
 
         Check("ScreenToRay 可用", rig.ScreenToRay(550, 310, ox, oy, oz, dx, dy, dz))
         Near("射线方向已归一化", std.Sqrt(dx * dx + dy * dy + dz * dz), 1.0, 1.0E-9)
+    End Sub
+
+    ''' <summary>物理坐标点投影到屏幕。</summary>
+    Private Function ScreenOf(rig As CameraRig, x As Double, y As Double, z As Double) As Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
+        Return rig.Camera.Project(rig.Camera.Rotate(rig.ToRender(x, y, z)))
+    End Function
+
+    ''' <summary>
+    ''' 相机朝向的语义检查。反投影往返是自洽的，因此"上下颠倒"这类映射错误
+    ''' 必须用"物理方向 → 屏幕方向"的常识约束来验证：
+    ''' 地面远端要在画面上方、高处物体要在画面上方、屏幕上方的落点要更远。
+    ''' </summary>
+    Private Sub CameraOrientation(rig As CameraRig)
+        Call report.AppendLine("-- 相机朝向（场景不得倒置）")
+
+        Call rig.SetScreen(New Size(1100, 620))
+        Call rig.SetAngles(24, -38)
+        Call rig.SetDistance(48)
+        Call rig.SetFocus(0, 2.5, 0)
+
+        For i As Integer = 1 To 200
+            rig.Tick()
+        Next
+
+        Dim w As Double = rig.Camera.Screen.Width
+        Dim h As Double = rig.Camera.Screen.Height
+
+        ' ① 地面：远端必须投影在近端上方，否则整个场景是倒置的
+        Dim farS = ScreenOf(rig, 0, 0, -12)
+        Dim nearS = ScreenOf(rig, 0, 0, 12)
+
+        Check("地面远端在屏幕上方（场景未倒置）", farS.Y < nearS.Y,
+              $"far.Y={farS.Y:F1} near.Y={nearS.Y:F1}")
+
+        ' ② 高度：越高的点越靠上
+        Dim hiS = ScreenOf(rig, 0, 12, 0)
+        Dim loS = ScreenOf(rig, 0, 1, 0)
+
+        Check("高处物体在屏幕上方", hiS.Y < loS.Y, $"hi.Y={hiS.Y:F1} lo.Y={loS.Y:F1}")
+
+        ' ③ 屏幕上方的落点应比屏幕下方的更远（相机在 +Z 侧看向 -Z）
+        Dim px, py, pz As Double
+        Dim okUp As Boolean = rig.ScreenToPlane(w / 2.0, h * 0.35, 0, 1, 0, 0.0, px, py, pz)
+        Dim farZ As Double = pz
+        Dim okDown As Boolean = rig.ScreenToPlane(w / 2.0, h * 0.62, 0, 1, 0, 0.0, px, py, pz)
+        Dim nearZ As Double = pz
+
+        Check("屏幕上方与下方都能命中地面", okUp AndAlso okDown, $"up={okUp} down={okDown}")
+        Check("屏幕上方的落点更远", okUp AndAlso okDown AndAlso farZ < nearZ,
+              $"farZ={farZ:F2} nearZ={nearZ:F2}")
+
+        ' ④ "地面在屏幕中部偏下、上方是天空"才是正常观感：
+        '    屏幕下部点击应落在相机前方（而非提示"指向天空"）
+        Dim okLow As Boolean = rig.ScreenToPlane(w / 2.0, h * 0.85, 0, 1, 0, 0.0, px, py, pz)
+
+        Check("屏幕下部点击可命中地面", okLow, $"ok={okLow}")
+        Near("落点确实在地面上", py, 0.0, 1.0E-9)
     End Sub
 
     ''' <summary>各形状都能生成，并且质量 / 静态标志正确。</summary>
