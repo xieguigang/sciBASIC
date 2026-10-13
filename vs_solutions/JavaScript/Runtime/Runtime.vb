@@ -149,7 +149,8 @@ Namespace Runtime
             If TypeOf x Is String Then Return "string"
             If TypeOf x Is Boolean Then Return "boolean"
             If TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod Then Return "function"
-            If x Is Nothing OrElse x Is Undef Then Return "undefined"
+            If x Is Undef Then Return "undefined"
+            If x Is Nothing Then Return "object"     ' JS: typeof null === "object"
             Return "object"
         End Function
 
@@ -230,6 +231,14 @@ Namespace Runtime
                 Return ReferenceEquals(a, b)
             End If
             Return False
+        End Function
+
+        Public Function JsNe(a As Object, b As Object) As Boolean
+            Return Not JsEq(a, b)
+        End Function
+
+        Public Function JsStrictNe(a As Object, b As Object) As Boolean
+            Return Not JsStrictEq(a, b)
         End Function
 
         Public Function JsEq(a As Object, b As Object) As Boolean
@@ -1065,7 +1074,8 @@ Namespace Runtime
                 Case TypeCode.Double, TypeCode.Single, TypeCode.Int32, TypeCode.Int64 : Return "number"
                 Case TypeCode.String : Return "string"
                 Case TypeCode.Boolean : Return "boolean"
-                Case TypeCode.Empty, TypeCode.DBNull : Return "undefined"
+                Case TypeCode.Empty : Return "undefined"
+                Case TypeCode.DBNull : Return "object"      ' JS: typeof null === "object"
                 Case Else
                     Dim o = v.AsObject()
                     If TypeOf o Is Func(Of Object(), Object) OrElse TypeOf o Is BuiltinMethod Then Return "function"
@@ -1174,6 +1184,14 @@ Namespace Runtime
             If b.IsString Then Return JsStr(a) = b.AsString()
             If a.IsString Then Return a.AsString() = JsStr(b)
             Return JsNum(a) = JsNum(b)
+        End Function
+
+        Public Function JsNe(a As JsValue, b As JsValue) As Boolean
+            Return Not JsEq(a, b)
+        End Function
+
+        Public Function JsStrictNe(a As JsValue, b As JsValue) As Boolean
+            Return Not JsStrictEq(a, b)
         End Function
 
         Public Function JsLt(a As JsValue, b As JsValue) As Boolean

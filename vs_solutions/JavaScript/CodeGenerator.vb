@@ -47,6 +47,9 @@ Public NotInheritable Class CodeGenerator
         w.Line("Public Shared Sub Run(io As LiteJs.Runtime.ScriptIO)")
         w.Indent()
         w.Line("JsRuntime.Io = io")
+        ' JS var hoisting: every 'var' of this function body is declared once at
+        ' the top (VB Dim is block-scoped, JS var is function-scoped)
+        EmitHoistedVars(program.Body, w, top)
         GenBlock(program.Body, w, top)
         w.UnIndent()
         w.Line("End Sub")
@@ -85,11 +88,26 @@ Public NotInheritable Class CodeGenerator
     Private Sub GenStmt(s As Statement, w As IndentWriter, scope As Scope)
         If TypeOf s Is VarStmt Then
             Dim v = DirectCast(s, VarStmt)
-            For Each d In v.Declarations
-                Dim vbName = scope.DefineLocal(d.Name)
-                Dim init = If(d.Init IsNot Nothing, GenExpr(d.Init, scope), "JsRuntime.Undef")
-                w.Line($"Dim {vbName} As JsValue = {init}")
-            Next
+            If v.Kind = "var" Then
+                ' var was hoisted to the function top by EmitHoistedVars — assign only
+                For Each d In v.Declarations
+                    Dim vbName = scope.Resolve(d.Name)
+                    If vbName Is Nothing Then
+                        vbName = scope.DefineLocal(d.Name)
+                        w.Line($"Dim {vbName} As JsValue = JsRuntime.Undef")
+                    End If
+                    If d.Init IsNot Nothing Then
+                        w.Line($"{vbName} = {GenExpr(d.Init, scope)}")
+                    End If
+                Next
+            Else
+                ' let / const — block-scoped declaration
+                For Each d In v.Declarations
+                    Dim vbName = scope.DefineLocal(d.Name)
+                    Dim init = If(d.Init IsNot Nothing, GenExpr(d.Init, scope), "JsRuntime.Undef")
+                    w.Line($"Dim {vbName} As JsValue = {init}")
+                Next
+            End If
 
         ElseIf TypeOf s Is ExprStmt Then
             GenExprAsStatement(DirectCast(s, ExprStmt).Expr, w, scope)
@@ -421,7 +439,7 @@ Public NotInheritable Class CodeGenerator
             Dim f = DirectCast(e, FuncExpr)
             Dim argsName = ArgsParam()
             Return "CType(Function(" & argsName & " As JsValue())" & vbLf &
-                   LambdaBody(f.Parameters, f.Body, scope, argsName) & vbLf &
+                   LambdaBody(f.Parameters, f.Body, scope, argsName, f.IsArrow) & vbLf &
                    "End Function, Func(Of Object(), Object))"
         End If
 
@@ -442,7 +460,8 @@ Public NotInheritable Class CodeGenerator
     End Function
 
     ''' <summary>Parameter binding + function-hoisted block + trailing Return Undef, as plain lines.</summary>
-    Private Function LambdaBody(parameters As String(), body As List(Of Statement), parent As Scope, argsName As String) As String
+    Private Function LambdaBody(parameters As String(), body As List(Of Statement), parent As Scope, argsName As String,
+                                Optional isArrow As Boolean = False) As String
         ' a function body is a loop boundary in JS: break/continue inside can
         ' only target the function's own loops, never the caller's
         Dim saveExit = _loopExit.ToArray()
@@ -454,6 +473,13 @@ Public NotInheritable Class CodeGenerator
             Dim vbParam = fscope.DefineLocal(parameters(i))
             w.Line($"Dim {vbParam} As JsValue = If({argsName}.Length > {i}, {argsName}({i}), JsRuntime.Undef)")
         Next
+        If Not isArrow Then
+            ' the 'arguments' object: arrow functions inherit it lexically
+            Dim vbArgs = fscope.DefineLocal("arguments")
+            w.Line($"Dim {vbArgs} As JsValue = New List(Of Object)({argsName})")
+        End If
+        ' JS var hoisting: declare every 'var' of this function once at the top
+        EmitHoistedVars(body, w, fscope)
         GenBlockInScope(body, w, fscope)
         w.Line("Return JsRuntime.Undef")
         _loopExit.Clear() : _loopCont.Clear()
@@ -461,6 +487,72 @@ Public NotInheritable Class CodeGenerator
         For Each c In saveCont : _loopCont.Push(c) : Next
         Return w.ToString()
     End Function
+
+    ' ======================================================= var hoisting (codegen)
+
+    ''' <summary>
+    ''' JS <c>var</c> is function-scoped while VB <c>Dim</c> is block-scoped, so every
+    ''' <c>var</c> of a function body is declared once at the top as <c>Undef</c> and
+    ''' the declaration site only assigns (see <see cref="GenStmt"/>).
+    ''' </summary>
+    Private Sub EmitHoistedVars(body As List(Of Statement), w As IndentWriter, scope As Scope)
+        Dim names As New List(Of String)
+        CollectHoistedVars(body, names, New HashSet(Of String))
+        For Each name In names
+            If scope.Resolve(name) Is Nothing Then
+                Dim vbName = scope.DefineLocal(name)
+                w.Line($"Dim {vbName} As JsValue = JsRuntime.Undef")
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Collect <c>var</c> names of a statement list. Never descends into nested
+    ''' function declarations (their vars belong to their own function scope).
+    ''' </summary>
+    Private Sub CollectHoistedVars(stmts As List(Of Statement), names As List(Of String), seen As HashSet(Of String))
+        For Each s In stmts
+            CollectHoistedVars(s, names, seen)
+        Next
+    End Sub
+
+    ''' <summary>Collect <c>var</c> names reachable from one statement (recursive).</summary>
+    Private Sub CollectHoistedVars(s As Statement, names As List(Of String), seen As HashSet(Of String))
+        Select Case True
+            Case TypeOf s Is VarStmt
+                Dim v = DirectCast(s, VarStmt)
+                If v.Kind = "var" Then
+                    For Each d In v.Declarations
+                        If seen.Add(d.Name) Then names.Add(d.Name)
+                    Next
+                End If
+            Case TypeOf s Is BlockStmt
+                CollectHoistedVars(DirectCast(s, BlockStmt).Body, names, seen)
+            Case TypeOf s Is IfStmt
+                Dim i = DirectCast(s, IfStmt)
+                CollectHoistedVars(i.ThenBranch, names, seen)
+                If i.ElseBranch IsNot Nothing Then CollectHoistedVars(i.ElseBranch, names, seen)
+            Case TypeOf s Is ForStmt
+                Dim fr = DirectCast(s, ForStmt)
+                If TypeOf fr.Init Is VarStmt Then CollectHoistedVars(DirectCast(fr.Init, Statement), names, seen)
+                CollectHoistedVars(fr.Body, names, seen)
+            Case TypeOf s Is ForInStmt
+                CollectHoistedVars(DirectCast(s, ForInStmt).Body, names, seen)
+            Case TypeOf s Is WhileStmt
+                CollectHoistedVars(DirectCast(s, WhileStmt).Body, names, seen)
+            Case TypeOf s Is DoWhileStmt
+                CollectHoistedVars(DirectCast(s, DoWhileStmt).Body, names, seen)
+            Case TypeOf s Is TryStmt
+                Dim t = DirectCast(s, TryStmt)
+                CollectHoistedVars(t.TryBlock, names, seen)
+                If t.CatchBlock IsNot Nothing Then CollectHoistedVars(t.CatchBlock, names, seen)
+                If t.FinallyBlock IsNot Nothing Then CollectHoistedVars(t.FinallyBlock, names, seen)
+            Case TypeOf s Is FuncDeclStmt
+                ' its own function scope — never hoisted into the enclosing one
+            Case Else
+                ' TODO: switch / labeled / for-of / class bodies (added in later tiers)
+        End Select
+    End Sub
 
     ' ======================================================= literals / identifiers
 

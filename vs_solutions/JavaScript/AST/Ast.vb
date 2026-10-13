@@ -162,11 +162,18 @@ Public NotInheritable Class FuncExpr
     ''' <summary>Function name, or Nothing for anonymous/arrow functions.</summary>
     Public ReadOnly Name As String
     Public ReadOnly Parameters As String()
+    ''' <summary>
+    ''' Arrow function? Arrow functions have no own <c>this</c>/<c>arguments</c>
+    ''' bindings — both resolve lexically through the enclosing scope.
+    ''' </summary>
+    Public ReadOnly IsArrow As Boolean
     Public ReadOnly Body As List(Of Statement)
 
-    Public Sub New(name As String, parameters As String(), body As List(Of Statement))
+    Public Sub New(name As String, parameters As String(), body As List(Of Statement),
+                   Optional isArrow As Boolean = False)
         Me.Name = name
         Me.Parameters = parameters
+        Me.IsArrow = isArrow
         Me.Body = body
     End Sub
 End Class

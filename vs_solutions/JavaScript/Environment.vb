@@ -14,9 +14,28 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Public NotInheritable Class Environment
     Inherits NestedScriptEnvironment
 
-    Public Sub New(parent As Environment)
+    ''' <summary>
+    ''' 函数作用域边界标记：JS <c>var</c> 声明与函数声明提升到最近的函数作用域
+    ''' （脚本全局根也是函数边界；普通块级作用域为 False）。
+    ''' </summary>
+    Public ReadOnly Property IsFunctionScope As Boolean
+
+    Public Sub New(parent As Environment, Optional isFunctionScope As Boolean = False)
         MyBase.New(parent)
+        _IsFunctionScope = isFunctionScope
     End Sub
+
+    ''' <summary>
+    ''' 沿作用域链上溯至最近的函数作用域——JS <c>var</c> 声明的落点。
+    ''' </summary>
+    Public Function FunctionScope() As Environment
+        Dim env As Environment = Me
+        While env IsNot Nothing
+            If env.IsFunctionScope Then Return env
+            env = TryCast(env.Parent, Environment)
+        End While
+        Return Me
+    End Function
 
     ' ========================================================
     ' 解释器热路径（JsValue，零装箱）
@@ -38,6 +57,17 @@ Public NotInheritable Class Environment
         Dim slot = DefineVariable(name, isReadOnly:=False, overwrite:=True)
         slot.SetJsValue(value)
         slot.IsConst = isConst
+    End Sub
+
+    ''' <summary>
+    ''' JS <c>var</c> 声明：落点为最近的函数作用域（函数级提升），
+    ''' 而非当前块级作用域——<c>if (true) { var x = 1; }</c> 之后 <c>x</c> 仍然可见。
+    ''' </summary>
+    Public Sub DefineVar(name As String, value As JsValue)
+        Dim target = FunctionScope()
+        Dim slot = target.DefineVariable(name, isReadOnly:=False, overwrite:=True)
+        slot.SetJsValue(value)
+        slot.IsConst = False
     End Sub
 
     ''' <summary>
