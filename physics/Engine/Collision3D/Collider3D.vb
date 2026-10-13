@@ -9,7 +9,7 @@ Namespace Collision3D
     ''' <remarks>
     ''' 枚举值的顺序同时也是窄相位的"规范顺序"：<see cref="NarrowPhase3D"/> 只实现
     ''' 前者小于后者的组合，因此顺序必须与已实现的分支一致
-    ''' （球 &lt; 胶囊 &lt; 盒 &lt; 平面）。
+    ''' （球 &lt; 胶囊 &lt; 盒 &lt; 平面 &lt; 凸多面体）。
     ''' </remarks>
     Public Enum ShapeKind3D
         ''' <summary>球体，用于头部、关节端点。</summary>
@@ -20,6 +20,8 @@ Namespace Collision3D
         Box = 2
         ''' <summary>无限平面，用于地面。</summary>
         Plane = 3
+        ''' <summary>凸多面体（四面体、圆锥、圆柱、楔形斜坡等），走 SAT + 面裁剪求解。</summary>
+        Convex = 4
     End Enum
 
     ''' <summary>
@@ -147,6 +149,22 @@ Namespace Collision3D
                 If(local.y >= 0, h.y, -h.y),
                 If(local.z >= 0, h.z, -h.z))
         End Function
+
+        Private _convex As ConvexMesh3D
+
+        ''' <summary>
+        ''' 本盒体等价的凸多面体网格（惰性构造并缓存）。
+        ''' 盒-盒、盒-凸的碰撞统一走凸多面体 SAT，因此这里提供几何来源。
+        ''' </summary>
+        Public ReadOnly Property AsConvex As ConvexMesh3D
+            Get
+                If _convex Is Nothing Then
+                    _convex = ConvexMesh3D.CreateBox(HalfExtents.x * 2.0, HalfExtents.y * 2.0, HalfExtents.z * 2.0)
+                End If
+
+                Return _convex
+            End Get
+        End Property
     End Class
 
     ''' <summary>
@@ -266,6 +284,67 @@ Namespace Collision3D
             Dim onPlane As Vector3 = Normal * Constant
 
             Return onPlane + n * 1.0E+9
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' 凸多面体碰撞体：四面体、圆锥、圆柱、楔形斜坡、任意凸壳。
+    ''' 碰撞走 SAT + 参考面/入射面裁剪（见 <c>ConvexNarrowPhase3D</c>），
+    ''' 惯量由网格的四面体分解解析积分得到。
+    ''' </summary>
+    Public Class ConvexPolyhedronCollider3D : Inherits Collider3D
+
+        ''' <summary>局部几何（顶点已平移到质心）。</summary>
+        Public ReadOnly Property Mesh As ConvexMesh3D
+
+        Sub New(mesh As ConvexMesh3D)
+            Me.Mesh = If(mesh, ConvexMesh3D.CreateBox(1, 1, 1))
+        End Sub
+
+        Public Overrides ReadOnly Property Kind As ShapeKind3D
+            Get
+                Return ShapeKind3D.Convex
+            End Get
+        End Property
+
+        Public Overrides Function ComputeInertia(mass As Double) As Matrix3x3
+            Return Mesh.InertiaAboutCentroid(mass)
+        End Function
+
+        Public Overrides Function GetAABB(position As Vector3, rotation As Quaternion) As AABB3D
+            Dim vs As Vector3() = Mesh.Vertices
+            Dim lo As New Vector3(Double.MaxValue, Double.MaxValue, Double.MaxValue)
+            Dim hi As New Vector3(Double.MinValue, Double.MinValue, Double.MinValue)
+
+            For Each v As Vector3 In vs
+                Dim w As Vector3 = position + rotation.Rotate(v)
+
+                lo = New Vector3(std.Min(lo.x, w.x), std.Min(lo.y, w.y), std.Min(lo.z, w.z))
+                hi = New Vector3(std.Max(hi.x, w.x), std.Max(hi.y, w.y), std.Max(hi.z, w.z))
+            Next
+
+            If vs.Length = 0 Then
+                lo = position
+                hi = position
+            End If
+
+            Return New AABB3D(lo, hi)
+        End Function
+
+        Public Overrides Function Support(dir As Vector3) As Vector3
+            Dim best As Vector3 = New Vector3(0, 0, 0)
+            Dim bestDot As Double = Double.MinValue
+
+            For Each v As Vector3 In Mesh.Vertices
+                Dim d As Double = Vector3Math.Dot(v, dir)
+
+                If d > bestDot Then
+                    bestDot = d
+                    best = v
+                End If
+            Next
+
+            Return best
         End Function
     End Class
 End Namespace

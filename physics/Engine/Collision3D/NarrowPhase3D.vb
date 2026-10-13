@@ -7,9 +7,10 @@ Namespace Collision3D
     ''' 3D 窄相位碰撞检测：按碰撞体种类分派，输出接触流形。
     ''' </summary>
     ''' <remarks>
-    ''' 覆盖的组合：球-球、球-胶囊、胶囊-胶囊、球-盒、胶囊-盒、球-平面、胶囊-平面。
-    ''' 盒-盒与盒-平面在本库中返回空流形：火柴人的身体全部由胶囊/球体构成，
-    ''' 而盒体只用于静态关卡几何，静态-静态对在宽相位就已被剔除。
+    ''' 覆盖的组合：球-球、球-胶囊、胶囊-胶囊、球-盒、胶囊-盒、球-平面、胶囊-平面，
+    ''' 以及盒-盒、盒-凸、盒-平面、凸-凸、凸-平面、球-凸（后六项由
+    ''' <see cref="ConvexNarrowPhase3D"/> 实现：盒体转成等价凸壳后统一走 SAT + 面裁剪）。
+    ''' 仍未实现：胶囊-凸、平面-平面（静态-静态在宽相位已被剔除）。
     ''' </remarks>
     Public Module NarrowPhase3D
 
@@ -42,12 +43,28 @@ Namespace Collision3D
                         Case ShapeKind3D.Capsule : Return SphereCapsule(a, b)
                         Case ShapeKind3D.Box : Return SphereBox(a, b)
                         Case ShapeKind3D.Plane : Return SpherePlane(a, b)
+                        Case ShapeKind3D.Convex : Return ConvexNarrowPhase3D.SphereConvex(a, b)
                     End Select
                 Case ShapeKind3D.Capsule
                     Select Case b.Shape.Kind
                         Case ShapeKind3D.Capsule : Return CapsuleCapsule(a, b)
                         Case ShapeKind3D.Box : Return CapsuleBox(a, b)
                         Case ShapeKind3D.Plane : Return CapsulePlane(a, b)
+                        ' 胶囊与凸多面体：demo 场景不涉及，暂不实现（返回空流形）
+                    End Select
+                Case ShapeKind3D.Box
+                    Select Case b.Shape.Kind
+                        Case ShapeKind3D.Box : Return ConvexNarrowPhase3D.ConvexConvex(a, b)
+                        Case ShapeKind3D.Plane : Return ConvexNarrowPhase3D.ConvexPlane(a, b)
+                        Case ShapeKind3D.Convex : Return ConvexNarrowPhase3D.ConvexConvex(a, b)
+                    End Select
+                Case ShapeKind3D.Plane
+                    Select Case b.Shape.Kind
+                        Case ShapeKind3D.Convex : Return ConvexNarrowPhase3D.PlaneConvex(a, b)
+                    End Select
+                Case ShapeKind3D.Convex
+                    Select Case b.Shape.Kind
+                        Case ShapeKind3D.Convex : Return ConvexNarrowPhase3D.ConvexConvex(a, b)
                     End Select
             End Select
 
@@ -209,7 +226,9 @@ Namespace Collision3D
                 Return Nothing
             End If
 
-            Dim normalWorld As Vector3 = box.Orientation.Rotate(normalLocal) * -1.0
+            ' normalLocal 已由球心指向盒面，即 A(球) → B(盒)，与流形约定一致，不能再取反：
+            ' 取反会让求解器把球往盒子里推（球会一路陷进静态盒并被以最大修正速度持续下压）
+            Dim normalWorld As Vector3 = box.Orientation.Rotate(normalLocal)
             Dim point As Vector3 = box.Position + box.Orientation.Rotate(contact)
 
             Return Build(sphere, box, normalWorld, {point}, {penetration})
@@ -239,7 +258,8 @@ Namespace Collision3D
                 Return Nothing
             End If
 
-            Dim normalWorld As Vector3 = Vector3Math.Normalize(box.Orientation.Rotate(normalSum)) * -1.0
+            ' 与 SphereBox 同理：normalLocal 之和已经是 A(胶囊) → B(盒)
+            Dim normalWorld As Vector3 = Vector3Math.Normalize(box.Orientation.Rotate(normalSum))
 
             Return Build(capsule, box, normalWorld, points, penetrations)
         End Function
@@ -380,7 +400,7 @@ Namespace Collision3D
         End Function
 
         ''' <summary>组装流形，顺便从双方材质组合出摩擦与恢复系数。</summary>
-        Private Function Build(a As RigidBody3D, b As RigidBody3D, normal As Vector3,
+        Public Function Build(a As RigidBody3D, b As RigidBody3D, normal As Vector3,
                                points As IEnumerable(Of Vector3),
                                penetrations As IEnumerable(Of Double)) As Manifold3D
             Dim m As New Manifold3D With {
