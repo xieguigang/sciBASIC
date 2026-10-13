@@ -73,6 +73,20 @@ Public Class FormPlayer
         lastFrameTime = Environment.TickCount64 / 1000.0
         lastFpsTick = lastFrameTime
 
+        ' 无头自测模式：不进入常规交互循环
+        If Environment.GetCommandLineArgs().Any(Function(a) a.Equals("--selftest", StringComparison.OrdinalIgnoreCase)) Then
+            timer.Stop()
+
+            AddHandler Me.Shown, Sub(s, ev)
+                                     Dim code As Integer = SelfTest.Run(host, rig, renderer, script, api)
+
+                                     Environment.ExitCode = code
+                                     Me.Close()
+                                 End Sub
+
+            Return
+        End If
+
         Dim startPath As String = FindStartScript()
 
         If startPath IsNot Nothing Then

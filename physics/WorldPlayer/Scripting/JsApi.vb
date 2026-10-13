@@ -290,6 +290,29 @@ Public Class JsApi
         Return fn
     End Function
 
+    ''' <summary>
+    ''' <c>print(...)</c> / <c>log(...)</c> 的实现。
+    ''' 注意不要在这里用 <c>args.Select(AddressOf JsRuntime.JsStr)</c>：
+    ''' <c>JsStr</c> 有重载，方法组会在后期绑定阶段被当成委托传给 <c>String.Join</c> 而抛异常。
+    ''' </summary>
+    Private Function PrintImpl(args As Object()) As Object
+        Dim parts As New List(Of String)()
+
+        If args IsNot Nothing Then
+            For Each a As Object In args
+                parts.Add(ToText(a))
+            Next
+        End If
+
+        Call script.Log(String.Join(" ", parts))
+
+        Return JsRuntime.Undef
+    End Function
+
+    Private Shared Function ToText(x As Object) As String
+        Return JsRuntime.JsStr(x)
+    End Function
+
     ''' <summary>构造并注册全部全局 API。</summary>
     Public Sub Register()
         script.DefineGlobal("world", BuildWorld())
@@ -298,14 +321,8 @@ Public Class JsApi
         script.DefineGlobal("sim", BuildSim())
         script.DefineGlobal("render", BuildRender())
 
-        script.DefineGlobal("print", F(Function(args As Object()) As Object
-                                           Call script.Log(String.Join(" ", args.Select(AddressOf JsRuntime.JsStr)))
-                                           Return JsRuntime.Undef
-                                       End Function))
-        script.DefineGlobal("log", F(Function(args As Object()) As Object
-                                         Call script.Log(String.Join(" ", args.Select(AddressOf JsRuntime.JsStr)))
-                                         Return JsRuntime.Undef
-                                     End Function))
+        script.DefineGlobal("print", F(AddressOf PrintImpl))
+        script.DefineGlobal("log", F(AddressOf PrintImpl))
         script.DefineGlobal("version", F(Function(args As Object()) As Object
                                              Return CDbl(1)
                                          End Function))
