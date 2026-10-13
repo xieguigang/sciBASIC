@@ -529,7 +529,12 @@ Public NotInheritable Class Parser
                         If Cur.name <> TokenType.Identifier Then ok = False : Exit Do
                         spec.Rest = Cur.text
                         _pos += 1
-                        Exit Do          ' rest must be last
+                        ' rest must be the last parameter: the ')' closes the list
+                        If At(")") Then
+                            _pos += 1
+                            Exit Do
+                        End If
+                        ok = False : Exit Do
                     End If
                     If Cur.name <> TokenType.Identifier Then ok = False : Exit Do
                     spec.Parameters.Add(Cur.text)
@@ -902,9 +907,13 @@ Public NotInheritable Class Parser
         Return New TemplateExpr(chunks)
     End Function
 
-    ''' <summary>Recursively parse the raw source of a ${...} placeholder.</summary>
+    ''' <summary>
+    ''' Recursively parse the raw source of a ${...} placeholder.
+    ''' The source is wrapped in parentheses so that an object literal placeholder
+    ''' (<c>${{a: 1}}</c>) is not mistaken for a block statement.
+    ''' </summary>
     Private Shared Function ParseEmbeddedExpression(source As String) As Expression
-        Dim program = Parser.Parse(source)
+        Dim program = Parser.Parse("(" & source & ")")
         If program.Body.Count <> 1 OrElse Not TypeOf program.Body(0) Is ExprStmt Then
             Throw New ParseException("invalid template expression placeholder")
         End If
@@ -915,22 +924,24 @@ Public NotInheritable Class Parser
     Private Function ParseArrayLiteral() As Expression
         Eat("[")
         Dim elements As New List(Of Expression)
-        If Not At("]") Then
-            Do
-                If At("]") Then Exit Do               ' trailing comma — no hole
-                If At(",") Then
-                    elements.Add(Nothing)             ' hole
-                    _pos += 1
-                    Continue Do
-                End If
-                If At("...") Then
-                    _pos += 1
-                    elements.Add(New SpreadElement(ParseAssignment()))
-                Else
-                    elements.Add(ParseAssignment())
-                End If
-            Loop While Match(",")
-        End If
+        While Not At("]")
+            If Cur.name = TokenType.Eof Then
+                Throw New ParseException("missing ']' — unexpected end of input")
+            End If
+            ' a comma at element position is a hole ([, a] has first === undefined)
+            If At(",") Then
+                elements.Add(Nothing)
+                _pos += 1
+                Continue While
+            End If
+            If At("...") Then
+                _pos += 1
+                elements.Add(New SpreadElement(ParseAssignment()))
+            Else
+                elements.Add(ParseAssignment())
+            End If
+            If Not Match(",") Then Exit While
+        End While
         Eat("]")
         Return New ArrayExpr(elements)
     End Function
