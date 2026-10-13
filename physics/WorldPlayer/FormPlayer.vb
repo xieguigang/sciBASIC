@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
@@ -9,7 +10,7 @@ Imports std = System.Math
 ''' 物理世界模拟器主窗体。
 ''' </summary>
 ''' <remarks>
-''' 本窗体只提供"引擎外壳"：视口、控制台、工具栏、事件转发与渲染循环。
+''' 本窗体只提供"引擎外壳"：视口、脚本编辑器、控制台、工具栏、事件转发与渲染循环。
 ''' 场景搭建与交互逻辑全部来自 JavaScript 脚本（见 <c>demo/platform.js</c>）。
 ''' </remarks>
 Public Class FormPlayer
@@ -33,6 +34,12 @@ Public Class FormPlayer
     Private dragging As Boolean = False
     Private lastMouseX As Integer = 0
     Private lastMouseY As Integer = 0
+
+    ''' <summary>程序性改写编辑器内容时抑制自动运行，避免"加载即运行"以外的意外触发。</summary>
+    Private suppressAutoRun As Boolean = False
+
+    ''' <summary>编辑器里上一次成功运行过的源码，用于提示"有未运行的改动"。</summary>
+    Private lastRunSource As String = ""
 
     ''' <summary>默认演示脚本名（位于输出目录）。</summary>
     Private Const DefaultScript As String = "demo\platform.js"
@@ -67,7 +74,13 @@ Public Class FormPlayer
         AddHandler viewport.MouseEnter, AddressOf Viewport_MouseEnter
         AddHandler viewport.MouseLeave, AddressOf Viewport_MouseLeave
         AddHandler viewport.Resize, AddressOf Viewport_Resize
+        AddHandler split.SplitterMoved, AddressOf Viewport_Resize
+        AddHandler tabs.SelectedIndexChanged, AddressOf Tabs_SelectedIndexChanged
+
         AddHandler Me.KeyDown, AddressOf FormPlayer_KeyDown
+        AddHandler editorBox.KeyDown, AddressOf EditorBox_KeyDown
+        AddHandler editorBox.TextChanged, AddressOf EditorBox_TextChanged
+        AddHandler autoRunTimer.Tick, AddressOf AutoRunTimer_Tick
 
         timer.Interval = 16
         AddHandler timer.Tick, AddressOf Timer_Tick
@@ -75,6 +88,14 @@ Public Class FormPlayer
 
         lastFrameTime = Environment.TickCount64 / 1000.0
         lastFpsTick = lastFrameTime
+
+        ' ---- 开发/验证用的截图模式 ----
+        Dim shot As Size? = ParseShotRequest()
+
+        If shot.HasValue Then
+            Call SetupShotCapture(shot.Value)
+            Return
+        End If
 
         ' 无头自测模式：不进入常规交互循环
         If Environment.GetCommandLineArgs().Any(Function(a) a.Equals("--selftest", StringComparison.OrdinalIgnoreCase)) Then
@@ -93,31 +114,34 @@ Public Class FormPlayer
         Dim startPath As String = FindStartScript()
 
         If startPath IsNot Nothing Then
-            Call LoadScript(startPath)
+            Call OpenScriptIntoEditor(startPath)
+            Call RunEditorSource()
         Else
             Call AppendConsole("未找到演示脚本 demo\platform.js", True)
+            Call AppendConsole("请在【脚本编辑器】标签页里粘贴脚本，然后按 F5 运行", False)
         End If
     End Sub
 
-    ''' <summary>定位要运行的脚本：优先 exe 目录下的 demo\platform.js，其次向上查找。</summary>
+    ''' <summary>定位默认脚本：优先 exe 目录下的 demo\platform.js，其次向上查找源码目录。</summary>
     Private Function FindStartScript() As String
         Dim candidates As New List(Of String)()
         Dim dir As DirectoryInfo = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
 
-        candidates.Add(Path.Combine(dir.FullName, DefaultScript))
+        candidates.Add(System.IO.Path.Combine(dir.FullName, DefaultScript))
 
         For i As Integer = 0 To 4
             If dir Is Nothing Then Exit For
-            candidates.Add(Path.Combine(dir.FullName, DefaultScript))
+
+            candidates.Add(System.IO.Path.Combine(dir.FullName, DefaultScript))
             dir = dir.Parent
         Next
 
-        ' 源码目录下的脚本（未复制到输出时也能跑）
         Dim probe As DirectoryInfo = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
 
         For i As Integer = 0 To 8
             If probe Is Nothing Then Exit For
-            candidates.Add(Path.Combine(probe.FullName, "WorldPlayer", DefaultScript))
+
+            candidates.Add(System.IO.Path.Combine(probe.FullName, "WorldPlayer", DefaultScript))
             probe = probe.Parent
         Next
 
@@ -128,8 +152,12 @@ Public Class FormPlayer
         Return Nothing
     End Function
 
-    ''' <summary>装载并运行一个 JS 脚本，同时重建 API 绑定。</summary>
-    Private Sub LoadScript(path As String)
+    ' /********************************************************************************/
+    '  脚本编辑器
+    ' /********************************************************************************/
+
+    ''' <summary>把脚本文件内容读进编辑器（不会自动运行，自动运行由编辑器事件负责）。</summary>
+    Private Sub OpenScriptIntoEditor(path As String)
         Dim source As String
 
         Try
@@ -139,9 +167,58 @@ Public Class FormPlayer
             Return
         End Try
 
-        Call host.Clear()
+        suppressAutoRun = True
+
+        Try
+            editorBox.Text = source
+        Finally
+            suppressAutoRun = False
+        End Try
 
         script.ScriptPath = path
+        lblScript.Text = "脚本: " & System.IO.Path.GetFileName(path)
+
+        Call AppendConsole($"已载入脚本 {path}（{source.Length} 字符）", False)
+    End Sub
+
+    ''' <summary>保存编辑器内容到当前脚本文件（没有路径时另存为）。</summary>
+    Private Function SaveEditorSource(Optional saveAs As Boolean = False) As Boolean
+        Dim path As String = script.ScriptPath
+
+        If saveAs OrElse String.IsNullOrEmpty(path) Then
+            Using dlg As New SaveFileDialog()
+                dlg.Filter = "JavaScript 场景脚本 (*.js)|*.js|所有文件 (*.*)|*.*"
+                dlg.Title = "保存 JavaScript 脚本"
+                dlg.FileName = If(String.IsNullOrEmpty(path), "world.js", System.IO.Path.GetFileName(path))
+
+                If dlg.ShowDialog(Me) <> DialogResult.OK Then Return False
+
+                path = dlg.FileName
+            End Using
+        End If
+
+        Try
+            File.WriteAllText(path, editorBox.Text)
+        Catch ex As Exception
+            Call AppendConsole($"保存失败: {ex.Message}", True)
+            Return False
+        End Try
+
+        script.ScriptPath = path
+        lblScript.Text = "脚本: " & System.IO.Path.GetFileName(path)
+        Call AppendConsole($"已保存脚本 {path}", False)
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' 用编辑器里的源码重建世界并运行。这是"实时编辑、实时观察"的核心动作。
+    ''' </summary>
+    Private Sub RunEditorSource()
+        Dim source As String = editorBox.Text
+
+        Call host.Clear()
+
         host.LastError = Nothing
 
         Dim ok As Boolean = script.Load(source)
@@ -151,18 +228,75 @@ Public Class FormPlayer
             lblStatus.Text = "错误"
             lblStatus.ForeColor = Color.FromArgb(248, 113, 113)
             Call UpdateStatus()
+
             Return
         End If
 
         api.PendingSteps = 0.0
+        lastRunSource = source
 
         Call script.Fire("init")
 
-        lblScript.Text = "脚本: " & System.IO.Path.GetFileName(path)
-        lblStatus.Text = "运行中"
-        lblStatus.ForeColor = Color.FromArgb(52, 211, 153)
+        lblStatus.Text = If(host.Paused, "已暂停", "运行中")
+        lblStatus.ForeColor = If(host.Paused, Color.FromArgb(251, 191, 36), Color.FromArgb(52, 211, 153))
 
         Call UpdateStatus()
+        Call RenderFrame(force:=True)
+    End Sub
+
+    Private Sub EditorBox_TextChanged(sender As Object, e As EventArgs)
+        If suppressAutoRun Then Return
+
+        ' 编辑器内容与上次运行的源码存在差异时提示
+        If lastRunSource <> editorBox.Text Then
+            lblStatus.Text = "有未运行改动"
+            lblStatus.ForeColor = Color.FromArgb(251, 191, 36)
+        End If
+
+        If Not chkAutoRun.Checked Then Return
+
+        autoRunTimer.Stop()
+        autoRunTimer.Start()
+    End Sub
+
+    Private Sub AutoRunTimer_Tick(sender As Object, e As EventArgs)
+        autoRunTimer.Stop()
+
+        If suppressAutoRun Then Return
+
+        Call RunEditorSource()
+    End Sub
+
+    Private Sub EditorBox_KeyDown(sender As Object, e As KeyEventArgs)
+        ' Ctrl+Enter / F5：立即运行编辑器里的脚本
+        If e.KeyCode = Keys.F5 OrElse (e.Control AndAlso e.KeyCode = Keys.Enter) Then
+            Call RunEditorSource()
+            e.Handled = True
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub btnLoadJs_Click(sender As Object, e As EventArgs) Handles btnLoadJs.Click
+        Using dlg As New OpenFileDialog()
+            dlg.Filter = "JavaScript 场景脚本 (*.js)|*.js|所有文件 (*.*)|*.*"
+            dlg.Title = "加载 JavaScript 物理世界脚本"
+
+            If dlg.ShowDialog(Me) = DialogResult.OK Then
+                Call OpenScriptIntoEditor(dlg.FileName)
+
+                If Not chkAutoRun.Checked Then
+                    Call RunEditorSource()
+                End If
+            End If
+        End Using
+    End Sub
+
+    Private Sub btnSaveJs_Click(sender As Object, e As EventArgs) Handles btnSaveJs.Click
+        Call SaveEditorSource()
+    End Sub
+
+    Private Sub btnRunJs_Click(sender As Object, e As EventArgs) Handles btnRunJs.Click
+        Call RunEditorSource()
     End Sub
 
     ' /********************************************************************************/
@@ -200,7 +334,7 @@ Public Class FormPlayer
         ' 3) 相机缓动
         Call rig.Tick()
 
-        ' 4) 渲染
+        ' 4) 渲染（画布标签页不可见时跳过，省下整帧的投影与填充）
         Call RenderFrame()
 
         ' 5) 统计
@@ -214,27 +348,32 @@ Public Class FormPlayer
         End If
     End Sub
 
-    Private Sub RenderFrame()
+    ''' <summary>渲染一帧到离屏缓冲并交给视口。</summary>
+    Private Sub RenderFrame(Optional force As Boolean = False)
+        If viewport.IsDisposed Then Return
         If viewport.Width <= 0 OrElse viewport.Height <= 0 Then Return
+
+        ' 画布不在前台时不渲染：切回来时由 SelectedIndexChanged 强制补一帧
+        If Not force AndAlso tabs.SelectedTab IsNot pageCanvas Then Return
 
         If renderBuffer Is Nothing OrElse
            renderBuffer.Width <> viewport.Width OrElse
            renderBuffer.Height <> viewport.Height Then
 
+            ' 先摘掉引用再释放，避免 PictureBox 绘制到已释放的位图
+            viewport.Image = Nothing
+
             If renderBuffer IsNot Nothing Then renderBuffer.Dispose()
+
             renderBuffer = New Bitmap(viewport.Width, viewport.Height)
         End If
 
         Try
             Using g As Graphics = Graphics.FromImage(renderBuffer)
-                renderer.HoverX = If(dragging, lastMouseX, api.MouseX)
-                renderer.HoverY = If(dragging, lastMouseY, api.MouseY)
+                renderer.HoverX = If(dragging, lastMouseX, CInt(api.MouseX))
+                renderer.HoverY = If(dragging, lastMouseY, CInt(api.MouseY))
                 Call renderer.Render(g, renderBuffer.Size)
             End Using
-
-            If viewport.Image IsNot Nothing Then
-                viewport.Image = Nothing
-            End If
 
             viewport.Image = renderBuffer
         Catch
@@ -325,8 +464,14 @@ Public Class FormPlayer
         End If
     End Sub
 
+    ''' <summary>视口 / 分割条尺寸变化：下一个定时器 tick 会按新尺寸重建缓冲。</summary>
     Private Sub Viewport_Resize(sender As Object, e As EventArgs)
-        Call RenderFrame()
+        Call RenderFrame(force:=True)
+    End Sub
+
+    Private Sub Tabs_SelectedIndexChanged(sender As Object, e As EventArgs)
+        ' 从编辑器切回画布时立刻补一帧，避免看到旧内容
+        Call RenderFrame(force:=True)
     End Sub
 
     Private Sub FormPlayer_KeyDown(sender As Object, e As KeyEventArgs)
@@ -335,7 +480,7 @@ Public Class FormPlayer
         End If
 
         If e.KeyCode = Keys.F5 Then
-            Call ReloadCurrent()
+            Call RunEditorSource()
             e.Handled = True
         ElseIf e.KeyCode = Keys.Space Then
             Call TogglePause()
@@ -353,19 +498,14 @@ Public Class FormPlayer
             dlg.Title = "打开 JavaScript 物理世界脚本"
 
             If dlg.ShowDialog(Me) = DialogResult.OK Then
-                Call LoadScript(dlg.FileName)
+                Call OpenScriptIntoEditor(dlg.FileName)
+                Call RunEditorSource()
             End If
         End Using
     End Sub
 
     Private Sub btnReload_Click(sender As Object, e As EventArgs) Handles btnReload.Click
-        Call ReloadCurrent()
-    End Sub
-
-    Private Sub ReloadCurrent()
-        If Not String.IsNullOrEmpty(script.ScriptPath) AndAlso File.Exists(script.ScriptPath) Then
-            Call LoadScript(script.ScriptPath)
-        End If
+        Call RunEditorSource()
     End Sub
 
     Private Sub btnPause_Click(sender As Object, e As EventArgs) Handles btnPause.Click
@@ -375,12 +515,16 @@ Public Class FormPlayer
     Private Sub TogglePause()
         host.Paused = Not host.Paused
         btnPause.Text = If(host.Paused, "继续", "暂停")
+        lblStatus.Text = If(host.Paused, "已暂停", "运行中")
+        lblStatus.ForeColor = If(host.Paused, Color.FromArgb(251, 191, 36), Color.FromArgb(52, 211, 153))
         Call UpdateStatus()
     End Sub
 
     Private Sub btnWireframe_Click(sender As Object, e As EventArgs) Handles btnWireframe.Click
         renderer.Wireframe = Not renderer.Wireframe
         btnWireframe.ForeColor = If(renderer.Wireframe, Color.FromArgb(34, 211, 238), Color.FromArgb(226, 232, 240))
+
+        Call RenderFrame(force:=True)
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
@@ -389,6 +533,8 @@ Public Class FormPlayer
         If script.IsReady Then
             Call script.Fire("cleared")
         End If
+
+        Call RenderFrame(force:=True)
     End Sub
 
     Private Sub btnResetCamera_Click(sender As Object, e As EventArgs) Handles btnResetCamera.Click
@@ -429,5 +575,95 @@ Public Class FormPlayer
 
     Private Sub FormPlayer_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         timer.Stop()
+        autoRunTimer.Stop()
+    End Sub
+
+    ' /********************************************************************************/
+    '  开发用：--shot 布局截图模式
+    ' /********************************************************************************/
+
+    ''' <summary>解析 <c>--shot 1400x900</c> 或 <c>--shot=1400x900</c>。</summary>
+    Private Function ParseShotRequest() As Size?
+        Dim args As String() = Environment.GetCommandLineArgs()
+
+        For i As Integer = 0 To args.Length - 1
+            Dim a As String = args(i)
+
+            If a.Equals("--shot", StringComparison.OrdinalIgnoreCase) Then
+                If i + 1 < args.Length Then Return ParseSize(args(i + 1))
+            ElseIf a.StartsWith("--shot=", StringComparison.OrdinalIgnoreCase) Then
+                Return ParseSize(a.Substring(7))
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
+    Private Shared Function ParseSize(text As String) As Size?
+        Dim parts As String() = text.Split("x"c, "X"c)
+
+        If parts.Length <> 2 Then Return Nothing
+
+        Dim w As Integer
+        Dim h As Integer
+
+        If Integer.TryParse(parts(0), w) AndAlso Integer.TryParse(parts(1), h) Then
+            Return New Size(w, h)
+        End If
+
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' 按指定客户区大小渲染两个标签页并落盘截图 + 控件尺寸报告。
+    ''' 用于验证"窗口缩放时画布是否跟随"这类布局问题。
+    ''' </summary>
+    Private Sub SetupShotCapture(client As Size)
+        timer.Stop()
+
+        Me.ClientSize = client
+
+        AddHandler Me.Shown, Sub(s, ev)
+                                 ' 让布局与渲染循环跑起来
+                                 For i As Integer = 1 To 40
+                                     Application.DoEvents()
+                                     System.Threading.Thread.Sleep(16)
+                                 Next
+
+                                 Dim outDir As String = AppDomain.CurrentDomain.BaseDirectory
+                                 Dim report As New List(Of String) From {
+                                     $"client      = {Me.ClientSize.Width} x {Me.ClientSize.Height}",
+                                     $"split       = {split.Width} x {split.Height}",
+                                     $"tabs        = {tabs.Width} x {tabs.Height}",
+                                     $"canvas page = {pageCanvas.Width} x {pageCanvas.Height}",
+                                     $"viewport    = {viewport.Width} x {viewport.Height}",
+                                     $"buffer      = {If(renderBuffer Is Nothing, "none", renderBuffer.Width & " x " & renderBuffer.Height)}",
+                                     $"camera      = {rig.Camera.Screen.Width} x {rig.Camera.Screen.Height}",
+                                     $"editor page = {pageScript.Width} x {pageScript.Height}",
+                                     $"editor box  = {editorBox.Width} x {editorBox.Height}",
+                                     $"console box = {consoleBox.Width} x {consoleBox.Height}"
+                                 }
+
+                                 File.AppendAllLines(System.IO.Path.Combine(outDir, "shot-report.txt"), report)
+
+                                 ' 画布页
+                                 tabs.SelectedIndex = 0
+                                 Application.DoEvents()
+                                 Call Capture(Me, System.IO.Path.Combine(outDir, "shot-canvas.png"))
+
+                                 ' 编辑器页
+                                 tabs.SelectedIndex = 1
+                                 Application.DoEvents()
+                                 Call Capture(Me, System.IO.Path.Combine(outDir, "shot-editor.png"))
+
+                                 Application.Exit()
+                             End Sub
+    End Sub
+
+    Private Shared Sub Capture(form As Form, path As String)
+        Using bmp As New Bitmap(form.Width, form.Height)
+            Call form.DrawToBitmap(bmp, New Rectangle(0, 0, form.Width, form.Height))
+            Call bmp.Save(path, ImageFormat.Png)
+        End Using
     End Sub
 End Class
