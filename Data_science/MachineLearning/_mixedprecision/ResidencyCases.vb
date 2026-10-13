@@ -55,7 +55,7 @@ Namespace MixedPrecisionBench
             Dim computed = kernel.AddScalar(t, 0.5F)
             Dim maxDiff As Double = 0
             For i = 0 To expected.Length - 1
-                maxDiff = std.Max(maxDiff, std.Abs(expected(i) - computed.Data(i)))
+                maxDiff = std.Max(maxDiff, std.Abs(CDbl(expected(i)) - computed.Data(i)))
             Next
 
             ' 同步回主机：常驻张量的主机副本是陈旧的，这一步之后才可读
@@ -65,7 +65,9 @@ Namespace MixedPrecisionBench
 
             results.Add(New CaseResult("设备常驻 钉住/判等", pinnedOk AndAlso grew,
                                        $"IsDevicePinned={pinnedOk} 字节数增长={grew}"))
-            results.Add(New CaseResult("设备常驻 被钉住张量可参与运算", maxDiff = 0.0, $"maxAbsDiff={maxDiff:E3}"))
+            ' 容差 1e-6：主机参考是"Double 相加后再舍入"，设备是"Single 相加"，
+            ' 两者在 1 ULP 量级上不同是正常现象，不是错误。
+            results.Add(New CaseResult("设备常驻 被钉住张量可参与运算", maxDiff <= 0.000001, $"maxAbsDiff={maxDiff:E3}"))
             results.Add(New CaseResult("设备常驻 同步与释放", synced AndAlso released AndAlso backToZero,
                                        $"sync={synced} unpin={released} 字节归零={backToZero}"))
         End Sub
