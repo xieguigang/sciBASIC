@@ -153,7 +153,7 @@ Namespace VBProj
         Public Function GetOutputDirectory(vbproj As VBProject, profileName$) As String
             Dim profile = vbproj.GetProfile(profileName)
             Dim base$ = DirectCast(vbproj, IFileReference).FilePath.ParentPath
-            Dim bin = If(profile Is Nothing, "bin", profile.OutputPath)
+            Dim bin = If(profile Is Nothing, "bin/" & FallbackPath(profileName), profile.OutputPath)
             Dim outputdir = $"{base}/{bin}"
 
             If profile Is Nothing Then
@@ -161,6 +161,22 @@ Namespace VBProj
             End If
 
             Return outputdir
+        End Function
+
+        Private Function FallbackPath(profileName As String) As String
+            Dim t = profileName.Split("|"c)
+            Dim profile As String
+            Dim platform As String
+
+            If t.Length = 1 Then
+                profile = t(0)
+                platform = ""
+            Else
+                profile = t(0)
+                platform = If(t(1) = "AnyCPU", "", t(1))
+            End If
+
+            Return $"{platform}/{profile}"
         End Function
 
         <Extension>
