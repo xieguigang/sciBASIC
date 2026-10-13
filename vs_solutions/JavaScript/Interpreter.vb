@@ -16,7 +16,8 @@ Public NotInheritable Class Interpreter
     Public Sub New(Optional io As ScriptIO = Nothing)
         Me.Io = If(io, New LogTextIO)
         JsRuntime.Io = Me.Io          ' builtin dispatch (console.log) reads the static sink
-        _globals = New Environment(Nothing)
+        ' the script global root is the outermost JS function scope (var hoisting target)
+        _globals = New Environment(Nothing, isFunctionScope:=True)
         For Each kv In JsRuntime.GlobalIdentifiers()
             _globals.Define(kv.Key, kv.Value, False)
         Next
@@ -84,7 +85,13 @@ Public NotInheritable Class Interpreter
                 Dim v = DirectCast(s, VarStmt)
                 For Each d In v.Declarations
                     Dim value = If(d.Init IsNot Nothing, Eval(d.Init, env), JsValue.Undef)
-                    env.Define(d.Name, value, v.Kind = "const")
+                    If v.Kind = "var" Then
+                        ' var is function-scoped: declare in the nearest function scope
+                        env.DefineVar(d.Name, value)
+                    Else
+                        ' let / const are block-scoped
+                        env.Define(d.Name, value, v.Kind = "const")
+                    End If
                 Next
             Case TypeOf s Is BlockStmt
                 ExecuteBlock(DirectCast(s, BlockStmt).Body, env)
@@ -127,13 +134,40 @@ Public NotInheritable Class Interpreter
                 ElseIf TypeOf f.Init Is Expression Then
                     Eval(DirectCast(f.Init, Expression), fenv)
                 End If
+                ' let/const loop headers get a fresh binding per iteration (JS spec);
+                ' var headers were already hoisted into the enclosing function scope
+                Dim loopNames As New List(Of String)
+                Dim loopConst As New List(Of Boolean)
+                If TypeOf f.Init Is VarStmt Then
+                    Dim lv = DirectCast(f.Init, VarStmt)
+                    If lv.Kind <> "var" Then
+                        For Each d In lv.Declarations
+                            loopNames.Add(d.Name)
+                            loopConst.Add(lv.Kind = "const")
+                        Next
+                    End If
+                End If
                 Try
                     While f.Test Is Nothing OrElse JsRuntime.JsTruthy(Eval(f.Test, fenv))
+                        Dim bodyEnv As New Environment(env)
+                        For i = 0 To loopNames.Count - 1
+                            Dim lv As JsValue = Nothing
+                            If fenv.TryGet(loopNames(i), lv) Then
+                                bodyEnv.Define(loopNames(i), lv, loopConst(i))
+                            End If
+                        Next
                         Try
-                            Execute(f.Body, fenv)
+                            Execute(f.Body, bodyEnv)
                         Catch ex As ContinueSignal
                             ' fall through to update (JS semantics)
                         End Try
+                        ' copy mutated let bindings back before running the update clause
+                        For i = 0 To loopNames.Count - 1
+                            Dim lv As JsValue = Nothing
+                            If bodyEnv.TryGet(loopNames(i), lv) Then
+                                fenv.Define(loopNames(i), lv, loopConst(i))
+                            End If
+                        Next
                         If f.Update IsNot Nothing Then Eval(f.Update, fenv)
                     End While
                 Catch ex As BreakSignal
@@ -194,12 +228,15 @@ Public NotInheritable Class Interpreter
     Private Function MakeFunction(f As FuncExpr, env As Environment) As Func(Of Object(), Object)
         Dim closure = env
         Return Function(args As Object())
-                   Dim fenv As New Environment(closure)
+                   Dim fenv As New Environment(closure, isFunctionScope:=True)
                    For i = 0 To f.Parameters.Length - 1
                        fenv.Define(f.Parameters(i),
                                    If(i < args.Length, args(i), JsRuntime.Undef), False)
                    Next
-                   fenv.Define("arguments", New List(Of Object)(args), False)
+                   If Not f.IsArrow Then
+                       ' arrow functions inherit 'arguments' lexically — no own binding
+                       fenv.Define("arguments", New List(Of Object)(args), False)
+                   End If
                    HoistFunctions(f.Body, fenv)
                    Try
                        For Each st In f.Body
@@ -243,7 +280,16 @@ Public NotInheritable Class Interpreter
 
             Case TypeOf e Is UpdateExpr
                 Dim up = DirectCast(e, UpdateExpr)
-                Dim oldV = Eval(up.Target, env)
+                Dim oldV As JsValue
+                If TypeOf up.Target Is IdentExpr Then
+                    Dim nm = DirectCast(up.Target, IdentExpr).Name
+                    If Not env.TryGet(nm, oldV) Then
+                        ' non-strict JS: x++ on an undeclared x assigns NaN to the implicit global
+                        oldV = JsValue.Number(Double.NaN)
+                    End If
+                Else
+                    oldV = Eval(up.Target, env)
+                End If
                 Dim n = JsRuntime.JsNum(oldV)
                 Dim [new] = If(up.Op = "++", n + 1.0, n - 1.0)
                 AssignTo(up.Target, JsValue.Number([new]), env)

@@ -392,12 +392,12 @@ Public NotInheritable Class Parser
             Dim body = ParseBlock()
             _funcDepth = outerFunc
             _loopDepth = outerLoop
-            Return New FuncExpr(Nothing, parameters, body)
+            Return New FuncExpr(Nothing, parameters, body, isArrow:=True)
         End If
         ' expression body → { return expr; }
         Dim expr = ParseAssignment()
         Dim body2 As New List(Of Statement) From {New ReturnStmt(expr)}
-        Return New FuncExpr(Nothing, parameters, body2)
+        Return New FuncExpr(Nothing, parameters, body2, isArrow:=True)
     End Function
 
     Private Function ParseConditional() As Expression

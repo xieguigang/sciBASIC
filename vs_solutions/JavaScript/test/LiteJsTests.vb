@@ -180,6 +180,67 @@ Public Class LiteJsTests
         Assert.Equal("ok", OneLine("function f() { return 'ok'; } console.log(f());"))
     End Sub
 
+    ' -------------------------------------------- tier 0: semantic fixes
+
+    <Fact>
+    Public Sub Interp_TypeofNull_IsObject()
+        Assert.Equal("object", OneLine("console.log(typeof null);"))
+        Assert.Equal("object", OneLine("var n = null; console.log(typeof n);"))
+        Assert.Equal("undefined", OneLine("console.log(typeof undefined);"))
+        Assert.Equal("undefined", OneLine("var u; console.log(typeof u);"))
+    End Sub
+
+    <Fact>
+    Public Sub Interp_VarIsFunctionScoped()
+        ' var escapes an if-block (JS function scoping, not block scoping)
+        Assert.Equal("1", OneLine("if (true) { var x = 1; } console.log(x);"))
+        ' var escapes a for-loop header
+        Assert.Equal("3", OneLine("for (var i = 0; i < 3; i++) {} console.log(i);"))
+        ' var inside nested blocks of a function stays function-visible
+        Assert.Equal("7", OneLine("function f() { { var y = 7; } return y; } console.log(f());"))
+        ' let stays block-scoped
+        Assert.Throws(Of JsRuntimeException)(Function() RunJs("if (true) { let z = 1; } console.log(z);"))
+    End Sub
+
+    <Fact>
+    Public Sub Interp_LetLoop_PerIterationBinding()
+        ' each closure captures its own let binding (0 1 2), unlike var (3 3 3)
+        Assert.Equal("0 1 2", OneLine(
+            "var fns = []; for (let i = 0; i < 3; i++) { fns.push(function() { return i; }); }" &
+            "console.log(fns[0](), fns[1](), fns[2]());"))
+        Assert.Equal("3 3 3", OneLine(
+            "var fns = []; for (var i = 0; i < 3; i++) { fns.push(function() { return i; }); }" &
+            "console.log(fns[0](), fns[1](), fns[2]());"))
+    End Sub
+
+    <Fact>
+    Public Sub Interp_ArrowArguments_Lexical()
+        ' arrow functions inherit 'arguments' from the enclosing function
+        Dim lines = RunJs(
+            "function outer() {" &
+            "  var arrow = () => arguments[0];" &
+            "  return arrow('x', 'y');" &
+            "}" &
+            "console.log(outer('a', 'b'));")
+        Assert.Equal("a", lines(0))
+        ' regular functions get their own arguments object
+        Assert.Equal("x", OneLine("function f() { return arguments[0]; } console.log(f('x', 'y'));"))
+    End Sub
+
+    <Fact>
+    Public Sub Interp_UpdateUndeclared_ImplicitGlobal()
+        ' non-strict JS: x++ on an undeclared x assigns NaN to the implicit global
+        Assert.Equal("NaN", OneLine("x++; console.log(x);"))
+        Assert.Equal("NaN", OneLine("var a = 1; a--; a--; console.log(a - 1);"))
+    End Sub
+
+    <Fact>
+    Public Sub Interp_NeAndStrictNe()
+        Assert.Equal("true false", OneLine("console.log(1 != 2, 1 !== 1);"))
+        Assert.Equal("true", OneLine("console.log('a' != 'b');"))
+        Assert.Equal("false", OneLine("console.log(NaN != NaN);"))
+    End Sub
+
     ' --------------------------------------------------------- codegen (text)
 
     <Fact>
@@ -188,6 +249,32 @@ Public Class LiteJsTests
         Assert.Contains("Public NotInheritable Class GeneratedScript", code)
         Assert.Contains("JsRuntime", code)                ' dynamic dispatch
         Assert.DoesNotContain("Dim string As", code)      ' VB keyword escaped
+    End Sub
+
+    <Fact>
+    Public Sub CodeGen_VarHoisting_SingleTopDeclaration()
+        ' VB Dim is block-scoped but JS var is function-scoped: the var must be
+        ' declared once at the top of Run and only assigned inside the block
+        Dim code = New CodeGenerator().Generate(Parser.Parse("if (true) { var x = 1; } console.log(x);"))
+        Assert.Contains("Dim x As JsValue = JsRuntime.Undef", code)
+        Assert.DoesNotContain("Dim x As JsValue = 1R", code)
+    End Sub
+
+    <Fact>
+    Public Sub CodeGen_NeAndStrictNe_RuntimeHelpers()
+        ' != / !== translate to the JsRuntime helpers that actually exist
+        Dim code = New CodeGenerator().Generate(Parser.Parse("console.log(1 != 2, 1 !== 2);"))
+        Assert.Contains("JsRuntime.JsNe(", code)
+        Assert.Contains("JsRuntime.JsStrictNe(", code)
+    End Sub
+
+    <Fact>
+    Public Sub CodeGen_ArrowFunction_NoOwnArguments()
+        ' arrows inherit 'arguments' lexically; only real functions bind their own
+        Dim arrowCode = New CodeGenerator().Generate(Parser.Parse("var f = () => 1;"))
+        Assert.DoesNotContain("Dim arguments", arrowCode)
+        Dim fnCode = New CodeGenerator().Generate(Parser.Parse("var g = function() { return 1; };"))
+        Assert.Contains("Dim arguments As JsValue = New List(Of Object)(args__", fnCode)
     End Sub
 
     ' ----------------------------------------------------------------- json
