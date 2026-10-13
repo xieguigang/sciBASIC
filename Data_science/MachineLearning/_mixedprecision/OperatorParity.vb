@@ -39,7 +39,12 @@ Namespace MixedPrecisionBench
                 Try
                     Call g(results)
                 Catch ex As Exception
-                    results.Add(New CaseResult("用例组异常 " & g.Method.Name, False, ex.Message))
+                    ' 带上栈顶帧：并发/索引类异常只看 Message 往往定位不到位置
+                    Dim frame = If(ex.StackTrace, "")
+                    Dim firstFrame = frame.Split(ControlChars.CrLf).FirstOrDefault()
+
+                    results.Add(New CaseResult("用例组异常 " & g.Method.Name, False,
+                                               $"{ex.GetType().Name}: {ex.Message} @ {firstFrame}"))
                 End Try
             Next
         End Sub

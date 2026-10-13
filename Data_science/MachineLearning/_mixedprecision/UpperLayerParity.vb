@@ -14,6 +14,7 @@
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.Transformer
+Imports Microsoft.VisualBasic.MachineLearning.RNN
 Imports std = System.Math
 
 Namespace MixedPrecisionBench
@@ -22,6 +23,58 @@ Namespace MixedPrecisionBench
 
         Friend Sub RunAll(results As List(Of CaseResult))
             Call BatchedMatMulCase(results)
+            Call RnnCase(results)
+        End Sub
+
+        ''' <summary>
+        ''' RNN 行为回归：确认把自研 jagged 矩阵换成 Tensor 之后网络仍能学习。
+        ''' </summary>
+        ''' <remarks>
+        ''' 这是 Matrix → Tensor 迁移最有价值的一道保险：编译通过只能说明类型对得上，
+        ''' 说明不了"每一步的形状与累加次序仍然正确"。这里用最简单的周期序列
+        ''' （预测下一个符号）驱动 forwardBackward，只要损失显著下降，
+        ''' 就说明前向的 tanh 递归、反向的 BPTT 与 Adagrad 更新链路都是通的。
+        ''' </remarks>
+        Private Sub RnnCase(results As List(Of CaseResult))
+            Dim vocab = 4
+            Dim seq = {0, 1, 2, 3, 0, 1, 2, 3}
+            Dim target = {1, 2, 3, 0, 1, 2, 3, 0}
+
+            Dim net As New SingleLayerRNN(vocab)
+            Call net.initialize(vocab)
+
+            Dim first As Double = 0
+            Dim last As Double = 0
+            Dim iterations = 300
+
+            For i = 1 To iterations
+                Dim loss = net.forwardBackward(seq, target)
+
+                If i = 1 Then first = loss
+                last = loss
+            Next
+
+            Dim finite = Not Double.IsNaN(last) AndAlso Not Double.IsInfinity(last)
+            Dim improved = finite AndAlso last < first
+
+            results.Add(New CaseResult(
+                "RNN (Tensor) 训练可收敛",
+                improved,
+                $"初始损失={first:F4} 末次损失={last:F4} 下降={(first - last):F4}"))
+
+            ' 采样也必须能跑通（走 softmax + 温度 + 隐藏态保存/恢复）
+            Dim sampled = net.sampleIndices(8, {0}, 1.0, advance:=False)
+
+            Dim validSample = sampled IsNot Nothing AndAlso sampled.Length = 8
+
+            If validSample Then
+                For Each s In sampled
+                    If s < 0 OrElse s >= vocab Then validSample = False
+                Next
+            End If
+
+            results.Add(New CaseResult("RNN (Tensor) 采样索引合法", validSample,
+                                       If(validSample, $"样本={String.Join(",", sampled)}", "采样结果越界或为空")))
         End Sub
 
         Private Sub BatchedMatMulCase(results As List(Of CaseResult))

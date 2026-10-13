@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a23e4d2168b6168c6166fec187f469c, Data_science\MachineLearning\DeepLearning\RNN\net\SingleLayerRNN.vb"
+#Region "Microsoft.VisualBasic::4a23e4d2168b6168c6166fec187f469c, Data_science\MachineLearning\DeepLearning\RNN\net\SingleLayerRNN.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace RNN
 
@@ -156,7 +158,7 @@ Namespace RNN
 		''' <param name="advance">When <c>True</c> the hidden state is advanced while consuming the seed.</param>
 		''' <returns>The sampled indices.</returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
-			Dim savedState As Matrix = If(Not advance, layer.saveHiddenState(), Nothing)
+			Dim savedState As Tensor = If(Not advance, layer.saveHiddenState(), Nothing)
 
 			Dim sampled = New Integer(n - 1) {}
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36b9eee47f98a54170bf995ce3592d7c, Data_science\MachineLearning\DeepLearning\RNN\net\RNNLayer.vb"
+#Region "Microsoft.VisualBasic::36b9eee47f98a54170bf995ce3592d7c, Data_science\MachineLearning\DeepLearning\RNN\net\RNNLayer.vb"
 
     ' Author:
     ' 
@@ -243,6 +243,20 @@ Namespace RNN
         ' 且带"行向量还是列向量"的隐式约定。改用 Tensor 之后形状必须显式，
         ' 因此这里把四个常用构造收成具名的小工具，避免散落的字面量形状写错。
 
+        ''' <summary>
+        ''' 构造长度为 <paramref name="length"/> 的张量数组（元素为 Nothing）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 为什么不直接写 <c>New Tensor(n) {}</c>：<see cref="Tensor"/> 带一个
+        ''' <c>New(ParamArray shape As Integer())</c> 构造函数，于是
+        ''' <c>New Tensor(n) {}</c> 会被编译器当成"调用该构造函数"而不是"建数组"
+        ''' （报 BC30106 索引超出维度）。显式声明数组类型可以彻底绕开这个歧义。
+        ''' </remarks>
+        Private Shared Function NewArray(length As Integer) As Tensor()
+            Dim arr(length - 1) As Tensor
+            Return arr
+        End Function
+
         ''' <summary>构造一个 (n, 1) 的列向量，全部元素为 <paramref name="value"/></summary>
         Private Shared Function Col(n As Integer, value As Double) As Tensor
             Dim data(n - 1) As Double
@@ -279,7 +293,8 @@ Namespace RNN
         End Function
 
         ''' <summary>one-hot 列向量 (size, 1)，第 <paramref name="index"/> 位为 1</summary>
-        Private Shared Function OneHot(size As Integer, index As Integer) As Tensor
+        ''' <remarks>函数名不能叫 OneHot —— VB 不区分大小写，会与局部变量 oneHot 撞名。</remarks>
+        Private Shared Function HotVector(size As Integer, index As Integer) As Tensor
             Dim data(size - 1) As Double
             data(index) = 1.0
             Return New Tensor(data, size, 1)
@@ -293,9 +308,11 @@ Namespace RNN
         ' 		
         Friend Overridable Function ixTox(ix As Integer()) As Tensor()
             ' start at t = 1
-            Dim oneHot = New Tensor(ix.Length + 1 - 1) {}
+            ' 长度必须是 ix.Length + 1：下标 0 位留空不用，序列从 t = 1 开始
+            ' （旧代码的 New Matrix(ix.Length + 1 - 1) {} 在 VB 里同样表示 ix.Length + 1 个元素）
+            Dim oneHot As Tensor() = NewArray(ix.Length + 1)
             For t = 1 To ix.Length + 1 - 1
-                oneHot(t) = OneHot(m_inputSize, ix(t - 1))
+                oneHot(t) = HotVector(m_inputSize, ix(t - 1))
             Next
 
             Return oneHot
@@ -307,7 +324,7 @@ Namespace RNN
         ''' <param name="ix"></param>
         ''' <returns></returns>
         Friend Overridable Function ixTox(ix As Integer) As Tensor
-            Return OneHot(m_inputSize, ix)
+            Return HotVector(m_inputSize, ix)
         End Function
 
         ' 
@@ -341,13 +358,13 @@ Namespace RNN
             lastSequenceLength = x.Length - 1
 
             ' hidden state vectors through time
-            hAt = New Tensor(lastSequenceLength + 1 - 1) {}
+            hAt = NewArray(lastSequenceLength + 1)
 
             ' normalized probability vectors through time
-            pAt = New Tensor(lastSequenceLength + 1 - 1) {}
+            pAt = NewArray(lastSequenceLength + 1)
 
             ' normalized probability vectors through time
-            yAt = New Tensor(lastSequenceLength + 1 - 1) {}
+            yAt = NewArray(lastSequenceLength + 1)
 
             ' copy the current state。
             ' 注意：原 Matrix 的算术方法是**原地**的，所以旧代码到处用 New Matrix(x) 做防御性拷贝；
@@ -380,7 +397,7 @@ Namespace RNN
         ''' </summary>
         ''' <param name="x"></param>
         Friend Overridable Sub forward(x As Tensor)
-            Dim xa = New Tensor(1) {}
+            Dim xa As Tensor() = NewArray(2)
             xa(1) = x
             forward(xa)
         End Sub
@@ -427,14 +444,14 @@ Namespace RNN
         ' 		    iy must be the size of the last sequence length, iy[i] < outputSize
         ' 		
         Friend Overridable Function getdy(iy As Integer()) As Tensor()
-            Dim dyAt = New Tensor(lastSequenceLength + 1 - 1) {} ' start at t = 1
+            Dim dyAt As Tensor() = NewArray(lastSequenceLength + 1) ' start at t = 1
 
             Dim t = 1
 
             While t < lastSequenceLength + 1
                 ' backprop into y,
                 ' http://cs231n.github.io/neural-networks-case-study/#grad
-                Dim probs = CloneOf(pAt(t))
+                Dim probs As Tensor = CloneOf(pAt(t))
                 Dim expected = iy(t - 1)
 
                 probs.Data(expected) = probs.Data(expected) - 1.0
@@ -474,7 +491,7 @@ Namespace RNN
             Dim dhNext = ZerosLike(h)
 
             ' gradients to be passed to the next backwards pass
-            dxAt = New Tensor(lastSequenceLength + 1 - 1) {}
+            dxAt = NewArray(lastSequenceLength + 1)
 
             ' Backward pass 
 
@@ -509,10 +526,10 @@ Namespace RNN
             ' clip exploding gradients
 
             Dim clip_a = -5.0
-            Dim dparams = New Tensor() {dWxh, dWhh, dWhy, dbh, dby}
+            Dim dparams As Tensor() = {dWxh, dWhh, dWhy, dbh, dby}
 
-            For i = 0 To dparams.Length - 1
-                dparams(i) = tf.clip_by_value(dparams(i), clip_a, -clip_a)
+            For ci = 0 To dparams.Length - 1
+                dparams(ci) = tf.clip_by_value(dparams(ci), clip_a, -clip_a)
             Next
 
             t = 1
@@ -531,23 +548,25 @@ Namespace RNN
             ' 原实现全程**原地**修改（Matrix 的 add/mul/div 返回 Me），
             ' 这里改成"算出新值再写回字段" —— 语义等价，但要注意每个字段都要真的写回。
 
-            Dim params = New Tensor() {Wxh, Whh, Why, bh, by}
-            Dim gparams = New Tensor() {gWxh, gWhh, gWhy, gbh, gby}
+            Dim params As Tensor() = {Wxh, Whh, Why, bh, by}
+            Dim gparams As Tensor() = {gWxh, gWhh, gWhy, gbh, gby}
 
             Dim i = 0
 
             While i < dparams.Length
-                Dim dparam = dparams(i)
-                Dim gparam = gparams(i)
+                Dim dparam As Tensor = dparams(i)
+                Dim gparam As Tensor = gparams(i)
 
                 ' 二阶矩累积：g += d²
                 gparam = tf.add(gparam, tf.multiply(dparam, dparam))
                 gparams(i) = gparam
 
-                Dim tmp As Tensor = gparam.Apply(Function(elem As Double) std.Sqrt(elem) + 0.00000001)
-                Dim step As Tensor = tf.divide(tf.multiply_scalar(dparam, -LearningRate), tmp)
+                Dim denom As Tensor = gparam.Apply(Function(elem As Double) std.Sqrt(elem) + 0.00000001)
 
-                params(i) = tf.add(params(i), step)
+                ' 局部变量不能叫 step —— Step 是 VB 保留关键字
+                Dim delta As Tensor = tf.divide(tf.multiply_scalar(dparam, -LearningRate), denom)
+
+                params(i) = tf.add(params(i), delta)
                 Threading.Interlocked.Increment(i)
             End While
 
