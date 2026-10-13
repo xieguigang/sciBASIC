@@ -20,8 +20,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.6.9782.41217</Version>
-    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <Title>XGBoost Model Predictor and Gradient Boosting Tree Trainer</Title>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.XGBoost</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

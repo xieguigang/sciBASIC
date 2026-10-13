@@ -28,8 +28,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>10.6.9782.41217</Version>
-    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>

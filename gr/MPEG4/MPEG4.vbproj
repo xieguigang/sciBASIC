@@ -6,8 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;NPSearch;mzkit_win32;CellaLAB-Desktop;nuget_release</Configurations>
-    <Version>10.6.9782.41217</Version>
-    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>H.264 Video Encoder and MP4 ISO-BMFF Muxer</Title>

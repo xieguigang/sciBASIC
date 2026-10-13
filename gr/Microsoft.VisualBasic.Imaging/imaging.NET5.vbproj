@@ -37,8 +37,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>10.6.9782.41217</Version>
-    <AssemblyVersion>1.0.9782.41217</AssemblyVersion>
+    <Version>10.7.9782.41243</Version>
+    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
     <Description>A driver-based scientific graphics engine for sciBASIC#: renders shapes, charts, heatmaps, text labels and isometric 3D scenes through one IGraphics API to bitmap, SVG or PostScript output, with d3.js-style scales, color palettes, Delaunay/Voronoi geometry and contour extraction.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
