@@ -41,6 +41,13 @@ Public Class FormPlayer
     ''' <summary>编辑器里上一次成功运行过的源码，用于提示"有未运行的改动"。</summary>
     Private lastRunSource As String = ""
 
+    ''' <summary>上一次同步过的画布可用区域（用于避免每帧无谓重排）。</summary>
+    Private lastCanvasArea As Size = Size.Empty
+    ''' <summary>上一次同步过的编辑器页尺寸。</summary>
+    Private lastEditorPageSize As Size = Size.Empty
+    ''' <summary>布局同步的调试轨迹。</summary>
+    Private lastSyncInfo As String = ""
+
     ''' <summary>默认演示脚本名（位于输出目录）。</summary>
     Private Const DefaultScript As String = "demo\platform.js"
 
@@ -334,7 +341,10 @@ Public Class FormPlayer
         ' 3) 相机缓动
         Call rig.Tick()
 
-        ' 4) 渲染（画布标签页不可见时跳过，省下整帧的投影与填充）
+        ' 4) 布局同步（详见 SyncLayout 的说明）
+        Call SyncLayout()
+
+        ' 5) 渲染（画布标签页不可见时跳过，省下整帧的投影与填充）
         Call RenderFrame()
 
         ' 5) 统计
@@ -345,6 +355,43 @@ Public Class FormPlayer
             frames = 0
             lastFpsTick = now
             Call UpdateStatus()
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 显式同步页内布局。
+    ''' </summary>
+    ''' <remarks>
+    ''' <see cref="TabPage"/> 尺寸变化时，它内部的 <c>Dock=Fill</c> 子控件<b>不会</b>自动重排
+    ''' （实测页面已变成 1110x819，PictureBox 仍停留在设计尺寸 884x497），
+    ''' 因此这里按 <see cref="TabPage.DisplayRectangle"/> 显式设置画布边界，
+    ''' 并在切到编辑器页时补一次 <c>PerformLayout</c>。
+    ''' </remarks>
+    Private Sub SyncLayout()
+        If tabs Is Nothing OrElse pageCanvas Is Nothing Then Return
+        If tabs.IsDisposed OrElse pageCanvas.IsDisposed Then Return
+
+        Dim area As Size = pageCanvas.DisplayRectangle.Size
+
+        If area <> lastCanvasArea AndAlso area.Width > 0 AndAlso area.Height > 0 Then
+            lastCanvasArea = area
+
+            viewport.Dock = DockStyle.None
+            viewport.Size = area
+            viewport.Location = Point.Empty
+
+            lastSyncInfo = $"area={area.Width}x{area.Height} -> viewport={viewport.Width}x{viewport.Height} dock={viewport.Dock}"
+
+            Call RenderFrame(force:=True)
+        Else
+            lastSyncInfo &= $" | skip(area={area.Width}x{area.Height} last={lastCanvasArea.Width}x{lastCanvasArea.Height} viewport={viewport.Width}x{viewport.Height})"
+        End If
+
+        Dim selected As TabPage = tabs.SelectedTab
+
+        If selected Is pageScript AndAlso selected.Size <> lastEditorPageSize Then
+            lastEditorPageSize = selected.Size
+            selected.PerformLayout()
         End If
     End Sub
 
@@ -464,13 +511,15 @@ Public Class FormPlayer
         End If
     End Sub
 
-    ''' <summary>视口 / 分割条尺寸变化：下一个定时器 tick 会按新尺寸重建缓冲。</summary>
+    ''' <summary>视口 / 分割条尺寸变化：立刻按新尺寸同步并重画。</summary>
     Private Sub Viewport_Resize(sender As Object, e As EventArgs)
+        Call SyncLayout()
         Call RenderFrame(force:=True)
     End Sub
 
     Private Sub Tabs_SelectedIndexChanged(sender As Object, e As EventArgs)
-        ' 从编辑器切回画布时立刻补一帧，避免看到旧内容
+        ' 切换标签页时补一次页内布局；切回画布立刻补一帧，避免看到旧内容
+        Call SyncLayout()
         Call RenderFrame(force:=True)
     End Sub
 
@@ -625,39 +674,51 @@ Public Class FormPlayer
 
         AddHandler Me.Shown, Sub(s, ev)
                                  ' 让布局与渲染循环跑起来
-                                 For i As Integer = 1 To 40
+                                 For i As Integer = 1 To 30
                                      Application.DoEvents()
                                      System.Threading.Thread.Sleep(16)
                                  Next
 
                                  Dim outDir As String = AppDomain.CurrentDomain.BaseDirectory
-                                 Dim report As New List(Of String) From {
-                                     $"client      = {Me.ClientSize.Width} x {Me.ClientSize.Height}",
-                                     $"split       = {split.Width} x {split.Height}",
-                                     $"tabs        = {tabs.Width} x {tabs.Height}",
-                                     $"canvas page = {pageCanvas.Width} x {pageCanvas.Height}",
-                                     $"viewport    = {viewport.Width} x {viewport.Height}",
-                                     $"buffer      = {If(renderBuffer Is Nothing, "none", renderBuffer.Width & " x " & renderBuffer.Height)}",
-                                     $"camera      = {rig.Camera.Screen.Width} x {rig.Camera.Screen.Height}",
-                                     $"editor page = {pageScript.Width} x {pageScript.Height}",
-                                     $"editor box  = {editorBox.Width} x {editorBox.Height}",
-                                     $"console box = {consoleBox.Width} x {consoleBox.Height}"
+                                 Dim text As New List(Of String) From {
+                                     $"client = {Me.ClientSize.Width} x {Me.ClientSize.Height}",
+                                     $"split = {split.Width} x {split.Height}   tabs = {tabs.Width} x {tabs.Height}",
+                                     $"console = {consoleBox.Width} x {consoleBox.Height}"
                                  }
 
-                                 File.AppendAllLines(System.IO.Path.Combine(outDir, "shot-report.txt"), report)
-
-                                 ' 画布页
-                                 tabs.SelectedIndex = 0
-                                 Application.DoEvents()
+                                 ' 先测画布页：切过去 → 同步布局 → 再测量（顺序很关键）
+                                 Call SwitchTo(0)
+                                 text.Add($"  [canvas] page={pageCanvas.Width}x{pageCanvas.Height} " &
+                                          $"display={pageCanvas.DisplayRectangle.Width}x{pageCanvas.DisplayRectangle.Height} " &
+                                          $"viewport={viewport.Width}x{viewport.Height} " &
+                                          $"buffer={If(renderBuffer Is Nothing, "none", renderBuffer.Width & "x" & renderBuffer.Height)} " &
+                                          $"camera={rig.Camera.Screen.Width}x{rig.Camera.Screen.Height}")
+                                 text.Add($"  [sync] {lastSyncInfo}")
                                  Call Capture(Me, System.IO.Path.Combine(outDir, "shot-canvas.png"))
 
-                                 ' 编辑器页
-                                 tabs.SelectedIndex = 1
-                                 Application.DoEvents()
+                                 ' 再测编辑器页
+                                 Call SwitchTo(1)
+                                 text.Add($"  [script] page={pageScript.Width}x{pageScript.Height} " &
+                                          $"display={pageScript.DisplayRectangle.Width}x{pageScript.DisplayRectangle.Height} " &
+                                          $"bar={editorBar.Width}x{editorBar.Height} " &
+                                          $"editor={editorBox.Width}x{editorBox.Height}")
                                  Call Capture(Me, System.IO.Path.Combine(outDir, "shot-editor.png"))
+
+                                 File.AppendAllLines(System.IO.Path.Combine(outDir, "shot-report.txt"), text)
 
                                  Application.Exit()
                              End Sub
+    End Sub
+
+    ''' <summary>切到指定标签页并把布局推进到稳定状态。</summary>
+    Private Sub SwitchTo(index As Integer)
+        tabs.SelectedIndex = index
+
+        For i As Integer = 1 To 3
+            Application.DoEvents()
+            Call SyncLayout()
+            Application.DoEvents()
+        Next
     End Sub
 
     Private Shared Sub Capture(form As Form, path As String)
