@@ -204,7 +204,8 @@ End Function, Func(Of Object(), Object)))))
         JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"grade:", grade, "walked:", walked}, False, False)
         [date] = "2026-10-14"
         JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"iso:", JsRuntime.JsInvokeMethod([date], "replace", New JsValue() {New LiteJsRuntime.JsRegExp("(\d+)-(\d+)-(\d+)", ""), "$3/$2/$1"}, False, False), JsRuntime.JsInvokeMethod(New LiteJsRuntime.JsRegExp("\d+", "g"), "test", New JsValue() {[date]}, False, False)}, False, False)
-        Dim Shape As JsValue = JsRuntime.JsDefineClass("Shape", CType(Function(args__20 As JsValue())
+        Dim Shape As JsValue = Nothing
+        Shape = JsRuntime.JsDefineClass("Shape", CType(Function(args__20 As JsValue())
 Dim area As JsValue = If(args__20.Length > 0, args__20(0), JsRuntime.Undef)
 Dim this_7 As JsValue = JsRuntime.CurrentThis
 Dim arguments_8 As JsValue = New List(Of Object)(args__20)
@@ -219,7 +220,8 @@ Return JsRuntime.JsAdd(JsRuntime.JsAdd("shape(", JsRuntime.JsGet(this_8, "area")
 Return JsRuntime.Undef
 
 End Function, Func(Of Object(), Object)))})
-        Dim Square As JsValue = JsRuntime.JsDefineClass("Square", CType(Function(args__22 As JsValue())
+        Dim Square As JsValue = Nothing
+        Square = JsRuntime.JsDefineClass("Square", CType(Function(args__22 As JsValue())
 Dim side As JsValue = If(args__22.Length > 0, args__22(0), JsRuntime.Undef)
 Dim this_9 As JsValue = JsRuntime.CurrentThis
 Dim arguments_10 As JsValue = New List(Of Object)(args__22)

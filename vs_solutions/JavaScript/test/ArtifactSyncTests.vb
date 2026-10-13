@@ -3,6 +3,7 @@ Option Explicit On
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports Xunit
 
 ''' <summary>
@@ -33,7 +34,8 @@ Public Class ArtifactSyncTests
         Dim generated = New CodeGenerator().Generate(Parser.Parse(source), ArtifactClassName)
         Dim target = System.IO.Path.Combine(dir, ArtifactFile)
 
-        If Environment.GetEnvironmentVariable("LITEJS_REGEN_ARTIFACTS") = "1" Then
+        ' System.Environment: the VB runtime module of the same name shadows it
+        If System.Environment.GetEnvironmentVariable("LITEJS_REGEN_ARTIFACTS") = "1" Then
             File.WriteAllText(target, generated)
             Return
         End If
