@@ -8,6 +8,10 @@
     <MyType>WindowsForms</MyType>
     <Platforms>AnyCPU;x64</Platforms>
     <UseWPF>True</UseWPF>
+    <RootNamespace>WorldPlayer</RootNamespace>
+    <ApplicationVisualStyles>true</ApplicationVisualStyles>
+    <ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +27,7 @@
     <ProjectReference Include="..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\..\vs_solutions\JavaScript\LiteJs.vbproj" />
     <ProjectReference Include="..\Engine\PhysicsEngine.vbproj" />
     <ProjectReference Include="..\Particles\Particles.vbproj" />
   </ItemGroup>
@@ -40,6 +45,11 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <!-- 演示脚本随输出发布，宿主启动时自动加载 -->
+  <ItemGroup>
+    <None Include="demo\**\*.js" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

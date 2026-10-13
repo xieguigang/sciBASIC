@@ -13,7 +13,6 @@ Module Program
     Private Failed As Integer = 0
 
     Sub Main()
-        Call RampDebug()
         Call MeshProperties()
         Call Winding()
         Call BoxOnGround()
@@ -31,66 +30,6 @@ Module Program
         If Failed > 0 Then
             Environment.Exit(1)
         End If
-    End Sub
-
-    Private Sub RampDebug()
-        Console.WriteLine("-- ramp debug: direct manifold probe")
-
-        Dim ramp As ConvexMesh3D = ConvexMesh3D.CreateWedge(8, 3, 8)
-        Dim wedge As RigidBody3D = PhysicsWorld3D.StaticConvex(ramp, New Vector3(0, ramp.PivotOffset.y, 0))
-
-        wedge.Label = "wedge"
-
-        For Each y As Double In {3.6, 3.3, 3.15, 3.1, 3.05, 3.0}
-            Dim probe As RigidBody3D = PhysicsWorld3D.Box(1, 1, 1, 1.0)
-
-            probe.Label = "box"
-            probe.Position = New Vector3(3.0, y, 0)
-
-            Dim m As Manifold3D = NarrowPhase3D.Collide(probe, wedge)
-
-            If m Is Nothing Then
-                Console.WriteLine($"  y={y:F2} -> no manifold")
-            Else
-                Dim pts As String = ""
-
-                For Each c In m.Contacts
-                    pts &= $" ({c.Position.x:F2},{c.Position.y:F2},{c.Position.z:F2})/pen={c.Penetration:F3}"
-                Next
-
-                Console.WriteLine($"  y={y:F2} -> A={m.A.Label} B={m.B.Label} n=({m.Normal.x:F3},{m.Normal.y:F3},{m.Normal.z:F3}){pts}")
-            End If
-        Next
-
-        Console.WriteLine("-- ramp debug trace")
-
-        Dim ramp As ConvexMesh3D = ConvexMesh3D.CreateWedge(8, 3, 8)
-        Dim w As New PhysicsWorld3D()
-
-        w.Add(PhysicsWorld3D.GroundPlane(0.0))
-        w.Add(PhysicsWorld3D.StaticConvex(ramp, New Vector3(0, ramp.PivotOffset.y, 0)))
-
-        Dim b As RigidBody3D = PhysicsWorld3D.Box(1, 1, 1, 1.0)
-
-        b.Position = New Vector3(3.0, 6.0, 0)
-        b.Material.Friction = 0.2
-        w.Add(b)
-
-        For i As Integer = 1 To 180
-            w.Step(1.0 / 60.0)
-
-            If i Mod 10 = 0 OrElse i < 40 Then
-                Dim info As String = ""
-
-                For Each m In w.Contacts
-                    If m.A Is b OrElse m.B Is b Then
-                        info &= $" n=({m.Normal.x:F2},{m.Normal.y:F2},{m.Normal.z:F2}) pen={m.Penetration:F3} pts={m.Contacts.Count}"
-                    End If
-                Next
-
-                Console.WriteLine($"  t={i / 60.0:F2} x={b.Position.x:F3} y={b.Position.y:F3} vx={b.Velocity.x:F3} vy={b.Velocity.y:F3} | {info}")
-            End If
-        Next
     End Sub
 
     ' /********************************************************************************/
@@ -141,6 +80,11 @@ Module Program
         Return Vector3Math.Length(b.Velocity)
     End Function
 
+    ''' <summary>把"构造原点"位置换算成质心位置（网格顶点已平移到质心）。</summary>
+    Private Function Place(mesh As ConvexMesh3D, origin As Vector3) As Vector3
+        Return origin + mesh.PivotOffset
+    End Function
+
     Private Function RandomOrientation(seed As Integer) As Quaternion
         Dim rnd As New Random(seed)
         Dim axis As Vector3 = Vector3Math.Normalize(New Vector3(rnd.NextDouble() * 2 - 1,
@@ -173,7 +117,8 @@ Module Program
         ' 圆柱：V = πr²h（64 边形近似，误差 ~1e-3），Iyy = mr²/2，Ixx = m(3r²+h²)/12
         Dim cyl As ConvexMesh3D = ConvexMesh3D.CreateCylinder(1.0, 2.0, 64)
 
-        Near("cylinder volume ≈ πr²h", cyl.Volume(), 2.0 * std.PI, 5.0E-3)
+        ' 64 边形近似圆：V = (N/2)·r²·sin(2π/N)·h ≈ πr²h·(1 - 1.6e-3)
+        Near("cylinder volume ≈ πr²h", cyl.Volume(), 2.0 * std.PI, 2.0E-2)
 
         Dim ic As Matrix3x3 = cyl.InertiaAboutCentroid(1.0)
 
@@ -330,7 +275,7 @@ Module Program
 
         w.Add(PhysicsWorld3D.GroundPlane(0.0))
 
-        Dim platform As RigidBody3D = PhysicsWorld3D.StaticConvex(ramp, New Vector3(0, ramp.PivotOffset.y, 0))
+        Dim platform As RigidBody3D = PhysicsWorld3D.StaticConvex(ramp, Place(ramp, New Vector3(0, 0, 0)))
 
         platform.Material.Friction = 0.2
         w.Add(platform)
@@ -361,7 +306,7 @@ Module Program
         Dim w As New PhysicsWorld3D()
 
         w.Add(PhysicsWorld3D.GroundPlane(0.0))
-        w.Add(PhysicsWorld3D.StaticConvex(ramp, New Vector3(0, ramp.PivotOffset.y, 0)))
+        w.Add(PhysicsWorld3D.StaticConvex(ramp, Place(ramp, New Vector3(0, 0, 0))))
 
         Dim s As RigidBody3D = PhysicsWorld3D.Sphere(0.5, 1.0)
 
