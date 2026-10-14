@@ -69,6 +69,7 @@
 Imports System.Diagnostics
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Math.Numerics
 Imports SimdCapabilities = Microsoft.VisualBasic.Math.SIMD.SimdCapabilities
 Imports SimdEngine = Microsoft.VisualBasic.Math.SIMD.SimdEngine
 Imports SimdParallel = Microsoft.VisualBasic.Math.SIMD.SimdParallel
@@ -143,6 +144,27 @@ Public Module SimdBenchmark
 
         Console.WriteLine($"--- 矩阵乘法（{mulOrder} x {mulOrder} x {mulOrder}） ---")
         BenchApi("DotProduct", Function() ChecksumFromMatrix(ka.Multiply(ka)))
+        Console.WriteLine()
+
+        ' ---- 半精度内核：8 路融合算子 vs 标量回退 ----
+        ' 说明：标量回退档（disable）走的是 System.Half 的逐元素转换 + 运算，
+        ' 也就是本次改造之前 HalfVector 的算子语义（旧实现还要额外付 2 次 BitConverter.GetBytes
+        ' 堆分配/元素与 5 次静态表索引，那部分开销这里体现不出来，实际收益比下面的数字更大）。
+        Const halfLen As Integer = 60000
+        Dim ha As Half() = FillHalf(halfLen, 1.25F)
+        Dim hb As Half() = FillHalf(halfLen, 0.75F)
+
+        Console.WriteLine($"--- 半精度 8 路内核（长度 = {halfLen}，{HalfSimd.Lanes} 路） ---")
+        BenchApi("HalfSimd.Add", Function() ChecksumHalf(HalfSimd.Add(ha, hb)))
+        BenchApi("HalfSimd.Subtract", Function() ChecksumHalf(HalfSimd.Subtract(ha, hb)))
+        BenchApi("HalfSimd.Multiply", Function() ChecksumHalf(HalfSimd.Multiply(ha, hb)))
+        BenchApi("HalfSimd.Divide", Function() ChecksumHalf(HalfSimd.Divide(ha, hb)))
+        BenchApi("HalfSimd.AddScalar", Function() ChecksumHalf(HalfSimd.AddScalar(ha, 0.5F)))
+        BenchApi("HalfSimd.MultiplyAdd", Function() ChecksumHalf(HalfSimd.MultiplyAdd(ha, hb, 0.25F)))
+        BenchApi("HalfSimd.ToSingle", Function() ChecksumSingle(HalfSimd.ToSingle(ha)))
+        BenchApi("HalfSimd.Sum", Function() HalfSimd.Sum(ha))
+        BenchApi("HalfSimd.Dot", Function() HalfSimd.Dot(ha, hb))
+        BenchApi("HalfVector v + 1.5F", Function() ChecksumHalf((New HalfVector(ha) + 1.5F).Array))
         Console.WriteLine()
 
         ' ---- 并行加速（只对比 SimdParallel 的开关） ----
@@ -251,6 +273,42 @@ Public Module SimdBenchmark
         Next
 
         Return data
+    End Function
+
+    Private Function FillHalf(length As Integer, value As Single) As Half()
+        Dim data As Half() = New Half(length - 1) {}
+
+        For i As Integer = 0 To length - 1
+            data(i) = CType(value + (i Mod 7) * 0.001F, Half)
+        Next
+
+        Return data
+    End Function
+
+    ''' <summary>
+    ''' 单精度数组的抽样求和（每 97 个取一个）
+    ''' </summary>
+    Private Function ChecksumSingle(v As Single()) As Double
+        Dim s As Double = 0
+
+        For i As Integer = 0 To v.Length - 1 Step 97
+            s += v(i)
+        Next
+
+        Return s
+    End Function
+
+    ''' <summary>
+    ''' 半精度数组的抽样求和（每 97 个取一个）
+    ''' </summary>
+    Private Function ChecksumHalf(v As Half()) As Double
+        Dim s As Double = 0
+
+        For i As Integer = 0 To v.Length - 1 Step 97
+            s += CSng(v(i))
+        Next
+
+        Return s
     End Function
 
     Private Function FillSquare(order As Integer, value As Double) As Double()()

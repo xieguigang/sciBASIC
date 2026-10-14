@@ -333,16 +333,26 @@ Public Module HalfSimdTest
             Close($"Dot[{n}]", HalfSimd.Dot(a, b), refDot)
             Close($"Norm[{n}]", HalfSimd.Norm(a), std.Sqrt(ReferenceSumOfSquares(a)))
 
-            ' Min/Max：不含 NaN 时逐位可比
+            ' Min/Max：NaN 传播（与 Enumerable.Min/Max 对浮点序列的行为一致），其余逐位可比
             Dim refMin As Single = CSng(a(0))
             Dim refMax As Single = CSng(a(0))
+            Dim hasNaN As Boolean = Single.IsNaN(refMin)
 
             For i As Integer = 1 To n - 1
                 Dim xi As Single = CSng(a(i))
 
-                If xi < refMin Then refMin = xi
-                If xi > refMax Then refMax = xi
+                If Single.IsNaN(xi) Then
+                    hasNaN = True
+                Else
+                    If xi < refMin Then refMin = xi
+                    If xi > refMax Then refMax = xi
+                End If
             Next
+
+            If hasNaN Then
+                refMin = Single.NaN
+                refMax = Single.NaN
+            End If
 
             Ok(Bits(HalfSimd.Min(a)) = Bits(CType(refMin, Half)), $"Min[{n}] 不一致")
             Ok(Bits(HalfSimd.Max(a)) = Bits(CType(refMax, Half)), $"Max[{n}] 不一致")
@@ -425,7 +435,15 @@ Public Module HalfSimdTest
         Dim singles As Single() = v.ToSingle()
         Dim back As HalfVector = HalfVector.FromSingles(singles)
 
-        CompareBits("ToSingle -> FromSingles 往返", back.Array, raw)
+        ' 往返：NaN 的 payload 不保证保留（BCL 会把任意 NaN 统一为 0xFE00），因此跳过 NaN
+        Dim rtBad As Integer = 0
+
+        For i As Integer = 0 To raw.Length - 1
+            If Half.IsNaN(raw(i)) Then Continue For
+            If Bits(back.Array(i)) <> Bits(raw(i)) Then rtBad += 1
+        Next
+
+        Ok(rtBad = 0, $"ToSingle -> FromSingles 往返存在 {rtBad} 个元素不还原")
         Ok(v.ToSingle().Length = 300, "ToSingle 长度不对")
 
         ' 与单精度向量相乘
@@ -494,9 +512,16 @@ Public Module HalfSimdTest
     End Sub
 
     Private Sub Close(name As String, actual As Double, expected As Double)
+        ' 两边都是 NaN 视为一致（数据中可能含有随机生成的 NaN 位型）
+        If Double.IsNaN(actual) AndAlso Double.IsNaN(expected) Then
+            checks += 1
+            Return
+        End If
+
         Dim diff As Double = std.Abs(actual - expected)
         Dim scale As Double = std.Max(1.0, std.Abs(expected))
 
+        ' 归约顺序在向量化后会发生改变，因此按 Double 精度的相对误差比对
         Ok(diff / scale < 1.0E-12, $"{name}: 实际 {actual} 与参考 {expected} 相差 {diff}")
     End Sub
 

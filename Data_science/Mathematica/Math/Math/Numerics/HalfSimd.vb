@@ -245,12 +245,16 @@ Namespace Numerics
             ' 非 NaN 车道为全 1；NaN 车道为 0
             Dim notNaN As Vector128(Of Integer) = Vector128.Equals(v, v).AsInt32()
 
+            ' 钳到 65520，避免溢出成 Infinity
             Dim abs As Vector128(Of Single) = Vector128.BitwiseAnd(raw, VAbs).AsSingle()
             abs = Vector128.Min(abs, VMaxBelowInfinity)
-            abs = Vector128.Max(abs, VMinExp)
+
+            ' 关键：指数偏置只由 Max(|x|, 2^-14) 推导，**参与加法的仍然是钳完上界的原值**。
+            ' 如果把 Max 的结果赋回 abs，那么 0 / 次正规数会被抬到 2^-14，结果整体偏移一个 exponent（0x0400）。
+            Dim clampedForExp As Vector128(Of Single) = Vector128.Max(abs, VMinExp)
 
             Dim expOffset As Vector128(Of Integer) = Vector128.Add(
-                Vector128.BitwiseAnd(abs.AsInt32(), VSingleExpMask), VExponent13)
+                Vector128.BitwiseAnd(clampedForExp.AsInt32(), VSingleExpMask), VExponent13)
             Dim rounded As Vector128(Of Integer) = Vector128.Add(abs, expOffset.AsSingle()).AsInt32()
 
             Dim bits As Vector128(Of Integer) = Vector128.Subtract(rounded, VExponent126)
@@ -721,13 +725,17 @@ Namespace Numerics
             If CanVectorize(n) Then
                 Dim last As Integer = n - Lanes
                 Dim lo, hi As Vector128(Of Integer)
+                Dim acc0 As Vector128(Of Double) = Vector128(Of Double).Zero
+                Dim acc1 As Vector128(Of Double) = Vector128(Of Double).Zero
 
                 Do While i <= last
                     LoadLanes(a, i, lo, hi)
-                    total += CDbl(Vector128.Sum(LanesToSingle(lo)))
-                    total += CDbl(Vector128.Sum(LanesToSingle(hi)))
+                    Accumulate(LanesToSingle(lo), acc0, acc1)
+                    Accumulate(LanesToSingle(hi), acc0, acc1)
                     i += Lanes
                 Loop
+
+                total += ReduceDouble(acc0) + ReduceDouble(acc1)
             End If
 
             Do While i < n
@@ -736,6 +744,29 @@ Namespace Numerics
             Loop
 
             Return total
+        End Function
+
+        ''' <summary>
+        ''' 把 4 路 Single lane 先加宽到 Double 再累加到 2 个 Double 累加器上
+        ''' </summary>
+        ''' <remarks>
+        ''' 这里**不能**直接用 <c>Vector128.Sum(Of Single)</c>：那样是在 Single 精度内求和，
+        ''' 对 Dot（乘积可达 1e9 量级）会引入 0.1 量级的误差。先加宽再累加才能保持 Double 精度。
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub Accumulate(block As Vector128(Of Single),
+                               ByRef acc0 As Vector128(Of Double),
+                               ByRef acc1 As Vector128(Of Double))
+            acc0 = Vector128.Add(acc0, Vector128.WidenLower(block))
+            acc1 = Vector128.Add(acc1, Vector128.WidenUpper(block))
+        End Sub
+
+        ''' <summary>
+        ''' 把一个 2 路 Double 向量归约为标量
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function ReduceDouble(v As Vector128(Of Double)) As Double
+            Return Vector128.GetElement(v, 0) + Vector128.GetElement(v, 1)
         End Function
 
         ''' <summary>
@@ -754,14 +785,18 @@ Namespace Numerics
             If CanVectorize(n) Then
                 Dim last As Integer = n - Lanes
                 Dim alo, ahi, blo, bhi As Vector128(Of Integer)
+                Dim acc0 As Vector128(Of Double) = Vector128(Of Double).Zero
+                Dim acc1 As Vector128(Of Double) = Vector128(Of Double).Zero
 
                 Do While i <= last
                     LoadLanes(a, i, alo, ahi)
                     LoadLanes(b, i, blo, bhi)
-                    total += CDbl(Vector128.Sum(Vector128.Multiply(LanesToSingle(alo), LanesToSingle(blo))))
-                    total += CDbl(Vector128.Sum(Vector128.Multiply(LanesToSingle(ahi), LanesToSingle(bhi))))
+                    Accumulate(Vector128.Multiply(LanesToSingle(alo), LanesToSingle(blo)), acc0, acc1)
+                    Accumulate(Vector128.Multiply(LanesToSingle(ahi), LanesToSingle(bhi)), acc0, acc1)
                     i += Lanes
                 Loop
+
+                total += ReduceDouble(acc0) + ReduceDouble(acc1)
             End If
 
             Do While i < n
@@ -837,7 +872,9 @@ Namespace Numerics
             Do While i < n
                 Dim x As Single = CSng(a(i))
 
-                If findMin Then
+                If Single.IsNaN(x) Then
+                    Return Single.NaN
+                ElseIf findMin Then
                     If x < best Then best = x
                 Else
                     If x > best Then best = x
@@ -853,6 +890,15 @@ Namespace Numerics
         ''' 把一个 4 路 lane 归约为单个 Single，再与已有的极值合并
         ''' </summary>
         Private Function ReduceBlock(v As Vector128(Of Single), best As Single, findMin As Boolean) As Single
+            ' NaN 传播：与 Enumerable.Min/Max 对浮点序列的行为保持一致
+            For lane As Integer = 0 To 3
+                Dim xi As Single = Vector128.GetElement(v, lane)
+
+                If Single.IsNaN(xi) Then
+                    Return Single.NaN
+                End If
+            Next
+
             Dim block As Single = Vector128.GetElement(v, 0)
 
             For lane As Integer = 1 To 3
@@ -864,10 +910,6 @@ Namespace Numerics
                     If x > block Then block = x
                 End If
             Next
-
-            If Single.IsNaN(block) Then
-                Return block
-            End If
 
             Return If(findMin, System.Math.Min(best, block), System.Math.Max(best, block))
         End Function
