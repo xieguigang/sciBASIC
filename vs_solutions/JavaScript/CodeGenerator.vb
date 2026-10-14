@@ -136,6 +136,9 @@ Public NotInheritable Class CodeGenerator
         w.Line("Public Shared Sub Run(io As LiteJsRuntime.ScriptIO, Optional host As LiteJsRuntime.ClrHost = Nothing)")
         w.Indent()
         w.Line("JsRuntime.Io = io")
+        ' (re)build the Node-compatible modules (fs / Buffer / path / process) so the
+        ' generated code, which references JsRuntime.FsBuiltin etc. directly, sees them.
+        w.Line("JsRuntime.GlobalIdentifiers()")
         ' host CLR objects (reflection bridge): publish them before the body runs
         w.Line("If host IsNot Nothing Then host.Install()")
         ' JS var hoisting: every 'var' of this function body is declared once at

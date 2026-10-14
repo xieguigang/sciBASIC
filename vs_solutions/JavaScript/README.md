@@ -35,6 +35,8 @@ JavaScript 源码
 
 **内置对象**：`console`（log/info/warn/error）· `Math`（含三角函数、`log2/log10/cbrt/imul/clz32/fround` 等）· `JSON`（`parse` / `stringify`，第三参数缩进）· `Object`（keys/values/entries/assign/fromEntries/getOwnPropertyNames/create/freeze）· `Array`（push/pop/shift/unshift/join/concat/slice/splice/indexOf/lastIndexOf/includes/reverse/sort/map/filter/reduce/reduceRight/forEach/find/findIndex/findLast/some/every/flat/flatMap/fill/at/keys/values/entries）· `String`（charAt/charCodeAt/at/substring/slice/indexOf/lastIndexOf/toUpperCase/toLowerCase/trim/trimStart/trimEnd/padStart/padEnd/split/replace/replaceAll/includes/startsWith/endsWith/repeat/concat/codePointAt/match/matchAll/search/`String.fromCharCode`）· `Number`（isInteger/isFinite/isNaN/isSafeInteger/parseInt/parseFloat/`toString(radix)`/toFixed/常量）· `Date` · `RegExp`（`test`/`exec`/`lastIndex`，与字符串的 `match`/`replace`/`split`/`search`/`matchAll` 互操作）· `Error` 层级（Error/TypeError/RangeError/SyntaxError/ReferenceError，`name`/`message`）· `Promise`（`then`/`catch`/`finally`、`resolve`/`reject`/`all`/`allSettled`/`race`/`any`）
 
+**Node.js 兼容模块**（模拟 `require('fs'|'path'|'Buffer'|'process')` 的全局 `fs` / `path` / `Buffer` / `process`）：`fs` 提供同步（`readFileSync`/`writeFileSync`/`existsSync`/`readdirSync`/`mkdirSync`/`rmdirSync`/`statSync`/`unlinkSync`/`appendFileSync`/`copyFileSync`/`renameSync`）、回调异步（`readFile(path, cb)` 等，以微任务延迟结算，行为等同 Node）与 Promise（`fs.promises.*` 可 `await`）三种形态，并暴露 `fs.constants`；`Buffer` 提供 `from`/`alloc`/`allocUnsafe`/`concat`/`slice`/`subarray`/`toString(encoding)`/`equals`；`path` 提供 `join`/`resolve`/`basename`/`dirname`/`extname`/`normalize`/`parse`/`isAbsolute` 及属性 `sep`/`delimiter`；`process` 提供 `cwd()`/`platform`/`arch`/`argv`/`env`，以及由宿主注入的 `__dirname`/`__filename`。相对路径相对 `process.cwd()` 解析，错误映射为带 `code`（`ENOENT`/`EACCES`/…）/`syscall`/`path` 的 JS `Error`。两条执行路径均通过 `JsRuntime` 单一语义源提供上述能力（生成产物的 `Run` 入口已调用 `GlobalIdentifiers()` 完成模块初始化）。
+
 **作用域语义**：`var` 函数级提升、`let/const` 块级、`const` 重赋值抛 TypeError、非严格模式隐式全局（`x++` 未声明变量）、`typeof null === "object"`、箭头函数词法 `this`/`arguments`
 
 ## 用法
@@ -135,10 +137,10 @@ Square = JsRuntime.JsDefineClass("Square", CType(Function(args__9 As JsValue())
 ## 测试
 
 ```
-dotnet test        ' 115 项全绿
+dotnet test        ' 117 项全绿
 ```
 
-覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）。
+覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）· **Node.js 文件系统 API 对齐**：`test/js/*.js` 为独立脚本，先用真实 `node` 生成 `*.baseline.txt` 基准，再以 `LiteJs.Runner` 运行并逐条对齐（含 `fs` 同步/回调/Promise、`Buffer`、`path`、`process` 与错误路径）；`NodeApiCodegenTests` 断言生成代码引用同一批 `JsRuntime.*Builtin` 且解释器可对真实文件执行读写。
 
 ## 实现要点（踩坑记录）
 
