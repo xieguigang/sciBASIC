@@ -122,6 +122,10 @@ Namespace Javascript
         Public Sub New()
         End Sub
 
+        Sub New(ParamArray vals As JsonElement())
+            Call list.AddRange(vals)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(objs As IEnumerable(Of JsonElement))
             list = objs.SafeQuery.ToList
