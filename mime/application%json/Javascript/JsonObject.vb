@@ -160,7 +160,11 @@ Namespace Javascript
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key$, value As Object, Optional comment As String = Nothing)
-            Call array.Add(key, New JsonValue(value))
+            If value IsNot Nothing AndAlso value.GetType.IsInheritsFrom(GetType(JsonElement)) Then
+                Call array.Add(key, DirectCast(value, JsonElement))
+            Else
+                Call array.Add(key, New JsonValue(value))
+            End If
 
             If Not comment Is Nothing Then
                 comments(key) = comment

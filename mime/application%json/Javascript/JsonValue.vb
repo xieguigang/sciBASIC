@@ -132,6 +132,10 @@ Namespace Javascript
             value = obj
         End Sub
 
+        Sub New(copy As JsonValue)
+            value = copy.value
+        End Sub
+
         ''' <summary>
         ''' create based on the value literal data
         ''' </summary>
