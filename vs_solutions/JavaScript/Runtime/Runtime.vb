@@ -127,6 +127,14 @@ Namespace Runtime
         Public ReadOnly PromiseBuiltin As New NativeObject("Promise")
         Public ReadOnly GlobalObj As New NativeObject("global")
 
+        ' Node.js-compatible modules (fs / Buffer / path / process). Rebuilt by
+        ' GlobalIdentifiers so each fresh interpreter picks up the current host context
+        ' (cwd / argv injected by the runner). CodeGenerator references these same fields.
+        Public FsBuiltin As JsModule
+        Public PathBuiltin As JsModule
+        Public ProcessBuiltin As JsModule
+        Public BufferBuiltin As JsModule
+
         ' math constants exposed as properties (System.Math qualified — the
         ' field above shadows the type name inside this module)
         Private ReadOnly _mathProps As New Dictionary(Of String, Object) From {
@@ -136,11 +144,21 @@ Namespace Runtime
 
         ''' <summary>Global identifiers installed into every fresh interpreter environment.</summary>
         Public Function GlobalIdentifiers() As IDictionary(Of String, Object)
+            ' (re)build the Node-compatible modules so each engine sees the current host
+            ' context (cwd / argv injected by the runner before this engine is created)
+            FsBuiltin = FsModule.MakeModule()
+            PathBuiltin = PathModule.MakeModule()
+            ProcessBuiltin = ProcessModule.MakeModule()
+            BufferBuiltin = BufferModule.MakeModule()
+
             Dim g As New Dictionary(Of String, Object) From {
                 {"console", ConsoleBuiltin}, {"Math", MathBuiltin}, {"JSON", Json},
                 {"Object", ObjectBuiltin}, {"Array", ArrayBuiltin}, {"Function", FunctionBuiltin},
                 {"Date", DateBuiltin}, {"RegExp", RegExpBuiltin}, {"Error", ErrorBuiltin},
                 {"Promise", PromiseBuiltin},
+                {"fs", FsBuiltin}, {"path", PathBuiltin}, {"process", ProcessBuiltin},
+                {"Buffer", BufferBuiltin},
+                {"__dirname", ProcessModule.ScriptDir}, {"__filename", ProcessModule.ScriptFile},
                 {"undefined", Undef}, {"NaN", Double.NaN}, {"Infinity", Double.PositiveInfinity}
             }
             For Each name In {"parseInt", "parseFloat", "isNaN", "isFinite",
@@ -243,6 +261,7 @@ Namespace Runtime
             If TypeOf x Is JsGenerator Then Return "[object Generator]"
             If TypeOf x Is JsDate Then Return DirectCast(x, JsDate).ToString()
             If TypeOf x Is JsRegExp Then Return DirectCast(x, JsRegExp).ToString()
+            If TypeOf x Is BufferInstance Then Return DirectCast(x, BufferInstance).ToString()
             ' ---- CLR reflection bridge ----
             If TypeOf x Is ClrObject Then Return "[object Object]"
             If TypeOf x Is ClrType Then Return "class " & DirectCast(x, ClrType).UnderlyingType.Name
@@ -284,6 +303,7 @@ Namespace Runtime
             If TypeOf x Is ClrObject Then
                 Return "[object " & DirectCast(x, ClrObject).TargetType.ToString() & "]"
             End If
+            If TypeOf x Is BufferInstance Then Return DirectCast(x, BufferInstance).ToString()
             Return JsStr(x)
         End Function
 
@@ -496,6 +516,50 @@ Namespace Runtime
                 End While
                 Return Undef
             End If
+            If TypeOf obj Is BufferInstance Then
+                Dim b = DirectCast(obj, BufferInstance)
+                If name = "length" Then Return CDbl(b.Data.Length)
+                If name = "toString" OrElse name = "slice" OrElse name = "subarray" OrElse name = "equals" OrElse
+                   name = "fill" OrElse name = "write" OrElse name = "copy" OrElse name = "includes" OrElse
+                   name = "indexOf" OrElse name = "toJSON" Then
+                    Return New BuiltinMethod(obj, name)
+                End If
+                Return Undef
+            End If
+            If TypeOf obj Is FsStats Then
+                Dim st = DirectCast(obj, FsStats)
+                Select Case name
+                    Case "size" : Return CDbl(st.Size)
+                    Case "mtimeMs" : Return st.MtimeMs
+                    Case "ctimeMs" : Return st.CtimeMs
+                    Case "atimeMs" : Return st.AtimeMs
+                    Case "birthtimeMs" : Return st.BirthtimeMs
+                    Case "dev" : Return CDbl(st.Dev)
+                    Case "mode" : Return CDbl(st.Mode)
+                    Case "isFile", "isDirectory", "isBlockDevice", "isCharacterDevice",
+                         "isSymbolicLink", "isFIFO", "isSocket"
+                        Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If TypeOf obj Is JsFsError Then
+                Dim fe = DirectCast(obj, JsFsError)
+                Select Case name
+                    Case "name" : Return fe.Name
+                    Case "message" : Return fe.Message
+                    Case "code" : Return fe.Code
+                    Case "syscall" : Return fe.Syscall
+                    Case "path" : Return fe.Path
+                    Case "stack" : Return fe.ToString()
+                    Case "toString" : Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
+            If TypeOf obj Is JsModule Then
+                Dim jm = DirectCast(obj, JsModule)
+                Dim pv As Object = Nothing
+                If jm.PropertyTable.TryGetValue(name, pv) Then Return pv
+            End If
             If TypeOf obj Is NativeObject Then
                 Dim n = DirectCast(obj, NativeObject)
                 If n.Name = "Math" AndAlso _mathProps.TryGetValue(name, Nothing) Then Return _mathProps(name)
@@ -588,6 +652,14 @@ Namespace Runtime
             ' ---- CLR reflection bridge: array elements and indexers ----
             Dim clrObj = TryCast(obj, ClrObject)
             If clrObj IsNot Nothing Then Return ClrInterop.GetIndex(clrObj, index)
+
+            If TypeOf obj Is BufferInstance Then
+                Dim b = DirectCast(obj, BufferInstance)
+                Dim i = CInt(System.Math.Floor(JsNum(index)))
+                If Double.IsNaN(JsNum(index)) Then Return Undef
+                If i < 0 OrElse i >= b.Data.Length Then Return Undef
+                Return CDbl(b.Data(i))
+            End If
 
             If IsJsArray(obj) Then
                 Dim a = DirectCast(obj, List(Of Object))
@@ -1162,6 +1234,13 @@ Namespace Runtime
         End Function
 
         Private Function DispatchBuiltin(target As Object, name As String, args As Object()) As Object
+            ' instance methods on Buffer / fs.Stats objects
+            If TypeOf target Is BufferInstance Then
+                Return BufferModule.DispatchInstance(DirectCast(target, BufferInstance), name, args)
+            End If
+            If TypeOf target Is FsStats Then
+                Return FsModule.DispatchStats(DirectCast(target, FsStats), name, args)
+            End If
             If TypeOf target Is NativeObject Then
                 Select Case DirectCast(target, NativeObject).Name
                     Case "console" : Return BuiltinConsole(name, args)
@@ -1174,6 +1253,11 @@ Namespace Runtime
                     Case "RegExp" : Return New JsRegExp(JsStr(Arg(args, 0)), If(args.Length > 1, JsStr(args(1)), ""))
                     Case "Promise" : Return BuiltinPromiseStatic(name, args)
                     Case "global" : Return BuiltinGlobalFn(name, args)
+                    Case "fs" : Return FsModule.Dispatch(name, args)
+                    Case "fs.promises" : Return FsModule.DispatchPromises(name, args)
+                    Case "Buffer" : Return BufferModule.Dispatch(name, args)
+                    Case "path" : Return PathModule.Dispatch(name, args)
+                    Case "process" : Return ProcessModule.Dispatch(name, args)
                 End Select
             End If
             ' static helpers on the Number / String / Boolean function objects

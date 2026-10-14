@@ -63,7 +63,7 @@ Namespace Runtime
     ''' in JavaScript; <c>String(e)</c> renders as <c>"Name: message"</c>.
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class JsError
+    Public Class JsError
 
         Public ReadOnly Name As String
         Public ReadOnly Message As String
