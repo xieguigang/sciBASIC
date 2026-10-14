@@ -72,15 +72,15 @@ Public Class LiteJsFunctionValueTests
 
     <Fact>
     Public Sub String_OfFunctionIsTheSource()
-        Const declare = "function add(a, b) { return a + b; } "
+        Const header = "function add(a, b) { return a + b; } "
 
         ' the reported crash: String(fn) threw InvalidCastException before this fix
-        Assert.Equal("function add(a, b) { return a + b; }", OneLine(declare & "console.log(String(add));"))
-        Assert.Equal("function add(a, b) { return a + b; }", OneLine(declare & "console.log('' + add);"))
-        Assert.Equal("function add(a, b) { return a + b; }", OneLine(declare & "console.log(add.toString());"))
+        Assert.Equal("function add(a, b) { return a + b; }", OneLine(header & "console.log(String(add));"))
+        Assert.Equal("function add(a, b) { return a + b; }", OneLine(header & "console.log('' + add);"))
+        Assert.Equal("function add(a, b) { return a + b; }", OneLine(header & "console.log(add.toString());"))
         ' %s uses the string form, like node
         Assert.Equal("fn=function add(a, b) { return a + b; }",
-                     OneLine(declare & "console.log('fn=%s', add);"))
+                     OneLine(header & "console.log('fn=%s', add);"))
     End Sub
 
     <Fact>
@@ -160,8 +160,8 @@ Public Class LiteJsFunctionValueTests
         ' every one of these used to reach `Return CStr(x)` and throw
         Assert.Equal("[object Promise]", OneLine("console.log(String(Promise.resolve(1)));"))
         Assert.Equal("[object Promise]", OneLine("console.log(Promise.resolve(1));"))
-        ' a resolved value is still a normal value
-        Assert.Equal("3", OneLine("console.log(Promise.resolve(1).then((v) => v + 2) === undefined ? 3 : 3);"))
+        ' a promise is still a thenable object
+        Assert.Equal("true", OneLine("console.log(typeof Promise.resolve(1).then === 'function');"))
     End Sub
 
     ' ------------------------------------------------ guards for existing behaviour
