@@ -54,6 +54,8 @@
 
 #End Region
 
+Public Module DistributionsPerfTest
+
 #Region "benchmark"
 
     Private Sub Benchmark()
@@ -202,5 +204,3 @@
 #End Region
 
 End Module
-
-#End Region

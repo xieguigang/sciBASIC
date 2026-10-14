@@ -314,13 +314,15 @@ Namespace LinearAlgebra
         Private Shared Function Power(x As Half(), pow As Double, baseIsVector As Boolean) As Half()
             Dim out As Half() = GC.AllocateUninitializedArray(Of Half)(x.Length)
 
+            ' 注意：本工程的 RootNamespace 就是 Microsoft.VisualBasic.Math，
+            ' 裸写 Math.Pow 会被解析到本命名空间而不是 System.Math，必须全限定
             If baseIsVector Then
                 For i As Integer = 0 To x.Length - 1
-                    out(i) = CType(Math.Pow(CSng(x(i)), pow), Half)
+                    out(i) = CType(System.Math.Pow(CSng(x(i)), pow), Half)
                 Next
             Else
                 For i As Integer = 0 To x.Length - 1
-                    out(i) = CType(Math.Pow(pow, CSng(x(i))), Half)
+                    out(i) = CType(System.Math.Pow(pow, CSng(x(i))), Half)
                 Next
             End If
 

@@ -84,7 +84,6 @@ Namespace Numerics
         ''' <summary>
         ''' 一个 128 位向量一次可以处理的 <see cref="System.Half"/> 元素个数
         ''' </summary>
-        ''' <returns></returns>
         Public Const Lanes As Integer = 8
 
 #Region "constants"
@@ -777,7 +776,9 @@ Namespace Numerics
         ''' <param name="a">输入向量</param>
         ''' <returns>Double 精度的 L2 范数</returns>
         Public Function Norm(a As Half()) As Double
-            Return Math.Sqrt(SumOfSquares(a))
+            ' 注意：本工程的 RootNamespace 就是 Microsoft.VisualBasic.Math，
+            ' 裸写 Math.Xxx 会被解析到本命名空间而不是 System.Math，必须全限定
+            Return System.Math.Sqrt(SumOfSquares(a))
         End Function
 
         ''' <summary>
@@ -857,7 +858,7 @@ Namespace Numerics
                 Return block
             End If
 
-            Return If(findMin, Math.Min(best, block), Math.Max(best, block))
+            Return If(findMin, System.Math.Min(best, block), System.Math.Max(best, block))
         End Function
 
 #End Region
