@@ -140,7 +140,9 @@ Module Program
             System.Console.Error.WriteLine("error: " & [error])
         End If
 
-        System.Console.Error.WriteLine("Usage: LiteJs.Runner <script.js> [args...] [--ansi|--plain|--html <out.html>]")
+        System.Console.Error.WriteLine("JavaScript Running on .NET CLR Environment")
+        System.Console.Error.WriteLine()
+        System.Console.Error.WriteLine("Usage: njs <script.js> [args...] [--ansi|--plain|--html <out.html>]")
         System.Console.Error.WriteLine("  --ansi         render %c CSS styles and log levels as ANSI colours (default)")
         System.Console.Error.WriteLine("  --plain        write the collected plain text output to stdout")
         System.Console.Error.WriteLine("  --html <file>  render a styled standalone HTML terminal page")
