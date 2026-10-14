@@ -262,7 +262,8 @@ Namespace Runtime
             If TypeOf x Is String Then Return CStr(x)
             If TypeOf x Is List(Of Object) Then Return JoinArray(DirectCast(x, List(Of Object)), ",")
             If TypeOf x Is Dictionary(Of String, Object) Then Return "[object Object]"
-            If TypeOf x Is BuiltinMethod Then Return "[function: " & DirectCast(x, BuiltinMethod).Name & "]"
+            ' native (host) functions render like node: function name() { [native code] }
+            If TypeOf x Is BuiltinMethod Then Return JsFunctions.NativeSource(DirectCast(x, BuiltinMethod).Name)
             If TypeOf x Is NativeObject Then Return "[object " & DirectCast(x, NativeObject).Name & "]"
             If TypeOf x Is JsClass Then Return "class " & DirectCast(x, JsClass).Name & " { ... }"
             If TypeOf x Is JsError Then Return DirectCast(x, JsError).ToString()
@@ -273,8 +274,28 @@ Namespace Runtime
             ' ---- CLR reflection bridge ----
             If TypeOf x Is ClrObject Then Return "[object Object]"
             If TypeOf x Is ClrType Then Return "class " & DirectCast(x, ClrType).UnderlyingType.Name
-            If TypeOf x Is ClrBoundMethod Then Return "[function: " & DirectCast(x, ClrBoundMethod).Name & "]"
-            Return CStr(x)
+            If TypeOf x Is ClrBoundMethod Then Return JsFunctions.NativeSource(DirectCast(x, ClrBoundMethod).Name)
+            ' ---- interpreter function values: JS String(fn) is the function source ----
+            If TypeOf x Is Func(Of Object(), Object) Then Return JsFunctions.SourceOf(x)
+            ' ---- the remaining primitives keep their plain text form ----
+            If TypeOf x Is Single OrElse TypeOf x Is Integer OrElse TypeOf x Is Long OrElse
+               TypeOf x Is Decimal OrElse TypeOf x Is Char Then
+                Return Convert.ToString(x, CultureInfo.InvariantCulture)
+            End If
+            ' ---- never throw here: any other runtime value (a promise, an accessor, ...) ----
+            Return "[object " & OpaqueTypeName(x) & "]"
+        End Function
+
+        ''' <summary>
+        ''' JS-ish type name of a runtime value that has no dedicated display branch, so an
+        ''' unknown value renders as <c>[object Promise]</c> instead of crashing the script
+        ''' (the previous <c>CStr(x)</c> fallback threw for every plain class).
+        ''' </summary>
+        Private Function OpaqueTypeName(x As Object) As String
+            If TypeOf x Is JsPromise Then Return "Promise"
+            If TypeOf x Is AccessorProperty Then Return "Object"
+
+            Return x.GetType().Name
         End Function
 
         Private Function NumToString(d As Double) As String
@@ -306,6 +327,11 @@ Namespace Runtime
                     ' circular reference in displayed graph
                     Return "[Circular]"
                 End Try
+            End If
+            ' functions are inspected the way node does: console.log(fn) → [Function: name]
+            If TypeOf x Is Func(Of Object(), Object) OrElse TypeOf x Is BuiltinMethod OrElse
+               TypeOf x Is ClrBoundMethod Then
+                Return JsFunctions.Inspect(x)
             End If
             ' ---- CLR reflection bridge: show the wrapped CLR type ----
             If TypeOf x Is ClrObject Then
@@ -629,9 +655,20 @@ Namespace Runtime
                 End Select
                 Return Undef
             End If
+            ' interpreter function values: fn.name / fn.length / fn.toString() (node semantics)
+            If TypeOf obj Is Func(Of Object(), Object) Then
+                Select Case name
+                    Case "name" : Return JsFunctions.DisplayName(obj)
+                    Case "length" : Return CDbl(JsFunctions.Arity(obj))
+                    Case "toString" : Return New BuiltinMethod(obj, name)
+                End Select
+                Return Undef
+            End If
             ' static helpers live on the builtin function objects (Number.isInteger, ...)
             If TypeOf obj Is BuiltinMethod Then
                 Dim bm = DirectCast(obj, BuiltinMethod)
+
+                If name = "name" Then Return bm.Name
                 If bm.Name = "Number" Then
                     ' numeric constants are values, not methods
                     Select Case name
@@ -1254,6 +1291,12 @@ Namespace Runtime
         End Function
 
         Private Function DispatchBuiltin(target As Object, name As String, args As Object()) As Object
+            ' methods of an interpreter function value: fn.toString() is the function source (node)
+            If TypeOf target Is Func(Of Object(), Object) Then
+                Select Case name
+                    Case "toString" : Return JsStr(target)
+                End Select
+            End If
             ' instance methods on Buffer / fs.Stats objects
             If TypeOf target Is BufferInstance Then
                 Return BufferModule.DispatchInstance(DirectCast(target, BufferInstance), name, args)

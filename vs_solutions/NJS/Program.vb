@@ -372,6 +372,20 @@ Module Program
             Return Paint(JsRuntime.JsDisplay(value), AnsiColor.BrightYellow, colorize)
         End If
 
+        ' a JS function echoes its source, devtools style: ƒ add(a, b) { throw ... }
+        ' (no source for host delegates / generated code → the node inspect form)
+        If TypeOf value Is Func(Of Object(), Object) Then
+            Return Paint(If(JsFunctions.DevToolsEcho(value), JsFunctions.Inspect(value)),
+                         AnsiColor.BrightCyan, colorize)
+        End If
+
+        ' a native (host) function: ƒ log() { [native code] }
+        Dim builtin = TryCast(value, BuiltinMethod)
+
+        If builtin IsNot Nothing Then
+            Return Paint("ƒ " & builtin.Name & "() { [native code] }", AnsiColor.BrightCyan, colorize)
+        End If
+
         Return JsRuntime.JsDisplay(value)
     End Function
 

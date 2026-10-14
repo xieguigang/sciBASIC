@@ -264,11 +264,16 @@ Public NotInheritable Class Interpreter
         For Each s In body
             If TypeOf s Is FuncDeclStmt Then
                 Dim f = DirectCast(s, FuncDeclStmt)
-                env.Define(f.Name,
-                           MakeFunction(New FuncExpr(f.Name, f.Parameters, f.Body,
-                                                     defaults:=f.Defaults, restParam:=f.RestParam,
-                                                     isAsync:=f.IsAsync, isGenerator:=f.IsGenerator), env),
-                           False)
+                ' the declaration is hoisted into a fresh FuncExpr: carry the source position and
+                ' the body source along, so String(fn) / fn.name / stack frames keep working
+                Dim hoisted As New FuncExpr(f.Name, f.Parameters, f.Body,
+                                            defaults:=f.Defaults, restParam:=f.RestParam,
+                                            isAsync:=f.IsAsync, isGenerator:=f.IsGenerator) With {
+                    .Position = f.Position,
+                    .BodySource = f.BodySource
+                }
+
+                env.Define(f.Name, MakeFunction(hoisted, env), False)
             End If
         Next
     End Sub
@@ -627,21 +632,30 @@ Public NotInheritable Class Interpreter
 
     Private Function MakeFunction(f As FuncExpr, env As Environment) As Func(Of Object(), Object)
         Dim closure = env
+        Dim fn As Func(Of Object(), Object)
+
         If f.IsGenerator Then
             ' eager generator: the body runs to completion, collecting yield values
-            Return Function(args As Object())
-                       Return JsRuntime.JsRunGenerator(Function() InvokeBody(f, closure, args))
-                   End Function
-        End If
-        If f.IsAsync Then
+            fn = Function(args As Object())
+                     Return JsRuntime.JsRunGenerator(Function() InvokeBody(f, closure, args))
+                 End Function
+        ElseIf f.IsAsync Then
             ' async: the body runs synchronously, its completion settles the promise
-            Return Function(args As Object())
-                       Return JsRuntime.JsAsyncWrapper(Function() InvokeBody(f, closure, args))
-                   End Function
+            fn = Function(args As Object())
+                     Return JsRuntime.JsAsyncWrapper(Function() InvokeBody(f, closure, args))
+                 End Function
+        Else
+            fn = Function(args As Object())
+                     Return InvokeBody(f, closure, args)
+                 End Function
         End If
-        Return Function(args As Object())
-                   Return InvokeBody(f, closure, args)
-               End Function
+
+        ' link the value to its AST node: this is what lets String(fn) show the source and
+        ' fn.name / fn.length answer like node (the wrapper delegates are the values that
+        ' scripts actually hold, so register the one returned here)
+        Call JsFunctions.Register(fn, f)
+
+        Return fn
     End Function
 
     ''' <summary>Bind parameters and run a function body (shared by sync and async paths).</summary>
