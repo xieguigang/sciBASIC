@@ -113,20 +113,21 @@ Namespace Numerics
         ''' <summary>会向下舍入到 Half.MaxValue 的最大无穷精细值</summary>
         Private Const MaxHalfValueBelowInfinity As Single = 65520.0F
 
-        Private Shared ReadOnly MinExpSingle As Single = BitConverter.Int32BitsToSingle(ExponentLowerBound32)
+        ' 注意：VB 的 Module 成员隐含 Shared，写成 Private Shared ReadOnly 会报 BC30593
+        Private ReadOnly MinExpSingle As Single = BitConverter.Int32BitsToSingle(ExponentLowerBound32)
 
-        Private Shared ReadOnly VZero As Vector128(Of Integer) = Vector128.Create(0)
-        Private Shared ReadOnly VSign As Vector128(Of Integer) = Vector128.Create(SignMask32)
-        Private Shared ReadOnly VAbs As Vector128(Of Integer) = Vector128.Create(AbsMask32)
-        Private Shared ReadOnly VSingleExpMask As Vector128(Of Integer) = Vector128.Create(SingleExpMask32)
-        Private Shared ReadOnly VExponent13 As Vector128(Of Integer) = Vector128.Create(Exponent13)
-        Private Shared ReadOnly VExponent126 As Vector128(Of Integer) = Vector128.Create(Exponent126)
-        Private Shared ReadOnly VExponentOffset As Vector128(Of Integer) = Vector128.Create(ExponentOffset32)
-        Private Shared ReadOnly VExponentLowerBound As Vector128(Of Integer) = Vector128.Create(ExponentLowerBound32)
-        Private Shared ReadOnly VHalfToSingleBitsMask As Vector128(Of Integer) = Vector128.Create(HalfToSingleBitsMask32)
-        Private Shared ReadOnly VHalfExponentMask As Vector128(Of Integer) = Vector128.Create(HalfExponentMask32)
-        Private Shared ReadOnly VMaxBelowInfinity As Vector128(Of Single) = Vector128.Create(MaxHalfValueBelowInfinity)
-        Private Shared ReadOnly VMinExp As Vector128(Of Single) = Vector128.Create(MinExpSingle)
+        Private ReadOnly VZero As Vector128(Of Integer) = Vector128.Create(0)
+        Private ReadOnly VSign As Vector128(Of Integer) = Vector128.Create(SignMask32)
+        Private ReadOnly VAbs As Vector128(Of Integer) = Vector128.Create(AbsMask32)
+        Private ReadOnly VSingleExpMask As Vector128(Of Integer) = Vector128.Create(SingleExpMask32)
+        Private ReadOnly VExponent13 As Vector128(Of Integer) = Vector128.Create(Exponent13)
+        Private ReadOnly VExponent126 As Vector128(Of Integer) = Vector128.Create(Exponent126)
+        Private ReadOnly VExponentOffset As Vector128(Of Integer) = Vector128.Create(ExponentOffset32)
+        Private ReadOnly VExponentLowerBound As Vector128(Of Integer) = Vector128.Create(ExponentLowerBound32)
+        Private ReadOnly VHalfToSingleBitsMask As Vector128(Of Integer) = Vector128.Create(HalfToSingleBitsMask32)
+        Private ReadOnly VHalfExponentMask As Vector128(Of Integer) = Vector128.Create(HalfExponentMask32)
+        Private ReadOnly VMaxBelowInfinity As Vector128(Of Single) = Vector128.Create(MaxHalfValueBelowInfinity)
+        Private ReadOnly VMinExp As Vector128(Of Single) = Vector128.Create(MinExpSingle)
 
 #End Region
 
