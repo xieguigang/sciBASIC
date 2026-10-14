@@ -116,22 +116,76 @@ Public NotInheritable Class Interpreter
 
     ''' <summary>Run a parsed program; output goes to <see cref="Io"/>.</summary>
     Public Sub Run(program As Program)
-        ' a run starts from an empty JS stack, with the top level script as the root frame
+        Call RunInRootFrame(Function() As Object
+                                HoistFunctions(program.Body, _globals)
+                                ExecuteBlock(program.Body, _globals)
+                                ' promise reactions queued while the body ran are microtasks —
+                                ' drain them now, mirroring a JS job queue with no other work
+                                JsRuntime.DrainMicrotasks()
+
+                                Return Nothing
+                            End Function)
+    End Sub
+
+    ''' <summary>
+    ''' Evaluate a parsed program for an interactive session (REPL) and return the completion
+    ''' value of its trailing expression statement (<see cref="JsRuntime.Undef"/> when the
+    ''' program ends with a non expression statement).
+    ''' <para>
+    ''' Unlike <see cref="Run"/>, the top level statements execute directly in the global
+    ''' function scope instead of a throwaway block scope, so <c>var</c>, <c>let</c>,
+    ''' <c>const</c>, function and class declarations survive from one call to the next —
+    ''' which is exactly what a REPL needs. Script semantics are untouched (<see cref="Run"/>
+    ''' still uses <see cref="ExecuteBlock"/>).
+    ''' </para>
+    ''' </summary>
+    Public Function Evaluate(program As Program) As Object
+        Return RunInRootFrame(Function() As Object
+                                  HoistFunctions(program.Body, _globals)
+
+                                  Dim body = program.Body
+                                  Dim completion As Object = JsRuntime.Undef
+
+                                  For i = 0 To body.Count - 1
+                                      Dim expr = TryCast(body(i), ExprStmt)
+
+                                      If expr Is Nothing Then
+                                          Execute(body(i), _globals)
+                                          completion = JsRuntime.Undef
+                                      ElseIf i = body.Count - 1 Then
+                                          ' the trailing expression is the value of the input:
+                                          ' evaluate it in place of Execute so it can be returned
+                                          Dim location = expr.Position
+
+                                          If location.HasValue Then JsStackTrace.UpdatePosition(location.Line, location.Column)
+
+                                          completion = JsRuntime.JsBox(Eval(expr.Expr, _globals))
+                                      Else
+                                          Execute(expr, _globals)
+                                      End If
+                                  Next
+
+                                  JsRuntime.DrainMicrotasks()
+
+                                  Return completion
+                              End Function)
+    End Function
+
+    ''' <summary>
+    ''' Run <paramref name="run"/> with the top level script as the root stack frame; the JS
+    ''' stack is emptied before and after, so a generator or async body left half way can
+    ''' never leak frames into the next run on this thread.
+    ''' </summary>
+    Private Function RunInRootFrame(run As Func(Of Object)) As Object
         JsStackTrace.Reset()
         Call JsStackTrace.PushFrame(JsStackFrame.AnonymousFunction, SourceFile)
 
         Try
-            HoistFunctions(program.Body, _globals)
-            ExecuteBlock(program.Body, _globals)
-            ' promise reactions queued while the body ran are microtasks — drain them
-            ' now, mirroring a JS job queue that has no other pending work
-            JsRuntime.DrainMicrotasks()
+            Return run()
         Finally
-            ' Reset (not Pop): a generator or async body left half way must not leak frames
-            ' into the next run on this thread
             JsStackTrace.Reset()
         End Try
-    End Sub
+    End Function
 
     ''' <summary>
     ''' Register a host-side value as a global identifier visible to scripts.
