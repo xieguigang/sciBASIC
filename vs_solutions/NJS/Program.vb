@@ -192,8 +192,8 @@ Module Program
     ''' <summary>
     ''' Interactive JavaScript session: an input is accumulated until it parses (so multi line
     ''' declarations work), evaluated in a persistent global scope — variables, functions and
-    ''' classes survive from one input to the next — and the value of a trailing expression is
-    ''' echoed like in node / devtools.
+    ''' classes survive from one input to the next — and its completion value is echoed,
+    ''' <c>undefined</c> included, exactly like the node REPL.
     ''' <para>
     ''' <c>.help</c> lists the dot commands; <c>.exit</c>, Ctrl+D and Ctrl+C leave the session.
     ''' When stdin is a pipe there is no banner and no prompt, so a session can be scripted
@@ -225,75 +225,112 @@ Module Program
                 End Sub
         End If
 
+        ' A redirected session is decoded as UTF-8 (with BOM detection) instead of trusting
+        ' Console.InputEncoding: the console code page may be a legacy one, which would mangle
+        ' the BOM and any non ASCII text of a piped session.
+        Dim stdin As TextReader = Nothing
+
+        If Not interactive Then
+            stdin = New StreamReader(System.Console.OpenStandardInput(), New UTF8Encoding(False), True)
+        End If
+
         Dim pending As New StringBuilder()
 
-        While True
-            If interactive Then
-                System.Console.Write(If(pending.Length = 0, PrimaryPrompt, ContinuePrompt))
-            End If
-
-            Dim line = System.Console.ReadLine()
-
-            If line Is Nothing Then
-                ' Ctrl+D, or the end of a piped session
-                If interactive Then System.Console.WriteLine()
-                Return
-            End If
-
-            ' dot commands only count when no input is pending
-            If pending.Length = 0 Then
-                Dim command = line.Trim()
-
-                If command.StartsWith("."c) Then
-                    Select Case command.ToLowerInvariant()
-                        Case ".exit", ".quit", ".q"
-                            Return
-                        Case ".help", ".h", ".?"
-                            Help()
-                        Case ".clear", ".cls"
-                            io.Clear()
-                        Case ".version"
-                            System.Console.WriteLine(EngineVersion())
-                        Case ".reset"
-                            engine = NewEngine(io)
-                            System.Console.WriteLine("(globals cleared)")
-                        Case Else
-                            System.Console.Error.WriteLine("(unknown command '" & command & "' — .help lists the commands)")
-                    End Select
-
-                    Continue While
+        Try
+            While True
+                If interactive Then
+                    System.Console.Write(If(pending.Length = 0, PrimaryPrompt, ContinuePrompt))
                 End If
-            End If
 
-            pending.AppendLine(line)
+                Dim line = ReadInput(stdin)
 
-            Dim program As JsProgram = Nothing
+                If line Is Nothing Then
+                    ' Ctrl+D, or the end of a piped session
+                    If interactive Then System.Console.WriteLine()
+                    Return
+                End If
 
-            Try
-                program = Parser.Parse(pending.ToString())
-            Catch ex As ParseException
-                ' an open block / unterminated literal is not an error yet: keep reading
-                If IsIncomplete(ex) Then Continue While
+                ' a stray BOM is never part of an input
+                If line.Length > 0 AndAlso line(0) = ChrW(&HFEFF) Then line = line.Substring(1)
 
-                ReportUncaught(ex, ReplSource)
+
+                ' dot commands only count when no input is pending
+                If pending.Length = 0 Then
+                    Dim command = line.Trim()
+
+                    If command.StartsWith("."c) Then
+                        Select Case command.ToLowerInvariant()
+                            Case ".exit", ".quit", ".q"
+                                Return
+                            Case ".help", ".h", ".?"
+                                Help()
+                            Case ".clear", ".cls"
+                                io.Clear()
+                            Case ".version"
+                                System.Console.WriteLine(EngineVersion())
+                            Case ".reset"
+                                engine = NewEngine(io)
+                                System.Console.WriteLine("(globals cleared)")
+                            Case Else
+                                System.Console.Error.WriteLine("(unknown command '" & command & "' — .help lists the commands)")
+                        End Select
+
+                        Continue While
+                    End If
+                End If
+
+                If pending.Length = 0 AndAlso line.Trim().Length = 0 Then
+                    Continue While      ' an empty input only gives a fresh prompt, like node
+                End If
+
+                pending.AppendLine(line)
+
+                Dim source = pending.ToString()
+                Dim program As JsProgram = Nothing
+
+                ' like node / devtools, a leading '{' is an object literal whenever it can be one:
+                ' a bare `{ a: 1 }` would otherwise parse as a block statement with a label
+                If source.TrimStart().StartsWith("{"c) Then
+                    Try
+                        program = Parser.Parse("(" & source & ")")
+                    Catch ex As ParseException
+                        program = Nothing
+                    End Try
+                End If
+
+                If program Is Nothing Then
+                    Try
+                        program = Parser.Parse(source)
+                    Catch ex As ParseException
+                        ' an open block / unterminated literal is not an error yet: keep reading
+                        If IsIncomplete(ex) Then Continue While
+
+                        ReportUncaught(ex, ReplSource)
+                        pending.Clear()
+                        Continue While
+                    End Try
+                End If
+
                 pending.Clear()
-                Continue While
-            End Try
 
-            pending.Clear()
-
-            Try
-                Dim value = engine.Evaluate(program)
-
-                ' a statement (or an explicitly undefined result) stays silent, like devtools
-                If value IsNot JsRuntime.Undef Then
-                    System.Console.WriteLine(DisplayResult(value, interactive))
-                End If
-            Catch ex As Exception
-                ReportUncaught(ex, ReplSource)
-            End Try
-        End While
+                Try
+                    ' the completion value is echoed even when it is undefined, matching node
+                    System.Console.WriteLine(DisplayResult(engine.Evaluate(program), interactive))
+                Catch ex As Exception
+                    ReportUncaught(ex, ReplSource)
+                End Try
+            End While
+        Finally
+            If stdin IsNot Nothing Then stdin.Dispose()
+        End Try
     End Sub
+
+    ''' <summary>Next input line: the console when interactive, the UTF-8 pipe otherwise.</summary>
+    Private Function ReadInput(stdin As TextReader) As String
+        If stdin IsNot Nothing Then Return stdin.ReadLine()
+
+        Return System.Console.ReadLine()
+    End Function
 
     ''' <summary>A fresh engine bound to <paramref name="io"/> with the REPL source name.</summary>
     Private Function NewEngine(io As ScriptIO) As Interpreter
@@ -346,9 +383,10 @@ Module Program
     End Function
 
     Private Sub Banner()
-        System.Console.WriteLine("njs — JavaScript running on .NET CLR (LiteJs " & EngineVersion() & ")")
-        System.Console.WriteLine("Type .help for commands, .exit or Ctrl+D to quit.")
+        System.Console.WriteLine("njs — JavaScript running on .NET CLR")
+        System.Console.WriteLine("LiteJs " & EngineVersion() & ", .NET " & System.Environment.Version.ToString())
         System.Console.WriteLine()
+        System.Console.WriteLine("Type "".help"" for more information.")
     End Sub
 
     Private Sub Help()
