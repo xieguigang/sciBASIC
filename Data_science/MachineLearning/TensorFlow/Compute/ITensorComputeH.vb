@@ -220,9 +220,9 @@ Namespace Compute
         Function SumAll(t As TensorH) As Double
         ''' <summary>整体求均值</summary>
         Function MeanAll(t As TensorH) As Double
-        ''' <summary>最小值（NaN 传播，与 <see cref="Numerics.HalfSimd.Min"/> 一致）</summary>
+        ''' <summary>最小值（NaN 传播，与 <see cref="Microsoft.VisualBasic.Math.Numerics.HalfSimd.Min"/> 一致）</summary>
         Function MinAll(t As TensorH) As Half
-        ''' <summary>最大值（NaN 传播，与 <see cref="Numerics.HalfSimd.Max"/> 一致）</summary>
+        ''' <summary>最大值（NaN 传播，与 <see cref="Microsoft.VisualBasic.Math.Numerics.HalfSimd.Max"/> 一致）</summary>
         Function MaxAll(t As TensorH) As Half
 
         ''' <summary>沿指定轴（Nothing 表示整体）求和</summary>

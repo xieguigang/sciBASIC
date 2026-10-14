@@ -440,19 +440,19 @@ Public Class TensorH : Implements ICloneable, IDisposable
     End Function
 
     ''' <summary>
-    ''' 转换为单精度 <see cref="TensorF"/>（批量走 <see cref="Numerics.HalfSimd.ToSingle"/>）。
+    ''' 转换为单精度 <see cref="TensorF"/>（批量走 <see cref="Microsoft.VisualBasic.Math.Numerics.HalfSimd.ToSingle"/>）。
     ''' </summary>
     Public Function ToTensorF() As TensorF
         Return New TensorF(halfSimd.ToSingle(_Data), CType(_Shape.Clone(), Integer()))
     End Function
 
-    ''' <summary>从双精度 <see cref="Tensor"/> 转换而来（批量走 <see cref="Numerics.HalfSimd.ToHalf(Double())"/>）。</summary>
+    ''' <summary>从双精度 <see cref="Tensor"/> 转换而来（批量走 <see cref="Microsoft.VisualBasic.Math.Numerics.HalfSimd.ToHalf(Double())"/>）。</summary>
     Public Shared Function FromTensor(t As Tensor) As TensorH
         If t Is Nothing Then Return Nothing
         Return FromDoubles(t.Data, t.Shape)
     End Function
 
-    ''' <summary>从单精度 <see cref="TensorF"/> 转换而来（批量走 <see cref="Numerics.HalfSimd.ToHalf(Single())"/>）。</summary>
+    ''' <summary>从单精度 <see cref="TensorF"/> 转换而来（批量走 <see cref="Microsoft.VisualBasic.Math.Numerics.HalfSimd.ToHalf(Single())"/>）。</summary>
     Public Shared Function FromTensorF(t As TensorF) As TensorH
         If t Is Nothing Then Return Nothing
         Return New TensorH(halfSimd.ToHalf(t.Data), CType(t.Shape.Clone(), Integer()))
