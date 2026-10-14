@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>njs</RootNamespace>
+    <AssemblyName>njs</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <OptionStrict>On</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <Platforms>AnyCPU;x64</Platforms>
+
+    <AssemblyTitle>JavaScript Interpreter Running on .NET CLR</AssemblyTitle>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+    <ProjectReference Include="..\JavaScript\LiteJs.vbproj" />
+  </ItemGroup>
+
+
+
+</Project>

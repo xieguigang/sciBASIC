@@ -14,10 +14,15 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
+  <Folder Name="/test/">
+    <Project Path="JavaScript/test/test.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
   <Project Path="JavaScript/LiteJs.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
-  <Project Path="JavaScript/test/LiteJs.Tests.vbproj">
+  <Project Path="NJS/NJS.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>
