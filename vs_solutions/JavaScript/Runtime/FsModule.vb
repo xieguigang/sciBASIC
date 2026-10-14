@@ -22,11 +22,11 @@ Namespace Runtime
         End Sub
 
         Public Shared Function MakeModule() As JsModule
-            Dim constants As New Dictionary(Of String, Object) From {
+            Dim constants As New System.Collections.Generic.Dictionary(Of String, Object) From {
                 {"F_OK", 0.0}, {"R_OK", 4.0}, {"W_OK", 2.0}, {"X_OK", 1.0}
             }
             Dim promises = New JsModule("fs.promises")
-            Dim props As New Dictionary(Of String, Object) From {
+            Dim props As New System.Collections.Generic.Dictionary(Of String, Object) From {
                 {"constants", constants},
                 {"promises", promises}
             }
@@ -94,7 +94,6 @@ Namespace Runtime
 
         ' ===================== arg parsing helpers =====================
 
-        ' Pull the trailing callback (if any) and the options object that sits just before it.
         Private Shared Sub Extract(args As Object(), requiredCount As Integer, ByRef cb As Object, ByRef opts As Object)
             cb = Nothing
             If args.Length > 0 AndAlso JsRuntime.IsJsFunction(args(args.Length - 1)) Then cb = args(args.Length - 1)
@@ -130,7 +129,7 @@ Namespace Runtime
                 Return e
             End If
             If JsRuntime.IsJsObject(opt) Then
-                Dim d = DirectCast(opt, Dictionary(Of String, Object))
+                Dim d = DirectCast(opt, System.Collections.Generic.Dictionary(Of String, Object))
                 Dim v As Object = Nothing
                 If d.TryGetValue("encoding", v) AndAlso v IsNot Nothing AndAlso v IsNot JsRuntime.Undef Then
                     Dim e = JsRuntime.JsStr(v)
@@ -151,7 +150,7 @@ Namespace Runtime
                 Return e
             End If
             If JsRuntime.IsJsObject(opt) Then
-                Dim d = DirectCast(opt, Dictionary(Of String, Object))
+                Dim d = DirectCast(opt, System.Collections.Generic.Dictionary(Of String, Object))
                 Dim v As Object = Nothing
                 If d.TryGetValue("encoding", v) AndAlso v IsNot Nothing AndAlso v IsNot JsRuntime.Undef Then Return JsRuntime.JsStr(v)
             End If
@@ -160,14 +159,14 @@ Namespace Runtime
 
         Private Shared Function IsRecursive(opt As Object) As Boolean
             If opt Is Nothing OrElse opt Is JsRuntime.Undef OrElse Not JsRuntime.IsJsObject(opt) Then Return False
-            Dim d = DirectCast(opt, Dictionary(Of String, Object))
+            Dim d = DirectCast(opt, System.Collections.Generic.Dictionary(Of String, Object))
             Dim v As Object = Nothing
             If d.TryGetValue("recursive", v) Then Return JsRuntime.JsTruthy(v)
             Return False
         End Function
 
         Private Shared Function CoreReadFile(pth As String, enc As String) As Object
-            Dim bytes = File.ReadAllBytes(pth)
+            Dim bytes = System.IO.File.ReadAllBytes(pth)
             If enc Is Nothing Then Return New BufferInstance(bytes)
             Return BufferModule.Decode(enc, bytes, 0, bytes.Length)
         End Function
@@ -179,12 +178,12 @@ Namespace Runtime
             Else
                 bytes = BufferModule.Encode(enc, JsRuntime.JsStr(data))
             End If
-            File.WriteAllBytes(pth, bytes)
+            System.IO.File.WriteAllBytes(pth, bytes)
         End Sub
 
-        Private Shared Function CoreReaddir(pth As String) As List(Of Object)
+        Private Shared Function CoreReaddir(pth As String) As System.Collections.Generic.List(Of Object)
             Dim dir = ResolvePath(pth)
-            Dim names As New List(Of Object)()
+            Dim names As New System.Collections.Generic.List(Of Object)()
             For Each f In System.IO.Directory.GetFiles(dir) : names.Add(System.IO.Path.GetFileName(f)) : Next
             For Each d In System.IO.Directory.GetDirectories(dir) : names.Add(System.IO.Path.GetFileName(d)) : Next
             Return names
@@ -192,24 +191,24 @@ Namespace Runtime
 
         Private Shared Sub CoreMkdir(pth As String, recursive As Boolean)
             Dim full = ResolvePath(pth)
-            If Directory.Exists(full) Then
+            If System.IO.Directory.Exists(full) Then
                 If Not recursive Then Throw New JsRuntimeException(FsError("EEXIST", "file already exists", "mkdir", full))
                 Return
             End If
             If Not recursive Then
-                Dim parent = IO.Path.GetDirectoryName(full)
-                If parent IsNot Nothing AndAlso parent.Length > 0 AndAlso Not Directory.Exists(parent) Then
+                Dim parent = System.IO.Path.GetDirectoryName(full)
+                If parent IsNot Nothing AndAlso parent.Length > 0 AndAlso Not System.IO.Directory.Exists(parent) Then
                     Throw New JsRuntimeException(FsError("ENOENT", "no such file or directory", "mkdir", full))
                 End If
             End If
-            Directory.CreateDirectory(full)
+            System.IO.Directory.CreateDirectory(full)
         End Sub
 
         Private Shared Sub CoreRmdir(pth As String)
             Dim full = ResolvePath(pth)
-            If Directory.Exists(full) Then
-                Directory.Delete(full, False)
-            ElseIf File.Exists(full) Then
+            If System.IO.Directory.Exists(full) Then
+                System.IO.Directory.Delete(full, False)
+            ElseIf System.IO.File.Exists(full) Then
                 Throw New JsRuntimeException(FsError("ENOTDIR", "not a directory", "rmdir", full))
             Else
                 Throw New JsRuntimeException(FsError("ENOENT", "no such file or directory", "rmdir", full))
@@ -218,16 +217,16 @@ Namespace Runtime
 
         Private Shared Function CoreStat(pth As String, follow As Boolean) As FsStats
             Dim full = ResolvePath(pth)
-            If File.Exists(full) Then
-                Dim fi = New FileInfo(full)
+            If System.IO.File.Exists(full) Then
+                Dim fi = New System.IO.FileInfo(full)
                 Return New FsStats With {
                     .Size = fi.Length, .IsFile = True, .IsDir = False,
                     .MtimeMs = ToMs(fi.LastWriteTimeUtc), .CtimeMs = ToMs(fi.CreationTimeUtc),
                     .AtimeMs = ToMs(fi.LastAccessTimeUtc), .BirthtimeMs = ToMs(fi.CreationTimeUtc),
                     .Mode = &H8000, .Dev = 1
                 }
-            ElseIf Directory.Exists(full) Then
-                Dim di = New DirectoryInfo(full)
+            ElseIf System.IO.Directory.Exists(full) Then
+                Dim di = New System.IO.DirectoryInfo(full)
                 Return New FsStats With {
                     .Size = 0, .IsFile = False, .IsDir = True,
                     .MtimeMs = ToMs(di.LastWriteTimeUtc), .CtimeMs = ToMs(di.CreationTimeUtc),
@@ -240,9 +239,9 @@ Namespace Runtime
 
         Private Shared Sub CoreUnlink(pth As String)
             Dim full = ResolvePath(pth)
-            If File.Exists(full) Then
-                File.Delete(full)
-            ElseIf Directory.Exists(full) Then
+            If System.IO.File.Exists(full) Then
+                System.IO.File.Delete(full)
+            ElseIf System.IO.Directory.Exists(full) Then
                 Throw New JsRuntimeException(FsError("EISDIR", "illegal operation on a directory", "unlink", full))
             Else
                 Throw New JsRuntimeException(FsError("ENOENT", "no such file or directory", "unlink", full))
@@ -256,28 +255,28 @@ Namespace Runtime
             Else
                 bytes = BufferModule.Encode(enc, JsRuntime.JsStr(data))
             End If
-            Using fs = New FileStream(ResolvePath(pth), FileMode.Append, FileAccess.Write)
+            Using fs = New System.IO.FileStream(ResolvePath(pth), System.IO.FileMode.Append, System.IO.FileAccess.Write)
                 fs.Write(bytes, 0, bytes.Length)
             End Using
         End Sub
 
         Private Shared Sub CoreCopy(src As String, dest As String)
-            File.Copy(ResolvePath(src), ResolvePath(dest), True)
+            System.IO.File.Copy(ResolvePath(src), ResolvePath(dest), True)
         End Sub
 
         Private Shared Sub CoreRename(oldP As String, newP As String)
             Dim s = ResolvePath(oldP), d = ResolvePath(newP)
-            If File.Exists(s) Then
-                File.Move(s, d, True)
-            ElseIf Directory.Exists(s) Then
-                Directory.Move(s, d)
+            If System.IO.File.Exists(s) Then
+                System.IO.File.Move(s, d, True)
+            ElseIf System.IO.Directory.Exists(s) Then
+                System.IO.Directory.Move(s, d)
             Else
                 Throw New JsRuntimeException(FsError("ENOENT", "no such file or directory", "rename", s))
             End If
         End Sub
 
-        Private Shared Function ToMs(dt As DateTime) As Double
-            Return (dt - New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds
+        Private Shared Function ToMs(dt As System.DateTime) As Double
+            Return (dt - New System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds
         End Function
 
         ' ===================== sync wrappers =====================
@@ -301,7 +300,7 @@ Namespace Runtime
 
         Private Shared Function ExistsSync(args As Object()) As Boolean
             Dim full = ResolvePath(Str(args, 0))
-            Return File.Exists(full) OrElse Directory.Exists(full)
+            Return System.IO.File.Exists(full) OrElse System.IO.Directory.Exists(full)
         End Function
 
         Private Shared Function SyncReaddir(args As Object()) As Object
@@ -558,7 +557,7 @@ Namespace Runtime
             Dim pth = Str(args, 0)
             JsRuntime.QueueMicrotask(Sub()
                                          Dim full = ResolvePath(pth)
-                                         If File.Exists(full) OrElse Directory.Exists(full) Then
+                                         If System.IO.File.Exists(full) OrElse System.IO.Directory.Exists(full) Then
                                              JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
                                          Else
                                              JsRuntime.JsInvoke(cb, New Object() {FsError("ENOENT", "no such file or directory", "access", full), JsRuntime.Undef})
@@ -694,7 +693,7 @@ Namespace Runtime
             Dim pth = Str(args, 0)
             JsRuntime.QueueMicrotask(Sub()
                                          Dim full = ResolvePath(pth)
-                                         If File.Exists(full) OrElse Directory.Exists(full) Then
+                                         If System.IO.File.Exists(full) OrElse System.IO.Directory.Exists(full) Then
                                              pr.Fulfill(JsRuntime.Undef)
                                          Else
                                              pr.Reject(FsError("ENOENT", "no such file or directory", "access", full))
@@ -707,13 +706,13 @@ Namespace Runtime
 
         Private Shared Function FsError(ex As Exception, syscall As String, pth As String) As JsFsError
             Dim code = "EIO"
-            If TypeOf ex Is FileNotFoundException OrElse TypeOf ex Is DirectoryNotFoundException Then
+            If TypeOf ex Is System.IO.FileNotFoundException OrElse TypeOf ex Is System.IO.DirectoryNotFoundException Then
                 code = "ENOENT"
-            ElseIf TypeOf ex Is UnauthorizedAccessException Then
+            ElseIf TypeOf ex Is System.UnauthorizedAccessException Then
                 code = "EACCES"
-            ElseIf TypeOf ex Is IOException Then
+            ElseIf TypeOf ex Is System.IO.IOException Then
                 Dim full = ResolvePath(pth)
-                If Directory.Exists(full) Then code = "EISDIR" Else code = "EIO"
+                If System.IO.Directory.Exists(full) Then code = "EISDIR" Else code = "EIO"
             End If
             Return FsError(code, MapDesc(code), syscall, pth)
         End Function
