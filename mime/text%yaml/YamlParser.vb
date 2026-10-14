@@ -94,7 +94,6 @@ Imports std = System.Math
 
 #End Region
 
-
 ''' <summary>
 ''' A YAML document parser that converts YAML text into JsonElement model objects.
 ''' The parser supports block mappings, block sequences, multi-line strings,
@@ -111,17 +110,18 @@ Public Class YamlParser
     ''' </summary>
     ''' <param name="yamlText">The YAML document text.</param>
     ''' <returns>The root JsonElement (typically a JsonObject).</returns>
-    Public Function Parse(yamlText As String) As JsonElement
+    Public Shared Function Parse(yamlText As String) As JsonElement
         If String.IsNullOrEmpty(yamlText) Then
             Return New JsonObject()
         End If
 
         ' Phase 1: Pre-process the raw YAML text into logical lines
-        Dim lines As List(Of YamlLine) = PreProcess(yamlText)
+        Dim yaml As New YamlParser
+        Dim lines As List(Of YamlLine) = yaml.PreProcess(yamlText)
 
         ' Phase 2: Parse the logical lines into the JsonElement model
         Dim index As Integer = 0
-        Return ParseValue(lines, index, 0)
+        Return yaml.ParseValue(lines, index, 0)
     End Function
 
     ''' <summary>
@@ -129,7 +129,7 @@ Public Class YamlParser
     ''' </summary>
     ''' <param name="filePath">The path to the YAML file.</param>
     ''' <returns>The root JsonElement (typically a JsonObject).</returns>
-    Public Function ParseFile(filePath As String) As JsonElement
+    Public Shared Function ParseFile(filePath As String) As JsonElement
         Dim yamlText As String = System.IO.File.ReadAllText(filePath, Encoding.UTF8)
         Return Parse(yamlText)
     End Function

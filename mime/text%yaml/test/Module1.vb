@@ -52,7 +52,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MIME.text.yaml
-Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
 
 Module Module1
 
@@ -73,8 +72,8 @@ Module Module1
     End Sub
 
     Sub v12()
-        Dim doc = YamlParser.Load("E:\VB_GamePads\runtime\sciBASIC#\mime\text%yaml\1.2\samples\YAML_Sample.yaml")
-        Dim singleDoc = YamlParser.Load("X:\Ripped\00d197fedc13a9d41acf88e9375702e9\AnimationClip\rb_yang_passive.anim")
+        Dim doc = YamlParser.ParseFile("E:\VB_GamePads\runtime\sciBASIC#\mime\text%yaml\1.2\samples\YAML_Sample.yaml")
+        Dim singleDoc = YamlParser.ParseFile("X:\Ripped\00d197fedc13a9d41acf88e9375702e9\AnimationClip\rb_yang_passive.anim")
 
         Pause()
     End Sub
