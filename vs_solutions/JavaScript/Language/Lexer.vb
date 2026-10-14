@@ -98,12 +98,20 @@ Public NotInheritable Class Lexer
     Public Shared Function Lex(source As String) As List(Of Token)
         Dim lx As New Lexer(source)
         Dim tokens As New List(Of Token)
-        While True
-            Dim t = lx.NextToken(False)      ' line-break detection restarts per token
-            tokens.Add(t)
-            lx._lastToken = t
-            If t.name = TokenType.Eof Then Exit While
-        End While
+
+        Try
+            While True
+                Dim t = lx.NextToken(False)      ' line-break detection restarts per token
+                tokens.Add(t)
+                lx._lastToken = t
+                If t.name = TokenType.Eof Then Exit While
+            End While
+        Catch ex As ParseException
+            ' every lexer failure happens at the current scanner position: attach it so the
+            ' host can render a position frame (the message text itself stays unchanged)
+            Throw ex.WithPosition(lx._line, lx._col)
+        End Try
+
         Return tokens
     End Function
 

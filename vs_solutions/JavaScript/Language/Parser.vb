@@ -105,7 +105,15 @@ Public NotInheritable Class Parser
     End Sub
 
     Public Shared Function Parse(source As String) As Program
-        Return New Parser(Lexer.Lex(source)).ParseProgram()
+        Dim parser As New Parser(Lexer.Lex(source))
+
+        Try
+            Return parser.ParseProgram()
+        Catch ex As ParseException
+            ' the parser stopped at the offending token: attach its location, so hosts can
+            ' render a position frame even for throw sites whose message carries no position
+            Throw ex.WithPosition(parser.CurrentTokenOrLast)
+        End Try
     End Function
 
     ' ---------------- token helpers ----------------
@@ -115,6 +123,26 @@ Public NotInheritable Class Parser
             Return _tokens(_pos)
         End Get
     End Property
+
+    ''' <summary>
+    ''' <see cref="Cur"/> clamped to the token list — safe to read from an exception
+    ''' handler, where <c>_pos</c> may already sit past the last token.
+    ''' </summary>
+    Private ReadOnly Property CurrentTokenOrLast As Token
+        Get
+            If _tokens Is Nothing OrElse _tokens.Count = 0 Then Return Nothing
+            If _pos >= 0 AndAlso _pos < _tokens.Count Then Return _tokens(_pos)
+
+            Return _tokens(_tokens.Count - 1)
+        End Get
+    End Property
+
+    ''' <summary>Source position of a token (the parser stamps it onto AST nodes).</summary>
+    Private Shared Function PositionOf(token As Token) As SourcePosition
+        If token Is Nothing Then Return SourcePosition.None
+
+        Return New SourcePosition(token.span.line, token.span.start)
+    End Function
 
     Private ReadOnly Property Prev As Token
         Get
@@ -206,7 +234,20 @@ Public NotInheritable Class Parser
         Return New Program(body)
     End Function
 
+    ''' <summary>
+    ''' Parse one statement and stamp its source position: the interpreter copies it onto
+    ''' the current stack frame, which is what gives frames a real line number.
+    ''' </summary>
     Private Function ParseStatement() As Statement
+        Dim start = Cur
+        Dim s = ParseStatementCore()
+
+        If s IsNot Nothing AndAlso Not s.Position.HasValue Then s.Position = PositionOf(start)
+
+        Return s
+    End Function
+
+    Private Function ParseStatementCore() As Statement
         If At(";") Then
             _pos += 1
             Return New EmptyStmt()
@@ -369,7 +410,9 @@ Public NotInheritable Class Parser
         _loopDepth = outerLoop
         Return New FuncExpr(name, spec.Parameters.ToArray(), body,
                             defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest,
-                            isAsync:=isAsync, isGenerator:=isGenerator)
+                            isAsync:=isAsync, isGenerator:=isGenerator) With {
+            .Position = PositionOf(Prev)      ' the declared name (or the 'function' keyword)
+        }
     End Function
 
     ''' <summary>Parameter list with default values and a trailing rest parameter.</summary>
@@ -503,7 +546,9 @@ Public NotInheritable Class Parser
         _loopDepth = outerLoop
         Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body,
                             defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest,
-                            isAsync:=isAsync, isGenerator:=isGenerator)
+                            isAsync:=isAsync, isGenerator:=isGenerator) With {
+            .Position = PositionOf(Prev)      ' the ')' of the parameter list
+        }
     End Function
 
     ''' <summary>True when 'async' is followed by a method header (async m() {}).</summary>
@@ -868,6 +913,8 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParseArrowBody(spec As ParamSpec, Optional isAsync As Boolean = False) As FuncExpr
+        Dim start = Cur
+
         If At("{") Then
             Dim outerFunc = _funcDepth, outerLoop = _loopDepth
             _funcDepth += 1
@@ -876,13 +923,17 @@ Public NotInheritable Class Parser
             _funcDepth = outerFunc
             _loopDepth = outerLoop
             Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body, isArrow:=True,
-                                defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
+                                defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync) With {
+                .Position = PositionOf(start)
+            }
         End If
         ' expression body → { return expr; }
         Dim expr = ParseAssignment()
         Dim body2 As New List(Of Statement) From {New ReturnStmt(expr)}
         Return New FuncExpr(Nothing, spec.Parameters.ToArray(), body2, isArrow:=True,
-                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync)
+                            defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest, isAsync:=isAsync) With {
+            .Position = PositionOf(start)
+        }
     End Function
 
     Private Function ParseConditional() As Expression
@@ -1093,6 +1144,9 @@ Public NotInheritable Class Parser
     End Function
 
     Private Function ParseCallOrMember() As Expression
+        ' the call site of every call in this chain is the start of its callee, which is
+        ' where V8 reports the frame of the call (see the position stamped on CallExpr)
+        Dim start = Cur
         Dim e = ParsePrimary()
         Dim anyOptional = False
         While True
@@ -1106,7 +1160,10 @@ Public NotInheritable Class Parser
                 If At("(") Then
                     ' optional call: a?.(args)
                     Dim args2 = ParseArguments()
-                    e = New CallExpr(e, args2, isOptional:=True)
+                    Dim optionalCall As New CallExpr(e, args2, isOptional:=True)
+
+                    optionalCall.Position = PositionOf(start)
+                    e = optionalCall
                 ElseIf At("[") Then
                     _pos += 1
                     Dim idx = ParseExpression()
@@ -1117,7 +1174,10 @@ Public NotInheritable Class Parser
                     e = New MemberExpr(e, name, False, isOptional:=True)
                 End If
             ElseIf At("(") Then
-                e = New CallExpr(e, ParseArguments(), isOptional:=False)
+                Dim callExpr As New CallExpr(e, ParseArguments(), isOptional:=False)
+
+                callExpr.Position = PositionOf(start)
+                e = callExpr
             ElseIf At("[") Then
                 _pos += 1
                 Dim idx = ParseExpression()

@@ -51,12 +51,64 @@
 
 #End Region
 
-''' <summary>Syntax error raised by the lexer and parser (carries source position).</summary>
+''' <summary>
+''' Syntax error raised by the lexer and parser.
+''' <para>
+''' The <see cref="Exception.Message"/> text is the historical wording (some throw
+''' sites already embed the position as <c>at line:col</c>) and must not change;
+''' <see cref="Line"/> / <see cref="Column"/> carry the same information in a
+''' structured way so a host can render a real stack frame for the failure.
+''' </para>
+''' </summary>
 Public NotInheritable Class ParseException
     Inherits Exception
 
+    ''' <summary>Source line of the offending token, 1 based; 0 when unknown.</summary>
+    Public ReadOnly Property Line As Integer
+
+    ''' <summary>Source column of the offending token, 1 based; 0 when unknown.</summary>
+    Public ReadOnly Property Column As Integer
+
     Public Sub New(message As String)
-        MyBase.New(message)
+        Me.New(message, 0, 0)
     End Sub
+
+    Public Sub New(message As String, line As Integer, column As Integer)
+        MyBase.New(message)
+        Me.Line = System.Math.Max(0, line)
+        Me.Column = System.Math.Max(0, column)
+    End Sub
+
+    ''' <summary>True when the failing source position is known.</summary>
+    Public ReadOnly Property HasPosition As Boolean
+        Get
+            Return Line > 0
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Same error with the failing position attached; returns this instance when the
+    ''' position is already known (or when <paramref name="line"/> is unknown), so a
+    ''' rethrow from an outer catch never loses the original error text.
+    ''' </summary>
+    Public Function WithPosition(line As Integer, column As Integer) As ParseException
+        If HasPosition OrElse line <= 0 Then Return Me
+
+        Return New ParseException(Message, line, column)
+    End Function
+
+    ''' <summary><see cref="WithPosition(Integer, Integer)"/> for the location of a token.</summary>
+    Public Function WithPosition(token As Token) As ParseException
+        If token Is Nothing Then Return Me
+
+        Return WithPosition(token.span.line, token.span.start)
+    End Function
+
+    ''' <summary>Position of <paramref name="token"/>, or <see cref="SourcePosition.None"/>.</summary>
+    Public Shared Function PositionOf(token As Token) As SourcePosition
+        If token Is Nothing Then Return SourcePosition.None
+
+        Return New SourcePosition(token.span.line, token.span.start)
+    End Function
 
 End Class

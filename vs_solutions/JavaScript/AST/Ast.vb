@@ -308,6 +308,14 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' <see cref="CodeGenerator"/> operate on this object model.</para>
 ''' </summary>
 Public MustInherit Class Expression
+
+    ''' <summary>
+    ''' Source location of this node, stamped by the parser
+    ''' (<see cref="SourcePosition.None"/> when unknown). It is what makes a JS stack
+    ''' frame point at the real source line of a call.
+    ''' </summary>
+    Public Property Position As SourcePosition
+
 End Class
 
 ''' <summary>number / string / true / false / null / undefined literal.</summary>
@@ -671,6 +679,13 @@ End Class
 ' ============================ statements ============================
 
 Public MustInherit Class Statement
+
+    ''' <summary>
+    ''' Source location of this statement, stamped by the parser; the interpreter copies
+    ''' it onto the innermost stack frame while the statement executes.
+    ''' </summary>
+    Public Property Position As SourcePosition
+
 End Class
 
 ''' <summary>Root node: top-level statement list.</summary>
