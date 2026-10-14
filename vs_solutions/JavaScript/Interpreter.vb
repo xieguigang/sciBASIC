@@ -45,6 +45,8 @@
 
     ' Class Interpreter
     ' 
+    '     Properties: Io, SourceFile
+    ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: BuildClass, Eval, EvalArguments, EvalArrayLiteral, EvalCall
@@ -86,6 +88,14 @@ Public NotInheritable Class Interpreter
     Private ReadOnly _globals As Environment
     Public ReadOnly Io As ScriptIO
 
+    ''' <summary>
+    ''' File name reported in JS stack frames (<c>at fn (file:line:col)</c>). It defaults
+    ''' to the script the host published through <c>process</c>
+    ''' (<see cref="ProcessModule.ScriptFile"/>); sources without a file (parsed
+    ''' strings, tests) render as <c>&lt;anonymous&gt;</c>.
+    ''' </summary>
+    Public Property SourceFile As String = ProcessModule.ScriptFile
+
     ''' <summary>Label of the statement currently being entered (see labeled break/continue).</summary>
     Private _pendingLabel As String
 
@@ -106,11 +116,21 @@ Public NotInheritable Class Interpreter
 
     ''' <summary>Run a parsed program; output goes to <see cref="Io"/>.</summary>
     Public Sub Run(program As Program)
-        HoistFunctions(program.Body, _globals)
-        ExecuteBlock(program.Body, _globals)
-        ' promise reactions queued while the body ran are microtasks — drain them
-        ' now, mirroring a JS job queue that has no other pending work
-        JsRuntime.DrainMicrotasks()
+        ' a run starts from an empty JS stack, with the top level script as the root frame
+        JsStackTrace.Reset()
+        Call JsStackTrace.PushFrame(JsStackFrame.AnonymousFunction, SourceFile)
+
+        Try
+            HoistFunctions(program.Body, _globals)
+            ExecuteBlock(program.Body, _globals)
+            ' promise reactions queued while the body ran are microtasks — drain them
+            ' now, mirroring a JS job queue that has no other pending work
+            JsRuntime.DrainMicrotasks()
+        Finally
+            ' Reset (not Pop): a generator or async body left half way must not leak frames
+            ' into the next run on this thread
+            JsStackTrace.Reset()
+        End Try
     End Sub
 
     ''' <summary>
@@ -208,6 +228,13 @@ Public NotInheritable Class Interpreter
     End Sub
 
     Private Sub Execute(s As Statement, env As Environment)
+        ' stamp the position of the statement being executed on the innermost frame: two
+        ' integer writes, no allocation — this is what makes a stack frame point at the
+        ' real offending source line instead of the function declaration
+        Dim location = s.Position
+
+        If location.HasValue Then JsStackTrace.UpdatePosition(location.Line, location.Column)
+
         Select Case True
             Case TypeOf s Is ExprStmt
                 Eval(DirectCast(s, ExprStmt).Expr, env)
@@ -595,12 +622,23 @@ Public NotInheritable Class Interpreter
         End If
 
         HoistFunctions(f.Body, fenv)
+
+        ' one frame per invoked body: every interpreter call becomes visible to
+        ' console.trace / e.stack; named functions use their declared name, anonymous ones
+        ' the name inferred from their syntactic position (V8 inference), and only a truly
+        ' unnamed callback renders as <anonymous>
+        Dim frameName = If(Not String.IsNullOrEmpty(f.Name), f.Name, f.InferredName)
+
+        Call JsStackTrace.PushFrame(frameName, SourceFile, f.Position.Line, f.Position.Column)
+
         Try
             For Each st In f.Body
                 Execute(st, fenv)
             Next
         Catch r As ReturnSignal
             Return JsRuntime.JsBox(r.Value)
+        Finally
+            JsStackTrace.PopFrame()
         End Try
         Return JsRuntime.Undef
     End Function
@@ -895,6 +933,12 @@ Public NotInheritable Class Interpreter
     ''' object for <c>this</c>) and plain calls.
     ''' </summary>
     Private Function EvalCall(c As CallExpr, env As Environment) As Object
+        ' narrow the innermost frame to the call site itself (the statement start would point
+        ' at 'var' in `var x = f()`, while a stack trace should point at the call)
+        Dim callSite = c.Position
+
+        If callSite.HasValue Then JsStackTrace.UpdatePosition(callSite.Line, callSite.Column)
+
         ' super(...) / super.m(...)
         Dim sup = TryCast(c.Callee, SuperExpr)
         If sup IsNot Nothing Then

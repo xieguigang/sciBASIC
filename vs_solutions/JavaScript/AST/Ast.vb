@@ -502,6 +502,15 @@ Public NotInheritable Class FuncExpr
     Public ReadOnly IsGenerator As Boolean
     Public ReadOnly Body As List(Of Statement)
 
+    ''' <summary>
+    ''' Name inferred from the syntactic position when the function itself is anonymous:
+    ''' <c>{ m() {} }</c> → <c>m</c>, <c>var f = function () {}</c> → <c>f</c>,
+    ''' <c>class C { m() {} }</c> → <c>m</c>. It mirrors the name inference of V8 and is
+    ''' used for JS stack frame names (<c>at m (file:line:col)</c>); it never affects the
+    ''' script visible <c>name</c> property nor the generated code.
+    ''' </summary>
+    Public Property InferredName As String
+
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
                    Optional isArrow As Boolean = False,
                    Optional defaults As Expression() = Nothing,

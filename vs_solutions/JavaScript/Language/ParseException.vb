@@ -104,11 +104,4 @@ Public NotInheritable Class ParseException
         Return WithPosition(token.span.line, token.span.start)
     End Function
 
-    ''' <summary>Position of <paramref name="token"/>, or <see cref="SourcePosition.None"/>.</summary>
-    Public Shared Function PositionOf(token As Token) As SourcePosition
-        If token Is Nothing Then Return SourcePosition.None
-
-        Return New SourcePosition(token.span.line, token.span.start)
-    End Function
-
 End Class

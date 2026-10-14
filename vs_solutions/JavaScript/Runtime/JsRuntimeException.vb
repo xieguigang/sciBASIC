@@ -45,6 +45,8 @@
 
     '     Class JsRuntimeException
     ' 
+    '         Properties: Frames, FullMessage, Stack
+    ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Describe, Error_, RangeError, ReferenceError, SyntaxError
     '                   TypeError
@@ -70,10 +72,61 @@ Namespace Runtime
 
         Public ReadOnly Payload As Object
 
+        ''' <summary>
+        ''' JS stack frames frozen when this exception was created, innermost first.
+        ''' <para>
+        ''' Named <see cref="Stack"/> rather than <c>StackTrace</c> because
+        ''' <see cref="Exception.StackTrace"/> already means the CLR trace.
+        ''' </para>
+        ''' </summary>
+        Public ReadOnly Property Frames As List(Of JsStackFrame)
+
         Public Sub New(payload As Object)
+            Me.New(payload, Nothing)
+        End Sub
+
+        ''' <summary>
+        ''' <paramref name="frames"/> = Nothing captures the current JS stack; a
+        ''' <see cref="JsError"/> payload already froze its own frames and they are reused
+        ''' instead of capturing twice.
+        ''' </summary>
+        Public Sub New(payload As Object, frames As List(Of JsStackFrame))
             MyBase.New(Describe(payload))
             Me.Payload = payload
+
+            Dim frozen = frames
+
+            If frozen Is Nothing Then
+                Dim jsError = TryCast(payload, JsError)
+
+                If jsError IsNot Nothing Then frozen = jsError.Frames
+            End If
+
+            If frozen Is Nothing Then frozen = JsStackTrace.Capture()
+
+            Me.Frames = frozen
         End Sub
+
+        ''' <summary>
+        ''' Node style stack text (message <c>"Name: message"</c> plus the JS frames); an
+        ''' error payload keeps the frames captured where it was constructed.
+        ''' </summary>
+        Public ReadOnly Property Stack As String
+            Get
+                Dim jsError = TryCast(Payload, JsError)
+
+                If jsError IsNot Nothing Then Return jsError.Stack
+
+                Return Describe(Payload) & vbLf & JsStackTrace.Format(Frames)
+            End Get
+        End Property
+
+        ''' <summary>Host facing alias of <see cref="Stack"/> for uncaught error reporting.</summary>
+        Public ReadOnly Property FullMessage As String
+            Get
+                Return Stack
+            End Get
+        End Property
 
         Private Shared Function Describe(payload As Object) As String
             If TypeOf payload Is String Then Return CStr(payload)

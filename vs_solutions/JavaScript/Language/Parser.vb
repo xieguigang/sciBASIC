@@ -370,6 +370,10 @@ Public NotInheritable Class Parser
             Dim target = ParseBindingTarget()
             Dim init As Expression = Nothing
             If Match("=") Then init = ParseAssignment()
+            ' `var f = function () {}` → the frame name is the declared variable (V8 inference)
+            If TypeOf target Is String AndAlso TypeOf init Is FuncExpr Then
+                DirectCast(init, FuncExpr).InferredName = CStr(target)
+            End If
             decls.Add(New VarDeclarant(target, init))
         Loop While Match(",")
         Return New VarStmt(kind, decls)
@@ -509,12 +513,16 @@ Public NotInheritable Class Parser
                     Throw New ParseException("class setter must take exactly one parameter")
                 End If
                 Dim fn = ParseMethodBody(spec)
+
+                fn.InferredName = mname
                 members.Add(New ClassMember(If(isGetter, ClassMemberKind.Getter, ClassMemberKind.Setter),
                                             mname, fn, isStatic))
             ElseIf IsMethodHeader() Then
                 Dim mname = ParsePropertyName()
                 Dim spec = ParseParameterList()
                 Dim fn = ParseMethodBody(spec, isAsyncMember, isGeneratorMember)
+
+                fn.InferredName = mname
                 If Not isStatic AndAlso mname = "constructor" Then
                     If ctor IsNot Nothing Then Throw New ParseException("class may only have one constructor")
                     ctor = fn
@@ -906,6 +914,12 @@ Public NotInheritable Class Parser
             End If
             If Not (TypeOf left Is IdentExpr OrElse TypeOf left Is MemberExpr) Then
                 Throw New ParseException("invalid assignment target")
+            End If
+            ' `f = function () {}` → frame name from the assignment target (V8 inference)
+            If op = "=" AndAlso TypeOf right Is FuncExpr Then
+                Dim target = TryCast(left, IdentExpr)
+
+                If target IsNot Nothing Then DirectCast(right, FuncExpr).InferredName = target.Name
             End If
             Return New AssignExpr(op, left, right)
         End If
@@ -1399,8 +1413,10 @@ Public NotInheritable Class Parser
             _pos += 1
             Dim akey = ParsePropertyName()
             Dim aspec = ParseParameterList()
-            Return New ObjectProperty(akey, Nothing, ParseMethodBody(aspec, isAsync:=True),
-                                      ObjectPropertyKind.Normal)
+            Dim afn = ParseMethodBody(aspec, isAsync:=True)
+
+            afn.InferredName = akey
+            Return New ObjectProperty(akey, Nothing, afn, ObjectPropertyKind.Normal)
         End If
 
         ' generator method: { *m() {} }
@@ -1408,8 +1424,10 @@ Public NotInheritable Class Parser
             _pos += 1
             Dim gkey = ParsePropertyName()
             Dim gspec = ParseParameterList()
-            Return New ObjectProperty(gkey, Nothing, ParseMethodBody(gspec, isGenerator:=True),
-                                      ObjectPropertyKind.Normal)
+            Dim gfn = ParseMethodBody(gspec, isGenerator:=True)
+
+            gfn.InferredName = gkey
+            Return New ObjectProperty(gkey, Nothing, gfn, ObjectPropertyKind.Normal)
         End If
 
         ' get/set accessors — contextual keywords: they only count when a key
@@ -1432,7 +1450,9 @@ Public NotInheritable Class Parser
             Dim body = ParseBlock()
             _funcDepth = outerFunc
             _loopDepth = outerLoop
-            Dim fn = New FuncExpr(Nothing, spec.Parameters.ToArray(), body)
+            Dim fn = New FuncExpr(Nothing, spec.Parameters.ToArray(), body) With {
+                .InferredName = key
+            }
             Return New ObjectProperty(key, Nothing, fn,
                                       If(isGetter, ObjectPropertyKind.Getter, ObjectPropertyKind.Setter))
         End If
@@ -1457,7 +1477,9 @@ Public NotInheritable Class Parser
             _funcDepth = outerFunc
             _loopDepth = outerLoop
             Dim fn = New FuncExpr(Nothing, spec.Parameters.ToArray(), body,
-                                  defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest)
+                                  defaults:=spec.Defaults.ToArray(), restParam:=spec.Rest) With {
+                .InferredName = key
+            }
             Return New ObjectProperty(key, Nothing, fn, ObjectPropertyKind.Normal)
         End If
 

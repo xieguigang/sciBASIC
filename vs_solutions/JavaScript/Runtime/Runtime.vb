@@ -113,8 +113,12 @@ Namespace Runtime
             Set(value As ScriptIO)
                 _io = value
                 ' a fresh sink means a fresh script run: console counters / timers /
-                ' group indentation are per-thread state of the console singleton
+                ' group indentation are per-thread state of the console singleton, and any
+                ' frames left over from an interrupted run must not leak into this one
+                ' (Interpreter.Run resets the stack too — this is the belt and braces path
+                ' that also covers generated code, which only assigns the sink)
                 Call ConsoleModule.Reset()
+                Call JsStackTrace.Reset()
             End Set
         End Property
 
@@ -554,7 +558,7 @@ Namespace Runtime
                     Case "code" : Return fe.Code
                     Case "syscall" : Return fe.Syscall
                     Case "path" : Return fe.Path
-                    Case "stack" : Return fe.ToString()
+                    Case "stack" : Return fe.Stack
                     Case "toString" : Return New BuiltinMethod(obj, name)
                 End Select
                 Return Undef
@@ -567,6 +571,10 @@ Namespace Runtime
             If TypeOf obj Is NativeObject Then
                 Dim n = DirectCast(obj, NativeObject)
                 If n.Name = "Math" AndAlso _mathProps.TryGetValue(name, Nothing) Then Return _mathProps(name)
+                ' Error.stackTraceLimit is the one writable static property of the Error family
+                If n.Name = "Error" AndAlso name = "stackTraceLimit" Then
+                    Return CDbl(JsStackTrace.StackTraceLimit)
+                End If
                 ' the global object has no builtin methods beyond the registered globals
                 If n.Name = "global" Then Return Undef
                 Return New BuiltinMethod(obj, name)
@@ -614,7 +622,7 @@ Namespace Runtime
                 Select Case name
                     Case "name" : Return err.Name
                     Case "message" : Return err.Message
-                    Case "stack" : Return err.ToString()
+                    Case "stack" : Return err.Stack
                     ' the .NET exception a CLR bridge call raised (Nothing for engine errors)
                     Case "clrException" : Return err.Original
                     Case "toString" : Return New BuiltinMethod(obj, name)
@@ -722,6 +730,13 @@ Namespace Runtime
                     If TryWriteAccessor(existingStatic, value, obj, c) Then Return
                 End If
                 c.Statics(name) = value
+            ElseIf TypeOf obj Is NativeObject Then
+                ' Error.stackTraceLimit = n (the only writable static of the builtin objects)
+                Dim n = DirectCast(obj, NativeObject)
+
+                If n.Name = "Error" AndAlso name = "stackTraceLimit" Then
+                    JsStackTrace.StackTraceLimit = CInt(System.Math.Max(0, System.Math.Truncate(JsNum(value))))
+                End If
             End If
             ' other targets: silently ignored (non-strict JS)
         End Sub
@@ -978,7 +993,8 @@ Namespace Runtime
                     Dim parsed = JsDate.Parse(JsStr(args(0)))
                     Return If(parsed IsNot Nothing, parsed, JsDate.FromEpochMs(Double.NaN))
                 Case "Error", "TypeError", "RangeError", "SyntaxError", "ReferenceError"
-                    Return New JsError(name, If(args.Length > 0 AndAlso args(0) IsNot Undef, JsStr(args(0)), ""))
+                    ' freeze the JS stack of the construction site (Node semantics)
+                    Return JsError.Capture(name, If(args.Length > 0 AndAlso args(0) IsNot Undef, JsStr(args(0)), ""))
                 Case "Promise" : Return ConstructPromise(args)
             End Select
             Throw JsRuntimeException.TypeError("'" & name & "' is not a constructor")
@@ -2488,8 +2504,30 @@ Namespace Runtime
             Return list
         End Function
 
+        ''' <summary>
+        ''' The <c>Error</c> family (constructible with and without <c>new</c>) plus the
+        ''' Node extension <c>Error.captureStackTrace(targetObject)</c>.
+        ''' </summary>
         Private Function BuiltinErrorCtor(name As String, args As Object()) As Object
-            Return New JsError(name, If(args.Length > 0 AndAlso Not (args(0) Is Undef), JsStr(args(0)), ""))
+            If name = "captureStackTrace" Then Return CaptureStackTrace(args)
+
+            ' the JS stack is frozen here, exactly like `new Error(message)` in Node
+            Return JsError.Capture(name, If(args.Length > 0 AndAlso Not (args(0) Is Undef), JsStr(args(0)), ""))
+        End Function
+
+        ''' <summary>
+        ''' Node's <c>Error.captureStackTrace(targetObject)</c>: install the current JS stack
+        ''' as the <c>stack</c> property of the target object. The optional second argument
+        ''' (constructorOpt) is ignored — the engine cannot skip host frames.
+        ''' </summary>
+        Private Function CaptureStackTrace(args As Object()) As Object
+            Dim target = Arg(args, 0)
+
+            If IsJsObject(target) Then
+                DirectCast(target, Dictionary(Of String, Object))("stack") = JsStackTrace.Format(JsStackTrace.Capture())
+            End If
+
+            Return Undef
         End Function
 
         Private Function BuiltinDateStatic(name As String, args As Object()) As Object

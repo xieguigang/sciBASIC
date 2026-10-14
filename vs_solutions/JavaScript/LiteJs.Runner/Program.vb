@@ -102,10 +102,20 @@ Module Program
         Dim engine As New Interpreter(io)
         Dim failed As Boolean = False
 
+        ' stack frames report the script path, like Node does
+        engine.SourceFile = scriptPath
+
         Try
             engine.Run(Parser.Parse(File.ReadAllText(scriptPath)))
         Catch ex As JsRuntimeException
-            System.Console.Error.WriteLine("Uncaught " & ex.Message)
+            ' Node style uncaught report: "TypeError: msg" plus the JS frames
+            System.Console.Error.WriteLine("Uncaught " & ex.Stack)
+            failed = True
+        Catch ex As ParseException
+            ' a syntax error carries the failing token position: render it as a JS frame
+            System.Console.Error.WriteLine("Uncaught " & JsStackTrace.FormatWithHeader(
+                "SyntaxError", ex.Message,
+                JsStackTrace.SingleFrame(JsStackFrame.AnonymousFunction, scriptPath, ex.Line, ex.Column)))
             failed = True
         Finally
             ' flush the buffering backends even when the script failed, so the partial

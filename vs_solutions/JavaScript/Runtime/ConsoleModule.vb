@@ -379,9 +379,11 @@ Namespace Runtime
         ' ===================== trace / assert =====================
 
         ''' <summary>
-        ''' <c>console.trace</c>. The engine is a tree walking interpreter without
-        ''' source level stack frames, so the trace prints the optional label plus the
-        ''' anonymous frame placeholder used by engines without source mapping.
+        ''' <c>console.trace</c>: the optional label followed by the live JS stack of the
+        ''' interpreter, rendered Node style (<c>    at fn (file:line:col)</c>). The
+        ''' innermost frame is the function containing this call, pointing at the call
+        ''' line; a stack with no interpreter frame (generated code) shows the
+        ''' <c>&lt;generated&gt;</c> placeholder.
         ''' </summary>
         Private Shared Function Trace(args As Object()) As Object
             Dim spans = Format(args)
@@ -395,7 +397,7 @@ Namespace Runtime
             End If
 
             sb.Append(vbLf)
-            sb.Append("    at <anonymous>")
+            sb.Append(JsStackTrace.Format(JsStackTrace.Capture()))
 
             Return Emit("trace", SingleSpan(sb.ToString()))
         End Function

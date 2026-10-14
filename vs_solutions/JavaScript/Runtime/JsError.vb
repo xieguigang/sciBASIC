@@ -41,12 +41,14 @@
     ' 
     '   Blank Lines: 7 (19.44%)
     '     File Size: 1.37 KB
-
-
+    ' 
+    ' 
     '     Class JsError
     ' 
+    '         Properties: Frames, Message, Name, Original, Stack
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: Capture, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,11 +58,18 @@
 Namespace Runtime
 
     ''' <summary>
-    ''' JavaScript Error object: <c>name</c> plus <c>message</c>.
+    ''' JavaScript Error object: <c>name</c> plus <c>message</c>, and — like Node — the
+    ''' JS stack frozen at the moment the error was constructed.
     ''' <para>
     ''' Engine-raised runtime errors carry one of these as their payload, so script
-    ''' <c>catch</c> handlers can read <c>e.message</c> / <c>e.name</c> exactly like
-    ''' in JavaScript; <c>String(e)</c> renders as <c>"Name: message"</c>.
+    ''' <c>catch</c> handlers can read <c>e.message</c> / <c>e.name</c> / <c>e.stack</c>
+    ''' exactly like in JavaScript; <c>String(e)</c> renders as <c>"Name: message"</c>
+    ''' (unchanged), while <c>e.stack</c> adds the frames.
+    ''' </para>
+    ''' <para>
+    ''' <see cref="Frames"/> is captured eagerly in the constructor: the stack must be
+    ''' frozen at the construction site, because by the time a handler reads
+    ''' <c>e.stack</c> the interpreter has already unwound.
     ''' </para>
     ''' </summary>
     Public Class JsError
@@ -75,11 +84,47 @@ Namespace Runtime
         ''' </summary>
         Public ReadOnly Original As Exception
 
+        ''' <summary>
+        ''' JS stack frames frozen at construction time, innermost first
+        ''' (see <see cref="JsStackTrace.Capture"/>).
+        ''' </summary>
+        Public ReadOnly Property Frames As List(Of JsStackFrame)
+
         Public Sub New(name As String, Optional message As String = "", Optional original As Exception = Nothing)
+            Me.New(name, message, original, Nothing)
+        End Sub
+
+        ''' <summary>
+        ''' <paramref name="frames"/> = Nothing captures the current JS stack; pass an
+        ''' existing list to share the frames of a wrapping error.
+        ''' </summary>
+        Public Sub New(name As String, message As String, original As Exception, frames As List(Of JsStackFrame))
             Me.Name = name
             Me.Message = If(message, "")
             Me.Original = original
+            Me.Frames = If(frames, JsStackTrace.Capture())
         End Sub
+
+        ''' <summary>
+        ''' Build an error that carries the JS stack of this very moment — the JS
+        ''' <c>new Error(message)</c> semantics.
+        ''' </summary>
+        Public Shared Function Capture(name As String,
+                                      Optional message As String = "",
+                                      Optional original As Exception = Nothing) As JsError
+
+            Return New JsError(name, message, original)
+        End Function
+
+        ''' <summary>
+        ''' Node style stack text: <c>"Name: message"</c> followed by the frames
+        ''' (<c>    at fn (file:line:col)</c>).
+        ''' </summary>
+        Public ReadOnly Property Stack As String
+            Get
+                Return JsStackTrace.FormatWithHeader(Name, Message, Frames)
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             If Message Is Nothing OrElse Message.Length = 0 Then Return Name

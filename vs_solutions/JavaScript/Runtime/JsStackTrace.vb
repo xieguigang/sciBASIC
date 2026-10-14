@@ -45,7 +45,7 @@
     '         Properties: CurrentFrame, Depth, Frames, StackTraceLimit
     '
     '         Function: Capture, CaptureCount, Format, FormatFrame, FormatWithHeader
-    '                   JsLocation, PushFrame
+    '                   JsLocation, PushFrame, SingleFrame
     '
     '         Sub: PopFrame, Reset, UpdatePosition
     '
@@ -314,6 +314,15 @@ Namespace Runtime
             If frameLimit <= 0 Then frameLimit = MaxCaptureDepth
 
             Return System.Math.Min(System.Math.Min(frameCount, frameLimit), MaxCaptureDepth)
+        End Function
+
+        ''' <summary>
+        ''' A one frame stack for a location known without an interpreter stack — a syntax
+        ''' error reported by the parser, for instance, which hosts render as
+        ''' <c>SyntaxError</c> plus its position.
+        ''' </summary>
+        Public Function SingleFrame(name As String, file As String, line As Integer, column As Integer) As List(Of JsStackFrame)
+            Return New List(Of JsStackFrame) From {New JsStackFrame(name, file, line, column)}
         End Function
 
         ''' <summary>Clear the frame stack (start of a script run).</summary>
