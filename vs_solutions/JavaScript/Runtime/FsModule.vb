@@ -372,20 +372,24 @@ Namespace Runtime
 
         ' ===================== async (callback) wrappers =====================
 
+        ' All async wrappers perform the file I/O at CALL time (mirroring how Node
+        ' opens/reads the file immediately), capture the result or error, and only
+        ' DEFER the callback invocation as a microtask. This keeps behaviour correct
+        ' when the caller mutates the file synchronously before the callback fires
+        ' (e.g. readFile then unlinkSync), exactly as Node does via the open fd.
+
         Private Shared Function AsyncReadFile(args As Object()) As Object
             Dim cb As Object = Nothing, opts As Object = Nothing
             Extract(args, 1, cb, opts)
-            Dim pth = Str(args, 0), enc = ReadEncoding(opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.readFile requires a callback")
+            Dim pth = Str(args, 0), enc = ReadEncoding(opts)
+            Dim failed As Boolean = False, result As Object = JsRuntime.Undef, err As Object = JsRuntime.Undef
+            Try : result = CoreReadFile(ResolvePath(pth), enc)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "open", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             Dim data = CoreReadFile(ResolvePath(pth), enc)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef, data})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "open", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef, result}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -395,15 +399,13 @@ Namespace Runtime
             Extract(args, 2, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.writeFile requires a callback")
             Dim pth = Str(args, 0), data = Arg(args, 1), enc = WriteEncoding(opts)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreWriteFile(ResolvePath(pth), data, enc)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "open", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreWriteFile(ResolvePath(pth), data, enc)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "open", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -413,14 +415,13 @@ Namespace Runtime
             Extract(args, 1, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.readdir requires a callback")
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, result As Object = JsRuntime.Undef, err As Object = JsRuntime.Undef
+            Try : result = CoreReaddir(pth)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "scandir", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef, CoreReaddir(pth)})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "scandir", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef, result}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -430,15 +431,13 @@ Namespace Runtime
             Extract(args, 1, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.mkdir requires a callback")
             Dim pth = Str(args, 0), rec = IsRecursive(opts)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreMkdir(pth, rec)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "mkdir", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreMkdir(pth, rec)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "mkdir", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -448,15 +447,13 @@ Namespace Runtime
             Extract(args, 1, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.rmdir requires a callback")
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreRmdir(pth)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "rmdir", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreRmdir(pth)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "rmdir", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -466,14 +463,13 @@ Namespace Runtime
             Extract(args, 1, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.stat requires a callback")
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, result As Object = JsRuntime.Undef, err As Object = JsRuntime.Undef
+            Try : result = CoreStat(pth, follow)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "stat", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef, CoreStat(pth, follow)})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "stat", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef, result}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -483,15 +479,13 @@ Namespace Runtime
             Extract(args, 1, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.unlink requires a callback")
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreUnlink(pth)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "unlink", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreUnlink(pth)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "unlink", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -501,15 +495,13 @@ Namespace Runtime
             Extract(args, 2, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.appendFile requires a callback")
             Dim pth = ResolvePath(Str(args, 0)), data = Arg(args, 1), enc = WriteEncoding(opts)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreAppend(pth, data, enc)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "open", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreAppend(pth, data, enc)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "open", pth), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -519,15 +511,13 @@ Namespace Runtime
             Extract(args, 2, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.copyFile requires a callback")
             Dim s = Str(args, 0), d = Str(args, 1)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreCopy(s, d)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "copyfile", s)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreCopy(s, d)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "copyfile", s), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -537,15 +527,13 @@ Namespace Runtime
             Extract(args, 2, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.rename requires a callback")
             Dim s = Str(args, 0), d = Str(args, 1)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreRename(s, d)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "rename", s)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try
-                                             CoreRename(s, d)
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Catch rex As JsRuntimeException
-                                             JsRuntime.JsInvoke(cb, New Object() {rex.Payload, JsRuntime.Undef})
-                                         Catch ex As Exception
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError(ex, "rename", s), JsRuntime.Undef})
-                                         End Try
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {err, JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
@@ -555,27 +543,28 @@ Namespace Runtime
             Extract(args, 1, cb, opts)
             If cb Is Nothing Then Throw JsRuntimeException.TypeError("fs.access requires a callback")
             Dim pth = Str(args, 0)
+            Dim full = ResolvePath(pth)
+            Dim failed As Boolean = (Not System.IO.File.Exists(full)) AndAlso (Not System.IO.Directory.Exists(full))
             JsRuntime.QueueMicrotask(Sub()
-                                         Dim full = ResolvePath(pth)
-                                         If System.IO.File.Exists(full) OrElse System.IO.Directory.Exists(full) Then
-                                             JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef})
-                                         Else
-                                             JsRuntime.JsInvoke(cb, New Object() {FsError("ENOENT", "no such file or directory", "access", full), JsRuntime.Undef})
-                                         End If
+                                         If Not failed Then JsRuntime.JsInvoke(cb, New Object() {JsRuntime.Undef}) Else JsRuntime.JsInvoke(cb, New Object() {FsError("ENOENT", "no such file or directory", "access", full), JsRuntime.Undef})
                                      End Sub)
             Return JsRuntime.Undef
         End Function
 
         ' ===================== promise wrappers =====================
 
+        ' Promise wrappers: same call-time I/O capture as the callback form so that
+        ' the underlying operation is committed before the promise settles.
         Private Shared Function PromiseReadFile(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0), enc = ReadEncoding(Arg(args, 1))
+            Dim failed As Boolean = False, result As Object = JsRuntime.Undef, err As Object = JsRuntime.Undef
+            Try : result = CoreReadFile(ResolvePath(pth), enc)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "open", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : pr.Fulfill(CoreReadFile(ResolvePath(pth), enc))
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "open", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(result) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -583,11 +572,13 @@ Namespace Runtime
         Private Shared Function PromiseWriteFile(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0), data = Arg(args, 1), enc = WriteEncoding(Arg(args, 2))
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreWriteFile(ResolvePath(pth), data, enc)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "open", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreWriteFile(ResolvePath(pth), data, enc) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "open", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -595,11 +586,13 @@ Namespace Runtime
         Private Shared Function PromiseReaddir(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, result As Object = JsRuntime.Undef, err As Object = JsRuntime.Undef
+            Try : result = CoreReaddir(pth)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "scandir", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : pr.Fulfill(CoreReaddir(pth))
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "scandir", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(result) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -607,11 +600,13 @@ Namespace Runtime
         Private Shared Function PromiseMkdir(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0), rec = IsRecursive(Arg(args, 1))
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreMkdir(pth, rec)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "mkdir", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreMkdir(pth, rec) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "mkdir", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -619,11 +614,13 @@ Namespace Runtime
         Private Shared Function PromiseRmdir(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreRmdir(pth)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "rmdir", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreRmdir(pth) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "rmdir", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -631,11 +628,13 @@ Namespace Runtime
         Private Shared Function PromiseStat(args As Object(), follow As Boolean) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, result As Object = JsRuntime.Undef, err As Object = JsRuntime.Undef
+            Try : result = CoreStat(pth, follow)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "stat", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : pr.Fulfill(CoreStat(pth, follow))
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "stat", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(result) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -643,11 +642,13 @@ Namespace Runtime
         Private Shared Function PromiseUnlink(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreUnlink(pth)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "unlink", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreUnlink(pth) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "unlink", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -655,11 +656,13 @@ Namespace Runtime
         Private Shared Function PromiseAppend(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0), data = Arg(args, 1), enc = WriteEncoding(Arg(args, 2))
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreAppend(ResolvePath(pth), data, enc)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "open", pth)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreAppend(ResolvePath(pth), data, enc) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "open", pth))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -667,11 +670,13 @@ Namespace Runtime
         Private Shared Function PromiseCopy(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim s = Str(args, 0), d = Str(args, 1)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreCopy(s, d)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "copyfile", s)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreCopy(s, d) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "copyfile", s))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -679,11 +684,13 @@ Namespace Runtime
         Private Shared Function PromiseRename(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim s = Str(args, 0), d = Str(args, 1)
+            Dim failed As Boolean = False, err As Object = JsRuntime.Undef
+            Try : CoreRename(s, d)
+            Catch rex As JsRuntimeException : failed = True : err = rex.Payload
+            Catch ex As Exception : failed = True : err = FsError(ex, "rename", s)
+            End Try
             JsRuntime.QueueMicrotask(Sub()
-                                         Try : CoreRename(s, d) : pr.Fulfill(JsRuntime.Undef)
-                                         Catch rex As JsRuntimeException : pr.Reject(rex.Payload)
-                                         Catch ex As Exception : pr.Reject(FsError(ex, "rename", s))
-                                         End Try
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -691,13 +698,11 @@ Namespace Runtime
         Private Shared Function PromiseAccess(args As Object()) As Object
             Dim pr = New JsPromise()
             Dim pth = Str(args, 0)
+            Dim full = ResolvePath(pth)
+            Dim failed As Boolean = (Not System.IO.File.Exists(full)) AndAlso (Not System.IO.Directory.Exists(full))
+            Dim err As Object = If(failed, FsError("ENOENT", "no such file or directory", "access", full), JsRuntime.Undef)
             JsRuntime.QueueMicrotask(Sub()
-                                         Dim full = ResolvePath(pth)
-                                         If System.IO.File.Exists(full) OrElse System.IO.Directory.Exists(full) Then
-                                             pr.Fulfill(JsRuntime.Undef)
-                                         Else
-                                             pr.Reject(FsError("ENOENT", "no such file or directory", "access", full))
-                                         End If
+                                         If Not failed Then pr.Fulfill(JsRuntime.Undef) Else pr.Reject(err)
                                      End Sub)
             Return pr
         End Function
@@ -718,8 +723,10 @@ Namespace Runtime
         End Function
 
         Private Shared Function FsError(code As String, desc As String, syscall As String, pth As String) As JsFsError
-            Dim msg = code & ": " & desc & ", " & syscall & " '" & pth & "'"
-            Return New JsFsError(msg, code, syscall, pth)
+            ' Node reports the RESOLVED absolute path in both the message and err.path.
+            Dim rp = ResolvePath(pth)
+            Dim msg = code & ": " & desc & ", " & syscall & " '" & rp & "'"
+            Return New JsFsError(msg, code, syscall, rp)
         End Function
 
         Private Shared Function MapDesc(code As String) As String

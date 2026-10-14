@@ -44,10 +44,10 @@ Namespace Runtime
                 Return New BufferInstance(Encode(enc, CStr(input)))
             End If
             If JsRuntime.IsJsArray(input) Then
-                Dim a = DirectCast(input, List(Of Object))
+                Dim a = DirectCast(input, System.Collections.Generic.List(Of Object))
                 Dim b(a.Count - 1) As Byte
                 For i = 0 To a.Count - 1
-                    b(i) = CByte(JsRuntime.JsNum(a(i)) And &HFF)
+                    b(i) = CByte(CInt(JsRuntime.JsNum(a(i))) And &HFF)
                 Next
                 Return New BufferInstance(b)
             End If
@@ -67,14 +67,14 @@ Namespace Runtime
                     End If
                     Return New BufferInstance(b)
                 End If
-                Dim value = CByte(JsRuntime.JsNum(fill) And &HFF)
+                Dim value = CByte(CInt(JsRuntime.JsNum(fill)) And &HFF)
                 For i = 0 To size - 1 : b(i) = value : Next
             End If
             Return New BufferInstance(b)
         End Function
 
         Private Shared Function Concat(args As Object()) As BufferInstance
-            Dim list = DirectCast(Arg(args, 0), List(Of Object))
+            Dim list = DirectCast(Arg(args, 0), System.Collections.Generic.List(Of Object))
             Dim total = 0
             For Each item In list
                 Dim bi = TryCast(item, BufferInstance)
@@ -125,7 +125,7 @@ Namespace Runtime
                     Dim o = TryCast(Arg(args, 0), BufferInstance)
                     Return o IsNot Nothing AndAlso target.EqualsBuf(o)
                 Case "fill"
-                    Dim v = CByte(JsRuntime.JsNum(Arg(args, 0)) And &HFF)
+                    Dim v = CByte(CInt(JsRuntime.JsNum(Arg(args, 0))) And &HFF)
                     Dim s = If(args.Length > 1, CInt(JsRuntime.JsNum(Arg(args, 1))), 0)
                     Dim e = If(args.Length > 2, CInt(JsRuntime.JsNum(Arg(args, 2))), target.Data.Length)
                     target.Fill(v, s, e) : Return target
@@ -163,11 +163,11 @@ Namespace Runtime
 
         Friend Shared Function Encode(enc As String, text As String) As Byte()
             Select Case LCase(If(enc, "utf8"))
-                Case "ascii" : Return ASCIIEncoding.ASCII.GetBytes(text)
+                Case "ascii" : Return System.Text.ASCIIEncoding.ASCII.GetBytes(text)
                 Case "latin1", "binary" : Return Latin1.GetBytes(text)
-                Case "base64" : Return Convert.FromBase64String(NormalizeBase64(text))
+                Case "base64" : Return System.Convert.FromBase64String(NormalizeBase64(text))
                 Case "hex" : Return FromHex(text)
-                Case Else : Return Encoding.UTF8.GetBytes(text)
+                Case Else : Return System.Text.Encoding.UTF8.GetBytes(text)
             End Select
         End Function
 
@@ -178,15 +178,15 @@ Namespace Runtime
             Dim slice(e - s - 1) As Byte
             Array.Copy(bytes, s, slice, 0, e - s)
             Select Case LCase(If(enc, "utf8"))
-                Case "ascii" : Return ASCIIEncoding.ASCII.GetString(slice)
+                Case "ascii" : Return System.Text.ASCIIEncoding.ASCII.GetString(slice)
                 Case "latin1", "binary" : Return Latin1.GetString(slice)
-                Case "base64" : Return Convert.ToBase64String(slice)
+                Case "base64" : Return System.Convert.ToBase64String(slice)
                 Case "hex" : Return ToHex(slice)
-                Case Else : Return Encoding.UTF8.GetString(slice)
+                Case Else : Return System.Text.Encoding.UTF8.GetString(slice)
             End Select
         End Function
 
-        Private Shared ReadOnly Latin1 As Encoding = Encoding.GetEncoding("ISO-8859-1")
+        Private Shared ReadOnly Latin1 As System.Text.Encoding = System.Text.Encoding.GetEncoding("ISO-8859-1")
 
         Private Shared Function NormalizeBase64(text As String) As String
             Dim t = text.Trim()
@@ -197,19 +197,19 @@ Namespace Runtime
         End Function
 
         Private Shared Function FromHex(text As String) As Byte()
-            Dim sb As New StringBuilder(text.Trim())
+            Dim sb As New System.Text.StringBuilder(text.Trim())
             sb.Replace(vbCr, "").Replace(vbLf, "").Replace(" ", "")
             Dim t = sb.ToString()
             If t.Length Mod 2 <> 0 Then Throw JsRuntimeException.TypeError("Invalid hex string")
             Dim out(t.Length \ 2 - 1) As Byte
             For i = 0 To out.Length - 1
-                out(i) = Convert.ToByte(t.Substring(i * 2, 2), 16)
+                out(i) = System.Convert.ToByte(t.Substring(i * 2, 2), 16)
             Next
             Return out
         End Function
 
         Private Shared Function ToHex(bytes As Byte()) As String
-            Dim sb As New StringBuilder()
+            Dim sb As New System.Text.StringBuilder()
             For Each b In bytes : sb.Append(b.ToString("x2")) : Next
             Return sb.ToString()
         End Function
@@ -273,8 +273,8 @@ Namespace Runtime
             Return -1
         End Function
 
-        Public Function ToArrayObject() As List(Of Object)
-            Dim a As New List(Of Object)(Data.Length)
+        Public Function ToArrayObject() As System.Collections.Generic.List(Of Object)
+            Dim a As New System.Collections.Generic.List(Of Object)(Data.Length)
             For Each b In Data : a.Add(CDbl(b)) : Next
             Return a
         End Function
@@ -282,7 +282,7 @@ Namespace Runtime
         Public Overrides Function ToString() As String
             If Data.Length = 0 Then Return "<Buffer >"
             Dim limit = System.Math.Min(Data.Length, 50)
-            Dim sb As New StringBuilder("<Buffer")
+            Dim sb As New System.Text.StringBuilder("<Buffer")
             For i = 0 To limit - 1
                 sb.Append(" " & Data(i).ToString("x2"))
             Next
