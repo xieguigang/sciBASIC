@@ -54,7 +54,32 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
+Imports Microsoft.VisualBasic.Math.SIMD
+Imports std = System.Math
+
 Public Module DistributionsPerfTest
+
+    Private sink As Double = 0
+    Private pass As Integer = 0
+    Private fail As Integer = 0
+
+    ''' <summary>
+    ''' TrIQ / ECDF 性能优化的正确性校验与提速基准入口
+    ''' </summary>
+    ''' <returns>0 表示全部通过</returns>
+    Public Function RunAll() As Integer
+        pass = 0
+        fail = 0
+
+        Benchmark()
+
+        Console.WriteLine()
+        Console.WriteLine($"断言通过 = {pass}, 失败 = {fail}")
+
+        Return If(fail = 0, 0, 1)
+    End Function
 
 #Region "benchmark"
 
@@ -140,6 +165,86 @@ Public Module DistributionsPerfTest
 #End Region
 
 #Region "harness helpers"
+
+    ''' <summary>
+    ''' TrIQ 上界钳制优化前的参考实现：逐元素标量比较。
+    ''' </summary>
+    Private Function RefCutThreshold(data As Double(), cut As Double) As Double()
+        Dim out As Double() = New Double(data.Length - 1) {}
+
+        For i As Integer = 0 To data.Length - 1
+            out(i) = std.Min(data(i), cut)
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>
+    ''' DiscreteLevels 优化前的参考实现：逐元素标量仿射映射（减 -> 除 -> 乘）。
+    ''' </summary>
+    Private Function RefDiscrete(data As Double(), n As Integer, T As Double?) As Integer()
+        Dim f As Double() = data.ToArray
+        Dim minf As Double = f.Min
+        Dim maxf As Double = f.Max
+        Dim out As Integer() = New Integer(f.Length - 1) {}
+
+        If T Is Nothing Then
+            T = maxf
+        End If
+
+        Dim span As Double = T.Value - minf
+
+        If span = 0.0 Then
+            For i As Integer = 0 To f.Length - 1
+                out(i) = n - 1
+            Next
+
+            Return out
+        End If
+
+        For i As Integer = 0 To f.Length - 1
+            Dim scaled As Double = (f(i) - minf) / span * n
+
+            out(i) = If(f(i) >= T.Value, n - 1, CInt(scaled))
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>
+    ''' ECDF.FindThreshold 优化前的参考实现：在循环内反复切片并从头累加 CDF（O(n^2)）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 与 <see cref="ECDF.FindThreshold"/> 的注释一致：优化后改用包含式前缀和 cum(k-1)/N，
+    ''' 这里的参考实现刻意保留原来的 ``ECDF.CDF(sample.Take(k), N)`` 写法，用于耗时对比。
+    ''' </remarks>
+    Private Function RefFindThreshold(data As Double(), q As Double, eps As Double) As Double
+        Dim sample As DataBinBox(Of Double)() = CutBins.FixedWidthBins(data, 100, Function(xi) xi) _
+            .OrderBy(Function(b) b.Boundary.Min) _
+            .ToArray
+        Dim n As Integer = Aggregate bi As DataBinBox(Of Double) In sample Into Sum(bi.Count)
+        Dim minK As Integer = 1
+        Dim minD As Double = Double.MaxValue
+
+        For k As Integer = 1 To sample.Length - 1
+            Dim cdf As Double = ECDF.CDF(sample.Take(k), n)
+
+            If cdf > q Then
+                Exit For
+            End If
+
+            Dim d As Double = std.Abs(cdf - q)
+
+            If d <= eps Then
+                Return sample(k).Boundary.Min
+            ElseIf d < minD Then
+                minD = d
+                minK = k
+            End If
+        Next
+
+        Return sample(minK - 1).Boundary.Max
+    End Function
 
     Private Function MakeRandom(seed As Integer, length As Integer, min As Double, max As Double) As Double()
         Dim rnd As New Random(seed)

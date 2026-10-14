@@ -282,16 +282,16 @@ Public Module HalfSimdTest
 
                 CompareBits($"AddScalar[{n},{s}]",
                     HalfSimd.AddScalar(a, s),
-                    ReferenceScalar(a, s, Function(x, y) x + y))
+                    ReferenceScalar(a, s, Function(p, q) p + q))
                 CompareBits($"SubtractScalar[{n},{s}]",
                     HalfSimd.SubtractScalar(a, s),
-                    ReferenceScalar(a, s, Function(x, y) x - y))
+                    ReferenceScalar(a, s, Function(p, q) p - q))
                 CompareBits($"MultiplyScalar[{n},{s}]",
                     HalfSimd.MultiplyScalar(a, s),
-                    ReferenceScalar(a, s, Function(x, y) x * y))
+                    ReferenceScalar(a, s, Function(p, q) p * q))
                 CompareBits($"DivideScalar[{n},{s}]",
                     HalfSimd.DivideScalar(a, s),
-                    ReferenceScalar(a, s, Function(x, y) x / y))
+                    ReferenceScalar(a, s, Function(p, q) p / q))
             Next
         Next
 

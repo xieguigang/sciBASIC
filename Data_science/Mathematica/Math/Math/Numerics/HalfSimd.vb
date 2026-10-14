@@ -45,6 +45,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Runtime.Intrinsics
 Imports Microsoft.VisualBasic.Math.SIMD
 
@@ -156,11 +157,21 @@ Namespace Numerics
         ''' <summary>
         ''' 读取 8 个 <see cref="System.Half"/> 并拆分到两个 4 路 Integer lane
         ''' </summary>
+        ''' <remarks>
+        ''' 关键点：``Vector128(Of Half)`` 在运行时**不受支持**（读它的 Count 会抛
+        ''' NotSupportedException，因为 Half 不是向量基元类型），所以不能直接
+        ''' ``Vector128.Create(Of Half)(...)``。这里用 <see cref="MemoryMarshal"/> 把
+        ''' ``Half()`` 按位重解释成 ``Short()``（两者都是 2 字节且不含引用），再走 Short 通道。
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub LoadLanes(source As Half(), start As Integer,
                               ByRef lower As Vector128(Of Integer),
                               ByRef upper As Vector128(Of Integer))
-            Dim bits As Vector128(Of Short) = Vector128.Create(source, start).AsInt16()
+            ' 注意：
+            ' 1) VB 不支持声明 Span/ReadOnlySpan 局部变量（ref struct），所以必须内联写；
+            ' 2) 必须显式给出 (Of Short)，否则 VB 会把 Span 本身当成广播标量去匹配 Create(Of T)(T)
+            Dim bits As Vector128(Of Short) = Vector128.Create(Of Short)(
+                MemoryMarshal.Cast(Of Half, Short)(source.AsSpan(start, Lanes)))
 
             lower = Vector128.WidenLower(bits)
             upper = Vector128.WidenUpper(bits)
@@ -174,7 +185,7 @@ Namespace Numerics
                                target As Half(), start As Integer)
             Dim packed As Vector128(Of Short) = Vector128.Narrow(lower, upper)
 
-            Vector128.CopyTo(Of Half)(Vector128.As(Of Short, Half)(packed), target, start)
+            packed.CopyTo(MemoryMarshal.Cast(Of Half, Short)(target.AsSpan(start, Lanes)))
         End Sub
 
 #End Region
