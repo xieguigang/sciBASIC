@@ -58,4 +58,8 @@
     <ProjectReference Include="..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Runtime\Error\" />
+  </ItemGroup>
+
 </Project>
