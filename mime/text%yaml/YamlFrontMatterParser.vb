@@ -77,9 +77,7 @@ Imports System.Text.RegularExpressions
 ''' </summary>
 Public Module YamlFrontMatterParser
 
-    Private ReadOnly FrontMatterRegex As New Regex(
-        "^\s*---\s*\r?\n(.*?)\r?\n---\s*(\r?\n|$)",
-        RegexOptions.Singleline Or RegexOptions.Compiled)
+    Private ReadOnly FrontMatterRegex As New Regex("^\s*---\s*\r?\n(.*?)\r?\n---\s*(\r?\n|$)", RegexOptions.Singleline Or RegexOptions.Compiled)
 
     ''' <summary>
     ''' Parse the YAML front-matter block from the raw markdown content
