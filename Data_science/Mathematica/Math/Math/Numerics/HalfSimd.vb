@@ -908,6 +908,550 @@ Namespace Numerics
 
 #End Region
 
+#Region "elementwise extrema"
+
+        ''' <summary>
+        ''' 把一路 4-lane Single 的极值结果转成 Half 位型，并把 NaN 车道改写为标准 NaN。
+        ''' </summary>
+        ''' <remarks>
+        ''' 之所以需要显式处理 NaN：<see cref="Vector128.Min"/> / <see cref="Vector128.Max"/>
+        ''' 在任一操作数为 NaN 时返回另一个操作数（NaN 被忽略），而
+        ''' <see cref="System.Math.Min(Single,Single)"/> / <see cref="System.Math.Max(Single,Single)"/>
+        ''' 传播 NaN。不修正的话向量路径与标量尾部在 NaN 输入上会分叉。
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function ExtremaLanes(x As Vector128(Of Single), y As Vector128(Of Single),
+                                      findMin As Boolean) As Vector128(Of Integer)
+            Dim m As Vector128(Of Single) = If(findMin, Vector128.Min(x, y), Vector128.Max(x, y))
+            ' 两个操作数都非 NaN 的车道为全 1
+            Dim notNaN As Vector128(Of Single) = Vector128.BitwiseAnd(Vector128.Equals(x, x), Vector128.Equals(y, y))
+            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(notNaN.AsInt32(), Vector128.Create(-1))
+            ' 极值结果一定是输入之一，转回 Half 是恒等映射；NaN 车道统一改写成 &amp;H7E00
+            Dim bits As Vector128(Of Integer) = LanesToHalf(m)
+            Dim nanBits As Vector128(Of Integer) = Vector128.Create(&H7E00)
+
+            Return Vector128.BitwiseOr(Vector128.AndNot(isNaN, bits), Vector128.BitwiseAnd(isNaN, nanBits))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素取较大值：<c>out(i) = CType(std.Max(CSng(a(i)), CSng(b(i))), Half)</c>。
+        ''' </summary>
+        ''' <param name="a">第一个向量</param>
+        ''' <param name="b">第二个向量</param>
+        ''' <returns>与输入等长的新数组</returns>
+        ''' <remarks>
+        ''' 任一操作数为 NaN 时该位置结果为 NaN（与 <see cref="System.Math.Max(Single,Single)"/> 的
+        ''' 传播语义一致），向量路径与标量尾部逐位一致。
+        ''' </remarks>
+        Public Function Maximum(a As Half(), b As Half()) As Half()
+            CheckSameLength(a, b)
+
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim alo, ahi, blo, bhi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, alo, ahi)
+                    LoadLanes(b, i, blo, bhi)
+                    StoreLanes(
+                        ExtremaLanes(LanesToSingle(alo), LanesToSingle(blo), findMin:=False),
+                        ExtremaLanes(LanesToSingle(ahi), LanesToSingle(bhi), findMin:=False),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(System.Math.Max(CSng(a(i)), CSng(b(i))), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' 逐元素取较小值：<c>out(i) = CType(std.Min(CSng(a(i)), CSng(b(i))), Half)</c>。
+        ''' </summary>
+        ''' <param name="a">第一个向量</param>
+        ''' <param name="b">第二个向量</param>
+        ''' <returns>与输入等长的新数组</returns>
+        ''' <remarks>NaN 传播语义与 <see cref="Maximum"/> 一致。</remarks>
+        Public Function Minimum(a As Half(), b As Half()) As Half()
+            CheckSameLength(a, b)
+
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim alo, ahi, blo, bhi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, alo, ahi)
+                    LoadLanes(b, i, blo, bhi)
+                    StoreLanes(
+                        ExtremaLanes(LanesToSingle(alo), LanesToSingle(blo), findMin:=True),
+                        ExtremaLanes(LanesToSingle(ahi), LanesToSingle(bhi), findMin:=True),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(System.Math.Min(CSng(a(i)), CSng(b(i))), Half)
+            Loop
+
+            Return out
+        End Function
+
+#End Region
+
+#Region "elementwise unary"
+
+        ''' <summary>
+        ''' 逐元素一元核的公共骨架：向量路径只向量化「Half→Single→Half 的转换」，
+        ''' 函数本身逐 lane 求值（BCL 没有向量的 transcendental 指令），尾部走标量。
+        ''' 两条路径经过同一套转换内核，因此逐位一致。
+        ''' </summary>
+        ''' <param name="a">输入向量</param>
+        ''' <param name="f">Single 域的一元函数</param>
+        Private Function UnaryCore(a As Half(), f As Func(Of Single, Single)) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        LanesToHalf(ApplyLanes(LanesToSingle(lo), f)),
+                        LanesToHalf(ApplyLanes(LanesToSingle(hi), f)),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(f(CSng(a(i))), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' 把一元函数应用到 4 路 Single lane 上（逐 lane 调用，无向量 transcendental 可用）。
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function ApplyLanes(v As Vector128(Of Single), f As Func(Of Single, Single)) As Vector128(Of Single)
+            Return Vector128.Create(f(v.GetElement(0)), f(v.GetElement(1)),
+                                    f(v.GetElement(2)), f(v.GetElement(3)))
+        End Function
+
+        ''' <summary>逐元素绝对值：向量路径按位清 Single lane 的符号位，NaN 仍由转换内核规范化。</summary>
+        Public Function Abs(a As Half()) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        LanesToHalf(Vector128.BitwiseAnd(LanesToSingle(lo).AsInt32(), Vector128.Create(AbsMask32)).AsSingle()),
+                        LanesToHalf(Vector128.BitwiseAnd(LanesToSingle(hi).AsInt32(), Vector128.Create(AbsMask32)).AsSingle()),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(System.Math.Abs(CSng(a(i))), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>逐元素取负：向量路径按位翻转 Single lane 的符号位。</summary>
+        Public Function Negate(a As Half()) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        LanesToHalf(Vector128.Xor(LanesToSingle(lo).AsInt32(), Vector128.Create(SignMask32)).AsSingle()),
+                        LanesToHalf(Vector128.Xor(LanesToSingle(hi).AsInt32(), Vector128.Create(SignMask32)).AsSingle()),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(-CSng(a(i)), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>逐元素平方：<c>out(i) = CType(CSng(a(i)) * CSng(a(i)), Half)</c>。</summary>
+        Public Function Square(a As Half()) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        LanesToHalf(Vector128.Multiply(LanesToSingle(lo), LanesToSingle(lo))),
+                        LanesToHalf(Vector128.Multiply(LanesToSingle(hi), LanesToSingle(hi))),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(CSng(a(i)) * CSng(a(i)), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>逐元素倒数：<c>out(i) = CType(1.0F / CSng(a(i)), Half)</c>。</summary>
+        Public Function Reciprocal(a As Half()) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+            Dim ones As Vector128(Of Single) = Vector128.Create(1.0F)
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        LanesToHalf(Vector128.Divide(ones, LanesToSingle(lo))),
+                        LanesToHalf(Vector128.Divide(ones, LanesToSingle(hi))),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(1.0F / CSng(a(i)), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>逐元素平方根：<c>out(i) = CType(std.Sqrt(CSng(a(i))), Half)</c>。</summary>
+        Public Function Sqrt(a As Half()) As Half()
+            Return UnaryCore(a, Function(x) System.Math.Sqrt(x))
+        End Function
+
+        ''' <summary>逐元素自然指数：<c>out(i) = CType(std.Exp(CSng(a(i))), Half)</c>。</summary>
+        ''' <remarks>
+        ''' fp16 的 exp 在 x &gt; 11.1 即溢出成 Infinity —— 这是数据类型的硬上限，
+        ''' 与标量路径行为一致；需要稳定化的上层算子应当在 Single/Double 域先做重参数化。
+        ''' </remarks>
+        Public Function Exp(a As Half()) As Half()
+            Return UnaryCore(a, Function(x) CSng(System.Math.Exp(x)))
+        End Function
+
+        ''' <summary>逐元素自然对数：<c>out(i) = CType(std.Log(CSng(a(i))), Half)</c>。</summary>
+        Public Function Log(a As Half()) As Half()
+            Return UnaryCore(a, Function(x) System.Math.Log(x))
+        End Function
+
+        ''' <summary>逐元素双曲正切：<c>out(i) = CType(std.Tanh(CSng(a(i))), Half)</c>。</summary>
+        Public Function Tanh(a As Half()) As Half()
+            Return UnaryCore(a, Function(x) System.Math.Tanh(x))
+        End Function
+
+        ''' <summary>逐元素 Sigmoid：<c>out(i) = CType(1 / (1 + exp(-x)), Half)</c>。</summary>
+        Public Function Sigmoid(a As Half()) As Half()
+            Return UnaryCore(a, Function(x) 1.0F / (1.0F + CSng(System.Math.Exp(-x))))
+        End Function
+
+        ''' <summary>
+        ''' 逐元素 ReLU：<c>out(i) = x &gt; 0 ? x : 0</c>（NaN 输入取 0，与标量比较语义一致）。
+        ''' </summary>
+        Public Function Relu(a As Half()) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        ReluLanes(LanesToSingle(lo)),
+                        ReluLanes(LanesToSingle(hi)),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = If(CSng(a(i)) > 0.0F, a(i), CType(0.0F, Half))
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' 4 路 ReLU：先取 <c>Max(x, 0)</c>，再把 NaN 车道显式改写为 0 ——
+        ''' <see cref="Vector128.Max"/> 对 NaN 的返回哪个操作数属于实现相关行为，
+        ''' 不修正就无法保证与标量尾部（<c>x &gt; 0 ? x : 0</c>，NaN 落 0）逐位一致。
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function ReluLanes(v As Vector128(Of Single)) As Vector128(Of Integer)
+            Dim m As Vector128(Of Single) = Vector128.Max(v, Vector128(Of Single).Zero)
+            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(Vector128.Equals(v, v).AsInt32(), Vector128.Create(-1))
+            Dim bits As Vector128(Of Integer) = LanesToHalf(m)
+
+            Return Vector128.AndNot(isNaN, bits)
+        End Function
+
+        ''' <summary>
+        ''' 逐元素钳制：<c>out(i) = std.Min(std.Max(x, low), high)</c>（NaN 传播，与 Math.Min/Max 一致）。
+        ''' </summary>
+        ''' <param name="a">输入向量</param>
+        ''' <param name="low">下界（Single 域求值，精确表示任意 Half 边界）</param>
+        ''' <param name="high">上界</param>
+        Public Function Clip(a As Half(), low As Single, high As Single) As Half()
+            Dim n As Integer = a.Length
+            Dim out As Half() = NewArray(Of Half)(n)
+            Dim i As Integer = 0
+            Dim loV As Vector128(Of Single) = Vector128.Create(low)
+            Dim hiV As Vector128(Of Single) = Vector128.Create(high)
+
+            If CanVectorize(n) Then
+                Dim last As Integer = n - Lanes
+                Dim lo, hi As Vector128(Of Integer)
+
+                Do While i <= last
+                    LoadLanes(a, i, lo, hi)
+                    StoreLanes(
+                        ClipLanes(LanesToSingle(lo), loV, hiV),
+                        ClipLanes(LanesToSingle(hi), loV, hiV),
+                        out, i)
+                    i += Lanes
+                Loop
+            End If
+
+            Do While i < n
+                out(i) = CType(System.Math.Min(System.Math.Max(CSng(a(i)), low), high), Half)
+            Loop
+
+            Return out
+        End Function
+
+        ''' <summary>4 路钳制：NaN 车道显式改写为标准 NaN，保证与 <c>std.Min(std.Max(x, low), high)</c> 一致。</summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function ClipLanes(v As Vector128(Of Single), low As Vector128(Of Single), high As Vector128(Of Single)) As Vector128(Of Integer)
+            Dim m As Vector128(Of Single) = Vector128.Min(Vector128.Max(v, low), high)
+            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(Vector128.Equals(v, v).AsInt32(), Vector128.Create(-1))
+            Dim bits As Vector128(Of Integer) = LanesToHalf(m)
+            Dim nanBits As Vector128(Of Integer) = Vector128.Create(&H7E00)
+
+            Return Vector128.BitwiseOr(Vector128.AndNot(isNaN, bits), Vector128.BitwiseAnd(isNaN, nanBits))
+        End Function
+
+#End Region
+
+#Region "scalar operand overloads"
+
+        ' HalfSimd 原有的四个标量算子只接受 Single 标量。这里补 Half / Double 重载：
+        ' 内部统一转到 Single 广播（Half→Single 是精确 widening；Double 标量先经 CSng），
+        ' 避免每个调用点重复写转换。注意 Double 标量会被舍入到 Single 精度后再广播。
+
+        ''' <summary>逐元素加标量（Half 标量重载）。</summary>
+        Public Function AddScalar(a As Half(), scalar As Half) As Half()
+            Return AddScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素加标量（Double 标量重载，标量先经 CSng 广播）。</summary>
+        Public Function AddScalar(a As Half(), scalar As Double) As Half()
+            Return AddScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素减标量（Half 标量重载）。</summary>
+        Public Function SubtractScalar(a As Half(), scalar As Half) As Half()
+            Return SubtractScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素减标量（Double 标量重载，标量先经 CSng 广播）。</summary>
+        Public Function SubtractScalar(a As Half(), scalar As Double) As Half()
+            Return SubtractScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素乘标量（Half 标量重载）。</summary>
+        Public Function MultiplyScalar(a As Half(), scalar As Half) As Half()
+            Return MultiplyScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素乘标量（Double 标量重载，标量先经 CSng 广播）。</summary>
+        Public Function MultiplyScalar(a As Half(), scalar As Double) As Half()
+            Return MultiplyScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素除标量（Half 标量重载）。</summary>
+        Public Function DivideScalar(a As Half(), scalar As Half) As Half()
+            Return DivideScalar(a, CSng(scalar))
+        End Function
+
+        ''' <summary>逐元素除标量（Double 标量重载，标量先经 CSng 广播）。</summary>
+        Public Function DivideScalar(a As Half(), scalar As Double) As Half()
+            Return DivideScalar(a, CSng(scalar))
+        End Function
+
+#End Region
+
+#Region "matrix multiply"
+
+        ''' <summary>
+        ''' 计算矩阵乘积的第 <paramref name="row"/> 行：
+        ''' <c>result(resultOffset + j) = Σ_p a(row*k + p) * b(p*n + j)</c>。
+        ''' </summary>
+        ''' <param name="a">左矩阵，行主序 <c>[m, k]</c></param>
+        ''' <param name="b">右矩阵，行主序 <c>[k, n]</c></param>
+        ''' <param name="row">要计算的行号</param>
+        ''' <param name="k">内维长度</param>
+        ''' <param name="n">右矩阵列数</param>
+        ''' <param name="result">输出缓冲（长度 &gt;= m*n）</param>
+        ''' <param name="resultOffset">该行在输出缓冲中的起始下标</param>
+        ''' <remarks>
+        ''' 每 8 个输出列一块：8 个 Half 读入 → 2 个 4-lane Single 乘积
+        ''' （Half×Half 在 Single 的 24 位尾数内是**精确**的）→ 4 个 2-lane Double 累加器，
+        ''' 每个累加 lane 独立按 p 的顺序求和，因此与「Double 累加的标量三重循环」
+        ''' <b>逐位一致</b>（可做差分回归）。尾部列走标量路径。
+        ''' <para>
+        ''' 之所以不直接复用 <see cref="Dot"/>：Dot 用 lane 部分和改变了归约顺序，
+        ''' 无法与标量参考实现对拍；且逐输出元素调用会重复加载 b 的同一行。
+        ''' </para>
+        ''' </remarks>
+        Public Sub MatMulRowH(a As Half(), b As Half(), row As Integer,
+                              k As Integer, n As Integer,
+                              result As Half(), resultOffset As Integer)
+            Dim aBase As Integer = row * k
+            Dim j As Integer = 0
+
+            Do While j + Lanes <= n
+                Dim acc0 As Vector128(Of Double) = Vector128(Of Double).Zero
+                Dim acc1 As Vector128(Of Double) = Vector128(Of Double).Zero
+                Dim acc2 As Vector128(Of Double) = Vector128(Of Double).Zero
+                Dim acc3 As Vector128(Of Double) = Vector128(Of Double).Zero
+
+                For p As Integer = 0 To k - 1
+                    Dim av As Vector128(Of Single) = Vector128.Create(CSng(a(aBase + p)))
+                    Dim blo, bhi As Vector128(Of Integer)
+
+                    Call LoadLanes(b, p * n + j, blo, bhi)
+
+                    Dim plo As Vector128(Of Single) = Vector128.Multiply(av, LanesToSingle(blo))
+                    Dim phi As Vector128(Of Single) = Vector128.Multiply(av, LanesToSingle(bhi))
+
+                    acc0 = Vector128.Add(acc0, Vector128.WidenLower(plo))
+                    acc1 = Vector128.Add(acc1, Vector128.WidenUpper(plo))
+                    acc2 = Vector128.Add(acc2, Vector128.WidenLower(phi))
+                    acc3 = Vector128.Add(acc3, Vector128.WidenUpper(phi))
+                Next
+
+                Dim o As Integer = resultOffset + j
+
+                result(o) = CType(acc0.GetElement(0), Half)
+                result(o + 1) = CType(acc0.GetElement(1), Half)
+                result(o + 2) = CType(acc1.GetElement(0), Half)
+                result(o + 3) = CType(acc1.GetElement(1), Half)
+                result(o + 4) = CType(acc2.GetElement(0), Half)
+                result(o + 5) = CType(acc2.GetElement(1), Half)
+                result(o + 6) = CType(acc3.GetElement(0), Half)
+                result(o + 7) = CType(acc3.GetElement(1), Half)
+
+                j += Lanes
+            Loop
+
+            Do While j < n
+                Dim acc As Double = 0.0
+
+                For p As Integer = 0 To k - 1
+                    acc += CDbl(a(aBase + p)) * b(p * n + j)
+                Next
+
+                result(resultOffset + j) = CType(acc, Half)
+                j += 1
+            Loop
+        End Sub
+
+        ''' <summary>
+        ''' 矩阵乘法 <c>a[m, k] · b[k, n] → [m, n]</c>（行主序一维数组），
+        ''' 逐行调用 <see cref="MatMulRowH"/>，与 Double 累加的标量三重循环逐位一致。
+        ''' </summary>
+        Public Function MatMulH(a As Half(), b As Half(), m As Integer, k As Integer, n As Integer) As Half()
+            Dim result As Half() = NewArray(Of Half)(m * n)
+
+            For row As Integer = 0 To m - 1
+                Call MatMulRowH(a, b, row, k, n, result, row * n)
+            Next
+
+            Return result
+        End Function
+
+#End Region
+
+#Region "checked conversion"
+
+        ''' <summary>
+        ''' Double → Half 的范围安全转换：NaN 归零、|v| 超过 Half 表示范围时按 ±65520 夹断
+        ''' （转换结果为 ±65504，即 <see cref="System.Half.MaxValue"/>），不会静默产生 ±Infinity。
+        ''' </summary>
+        ''' <remarks>
+        ''' 对标单精度栈的 <c>MixedPrecisionPolicy.ToSingleChecked</c>：Inf 一旦进入动量 /
+        ''' 二阶矩就会永久粘住，与其等它在下游变 NaN，不如在入口处夹断。
+        ''' 本函数刻意不依赖 TensorFlow 侧的诊断计数器（Math 工程不能反向引用），
+        ''' 需要计数的调用方应在包装层判定夹断事件。
+        ''' </remarks>
+        Public Function ToHalfChecked(value As Double) As Half
+            If Double.IsNaN(value) Then
+                Return CType(0.0F, Half)
+            End If
+
+            If value > MaxHalfValueBelowInfinity Then
+                Return CType(MaxHalfValueBelowInfinity, Half)
+            End If
+
+            If value < -MaxHalfValueBelowInfinity Then
+                Return CType(-MaxHalfValueBelowInfinity, Half)
+            End If
+
+            Return CType(value, Half)
+        End Function
+
+#End Region
+
 #Region "argument checks"
 
         ''' <summary>
