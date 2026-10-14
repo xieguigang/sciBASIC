@@ -511,6 +511,14 @@ Public NotInheritable Class FuncExpr
     ''' </summary>
     Public Property InferredName As String
 
+    ''' <summary>
+    ''' Source text of the function body as it was written (<c>{ throw ... }</c>, or the
+    ''' expression of an arrow body), sliced by the parser. It is what lets
+    ''' <c>String(fn)</c> and the REPL echo show real source; <c>Nothing</c> for functions
+    ''' the engine built itself (generated code, host delegates).
+    ''' </summary>
+    Public Property BodySource As String
+
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
                    Optional isArrow As Boolean = False,
                    Optional defaults As Expression() = Nothing,
@@ -755,6 +763,12 @@ Public NotInheritable Class FuncDeclStmt
     ''' <summary>generator function (function*) — calling it yields an iterator.</summary>
     Public ReadOnly IsGenerator As Boolean
     Public ReadOnly Body As List(Of Statement)
+
+    ''' <summary>
+    ''' Source text of the declared function body, sliced by the parser
+    ''' (see <see cref="FuncExpr.BodySource"/>); carries over to the hoisted function value.
+    ''' </summary>
+    Public Property BodySource As String
 
     Public Sub New(name As String, parameters As String(), body As List(Of Statement),
                    Optional defaults As Expression() = Nothing, Optional restParam As String = Nothing,
