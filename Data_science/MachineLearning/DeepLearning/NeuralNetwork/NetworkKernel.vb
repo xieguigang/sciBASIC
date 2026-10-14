@@ -139,8 +139,7 @@ Namespace NeuralNetwork
         ''' <remarks>
         ''' No normalization is applied so the values keep the plain real-number semantics of the legacy
         ''' Netz/Network input, avoiding the <c>-0.5</c> offset introduced by image normalization.
-        ''' </remarks>
-        ''' <remarks>
+        ''' 
         ''' 单精度输入在此**加宽**为 <c>Double()</c> 写进 CNN 内核的 <c>DataBlock.w</c>；
         ''' 这是 NeuralNetwork 分支里唯一的精度边界，方向是加宽，不损失信息。
         ''' </remarks>
