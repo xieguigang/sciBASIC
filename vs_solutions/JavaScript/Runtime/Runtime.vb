@@ -112,10 +112,14 @@ Namespace Runtime
             End Get
             Set(value As ScriptIO)
                 _io = value
+                ' a fresh sink means a fresh script run: console counters / timers /
+                ' group indentation are per-thread state of the console singleton
+                Call ConsoleModule.Reset()
             End Set
         End Property
 
-        Public ReadOnly ConsoleBuiltin As New NativeObject("console")
+        ''' <summary>The <c>console</c> builtin object (see <see cref="ConsoleModule"/>).</summary>
+        Public ReadOnly ConsoleBuiltin As NativeObject = ConsoleModule.MakeConsole()
         Public ReadOnly MathBuiltin As New NativeObject("Math")
         Public ReadOnly Json As New NativeObject("JSON")
         Public ReadOnly ObjectBuiltin As New NativeObject("Object")
@@ -1335,14 +1339,12 @@ Namespace Runtime
             Return NumToString(d)
         End Function
 
+        ''' <summary>
+        ''' Dispatch a call on the <c>console</c> object; the whole console API lives in
+        ''' <see cref="ConsoleModule"/> (mirroring how <c>fs</c> lives in <see cref="FsModule"/>).
+        ''' </summary>
         Private Function BuiltinConsole(name As String, args As Object()) As Object
-            Dim parts(args.Length - 1) As String
-            For i = 0 To args.Length - 1
-                parts(i) = JsDisplay(args(i))
-            Next
-            Dim prefix = If(name = "error", "[error] ", If(name = "warn", "[warn] ", ""))
-            Io.WriteLine(prefix & String.Join(" ", parts))
-            Return Undef
+            Return ConsoleModule.Dispatch(name, args)
         End Function
 
         Private Function BuiltinMath(name As String, args As Object()) As Object
