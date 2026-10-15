@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::36f813d1a0a02ef831e077ca31a90e35, Data_science\Visualization\DataPlot\Advanced\DendrogramPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 260
-    '    Code Lines: 182 (70.00%)
-    ' Comment Lines: 35 (13.46%)
-    '    - Xml Docs: 60.00%
-    ' 
-    '   Blank Lines: 43 (16.54%)
-    '     File Size: 11.62 KB
+' Summaries:
 
 
-    '     Class DendrogramTheme
-    ' 
-    '         Properties: axisStroke, axisTickCSS, background, gridStrokeX, padding
-    '                     pointSize, tagCSS, XaxisTickFormat
-    ' 
-    '     Class DendrogramPlot
-    ' 
-    '         Properties: classinfo
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetColor, Plot
-    ' 
-    '         Sub: DendrogramTree, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 260
+'    Code Lines: 182 (70.00%)
+' Comment Lines: 35 (13.46%)
+'    - Xml Docs: 60.00%
+' 
+'   Blank Lines: 43 (16.54%)
+'     File Size: 11.62 KB
+
+
+'     Class DendrogramTheme
+' 
+'         Properties: axisStroke, axisTickCSS, background, gridStrokeX, padding
+'                     pointSize, tagCSS, XaxisTickFormat
+' 
+'     Class DendrogramPlot
+' 
+'         Properties: classinfo
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetColor, Plot
+' 
+'         Sub: DendrogramTree, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,240 +85,228 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
-#If NET48 Then
-Imports Brushes = System.Drawing.Brushes
-Imports Font = System.Drawing.Font
-Imports Pen = System.Drawing.Pen
-Imports SolidBrush = System.Drawing.SolidBrush
-#Else
-Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-#End If
+''' <summary>
+''' 层次聚类树图的样式参数
+''' </summary>
+Public Class DendrogramTheme
+
+    Public Property padding As String = g.DefaultPadding
+    Public Property background As String = "white"
+
+    ''' <summary>树杈连接线的画笔 CSS</summary>
+    Public Property gridStrokeX As String = Stroke.AxisGridStroke
+
+    ''' <summary>标尺刻度字体 CSS</summary>
+    Public Property axisTickCSS As String = CSSFont.PlotLabelNormal
+
+    ''' <summary>标尺轴线画笔 CSS</summary>
+    Public Property axisStroke As String = Stroke.AxisStroke
+
+    ''' <summary>叶子标签字体 CSS</summary>
+    Public Property tagCSS As String = CSSFont.PlotLabelNormal
+
+    ''' <summary>距离标尺刻度数字的格式化字符串</summary>
+    Public Property XaxisTickFormat As String = "F1"
+
+    ''' <summary>样本节点圆点大小（0 表示不绘制）</summary>
+    Public Property pointSize As Single = 10
+
+End Class
+
+''' <summary>
+''' 绘制层次聚类图(竖直方向)
+''' </summary>
+Public Class DendrogramPlot
+
+    Protected Friend ReadOnly hist As Cluster
+    Protected Friend ReadOnly classIndex As Dictionary(Of String, ColorClass)
 
     ''' <summary>
-    ''' 层次聚类树图的样式参数
+    ''' leaf id map to <see cref="ColorClass.name"/>
     ''' </summary>
-    Public Class DendrogramTheme
+    Public ReadOnly Property classinfo As Dictionary(Of String, String)
 
-        Public Property padding As String = g.DefaultPadding
-        Public Property background As String = "white"
+    Protected Friend ReadOnly showAllLabels As Boolean
+    Protected Friend ReadOnly showAllNodes As Boolean
+    Protected Friend ReadOnly showLeafLabels As Boolean
+    Protected Friend ReadOnly showRuler As Boolean
 
-        ''' <summary>树杈连接线的画笔 CSS</summary>
-        Public Property gridStrokeX As String = Stroke.AxisGridStroke
+    Protected labelFont As Font
+    Protected ReadOnly linkColor As Stroke
+    Protected ReadOnly pointColor As SolidBrush
+    Protected ReadOnly theme As DendrogramTheme
 
-        ''' <summary>标尺刻度字体 CSS</summary>
-        Public Property axisTickCSS As String = CSSFont.PlotLabelNormal
+    Protected labels As New List(Of NamedValue(Of PointF))
+    Protected legendWidth As Single = 20
 
-        ''' <summary>标尺轴线画笔 CSS</summary>
-        Public Property axisStroke As String = Stroke.AxisStroke
+    Public Sub New(hist As Cluster, theme As DendrogramTheme,
+                   Optional classes As ColorClass() = Nothing,
+                   Optional classinfo As Dictionary(Of String, String) = Nothing,
+                   Optional showAllLabels As Boolean = False,
+                   Optional showAllNodes As Boolean = False,
+                   Optional pointColor$ = "red",
+                   Optional showRuler As Boolean = True,
+                   Optional showLeafLabels As Boolean = True)
 
-        ''' <summary>叶子标签字体 CSS</summary>
-        Public Property tagCSS As String = CSSFont.PlotLabelNormal
-
-        ''' <summary>距离标尺刻度数字的格式化字符串</summary>
-        Public Property XaxisTickFormat As String = "F1"
-
-        ''' <summary>样本节点圆点大小（0 表示不绘制）</summary>
-        Public Property pointSize As Single = 10
-
-    End Class
+        Me.hist = hist
+        Me.theme = theme
+        Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
+        Me.classinfo = classinfo
+        Me.showAllLabels = showAllLabels
+        Me.linkColor = Stroke.TryParse(theme.gridStrokeX)
+        Me.showAllNodes = showAllNodes
+        Me.pointColor = pointColor.GetBrush
+        Me.showLeafLabels = showLeafLabels
+        Me.showRuler = showRuler
+    End Sub
 
     ''' <summary>
-    ''' 绘制层次聚类图(竖直方向)
+    ''' get by <see cref="classinfo"/>
     ''' </summary>
-    Public Class DendrogramPlot
+    Protected Function GetColor(id As String) As Color
+        If classinfo Is Nothing OrElse Not classinfo.ContainsKey(id) Then
+            Return Nothing
+        Else
+            Return classIndex(classinfo(id)).color.TranslateColor
+        End If
+    End Function
 
-        Protected Friend ReadOnly hist As Cluster
-        Protected Friend ReadOnly classIndex As Dictionary(Of String, ColorClass)
+    ''' <summary>
+    ''' render the dendrogram plot image
+    ''' </summary>
+    Public Function Plot(Optional size$ = "2100,1600",
+                         Optional dpi As Integer = 100,
+                         Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default) As GraphicsData
 
-        ''' <summary>
-        ''' leaf id map to <see cref="ColorClass.name"/>
-        ''' </summary>
-        Public ReadOnly Property classinfo As Dictionary(Of String, String)
+        Return g.GraphicsPlots(
+            size:=size.SizeParser,
+            padding:=theme.padding,
+            bg:=theme.background,
+            plotAPI:=AddressOf PlotInternal,
+            driver:=driver,
+            dpi:=dpi
+        )
+    End Function
 
-        Protected Friend ReadOnly showAllLabels As Boolean
-        Protected Friend ReadOnly showAllNodes As Boolean
-        Protected Friend ReadOnly showLeafLabels As Boolean
-        Protected Friend ReadOnly showRuler As Boolean
+    Private Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim plotRegion As Rectangle = canvas.PlotRegion(css)
+        ' 每一个样本点都平分一段长度
+        Dim unitWidth As Double = plotRegion.Height / hist.Leafs
+        Dim axisTicks As Double()
 
-        Protected labelFont As Font
-        Protected ReadOnly linkColor As Stroke
-        Protected ReadOnly pointColor As SolidBrush
-        Protected ReadOnly theme As DendrogramTheme
+        If hist.DistanceValue <= 0.1 Then
+            axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks(decimalDigits:=-1)
+        Else
+            axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
+        End If
 
-        Protected labels As New List(Of NamedValue(Of PointF))
-        Protected legendWidth As Single = 20
+        labelFont = css.GetFont(CSSFont.TryParse(theme.tagCSS))
 
-        Public Sub New(hist As Cluster, theme As DendrogramTheme,
-                       Optional classes As ColorClass() = Nothing,
-                       Optional classinfo As Dictionary(Of String, String) = Nothing,
-                       Optional showAllLabels As Boolean = False,
-                       Optional showAllNodes As Boolean = False,
-                       Optional pointColor$ = "red",
-                       Optional showRuler As Boolean = True,
-                       Optional showLeafLabels As Boolean = True)
+        Dim scaleX As d3js.scale.LinearScale = d3js.scale _
+            .linear() _
+            .domain(values:=axisTicks) _
+            .range(integers:={plotRegion.Left, plotRegion.Right})
 
-            Me.hist = hist
-            Me.theme = theme
-            Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
-            Me.classinfo = classinfo
-            Me.showAllLabels = showAllLabels
-            Me.linkColor = Stroke.TryParse(theme.gridStrokeX)
-            Me.showAllNodes = showAllNodes
-            Me.pointColor = pointColor.GetBrush
-            Me.showLeafLabels = showLeafLabels
-            Me.showRuler = showRuler
-        End Sub
+        ' 绘制距离标尺
+        Dim left = plotRegion.Left + plotRegion.Right - scaleX(axisTicks.Max)
+        Dim right = plotRegion.Left + plotRegion.Right - scaleX(0)
+        Dim y = plotRegion.Top + unitWidth - unitWidth / 2
+        Dim x!
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+        Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
+        Dim dh As Double = tickFontHeight / 3
+        Dim tickLable As String
+        Dim tickLabelSize As SizeF
+        Dim labelPadding As Integer
+        Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
-        ''' <summary>
-        ''' get by <see cref="classinfo"/>
-        ''' </summary>
-        Protected Function GetColor(id As String) As Color
-            If classinfo Is Nothing OrElse Not classinfo.ContainsKey(id) Then
-                Return Nothing
-            Else
-                Return classIndex(classinfo(id)).color.TranslateColor
-            End If
-        End Function
+        If classinfo.IsNullOrEmpty Then
+            labelPadding = g.MeasureString("0", labelFont).Width / 2
+        Else
+            labelPadding = g.MeasureString("00", labelFont).Width
+        End If
 
-        ''' <summary>
-        ''' render the dendrogram plot image
-        ''' </summary>
-        Public Function Plot(Optional size$ = "2100,1600",
-                             Optional dpi As Integer = 100,
-                             Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default) As GraphicsData
+        If showRuler Then
+            Call g.DrawLine(axisPen, New PointF(left, y), New PointF(right, y))
 
-            Return g.GraphicsPlots(
-                size:=size.SizeParser,
-                padding:=theme.padding,
-                bg:=theme.background,
-                plotAPI:=AddressOf PlotInternal,
-                driver:=driver,
-                dpi:=dpi
-            )
-        End Function
+            For Each tick As Double In axisTicks
+                x = plotRegion.Left + plotRegion.Right - scaleX(tick)
+                tickLable = tick.ToString(theme.XaxisTickFormat)
+                tickLabelSize = g.MeasureString(tickLable, tickFont)
 
-        Private Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim plotRegion As Rectangle = canvas.PlotRegion(css)
-            ' 每一个样本点都平分一段长度
-            Dim unitWidth As Double = plotRegion.Height / hist.Leafs
-            Dim axisTicks As Double()
+                g.DrawLine(axisPen, New PointF(x, y), New PointF(x, y - dh))
+                g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
+            Next
+        End If
 
-            If hist.DistanceValue <= 0.1 Then
-                axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks(decimalDigits:=-1)
-            Else
-                axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
-            End If
+        Call DendrogramTree(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding, charWidth)
+    End Sub
 
-            labelFont = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+    Protected Overridable Sub DendrogramTree(partition As Cluster,
+                                             unitWidth As Double,
+                                             g As IGraphics,
+                                             plotRegion As Rectangle,
+                                             i As Integer,
+                                             scaleX As d3js.scale.LinearScale,
+                                             parentPt As PointF,
+                                             labelPadding As Integer,
+                                             charWidth As Integer)
 
-            Dim scaleX As d3js.scale.LinearScale = d3js.scale _
-                .linear() _
-                .domain(values:=axisTicks) _
-                .range(integers:={plotRegion.Left, plotRegion.Right})
+        Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
+        Dim x = plotRegion.Left + plotRegion.Right - scaleX(partition.DistanceValue)
+        Dim y As Integer
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim linkColor As Pen = css.GetPen(Me.linkColor)
 
-            ' 绘制距离标尺
-            Dim left = plotRegion.Left + plotRegion.Right - scaleX(axisTicks.Max)
-            Dim right = plotRegion.Left + plotRegion.Right - scaleX(0)
-            Dim y = plotRegion.Top + unitWidth - unitWidth / 2
-            Dim x!
-            Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
-            Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
-            Dim dh As Double = tickFontHeight / 3
-            Dim tickLable As String
-            Dim tickLabelSize As SizeF
-            Dim labelPadding As Integer
-            Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
-            Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
+        If partition.isLeaf Then
+            y = plotRegion.Top + i * unitWidth + unitWidth
+            labels.Add(New NamedValue(Of PointF) With {
+                .Name = partition.Name,
+                .Value = New PointF(x, y)
+            })
+        Else
+            ' 连接节点在中间？
+            y = plotRegion.Top + (i + 0.5) * unitWidth + (partition.Leafs * unitWidth) / 2
+        End If
 
-            If classinfo.IsNullOrEmpty Then
-                labelPadding = g.MeasureString("0", labelFont).Width / 2
-            Else
-                labelPadding = g.MeasureString("00", labelFont).Width
-            End If
+        If Not parentPt.IsEmpty Then
+            ' 绘制连接线
+            Call g.DrawLine(linkColor, parentPt, New PointF(parentPt.X, y))
+            Call g.DrawLine(linkColor, New PointF(x, y), New PointF(parentPt.X, y))
+        End If
 
-            If showRuler Then
-                Call g.DrawLine(axisPen, New PointF(left, y), New PointF(right, y))
+        If (partition.isLeaf OrElse showAllNodes) AndAlso theme.pointSize > 0 Then
+            Call g.DrawCircle(New PointF(x, y), theme.pointSize, pointColor)
+        End If
 
-                For Each tick As Double In axisTicks
-                    x = plotRegion.Left + plotRegion.Right - scaleX(tick)
-                    tickLable = tick.ToString(theme.XaxisTickFormat)
-                    tickLabelSize = g.MeasureString(tickLable, tickFont)
+        If showLeafLabels AndAlso (partition.isLeaf OrElse showAllLabels) Then
+            Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
+            Dim lpos As New PointF(x + labelPadding, y - lsize.Height / 2)
 
-                    g.DrawLine(axisPen, New PointF(x, y), New PointF(x, y - dh))
-                    g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
-                Next
-            End If
+            Call g.DrawString(partition.Name, labelFont, Brushes.Black, lpos)
+        End If
 
-            Call DendrogramTree(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding, charWidth)
-        End Sub
+        If partition.isLeaf AndAlso Not classinfo.IsNullOrEmpty Then
+            ' 绘制class颜色块
+            Dim color As New SolidBrush(GetColor(partition.Name))
+            Dim d As Double = std.Max(charWidth / 2, theme.pointSize)
+            Dim layout As New Rectangle With {
+                .Location = New Point(x + d, y - unitWidth / 2),
+                .Size = New Size(legendWidth, unitWidth)
+            }
 
-        Protected Overridable Sub DendrogramTree(partition As Cluster,
-                                                 unitWidth As Double,
-                                                 g As IGraphics,
-                                                 plotRegion As Rectangle,
-                                                 i As Integer,
-                                                 scaleX As d3js.scale.LinearScale,
-                                                 parentPt As PointF,
-                                                 labelPadding As Integer,
-                                                 charWidth As Integer)
+            Call g.FillRectangle(color, layout)
+        Else
+            Dim n As Integer = 0
 
-            Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
-            Dim x = plotRegion.Left + plotRegion.Right - scaleX(partition.DistanceValue)
-            Dim y As Integer
-            Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim linkColor As Pen = css.GetPen(Me.linkColor)
+            parentPt = New PointF(x, y)
 
-            If partition.isLeaf Then
-                y = plotRegion.Top + i * unitWidth + unitWidth
-                labels.Add(New NamedValue(Of PointF) With {
-                    .Name = partition.Name,
-                    .Value = New PointF(x, y)
-                })
-            Else
-                ' 连接节点在中间？
-                y = plotRegion.Top + (i + 0.5) * unitWidth + (partition.Leafs * unitWidth) / 2
-            End If
-
-            If Not parentPt.IsEmpty Then
-                ' 绘制连接线
-                Call g.DrawLine(linkColor, parentPt, New PointF(parentPt.X, y))
-                Call g.DrawLine(linkColor, New PointF(x, y), New PointF(parentPt.X, y))
-            End If
-
-            If (partition.isLeaf OrElse showAllNodes) AndAlso theme.pointSize > 0 Then
-                Call g.DrawCircle(New PointF(x, y), theme.pointSize, pointColor)
-            End If
-
-            If showLeafLabels AndAlso (partition.isLeaf OrElse showAllLabels) Then
-                Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
-                Dim lpos As New PointF(x + labelPadding, y - lsize.Height / 2)
-
-                Call g.DrawString(partition.Name, labelFont, Brushes.Black, lpos)
-            End If
-
-            If partition.isLeaf AndAlso Not classinfo.IsNullOrEmpty Then
-                ' 绘制class颜色块
-                Dim color As New SolidBrush(GetColor(partition.Name))
-                Dim d As Double = std.Max(charWidth / 2, theme.pointSize)
-                Dim layout As New Rectangle With {
-                    .Location = New Point(x + d, y - unitWidth / 2),
-                    .Size = New Size(legendWidth, unitWidth)
-                }
-
-                Call g.FillRectangle(color, layout)
-            Else
-                Dim n As Integer = 0
-
-                parentPt = New PointF(x, y)
-
-                For Each part As Cluster In orders
-                    Call DendrogramTree(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt, labelPadding, charWidth)
-                    n += part.Leafs
-                Next
-            End If
-        End Sub
-    End Class
+            For Each part As Cluster In orders
+                Call DendrogramTree(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt, labelPadding, charWidth)
+                n += part.Leafs
+            Next
+        End If
+    End Sub
+End Class

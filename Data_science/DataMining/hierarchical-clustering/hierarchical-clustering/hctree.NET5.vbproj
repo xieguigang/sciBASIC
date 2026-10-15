@@ -179,9 +179,4 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.12" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.12" />
-  </ItemGroup>
-
 </Project>
