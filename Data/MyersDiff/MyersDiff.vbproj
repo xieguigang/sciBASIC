@@ -7,7 +7,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Version>10.7.9782.41243</Version>
     <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
-    <Configurations>nuget_release;Debug</Configurations>
+    <Configurations>nuget_release;Debug;Rsharp_app_release</Configurations>
     <Title>Myers O(ND) Diff Algorithm for Text Comparison</Title>
     <Description>A text differencing toolkit for sciBASIC#: implements the Myers O((N+M)D) shortest edit script algorithm to compare files, line sequences and character strings, producing structured diff blocks, unified and side-by-side output, and a sequence similarity score.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.MyersDiff</AssemblyTitle>
@@ -29,6 +29,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
