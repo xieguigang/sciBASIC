@@ -924,13 +924,14 @@ Namespace Numerics
                                       findMin As Boolean) As Vector128(Of Integer)
             Dim m As Vector128(Of Single) = If(findMin, Vector128.Min(x, y), Vector128.Max(x, y))
             ' 两个操作数都非 NaN 的车道为全 1
-            Dim notNaN As Vector128(Of Single) = Vector128.BitwiseAnd(Vector128.Equals(x, x), Vector128.Equals(y, y))
-            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(notNaN.AsInt32(), Vector128.Create(-1))
+            ' 注意 Vector128.AndNot(left, right) 的语义是 left &amp; ~right（与 x86 ANDNPS 一致）
+            Dim notNaN As Vector128(Of Integer) = Vector128.BitwiseAnd(Vector128.Equals(x, x), Vector128.Equals(y, y)).AsInt32()
+            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(Vector128.Create(-1), notNaN)
             ' 极值结果一定是输入之一，转回 Half 是恒等映射；NaN 车道统一改写成 &amp;H7E00
             Dim bits As Vector128(Of Integer) = LanesToHalf(m)
             Dim nanBits As Vector128(Of Integer) = Vector128.Create(&H7E00)
 
-            Return Vector128.BitwiseOr(Vector128.AndNot(isNaN, bits), Vector128.BitwiseAnd(isNaN, nanBits))
+            Return Vector128.BitwiseOr(Vector128.BitwiseAnd(notNaN, bits), Vector128.BitwiseAnd(isNaN, nanBits))
         End Function
 
         ''' <summary>
@@ -967,6 +968,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(System.Math.Max(CSng(a(i)), CSng(b(i))), Half)
+                i += 1
             Loop
 
             Return out
@@ -1003,6 +1005,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(System.Math.Min(CSng(a(i)), CSng(b(i))), Half)
+                i += 1
             Loop
 
             Return out
@@ -1040,6 +1043,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(f(CSng(a(i))), Half)
+                i += 1
             Loop
 
             Return out
@@ -1076,6 +1080,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(System.Math.Abs(CSng(a(i))), Half)
+                i += 1
             Loop
 
             Return out
@@ -1103,6 +1108,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(-CSng(a(i)), Half)
+                i += 1
             Loop
 
             Return out
@@ -1130,6 +1136,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(CSng(a(i)) * CSng(a(i)), Half)
+                i += 1
             Loop
 
             Return out
@@ -1158,6 +1165,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(1.0F / CSng(a(i)), Half)
+                i += 1
             Loop
 
             Return out
@@ -1216,6 +1224,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = If(CSng(a(i)) > 0.0F, a(i), CType(0.0F, Half))
+                i += 1
             Loop
 
             Return out
@@ -1229,10 +1238,11 @@ Namespace Numerics
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function ReluLanes(v As Vector128(Of Single)) As Vector128(Of Integer)
             Dim m As Vector128(Of Single) = Vector128.Max(v, Vector128(Of Single).Zero)
-            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(Vector128.Equals(v, v).AsInt32(), Vector128.Create(-1))
+            Dim notNaN As Vector128(Of Integer) = Vector128.Equals(v, v).AsInt32()
             Dim bits As Vector128(Of Integer) = LanesToHalf(m)
 
-            Return Vector128.AndNot(isNaN, bits)
+            ' NaN 车道改写为 0（与标量尾部 x > 0 ? x : 0 一致）
+            Return Vector128.BitwiseAnd(notNaN, bits)
         End Function
 
         ''' <summary>
@@ -1264,6 +1274,7 @@ Namespace Numerics
 
             Do While i < n
                 out(i) = CType(System.Math.Min(System.Math.Max(CSng(a(i)), low), high), Half)
+                i += 1
             Loop
 
             Return out
@@ -1273,11 +1284,12 @@ Namespace Numerics
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function ClipLanes(v As Vector128(Of Single), low As Vector128(Of Single), high As Vector128(Of Single)) As Vector128(Of Integer)
             Dim m As Vector128(Of Single) = Vector128.Min(Vector128.Max(v, low), high)
-            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(Vector128.Equals(v, v).AsInt32(), Vector128.Create(-1))
+            Dim notNaN As Vector128(Of Integer) = Vector128.Equals(v, v).AsInt32()
+            Dim isNaN As Vector128(Of Integer) = Vector128.AndNot(Vector128.Create(-1), notNaN)
             Dim bits As Vector128(Of Integer) = LanesToHalf(m)
             Dim nanBits As Vector128(Of Integer) = Vector128.Create(&H7E00)
 
-            Return Vector128.BitwiseOr(Vector128.AndNot(isNaN, bits), Vector128.BitwiseAnd(isNaN, nanBits))
+            Return Vector128.BitwiseOr(Vector128.BitwiseAnd(notNaN, bits), Vector128.BitwiseAnd(isNaN, nanBits))
         End Function
 
 #End Region
@@ -1398,7 +1410,10 @@ Namespace Numerics
                 Dim acc As Double = 0.0
 
                 For p As Integer = 0 To k - 1
-                    acc += CDbl(a(aBase + p)) * b(p * n + j)
+                    ' 注意：两个操作数都必须显式 CDbl。VB 的 Double * Half 会绑定到
+                    ' Half 的乘法运算符（Double 操作数被窄化），乘积先舍入到 Half 再
+                    ' 累加会破坏与 Double 累加参考实现的逐位一致性。
+                    acc += CDbl(a(aBase + p)) * CDbl(b(p * n + j))
                 Next
 
                 result(resultOffset + j) = CType(acc, Half)
