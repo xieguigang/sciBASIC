@@ -276,7 +276,11 @@ Namespace CommandLine.InteropService.SharedORM
                 out += If(argumentNames, "term", $"term As String")
             Else
                 For Each arg As NamedValue(Of String) In API.ParameterList
-                    param = VisualBasic.normAsVisualBasicName(arg.Name)
+                    If arg.Name = "" Then
+                        Continue For
+                    Else
+                        param = VisualBasic.normAsVisualBasicName(arg.Name)
+                    End If
 
                     If Not argumentNames Then
                         param = $"{param} As String"
@@ -350,6 +354,10 @@ Namespace CommandLine.InteropService.SharedORM
                 CLI.AppendLine(vbcode)
             Else
                 For Each param As NamedValue(Of String) In api.ParameterList
+                    If param.Name = "" Then
+                        Continue For
+                    End If
+
                     Dim var$ = normAsVisualBasicName(param.Name)
 
                     If param.Name.TextEquals("/@set") Then
