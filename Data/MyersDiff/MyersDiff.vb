@@ -152,14 +152,14 @@ Public Class MyersDiff
         ' 这部分可以显著降低 Myers 算法的输入规模。
         ' ------------------------------------------------------------
         Dim prefix As Integer = 0
-        Dim maxPrefix As Integer = std.Min(N, M)
+        Dim maxPrefix As Integer = System.Math.Min(N, M)
 
         While prefix < maxPrefix AndAlso String.Equals(oldLines(prefix), newLines(prefix), StringComparison.Ordinal)
             prefix += 1
         End While
 
         Dim suffix As Integer = 0
-        Dim maxSuffix As Integer = std.Min(N - prefix, M - prefix)
+        Dim maxSuffix As Integer = System.Math.Min(N - prefix, M - prefix)
 
         While suffix < maxSuffix AndAlso String.Equals(oldLines(N - 1 - suffix), newLines(M - 1 - suffix), StringComparison.Ordinal)
             suffix += 1
@@ -318,7 +318,7 @@ Public Class MyersDiff
 
         ' 外层循环：编辑距离 d 从 0 递增
         For d As Integer = 0 To maxD
-            Dim snapshot As Integer() = New Integer(2 * d + 1 - 1) {}
+            Dim snapshot As Integer() = New Integer(2 * d) {}
 
             For k As Integer = -d To d
                 snapshot(k + d) = V(k + maxD)

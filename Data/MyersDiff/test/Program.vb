@@ -64,7 +64,21 @@ Imports Microsoft.VisualBasic.Data.MyersDiff
 
 Module MyersDiffDemo
 
-    Sub Main()
+    ''' <summary>
+    ''' test.exe            运行演示程序
+    ''' test.exe --test    运行自测（正确性 / 最优性 / 性能）
+    ''' </summary>
+    Sub Main(args As String())
+        If args IsNot Nothing AndAlso args.Contains("--test") Then
+            Call MyersDiffSelfTest.Run()
+
+            If MyersDiffSelfTest.FailedCount > 0 Then
+                Environment.Exit(1)
+            Else
+                Environment.Exit(0)
+            End If
+        End If
+
         Console.WriteLine("============================================")
         Console.WriteLine("  Myers 差异算法模块 — 演示程序")
         Console.WriteLine("============================================")
