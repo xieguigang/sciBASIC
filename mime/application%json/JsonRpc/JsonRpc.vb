@@ -182,14 +182,20 @@ Public Module JsonRpc
     ''' 
     <Extension>
     Public Function Str(node As JsonElement, ParamArray path As String()) As String
-        Dim current As jsobj = node
+        Dim current As JsonElement = node
 
         For Each segment As String In path
             If current Is Nothing Then
                 Return ""
             End If
 
-            current = current(segment)
+            Dim obj = TryCast(current, jsobj)
+
+            If obj Is Nothing Then
+                Return ""
+            End If
+
+            current = obj(segment)
         Next
 
         If current Is Nothing Then
