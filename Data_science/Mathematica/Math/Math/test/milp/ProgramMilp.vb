@@ -96,6 +96,9 @@ Public Module ProgramMilp
                 Case "simd-bench"
                     ' 标量 vs SIMD 的耗时与加速比基准
                     Return SimdBenchmark.RunAll()
+                Case "half-simd"
+                    ' 半精度 SIMD 内核（HalfSimd）与 System.Half 标量语义的逐位差分自测
+                    Return HalfSimdTest.RunAll()
                 Case "simd-all"
                     Dim simdCode As Integer = VectorMatrixSimdTest.RunAll()
 
