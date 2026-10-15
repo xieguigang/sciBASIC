@@ -54,8 +54,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.12" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.12" />
+    <PackageReference Include="System.Composition" Version="10.0.13" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.13" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
