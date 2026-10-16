@@ -88,9 +88,16 @@ Public Class DataSubChunk : Inherits SampleDataChunk
         End Get
     End Property
 
-    Public Overrides Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+    ''' <summary>
+    ''' load a block of the sample frames from the in-memory data array.
+    ''' 
+    ''' the load position is a <see cref="Long"/> for the compatibility with the wave
+    ''' file frame indexing, an <see cref="OverflowException"/> is thrown when the
+    ''' requested block is outside of the in-memory data.
+    ''' </summary>
+    Public Overrides Function LoadSamples(start As Long, length As Long, Optional scan0% = 0) As IEnumerable(Of Sample)
         Dim [sub] As Sample() = New Sample(length - 1) {}
-        Call Array.ConstrainedCopy(data, start, [sub], scan0, length)
+        Call Array.ConstrainedCopy(data, CInt(start), [sub], scan0, CInt(length))
         Return [sub]
     End Function
 
@@ -123,7 +130,16 @@ End Class
 
 Public MustInherit Class SampleDataChunk : Inherits SubChunk
 
-    Public MustOverride Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+    ''' <summary>
+    ''' load a block of the sample frames which is started at the given frame position.
+    ''' 
+    ''' the frame position is a <see cref="Long"/> because a wave file may contain more
+    ''' frames than the <see cref="Integer"/> range when the sample rate is high.
+    ''' </summary>
+    ''' <param name="start">the zero based start frame position</param>
+    ''' <param name="length">the number of the frames for load</param>
+    ''' <param name="scan0">the zero based start position of the target data array</param>
+    Public MustOverride Iterator Function LoadSamples(start As Long, length As Long, Optional scan0% = 0) As IEnumerable(Of Sample)
 
 End Class
 
@@ -143,7 +159,7 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
         Call wav.Dispose()
     End Sub
 
-    Public Overrides Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+    Public Overrides Iterator Function LoadSamples(start As Long, length As Long, Optional scan0% = 0) As IEnumerable(Of Sample)
         ' little endian
         wav.ByteOrder = ByteOrder.LittleEndian
         wav.Position = CalculateOffset(start, scan0)
@@ -151,16 +167,29 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
         Dim parseSingle As Func(Of BinaryDataReader, Integer, Sample) =
             ResolveSingleSampleParser(format.effectiveAudioFormat, format.BitsPerSample)
 
-        For i As Integer = 0 To length - 1
+        For i As Long = 0 To length - 1
             Yield parseSingle(wav, format.channels)
         Next
     End Function
 
-    Public Function MeasureChunkSize(length As Integer) As Long
+    ''' <summary>
+    ''' the byte size of the given number of the sample frames
+    ''' </summary>
+    ''' <param name="length">the number of the sample frames</param>
+    Public Function MeasureChunkSize(length As Long) As Long
         Return CLng(format.sampleSizeBytes) * length
     End Function
 
-    Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
+    ''' <summary>
+    ''' the byte offset of the given sample frame position on the file stream.
+    ''' 
+    ''' ``scan0`` is the byte offset which is relative to the resolved data chunk
+    ''' position, the default value 8 skips the "data" chunk id and its chunk size field,
+    ''' so ``CalculateOffset(0, scan0:=8)`` is the byte position of the first sample frame.
+    ''' </summary>
+    ''' <param name="start">the zero based sample frame position</param>
+    ''' <param name="scan0">the relative byte offset inside the data chunk</param>
+    Public Function CalculateOffset(start As Long, Optional scan0% = 0) As Long
         Dim offset As Long = CLng(start) * format.sampleSizeBytes
         Return (position + scan0) + offset
     End Function

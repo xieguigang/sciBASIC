@@ -74,6 +74,12 @@ Public Class DiffResult
     ''' <summary>新序列的元素总数。</summary>
     Public Property NewCount As Integer
 
+    ''' <summary>
+    ''' 编辑距离超过 <see cref="MyersDiff.MaxEditDistance"/> 时为 TRUE：此时结果
+    ''' 已退化为「全部删除 + 全部插入」，并非最短编辑脚本。
+    ''' </summary>
+    Public Property Truncated As Boolean
+
     ''' <summary>相同元素的数量。</summary>
     Public ReadOnly Property EqualCount As Integer
         Get
