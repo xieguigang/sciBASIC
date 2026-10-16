@@ -120,16 +120,14 @@ Public Module Alignment
         }
     End Function
 
+    ''' <summary>
+    ''' shift the signal curve into the non negative range by the abs of its minimal
+    ''' value (see <see cref="Filters.DCShift.PositiveShift"/>), the operation is skipped
+    ''' when the signal has no negative sample.
+    ''' </summary>
     <Extension>
     Public Function Normalize(signal As GeneralSignal) As GeneralSignal
-        If signal.Strength.Any(Function(vi) vi < 0) Then
-            Dim minY As Double = std.Abs(signal.Strength.Min)
-            Dim norm As Double() = signal.Strength _
-                .Select(Function(v) v + minY) _
-                .ToArray
-
-            signal.Strength = norm
-        End If
+        signal.Strength = Filters.DCShift.PositiveShift(signal.Strength)
 
         Return signal
     End Function

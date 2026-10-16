@@ -72,6 +72,21 @@ Imports std = System.Math
 
 ''' <summary>
 ''' 信号处理工具模块，提供静态方法供声纹提取流水线调用。
+''' 
+''' ### the duplicated FFT helpers of the signal processing library
+''' 
+''' <see cref="FFT"/>, <see cref="PowerSpectrum(Double(), Double(), Integer)"/> and
+''' <see cref="NextPowerOf2"/> are mathematically the same thing as the
+''' ``FFT.Radix2``/``FFT.Spectrum.PowerSpectrum``/``FFT.Radix2.RoundupPow2`` members of
+''' the ``Microsoft.VisualBasic.Math.SignalProcessing`` library, but they are kept here
+''' on purpose: this module belongs to the low level wave file IO library, and taking a
+''' reference on the heavy weight signal processing library (it pulls Math.NET) for a
+''' 20 lines helper would make the wave file package much heavier. the two copies are
+''' only duplicated, they are not used by the same decoding pipeline.
+''' 
+''' the optional future clean up is to move this original implementation down into the
+''' core library namespace ``Microsoft.VisualBasic.Math`` so that both sides can share
+''' it without the dependency direction problem.
 ''' </summary>
 Public Module SignalProcessing
 
