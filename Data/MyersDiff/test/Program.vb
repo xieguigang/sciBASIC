@@ -93,9 +93,9 @@ Module MyersDiffDemo
         ' ---- 演示 3：文件差异比较 ----
         DemoFileDiff()
 
-        Console.WriteLine()
-        Console.WriteLine("按任意键退出...")
-        Console.ReadKey()
+        'Console.WriteLine()
+        'Console.WriteLine("按任意键退出...")
+        'Console.ReadKey()
     End Sub
 
     ''' <summary>
