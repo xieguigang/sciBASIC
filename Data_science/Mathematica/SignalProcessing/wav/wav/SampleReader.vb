@@ -395,7 +395,15 @@ Public Class WaveSampleReader : Implements IDisposable
     ''' read a little endian 24 bit signed integer with the sign extension
     ''' </summary>
     Private Shared Function ReadInt24(raw As Byte(), p As Integer) As Integer
-        Dim value As Integer = raw(p) Or (raw(p + 1) << 8) Or (raw(p + 2) << 16)
+        ' IMPORTANT: the shift operators of visual basic keeps the type of its left operand,
+        ' so a ``Byte`` left operand gives a ``Byte`` result: ``0xFF << 16`` evaluates to zero
+        ' instead of 0xFF0000. the bytes are therefore widened into the integer first, this is
+        ' also what the ``BinaryDataReader.ReadByte`` based ``ReadInt24Normalized`` does.
+        Dim b0 As Integer = raw(p)
+        Dim b1 As Integer = raw(p + 1)
+        Dim b2 As Integer = raw(p + 2)
+
+        Dim value As Integer = b0 Or (b1 << 8) Or (b2 << 16)
 
         ' sign-extend from 24-bit to 32-bit
         If (value And &H800000) <> 0 Then
