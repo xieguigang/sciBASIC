@@ -238,7 +238,56 @@ Namespace Boids
             Else
                 IntegrateScalar(state, width, height, depth, bounceOffWalls, wrapAroundEdges, minSpeed, maxSpeed)
             End If
+
+            Call Sanitize(state, width, height, depth)
         End Sub
+
+        ''' <summary>
+        ''' Re-seat the boids whose position or velocity stopped being finite.
+        ''' </summary>
+        ''' <remarks>
+        ''' A boid that reached a not-a-number position can not recover on its own:
+        ''' the grid pins it into the bad corner of the cell block, its
+        ''' neighborhood is empty, every force it evaluates is not a number again
+        ''' and the NaN guard keeps its velocity at zero - the boid would stay
+        ''' invisible for the rest of the session. Such a boid is placed at the
+        ''' centre of the field instead, from where the flock rules pick it up
+        ''' again on the next frame.
+        '''
+        ''' The pass is a single streaming scan over the state, so the cost is
+        ''' negligible compared with the neighbor solve.
+        ''' </remarks>
+        Private Sub Sanitize(state As FlockState3D, width As Double, height As Double, depth As Double)
+            Dim px = state.px
+            Dim py = state.py
+            Dim pz = state.pz
+            Dim vx = state.vx
+            Dim vy = state.vy
+            Dim vz = state.vz
+            Dim n As Integer = state.count
+
+            For i As Integer = 0 To n - 1
+                If Not IsFinite(px(i)) OrElse Not IsFinite(py(i)) OrElse Not IsFinite(pz(i)) Then
+                    px(i) = width * 0.5
+                    py(i) = height * 0.5
+                    pz(i) = depth * 0.5
+                    vx(i) = 0
+                    vy(i) = 0
+                    vz(i) = 0
+                ElseIf Not IsFinite(vx(i)) OrElse Not IsFinite(vy(i)) OrElse Not IsFinite(vz(i)) Then
+                    vx(i) = 0
+                    vy(i) = 0
+                    vz(i) = 0
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' is the given value a usable coordinate or velocity?
+        ''' </summary>
+        Private Function IsFinite(v As Double) As Boolean
+            Return Not (Double.IsNaN(v) OrElse Double.IsInfinity(v))
+        End Function
 
         ''' <summary>
         ''' 4-lane (AVX2) streaming integration over the SoA state.

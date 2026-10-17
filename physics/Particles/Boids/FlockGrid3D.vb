@@ -168,14 +168,18 @@ Namespace Boids
                 ny = maxY - minY + 3
                 nz = maxZ - minZ + 3
 
-                Dim cells As Long = CLng(nx) * CLng(ny) * CLng(nz)
+                ' the product is evaluated in double precision: a spread over a
+                ' huge volume overflows a Long long before the cell size has
+                ' grown enough, and a wrapped product would silently pass the
+                ' budget check below with a garbage cell count
+                Dim cells As Double = CDbl(nx) * CDbl(ny) * CDbl(nz)
 
                 If cells <= MaxCells Then
                     m_cellSize = cellSize
                     Exit For
                 ElseIf attempt = 31 Then
                     Throw New InvalidOperationException(
-                        $"the flock spread needs {cells} grid cells, which exceeds the {MaxCells} cell budget even at the coarsest cell size")
+                        $"the flock spread needs {cells:F0} grid cells, which exceeds the {MaxCells} cell budget even at the coarsest cell size")
                 End If
 
                 ' grow the cell size by the cube root of the overshoot, so the
