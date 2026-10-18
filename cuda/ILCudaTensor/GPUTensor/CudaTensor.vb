@@ -120,6 +120,12 @@ Imports tfCompute = Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 
 Namespace GPUTensor
 
+    Public Enum Precision
+        fp64
+        fp32
+        fp16
+    End Enum
+
     ''' <summary>
     ''' <see cref="tfCompute.ITensorCompute"/> 的 CUDA GPU 实现（全 double 精度）。
     ''' </summary>
