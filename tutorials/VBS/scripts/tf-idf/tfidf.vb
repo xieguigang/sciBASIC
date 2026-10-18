@@ -2,6 +2,7 @@
 #include "Microsoft.VisualBasic.Data.Framework.dll"
 #include "Microsoft.VisualBasic.Drawing.dll"
 #include "Microsoft.VisualBasic.Data.DataPlot.dll"
+#include "Microsoft.VisualBasic.Imaging.dll"
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -11,6 +12,7 @@ Imports Microsoft.VisualBasic.Math.Correlations
 imports microsoft.visualbasic.data.plots
 imports microsoft.visualbasic.drawing
 imports Microsoft.VisualBasic.Data.Framework
+imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
 ' ============================================================================
 '  TF-IDF document distance tutorial
@@ -104,7 +106,7 @@ Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
     plt.Matrix = dist.ToMatrix()
     plt.RowLabels = fieldName("doc", dist.length, sep := "_").toarray()
     plt.ColLabels = fieldName("doc", dist.length, sep := "_").ToArray()
-    plt.ColorMap = ColorScale.ColorMapType.Plasma
+    plt.ColorMap = ScalerPalette.Plasma
     plt.ShowValues = False
     plt.Plot()
     plt.SavePng(here("tfidf-heatmap.png"), 300)
