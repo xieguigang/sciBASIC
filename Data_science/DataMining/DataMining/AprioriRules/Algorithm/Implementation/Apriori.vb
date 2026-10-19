@@ -54,10 +54,12 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
+Imports Microsoft.VisualBasic.DataMining.AprioriRules.Engine
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.JoinExtensions
@@ -80,10 +82,61 @@ Namespace AprioriRules.Impl
              Cites:="")>
     Public Module Apriori
 
+        ''' <summary>
+        ''' 关联规则挖掘入口
+        ''' </summary>
+        ''' <param name="minSupport">最小支持度阈值 ``(0,1]``</param>
+        ''' <param name="minConfidence">最小置信度阈值 ``(0,1]``</param>
+        ''' <param name="items">全部相异项的集合</param>
+        ''' <param name="transactions">事务数据库</param>
+        ''' <param name="maxDegreeOfParallelism">
+        ''' 最大并行度；小于等于 0 时取 <see cref="Environment.ProcessorCount"/>。
+        ''' </param>
+        ''' <param name="bitIndexBudgetMB">
+        ''' 位图索引的内存预算（MB）。频繁项位图超过该预算时自动降级为横向计数，
+        ''' 保证超大数据集仍然可以跑完（只是慢一些）。
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 本函数现在只是转发给 <see cref="AprioriEngine"/>，
+        ''' 下面保留的那些辅助函数是原始的分步实现，外部 API（含 R# 的 ``Get.Support``）仍然可用。
+        ''' </remarks>
         Public Function GetAssociateRules(<Parameter("Support.Min")> minSupport#,
                                           <Parameter("Confidence.Min")> minConfidence#,
                                           <Parameter("Items")> items As IEnumerable(Of Item),
-                                          <Parameter("Transactions")> transactions As ItemSet()) As Output
+                                          <Parameter("Transactions")> transactions As ItemSet(),
+                                          Optional maxDegreeOfParallelism As Integer = -1,
+                                          Optional bitIndexBudgetMB As Integer = 512) As Output
+
+            Return AprioriEngine _
+                .Create(items:=items,
+                        transactions:=transactions,
+                        minSupport:=minSupport,
+                        minConfidence:=minConfidence,
+                        maxDegreeOfParallelism:=maxDegreeOfParallelism,
+                        bitIndexBudgetMB:=bitIndexBudgetMB) _
+                .Run()
+        End Function
+
+        ''' <summary>
+        ''' 原始的逐步实现：保留下来作为回归对拍的基准实现
+        ''' </summary>
+        ''' <param name="minSupport">``(0,1]``</param>
+        ''' <param name="minConfidence">``(0,1]``</param>
+        ''' <param name="items"></param>
+        ''' <param name="transactions"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这一份实现与 <see cref="GetAssociateRules(Double, Double, IEnumerable(Of Item), ItemSet(), Integer, Integer)"/>
+        ''' 的结果完全一致，只是复杂度高得多（每个候选都要逐事务线性 Contains 计数）。
+        ''' 生产路径请用 <see cref="GetAssociateRules(Double, Double, IEnumerable(Of Item), ItemSet(), Integer, Integer)"/>，
+        ''' 这里保留它仅供自测工程做新旧结果等价性对拍与性能对比。
+        ''' </remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Function GetAssociateRulesReference(<Parameter("Support.Min")> minSupport#,
+                                                   <Parameter("Confidence.Min")> minConfidence#,
+                                                   <Parameter("Items")> items As IEnumerable(Of Item),
+                                                   <Parameter("Transactions")> transactions As ItemSet()) As Output
 
             Dim frequentItems As List(Of TransactionTokensItem) = transactions _
                 .GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray) _
@@ -99,19 +152,16 @@ Namespace AprioriRules.Impl
                 For Each item As TransactionTokensItem In frequentItems
                     allFrequentItems(item.Name) = item
                 Next
-
-                Call VBDebugger.EchoLine($" ..... {frequentItems.Count} / {allFrequentItems.Count}")
             Loop While candidates.Count <> 0
 
-            Call VBDebugger.EchoLine($"generate rules based on all {allFrequentItems.Count} frequent items!")
-
-            Dim rules As HashSet(Of Rule) = GenerateRules(allFrequentItems)
-            Dim strongRules As IList(Of Rule) = GetStrongRules(minConfidence, rules, allFrequentItems)
+            ' 注意：局部变量不能叫 strongRules——VB 大小写不敏感，会遮蔽 StrongRules 模块
+            Dim candidates2 As HashSet(Of Rule) = StrongRules.GenerateRules(allFrequentItems)
+            Dim strong As IList(Of Rule) = StrongRules.GetStrongRules(minConfidence, candidates2, allFrequentItems)
             Dim closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double)) = GetClosedItemSets(allFrequentItems)
-            Dim maximalItemSets As IList(Of ItemSet) = GetMaximalItemSets(closedItemSets)
+            Dim maximalItemSets As IList(Of ItemSet) = StrongRules.GetMaximalItemSets(closedItemSets)
 
             Return New Output() With {
-                .StrongRules = strongRules,
+                .StrongRules = strong,
                 .MaximalItemSets = maximalItemSets,
                 .ClosedItemSets = closedItemSets,
                 .FrequentItems = allFrequentItems,
@@ -204,18 +254,28 @@ Namespace AprioriRules.Impl
             Return candidates
         End Function
 
+        ''' <summary>
+        ''' 由两个频繁的 (k-1) 项集拼接出 k 项候选
+        ''' </summary>
+        ''' <remarks>
+        ''' 拼接结果必须重新排序：原始实现直接返回 ``firstItem &amp; secondItem.PopLast``，
+        ''' 而 <see cref="GetFrequentItems"/> 的输出顺序并不保证字典序（内部是 AsParallel），
+        ''' 于是拼接出来的候选可能是乱序的（例如 {B,E,C}）。
+        ''' 乱序的项集在后续 <see cref="ItemSet.Remove(ItemSet)"/> 与字典查找里会与排序后的
+        ''' 等价项集对不上，导致该类项集上的关联规则被静默丢弃。
+        ''' </remarks>
         Public Function GenerateCandidate(firstItem As ItemSet, secondItem As ItemSet) As ItemSet
             Dim length As Integer = firstItem.Length
 
             If length = 1 Then
-                Return firstItem & secondItem
+                Return (firstItem & secondItem).SorterSortTokens
             End If
 
             Dim firstSubString As ItemSet = firstItem.Slice(0, length - 1)
             Dim secondSubString As ItemSet = secondItem.Slice(0, length - 1)
 
             If firstSubString = secondSubString Then
-                Return firstItem & secondItem.PopLast
+                Return (firstItem & secondItem.PopLast).SorterSortTokens
             End If
 
             Return ItemSet.Empty
