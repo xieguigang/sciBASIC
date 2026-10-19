@@ -237,7 +237,7 @@ Public Class TensorH : Implements ICloneable, IDisposable
     ''' <param name="shape">各维度大小</param>
     Public Sub New(ParamArray shape As Integer())
         Me._Shape = CType(shape.Clone(), Integer())
-        Dim totalSize = shape.Aggregate(1, Function(a, b) a * b)
+        Dim totalSize = Tensor.ShapeSize(shape)
         Me._Data = New Half(totalSize - 1) {}
         Call UpdateDimProds()
     End Sub
@@ -249,7 +249,7 @@ Public Class TensorH : Implements ICloneable, IDisposable
     ''' <param name="shape">各维度大小</param>
     Public Sub New(data As Half(), ParamArray shape As Integer())
         Me._Shape = CType(shape.Clone(), Integer())
-        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+        Dim expectedSize = Tensor.ShapeSize(shape)
 
         If data.Length <> expectedSize Then
             Throw New ArgumentException(

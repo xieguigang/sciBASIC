@@ -226,7 +226,8 @@ Namespace Compute
             Dim rowsB = ToJagged(b.Data, k, n)
             Dim product = SimdParallel.MatrixDot(rowsA, rowsB)
 
-            Dim flat(m * n - 1) As Double
+            ' 输出元素数必须用 64 位校验（见 Tensor.MatrixSize 的说明）
+            Dim flat(Tensor.MatrixSize(m, n) - 1) As Double
             For i As Integer = 0 To m - 1
                 Call Array.Copy(product(i), 0, flat, i * n, n)
             Next

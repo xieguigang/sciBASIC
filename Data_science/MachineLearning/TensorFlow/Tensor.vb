@@ -344,12 +344,66 @@ Public Class Tensor : Implements ICloneable, IDisposable
     End Sub
 
     ''' <summary>
+    ''' 形状各维的乘积，用 64 位计算并校验单个数组的容量上限。
+    ''' </summary>
+    ''' <param name="shape">张量形状</param>
+    ''' <returns>元素总数（&lt;= <see cref="Integer.MaxValue"/>）</returns>
+    ''' <remarks>
+    ''' 原来用 <c>shape.Aggregate(1, Function(a, b) a * b)</c> 的 Int32 累乘：
+    ''' 64k 个基因、64k 个基因的 <c>[N, N]</c> 张量元素数是 3.6e9，
+    ''' 会在构造阶段静默溢出（得到负数或错误长度）。这里改为显式 64 位累乘，
+    ''' 超限时抛出带形状信息的异常，由调用方改用稀疏表示或降低规模。
+    ''' </remarks>
+    Friend Shared Function ShapeSize(shape As Integer()) As Integer
+        Dim total As Long = 1
+
+        If shape IsNot Nothing Then
+            For Each size As Integer In shape
+                total *= size
+
+                If total > Integer.MaxValue Then
+                    Throw New ArgumentOutOfRangeException(
+                        NameOf(shape),
+                        $"张量形状 [{String.Join(",", shape)}] 共 {total} 个元素，" &
+                        $"超过单个数组的容量上限 {Integer.MaxValue}；请改用稀疏表示或降低规模")
+                End If
+            Next
+        End If
+
+        Return CInt(total)
+    End Function
+
+    ''' <summary>
+    ''' 矩阵乘结果 <c>rows × cols</c> 的元素数（64 位校验）。
+    ''' </summary>
+    ''' <param name="rows">输出行数</param>
+    ''' <param name="cols">输出列数</param>
+    ''' <returns>元素总数（&lt;= <see cref="Integer.MaxValue"/>）</returns>
+    ''' <remarks>
+    ''' 与 <see cref="ShapeSize"/> 同因：<c>m * n - 1</c> 用 Int32 计算，
+    ''' 在 <c>[60273, 60273]</c> 这类"全基因组 × 全基因组"的分数矩阵上会直接抛
+    ''' <c>OverflowException</c>，且掩盖了"这个规模本就不该构造稠密矩阵"的事实。
+    ''' 这里给出可操作的错误信息，而不是让底层数组分配失败。
+    ''' </remarks>
+    Friend Shared Function MatrixSize(rows As Integer, cols As Integer) As Integer
+        Dim total As Long = CLng(rows) * cols
+
+        If total > Integer.MaxValue Then
+            Throw New NotSupportedException(
+                $"矩阵乘结果 [{rows} × {cols}] 共 {total} 个元素，超过单个数组的容量上限 " &
+                $"{Integer.MaxValue}；请改用稀疏 / 分块实现或降低规模（例如启用稀疏注意力）")
+        End If
+
+        Return CInt(total)
+    End Function
+
+    ''' <summary>
     ''' 创建指定形状的张量，并用零初始化
     ''' </summary>
     ''' <param name="shape">张量的形状</param>
     Public Sub New(ParamArray shape As Integer())
         Me._Shape = CType(shape.Clone(), Integer())
-        Dim totalSize = shape.Aggregate(1, Function(a, b) a * b)
+        Dim totalSize = ShapeSize(shape)
         _Data = New Double(totalSize - 1) {}
 
         ' 初始化维度乘积数组
@@ -365,7 +419,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Me._Shape = CType(shape.Clone(), Integer())
         _Data = DirectCast(data.Clone(), Double())
 
-        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+        Dim expectedSize = ShapeSize(shape)
         If data.Length <> expectedSize Then
             Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
         End If
@@ -383,7 +437,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Me._Shape = CType(shape.Clone(), Integer())
         _Data = (From f As Single In data Select CDbl(f)).ToArray()
 
-        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+        Dim expectedSize = ShapeSize(shape)
         If data.Length <> expectedSize Then
             Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
         End If
@@ -535,7 +589,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Throw New ArgumentNullException(NameOf(data))
         End If
 
-        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+        Dim expectedSize = ShapeSize(shape)
 
         If data.Length <> expectedSize Then
             Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")

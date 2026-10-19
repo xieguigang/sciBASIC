@@ -511,7 +511,9 @@ Namespace Compute
 
             Dim m = a.Shape(0), k = a.Shape(1), n = b.Shape(1)
             Dim x = a.Data, y = b.Data
-            Dim r(m * n - 1) As Half
+
+            ' 输出元素数必须用 64 位校验（见 Tensor.MatrixSize 的说明）
+            Dim r(Tensor.MatrixSize(m, n) - 1) As Half
 
             If CLng(m) * CLng(k) * CLng(n) >= MatMulParallelThreshold Then
                 tpl.Parallel.For(0, m, Sub(i)
