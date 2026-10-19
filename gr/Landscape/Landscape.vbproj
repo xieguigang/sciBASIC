@@ -146,13 +146,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="10.0.12" />
-		<PackageReference Include="System.Resources.Extensions" Version="10.0.12">
-		  <GeneratePathProperty>True</GeneratePathProperty>
-		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 	  <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 	  <ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />

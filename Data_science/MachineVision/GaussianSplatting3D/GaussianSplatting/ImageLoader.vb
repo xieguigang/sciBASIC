@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::5f2fa8337d9fe5578f99fac3fc6683d1, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\ImageLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 226
-    '    Code Lines: 175 (77.43%)
-    ' Comment Lines: 33 (14.60%)
-    '    - Xml Docs: 87.88%
-    ' 
-    '   Blank Lines: 18 (7.96%)
-    '     File Size: 9.28 KB
+' Summaries:
 
 
-    ' Class ImageLoader
-    ' 
-    '     Function: Load, LoadAll
-    ' 
-    '     Sub: Save
-    ' 
-    ' Class PointCloudIO
-    ' 
-    '     Function: LoadPLY
-    ' 
-    '     Sub: SaveGaussianPLY, SavePLY
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 226
+'    Code Lines: 175 (77.43%)
+' Comment Lines: 33 (14.60%)
+'    - Xml Docs: 87.88%
+' 
+'   Blank Lines: 18 (7.96%)
+'     File Size: 9.28 KB
+
+
+' Class ImageLoader
+' 
+'     Function: Load, LoadAll
+' 
+'     Sub: Save
+' 
+' Class PointCloudIO
+' 
+'     Function: LoadPLY
+' 
+'     Sub: SaveGaussianPLY, SavePLY
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,8 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports std = System.Math
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 ''' <summary>
 ''' 图像加载器 - 从 PNG 文件加载图像并转换为 Tensor
@@ -83,22 +85,22 @@ Public Class ImageLoader
 
             ' 锁定像素数据
             Dim rect As New Rectangle(0, 0, W, H)
-            Dim bmpData = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb)
+            Dim bmpData = BitmapBuffer.FromBitmap(bmp)
             Dim stride = bmpData.Stride
             Dim bytes(stride * H - 1) As Byte
-            System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, bytes, 0, bytes.Length)
-            bmp.UnlockBits(bmpData)
+
+            Call Array.Copy(bmpData.RawBuffer, bytes, bytes.Length)
 
             ' Format24bppRgb: BGR 顺序，行优先，stride 可能大于 W*3
-            For y = 0 To H - 1
-                For x = 0 To W - 1
-                    Dim offset = y * stride + x * 3
+            For Y As Integer = 0 To H - 1
+                For X As Integer = 0 To W - 1
+                    Dim offset = Y * stride + X * 3
                     Dim b = bytes(offset) / 255.0
                     Dim g = bytes(offset + 1) / 255.0
                     Dim r = bytes(offset + 2) / 255.0
-                    result(y, x, 0) = r
-                    result(y, x, 1) = g
-                    result(y, x, 2) = b
+                    result(Y, X, 0) = r
+                    result(Y, X, 1) = g
+                    result(Y, X, 2) = b
                 Next
             Next
 
@@ -115,16 +117,16 @@ Public Class ImageLoader
         Dim W = image.Shape(1)
         Using bmp As New Bitmap(W, H, PixelFormat.Format24bppRgb)
             Dim rect As New Rectangle(0, 0, W, H)
-            Dim bmpData = bmp.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb)
+            Dim bmpData = BitmapBuffer.FromBitmap(bmp)
             Dim stride = bmpData.Stride
             Dim bytes(stride * H - 1) As Byte
 
-            For y = 0 To H - 1
-                For x = 0 To W - 1
-                    Dim offset = y * stride + x * 3
-                    Dim r = image(y, x, 0)
-                    Dim g = image(y, x, 1)
-                    Dim b = image(y, x, 2)
+            For Y As Integer = 0 To H - 1
+                For X As Integer = 0 To W - 1
+                    Dim offset = Y * stride + X * 3
+                    Dim r = image(Y, X, 0)
+                    Dim g = image(Y, X, 1)
+                    Dim b = image(Y, X, 2)
                     ' clamp 到 [0, 1] 然后转换为 [0, 255]
                     bytes(offset) = CByte(std.Max(0, std.Min(255, CInt(b * 255))))
                     bytes(offset + 1) = CByte(std.Max(0, std.Min(255, CInt(g * 255))))
@@ -132,15 +134,14 @@ Public Class ImageLoader
                 Next
             Next
 
-            System.Runtime.InteropServices.Marshal.Copy(bytes, 0, bmpData.Scan0, bytes.Length)
-            bmp.UnlockBits(bmpData)
+            Call Array.Copy(bytes, bmpData.RawBuffer, bytes.Length)
 
             ' 确保目录存在
             Dim dir = path.FileName
             If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
                 Directory.CreateDirectory(dir)
             End If
-            bmp.Save(path, ImageFormat.Png)
+            bmp.Save(path, ImageFormats.Png)
         End Using
     End Sub
 
