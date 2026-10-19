@@ -94,20 +94,26 @@ Namespace AprioriRules
             Me.Items = items.ToArray
         End Sub
 
+        ''' <summary>
+        ''' 顺序敏感的项集哈希。
+        ''' </summary>
+        ''' <remarks>
+        ''' 使用 <see cref="System.HashCode"/> 而不是手写的 ``31 * hash + x``：
+        ''' 后者在 VB 默认开启的整数溢出检查下（本工程 Debug/Release|AnyCPU 均未设置
+        ''' RemoveIntegerChecks）对 4 项以上的项集会直接抛出 OverflowException。
+        ''' </remarks>
         Public Overrides Function GetHashCode() As Integer
             If IsNullOrEmpty() Then
                 Return 0
             End If
 
-            Dim hash As Integer = 1
-            Dim el_hash As Integer
+            Dim hash As New System.HashCode()
 
             For Each element As Item In Items
-                el_hash = element.Code Xor (element.Code >> 31)
-                hash = 31 * hash + el_hash
+                hash.Add(element.Code)
             Next
 
-            Return hash
+            Return hash.ToHashCode()
         End Function
 
         Public Function IsNullOrEmpty() As Boolean
@@ -173,16 +179,14 @@ Namespace AprioriRules
             Return Not a = b
         End Operator
 
-        Private Function GetCompareValue() As ULong
-            Dim p As ULong = 0
-
-            For i As Integer = 0 To Items.Length - 1
-                p += Items(i).Code * (10 ^ i)
-            Next
-
-            Return p
-        End Function
-
+        ''' <summary>
+        ''' 逐元素精确比较：长度相同且每个位置的 <see cref="Item.Code"/> 都相同才算相等。
+        ''' </summary>
+        ''' <remarks>
+        ''' 早期实现只比较两个 32 位哈希值，导致哈希碰撞的两个不同项集被当作同一个键
+        ''' （支持度被算到错误的项集上，并会在候选字典里抛出
+        ''' ``ArgumentException: An item with the same key has already been added``）。
+        ''' </remarks>
         Public Overrides Function Equals(obj As Object) As Boolean
             If obj Is Nothing Then
                 Return Items Is Nothing
@@ -190,14 +194,53 @@ Namespace AprioriRules
                 Return False
             End If
 
-            Return DirectCast(obj, ItemSet).GetHashCode = GetHashCode()
+            Dim other As ItemSet = DirectCast(obj, ItemSet)
+
+            If Items Is Nothing OrElse other.Items Is Nothing Then
+                Return Items Is Nothing AndAlso other.Items Is Nothing
+            End If
+            If Items.Length <> other.Items.Length Then
+                Return False
+            End If
+
+            For i As Integer = 0 To Items.Length - 1
+                If Items(i).Code <> other.Items(i).Code Then
+                    Return False
+                End If
+            Next
+
+            Return True
         End Function
 
+        ''' <summary>
+        ''' 按 <see cref="Item.Code"/> 的字典序比较，短项集排在前面。
+        ''' </summary>
+        ''' <remarks>
+        ''' 早期实现用 ``p += code * (10 ^ i)``（注意 VB 的 ^ 是幂运算）得到一个 ULong 比较值，
+        ''' 既不是真正的字典序，在 i 较大时还会因 ULong 溢出/转换直接抛 OverflowException。
+        ''' </remarks>
         Public Function CompareTo(other As ItemSet) As Integer Implements IComparable(Of ItemSet).CompareTo
-            Dim val1 As ULong = GetCompareValue()
-            Dim val2 As ULong = other.GetCompareValue
+            If IsNullOrEmpty() Then
+                If other.IsNullOrEmpty() Then
+                    Return 0
+                Else
+                    Return -1
+                End If
+            ElseIf other.IsNullOrEmpty() Then
+                Return 1
+            End If
 
-            Return val1.CompareTo(val2)
+            Dim n As Integer = System.Math.Min(Items.Length, other.Items.Length)
+
+            For i As Integer = 0 To n - 1
+                If Items(i).Code < other.Items(i).Code Then
+                    Return -1
+                ElseIf Items(i).Code > other.Items(i).Code Then
+                    Return 1
+                End If
+            Next
+
+            Return Items.Length.CompareTo(other.Items.Length)
         End Function
     End Structure
 
