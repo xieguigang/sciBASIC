@@ -187,7 +187,7 @@ Module Program
         ' 错误处理
         Call Check(Throws(Sub() decayTable.NonLinearFit("a*exp(-b*zzz)", {"a", "b"})),
                    "the LMA formula entry rejects a formula with an unknown symbol")
-        Call Check(Throws(Sub() decayTable.NonLinearFit("a*x^b", Nothing)),
+        Call Check(Throws(Sub() decayTable.NonLinearFit("a*x^b", New String() {})),
                    "the LMA formula entry requires at least one parameter symbol")
 
         ' 幂律入口要求自变量为正，含负值的数据必须被拒绝
