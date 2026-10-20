@@ -1,8 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>ElasticNet</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.Bootstrapping.ElasticNet</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.Data.Bootstrapping.ElasticNet</AssemblyName>
+    <AssemblyTitle>Regularization and Variable Selection via the Elastic Net</AssemblyTitle>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Regularization and Variable Selection via the Elastic Net</Title>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
