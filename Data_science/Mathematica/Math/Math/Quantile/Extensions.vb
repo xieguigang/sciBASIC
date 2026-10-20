@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::90ed3d6818b61980dd2bca8ecb1152f1, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 280
-    '    Code Lines: 137 (48.93%)
-    ' Comment Lines: 100 (35.71%)
-    '    - Xml Docs: 73.00%
-    ' 
-    '   Blank Lines: 43 (15.36%)
-    '     File Size: 11.14 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: debugView, (+3 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
-    ' 
-    '         Sub: Summary
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 280
+'    Code Lines: 137 (48.93%)
+' Comment Lines: 100 (35.71%)
+'    - Xml Docs: 73.00%
+' 
+'   Blank Lines: 43 (15.36%)
+'     File Size: 11.14 KB
+
+
+'     Module Extensions
+' 
+'         Function: debugView, (+3 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
+' 
+'         Sub: Summary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,28 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace Quantile
+
+    Public Class LinearQuantile : Implements QuantileQuery
+
+        ReadOnly _sorted As Double()
+
+        Sub New(x As Double())
+            Dim sorted(x.Length - 1) As Double
+            Array.Copy(x, sorted, x.Length)
+            Array.Sort(sorted)
+
+            _sorted = sorted
+        End Sub
+
+        Public Function Query(q As Double) As Double Implements QuantileQuery.Query
+            Dim pos = q * (_sorted.Length - 1)
+            Dim lower = CInt(std.Floor(pos))
+            Dim upper = CInt(std.Ceiling(pos))
+            If lower = upper Then Return _sorted(lower)
+            Dim frac = pos - lower
+            Return _sorted(lower) * (1 - frac) + _sorted(upper) * frac
+        End Function
+    End Class
 
     ''' <summary>
     ''' GK quantile extensions method
@@ -85,15 +107,7 @@ Namespace Quantile
 
         ''' <summary>计算分位数（线性插值法）</summary>
         Public Function Quantile(x As Double(), q As Double) As Double
-            Dim sorted(x.Length - 1) As Double
-            Array.Copy(x, sorted, x.Length)
-            Array.Sort(sorted)
-            Dim pos = q * (sorted.Length - 1)
-            Dim lower = CInt(std.Floor(pos))
-            Dim upper = CInt(std.Ceiling(pos))
-            If lower = upper Then Return sorted(lower)
-            Dim frac = pos - lower
-            Return sorted(lower) * (1 - frac) + sorted(upper) * frac
+            Return New LinearQuantile(x).Query(q)
         End Function
 
         ''' <summary>
