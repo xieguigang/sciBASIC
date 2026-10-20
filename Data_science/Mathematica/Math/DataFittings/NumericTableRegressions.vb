@@ -48,7 +48,8 @@
     '     Function: AsFitInputs, AutoPointDeletion, BayesianCurveFit, FeatureMatrix, FeatureNameList
     '               FeatureProjection, GaussNewtonFit, LassoRegression, LinearFit, LoessFit
     '               LogisticRegression, Lowess, MapRemovedRows, MultipleLinearRegression, Nnls
-    '               PolyFit, ResponseVector, SingleFeature, StandardCurveFit, WeightedLinearFit
+    '               PolyFit, ResponseVector, RidgeRegression, SingleFeature, StandardCurveFit,
+    '               WeightedLinearFit
     ' 
     ' /********************************************************************************/
 
