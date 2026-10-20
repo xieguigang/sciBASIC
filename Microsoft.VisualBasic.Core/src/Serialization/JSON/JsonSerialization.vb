@@ -56,10 +56,14 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.Serialization.Json
+Imports System.Runtime.Serialization
 Imports System.Text
+Imports System.Text.Json
+Imports System.Text.Json.Serialization
+Imports System.Text.Json.Serialization.Metadata
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -69,7 +73,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
-Imports Factory = System.Runtime.Serialization.Json.DataContractJsonSerializer
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Serialization.JSON
@@ -127,14 +130,11 @@ Namespace Serialization.JSON
                     obj:=obj,
                     type:=type,
                     simpleDict:=simpleDict,
-                    knownTypes:=knownTypes Or emptyTypeList
+                    knownTypes:=knownTypes Or emptyTypeList,
+                    indent:=indent
                 )
 
-                If indent Then
-                    Return Formatter.Format(Encoding.UTF8.GetString(ms.ToArray()))
-                Else
-                    Return Encoding.UTF8.GetString(ms.ToArray())
-                End If
+                Return Encoding.UTF8.GetString(ms.ToArray())
             End Using
         End Function
 
@@ -148,19 +148,12 @@ Namespace Serialization.JSON
         ''' <param name="knownTypes"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Sub writeJson(output As Stream, obj As Object, type As Type, simpleDict As Boolean, knownTypes As IEnumerable(Of Type))
-            If simpleDict Then
-                Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = True,
-                    .SerializeReadOnlyTypes = True,
-                    .KnownTypes = knownTypes _
-                        .SafeQuery _
-                        .ToArray
-                }
-                Call New Factory(type, settings).WriteObject(output, obj)
-            Else
-                Call New Factory(type).WriteObject(output, obj)
-            End If
+        Private Sub writeJson(output As Stream, obj As Object, type As Type, simpleDict As Boolean, indent As Boolean, knownTypes As IEnumerable(Of Type))
+            ' simpleDict is kept for API compatibility only: System.Text.Json always
+            ' serializes a string-keyed dictionary as a JSON object (i.e. the simple
+            ' dictionary format that DataContractJsonSerializer produced with
+            ' UseSimpleDictionaryFormat = True).
+            Call JsonSerializer.Serialize(output, obj, type, BuildOptions(type, indent, knownTypes))
         End Sub
 
         ''' <summary>
@@ -171,9 +164,9 @@ Namespace Serialization.JSON
         ''' <param name="path"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function WriteLargeJson(Of T)(obj As T, path$, Optional simpleDict As Boolean = True) As Boolean
+        Public Function WriteLargeJson(Of T)(obj As T, path$, Optional simpleDict As Boolean = True, Optional indent As Boolean = False) As Boolean
             Using ms As FileStream = path.Open(, doClear:=True)
-                Call ms.writeJson(obj, GetType(T), simpleDict, Nothing)
+                Call ms.writeJson(obj, GetType(T), simpleDict, indent:=indent, knownTypes:=Nothing)
             End Using
 
             Return True
@@ -234,8 +227,7 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <ExportAPI("LoadObject")>
         <Extension>
-        Public Function LoadObject(json$,
-                                   type As Type,
+        Public Function LoadObject(json$, type As Type,
                                    Optional simpleDict As Boolean = True,
                                    Optional throwEx As Boolean = True,
                                    Optional ByRef exception As Exception = Nothing,
@@ -251,17 +243,10 @@ Namespace Serialization.JSON
                 End If
             End If
 
-            Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
-                Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = simpleDict,
-                    .SerializeReadOnlyTypes = False,
-                    .KnownTypes = If(knownTypes, DirectCast(New Type() {}, IEnumerable(Of Type))).ToArray
-                }
-                Dim ser As New DataContractJsonSerializer(type, settings)
-                Dim de As Func(Of Object) = Function() ser.ReadObject(MS)
-                Dim obj = TryCatch(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
-                Return obj
-            End Using
+            Dim normalized = ConvertMicrosoftDates(json)
+            Dim de As Func(Of Object) = Function() JsonSerializer.Deserialize(normalized, type, BuildOptions(type, indent:=False, knownTypes))
+            Dim obj = TryCatch(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
+            Return obj
         End Function
 
         <Extension>
@@ -269,12 +254,10 @@ Namespace Serialization.JSON
             If jsonStream Is Nothing Then
                 Return Nothing
             Else
-                Dim settings As New DataContractJsonSerializerSettings With {
-                    .UseSimpleDictionaryFormat = simpleDict,
-                    .SerializeReadOnlyTypes = False
-                }
-                Return New DataContractJsonSerializer(type, settings) _
-                    .ReadObject(jsonStream)
+                Using reader As New StreamReader(jsonStream, Encoding.UTF8)
+                    Dim json = reader.ReadToEnd()
+                    Return JsonSerializer.Deserialize(ConvertMicrosoftDates(json), type, BuildOptions(type, indent:=False, Nothing))
+                End Using
             End If
         End Function
 
@@ -429,5 +412,146 @@ Namespace Serialization.JSON
 
             Return sb.ToString
         End Function
+
+        ' Matches the /Date(ticks)/ and /Date(ticks+hhmm)/ forms previously emitted by
+        ' DataContractJsonSerializer, keeping the surrounding double quotes via look-around.
+        Private ReadOnly microsoftDatePattern As New Regex("(?<= "")/Date\((-?\d+)([+\-]\d{4})?\)/(?= "")", RegexOptions.None)
+
+        ''' <summary>
+        ''' Rewrite legacy ``/Date(...)/`` tokens into ISO 8601 strings so that JSON
+        ''' persisted by the old DataContractJsonSerializer based code keeps loading.
+        ''' </summary>
+        Private Function ConvertMicrosoftDates(json As String) As String
+            If json Is Nothing Then
+                Return json
+            End If
+
+            Return microsoftDatePattern.Replace(json, AddressOf NormalizeMicrosoftDate)
+        End Function
+
+        Private Function NormalizeMicrosoftDate(m As Match) As String
+            Dim ticks As Long = Long.Parse(m.Groups(1).Value, CultureInfo.InvariantCulture)
+            Dim utc = New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(ticks)
+            Dim offset = m.Groups(2).Value
+
+            If offset.Length = 5 Then
+                Dim sign = If(offset(0) = "-"c, -1, 1)
+                Dim hh = Integer.Parse(offset.Substring(1, 2), CultureInfo.InvariantCulture)
+                Dim mm = Integer.Parse(offset.Substring(3, 2), CultureInfo.InvariantCulture)
+                utc = utc.AddMinutes(-sign * (hh * 60 + mm))
+                utc = DateTime.SpecifyKind(utc, DateTimeKind.Local)
+            End If
+
+            Return utc.ToString("o", CultureInfo.InvariantCulture)
+        End Function
+
+        ''' <summary>
+        ''' Cached options for the common case (no polymorphic known types).
+        ''' </summary>
+        Private ReadOnly defaultOptions As JsonSerializerOptions = CreateDefaultOptions()
+
+        ''' <summary>
+        ''' Build the <see cref="JsonSerializerOptions"/> used for (de)serialization. When
+        ''' <paramref name="knownTypes"/> is supplied, polymorphic (de)serialization is enabled
+        ''' using the DataContract convention of a ``__type`` discriminator so that JSON
+        ''' previously emitted by the legacy DataContractJsonSerializer keeps working.
+        ''' </summary>
+        Private Function BuildOptions(type As Type, indent As Boolean, knownTypes As IEnumerable(Of Type)) As JsonSerializerOptions
+            Dim types As Type()
+
+            If knownTypes Is Nothing Then
+                types = New Type() {}
+            Else
+                types = knownTypes.Where(Function(t) t IsNot Nothing).ToArray()
+            End If
+
+            If types.Length = 0 Then
+                Return defaultOptions
+            End If
+
+            Dim options As New JsonSerializerOptions() With {
+                .IncludeFields = True,
+                .DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+                .PropertyNamingPolicy = Nothing,
+                .DictionaryKeyPolicy = Nothing,
+                .WriteIndented = indent
+            }
+
+            Dim resolver As New DefaultJsonTypeInfoResolver()
+            resolver.Modifiers.Add(AddressOf IgnoreUnwantedMembers)
+            resolver.Modifiers.Add(Sub(info) RegisterKnownTypes(info, types))
+            options.TypeInfoResolver = resolver
+
+            Return options
+        End Function
+
+        Private Function CreateDefaultOptions() As JsonSerializerOptions
+            Dim options As New JsonSerializerOptions() With {
+                .IncludeFields = True,
+                .DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+                .PropertyNamingPolicy = Nothing,
+                .DictionaryKeyPolicy = Nothing,
+                .WriteIndented = False
+            }
+
+            Dim resolver As New DefaultJsonTypeInfoResolver()
+            resolver.Modifiers.Add(AddressOf IgnoreUnwantedMembers)
+            options.TypeInfoResolver = resolver
+
+            Return options
+        End Function
+
+        ''' <summary>
+        ''' Drop members that DataContractJsonSerializer would have skipped: those marked with
+        ''' <see cref="IgnoreDataMemberAttribute"/> or the framework's custom
+        ''' <see cref="ScriptIgnoreAttribute"/>.
+        ''' </summary>
+        Private Sub IgnoreUnwantedMembers(info As JsonTypeInfo)
+            For i As Integer = info.Properties.Count - 1 To 0 Step -1
+                Dim provider = info.Properties(i).AttributeProvider
+
+                If provider Is Nothing Then
+                    Continue For
+                End If
+
+                Dim ignored = provider _
+                    .GetCustomAttributes(GetType(IgnoreDataMemberAttribute), True) _
+                    .Length > 0 OrElse
+                    provider _
+                    .GetCustomAttributes(GetType(ScriptIgnoreAttribute), True) _
+                    .Length > 0
+
+                If ignored Then
+                    info.Properties.RemoveAt(i)
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Enable polymorphic (de)serialization for the declared base type and any of its
+        ''' ancestors that appear in <paramref name="knownTypes"/>, mirroring the
+        ''' KnownTypes behaviour of the legacy DataContractJsonSerializer.
+        ''' </summary>
+        Private Sub RegisterKnownTypes(info As JsonTypeInfo, knownTypes As Type())
+            Dim derived = knownTypes _
+                .Where(Function(t) t IsNot info.Type AndAlso info.Type.IsAssignableFrom(t)) _
+                .ToArray()
+
+            If derived.Length = 0 Then
+                Return
+            End If
+
+            If info.PolymorphismOptions Is Nothing Then
+                info.PolymorphismOptions = New JsonPolymorphismOptions()
+            End If
+
+            info.PolymorphismOptions.TypeDiscriminatorPropertyName = "__type"
+
+            For Each d In derived
+                If Not info.PolymorphismOptions.DerivedTypes.Any(Function(dt) dt.DerivedType = d) Then
+                    info.PolymorphismOptions.DerivedTypes.Add(New JsonDerivedType(d))
+                End If
+            Next
+        End Sub
     End Module
 End Namespace
