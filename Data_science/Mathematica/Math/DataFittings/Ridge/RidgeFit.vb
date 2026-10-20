@@ -266,7 +266,11 @@ Namespace Ridge
             Dim table As New NumericTable(matrix, rowNames, header)
 
             For j As Integer = 0 To labelNames.Length - 1
-                Call table.SetLabel(labelNames(j), labels.Select(Function(row) row(j)).ToArray)
+                ' 循环变量不能直接进 lambda（BC42324），先拷到局部变量
+                Dim col As Integer = j
+                Dim vec As Double() = labels.Select(Function(row) row(col)).ToArray
+
+                Call table.SetLabel(labelNames(j), vec)
             Next
 
             Return table
