@@ -240,6 +240,70 @@ Module Program
         Call Check(inputs.Length = n, $"LMA FitInput count = {inputs.Length}")
         Call Check(inputs(0).factors.Count = 3, $"LMA FitInput factor count = {inputs(0).factors.Count}")
 
+        Call Section("ridge regression")
+
+        ' 共线性数据：b = 2a，X'X 奇异，普通最小二乘在这里无法给出稳定的解
+        Dim ca As Double() = Enumerable.Range(1, n).Select(Function(i) CDbl(i)).ToArray
+        Dim cb As Double() = ca.Select(Function(v) v * 2.0).ToArray
+        Dim cy As Double() = ca.Select(Function(v) 1.0 + 3.0 * v).ToArray
+        Dim collinear As NumericTable = BuildMultiFeatureTable(ca, cb, cy)
+        Dim collinearRidge As Ridge.RidgeFit = collinear.RidgeRegression(numberOfLambdas:=50)
+
+        Call Check(collinearRidge.lambdas.Length = 50, $"ridge path has {collinearRidge.lambdas.Length} step(s)")
+        Call Check(collinearRidge.R2 > 0.99, $"ridge R2 = {collinearRidge.R2:F6} on collinear data")
+        Call Check(collinearRidge.BestLambda > 0, $"ridge best lambda = {collinearRidge.BestLambda:G4} (selected by GCV)")
+        Call Check(collinearRidge.BestCoefficients.All(Function(c) Not Double.IsNaN(c) AndAlso Not Double.IsInfinity(c)),
+                   "the ridge coefficients stay finite on collinear data")
+        Call Check(TypeOf collinearRidge.Polynomial Is Ridge.RidgePolynomial, "the ridge model exposes a polynomial with the intercept")
+
+        Dim ridgePath As NumericTable = collinearRidge.toNumericTable()
+
+        Call Check(ridgePath.nsamples = 50, $"ridge path table rows = {ridgePath.nsamples}")
+        Call Check(ridgePath.nfeatures = 4, $"ridge path table columns = {ridgePath.nfeatures}")
+        Call Check(ridgePath.HasLabel("gcv"), "the ridge path table carries the gcv label column")
+        Call Check(ridgePath.HasLabel("df"), "the ridge path table carries the df label column")
+
+        Dim ridgePred As NumericTable = collinear.SetPrediction(collinearRidge, name:="ridge_fit", withResidual:=True)
+
+        Call Check(ridgePred.HasLabel("ridge_fit"), "ridge SetPrediction writes the prediction column")
+        Call Check(ridgePred.HasLabel("residual"), "ridge SetPrediction writes the residual column")
+
+        ' lambda 趋于 0 的时候岭回归应当回到普通最小二乘
+        Dim ridgeTiny As Ridge.RidgeFit = multi.RidgeRegression(lambda:=0.000001)
+        Dim ridgeMLR As Multivariate.MLRFit = multi.MultipleLinearRegression()
+        Dim multiRows As Double()() = multi.NumericRows
+        Dim ridgeGap As Double = 0.0
+
+        For i As Integer = 0 To multiRows.Length - 1
+            ridgeGap = System.Math.Max(ridgeGap, System.Math.Abs(ridgeTiny.GetY(multiRows(i)) - ridgeMLR.GetY(multiRows(i))))
+        Next
+
+        Call Check(ridgeGap < 0.001, $"ridge with a tiny lambda reproduces the MLR fit, max |diff| = {ridgeGap:E3}")
+
+        ' 惩罚越强，系数的二范数越小（岭回归的收缩性质）
+        Dim ridgeStrong As Ridge.RidgeFit = multi.RidgeRegression(lambda:=10.0)
+        Dim normStrong As Double = ridgeStrong.BestCoefficients.Select(Function(c) c * c).Sum
+        Dim normWeak As Double = ridgeTiny.BestCoefficients.Select(Function(c) c * c).Sum
+
+        Call Check(normStrong < normWeak, $"ridge shrinks the coefficients: |b|^2 = {normStrong:E3} (lambda=10) < {normWeak:E3} (lambda=1e-6)")
+        Call Check(multi.RidgeRegression().R2 > 0.99, $"ridge R2 = {multi.RidgeRegression().R2:F6} with the GCV-selected lambda")
+
+        ' 无噪声的数据之上 GCV 会一路走到网格的最软端；加入确定性扰动之后
+        ' 它才会在网格内部（而不是两端）折中偏差与方差挑出 lambda
+        Dim na As Double() = Enumerable.Range(1, n).Select(Function(i) CDbl(i)).ToArray
+        Dim nb As Double() = na.Select(Function(v) v * 2.0).ToArray
+        Dim ny As Double() = na.Select(Function(v, i) 1.0 + 3.0 * v + 4.0 * System.Math.Sin(i)).ToArray
+        Dim noisy As NumericTable = BuildMultiFeatureTable(na, nb, ny)
+        Dim noisyRidge As Ridge.RidgeFit = noisy.RidgeRegression(numberOfLambdas:=50)
+
+        Call Check(noisyRidge.bestIndex > 0 AndAlso noisyRidge.bestIndex < noisyRidge.lambdas.Length - 1,
+                   $"GCV selects an interior lambda: index {noisyRidge.bestIndex} of {noisyRidge.lambdas.Length}, lambda = {noisyRidge.BestLambda:G4}")
+        Call Check(noisyRidge.df(noisyRidge.bestIndex) <= noisyRidge.BestCoefficients.Length,
+                   $"the effective degrees of freedom = {noisyRidge.df(noisyRidge.bestIndex):F4} of {noisyRidge.BestCoefficients.Length} coefficients")
+
+        ' 错误处理
+        Call Check(Throws(Sub() multi.RidgeRegression(lambda:=-1)), "the ridge entry rejects a non-positive lambda")
+
         Call Section("logistic regression")
         Dim ltable As NumericTable = BuildLogisticTable(f1, f2)
         Dim logistic = ltable.LogisticRegression(iterations:=3000, y:="class")
