@@ -59,6 +59,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace LASSO
@@ -179,7 +180,7 @@ Namespace LASSO
                 For i = 0 To numObservations - 1
                     observations(j)(i) = CSng(factor * (observations(j)(i) - mean))
                 Next
-                featureStds(j) = std.Sqrt(MathUtil.getDotProduct(observations(j), observations(j), observations(j).Length))
+                featureStds(j) = std.Sqrt(SimdReduce.Dot(observations(j), observations(j)))
 
                 MathUtil.divideInPlace(observations(j), featureStds(j))
             Next
@@ -188,11 +189,11 @@ Namespace LASSO
             For i = 0 To numObservations - 1
                 targetsField(i) = factor * (targetsField(i) - targetMean)
             Next
-            Dim targetStd As Double = std.Sqrt(MathUtil.getDotProduct(targetsField, targetsField, targetsField.Length))
+            Dim targetStd As Double = std.Sqrt(SimdReduce.Dot(targetsField, targetsField))
             MathUtil.divideInPlace(targetsField, targetStd)
 
             For j = 0 To numFeatures - 1
-                feature2residualCorrelations(j) = MathUtil.getDotProduct(targetsField, observations(j), targetsField.Length)
+                feature2residualCorrelations(j) = SimdReduce.Dot(targetsField, observations(j))
             Next
 
             Dim feature2featureCorrelations = RectangularArray.Matrix(Of Double)(numFeatures, maxAllowedFeaturesAlongPath)
@@ -272,7 +273,7 @@ Namespace LASSO
                                     If j = k Then
                                         feature2featureCorrelations(j)(numberOfInputs - 1) = 1.0
                                     Else
-                                        feature2featureCorrelations(j)(numberOfInputs - 1) = MathUtil.getDotProduct(observations(j), observations(k), observations(j).Length)
+                                        feature2featureCorrelations(j)(numberOfInputs - 1) = SimdReduce.Dot(observations(j), observations(k))
                                     End If
                                 End If
                             Next
@@ -324,7 +325,7 @@ Namespace LASSO
                     Next
                     For j = 0 To numFeatures - 1
                         If correlationCacheIndices(j) = 0 Then
-                            feature2residualCorrelations(j) -= MathUtil.getDotProduct(denseActiveSet, feature2featureCorrelations(j), numberOfInputs)
+                            feature2residualCorrelations(j) -= SimdReduce.Dot(denseActiveSet, feature2featureCorrelations(j))
                         End If
                     Next
                 End While

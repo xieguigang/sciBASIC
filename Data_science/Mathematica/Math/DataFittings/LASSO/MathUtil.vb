@@ -91,22 +91,6 @@ Namespace LASSO
             Return std.Sqrt(sum / arr.Count)
         End Function
 
-        Public Shared Function getDotProduct(vector1 As Single(), vector2 As Single(), length As Integer) As Double
-            Dim product As Double = 0
-            For i = 0 To length - 1
-                product += vector1(i) * vector2(i)
-            Next
-            Return product
-        End Function
-
-        Public Shared Function getDotProduct(vector1 As Double(), vector2 As Double(), length As Integer) As Double
-            Dim product As Double = 0
-            For i = 0 To length - 1
-                product += vector1(i) * vector2(i)
-            Next
-            Return product
-        End Function
-
         ' Divides the second vector from the first one (vector1[i] /= val)
         Public Shared Sub divideInPlace(ByRef vector As Double(), val As Single)
             Dim length = vector.Length
