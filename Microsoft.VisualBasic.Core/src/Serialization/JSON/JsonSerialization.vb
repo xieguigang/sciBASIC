@@ -153,7 +153,7 @@ Namespace Serialization.JSON
             ' serializes a string-keyed dictionary as a JSON object (i.e. the simple
             ' dictionary format that DataContractJsonSerializer produced with
             ' UseSimpleDictionaryFormat = True).
-            Call JsonSerializer.Serialize(output, obj, type, BuildOptions(type, knownTypes))
+            Call JsonSerializer.Serialize(output, obj, type, BuildOptions(type, indent, knownTypes))
         End Sub
 
         ''' <summary>
@@ -227,8 +227,7 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <ExportAPI("LoadObject")>
         <Extension>
-        Public Function LoadObject(json$,
-                                   type As Type,
+        Public Function LoadObject(json$, type As Type,
                                    Optional simpleDict As Boolean = True,
                                    Optional throwEx As Boolean = True,
                                    Optional ByRef exception As Exception = Nothing,
@@ -245,7 +244,7 @@ Namespace Serialization.JSON
             End If
 
             Dim normalized = ConvertMicrosoftDates(json)
-            Dim de As Func(Of Object) = Function() JsonSerializer.Deserialize(normalized, type, BuildOptions(type, knownTypes))
+            Dim de As Func(Of Object) = Function() JsonSerializer.Deserialize(normalized, type, BuildOptions(type, indent:=False, knownTypes))
             Dim obj = TryCatch(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
             Return obj
         End Function
@@ -257,7 +256,7 @@ Namespace Serialization.JSON
             Else
                 Using reader As New StreamReader(jsonStream, Encoding.UTF8)
                     Dim json = reader.ReadToEnd()
-                    Return JsonSerializer.Deserialize(ConvertMicrosoftDates(json), type, BuildOptions(type, Nothing))
+                    Return JsonSerializer.Deserialize(ConvertMicrosoftDates(json), type, BuildOptions(type, indent:=False, Nothing))
                 End Using
             End If
         End Function
@@ -457,7 +456,7 @@ Namespace Serialization.JSON
         ''' using the DataContract convention of a ``__type`` discriminator so that JSON
         ''' previously emitted by the legacy DataContractJsonSerializer keeps working.
         ''' </summary>
-        Private Function BuildOptions(type As Type, knownTypes As IEnumerable(Of Type)) As JsonSerializerOptions
+        Private Function BuildOptions(type As Type, indent As Boolean, knownTypes As IEnumerable(Of Type)) As JsonSerializerOptions
             Dim types As Type()
 
             If knownTypes Is Nothing Then
@@ -475,7 +474,7 @@ Namespace Serialization.JSON
                 .DefaultIgnoreCondition = JsonIgnoreCondition.Never,
                 .PropertyNamingPolicy = Nothing,
                 .DictionaryKeyPolicy = Nothing,
-                .WriteIndented = False
+                .WriteIndented = indent
             }
 
             Dim resolver As New DefaultJsonTypeInfoResolver()
