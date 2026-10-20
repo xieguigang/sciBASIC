@@ -67,6 +67,7 @@ Imports FeatureProjectionNS = Microsoft.VisualBasic.Data.Bootstrapping.FeaturePr
 Imports LassoNS = Microsoft.VisualBasic.Data.Bootstrapping.LASSO
 Imports LogisticNS = Microsoft.VisualBasic.Data.Bootstrapping.Logistic
 Imports MultivariateNS = Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
+Imports RidgeNS = Microsoft.VisualBasic.Data.Bootstrapping.Ridge
 
 ''' <summary>
 ''' 回归/曲线拟合算法的统一二维表入口。
@@ -438,6 +439,50 @@ Public Module NumericTableRegressions
         Next
 
         Return generator.fit(maxAllowedFeaturesPerModel)
+    End Function
+
+    ''' <summary>
+    ''' 岭回归（Ridge，L2 正则化的线性回归）。使用表中的全部特征列作为自变量。
+    ''' 
+    ''' 与 <see cref="MultipleLinearRegression"/> 不同，岭回归自带截距项
+    ''' （并且截距不施加惩罚），因此不需要在表里面额外加一列常量。
+    ''' 它最适合于自变量之间存在共线性的场合：惩罚项让正规方程
+    ''' ``X'X + n*lambda*I`` 恒为正定，从而可以稳定地解出系数。
+    ''' 
+    ''' 指定了 <paramref name="lambda"/> 的时候就只在该 lambda 之上求解一次；
+    ''' 否则会在 lambda 网格上面求解出完整的正则化路径，并用 GCV 准则
+    ''' 挑出最优的那一步（<see cref="RidgeNS.RidgeFit.bestIndex"/>）。
+    ''' 路径可以用 <see cref="RidgeNS.RidgeFit.toNumericTable"/> 导出成二维表查看。
+    ''' </summary>
+    ''' <param name="table">特征矩阵为 X、指定标签列为 y 的二维表</param>
+    ''' <param name="lambda">
+    ''' 正则化强度，必须为正数。缺省（Nothing）的时候走 GCV 自动选择
+    ''' </param>
+    ''' <param name="numberOfLambdas">lambda 网格的步数</param>
+    ''' <param name="standardize">是否先对每一列做标准化</param>
+    ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
+    ''' <param name="Silent">保留参数，岭回归求解器没有进度输出</param>
+    ''' <returns>含正则化路径的岭回归拟合结果</returns>
+    <Extension>
+    Public Function RidgeRegression(table As NumericTable,
+                                    Optional lambda As Double? = Nothing,
+                                    Optional numberOfLambdas As Integer = 100,
+                                    Optional standardize As Boolean = True,
+                                    Optional y As String = Nothing,
+                                    Optional Silent As Boolean = False) As RidgeNS.RidgeFit
+
+        Dim xm As Double()() = FeatureMatrix(table, NameOf(RidgeRegression))
+        Dim yv As Double() = ResponseVector(table, y, NameOf(RidgeRegression))
+        Dim names As String() = FeatureNameList(table)
+
+        Return RidgeNS.RidgeFitting.Fit(
+            x:=xm,
+            y:=yv,
+            lambda:=lambda,
+            numberOfLambdas:=numberOfLambdas,
+            standardize:=standardize,
+            featureNames:=names
+        )
     End Function
 
 #End Region
