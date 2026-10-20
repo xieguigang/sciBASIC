@@ -70,7 +70,7 @@ Module testoutlier
         '   Dim xy = index.RemovesOutlier(x.AsVector, x.AsVector)
 
 
-        Call x.ToArray.GetJson(indent:=True).__DEBUG_ECHO
+        Call x.ToArray.GetJson(indent:=True).debug
         ' Call xy.X.ToArray.GetJson(indent:=True).__DEBUG_ECHO
 
         Pause()
