@@ -67,14 +67,6 @@ Namespace LASSO
     Public Class MathUtil
 
 
-        Public Shared Function getStg(arr As Double()) As Double
-            Return getStd(arr, arr.Average())
-        End Function
-
-        Public Shared Function getStg(arr As IList(Of Double)) As Double
-            Return getStd(arr, arr.Average())
-        End Function
-
         Public Shared Function getStd(arr As Double(), avg As Double) As Double
             Dim sum As Double = 0
             For Each item In arr

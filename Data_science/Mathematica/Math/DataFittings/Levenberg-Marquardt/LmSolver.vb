@@ -99,6 +99,10 @@ Namespace LevenbergMarquardt
         Private changeEpsilonField As Double
 
         Private errorFuncField As LmModelError
+        ' 求解过程的可观测状态：迭代计数、收敛标志与最终的误差函数值
+        Private iterCountField As Integer
+        Private convergedField As Boolean
+        Private errorValueField As Double
 
         Public Sub New(inErrorFunc As LmModelError)
             dampingFactorField = 0.001
@@ -161,6 +165,49 @@ Namespace LevenbergMarquardt
             End Set
         End Property
 
+        ''' <summary>
+        ''' The number of iterations that have been consumed by the last call 
+        ''' of the <see cref="solve(Double(), LmParamHandler, Boolean)"/> 
+        ''' routine.
+        ''' 
+        ''' (上一次求解所实际消耗的迭代次数，可以用来判断求解是否因为
+        ''' 达到了 <see cref="MaxNumIter"/> 的上限而被迫终止)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable ReadOnly Property Iterations As Integer
+            Get
+                Return iterCountField
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Does the last call of the solver terminate on the convergence 
+        ''' criteria instead of the max iteration limit?
+        ''' 
+        ''' (上一次求解是否命中了收敛判据而正常终止，False 表示迭代次数被耗尽，
+        ''' 求解结果可能还没有收敛)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable ReadOnly Property Converged As Boolean
+            Get
+                Return convergedField
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The final value of the chi-squared error function after the last 
+        ''' call of the solver, which is a half of the sum of the squared 
+        ''' residuals.
+        ''' 
+        ''' (上一次求解结束之后的误差函数值，即残差平方和的一半)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable ReadOnly Property ErrorValue As Double
+            Get
+                Return errorValueField
+            End Get
+        End Property
+
 
         ''' <summary>
         ''' Applies Levenberg-Marquadt algorithm on the input error function with the
@@ -183,28 +230,43 @@ Namespace LevenbergMarquardt
         '''                         {@code true}, the Hessian matrix will be
         '''                         approximated by the Jacobian matrix </param>
         Public Overridable Sub solve(optParams As Double(), paramHandler As LmParamHandler, approxHessianFlg As Boolean)
+            If optParams Is Nothing OrElse optParams.Length = 0 Then
+                Throw New ArgumentException("the vector of the optimization parameters can not be empty!", NameOf(optParams))
+            End If
+
             Dim iter = 0
             Dim numOptParams = optParams.Length
             Dim penaltyFactor = 2.0
             Dim lambda = 0.0
             Dim i = 0
+            Dim diagonalMax = 0.0
             Dim errValue = errorFuncField.eval(optParams)
+
+            ' 上一次求解所遗留下来的状态必须先复位，否则外部读到的
+            ' 迭代计数与收敛标志是历史值
+            iterCountField = 0
+            convergedField = False
+            errorValueField = errValue
 
             While iter < maxNumIterField
                 iter += 1
+                iterCountField = iter
 
                 ' Compute gradient vector
                 Dim gradient = errorFuncField.jacobian(optParams)
                 Dim gradientMat As Matrix = New Matrix(gradient, numOptParams)
                 If gradientMat.NormInf() < gradientEpsilonField Then
+                    convergedField = True
                     Exit While
                 End If
 
                 ' Compute modified Hessian matrix
                 Dim modifiedHessian = errorFuncField.hessian(optParams, approxHessianFlg)
                 If iter = 1 Then
-                    ' Initialize damping value on the first iteration
-                    Dim diagonalMax = modifiedHessian(0)(0)
+                    ' Initialize damping value on the first iteration,
+                    ' the diagonal maximum is cached here for the damping 
+                    ' value lower bound of the following iterations
+                    diagonalMax = modifiedHessian(0)(0)
                     i = 1
 
                     While i < modifiedHessian.Length
@@ -225,6 +287,14 @@ Namespace LevenbergMarquardt
                 Dim direction = JamaHelper.solvePSDMatrixEq(modifiedHessianMat, -gradientMat)
                 If direction Is Nothing Then
                     ' Modified Hessian matrix is not positive definite
+                    ' 
+                    ' λ 等于 0 的时候（例如雅可比矩阵存在全零列），单纯放大 λ 
+                    ' 的结果仍然是 0，Cholesky 分解会一直失败到迭代次数耗尽；
+                    ' 这里先把 λ 抬到一个正的下界之后再放大
+                    If lambda <= 0 Then
+                        lambda = dampingFactorField * std.Max(1.0, diagonalMax)
+                    End If
+
                     lambda *= penaltyFactor
                     penaltyFactor *= 2.0
                     Continue While
@@ -233,6 +303,7 @@ Namespace LevenbergMarquardt
                 ' Stop if the change in optimized parameter vectors is negligible
                 Dim paramVector As Matrix = New Matrix(optParams, numOptParams)
                 If direction.NormF() < changeEpsilonField * (paramVector.NormF() + changeEpsilonField) Then
+                    convergedField = True
                     Exit While
                 End If
 
@@ -240,6 +311,16 @@ Namespace LevenbergMarquardt
 
                 ' Compute gain ratio between actual and predicted gain
                 Dim newErrValue = errorFuncField.eval(newOptParams)
+
+                If Double.IsNaN(newErrValue) OrElse Double.IsInfinity(newErrValue) Then
+                    ' 模型在新的参数向量处取值非有限（例如指数溢出）：这一步必须
+                    ' 被拒绝掉，否则 NaN 会经由 gainRatio 的比较结果为 False 
+                    ' 而静默地吞掉整轮迭代，求解过程不再有任何进展
+                    lambda *= penaltyFactor
+                    penaltyFactor *= 2.0
+                    Continue While
+                End If
+
                 Dim predictedGain = 0.5 * (lambda * JamaHelper.dotProduct(direction, direction) - JamaHelper.dotProduct(gradientMat, direction))
                 Dim gainRatio = (errValue - newErrValue) / predictedGain
 
@@ -253,6 +334,7 @@ Namespace LevenbergMarquardt
                         i+=1
                     End While
                     errValue = newErrValue
+                    errorValueField = errValue
                     penaltyFactor = 2.0
                     lambda *= std.Max(1.0 / 3.0, 1 - std.Pow(2.0 * gainRatio - 1, 3))
                 Else

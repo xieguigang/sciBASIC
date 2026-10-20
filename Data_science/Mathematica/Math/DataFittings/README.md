@@ -39,6 +39,15 @@ Dim lm = LevenbergMarquardt.Solve(x, y, model, guess:={1.0, 1.0})
 
 ' 3. 稀疏回归（自动做特征选择）
 Dim lasso = LASSO.Fit(design, response, lambda:=0.01)
+
+' 4. 非线性拟合（Levenberg-Marquardt）：三种入口
+'    a) 不给出模型，拟合幂律模型 y = p0 * x1^p1 * x2^p2 ...
+Dim power = inputs.NonLinearFit()
+'    b) 给出模型委托
+Dim mm = inputs.NonLinearFit(Function(p, x) p(0) * x(0) / (p(1) + x(0)), guess:={1.0, 1.0})
+'    c) 给出公式字符串，自变量按列名绑定
+Dim decay = inputs.NonLinearFit("a*exp(-b*x1)", {"a", "b"})
+Console.WriteLine($"R2={decay.R2}, a={decay.Parameters("a")}, b={decay.Parameters("b")}")
 ```
 
 ## 实现要点
