@@ -126,7 +126,10 @@ Namespace LASSO
                 Throw New Exception("Number of observations (" & numObservations.ToString() & ") exceeds the maximum allowed number: " & getMaxAllowedObservations(maxNumFeatures).ToString())
             End If
             Me.numObservations = numObservations
-            observations = New Double(Me.numObservations - 1)() {}
+            ' observations 是按照特征为第一维来组织的：observations(特征)(样本)，
+            ' 因此外层数组的长度必须是特征的数量，而不是观测的数量。
+            ' (旧实现使用 numObservations 作为外层长度，只要自变量个数大于样本数量就会越界)
+            observations = New Double(maxNumFeatures - 1)() {}
             For t = 0 To maxNumFeatures - 1
                 observations(t) = New Double(Me.numObservations - 1) {}
             Next
@@ -156,7 +159,9 @@ Namespace LASSO
         End Sub
 
         Private Function getLassoFit(maxAllowedFeaturesPerModel As Integer) As LassoFit
-            If maxAllowedFeaturesPerModel < 0 Then
+            ' 负数表示不做限制；零也按不限制处理，否则下面的
+            ' maxAllowedFeaturesAlongPath 会等于零并构造出负长度的数组
+            If maxAllowedFeaturesPerModel <= 0 Then
                 maxAllowedFeaturesPerModel = numFeatures
             End If
             Dim numberOfLambdas = DEFAULT_NUMBER_OF_LAMBDAS
@@ -199,7 +204,12 @@ Namespace LASSO
             Dim feature2featureCorrelations = RectangularArray.Matrix(Of Double)(numFeatures, maxAllowedFeaturesAlongPath)
             Dim activeWeights = New Double(numFeatures - 1) {}
             Dim correlationCacheIndices = New Integer(numFeatures - 1) {}
-            Dim denseActiveSet = New Double(numFeatures - 1) {}
+            ' denseActiveSet 会和 feature2featureCorrelations(j) 做点积，后者的长度是
+            ' maxAllowedFeaturesAlongPath，因此这里也必须使用同一个长度，
+            ' 否则在 maxAllowedFeaturesPerModel 受限(即小于特征数量)的时候，
+            ' SimdReduce.Dot 会因为两个向量的长度不相等而抛出异常。
+            ' 旧实现使用 numFeatures，只有在正则化路径不受限的时候才恰好相等。
+            Dim denseActiveSet = New Double(maxAllowedFeaturesAlongPath - 1) {}
 
             Dim fit As New LassoFit(numberOfLambdas, maxAllowedFeaturesAlongPath, numFeatures) With {
                 .featureNames = featureNames,
@@ -295,6 +305,11 @@ Namespace LASSO
                         Exit While
                     End If
 
+                    ' 超出当前活跃集长度的位置必须保持为零，
+                    ' 这样下面与协方差行向量的整长点积才只覆盖有效的列
+                    For ii As Integer = numberOfInputs To denseActiveSet.Length - 1
+                        denseActiveSet(ii) = 0
+                    Next
                     For ii = 0 To numberOfInputs - 1
                         denseActiveSet(ii) = activeWeights(fit.indices(ii))
                     Next
