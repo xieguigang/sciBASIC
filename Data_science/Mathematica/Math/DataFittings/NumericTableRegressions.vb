@@ -623,8 +623,8 @@ Public Module NumericTableRegressions
     ''' 将二维表转换为 <see cref="LMA.FitInput"/> 的集合，以提供给
     ''' <see cref="LMA.NonLinearFit"/> 使用。
     ''' 
-    ''' 注意：<see cref="LMA.NonLinearFit"/> 目前尚未实现（会抛出
-    ''' <see cref="NotImplementedException"/>），因此这里只是完成数据形态的适配。
+    ''' 转换之后每一个样本的自变量就是表的全部特征列（以列名为键），
+    ''' 响应变量由 <paramref name="y"/> 指定。
     ''' </summary>
     ''' <param name="table">特征矩阵为自变量、指定标签列为 y 的二维表</param>
     ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
@@ -651,6 +651,81 @@ Public Module NumericTableRegressions
         Next
 
         Return inputs
+    End Function
+
+    ''' <summary>
+    ''' 非线性最小二乘拟合的缺省表入口：拟合幂律（Cobb-Douglas / 异速生长）
+    ''' 模型 ``y = p0 * x1^p1 * x2^p2 * ...``，不需要调用者给出模型函数。
+    ''' 
+    ''' 该模型要求全部特征列与响应变量**均为正数**。
+    ''' </summary>
+    ''' <param name="table">特征矩阵为自变量、指定标签列为 y 的二维表</param>
+    ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
+    ''' <param name="iterations">求解器所允许的最大迭代次数</param>
+    ''' <returns>拟合结果，参数依次为 ``p0`` 以及各个特征列的指数</returns>
+    <Extension>
+    Public Function NonLinearFit(table As NumericTable,
+                                 Optional y As String = Nothing,
+                                 Optional iterations As Integer = 2000) As LMA.NonLinearFitResult
+
+        Dim inputs As LMA.FitInput() = AsFitInputs(table, y)
+
+        Return inputs.NonLinearFit(iterations)
+    End Function
+
+    ''' <summary>
+    ''' 给出模型委托的非线性最小二乘拟合表入口。
+    ''' 
+    ''' 自变量向量的顺序同 <see cref="FeatureNameList"/>，即特征列的列序。
+    ''' </summary>
+    ''' <param name="table">特征矩阵为自变量、指定标签列为 y 的二维表</param>
+    ''' <param name="model">待拟合的非线性模型</param>
+    ''' <param name="guess">参数的初始猜测值，缺省时全部取 1</param>
+    ''' <param name="names">参数名，缺省时自动生成 ``p1, p2, ...``</param>
+    ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
+    ''' <param name="iterations">求解器所允许的最大迭代次数</param>
+    ''' <param name="approxHessian">是否使用高斯-牛顿近似代替精确的海塞矩阵</param>
+    ''' <returns>拟合结果</returns>
+    <Extension>
+    Public Function NonLinearFit(table As NumericTable,
+                                 model As LMA.NonLinearModel,
+                                 Optional guess As Double() = Nothing,
+                                 Optional names As String() = Nothing,
+                                 Optional y As String = Nothing,
+                                 Optional iterations As Integer = 2000,
+                                 Optional approxHessian As Boolean = True) As LMA.NonLinearFitResult
+
+        Dim inputs As LMA.FitInput() = AsFitInputs(table, y)
+
+        Return inputs.NonLinearFit(model, guess, names, iterations, approxHessian)
+    End Function
+
+    ''' <summary>
+    ''' 给出公式字符串的非线性最小二乘拟合表入口。
+    ''' 
+    ''' 公式之中的自变量按**特征列的列名**绑定，例如特征列名为 ``t`` 时可以写作
+    ''' ``a*exp(-b*t)``；<paramref name="parameters"/> 之外的符号必须都是列名。
+    ''' </summary>
+    ''' <param name="table">特征矩阵为自变量、指定标签列为 y 的二维表</param>
+    ''' <param name="formula">模型的公式文本</param>
+    ''' <param name="parameters">待估计的参数符号名</param>
+    ''' <param name="guess">参数的初始猜测值，缺省时全部取 1</param>
+    ''' <param name="y">响应变量所在的标签列名，缺省为第一个标签列</param>
+    ''' <param name="iterations">求解器所允许的最大迭代次数</param>
+    ''' <param name="approxHessian">是否使用高斯-牛顿近似代替精确的海塞矩阵</param>
+    ''' <returns>拟合结果</returns>
+    <Extension>
+    Public Function NonLinearFit(table As NumericTable,
+                                 formula As String,
+                                 parameters As String(),
+                                 Optional guess As Double() = Nothing,
+                                 Optional y As String = Nothing,
+                                 Optional iterations As Integer = 2000,
+                                 Optional approxHessian As Boolean = True) As LMA.NonLinearFitResult
+
+        Dim inputs As LMA.FitInput() = AsFitInputs(table, y)
+
+        Return inputs.NonLinearFit(formula, parameters, guess, iterations, approxHessian)
     End Function
 
 #End Region
