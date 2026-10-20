@@ -74,6 +74,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace IL
 
@@ -82,7 +83,7 @@ Namespace IL
     ''' 
     ''' > https://www.codeproject.com/articles/14058/parsing-the-il-of-a-method-body
     ''' </summary>
-    Public Class MethodBodyReader : Implements IEnumerable(Of ILInstruction)
+    Public Class MethodBodyReader : Implements Enumeration(Of ILInstruction)
         Implements IDisposable
 
         ReadOnly _instructions As New List(Of ILInstruction)
@@ -430,14 +431,10 @@ Namespace IL
             GC.SuppressFinalize(Me)
         End Sub
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of ILInstruction) Implements IEnumerable(Of ILInstruction).GetEnumerator
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of ILInstruction) Implements Enumeration(Of ILInstruction).GenericEnumerator
             For Each il As ILInstruction In _instructions
                 Yield il
             Next
-        End Function
-
-        Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Return GetEnumerator()
         End Function
     End Class
 End Namespace
