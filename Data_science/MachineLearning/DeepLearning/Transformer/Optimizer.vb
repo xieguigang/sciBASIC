@@ -109,6 +109,48 @@ Namespace Transformer
         End Sub
 
         ''' <summary>
+        ''' 一阶矩估计张量（与参数同形）。仅供 checkpoint 持久化读取，请勿直接改写其内容。
+        ''' </summary>
+        Public ReadOnly Property FirstMoment As Tensor
+            Get
+                Return _m
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 二阶矩估计张量（与参数同形）。仅供 checkpoint 持久化读取，请勿直接改写其内容。
+        ''' </summary>
+        Public ReadOnly Property SecondMoment As Tensor
+            Get
+                Return _v
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 从 checkpoint 恢复一阶/二阶矩估计（用于中断后精确续训）。
+        ''' </summary>
+        ''' <param name="m">一阶矩数据，长度须与参数相同</param>
+        ''' <param name="v">二阶矩数据，长度须与参数相同</param>
+        ''' <remarks>
+        ''' 恢复的是 Adam 的动量缓存，不触及参数值与梯度累加器；
+        ''' 调用方应保证配套的全局训练步序号（偏置校正依据）一并恢复。
+        ''' </remarks>
+        Public Sub RestoreMomenta(m As Double(), v As Double())
+            If m Is Nothing Then Throw New ArgumentNullException(NameOf(m))
+            If v Is Nothing Then Throw New ArgumentNullException(NameOf(v))
+
+            If m.Length <> _m.Data.Length OrElse v.Length <> _v.Data.Length Then
+                Throw New ArgumentException(
+                    $"动量数据长度（{m.Length}/{v.Length}）与参数规模（{_m.Data.Length}）不一致")
+            End If
+
+            Call System.Array.Copy(m, _m.Data, m.Length)
+            Call System.Array.Copy(v, _v.Data, v.Length)
+            Call _m.MarkHostModified()
+            Call _v.MarkHostModified()
+        End Sub
+
+        ''' <summary>
         ''' 按 Adam 规则原地更新参数，并在更新完成后清零梯度累加器。
         ''' </summary>
         ''' <param name="learningRate">学习率</param>

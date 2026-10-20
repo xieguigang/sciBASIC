@@ -621,7 +621,9 @@ Namespace Compute
 
             Dim m = a.Shape(0), k = a.Shape(1), n = b.Shape(1)
             Dim x = a.Data, y = b.Data
-            Dim r(m * n - 1) As Single
+
+            ' 输出元素数必须用 64 位校验：全基因组规模的 [N,N] 分数矩阵会超过 Int32 上限
+            Dim r(Tensor.MatrixSize(m, n) - 1) As Single
 
             If CLng(m) * CLng(k) * CLng(n) >= MatMulParallelThreshold Then
                 tpl.Parallel.For(0, m, Sub(i)
