@@ -52,6 +52,9 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Text
+Imports System.Text.Json
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Serialization.JSON.Formatter
@@ -68,7 +71,23 @@ Namespace Serialization.JSON.Formatter
         ''' <param name="json">A valid JSON string.</param>
         ''' <returns>A 'pretty printed' version of the specified JSON string.</returns>
         Public Function Format(json As String) As String
+            If String.IsNullOrEmpty(json) Then
+                Return json
+            End If
 
+            ' Re-emit the parsed JSON tree through an indented writer so that any compact,
+            ' single-line JSON string is turned into a human readable, multi-line document.
+            Using document As JsonDocument = JsonDocument.Parse(json)
+                Using ms As New MemoryStream()
+                    Dim writerOptions As New JsonWriterOptions With {.Indented = True}
+
+                    Using writer As New Utf8JsonWriter(ms, writerOptions)
+                        document.WriteTo(writer)
+                    End Using
+
+                    Return Encoding.UTF8.GetString(ms.ToArray())
+                End Using
+            End Using
         End Function
 
         ''' <summary>
