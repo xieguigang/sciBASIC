@@ -68,6 +68,12 @@ Public Structure SmSliceSummary
     Public ThroughputPercent As Double
     ''' <summary>每 SM 平均活跃周期</summary>
     Public CyclesActiveAvg As Double
+    ''' <summary>每 SM 平均经过周期（作为利用率的分母）</summary>
+    Public CyclesElapsedAvg As Double
+    ''' <summary>最忙 SM 的活跃周期（跨 instance 的 max rollup）</summary>
+    Public CyclesActiveMax As Double
+    ''' <summary>最闲 SM 的活跃周期（跨 instance 的 min rollup）</summary>
+    Public CyclesActiveMin As Double
     ''' <summary>由 avg/max/min 推出的均衡估计</summary>
     Public Balance As SmBalanceEstimate
 End Structure
@@ -156,22 +162,16 @@ Public NotInheritable Class CuptiMonitor
         _session = New CuptiPmSamplingSession()
         _session.ForceSystemClockTrigger = _options.ForceSystemClockTrigger
 
-        ' 1) 先初始化 CUDA 驱动并建立本进程上下文：
-        '    官方 pm_sampling 示例在 cuptiPmSamplingStart 之前就已经创建了 CUDA 上下文，
-        '    否则 cuptiPmSamplingStart 会返回 CUPTI_ERROR_UNKNOWN（999）。
+        ' 1) 初始化 CUDA 驱动（cuInit）并取设备属性；PM Sampling 本身不需要 CUDA 上下文，
+        '    上下文只在 per-SM（旧 Event API）路径里按需创建（见 OpenPerSmCounter）。
         Try
             Dim devices = CudaDevice.Enumerate()
 
             If _options.DeviceIndex >= 0 AndAlso _options.DeviceIndex < devices.Count Then
                 _device = devices(_options.DeviceIndex)
             End If
-
-            If _device IsNot Nothing Then
-                _context = New CudaContext(_device)
-                _context.MakeCurrent()
-            End If
         Catch ex As Exception
-            _openError = $"初始化 CUDA 上下文失败：{ex.Message}"
+            _openError = $"初始化 CUDA 驱动失败：{ex.Message}"
         End Try
 
         ' 2) 打开 CUPTI 会话（内部会调用 cuptiProfilerInitialize）
@@ -308,12 +308,17 @@ Public NotInheritable Class CuptiMonitor
     ' ------------------------------------------------------------------
 
     Private Sub OpenPerSmCounter()
-        If _device Is Nothing OrElse _context Is Nothing Then
+        If _device Is Nothing Then
             _perSmReason = "无法获取 CUDA 设备/上下文，per-SM 采集不可用"
             Return
         End If
 
         Try
+            ' 旧 Event API 的 event group 必须绑定到一个真实存在的 CUcontext
+            If _context Is Nothing Then
+                _context = New CudaContext(_device)
+            End If
+
             _context.MakeCurrent()
 
             Dim counter As New CuptiPerSmCounter()
@@ -370,6 +375,9 @@ Public NotInheritable Class CuptiMonitor
         item.Index = sample.Index
         item.DurationMs = sample.DurationMs
         item.CyclesActiveAvg = sample.ValueOf(PmSamplingMetrics.CyclesActiveAvg)
+        item.CyclesElapsedAvg = sample.ValueOf(PmSamplingMetrics.CyclesElapsedAvg)
+        item.CyclesActiveMax = sample.ValueOf(PmSamplingMetrics.CyclesActiveMax)
+        item.CyclesActiveMin = sample.ValueOf(PmSamplingMetrics.CyclesActiveMin)
         item.WarpsActivePercent = sample.ValueOf(PmSamplingMetrics.WarpsActivePercent, -1)
         item.ThroughputPercent = sample.ValueOf(PmSamplingMetrics.ThroughputPercent, -1)
         item.UtilizationPercent = UtilizationOf(sample)
@@ -450,12 +458,13 @@ Public NotInheritable Class CuptiMonitor
         Dim thrSum As Double = 0
         Dim thrWeight As Double = 0
         Dim activeSum As Double = 0
-        Dim hotSum As Double = 0
-        Dim coldSum As Double = 0
-        Dim avgSum As Double = 0
-        Dim imbalanceSum As Double = 0
-        Dim estimated As Integer = 0
-        Dim idleSum As Integer = 0
+        ' 均衡指标必须用"周期总量之比"聚合（Σactive / Σelapsed），
+        ' 直接把每片的比例取平均会被大量空闲切片稀释，导致失衡比与推断空转自相矛盾。
+        Dim wActive As Double = 0
+        Dim wElapsed As Double = 0
+        Dim wMax As Double = 0
+        Dim wMin As Double = 0
+        Dim balanceWeight As Double = 0
 
         For Each item In slices
             Dim weight = If(item.DurationMs > 0, item.DurationMs, 1.0)
@@ -475,14 +484,14 @@ Public NotInheritable Class CuptiMonitor
             End If
 
             activeSum += item.CyclesActiveAvg
+            wActive += item.CyclesActiveAvg * weight
+            wElapsed += item.CyclesElapsedAvg * weight
 
+            ' IsEstimated 为真说明该切片同时带了 max/min rollup
             If item.Balance.IsEstimated Then
-                estimated += 1
-                hotSum += item.Balance.HotSmPercent
-                coldSum += item.Balance.ColdSmPercent
-                avgSum += item.Balance.AveragePercent
-                imbalanceSum += item.Balance.ImbalanceRatio
-                idleSum += item.Balance.IdleSmEstimate
+                balanceWeight += weight
+                wMax += item.CyclesActiveMax * weight
+                wMin += item.CyclesActiveMin * weight
             End If
         Next
 
@@ -504,17 +513,38 @@ Public NotInheritable Class CuptiMonitor
         balance.IdleSmEstimate = -1
         balance.IsEstimated = False
 
-        If estimated > 0 Then
+        Dim avgPercent = If(wElapsed > 0,
+            System.Math.Min(100.0, wActive / wElapsed * 100.0),
+            result.UtilizationPercent)
+
+        If avgPercent >= 0 Then
+            balance.AveragePercent = avgPercent
+            balance.AverageActiveSm = avgPercent / 100.0 * balance.SmCount
+        End If
+
+        If balanceWeight > 0 AndAlso wElapsed > 0 Then
+            Dim hotPercent = System.Math.Min(100.0, wMax / wElapsed * 100.0)
+            Dim coldPercent = System.Math.Min(100.0, wMin / wElapsed * 100.0)
+
+            ' 防御：不同驱动下 max/min 的相对关系可能出现倒挂
+            If coldPercent > hotPercent Then
+                Dim swap = hotPercent
+                hotPercent = coldPercent
+                coldPercent = swap
+            End If
+
             balance.IsEstimated = True
-            balance.HotSmPercent = hotSum / estimated
-            balance.ColdSmPercent = coldSum / estimated
-            balance.AveragePercent = If(result.UtilizationPercent >= 0, result.UtilizationPercent, avgSum / estimated)
-            balance.ImbalanceRatio = System.Math.Max(0, System.Math.Min(1, imbalanceSum / estimated))
-            balance.IdleSmEstimate = CInt(System.Math.Round(idleSum / CDbl(estimated)))
-            balance.AverageActiveSm = balance.AveragePercent / 100.0 * balance.SmCount
-        ElseIf result.UtilizationPercent >= 0 AndAlso balance.SmCount > 0 Then
-            balance.AveragePercent = result.UtilizationPercent
-            balance.AverageActiveSm = result.UtilizationPercent / 100.0 * balance.SmCount
+            balance.HotSmPercent = hotPercent
+            balance.ColdSmPercent = coldPercent
+            balance.ImbalanceRatio = If(hotPercent > 0,
+                System.Math.Max(0, System.Math.Min(1, (hotPercent - coldPercent) / hotPercent)), 0)
+
+            ' 两极模型：假设负载全部集中在"最热 SM 的活跃水平"上，
+            ' 那么只需要 avg/hot 比例的 SM 就能产生观测到的平均值，
+            ' 其余 SM 视为空转（这是空转数的上限估计）。
+            Dim busyEquivalent = If(hotPercent > 0, avgPercent / hotPercent * balance.SmCount, 0)
+            balance.IdleSmEstimate = CInt(System.Math.Max(0, System.Math.Min(balance.SmCount,
+                System.Math.Round(balance.SmCount - busyEquivalent))))
         End If
 
         result.Balance = balance

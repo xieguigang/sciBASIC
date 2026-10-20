@@ -861,18 +861,12 @@ Namespace Runtime
                     est.ImbalanceRatio = 0
                 End If
 
-                ' 两极模型：avg = p·max + (1-p)·min
-                If hotPercent - coldPercent > 0.001 Then
-                    Dim ratio = (avgPercent - coldPercent) / (hotPercent - coldPercent)
-                    ratio = System.Math.Max(0, System.Math.Min(1, ratio))
-
-                    Dim idle = CInt(System.Math.Round((1 - ratio) * est.SmCount))
-                    est.IdleSmEstimate = System.Math.Max(0, System.Math.Min(est.SmCount, idle))
-                ElseIf avgPercent < 1.0 Then
-                    est.IdleSmEstimate = est.SmCount
-                Else
-                    est.IdleSmEstimate = 0
-                End If
+                ' 两极模型（与 GTop 聚合口径一致）：
+                ' 若把负载全部集中在"最热 SM 的活跃水平"上，只需要 avg/hot 比例的 SM
+                ' 就能产生观测到的平均值，其余 SM 视为空转（空转数的上限估计）。
+                Dim busyEquivalent = If(hotPercent > 0, avgPercent / hotPercent * est.SmCount, 0)
+                est.IdleSmEstimate = CInt(System.Math.Max(0, System.Math.Min(est.SmCount,
+                    System.Math.Round(est.SmCount - busyEquivalent))))
             End If
 
             Return est

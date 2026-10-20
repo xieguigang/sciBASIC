@@ -89,6 +89,8 @@ Module Program
         Public SmRows As Integer = 0
         Public SmHwBufferMB As Integer = 0
         Public SmSysClock As Boolean = False
+        ''' <summary>实时仪表盘不挂载 CUPTI SM 归因区块</summary>
+        Public NoSm As Boolean = False
         Public CuptiPath As String = Nothing
     End Class
 
@@ -190,21 +192,27 @@ Module Program
             sampler.Run(stopFn)
             Reporter.PrintHistory(device, sampler.Samples)
         Else
-            ' 实时仪表盘（默认模式）：完整信息 = 设备指标 + 硬件参数 + 历史曲线 + 每进程指标
+            ' 实时仪表盘（默认模式）：完整信息 = 设备指标 + 硬件参数 + 历史曲线 + SM 归因 + 每进程指标
             Dim hw = TryGetHardware(opts.DeviceIndex)
+            Dim smMonitor = CreateSmMonitor(opts)
+            Dim smRows = If(opts.SmRows > 0, opts.SmRows, 8)
 
-            If GpuProcessCounter.IsAvailable() Then
-                Using procCounter As New GpuProcessCounter()
-                    Dim total = device.GetMemoryInfo().TotalBytes
-                    Dim procMonitor As New ProcessMonitor(procCounter, total, 20, TimeSpan.FromMinutes(1))
-                    Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, procMonitor, hw, opts.MaxRows)
-                End Using
-            Else
-                If opts.Processes Then
-                    Console.Error.WriteLine("警告：进程级 GPU 计数器不可用，仅显示设备仪表盘。")
+            Try
+                If GpuProcessCounter.IsAvailable() Then
+                    Using procCounter As New GpuProcessCounter()
+                        Dim total = device.GetMemoryInfo().TotalBytes
+                        Dim procMonitor As New ProcessMonitor(procCounter, total, 20, TimeSpan.FromMinutes(1))
+                        Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, procMonitor, hw, opts.MaxRows, smMonitor, smRows)
+                    End Using
+                Else
+                    If opts.Processes Then
+                        Console.Error.WriteLine("警告：进程级 GPU 计数器不可用，仅显示设备仪表盘。")
+                    End If
+                    Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, Nothing, hw, 0, smMonitor, smRows)
                 End If
-                Reporter.RunLive(sampler, device, Not opts.Plain, stopFn, Nothing, hw, 0)
-            End If
+            Finally
+                If smMonitor IsNot Nothing Then smMonitor.Dispose()
+            End Try
         End If
 
         RemoveHandler Console.CancelKeyPress, AddressOf OnCancel
@@ -250,6 +258,20 @@ Module Program
         If opts.SmHwBufferMB > 0 Then options.HardwareBufferBytes = CLng(opts.SmHwBufferMB) << 20
         options.ForceSystemClockTrigger = opts.SmSysClock
         Return options
+    End Function
+
+    ''' <summary>
+    ''' 为实时仪表盘准备 CUPTI SM 归因会话；--no-sm 或初始化失败时返回 Nothing（仪表盘自动省略该区块）。
+    ''' </summary>
+    Private Function CreateSmMonitor(opts As Options) As CuptiMonitor
+        If opts.NoSm Then Return Nothing
+
+        Try
+            Return New CuptiMonitor(BuildSmOptions(opts))
+        Catch ex As Exception
+            Console.Error.WriteLine($"警告：CUPTI SM 归因会话初始化失败（{ex.Message}），仪表盘将不含 SM 归因区块。")
+            Return Nothing
+        End Try
     End Function
 
     ''' <summary>
@@ -385,6 +407,8 @@ Module Program
                     If i < args.Length Then Integer.TryParse(args(i), opts.SmHwBufferMB)
                 Case "--sm-sysclk"
                     opts.SmSysClock = True
+                Case "--no-sm"
+                    opts.NoSm = True
                 Case "--cupti"
                     i += 1
                     If i < args.Length Then opts.CuptiPath = args(i)
@@ -437,6 +461,7 @@ Module Program
         Console.WriteLine("  --sm-rows <n>        一次性模式最多打印多少个 SM 行（0 = 全部；实时模式为固定行数，默认 16）")
         Console.WriteLine("  --sm-hwbuffer <MB>   PM Sampling 的硬件缓冲大小（默认 64 MB；GPU 满载时过小会记录溢出）")
         Console.WriteLine("  --sm-sysclk          强制用 SYSCLK 触发（默认优先纳秒触发；Turing/GA100 需此开关）")
+        Console.WriteLine("  --no-sm          实时仪表盘不加载 CUPTI SM 归因区块（默认会加载，失败时自动省略）")
         Console.WriteLine("  --cupti <dll>    显式指定 cupti64 动态库（默认自动探测 CUDA Toolkit 的 extras\CUPTI\lib64）")
         Console.WriteLine("  --device <n>    指定 GPU 序号（默认 0）")
         Console.WriteLine("  --interval <ms> 轮询间隔毫秒（默认 1000）")

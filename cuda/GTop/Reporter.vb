@@ -272,18 +272,25 @@ Public Module Reporter
     Public Sub RunLive(sampler As MonitorSampler, device As NvmlDevice, useColor As Boolean, shouldStop As Func(Of Boolean),
                        Optional processMonitor As ProcessMonitor = Nothing,
                        Optional hardware As CudaDevice = Nothing,
-                       Optional processRows As Integer = 0)
+                       Optional processRows As Integer = 0,
+                       Optional smMonitor As CuptiMonitor = Nothing,
+                       Optional smRows As Integer = 8)
         If useColor Then
-            RunLiveColor(sampler, device, shouldStop, processMonitor, hardware, processRows)
+            RunLiveColor(sampler, device, shouldStop, processMonitor, hardware, processRows, smMonitor, smRows)
         Else
-            RunLivePlain(sampler, device, shouldStop, processMonitor)
+            RunLivePlain(sampler, device, shouldStop, processMonitor, smMonitor)
         End If
     End Sub
 
     Private Sub RunLivePlain(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
-                             processMonitor As ProcessMonitor)
+                             processMonitor As ProcessMonitor, Optional smMonitor As CuptiMonitor = Nothing)
         sampler.Run(shouldStop, Sub(s)
                                     Console.WriteLine($"{s.Time:HH:mm:ss} GPU={FmtPercent(s.GpuPercent)} 显存控={FmtPercent(s.MemoryControllerPercent)} 显存={FmtMB(s.UsedMB)}/{FmtMB(s.TotalMB)}MB PCIe TX={FmtDouble(s.PcieTxMBps)} RX={FmtDouble(s.PcieRxMBps)} 功耗={FmtWatts(s.PowerWatts)}W 温度={FmtTemp(s.TemperatureC)}")
+
+                                    If smMonitor IsNot Nothing Then
+                                        Console.WriteLine($"{s.Time:HH:mm:ss} {BuildSmSummaryLine(smMonitor.Refresh())}")
+                                    End If
+
                                     If processMonitor IsNot Nothing Then
                                         processMonitor.Update()
                                         For Each p In processMonitor.Rows()
@@ -293,11 +300,46 @@ Public Module Reporter
                                 End Sub)
     End Sub
 
+    ''' <summary>无颜色模式下的单行 SM 归因摘要。</summary>
+    Private Function BuildSmSummaryLine(snapshot As SmSnapshot) As String
+        If Not snapshot.Capability.Available Then
+            Return $"SM归因 CUPTI不可用: {snapshot.Reason}"
+        End If
+
+        Dim aggregate = snapshot.Aggregate
+        Dim balance = aggregate.Balance
+
+        If snapshot.PerSmAvailable Then
+            Return $"SM归因 整卡={FmtPercentD(aggregate.UtilizationPercent)} warps={FmtPercentD(aggregate.WarpsActivePercent)} " &
+                   $"切片={snapshot.SampleCount} 空转={snapshot.IdleCount}/{snapshot.SmCount} " &
+                   $"最热={FormatSmList(snapshot.TopHot(3))} 最冷={FormatSmList(snapshot.TopCold(3))}"
+        End If
+
+        Dim head = $"SM归因 整卡={FmtPercentD(aggregate.UtilizationPercent)} warps={FmtPercentD(aggregate.WarpsActivePercent)} " &
+                   $"发射={FmtPercentD(aggregate.ThroughputPercent)} 切片={snapshot.SampleCount}"
+
+        If Not balance.IsEstimated Then
+            Return head & " 均衡推断: 指标不足（缺少 sm__cycles_active.max/.min） [per-SM 明细不可用]"
+        End If
+
+        If balance.AveragePercent >= 0 AndAlso balance.AveragePercent < 1.0 Then
+            Return head & " 均衡推断: GPU 基本空闲（平均活跃 < 1%），失衡推断无统计意义 [per-SM 明细不可用]"
+        End If
+
+        Return head &
+               $" 平均活跃SM={balance.AverageActiveSm:F1}/{balance.SmCount} 推断空转={balance.IdleSmEstimate} " &
+               $"失衡比={balance.ImbalanceRatio:P0} 最热/最冷={balance.HotSmPercent:F1}%/{balance.ColdSmPercent:F1}% " &
+               $"[per-SM 明细不可用：CUDA 13.x 已移除 instance 接口]"
+    End Function
+
     Private Sub RunLiveColor(sampler As MonitorSampler, device As NvmlDevice, shouldStop As Func(Of Boolean),
-                             processMonitor As ProcessMonitor, hardware As CudaDevice, processRows As Integer)
+                             processMonitor As ProcessMonitor, hardware As CudaDevice, processRows As Integer,
+                             Optional smMonitor As CuptiMonitor = Nothing, Optional smRows As Integer = 8)
         Dim frameLines As Integer = 0
         ' 进程块固定高度，避免样本数波动导致原地刷新残影
         Dim procRows = If(processRows > 0, System.Math.Min(processRows, 15), 0)
+        ' SM 归因块固定高度（4 行概览 + N 行明细），避免帧高抖动
+        Dim smRowCount = System.Math.Max(4, System.Math.Min(If(smRows > 0, smRows, 8), 16))
 
         Dim cudaHist As New List(Of Integer)()
         Dim memHist As New List(Of Integer)()
@@ -316,6 +358,12 @@ Public Module Reporter
                                     Dim lines = BuildLiveLines(device, s)
                                     If hardware IsNot Nothing Then lines.AddRange(BuildHardwareLines(hardware))
                                     lines.AddRange(BuildCurveLines(cudaHist, memHist))
+
+                                    ' SM 归因（CUPTI PM Sampling 切片 / per-SM 明细 / SM 均衡推断）
+                                    If smMonitor IsNot Nothing Then
+                                        lines.AddRange(BuildSmPanel(smMonitor.Refresh(), True, smRowCount))
+                                    End If
+
                                     If processMonitor IsNot Nothing AndAlso procRows > 0 Then
                                         lines.AddRange(BuildProcessLines(processMonitor.Rows(), procRows, True))
                                     End If
@@ -804,12 +852,14 @@ Public Module Reporter
             Console.WriteLine($"  推断空转 SM 数 : {balance.IdleSmEstimate} / {balance.SmCount}（两极模型估计）")
             Console.WriteLine($"  SM 失衡比      : {balance.ImbalanceRatio:P1}（越接近 0 越均衡）")
 
-            If balance.ImbalanceRatio >= 0.5 Then
-                Console.WriteLine("  判读：负载高度集中在少数 SM 上，存在明显的 SM 空转（通常来自数据并行度不足或 tail effect）。")
-            ElseIf balance.ImbalanceRatio >= 0.2 Then
-                Console.WriteLine("  判读：存在中等程度失衡，部分 SM 明显更忙，可检查网格划分与 block 调度是否均匀。")
+            If balance.AveragePercent >= 0 AndAlso balance.AveragePercent < 1.0 Then
+                Console.WriteLine("  判读：采样窗口内 GPU 基本空闲（平均活跃 < 1%），SM 失衡推断无统计意义。")
+            ElseIf balance.ImbalanceRatio >= 0.7 Then
+                Console.WriteLine("  判读：推断负载明显集中在少数 SM 上（两极模型），可能存在并行度不足或 tail effect。")
+            ElseIf balance.ImbalanceRatio >= 0.4 Then
+                Console.WriteLine("  判读：推断存在中等程度失衡（两极模型），可检查网格划分与 block 调度是否均匀。")
             Else
-                Console.WriteLine("  判读：SM 之间基本均衡，未观察到明显的空转 SM。")
+                Console.WriteLine("  判读：推断 SM 之间基本均衡（两极模型），未观察到明显的空转 SM。")
             End If
         Else
             Console.WriteLine("  当前采集到的指标不足以推断 SM 均衡（缺少 sm__cycles_active.max/.min）。")
@@ -871,62 +921,104 @@ Public Module Reporter
     ''' <summary>实时模式的一帧（固定行数，避免残影）。</summary>
     Private Function BuildSmLines(snapshot As SmSnapshot, useColor As Boolean, rowCount As Integer) As List(Of String)
         Dim L As New List(Of String)()
-        Dim cap = snapshot.Capability
-
         L.Add($"GTop — {If(String.IsNullOrEmpty(snapshot.DeviceName), "GPU", snapshot.DeviceName)}  [{snapshot.DeviceIndex}]   SM 归因 (CUPTI)   {DateTime.Now:HH:mm:ss}")
+        L.AddRange(BuildSmPanel(snapshot, useColor, rowCount))
+        Return L
+    End Function
+
+    ''' <summary>
+    ''' SM 归因区块（固定高度 = 4 + rowCount 行，供实时仪表盘原地刷新用）。
+    '''
+    ''' 行布局：
+    '''   第 0 行 整卡 SM 利用率条形
+    '''   第 1 行 活跃 warp / 发射槽 / 切片数 / 芯片
+    '''   第 2 行 per-SM 可用性、或整卡层面的均衡推断（平均活跃 SM、推断空转、失衡比、最热/最冷）
+    '''   第 3 行 per-SM 排名（最热/最冷 Top-3 + 空转计数）或判读结论
+    '''   其余    逐 SM 明细（SM/条形/利用率/warps%/吞吐%/IDLE|HOT），降级时为 PM 切片
+    ''' </summary>
+    Public Function BuildSmPanel(snapshot As SmSnapshot, useColor As Boolean, rowCount As Integer) As List(Of String)
+        Dim L As New List(Of String)()
+        Dim cap = snapshot.Capability
+        Dim aggregate = snapshot.Aggregate
+        Dim balance = aggregate.Balance
+        Dim rows = System.Math.Max(1, rowCount)
 
         If Not cap.Available Then
-            L.Add("  CUPTI PM Sampling 不可用")
-            L.Add($"  原因: {snapshot.Reason}")
+            L.Add("  整卡 SM  : CUPTI PM Sampling 不可用")
+            L.Add($"  原因     : {TruncateByWidth(snapshot.Reason, System.Math.Max(30, GetConsoleWidth() - 14))}")
+            L.Add("  per-SM   : 无硬件计数器数据")
+            L.Add(String.Empty)
+
+            For i As Integer = 0 To rows - 1
+                L.Add(String.Empty)
+            Next
+
             Return L
         End If
 
-        Dim aggregate = snapshot.Aggregate
+        ' 第 0 行：整卡利用率
         L.Add(Bar("整卡", CInt(System.Math.Round(System.Math.Max(0, aggregate.UtilizationPercent))), useColor))
 
-        If snapshot.SampleCount = 0 AndAlso Not String.IsNullOrEmpty(snapshot.SamplingError) Then
-            L.Add($"  采样异常: {TruncateByWidth(snapshot.SamplingError, System.Math.Max(40, GetConsoleWidth() - 14))}")
-        End If
+        ' 第 1 行：活跃 warp / 发射槽 / 切片 / 芯片
         L.Add($"  活跃warp : {FmtPercentD(aggregate.WarpsActivePercent)}    发射槽 : {FmtPercentD(aggregate.ThroughputPercent)}    切片 : {snapshot.SampleCount}    芯片 : {If(String.IsNullOrEmpty(cap.ChipName), "N/A", cap.ChipName)}")
 
+        ' 第 2 行：per-SM 可用性 / 均衡推断
         If snapshot.PerSmAvailable Then
-            L.Add($"  per-SM  : [可用]  共 {snapshot.Rows.Count} 个 SM，空转(<5%) {snapshot.IdleCount} 个")
+            L.Add($"  per-SM   : [可用] 共 {snapshot.Rows.Count} 个 SM，空转(<5%) {snapshot.IdleCount} 个")
+        ElseIf balance.IsEstimated Then
+            L.Add($"  均衡推断 : 平均活跃SM {balance.AverageActiveSm:F1}/{balance.SmCount}   推断空转 {balance.IdleSmEstimate}   失衡比 {balance.ImbalanceRatio:P0}   最热/最冷 {balance.HotSmPercent:F1}%/{balance.ColdSmPercent:F1}%")
+        ElseIf snapshot.SampleCount = 0 AndAlso Not String.IsNullOrEmpty(snapshot.SamplingError) Then
+            L.Add($"  采样异常 : {TruncateByWidth(snapshot.SamplingError, System.Math.Max(30, GetConsoleWidth() - 14))}")
+        Else
+            L.Add("  均衡推断 : 指标不足（缺少 sm__cycles_active.max/.min）")
+        End If
 
-            For i As Integer = 0 To rowCount - 1
-                If i >= snapshot.Rows.Count Then
-                    L.Add(String.Empty)
-                    Continue For
-                End If
+        ' 第 3 行：排名摘要 / 判读
+        If snapshot.PerSmAvailable Then
+            L.Add($"  最热/最冷 : {FormatSmList(snapshot.TopHot(3))}   |   {FormatSmList(snapshot.TopCold(3))}")
+        ElseIf balance.IsEstimated Then
+            If balance.AveragePercent >= 0 AndAlso balance.AveragePercent < 1.0 Then
+                ' 极低活跃度下 max/min 都接近 0，失衡比会被数值噪声放大，不做结论
+                L.Add("  判读     : 采样窗口内 GPU 基本空闲（平均活跃 < 1%），失衡推断无统计意义")
+            ElseIf balance.ImbalanceRatio >= 0.7 Then
+                L.Add("  判读     : 推断负载明显集中在少数 SM（两极模型），可能有并行度不足 / tail effect")
+            ElseIf balance.ImbalanceRatio >= 0.4 Then
+                L.Add("  判读     : 推断存在中等程度失衡（两极模型），可检查网格划分与 block 调度")
+            Else
+                L.Add("  判读     : 推断 SM 之间基本均衡（两极模型），未观察到明显空转")
+            End If
+        Else
+            L.Add($"  per-SM   : [不可用] CUPTI 已移除 per-instance 接口（CUDA 13.x / 错误码 38）")
+        End If
+
+        ' 其余行：逐 SM 明细 / PM 切片（固定行数，避免残影）
+        Dim shown As Integer = 0
+
+        If snapshot.PerSmAvailable Then
+            For i As Integer = 0 To snapshot.Rows.Count - 1
+                If shown >= rows Then Exit For
 
                 Dim r = snapshot.Rows(i)
                 Dim percent = CInt(System.Math.Round(System.Math.Max(0, r.UtilizationPercent)))
-                L.Add($"  SM{r.SmIndex,-3} : {BarInline(percent, useColor)} {percent,3}%   warps {FmtPercentD(r.WarpsActivePercent),7}   {SmState(r.UtilizationPercent)}")
-            Next
-        Else
-            L.Add($"  per-SM  : [不可用] CUPTI 已移除 per-instance 接口（CUDA 13.x / 错误码 38）")
 
-            Dim balance = aggregate.Balance
-            If balance.IsEstimated Then
-                L.Add($"  平均活跃SM: {balance.AverageActiveSm:F1}/{balance.SmCount}   推断空转: {balance.IdleSmEstimate}   失衡比: {balance.ImbalanceRatio:P0}   最热/最冷: {balance.HotSmPercent:F1}%/{balance.ColdSmPercent:F1}%")
-            Else
-                L.Add("  均衡推断: 指标不足（缺少 sm__cycles_active.max/.min）")
-            End If
-
-            ' 用切片历史填充固定行数，保持帧高稳定
-            Dim slices = snapshot.Slices
-            Dim shown As Integer = 0
-
-            For i As Integer = System.Math.Max(0, slices.Count - rowCount) To slices.Count - 1
-                Dim item = slices(i)
-                Dim percent = CInt(System.Math.Round(System.Math.Max(0, item.UtilizationPercent)))
-                L.Add($"  #{item.Index,-4} : {BarInline(percent, useColor)} {percent,3}%   {FmtMs(item.DurationMs)}   warps {FmtPercentD(item.WarpsActivePercent)}")
+                L.Add($"  SM{r.SmIndex,-3} : {BarInline(percent, useColor)} {percent,3}%   warps {FmtPercentD(r.WarpsActivePercent),7}   吞吐 {FmtPercentD(r.ThroughputPercent),7}   {SmState(r.UtilizationPercent)}")
                 shown += 1
             Next
+        Else
+            Dim slices = snapshot.Slices
 
-            For i As Integer = shown To rowCount - 1
-                L.Add(String.Empty)
+            For i As Integer = System.Math.Max(0, slices.Count - rows) To slices.Count - 1
+                Dim item = slices(i)
+                Dim percent = CInt(System.Math.Round(System.Math.Max(0, item.UtilizationPercent)))
+
+                L.Add($"  #{item.Index,-4} : {BarInline(percent, useColor)} {percent,3}%   {FmtMs(item.DurationMs)}   warps {FmtPercentD(item.WarpsActivePercent)}   吞吐 {FmtPercentD(item.ThroughputPercent)}")
+                shown += 1
             Next
         End If
+
+        For i As Integer = shown To rows - 1
+            L.Add(String.Empty)
+        Next
 
         Return L
     End Function
