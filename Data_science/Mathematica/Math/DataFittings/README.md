@@ -17,6 +17,7 @@
 |---|---|---|
 | （根） | 线性 / 多项式最小二乘、加权与**非负**最小二乘、多元线性回归 | 参数线性、有先验约束 |
 | `...Data.Bootstrapping.LASSO` | L1 正则回归 | 特征多、需要特征选择 |
+| `...Data.Bootstrapping.Ridge` | L2 正则回归（岭回归） | 自变量共线、需要稳定解 |
 | `...Data.Bootstrapping.LevenbergMarquardt` | 阻尼最小二乘（LM） | 任意非线性模型函数 |
 | `...Data.Bootstrapping.Multivariate` | 多元线性回归（MLR） | 多自变量线性拟合 |
 | `...Data.Bootstrapping.Logistic` | 逻辑回归 | 二分类 / S 型曲线 |
@@ -40,7 +41,15 @@ Dim lm = LevenbergMarquardt.Solve(x, y, model, guess:={1.0, 1.0})
 ' 3. 稀疏回归（自动做特征选择）
 Dim lasso = LASSO.Fit(design, response, lambda:=0.01)
 
-' 4. 非线性拟合（Levenberg-Marquardt）：三种入口
+' 4. 岭回归：L2 正则，自变量共线时仍能给出稳定解
+'    不指定 lambda 时会在 lambda 网格上求解完整路径并用 GCV 挑出最优值
+Dim ridge = inputs.RidgeRegression()               ' 或 RidgeRegression(lambda:=0.1)
+Console.WriteLine($"best lambda={ridge.BestLambda}, R2={ridge.R2}")
+Console.WriteLine(ridge.BestCoefficients.JoinBy(", "))
+'    岭迹（正则化路径）可以直接导出成二维表
+Dim trace = ridge.toNumericTable()
+
+' 5. 非线性拟合（Levenberg-Marquardt）：三种入口
 '    a) 不给出模型，拟合幂律模型 y = p0 * x1^p1 * x2^p2 ...
 Dim power = inputs.NonLinearFit()
 '    b) 给出模型委托
