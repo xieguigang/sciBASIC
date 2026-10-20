@@ -248,7 +248,11 @@ Public NotInheritable Class CuptiMonitor
         _perSmRows.Clear()
 
         If _session.IsOpen Then
-            _session.Start()
+            If Not _session.Start() Then
+                ' 采样无法启动（驱动/权限/会话冲突）：不要空转，直接把失败原因带回去
+                ReadPerSm()
+                Return BuildSnapshot(watch.Elapsed.TotalSeconds)
+            End If
 
             Dim lastPoll As Long = 0
 

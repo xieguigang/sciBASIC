@@ -282,6 +282,7 @@ Namespace Runtime
         Private _usingSysClock As Boolean
         Private _singlePassLimit As Integer
         Private _configApplied As Boolean
+        Private _everStarted As Boolean
 
         ''' <summary>最近一次解码的停止原因（诊断用）</summary>
         Public ReadOnly Property LastDecodeStopReason As CUptiPmSamplingDecodeStopReason
@@ -590,6 +591,7 @@ Namespace Runtime
             End If
 
             _running = True
+            _everStarted = True
             _capability.UsingSysClockTrigger = _usingSysClock
             Return True
         End Function
@@ -663,6 +665,10 @@ Namespace Runtime
             Dim result As New List(Of PmSamplingSample)()
             If _counterImage Is Nothing OrElse _counterImage.Pointer = IntPtr.Zero Then Return result
             If _metrics.Length = 0 Then Return result
+
+            ' 从未成功启动过采样时，镜像里没有任何数据，解码会报 INVALID_PARAMETER，
+            ' 这里直接返回空表（把真正的失败原因保留为 Start/SetConfig 的错误）。
+            If Not _everStarted Then Return result
 
             Dim dataParams As New CUptiPmSamplingDecodeDataParams()
             dataParams.structSize = CUptiApi.StructSize(Of CUptiPmSamplingDecodeDataParams)()
