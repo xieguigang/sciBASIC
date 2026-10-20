@@ -101,6 +101,8 @@ Public Class SmSnapshot
     Public Property Overflow As Boolean
     ''' <summary>降级/失败原因（中文）；一切正常时为空串</summary>
     Public Property Reason As String
+    ''' <summary>采样链路本身的错误（Start/Decode 失败等）；无错误时为空串</summary>
+    Public Property SamplingError As String
 
     ''' <summary>空转 SM 数量（per-SM 可用时为精确值，否则取两极估计，-1 = 未知）</summary>
     Public ReadOnly Property IdleCount As Integer
@@ -142,6 +144,7 @@ Public NotInheritable Class CuptiMonitor
     Private _smCounter As CuptiPerSmCounter
     Private _perSmRows As New List(Of SmRow)()
     Private _perSmReason As String = String.Empty
+    Private _trimLimit As Integer = 240
     Private _openError As String = String.Empty
     Private _disposed As Boolean
 
@@ -247,6 +250,9 @@ Public NotInheritable Class CuptiMonitor
         _slices.Clear()
         _perSmRows.Clear()
 
+        ' 一次性模式保留全部切片用于加权平均；实时模式只保留最近 MaxSlices 条
+        _trimLimit = System.Math.Max(MaxSlices, 20000)
+
         If _session.IsOpen Then
             If Not _session.Start() Then
                 ' 采样无法启动（驱动/权限/会话冲突）：不要空转，直接把失败原因带回去
@@ -280,7 +286,15 @@ Public NotInheritable Class CuptiMonitor
     Public Function Refresh() As SmSnapshot
         Dim watch = Diagnostics.Stopwatch.StartNew()
 
+        ' 实时模式：切片历史滚动保留
+        _trimLimit = System.Math.Max(1, MaxSlices)
+
         If _session.IsOpen Then
+            ' 首帧：采样刚启动，稍等一个采样窗口，避免实时界面第一屏全是 N/A
+            If _slices.Count = 0 AndAlso Not _session.IsRunning Then
+                If _session.Start() Then Threading.Thread.Sleep(150)
+            End If
+
             AppendSamples(_session.Poll())
         End If
 
@@ -345,7 +359,7 @@ Public NotInheritable Class CuptiMonitor
 
             _slices.Add(Summarize(sample))
 
-            While _slices.Count > System.Math.Max(1, MaxSlices)
+            While _slices.Count > System.Math.Max(1, _trimLimit)
                 _slices.RemoveAt(0)
             End While
         Next
@@ -389,10 +403,14 @@ Public NotInheritable Class CuptiMonitor
         snapshot.PerSmAvailable = snapshot.Rows.Count > 0
         snapshot.Aggregate = Aggregate(_slices)
 
+        snapshot.SamplingError = _session.LastError
+
         If Not String.IsNullOrEmpty(_openError) Then
             snapshot.Reason = _openError
+            snapshot.SamplingError = _openError
         ElseIf Not _session.Capability.Available Then
             snapshot.Reason = _session.Capability.Reason
+            snapshot.SamplingError = snapshot.Reason
         ElseIf snapshot.SampleCount = 0 AndAlso Not String.IsNullOrEmpty(_session.LastError) Then
             ' 会话配置成功但采样没能启动/解码出数据：把底层错误如实带出来
             snapshot.Reason = _session.LastError
@@ -491,7 +509,7 @@ Public NotInheritable Class CuptiMonitor
             balance.HotSmPercent = hotSum / estimated
             balance.ColdSmPercent = coldSum / estimated
             balance.AveragePercent = If(result.UtilizationPercent >= 0, result.UtilizationPercent, avgSum / estimated)
-            balance.ImbalanceRatio = imbalanceSum / estimated
+            balance.ImbalanceRatio = System.Math.Max(0, System.Math.Min(1, imbalanceSum / estimated))
             balance.IdleSmEstimate = CInt(System.Math.Round(idleSum / CDbl(estimated)))
             balance.AverageActiveSm = balance.AveragePercent / 100.0 * balance.SmCount
         ElseIf result.UtilizationPercent >= 0 AndAlso balance.SmCount > 0 Then

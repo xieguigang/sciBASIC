@@ -746,9 +746,9 @@ Public Module Reporter
         If slices Is Nothing OrElse slices.Count = 0 Then
             Console.WriteLine()
 
-            If Not String.IsNullOrEmpty(snapshot.Reason) AndAlso snapshot.Reason.Contains("Start") Then
-                Console.Error.WriteLine("  警告：CUPTI 会话已配置成功，但采样未能启动。")
-                Console.Error.WriteLine($"  原因：{snapshot.Reason}")
+            If Not String.IsNullOrEmpty(snapshot.SamplingError) Then
+                Console.Error.WriteLine("  警告：CUPTI 会话已配置成功，但采样未能启动/解码。")
+                Console.Error.WriteLine($"  原因：{snapshot.SamplingError}")
                 Console.Error.WriteLine("  可尝试：①用 --sm-doctor 查看完整诊断；②以管理员身份运行；")
                 Console.Error.WriteLine("          ③关闭 Nsight Compute / 其它 profiler（同一设备只允许一个采样会话）；")
                 Console.Error.WriteLine("          ④换用 --sm-sysclk（SYSCLK 触发）；⑤更新或回退 NVIDIA 驱动。")
@@ -884,8 +884,8 @@ Public Module Reporter
         Dim aggregate = snapshot.Aggregate
         L.Add(Bar("整卡", CInt(System.Math.Round(System.Math.Max(0, aggregate.UtilizationPercent))), useColor))
 
-        If snapshot.SampleCount = 0 AndAlso Not String.IsNullOrEmpty(snapshot.Reason) Then
-            L.Add($"  采样异常: {TruncateByWidth(snapshot.Reason, System.Math.Max(40, GetConsoleWidth() - 14))}")
+        If snapshot.SampleCount = 0 AndAlso Not String.IsNullOrEmpty(snapshot.SamplingError) Then
+            L.Add($"  采样异常: {TruncateByWidth(snapshot.SamplingError, System.Math.Max(40, GetConsoleWidth() - 14))}")
         End If
         L.Add($"  活跃warp : {FmtPercentD(aggregate.WarpsActivePercent)}    发射槽 : {FmtPercentD(aggregate.ThroughputPercent)}    切片 : {snapshot.SampleCount}    芯片 : {If(String.IsNullOrEmpty(cap.ChipName), "N/A", cap.ChipName)}")
 

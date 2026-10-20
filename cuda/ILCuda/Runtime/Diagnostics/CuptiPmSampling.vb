@@ -254,8 +254,14 @@ Namespace Runtime
     Public NotInheritable Class CuptiPmSamplingSession
         Implements IDisposable
 
-        ''' <summary>硬件缓冲默认 4 MB（可容纳数百个采样，1 ms 间隔下约 1 秒）</summary>
-        Public Const DefaultHardwareBufferBytes As Long = 4L << 20
+        ''' <summary>
+        ''' 硬件缓冲默认 64 MB。
+        '''
+        ''' 实测（GA104 / 1 ms 采样 / 6 指标）：4 MB 在 GPU 满载时会出现记录溢出，
+        ''' 导致 cuptiPmSamplingDecodeData 返回 CUPTI_ERROR_OUT_OF_MEMORY(8)；
+        ''' 64 MB 在同样负载下可稳定连续采样。
+        ''' </summary>
+        Public Const DefaultHardwareBufferBytes As Long = 64L << 20
         ''' <summary>counter data 镜像默认最多容纳 4096 个采样</summary>
         Public Const DefaultMaxSamples As Integer = 4096
         ''' <summary>默认采样间隔（毫秒）</summary>
@@ -558,6 +564,16 @@ Namespace Runtime
         ''' <summary>
         ''' 按配置启动采样（SetConfig + Start）。已启动时直接返回 True。
         ''' </summary>
+        Private Shared ReadOnly Property Trace As Boolean
+            Get
+                Return Environment.GetEnvironmentVariable("GTOP_SM_TRACE") = "1"
+            End Get
+        End Property
+
+        Private Sub LogTrace(message As String)
+            If Trace Then Console.Error.WriteLine($"[cupti] {message}")
+        End Sub
+
         Public Function Start() As Boolean
             If _disposed OrElse Not _pmEnabled Then Return False
             If _running Then Return True
@@ -576,6 +592,7 @@ Namespace Runtime
 
             Dim res = StartPmSampling()
             _lastStartResult = res
+            LogTrace($"cuptiPmSamplingStart -> {CInt(res)}")
 
             If res <> CUptiResult.CUPTI_SUCCESS Then
                 ' 部分驱动在"设备刚被 profiler 接管"时首次 Start 会返回 UNKNOWN，
@@ -671,12 +688,24 @@ Namespace Runtime
             If Not _everStarted Then Return result
 
             Dim dataParams As New CUptiPmSamplingDecodeDataParams()
-            dataParams.structSize = CUptiApi.StructSize(Of CUptiPmSamplingDecodeDataParams)()
+            ' 该结构体 C 侧大小是 45（末尾 uint8_t），不能用 Marshal.SizeOf（48）
+            dataParams.structSize = New IntPtr(CUptiApi.PmSamplingDecodeDataStructSize)
             dataParams.pPmSamplingObject = _pmObject
             dataParams.pCounterDataImage = _counterImage.Pointer
             dataParams.counterDataImageSize = New IntPtr(_counterImage.Size)
 
             Dim res = _library.PmSamplingDecodeData(dataParams)
+            LogTrace($"cuptiPmSamplingDecodeData -> {CInt(res)}, imageSize={_counterImage.Size}, everStarted={_everStarted}")
+
+            If res = CUptiResult.CUPTI_ERROR_OUT_OF_MEMORY Then
+                ' 硬件缓冲记录溢出：标记并尝试重建会话（否则后续 Start 会一直失败）
+                _lastDecodeOverflow = True
+                _lastError = "PM 采样的硬件缓冲已溢出（记录过多）：请增大硬件缓冲（--sm-hwbuffer）或加大采样间隔"
+                ResetCounterDataImage()
+                Recover()
+                Return result
+            End If
+
             If res <> CUptiResult.CUPTI_SUCCESS Then
                 _capability.Reason = $"cuptiPmSamplingDecodeData 失败：{CUptiApi.Describe(res)}"
                 _lastError = _capability.Reason
@@ -817,8 +846,19 @@ Namespace Runtime
             If hotPercent >= 0 AndAlso coldPercent >= 0 AndAlso est.SmCount > 0 Then
                 est.IsEstimated = True
 
+                ' 防御：不同驱动下 max/min 的相对关系可能出现倒挂，先归一化
+                If coldPercent > hotPercent Then
+                    Dim swap = hotPercent
+                    hotPercent = coldPercent
+                    coldPercent = swap
+                    est.HotSmPercent = hotPercent
+                    est.ColdSmPercent = coldPercent
+                End If
+
                 If hotPercent > 0 Then
                     est.ImbalanceRatio = System.Math.Max(0, hotPercent - coldPercent) / hotPercent
+                Else
+                    est.ImbalanceRatio = 0
                 End If
 
                 ' 两极模型：avg = p·max + (1-p)·min
@@ -1271,6 +1311,48 @@ Namespace Runtime
             Catch
             End Try
         End Sub
+
+        ''' <summary>
+        ''' 会话异常（例如硬件缓冲溢出）后的自愈：
+        ''' 销毁并重建 PM sampling 对象 → 重新 SetConfig → 重建 counter data 镜像 → Start。
+        ''' </summary>
+        Private Function Recover() As Boolean
+            LogTrace("试图重建 PM sampling 会话")
+
+            Try
+                If _running Then StopPmSampling()
+            Catch
+            End Try
+
+            _running = False
+
+            If _pmObject <> IntPtr.Zero AndAlso _library IsNot Nothing AndAlso _library.PmSamplingDisable IsNot Nothing Then
+                Dim p As New CUptiPmSamplingDisableParams()
+                p.structSize = CUptiApi.StructSize(Of CUptiPmSamplingDisableParams)()
+                p.pPmSamplingObject = _pmObject
+
+                Try : _library.PmSamplingDisable(p) : Catch : End Try
+            End If
+
+            _pmEnabled = False
+            _pmObject = IntPtr.Zero
+
+            If _counterImage IsNot Nothing Then
+                _counterImage.Dispose()
+                _counterImage = Nothing
+            End If
+
+            If EnablePmSampling(_deviceIndex) <> CUptiResult.CUPTI_SUCCESS Then Return False
+
+            _configApplied = False
+
+            If ApplyConfig() <> CUptiResult.CUPTI_SUCCESS Then Return False
+            _configApplied = True
+
+            If CreateCounterDataImage() <> CUptiResult.CUPTI_SUCCESS Then Return False
+
+            Return Start()
+        End Function
 
         Private Sub Cleanup()
             If _running Then

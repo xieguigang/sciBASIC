@@ -619,10 +619,20 @@ Friend Module CUptiApi
 
 #End Region
 
-    ''' <summary>算法复用：结构体的托管大小（即 CUPTI 期望的 structSize 下限）。</summary>
+    ''' <summary>算法复用：结构体的托管大小（即 CUPTI 期望的 structSize）。</summary>
     Friend Function StructSize(Of T As Structure)() As IntPtr
         Return New IntPtr(Marshal.SizeOf(Of T)())
     End Function
+
+    ''' <summary>
+    ''' CUpti_PmSampling_DecodeData_Params 在 C 侧的确切大小 = 45 字节
+    ''' （offsetof(overflow)=44 + sizeof(uint8_t)=1）。
+    '''
+    ''' 注意：托管侧的 LayoutKind.Sequential 会把结构体尾部补齐到 8 字节对齐（48），
+    ''' 而 CUPTI 对这个结构做的是精确比较，传 48 会直接返回 CUPTI_ERROR_INVALID_PARAMETER。
+    ''' 这是全 CUPTI 里唯一一个"末尾是 uint8_t"的结构体，因此这里单独给出常量。
+    ''' </summary>
+    Friend Const PmSamplingDecodeDataStructSize As Integer = 45
 
     ''' <summary>把返回码翻译成中文可读说明（用于 GTop 的提示行）。</summary>
     Friend Function Describe(result As CUptiResult) As String
@@ -1004,6 +1014,12 @@ Public NotInheritable Class CuptiLibrary
 
     Private Shared Function TryLoadInternal(explicitPath As String, ByRef errorMessage As String) As CuptiLibrary
         errorMessage = Nothing
+
+        ' 显式指定了路径就必须用它，不存在时直接报错（不要静默回退到自动探测）
+        If Not String.IsNullOrWhiteSpace(explicitPath) AndAlso Not IO.File.Exists(explicitPath) Then
+            errorMessage = $"指定的 cupti64 动态库不存在：{explicitPath}"
+            Return Nothing
+        End If
 
         Dim candidates = EnumerateCandidates(explicitPath).ToArray()
 
