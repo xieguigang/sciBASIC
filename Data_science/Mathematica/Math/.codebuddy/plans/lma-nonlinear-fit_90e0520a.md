@@ -32,126 +32,139 @@ todos:
       - smoketest-assert
 ---
 
+
 ## 产品概述
 
-把 `DataFittings/LMA.vb` 里仍抛 `NotImplementedException` 的 Levenberg-Marquardt 非线性最小二乘入口补全为真正可用的算法模块，并让它接入本包既有的「二维表 → 拟合模型 → 预测写回」链路。
+在曲线拟合与回归工具包 `DataFittings`（`linear-netcore5.vbproj`）中新增 **Ridge 回归（L2 正则化线性回归）**，与既有的 LASSO（L1 正则）、MLR（无正则）、NNLS（非负约束）并列，共用同一套「二维表 → 拟合模型 → 预测写回」链路。
 
 ## 核心功能
 
-1. **三类拟合入口，共用同一套求解内核**
+1. **带岭迹的正则化路径**：在 λ 网格上给出全部解，每行记录截距、各特征系数、λ、R²、GCV 与有效自由度；可按路径下标取任意一组系数，也可自动取出最优 λ 对应的单个模型。
+2. **闭式解求解**：`(XᵀX + nλI)β = Xᵀy`，λ>0 时矩阵恒正定，因此在 OLS 会失效的**完全共线性**数据上仍可给出有限、稳定的系数。
+3. **λ 的两种给法**：用户显式指定（只在该 λ 上求解一次）；未指定时按 **GCV 准则自动挑选**（闭式、无随机性，结果可复现）。
+4. **标准化与无惩罚截距**：按列中心化 + 标准化后拟合，再把系数还原到原始量纲；截距单独由 ȳ 反推，不施加惩罚。
+5. **二维表集成**：`RidgeRegression` 表入口直接消费 `NumericTable`；结果实现 `IFitted`，可直接接入既有的 `SetPrediction` / `PredictTable` 写回预测值与残差；岭迹路径可导出为 `NumericTable`（行=λ，列=截距+各特征系数）。
+6. **自检与文档**：共线性稳定性、λ→0 与 MLR 的一致性、路径规模与 GCV 选 λ、预测写回等断言，并更新 README。
 
-- 默认入口 `NonLinearFit(输入集, iterations)`：不传模型，拟合纯数据驱动的幂律（Cobb-Douglas / 异速生长）模型 `y = p0 · x1^p1 · x2^p2 …`，初值由对数域 OLS 给出。
-- 委托入口：用户传入 `f(参数, 自变量)` 的 lambda 与初值（或参数名），按位置取自变量。
-- 公式字符串入口：用户传入如 `a*exp(-b*x1)+c` 的表达式与待估参数名，自变量按 `FitInput.factors` 的**列名**自动绑定，内部编译成委托后与委托入口共用同一条求解路径。
 
-2. **通用非线性模型桥接**：把任意模型包装成求解器要求的逐样本 `f / ∂f/∂p / ∂²f/∂p²`，导数用中心差分（步长随参数量纲自适应）。
-3. **专用拟合结果对象**：返回包含参数名与参数值、R²、RMSE、SSE、残差、拟合值、实际迭代数、是否收敛、预测函数 `GetY(x)`、可读摘要与 JSON 的结果对象，替代原来的 `As Object`。
-4. **二维表入口与预测写回**：在 `NumericTableRegressions` 上提供同名的表级拟合入口（内部复用 `AsFitInputs`），并把 LMA 结果接进 `NumericTablePrediction` 的预测/残差写回。
-5. **求解器稳健性**：修掉阻尼因子为 0 时 Cholesky 恒失败导致的空转、模型返回 NaN/Inf 时的静默无进展，并对外暴露迭代数/收敛状态/最终误差。
-6. **自检覆盖**：在 smoketest 里对三条入口都加上真实拟合断言（参数还原精度、R²、预测一致性）与错误处理断言。
 
 ## 技术栈
 
-- 语言/框架：VB.NET，net10.0，工程 `DataFittings/linear-netcore5.vbproj`（RootNamespace `Microsoft.VisualBasic.Data.Bootstrapping`）
-- 既有依赖（全部工程内已引用，不新增）：`Microsoft.VisualBasic.Math.LinearAlgebra.Matrix`、`...LinearAlgebra.Solvers.OLS`、`Microsoft.VisualBasic.Math.Scripting.MathExpression.ExpressionEngine`、`Microsoft.VisualBasic.ComponentModel.Collection.RectangularArray`、`Microsoft.VisualBasic.Serialization.JSON`
-- 约束：`GenerateDocumentationFile=True`，Public 成员必须写 XML 注释；目标是 **0 警告 0 错误**；内部实现类一律 `Friend` 以规避文档警告
+- 语言/框架：VB.NET，net10.0，工程 `DataFittings\linear-netcore5.vbproj`（RootNamespace `Microsoft.VisualBasic.Data.Bootstrapping`）
+- 既有依赖（工程内已引用，不新增）：`Microsoft.VisualBasic.Math.LinearAlgebra.Matrix`（`NumericMatrix`/`CholeskyDecomposition`/`MatrixOps`/`Vector`）、`Microsoft.VisualBasic.Math.LinearAlgebra`（`Formula`）、`Microsoft.VisualBasic.Data`（`NumericTable`）、`Microsoft.VisualBasic.ComponentModel.Collection`（`RectangularArray`）
+- 约束：`GenerateDocumentationFile=True`，全部 Public 成员需 XML 注释；目标 Debug/Release 均 **0 警告 0 错误**；工程为 SDK-style，新 `.vb` 文件自动纳入编译，无需改 vbproj
 
 ## 实现思路
 
-采用「**模型桥 + 既有 LM 内核**」：不重写阻尼最小二乘，而是把用户模型包装成 `LevenbergMarquardt.LmScalarModel`，交给既有的 `LmSumSquaresError` + `LmSolver` 求解，LMA 只负责数据整形、模型表达、导数近似、初值构造与结果统计。
+采用「**标准化 + Cholesky 闭式解 + 单次分解复用**」：不引入迭代优化，而是把 Ridge 写成可解析求解的正规方程，用一次 Cholesky 分解同时拿到系数与 GCV 所需的有效自由度。
 
 关键决策与取舍：
 
-1. **字符串公式与委托两条路径共用同一个桥**：字符串版本在拟合前用 `ExpressionEngine.Parse` 解析一次得到 `Expression`，运行时逐样本 `SetSymbol` 更新符号后 `Evaluate(已解析表达式)`，其对外表现与手写委托完全一致。这样求导/求解/统计只有一份实现，避免双份逻辑走偏。
-2. **导数用中心差分，步长自适应** `h_j = eps·(1+|p_j|)`（默认 eps = 1e-5）。解析求导需要引入符号微分（MathLambda 体系），代价远超收益；中心差分在 Double 精度下截断与舍入误差平衡，且对任意用户模型都成立。
-3. **默认走高斯-牛顿近似海塞**（`approxHessianFlg = True`）。LM 的标准做法就是 `H ≈ JᵀJ`，省掉每样本 `O(p²)` 次模型求值的二阶差分；`LmSumSquaresError.hessian` 在该开关下本身就不访问 `hessian(i,·)`，但仍保留精确二阶差分实现以备精确海塞选项。
-4. **自变量顺序**：委托路径以第一个样本的键序为准，并逐样本校验键集完全相同，不一致直接抛清晰异常（`Dictionary` 的枚举顺序不是契约保证，必须显式定序）；字符串路径按名绑定，天然不受顺序影响，但需处理非法标识符。
-5. **不实现 `IFitted`**：该接口要求返回多项式 `Formula`，非线性模型无法表示，返回 Nothing 会给下游埋 NRE；改为在 `NumericTablePrediction` 新增接受 LMA 结果对象的重载，代价是多两个小函数、收益是类型安全。
+1. **λ 尺度与样本量解耦**。在标准化数据上把目标函数写成 `min ||ỹ − X̃β||² + n·λ·||β||²`，令 `R = X̃ᵀX̃/n`（相关矩阵，对角线恒为 1），正规方程即 `(R + λI)β = X̃ᵀỹ/n`。这样 λ 与 R 的特征值同尺度（∈ [0,p]），默认值 [1e-4, 10] 对任何 n、p 都合理，无需按数据量调参。
+2. **GCV 优于 K 折 CV**。GCV(λ) = RSS(λ) / (n·(1 − (df+1)/n)²) 是闭式的、确定性的，不需要随机折划分，自检结果可复现；同时 K 折 CV 会随折划分方式变化，不利于回归测试。
+3. **有效自由度走 `df = p − λ·tr(B⁻¹)`**。帽子矩阵 `H = X̃(X̃ᵀX̃+nλI)⁻¹X̃ᵀ`，其迹与 `B = R + λI` 的逆迹有恒等关系。求逆用一次 `chol.Solve(Identity(p))` 完成（对单位阵求解即求逆，`Solve` 已核实支持多列右端项），比逐 λ 做 O(np²) 的前代替换更省，且随 λ→0 有 `df→p`、λ→∞ 有 `df→0` 的正确极限。
+4. **Cholesky 而非求逆**。λ>0 时 `R + λI` 严格正定，即便原始数据完全共线性也不奇异；而 `MatrixOps.Inverse` 在奇异时会返回 Nothing，无法用于共线性数据。
+5. **绝不使用 `*` 做矩阵乘法**。本库的 `NumericMatrix` 的 `*` 是**逐元素（Hadamard）乘法**（见下方陷阱 1），因此 XᵀX、Xᵀy、β = B⁻¹b 全部按定义自写循环或用 `MatrixOps.Multiply`。
+6. **自含 RidgePolynomial**。`IFitted` 要求返回 `Polynomial As Formula`，而既有的 `MultivariatePolynomial` 求值式为 `Σ x(i)*Factors(i)`、**不含截距**；Ridge 自带截距，因此在 Ridge 命名空间内继承 `Formula` 提供 `Intercept + Σ x(i)*Factors(i)` 的求值，避免改动公共 Math 库、也避免下游拿到语义错误的模型。
 
 ## 实现要点（防踩坑细节）
 
-- **文件头必须原样保留**：`LMA.vb` 顶部的 `#Region "Microsoft.VisualBasic::069b6312a79e771279d3290e6c090929, Data_science\..."` … `#End Region` 自动生成块不要动，正文写在 `#End Region` 之后。
-- **变量命名**：VB 大小写不敏感且保留字多 —— 不要用 `matrix`、`x`（与形参撞）、`error`/`[Step]`/`Next`/`Call`/`Set`/`Index`/`Result` 作局部名；残差局部变量用 `[error]` 或改名 `resid`；`Module` 成员不能写 `Shared`；XML 注释里不能出现 `--`。
-- **公式路径的标识符陷阱**：分词器要求标识符以字母开头（`"x1"` 合法，纯数字名会被当成字面量）。而 `FeatureNameList` 在无列名时回退为 `"1","2",…`，因此字符串入口必须做标识符合法性检查，非法名自动替换为 `x1..xm` 别名并在结果的 `FactorNames` 中体现；同时用 `CheckFunction` 与 `GetVariableSymbols` 校验不与内建函数（`log`/`exp`/`pow`…）重名、公式中不存在无法绑定的符号。
-- **表达式引擎复用**：解析一次、复用同一个引擎实例逐样本改符号求值，禁止在热路径里每次 `Evaluate(String)`（那会重新分词 + 建树）。
-- **性能**：每轮迭代的模型求值次数约为 `n·(2p+1)`（雅可比 + 残差），`p` 为参数个数、`n` 为样本数；空间复杂度 `O(n·m + p²)`。热路径是中心差分，避免在差分内部分配大对象，参数向量用预分配缓冲 + 改完再还原。字符串路径额外注意引擎字典写入是热操作，一次性把因子名与参数名写入同一引擎。
-- **日志/输出**：对数域 OLS 初值计算会向 `Console` 打印奇异警告，调用期间临时替换 `Console.Out` 并在 `Try/Finally` 中恢复，避免污染调用方输出；其余路径静默，异常只由入口抛出清晰信息，不做内部捕获吞掉。
+- **⚠ 库陷阱 1（必须绕开）**：`NumericMatrix` 的 `*` 是逐元素乘法，维度不一致会抛 `ArgumentException("GeneralMatrix dimensions must agree.")`，维度恰好一致时静默给出逐元素积。Ridge 全部线性代数自写循环。
+- **⚠ 库陷阱 2**：`CholeskyDecomposition` 的 SPD 判据含 `isspd = isspd And (A(k)(j) = A(j)(k))`，是**逐位精确对称比较**。构造 R 时必须只算上三角再镜像填充，保证 `A = R + λI` 逐位对称；λ 极小时若判为非 SPD，则按 ×10 递增 λ 重试，仍失败则跳过该 λ 并在路径中标记。
+- **常数列守卫**：标准差 s_j = 0 的列（如 smoketest 的 `bias` 常量列）必须守卫为 s_j = 1，否则还原系数时会除零。
+- **性能**：标准化 O(np)；R = X̃ᵀX̃/n 只算上三角 O(np²/2)，**整条路径只算一次**；每个 λ 一次 Cholesky O(p³/3) + 一次求逆式 Solve O(p³) + 一次系数 Solve O(p²) + RSS O(np)。整条 100 点路径的复杂度为 O(np²/2 + 100·(p³ + np))，p 较小时可忽略。
+- **GCV 的 RSS 定义在中心化响应上**，自由度取 `df + 1`（+1 是截距），必须在 XML 注释中写明，避免与「含截距的 RSS」口径混淆。
+- **数值输出**：`SSE`/`SST`/`R²` 建在原始量纲的拟合值上（还原后再算），保证与 `MLRFit` 的 `R2 = 1 − SSE/SST` 口径一致，便于自检对拍。
+- **变量命名**：VB 大小写不敏感，避免 `beta`/`R2` 之类的局部名与属性同名；不使用 `error`、`Step`、`Next`、`Call`、`Set`、`Index`、`Result` 等保留字；XML 注释中不得出现 `--`；类型名避免 `Ridge`（与命名空间同名会造成解析歧义），求解器模块取名 `RidgeFitting`。
+- **公开 API 全部写 XML 注释**，否则触发文档警告；内部辅助一律 `Friend`/`Private`。
 
 ## 架构设计
 
 ```
-用户模型（公式字符串 / 委托 / 默认幂律）
-        │  统一编译成 NonLinearModel 委托
+NumericTable(特征矩阵 X + 标签列 y)
+        │  RidgeRegression 表入口（复用既有 FeatureMatrix/ResponseVector/FeatureNameList）
         ▼
-LmFitModel（实现 LmScalarModel：逐样本 f / ∂f/∂p / ∂²f/∂p²）
+RidgeFitting.Fit(x, y, lambda?)         ← 求解器（标准化 → R → λ 路径 → GCV 选优）
+        │
+        ├── 标准化：列均值 m、列尺度 s（s=0 守卫为 1）、ȳ
+        ├── 每 λ：(R+λI) 的 Cholesky → β̃ ; df = p − λ·tr(B⁻¹) ; RSS ; R² ; GCV
+        └── 还原：coef_j = β̃_j/s_j ; intercept = ȳ − Σ β̃_j·m_j/s_j
         ▼
-LmSumSquaresError（0.5Σr²、g=−Jᵀr、H≈JᵀJ）
+RidgeFit（lambdas / intercepts / coefficients / rsquared / gcv / df / rss
+          + bestIndex + 原始量纲尺度 + GetY/PredictAt/getCoefficients/toNumericTable）
+        │  Implements IFitted（R2 / Polynomial / ErrorTest / GetY）
         ▼
-LmSolver（(H+λI)h=−g，增益比自适应调 λ）  ← 本次加固
-        ▼
-NonLinearFitResult（参数、R²、RMSE、SSE、残差、GetY、迭代数/收敛）
-        ▼
-NumericTable 入口 ← AsFitInputs ← NumericTable
-        ▼
-NumericTablePrediction 预测/残差写回
+NumericTablePrediction.SetPrediction / PredictTable（既有，零改动即可工作）
+NumericTable（岭迹路径表，风格对齐 LassoFit.toNumericTable）
 ```
 
 ## 目录结构
 
 ```
 DataFittings/
-├── LMA.vb                                  # [MODIFY] 主体。保留自动生成的文件头与 FitInput；新增 NonLinearModel 委托、Friend LmFitModel（LmScalarModel 桥，中心差分雅可比 + 精确二阶海塞）、Public NonLinearFitResult（结果类）、三个 NonLinearFit 入口（默认幂律 / 委托 / 字符串公式）、幂律模型的构造与对数域 OLS 初值、输入校验与数据整形。所有 Public 成员写 XML 注释。
-├── Levenberg-Marquardt/
-│   └── LmSolver.vb                        # [MODIFY] 稳健性加固：λ=0 死锁修复、NaN/Inf 拒绝、对外暴露 Iterations / Converged / ErrorValue；主循环语义与收敛判据保持不变。
-├── NumericTableRegressions.vb             # [MODIFY] 更新 AsFitInputs 的 XML 注释（删除"尚未实现"表述）；新增 3 个表级 NonLinearFit 扩展入口，复用既有 ResponseVector / FeatureMatrix / FeatureNameList 助手。
-├── NumericTablePrediction.vb              # [MODIFY] 新增接受 LMA 结果对象的 SetPrediction / PredictTable 重载（不实现 IFitted，避免多项式语义污染）。
-├── README.md                              # [MODIFY] 快速上手小节补上 LMA 三条入口的用法示例。
-└── _smoketest/
-    └── Program.vb                         # [MODIFY] 在 nonlinear 段新增：幂律默认拟合（专用正值因子表）、字符串公式拟合（如 a*exp(-b*t)）、委托拟合（如米氏方程）、参数还原精度 / R² / 预测一致性 / 错误处理断言。
+├── Ridge/                              # [NEW] Ridge 回归子模块，命名空间 Ridge
+│   ├── RidgeFit.vb                     # [NEW] 结果类。保存 λ 路径（lambdas / intercepts / coefficients(path×p) / rsquared / gcv / df / rss）、最优下标 bestIndex、原始量纲的 columnMeans/columnScales/yMean、featureNames；方法 getCoefficients(lambdaIdx)、BestLambda/BestCoefficients/BestIntercept、GetY(ParamArray x)（IFitted 契约，取最优 λ）、PredictAt(lambdaIdx, x)、toNumericTable()（岭迹表：行=λ，列=intercept+各特征，标签=lambdas/rsquared/gcv/Df）、ToString()。实现 IFitted：R2 取最优 λ 的 1−SSE/SST，Polynomial 返回 RidgePolynomial，ErrorTest 填充 TestPoint(Y, Yfit)，GetY 用原始量纲系数预测。全部 Public 成员写 XML 注释。
+│   ├── RidgeFitting.vb                 # [NEW] 求解器 Module。Public Function Fit(x As Double()(), y As Double(), Optional lambda As Double = Nothing, Optional nlambda As Integer = 100, Optional lambdaMin As Double = 0.0001, Optional lambdaMax As Double = 10, Optional standardize As Boolean = True, Optional featureNames As String() = Nothing) As RidgeFit；内部私有助手：Standardize（含 s=0 守卫）、Correlation（只算上三角再镜像）、SolveLambda（Cholesky 闭式解 + df + RSS + λ 递增重试）、ArgMinGCV。
+│   ├── RidgePolynomial.vb              # [NEW] Public Class RidgePolynomial : Inherits Formula，Evaluate = Intercept + Σ x(i)*Factors(i)，两个 ToString 重载分别输出序号名与真实列名。
+│   └── NamespaceDoc.vb                 # [NEW] 命名空间文档（对齐 LASSO/NamespaceDoc.vb 风格）。
+├── NumericTableRegressions.vb          # [MODIFY] 顶部新增 Imports RidgeNS = Microsoft.VisualBasic.Data.Bootstrapping.Ridge；在既有 #Region 内新增 <Extension> Public Function RidgeRegression(table As NumericTable, Optional lambda As Double = Nothing, Optional y As String = Nothing, Optional Silent As Boolean = False) As RidgeNS.RidgeFit，内部复用 FeatureMatrix/ResponseVector/FeatureNameList。
+├── README.md                           # [MODIFY] 核心能力表新增 Ridge 一行；快速上手补 Ridge 示例。
+└── _smoketest/Program.vb               # [MODIFY] 新增 Ridge 断言（见 todolist）。
 ```
 
 ## 关键代码结构
 
-```
-''' <summary>
-''' 任意非线性模型：由参数向量与自变量向量计算模型的输出值
-''' </summary>
-''' <param name="params">待优化的模型参数向量</param>
-''' <param name="x">单个样本的自变量向量（顺序由 <see cref="NonLinearFitResult.FactorNames"/> 决定）</param>
-Public Delegate Function NonLinearModel(params As Double(), x As Double()) As Double
+```vbnet
+Namespace Ridge
 
-''' <summary>
-''' 驱动既有 LM 内核的桥：逐样本给出模型值与一阶/二阶导数
-''' （契约来自 LevenbergMarquardt.LmScalarModel，必须逐项实现）
-''' </summary>
-Friend Class LmFitModel : Implements LmScalarModel
-    ' 字段：样本自变量矩阵 xs(n×m)、观测值 ys(n)、模型委托、差分步长
-    Public ReadOnly Property MeasuredData As Double() Implements LmScalarModel.MeasuredData
-    Public Function eval(dataIdx As Integer, optParams As Double()) As Double Implements LmScalarModel.eval
-    Public Function jacobian(dataIdx As Integer, optParams As Double()) As Double() Implements LmScalarModel.jacobian
-    Public Function hessian(dataIdx As Integer, optParams As Double()) As Double()() Implements LmScalarModel.hessian
-End Class
+    ''' <summary>
+    ''' Ridge 回归的拟合结果：λ 正则化路径（岭迹）+ 最优 λ 对应的单个模型
+    ''' </summary>
+    Public Class RidgeFit : Implements IFitted
 
-''' <summary>
-''' 非线性最小二乘拟合结果
-''' </summary>
-Public Class NonLinearFitResult
-    Public Property Model As NonLinearModel          ' 拟合好的模型，用于预测
-    Public Property Formula As String                ' 字符串公式入口时非空的原始公式
-    Public Property FactorNames As String()          ' 自变量名（含自动生成的别名）
-    Public Property ParameterNames As String()       ' 参数名
-    Public Property Parameters As Dictionary(Of String, Double)
-    Public ReadOnly Property Values As Double()      ' 参数向量形式
-    Public Property SSE As Double
-    Public Property RMSE As Double
-    Public Property RSquared As Double
-    Public Property Residuals As Double()
-    Public Property FittedValues As Double()
-    Public Property Iterations As Integer
-    Public Property Converged As Boolean
-    Public Function GetY(ParamArray x As Double()) As Double
-    Public Overrides Function ToString() As String
-End Class
+        ''' <summary>路径上的 λ 序列</summary>
+        Public Property lambdas As Double()
+        ''' <summary>每一个 λ 对应的截距（原始量纲）</summary>
+        Public Property intercepts As Double()
+        ''' <summary>每一个 λ 对应的各特征回归系数（原始量纲），行为 λ、列为特征</summary>
+        Public Property coefficients As Double()()
+        ''' <summary>每一个 λ 对应的决定系数</summary>
+        Public Property rSquared As Double()
+        ''' <summary>每一个 λ 对应的 GCV 准则值</summary>
+        Public Property gcv As Double()
+        ''' <summary>每一个 λ 对应的有效自由度</summary>
+        Public Property df As Double()
+        ''' <summary>GCV 最小的那一步的下标</summary>
+        Public Property bestIndex As Integer
+
+        Public ReadOnly Property BestLambda As Double
+        Public ReadOnly Property BestIntercept As Double
+        Public ReadOnly Property BestCoefficients As Double()
+
+        Public Function getCoefficients(lambdaIdx As Integer) As Double()
+        Public Function PredictAt(lambdaIdx As Integer, x As Double()) As Double
+        Public Function toNumericTable(Optional featureNames As String() = Nothing) As NumericTable
+
+        Public ReadOnly Property R2 As Double Implements IFitted.R2
+        Public ReadOnly Property Polynomial As Formula Implements IFitted.Polynomial
+        Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
+        Public Function GetY(ParamArray x As Double()) As Double Implements IFitted.GetY
+    End Class
+
+    ''' <summary>
+    ''' Ridge 求解器：标准化 + Cholesky 闭式解 + λ 路径 + GCV 选 λ
+    ''' </summary>
+    Public Module RidgeFitting
+        Public Function Fit(x As Double()(),
+                            y As Double(),
+                            Optional lambda As Double = Nothing,
+                            Optional nlambda As Integer = 100,
+                            Optional lambdaMin As Double = 0.0001,
+                            Optional lambdaMax As Double = 10,
+                            Optional standardize As Boolean = True,
+                            Optional featureNames As String() = Nothing) As RidgeFit
+    End Module
+End Namespace
 ```
 
 ## Agent Extensions
@@ -159,5 +172,14 @@ End Class
 ### SubAgent
 
 - **code-explorer**
-- 用途：在动工前快速确认 `NonLinearFit` / `AsFitInputs` / `LmSolver` 在 G:/pixelArtist 全仓的引用面，避免改坏下游调用方（仓库内 VB 无 documentSymbol provider，找引用需回退全文检索）。
-- 预期产出：给出全部调用点与受影响工程清单，确认本次签名变更是安全的（当前全仓仅 3 处引用，均在 DataFittings 内）。
+  - 用途：动工前快速确认 `Ridge` / `RidgeFit` / `RidgeFitting` / `RidgePolynomial` 这些新名字在 G:/pixelArtist 全仓是否与既有类型、命名空间或模块名冲突（含大小写不敏感的 VB 同名判定），并定位 `RidgeRegression` 表入口在 `NumericTableRegressions.vb` 中的最佳插入位置与 region 归属。
+  - 预期产出：确认命名无冲突（当前已知全仓无 Ridge 回归实现，仅 LMA.vb 的 `bridge` 变量与 OLS.vb 偶含 ridge 子串），给出表入口插入点。
+
+
+## Agent Extensions
+
+### SubAgent
+
+- **code-explorer**
+  - 用途：确认 `Ridge` / `RidgeFit` / `RidgeFitting` / `RidgePolynomial` 在全仓是否有命名冲突，并定位表入口的插入位置。
+  - 预期产出：命名冲突清单（应为空）+ `NumericTableRegressions.vb` 的具体插入点。
