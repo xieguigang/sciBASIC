@@ -242,7 +242,7 @@ Module Program
 
         ' 数据几乎没有噪声的时候 CV 会一路走到网格的最软端（正则化越少越好）；
         ' 加入明显的噪声之后，它才会在网格**内部**折中偏差与方差
-        Dim noisy As NumericTable = BuildRegressionTable(80, 12, {0, 1, 2, 3}, noiseLevel:=4.0)
+        Dim noisy As NumericTable = BuildRegressionTable(60, 12, {0, 1, 2, 3}, noiseLevel:=12.0)
         Dim noisyCV As ElasticNetCVResult = noisy.ElasticNetCrossValidate(numberOfAlphas:=25, folds:=5)
 
         Call Check(noisyCV.BestAlphaIndex > 0,

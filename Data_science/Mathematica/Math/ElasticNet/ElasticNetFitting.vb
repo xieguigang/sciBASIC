@@ -78,7 +78,11 @@ Public Module ElasticNetFitting
     ''' <param name="l1Ratio">
     ''' L1 惩罚所占的混合比例，取值 [0, 1]；0 表示纯 Ridge、1 表示纯 Lasso
     ''' </param>
-    ''' <param name="standardize">是否先对特征做标准化；中心化总是会做</param>
+    ''' <param name="standardize">
+    ''' 是否先对特征做标准化；中心化总是会做。置为 False 的时候惩罚就直接作用在
+    ''' 原始量纲的系数之上，此时 ``alpha`` 的实际力度会随各特征的单位而改变，
+    ''' 一般只在所有特征本身同量纲（或者已经手工标准化）的时候才这样用
+    ''' </param>
     ''' <param name="tolerance">坐标下降的收敛容差（系数更新的最大变化量）</param>
     ''' <param name="maxIterations">坐标下降的最大迭代轮数</param>
     ''' <param name="featureNames">特征列的名称，缺省时自动生成 ``[1]..[p]``</param>
