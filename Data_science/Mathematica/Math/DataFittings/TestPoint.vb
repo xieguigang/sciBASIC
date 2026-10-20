@@ -69,6 +69,9 @@ Public Interface IFitError
 
 End Interface
 
+''' <summary>
+''' data fitting test point [x,y] ~ [yfit, error]
+''' </summary>
 <XmlType("point", [Namespace]:="http://scibasic.net/math/Bootstrapping")>
 Public Class TestPoint : Inherits DataPoint
     Implements IFitError

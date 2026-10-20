@@ -81,6 +81,9 @@ Namespace Scripting
 
     End Module
 
+    ''' <summary>
+    ''' data point [x,y]
+    ''' </summary>
     Public Class DataPoint : Implements Layout2D
 
         <XmlAttribute("x")> Public Property X As Double Implements Layout2D.X
