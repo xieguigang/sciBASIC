@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports std = System.Math
 
 Namespace Quantile
 
@@ -80,6 +81,19 @@ Namespace Quantile
                                   Return q.Query(pct).ToString("F2")
                               End Function) _
                 .GetJson
+        End Function
+
+        ''' <summary>计算分位数（线性插值法）</summary>
+        Public Function Quantile(x As Double(), q As Double) As Double
+            Dim sorted(x.Length - 1) As Double
+            Array.Copy(x, sorted, x.Length)
+            Array.Sort(sorted)
+            Dim pos = q * (sorted.Length - 1)
+            Dim lower = CInt(std.Floor(pos))
+            Dim upper = CInt(std.Ceiling(pos))
+            If lower = upper Then Return sorted(lower)
+            Dim frac = pos - lower
+            Return sorted(lower) * (1 - frac) + sorted(upper) * frac
         End Function
 
         ''' <summary>
