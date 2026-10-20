@@ -313,15 +313,15 @@ Namespace Ridge
             Dim bestIcept As Double = intercepts(best)
 
             For i As Integer = 0 To n - 1
-                Dim fit As Double = bestIcept
+                Dim yhat As Double = bestIcept
 
                 For j As Integer = 0 To p - 1
-                    fit += bestCoef(j) * x(i)(j)
+                    yhat += bestCoef(j) * x(i)(j)
                 Next
 
                 tests(i) = New TestPoint With {
                     .Y = y(i),
-                    .Yfit = fit
+                    .Yfit = yhat
                 }
             Next
 
