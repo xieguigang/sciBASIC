@@ -895,8 +895,14 @@ Public Module ElasticNetFitting
 
         Dim grid As Double() = New Double(steps - 1) {}
 
+        ' 按对数等间隔从 alpha_max 衰减到 alpha_max * ratio。
+        ' 注意：这里必须是 ratio^(k / (steps - 1))，而不是 ratio^k —— 后者会让
+        ' 第二步就掉到 alpha_max * 0.001，整条路径实际上只剩两个有效解，
+        ' 既浪费了后续所有 alpha 的求解时间，也让路径选步失去意义。
+        Dim exponent As Double = 1.0R / std.Max(1, steps - 1)
+
         For k As Integer = 0 To steps - 1
-            grid(k) = top * std.Pow(ratio, k)
+            grid(k) = top * std.Pow(ratio, k * exponent)
         Next
 
         Return grid
