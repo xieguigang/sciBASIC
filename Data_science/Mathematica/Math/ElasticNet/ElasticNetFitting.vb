@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 ''' <summary>
@@ -36,8 +37,15 @@ Public Module ElasticNetFitting
         Friend N As Integer
         ''' <summary>特征数量</summary>
         Friend P As Integer
-        ''' <summary>标准化之后的特征矩阵</summary>
-        Friend X As Double()()
+        ''' <summary>
+        ''' 标准化之后的特征矩阵，<b>列主序</b>：<c>Xc(j)(i)</c> 表示第 j 个特征
+        ''' 在第 i 个样本之上的取值。
+        ''' 
+        ''' 坐标下降的内积与残差更新都是"固定列、扫描样本"，列主序让每一列成为
+        ''' 一段连续内存，可以直接交给 <see cref="SIMDIntrinsics.DotFma(Double(), Double())"/>
+        ''' 与 <see cref="SIMDIntrinsics.AxpyInplace"/>，避免跨行访问带来的缓存缺失。
+        ''' </summary>
+        Friend Xc As Double()()
         ''' <summary>中心化之后的响应向量</summary>
         Friend Y As Double()
         ''' <summary>特征列的均值</summary>
@@ -58,6 +66,10 @@ Public Module ElasticNetFitting
         Friend Intercepts As Double()
         Friend RSquared As Double()
         Friend NonZero As Integer()
+        ''' <summary>实际执行的路径步数(早停之后可能小于网格长度)</summary>
+        Friend Steps As Integer
+        ''' <summary>是否因为非零系数超出上限而提前结束</summary>
+        Friend StoppedEarly As Boolean
     End Class
 
     ''' <summary>
@@ -108,7 +120,47 @@ Public Module ElasticNetFitting
         Dim iterations As Integer = 0
         Dim converged As Boolean = CoordinateDescent(data, alpha, l1Ratio, beta, tolerance, maxIterations, iterations)
 
-        Return CreateFit(x, y, data, alpha, l1Ratio, beta, iterations, converged, featureNames)
+        Return CreateFit(y, data, alpha, l1Ratio, beta, iterations, converged, featureNames)
+    End Function
+
+    ''' <summary>
+    ''' 在给定的 ``(alpha, l1Ratio)`` 之上拟合弹性网络，入参为<b>列主序</b>的特征矩阵。
+    ''' 
+    ''' 与 <see cref="Fit(Double()(), Double(), Double, Double, Boolean, Double, Integer, String())"/>
+    ''' 完全等价，只是省掉了一次行主序到列主序的转置拷贝：调用方（例如基因调控网络
+    ''' 拟合）手里本来就有"每个基因一条表达向量"的列式数据，直接传进来即可。
+    ''' </summary>
+    ''' <param name="columns">特征列，<c>columns(j)</c> 是第 j 个特征在所有样本之上的取值</param>
+    ''' <param name="y">与列向量对齐的观测值</param>
+    ''' <param name="alpha">总的正则化强度</param>
+    ''' <param name="l1Ratio">L1 惩罚所占的混合比例</param>
+    ''' <param name="standardize">是否先对特征做标准化</param>
+    ''' <param name="tolerance">坐标下降的收敛容差</param>
+    ''' <param name="maxIterations">坐标下降的最大迭代轮数</param>
+    ''' <param name="featureNames">特征列的名称</param>
+    ''' <returns>拟合结果</returns>
+    Public Function FitColumns(columns As Double()(),
+                               y As Double(),
+                               alpha As Double,
+                               l1Ratio As Double,
+                               Optional standardize As Boolean = True,
+                               Optional tolerance As Double = 0.0001,
+                               Optional maxIterations As Integer = 10000,
+                               Optional featureNames As String() = Nothing) As ElasticNetFit
+
+        Dim n As Integer = 0
+        Dim p As Integer = 0
+
+        Call CheckColumns(columns, y, NameOf(FitColumns), n, p)
+        Call CheckAlpha(alpha, l1Ratio, NameOf(FitColumns))
+        Call CheckSolver(tolerance, maxIterations, NameOf(FitColumns))
+
+        Dim data As ElasticNetData = PrepareColumns(columns, y, standardize, Nothing)
+        Dim beta As Double() = New Double(p - 1) {}
+        Dim iterations As Integer = 0
+        Dim converged As Boolean = CoordinateDescent(data, alpha, l1Ratio, beta, tolerance, maxIterations, iterations)
+
+        Return CreateFit(y, data, alpha, l1Ratio, beta, iterations, converged, featureNames)
     End Function
 
     ''' <summary>
@@ -157,14 +209,89 @@ Public Module ElasticNetFitting
         Dim grid As Double() = AlphaGrid(data, l1Ratio, numberOfAlphas, alphaRatio, alphaMax)
         Dim solution As PathSolution = RunPath(data, l1Ratio, grid, tolerance, maxIterations)
 
+        Return NewPath(data, l1Ratio, grid, solution, featureNames)
+    End Function
+
+    ''' <summary>
+    ''' 沿一条对数间隔的 alpha 路径求解，入参为<b>列主序</b>的特征矩阵。
+    ''' 
+    ''' 与 <see cref="RegularizationPath(Double()(), Double(), Double, Integer, Double, Double?, Boolean, Double, Integer, String())"/>
+    ''' 完全等价，只是省掉了一次转置拷贝。
+    ''' </summary>
+    ''' <param name="columns">特征列，<c>columns(j)</c> 是第 j 个特征在所有样本之上的取值</param>
+    ''' <param name="y">与列向量对齐的观测值</param>
+    ''' <param name="l1Ratio">L1 惩罚所占的混合比例</param>
+    ''' <param name="numberOfAlphas">路径的步数</param>
+    ''' <param name="alphaRatio">路径的终止比例</param>
+    ''' <param name="alphaMax">手写指定路径的起点 alpha</param>
+    ''' <param name="standardize">是否先对特征做标准化</param>
+    ''' <param name="tolerance">坐标下降的收敛容差</param>
+    ''' <param name="maxIterations">每一步的最大迭代轮数</param>
+    ''' <param name="featureNames">特征列的名称</param>
+    ''' <param name="maxFeatures">
+    ''' 每个目标基因最多保留的非零系数个数；大于零的时候，路径会在非零个数
+    ''' 超过它的两倍时提前结束（更靠后的 alpha 只会更稠密）。
+    ''' </param>
+    ''' <returns>正则化路径</returns>
+    Public Function RegularizationPathColumns(columns As Double()(),
+                                              y As Double(),
+                                              l1Ratio As Double,
+                                              Optional numberOfAlphas As Integer = 20,
+                                              Optional alphaRatio As Double = 0.001,
+                                              Optional alphaMax As Double? = Nothing,
+                                              Optional standardize As Boolean = True,
+                                              Optional tolerance As Double = 0.0001,
+                                              Optional maxIterations As Integer = 10000,
+                                              Optional featureNames As String() = Nothing,
+                                              Optional maxFeatures As Integer = 0) As ElasticNetPath
+
+        Dim n As Integer = 0
+        Dim p As Integer = 0
+
+        Call CheckColumns(columns, y, NameOf(RegularizationPathColumns), n, p)
+        Call CheckAlpha(0.0, l1Ratio, NameOf(RegularizationPathColumns))
+        Call CheckSolver(tolerance, maxIterations, NameOf(RegularizationPathColumns))
+
+        If numberOfAlphas < 1 Then
+            Throw New ArgumentException("the number of alphas must be a positive integer!", NameOf(numberOfAlphas))
+        End If
+        If alphaRatio <= 0.0 OrElse alphaRatio >= 1.0 Then
+            Throw New ArgumentException("the alpha ratio must be in the range (0, 1)!", NameOf(alphaRatio))
+        End If
+
+        Dim data As ElasticNetData = PrepareColumns(columns, y, standardize, Nothing)
+        Dim grid As Double() = AlphaGrid(data, l1Ratio, numberOfAlphas, alphaRatio, alphaMax)
+        Dim solution As PathSolution = RunPath(data, l1Ratio, grid, tolerance, maxIterations, maxFeatures)
+
+        Return NewPath(data, l1Ratio, grid, solution, featureNames)
+    End Function
+
+    ''' <summary>
+    ''' 把路径求解的结果组装成公开的 <see cref="ElasticNetPath"/>；
+    ''' 早停的时候 alpha 网格也要同步截断，否则会与系数数组长度不一致。
+    ''' </summary>
+    Private Function NewPath(data As ElasticNetData,
+                             l1Ratio As Double,
+                             grid As Double(),
+                             solution As PathSolution,
+                             featureNames As String()) As ElasticNetPath
+
+        Dim alphas As Double() = grid
+
+        If solution.Steps > 0 AndAlso solution.Steps < grid.Length Then
+            alphas = New Double(solution.Steps - 1) {}
+            Call Array.Copy(grid, alphas, solution.Steps)
+        End If
+
         Return New ElasticNetPath With {
             .L1Ratio = l1Ratio,
-            .Alphas = grid,
+            .Alphas = alphas,
             .Intercepts = solution.Intercepts,
             .Coefficients = solution.Coefficients,
             .RSquared = solution.RSquared,
             .NonZeroCounts = solution.NonZero,
-            .FeatureNames = NormalizeNames(featureNames, p)
+            .FeatureNames = NormalizeNames(featureNames, data.P),
+            .StoppedEarly = solution.StoppedEarly
         }
     End Function
 
@@ -325,15 +452,14 @@ Public Module ElasticNetFitting
             .Folds = folds,
             .BestL1RatioIndex = bestRatioIdx,
             .BestAlphaIndex = bestAlphaIdx,
-            .Fit = CreateFit(x, y, fullData, bestAlpha, bestL1, beta, iterations, converged, featureNames)
+            .Fit = CreateFit(y, fullData, bestAlpha, bestL1, beta, iterations, converged, featureNames)
         }
     End Function
 
     ''' <summary>
     ''' 组装最终的拟合结果对象
     ''' </summary>
-    Private Function CreateFit(x As Double()(),
-                               y As Double(),
+    Private Function CreateFit(y As Double(),
                                data As ElasticNetData,
                                alpha As Double,
                                l1Ratio As Double,
@@ -349,17 +475,27 @@ Public Module ElasticNetFitting
 
         Dim n As Integer = data.N
         Dim p As Integer = data.P
+        Dim sum As Double = 0.0
         Dim sse As Double = 0.0
         Dim sst As Double = 0.0
 
+        ' yhat 用列主序累加：yhat = Σ_j c_j * (mean_j + scale_j * Xc(j))
+        ' 一次 AXPY 处理一整列，避免按样本逐行拼内积
+        Dim yhat As Double() = New Double(n - 1) {}
+
+        For j As Integer = 0 To p - 1
+            If coefficients(j) = 0.0 Then
+                Continue For
+            End If
+
+            sum += coefficients(j) * data.Means(j)
+            Call SIMDIntrinsics.AxpyInplace(coefficients(j) * data.Scales(j), data.Xc(j), yhat)
+        Next
+
+        sum += intercept
+
         For i As Integer = 0 To n - 1
-            Dim yhat As Double = intercept
-
-            For j As Integer = 0 To p - 1
-                yhat += coefficients(j) * x(i)(j)
-            Next
-
-            Dim d As Double = y(i) - yhat
+            Dim d As Double = y(i) - (sum + yhat(i))
 
             sse += d * d
 
@@ -383,15 +519,9 @@ Public Module ElasticNetFitting
         Dim tests As IFitError() = New IFitError(n - 1) {}
 
         For i As Integer = 0 To n - 1
-            Dim yhat As Double = intercept
-
-            For j As Integer = 0 To p - 1
-                yhat += coefficients(j) * x(i)(j)
-            Next
-
             tests(i) = New TestPoint With {
                 .Y = y(i),
-                .Yfit = yhat
+                .Yfit = sum + yhat(i)
             }
         Next
 
@@ -405,30 +535,52 @@ Public Module ElasticNetFitting
     ''' 只使用其中的行（交叉验证的每一折都只用自己的训练集统计量）
     ''' </summary>
     Private Function Prepare(x As Double()(), y As Double(), standardize As Boolean, rows As Integer()) As ElasticNetData
-        Dim n As Integer = If(rows Is Nothing, y.Length, rows.Length)
         Dim p As Integer = x(0).Length
+        Dim columns As Double()() = New Double(p - 1)() {}
+
+        ' 行主序 -> 列主序：只做一次转置，换来坐标下降整个热循环的连续访存
+        For j As Integer = 0 To p - 1
+            Dim col As Double() = New Double(y.Length - 1) {}
+
+            For i As Integer = 0 To y.Length - 1
+                col(i) = x(i)(j)
+            Next
+
+            columns(j) = col
+        Next
+
+        Return PrepareColumns(columns, y, standardize, rows)
+    End Function
+
+    ''' <summary>
+    ''' 中心化（并且可选地标准化）给定的数据，并按<b>列主序</b>组织成
+    ''' <see cref="ElasticNetData.Xc"/>。
+    ''' 
+    ''' 与 <see cref="Prepare(Double()(), Double(), Boolean, Integer())"/> 的区别是
+    ''' 这里的入参已经是"每个特征一列"的形式（<c>columns(j)(i)</c>），
+    ''' 因此调用方可以直接把表达矩阵的列引用传进来，省掉一次 n x p 的转置拷贝。
+    ''' <paramref name="rows"/> 非空的时候只使用其中的样本（交叉验证的每一折
+    ''' 都只用自己的训练集统计量）。
+    ''' </summary>
+    ''' <param name="columns">特征列，<c>columns(j)</c> 的长度必须等于 <paramref name="y"/> 的长度</param>
+    ''' <param name="y">与列向量对齐的观测值</param>
+    ''' <param name="standardize">是否按总体标准差（除以 n）标准化</param>
+    ''' <param name="rows">参与计算的样本行号，为空表示全部样本</param>
+    ''' <returns></returns>
+    Private Function PrepareColumns(columns As Double()(), y As Double(), standardize As Boolean, rows As Integer()) As ElasticNetData
+        Dim n As Integer = If(rows Is Nothing, y.Length, rows.Length)
+        Dim p As Integer = columns.Length
         Dim data As New ElasticNetData With {
             .N = n,
             .P = p,
             .Means = New Double(p - 1) {},
             .Scales = New Double(p - 1) {},
             .ColumnScale = New Double(p - 1) {},
-            .X = RectangularArray.Matrix(Of Double)(n, p),
+            .Xc = New Double(p - 1)() {},
             .Y = New Double(n - 1) {}
         }
         Dim i As Integer
         Dim j As Integer
-
-        ' 均值
-        For j = 0 To p - 1
-            Dim sum As Double = 0.0
-
-            For i = 0 To n - 1
-                sum += x(RowAt(rows, i))(j)
-            Next
-
-            data.Means(j) = sum / n
-        Next
 
         Dim ySum As Double = 0.0
 
@@ -438,44 +590,50 @@ Public Module ElasticNetFitting
 
         data.YMean = ySum / n
 
-        ' 标准差（总体标准差，使得标准化之后每一列的 ||x||^2/n 恰好为 1）
-        For j = 0 To p - 1
-            If standardize Then
-                Dim var As Double = 0.0
-
-                For i = 0 To n - 1
-                    Dim d As Double = x(RowAt(rows, i))(j) - data.Means(j)
-
-                    var += d * d
-                Next
-
-                var = var / n
-                data.Scales(j) = If(var > 0.0, std.Sqrt(var), 1.0)
-            Else
-                data.Scales(j) = 1.0
-            End If
-        Next
-
-        ' 填充
         For i = 0 To n - 1
-            Dim src As Integer = RowAt(rows, i)
-
-            data.Y(i) = y(src) - data.YMean
-
-            For j = 0 To p - 1
-                data.X(i)(j) = (x(src)(j) - data.Means(j)) / data.Scales(j)
-            Next
+            data.Y(i) = y(RowAt(rows, i)) - data.YMean
         Next
 
-        ' 每一列的 ||x||^2/n
         For j = 0 To p - 1
+            Dim src As Double() = columns(j)
+            Dim col As Double() = New Double(n - 1) {}
             Dim sum As Double = 0.0
 
             For i = 0 To n - 1
-                sum += data.X(i)(j) * data.X(i)(j)
+                Dim v As Double = src(RowAt(rows, i))
+
+                col(i) = v
+                sum += v
             Next
 
-            data.ColumnScale(j) = sum / n
+            Dim mean As Double = sum / n
+            Dim scale As Double = 1.0
+
+            ' 标准差（总体标准差，使得标准化之后每一列的 ||x||^2/n 恰好为 1）
+            If standardize Then
+                Dim variance As Double = 0.0
+
+                For i = 0 To n - 1
+                    Dim d As Double = col(i) - mean
+
+                    variance += d * d
+                Next
+
+                variance = variance / n
+                scale = If(variance > 0.0, std.Sqrt(variance), 1.0)
+            End If
+
+            Dim inv As Double = 1.0 / scale
+
+            For i = 0 To n - 1
+                col(i) = (col(i) - mean) * inv
+            Next
+
+            data.Means(j) = mean
+            data.Scales(j) = scale
+            ' 每一列的 ||x||^2/n，用 SIMD 归约；标准化列恒为 1、常数列为 0
+            data.ColumnScale(j) = SIMDIntrinsics.SumSquaresFma(col) / n
+            data.Xc(j) = col
         Next
 
         Return data
@@ -488,7 +646,8 @@ Public Module ElasticNetFitting
                              l1Ratio As Double,
                              grid As Double(),
                              tolerance As Double,
-                             maxIterations As Integer) As PathSolution
+                             maxIterations As Integer,
+                             Optional maxFeatures As Integer = 0) As PathSolution
 
         Dim steps As Integer = grid.Length
         Dim p As Integer = data.P
@@ -499,17 +658,31 @@ Public Module ElasticNetFitting
             .NonZero = New Integer(steps - 1) {}
         }
         Dim beta As Double() = New Double(p - 1) {}
-        Dim sst As Double = 0.0
-
-        For i As Integer = 0 To data.N - 1
-            sst += data.Y(i) * data.Y(i)
-        Next
+        Dim residual As Double() = New Double(data.N - 1) {}
+        Dim sst As Double = SIMDIntrinsics.SumSquaresFma(data.Y)
+        Dim executed As Integer = 0
+        Dim stoppedEarly As Boolean = False
+        Dim initResidual As Boolean = True
 
         For k As Integer = 0 To steps - 1
             Dim iterations As Integer = 0
 
-            ' warm start：beta 直接沿用上一步（更大 alpha）的结果
-            Call CoordinateDescent(data, grid(k), l1Ratio, beta, tolerance, maxIterations, iterations)
+            ' warm start：beta 沿用上一步的结果；residual 也一并沿用
+            ' （上一步收敛时 r 恰好等于 y - X*beta），省掉每个 alpha 一次 O(nnz*n) 的重算
+            Call CoordinateDescent(data, grid(k), l1Ratio, beta, tolerance, maxIterations, iterations, residual, initResidual)
+            initResidual = False
+
+            executed = k + 1
+
+            ' 收敛之后 SSE = ||r||^2，避免每个 alpha 再做一次 O(n*p) 的 X*beta
+            Dim sse As Double = SIMDIntrinsics.SumSquaresFma(residual)
+            Dim nonzero As Integer = 0
+
+            For j As Integer = 0 To p - 1
+                If beta(j) <> 0.0 Then
+                    nonzero += 1
+                End If
+            Next
 
             Dim intercept As Double = 0.0
             Dim coefficients As Double() = Nothing
@@ -518,32 +691,26 @@ Public Module ElasticNetFitting
 
             solution.Coefficients(k) = coefficients
             solution.Intercepts(k) = intercept
-
-            ' 在中心化之后的尺度上计算残差与 R2（与原始尺度等价，但少一次还原）
-            Dim sse As Double = 0.0
-            Dim nonzero As Integer = 0
-
-            For i As Integer = 0 To data.N - 1
-                Dim yhat As Double = 0.0
-
-                For j As Integer = 0 To p - 1
-                    yhat += data.X(i)(j) * beta(j)
-                Next
-
-                Dim d As Double = data.Y(i) - yhat
-
-                sse += d * d
-            Next
-
-            For j As Integer = 0 To p - 1
-                If beta(j) <> 0.0 Then
-                    nonzero += 1
-                End If
-            Next
-
             solution.RSquared(k) = If(sst > 0.0, 1.0 - sse / sst, If(sse <= 0.0, 1.0, 0.0))
             solution.NonZero(k) = nonzero
+
+            ' 非零系数个数随 alpha 减小单调不减：一旦超过两倍上限，
+            ' 之后的每一步都不可能再满足 maxFeatures 约束，路径可以就此结束
+            If maxFeatures > 0 AndAlso k > 0 AndAlso nonzero > maxFeatures * 2 Then
+                stoppedEarly = True
+                Exit For
+            End If
         Next
+
+        If executed > 0 AndAlso executed < steps Then
+            Call Array.Resize(solution.Coefficients, executed)
+            Call Array.Resize(solution.Intercepts, executed)
+            Call Array.Resize(solution.RSquared, executed)
+            Call Array.Resize(solution.NonZero, executed)
+        End If
+
+        solution.Steps = executed
+        solution.StoppedEarly = stoppedEarly
 
         Return solution
     End Function
@@ -570,30 +737,33 @@ Public Module ElasticNetFitting
                                        beta As Double(),
                                        tolerance As Double,
                                        maxIterations As Integer,
-                                       ByRef iterations As Integer) As Boolean
+                                       ByRef iterations As Integer,
+                                       Optional residual As Double() = Nothing,
+                                       Optional initResidual As Boolean = True) As Boolean
 
         Dim n As Integer = data.N
         Dim p As Integer = data.P
         Dim l1 As Double = alpha * l1Ratio
         Dim l2 As Double = alpha * (1.0 - l1Ratio)
-        Dim residual As Double() = New Double(n - 1) {}
-        Dim i As Integer
         Dim j As Integer
 
-        ' 初始化残差：r = y - X*beta
-        For i = 0 To n - 1
-            residual(i) = data.Y(i)
-        Next
+        If residual Is Nothing OrElse residual.Length <> n Then
+            residual = New Double(n - 1) {}
+            initResidual = True
+        End If
 
-        For j = 0 To p - 1
-            If beta(j) = 0.0 Then
-                Continue For
-            End If
+        If initResidual Then
+            ' 初始化残差：r = y - X*beta
+            Call Array.Copy(data.Y, residual, n)
 
-            For i = 0 To n - 1
-                residual(i) -= data.X(i)(j) * beta(j)
+            For j = 0 To p - 1
+                If beta(j) = 0.0 Then
+                    Continue For
+                End If
+
+                Call SIMDIntrinsics.AxpyInplace(-beta(j), data.Xc(j), residual)
             Next
-        Next
+        End If
 
         iterations = 0
 
@@ -611,11 +781,8 @@ Public Module ElasticNetFitting
                     Continue For
                 End If
 
-                Dim rho As Double = 0.0
-
-                For i = 0 To n - 1
-                    rho += data.X(i)(j) * residual(i)
-                Next
+                ' rho = x_j'r，列主序连续访存 + FMA 归约
+                Dim rho As Double = SIMDIntrinsics.DotFma(data.Xc(j), residual)
 
                 rho = rho / n + scale * beta(j)
 
@@ -630,9 +797,8 @@ Public Module ElasticNetFitting
                 If delta <> 0.0 Then
                     beta(j) = updated
 
-                    For i = 0 To n - 1
-                        residual(i) -= data.X(i)(j) * delta
-                    Next
+                    ' r -= delta * x_j，就地更新，无临时数组
+                    Call SIMDIntrinsics.AxpyInplace(-delta, data.Xc(j), residual)
 
                     Dim moved As Double = std.Abs(delta)
 
@@ -710,13 +876,8 @@ Public Module ElasticNetFitting
             Dim score As Double = 0.0
 
             For j As Integer = 0 To data.P - 1
-                Dim s As Double = 0.0
-
-                For i As Integer = 0 To data.N - 1
-                    s += data.X(i)(j) * data.Y(i)
-                Next
-
-                s = std.Abs(s) / data.N
+                ' 列主序 + FMA 归约取 x_j'y
+                Dim s As Double = std.Abs(SIMDIntrinsics.DotFma(data.Xc(j), data.Y)) / data.N
 
                 If s > score Then
                     score = s
@@ -764,6 +925,34 @@ Public Module ElasticNetFitting
         For i As Integer = 0 To n - 1
             If x(i) Is Nothing OrElse x(i).Length <> p Then
                 Throw New ArgumentException($"the row {i} of the feature matrix has a different number of features than the first row ({p})!", NameOf(x))
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 校验列主序的特征矩阵与观测向量
+    ''' </summary>
+    Private Sub CheckColumns(columns As Double()(), y As Double(), caller As String, ByRef n As Integer, ByRef p As Integer)
+        If columns Is Nothing Then
+            Throw New ArgumentNullException(NameOf(columns))
+        End If
+        If y Is Nothing Then
+            Throw New ArgumentNullException(NameOf(y))
+        End If
+        If columns.Length = 0 OrElse columns(0) Is Nothing OrElse columns(0).Length = 0 Then
+            Throw New ArgumentException($"the '{caller}' requires a non-empty feature matrix!", NameOf(columns))
+        End If
+
+        n = y.Length
+        p = columns.Length
+
+        If columns(0).Length <> n Then
+            Throw New ArgumentException($"the size of the feature columns ({columns(0).Length}) is not matched with the size of the observed values ({n})!", NameOf(y))
+        End If
+
+        For j As Integer = 1 To p - 1
+            If columns(j) Is Nothing OrElse columns(j).Length <> n Then
+                Throw New ArgumentException($"the column {j} of the feature matrix has a different size ({If(columns(j) Is Nothing, 0, columns(j).Length)}) than the first column ({n})!", NameOf(columns))
             End If
         Next
     End Sub
