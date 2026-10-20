@@ -161,8 +161,29 @@ Namespace LevenbergMarquardt
                 jVectors(i) = modelField.jacobian(i, optParams)
                 i+=1
             End While
-            Dim jacobianMat As Matrix = New Matrix(jVectors)
-            Dim hessianMat As Matrix = CType(jacobianMat.Transpose(), Matrix) * jacobianMat
+            ' 注意：NumericMatrix 的 * 运算符是逐元素（Hadamard）乘法，不是矩阵乘法。
+            ' 用它算 J'J 会在 J 不是方阵的时候直接抛出维度不一致的异常，
+            ' 而在恰好是方阵的时候又会静默得到一个逐元素积的错误结果，
+            ' 因此 J'J 必须按定义自己累加
+            Dim jtj As Double()() = RectangularArray.Matrix(Of Double)(numParams, numParams)
+            Dim a As Integer
+            Dim b As Integer
+            Dim k As Integer
+
+            For a = 0 To numParams - 1
+                For b = a To numParams - 1
+                    Dim s As Double = 0.0
+
+                    For k = 0 To numData - 1
+                        s += jVectors(k)(a) * jVectors(k)(b)
+                    Next
+
+                    jtj(a)(b) = s
+                    jtj(b)(a) = s
+                Next
+            Next
+
+            Dim hessianMat As Matrix = New Matrix(jtj)
 
             If Not approxHessianFlg Then
                 i = 0

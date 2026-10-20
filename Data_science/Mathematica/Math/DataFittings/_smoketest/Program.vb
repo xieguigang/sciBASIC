@@ -172,6 +172,13 @@ Module Program
         Call Check(System.Math.Abs(decayFit.Parameters("b") - 0.5) < 0.01, $"LMA b = {decayFit.Parameters("b"):F4}, expected 0.5")
         Call Check(decayFit.Converged, $"LMA formula converged after {decayFit.Iterations} iteration(s)")
 
+        ' 关掉高斯-牛顿近似、改用精确海塞（二阶差分）应当得到同样的解
+        Dim exactFit As LMA.NonLinearFitResult = decayTable.NonLinearFit("a*exp(-b*x)", {"a", "b"}, approxHessian:=False)
+
+        Call Check(exactFit.R2 > 0.999, $"LMA exact hessian R2 = {exactFit.R2:F6}")
+        Call Check(System.Math.Abs(exactFit.Parameters("a") - 3.0) < 0.01, $"LMA exact hessian a = {exactFit.Parameters("a"):F4}, expected 3")
+        Call Check(System.Math.Abs(exactFit.Parameters("b") - 0.5) < 0.01, $"LMA exact hessian b = {exactFit.Parameters("b"):F4}, expected 0.5")
+
         ' 委托入口：米氏方程 v = Vmax*x/(Km+x)
         Dim conc As Double() = {0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0}
         Dim rate As Double() = conc.Select(Function(si) 10.0 * si / (2.0 + si)).ToArray

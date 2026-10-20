@@ -236,6 +236,152 @@ Public Module LMA
     End Class
 
     ''' <summary>
+    ''' 残差平方和误差函数：直接在数组上计算 
+    ''' 
+    ''' ```
+    ''' E(p)  = 1/2 * sum(r^2)
+    ''' g     = -J' * r
+    ''' H    ~=  J' * J
+    ''' ```
+    ''' 
+    ''' 这里刻意绕开了矩阵库：``NumericMatrix`` 的 ``*`` 运算符是**逐元素**乘法
+    ''' 而不是矩阵乘法，直接用它算 ``J'J`` 会在维度不一致时抛异常、
+    ''' 在维度恰好一致时静默得到逐元素积这个错误结果
+    ''' （<see cref="LmSumSquaresError"/> 的既有实现正踩了这个坑，本次已一并修正）。
+    ''' 
+    ''' 此外 <see cref="LmSolver"/> 每一轮都会先取梯度再取海塞，这两次调用的参数
+    ''' 向量是相同的，因此这里把雅可比矩阵缓存住，让每一轮只做一次有限差分。
+    ''' </summary>
+    Friend Class LmResidualError : Inherits LmModelError
+
+        ReadOnly bridge As LmFitModel
+
+        Dim cacheParams As Double()
+        Dim cacheJacobian As Double()()
+        Dim cacheResidual As Double()
+        Dim cacheError As Double
+
+        Sub New(bridge As LmFitModel)
+            Me.bridge = bridge
+        End Sub
+
+        ''' <summary>
+        ''' 参数向量没有变化的时候直接复用上一次的雅可比与残差
+        ''' </summary>
+        Private Sub Ensure(optParams As Double())
+            Dim n As Integer = bridge.MeasuredData.Length
+            Dim p As Integer = optParams.Length
+
+            If cacheJacobian IsNot Nothing _
+                AndAlso cacheJacobian.Length = n _
+                AndAlso cacheJacobian(0).Length = p _
+                AndAlso SameVector(cacheParams, optParams) Then
+
+                Return
+            End If
+
+            cacheJacobian = RectangularArray.Matrix(Of Double)(n, p)
+            cacheResidual = New Double(n - 1) {}
+
+            For i As Integer = 0 To n - 1
+                cacheJacobian(i) = bridge.jacobian(i, optParams)
+                cacheResidual(i) = bridge.MeasuredData(i) - bridge.eval(i, optParams)
+            Next
+
+            Dim sum As Double = 0.0
+
+            For i As Integer = 0 To n - 1
+                sum += cacheResidual(i) * cacheResidual(i)
+            Next
+
+            cacheError = 0.5 * sum
+            cacheParams = CType(optParams.Clone(), Double())
+        End Sub
+
+        Public Overrides Function eval(optParams As Double()) As Double
+            Call Ensure(optParams)
+
+            Return cacheError
+        End Function
+
+        Public Overrides Function jacobian(optParams As Double()) As Double()
+            Call Ensure(optParams)
+
+            Dim n As Integer = cacheJacobian.Length
+            Dim p As Integer = optParams.Length
+            Dim g As Double() = New Double(p - 1) {}
+
+            For i As Integer = 0 To n - 1
+                Dim ri As Double = cacheResidual(i)
+                Dim ji As Double() = cacheJacobian(i)
+
+                For k As Integer = 0 To p - 1
+                    g(k) -= ji(k) * ri
+                Next
+            Next
+
+            Return g
+        End Function
+
+        Public Overrides Function hessian(optParams As Double(), approxHessianFlg As Boolean) As Double()()
+            Call Ensure(optParams)
+
+            Dim n As Integer = cacheJacobian.Length
+            Dim p As Integer = optParams.Length
+            Dim h As Double()() = RectangularArray.Matrix(Of Double)(p, p)
+            Dim a As Integer
+            Dim b As Integer
+            Dim i As Integer
+
+            ' J'J 是对称矩阵，只需要计算上三角
+            For a = 0 To p - 1
+                For b = a To p - 1
+                    Dim s As Double = 0.0
+
+                    For i = 0 To n - 1
+                        s += cacheJacobian(i)(a) * cacheJacobian(i)(b)
+                    Next
+
+                    h(a)(b) = s
+                    h(b)(a) = s
+                Next
+            Next
+
+            If Not approxHessianFlg Then
+                ' 精确海塞：H = J'J - sum(r_i * H_i)
+                For i = 0 To n - 1
+                    Dim hi As Double()() = bridge.hessian(i, optParams)
+
+                    For a = 0 To p - 1
+                        For b = 0 To p - 1
+                            h(a)(b) -= cacheResidual(i) * hi(a)(b)
+                        Next
+                    Next
+                Next
+            End If
+
+            Return h
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' 逐元素比较两个向量是否相等
+    ''' </summary>
+    Private Function SameVector(a As Double(), b As Double()) As Boolean
+        If a Is Nothing OrElse b Is Nothing OrElse a.Length <> b.Length Then
+            Return False
+        End If
+
+        For i As Integer = 0 To a.Length - 1
+            If a(i) <> b(i) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
+
+    ''' <summary>
     ''' 非线性最小二乘拟合的结果
     ''' 
     ''' 这个类型保存了拟合出来的参数、拟合优度、残差与预测模型，与线性拟合的
@@ -964,7 +1110,7 @@ Public Module LMA
 
         ' 求解器会就地修改参数向量，这里给它一份工作副本
         Dim lmModel As New LmFitModel(xm, yv, model, fdEpsilon)
-        Dim err As New LmSumSquaresError(lmModel)
+        Dim err As New LmResidualError(lmModel)
         Dim err0 As Double = err.eval(opt)
 
         If Double.IsNaN(err0) OrElse Double.IsInfinity(err0) Then
