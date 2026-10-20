@@ -239,6 +239,14 @@ Module Program
 
         Call Check(tbl.nsamples = 7 * 25, $"the CV error table has {tbl.nsamples} row(s)")
         Call Check(tbl.HasLabel("mse"), "the CV error table carries the mse label")
+
+        ' 数据几乎没有噪声的时候 CV 会一路走到网格的最软端（正则化越少越好）；
+        ' 加入明显的噪声之后，它才会在网格**内部**折中偏差与方差
+        Dim noisy As NumericTable = BuildRegressionTable(80, 12, {0, 1, 2, 3}, noiseLevel:=4.0)
+        Dim noisyCV As ElasticNetCVResult = noisy.ElasticNetCrossValidate(numberOfAlphas:=25, folds:=5)
+
+        Call Check(noisyCV.BestAlphaIndex > 0,
+                   $"the CV picks an interior alpha on noisy data: index {noisyCV.BestAlphaIndex} of {noisyCV.Alphas(noisyCV.BestL1RatioIndex).Length}, alpha = {noisyCV.BestAlpha:G4}")
     End Sub
 
     ''' <summary>
@@ -296,27 +304,6 @@ Module Program
     End Sub
 
     ''' <summary>
-    ''' 两个完全共线（b = 2a）的特征所构成的回归表
-    ''' </summary>
-    Private Function BuildCollinearTable(n As Integer) As NumericTable
-        Dim features As Double()() = New Double(n - 1)() {}
-        Dim y As Double() = New Double(n - 1) {}
-
-        For i As Integer = 0 To n - 1
-            Dim a As Double = i + 1.0
-
-            features(i) = New Double() {a, 2.0 * a}
-            y(i) = 1.0 + 3.0 * a
-        Next
-
-        Dim table As New NumericTable(features, Nothing, New String() {"a", "b"})
-
-        Call table.SetLabel("y", y)
-
-        Return table
-    End Function
-
-    ''' <summary>
     ''' 带一列常量 bias 的回归表：既满足本模块（截距由模型自己估计）的要求，
     ''' 也能与不带截距的多元线性回归对拍
     ''' </summary>
@@ -349,7 +336,10 @@ Module Program
     ''' 合成的回归数据：前 <paramref name="informative"/> 个特征参与生成响应变量，
     ''' 其余都是纯噪声；噪声使用确定性的散列函数，因此结果完全可复现
     ''' </summary>
-    Private Function BuildRegressionTable(n As Integer, p As Integer, Optional informative As Integer() = Nothing) As NumericTable
+    Private Function BuildRegressionTable(n As Integer,
+                                          p As Integer,
+                                          Optional informative As Integer() = Nothing,
+                                          Optional noiseLevel As Double = 0.05) As NumericTable
         Dim active As Integer() = If(informative, New Integer() {0, 1})
 
         If active.Length = 0 OrElse active.Max() >= p Then
@@ -377,7 +367,7 @@ Module Program
                 v += coef(k) * features(i)(active(k))
             Next
 
-            y(i) = v + 0.05 * (Noise(i * 1000 + 999) - 0.5)
+            y(i) = v + noiseLevel * (Noise(i * 1000 + 999) - 0.5)
         Next
 
         Dim names As String() = Enumerable.Range(1, p).Select(Function(i) $"x{i}").ToArray
