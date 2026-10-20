@@ -130,14 +130,11 @@ Namespace Serialization.JSON
                     obj:=obj,
                     type:=type,
                     simpleDict:=simpleDict,
-                    knownTypes:=knownTypes Or emptyTypeList
+                    knownTypes:=knownTypes Or emptyTypeList,
+                    indent:=indent
                 )
 
-                If indent Then
-                    Return Formatter.Format(Encoding.UTF8.GetString(ms.ToArray()))
-                Else
-                    Return Encoding.UTF8.GetString(ms.ToArray())
-                End If
+                Return Encoding.UTF8.GetString(ms.ToArray())
             End Using
         End Function
 
@@ -151,7 +148,7 @@ Namespace Serialization.JSON
         ''' <param name="knownTypes"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Sub writeJson(output As Stream, obj As Object, type As Type, simpleDict As Boolean, knownTypes As IEnumerable(Of Type))
+        Private Sub writeJson(output As Stream, obj As Object, type As Type, simpleDict As Boolean, indent As Boolean, knownTypes As IEnumerable(Of Type))
             ' simpleDict is kept for API compatibility only: System.Text.Json always
             ' serializes a string-keyed dictionary as a JSON object (i.e. the simple
             ' dictionary format that DataContractJsonSerializer produced with
@@ -167,9 +164,9 @@ Namespace Serialization.JSON
         ''' <param name="path"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function WriteLargeJson(Of T)(obj As T, path$, Optional simpleDict As Boolean = True) As Boolean
+        Public Function WriteLargeJson(Of T)(obj As T, path$, Optional simpleDict As Boolean = True, Optional indent As Boolean = False) As Boolean
             Using ms As FileStream = path.Open(, doClear:=True)
-                Call ms.writeJson(obj, GetType(T), simpleDict, Nothing)
+                Call ms.writeJson(obj, GetType(T), simpleDict, indent:=indent, knownTypes:=Nothing)
             End Using
 
             Return True
