@@ -243,7 +243,7 @@ Namespace Serialization.JSON
                 End If
             End If
 
-            Dim normalized = ConvertMicrosoftDates(json)
+            Dim normalized As String = json
             Dim de As Func(Of Object) = Function() JsonSerializer.Deserialize(normalized, type, BuildOptions(type, indent:=False, knownTypes))
             Dim obj = TryCatch(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
             Return obj
@@ -256,7 +256,7 @@ Namespace Serialization.JSON
             Else
                 Using reader As New StreamReader(jsonStream, Encoding.UTF8)
                     Dim json = reader.ReadToEnd()
-                    Return JsonSerializer.Deserialize(ConvertMicrosoftDates(json), type, BuildOptions(type, indent:=False, Nothing))
+                    Return JsonSerializer.Deserialize(json, type, BuildOptions(type, indent:=False, Nothing))
                 End Using
             End If
         End Function
@@ -376,73 +376,6 @@ Namespace Serialization.JSON
 
             Return (file.ReadAllText(encoding Or UTF8, throwEx:=throwEx, suppress:=True) Or "null".AsDefault) _
                 .LoadJSON(Of T)(simpleDict, knownTypes:=knownTypes, throwEx:=throwEx)
-        End Function
-
-        Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"
-
-        Public Function EnsureDate(json$, Optional propertyName$ = Nothing) As String
-            Dim pattern$ = $"""{JsonLongTime}"""
-
-            If Not propertyName.StringEmpty Then
-                pattern = $"""{propertyName}""\s*:\s*" & pattern
-            End If
-
-            Dim dates = r.Matches(json, pattern, RegexICSng)
-            Dim sb As New StringBuilder(json)
-            Dim [date] As Date
-
-            For Each m As Match In dates
-                Dim s$ = m.Value
-
-                If Not propertyName.StringEmpty Then
-                    With r.Replace(s, $"""{propertyName}""\s*:", "", RegexICSng) _
-                        .Trim _
-                        .Trim(ASCII.Quot)
-
-                        [date] = Date.Parse(.ByRef)
-                    End With
-
-                    sb.Replace(s, $"""{propertyName}"":" & [date].GetJson)
-                Else
-                    [date] = Date.Parse(s.Trim(ASCII.Quot))
-
-                    sb.Replace(s, [date].GetJson)
-                End If
-            Next
-
-            Return sb.ToString
-        End Function
-
-        ' Matches the /Date(ticks)/ and /Date(ticks+hhmm)/ forms previously emitted by
-        ' DataContractJsonSerializer, keeping the surrounding double quotes via look-around.
-        Private ReadOnly microsoftDatePattern As New Regex("(?<= "")/Date\((-?\d+)([+\-]\d{4})?\)/(?= "")", RegexOptions.None)
-
-        ''' <summary>
-        ''' Rewrite legacy ``/Date(...)/`` tokens into ISO 8601 strings so that JSON
-        ''' persisted by the old DataContractJsonSerializer based code keeps loading.
-        ''' </summary>
-        Private Function ConvertMicrosoftDates(json As String) As String
-            If json Is Nothing Then
-                Return json
-            End If
-
-            Return microsoftDatePattern.Replace(json, AddressOf NormalizeMicrosoftDate)
-        End Function
-
-        Private Function NormalizeMicrosoftDate(m As Match) As String
-            Dim ticks As Long = Long.Parse(m.Groups(1).Value, CultureInfo.InvariantCulture)
-            Dim utc = New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(ticks)
-            Dim offset = m.Groups(2).Value
-
-            If offset.Length = 5 Then
-                Dim sign = If(offset(0) = "-"c, -1, 1)
-                Dim hh = Integer.Parse(offset.Substring(1, 2), CultureInfo.InvariantCulture)
-                Dim mm = Integer.Parse(offset.Substring(3, 2), CultureInfo.InvariantCulture)
-                utc = utc.AddMinutes(-sign * (hh * 60 + mm))
-                utc = DateTime.SpecifyKind(utc, DateTimeKind.Local)
-            End If
-
-            Return utc.ToString("o", CultureInfo.InvariantCulture)
         End Function
 
         ''' <summary>
