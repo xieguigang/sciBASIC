@@ -98,21 +98,73 @@ Public Module NumericTablePrediction
             pred(i) = fitted.GetY(xm(i))
         Next
 
+        Call WriteBack(table, pred, name, withResidual, y)
+
+        Return table
+    End Function
+
+    ''' <summary>
+    ''' 把非线性拟合模型（<see cref="LMA.NonLinearFitResult"/>）对表中每一个样本
+    ''' 的预测值写入指定的标签列。
+    ''' 
+    ''' 非线性模型没有多项式形式，因此 <see cref="LMA.NonLinearFitResult"/> 并没有
+    ''' 实现 <see cref="IFitted"/> 接口，这里为它单独提供一个入口。
+    ''' </summary>
+    ''' <param name="table">需要写入预测结果的二维表（**会被就地修改**）</param>
+    ''' <param name="fitted">非线性拟合的结果对象</param>
+    ''' <param name="name">预测值写入的标签列名称</param>
+    ''' <param name="withResidual">是否同时写入残差列 ``residual``</param>
+    ''' <param name="y">观测值所在的标签列名，缺省为第一个标签列</param>
+    ''' <returns>返回当前表对象以支持链式调用</returns>
+    <Extension>
+    Public Function SetPrediction(table As NumericTable,
+                                  fitted As LMA.NonLinearFitResult,
+                                  Optional name As String = "prediction",
+                                  Optional withResidual As Boolean = False,
+                                  Optional y As String = Nothing) As NumericTable
+
+        If table Is Nothing Then
+            Throw New ArgumentNullException(NameOf(table))
+        End If
+        If fitted Is Nothing Then
+            Throw New ArgumentNullException(NameOf(fitted))
+        End If
+
+        Dim n As Integer = table.nsamples
+        Dim xm As Double()() = table.NumericRows
+        Dim pred As Double() = New Double(n - 1) {}
+
+        For i As Integer = 0 To n - 1
+            pred(i) = fitted.GetY(xm(i))
+        Next
+
+        Call WriteBack(table, pred, name, withResidual, y)
+
+        Return table
+    End Function
+
+    ''' <summary>
+    ''' 写入预测列，并且按需写入残差列
+    ''' </summary>
+    Private Sub WriteBack(table As NumericTable,
+                         pred As Double(),
+                         name As String,
+                         withResidual As Boolean,
+                         y As String)
+
         Call table.SetLabel(name, pred)
 
         If withResidual Then
             Dim obs As Double() = ObservedVector(table, y)
-            Dim res As Double() = New Double(n - 1) {}
+            Dim res As Double() = New Double(pred.Length - 1) {}
 
-            For i As Integer = 0 To n - 1
+            For i As Integer = 0 To pred.Length - 1
                 res(i) = pred(i) - obs(i)
             Next
 
             Call table.SetLabel("residual", res)
         End If
-
-        Return table
-    End Function
+    End Sub
 
     ''' <summary>
     ''' 在源表的一个**深拷贝副本**上面计算预测值并且写入标签列，
@@ -126,6 +178,33 @@ Public Module NumericTablePrediction
     ''' <returns>写入了预测结果的表副本</returns>
     <Extension>
     Public Function PredictTable(fitted As IFitted,
+                                 source As NumericTable,
+                                 Optional name As String = "prediction",
+                                 Optional withResidual As Boolean = False,
+                                 Optional y As String = Nothing) As NumericTable
+
+        If fitted Is Nothing Then
+            Throw New ArgumentNullException(NameOf(fitted))
+        End If
+        If source Is Nothing Then
+            Throw New ArgumentNullException(NameOf(source))
+        End If
+
+        Return source.Clone().SetPrediction(fitted, name, withResidual, y)
+    End Function
+
+    ''' <summary>
+    ''' 在源表的一个**深拷贝副本**上面计算非线性拟合模型的预测值并且写入标签列，
+    ''' 源表对象不会被修改。
+    ''' </summary>
+    ''' <param name="fitted">非线性拟合的结果对象</param>
+    ''' <param name="source">预测所使用的源数据表</param>
+    ''' <param name="name">预测值写入的标签列名称</param>
+    ''' <param name="withResidual">是否同时写入残差列 ``residual``</param>
+    ''' <param name="y">观测值所在的标签列名，缺省为第一个标签列</param>
+    ''' <returns>写入了预测结果的表副本</returns>
+    <Extension>
+    Public Function PredictTable(fitted As LMA.NonLinearFitResult,
                                  source As NumericTable,
                                  Optional name As String = "prediction",
                                  Optional withResidual As Boolean = False,

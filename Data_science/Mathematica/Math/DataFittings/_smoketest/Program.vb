@@ -140,6 +140,63 @@ Module Program
         ' 因此这里只探测表的输入适配，求解器的异常信息会被如实打印出来
         Call Console.WriteLine($"   [note] GaussNewtonFit -> {ProbeGaussNewton(singleTable)}")
 
+        ' 缺省入口：幂律（Cobb-Douglas）模型，参数初值来自对数域的普通最小二乘
+        Dim powerTable As NumericTable = BuildPowerTable(n)
+        Dim powerFit As LMA.NonLinearFitResult = powerTable.NonLinearFit()
+
+        Call Check(powerFit.R2 > 0.999, $"LMA power-law R2 = {powerFit.R2:F6}")
+        Call Check(System.Math.Abs(powerFit.Parameters("p0") - 2.5) < 0.05, $"LMA p0 = {powerFit.Parameters("p0"):F4}, expected 2.5")
+        Call Check(System.Math.Abs(powerFit.Parameters("p1") - 1.5) < 0.01, $"LMA p1 = {powerFit.Parameters("p1"):F4}, expected 1.5")
+        Call Check(System.Math.Abs(powerFit.Parameters("p2") + 0.5) < 0.01, $"LMA p2 = {powerFit.Parameters("p2"):F4}, expected -0.5")
+        Call Check(powerFit.Converged, $"LMA power-law converged after {powerFit.Iterations} iteration(s)")
+
+        Dim powerRow As Double()() = powerTable.NumericRows
+
+        Call Check(System.Math.Abs(powerFit.GetY(powerRow(0)) - powerFit.FittedValues(0)) < 0.000000001,
+                   "LMA GetY reproduces the fitted value of the first sample")
+
+        Dim powerPred As NumericTable = powerFit.PredictTable(powerTable, name:="lma_fit", withResidual:=True)
+
+        Call Check(powerPred.HasLabel("lma_fit"), "LMA PredictTable writes the prediction column")
+        Call Check(powerPred.HasLabel("residual"), "LMA PredictTable writes the residual column")
+        Call Check(Not powerTable.HasLabel("lma_fit"), "LMA PredictTable does not modify the source table")
+
+        ' 公式字符串入口：a*exp(-b*x)，自变量按列名绑定
+        Dim t As Double() = {0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0}
+        Dim decay As Double() = t.Select(Function(ti) 3.0 * System.Math.Exp(-0.5 * ti)).ToArray
+        Dim decayTable As NumericTable = BuildSingleFeatureTable(t, decay)
+        Dim decayFit As LMA.NonLinearFitResult = decayTable.NonLinearFit("a*exp(-b*x)", {"a", "b"})
+
+        Call Check(decayFit.R2 > 0.999, $"LMA formula R2 = {decayFit.R2:F6}")
+        Call Check(System.Math.Abs(decayFit.Parameters("a") - 3.0) < 0.01, $"LMA a = {decayFit.Parameters("a"):F4}, expected 3")
+        Call Check(System.Math.Abs(decayFit.Parameters("b") - 0.5) < 0.01, $"LMA b = {decayFit.Parameters("b"):F4}, expected 0.5")
+        Call Check(decayFit.Converged, $"LMA formula converged after {decayFit.Iterations} iteration(s)")
+
+        ' 委托入口：米氏方程 v = Vmax*x/(Km+x)
+        Dim conc As Double() = {0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0}
+        Dim rate As Double() = conc.Select(Function(si) 10.0 * si / (2.0 + si)).ToArray
+        Dim mmTable As NumericTable = BuildSingleFeatureTable(conc, rate)
+        Dim mmFit As LMA.NonLinearFitResult = mmTable.NonLinearFit(
+            Function(p, xi) p(0) * xi(0) / (p(1) + xi(0)),
+            guess:={1.0, 1.0})
+
+        Call Check(mmFit.R2 > 0.999, $"LMA delegate R2 = {mmFit.R2:F6}")
+        Call Check(System.Math.Abs(mmFit.Parameters("p1") - 10.0) < 0.05, $"LMA Vmax = {mmFit.Parameters("p1"):F4}, expected 10")
+        Call Check(System.Math.Abs(mmFit.Parameters("p2") - 2.0) < 0.05, $"LMA Km = {mmFit.Parameters("p2"):F4}, expected 2")
+
+        ' 错误处理
+        Call Check(Throws(Sub() decayTable.NonLinearFit("a*exp(-b*zzz)", {"a", "b"})),
+                   "the LMA formula entry rejects a formula with an unknown symbol")
+        Call Check(Throws(Sub() decayTable.NonLinearFit("a*x^b", Nothing)),
+                   "the LMA formula entry requires at least one parameter symbol")
+
+        ' 幂律入口要求自变量为正，含负值的数据必须被拒绝
+        Dim signedX As Double() = {-5.0, -4.0, -3.0, -2.0, -1.0, 1.0, 2.0, 3.0, 4.0, 5.0}
+        Dim signedTable As NumericTable = BuildSingleFeatureTable(signedX, signedX.Select(Function(xi) 2.0 * xi + 1.0).ToArray)
+
+        Call Check(Throws(Sub() signedTable.NonLinearFit()),
+                   "the LMA power-law entry rejects a table with non-positive factors")
+
         Call Section("multivariate regression")
         Dim f1 As Double() = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
         Dim f2 As Double() = {2, 1, 4, 3, 6, 5, 8, 7, 10, 9}
@@ -248,6 +305,28 @@ Module Program
             .ToArray
         Dim rows As String() = Enumerable.Range(1, f1.Length).Select(Function(i) $"m{i}").ToArray
         Dim table As New NumericTable(features, rows, New String() {"bias", "a", "b"})
+
+        Call table.SetLabel("y", y)
+
+        Return table
+    End Function
+
+    ''' <summary>
+    ''' 幂律（Cobb-Douglas）模型的测试数据：``y = 2.5 * x1^1.5 * x2^-0.5``，
+    ''' 自变量与响应变量全部取正值
+    ''' </summary>
+    Private Function BuildPowerTable(n As Integer) As NumericTable
+        Dim x1 As Double() = Enumerable.Range(1, n).Select(Function(i) 1.0 + i * 0.5).ToArray
+        Dim x2 As Double() = Enumerable.Range(1, n).Select(Function(i) 2.0 + (n - i) * 0.25).ToArray
+        Dim y As Double() = x1 _
+            .Select(Function(xi, i) 2.5 * System.Math.Pow(xi, 1.5) * System.Math.Pow(x2(i), -0.5)) _
+            .ToArray
+        Dim features As Double()() = x1 _
+            .SeqIterator _
+            .Select(Function(i) New Double() {i.value, x2(i.i)}) _
+            .ToArray
+        Dim rows As String() = Enumerable.Range(1, n).Select(Function(i) $"p{i}").ToArray
+        Dim table As New NumericTable(features, rows, New String() {"x1", "x2"})
 
         Call table.SetLabel("y", y)
 

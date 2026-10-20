@@ -69,279 +69,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 ''' <summary>
-''' 任意非线性模型函数：由参数向量和单个样本的自变量向量计算出模型的输出值。
-''' 
-''' 参数的顺序由 <see cref="NonLinearFitResult.ParameterNames"/> 决定，自变量的
-''' 顺序由 <see cref="NonLinearFitResult.FactorNames"/> 决定。
-''' </summary>
-''' <param name="params">待优化的模型参数向量</param>
-''' <param name="x">单个样本的自变量向量</param>
-''' <returns>模型在该样本处的估计输出值</returns>
-Public Delegate Function NonLinearModel(params As Double(), x As Double()) As Double
-
-''' <summary>
-''' 驱动既有 <see cref="LmSolver"/> 内核的非线性模型桥。
-''' 
-''' 任意一个 <see cref="NonLinearModel"/> 委托经由这个桥包装之后，就满足了
-''' <see cref="LmScalarModel"/> 所要求的「逐样本给出模型值、一阶导数与二阶
-''' 导数」的契约，从而可以直接交给 <see cref="LmSumSquaresError"/> 求解。
-''' 
-''' 导数一律采用中心差分近似，差分步长随着参数自身的量纲自适应：
-''' 
-''' ```
-''' h = eps * (1 + |p|)
-''' ```
-''' </summary>
-Friend Class LmFitModel : Implements LmScalarModel
-
-    ''' <summary>
-    ''' 自变量矩阵，行是样本、列是自变量
-    ''' </summary>
-    ReadOnly xm As Double()()
-    ''' <summary>
-    ''' 观测值向量
-    ''' </summary>
-    ReadOnly yv As Double()
-    ''' <summary>
-    ''' 被包装的非线性模型
-    ''' </summary>
-    ReadOnly fn As NonLinearModel
-    ''' <summary>
-    ''' 差分步长基准
-    ''' </summary>
-    ReadOnly fdEps As Double
-
-    Sub New(xm As Double()(), yv As Double(), fn As NonLinearModel, fdEps As Double)
-        Me.xm = xm
-        Me.yv = yv
-        Me.fn = fn
-        Me.fdEps = fdEps
-    End Sub
-
-    Public ReadOnly Property MeasuredData As Double() Implements LmScalarModel.MeasuredData
-        Get
-            Return yv
-        End Get
-    End Property
-
-    Public Function eval(dataIdx As Integer, optParams As Double()) As Double Implements LmScalarModel.eval
-        Return fn(optParams, xm(dataIdx))
-    End Function
-
-    Public Function jacobian(dataIdx As Integer, optParams As Double()) As Double() Implements LmScalarModel.jacobian
-        Dim n As Integer = optParams.Length
-        Dim row As Double() = xm(dataIdx)
-        Dim jac As Double() = New Double(n - 1) {}
-        Dim k As Integer
-
-        For k = 0 To n - 1
-            Dim saved As Double = optParams(k)
-            Dim h As Double = fdEps * (1.0 + std.Abs(saved))
-
-            optParams(k) = saved + h
-            Dim fPlus As Double = fn(optParams, row)
-            optParams(k) = saved - h
-            Dim fMinus As Double = fn(optParams, row)
-            optParams(k) = saved
-
-            jac(k) = (fPlus - fMinus) / (2.0 * h)
-        Next
-
-        Return jac
-    End Function
-
-    Public Function hessian(dataIdx As Integer, optParams As Double()) As Double()() Implements LmScalarModel.hessian
-        Dim n As Integer = optParams.Length
-        Dim row As Double() = xm(dataIdx)
-        Dim hes As Double()() = RectangularArray.Matrix(Of Double)(n, n)
-        Dim steps As Double() = New Double(n - 1) {}
-        Dim fPlus As Double() = New Double(n - 1) {}
-        Dim fMinus As Double() = New Double(n - 1) {}
-        Dim f0 As Double = fn(optParams, row)
-        Dim i As Integer
-        Dim j As Integer
-
-        ' 步长先算好，后面每次差分都要用到同一个 h
-        For i = 0 To n - 1
-            steps(i) = fdEps * (1.0 + std.Abs(optParams(i)))
-        Next
-
-        For i = 0 To n - 1
-            Dim saved As Double = optParams(i)
-
-            optParams(i) = saved + steps(i)
-            fPlus(i) = fn(optParams, row)
-            optParams(i) = saved - steps(i)
-            fMinus(i) = fn(optParams, row)
-            optParams(i) = saved
-        Next
-
-        ' 对角：二阶中心差分
-        For i = 0 To n - 1
-            hes(i)(i) = (fPlus(i) - 2.0 * f0 + fMinus(i)) / (steps(i) * steps(i))
-        Next
-
-        ' 非对角：四个角点的混合差分，并按对称性只计算上三角
-        For i = 0 To n - 1
-            For j = i + 1 To n - 1
-                Dim savedI As Double = optParams(i)
-                Dim savedJ As Double = optParams(j)
-
-                optParams(i) = savedI + steps(i)
-                optParams(j) = savedJ + steps(j)
-                Dim fpp As Double = fn(optParams, row)
-                optParams(j) = savedJ - steps(j)
-                Dim fpm As Double = fn(optParams, row)
-                optParams(i) = savedI - steps(i)
-                Dim fmm As Double = fn(optParams, row)
-                optParams(j) = savedJ + steps(j)
-                Dim fmp As Double = fn(optParams, row)
-
-                optParams(i) = savedI
-                optParams(j) = savedJ
-
-                Dim d As Double = (fpp - fpm - fmp + fmm) / (4.0 * steps(i) * steps(j))
-
-                hes(i)(j) = d
-                hes(j)(i) = d
-            Next
-        Next
-
-        Return hes
-    End Function
-End Class
-
-''' <summary>
-''' 非线性最小二乘拟合的结果
-''' 
-''' 这个类型保存了拟合出来的参数、拟合优度、残差与预测模型，与线性拟合的
-''' <see cref="FitResult"/> 风格一致。注意：非线性模型没有多项式形式，
-''' 因此这里并没有实现 <see cref="IFitted"/> 接口。
-''' </summary>
-Public Class NonLinearFitResult
-
-    ''' <summary>
-    ''' 拟合好的模型，可以直接用于预测；委托无法序列化，故而不参与 JSON 输出
-    ''' </summary>
-    ''' <returns></returns>
-    <IgnoreDataMember>
-    Public Property Model As NonLinearModel
-
-    ''' <summary>
-    ''' 模型的文本形式（公式字符串入口时为用户给出的原始公式，
-    ''' 默认幂律入口时为自动生成的幂律公式）
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Formula As String
-
-    ''' <summary>
-    ''' 自变量的名称，同时也是模型自变量向量的顺序
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property FactorNames As String()
-
-    ''' <summary>
-    ''' 模型参数的名称，同时也是参数向量 <see cref="Values"/> 的顺序
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property ParameterNames As String()
-
-    ''' <summary>
-    ''' 参数名到参数值的映射
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Parameters As Dictionary(Of String, Double)
-
-    ''' <summary>
-    ''' 残差平方和
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property SSE As Double
-
-    ''' <summary>
-    ''' 均方根误差
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property RMSE As Double
-
-    ''' <summary>
-    ''' 决定系数 R2，等于 1 - SSE / SStotal
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property R2 As Double
-
-    ''' <summary>
-    ''' 残差向量，等于观测值减去拟合值
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Residuals As Double()
-
-    ''' <summary>
-    ''' 每一个样本的模型拟合值
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property FittedValues As Double()
-
-    ''' <summary>
-    ''' 求解器实际消耗掉的迭代次数
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Iterations As Integer
-
-    ''' <summary>
-    ''' 求解是否命中了收敛判据；False 表示迭代次数被耗尽，结果可能尚未收敛
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Converged As Boolean
-
-    ''' <summary>
-    ''' 参数向量的缓存
-    ''' </summary>
-    Friend valuesVec As Double()
-
-    ''' <summary>
-    ''' 以向量形式获取拟合出来的参数值
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property Values As Double()
-        Get
-            If valuesVec Is Nothing Then
-                Return New Double() {}
-            End If
-
-            Return CType(valuesVec.Clone(), Double())
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' 使用拟合好的模型对给定自变量做预测
-    ''' </summary>
-    ''' <param name="x">自变量向量，顺序见 <see cref="FactorNames"/></param>
-    ''' <returns>模型的输出值</returns>
-    Public Function GetY(ParamArray x As Double()) As Double
-        If Model Is Nothing Then
-            Throw New InvalidOperationException("the current fitting result does not have a valid model for prediction!")
-        End If
-
-        Return Model(valuesVec, x)
-    End Function
-
-    Public Overrides Function ToString() As String
-        Dim summary As String = If(
-            String.IsNullOrEmpty(Formula),
-            $"R2 = {R2:F6}, RMSE = {RMSE:G6}, SSE = {SSE:G6}",
-            $"{Formula} | R2 = {R2:F6}, RMSE = {RMSE:G6}, SSE = {SSE:G6}"
-        )
-
-        If Parameters Is Nothing OrElse Parameters.Count = 0 Then
-            Return summary
-        End If
-
-        Return summary & " | " & Parameters.GetJson
-    End Function
-End Class
-
-''' <summary>
 ''' ### Levenberg–Marquardt algorithm
 ''' 
 ''' In mathematics and computing, the Levenberg–Marquardt algorithm 
@@ -364,6 +91,279 @@ End Class
 ''' solver implements at <see cref="LmSolver"/>
 ''' </remarks>
 Public Module LMA
+
+    ''' <summary>
+    ''' 任意非线性模型函数：由参数向量和单个样本的自变量向量计算出模型的输出值。
+    ''' 
+    ''' 参数的顺序由 <see cref="NonLinearFitResult.ParameterNames"/> 决定，自变量的
+    ''' 顺序由 <see cref="NonLinearFitResult.FactorNames"/> 决定。
+    ''' </summary>
+    ''' <param name="params">待优化的模型参数向量</param>
+    ''' <param name="x">单个样本的自变量向量</param>
+    ''' <returns>模型在该样本处的估计输出值</returns>
+    Public Delegate Function NonLinearModel(params As Double(), x As Double()) As Double
+
+    ''' <summary>
+    ''' 驱动既有 <see cref="LmSolver"/> 内核的非线性模型桥。
+    ''' 
+    ''' 任意一个 <see cref="NonLinearModel"/> 委托经由这个桥包装之后，就满足了
+    ''' <see cref="LmScalarModel"/> 所要求的「逐样本给出模型值、一阶导数与二阶
+    ''' 导数」的契约，从而可以直接交给 <see cref="LmSumSquaresError"/> 求解。
+    ''' 
+    ''' 导数一律采用中心差分近似，差分步长随着参数自身的量纲自适应：
+    ''' 
+    ''' ```
+    ''' h = eps * (1 + |p|)
+    ''' ```
+    ''' </summary>
+    Friend Class LmFitModel : Implements LmScalarModel
+
+        ''' <summary>
+        ''' 自变量矩阵，行是样本、列是自变量
+        ''' </summary>
+        ReadOnly xm As Double()()
+        ''' <summary>
+        ''' 观测值向量
+        ''' </summary>
+        ReadOnly yv As Double()
+        ''' <summary>
+        ''' 被包装的非线性模型
+        ''' </summary>
+        ReadOnly fn As NonLinearModel
+        ''' <summary>
+        ''' 差分步长基准
+        ''' </summary>
+        ReadOnly fdEps As Double
+
+        Sub New(xm As Double()(), yv As Double(), fn As NonLinearModel, fdEps As Double)
+            Me.xm = xm
+            Me.yv = yv
+            Me.fn = fn
+            Me.fdEps = fdEps
+        End Sub
+
+        Public ReadOnly Property MeasuredData As Double() Implements LmScalarModel.MeasuredData
+            Get
+                Return yv
+            End Get
+        End Property
+
+        Public Function eval(dataIdx As Integer, optParams As Double()) As Double Implements LmScalarModel.eval
+            Return fn(optParams, xm(dataIdx))
+        End Function
+
+        Public Function jacobian(dataIdx As Integer, optParams As Double()) As Double() Implements LmScalarModel.jacobian
+            Dim n As Integer = optParams.Length
+            Dim row As Double() = xm(dataIdx)
+            Dim jac As Double() = New Double(n - 1) {}
+            Dim k As Integer
+
+            For k = 0 To n - 1
+                Dim saved As Double = optParams(k)
+                Dim h As Double = fdEps * (1.0 + std.Abs(saved))
+
+                optParams(k) = saved + h
+                Dim fPlus As Double = fn(optParams, row)
+                optParams(k) = saved - h
+                Dim fMinus As Double = fn(optParams, row)
+                optParams(k) = saved
+
+                jac(k) = (fPlus - fMinus) / (2.0 * h)
+            Next
+
+            Return jac
+        End Function
+
+        Public Function hessian(dataIdx As Integer, optParams As Double()) As Double()() Implements LmScalarModel.hessian
+            Dim n As Integer = optParams.Length
+            Dim row As Double() = xm(dataIdx)
+            Dim hes As Double()() = RectangularArray.Matrix(Of Double)(n, n)
+            Dim steps As Double() = New Double(n - 1) {}
+            Dim fPlus As Double() = New Double(n - 1) {}
+            Dim fMinus As Double() = New Double(n - 1) {}
+            Dim f0 As Double = fn(optParams, row)
+            Dim i As Integer
+            Dim j As Integer
+
+            ' 步长先算好，后面每次差分都要用到同一个 h
+            For i = 0 To n - 1
+                steps(i) = fdEps * (1.0 + std.Abs(optParams(i)))
+            Next
+
+            For i = 0 To n - 1
+                Dim saved As Double = optParams(i)
+
+                optParams(i) = saved + steps(i)
+                fPlus(i) = fn(optParams, row)
+                optParams(i) = saved - steps(i)
+                fMinus(i) = fn(optParams, row)
+                optParams(i) = saved
+            Next
+
+            ' 对角：二阶中心差分
+            For i = 0 To n - 1
+                hes(i)(i) = (fPlus(i) - 2.0 * f0 + fMinus(i)) / (steps(i) * steps(i))
+            Next
+
+            ' 非对角：四个角点的混合差分，并按对称性只计算上三角
+            For i = 0 To n - 1
+                For j = i + 1 To n - 1
+                    Dim savedI As Double = optParams(i)
+                    Dim savedJ As Double = optParams(j)
+
+                    optParams(i) = savedI + steps(i)
+                    optParams(j) = savedJ + steps(j)
+                    Dim fpp As Double = fn(optParams, row)
+                    optParams(j) = savedJ - steps(j)
+                    Dim fpm As Double = fn(optParams, row)
+                    optParams(i) = savedI - steps(i)
+                    Dim fmm As Double = fn(optParams, row)
+                    optParams(j) = savedJ + steps(j)
+                    Dim fmp As Double = fn(optParams, row)
+
+                    optParams(i) = savedI
+                    optParams(j) = savedJ
+
+                    Dim d As Double = (fpp - fpm - fmp + fmm) / (4.0 * steps(i) * steps(j))
+
+                    hes(i)(j) = d
+                    hes(j)(i) = d
+                Next
+            Next
+
+            Return hes
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' 非线性最小二乘拟合的结果
+    ''' 
+    ''' 这个类型保存了拟合出来的参数、拟合优度、残差与预测模型，与线性拟合的
+    ''' <see cref="FitResult"/> 风格一致。注意：非线性模型没有多项式形式，
+    ''' 因此这里并没有实现 <see cref="IFitted"/> 接口。
+    ''' </summary>
+    Public Class NonLinearFitResult
+
+        ''' <summary>
+        ''' 拟合好的模型，可以直接用于预测；委托无法序列化，故而不参与 JSON 输出
+        ''' </summary>
+        ''' <returns></returns>
+        <IgnoreDataMember>
+        Public Property Model As NonLinearModel
+
+        ''' <summary>
+        ''' 模型的文本形式（公式字符串入口时为用户给出的原始公式，
+        ''' 默认幂律入口时为自动生成的幂律公式）
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Formula As String
+
+        ''' <summary>
+        ''' 自变量的名称，同时也是模型自变量向量的顺序
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property FactorNames As String()
+
+        ''' <summary>
+        ''' 模型参数的名称，同时也是参数向量 <see cref="Values"/> 的顺序
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ParameterNames As String()
+
+        ''' <summary>
+        ''' 参数名到参数值的映射
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Parameters As Dictionary(Of String, Double)
+
+        ''' <summary>
+        ''' 残差平方和
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SSE As Double
+
+        ''' <summary>
+        ''' 均方根误差
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property RMSE As Double
+
+        ''' <summary>
+        ''' 决定系数 R2，等于 1 - SSE / SStotal
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property R2 As Double
+
+        ''' <summary>
+        ''' 残差向量，等于观测值减去拟合值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Residuals As Double()
+
+        ''' <summary>
+        ''' 每一个样本的模型拟合值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property FittedValues As Double()
+
+        ''' <summary>
+        ''' 求解器实际消耗掉的迭代次数
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Iterations As Integer
+
+        ''' <summary>
+        ''' 求解是否命中了收敛判据；False 表示迭代次数被耗尽，结果可能尚未收敛
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Converged As Boolean
+
+        ''' <summary>
+        ''' 参数向量的缓存
+        ''' </summary>
+        Friend valuesVec As Double()
+
+        ''' <summary>
+        ''' 以向量形式获取拟合出来的参数值
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Values As Double()
+            Get
+                If valuesVec Is Nothing Then
+                    Return New Double() {}
+                End If
+
+                Return CType(valuesVec.Clone(), Double())
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 使用拟合好的模型对给定自变量做预测
+        ''' </summary>
+        ''' <param name="x">自变量向量，顺序见 <see cref="FactorNames"/></param>
+        ''' <returns>模型的输出值</returns>
+        Public Function GetY(ParamArray x As Double()) As Double
+            If Model Is Nothing Then
+                Throw New InvalidOperationException("the current fitting result does not have a valid model for prediction!")
+            End If
+
+            Return Model(valuesVec, x)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Dim summary As String = If(
+                String.IsNullOrEmpty(Formula),
+                $"R2 = {R2:F6}, RMSE = {RMSE:G6}, SSE = {SSE:G6}",
+                $"{Formula} | R2 = {R2:F6}, RMSE = {RMSE:G6}, SSE = {SSE:G6}"
+            )
+
+            If Parameters Is Nothing OrElse Parameters.Count = 0 Then
+                Return summary
+            End If
+
+            Return summary & " | " & Parameters.GetJson
+        End Function
+    End Class
 
     ''' <summary>
     ''' 中心差分步长的基准值
