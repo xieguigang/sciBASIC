@@ -159,7 +159,9 @@ Namespace LASSO
         End Sub
 
         Private Function getLassoFit(maxAllowedFeaturesPerModel As Integer) As LassoFit
-            If maxAllowedFeaturesPerModel < 0 Then
+            ' 负数表示不做限制；零也按不限制处理，否则下面的
+            ' maxAllowedFeaturesAlongPath 会等于零并构造出负长度的数组
+            If maxAllowedFeaturesPerModel <= 0 Then
                 maxAllowedFeaturesPerModel = numFeatures
             End If
             Dim numberOfLambdas = DEFAULT_NUMBER_OF_LAMBDAS
