@@ -134,8 +134,7 @@ Namespace Serialization.JSON
                     indent:=indent
                 )
 
-                Dim raw = Encoding.UTF8.GetString(ms.ToArray())
-                Return If(indent, Microsoft.VisualBasic.Serialization.JSON.Formatter.JsonFormatter.Format(raw), raw)
+                Return Encoding.UTF8.GetString(ms.ToArray())
             End Using
         End Function
 
