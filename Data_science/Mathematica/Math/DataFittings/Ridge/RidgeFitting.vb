@@ -210,13 +210,13 @@ Namespace Ridge
                 Dim err As Double = 0.0
 
                 For i As Integer = 0 To n - 1
-                    Dim fit As Double = 0.0
+                    Dim yhat As Double = 0.0
 
                     For j As Integer = 0 To p - 1
-                        fit += xc(i)(j) * beta(j)
+                        yhat += xc(i)(j) * beta(j)
                     Next
 
-                    Dim d As Double = yc(i) - fit
+                    Dim d As Double = yc(i) - yhat
 
                     err += d * d
                 Next
