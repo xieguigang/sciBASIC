@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports System.Globalization
+Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
@@ -570,4 +571,383 @@ Public Module Reporter
     Private Sub AddRow(rows As List(Of Object()), name As String, value As String)
         rows.Add({name, DirectCast(value, Object)})
     End Sub
+
+    ' ==================================================================
+    ' CUPTI per-SM 归因（--sm / --sm --top / --sm-doctor）
+    ' ==================================================================
+
+    Private Function FmtPercentD(v As Double) As String
+        If v < 0 Then Return "N/A"
+        Return v.ToString("F1", CultureInfo.InvariantCulture) & "%"
+    End Function
+
+    Private Function FmtMs(v As Double) As String
+        If v <= 0 Then Return "N/A"
+        Return v.ToString("F1", CultureInfo.InvariantCulture) & " ms"
+    End Function
+
+    ''' <summary>表格里用的迷你条形（10 格）。</summary>
+    Private Function MiniBar(percent As Double, Optional width As Integer = 12) As String
+        If percent < 0 Then Return New String("-"c, width)
+
+        Dim filled = CInt(System.Math.Round(percent / 100.0 * width))
+        If filled < 0 Then filled = 0
+        If filled > width Then filled = width
+
+        Return New String("#"c, filled) & New String("-"c, width - filled)
+    End Function
+
+    ''' <summary>按利用率给出状态标记：IDLE(&lt;阈值) / HOT(&gt;=80%) / BUSY。</summary>
+    Private Function SmState(percent As Double, Optional idleThreshold As Double = 5.0) As String
+        If percent < 0 Then Return "N/A"
+        If percent < idleThreshold Then Return "IDLE"
+        If percent >= 80 Then Return "HOT"
+        Return "BUSY"
+    End Function
+
+    ''' <summary>
+    ''' 能力与配置诊断块（--sm 一次性模式与 --sm-doctor 共用）。
+    ''' </summary>
+    Public Sub PrintSmCapability(snapshot As SmSnapshot)
+        Dim cap = snapshot.Capability
+        Dim rows As New List(Of Object())()
+
+        rows.Add({"设备", $"{If(String.IsNullOrEmpty(snapshot.DeviceName), "N/A", snapshot.DeviceName)}  [{snapshot.DeviceIndex}]"})
+        rows.Add({"SM 数量", If(snapshot.SmCount > 0, snapshot.SmCount.ToString(CultureInfo.InvariantCulture), "未知")})
+        rows.Add({"CUPTI 版本", If(String.IsNullOrEmpty(cap.CuptiVersion), "N/A", cap.CuptiVersion)})
+        rows.Add({"CUPTI 路径", If(String.IsNullOrEmpty(cap.CuptiPath), "N/A", cap.CuptiPath)})
+        rows.Add({"芯片", If(String.IsNullOrEmpty(cap.ChipName), "N/A", cap.ChipName)})
+
+        If Not String.IsNullOrEmpty(cap.DeviceSupported) Then
+            rows.Add({"设备支持级别", cap.DeviceSupported})
+        End If
+        rows.Add({"采样会话", If(cap.Available, "已启用（PM Sampling）", "不可用")})
+        rows.Add({"采样间隔", $"{cap.SamplingIntervalMs:F1} ms" & If(cap.UsingSysClockTrigger, "（SYSCLK 触发）", "（纳秒触发）")})
+        rows.Add({"单 pass 上限", If(cap.SinglePassLimit > 0, $"{cap.SinglePassLimit} 项指标", "未知")})
+        rows.Add({"采集指标", If(cap.Metrics Is Nothing OrElse cap.Metrics.Length = 0, "N/A", String.Join(", ", cap.Metrics))})
+
+        If cap.SkippedMetrics IsNot Nothing AndAlso cap.SkippedMetrics.Length > 0 Then
+            rows.Add({"已裁剪指标", String.Join(", ", cap.SkippedMetrics) & "（超出单 pass 容量）"})
+        End If
+
+        rows.Add({"per-SM 明细", If(snapshot.PerSmAvailable,
+                                    "可用（旧 Event API，per-instance 计数）",
+                                    "不可用" & If(String.IsNullOrEmpty(snapshot.Reason), "", "：" & snapshot.Reason))})
+
+        ConsoleTableBuilder _
+            .From(rows) _
+            .WithColumn("项目", "取值") _
+            .WithTitle("CUPTI 能力诊断", ConsoleColor.Cyan) _
+            .ExportAndWriteLine(TableAligntment.Left)
+    End Sub
+
+    ''' <summary>
+    ''' 一次性模式的完整报告：能力诊断块 → 概览表 → （per-SM 表 或 PM 切片表）→ 排名摘要。
+    ''' </summary>
+    Public Sub PrintSmSummary(snapshot As SmSnapshot, Optional topN As Integer = 3,
+                              Optional useColor As Boolean = True, Optional maxRows As Integer = 0)
+        PrintSmCapability(snapshot)
+
+        If Not snapshot.Capability.Available Then
+            Console.WriteLine()
+            Console.Error.WriteLine("错误：CUPTI PM Sampling 会话不可用，无法采集 SM 指标。")
+            If Not String.IsNullOrEmpty(snapshot.Reason) Then Console.Error.WriteLine($"原因：{snapshot.Reason}")
+            Return
+        End If
+
+        Dim aggregate = snapshot.Aggregate
+        Dim balance = aggregate.Balance
+        Dim overview As New List(Of Object())()
+
+        overview.Add({"采集时长", $"{snapshot.CaptureSeconds:F2} s"})
+        overview.Add({"有效切片", snapshot.SampleCount.ToString(CultureInfo.InvariantCulture)})
+        overview.Add({"平均 SM 利用率", FmtPercentD(aggregate.UtilizationPercent)})
+        overview.Add({"活跃 warp 占峰值", FmtPercentD(aggregate.WarpsActivePercent)})
+        overview.Add({"SM 发射利用率（吞吐代理）", FmtPercentD(aggregate.ThroughputPercent)})
+        overview.Add({"最热 SM 活跃度", FmtPercentD(balance.HotSmPercent)})
+        overview.Add({"最冷 SM 活跃度", FmtPercentD(balance.ColdSmPercent)})
+
+        If snapshot.PerSmAvailable Then
+            overview.Add({"空转 SM 数", $"{snapshot.IdleCount} / {snapshot.SmCount}（利用率 < 5%）"})
+        ElseIf balance.IdleSmEstimate >= 0 Then
+            overview.Add({"推断空转 SM 数", $"{balance.IdleSmEstimate} / {balance.SmCount}（两极估计）"})
+        End If
+
+        If balance.ImbalanceRatio >= 0 Then
+            overview.Add({"SM 失衡比", balance.ImbalanceRatio.ToString("P1", CultureInfo.InvariantCulture) & "（(max-min)/max）"})
+        End If
+
+        If snapshot.Overflow Then
+            overview.Add({"硬件缓冲", "发生溢出：请增大 --sm-hwbuffer 或采样间隔"})
+        End If
+
+        Console.WriteLine()
+        ConsoleTableBuilder _
+            .From(overview) _
+            .WithColumn("项目", "取值") _
+            .WithTitle("SM 归因概览", ConsoleColor.Cyan) _
+            .ExportAndWriteLine(TableAligntment.Left)
+
+        If snapshot.PerSmAvailable Then
+            PrintPerSmTable(snapshot, useColor, maxRows)
+            PrintPerSmRanking(snapshot, topN)
+        Else
+            PrintSliceTable(snapshot, useColor)
+            PrintBalanceFallback(snapshot)
+        End If
+    End Sub
+
+    ''' <summary>真实的逐 SM 表（旧 Event API 可用时）。</summary>
+    Private Sub PrintPerSmTable(snapshot As SmSnapshot, useColor As Boolean, maxRows As Integer)
+        Dim rows = snapshot.Rows
+        Dim count = If(maxRows > 0, System.Math.Min(maxRows, rows.Count), rows.Count)
+        Dim table As New List(Of Object())()
+
+        For i As Integer = 0 To count - 1
+            Dim r = rows(i)
+            Dim bar = MiniBar(r.UtilizationPercent)
+            If useColor Then bar = Colorize(bar, CInt(System.Math.Round(r.UtilizationPercent)))
+
+            table.Add({
+                r.SmIndex,
+                bar,
+                FmtPercentD(r.UtilizationPercent),
+                FmtPercentD(r.WarpsActivePercent),
+                FmtPercentD(r.ThroughputPercent),
+                SmState(r.UtilizationPercent)
+            })
+        Next
+
+        Console.WriteLine()
+        ConsoleTableBuilder _
+            .From(table) _
+            .WithColumn("SM", "利用率条形", "利用率", "warps%", "吞吐%", "状态") _
+            .WithTitle($"per-SM 利用率（共 {rows.Count} 个 SM，显示 {count} 个）", ConsoleColor.Cyan) _
+            .ExportAndWriteLine(TableAligntment.Left)
+    End Sub
+
+    ''' <summary>per-SM 排名摘要：最热 / 最冷 / 空转统计。</summary>
+    Private Sub PrintPerSmRanking(snapshot As SmSnapshot, topN As Integer)
+        Console.WriteLine()
+        Console.WriteLine($"  最热 {topN} 个 SM：" & FormatSmList(snapshot.TopHot(topN)))
+        Console.WriteLine($"  最冷 {topN} 个 SM：" & FormatSmList(snapshot.TopCold(topN)))
+        Console.WriteLine($"  空转 SM（< 5%）：{snapshot.IdleCount} / {snapshot.SmCount}")
+    End Sub
+
+    Private Function FormatSmList(rows As IReadOnlyList(Of SmRow)) As String
+        If rows Is Nothing OrElse rows.Count = 0 Then Return "N/A"
+
+        Return String.Join("   ", rows.Select(Function(r) $"SM{r.SmIndex}={r.UtilizationPercent:F1}%"))
+    End Function
+
+    ''' <summary>PM 采样切片表（降级路径：只有整卡聚合值）。</summary>
+    Private Sub PrintSliceTable(snapshot As SmSnapshot, useColor As Boolean)
+        Dim slices = snapshot.Slices
+        If slices Is Nothing OrElse slices.Count = 0 Then
+            Console.WriteLine()
+
+            If Not String.IsNullOrEmpty(snapshot.Reason) AndAlso snapshot.Reason.Contains("Start") Then
+                Console.Error.WriteLine("  警告：CUPTI 会话已配置成功，但采样未能启动。")
+                Console.Error.WriteLine($"  原因：{snapshot.Reason}")
+                Console.Error.WriteLine("  可尝试：①用 --sm-doctor 查看完整诊断；②以管理员身份运行；")
+                Console.Error.WriteLine("          ③关闭 Nsight Compute / 其它 profiler（同一设备只允许一个采样会话）；")
+                Console.Error.WriteLine("          ④换用 --sm-sysclk（SYSCLK 触发）；⑤更新或回退 NVIDIA 驱动。")
+            Else
+                Console.WriteLine("  没有采集到有效的采样切片（GPU 在采样窗口内可能完全空闲，或采样间隔过小）。")
+                If Not String.IsNullOrEmpty(snapshot.Reason) Then Console.WriteLine($"  原因：{snapshot.Reason}")
+            End If
+
+            Return
+        End If
+
+        ' 只展示最近 20 条，避免刷屏
+        Const showMax As Integer = 20
+        Dim startIndex = System.Math.Max(0, slices.Count - showMax)
+        Dim table As New List(Of Object())()
+
+        For i As Integer = startIndex To slices.Count - 1
+            Dim item = slices(i)
+            Dim bar = MiniBar(item.UtilizationPercent)
+            If useColor Then bar = Colorize(bar, CInt(System.Math.Round(item.UtilizationPercent)))
+
+            table.Add({
+                item.Index,
+                FmtMs(item.DurationMs),
+                bar,
+                FmtPercentD(item.UtilizationPercent),
+                FmtPercentD(item.WarpsActivePercent),
+                FmtPercentD(item.ThroughputPercent)
+            })
+        Next
+
+        Console.WriteLine()
+        ConsoleTableBuilder _
+            .From(table) _
+            .WithColumn("#", "窗口", "利用率条形", "利用率", "warps%", "吞吐%") _
+            .WithTitle($"PM 采样切片（最近 {table.Count} / 共 {slices.Count} 条）", ConsoleColor.Cyan) _
+            .ExportAndWriteLine(TableAligntment.Left)
+    End Sub
+
+    ''' <summary>per-SM 不可用时的说明 + 整卡层面的均衡推断。</summary>
+    Private Sub PrintBalanceFallback(snapshot As SmSnapshot)
+        Dim balance = snapshot.Aggregate.Balance
+
+        Console.WriteLine()
+        Console.WriteLine("  说明：本机 CUPTI 无法提供逐 SM（instance）计数 —— NVIDIA 自 CUDA 12.8 弃用、")
+        Console.WriteLine("        CUDA 13.0 起移除了旧 Event/Metric API（错误码 38，LEGACY_PROFILER_NOT_SUPPORTED），")
+        Console.WriteLine("        新版 PM Sampling 只输出整卡聚合值。以下为整卡层面的均衡推断：")
+        Console.WriteLine()
+
+        If balance.IsEstimated Then
+            Console.WriteLine($"  平均活跃 SM 数 : {balance.AverageActiveSm:F1} / {balance.SmCount}")
+            Console.WriteLine($"  最热/最冷 SM   : {balance.HotSmPercent:F1}% / {balance.ColdSmPercent:F1}%")
+            Console.WriteLine($"  推断空转 SM 数 : {balance.IdleSmEstimate} / {balance.SmCount}（两极模型估计）")
+            Console.WriteLine($"  SM 失衡比      : {balance.ImbalanceRatio:P1}（越接近 0 越均衡）")
+
+            If balance.ImbalanceRatio >= 0.5 Then
+                Console.WriteLine("  判读：负载高度集中在少数 SM 上，存在明显的 SM 空转（通常来自数据并行度不足或 tail effect）。")
+            ElseIf balance.ImbalanceRatio >= 0.2 Then
+                Console.WriteLine("  判读：存在中等程度失衡，部分 SM 明显更忙，可检查网格划分与 block 调度是否均匀。")
+            Else
+                Console.WriteLine("  判读：SM 之间基本均衡，未观察到明显的空转 SM。")
+            End If
+        Else
+            Console.WriteLine("  当前采集到的指标不足以推断 SM 均衡（缺少 sm__cycles_active.max/.min）。")
+            Console.WriteLine("  可在具备单 pass 容量的设备上重试，或用 --sm-metrics 显式指定指标。")
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 实时模式：固定行数原地刷新（--sm --top）。
+    ''' </summary>
+    Public Sub RunSmLive(monitor As CuptiMonitor, useColor As Boolean, shouldStop As Func(Of Boolean),
+                         intervalMs As Integer, Optional maxRows As Integer = 16)
+        Dim frameLines As Integer = 0
+        Dim rowCount = System.Math.Max(4, System.Math.Min(If(maxRows > 0, maxRows, 16), 32))
+        Static gray As New ConsoleFormat(AnsiColor.FromRgbColor(Color.DimGray), AnsiColor.Black, Underline:=True)
+
+        While Not shouldStop()
+            Dim snapshot = monitor.Refresh()
+            Dim lines = BuildSmLines(snapshot, useColor, rowCount)
+            lines.Add("")
+            lines.Add(New TextSpan("  按 Ctrl+C 停止", gray))
+
+            Dim sb As New StringBuilder()
+
+            If useColor Then
+                ' 覆盖式刷新：光标上移 + 清行
+                If frameLines > 0 Then sb.Append(AnsiEscapeCodes.GetMoveCursorUp(frameLines))
+
+                For i As Integer = 0 To lines.Count - 1
+                    sb.Append(AnsiEscapeCodes.ClearLine)
+                    sb.Append(lines(i))
+                    sb.Append(vbCrLf)
+                Next
+
+                frameLines = lines.Count
+            Else
+                ' --plain：逐帧追加，不做光标操作（便于管道/日志）
+                For i As Integer = 0 To lines.Count - 1
+                    sb.Append(lines(i))
+                    sb.Append(vbCrLf)
+                Next
+
+                sb.Append(vbCrLf)
+            End If
+
+            Console.Out.Write(sb.ToString())
+            Console.Out.Flush()
+
+            Dim waitUntil = DateTime.Now.AddMilliseconds(System.Math.Max(200, intervalMs))
+            While Not shouldStop() AndAlso DateTime.Now < waitUntil
+                Threading.Thread.Sleep(50)
+            End While
+        End While
+
+        Console.Out.Write(vbCrLf)
+        Console.Out.Flush()
+    End Sub
+
+    ''' <summary>实时模式的一帧（固定行数，避免残影）。</summary>
+    Private Function BuildSmLines(snapshot As SmSnapshot, useColor As Boolean, rowCount As Integer) As List(Of String)
+        Dim L As New List(Of String)()
+        Dim cap = snapshot.Capability
+
+        L.Add($"GTop — {If(String.IsNullOrEmpty(snapshot.DeviceName), "GPU", snapshot.DeviceName)}  [{snapshot.DeviceIndex}]   SM 归因 (CUPTI)   {DateTime.Now:HH:mm:ss}")
+
+        If Not cap.Available Then
+            L.Add("  CUPTI PM Sampling 不可用")
+            L.Add($"  原因: {snapshot.Reason}")
+            Return L
+        End If
+
+        Dim aggregate = snapshot.Aggregate
+        L.Add(Bar("整卡", CInt(System.Math.Round(System.Math.Max(0, aggregate.UtilizationPercent))), useColor))
+
+        If snapshot.SampleCount = 0 AndAlso Not String.IsNullOrEmpty(snapshot.Reason) Then
+            L.Add($"  采样异常: {TruncateByWidth(snapshot.Reason, System.Math.Max(40, GetConsoleWidth() - 14))}")
+        End If
+        L.Add($"  活跃warp : {FmtPercentD(aggregate.WarpsActivePercent)}    发射槽 : {FmtPercentD(aggregate.ThroughputPercent)}    切片 : {snapshot.SampleCount}    芯片 : {If(String.IsNullOrEmpty(cap.ChipName), "N/A", cap.ChipName)}")
+
+        If snapshot.PerSmAvailable Then
+            L.Add($"  per-SM  : [可用]  共 {snapshot.Rows.Count} 个 SM，空转(<5%) {snapshot.IdleCount} 个")
+
+            For i As Integer = 0 To rowCount - 1
+                If i >= snapshot.Rows.Count Then
+                    L.Add(String.Empty)
+                    Continue For
+                End If
+
+                Dim r = snapshot.Rows(i)
+                Dim percent = CInt(System.Math.Round(System.Math.Max(0, r.UtilizationPercent)))
+                L.Add($"  SM{r.SmIndex,-3} : {BarInline(percent, useColor)} {percent,3}%   warps {FmtPercentD(r.WarpsActivePercent),7}   {SmState(r.UtilizationPercent)}")
+            Next
+        Else
+            L.Add($"  per-SM  : [不可用] CUPTI 已移除 per-instance 接口（CUDA 13.x / 错误码 38）")
+
+            Dim balance = aggregate.Balance
+            If balance.IsEstimated Then
+                L.Add($"  平均活跃SM: {balance.AverageActiveSm:F1}/{balance.SmCount}   推断空转: {balance.IdleSmEstimate}   失衡比: {balance.ImbalanceRatio:P0}   最热/最冷: {balance.HotSmPercent:F1}%/{balance.ColdSmPercent:F1}%")
+            Else
+                L.Add("  均衡推断: 指标不足（缺少 sm__cycles_active.max/.min）")
+            End If
+
+            ' 用切片历史填充固定行数，保持帧高稳定
+            Dim slices = snapshot.Slices
+            Dim shown As Integer = 0
+
+            For i As Integer = System.Math.Max(0, slices.Count - rowCount) To slices.Count - 1
+                Dim item = slices(i)
+                Dim percent = CInt(System.Math.Round(System.Math.Max(0, item.UtilizationPercent)))
+                L.Add($"  #{item.Index,-4} : {BarInline(percent, useColor)} {percent,3}%   {FmtMs(item.DurationMs)}   warps {FmtPercentD(item.WarpsActivePercent)}")
+                shown += 1
+            Next
+
+            For i As Integer = shown To rowCount - 1
+                L.Add(String.Empty)
+            Next
+        End If
+
+        Return L
+    End Function
+
+    ''' <summary>行内条形（不含标签，供实时模式逐 SM 使用）。</summary>
+    Private Function BarInline(percent As Integer, useColor As Boolean) As String
+        Const width As Integer = 24
+        Dim filled = CInt(System.Math.Round(System.Math.Max(0, System.Math.Min(100, percent)) / 100.0 * width))
+        Dim barText = New String("#"c, filled) & New String("-"c, width - filled)
+
+        If Not useColor Then Return $"[{barText}]"
+
+        Dim color As AnsiColor
+        If percent < 50 Then
+            color = AnsiColor.BrightGreen
+        ElseIf percent < 80 Then
+            color = AnsiColor.BrightYellow
+        Else
+            color = AnsiColor.BrightRed
+        End If
+
+        Return $"[{color.GetEscapeSequence()}{barText}{AnsiEscapeCodes.Reset}]"
+    End Function
 End Module
