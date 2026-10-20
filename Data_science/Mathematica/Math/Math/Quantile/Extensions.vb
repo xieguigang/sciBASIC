@@ -106,7 +106,9 @@ Namespace Quantile
         End Function
 
         ''' <summary>计算分位数（线性插值法）</summary>
-        Public Function Quantile(x As Double(), q As Double) As Double
+        ''' 
+        <Extension>
+        Public Function LinearQuantile(x As Double(), q As Double) As Double
             Return New LinearQuantile(x).Query(q)
         End Function
 
