@@ -272,45 +272,90 @@ Namespace Dynamics
         ''' <param name="n">A larger value of this parameter, will makes your result more precise.</param>
         ''' <param name="a"></param>
         ''' <param name="b"></param>
+        ''' <param name="incept"></param>
         ''' <returns></returns>
         Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
             Dim y0 As Double() = GetY0(incept)
-            Dim yinit As New Dictionary(Of String, Double)
-            Dim x As Double() = Nothing
-            Dim y As List(Of Double)() = Nothing
+            Dim solver As New RungeKutta4(Me)
 
-            For Each var As var In vars
-                ' 记录y0
-                yinit(var.Name) = y0(var.Index)
-            Next
+            Call solver.Solve(y0, n, a, b)
 
-            Call New RungeKutta4(Me).Solve(y0, n, a, b).GetResult(x, y)
-
-            Return CreateOutput(Me, yinit, x, y)
+            Return CreateOutput(Me, CreateY0Map(y0), solver.XValues, solver.YValues)
         End Function
 
-        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODEsOut
-            Dim out = LinqAPI.MakeList(Of NamedCollection(Of Double)) _
-                                                                      _
-                () <= From var As var
-                      In system.vars
-                      Select New NamedCollection(Of Double) With {
-                          .name = var.Name,
-                          .value = y(var).ToArray
-                      }
+        ''' <summary>
+        ''' Create the ``name -> value`` table of the initial values of the state variables.
+        ''' </summary>
+        ''' <param name="y0"></param>
+        ''' <returns></returns>
+        Private Function CreateY0Map(y0 As Double()) As Dictionary(Of String, Double)
+            Dim symbols As var() = vars
+            Dim yinit As New Dictionary(Of String, Double)(symbols.Length)
 
-            ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏
-            'GC.SuppressFinalize(K1)
-            'GC.SuppressFinalize(K2)
-            'GC.SuppressFinalize(K3)
-            'GC.SuppressFinalize(K4)
-            'GC.SuppressFinalize(darrayn)
-            'GC.SuppressFinalize(darraynext)
-            'GC.SuppressFinalize(vars)
+            For i As Integer = 0 To symbols.Length - 1
+                Dim v As var = symbols(i)
+
+                ' 记录y0
+                yinit(v.Name) = y0(v.Index)
+            Next
+
+            Return yinit
+        End Function
+
+        ''' <summary>
+        ''' Create the output model from the pre-allocated integration result columns.
+        ''' </summary>
+        ''' <param name="system"></param>
+        ''' <param name="y0"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y">The result columns of each state variable.</param>
+        ''' <returns></returns>
+        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As Double()()) As ODEsOut
+            Dim symbols As var() = system.vars
+            Dim out As New Dictionary(Of NamedCollection(Of Double))(symbols.Length)
+
+            For i As Integer = 0 To symbols.Length - 1
+                Dim v As var = symbols(i)
+
+                out(v.Name) = New NamedCollection(Of Double) With {
+                    .name = v.Name,
+                    .value = y(v.Index)
+                }
+            Next
 
             Return New ODEsOut With {
                 .x = x,
-                .y = out.ToDictionary,
+                .y = out,
+                .y0 = y0,
+                .params = system.Parameters
+            }
+        End Function
+
+        ''' <summary>
+        ''' Create the output model from the integration result which is stored in the
+        ''' <see cref="List(Of Double)"/> format.
+        ''' </summary>
+        ''' <param name="system"></param>
+        ''' <param name="y0"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODEsOut
+            Dim symbols As var() = system.vars
+            Dim out As New Dictionary(Of NamedCollection(Of Double))(symbols.Length)
+
+            For i As Integer = 0 To symbols.Length - 1
+                Dim v As var = symbols(i)
+
+                out(v.Name) = New NamedCollection(Of Double) With {
+                    .name = v.Name,
+                    .value = y(v.Index).ToArray
+                }
+            Next
+
+            Return New ODEsOut With {
+                .x = x,
+                .y = out,
                 .y0 = y0,
                 .params = system.Parameters
             }
