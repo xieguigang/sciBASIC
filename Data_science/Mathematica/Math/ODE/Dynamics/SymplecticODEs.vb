@@ -116,15 +116,17 @@ Namespace Dynamics
                 Return
             End If
 
-            Dim size As Integer = Size
+            ' 注意：局部变量不能命名为 size —— VB 的标识符是大小写不敏感的，
+            ' 那样会在初始化表达式之中遮蔽 Size 属性(读到未初始化的局部变量 0)
+            Dim dimension As Integer = Size
 
             If PositionIndices Is Nothing OrElse MomentumIndices Is Nothing Then
-                If size Mod 2 <> 0 Then
+                If dimension Mod 2 <> 0 Then
                     Throw New ArgumentException(
-                        $"The symplectic model requires an even number of the state variables when the position/momentum split is not presented, but {size} state variables are found!")
+                        $"The symplectic model requires an even number of the state variables when the position/momentum split is not presented, but {dimension} state variables are found!")
                 End If
 
-                Dim half As Integer = size \ 2
+                Dim half As Integer = dimension \ 2
 
                 qIndex = New Integer(half - 1) {}
                 pIndex = New Integer(half - 1) {}
@@ -224,20 +226,20 @@ Namespace Dynamics
         ''' <param name="dx"></param>
         ''' <param name="dy"></param>
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-            Dim size As Integer = Size
+            Dim dimension As Integer = Size
 
             If fallbackState Is Nothing Then
-                fallbackState = New Double(size - 1) {}
-                fallbackDeriv = New Double(size - 1) {}
+                fallbackState = New Double(dimension - 1) {}
+                fallbackDeriv = New Double(dimension - 1) {}
             End If
 
-            For i As Integer = 0 To size - 1
+            For i As Integer = 0 To dimension - 1
                 fallbackState(i) = vars(i).Value
             Next
 
             Call ComputeDerivative(dx, fallbackState, fallbackDeriv)
 
-            For i As Integer = 0 To size - 1
+            For i As Integer = 0 To dimension - 1
                 dy(i) = fallbackDeriv(i)
             Next
         End Sub

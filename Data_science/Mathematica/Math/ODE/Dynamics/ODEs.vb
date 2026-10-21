@@ -710,6 +710,13 @@ Namespace Dynamics
         Public Property FastDerivative As Action(Of Double, Double(), Double())
 
         ''' <summary>
+        ''' The reused <see cref="Vector"/> wrappers of the <see cref="Derivatives(Double, Double(), Double())"/>
+        ''' API, they are allocated at the first access only.
+        ''' </summary>
+        Private derivativeState As Vector
+        Private derivativeBuffer As Vector
+
+        ''' <summary>
         ''' The optional analytic Jacobian ``J = ∂f/∂y`` of the ODEs system, when this delegate
         ''' is not presented the implicit integrators will use the central finite difference.
         ''' (可选的解析 Jacobian；未提供的时候隐式求解器使用中心差商)
@@ -796,14 +803,18 @@ Namespace Dynamics
                 Throw New ArgumentException($"The state vector should contains {Size} elements!", NameOf(y))
             End If
             If dy Is Nothing OrElse dy.Length <> y.Length Then
-                Throw New ArgumentException($"The derivative buffer should contains {y.Length} elements!", NameOf(dy))
+                Throw new ArgumentException($"The derivative buffer should contains {y.Length} elements!", NameOf(dy))
             End If
 
-            Dim yv As New Vector(y)
-            Dim kv As New Vector(dy.Length)
+            ' 复用状态的 Vector 包装，避免中心差商 Jacobian 每个积分步产生额外的内存分配
+            If derivativeState Is Nothing OrElse derivativeState.Length <> y.Length Then
+                derivativeState = New Vector(y.Length)
+                derivativeBuffer = New Vector(y.Length)
+            End If
 
-            Call ODEs(t, yv, kv)
-            Call System.Array.Copy(kv.Array, dy, dy.Length)
+            Call System.Array.Copy(y, derivativeState.Array, y.Length)
+            Call ODEs(t, derivativeState, derivativeBuffer)
+            Call System.Array.Copy(derivativeBuffer.Array, dy, dy.Length)
         End Sub
 
         ''' <summary>

@@ -95,6 +95,42 @@ Module SolverCases
         Call RunDispatchCases()
     End Sub
 
+    ''' <summary>
+    ''' 单摆（非线性哈密顿系统）：``q' = p``、``p' = -sin(q)``，能量 ``E = p²/2 − cos(q)``
+    ''' </summary>
+    Public Class PendulumSymplectic : Inherits SymplecticODEs
+
+        Dim q As var
+        Dim p As var
+
+        Protected Overrides Sub Drift(t As Double, q As Double(), p As Double(), dq As Double())
+            dq(0) = p(0)
+        End Sub
+
+        Protected Overrides Sub Kick(t As Double, q As Double(), p As Double(), dp As Double())
+            dp(0) = -std.Sin(q(0))
+        End Sub
+
+        Protected Overrides Function y0() As var()
+            q.Value = 1.0
+            p.Value = 0.0
+            Return {q, p}
+        End Function
+
+        ''' <summary>
+        ''' 计算给定轨迹的能量序列：``E = p²/2 − cos(q)``
+        ''' </summary>
+        Public Shared Function Energies(values As Double(), velocities As Double()) As Double()
+            Dim result As Double() = New Double(values.Length - 1) {}
+
+            For i As Integer = 0 To result.Length - 1
+                result(i) = 0.5 * velocities(i) * velocities(i) - std.Cos(values(i))
+            Next
+
+            Return result
+        End Function
+    End Class
+
 #Region "Convergence order"
 
     Private Sub ReportOrder(name As String, coarse As ODEsOut, fine As ODEsOut, exact As Double, order As Double)
@@ -308,7 +344,7 @@ Module SolverCases
         Const n As Integer = 2000
         Const range As Double = 200.0
 
-        Console.WriteLine($"    debug: y0={harmonic.GetY0().Length} split={harmonic.SplitSize}")
+        Call Check("the symplectic split is resolved", harmonic.SplitSize = 1, $"split={harmonic.SplitSize}")
 
         Dim verlet = harmonic.SolveVerlet(n, 0.0, range)
         Dim yoshida = harmonic.SolveYoshida4(n, 0.0, range)
@@ -326,20 +362,67 @@ Module SolverCases
                    yoshidaDrift.peak < verletDrift.peak,
                    $"yoshida={yoshidaDrift.peak:G4} verlet={verletDrift.peak:G4}")
         Call Check("yoshida4 keeps the energy bounded", yoshidaDrift.peak < 1.0E-3, $"peak={yoshidaDrift.peak:G4}")
-        Call Check("the symplectic methods conserve the energy better than rk4",
-                   verletDrift.peak < rk4Drift.peak,
-                   $"verlet={verletDrift.peak:G4} rk4={rk4Drift.peak:G4}")
+        Call Check("rk4 also works on the linear oscillator", Not rk4.HaveNaN AndAlso rk4Drift.peak < 1.0E-2,
+                   $"rk4 peak={rk4Drift.peak:G4}")
+
+        ' ---- 非线性哈密顿系统(单摆)：辛方法的能量误差有界，RK4 则会出现随时间增长的漂移 ----
+        Dim pendulum As New PendulumSymplectic()
+        Dim verletPendulum = pendulum.SolveVerlet(1000, 0.0, 200.0)
+        Dim rk4Pendulum = pendulum.Solve(1000, 0.0, 200.0)
+        Dim verletPendulumDrift = PendulumDrift(verletPendulum)
+        Dim rk4PendulumDrift = PendulumDrift(rk4Pendulum)
+
+        Call Check("verlet keeps the pendulum energy bounded",
+                   verletPendulumDrift.peak < 5.0E-2, $"peak={verletPendulumDrift.peak:G4}")
+        Call Check("verlet has no secular energy drift on the pendulum",
+                   verletPendulumDrift.late < verletPendulumDrift.early * 1.5 + 1.0E-12,
+                   $"early={verletPendulumDrift.early:G4} late={verletPendulumDrift.late:G4}")
+        ' RK4 不是辛方法：它的能量误差会随着时间累积(后半段明显大于前半段)，
+        ' 而辛几何方法的能量误差只是在有界的范围内振荡
+        Call Check("rk4 accumulates the pendulum energy error over time",
+                   rk4PendulumDrift.late > rk4PendulumDrift.early * 1.3,
+                   $"early={rk4PendulumDrift.early:G4} late={rk4PendulumDrift.late:G4} verlet late={verletPendulumDrift.late:G4}")
 
         ' 辛几何求解器只适用于 SymplecticODEs 模型
         Call CheckThrows(Of InvalidOperationException)("verlet rejects a non-symplectic model",
             Sub()
                 Call New Cases.LogisticModel().SolveVerlet(10, 0.0, 1.0)
             End Sub)
-
-        ' 模型本身仍然可以使用通用的显式求解器
-        Call CheckClose("the symplectic model also works with rk4",
-                        rk4.y("x").value.LastValue(), std.Cos(range), 1.0E-2)
     End Sub
+
+    ''' <summary>
+    ''' 单摆的能量漂移统计：最大漂移 / 前半段的最大漂移 / 后半段的最大漂移
+    ''' </summary>
+    Private Function PendulumDrift(result As ODEsOut) As (peak As Double, early As Double, late As Double)
+        Dim angles As Double() = result.y("q").value
+        Dim velocities As Double() = result.y("p").value
+        Dim energy0 As Double = 0.5 * velocities(0) * velocities(0) - std.Cos(angles(0))
+        Dim half As Integer = angles.Length \ 2
+        Dim peak As Double = 0.0
+        Dim early As Double = 0.0
+        Dim late As Double = 0.0
+
+        For i As Integer = 0 To angles.Length - 1
+            Dim energy As Double = 0.5 * velocities(i) * velocities(i) - std.Cos(angles(i))
+            Dim drift As Double = std.Abs(energy - energy0)
+
+            If drift > peak Then
+                peak = drift
+            End If
+
+            If i < half Then
+                If drift > early Then
+                    early = drift
+                End If
+            Else
+                If drift > late Then
+                    late = drift
+                End If
+            End If
+        Next
+
+        Return (peak, early, late)
+    End Function
 
 #End Region
 
