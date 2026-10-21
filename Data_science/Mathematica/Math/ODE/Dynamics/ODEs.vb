@@ -59,6 +59,7 @@
 
 #End Region
 
+Imports System.Collections.Concurrent
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -99,6 +100,35 @@ Namespace Dynamics
         Public Const y0RefName As String = NameOf(__vars)
 
         ''' <summary>
+        ''' The reflection cache of the parameter fields of each ODEs model type, the
+        ''' <see cref="Parameters"/> property is evaluated in every <see cref="Solve"/> call,
+        ''' so the expensive reflection metadata should be cached by the model type.
+        ''' </summary>
+        Private Shared ReadOnly parameterFields As New ConcurrentDictionary(Of Type, FieldInfo())
+        ''' <summary>
+        ''' The reflection cache of the state variable fields of each ODEs model type.
+        ''' </summary>
+        Private Shared ReadOnly variableFields As New ConcurrentDictionary(Of Type, FieldInfo())
+        ''' <summary>
+        ''' The parameter names cache which is required by the Monte Carlo fitting.
+        ''' </summary>
+        Private Shared ReadOnly parameterNames As New ConcurrentDictionary(Of Type, String())
+        ''' <summary>
+        ''' The state variable names cache.
+        ''' </summary>
+        Private Shared ReadOnly variableNames As New ConcurrentDictionary(Of Type, String())
+
+        ''' <summary>
+        ''' The number of the state variables in current ODEs system.(当前方程组的状态变量个数)
+        ''' </summary>
+        ''' <returns></returns>
+        Friend ReadOnly Property Size As Integer
+            Get
+                Return If(vars Is Nothing, 0, vars.Length)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' get variable by given unique name
         ''' </summary>
         ''' <param name="name"></param>
@@ -115,39 +145,50 @@ Namespace Dynamics
         ''' <returns></returns>
         Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
             Get
-                Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
-                Dim fields As IEnumerable(Of FieldInfo) = type _
-                    .DeclaredFields _
-                    .Where(Function(f)
-                               Return f.FieldType.Equals(GetType(Double))
-                           End Function)
-                Dim out As Dictionary(Of String, Double) = fields _
-                    .ToDictionary(Function(x) x.Name,
-                                  Function(x)
-                                      Return DirectCast(x.GetValue(Me), Double)
-                                  End Function)
+                Dim fields As FieldInfo() = parameterFields.GetOrAdd(Me.GetType, AddressOf GetParameterFields)
+                Dim out As New Dictionary(Of String, Double)(fields.Length)
 
-                fields = type _
-                    .DeclaredFields _
-                    .Where(Function(f)
-                               Return (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(f64))
-                           End Function)
+                For i As Integer = 0 To fields.Length - 1
+                    Dim f As FieldInfo = fields(i)
+                    Dim value As Object = f.GetValue(Me)
 
-                For Each v As FieldInfo In fields
-                    Call out.Add(v.Name, DirectCast(v.GetValue(Me), f64).Value)
+                    If f.FieldType.Equals(GetType(Double)) Then
+                        out.Add(f.Name, CDbl(value))
+                    Else
+                        out.Add(f.Name, DirectCast(value, f64).Value)
+                    End If
                 Next
 
                 Return out
             End Get
         End Property
 
-        Sub New()
-            Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
-            Dim fields As FieldInfo() = type.DeclaredFields _
-                .Where(Function(x) x.FieldType.Equals(var.type)) _
-                .ToArray
+        ''' <summary>
+        ''' Get the parameter fields of the given ODEs model type: the <see cref="Double"/>
+        ''' typed fields and the <see cref="f64"/> typed fields, but the <see cref="var"/>
+        ''' typed state variables are excluded.
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        Private Shared Function GetParameterFields(model As Type) As FieldInfo()
+            Dim fields As FieldInfo() = CType(model, TypeInfo).DeclaredFields.ToArray
+            Dim doubleFields = fields.Where(Function(f) f.FieldType.Equals(GetType(Double)))
+            Dim f64Fields = fields.Where(Function(f)
+                                             Return (Not f.FieldType.Equals(var.type)) AndAlso f.FieldType.Equals(GetType(f64))
+                                         End Function)
 
-            vars = New var(fields.Length - 1) {}
+            Return doubleFields.Concat(f64Fields).ToArray
+        End Function
+
+        Sub New()
+            Dim fields As FieldInfo() = variableFields.GetOrAdd(Me.GetType, AddressOf GetVariableFields)
+
+            If fields.Length = 0 Then
+                ' 没有声明任何状态变量的方程组：给一个空数组而不是抛出异常
+                vars = New var() {}
+            Else
+                vars = New var(fields.Length - 1) {}
+            End If
 
             For Each f As SeqValue(Of FieldInfo) In fields.SeqIterator
                 Dim x As New var() With {
@@ -161,6 +202,17 @@ Namespace Dynamics
 
             __vars = vars.ToDictionary(Function(a) a.Name)
         End Sub
+
+        ''' <summary>
+        ''' Get the state variable fields of the given ODEs model type.
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        Private Shared Function GetVariableFields(model As Type) As FieldInfo()
+            Return CType(model, TypeInfo).DeclaredFields _
+                .Where(Function(x) x.FieldType.Equals(var.type)) _
+                .ToArray
+        End Function
 
         Protected Sub New(vars As var())
             Me.vars = vars
@@ -261,13 +313,29 @@ Namespace Dynamics
         ''' <param name="dy"></param>
         Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
+        ''' <summary>
+        ''' Evaluate the right-hand side function of the ODEs system: the state variables
+        ''' are synchronized from the state vector first, then the user overrided
+        ''' <see cref="func"/> will be invoked for computing the derivatives.
+        ''' (方程组的右端函数求值：先从状态向量同步各个变量的数值，再调用用户重写的 func 计算导数)
+        ''' </summary>
+        ''' <param name="dx">The current integration time.</param>
+        ''' <param name="y">The state vector.</param>
+        ''' <param name="k">The derivative vector buffer, it will be cleared before the evaluation.</param>
         Friend Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
+            Dim values As Double() = y.Array
+            Dim symbols As var() = vars
+
             ' 更新设置y的值
-            For Each x As var In vars
-                x.Value = y(x.Index)
+            For i As Integer = 0 To symbols.Length - 1
+                Dim symbol As var = symbols(i)
+
+                symbol.Value = values(symbol.Index)
             Next
 
-            k = k.ImputeNA(fill_as:=0.0)
+            ' 导数缓冲清零：避免用户函数没有显式赋值的分量残留上一阶段的数值
+            Dim derivatives As Double() = k.Array
+            System.Array.Clear(derivatives, 0, derivatives.Length)
 
             Call func(dx, dy:=k)
         End Sub

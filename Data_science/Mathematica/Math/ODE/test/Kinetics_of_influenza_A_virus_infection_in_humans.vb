@@ -1,3 +1,6 @@
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
 ''' <summary>
 ''' ##### Kinetics of influenza A virus infection in humans
 '''

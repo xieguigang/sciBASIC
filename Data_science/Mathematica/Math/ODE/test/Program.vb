@@ -69,12 +69,21 @@ Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
-Imports stdNum = System.Math
+Imports std = System.Math
 
-Module Module1
+Module Program
 
     Sub Main()
+        Call TestVirusDynamics()
+    End Sub
 
+    Sub TestVirusDynamics()
+        Dim virus As New Kinetics_of_influenza_A_virus_infection_in_humans
+        Dim result As ODEsOut = virus.Solve(1000, 0, 10)
+
+    End Sub
+
+    Sub test1()
         Dim s As New TestSin
         Dim result = s.Solve(1000, 0, 10)
 
@@ -88,8 +97,6 @@ Module Module1
         Dim result2 = s2.Solve(1000, 0, 10)
 
         Call result2.DataFrame.Save("x:\2.csv", Encodings.ASCII)
-
-        Pause()
     End Sub
 
     Public Class TestRefSin : Inherits RefODEs
@@ -97,7 +104,7 @@ Module Module1
         Dim T As var
 
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector, Y As ValueVector)
-            dy(T) = stdNum.Sin(dx) + Y("a")
+            dy(T) = std.Sin(dx) + Y("a")
         End Sub
 
         Protected Overrides Function y0() As var()
@@ -113,8 +120,8 @@ Module Module1
         Dim a As var
 
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-            dy(T) = stdNum.Sin(dx) + a
-            dy(a) = stdNum.Cos(dx)
+            dy(T) = std.Sin(dx) + a
+            dy(a) = std.Cos(dx)
         End Sub
 
         Protected Overrides Function y0() As var()

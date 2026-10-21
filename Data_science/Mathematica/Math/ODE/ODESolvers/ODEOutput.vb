@@ -87,7 +87,11 @@ Public Class ODEOutput : Implements INamedValue
     Public ReadOnly Property sum As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Dim v#() = If(Y Is Nothing, Nothing, Y.vector)
+            Dim v As Double() = Nothing
+
+            If Y IsNot Nothing Then
+                v = Y.vector
+            End If
 
             If v Is Nothing OrElse v.Length = 0 Then
                 Return 0.0
@@ -100,7 +104,11 @@ Public Class ODEOutput : Implements INamedValue
     Public ReadOnly Property y0 As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Dim v#() = If(Y Is Nothing, Nothing, Y.vector)
+            Dim v As Double() = Nothing
+
+            If Y IsNot Nothing Then
+                v = Y.vector
+            End If
 
             If v Is Nothing OrElse v.Length = 0 Then
                 Return 0.0
@@ -126,17 +134,16 @@ Public Class ODEOutput : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     Public Iterator Function GetPointsData() As IEnumerable(Of PointF)
-        Dim x#() = X?.ToArray
-        Dim y#() = Y?.vector
-
-        If x Is Nothing OrElse y Is Nothing Then
+        If X Is Nothing OrElse Y Is Nothing Then
             Return
         End If
 
-        Dim n% = System.Math.Min(x.Length, y.Length)
+        Dim xs As Double() = X.ToArray
+        Dim ys As Double() = Y.vector
+        Dim n As Integer = System.Math.Min(xs.Length, ys.Length)
 
         For i As Integer = 0 To n - 1
-            Yield New PointF(CSng(x(i)), CSng(y(i)))
+            Yield New PointF(CSng(xs(i)), CSng(ys(i)))
         Next
     End Function
 End Class
