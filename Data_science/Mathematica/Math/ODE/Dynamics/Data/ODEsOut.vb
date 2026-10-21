@@ -58,6 +58,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -119,7 +120,7 @@ Namespace Dynamics.Data
         Public ReadOnly Property HaveNaN As Boolean
             Get
                 For Each val As NamedCollection(Of Double) In y.Values
-                    For Each x As Double In val.Value
+                    For Each x As Double In val.value
                         If x.IsNaNImaginary Then
                             Return True
                         End If
@@ -146,6 +147,10 @@ Namespace Dynamics.Data
                 .y = y,
                 .y0 = y0
             }
+        End Function
+
+        Public Function AsTable() As NumericTable
+
         End Function
 
         Public Overrides Function ToString() As String

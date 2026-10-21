@@ -80,7 +80,7 @@ Module Program
     Sub TestVirusDynamics()
         Dim virus As New Kinetics_of_influenza_A_virus_infection_in_humans
         Dim result As ODEsOut = virus.Solve(1000, 0, 10)
-        Dim resultTable = result. 
+        Dim resultTable = result.AsTable
 
 
     End Sub
