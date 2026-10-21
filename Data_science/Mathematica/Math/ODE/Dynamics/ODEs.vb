@@ -312,7 +312,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As Double()()) As ODEsOut
             Dim symbols As var() = system.vars
-            Dim out As New Dictionary(Of NamedCollection(Of Double))(symbols.Length)
+            Dim out As New Dictionary(Of NamedCollection(Of Double))
 
             For i As Integer = 0 To symbols.Length - 1
                 Dim v As var = symbols(i)
@@ -342,7 +342,7 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODEsOut
             Dim symbols As var() = system.vars
-            Dim out As New Dictionary(Of NamedCollection(Of Double))(symbols.Length)
+            Dim out As New Dictionary(Of NamedCollection(Of Double))
 
             For i As Integer = 0 To symbols.Length - 1
                 Dim v As var = symbols(i)
@@ -398,27 +398,32 @@ Namespace Dynamics
         ''' <summary>
         ''' Get function parameters name collection
         ''' </summary>
+        ''' <param name="model"></param>
         ''' <returns></returns>
         Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
-            Dim fields = CType(model, TypeInfo).DeclaredFields _
+            Return parameterNames.GetOrAdd(model, AddressOf GetParameterNames)
+        End Function
+
+        Private Shared Function GetParameterNames(model As Type) As String()
+            Return CType(model, TypeInfo).DeclaredFields _
                 .Where(Function(f)
                            Return (Not f.IsLiteral) AndAlso f.FieldType.Equals(GetType(Double))
-                       End Function)
-
-            Return fields.Select(Function(f) f.Name)
+                       End Function) _
+                .Select(Function(f) f.Name) _
+                .ToArray
         End Function
 
         ''' <summary>
         ''' Get Y names
         ''' </summary>
+        ''' <param name="model"></param>
         ''' <returns></returns>
         Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)
-            Dim fields = CType(model, TypeInfo).DeclaredFields _
-                .Where(Function(f)
-                           Return f.FieldType.Equals(GetType(var))
-                       End Function)
+            Return variableNames.GetOrAdd(model, AddressOf GetVariableNames)
+        End Function
 
-            Return fields.Select(Function(f) f.Name)
+        Private Shared Function GetVariableNames(model As Type) As String()
+            Return GetVariableFields(model).Select(Function(f) f.Name).ToArray
         End Function
     End Class
 End Namespace

@@ -58,6 +58,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Dynamics.Data
@@ -66,7 +67,7 @@ Namespace Dynamics.Data
     ''' ODEs output, this object can populates the <see cref="ODEsOut.y"/> 
     ''' variables values through its enumerator interface.
     ''' </summary>
-    Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
+    Public Class ODEsOut : Implements Enumeration(Of NamedCollection(Of Double))
 
         Public Property x As Double()
         Public Property y As Dictionary(Of NamedCollection(Of Double))
@@ -151,14 +152,10 @@ Namespace Dynamics.Data
             Return Me.GetJson
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements IEnumerable(Of NamedCollection(Of Double)).GetEnumerator
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements Enumeration(Of NamedCollection(Of Double)).GenericEnumerator
             For Each var As NamedCollection(Of Double) In y.Values
                 Yield var
             Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
