@@ -319,6 +319,288 @@ Namespace Dynamics
             Return CreateOutput(Me, CreateY0Map(y0), solver.XValues, solver.YValues)
         End Function
 
+#Region "Solver dispatch"
+
+        ''' <summary>
+        ''' Solve the ODEs system by the specified integration method, all of the methods will
+        ''' produce the same output shape as <see cref="Solve"/>: ``n + 1`` sampling points which
+        ''' include both boundaries of the integration range.
+        ''' (使用指定的积分方法求解方程组，所有方法都输出与 Solve 相同形状的结果)
+        ''' </summary>
+        ''' <param name="n">The number of the integration steps.(积分步数)</param>
+        ''' <param name="a">The lower bound of the integration range.(积分下界)</param>
+        ''' <param name="b">The upper bound of the integration range.(积分上界)</param>
+        ''' <param name="method">The integration algorithm.(积分算法)</param>
+        ''' <param name="incept">是否是为蒙特卡洛实验设计的？</param>
+        ''' <param name="options">The optional solver settings.(可选的求解器设置)</param>
+        ''' <returns></returns>
+        Public Function Solve(n As Integer, a As Double, b As Double, method As ODESolverMethod,
+                              Optional incept As Boolean = False,
+                              Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Dim y0 As Double() = GetY0(incept)
+            Dim points As Double()
+            Dim columns As Double()()
+
+            Select Case method
+                Case ODESolverMethod.Euler
+                    Dim solver As New EulerSolver(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.RK2
+                    Dim solver As New RungeKutta2(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.Gill
+                    Dim solver As New GillSolver(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.RK4
+                    Dim solver As New RungeKutta4(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.ABM4
+                    Dim solver As New AdamsBashforthMoulton4(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.BackwardEuler
+                    Dim solver As New BackwardEulerSolver(Me, options)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.Trapezoidal
+                    Dim solver As New TrapezoidalSolver(Me, options)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.BDF2
+                    Dim solver As New Bdf2Solver(Me, options)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.RosenbrockROS2
+                    Dim solver As New RosenbrockRos2Solver(Me, options)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.RK23
+                    Dim solver As New RungeKutta23(Me)
+                    Dim settings As ODESolverOptions = If(options, New ODESolverOptions())
+
+                    Call solver.Solve(y0, n, a, b, settings.Atol, settings.Rtol, settings.InitialStep, settings.MaxSteps)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.RK45
+                    Dim solver As New RungeKutta45(Me)
+                    Dim settings As ODESolverOptions = If(options, New ODESolverOptions())
+
+                    Call solver.Solve(y0, n, a, b, settings.Atol, settings.Rtol, settings.InitialStep, settings.MaxSteps)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.Verlet
+                    Dim solver As New StormerVerletSolver(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case ODESolverMethod.Yoshida4
+                    Dim solver As New Yoshida4Solver(Me)
+
+                    Call solver.Solve(y0, n, a, b)
+                    points = solver.XValues
+                    columns = solver.YValues
+                Case Else
+                    Throw New NotSupportedException($"Unsupported ODEs solver method: {method}")
+            End Select
+
+            Return CreateOutput(Me, CreateY0Map(y0), points, columns)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the forward Euler method, 1st order.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <returns></returns>
+        Public Function SolveEuler(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+            Return Solve(n, a, b, ODESolverMethod.Euler, incept)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the 2nd order Runge-Kutta (Heun) method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <returns></returns>
+        Public Function SolveRK2(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+            Return Solve(n, a, b, ODESolverMethod.RK2, incept)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the 4th order Gill method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <returns></returns>
+        Public Function SolveGill(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+            Return Solve(n, a, b, ODESolverMethod.Gill, incept)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the 4th order Adams-Bashforth-Moulton method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <returns></returns>
+        Public Function SolveABM4(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+            Return Solve(n, a, b, ODESolverMethod.ABM4, incept)
+        End Function
+
+        ''' <summary>
+        ''' Solve the stiff ODEs system by the implicit backward Euler method (BDF1).
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <param name="options"></param>
+        ''' <returns></returns>
+        Public Function SolveBackwardEuler(n As Integer, a As Double, b As Double,
+                                           Optional incept As Boolean = False,
+                                           Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Return Solve(n, a, b, ODESolverMethod.BackwardEuler, incept, options)
+        End Function
+
+        ''' <summary>
+        ''' Solve the stiff ODEs system by the implicit trapezoidal rule (Crank-Nicolson).
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <param name="options"></param>
+        ''' <returns></returns>
+        Public Function SolveTrapezoidal(n As Integer, a As Double, b As Double,
+                                         Optional incept As Boolean = False,
+                                         Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Return Solve(n, a, b, ODESolverMethod.Trapezoidal, incept, options)
+        End Function
+
+        ''' <summary>
+        ''' Solve the stiff ODEs system by the 2nd order backward differentiation formula.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <param name="options"></param>
+        ''' <returns></returns>
+        Public Function SolveBDF2(n As Integer, a As Double, b As Double,
+                                  Optional incept As Boolean = False,
+                                  Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Return Solve(n, a, b, ODESolverMethod.BDF2, incept, options)
+        End Function
+
+        ''' <summary>
+        ''' Solve the stiff ODEs system by the 2nd order linearly implicit Rosenbrock method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <param name="options"></param>
+        ''' <returns></returns>
+        Public Function SolveRosenbrockROS2(n As Integer, a As Double, b As Double,
+                                            Optional incept As Boolean = False,
+                                            Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Return Solve(n, a, b, ODESolverMethod.RosenbrockROS2, incept, options)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the adaptive step size Bogacki-Shampine 3(2) method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <param name="options"></param>
+        ''' <returns></returns>
+        Public Function SolveRK23(n As Integer, a As Double, b As Double,
+                                  Optional incept As Boolean = False,
+                                  Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Return Solve(n, a, b, ODESolverMethod.RK23, incept, options)
+        End Function
+
+        ''' <summary>
+        ''' Solve the ODEs system by the adaptive step size Dormand-Prince 5(4) method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <param name="options"></param>
+        ''' <returns></returns>
+        Public Function SolveRK45(n As Integer, a As Double, b As Double,
+                                  Optional incept As Boolean = False,
+                                  Optional options As ODESolverOptions = Nothing) As ODEsOut
+
+            Return Solve(n, a, b, ODESolverMethod.RK45, incept, options)
+        End Function
+
+        ''' <summary>
+        ''' Solve the Hamiltonian system by the 2nd order Stormer-Verlet symplectic method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <returns></returns>
+        Public Function SolveVerlet(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+            Return Solve(n, a, b, ODESolverMethod.Verlet, incept)
+        End Function
+
+        ''' <summary>
+        ''' Solve the Hamiltonian system by the 4th order Yoshida composition of the
+        ''' Stormer-Verlet method.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="incept"></param>
+        ''' <returns></returns>
+        Public Function SolveYoshida4(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
+            Return Solve(n, a, b, ODESolverMethod.Yoshida4, incept)
+        End Function
+
+#End Region
+
         ''' <summary>
         ''' Create the ``name -> value`` table of the initial values of the state variables.
         ''' </summary>
@@ -426,6 +708,25 @@ Namespace Dynamics
         ''' </remarks>
         ''' <returns></returns>
         Public Property FastDerivative As Action(Of Double, Double(), Double())
+
+        ''' <summary>
+        ''' The optional analytic Jacobian ``J = ∂f/∂y`` of the ODEs system, when this delegate
+        ''' is not presented the implicit integrators will use the central finite difference.
+        ''' (可选的解析 Jacobian；未提供的时候隐式求解器使用中心差商)
+        ''' </summary>
+        ''' <remarks>
+        ''' 对于状态变量维度较大、或者需要高频调用隐式求解器的模型，提供解析 Jacobian 可以
+        ''' 显著降低每一次隐式积分步的开销（中心差商需要 ``2N`` 次右端函数求值）：
+        ''' 
+        ''' ```vbnet
+        ''' model.Jacobian = Sub(t, y, j)
+        '''                      ' j(i, k) = ∂f_i / ∂y_k
+        '''                      j(0, 0) = -0.5
+        '''                  End Sub
+        ''' ```
+        ''' </remarks>
+        ''' <returns></returns>
+        Public Property Jacobian As Action(Of Double, Double(), Double(,))
 
         ''' <summary>
         ''' Evaluate the right-hand side function of the ODEs system: the state variables

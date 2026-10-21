@@ -95,6 +95,143 @@ Namespace Dynamics
         Friend Sub SetState(source As Double())
             Call System.Array.Copy(source, y, y.Length)
         End Sub
+
+#Region "Lazy workspaces"
+
+        Private historyStore As Double()()
+        Private previousStore As Double()
+        Private implicitStore As ImplicitWorkspace
+
+        ''' <summary>
+        ''' Get the derivative/state history buffers of the multistep solvers, the buffers are
+        ''' allocated at the first access only.(多步法所需的历史缓冲，惰性分配)
+        ''' </summary>
+        ''' <param name="count"></param>
+        ''' <returns></returns>
+        Friend Function EnsureHistory(count As Integer) As Double()()
+            If historyStore Is Nothing OrElse historyStore.Length <> count Then
+                historyStore = New Double(count - 1)() {}
+
+                For i As Integer = 0 To count - 1
+                    historyStore(i) = New Double(Size - 1) {}
+                Next
+            End If
+
+            Return historyStore
+        End Function
+
+        ''' <summary>
+        ''' Get the buffer of the previous state ``y_{n-1}``, it is required by BDF2.
+        ''' (BDF2 所需要的上一步状态缓冲)
+        ''' </summary>
+        ''' <returns></returns>
+        Friend Function EnsurePrevious() As Double()
+            If previousStore Is Nothing Then
+                previousStore = New Double(Size - 1) {}
+            End If
+
+            Return previousStore
+        End Function
+
+        ''' <summary>
+        ''' Get the working workspace of the implicit solvers: the Jacobian matrix, the LU
+        ''' factors, the Newton correction and the state/derivative history.
+        ''' (隐式求解器的工作区：Jacobian、LU、Newton 修正量与状态/导数历史)
+        ''' </summary>
+        ''' <returns></returns>
+        Friend Function EnsureImplicit() As ImplicitWorkspace
+            If implicitStore Is Nothing Then
+                implicitStore = New ImplicitWorkspace(Size)
+            End If
+
+            Return implicitStore
+        End Function
+
+#End Region
+    End Class
+
+    ''' <summary>
+    ''' The pre-allocated working workspace of the implicit integrators.
+    ''' (隐式积分器的预分配工作区)
+    ''' </summary>
+    ''' <remarks>
+    ''' 只有在构造隐式求解器的时候才会分配这些缓冲（``O(N²)`` 的 Jacobian 与 LU），
+    ''' 因此 RK4/RK45 等显式求解器的内存占用与分配行为保持不变。
+    ''' </remarks>
+    Friend NotInheritable Class ImplicitWorkspace
+
+        ''' <summary>
+        ''' The number of the state variables.(状态变量的个数)
+        ''' </summary>
+        Friend ReadOnly Size As Integer
+        ''' <summary>
+        ''' The Jacobian matrix ``J = ∂f/∂y``.(Jacobian 矩阵)
+        ''' </summary>
+        Friend ReadOnly jacobian As Double(,)
+        ''' <summary>
+        ''' The iteration matrix ``W`` of the implicit methods.(隐式方法的迭代矩阵)
+        ''' </summary>
+        Friend ReadOnly matrix As Double(,)
+        ''' <summary>
+        ''' The LU decomposition of the iteration matrix ``W``.(迭代矩阵的 LU 分解)
+        ''' </summary>
+        Friend ReadOnly lu As DenseLu
+        ''' <summary>
+        ''' The right hand side buffer ``-G(y)`` of the Newton iteration.(Newton 迭代的右端向量)
+        ''' </summary>
+        Friend ReadOnly rhs As Double()
+        ''' <summary>
+        ''' The Newton correction ``Δ``.(Newton 修正量)
+        ''' </summary>
+        Friend ReadOnly delta As Double()
+        ''' <summary>
+        ''' The candidate state of the current Newton iterate.(当前 Newton 迭代的状态)
+        ''' </summary>
+        Friend ReadOnly yStage As Double()
+        ''' <summary>
+        ''' The state of the previous step ``y_n``.(上一步的状态)
+        ''' </summary>
+        Friend ReadOnly yPrev As Double()
+        ''' <summary>
+        ''' The state of the step before the previous step ``y_{n-1}``, it is required by BDF2.
+        ''' (上上步的状态，BDF2 需要)
+        ''' </summary>
+        Friend ReadOnly yPrevPrev As Double()
+        ''' <summary>
+        ''' The derivative at the previous step ``f(t_n, y_n)``.(上一步的导数)
+        ''' </summary>
+        Friend ReadOnly fPrev As Double()
+        ''' <summary>
+        ''' The derivative at the current Newton iterate ``f(t_{n+1}, y)``.(当前迭代状态的导数)
+        ''' </summary>
+        Friend ReadOnly fCurrent As Double()
+
+        Friend ReadOnly vyStage As Vector
+        Friend ReadOnly vyPrev As Vector
+        Friend ReadOnly vyPrevPrev As Vector
+        Friend ReadOnly vfCurrent As Vector
+        Friend ReadOnly vfPrev As Vector
+
+        Friend Sub New(size As Integer)
+            Me.Size = size
+            Me.jacobian = New Double(size - 1, size - 1) {}
+            Me.matrix = New Double(size - 1, size - 1) {}
+            Me.lu = New DenseLu(size)
+            Me.rhs = New Double(size - 1) {}
+            Me.delta = New Double(size - 1) {}
+
+            Me.vyStage = New Vector(size)
+            Me.vyPrev = New Vector(size)
+            Me.vyPrevPrev = New Vector(size)
+            Me.vfCurrent = New Vector(size)
+            Me.vfPrev = New Vector(size)
+
+            Me.yStage = vyStage.Array
+            Me.yPrev = vyPrev.Array
+            Me.yPrevPrev = vyPrevPrev.Array
+            Me.fCurrent = vfCurrent.Array
+            Me.fPrev = vfPrev.Array
+        End Sub
     End Class
 
     ''' <summary>
@@ -315,6 +452,107 @@ Namespace Dynamics
 
             Return h00 * y0 + h10 * h * m0 + h01 * y1 + h11 * h * m1
         End Function
+
+        ''' <summary>
+        ''' ``dst = dst + scale * x``, in place.(原位累加)
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Sub AddScaled(dst As Double(), scale As Double, x As Double())
+            For i As Integer = 0 To dst.Length - 1
+                dst(i) += scale * x(i)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' ``dst = src``
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Sub Copy(dst As Double(), src As Double())
+            Call System.Array.Copy(src, dst, dst.Length)
+        End Sub
+
+        ''' <summary>
+        ''' ``dst(i) = value``
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Sub Fill(dst As Double(), value As Double)
+            For i As Integer = 0 To dst.Length - 1
+                dst(i) = value
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' The maximal absolute element of the given vector.(最大绝对元素)
+        ''' </summary>
+        Friend Function MaxAbs(v As Double()) As Double
+            Dim max As Double = 0.0
+
+            For i As Integer = 0 To v.Length - 1
+                Dim value As Double = System.Math.Abs(v(i))
+
+                If value > max Then
+                    max = value
+                End If
+            Next
+
+            Return max
+        End Function
+
+        ''' <summary>
+        ''' Build the iteration matrix ``W = diagonal * I - factor * J`` of the implicit methods.
+        ''' (构造隐式方法的迭代矩阵)
+        ''' </summary>
+        ''' <param name="w">The ``N × N`` iteration matrix buffer.</param>
+        ''' <param name="j">The ``N × N`` Jacobian matrix.</param>
+        ''' <param name="diagonal">The coefficient of the identity matrix.</param>
+        ''' <param name="factor">The coefficient of the Jacobian matrix.</param>
+        Friend Sub BuildIterationMatrix(w As Double(,), j As Double(,), diagonal As Double, factor As Double)
+            Dim n As Integer = w.GetLength(0)
+
+            For i As Integer = 0 To n - 1
+                For k As Integer = 0 To n - 1
+                    w(i, k) = -factor * j(i, k)
+                Next
+
+                w(i, i) += diagonal
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' ``dst = J · x``, the dense matrix-vector product which is required by the
+        ''' Rosenbrock methods.
+        ''' </summary>
+        ''' <param name="dst"></param>
+        ''' <param name="j"></param>
+        ''' <param name="x"></param>
+        Friend Sub MatVec(dst As Double(), j As Double(,), x As Double())
+            Dim n As Integer = dst.Length
+
+            For i As Integer = 0 To n - 1
+                Dim sum As Double = 0.0
+
+                For k As Integer = 0 To n - 1
+                    sum += j(i, k) * x(k)
+                Next
+
+                dst(i) = sum
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Throw an informative exception when the integration is diverged.
+        ''' </summary>
+        ''' <param name="y"></param>
+        ''' <param name="t"></param>
+        ''' <param name="name">The name of the solver.</param>
+        Friend Sub EnsureFinite(y As Double(), t As Double, name As String)
+            For i As Integer = 0 To y.Length - 1
+                If Double.IsNaN(y(i)) OrElse Double.IsInfinity(y(i)) Then
+                    Throw New InvalidOperationException(
+                        $"{name}: the integration is diverged at t = {t}, please reduce the number of the integration steps!")
+                End If
+            Next
+        End Sub
     End Module
 
     ''' <summary>

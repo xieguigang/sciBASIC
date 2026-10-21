@@ -19,6 +19,7 @@ Module Program
         Call Cases.RunDynamicsCases()
         Call Cases.RunAdaptiveCases()
         Call Cases.RunRobustnessCases()
+        Call SolverCases.RunAll()
         Call Benchmark.Run()
 
         Console.WriteLine()

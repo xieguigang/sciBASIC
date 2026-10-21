@@ -36,6 +36,137 @@ Module Benchmark
 
         Console.WriteLine()
         Call BenchAdaptive("lorenz (3 vars)", lorenzFast, 1000, 0.0, 20.0)
+
+        Console.WriteLine()
+        Call RunMethods()
+    End Sub
+
+    ''' <summary>
+    ''' Benchmark of the accuracy/performance of each integration method.
+    ''' </summary>
+    Public Sub RunMethods()
+        Console.WriteLine()
+        Console.WriteLine("--- solver methods (logistic 1 var, n = 20000) ---")
+        Console.WriteLine($"{"method",-18}{"elapsed(ms)",14}{"allocated(MB)",16}{"evaluations",14}")
+
+        Const n As Integer = 20000
+
+        Call BenchMethod("euler", n, Function()
+                                          Dim model As New Cases.LogisticModel()
+                                          Dim solver As New EulerSolver(model)
+
+                                          Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                          Return solver.NumberOfEvaluations
+                                      End Function)
+        Call BenchMethod("rk2", n, Function()
+                                        Dim model As New Cases.LogisticModel()
+                                        Dim solver As New RungeKutta2(model)
+
+                                        Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                        Return solver.NumberOfEvaluations
+                                    End Function)
+        Call BenchMethod("gill", n, Function()
+                                         Dim model As New Cases.LogisticModel()
+                                         Dim solver As New GillSolver(model)
+
+                                         Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                         Return solver.NumberOfEvaluations
+                                     End Function)
+        Call BenchMethod("rk4", n, Function()
+                                        Dim model As New Cases.LogisticModel()
+
+                                        Call model.Solve(n, 0.0, 5.0)
+                                        Return 4 * n
+                                    End Function)
+        Call BenchMethod("abm4", n, Function()
+                                         Dim model As New Cases.LogisticModel()
+                                         Dim solver As New AdamsBashforthMoulton4(model)
+
+                                         Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                         Return solver.NumberOfEvaluations
+                                     End Function)
+        Call BenchMethod("backward euler", n, Function()
+                                                  Dim model As New Cases.LogisticModel()
+                                                  Dim solver As New BackwardEulerSolver(model)
+
+                                                  Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                                  Return solver.NumberOfEvaluations
+                                              End Function)
+        Call BenchMethod("trapezoidal", n, Function()
+                                               Dim model As New Cases.LogisticModel()
+                                               Dim solver As New TrapezoidalSolver(model)
+
+                                               Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                               Return solver.NumberOfEvaluations
+                                           End Function)
+        Call BenchMethod("bdf2", n, Function()
+                                        Dim model As New Cases.LogisticModel()
+                                        Dim solver As New Bdf2Solver(model)
+
+                                        Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                        Return solver.NumberOfEvaluations
+                                    End Function)
+        Call BenchMethod("rosenbrock ros2", n, Function()
+                                                    Dim model As New Cases.LogisticModel()
+                                                    Dim solver As New RosenbrockRos2Solver(model)
+
+                                                    Call solver.Solve(model.GetY0(), n, 0.0, 5.0)
+                                                    Return solver.NumberOfEvaluations
+                                                End Function)
+        Call BenchMethod("rk23", n, Function()
+                                        Dim model As New Cases.LogisticModel()
+                                        Dim solver As New RungeKutta23(model)
+
+                                        Call solver.Solve(model.GetY0(), n, 0.0, 5.0, 1.0E-8, 1.0E-6)
+                                        Return solver.NumberOfEvaluations
+                                    End Function)
+        Call BenchMethod("rk45", n, Function()
+                                        Dim model As New Cases.LogisticModel()
+                                        Dim solver As New RungeKutta45(model)
+
+                                        Call solver.Solve(model.GetY0(), n, 0.0, 5.0, 1.0E-8, 1.0E-6)
+                                        Return solver.NumberOfEvaluations
+                                    End Function)
+        Call BenchMethod("verlet", n, Function()
+                                         Dim model As New SolverCases.HarmonicSymplectic()
+                                         Dim solver As New StormerVerletSolver(model)
+
+                                         Call solver.Solve(model.GetY0(), n, 0.0, 20.0)
+                                         Return solver.NumberOfEvaluations
+                                     End Function)
+        Call BenchMethod("yoshida4", n, Function()
+                                           Dim model As New SolverCases.HarmonicSymplectic()
+                                           Dim solver As New Yoshida4Solver(model)
+
+                                           Call solver.Solve(model.GetY0(), n, 0.0, 20.0)
+                                           Return solver.NumberOfEvaluations
+                                       End Function)
+    End Sub
+
+    ''' <summary>
+    ''' Run the given integration once and print the elapsed time, the managed allocation and
+    ''' the number of the right-hand side evaluations.
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="n"></param>
+    ''' <param name="work">The integration action, it returns the number of the evaluations.</param>
+    Private Sub BenchMethod(name As String, n As Integer, work As Func(Of Integer))
+        ' 预热
+        Call work()
+        GC.Collect()
+
+        Dim allocated0 As Long = GC.GetAllocatedBytesForCurrentThread()
+        Dim started As Long = Stopwatch.GetTimestamp()
+        Dim evaluations As Integer = work()
+        Dim finished As Long = Stopwatch.GetTimestamp()
+        Dim used As Long = GC.GetAllocatedBytesForCurrentThread() - allocated0
+        Dim elapsed As Double = (finished - started) * 1000.0 / Stopwatch.Frequency
+
+        Console.WriteLine($"{name,-18}{elapsed,14:F3}{used / 1024.0 / 1024.0,16:F3}{evaluations,14}")
+
+        Call Check($"bench {name}: the managed allocation is small",
+                   used < 8L * 1024 * 1024,
+                   $"{used / 1024.0:F1}KB")
     End Sub
 
     ''' <summary>
