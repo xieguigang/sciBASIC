@@ -78,8 +78,16 @@ Namespace Dynamics
         ''' <returns></returns>
         Public Property df As [Function]
 
+        ''' <summary>
+        ''' The initial values of the state variables which is captured at the construction
+        ''' time, so that each integration will start from the same state.
+        ''' (构造时捕获的初值快照，保证多次求解都从同一个起点开始)
+        ''' </summary>
+        ReadOnly initialValues As Double()
+
         Sub New(ParamArray vars As var())
             Me.vars = vars
+            Me.initialValues = vars.Select(Function(v) v.Value).ToArray
 
             For Each x As SeqValue(Of var) In vars.SeqIterator
                 x.value.Index = x.i
@@ -118,6 +126,14 @@ Namespace Dynamics
         End Sub
 
         Protected Overrides Function y0() As var()
+            ' 恢复构造时的初值：积分过程会修改各个 var 的数值，重复求解时不能以上一次的
+            ' 终值作为这一次的起点
+            If initialValues IsNot Nothing Then
+                For i As Integer = 0 To vars.Length - 1
+                    vars(i).Value = initialValues(i)
+                Next
+            End If
+
             Return vars
         End Function
     End Class

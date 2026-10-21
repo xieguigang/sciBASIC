@@ -450,16 +450,25 @@ Namespace Dynamics
                 Return
             End If
 
+            ' 更新设置y的值
+            Call SyncState(values)
+
+            Call func(dx, dy:=k)
+        End Sub
+
+        ''' <summary>
+        ''' Synchronize the ``var`` state variables from the given state vector.
+        ''' (将状态向量的数值同步到各个状态变量对象之上)
+        ''' </summary>
+        ''' <param name="values"></param>
+        Friend Sub SyncState(values As Double())
             Dim symbols As var() = vars
 
-            ' 更新设置y的值
             For i As Integer = 0 To symbols.Length - 1
                 Dim symbol As var = symbols(i)
 
                 symbol.Value = values(symbol.Index)
             Next
-
-            Call func(dx, dy:=k)
         End Sub
 
         ''' <summary>

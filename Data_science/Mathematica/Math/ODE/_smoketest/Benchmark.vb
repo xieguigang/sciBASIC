@@ -152,6 +152,7 @@ Module Benchmark
         Dim k2 As Vector
         Dim k3 As Vector
         Dim k4 As Vector
+        Dim h6 As Double = dh / 6.0
 
         For iStep As Integer = 1 To n
             Dim t As Double = a + dh * (iStep - 1)
@@ -161,7 +162,8 @@ Module Benchmark
             k3 = Derivative(system, t + dh / 2, y + dh / 2 * k2)
             k4 = Derivative(system, t + dh, y + dh * k3)
 
-            y = y + (k1 + 2 * k2 + 2 * k3 + k4) * dh / 6
+            ' 与零分配内核保持完全相同的运算结合顺序，这样两条路径的结果可以逐位对比
+            y = y + (k1 + 2 * (k2 + k3) + k4) * h6
 
             For i As Integer = 0 To y0.Length - 1
                 columns(i)(iStep) = y(i)

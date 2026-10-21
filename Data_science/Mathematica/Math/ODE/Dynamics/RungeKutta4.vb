@@ -204,6 +204,9 @@ Namespace Dynamics
 
                 Yield iStep
             Next
+
+            ' 积分结束之后，把最终状态同步到各个状态变量对象之上
+            Call ODEs.SyncState(y)
         End Function
 
         Public Overrides Function ToString() As String
