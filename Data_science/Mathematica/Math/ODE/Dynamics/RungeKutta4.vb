@@ -103,6 +103,9 @@ Namespace Dynamics
             Dim k As Double()() = buffers.k
             Dim hh As Double = 0.5 * dh
 
+            ' 供 RefODEs 等需要按步索引定位参考数据的模型使用
+            ODEs.CurrentStep = index
+
             ' 求解K1
             Call ODEs.ODEs(dxn, buffers.vy, buffers.vk(0))
             ' 求解K2

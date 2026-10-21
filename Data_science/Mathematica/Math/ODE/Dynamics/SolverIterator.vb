@@ -66,10 +66,22 @@ Namespace Dynamics
 
         Dim solverEnumerator As IEnumerator(Of Integer)
         Dim triggers As New List(Of Action)
+        Dim isFinished As Boolean
 
         Public ReadOnly Property RK4Solver As RungeKutta4
             Get
                 Return rk4
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Does the integration of current solver iterator is finished?
+        ''' (当前的积分迭代是否已经结束)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Finished As Boolean
+            Get
+                Return isFinished
             End Get
         End Property
 
@@ -81,6 +93,7 @@ Namespace Dynamics
             solverEnumerator = rk4 _
                 .solverIteration(y0, n, a, b) _
                 .GetEnumerator
+            isFinished = False
 
             Return Me
         End Function
@@ -94,7 +107,18 @@ Namespace Dynamics
         ''' 这个方法接口主要是应用于模拟器计算
         ''' </summary>
         Public Sub Tick()
-            Call solverEnumerator.MoveNext()
+            If isFinished Then
+                Return
+            End If
+            If solverEnumerator Is Nothing Then
+                Throw New InvalidOperationException("The solver iterator is not initialized, please invoke the ``Config`` method first!")
+            End If
+
+            If Not solverEnumerator.MoveNext() Then
+                ' 迭代已经结束：标记之后直接返回，不再静默地触发绑定事件
+                isFinished = True
+                Return
+            End If
 
             For Each action In triggers
                 Call action()
@@ -102,7 +126,7 @@ Namespace Dynamics
         End Sub
 
         Public Overrides Function ToString() As String
-            Return rk4.ToString
+            Return If(rk4 Is Nothing, NameOf(SolverIterator), rk4.ToString)
         End Function
     End Class
 End Namespace

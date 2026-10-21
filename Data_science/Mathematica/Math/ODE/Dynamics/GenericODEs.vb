@@ -91,9 +91,30 @@ Namespace Dynamics
             Me.df = df
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        ''' <summary>
+        ''' Create a ODEs system with the array based derivative evaluator, the state variables
+        ''' will not be synchronized during the integration, so this constructor provides the
+        ''' best performance for the high frequency simulation.
+        ''' (使用数组式导数求值器构造方程组模型，积分过程中不再同步 var 变量，性能最佳)
+        ''' </summary>
+        ''' <param name="vars">The state variable definitions, it also provides the ``y0`` values.</param>
+        ''' <param name="derivative">
+        ''' The derivative evaluator ``derivative(t, y, dy)``, the ``dy`` buffer will be
+        ''' cleared before the evaluation, so only the assigned components are non-zero.
+        ''' </param>
+        Sub New(vars As var(), derivative As Action(Of Double, Double(), Double()))
+            Call Me.New(vars)
+            Me.FastDerivative = derivative
+        End Sub
+
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-            Call _df(dx, dy)
+            Dim f As [Function] = _df
+
+            If f Is Nothing Then
+                Throw New InvalidOperationException("The derivative function ``df`` of current GenericODEs model is not initialized!")
+            End If
+
+            Call f(dx, dy)
         End Sub
 
         Protected Overrides Function y0() As var()

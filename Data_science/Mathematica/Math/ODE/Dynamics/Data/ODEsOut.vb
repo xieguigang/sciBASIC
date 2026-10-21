@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Dynamics.Data
@@ -81,24 +82,34 @@ Namespace Dynamics.Data
         Public Property params As Dictionary(Of String, Double)
 
         ''' <summary>
-        ''' 得到进行积分的步进值
+        ''' 得到进行积分的步进值，采样点不足的时候返回零
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property dx As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return x(2) - x(1)
+                If x Is Nothing OrElse x.Length < 2 Then
+                    Return 0.0
+                Else
+                    Return x(1) - x(0)
+                End If
             End Get
         End Property
 
         ''' <summary>
-        ''' 获取得到积分计算的分辨率的数值
+        ''' 获取得到积分计算的分辨率的数值，采样点不足的时候返回零
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Resolution As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return (x.Last - x.First) / dx
+                Dim dh As Double = dx
+
+                If x Is Nothing OrElse x.Length < 2 OrElse dh = 0.0 Then
+                    Return 0.0
+                Else
+                    Return (x(x.Length - 1) - x(0)) / dh
+                End If
             End Get
         End Property
 
@@ -149,8 +160,23 @@ Namespace Dynamics.Data
             }
         End Function
 
+        ''' <summary>
+        ''' Cast the integration result into a <see cref="NumericTable"/>: each row is a
+        ''' sampling time point and each feature column is a state variable.
+        ''' (将积分结果转换为数值表：每一行是一个时间采样点，每一列是一个状态变量)
+        ''' </summary>
+        ''' <returns></returns>
         Public Function AsTable() As NumericTable
+            Dim columns As NamedCollection(Of Double)() = y.Values.ToArray
+            Dim tbl As New NumericTable(
+                columns.ToList(Function(v) v.name),
+                columns.Select(Function(v) v.value),
+                x.ToList(Function(xi) CStr(xi))) With {
+                .description = "ODE output data",
+                .name = "ODEs Output Table"
+            }
 
+            Return tbl
         End Function
 
         Public Overrides Function ToString() As String

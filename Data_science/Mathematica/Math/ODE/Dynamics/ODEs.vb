@@ -129,6 +129,14 @@ Namespace Dynamics
         End Property
 
         ''' <summary>
+        ''' The index of the current integration step which is maintained by the solver, it
+        ''' starts from zero at the initial state.
+        ''' (当前积分步的序号，由求解器维护，初始状态的序号为0)
+        ''' </summary>
+        ''' <returns></returns>
+        Friend Property CurrentStep As Integer
+
+        ''' <summary>
         ''' get variable by given unique name
         ''' </summary>
         ''' <param name="name"></param>
@@ -369,6 +377,29 @@ Namespace Dynamics
         Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
         ''' <summary>
+        ''' The optional array based derivative evaluator: when this delegate is presented,
+        ''' the solver will invoke it directly with the raw state array and the raw derivative
+        ''' buffer, so that the per-stage synchronization of the <see cref="var"/> state
+        ''' variables will be skipped. (可选的数组式直通导数求值器)
+        ''' </summary>
+        ''' <remarks>
+        ''' 使用这个入口可以完全绕过 <see cref="var"/> 包装与反射带来的开销，适合 Lorenz 仿真、
+        ''' 蒙特卡洛/遗传算法参数拟合这类需要成千上万次求解的高频场景：
+        ''' 
+        ''' ```vbnet
+        ''' model.FastDerivative = Sub(t, y, dy)
+        '''                            dy(0) = sigma * (y(1) - y(0))
+        '''                            dy(1) = y(0) * (rho - y(2)) - y(1)
+        '''                            dy(2) = y(0) * y(1) - beta * y(2)
+        '''                        End Sub
+        ''' ```
+        ''' 
+        ''' 注意：使用这个入口的时候，求解过程中不会更新各个 <see cref="var"/> 变量的数值。
+        ''' </remarks>
+        ''' <returns></returns>
+        Public Property FastDerivative As Action(Of Double, Double(), Double())
+
+        ''' <summary>
         ''' Evaluate the right-hand side function of the ODEs system: the state variables
         ''' are synchronized from the state vector first, then the user overrided
         ''' <see cref="func"/> will be invoked for computing the derivatives.
@@ -379,6 +410,18 @@ Namespace Dynamics
         ''' <param name="k">The derivative vector buffer, it will be cleared before the evaluation.</param>
         Friend Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
             Dim values As Double() = y.Array
+            ' 导数缓冲清零：避免用户函数没有显式赋值的分量残留上一阶段的数值
+            Dim derivatives As Double() = k.Array
+            System.Array.Clear(derivatives, 0, derivatives.Length)
+
+            Dim fast As Action(Of Double, Double(), Double()) = FastDerivative
+
+            If fast IsNot Nothing Then
+                ' 数组式直通：跳过 var 状态变量的同步，没有任何包装开销
+                Call fast(dx, values, derivatives)
+                Return
+            End If
+
             Dim symbols As var() = vars
 
             ' 更新设置y的值
@@ -387,10 +430,6 @@ Namespace Dynamics
 
                 symbol.Value = values(symbol.Index)
             Next
-
-            ' 导数缓冲清零：避免用户函数没有显式赋值的分量残留上一阶段的数值
-            Dim derivatives As Double() = k.Array
-            System.Array.Clear(derivatives, 0, derivatives.Length)
 
             Call func(dx, dy:=k)
         End Sub

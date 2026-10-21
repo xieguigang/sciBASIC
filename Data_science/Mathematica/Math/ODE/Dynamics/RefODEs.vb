@@ -60,27 +60,42 @@ Namespace Dynamics
     ''' <summary>
     ''' ``dy`` reference to the exists values.
     ''' </summary>
+    ''' <remarks>
+    ''' 参考数据的定位使用了求解器维护的 <see cref="ODEs.CurrentStep"/>，因此与积分方法的
+    ''' 阶段个数(4 阶段 RK4 或者 7 阶段 RK45)完全解耦，也不会在最后一步越界。
+    ''' </remarks>
     Public MustInherit Class RefODEs : Inherits ODEs
 
+        ''' <summary>
+        ''' The reference data cursor, its position is the index of the current integration step.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property RefValues As ValueVector
 
-        Dim RK%
-
         ''' <summary>
-        ''' RK4每一次迭代会调用这个函数计算4次
+        ''' 每一次阶段求值都会调用这个函数，参考数据的游标位置由求解器给出的当前步索引决定
         ''' </summary>
         ''' <param name="dx"></param>
         ''' <param name="dy"></param>
         Protected NotOverridable Overrides Sub func(dx As Double, ByRef dy As Vector)
-            RK += 1
-            func(dx, dy, RefValues)
+            Dim ref As ValueVector = RefValues
 
-            If RK = 4 Then
-                RK = 0
-                RefValues += 1  ' 最开始是0，假若这句代码被放在func调用的前面首先自增1的话，会在末尾出现越界的问题
+            If ref Is Nothing Then
+                Throw New InvalidOperationException($"The reference data ``{NameOf(RefValues)}`` of the model '{GetType(RefODEs).FullName}' is not initialized!")
             End If
+
+            ' 使用求解器维护的步索引来定位参考数据，不再依赖每步调用次数的隐式约定
+            ref.Value = CurrentStep
+
+            Call func(dx, dy, ref)
         End Sub
 
+        ''' <summary>
+        ''' Compute the derivatives with the reference data of the current integration step.
+        ''' </summary>
+        ''' <param name="dx"></param>
+        ''' <param name="dy"></param>
+        ''' <param name="Y"></param>
         Protected MustOverride Overloads Sub func(dx#, ByRef dy As Vector, Y As ValueVector)
 
     End Class

@@ -23,7 +23,7 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -31,27 +31,17 @@
 
     ' Summaries:
 
-
-    ' Code Statistics:
-
-    '   Total Lines: 41
-    '    Code Lines: 28 (68.29%)
-    ' Comment Lines: 6 (14.63%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 7 (17.07%)
-    '     File Size: 1.32 KB
-
-
-    '     Class ValueVector
-    ' 
-    '         Properties: Y
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    '         Operators: +
-    ' 
-    ' 
+    ' Class ValueVector
+    '
+    '     Properties: Y
+    '
+    '     Constructor: (+1 Overloads) Sub New
+    '
+    '     Function: ToString
+    '
+    '     Operators: +
+    '
+    '
     ' /********************************************************************************/
 
 #End Region
@@ -64,18 +54,58 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Dynamics.Data
 
+    ''' <summary>
+    ''' A cursor over a reference data set: the <see cref="i32"/> base type provides the
+    ''' position pointer, and each variable can be accessed by its name.
+    ''' (带位置游标的参考数据向量)
+    ''' </summary>
     Public Class ValueVector : Inherits i32
 
+        Private _Y As Dictionary(Of NamedCollection(Of Double))
+        ''' <summary>
+        ''' The resolved column cache, the dictionary lookup and the string conversion of the
+        ''' variable name will be skipped after the first access of a given variable.
+        ''' </summary>
+        Private ReadOnly cached As New Dictionary(Of String, NamedCollection(Of Double))
+
+        ''' <summary>
+        ''' The reference data of each variable.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Y As Dictionary(Of NamedCollection(Of Double))
+            Get
+                Return _Y
+            End Get
+            Set(value As Dictionary(Of NamedCollection(Of Double)))
+                _Y = value
+                Call cached.Clear()
+            End Set
+        End Property
 
         Default Public Overrides Property Index(name As Object) As Object
             Get
-                Return Y(InputHandler.ToString(name)).Value(MyBase.Value)
+                Return GetColumn(InputHandler.ToString(name)).Value(MyBase.Value)
             End Get
             Set(value As Object)
-                Y(InputHandler.ToString(name)).Value(MyBase.Value) = value
+                GetColumn(InputHandler.ToString(name)).Value(MyBase.Value) = value
             End Set
         End Property
+
+        ''' <summary>
+        ''' Get the reference data column of the given variable.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Private Function GetColumn(name As String) As NamedCollection(Of Double)
+            Dim column As NamedCollection(Of Double) = Nothing
+
+            If Not cached.TryGetValue(name, column) Then
+                column = _Y(name)
+                cached(name) = column
+            End If
+
+            Return column
+        End Function
 
         Sub New()
             Call MyBase.New(0)
