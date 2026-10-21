@@ -47,6 +47,9 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Remove="build_lib.log" />
+    <None Remove="build_test.log" />
+    <None Remove="run.log" />
     <None Include="..\..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
