@@ -113,8 +113,8 @@ Namespace Distributions.LHS
         Friend Function FactorAt(sample As Double()(), columns As Integer(), row As Integer) As Double
             Dim product As Double = 1
 
-            For Each dim As Integer In columns
-                product *= Factor(sample(row)(dim))
+            For Each axis As Integer In columns
+                product *= Factor(sample(row)(axis))
             Next
 
             Return product
@@ -131,8 +131,8 @@ Namespace Distributions.LHS
         Friend Function KernelAt(sample As Double()(), columns As Integer(), i As Integer, j As Integer) As Double
             Dim product As Double = 1
 
-            For Each dim As Integer In columns
-                product *= Kernel(sample(i)(dim), sample(j)(dim))
+            For Each axis As Integer In columns
+                product *= Kernel(sample(i)(axis), sample(j)(axis))
             Next
 
             Return product
@@ -216,9 +216,9 @@ Namespace Distributions.LHS
                 Return all
             End If
 
-            For Each dim As Integer In dims
-                If dim < 0 OrElse dim >= nDims Then
-                    Throw New ArgumentOutOfRangeException(NameOf(dims), dim, $"the projected dimension should be inside of the range [0, {nDims - 1}].")
+            For Each axis As Integer In dims
+                If axis < 0 OrElse axis >= nDims Then
+                    Throw New ArgumentOutOfRangeException(NameOf(dims), axis, $"the projected dimension should be inside of the range [0, {nDims - 1}].")
                 End If
             Next
 

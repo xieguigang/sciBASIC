@@ -31,8 +31,8 @@ Namespace Distributions.LHS
             Dim scaled As Double()() = LatinHypercube.NewSamples(n, nDims)
 
             For i As Integer = 0 To n - 1
-                For dim As Integer = 0 To nDims - 1
-                    scaled(i)(dim) = lb(dim) + unit(i)(dim) * (ub(dim) - lb(dim))
+                For axis As Integer = 0 To nDims - 1
+                    scaled(i)(axis) = lb(axis) + unit(i)(axis) * (ub(axis) - lb(axis))
                 Next
             Next
 
@@ -47,7 +47,7 @@ Namespace Distributions.LHS
         ''' <param name="ub">the upper bound of all dimensions</param>
         ''' <returns>the scaled `N x d` sample matrix</returns>
         Public Function Scale(unit As Double()(), lb As Double, ub As Double) As Double()()
-            Dim nDims As Integer = CheckBounds(unit, lb, ub, "Scale")
+            Dim nDims As Integer = UnitDimensions(unit, "Scale")
 
             Return Scale(unit, Fill(lb, nDims), Fill(ub, nDims))
         End Function
@@ -71,8 +71,8 @@ Namespace Distributions.LHS
             Dim nDims As Integer = inLog(0).Length
 
             For i As Integer = 0 To n - 1
-                For dim As Integer = 0 To nDims - 1
-                    inLog(i)(dim) = std.Pow(logBase, inLog(i)(dim))
+                For axis As Integer = 0 To nDims - 1
+                    inLog(i)(axis) = std.Pow(logBase, inLog(i)(axis))
                 Next
             Next
 
@@ -135,6 +135,37 @@ Namespace Distributions.LHS
         ''' Validate the design and the bounds, returns the number of dimensions.
         ''' </summary>
         Friend Function CheckBounds(unit As Double()(), lb As Double(), ub As Double(), caller As String) As Integer
+            Dim nDims As Integer = UnitDimensions(unit, caller)
+
+            If lb Is Nothing OrElse lb.Length <> nDims Then
+                Throw New ArgumentException($"{caller}: the lower bound array should own {nDims} elements.", NameOf(lb))
+            End If
+            If ub Is Nothing OrElse ub.Length <> nDims Then
+                Throw New ArgumentException($"{caller}: the upper bound array should own {nDims} elements.", NameOf(ub))
+            End If
+
+            For axis As Integer = 0 To nDims - 1
+                If Not lb(axis) < ub(axis) Then
+                    Throw New ArgumentException($"{caller}: the lower bound {lb(axis)} of the dimension {axis} should be less than the upper bound {ub(axis)}.", NameOf(lb))
+                End If
+            Next
+
+            For i As Integer = 0 To unit.Length - 1
+                If unit(i) Is Nothing OrElse unit(i).Length <> nDims Then
+                    Throw New ArgumentException($"{caller}: the unit design is not rectangular, the row {i} does not own {nDims} columns.", NameOf(unit))
+                End If
+            Next
+
+            Return nDims
+        End Function
+
+        ''' <summary>
+        ''' Return the number of dimensions of the design and check that it is not empty.
+        ''' </summary>
+        ''' <param name="unit">the unit design</param>
+        ''' <param name="caller">the name of the calling method, it is used inside of the error message</param>
+        ''' <returns>the number of dimensions of the design</returns>
+        Friend Function UnitDimensions(unit As Double()(), caller As String) As Integer
             If unit Is Nothing OrElse unit.Length = 0 Then
                 Throw New ArgumentException($"{caller}: the unit design can not be empty.", NameOf(unit))
             End If
@@ -144,24 +175,6 @@ Namespace Distributions.LHS
             If nDims = 0 Then
                 Throw New ArgumentException($"{caller}: the unit design can not be empty.", NameOf(unit))
             End If
-            If lb Is Nothing OrElse lb.Length <> nDims Then
-                Throw New ArgumentException($"{caller}: the lower bound array should own {nDims} elements.", NameOf(lb))
-            End If
-            If ub Is Nothing OrElse ub.Length <> nDims Then
-                Throw New ArgumentException($"{caller}: the upper bound array should own {nDims} elements.", NameOf(ub))
-            End If
-
-            For dim As Integer = 0 To nDims - 1
-                If Not lb(dim) < ub(dim) Then
-                    Throw New ArgumentException($"{caller}: the lower bound {lb(dim)} of the dimension {dim} should be less than the upper bound {ub(dim)}.", NameOf(lb))
-                End If
-            Next
-
-            For i As Integer = 0 To unit.Length - 1
-                If unit(i) Is Nothing OrElse unit(i).Length <> nDims Then
-                    Throw New ArgumentException($"{caller}: the unit design is not rectangular, the row {i} does not own {nDims} columns.", NameOf(unit))
-                End If
-            Next
 
             Return nDims
         End Function

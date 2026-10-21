@@ -124,6 +124,9 @@ Public Module ProgramMilp
                 Case "triq-ecdf"
                     ' TrIQ / ECDF 性能优化的正确性校验与提速基准
                     Return DistributionsPerfTest.RunAll()
+                Case "lhs"
+                    ' 拉丁超立方采样（Distributions\LHS）的正确性自检
+                    Return LhsSelfTest.RunAll()
             End Select
         End If
 

@@ -34,12 +34,12 @@ Namespace Distributions.LHS
             Dim sample As Double()() = NewSamples(nSamples, nDims)
             Dim ranks As Integer() = New Integer(nSamples - 1) {}
 
-            For dim As Integer = 0 To nDims - 1
+            For axis As Integer = 0 To nDims - 1
                 Call PermuteRanks(ranks, rng)
 
                 For i As Integer = 0 To nSamples - 1
                     ' the jitter keeps the point strictly inside of its own stratum
-                    sample(i)(dim) = (ranks(i) + rng.NextDouble()) / nSamples
+                    sample(i)(axis) = (ranks(i) + rng.NextDouble()) / nSamples
                 Next
             Next
 
@@ -80,11 +80,11 @@ Namespace Distributions.LHS
             Dim sample As Double()() = NewSamples(nSamples, nDims)
             Dim ranks As Integer() = New Integer(nSamples - 1) {}
 
-            For dim As Integer = 0 To nDims - 1
+            For axis As Integer = 0 To nDims - 1
                 Call PermuteRanks(ranks, rng)
 
                 For i As Integer = 0 To nSamples - 1
-                    sample(i)(dim) = (ranks(i) + 0.5) / nSamples
+                    sample(i)(axis) = (ranks(i) + 0.5) / nSamples
                 Next
             Next
 
@@ -141,8 +141,8 @@ Namespace Distributions.LHS
             Dim offset As Integer() = New Integer(p) {}
             Dim numberOfColumns As Integer = p + 1
 
-            For dim As Integer = 0 To nDims - 1
-                Dim col As Integer = dim Mod numberOfColumns
+            For axis As Integer = 0 To nDims - 1
+                Dim col As Integer = axis Mod numberOfColumns
 
                 For row As Integer = 0 To nSamples - 1
                     Dim i As Integer = row \ p
@@ -169,7 +169,7 @@ Namespace Distributions.LHS
                 Next
 
                 For i As Integer = 0 To nSamples - 1
-                    sample(i)(dim) = (ranks(i) + rng.NextDouble()) / nSamples
+                    sample(i)(axis) = (ranks(i) + rng.NextDouble()) / nSamples
                 Next
             Next
 
@@ -207,13 +207,13 @@ Namespace Distributions.LHS
 
             Dim seen As Boolean() = New Boolean(n - 1) {}
 
-            For dim As Integer = 0 To nDims - 1
+            For axis As Integer = 0 To nDims - 1
                 For i As Integer = 0 To n - 1
                     If sample(i) Is Nothing OrElse sample(i).Length <> nDims Then
                         Return False
                     End If
 
-                    Dim x As Double = sample(i)(dim)
+                    Dim x As Double = sample(i)(axis)
 
                     If x < 0 OrElse x >= 1 Then
                         Return False

@@ -67,31 +67,46 @@ Namespace Distributions.LHS
             Next
 
             Dim factors As Double() = LhsDiscrepancy.RowFactors(optimized, dims)
-            Dim kernels As Double() = LhsDiscrepancy.RowKernels(optimized, dims)
             Dim termA As Double = SumOf(factors)
-            Dim termB As Double = SumOf(kernels)
+            Dim termB As Double = SumOf(LhsDiscrepancy.RowKernels(optimized, dims))
             Dim best As Double = Objective(termA, termB, n)
 
             For iter As Integer = 0 To iterations - 1
-                Dim dim As Integer = dims(rng.Next(dims.Length))
+                Dim axis As Integer = dims(rng.Next(dims.Length))
                 Dim i1 As Integer = rng.Next(n)
                 Dim i2 As Integer = (i1 + 1 + rng.Next(n - 1)) Mod n
-                Dim v1 As Double = optimized(i1)(dim)
-                Dim v2 As Double = optimized(i2)(dim)
+                Dim v1 As Double = optimized(i1)(axis)
+                Dim v2 As Double = optimized(i2)(axis)
 
                 If v1 = v2 Then
                     Continue For
                 End If
 
-                optimized(i1)(dim) = v2
-                optimized(i2)(dim) = v1
+                ' the kernel entries of the swapped rows against the rest of the design
+                Dim oldS1 As Double = RowKernelExcept(optimized, dims, i1, i1, i2)
+                Dim oldS2 As Double = RowKernelExcept(optimized, dims, i2, i1, i2)
+                Dim oldPair As Double = LhsDiscrepancy.KernelAt(optimized, dims, i1, i2)
+                Dim oldSelf1 As Double = LhsDiscrepancy.KernelAt(optimized, dims, i1, i1)
+                Dim oldSelf2 As Double = LhsDiscrepancy.KernelAt(optimized, dims, i2, i2)
+
+                optimized(i1)(axis) = v2
+                optimized(i2)(axis) = v1
 
                 Dim newA1 As Double = LhsDiscrepancy.FactorAt(optimized, dims, i1)
                 Dim newA2 As Double = LhsDiscrepancy.FactorAt(optimized, dims, i2)
-                Dim newB1 As Double = RowKernel(optimized, dims, i1)
-                Dim newB2 As Double = RowKernel(optimized, dims, i2)
+                Dim newS1 As Double = RowKernelExcept(optimized, dims, i1, i1, i2)
+                Dim newS2 As Double = RowKernelExcept(optimized, dims, i2, i1, i2)
+                Dim newPair As Double = LhsDiscrepancy.KernelAt(optimized, dims, i1, i2)
+                Dim newSelf1 As Double = LhsDiscrepancy.KernelAt(optimized, dims, i1, i1)
+                Dim newSelf2 As Double = LhsDiscrepancy.KernelAt(optimized, dims, i2, i2)
+
+                ' the double sum owns each unordered pair twice, the diagonal terms once
+                Dim delta As Double =
+                    2.0 * ((newS1 - oldS1) + (newS2 - oldS2) + (newPair - oldPair)) +
+                    (newSelf1 - oldSelf1) + (newSelf2 - oldSelf2)
+
                 Dim candidateA As Double = termA - factors(i1) - factors(i2) + newA1 + newA2
-                Dim candidateB As Double = termB - kernels(i1) - kernels(i2) + newB1 + newB2
+                Dim candidateB As Double = termB + delta
                 Dim candidate As Double = Objective(candidateA, candidateB, n)
 
                 If candidate < best Then
@@ -100,12 +115,10 @@ Namespace Distributions.LHS
                     termB = candidateB
                     factors(i1) = newA1
                     factors(i2) = newA2
-                    kernels(i1) = newB1
-                    kernels(i2) = newB2
                 Else
                     ' revert the rejected swap
-                    optimized(i1)(dim) = v1
-                    optimized(i2)(dim) = v2
+                    optimized(i1)(axis) = v1
+                    optimized(i2)(axis) = v2
                 End If
             Next
 
@@ -125,16 +138,28 @@ Namespace Distributions.LHS
         End Function
 
         ''' <summary>
-        ''' The kernel sum of one sample row against all of the sample rows.
+        ''' The kernel sum of one sample row against all of the other sample rows,
+        ''' with two rows excluded.
         ''' </summary>
         ''' <param name="sample">the design matrix</param>
         ''' <param name="columns">the projected columns, must be resolved already</param>
         ''' <param name="row">the sample row index</param>
-        ''' <returns>sum_j prod_k g(x_ik, x_jk)</returns>
-        Friend Function RowKernel(sample As Double()(), columns As Integer(), row As Integer) As Double
+        ''' <param name="excludeA">the first excluded row index</param>
+        ''' <param name="excludeB">the second excluded row index</param>
+        ''' <returns>sum_j prod_k g(x_ik, x_jk) for every j that is not excluded</returns>
+        ''' <remarks>
+        ''' A coordinate swap changes the kernel of the two swapped rows against
+        ''' every other row, so the incremental update of the double sum has to
+        ''' separate the swapped pair from the rest of the design.
+        ''' </remarks>
+        Friend Function RowKernelExcept(sample As Double()(), columns As Integer(), row As Integer, excludeA As Integer, excludeB As Integer) As Double
             Dim sum As Double = 0
 
             For j As Integer = 0 To sample.Length - 1
+                If j = excludeA OrElse j = excludeB Then
+                    Continue For
+                End If
+
                 sum += LhsDiscrepancy.KernelAt(sample, columns, row, j)
             Next
 
