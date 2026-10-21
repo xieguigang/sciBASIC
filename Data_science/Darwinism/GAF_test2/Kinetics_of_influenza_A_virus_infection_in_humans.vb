@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::79dcaa7b92812dd75ac41000f29a7c85, Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 53
-    '    Code Lines: 38 (71.70%)
-    ' Comment Lines: 6 (11.32%)
-    '    - Xml Docs: 83.33%
-    ' 
-    '   Blank Lines: 9 (16.98%)
-    '     File Size: 1.48 KB
+' Summaries:
 
 
-    ' Class Kinetics_of_influenza_A_virus_infection_in_humans
-    ' 
-    '     Function: y0
-    ' 
-    '     Sub: func
-    ' 
-    ' Class Kinetics_of_influenza_A_virus_infection_in_humans_Model
-    ' 
-    '     Sub: func
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 53
+'    Code Lines: 38 (71.70%)
+' Comment Lines: 6 (11.32%)
+'    - Xml Docs: 83.33%
+' 
+'   Blank Lines: 9 (16.98%)
+'     File Size: 1.48 KB
+
+
+' Class Kinetics_of_influenza_A_virus_infection_in_humans
+' 
+'     Function: y0
+' 
+'     Sub: func
+' 
+' Class Kinetics_of_influenza_A_virus_infection_in_humans_Model
+' 
+'     Sub: func
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
@@ -93,7 +94,7 @@ Public Class Kinetics_of_influenza_A_virus_infection_in_humans : Inherits ODEs
     End Function
 End Class
 
-Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits GAF.ODEs.Model
+Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits Model
 
     Dim T As var
     Dim I As var

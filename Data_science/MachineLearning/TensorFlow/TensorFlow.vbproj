@@ -37,6 +37,11 @@
     <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="_mixedprecision\**" />
+    <EmbeddedResource Remove="_mixedprecision\**" />
+    <None Remove="_mixedprecision\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

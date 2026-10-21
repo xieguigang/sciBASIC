@@ -9,22 +9,26 @@
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
+ 
     <ProjectReference Include="..\..\..\nlp\NLP\NLP.NET.vbproj" />
+    <ProjectReference Include="..\..\..\nlp\word2vec\word2vec.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\MachineLearning\Bootstrapping\Bootstrapping.vbproj" />
     <ProjectReference Include="..\..\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\Mathematica\Math\ODESolver.Extensions\ODESolver.Extensions.NET5.vbproj" />
+   
     <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
-    <ProjectReference Include="..\..\Visualization\DataPlot\DataPlot.vbproj" />
+
   </ItemGroup>
  
 </Project>
