@@ -61,24 +61,52 @@ Partial Module ODESolver
     ''' </summary>
     ReadOnly sqr2# = std.Sqrt(2.0)
 
+    ''' <summary>
+    ''' Gill 四阶方法，与经典 RK4 同阶，但是通过特殊选取的系数将浮点舍入误差
+    ''' 的累积降到最低，适合长时程积分。
+    ''' 
+    ''' 标准的 Gill 系数如下：
+    ''' 
+    ''' ```
+    ''' k1 = f(t, y)
+    ''' k2 = f(t + h/2, y + h/2 * k1)
+    ''' k3 = f(t + h/2, y + h * (((sqr2 - 1) / 2) * k1 + ((2 - sqr2) / 2) * k2))
+    ''' k4 = f(t + h,   y + h * (-sqr2 / 2 * k2 + (1 + sqr2 / 2) * k3))
+    ''' y  = y + h/6 * (k1 + (2 - sqr2) * k2 + (2 + sqr2) * k3 + k4)
+    ''' ```
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="N">积分步数，返回的结果将会含有 N + 1 个采样点(包含积分区间两端的端点)</param>
+    ''' <param name="t0"></param>
+    ''' <param name="tt"></param>
     <Extension>
-    Public Function Gill(ByRef ode As ODE, N As Integer, t0 As Double, tt As Double) As ODEOutput
-        Dim df As df = ode.df
+    Public Function Gill(ode As ODE, N As Integer, t0 As Double, tt As Double) As ODEOutput
+        Dim f As df = GetDerivative(ode)
         Dim out As ODEOutput = ode.Allocate(N, t0, tt)
+        Dim vector#() = out.Y.vector
+        Dim h# = (tt - t0) / N   ' 步长
         Dim y As Double = ode.y0, t As Double = t0    ' 积分初值
         Dim k1 As Double, k2 As Double, k3 As Double, k4 As Double
-        Dim h# = (tt - t0) / N   ' 步长
-        Dim vector#() = out.Y.Vector
+
+        ' Gill 系数常量
+        Dim a31 As Double = 0.5 * (sqr2 - 1.0)          ' k3 的 k1 系数
+        Dim a32 As Double = 0.5 * (2.0 - sqr2)          ' k3 的 k2 系数
+        Dim a42 As Double = -0.5 * sqr2                 ' k4 的 k2 系数
+        Dim a43 As Double = 1.0 + 0.5 * sqr2            ' k4 的 k3 系数
+        Dim b2 As Double = 2.0 - sqr2                   ' 终值的 k2 权重
+        Dim b3 As Double = 2.0 + sqr2                   ' 终值的 k3 权重
+        Dim halfH As Double = 0.5 * h
+        Dim h6 As Double = h / 6.0
 
         ' 因为已经设置了y0了，所以在这里都是从1开始的
         For i% = 1 To N
-            k1 = df(y, t)
-            k2 = df(y + 0.5 * h * k1, t + 0.5 * h)
-            k3 = df(y + 0.5 * (sqr2 - 1.0) * h * k1 + 0.5 * (1 - sqr2) * h * k2, t + 0.5 * h)
-            k4 = df(y - sqr2 * 0.5 * h * k2 + (1 + sqr2) * h * k3, t + h)
+            k1 = f(t, y)
+            k2 = f(t + halfH, y + halfH * k1)
+            k3 = f(t + halfH, y + h * (a31 * k1 + a32 * k2))
+            k4 = f(t + h, y + h * (a42 * k2 + a43 * k3))
 
-            y = y + (k1 + k2 * (2 - sqr2) + k3 * (2 + sqr2) + k4) * h / 6.0
-            t = t + h
+            y = y + h6 * (k1 + b2 * k2 + b3 * k3 + k4)
+            t = t0 + h * i
             vector(i) = y
         Next
 

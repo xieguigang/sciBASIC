@@ -88,11 +88,17 @@ Public Class ODE : Implements INamedValue
     Default Public ReadOnly Property GetValue(xi As Double, yi As Double) As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return _df(xi, yi)
+            Dim f As ODESolver.df = df
+
+            If f Is Nothing Then
+                Throw New InvalidOperationException($"The derivative function pointer ``df`` of the ODE model '{If(ID, "(null)")}' is not initialized!")
+            End If
+
+            Return f(xi, yi)
         End Get
     End Property
 
     Public Overrides Function ToString() As String
-        Return df.ToString
+        Return If(df Is Nothing, If(ID, GetType(ODE).FullName), df.ToString)
     End Function
 End Class

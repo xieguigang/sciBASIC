@@ -67,7 +67,14 @@ Public Class ODEOutput : Implements INamedValue
 
     <XmlAttribute>
     Public Property ID As String Implements INamedValue.Key
-    Public Property X As Sequence
+
+    ''' <summary>
+    ''' The sampling time points of the integration result, it contains ``n + 1`` points
+    ''' which includes both boundaries of the integration range.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property X As ODESequence
+
     Public Property Y As NumericVector
 
     <XmlText>
@@ -78,15 +85,28 @@ Public Class ODEOutput : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property sum As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Y.vector.Last
+            Dim v#() = If(Y Is Nothing, Nothing, Y.vector)
+
+            If v Is Nothing OrElse v.Length = 0 Then
+                Return 0.0
+            Else
+                Return v(v.Length - 1)
+            End If
         End Get
     End Property
 
     Public ReadOnly Property y0 As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Y.vector.First
+            Dim v#() = If(Y Is Nothing, Nothing, Y.vector)
+
+            If v Is Nothing OrElse v.Length = 0 Then
+                Return 0.0
+            Else
+                Return v(0)
+            End If
         End Get
     End Property
 
@@ -98,14 +118,25 @@ Public Class ODEOutput : Implements INamedValue
     End Property
 
     Public Overrides Function ToString() As String
-        Return Y.vector.GetJson
+        Return If(Y Is Nothing, "{}", Y.vector.GetJson)
     End Function
 
+    ''' <summary>
+    ''' Enumerate the ``(x, y)`` points of the integration result.
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function GetPointsData() As IEnumerable(Of PointF)
-        Yield New PointF(X.range.Min, y0)
+        Dim x#() = X?.ToArray
+        Dim y#() = Y?.vector
 
-        For Each xi In X.ToArray.Skip(1).SeqIterator
-            Yield New PointF(xi.value, Y(xi))
+        If x Is Nothing OrElse y Is Nothing Then
+            Return
+        End If
+
+        Dim n% = System.Math.Min(x.Length, y.Length)
+
+        For i As Integer = 0 To n - 1
+            Yield New PointF(CSng(x(i)), CSng(y(i)))
         Next
     End Function
 End Class

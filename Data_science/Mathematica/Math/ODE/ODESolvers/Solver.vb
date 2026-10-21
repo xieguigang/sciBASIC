@@ -60,9 +60,10 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 ''' <summary>
-''' Solving the Ordinary differential equation(ODE) by using trapezoidal method.(使用梯形法求解常微分方程)
+''' Solving the Ordinary differential equation(ODE) by using the explicit Runge-Kutta
+''' family methods (Euler / RK2 / RK4 / Gill) and the adaptive step size Dormand-Prince
+''' RK45 method.(使用显式龙格库塔族方法求解常微分方程)
 ''' </summary>
-''' <remarks>http://www.oschina.net/code/snippet_76_4433</remarks>
 Public Module ODESolver
 
     ''' <summary>
@@ -74,20 +75,43 @@ Public Module ODESolver
     Public Delegate Function df(x As Double, y As Double) As Double
 
     ''' <summary>
+    ''' Get the derivative function pointer from the given <see cref="ODE"/> model,
+    ''' throws a descriptive error when the model is not initialized correctly.
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Function GetDerivative(ode As ODE) As df
+        Dim f As df = If(ode Is Nothing, Nothing, ode.df)
+
+        If f Is Nothing Then
+            Throw New InvalidOperationException($"The derivative function pointer ``df`` of the ODE model '{If(ode?.ID, "(null)")}' is not initialized!")
+        End If
+
+        Return f
+    End Function
+
+    ''' <summary>
     ''' 欧拉法解微分方程，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0,y0)，ODE的结果会从x和y这两个数组指针返回
     ''' </summary>
-    ''' <param name="n"></param>
+    ''' <param name="ode"></param>
+    ''' <param name="n">
+    ''' 积分步数，返回的结果将会含有 n + 1 个采样点(包含积分区间两端的端点)
+    ''' </param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     ''' 
     <Extension>
-    Public Function Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+    Public Function Eluer(ode As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+        Dim f As df = GetDerivative(ode)
         Dim h As Double = (b - a) / n
-        Dim out As ODEOutput = df.Allocate(n, a, b)
-        Dim x# = a, y#() = out.Y.Vector
+        Dim out As ODEOutput = ode.Allocate(n, a, b)
+        Dim y#() = out.Y.vector
+        Dim x# = a
 
-        For i As Integer = 1 To n - 1
-            y(i) = x + h * df(x, y(i - 1))
+        ' y(i) = y(i - 1) + h * f(x, y(i - 1))，默认的初值 y(0) = y0 已经在 Allocate 之中完成赋值
+        For i As Integer = 1 To n
+            y(i) = y(i - 1) + h * f(x, y(i - 1))
             x = a + h * i
         Next
 
@@ -95,49 +119,63 @@ Public Module ODESolver
     End Function
 
     ''' <summary>
-    ''' 二阶龙格库塔法解解微分方程，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0, y0)
-    ''' 参考http://blog.sina.com.cn/s/blog_698c6a6f0100lp4x.html
+    ''' 二阶龙格库塔法解解微分方程(改进欧拉法/Heun方法)，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0, y0)
     ''' </summary>
-    ''' <param name="df"></param>
-    ''' <param name="n"></param>
+    ''' <param name="ode"></param>
+    ''' <param name="n">
+    ''' 积分步数，返回的结果将会含有 n + 1 个采样点(包含积分区间两端的端点)
+    ''' </param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     <Extension>
-    Public Function RK2(ByRef df As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+    Public Function RK2(ode As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+        Dim f As df = GetDerivative(ode)
         Dim h As Double = (b - a) / n
-        Dim k1 As Double, k2 As Double
-        Dim out As ODEOutput = df.Allocate(n, a, b)
-        Dim y#() = out.Y.Vector
+        Dim out As ODEOutput = ode.Allocate(n, a, b)
+        Dim y#() = out.Y.vector
         Dim x# = a
+        Dim y0 As Double, k1 As Double, k2 As Double
 
-        For i As Integer = 1 To n - 1
-            k1 = df(x, y(i - 1))
-            k2 = df(x + h, y(i - 1) + h * k1)
-            y(i) = y(i - 1) + h / 2 * (k1 + k2)
+        For i As Integer = 1 To n
+            y0 = y(i - 1)
+            k1 = f(x, y0)
+            k2 = f(x + h, y0 + h * k1)
+            y(i) = y0 + h / 2 * (k1 + k2)
             x = a + h * i
         Next
 
         Return out
     End Function
 
+    ''' <summary>
+    ''' 申请ODE积分结果的存储空间，结果向量含有 ``n + 1`` 个采样点，并且已经写入了初值 ``y0``
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="n">积分步数</param>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
     <Extension>
-    Public Function Allocate(ByRef ode As ODE, n%, a#, b#) As ODEOutput
-        Dim out As New ODEOutput
+    Public Function Allocate(ode As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+        If ode Is Nothing Then
+            Throw New ArgumentNullException(NameOf(ode))
+        End If
 
-        out.X = New Sequence(a, b, n)
-        out.Y = New NumericVector With {
-            .Vector = New Double(n - 1) {}
+        Dim out As New ODEOutput With {
+            .X = New ODESequence(a, b, n),
+            .Y = New NumericVector With {
+                .vector = New Double(n) {}
+            }
         }
-        out.Y.Vector(Scan0) = ode.y0
+
+        out.Y.vector(0) = ode.y0
 
         Return out
     End Function
 
     ''' <summary>
-    ''' 四阶龙格库塔法解解微分方程，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0, y0)
-    ''' 参考http://blog.sina.com.cn/s/blog_698c6a6f0100lp4x.html 和维基百科
+    ''' 四阶龙格库塔法解解微分方程(经典RK4)，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0, y0)
     ''' </summary>
-    ''' <param name="df"></param>
+    ''' <param name="ode"></param>
     ''' <param name="n">
     ''' 分辨率，越大越好，分辨率过低会出现误差过大的问题，分辨率越高，所需要的计算时间也越长
     ''' </param>
@@ -145,18 +183,23 @@ Public Module ODESolver
     ''' <param name="b"></param>
     ''' 
     <Extension>
-    Public Function RK4(ByRef df As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+    Public Function RK4(ode As ODE, n As Integer, a As Double, b As Double) As ODEOutput
+        Dim f As df = GetDerivative(ode)
         Dim h As Double = (b - a) / n
-        Dim out As ODEOutput = df.Allocate(n, a, b)
-        Dim x = a, y#() = out.Y.Vector
-        Dim k1, k2, k3, k4 As Double
+        Dim out As ODEOutput = ode.Allocate(n, a, b)
+        Dim y#() = out.Y.vector
+        Dim x# = a
+        Dim y0 As Double, k1 As Double, k2 As Double, k3 As Double, k4 As Double
+        Dim halfH As Double = 0.5 * h
+        Dim h6 As Double = h / 6
 
-        For i As Integer = 1 To n - 1
-            k1 = df(x, y(i - 1))
-            k2 = df(x + 0.5 * h, y(i - 1) + 0.5 * h * k1)
-            k3 = df(x + 0.5 * h, y(i - 1) + 0.5 * h * k2)
-            k4 = df(x + h, y(i - 1) + h * k3)
-            y(i) = y(i - 1) + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
+        For i As Integer = 1 To n
+            y0 = y(i - 1)
+            k1 = f(x, y0)
+            k2 = f(x + halfH, y0 + halfH * k1)
+            k3 = f(x + halfH, y0 + halfH * k2)
+            k4 = f(x + h, y0 + h * k3)
+            y(i) = y0 + h6 * (k1 + 2 * k2 + 2 * k3 + k4)
             x = a + h * i
         Next
 
