@@ -55,6 +55,15 @@ Public Class ElasticNetPath
     Public Property FeatureNames As String()
 
     ''' <summary>
+    ''' 是否因为非零系数个数超出上限而提前结束了路径求解。
+    ''' 
+    ''' 为 <c>True</c> 的时候 <see cref="Count"/> 会小于请求的步数，
+    ''' 但 alpha 网格与系数数组是同步截断的，因此仍然一一对应。
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property StoppedEarly As Boolean
+
+    ''' <summary>
     ''' 路径的步数
     ''' </summary>
     ''' <returns></returns>
