@@ -489,6 +489,25 @@ Public Module LhsSelfTest
         Call Check("10000 x 12 design is stratified", LatinHypercube.IsLatinHypercube(unit))
         Console.WriteLine($"      generated in {watch.ElapsedMilliseconds} ms")
 
+        ' the production configuration also enables the random-cd optimization
+        Dim optimizedSampler As New LatinHypercubeSampler(nDims:=12, seed:=42) With {
+            .Optimization = LhsOptimization.RandomCd,
+            .CdIterations = 50
+        }
+        Dim watch2 As Stopwatch = Stopwatch.StartNew()
+        Dim optimizedUnit = optimizedSampler.Random(10000)
+        watch2.Stop()
+
+        Call Check("10000 x 12 random-cd design is stratified", LatinHypercube.IsLatinHypercube(optimizedUnit))
+        Call Check("10000 x 12 random-cd discrepancy is finite", Not Double.IsNaN(optimizedSampler.LastDiscrepancy))
+        Console.WriteLine($"      random-cd (50 iterations) in {watch2.ElapsedMilliseconds} ms, CD(2D) = {optimizedSampler.LastDiscrepancy:G6}")
+
+        Dim plainCd As Double = LatinHypercubeSampler.MeasureDiscrepancy(unit, 2)
+
+        Call Check("random-cd improves the 2D discrepancy at the production scale",
+                   optimizedSampler.LastDiscrepancy <= plainCd,
+                   $"plain {plainCd:G6}, optimized {optimizedSampler.LastDiscrepancy:G6}")
+
         ' log10(k) inside of [-1, 1] and log10(K) inside of [-3, 2], alternating over the dimensions
         Dim logLb = LhsScale.TileBounds(New Double() {-1, -3}, 12)
         Dim logUb = LhsScale.TileBounds(New Double() {1, 2}, 12)
