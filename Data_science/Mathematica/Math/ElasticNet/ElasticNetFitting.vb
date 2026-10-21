@@ -663,6 +663,10 @@ Public Module ElasticNetFitting
         Dim executed As Integer = 0
         Dim stoppedEarly As Boolean = False
         Dim initResidual As Boolean = True
+        ' 是否已经出现过满足 maxFeatures 约束的步；没有出现过就不允许早停，
+        ' 否则在半数数据上（例如未取对数、被共同的测序深度因子主导的矩阵）
+        ' 会停在 alpha 最大处的平凡解上，得到 r2 ~ 0 的常数模型。
+        Dim hasValidStep As Boolean = False
 
         For k As Integer = 0 To steps - 1
             Dim iterations As Integer = 0
@@ -694,9 +698,15 @@ Public Module ElasticNetFitting
             solution.RSquared(k) = If(sst > 0.0, 1.0 - sse / sst, If(sse <= 0.0, 1.0, 0.0))
             solution.NonZero(k) = nonzero
 
+            If nonzero > 0 AndAlso (maxFeatures <= 0 OrElse nonzero <= maxFeatures) Then
+                hasValidStep = True
+            End If
+
             ' 非零系数个数随 alpha 减小单调不减：一旦超过两倍上限，
-            ' 之后的每一步都不可能再满足 maxFeatures 约束，路径可以就此结束
-            If maxFeatures > 0 AndAlso k > 0 AndAlso nonzero > maxFeatures * 2 Then
+            ' 之后的每一步都不可能再满足 maxFeatures 约束，路径可以就此结束。
+            ' 但前提是此前确实已经出现过满足约束的步，否则必须把路径跑完，
+            ' 由调用方退化为"解释力最强的一步 + 裁剪"。
+            If maxFeatures > 0 AndAlso hasValidStep AndAlso k > 0 AndAlso nonzero > maxFeatures * 2 Then
                 stoppedEarly = True
                 Exit For
             End If
