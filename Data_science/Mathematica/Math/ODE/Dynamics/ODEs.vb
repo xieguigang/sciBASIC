@@ -226,17 +226,27 @@ Namespace Dynamics
         Protected MustOverride Function y0() As var()
 
         ''' <summary>
-        ''' 
+        ''' Get the initial values of the state variables, the value array is indexed by
+        ''' the <see cref="var.Index"/> of each state variable.
         ''' </summary>
         ''' <param name="incept">是否是为蒙特卡洛实验设计的？</param>
         ''' <returns></returns>
         Public Function GetY0(Optional incept As Boolean = False) As Double()
             Dim symbols As var() = If(incept, Me.vars, Me.y0)
 
-            Return symbols _
-                .OrderBy(Function(o) o.Index) _
-                .Select(Function(o) o.Value) _
-                .ToArray
+            If symbols Is Nothing OrElse symbols.Length = 0 Then
+                Return New Double() {}
+            End If
+
+            Dim values As Double() = New Double(symbols.Length - 1) {}
+
+            For i As Integer = 0 To symbols.Length - 1
+                Dim v As var = symbols(i)
+
+                values(v.Index) = v.Value
+            Next
+
+            Return values
         End Function
 
         ''' <summary>
