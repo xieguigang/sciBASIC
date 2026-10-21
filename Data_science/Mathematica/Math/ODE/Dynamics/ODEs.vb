@@ -292,6 +292,34 @@ Namespace Dynamics
         End Function
 
         ''' <summary>
+        ''' Solve the ODEs system by using the adaptive step size Dormand-Prince 5(4) method.
+        ''' (使用自适应步长的 Dormand-Prince 5(4) 方法求解方程组)
+        ''' </summary>
+        ''' <param name="n">The number of the points on the output grid minus one.</param>
+        ''' <param name="a">The lower bound of the integration range.</param>
+        ''' <param name="b">The upper bound of the integration range.</param>
+        ''' <param name="atol">The absolute error tolerance of each state variable.</param>
+        ''' <param name="rtol">The relative error tolerance of each state variable.</param>
+        ''' <param name="initialStep">The initial step size, zero means auto select.</param>
+        ''' <param name="incept"></param>
+        ''' <param name="maxSteps">The maximal number of the integration steps.</param>
+        ''' <returns></returns>
+        Public Function SolveAdaptive(n As Integer, a As Double, b As Double,
+                                      Optional atol As Double = 1.0E-9,
+                                      Optional rtol As Double = 1.0E-7,
+                                      Optional initialStep As Double = 0.0,
+                                      Optional incept As Boolean = False,
+                                      Optional maxSteps As Integer = 10000000) As ODEsOut
+
+            Dim y0 As Double() = GetY0(incept)
+            Dim solver As New RungeKutta45(Me)
+
+            Call solver.Solve(y0, n, a, b, atol, rtol, initialStep, maxSteps)
+
+            Return CreateOutput(Me, CreateY0Map(y0), solver.XValues, solver.YValues)
+        End Function
+
+        ''' <summary>
         ''' Create the ``name -> value`` table of the initial values of the state variables.
         ''' </summary>
         ''' <param name="y0"></param>
@@ -432,6 +460,40 @@ Namespace Dynamics
             Next
 
             Call func(dx, dy:=k)
+        End Sub
+
+        ''' <summary>
+        ''' Evaluate the derivatives of the ODEs system at the given time and state, this is
+        ''' a diagnostic API which is useful for the finite difference Jacobian and the
+        ''' external custom integrators. (在给定的时间与状态下计算方程组的导数值)
+        ''' </summary>
+        ''' <param name="t">The evaluation time.</param>
+        ''' <param name="y">The state vector.</param>
+        ''' <param name="dy">The derivative output buffer.</param>
+        Public Sub Derivatives(t As Double, y As Vector, dy As Vector)
+            Call ODEs(t, y, dy)
+        End Sub
+
+        ''' <summary>
+        ''' Evaluate the derivatives of the ODEs system with the raw <see cref="Double"/>
+        ''' array buffers.
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <param name="y"></param>
+        ''' <param name="dy"></param>
+        Public Sub Derivatives(t As Double, y As Double(), dy As Double())
+            If y Is Nothing OrElse y.Length <> Size Then
+                Throw New ArgumentException($"The state vector should contains {Size} elements!", NameOf(y))
+            End If
+            If dy Is Nothing OrElse dy.Length <> y.Length Then
+                Throw New ArgumentException($"The derivative buffer should contains {y.Length} elements!", NameOf(dy))
+            End If
+
+            Dim yv As New Vector(y)
+            Dim kv As New Vector(dy.Length)
+
+            Call ODEs(t, yv, kv)
+            Call System.Array.Copy(kv.Array, dy, dy.Length)
         End Sub
 
         ''' <summary>

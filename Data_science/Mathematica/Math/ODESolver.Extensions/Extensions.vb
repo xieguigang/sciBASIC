@@ -190,7 +190,7 @@ Imports std = System.Math
     Private Iterator Function correlationImpl(df As ODEsOut, correlation As Correlations.ICorrelation) As IEnumerable(Of DataSet)
         Dim vars$() = df.y.Keys.ToArray
 
-        For Each var As NamedCollection(Of Double) In df
+        For Each var As NamedCollection(Of Double) In df.AsEnumerable
             Dim x As New DataSet With {
                 .ID = var.name,
                 .Properties = New Dictionary(Of String, Double)
