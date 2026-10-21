@@ -108,6 +108,10 @@ Namespace Hamming
                 End If
             Next
 
+            If featureNames IsNot Nothing AndAlso featureNames.Length <> width Then
+                Throw New ArgumentException($"the feature names has {featureNames.Length} values, but the data set has {width} features!", NameOf(featureNames))
+            End If
+
             _codes = codes
             _featureNames = featureNames
 

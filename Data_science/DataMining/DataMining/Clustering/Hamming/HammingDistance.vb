@@ -344,14 +344,14 @@ Namespace Hamming
                 Return 1.0 / (1.0 + distance)
             End If
 
-            Dim similarity As Double = 1.0 - distance / dimension
+            Dim ratio As Double = 1.0 - distance / dimension
 
-            If similarity < 0 Then
+            If ratio < 0 Then
                 Return 0
-            ElseIf similarity > 1 Then
+            ElseIf ratio > 1 Then
                 Return 1
             Else
-                Return similarity
+                Return ratio
             End If
         End Function
 

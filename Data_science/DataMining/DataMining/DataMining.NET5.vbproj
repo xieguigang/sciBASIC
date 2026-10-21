@@ -22,7 +22,7 @@
     <AssemblyTitle>Microsoft.VisualBasic.DataMining</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori</PackageTags>
+    <PackageTags>scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;hamming;kmodes</PackageTags>
     <PackageReleaseNotes>Introduces NumericTable-based clustering engines and a unified evaluation report framework with clustering quality indices decoupled from legacy entity models.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>

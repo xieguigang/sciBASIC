@@ -181,10 +181,17 @@ Namespace Hamming
         ''' 把众数质心转换为位模式（仅当输入数据是二值的时候可用）。
         ''' </summary>
         ''' <returns></returns>
+        ''' <exception cref="InvalidOperationException">质心中出现了大于 1 的类别码（说明输入数据不是二值的）</exception>
         Public Function CentroidPatterns() As BitPattern()
             Dim patterns As BitPattern() = New BitPattern(_centroids.Length - 1) {}
 
             For i As Integer = 0 To _centroids.Length - 1
+                For j As Integer = 0 To _centroids(i).Length - 1
+                    If _centroids(i)(j) < 0 OrElse _centroids(i)(j) > 1 Then
+                        Throw New InvalidOperationException("the centroids contain categorical codes greater than 1, they cannot be packed as binary patterns!")
+                    End If
+                Next
+
                 patterns(i) = BitPattern.FromIntegers(_centroids(i))
             Next
 
@@ -296,9 +303,21 @@ Namespace Hamming
 
             Dim cost As Double = 0
 
-            For i As Integer = 0 To samples - 1
-                cost += SampleDistance(data, patterns, i, centroids, labels(i))
-            Next
+            If patterns IsNot Nothing Then
+                Dim centroidPatterns As BitPattern() = New BitPattern(centroids.Length - 1) {}
+
+                For c As Integer = 0 To centroids.Length - 1
+                    centroidPatterns(c) = BitPattern.FromIntegers(centroids(c))
+                Next
+
+                For i As Integer = 0 To samples - 1
+                    cost += patterns(i).DistanceTo(centroidPatterns(labels(i)))
+                Next
+            Else
+                For i As Integer = 0 To samples - 1
+                    cost += CategoricalDistance(data.Codes(i), centroids(labels(i)))
+                Next
+            End If
 
             Dim clusters As Integer()() = GroupMembers(labels, centroids.Length)
 
@@ -525,12 +544,8 @@ Namespace Hamming
 
             Dim k As Integer = centroids.Length
             Dim width As Integer = data.Dimension
-            Dim sizes As Integer() = New Integer(k - 1) {}
+            Dim members As Integer()() = GroupMembers(labels, k)
             Dim maxCardinality As Integer = 1
-
-            For i As Integer = 0 To labels.Length - 1
-                sizes(labels(i)) += 1
-            Next
 
             For j As Integer = 0 To width - 1
                 If data.Cardinality(j) > maxCardinality Then
@@ -545,7 +560,7 @@ Namespace Hamming
             For c As Integer = 0 To k - 1
                 updated(c) = New Integer(width - 1) {}
 
-                If sizes(c) = 0 Then
+                If members(c).Length = 0 Then
                     ' 空簇保留上一轮的质心，避免出现没有中心的簇
                     For j As Integer = 0 To width - 1
                         updated(c)(j) = centroids(c)(j)
@@ -555,13 +570,13 @@ Namespace Hamming
                     Continue For
                 End If
 
+                Dim cluster As Integer() = members(c)
+
                 For j As Integer = 0 To width - 1
                     Call Array.Clear(counts, 0, counts.Length)
 
-                    For i As Integer = 0 To labels.Length - 1
-                        If labels(i) = c Then
-                            counts(data.Codes(i)(j)) += 1
-                        End If
+                    For m As Integer = 0 To cluster.Length - 1
+                        counts(data.Codes(cluster(m))(j)) += 1
                     Next
 
                     Dim bestValue As Integer = 0
@@ -637,19 +652,6 @@ Namespace Hamming
             Next
 
             Return clusters
-        End Function
-
-        Private Shared Function SampleDistance(data As HammingData,
-                                               patterns As BitPattern(),
-                                               sample As Integer,
-                                               centroids As Integer()(),
-                                               center As Integer) As Integer
-
-            If patterns IsNot Nothing Then
-                Return patterns(sample).DistanceTo(BitPattern.FromIntegers(centroids(center)))
-            Else
-                Return CategoricalDistance(data.Codes(sample), centroids(center))
-            End If
         End Function
 
         Private Shared Function PairwiseDistance(data As HammingData,

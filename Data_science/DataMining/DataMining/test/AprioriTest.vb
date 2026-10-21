@@ -29,9 +29,30 @@ Module AprioriTest
 
 
 
+        If command = "hamming" Then
+            Console.WriteLine("running hamming clustering checks...")
+
+            Dim hammingFailures As New List(Of String)()
+            Dim hammingChecks As Integer = HammingSelfTest.Run(hammingFailures)
+
+            If hammingFailures.Count > 0 Then
+                Console.WriteLine("FAILED:")
+
+                For Each msg As String In hammingFailures
+                    Console.WriteLine("  - " & msg)
+                Next
+
+                Return 1
+            End If
+
+            Console.WriteLine($"all {hammingChecks} hamming clustering checks passed.")
+
+            Return 0
+        End If
+
         If command <> "selftest" Then
             Console.WriteLine("unknown command: " & command)
-            Console.WriteLine("usage: Testing selftest | bench [--legacy]")
+            Console.WriteLine("usage: Testing selftest | hamming | bench [--legacy]")
             Return 2
         End If
 
