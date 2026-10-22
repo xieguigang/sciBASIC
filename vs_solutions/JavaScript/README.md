@@ -53,6 +53,33 @@ Dim vbCode = New CodeGenerator().Generate(Parser.Parse(scriptText), "GeneratedSc
 
 `Interpreter.DefineGlobal(name, value)` 可注册宿主委托（`Func(Of Object(), Object)`)作为脚本可见的全局函数；传入任意 CLR 对象或 `Type` 时，则通过下面的反射桥接暴露给脚本。
 
+## import：CLR 程序集与 JS 模块
+
+`import` 只允许出现在脚本顶层，并在主体执行前完成绑定（解释执行与翻译产物行为一致）。`from` 的取值决定语义：**以 `.dll` 结尾 ⇒ 反射打开 .NET 程序集并导入命名空间**，否则按相对路径加载 `.js` 模块。
+
+```javascript
+// 1) CLR 命名空间：程序集内该命名空间的 public 直属类型 → 别名下的类型对象
+import Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL as msil from 'Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.dll';
+var syntax = msil.MethodDecompiler.Decompile(method);   // 静态成员（VB Module 同理）
+typeof msil.MethodDecompiler                            // "function"
+Object.keys(msil)                                       // 类型名列表
+
+// 省略 as：别名取命名空间最后一段
+import Foo.Bar from 'x.dll';                            // 绑定 Bar
+
+// 2) JS 模块（相对导入方脚本所在目录；可省略 .js，也会尝试 index.js）
+import * as utils from './utils.js';                    // 全部顶层声明
+import { add as plus, helper } from './math.js';        // 按名取（支持 as 改名）
+import u from './utils.js';                             // 无 export：等同命名空间对象
+import './shim.js';                                     // 仅执行（副作用），重复导入只执行一次
+```
+
+**CLR 解析顺序**：已加载程序集 → 显式 dll 路径（绝对路径或相对脚本目录）→ `Assembly.Load(简单名)` → 宿主探测目录（`ClrInterop.AddAssemblySearchPath`）→ 宿主回调（`ClrInterop.AssemblyResolver`）→ 抛脚本可捕获错误（消息列出尝试过的位置）。命名空间映射是**扁平**的：不含子命名空间、不含嵌套类型、跳过开放泛型定义，结果按（程序集, 命名空间）缓存。
+
+**模块语义**：按绝对路径缓存（同一模块只执行一次）、循环导入明确报错、模块体在独立函数作用域中执行；`var`/函数/类声明属于全局作用域（相当于经典 script include），`let`/`const` 与函数局部变量对外不可见。**因为未实现 `export`**，模块的"导出面"就是它顶层的 `var/let/const/function/class` 声明。
+
+**宿主侧**：`JsRuntime.ScriptBaseDirectory` 指定相对路径的基准目录（默认取 `process` 的脚本目录，其次应用目录）；`JsRuntime.ClearImportCaches()` 清空程序集/命名空间/模块缓存。
+
 ## 宿主互操作：CLR 反射桥接
 
 把一个 .NET 对象（或类型）交给脚本，脚本即可像操作普通 JS 对象一样读写它的成员——成员由反射解析，无需接口、包装类或胶水代码。
@@ -132,15 +159,20 @@ Square = JsRuntime.JsDefineClass("Square", CType(Function(args__9 As JsValue())
   - **成员名精确匹配**：不做 camelCase↔PascalCase 隐式映射，别名请用 `<JsName>`。
   - **索引器限单参数**：`obj[i]` 映射到单参数索引器；`Item(x, y)` 这类多参数索引器不可用。
   - **集合不是 JS 数组**：集合代理支持下标、`length`、for-of 与展开，`Object.keys` 给出索引，但没有 `map`/`filter`/`push` 等数组方法（需先 `[...host.items]` 转换为数组）。
-- **无模块系统**：`import` / `export` 未实现（脚本按单文件执行）。
+- **import 的取舍**：
+  - **`import` 是保留字**（此前可用作标识符），`export` 未实现；因此模块导出面 = 顶层声明，`import x from './m.js'` 的默认位绑定为「模块对象」而非 `default`。
+  - **`from '...'` 以 `.dll` 结尾才按程序集解释**：路径式 dll 走 `Assembly.LoadFrom`，具备加载任意本机程序集的能力，只应在可信脚本中使用。
+  - **命名空间扁平**：没有子命名空间树，也不能通过别名访问嵌套类型；需要子命名空间时再写一条 import。
+  - **模块无 live binding**：`import {a}` 拿到的是模块执行完成后的值；循环导入直接报错，而非部分初始化。
+  - **CLR 导入首次扫描一次**：首次导入某命名空间会遍历其导出类型（O(T)），之后均为字典查找。
 
 ## 测试
 
 ```
-dotnet test        ' 117 项全绿
+dotnet test        ' 149 项全绿
 ```
 
-覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）· **Node.js 文件系统 API 对齐**：`test/js/*.js` 为独立脚本，先用真实 `node` 生成 `*.baseline.txt` 基准，再以 `LiteJs.Runner` 运行并逐条对齐（含 `fs` 同步/回调/Promise、`Buffer`、`path`、`process` 与错误路径）；`NodeApiCodegenTests` 断言生成代码引用同一批 `JsRuntime.*Builtin` 且解释器可对真实文件执行读写。
+覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **import**（`LiteJsImportTests`：六种声明形态与顶层限制/错误分支、CLR 命名空间导入与静态调用 `IL.MethodDecompiler.Decompile`、扁平命名空间、显式 dll 路径、宿主回调与探测目录 API、模块命名空间/按名/默认位/副作用/缓存/模块内相对路径/循环导入/缺失模块与缺失绑定的可捕获错误、生成代码结构断言）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）· **Node.js 文件系统 API 对齐**：`test/js/*.js` 为独立脚本，先用真实 `node` 生成 `*.baseline.txt` 基准，再以 `LiteJs.Runner` 运行并逐条对齐（含 `fs` 同步/回调/Promise、`Buffer`、`path`、`process` 与错误路径）；`NodeApiCodegenTests` 断言生成代码引用同一批 `JsRuntime.*Builtin` 且解释器可对真实文件执行读写。
 
 ## 实现要点（踩坑记录）
 

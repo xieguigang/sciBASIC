@@ -253,6 +253,8 @@ Public NotInheritable Class Interpreter
     ''' </summary>
     Public Function Evaluate(program As Program) As Object
         Return RunInRootFrame(Function() As Object
+                                  ' a REPL line may contain an import too (bound like Run's)
+                                  BindImports(program.Body, _globals)
                                   HoistFunctions(program.Body, _globals)
 
                                   Dim body = program.Body
