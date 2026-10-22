@@ -17,7 +17,9 @@
 
 Imports System.IO
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Report
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.pdf
 Imports Microsoft.VisualBasic.MIME.Office.WordDocument
 Imports Microsoft.VisualBasic.MIME.OpenXPS
@@ -45,8 +47,13 @@ Public Module DocumentExport
     ''' </summary>
     ''' <param name="markdown">markdown 源文本。</param>
     ''' <param name="outFile">输出文件路径（目录不存在时自动创建）。</param>
+    ''' <param name="baseDirectory">
+    ''' markdown 中相对图片路径的基准目录（通常是 markdown 源文件所在目录）；
+    ''' 为空时使用当前工作目录。
+    ''' </param>
     ''' <returns>实际使用的格式名称（用于界面提示）。</returns>
-    Public Function Export(markdown As String, outFile As String) As String
+    Public Function Export(markdown As String, outFile As String,
+                           Optional baseDirectory As String = Nothing) As String
         If String.IsNullOrEmpty(outFile) Then
             Throw New ArgumentException("未指定导出文件路径。", NameOf(outFile))
         End If
@@ -62,12 +69,100 @@ Public Module DocumentExport
             ' markdown 直接落盘：块模型往返会丢失嵌套列表、原始 HTML 等细节
             Call File.WriteAllText(outFile, If(markdown, ""), New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
         Else
+            Dim baseDir As String = If(String.IsNullOrEmpty(baseDirectory), Environment.CurrentDirectory, baseDirectory)
             Dim blocks As List(Of Block) = New MarkdownBlockParser().Parse(markdown)
 
-            Call ExportBlocks(blocks, outFile, ext)
+            ' markdown 中的图片通常是相对路径：按源文件目录解析成绝对路径之后，
+            ' 各个写入器才能读到图片字节并内嵌到目标文档中
+            Call ResolveImages(blocks, baseDir)
+            Call ExportBlocks(blocks, outFile, ext, baseDir)
         End If
 
         Return FormatName(ext)
+    End Function
+
+    ''' <summary>
+    ''' 把块模型里的相对图片路径解析为可直接读取的绝对路径。
+    ''' 远程图片（http/https）与 data URI 保持原样；解析不到本地文件时也保持原样，
+    ''' 由写入器降级为文本占位。
+    ''' </summary>
+    ''' <param name="blocks">markdown 内容块（会被原地更新）。</param>
+    ''' <param name="baseDir">相对路径基准目录。</param>
+    Public Sub ResolveImages(blocks As List(Of Block), baseDir As String)
+        For Each block As Block In blocks.SafeQuery
+            If block Is Nothing Then
+                Continue For
+            End If
+            If Not IsImageBlock(block.type) Then
+                Continue For
+            End If
+
+            block.url = ResolveImagePath(block.url, baseDir)
+        Next
+    End Sub
+
+    ''' <summary>判断块类型是否携带图片地址。</summary>
+    ''' <param name="blockType">block.type 的取值。</param>
+    ''' <returns></returns>
+    Public Function IsImageBlock(blockType As String) As Boolean
+        Select Case LCase(If(blockType, ""))
+            Case "image", "img"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' 把 markdown 中的图片地址解析为可读取的绝对文件路径。
+    ''' </summary>
+    ''' <param name="url">markdown 中书写的图片地址。</param>
+    ''' <param name="baseDir">相对路径基准目录。</param>
+    ''' <returns>存在的绝对路径；远程地址 / data URI / 找不到文件时返回原值。</returns>
+    Public Function ResolveImagePath(url As String, baseDir As String) As String
+        If String.IsNullOrEmpty(url) Then
+            Return url
+        End If
+
+        Dim raw As String = url.Trim()
+
+        If raw.StartsWith("data:", StringComparison.OrdinalIgnoreCase) OrElse
+           raw.StartsWith("http://", StringComparison.OrdinalIgnoreCase) OrElse
+           raw.StartsWith("https://", StringComparison.OrdinalIgnoreCase) OrElse
+           raw.StartsWith("//") Then
+            Return raw
+        End If
+
+        If raw.StartsWith("file://", StringComparison.OrdinalIgnoreCase) Then
+            Try
+                raw = New Uri(raw).LocalPath
+            Catch ex As Exception
+                Return url
+            End Try
+        End If
+
+        ' markdown 里常把空格写成 %20
+        Try
+            raw = Uri.UnescapeDataString(raw)
+        Catch ex As Exception
+            ' 保留原始字符串
+        End Try
+
+        If Path.IsPathRooted(raw) Then
+            Return If(File.Exists(raw), raw, url)
+        End If
+
+        If String.IsNullOrEmpty(baseDir) Then
+            Return url
+        End If
+
+        Try
+            Dim combined As String = Path.GetFullPath(Path.Combine(baseDir, raw))
+
+            Return If(File.Exists(combined), combined, url)
+        Catch ex As Exception
+            Return url
+        End Try
     End Function
 
     ''' <summary>
@@ -76,7 +171,8 @@ Public Module DocumentExport
     ''' <param name="blocks">markdown 内容块。</param>
     ''' <param name="outFile">输出文件路径。</param>
     ''' <param name="ext">小写扩展名（含点）。</param>
-    Private Sub ExportBlocks(blocks As List(Of Block), outFile As String, ext As String)
+    ''' <param name="baseDir">相对图片路径的基准目录（html 内联图片时使用）。</param>
+    Private Sub ExportBlocks(blocks As List(Of Block), outFile As String, ext As String, baseDir As String)
         Select Case ext
             Case ".txt"
                 Dim render As New ReportPlainTextRender
@@ -88,8 +184,12 @@ Public Module DocumentExport
                 Dim render As New ReportHtmlRender
 
                 Call render.Render(blocks)
+
+                ' 单文件 html：把本地图片内联为 data URI，避免移动文件后图片失效
+                Dim body As String = InlineImages(render.Output, baseDir)
+
                 Call File.WriteAllText(outFile,
-                                       WrapHtml(render.Output, Path.GetFileNameWithoutExtension(outFile)),
+                                       WrapHtml(body, Path.GetFileNameWithoutExtension(outFile)),
                                        New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
 
             Case ".docx"
@@ -126,6 +226,59 @@ Public Module DocumentExport
                 Throw New NotSupportedException($"不支持的导出格式: {ext}")
         End Select
     End Sub
+
+    ''' <summary>html 中 &lt;img src="..."&gt; 的匹配（只替换 src 的值）。</summary>
+    Private ReadOnly imgSource As New Regex("(<img\b[^>]*?\bsrc\s*=\s*"")([^""]*)("")", RegexOptions.IgnoreCase)
+
+    ''' <summary>
+    ''' 把 html 中的本地图片内联为 data URI，使导出的 .html 成为可独立分发的单文件文档。
+    ''' 远程图片（http/https）与找不到的本地文件保持原样。
+    ''' </summary>
+    ''' <param name="html">html 片段。</param>
+    ''' <param name="baseDir">相对路径基准目录。</param>
+    ''' <returns>内联后的 html。</returns>
+    Public Function InlineImages(html As String, baseDir As String) As String
+        If String.IsNullOrEmpty(html) Then
+            Return html
+        End If
+
+        Dim basePath As String = If(String.IsNullOrEmpty(baseDir), Environment.CurrentDirectory, baseDir)
+
+        Return imgSource.Replace(html,
+            Function(match)
+                Dim src As String = match.Groups(2).Value
+                Dim resolved As String = ResolveImagePath(src, basePath)
+
+                If String.IsNullOrEmpty(resolved) OrElse Not File.Exists(resolved) Then
+                    Return match.Value
+                End If
+
+                Dim mime As String = ImageMimeType(resolved)
+
+                If mime Is Nothing Then
+                    Return match.Value
+                End If
+
+                Dim data As String = Convert.ToBase64String(File.ReadAllBytes(resolved))
+
+                Return match.Groups(1).Value & "data:" & mime & ";base64," & data & match.Groups(3).Value
+            End Function)
+    End Function
+
+    ''' <summary>按扩展名推断图片的 MIME 类型；不支持的格式返回 Nothing。</summary>
+    ''' <param name="filePath">图片文件路径。</param>
+    ''' <returns>MIME 类型。</returns>
+    Public Function ImageMimeType(filePath As String) As String
+        Select Case Path.GetExtension(filePath).ToLowerInvariant()
+            Case ".png" : Return "image/png"
+            Case ".jpg", ".jpeg" : Return "image/jpeg"
+            Case ".gif" : Return "image/gif"
+            Case ".bmp" : Return "image/bmp"
+            Case ".webp" : Return "image/webp"
+            Case ".svg" : Return "image/svg+xml"
+            Case Else : Return Nothing
+        End Select
+    End Function
 
     ''' <summary>
     ''' 把 <see cref="ReportHtmlRender"/> 输出的 html 片段包装成完整的 HTML5 文档。

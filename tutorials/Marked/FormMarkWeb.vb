@@ -65,12 +65,17 @@ Public Class FormMarkWeb
     Private _navigating As Boolean = False
     Private _pendingScrollIndex As Integer = -1
 
+    ''' <summary>当前打开的 markdown 文件路径（导出时作为相对图片路径的基准目录）。</summary>
+    Private _sourceFile As String = ""
+
     Private ReadOnly headingTag As New Regex("<(h[1-6])>", RegexOptions.IgnoreCase)
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Using file As New OpenFileDialog With {.Filter = "Markdown 文档(*.md)|*.md"}
             If file.ShowDialog = DialogResult.OK Then
                 Dim md As String = file.FileName.ReadAllText
+
+                _sourceFile = file.FileName
 
                 ' Suppress the TextChanged -> debounce chain while we load the file,
                 ' then render once synchronously for an immediate result.
@@ -251,7 +256,11 @@ Public Class FormMarkWeb
             End If
 
             Try
-                Dim format As String = DocumentExport.Export(TextBox1.Text, dialog.FileName)
+                ' 图片按 markdown 源文件所在目录解析；未打开文件时使用当前工作目录
+                Dim baseDir As String = If(String.IsNullOrEmpty(_sourceFile),
+                                           Environment.CurrentDirectory,
+                                           IO.Path.GetDirectoryName(_sourceFile))
+                Dim format As String = DocumentExport.Export(TextBox1.Text, dialog.FileName, baseDir)
 
                 Call MessageBox.Show(Me,
                                      $"已导出 {format}：{vbCrLf}{dialog.FileName}",
