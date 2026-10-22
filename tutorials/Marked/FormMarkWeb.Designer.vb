@@ -75,8 +75,8 @@ Partial Class FormMarkWeb
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMarkWeb))
-        components = New System.ComponentModel.Container()
         WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
@@ -86,11 +86,15 @@ Partial Class FormMarkWeb
         TextBox1 = New TextBox()
         Timer1 = New Timer(components)
         CType(WebView21, ComponentModel.ISupportInitialize).BeginInit()
+        ToolStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
+        SplitContainer1.Panel1.SuspendLayout()
+        SplitContainer1.Panel2.SuspendLayout()
         SplitContainer1.SuspendLayout()
         CType(SplitContainer2, ComponentModel.ISupportInitialize).BeginInit()
+        SplitContainer2.Panel1.SuspendLayout()
+        SplitContainer2.Panel2.SuspendLayout()
         SplitContainer2.SuspendLayout()
-        ToolStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' WebView21
@@ -101,7 +105,7 @@ Partial Class FormMarkWeb
         WebView21.Dock = DockStyle.Fill
         WebView21.Location = New Point(0, 0)
         WebView21.Name = "WebView21"
-        WebView21.Size = New Size(640, 920)
+        WebView21.Size = New Size(637, 920)
         WebView21.TabIndex = 0
         WebView21.ZoomFactor = 1R
         ' 
@@ -110,6 +114,7 @@ Partial Class FormMarkWeb
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
+        ToolStrip1.RenderMode = ToolStripRenderMode.System
         ToolStrip1.Size = New Size(1461, 25)
         ToolStrip1.TabIndex = 1
         ToolStrip1.Text = "ToolStrip1"
@@ -179,7 +184,6 @@ Partial Class FormMarkWeb
         ' 
         ' Timer1
         ' 
-        Timer1.Enabled = False
         Timer1.Interval = 300
         ' 
         ' FormMarkWeb
@@ -192,12 +196,17 @@ Partial Class FormMarkWeb
         Name = "FormMarkWeb"
         Text = "Markdown文档查看"
         CType(WebView21, ComponentModel.ISupportInitialize).EndInit()
-        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer1.ResumeLayout(False)
-        CType(SplitContainer2, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer2.ResumeLayout(False)
         ToolStrip1.ResumeLayout(False)
         ToolStrip1.PerformLayout()
+        SplitContainer1.Panel1.ResumeLayout(False)
+        SplitContainer1.Panel2.ResumeLayout(False)
+        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
+        SplitContainer1.ResumeLayout(False)
+        SplitContainer2.Panel1.ResumeLayout(False)
+        SplitContainer2.Panel2.ResumeLayout(False)
+        SplitContainer2.Panel2.PerformLayout()
+        CType(SplitContainer2, ComponentModel.ISupportInitialize).EndInit()
+        SplitContainer2.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
