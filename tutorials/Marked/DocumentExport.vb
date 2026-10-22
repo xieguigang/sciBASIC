@@ -24,7 +24,7 @@ Imports Microsoft.VisualBasic.MIME.OpenXPS
 Imports Microsoft.VisualBasic.MIME.RTF
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports ReportHtmlRender = Microsoft.VisualBasic.ApplicationServices.Report.HtmlRender
-Imports ReportTextRender = Microsoft.VisualBasic.ApplicationServices.Report.TextRender
+Imports ReportPlainTextRender = Microsoft.VisualBasic.ApplicationServices.Report.PlainTextRender
 
 ''' <summary>
 ''' markdown → 多格式文档导出器（供 Marked 窗体的"另存为"使用）。
@@ -79,7 +79,7 @@ Public Module DocumentExport
     Private Sub ExportBlocks(blocks As List(Of Block), outFile As String, ext As String)
         Select Case ext
             Case ".txt"
-                Dim render As New ReportTextRender
+                Dim render As New ReportPlainTextRender
 
                 Call render.Render(blocks)
                 Call File.WriteAllText(outFile, render.Output, New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
