@@ -43,6 +43,7 @@
 Imports System.Reflection
 Imports System.Text
 
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports doc = Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 
 Namespace TypeDefinitions
@@ -157,7 +158,7 @@ Namespace TypeDefinitions
 
             For Each member In model.EnumMembers
                 sb.Append(indent).Append("    ").Append(member.Key) _
-                  .Append(" = ").Append(member.Value.ToString(Globalization.CultureInfo.InvariantCulture)) _
+                  .Append(" = ").Append(member.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)) _
                   .AppendLine(",")
             Next
 
@@ -471,7 +472,7 @@ Namespace TypeDefinitions
             If TypeOf value Is Boolean Then Return If(CBool(value), "true", "false")
 
             Try
-                Return Convert.ToString(value, Globalization.CultureInfo.InvariantCulture)
+                Return Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture)
             Catch ex As Exception
                 Return "?"
             End Try

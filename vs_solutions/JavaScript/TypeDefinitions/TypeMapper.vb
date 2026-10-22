@@ -39,6 +39,8 @@
 Imports System.Reflection
 Imports System.Threading.Tasks
 
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
+
 Namespace TypeDefinitions
 
     ''' <summary>
@@ -70,7 +72,7 @@ Namespace TypeDefinitions
                 Return "any"
             End If
 
-            Dim nullable As Type = Nullable.GetUnderlyingType(t)
+            Dim nullable As Type = System.Nullable.GetUnderlyingType(t)
 
             If nullable IsNot Nothing Then
                 Return TsTypeName(nullable, exports) & " | null"

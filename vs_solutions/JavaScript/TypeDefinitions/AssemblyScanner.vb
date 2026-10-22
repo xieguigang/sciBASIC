@@ -43,6 +43,8 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
+
 Namespace TypeDefinitions
 
     ''' <summary>The outcome of one assembly scan.</summary>
@@ -229,7 +231,7 @@ Namespace TypeDefinitions
 
             For i As Integer = 0 To names.Length - 1
                 list.Add(New KeyValuePair(Of String, Long)(
-                    names(i), Convert.ToInt64(values.GetValue(i), Globalization.CultureInfo.InvariantCulture)))
+                    names(i), Convert.ToInt64(values.GetValue(i), System.Globalization.CultureInfo.InvariantCulture)))
             Next
 
             Return list
@@ -381,7 +383,7 @@ Namespace TypeDefinitions
                 Dim p As ParameterInfo = ps(i)
 
                 list.Add(New TsParameter With {
-                    .Name = If(String.IsNullOrEmpty(p.Name), "arg" & i.ToString(Globalization.CultureInfo.InvariantCulture), p.Name),
+                    .Name = If(String.IsNullOrEmpty(p.Name), "arg" & i.ToString(System.Globalization.CultureInfo.InvariantCulture), p.Name),
                     .Type = p.ParameterType,
                     .IsOptional = p.IsOptional,
                     .IsParamArray = p.GetCustomAttributes(GetType(ParamArrayAttribute), False).Length > 0,

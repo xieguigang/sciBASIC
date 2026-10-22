@@ -232,7 +232,7 @@ Namespace TypeDefinitions
                     Dim name As String = m.Name
 
                     If m.IsGenericMethodDefinition Then
-                        name &= "``" & m.GetGenericArguments().Length.ToString(Globalization.CultureInfo.InvariantCulture)
+                        name &= "``" & m.GetGenericArguments().Length.ToString(System.Globalization.CultureInfo.InvariantCulture)
                     End If
 
                     Return head & name & ParamList(m)

@@ -3,6 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
+Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.TypeDefinitions
 ' the AST root node shares its name with this entry point module
 Imports JsProgram = Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Program
 
@@ -17,6 +18,12 @@ Imports JsProgram = Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Prog
 ''' <para>
 ''' <c>njs</c> without a script starts an interactive REPL: every input is evaluated in a
 ''' persistent global scope and the value of a trailing expression is echoed.
+''' </para>
+''' <para>
+''' <c>njs --dts &lt;assembly.dll&gt;</c> generates a TypeScript <c>.d.ts</c> definition file
+''' from a CLR assembly: every exported type and member is reflected through the very same
+''' rules the script bridge uses, so an IDE completion for a script matches runtime
+''' behaviour (see <see cref="TypeDefinitionGenerator"/>).
 ''' </para>
 ''' <para>
 ''' Output backends (script mode): <c>--ansi</c> (default) — <see cref="ConsoleIO"/> with
@@ -45,6 +52,14 @@ Module Program
         Dim scriptArg As String = Nothing
         Dim userArgs As New List(Of String)()
 
+        ' --dts mode: generate a TypeScript .d.ts from a CLR assembly
+        Dim dtsPath As String = Nothing
+        Dim dtsOut As String = Nothing
+        Dim dtsXml As String = Nothing
+        Dim dtsGlobals As Boolean = True
+        Dim dtsExplicit As Boolean = False
+        Dim dtsNonPublic As Boolean = False
+
         Dim i As Integer = 1
 
         While i < raw.Count
@@ -70,6 +85,48 @@ Module Program
                     htmlPath = raw(i + 1)
                     i += 2
                     Continue While
+                Case "--dts"
+                    If i + 1 >= raw.Count Then
+                        Usage("--dts requires an assembly file path")
+                        System.Environment.Exit(1)
+                        Return
+                    End If
+
+                    dtsPath = raw(i + 1)
+                    i += 2
+                    Continue While
+                Case "-o", "--output"
+                    If i + 1 >= raw.Count Then
+                        Usage("--output requires a file path")
+                        System.Environment.Exit(1)
+                        Return
+                    End If
+
+                    dtsOut = raw(i + 1)
+                    i += 2
+                    Continue While
+                Case "--xmldoc"
+                    If i + 1 >= raw.Count Then
+                        Usage("--xmldoc requires a file path")
+                        System.Environment.Exit(1)
+                        Return
+                    End If
+
+                    dtsXml = raw(i + 1)
+                    i += 2
+                    Continue While
+                Case "--no-globals"
+                    dtsGlobals = False
+                    i += 1
+                    Continue While
+                Case "--explicit-only"
+                    dtsExplicit = True
+                    i += 1
+                    Continue While
+                Case "--include-nonpublic"
+                    dtsNonPublic = True
+                    i += 1
+                    Continue While
                 Case "-h", "--help", "/?"
                     Usage(Nothing)
                     Return
@@ -83,6 +140,12 @@ Module Program
 
             i += 1
         End While
+
+        ' a definition generation request never falls through to the script / REPL modes
+        If dtsPath IsNot Nothing Then
+            RunDts(dtsPath, dtsOut, dtsXml, dtsGlobals, dtsExplicit, dtsNonPublic)
+            Return
+        End If
 
         ' no script and no script arguments → interactive session, like `node` without a file
         If scriptArg Is Nothing AndAlso userArgs.Count = 0 Then
@@ -103,6 +166,46 @@ Module Program
         End If
 
         Call RunScript(Path.GetFullPath(scriptArg), userArgs, backend, htmlPath)
+    End Sub
+
+    ' ===================== dts mode =====================
+
+    ''' <summary>
+    ''' Generate a TypeScript <c>.d.ts</c> definition file for one CLR assembly
+    ''' (<c>njs --dts MyLib.dll</c>). The emitted member visibility and type mapping are
+    ''' taken from the interop bridge rules, so an IDE completion for a script matches
+    ''' what the bridge can actually do at runtime.
+    ''' </summary>
+    Private Sub RunDts(assemblyPath As String, outputPath As String, xmlPath As String,
+                       globals As Boolean, explicitOnly As Boolean, includeNonPublic As Boolean)
+
+        Try
+            If String.IsNullOrEmpty(outputPath) Then
+                outputPath = Path.Combine(System.Environment.CurrentDirectory,
+                                          Path.GetFileNameWithoutExtension(assemblyPath) & ".d.ts")
+            End If
+
+            Dim options As New TypeDefinitionOptions With {
+                .Globals = globals,
+                .ExplicitOnly = explicitOnly,
+                .IncludeNonPublic = includeNonPublic,
+                .XmlDocPath = xmlPath
+            }
+
+            Dim result = TypeDefinitionGenerator.Write(assemblyPath, outputPath, options)
+
+            System.Console.WriteLine($"TypeScript definitions: {result.TypeCount} type(s), {result.MemberCount} member(s)")
+            System.Console.WriteLine("Output: " & Path.GetFullPath(outputPath))
+
+            If result.XmlDocLoaded Then
+                System.Console.WriteLine("XML documentation: " & result.XmlDocPath)
+            Else
+                System.Console.WriteLine("XML documentation: not found (no JSDoc comments emitted)")
+            End If
+        Catch ex As Exception
+            System.Console.Error.WriteLine("--dts failed: " & ex.Message)
+            System.Environment.Exit(1)
+        End Try
     End Sub
 
     ' ===================== script mode =====================
@@ -429,9 +532,19 @@ Module Program
         System.Console.Error.WriteLine()
         System.Console.Error.WriteLine("Usage: njs                      start an interactive REPL")
         System.Console.Error.WriteLine("       njs <script.js> [args...] [--ansi|--plain|--html <out.html>]")
+        System.Console.Error.WriteLine("       njs --dts <assembly.dll> [-o out.d.ts] [--xmldoc file.xml]")
+        System.Console.Error.WriteLine("                            [--no-globals] [--explicit-only] [--include-nonpublic]")
         System.Console.Error.WriteLine("  --ansi         render %c CSS styles and log levels as ANSI colours (default)")
         System.Console.Error.WriteLine("  --plain        write the collected plain text output to stdout")
         System.Console.Error.WriteLine("  --html <file>  render a styled standalone HTML terminal page")
+        System.Console.Error.WriteLine()
+        System.Console.Error.WriteLine("TypeScript definition generation:")
+        System.Console.Error.WriteLine("  --dts <dll>    emit a .d.ts for a CLR assembly (types, members and JSDoc)")
+        System.Console.Error.WriteLine("  -o, --output   output path (default: <assembly>.d.ts in the current directory)")
+        System.Console.Error.WriteLine("  --xmldoc       XML documentation file (default: <assembly>.xml next to the dll)")
+        System.Console.Error.WriteLine("  --no-globals   namespace-only output: skip the global type aliases")
+        System.Console.Error.WriteLine("  --explicit-only  whitelist mode: only [JsExpose] members stay visible")
+        System.Console.Error.WriteLine("  --include-nonpublic  also emit Friend/internal types")
     End Sub
 
 End Module

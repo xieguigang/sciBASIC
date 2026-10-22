@@ -37,8 +37,10 @@
 #End Region
 
 Imports System.Text
+Imports System.Text.RegularExpressions
 
 Imports doc = Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+Imports docser = Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 
 Namespace TypeDefinitions
 
@@ -74,8 +76,8 @@ Namespace TypeDefinitions
 
         ' ======================================================== rendering
 
-        Private Function Build(summary As String, params As doc.param(), returns As String, example As String,
-                               remarks As String, typeParams As doc.typeparam(),
+        Private Function Build(summary As String, params As docser.param(), returns As String, example As String,
+                               remarks As String, typeParams As docser.typeparam(),
                                obsolete As Boolean, deprecated As String,
                                paramNames As Dictionary(Of String, String), indent As String) As String
 
@@ -92,7 +94,7 @@ Namespace TypeDefinitions
             End If
 
             If params IsNot Nothing Then
-                For Each p As doc.param In params
+                For Each p As docser.param In params
                     Dim text As String = Clean(p.text)
 
                     If text = "" Then Continue For
@@ -112,7 +114,7 @@ Namespace TypeDefinitions
             If ret <> "" Then lines.Add("@returns " & ret)
 
             If typeParams IsNot Nothing Then
-                For Each tp As doc.typeparam In typeParams
+                For Each tp As docser.typeparam In typeParams
                     Dim text As String = Clean(tp.text)
                     lines.Add("@template " & tp.name & If(text = "", "", " " & text))
                 Next
@@ -144,6 +146,13 @@ Namespace TypeDefinitions
             Return sb.ToString()
         End Function
 
+        ''' <summary>
+        ''' The XML documentation preprocessor turns <c>&lt;see cref="..."/&gt;</c> into a
+        ''' markdown link carrying a <c>cref:</c> prefix; a JSDoc hover would render that
+        ''' as a dead link, so keep only the link text.
+        ''' </summary>
+        Private ReadOnly crefLink As New Regex("\[(?<text>[^\]]*)\]\(cref:[^)]*\)", RegexOptions.IgnoreCase)
+
         Private Function Clean(text As String) As String
             If String.IsNullOrEmpty(text) Then Return ""
 
@@ -154,7 +163,7 @@ Namespace TypeDefinitions
                 lines(i) = lines(i).TrimEnd()
             Next
 
-            Return String.Join(vbLf, lines).Trim()
+            Return crefLink.Replace(String.Join(vbLf, lines).Trim(), "${text}")
         End Function
 
         Private Function SplitLines(text As String) As List(Of String)
