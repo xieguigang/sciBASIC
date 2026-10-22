@@ -83,8 +83,8 @@
 ' 图片文件缺失时走 [警告] 日志并跳过，不影响其余内容生成。
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.MIME.Office.WordDocument
-Imports Microsoft.VisualBasic.MIME.text.markdown
 
 ''' <summary>
 ''' PDF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与
@@ -423,7 +423,8 @@ Public Class PdfDocument : Implements IDocumentWriter
         Return Me
     End Function
 
-    Public Function WriteBlocks(blocksInput As IEnumerable(Of JSONSchema.Block)) As PdfDocument
+    ''' <summary>将 markdown 内容块（<see cref="Block"/>）写入文档。</summary>
+    Public Function WriteBlocks(blocksInput As IEnumerable(Of Block)) As PdfDocument
         If blocksInput Is Nothing Then Return Me
         For Each blk In blocksInput
             If blk Is Nothing Then Continue For
@@ -432,32 +433,37 @@ Public Class PdfDocument : Implements IDocumentWriter
         Return Me
     End Function
 
-    Private Sub WriteBlock(blk As JSONSchema.Block)
-        ' 将 Markdown 块转换为对应内容块（覆盖常见段落/标题/代码/引用/列表/表格）
+    ''' <summary>
+    ''' 将单个 markdown 内容块映射为等价的写入调用。映射语义与
+    ''' <c>WordDocument.WriteBlock</c> / <c>RtfDocument.WriteBlock</c> 保持一致。
+    ''' </summary>
+    Private Sub WriteBlock(blk As Block)
         If blk.type Is Nothing Then
             If Not String.IsNullOrEmpty(blk.content) Then
                 Paragraph(blk.content)
             End If
             Return
         End If
-        Dim t = blk.type.ToLower()
-        Select Case t
-            Case "heading"
+
+        Select Case blk.type.ToLower()
+            Case "heading", "h"
                 Dim lvl = If(blk.level >= 1 AndAlso blk.level <= 6, blk.level, 1)
-                Heading(lvl, blk.content)
+                Heading(lvl, If(blk.content, ""))
+            Case "paragraph", "p"
+                Paragraph(If(blk.content, ""))
             Case "code"
-                CodeBlock(blk.content)
+                CodeBlock(If(blk.content, ""), If(blk.language, ""))
             Case "quote", "blockquote"
-                Blockquote(blk.content)
+                Blockquote(If(blk.content, ""))
             Case "list", "li", "bulletedlist", "orderedlist"
                 If blk.items IsNot Nothing AndAlso blk.items.Length > 0 Then
                     List(blk.items, blk.ordered)
                 End If
-            Case "tasklist"
+            Case "tasklist", "tasks", "todo"
                 If blk.items IsNot Nothing AndAlso blk.items.Length > 0 Then
                     TaskList(blk.items, blk.checked)
                 End If
-            Case "deflist"
+            Case "deflist", "definition", "dl"
                 If blk.terms IsNot Nothing AndAlso blk.terms.Length > 0 Then
                     DefinitionList(blk.terms, blk.definitions)
                 End If
@@ -465,8 +471,24 @@ Public Class PdfDocument : Implements IDocumentWriter
                 If blk.rows IsNot Nothing AndAlso blk.rows.Length > 0 Then
                     Table(If(blk.headers, New String() {}), blk.rows, blk.alignments)
                 End If
-            Case "hr", "horizontal-rule"
+            Case "hr", "horizontal-rule", "horizontalrule", "thematic-break"
                 Hr()
+            Case "image", "img"
+                If Not String.IsNullOrEmpty(blk.url) AndAlso System.IO.File.Exists(blk.url) Then
+                    Image(blk.url, caption:=If(blk.alt, ""))
+                Else
+                    ' 与 docx / rtf 侧一致：图片缺失时降级为文本占位
+                    Paragraph($"[图片: {If(String.IsNullOrEmpty(blk.alt), blk.url, blk.alt)}]")
+                End If
+            Case "math", "equation", "mathml", "tex", "latex"
+                ' PDF 侧暂不渲染公式对象，按 LaTeX 源码代码块输出
+                CodeBlock(If(blk.content, "").Trim(), "latex")
+            Case "link", "a"
+                Paragraph($"[{If(blk.alt, "")}]({If(blk.url, "")})")
+            Case "footnote", "note"
+                Paragraph($"[{If(blk.id, "")}] {If(blk.content, "")}")
+            Case "html", "raw"
+                Paragraph(If(blk.content, ""))
             Case Else
                 If Not String.IsNullOrEmpty(blk.content) Then
                     Paragraph(blk.content)
@@ -637,7 +659,7 @@ Public Class PdfDocument : Implements IDocumentWriter
         Return Image(file, width, height, caption)
     End Function
 
-    Private Function IDW_WriteBlocks(blocksInput As IEnumerable(Of JSONSchema.Block)) As IDocumentWriter Implements IDocumentWriter.WriteBlocks
+    Private Function IDW_WriteBlocks(blocksInput As IEnumerable(Of Block)) As IDocumentWriter Implements IDocumentWriter.WriteBlocks
         Return WriteBlocks(blocksInput)
     End Function
 

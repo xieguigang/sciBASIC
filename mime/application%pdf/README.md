@@ -20,7 +20,8 @@ PDF 是一种「写给打印机看」的格式：它把内容、字体、编码�
 - **底层读取器**：词法分析器、对象解析器、xref 表解析、对象 / 流解码（Flate、ASCII85、predictor）与页面树遍历；
 - **文本提取**：结合 ToUnicode CMap 与字体信息，把页面内容流还原为可读文本；
 - **流式写入器**：收集内容块（标题、段落、表格、图片），完成分页布局后序列化为符合规范的 PDF；
-- **共用文档契约**：写入器实现 `IDocumentWriter`，与 `WordDocument` 共用同一套文档 API。
+- **共用文档契约**：写入器实现 `IDocumentWriter`，与 `WordDocument` 共用同一套文档 API；
+- **报告渲染器 `PdfRender`**：继承 `ApplicationServices.Report.ReportRender`，可直接把 markdown 内容块（`Report.Block`）渲染为 PDF，并支持文档大标题、目录与文档元数据；
 
 ## 命名空间地图
 
@@ -37,7 +38,8 @@ PDF 是一种「写给打印机看」的格式：它把内容、字体、编码�
 - `PdfLexer` / `PdfObjectParser` / `PdfObject` 家族 —— 词法分析器与解析器，产出 `PdfDictionary`、`PdfArray`、`PdfStream`、`PdfIndirectObject` 等；
 - `FlateDecode` —— 流过滤器：deflate 解压、ASCII85 解码与 predictor 还原；
 - `TextExtractor` / `ToUnicodeCMap` —— 由内容流与字体 CMap 重建页面的可读文本；
-- `PdfDocument` —— 实现 `IDocumentWriter`；提供流式 `Heading` / `Paragraph` / `Table` / `Image` API 与 `Save`；
+- `PdfDocument` —— 实现 `IDocumentWriter`；提供流式 `Heading` / `Paragraph` / `Table` / `Image` API 与 `Save`（`WriteBlocks` 可直接消费 `Report.Block`）；
+- `PdfRender` —— **报告渲染器**：`ReportRender` 在 PDF 上的实现，`Render(blocks)` 写入内容、`Save` 排版落盘，支持文档大标题 / 目录 / 元数据；
 - `PdfLayoutEngine` / `PdfWriter` —— 把内容块分页，并序列化对象、内容流、xref 表与 trailer；
 - `PdfFontResource` / `PdfImageXObject` / `PdfColor` —— 字体度量与编码、图像 XObject 编码与 RGB 颜色算子。
 
@@ -61,6 +63,35 @@ Call doc.Heading(1, "Results").Paragraph("Hello PDF")
 Call doc.Table({"Name", "Value"}, {{"a", "1"}, {"b", "2"}})
 Call doc.Save("report.pdf")
 ```
+
+由 markdown 内容块渲染整份报告（`ReportRender`）：
+
+```vbnet
+Imports Microsoft.VisualBasic.ApplicationServices.Report
+Imports Microsoft.VisualBasic.MIME.application.pdf
+
+Dim blocks As Block() = {
+    New Block With {.type = "heading", .level = 1, .content = "Results"},
+    New Block With {.type = "paragraph", .content = "内容块直接渲染为 PDF。"},
+    New Block With {.type = "table", .headers = {"Name", "Value"},
+                    .rows = {New String() {"a", "1"}, New String() {"b", "2"}}}
+}
+
+Dim render As New PdfRender() With {
+    .DocumentTitle = "实验数据分析报告",   ' 正文之前的文档大标题
+    .TableOfContents = True,               ' 正文之前插入目录
+    .Author = "sciBASIC#"
+}
+
+Call render.Render(blocks)
+Call render.Save("report-block.pdf")
+
+' 也可以一步生成
+Call PdfRender.Generate(blocks, "report-oneshot.pdf", "实验数据分析报告")
+```
+
+写入侧自校验：`dotnet run --project test/test.vbproj -- --render` 会在当前目录生成
+`demo_render.pdf`，再用本库的解析器回读校验文档结构与内容。
 
 ## 实现要点
 

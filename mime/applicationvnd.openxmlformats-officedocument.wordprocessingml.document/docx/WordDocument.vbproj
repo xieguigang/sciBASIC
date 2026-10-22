@@ -12,8 +12,8 @@
     <Import>System.Collections.Generic</Import>
     <Import>System.Linq</Import>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
 
   
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
@@ -45,9 +45,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\..\application%xml\xml-netcore5.vbproj" />
-    <ProjectReference Include="..\..\text%markdown\markdown.NET5.vbproj" />
     <None Include="..\..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

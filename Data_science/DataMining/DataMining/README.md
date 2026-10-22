@@ -26,6 +26,7 @@
 | DBSCAN | `Clustering.DBSCAN` | 基于密度，自动识别噪声 |
 | HDBSCAN | `Clustering.HDBSCAN.*` | 层次化密度聚类（含 `Distance` / `Hdbscanstar` / `Runner`） |
 | 模糊 C 均值 | `Clustering.FuzzyCMeans` | 软分配，输出隶属度 |
+| Hamming 聚类 | `Clustering.Hamming` | 二值/定类数据：k-modes 聚类与 Muselli–Liberati 布尔规则提取 |
 
 ### 关联规则
 

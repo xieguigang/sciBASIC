@@ -18,8 +18,8 @@
     <PackageTags>scibasic;hypothesis-testing;minimum-hypergeometric;enrichment;ranked-list;gene-set</PackageTags>
     <PackageReleaseNotes>Adds exact dynamic programming p-value calculation, vectorized hypergeometric row recursion and R-compatible separation line helpers for ranked enrichment.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
@@ -28,6 +28,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

@@ -461,7 +461,7 @@ Public Class FormPlayer
     ''' 显式同步页内布局。
     ''' </summary>
     ''' <remarks>
-    ''' <see cref="TabControl.PageSizes"/> 之类的缓存会让 <see cref="TabPage"/> 里的
+    ''' "TabControl.PageSizes" 之类的缓存会让 <see cref="TabPage"/> 里的
     ''' <c>Dock</c> 子控件停留在设计尺寸，必须显式 <c>PerformLayout</c> 才会跟随。
     ''' 3D 画布不使用子控件（见 <see cref="CanvasTabPage"/>），因此这里只处理编辑器页。
     ''' </remarks>

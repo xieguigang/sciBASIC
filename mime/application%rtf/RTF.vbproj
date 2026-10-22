@@ -22,16 +22,19 @@
     <PackageTags>scibasic;rtf;rich-text-format;omml;document-generation;text-extraction</PackageTags>
     <Tags>scibasic;rtf;rich-text-format;omml;office-math;document-model;word;document-generation;text-extraction;markdown;idocumentwriter</Tags>
     <PackageReleaseNotes>Added a fluent RTF 1.x writer implementing IDocumentWriter and a single-pass lexer for text and metadata extraction.</PackageReleaseNotes>
-    <ReleaseNotes>RTF document generation, text extraction and Office Math (OMML) models for sciBASIC#. Generation: RtfDocument implements IDocumentWriter (metadata, heading levels 1-6 and other styles, page setup in twips with A4 / Letter presets, lists, task lists, definition lists, rules, page breaks, static table of contents, tables with auto-fit and three-line styles, embedded png/jpeg images) and WriteBlocks renders the JSONSchema.Block markdown content model directly. Extraction: RtfTextReader returns the whole text, a paragraph array and document metadata through a tolerant single pass lexer that handles unicode escapes, hexadecimal escapes and raw multi-byte code pages. Model: the original Rtf / FormatedRegion / Font document object model is unchanged, and a serializable Office / OMML XML model set remains available for Word XML round-tripping.</ReleaseNotes>
+    <ReleaseNotes>RTF document generation, text extraction and Office Math (OMML) models for sciBASIC#. Generation: RtfDocument implements IDocumentWriter (metadata, heading levels 1-6 and other styles, page setup in twips with A4 / Letter presets, lists, task lists, definition lists, rules, page breaks, static table of contents, tables with auto-fit and three-line styles, embedded png/jpeg images) and WriteBlocks renders the Report.Block markdown content model directly; RtfRender derives from the shared TextReportRender base class and emits the whole RTF document text through its Output property before Save writes it to disk. Extraction: RtfTextReader returns the whole text, a paragraph array and document metadata through a tolerant single pass lexer that handles unicode escapes, hexadecimal escapes and raw multi-byte code pages. Model: the original Rtf / FormatedRegion / Font document object model is unchanged, and a serializable Office / OMML XML model set remains available for Word XML round-tripping.</ReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TargetFramework>net10.0</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -41,9 +44,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vbproj" />
-    <ProjectReference Include="..\text%markdown\markdown.NET5.vbproj" />
     <None Include="..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -61,11 +62,4 @@
     <None Remove="test\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
- 
 </Project>

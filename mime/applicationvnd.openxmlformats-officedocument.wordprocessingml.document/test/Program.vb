@@ -69,8 +69,8 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.MIME.Office.WordDocument
-Imports Microsoft.VisualBasic.MIME.text.markdown
 
 Module Program
 
@@ -119,6 +119,13 @@ Module Program
         ' ================================================================
         Console.WriteLine("[5] 从 .docx 提取文本...")
         DemoTextExtraction(outDir)
+        Console.WriteLine()
+
+        ' ================================================================
+        ' Demo 5: ReportRender / WordRender（Block 块模型 + 论文主题）
+        ' ================================================================
+        Console.WriteLine("[6] 使用 WordRender 渲染报告块（套用 ThesisFormatting 主题）...")
+        DemoWordRender(outDir)
         Console.WriteLine()
 
         Console.WriteLine("=== Demo 完成 ===")
@@ -327,50 +334,50 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
     ' Demo 2: Block 模型兼容
     ' ================================================================
     Private Sub DemoBlockModel(outDir As String)
-        ' 创建 Block 列表 (模拟用户现有的 JSONSchema.Block 模型)
-        Dim blocks As New List(Of JSONSchema.Block) From {
-            New JSONSchema.Block With {
+        ' 创建 Block 列表 (模拟用户现有的 Block 模型)
+        Dim blocks As New List(Of Block) From {
+            New Block With {
                 .type = "heading",
                 .level = 1,
                 .content = "Block 模型兼容测试"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "paragraph",
-                .content = "本段落通过 JSONSchema.Block 模型生成，验证 WordDocument 的 WriteBlocks 方法对用户现有 markdown block 渲染模型的兼容性。"
+                .content = "本段落通过 Block 模型生成，验证 WordDocument 的 WriteBlocks 方法对用户现有 markdown block 渲染模型的兼容性。"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "heading",
                 .level = 2,
                 .content = "2.1 代码块测试"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "code",
                 .language = "vbnet",
                 .content = "Dim doc As New WordDocument() aligner" & vbCrLf &
                            "doc.H1(""标题"").Paragraph(""正文"")" & vbCrLf &
                            "doc.Save(""output.docx"")"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "heading",
                 .level = 2,
                 .content = "2.2 列表测试"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "list",
                 .ordered = True,
                 .items = {"第一项：有序列表", "第二项：有序列表", "第三项：有序列表"}
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "list",
                 .ordered = False,
                 .items = {"无序项 A", "无序项 B", "无序项 C"}
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "heading",
                 .level = 2,
                 .content = "2.3 表格测试"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "table",
                 .headers = {"参数", "值", "单位"},
                 .alignments = {"left", "center", "right"},
@@ -378,40 +385,40 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
                          New String() {"pH", "7.4", ""},
                          New String() {"湿度", "65", "%"}}
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "heading",
                 .level = 2,
                 .content = "2.4 引用和分割线"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "blockquote",
                 .content = "这是一段引用文字。引用块在 Word 中会显示为左侧带彩色边框的缩进段落，文字为斜体。"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "hr"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "paragraph",
                 .content = "上方为水平分割线。"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "heading",
                 .level = 2,
                 .content = "2.5 定义列表"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "deflist",
                 .terms = {"RNA-seq", "FDR", "GO"},
                 .definitions = {"转录组测序技术，用于分析细胞中所有 mRNA 的表达水平",
                                 "False Discovery Rate，错误发现率，多重检验校正后的 p 值",
                                 "Gene Ontology，基因本体论，标准化的基因功能分类体系"}
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "heading",
                 .level = 2,
                 .content = "2.6 任务列表"
             },
-            New JSONSchema.Block With {
+            New Block With {
                 .type = "tasklist",
                 .items = {"完成数据分析", "撰写报告初稿", "导师审阅", "终稿提交"},
                 .checked = {True, True, False, False}
@@ -506,14 +513,14 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [2] 论文原创性声明和使用授权说明（采用学校统一格式）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "原创性声明"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本人声明所呈交的学位论文是本人在导师指导下进行的研究工作及取得的研究成果。尽我所知，除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过的研究成果，也不包含本人为获得江南大学或其它教育机构的学位或证书而使用过的材料。与我一同工作的同志对本研究所做的任何贡献均已在论文中作了明确的说明并表示谢意。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "作者签名：　　　　　　　　日期：　　　　年　　月　　日"},
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "关于论文使用授权的说明"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本人完全了解江南大学有关保留、使用学位论文的规定：江南大学有权保留并向国家有关部门或机构送交论文的复印件和磁盘，允许论文被查阅和借阅，可以将学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文，并且本人电子文档的内容和纸质版的内容相一致。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "保密的学位论文在解密后也遵守此规定。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "作者签名：　　　　　　　　导师签名：　　　　　　　　"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "日期：　　　　年　　月　　日　　日期：　　　　年　　月　　日"}
+            New Block With {.type = "heading", .level = 1, .content = "原创性声明"},
+            New Block With {.type = "paragraph", .content = "本人声明所呈交的学位论文是本人在导师指导下进行的研究工作及取得的研究成果。尽我所知，除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过的研究成果，也不包含本人为获得江南大学或其它教育机构的学位或证书而使用过的材料。与我一同工作的同志对本研究所做的任何贡献均已在论文中作了明确的说明并表示谢意。"},
+            New Block With {.type = "paragraph", .content = "作者签名：　　　　　　　　日期：　　　　年　　月　　日"},
+            New Block With {.type = "heading", .level = 1, .content = "关于论文使用授权的说明"},
+            New Block With {.type = "paragraph", .content = "本人完全了解江南大学有关保留、使用学位论文的规定：江南大学有权保留并向国家有关部门或机构送交论文的复印件和磁盘，允许论文被查阅和借阅，可以将学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文，并且本人电子文档的内容和纸质版的内容相一致。"},
+            New Block With {.type = "paragraph", .content = "保密的学位论文在解密后也遵守此规定。"},
+            New Block With {.type = "paragraph", .content = "作者签名：　　　　　　　　导师签名：　　　　　　　　"},
+            New Block With {.type = "paragraph", .content = "日期：　　　　年　　月　　日　　日期：　　　　年　　月　　日"}
         })
         doc.PageBreak()
 
@@ -529,11 +536,11 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [3] 中文摘要及关键词
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "摘　要"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "高通量测序技术的快速发展为基因组学研究提供了海量数据支撑，如何在海量测序数据中准确识别差异表达基因并阐明其生物学功能，已成为生物信息学领域的核心问题之一。本文以本课题组 2024 年度采集的 6 个生物学重复样本的转录组测序数据为研究对象，系统开展了差异表达基因的识别与功能分析研究。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本文的主要研究工作包括：首先，建立了基于 FastQC 与 Trimmomatic 的原始数据质量控制流程，确保碱基质量值 Q30 比例不低于 85%；其次，采用 STAR aligner 将 cleaned reads 比对至参考基因组，并通过 HTSeq-count 完成基因层面的表达定量；再次，利用 DESeq2 以 |log2FoldChange| > 1 且 padj < 0.05 为筛选标准识别差异表达基因，共鉴定得到 847 个差异表达基因，其中上调 412 个、下调 435 个；最后，通过 GO 功能富集与 KEGG 通路分析，发现差异表达基因显著富集于应激反应、转录调控与信号转导等生物学过程。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本文建立了完整、可重复的转录组数据分析流程，为后续的关键基因功能验证实验提供了候选基因列表，也为同类型数据的分析提供了方法学参考。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "**关键词：**转录组测序；差异表达基因；生物信息学；功能富集；GO"}
+            New Block With {.type = "heading", .level = 1, .content = "摘　要"},
+            New Block With {.type = "paragraph", .content = "高通量测序技术的快速发展为基因组学研究提供了海量数据支撑，如何在海量测序数据中准确识别差异表达基因并阐明其生物学功能，已成为生物信息学领域的核心问题之一。本文以本课题组 2024 年度采集的 6 个生物学重复样本的转录组测序数据为研究对象，系统开展了差异表达基因的识别与功能分析研究。"},
+            New Block With {.type = "paragraph", .content = "本文的主要研究工作包括：首先，建立了基于 FastQC 与 Trimmomatic 的原始数据质量控制流程，确保碱基质量值 Q30 比例不低于 85%；其次，采用 STAR aligner 将 cleaned reads 比对至参考基因组，并通过 HTSeq-count 完成基因层面的表达定量；再次，利用 DESeq2 以 |log2FoldChange| > 1 且 padj < 0.05 为筛选标准识别差异表达基因，共鉴定得到 847 个差异表达基因，其中上调 412 个、下调 435 个；最后，通过 GO 功能富集与 KEGG 通路分析，发现差异表达基因显著富集于应激反应、转录调控与信号转导等生物学过程。"},
+            New Block With {.type = "paragraph", .content = "本文建立了完整、可重复的转录组数据分析流程，为后续的关键基因功能验证实验提供了候选基因列表，也为同类型数据的分析提供了方法学参考。"},
+            New Block With {.type = "paragraph", .content = "**关键词：**转录组测序；差异表达基因；生物信息学；功能富集；GO"}
         })
         doc.PageBreak()
 
@@ -541,11 +548,11 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [4] 英文摘要及关键词（Times New Roman，1.25 倍行距，与中文摘要对应）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "Abstract"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "The rapid development of high-throughput sequencing technology has provided massive data support for genomics research. How to accurately identify differentially expressed genes from massive sequencing data and elucidate their biological functions has become one of the core issues in bioinformatics. In this thesis, transcriptome sequencing data of 6 biological replicate samples collected in 2024 were taken as the research object, and systematic research on the identification and functional analysis of differentially expressed genes was carried out."},
-            New JSONSchema.Block With {.type = "paragraph", .content = "A total of 847 differentially expressed genes were identified with |log2FoldChange| > 1 and padj < 0.05 as the screening criteria, including 412 up-regulated and 435 down-regulated genes. GO enrichment and KEGG pathway analysis revealed that the differentially expressed genes were significantly enriched in biological processes such as response to stress, regulation of transcription and signal transduction."},
-            New JSONSchema.Block With {.type = "paragraph", .content = "This thesis establishes a complete and reproducible transcriptome data analysis pipeline, which provides a candidate gene list for subsequent functional validation experiments and a methodological reference for the analysis of similar data."},
-            New JSONSchema.Block With {.type = "paragraph", .content = "**Keywords:** transcriptome sequencing; differentially expressed genes; bioinformatics; functional enrichment; GO"}
+            New Block With {.type = "heading", .level = 1, .content = "Abstract"},
+            New Block With {.type = "paragraph", .content = "The rapid development of high-throughput sequencing technology has provided massive data support for genomics research. How to accurately identify differentially expressed genes from massive sequencing data and elucidate their biological functions has become one of the core issues in bioinformatics. In this thesis, transcriptome sequencing data of 6 biological replicate samples collected in 2024 were taken as the research object, and systematic research on the identification and functional analysis of differentially expressed genes was carried out."},
+            New Block With {.type = "paragraph", .content = "A total of 847 differentially expressed genes were identified with |log2FoldChange| > 1 and padj < 0.05 as the screening criteria, including 412 up-regulated and 435 down-regulated genes. GO enrichment and KEGG pathway analysis revealed that the differentially expressed genes were significantly enriched in biological processes such as response to stress, regulation of transcription and signal transduction."},
+            New Block With {.type = "paragraph", .content = "This thesis establishes a complete and reproducible transcriptome data analysis pipeline, which provides a candidate gene list for subsequent functional validation experiments and a methodological reference for the analysis of similar data."},
+            New Block With {.type = "paragraph", .content = "**Keywords:** transcriptome sequencing; differentially expressed genes; bioinformatics; functional enrichment; GO"}
         })
         doc.PageBreak()
 
@@ -559,13 +566,13 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [6] 图和附表清单（必要时）+ [7] 缩写和符号清单（必要时）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "图和附表清单"},
-            New JSONSchema.Block With {.type = "list", .ordered = False, .items = {
+            New Block With {.type = "heading", .level = 1, .content = "图和附表清单"},
+            New Block With {.type = "list", .ordered = False, .items = {
                 "图 2.1 实验技术路线图",
                 "表 1.1 主要研究内容一览表",
                 "表 2.1 测序数据质量统计摘要表"}},
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "缩写和符号清单"},
-            New JSONSchema.Block With {.type = "deflist",
+            New Block With {.type = "heading", .level = 1, .content = "缩写和符号清单"},
+            New Block With {.type = "deflist",
                 .terms = {"RNA-seq", "FDR", "GO", "KEGG", "DESeq2"},
                 .definitions = {
                     "转录组测序技术（RNA sequencing），用于分析细胞中所有 mRNA 的表达水平",
@@ -592,28 +599,28 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [8] 论文正文 —— 第一章（每一章另起页）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "第一章 绪论"},
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "1.1 研究背景与意义"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本段落在 ThesisFormatting 主题下渲染，正文为小四号宋体，首行缩进两个中文字符，1.25 倍行距，两端对齐；中文使用宋体，英文字母、阿拉伯数字和半角标点使用 Times New Roman，例如 DNA sequencing coverage 250 bp、Q30 ratio 93.2%。"},
-            New JSONSchema.Block With {.type = "heading", .level = 3, .content = "1.1.1 国内外研究现状"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "近年来，高通量测序技术的快速发展为基因组学研究提供了海量数据支撑，相关研究成果已在 Nature、Science 等国际期刊上大量发表。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "差异表达分析是转录组研究的核心内容之一[注1]，其结果直接关系到后续功能验证实验的候选基因选择。"},
-            New JSONSchema.Block With {.type = "footnote", .id = "1", .content = "差异表达分析（Differential Expression Analysis）：通过统计学模型比较不同条件下基因表达水平的差异。"},
-            New JSONSchema.Block With {.type = "heading", .level = 4, .content = "1.1.1.1 测序技术的发展"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "自 2005 年新一代测序技术问世以来，测序通量呈指数级增长，测序成本持续下降，为转录组学研究在动植物、微生物等各领域的广泛应用奠定了基础。"},
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "1.2 主要研究内容"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本文的主要研究内容如下表所示："},
-            New JSONSchema.Block With {.type = "paragraph", .content = "表 1.1 主要研究内容一览表"},
-            New JSONSchema.Block With {.type = "table",
+            New Block With {.type = "heading", .level = 1, .content = "第一章 绪论"},
+            New Block With {.type = "heading", .level = 2, .content = "1.1 研究背景与意义"},
+            New Block With {.type = "paragraph", .content = "本段落在 ThesisFormatting 主题下渲染，正文为小四号宋体，首行缩进两个中文字符，1.25 倍行距，两端对齐；中文使用宋体，英文字母、阿拉伯数字和半角标点使用 Times New Roman，例如 DNA sequencing coverage 250 bp、Q30 ratio 93.2%。"},
+            New Block With {.type = "heading", .level = 3, .content = "1.1.1 国内外研究现状"},
+            New Block With {.type = "paragraph", .content = "近年来，高通量测序技术的快速发展为基因组学研究提供了海量数据支撑，相关研究成果已在 Nature、Science 等国际期刊上大量发表。"},
+            New Block With {.type = "paragraph", .content = "差异表达分析是转录组研究的核心内容之一[注1]，其结果直接关系到后续功能验证实验的候选基因选择。"},
+            New Block With {.type = "footnote", .id = "1", .content = "差异表达分析（Differential Expression Analysis）：通过统计学模型比较不同条件下基因表达水平的差异。"},
+            New Block With {.type = "heading", .level = 4, .content = "1.1.1.1 测序技术的发展"},
+            New Block With {.type = "paragraph", .content = "自 2005 年新一代测序技术问世以来，测序通量呈指数级增长，测序成本持续下降，为转录组学研究在动植物、微生物等各领域的广泛应用奠定了基础。"},
+            New Block With {.type = "heading", .level = 2, .content = "1.2 主要研究内容"},
+            New Block With {.type = "paragraph", .content = "本文的主要研究内容如下表所示："},
+            New Block With {.type = "paragraph", .content = "表 1.1 主要研究内容一览表"},
+            New Block With {.type = "table",
                 .headers = {"研究内容", "技术方法", "预期成果"},
                 .alignments = {"left", "center", "left"},
                 .rows = {New String() {"质量控制与比对", "FastQC + STAR", "高质量比对 BAM 文件"},
                          New String() {"差异表达分析", "DESeq2", "差异基因列表"},
                          New String() {"功能富集分析", "GO + KEGG", "显著富集通路"}}
             },
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "1.3 论文组织结构"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本文共分为四章：第一章为绪论，介绍研究背景与主要研究内容；第二章介绍材料与实验方法；第三章给出结果与分析；第四章为结论与展望。"},
-            New JSONSchema.Block With {.type = "hr"}
+            New Block With {.type = "heading", .level = 2, .content = "1.3 论文组织结构"},
+            New Block With {.type = "paragraph", .content = "本文共分为四章：第一章为绪论，介绍研究背景与主要研究内容；第二章介绍材料与实验方法；第三章给出结果与分析；第四章为结论与展望。"},
+            New Block With {.type = "hr"}
         })
         doc.EndSection()
 
@@ -629,18 +636,18 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         '   OMML 公式对象——公式居中、编号右端对齐，Word 中可直接双击编辑）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "第二章 材料与方法"},
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.1 数据来源"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "实验数据来源于本课题组 2024 年度采集的 6 个生物学重复样本，测序平台为 Illumina NovaSeq 6000，测序策略为 PE150 双端测序。"},
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.2 技术路线"},
-            New JSONSchema.Block With {.type = "image",
+            New Block With {.type = "heading", .level = 1, .content = "第二章 材料与方法"},
+            New Block With {.type = "heading", .level = 2, .content = "2.1 数据来源"},
+            New Block With {.type = "paragraph", .content = "实验数据来源于本课题组 2024 年度采集的 6 个生物学重复样本，测序平台为 Illumina NovaSeq 6000，测序策略为 PE150 双端测序。"},
+            New Block With {.type = "heading", .level = 2, .content = "2.2 技术路线"},
+            New Block With {.type = "image",
                 .url = Path.Combine(outDir, "test_chart.png"),
                 .alt = "图 2.1 实验技术路线图"
             },
-            New JSONSchema.Block With {.type = "paragraph", .content = "图题置于图下方（五号、居中），图编号由""图""和从 1 开始的阿拉伯数字组成，全文编号方式统一。"},
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.3 分析流程"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "差异表达分析的核心 R 代码如下："},
-            New JSONSchema.Block With {.type = "code",
+            New Block With {.type = "paragraph", .content = "图题置于图下方（五号、居中），图编号由""图""和从 1 开始的阿拉伯数字组成，全文编号方式统一。"},
+            New Block With {.type = "heading", .level = 2, .content = "2.3 分析流程"},
+            New Block With {.type = "paragraph", .content = "差异表达分析的核心 R 代码如下："},
+            New Block With {.type = "code",
                 .language = "r",
                 .content = "library(DESeq2)" & vbCrLf &
                            "dds <- DESeqDataSetFromMatrix(countData = count_matrix, colData = sample_info," & vbCrLf &
@@ -648,19 +655,19 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
                            "dds <- DESeq(dds)" & vbCrLf &
                            "res  <- results(dds, alpha = 0.05)"
             },
-            New JSONSchema.Block With {.type = "list", .ordered = True, .items = {
+            New Block With {.type = "list", .ordered = True, .items = {
                 "原始数据质量控制：FastQC 质量评估与 Trimmomatic 接头去除",
                 "序列比对：STAR aligner 比对至参考基因组",
                 "表达定量：HTSeq-count 统计基因层面 read 计数",
                 "差异分析：DESeq2 以 |log2FC| > 1 且 padj < 0.05 为筛选标准"}
             },
-            New JSONSchema.Block With {.type = "paragraph", .content = "分析过程中各阶段的质量控制节点如下（已完成为 ☑，进行中为 ☐）："},
-            New JSONSchema.Block With {.type = "tasklist",
+            New Block With {.type = "paragraph", .content = "分析过程中各阶段的质量控制节点如下（已完成为 ☑，进行中为 ☐）："},
+            New Block With {.type = "tasklist",
                 .items = {"原始数据质量控制", "序列比对与表达定量", "差异表达分析", "功能富集分析"},
                 .checked = {True, True, True, False}
             },
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.4 统计模型"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "DESeq2 采用负二项广义线性模型估计基因表达量的离散程度。以两个条件下的均值比较为例，其标准化统计量可表示为："}
+            New Block With {.type = "heading", .level = 2, .content = "2.4 统计模型"},
+            New Block With {.type = "paragraph", .content = "DESeq2 采用负二项广义线性模型估计基因表达量的离散程度。以两个条件下的均值比较为例，其标准化统计量可表示为："}
         })
 
         ' 公式 (2-1)：Content MathML -> 表达式树 -> OMML 原生公式对象
@@ -679,19 +686,19 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
             "<apply><plus/><ci>U_11</ci><ci>U_22</ci></apply></apply></apply></math>")
 
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "paragraph", .content = "式中，U_11、U_12、U_21 分别为对应条件下的模型估计参数；较长的公式转行时应尽可能在＝处回行，或在＋、－、×、／等记号处换行。"},
-            New JSONSchema.Block With {.type = "blockquote", .content = "注：所有分析均在 R 4.3.2 环境下完成，随机数种子统一设置为 42 以保证结果可重复。"},
-            New JSONSchema.Block With {.type = "heading", .level = 2, .content = "2.5 测序数据质量统计"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "表题置于表上方（五号、居中），表格采用国际通行的三线表，转页接排的续表应重复表头："},
-            New JSONSchema.Block With {.type = "paragraph", .content = "表 2.1 测序数据质量统计摘要表"},
-            New JSONSchema.Block With {.type = "table",
+            New Block With {.type = "paragraph", .content = "式中，U_11、U_12、U_21 分别为对应条件下的模型估计参数；较长的公式转行时应尽可能在＝处回行，或在＋、－、×、／等记号处换行。"},
+            New Block With {.type = "blockquote", .content = "注：所有分析均在 R 4.3.2 环境下完成，随机数种子统一设置为 42 以保证结果可重复。"},
+            New Block With {.type = "heading", .level = 2, .content = "2.5 测序数据质量统计"},
+            New Block With {.type = "paragraph", .content = "表题置于表上方（五号、居中），表格采用国际通行的三线表，转页接排的续表应重复表头："},
+            New Block With {.type = "paragraph", .content = "表 2.1 测序数据质量统计摘要表"},
+            New Block With {.type = "table",
                 .headers = {"样本编号", "原始读段数", "过滤后读段数", "保留率", "Q30 比例"},
                 .alignments = {"center", "right", "right", "center", "center"},
                 .rows = {New String() {"S001", "4250000", "3810000", "89.6%", "93.2%"},
                          New String() {"S002", "4180000", "3725000", "89.1%", "92.8%"},
                          New String() {"S003", "4320000", "3842000", "88.9%", "93.5%"}}
             },
-            New JSONSchema.Block With {.type = "paragraph", .content = "以上流程构成了本文完整的数据分析框架，后续章节将依次展开详细论述。"}
+            New Block With {.type = "paragraph", .content = "以上流程构成了本文完整的数据分析框架，后续章节将依次展开详细论述。"}
         })
         doc.EndSection()
 
@@ -704,8 +711,8 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [9] 参考文献（标题三号黑体居中；条目五号宋体 1.25 倍行距，GB/T 7714 著录格式）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "参考文献"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "（以下条目依照在正文中被首次引用的先后次序排列，使用 ReferenceStyle 五号样式逐条写入）"}
+            New Block With {.type = "heading", .level = 1, .content = "参考文献"},
+            New Block With {.type = "paragraph", .content = "（以下条目依照在正文中被首次引用的先后次序排列，使用 ReferenceStyle 五号样式逐条写入）"}
         })
         doc.Paragraph("[1] 张伯伟. 全唐五代诗格汇考[M]. 南京：江苏古籍出版社，2002：288.", refStyle)
         doc.Paragraph("[2] 张群，程志宝，石志飞. 惯性增强动力吸振器-浮置板轨道低频减振性能研究[J]. 铁道学报，2024，46（8）：102-111.", refStyle)
@@ -724,10 +731,10 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [10] 附录A（内容小四宋体 1.25 倍行距；附录中的公式及图表编号冠以附录序号字母）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "附录A 主要分析脚本清单"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "附录中的公式及图表编号冠以附录序号字母加一短划线，如公式（A-1）、图 A-1、表 A-1 等。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本附录列出论文正文所涉及的主要分析脚本及其功能说明，包括原始数据质量控制脚本 qc_pipeline.sh、序列比对脚本 align_run.sh、差异表达分析脚本 deseq_analysis.R 以及功能富集分析脚本 enrichment.R。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "全部脚本均在 Ubuntu 22.04 LTS 环境下测试通过，运行顺序及参数配置详见脚本头部注释。"}
+            New Block With {.type = "heading", .level = 1, .content = "附录A 主要分析脚本清单"},
+            New Block With {.type = "paragraph", .content = "附录中的公式及图表编号冠以附录序号字母加一短划线，如公式（A-1）、图 A-1、表 A-1 等。"},
+            New Block With {.type = "paragraph", .content = "本附录列出论文正文所涉及的主要分析脚本及其功能说明，包括原始数据质量控制脚本 qc_pipeline.sh、序列比对脚本 align_run.sh、差异表达分析脚本 deseq_analysis.R 以及功能富集分析脚本 enrichment.R。"},
+            New Block With {.type = "paragraph", .content = "全部脚本均在 Ubuntu 22.04 LTS 环境下测试通过，运行顺序及参数配置详见脚本头部注释。"}
         })
         doc.EndSection()
 
@@ -740,10 +747,10 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [11] 致谢（"致  谢"三号黑体中间空2字符居中；内容小四宋体 1.25 倍行距）
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "致　谢"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "本论文是在导师李某某教授的悉心指导下完成的。从论文的选题、研究方案的制定到论文的撰写与修改，导师都倾注了大量的心血，在此谨向导师表示崇高的敬意和衷心的感谢。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "感谢课题组各位同学在实验数据采集与处理过程中给予的帮助与支持；感谢江南大学生物工程学院为本研究提供的实验平台与技术条件；感谢国家自然科学基金项目对本研究的资助。"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "最后，感谢家人一直以来的理解、支持与鼓励。"}
+            New Block With {.type = "heading", .level = 1, .content = "致　谢"},
+            New Block With {.type = "paragraph", .content = "本论文是在导师李某某教授的悉心指导下完成的。从论文的选题、研究方案的制定到论文的撰写与修改，导师都倾注了大量的心血，在此谨向导师表示崇高的敬意和衷心的感谢。"},
+            New Block With {.type = "paragraph", .content = "感谢课题组各位同学在实验数据采集与处理过程中给予的帮助与支持；感谢江南大学生物工程学院为本研究提供的实验平台与技术条件；感谢国家自然科学基金项目对本研究的资助。"},
+            New Block With {.type = "paragraph", .content = "最后，感谢家人一直以来的理解、支持与鼓励。"}
         })
         doc.EndSection()
 
@@ -756,8 +763,8 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         ' [12] 攻读学位期间取得的学术成果清单
         ' ============================================================
         doc.WriteBlocks({
-            New JSONSchema.Block With {.type = "heading", .level = 1, .content = "攻读学位期间取得的学术成果清单"},
-            New JSONSchema.Block With {.type = "paragraph", .content = "（学术论文按著录格式依时间顺序排列，并列出全部作者名字）"}
+            New Block With {.type = "heading", .level = 1, .content = "攻读学位期间取得的学术成果清单"},
+            New Block With {.type = "paragraph", .content = "（学术论文按著录格式依时间顺序排列，并列出全部作者名字）"}
         })
         doc.Paragraph("[1] 张某某，李某某. 基于转录组测序的差异表达基因分析研究[J]. 生物信息学学报，2025，23（3）：45-56.", refStyle)
         doc.Paragraph("[2] 张某某，王某某，李某某. 植物抗逆相关基因的功能验证[C]. 上海：第15届全国基因组学大会，2024.", refStyle)
@@ -810,6 +817,67 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         Dim txtPath As String = Path.Combine(outDir, "extracted_text.txt")
         File.WriteAllText(txtPath, text, Encoding.UTF8)
         Console.WriteLine($"  纯文本已保存: {txtPath}")
+    End Sub
+
+    ' ================================================================
+    ' Demo 5: ReportRender / WordRender（Block 块模型 + 论文主题）
+    ' ================================================================
+    Private Sub DemoWordRender(outDir As String)
+        Dim blocks As Block() = {
+            New Block With {.type = "heading", .level = 1, .content = "第一章 绪论"},
+            New Block With {.type = "paragraph", .content = "本章介绍基于块模型（Report.Block）的 word 报告自动排版方案，所有内容均由 WordRender 渲染写入。"},
+            New Block With {.type = "heading", .level = 2, .content = "1.1 研究背景"},
+            New Block With {.type = "paragraph", .content = "学位论文的版式要求繁复，人工排版容易出错，因此需要把内容（块模型）与版式（ThesisFormatting 主题）分离。"},
+            New Block With {.type = "list", .ordered = True, .items = {"内容以 Block 数组描述", "主题一次性应用到文档样式", "渲染器输出 .docx 文件"}},
+            New Block With {.type = "heading", .level = 2, .content = "1.2 参数对照表"},
+            New Block With {.type = "table", .headers = {"类型", "说明"}, .alignments = {"left", "left"}, .rows = {New String() {"heading", "标题"}, New String() {"paragraph", "正文段落"}}},
+            New Block With {.type = "code", .language = "vbnet", .content = "Dim render As New WordRender(New ThesisFormatting())" & vbCrLf & "render.Render(blocks)" & vbCrLf & "render.Save(""./thesis.docx"")"},
+            New Block With {.type = "blockquote", .content = "内容与版式分离：同一份 Block 数组可以渲染为 markdown、html 或者 word 文档。"},
+            New Block With {.type = "hr"},
+            New Block With {.type = "footnote", .id = "1", .content = "本段落由 footnote 块生成。"},
+            New Block With {.type = "heading", .level = 1, .content = "第二章 结论"},
+            New Block With {.type = "paragraph", .content = "WordRender 可以直接复用 WordDocument 的流式写入能力，并套用论文格式主题。"}
+        }
+
+        Dim theme As New ThesisFormatting()
+
+        ' ---- 方式一：渲染器对象（可配置题目、目录与文档元数据） ----
+        Dim outPath As String = Path.Combine(outDir, "demo_word_render.docx")
+        Dim render As New WordRender(theme) With {
+            .DocumentTitle = "基于块模型的学位论文自动排版",
+            .TableOfContents = True,
+            .Author = "科研数据分析系统",
+            .Title = "WordRender 演示",
+            .Subject = "报告生成",
+            .Tags = New String() {"docx", "报告", "ThesisFormatting"}
+        }
+
+        Call render.Render(blocks)
+        Call render.Save(outPath)
+
+        Console.WriteLine($"  已保存: {outPath}")
+
+        ' ---- 方式二：一次性生成 ----
+        Dim oneShot As String = Path.Combine(outDir, "demo_word_render_oneshot.docx")
+        Call WordRender.Generate(blocks, oneShot, theme, "一句话生成 word 报告")
+        Console.WriteLine($"  已保存: {oneShot}")
+
+        ' ---- 校验：读回文本并检查关键内容 ----
+        Dim reader As New DocxTextReader()
+        Dim text As String = reader.ExtractText(outPath)
+
+        Console.WriteLine($"  读回文本长度: {text.Length} 字符")
+
+        Dim keys As String() = {"基于块模型的学位论文自动排版", "第一章 绪论", "1.1 研究背景", "内容与版式分离", "第二章 结论"}
+
+        For Each key As String In keys
+            Dim hit As Boolean = text.Contains(key)
+
+            Console.WriteLine($"  校验 [{key}]: {If(hit, "ok", "缺失")}")
+            If Not hit Then
+                Throw New Exception($"word 报告内容校验失败: {key}")
+            End If
+        Next
     End Sub
 
 End Module

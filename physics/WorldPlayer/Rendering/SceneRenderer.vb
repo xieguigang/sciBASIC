@@ -221,13 +221,12 @@ Public Class SceneRenderer
     ''' 把任意实数安全地收敛到 0..255。
     ''' <see cref="Color.FromArgb(Integer, Integer, Integer, Integer)"/> 对越界值不友好，
     ''' 而 <c>CInt(NaN)</c> 会直接抛 OverflowException，因此所有通道都要经过这里。
-    ''' </summary>
-    ''' <summary>
+    ''' 
     ''' 通道线性插值。
     ''' </summary>
     ''' <remarks>
     ''' 注意：<see cref="Color.R"/> 等属性是 Byte，VB 中 <c>Byte - Byte</c> 仍是 Byte 的
-    ''' <b>受检算术</b>，当 <paramref name="to"/> 的分量小于 <paramref name="from"/> 时
+    ''' <b>受检算术</b>，当 <paramref name="dst"/> 的分量小于 <paramref name="src"/> 时
     ''' 会直接下溢抛 OverflowException。因此必须先提升为 Integer 再参与运算。
     ''' </remarks>
     Private Shared Function Mix(src As Color, dst As Color, t As Double) As Color
@@ -269,7 +268,7 @@ Public Class SceneRenderer
     ' /********************************************************************************/
 
     ''' <summary>
-    ''' 相机前方的最近可见深度。库内投影在 <c>depth <= 0</c> 时会把点塌缩到屏幕中心，
+    ''' 相机前方的最近可见深度。库内投影在 <c>depth &lt;= 0</c> 时会把点塌缩到屏幕中心，
     ''' 因此相机后方的几何必须由我们剔除，否则会画出"糊在屏幕上"的退化形状。
     ''' </summary>
     Private Const MinDepth As Double = 1.0

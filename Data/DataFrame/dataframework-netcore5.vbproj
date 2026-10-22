@@ -7,7 +7,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.Framework</PackageId>
-    <Version>10.7.9782.41243</Version>
+    <Version>10.7.9791.24820</Version>
     <Description>A tabular data framework for sciBASIC#: R-style DataFrame and DataSet objects, streaming CSV and ARFF readers and writers, reflection-based storage providers that map .NET classes to table rows and columns, and LINQ-style streams for querying ultra-large datasets.</Description>
     <Product>sciBASIC</Product>
     <Company>sciBASIC.NET Foundation</Company>
@@ -27,7 +27,7 @@
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
     <PackageIcon>logo-knot.png</PackageIcon>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <Title>Tabular Data Frame and CSV/ARFF Storage Provider Framework</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Framework</AssemblyTitle>
     <PackageTags>scibasic;dataframe;csv;arff;storage-provider;tabular-data</PackageTags>

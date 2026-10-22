@@ -10,9 +10,10 @@
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
     <Platforms>AnyCPU;x64</Platforms>
-
+    <OutputPath>../../tools/</OutputPath>
     <AssemblyTitle>JavaScript Interpreter Running on .NET CLR</AssemblyTitle>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

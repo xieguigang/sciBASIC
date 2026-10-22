@@ -12,8 +12,8 @@
     <Configurations>Debug;Release;Rsharp_app_release;nuget_release</Configurations>
     <OutputPath>../../.nuget</OutputPath>
    
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
 
     <Title>GPU Tensor Types and CUDA Kernels for the ILCuda Runtime</Title>
     <Description>A GPU tensor extension for sciBASIC#: device-resident dense and CSR sparse tensor storage with host/device caches, hand-written double-precision CUDA kernels for GEMM, softmax, convolution and pooling, plus a CUDA backend for the machine learning tensor compute interface.</Description>
@@ -29,6 +29,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
