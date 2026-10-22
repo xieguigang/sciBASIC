@@ -56,19 +56,6 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.Web.WebView2.Core
 
-''' <summary>
-''' A single parsed heading from the markdown source. The <see cref="Index"/> is
-''' aligned 1:1 with the order of ``&lt;h1&gt;``..``&lt;h6&gt;`` elements in the
-''' rendered HTML (after id injection), so it can be used as a navigation anchor.
-''' </summary>
-Public Class HeadingInfo
-    Public Index As Integer
-    Public Level As Integer
-    Public Text As String
-    Public LineStart As Integer
-    Public LineLength As Integer
-End Class
-
 Public Class FormMarkWeb
 
     ReadOnly render As New MarkdownRender
@@ -191,8 +178,8 @@ Public Class FormMarkWeb
             If level > 0 AndAlso Not String.IsNullOrWhiteSpace(headingText) Then
                 headings.Add(New HeadingInfo With {
                     .Index = headings.Count,
-                    .Level = level,
-                    .Text = CleanHeadingText(headingText),
+                    .level = level,
+                    .text = CleanHeadingText(headingText),
                     .LineStart = offset,
                     .LineLength = rawLine.Length
                 })
@@ -220,10 +207,10 @@ Public Class FormMarkWeb
     Private Function InjectHeadingIds(html As String) As String
         Dim counter As Integer = 0
         Return headingTag.Replace(html, Function(m)
-                                           Dim id = $"md-h{counter}"
-                                           counter += 1
-                                           Return $"<{m.Groups(1).Value} id=""{id}"">"
-                                       End Function)
+                                            Dim id = $"md-h{counter}"
+                                            counter += 1
+                                            Return $"<{m.Groups(1).Value} id=""{id}"">"
+                                        End Function)
     End Function
 
     Private Sub BuildTree(headings As List(Of HeadingInfo))
