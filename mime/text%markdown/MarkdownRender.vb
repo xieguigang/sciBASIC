@@ -96,6 +96,20 @@ Public Class MarkdownRender
     End Function
 
     ''' <summary>
+    ''' 将 markdown 文档文本解析为 <see cref="JSONSchema.Block"/> 平面列表。
+    ''' 列表中的 <see cref="JSONSchema.Block.content"/> 为纯文本，可直接交给
+    ''' <see cref="JSONSchema.BlockRenderer"/> 重新渲染为 markdown/HTML，或交给
+    ''' 下游（如 Word 文档写入器）做进一步转换。
+    ''' </summary>
+    ''' <param name="markdown">markdown 源文本。</param>
+    ''' <returns>按文档顺序排布的 Block 列表。</returns>
+    Public Function ParseBlocks(markdown As String) As List(Of JSONSchema.Block)
+        Return New JSONSchema.MarkdownBlockParser().Parse(markdown)
+    End Function
+
+    Shared ReadOnly headers As New Regex("^[#]+.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+    ''' <summary>
     ''' Get table of content of the target markdown document.
     ''' Both ATX style headers (``#`` to ``######``) and setext style headers are
     ''' supported; the scan is shared with <see cref="TOC.GenerateToc"/> through

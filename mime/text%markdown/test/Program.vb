@@ -207,7 +207,67 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
 
         Call New MarkdownRender().Transform(quote_links).SaveTo("./test_demo.html")
 
+        Call markdownToBlocksTest()
 
+
+    End Sub
+
+    ''' <summary>
+    ''' 验证 markdown 文本 -> Block 块列表 管线：解析后字段断言 + 往返渲染为 markdown/html。
+    ''' </summary>
+    Private Sub markdownToBlocksTest()
+        Dim md As String = "
+# 文档主标题
+
+这是一段普通段落，包含 **粗体**、*斜体* 与 `行内代码`，还有一个 [链接](https://x.com)。
+
+## 安装步骤
+
+- 克隆仓库
+- 执行 dotnet build
+- 运行测试
+
+1. 第一步
+2. 第二步
+
+> 引用第一行
+> 引用第二行
+
+| 名称 | 说明 |
+| :--- | ---: |
+| Block | 一个内容块 |
+
+---
+
+```vbnet
+Dim x As Integer = 1
+```
+
+- [x] 已完成的任务
+- [ ] 待办任务
+
+[^1]: 这是一条脚注。
+
+术语
+: 对应的定义
+"
+
+        Dim blocks = New MarkdownRender().ParseBlocks(md)
+
+        Console.WriteLine("=== markdown -> Block 数量: " & blocks.Count & " ===")
+        For Each b In blocks
+            Console.WriteLine("[" & b.type & "] " & If(b.content, ""))
+        Next
+
+        ' 往返：Block -> markdown
+        Dim back = blocks.ToMarkdown
+        Call back.SaveTo("./test_markdown_to_blocks.md")
+
+        ' 往返：Block -> html（验证与 JSONRenderer 管线一致）
+        Dim html = blocks.ToHtml
+        Call html.SaveTo("./test_markdown_to_blocks.html")
+
+        Pause()
     End Sub
 
     ''' <summary>
