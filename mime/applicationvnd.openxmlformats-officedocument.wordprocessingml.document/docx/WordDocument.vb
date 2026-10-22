@@ -1,102 +1,102 @@
 ﻿#Region "Microsoft.VisualBasic::e2ea3f229886b5140098401fe99732c8, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1721
-    '    Code Lines: 1207 (70.13%)
-    ' Comment Lines: 278 (16.15%)
-    '    - Xml Docs: 49.64%
-    ' 
-    '   Blank Lines: 236 (13.71%)
-    '     File Size: 86.15 KB
+' Summaries:
 
 
-    ' Module OOXMLNamespaces
-    ' 
-    ' 
-    ' 
-    ' Class WordDocument
-    ' 
-    '     Properties: ApplicationName, Author, Description, Subject, Tags
-    '                 Title
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: AddHeaderFooterPart, Blockquote, BlockquoteStyle, BuildSectionPr, CaptionStyle
-    '               CodeBlock, CodeStyle, DefaultStyle, DefinitionList, DocTitle
-    '               EndSection, FooterPageNumbers, Formula, GetAlign, GetBlockquoteStyle
-    '               GetBodyXml, GetCodeStyle, GetDefaultStyle, GetFinalSectionPr, GetHeaderFooterParts
-    '               GetHeadingStyles, GetImages, GetMargins, GetPageHeight, GetPageWidth
-    '               GetParagraphStyle, GetTableStyle, GetTitleStyle, GetUseEvenOddHeaders, H1
-    '               H2, H3, H4, H5, H6
-    '               HeaderEven, HeaderOdd, Heading, HeadingStyle, Hr
-    '               IDW_Blockquote, IDW_BlockquoteStyle, IDW_CodeBlock, IDW_CodeStyle, IDW_DefaultStyle
-    '               IDW_DefinitionList, IDW_DocTitle, IDW_H1, IDW_H2, IDW_H3
-    '               IDW_H4, IDW_H5, IDW_H6, IDW_Heading, IDW_HeadingStyle
-    '               IDW_Hr, IDW_Image, IDW_List, IDW_PageBreak, IDW_PageSetup
-    '               IDW_PageSetupA4, IDW_PageSetupLetter, IDW_Paragraph, IDW_Paragraph2, IDW_ParagraphStyle
-    '               IDW_Table1, IDW_Table2, IDW_Table3, IDW_TableAutoFitContents1, IDW_TableAutoFitContents2
-    '               IDW_TableAutoFitWindow1, IDW_TableAutoFitWindow2, IDW_TableStyle, IDW_TaskList, IDW_TitleStyle
-    '               IDW_Toc, IDW_WriteBlocks, Image, JcVal, List
-    '               NextRelId, PageBreak, PageSetup, PageSetupA4, PageSetupLetter
-    '               (+2 Overloads) Paragraph, ParagraphStyle, PtToTwip, (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents
-    '               (+2 Overloads) TableAutoFitWindow, TableStyle, TableTextStyle, TaskList, ThreeLineTable
-    '               TitleStyle, Toc, ToEmu, ToJagged1D, ToJagged2D
-    '               UnescapeMarkdown, WriteAutoFitTable, WriteBlocks, XEsc
-    ' 
-    '     Sub: AppendInlineRuns, AppendRunXml, ParseInlineRuns, ResolveImageExtent, Save
-    '          WriteBlock
-    '     Class HeaderFooterPart
-    ' 
-    '         Properties: Kind, RelId, Xml
-    ' 
-    '     Class SectionDef
-    ' 
-    '         Properties: FooterRelId, HeaderEvenRelId, HeaderOddRelId, PageNumFmt, PageNumStart
-    ' 
-    '     Class ImageEntry
-    ' 
-    '         Properties: Data, Extension, HeightEmu, RelId, WidthEmu
-    ' 
-    '     Class InlineRun
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1721
+'    Code Lines: 1207 (70.13%)
+' Comment Lines: 278 (16.15%)
+'    - Xml Docs: 49.64%
+' 
+'   Blank Lines: 236 (13.71%)
+'     File Size: 86.15 KB
+
+
+' Module OOXMLNamespaces
+' 
+' 
+' 
+' Class WordDocument
+' 
+'     Properties: ApplicationName, Author, Description, Subject, Tags
+'                 Title
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: AddHeaderFooterPart, Blockquote, BlockquoteStyle, BuildSectionPr, CaptionStyle
+'               CodeBlock, CodeStyle, DefaultStyle, DefinitionList, DocTitle
+'               EndSection, FooterPageNumbers, Formula, GetAlign, GetBlockquoteStyle
+'               GetBodyXml, GetCodeStyle, GetDefaultStyle, GetFinalSectionPr, GetHeaderFooterParts
+'               GetHeadingStyles, GetImages, GetMargins, GetPageHeight, GetPageWidth
+'               GetParagraphStyle, GetTableStyle, GetTitleStyle, GetUseEvenOddHeaders, H1
+'               H2, H3, H4, H5, H6
+'               HeaderEven, HeaderOdd, Heading, HeadingStyle, Hr
+'               IDW_Blockquote, IDW_BlockquoteStyle, IDW_CodeBlock, IDW_CodeStyle, IDW_DefaultStyle
+'               IDW_DefinitionList, IDW_DocTitle, IDW_H1, IDW_H2, IDW_H3
+'               IDW_H4, IDW_H5, IDW_H6, IDW_Heading, IDW_HeadingStyle
+'               IDW_Hr, IDW_Image, IDW_List, IDW_PageBreak, IDW_PageSetup
+'               IDW_PageSetupA4, IDW_PageSetupLetter, IDW_Paragraph, IDW_Paragraph2, IDW_ParagraphStyle
+'               IDW_Table1, IDW_Table2, IDW_Table3, IDW_TableAutoFitContents1, IDW_TableAutoFitContents2
+'               IDW_TableAutoFitWindow1, IDW_TableAutoFitWindow2, IDW_TableStyle, IDW_TaskList, IDW_TitleStyle
+'               IDW_Toc, IDW_WriteBlocks, Image, JcVal, List
+'               NextRelId, PageBreak, PageSetup, PageSetupA4, PageSetupLetter
+'               (+2 Overloads) Paragraph, ParagraphStyle, PtToTwip, (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents
+'               (+2 Overloads) TableAutoFitWindow, TableStyle, TableTextStyle, TaskList, ThreeLineTable
+'               TitleStyle, Toc, ToEmu, ToJagged1D, ToJagged2D
+'               UnescapeMarkdown, WriteAutoFitTable, WriteBlocks, XEsc
+' 
+'     Sub: AppendInlineRuns, AppendRunXml, ParseInlineRuns, ResolveImageExtent, Save
+'          WriteBlock
+'     Class HeaderFooterPart
+' 
+'         Properties: Kind, RelId, Xml
+' 
+'     Class SectionDef
+' 
+'         Properties: FooterRelId, HeaderEvenRelId, HeaderOddRelId, PageNumFmt, PageNumStart
+' 
+'     Class ImageEntry
+' 
+'         Properties: Data, Extension, HeightEmu, RelId, WidthEmu
+' 
+'     Class InlineRun
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -124,8 +124,8 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.MIME.application.xml.MathML
-Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports std = System.Math
 
 ' OOXML 命名空间（与 DocxPackager 中的定义保持一致）
@@ -1236,16 +1236,17 @@ Public Class WordDocument : Implements IDocumentWriter
     ''' <summary>
     ''' 将 Block 列表写入文档（兼容用户现有 JSONSchema.Block 模型）。
     ''' </summary>
-    Public Function WriteBlocks(blocks As IEnumerable(Of JSONSchema.Block)) As WordDocument
+    Public Function WriteBlocks(blocks As IEnumerable(Of Block)) As WordDocument
         If blocks Is Nothing Then Return Me
-        For Each b As JSONSchema.Block In blocks
-            If b Is Nothing Then Continue For
-            WriteBlock(b)
+        For Each b As Block In blocks
+            If b IsNot Nothing Then
+                WriteBlock(b)
+            End If
         Next
         Return Me
     End Function
 
-    Private Sub WriteBlock(b As JSONSchema.Block)
+    Private Sub WriteBlock(b As Block)
         Dim t As String = If(b.type, "").ToLower()
 
         Select Case t
@@ -1816,7 +1817,7 @@ Public Class WordDocument : Implements IDocumentWriter
         Return Image(file, width, height, caption)
     End Function
 
-    Private Function IDW_WriteBlocks(blocks As IEnumerable(Of JSONSchema.Block)) As IDocumentWriter Implements IDocumentWriter.WriteBlocks
+    Private Function IDW_WriteBlocks(blocks As IEnumerable(Of Block)) As IDocumentWriter Implements IDocumentWriter.WriteBlocks
         Return WriteBlocks(blocks)
     End Function
 

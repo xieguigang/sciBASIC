@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::5add4346ec9c8ee287dafe8f01f9127d, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\IDocumentWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 147
-    '    Code Lines: 65 (44.22%)
-    ' Comment Lines: 64 (43.54%)
-    '    - Xml Docs: 78.12%
-    ' 
-    '   Blank Lines: 18 (12.24%)
-    '     File Size: 8.15 KB
+' Summaries:
 
 
-    ' Interface IDocumentWriter
-    ' 
-    '     Properties: ApplicationName, Author, Description, Subject, Tags
-    '                 Title
-    ' 
-    '     Function: Blockquote, BlockquoteStyle, CodeBlock, CodeStyle, DefaultStyle
-    '               DefinitionList, DocTitle, H1, H2, H3
-    '               H4, H5, H6, Heading, HeadingStyle
-    '               Hr, Image, List, PageBreak, PageSetup
-    '               PageSetupA4, PageSetupLetter, (+2 Overloads) Paragraph, ParagraphStyle, (+3 Overloads) Table
-    '               (+2 Overloads) TableAutoFitContents, (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList, TitleStyle
-    '               Toc, WriteBlocks
-    ' 
-    '     Sub: Save
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 147
+'    Code Lines: 65 (44.22%)
+' Comment Lines: 64 (43.54%)
+'    - Xml Docs: 78.12%
+' 
+'   Blank Lines: 18 (12.24%)
+'     File Size: 8.15 KB
+
+
+' Interface IDocumentWriter
+' 
+'     Properties: ApplicationName, Author, Description, Subject, Tags
+'                 Title
+' 
+'     Function: Blockquote, BlockquoteStyle, CodeBlock, CodeStyle, DefaultStyle
+'               DefinitionList, DocTitle, H1, H2, H3
+'               H4, H5, H6, Heading, HeadingStyle
+'               Hr, Image, List, PageBreak, PageSetup
+'               PageSetupA4, PageSetupLetter, (+2 Overloads) Paragraph, ParagraphStyle, (+3 Overloads) Table
+'               (+2 Overloads) TableAutoFitContents, (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList, TitleStyle
+'               Toc, WriteBlocks
+' 
+'     Sub: Save
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,7 +70,7 @@
 ' 调用方面向该接口编程，仅通过传入不同实例即可产出不同格式。
 ' ============================================================================
 
-Imports Microsoft.VisualBasic.MIME.text.markdown
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 
 ''' <summary>
 ''' 统一文档写入接口。
@@ -201,7 +201,7 @@ Public Interface IDocumentWriter
                    Optional caption As String = "") As IDocumentWriter
 
     ''' <summary>将一组 Markdown 内容块写入文档。</summary>
-    Function WriteBlocks(blocks As IEnumerable(Of JSONSchema.Block)) As IDocumentWriter
+    Function WriteBlocks(blocks As IEnumerable(Of Block)) As IDocumentWriter
 
     ' === 保存 ===
 
