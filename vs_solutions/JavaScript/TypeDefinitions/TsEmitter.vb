@@ -285,12 +285,12 @@ Namespace TypeDefinitions
                 If Not d.CanRead AndAlso d.CanWrite Then
                     ' write-only: a plain property type would promise a read the bridge rejects
                     sb.Append(inner).Append(staticPrefix).Append("set ").Append(d.Name) _
-                      .Append("(value: ").Append(TypeMapper.TsTypeName(d.Type, exports)).AppendLine(");")
+                      .Append("(value: ").Append(TypeMapper.TsTypeName(d.Type, exports, model.GenericParameters)).AppendLine(");")
                 Else
                     Dim readonlyPrefix As String = If(d.CanRead AndAlso Not d.CanWrite, "readonly ", "")
 
                     sb.Append(inner).Append(staticPrefix).Append(readonlyPrefix).Append(d.Name) _
-                      .Append(": ").Append(TypeMapper.TsTypeName(d.Type, exports)).AppendLine(";")
+                      .Append(": ").Append(TypeMapper.TsTypeName(d.Type, exports, model.GenericParameters)).AppendLine(";")
                 End If
             Next
         End Sub
@@ -331,7 +331,7 @@ Namespace TypeDefinitions
                 If block <> "" Then sb.Append(block)
 
                 sb.Append(inner).Append("constructor") _
-                  .Append(RenderParameters(ctor.Parameters, exports)).AppendLine(";")
+                  .Append(RenderParameters(ctor.Parameters, exports, model.GenericParameters)).AppendLine(";")
             Next
         End Sub
 
@@ -344,7 +344,7 @@ Namespace TypeDefinitions
                 Dim readonlyPrefix As String = If(ix.CanRead AndAlso Not ix.CanWrite, "readonly ", "")
 
                 sb.Append(inner).Append(readonlyPrefix).Append("[").Append(keyName).Append("]: ") _
-                  .Append(TypeMapper.TsTypeName(ix.ValueType, exports)).AppendLine(";")
+                  .Append(TypeMapper.TsTypeName(ix.ValueType, exports, model.GenericParameters)).AppendLine(";")
             Next
         End Sub
 
