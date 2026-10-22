@@ -23,10 +23,10 @@
     <ROW Property="CTRLS" Value="1"/>
     <ROW Property="Manufacturer" Value="scibasic.net foundation"/>
     <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:vp"/>
-    <ROW Property="ProductCode" Value="1028:{97A8B17B-9A21-4540-ACF3-15C35239DD94} 1033:{97A8B17B-9A21-4540-ACF3-15C35239DD94} 2052:{97A8B17B-9A21-4540-ACF3-15C35239DD94} " Type="16"/>
+    <ROW Property="ProductCode" Value="1028:{AD88F695-3462-4D66-8588-374521C9A003} 1033:{AD88F695-3462-4D66-8588-374521C9A003} 2052:{AD88F695-3462-4D66-8588-374521C9A003} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="sciBASIC#"/>
-    <ROW Property="ProductVersion" Value="10.2026.1022.2" Options="32"/>
+    <ROW Property="ProductVersion" Value="10.2026.1022.3" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{8501C9BA-7DE8-4821-B7B4-A0D86D6AD318}"/>
     <ROW Property="VIEWREADME" Value="1" Type="4"/>
@@ -224,7 +224,7 @@
     <ROW Component="ProductInformation" Value="{E4F78CC0-939B-4D5A-8C6F-7CF883804579}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AI_CustomARPName" ComponentId="{5797A89B-4951-4976-ACB4-4E9F4CE92F0A}" Directory_="APPDIR" Attributes="260" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_CustomARPName" ComponentId="{A4F388FA-3E1F-4A5A-8768-863915A3AE34}" Directory_="APPDIR" Attributes="260" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_DisableModify" ComponentId="{12814D4E-5421-4A91-839D-766D917D710C}" Directory_="APPDIR" Attributes="260" KeyPath="NoModify" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{01880B81-5349-4789-9C8C-6AD4613C5F45}" Directory_="APPDIR" Attributes="260" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{B3B80A55-64C6-42E2-B776-9F0C1ED345A3}" Directory_="APPDIR" Attributes="0"/>
@@ -2174,8 +2174,8 @@
     <ATTRIBUTE name="UsedTheme" value="serene"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
-    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="255.255.6555.6555" Attributes="769" ActionProperty="OLDPRODUCTS"/>
-    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="255.255.6555.6555" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="769" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
     <ROW PrereqKey="D09784F374E3A9F5FB0AFDC657291" DisplayName="Microsoft Edge WebView2 Runtime (web installer)" VersionMin="128.0" SetupFileUrl="Prerequisites\WebView2\MicrosoftEdgeWebview2Setup.exe" Location="0" ExactSize="0" WinNTVersions="Windows 8 x86" WinNT64Versions="Windows 8 x64" Operator="1" NoUiComLine="/silent /install" Options="yx" TargetName="WebView2\MicrosoftEdgeWebview2Setup.exe"/>
