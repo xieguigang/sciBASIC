@@ -112,7 +112,6 @@ End Class
 
 ''' <summary>
 ''' 绘图引擎：所有图表类型的基类与公共能力。
-''' 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
 ''' </summary>
 Public Class PlotEngine : Implements IDisposable
 
