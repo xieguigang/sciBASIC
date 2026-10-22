@@ -62,8 +62,8 @@ Imports MarkdownHtmlRender = Microsoft.VisualBasic.MIME.text.markdown.HtmlRender
 
 Public Class FormMarkWeb
 
-    ''' <summary>带 GitHub 风格主题样式的 markdown → html 渲染器（预览用）。</summary>
-    ReadOnly render As New MarkdownRender(New MarkdownHtmlRender(MarkdownStyle.GitHub))
+    ''' <summary>预览使用的 markdown → html 渲染器（切换样式主题时重建）。</summary>
+    Private render As New MarkdownRender(New MarkdownHtmlRender(MarkdownStyle.GitHub))
 
     Private _headings As List(Of HeadingInfo)
     Private _loading As Boolean = False
@@ -100,6 +100,47 @@ Public Class FormMarkWeb
         If WebView21.CoreWebView2 IsNot Nothing Then
             AddHandler WebView21.CoreWebView2.NavigationCompleted, AddressOf OnNavigationCompleted
         End If
+    End Sub
+
+    ' ---------------------------------------------------------------------
+    ' Style theme selection
+    ' ---------------------------------------------------------------------
+
+    Private Sub ToolStripMenuItemThemeGitHub_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemThemeGitHub.Click
+        Call ApplyTheme(MarkdownStyle.GitHub)
+    End Sub
+
+    Private Sub ToolStripMenuItemThemeDark_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemThemeDark.Click
+        Call ApplyTheme(MarkdownStyle.Dark)
+    End Sub
+
+    Private Sub ToolStripMenuItemThemeThesis_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemThemeThesis.Click
+        Call ApplyTheme(MarkdownStyle.Thesis)
+    End Sub
+
+    Private Sub ToolStripMenuItemThemePlain_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItemThemePlain.Click
+        Call ApplyTheme(Nothing)
+    End Sub
+
+    ''' <summary>
+    ''' Switch the CSS theme used by the preview pane: rebuilds the html renderer,
+    ''' syncs the menu check states and re-renders the document (tree + anchors).
+    ''' </summary>
+    ''' <param name="style">目标主题；<c>Nothing</c> 表示不注入 CSS（输出 html 片段）。</param>
+    Private Sub ApplyTheme(style As MarkdownStyle)
+        If style Is Nothing Then
+            render = New MarkdownRender()
+        Else
+            render = New MarkdownRender(New MarkdownHtmlRender(style))
+        End If
+
+        ' 勾选状态与当前主题保持一致
+        ToolStripMenuItemThemeGitHub.Checked = style Is MarkdownStyle.GitHub
+        ToolStripMenuItemThemeDark.Checked = style Is MarkdownStyle.Dark
+        ToolStripMenuItemThemeThesis.Checked = style Is MarkdownStyle.Thesis
+        ToolStripMenuItemThemePlain.Checked = style Is Nothing
+
+        Call Rebuild()
     End Sub
 
     ' ---------------------------------------------------------------------
