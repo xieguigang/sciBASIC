@@ -17,25 +17,27 @@ Markdown 的语法看似简单，但「嵌套」会让实现难度陡增：引�
 - **两阶段递归解析器 `MarkdownParser`**：先块级分词，再行内 span 解析，因此嵌套列表、包含标题或列表的引用块、带行内格式的表格都能通过递归正确处理；
 - **可插拔输出**：抽象 `Render` 基类定义输出契约，`HtmlRender` 输出 HTML、`TextRender` 输出纯文本；`MarkdownRender` 负责组装并暴露图片 URL 路由；
 - **类型化块模型 `JSONSchema.Block`**：`JSONRenderer.Parse` 把 JSON 文档转换为 `IEnumerable(Of Block)`（对 LLM 输出尤其有用），`ToMarkdown` / `ToHtml` 再渲染回去；`BlockRenderer` 转换单个块；
-- **目录生成**：`TOC.GenerateToc` 由 ATX 标题构建嵌套 markdown 列表，`TOC.AddToc` 插入到文档前部，`MarkdownRender.GetTOC` 返回标题文本及其层级。
+- **目录生成**：`TOC.GenerateToc` 由标题构建嵌套 markdown 列表，`TOC.AddToc` 插入到文档前部，`MarkdownRender.GetTOC` 返回标题文本及其层级；
+- **统一的标题扫描 `MarkdownHeadings.Parse`**：ATX（`#`..`######`）与 setext（`===` / `---`）标题、跳过围栏代码块内的伪标题、识别引用块/列表项内的标题，并给出与渲染顺序一致的 `Index` 与源码位置（`LineStart` / `LineLength`），供目录生成、编辑器大纲与文档导航复用。
 
 ## 命名空间地图
 
 | 命名空间 | 职责 |
 |---|---|
-| `Microsoft.VisualBasic.MIME.text.markdown`（根） | `MarkdownParser`、`MarkdownRender`、`Render` / `HtmlRender` / `TextRender`、`TOC` |
+| `Microsoft.VisualBasic.MIME.text.markdown`（根） | `MarkdownParser`、`MarkdownRender`、`Render` / `HtmlRender` / `TextRender`、`TOC`、`MarkdownHeadings` / `HeadingInfo` |
 | `....text.markdown.JSONSchema` | 类型化块模型 `Block`、`JSONRenderer`、`BlockRenderer` |
 
 ## 关键类型与 API
 
 - `MarkdownParser` —— 递归块 / 行内解析器，针对给定 `Render` 产出渲染结果字符串；
-- `MarkdownRender` —— 入口：`Transform` 把 markdown 渲染为 HTML（或配合 `TextRender` 渲染为文本），`GetTOC` 列出 ATX 标题；
+- `MarkdownRender` —— 入口：`Transform` 把 markdown 渲染为 HTML（或配合 `TextRender` 渲染为文本），`GetTOC` 列出标题；
 - `Render` —— 抽象渲染契约，由 `HtmlRender` 与 `TextRender` 实现；
 - `HtmlRender` —— 把 markdown 结构渲染为 HTML 标签；
 - `TextRender` —— 把 markdown 结构渲染为纯文本；
 - `JSONSchema.Block` —— 类型化块模型：类型、层级、内容、表头、行与列表数据；
 - `JSONSchema.JSONRenderer` —— 把 JSON 文档解析为块，并把块渲染为 markdown 或 HTML；
-- `TOC` —— 由 ATX 标题生成并插入嵌套目录。
+- `TOC` —— 由标题生成并插入嵌套目录（内部复用 `MarkdownHeadings.Parse`）；
+- `MarkdownHeadings` / `HeadingInfo` —— 权威的标题扫描实现：目录、`GetTOC`、编辑器大纲与源码跳转都基于它。
 
 ## 快速上手
 
