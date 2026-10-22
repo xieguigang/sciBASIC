@@ -325,4 +325,24 @@ Public Class FormMarkWeb
         Dim js = $"var el=document.getElementById('md-h{idx}'); if(el){{el.scrollIntoView({{behavior:'smooth', block:'start'}});}}"
         Await WebView21.CoreWebView2.ExecuteScriptAsync(js)
     End Sub
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Using file As New SaveFileDialog With {
+            .Filter = {
+                "Markdown(*.md)|*.md",
+                "Microsoft Word(*.docx)|*.docx",
+                "PDF(*.pdf)|*.pdf",
+                "Open XPS(*.oxps)|*.oxps",
+                "Microsoft XPS(*.xps)|*.xps",
+                "RTF(*.rtf)|*.rtf",
+                "Plain Text(*.txt)|*.txt",
+                "Html Document(*.html)|*.html"
+            }.JoinBy("|")
+        }
+
+            If file.ShowDialog = DialogResult.OK Then
+
+            End If
+        End Using
+    End Sub
 End Class

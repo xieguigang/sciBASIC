@@ -85,6 +85,7 @@ Partial Class FormMarkWeb
         TreeView1 = New TreeView()
         TextBox1 = New TextBox()
         Timer1 = New Timer(components)
+        ToolStripButton2 = New ToolStripButton()
         CType(WebView21, ComponentModel.ISupportInitialize).BeginInit()
         ToolStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
@@ -111,7 +112,7 @@ Partial Class FormMarkWeb
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.System
@@ -186,6 +187,15 @@ Partial Class FormMarkWeb
         ' 
         Timer1.Interval = 300
         ' 
+        ' ToolStripButton2
+        ' 
+        ToolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), Image)
+        ToolStripButton2.ImageTransparentColor = Color.Magenta
+        ToolStripButton2.Name = "ToolStripButton2"
+        ToolStripButton2.Size = New Size(23, 22)
+        ToolStripButton2.Text = "导出文档"
+        ' 
         ' FormMarkWeb
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -219,5 +229,6 @@ Partial Class FormMarkWeb
     Friend WithEvents TreeView1 As TreeView
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents ToolStripButton2 As ToolStripButton
 
 End Class
