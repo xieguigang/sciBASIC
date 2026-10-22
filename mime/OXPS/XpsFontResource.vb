@@ -18,6 +18,11 @@ Imports System.IO
 ''' <summary>
 ''' XPS 字体资源：负责查找可用字体、按 ODTTF 规范混淆，并在没有可用字体时安全回退。
 ''' </summary>
+''' <remarks>
+''' 嵌入的是**完整**字体文件（不做子集化），因此使用中文字体时文档包体会达到数 MB；
+''' 对体积敏感的场景可以关闭 <see cref="XpsDocument.EmbedFont"/>（回退输出的包只有几 KB，
+''' 文本仍可提取），或通过 <see cref="XpsDocument.FontFile"/> 指定更小的字体。
+''' </remarks>
 Public Class XpsFontResource
 
     ''' <summary>包内字体部件所在目录。</summary>
