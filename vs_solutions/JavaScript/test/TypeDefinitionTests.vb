@@ -113,7 +113,9 @@ Public Class TypeDefinitionTests
 
         Assert.Contains("Name: string;", text)
         Assert.Contains("readonly Count: number;", text)
-        Assert.Contains("State: LiteJs.Tests.TsState;", text)
+        ' enums cross the bridge as numbers (ClrConvert.ToJs), so the member type
+        ' is number — the enum declaration still gives TsState.Running completion
+        Assert.Contains("State: number;", text)
         Assert.Contains("readonly Stamp: Date;", text)
         Assert.Contains("readonly Token: string;", text)
         Assert.Contains("readonly Items: number[];", text)
@@ -157,8 +159,18 @@ Public Class TypeDefinitionTests
     Public Sub Generic_types_and_methods()
         Dim text As String = Generate()
 
+        ' VB emits "As TsBox(Of T)" on a member of TsBox(Of T) as the unbound
+        ' definition: the enclosing type parameters are substituted back
         Assert.Contains("static Box(value: T): LiteJs.Tests.TsDemo.Generic.TsBox<T>;", text)
+        Assert.Contains("Self(): LiteJs.Tests.TsDemo.Generic.TsBox<T>;", text)
+        ' a method generic parameter keeps its own name
         Assert.Contains("Map<U>(selector: any): LiteJs.Tests.TsDemo.Generic.TsBox<U>;", text)
+        ' concrete arguments render as mapped types
+        Assert.Contains("WrapInt(v: number): LiteJs.Tests.TsDemo.Generic.TsBox<number>;", text)
+        Assert.Contains("TypedBox: LiteJs.Tests.TsDemo.Generic.TsBox<number>;", text)
+        ' positional substitution follows the declaring type parameters
+        Assert.Contains("BoxFirst(): LiteJs.Tests.TsDemo.Generic.TsBox<A>;", text)
+        Assert.Contains("BoxSecond(): LiteJs.Tests.TsDemo.Generic.TsBox<B>;", text)
     End Sub
 
     ' ======================================================== visibility
@@ -317,39 +329,6 @@ Public Class TypeDefinitionTests
             If File.Exists(copy) Then File.Delete(copy)
             If File.Exists(out) Then File.Delete(out)
         End Try
-    End Sub
-
-    <Fact>
-    Public Sub Diag_box_return_type()
-        Dim asm As Assembly = GetType(TsWidget).Assembly
-        Dim sb As New Text.StringBuilder()
-        Dim t = asm.GetType("LiteJs.Tests.TsDemo.Generic.TsBox`1")
-
-        Dim dump As Action(Of String, Type) =
-            Sub(label, rt)
-                sb.AppendLine(label & ": FullName=[" & rt.FullName & "] IsGenericType=" & rt.IsGenericType &
-                              " IsGenericTypeDefinition=" & rt.IsGenericTypeDefinition &
-                              " Args=" & rt.GetGenericArguments().Length)
-            End Sub
-
-        dump("Box return (Of T)", t.GetMethod("Box", BindingFlags.Public Or BindingFlags.Static).ReturnType)
-        dump("Map return (Of U)", t.GetMethod("Map", BindingFlags.Public Or BindingFlags.Instance).ReturnType)
-        dump("Map selector param", t.GetMethod("Map", BindingFlags.Public Or BindingFlags.Instance).GetParameters()(0).ParameterType)
-        dump("WrapInt return (Of Integer)", t.GetMethod("WrapInt", BindingFlags.Public Or BindingFlags.Instance).ReturnType)
-        dump("Self return (Of T, instance)", t.GetMethod("Self", BindingFlags.Public Or BindingFlags.Instance).ReturnType)
-        dump("TypedBox property", t.GetProperty("TypedBox").PropertyType)
-        dump("Value property (T)", t.GetProperty("Value").PropertyType)
-
-        Dim w = asm.GetType("LiteJs.Tests.TsWidget")
-        dump("Widget.Items (List Of Double)", w.GetProperty("Items").PropertyType)
-        dump("Widget.State (enum)", w.GetProperty("State").PropertyType)
-
-        Dim p = asm.GetType("LiteJs.Tests.TsDemo.Generic.TsPair`2")
-        dump("TsPair.BoxSecond (Of B)", p.GetMethod("BoxSecond").ReturnType)
-        dump("TsPair.BoxFirst (Of A)", p.GetMethod("BoxFirst").ReturnType)
-
-        File.WriteAllText(System.IO.Path.Combine(System.IO.Path.GetTempPath(), "lits-diag.txt"), sb.ToString())
-        Assert.True(True)
     End Sub
 
     ' ======================================================== end to end

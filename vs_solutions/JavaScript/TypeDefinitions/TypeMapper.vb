@@ -56,10 +56,12 @@ Namespace TypeDefinitions
     ''' type · types of the scanned assembly → their declaration name · everything
     ''' else (BCL) → ``any``.
     ''' </para>
-    ''' <paramref name="context"/> carries the generic parameter names of the
-    ''' declaring type: Visual Basic emits a signature type that instantiates a
-    ''' generic type with the enclosing type's own parameters (in order) as the
-    ''' unbound generic definition, so those parameters are substituted back here.
+    ''' <para>
+    ''' The ``context`` argument carries the generic parameter names of the declaring
+    ''' type: Visual Basic emits a signature type that instantiates a generic type with
+    ''' the enclosing type's own parameters (in order) as the unbound generic
+    ''' definition, so those parameters are substituted back here.
+    ''' </para>
     ''' </summary>
     Friend Module TypeMapper
 
@@ -118,7 +120,7 @@ Namespace TypeDefinitions
             End If
 
             If ClrConvert.IsDelegate(t) Then
-                Return If(IsExported(t, exports), TsNaming.QualifiedName(t), "any")
+                Return If(IsExported(t, exports), TsNaming.DeclarationPath(t), "any")
             End If
 
             If IsExported(t, exports) Then
@@ -126,12 +128,19 @@ Namespace TypeDefinitions
                     ' Visual Basic writes a signature that instantiates a generic type
                     ' with the enclosing type's own parameters as the unbound
                     ' definition; substitute those parameters back positionally
-                    Dim args As List(Of String) = DefinitionArguments(t, context)
+                    Dim substituted As List(Of String) = DefinitionArguments(t, context)
 
-                    Return TsNaming.QualifiedName(t) & "<" & String.Join(", ", args) & ">"
+                    Return TsNaming.DeclarationPath(t) & "<" & String.Join(", ", substituted) & ">"
                 End If
 
-                Return TsNaming.QualifiedName(t)
+                If t.IsGenericType Then
+                    Dim definition As Type = t.GetGenericTypeDefinition()
+                    Dim args = t.GetGenericArguments().Select(Function(a) TsTypeName(a, exports, context))
+
+                    Return TsNaming.DeclarationPath(definition) & "<" & String.Join(", ", args) & ">"
+                End If
+
+                Return TsNaming.DeclarationPath(t)
             End If
 
             ' BCL types outside the mapping table degrade to any
@@ -155,11 +164,15 @@ Namespace TypeDefinitions
 
         ''' <summary>Is the type (or its generic definition) part of the scanned assembly?</summary>
         Private Function IsExported(t As Type, exports As HashSet(Of String)) As Boolean
-            If t.FullName Is Nothing Then Return False
-
             If t.IsGenericType AndAlso Not t.IsGenericTypeDefinition Then
-                Return exports.Contains(t.GetGenericTypeDefinition().FullName)
+                ' a constructed generic whose arguments are generic parameters carries
+                ' no FullName, so always test through its definition
+                Dim definition As Type = t.GetGenericTypeDefinition()
+
+                Return definition.FullName IsNot Nothing AndAlso exports.Contains(definition.FullName)
             End If
+
+            If t.FullName Is Nothing Then Return False
 
             Return exports.Contains(t.FullName)
         End Function

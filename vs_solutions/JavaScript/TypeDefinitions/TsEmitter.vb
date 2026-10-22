@@ -215,7 +215,8 @@ Namespace TypeDefinitions
                 For Each i As Type In model.Interfaces
                     Dim name As String = TypeMapper.TsTypeName(i, exports, model.GenericParameters)
 
-                    If name <> "any" AndAlso Not extendsList.Contains(name) Then extendsList.Add(name)
+                    ' an array type (IList(Of T) and friends) is not a valid extends target
+                    If UsableBase(name) AndAlso Not extendsList.Contains(name) Then extendsList.Add(name)
                 Next
             Else
                 If model.BaseType IsNot Nothing Then
@@ -225,7 +226,7 @@ Namespace TypeDefinitions
                 For Each i As Type In model.Interfaces
                     Dim name As String = TypeMapper.TsTypeName(i, exports, model.GenericParameters)
 
-                    If name <> "any" AndAlso Not extendsList.Contains(name) AndAlso Not implementsList.Contains(name) Then
+                    If UsableBase(name) AndAlso Not extendsList.Contains(name) AndAlso Not implementsList.Contains(name) Then
                         implementsList.Add(name)
                     End If
                 Next
@@ -497,7 +498,7 @@ Namespace TypeDefinitions
             Dim used As New Dictionary(Of String, String)(StringComparer.Ordinal)
 
             For Each model In aliases.OrderBy(Function(t) t.ClrType.FullName, StringComparer.Ordinal)
-                Dim qualified As String = TsNaming.QualifiedName(model.ClrType)
+                Dim qualified As String = TsNaming.DeclarationPath(model.ClrType)
                 Dim winner As String = Nothing
 
                 If used.TryGetValue(model.ShortName, winner) Then

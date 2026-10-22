@@ -30,7 +30,7 @@
 
     '     Module TsNaming
     ' 
-    '         Function: QualifiedName, Sanitize, StripArity
+    '         Function: DeclarationPath, Sanitize, StripArity
 
     ' /********************************************************************************/
 
@@ -78,26 +78,14 @@ Namespace TypeDefinitions
         End Function
 
         ''' <summary>
-        ''' The TypeScript declaration path of a CLR type: dotted namespace plus the
+        ''' The dotted TypeScript declaration path of a CLR type: namespace plus the
         ''' declaring-type chain (nested types become ``Ns.Outer.Inner``), generic arity
-        ''' stripped, with ``&lt;args&gt;`` appended for constructed generic types.
+        ''' stripped. Generic arguments are NOT rendered here — the type mapper owns
+        ''' them, because an argument may be a generic parameter or a mapped type.
         ''' </summary>
-        Friend Function QualifiedName(t As Type) As String
+        Friend Function DeclarationPath(t As Type) As String
             If t Is Nothing Then Return "any"
-
-            Dim definition As Type = t
-            Dim constructed As Boolean = t.IsGenericType AndAlso Not t.IsGenericTypeDefinition
-
-            If constructed Then definition = t.GetGenericTypeDefinition()
-
-            Dim path As String = PathOf(definition)
-
-            If constructed Then
-                Dim args = t.GetGenericArguments().Select(Function(a) QualifiedName(a))
-                Return path & "<" & String.Join(", ", args) & ">"
-            End If
-
-            Return path
+            Return PathOf(t)
         End Function
 
         ''' <summary>The dotted path of a (possibly nested, possibly generic) type definition.</summary>
