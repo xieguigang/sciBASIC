@@ -14,6 +14,8 @@
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <OutputPath>../../tools/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ApplicationIcon>3mf.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,6 +54,9 @@
   <!-- 演示脚本随输出发布，宿主启动时自动加载 -->
   <ItemGroup>
     <None Include="demo\**\*.js" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="3mf.ico" />
   </ItemGroup>
 
 </Project>
