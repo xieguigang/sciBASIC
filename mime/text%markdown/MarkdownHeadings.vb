@@ -74,16 +74,19 @@ Public Module MarkdownHeadings
             Return headings
         End If
 
-        Dim text As String = markdown.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
-        Dim lines As String() = text.Split(ControlChars.Lf)
-        Dim offset As Integer = 0
+        ' 按原始文本切行并记录每行的起始偏移：CRLF 文本若先归一化为 LF，累加得到的
+        ' 偏移量会比真实位置每行少 1 个字符，导致调用方在源码中定位到错误的位置。
+        Dim lines As String() = Nothing
+        Dim lineStarts As Integer() = Nothing
+
+        Call SplitLines(markdown, lines, lineStarts)
 
         Dim inFence As Boolean = False
         Dim fenceChar As Char = " "c
 
         For i As Integer = 0 To lines.Length - 1
             Dim rawLine As String = lines(i)
-            Dim trimmed As String = rawLine.Trim(" "c, ControlChars.Tab, ControlChars.Cr, ControlChars.Lf)
+            Dim trimmed As String = rawLine.Trim(" "c, ControlChars.Tab)
 
             ' 跟踪围栏代码块：围栏内部的 # 不会被渲染为标题，跳过以保持索引对齐
             Dim fence As Match = fenceMarker.Match(trimmed)
@@ -96,12 +99,10 @@ Public Module MarkdownHeadings
                     inFence = False
                 End If
 
-                offset += rawLine.Length + 1
                 Continue For
             End If
 
             If inFence Then
-                offset += rawLine.Length + 1
                 Continue For
             End If
 
@@ -145,16 +146,54 @@ Public Module MarkdownHeadings
                     .Index = headings.Count,
                     .Level = level,
                     .Text = CleanHeadingText(headingText),
-                    .LineStart = offset,
+                    .LineStart = lineStarts(i),
                     .LineLength = rawLine.Length
                 })
             End If
-
-            offset += rawLine.Length + 1
         Next
 
         Return headings
     End Function
+
+    ''' <summary>
+    ''' 按 CRLF / LF / CR 切分文本，并返回每行在原始文本中的起始偏移。
+    ''' （<paramref name="text"/> 不做换行归一化，因此偏移量可以直接用于源码定位。）
+    ''' </summary>
+    ''' <param name="text">原始文本。</param>
+    ''' <param name="lines">切分出的行（不含换行符）。</param>
+    ''' <param name="starts">每行的起始字符偏移。</param>
+    Private Sub SplitLines(text As String, ByRef lines As String(), ByRef starts As Integer())
+        Dim lineList As New List(Of String)()
+        Dim startList As New List(Of Integer)()
+        Dim start As Integer = 0
+        Dim pos As Integer = 0
+
+        While pos < text.Length
+            Dim c As Char = text(pos)
+
+            If c = ControlChars.Cr OrElse c = ControlChars.Lf Then
+                Call lineList.Add(text.Substring(start, pos - start))
+                Call startList.Add(start)
+
+                If c = ControlChars.Cr AndAlso pos + 1 < text.Length AndAlso text(pos + 1) = ControlChars.Lf Then
+                    pos += 1
+                End If
+
+                pos += 1
+                start = pos
+            Else
+                pos += 1
+            End If
+        End While
+
+        If start <= text.Length Then
+            Call lineList.Add(text.Substring(start, text.Length - start))
+            Call startList.Add(start)
+        End If
+
+        lines = lineList.ToArray()
+        starts = startList.ToArray()
+    End Sub
 
     ''' <summary>
     ''' 剥离行内 markdown 强调 / 代码 / 删除线分隔符与转义反斜杠，得到可读的标题文本。
