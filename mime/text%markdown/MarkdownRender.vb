@@ -97,17 +97,17 @@ Public Class MarkdownRender
         Return render.Document(parser.Parse(markdown))
     End Function
 
-    Shared ReadOnly headers As New Regex("^[#]+.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
-
     ''' <summary>
     ''' Get table of content of the target markdown document.
-    ''' (Only ATX style headers ``#`` to ``######`` are supported.)
+    ''' Both ATX style headers (``#`` to ``######``) and setext style headers are
+    ''' supported; the scan is shared with <see cref="TOC.GenerateToc"/> through
+    ''' <see cref="MarkdownHeadings.Parse"/>.
     ''' </summary>
-    ''' <param name="md"></param>
-    ''' <returns></returns>
+    ''' <param name="md">The markdown source text.</param>
+    ''' <returns>标题文本及其层级。</returns>
     Public Shared Iterator Function GetTOC(md As String) As IEnumerable(Of NamedValue(Of Integer))
-        For Each level As String In headers.Matches(md).ToArray
-            Yield New NamedValue(Of Integer)(level.Trim(" "c, "#"c), level.TakeWhile(Function(c) c = "#"c).Count)
+        For Each heading As HeadingInfo In MarkdownHeadings.Parse(md)
+            Yield New NamedValue(Of Integer)(heading.Text, heading.Level)
         Next
     End Function
 End Class

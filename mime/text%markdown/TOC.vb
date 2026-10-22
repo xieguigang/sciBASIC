@@ -52,32 +52,28 @@
 #End Region
 
 Imports System.Text
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Language
 
 Public Module TOC
 
-    Private ReadOnly atxHeader As New Regex("^(#{1,6})\s+(.*?)\s*#*\s*$", RegexOptions.Multiline)
-
     ''' <summary>
-    ''' Generate a nested markdown table of contents from the ATX headers
-    ''' (``#`` .. ``######``) found in the document.
+    ''' Generate a nested markdown table of contents from the headings found in
+    ''' the document. Both ATX (``#`` .. ``######``) and setext (``===`` / ``---``
+    ''' underline) headings are collected through <see cref="MarkdownHeadings.Parse"/>,
+    ''' so headers inside fenced code blocks are ignored exactly like the renderer does.
     ''' </summary>
     ''' <param name="md">The markdown source text.</param>
     ''' <param name="numbering">Reserved for future numbered list output.</param>
     ''' <returns>A markdown list string representing the document outline.</returns>
     Public Function GenerateToc(md As String, Optional numbering As Boolean = False) As String
         Dim sb As New StringBuilder
-        For Each m As Match In atxHeader.Matches(md)
-            Dim level = m.Groups(1).Value.Length
-            Dim text = m.Groups(2).Value.Trim()
-            If text.StringEmpty Then
-                Continue For
-            End If
-            Dim indent = New String(" "c, (level - 1) * 2)
-            Dim anchor = Slug(text)
-            sb.AppendLine($"{indent}- [{text}](#{anchor})")
+
+        For Each heading As HeadingInfo In MarkdownHeadings.Parse(md)
+            Dim indent As String = New String(" "c, (heading.Level - 1) * 2)
+            Dim anchor As String = Slug(heading.Text)
+
+            Call sb.AppendLine($"{indent}- [{heading.Text}](#{anchor})")
         Next
+
         Return sb.ToString.Trim(vbCr, vbLf, " "c)
     End Function
 

@@ -65,11 +65,7 @@ Public Class FormMarkWeb
     Private _navigating As Boolean = False
     Private _pendingScrollIndex As Integer = -1
 
-    Private ReadOnly atxHeader As New Regex("^(#{1,6})\s+(.*?)\s*#*\s*$", RegexOptions.Multiline)
     Private ReadOnly headingTag As New Regex("<(h[1-6])>", RegexOptions.IgnoreCase)
-    Private ReadOnly setextH1 As New Regex("^=+\s*$", RegexOptions.Multiline)
-    Private ReadOnly setextH2 As New Regex("^-{2,}\s*$", RegexOptions.Multiline)
-    Private ReadOnly listMarker As New Regex("^(\s*[-+*]|\s*\d+[.])[ \t]+")
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Using file As New OpenFileDialog With {.Filter = "Markdown 文档(*.md)|*.md"}
@@ -101,108 +97,9 @@ Public Class FormMarkWeb
     ' ---------------------------------------------------------------------
 
     ''' <summary>
-    ''' Scan the markdown source for ATX (``#``..``######``) and setext
-    ''' (underline ``=`` / ``-``) headers, mirroring the rules used by
-    ''' <see cref="MarkdownParser"/> so that the detected order matches the
-    ''' order of ``&lt;h*&gt;`` elements produced by <see cref="MarkdownRender"/>.
-    ''' </summary>
-    Private Function ParseHeadings(md As String) As List(Of HeadingInfo)
-        Dim headings As New List(Of HeadingInfo)
-        If String.IsNullOrEmpty(md) Then
-            Return headings
-        End If
-
-        Dim text = md.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
-        Dim lines = text.Split(vbLf)
-        Dim offset As Integer = 0
-
-        Dim inFence As Boolean = False
-        Dim fenceChar As Char = " "c
-
-        For i As Integer = 0 To lines.Length - 1
-            Dim rawLine = lines(i)
-            Dim t = rawLine.Trim(" "c, vbTab, vbCr, vbLf)
-
-            ' Track fenced code blocks (``` or ~~~); headers inside a fence are
-            ' not rendered as <h*> by the parser, so skip them to keep the
-            ' heading index aligned with the rendered HTML anchor order.
-            Dim fm = Regex.Match(t, "^( {0,3})(`{3,}|~{3,})")
-            If fm.Success Then
-                If Not inFence Then
-                    inFence = True
-                    fenceChar = fm.Groups(2).Value(0)
-                ElseIf fm.Groups(2).Value(0) = fenceChar Then
-                    inFence = False
-                End If
-                offset += rawLine.Length + 1
-                Continue For
-            End If
-            If inFence Then
-                offset += rawLine.Length + 1
-                Continue For
-            End If
-
-            ' Strip blockquote prefixes ("> " may be repeated) so that a heading
-            ' nested inside a blockquote is still detected.
-            Dim work = t
-            While work.StartsWith(">")
-                work = work.Substring(1).TrimStart(" "c)
-            End While
-
-            ' Strip list-item markers (including nesting) so a heading written
-            ' inside a list item is detected the same way the parser renders it.
-            Dim lm = listMarker.Match(work)
-            While lm.Success
-                work = work.Substring(lm.Length)
-                lm = listMarker.Match(work)
-            End While
-
-            Dim level As Integer = 0
-            Dim headingText As String = Nothing
-
-            Dim atx = atxHeader.Match(work)
-            If atx.Success Then
-                level = atx.Groups(1).Value.Length
-                headingText = atx.Groups(2).Value.Trim()
-            ElseIf i + 1 < lines.Length Then
-                Dim nxt = lines(i + 1).Trim(" "c, vbTab, vbCr, vbLf)
-                If setextH1.IsMatch(nxt) Then
-                    level = 1
-                    headingText = work
-                ElseIf setextH2.IsMatch(nxt) Then
-                    level = 2
-                    headingText = work
-                End If
-            End If
-
-            If level > 0 AndAlso Not String.IsNullOrWhiteSpace(headingText) Then
-                headings.Add(New HeadingInfo With {
-                    .Index = headings.Count,
-                    .Level = level,
-                    .Text = CleanHeadingText(headingText),
-                    .LineStart = offset,
-                    .LineLength = rawLine.Length
-                })
-            End If
-
-            offset += rawLine.Length + 1
-        Next
-
-        Return headings
-    End Function
-
-    ''' <summary>
-    ''' Strip inline markdown emphasis / code / strikethrough delimiters so the
-    ''' tree label is human readable.
-    ''' </summary>
-    Private Function CleanHeadingText(raw As String) As String
-        Dim s = Regex.Replace(raw, "\\|(\*\*\*|\*\*|__|~~|\*|`|_)", "")
-        Return s.Trim()
-    End Function
-
-    ''' <summary>
     ''' Inject a stable ``id="md-h{index}"`` anchor into every ``&lt;h*&gt;`` opening
-    ''' tag, in document order, so the index matches <see cref="ParseHeadings"/>.
+    ''' tag, in document order, so the index matches
+    ''' <see cref="MarkdownHeadings.Parse"/>.
     ''' </summary>
     Private Function InjectHeadingIds(html As String) As String
         Dim counter As Integer = 0
@@ -237,7 +134,7 @@ Public Class FormMarkWeb
 
     Private Sub Rebuild()
         Dim md = TextBox1.Text
-        Dim headings = ParseHeadings(md)
+        Dim headings = MarkdownHeadings.Parse(md)
         _headings = headings
 
         Dim html = render.Transform(md)
