@@ -81,6 +81,12 @@ Partial Class FormMarkWeb
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
+        ToolStripThemeButton = New ToolStripDropDownButton()
+        ToolStripMenuItemThemeGitHub = New ToolStripMenuItem()
+        ToolStripMenuItemThemeDark = New ToolStripMenuItem()
+        ToolStripMenuItemThemeThesis = New ToolStripMenuItem()
+        ToolStripSeparatorTheme = New ToolStripSeparator()
+        ToolStripMenuItemThemePlain = New ToolStripMenuItem()
         SplitContainer1 = New SplitContainer()
         SplitContainer2 = New SplitContainer()
         TreeView1 = New TreeView()
@@ -113,7 +119,7 @@ Partial Class FormMarkWeb
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2, ToolStripThemeButton})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.System
@@ -138,6 +144,50 @@ Partial Class FormMarkWeb
         ToolStripButton2.Name = "ToolStripButton2"
         ToolStripButton2.Size = New Size(23, 22)
         ToolStripButton2.Text = "导出文档"
+        ' 
+        ' ToolStripThemeButton
+        ' 
+        ToolStripThemeButton.DisplayStyle = ToolStripItemDisplayStyle.Text
+        ToolStripThemeButton.DropDownItems.AddRange(New ToolStripItem() {ToolStripMenuItemThemeGitHub, ToolStripMenuItemThemeDark, ToolStripMenuItemThemeThesis, ToolStripSeparatorTheme, ToolStripMenuItemThemePlain})
+        ToolStripThemeButton.Name = "ToolStripThemeButton"
+        ToolStripThemeButton.Size = New Size(68, 22)
+        ToolStripThemeButton.Text = "样式主题"
+        ToolStripThemeButton.ToolTipText = "选择预览使用的 CSS 样式主题"
+        ' 
+        ' ToolStripMenuItemThemeGitHub
+        ' 
+        ToolStripMenuItemThemeGitHub.Checked = True
+        ToolStripMenuItemThemeGitHub.CheckState = CheckState.Checked
+        ToolStripMenuItemThemeGitHub.Name = "ToolStripMenuItemThemeGitHub"
+        ToolStripMenuItemThemeGitHub.Size = New Size(180, 22)
+        ToolStripMenuItemThemeGitHub.Text = "GitHub 浅色"
+        ToolStripMenuItemThemeGitHub.ToolTipText = "GitHub 风格的浅色主题（MarkdownStyle.GitHub）"
+        ' 
+        ' ToolStripMenuItemThemeDark
+        ' 
+        ToolStripMenuItemThemeDark.Name = "ToolStripMenuItemThemeDark"
+        ToolStripMenuItemThemeDark.Size = New Size(180, 22)
+        ToolStripMenuItemThemeDark.Text = "深色"
+        ToolStripMenuItemThemeDark.ToolTipText = "深色主题（MarkdownStyle.Dark）"
+        ' 
+        ' ToolStripMenuItemThemeThesis
+        ' 
+        ToolStripMenuItemThemeThesis.Name = "ToolStripMenuItemThemeThesis"
+        ToolStripMenuItemThemeThesis.Size = New Size(180, 22)
+        ToolStripMenuItemThemeThesis.Text = "论文学术风格"
+        ToolStripMenuItemThemeThesis.ToolTipText = "论文版式：宋体正文 + 黑体标题 + 三线表（MarkdownStyle.Thesis）"
+        ' 
+        ' ToolStripSeparatorTheme
+        ' 
+        ToolStripSeparatorTheme.Name = "ToolStripSeparatorTheme"
+        ToolStripSeparatorTheme.Size = New Size(177, 6)
+        ' 
+        ' ToolStripMenuItemThemePlain
+        ' 
+        ToolStripMenuItemThemePlain.Name = "ToolStripMenuItemThemePlain"
+        ToolStripMenuItemThemePlain.Size = New Size(180, 22)
+        ToolStripMenuItemThemePlain.Text = "无样式"
+        ToolStripMenuItemThemePlain.ToolTipText = "不注入任何 CSS，仅输出 html 片段（HtmlRender 默认行为）"
         ' 
         ' SplitContainer1
         ' 
@@ -242,5 +292,11 @@ Partial Class FormMarkWeb
     Friend WithEvents Timer1 As Timer
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripThemeButton As ToolStripDropDownButton
+    Friend WithEvents ToolStripMenuItemThemeGitHub As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItemThemeDark As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItemThemeThesis As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparatorTheme As ToolStripSeparator
+    Friend WithEvents ToolStripMenuItemThemePlain As ToolStripMenuItem
 
 End Class
