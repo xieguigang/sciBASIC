@@ -12,8 +12,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.7.9791.24820</Version>
-    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
+    <Version>10.7.9791.26955</Version>
+    <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <Title>Dendrogram and Radial Tree Plotting for Cluster Hierarchies</Title>
     <Description>A hierarchical clustering plotting library for sciBASIC#: renders cluster trees as vertical dendrograms, circular and radial layouts, and horizon or right-to-left panels, with heatmap compatibility layers, class colour legends, leaf labels and row or column data scaling.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.HierarchicalClustering.Plot</AssemblyTitle>

@@ -1,93 +1,86 @@
 ﻿#Region "Microsoft.VisualBasic::be6bc3664c09ed7c03c3a3c97d9d65a8, tutorials\Marked\FormMarkWeb.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 30
-    '    Code Lines: 23 (76.67%)
-    '    Comment Lines: 0 (0.00%)
-    '     - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 7 (23.33%)
-    '     File Size: 1.18 KB
+' Summaries:
 
 
-    ' Class FormMarkWeb
-    ' 
-    '     Sub: ToolStripButton1_Click
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 30
+'    Code Lines: 23 (76.67%)
+'    Comment Lines: 0 (0.00%)
+'     - Xml Docs: 0.00%
+' 
+'   Blank Lines: 7 (23.33%)
+'     File Size: 1.18 KB
+
+
+' Class FormMarkWeb
+' 
+'     Sub: ToolStripButton1_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.Web.WebView2.Core
 
-''' <summary>
-''' A single parsed heading from the markdown source. The <see cref="Index"/> is
-''' aligned 1:1 with the order of ``&lt;h1&gt;``..``&lt;h6&gt;`` elements in the
-''' rendered HTML (after id injection), so it can be used as a navigation anchor.
-''' </summary>
-Public Class HeadingInfo
-    Public Index As Integer
-    Public Level As Integer
-    Public Text As String
-    Public LineStart As Integer
-    Public LineLength As Integer
-End Class
+' 注意：ApplicationServices.Report 与 markdown 命名空间各有一个 HtmlRender，
+' 这里使用带主题样式的 markdown html 渲染器，因此用别名避免二义性。
+Imports MarkdownHtmlRender = Microsoft.VisualBasic.MIME.text.markdown.HtmlRender
 
 Public Class FormMarkWeb
 
-    ReadOnly render As New MarkdownRender
+    ''' <summary>带 GitHub 风格主题样式的 markdown → html 渲染器（预览用）。</summary>
+    ReadOnly render As New MarkdownRender(New MarkdownHtmlRender(MarkdownStyle.GitHub))
 
     Private _headings As List(Of HeadingInfo)
     Private _loading As Boolean = False
     Private _navigating As Boolean = False
     Private _pendingScrollIndex As Integer = -1
 
-    Private ReadOnly atxHeader As New Regex("^(#{1,6})\s+(.*?)\s*#*\s*$", RegexOptions.Multiline)
+    ''' <summary>当前打开的 markdown 文件路径（导出时作为相对图片路径的基准目录）。</summary>
+    Private _sourceFile As String = ""
+
     Private ReadOnly headingTag As New Regex("<(h[1-6])>", RegexOptions.IgnoreCase)
-    Private ReadOnly setextH1 As New Regex("^=+\s*$", RegexOptions.Multiline)
-    Private ReadOnly setextH2 As New Regex("^-{2,}\s*$", RegexOptions.Multiline)
-    Private ReadOnly listMarker As New Regex("^(\s*[-+*]|\s*\d+[.])[ \t]+")
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Using file As New OpenFileDialog With {.Filter = "Markdown 文档(*.md)|*.md"}
             If file.ShowDialog = DialogResult.OK Then
                 Dim md As String = file.FileName.ReadAllText
+
+                _sourceFile = file.FileName
 
                 ' Suppress the TextChanged -> debounce chain while we load the file,
                 ' then render once synchronously for an immediate result.
@@ -114,116 +107,17 @@ Public Class FormMarkWeb
     ' ---------------------------------------------------------------------
 
     ''' <summary>
-    ''' Scan the markdown source for ATX (``#``..``######``) and setext
-    ''' (underline ``=`` / ``-``) headers, mirroring the rules used by
-    ''' <see cref="MarkdownParser"/> so that the detected order matches the
-    ''' order of ``&lt;h*&gt;`` elements produced by <see cref="MarkdownRender"/>.
-    ''' </summary>
-    Private Function ParseHeadings(md As String) As List(Of HeadingInfo)
-        Dim headings As New List(Of HeadingInfo)
-        If String.IsNullOrEmpty(md) Then
-            Return headings
-        End If
-
-        Dim text = md.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
-        Dim lines = text.Split(vbLf)
-        Dim offset As Integer = 0
-
-        Dim inFence As Boolean = False
-        Dim fenceChar As Char = " "c
-
-        For i As Integer = 0 To lines.Length - 1
-            Dim rawLine = lines(i)
-            Dim t = rawLine.Trim(" "c, vbTab, vbCr, vbLf)
-
-            ' Track fenced code blocks (``` or ~~~); headers inside a fence are
-            ' not rendered as <h*> by the parser, so skip them to keep the
-            ' heading index aligned with the rendered HTML anchor order.
-            Dim fm = Regex.Match(t, "^( {0,3})(`{3,}|~{3,})")
-            If fm.Success Then
-                If Not inFence Then
-                    inFence = True
-                    fenceChar = fm.Groups(2).Value(0)
-                ElseIf fm.Groups(2).Value(0) = fenceChar Then
-                    inFence = False
-                End If
-                offset += rawLine.Length + 1
-                Continue For
-            End If
-            If inFence Then
-                offset += rawLine.Length + 1
-                Continue For
-            End If
-
-            ' Strip blockquote prefixes ("> " may be repeated) so that a heading
-            ' nested inside a blockquote is still detected.
-            Dim work = t
-            While work.StartsWith(">")
-                work = work.Substring(1).TrimStart(" "c)
-            End While
-
-            ' Strip list-item markers (including nesting) so a heading written
-            ' inside a list item is detected the same way the parser renders it.
-            Dim lm = listMarker.Match(work)
-            While lm.Success
-                work = work.Substring(lm.Length)
-                lm = listMarker.Match(work)
-            End While
-
-            Dim level As Integer = 0
-            Dim headingText As String = Nothing
-
-            Dim atx = atxHeader.Match(work)
-            If atx.Success Then
-                level = atx.Groups(1).Value.Length
-                headingText = atx.Groups(2).Value.Trim()
-            ElseIf i + 1 < lines.Length Then
-                Dim nxt = lines(i + 1).Trim(" "c, vbTab, vbCr, vbLf)
-                If setextH1.IsMatch(nxt) Then
-                    level = 1
-                    headingText = work
-                ElseIf setextH2.IsMatch(nxt) Then
-                    level = 2
-                    headingText = work
-                End If
-            End If
-
-            If level > 0 AndAlso Not String.IsNullOrWhiteSpace(headingText) Then
-                headings.Add(New HeadingInfo With {
-                    .Index = headings.Count,
-                    .Level = level,
-                    .Text = CleanHeadingText(headingText),
-                    .LineStart = offset,
-                    .LineLength = rawLine.Length
-                })
-            End If
-
-            offset += rawLine.Length + 1
-        Next
-
-        Return headings
-    End Function
-
-    ''' <summary>
-    ''' Strip inline markdown emphasis / code / strikethrough delimiters so the
-    ''' tree label is human readable.
-    ''' </summary>
-    Private Function CleanHeadingText(raw As String) As String
-        Dim s = Regex.Replace(raw, "\\|(\*\*\*|\*\*|__|~~|\*|`|_)", "")
-        Return s.Trim()
-    End Function
-
-    ''' <summary>
     ''' Inject a stable ``id="md-h{index}"`` anchor into every ``&lt;h*&gt;`` opening
-    ''' tag, in document order, so the index matches <see cref="ParseHeadings"/>.
+    ''' tag, in document order, so the index matches
+    ''' <see cref="MarkdownHeadings.Parse"/>.
     ''' </summary>
     Private Function InjectHeadingIds(html As String) As String
         Dim counter As Integer = 0
         Return headingTag.Replace(html, Function(m)
-                                           Dim id = $"md-h{counter}"
-                                           counter += 1
-                                           Return $"<{m.Groups(1).Value} id=""{id}"">"
-                                       End Function)
+                                            Dim id = $"md-h{counter}"
+                                            counter += 1
+                                            Return $"<{m.Groups(1).Value} id=""{id}"">"
+                                        End Function)
     End Function
 
     Private Sub BuildTree(headings As List(Of HeadingInfo))
@@ -250,7 +144,7 @@ Public Class FormMarkWeb
 
     Private Sub Rebuild()
         Dim md = TextBox1.Text
-        Dim headings = ParseHeadings(md)
+        Dim headings = MarkdownHeadings.Parse(md)
         _headings = headings
 
         Dim html = render.Transform(md)
@@ -338,5 +232,53 @@ Public Class FormMarkWeb
 
         Dim js = $"var el=document.getElementById('md-h{idx}'); if(el){{el.scrollIntoView({{behavior:'smooth', block:'start'}});}}"
         Await WebView21.CoreWebView2.ExecuteScriptAsync(js)
+    End Sub
+
+    ''' <summary>
+    ''' 另存为：把编辑器中的 markdown 导出为所选格式的文档。
+    ''' 实际的解析与渲染在 <see cref="DocumentExport.Export"/> 中完成。
+    ''' </summary>
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Using dialog As New SaveFileDialog With {
+            .Filter = {
+                "Markdown(*.md)|*.md",
+                "Microsoft Word(*.docx)|*.docx",
+                "PDF(*.pdf)|*.pdf",
+                "Open XPS(*.oxps)|*.oxps",
+                "Microsoft XPS(*.xps)|*.xps",
+                "RTF(*.rtf)|*.rtf",
+                "Plain Text(*.txt)|*.txt",
+                "Html Document(*.html)|*.html"
+            }.JoinBy("|"),
+            .AddExtension = True,
+            .DefaultExt = "md",
+            .FileName = "document.md",
+            .Title = "导出文档"
+        }
+
+            If dialog.ShowDialog() <> DialogResult.OK Then
+                Return
+            End If
+
+            Try
+                ' 图片按 markdown 源文件所在目录解析；未打开文件时使用当前工作目录
+                Dim baseDir As String = If(String.IsNullOrEmpty(_sourceFile),
+                                           Environment.CurrentDirectory,
+                                           IO.Path.GetDirectoryName(_sourceFile))
+                Dim format As String = DocumentExport.Export(TextBox1.Text, dialog.FileName, baseDir)
+
+                Call MessageBox.Show(Me,
+                                     $"已导出 {format}：{vbCrLf}{dialog.FileName}",
+                                     "导出完成",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Information)
+            Catch ex As Exception
+                Call MessageBox.Show(Me,
+                                     $"导出失败：{vbCrLf}{ex.Message}",
+                                     "导出失败",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Error)
+            End Try
+        End Using
     End Sub
 End Class

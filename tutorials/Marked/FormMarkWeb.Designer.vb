@@ -75,22 +75,28 @@ Partial Class FormMarkWeb
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMarkWeb))
-        components = New System.ComponentModel.Container()
         WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
+        ToolStripButton2 = New ToolStripButton()
         SplitContainer1 = New SplitContainer()
         SplitContainer2 = New SplitContainer()
         TreeView1 = New TreeView()
         TextBox1 = New TextBox()
         Timer1 = New Timer(components)
+        StatusStrip1 = New StatusStrip()
         CType(WebView21, ComponentModel.ISupportInitialize).BeginInit()
+        ToolStrip1.SuspendLayout()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
+        SplitContainer1.Panel1.SuspendLayout()
+        SplitContainer1.Panel2.SuspendLayout()
         SplitContainer1.SuspendLayout()
         CType(SplitContainer2, ComponentModel.ISupportInitialize).BeginInit()
+        SplitContainer2.Panel1.SuspendLayout()
+        SplitContainer2.Panel2.SuspendLayout()
         SplitContainer2.SuspendLayout()
-        ToolStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' WebView21
@@ -101,15 +107,16 @@ Partial Class FormMarkWeb
         WebView21.Dock = DockStyle.Fill
         WebView21.Location = New Point(0, 0)
         WebView21.Name = "WebView21"
-        WebView21.Size = New Size(640, 920)
+        WebView21.Size = New Size(637, 898)
         WebView21.TabIndex = 0
         WebView21.ZoomFactor = 1R
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
+        ToolStrip1.RenderMode = ToolStripRenderMode.System
         ToolStrip1.Size = New Size(1461, 25)
         ToolStrip1.TabIndex = 1
         ToolStrip1.Text = "ToolStrip1"
@@ -122,6 +129,15 @@ Partial Class FormMarkWeb
         ToolStripButton1.Name = "ToolStripButton1"
         ToolStripButton1.Size = New Size(23, 22)
         ToolStripButton1.Text = "打开"
+        ' 
+        ' ToolStripButton2
+        ' 
+        ToolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), Image)
+        ToolStripButton2.ImageTransparentColor = Color.Magenta
+        ToolStripButton2.Name = "ToolStripButton2"
+        ToolStripButton2.Size = New Size(23, 22)
+        ToolStripButton2.Text = "导出文档"
         ' 
         ' SplitContainer1
         ' 
@@ -136,7 +152,7 @@ Partial Class FormMarkWeb
         ' SplitContainer1.Panel2
         ' 
         SplitContainer1.Panel2.Controls.Add(WebView21)
-        SplitContainer1.Size = New Size(1461, 920)
+        SplitContainer1.Size = New Size(1461, 898)
         SplitContainer1.SplitterDistance = 820
         SplitContainer1.TabIndex = 2
         ' 
@@ -153,16 +169,17 @@ Partial Class FormMarkWeb
         ' SplitContainer2.Panel2
         ' 
         SplitContainer2.Panel2.Controls.Add(TextBox1)
-        SplitContainer2.Size = New Size(820, 920)
+        SplitContainer2.Size = New Size(820, 898)
         SplitContainer2.SplitterDistance = 240
         SplitContainer2.TabIndex = 0
         ' 
         ' TreeView1
         ' 
+        TreeView1.BorderStyle = BorderStyle.None
         TreeView1.Dock = DockStyle.Fill
         TreeView1.Location = New Point(0, 0)
         TreeView1.Name = "TreeView1"
-        TreeView1.Size = New Size(240, 920)
+        TreeView1.Size = New Size(240, 898)
         TreeView1.TabIndex = 0
         ' 
         ' TextBox1
@@ -174,13 +191,20 @@ Partial Class FormMarkWeb
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
         TextBox1.ScrollBars = ScrollBars.Both
-        TextBox1.Size = New Size(576, 920)
+        TextBox1.Size = New Size(576, 898)
         TextBox1.TabIndex = 0
         ' 
         ' Timer1
         ' 
-        Timer1.Enabled = False
         Timer1.Interval = 300
+        ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Location = New Point(0, 923)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Size = New Size(1461, 22)
+        StatusStrip1.TabIndex = 3
+        StatusStrip1.Text = "StatusStrip1"
         ' 
         ' FormMarkWeb
         ' 
@@ -189,15 +213,21 @@ Partial Class FormMarkWeb
         ClientSize = New Size(1461, 945)
         Controls.Add(SplitContainer1)
         Controls.Add(ToolStrip1)
+        Controls.Add(StatusStrip1)
         Name = "FormMarkWeb"
         Text = "Markdown文档查看"
         CType(WebView21, ComponentModel.ISupportInitialize).EndInit()
-        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer1.ResumeLayout(False)
-        CType(SplitContainer2, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer2.ResumeLayout(False)
         ToolStrip1.ResumeLayout(False)
         ToolStrip1.PerformLayout()
+        SplitContainer1.Panel1.ResumeLayout(False)
+        SplitContainer1.Panel2.ResumeLayout(False)
+        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
+        SplitContainer1.ResumeLayout(False)
+        SplitContainer2.Panel1.ResumeLayout(False)
+        SplitContainer2.Panel2.ResumeLayout(False)
+        SplitContainer2.Panel2.PerformLayout()
+        CType(SplitContainer2, ComponentModel.ISupportInitialize).EndInit()
+        SplitContainer2.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -210,5 +240,7 @@ Partial Class FormMarkWeb
     Friend WithEvents TreeView1 As TreeView
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents StatusStrip1 As StatusStrip
 
 End Class

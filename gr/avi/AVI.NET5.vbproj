@@ -10,8 +10,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Version>10.7.9791.24820</Version>
-    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
+    <Version>10.7.9791.26955</Version>
+    <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <Title>AVI Video Encoder with MJPEG and Uncompressed DIB Codecs</Title>
     <Description>A dependency-free AVI (RIFF) video writer for sciBASIC#: assembles main and stream headers to export rendered animation frames as MJPEG or uncompressed 32-bit DIB streams, with per-stream codec selection and configurable JPEG quality and no external codec dependency.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Imaging.AVIMedia</AssemblyTitle>

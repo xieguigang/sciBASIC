@@ -20,8 +20,8 @@
 		<UseApplicationFramework>True</UseApplicationFramework>
 
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Version>10.7.9791.24820</Version>
-		<AssemblyVersion>1.0.9791.24820</AssemblyVersion>
+		<Version>10.7.9791.26955</Version>
+		<AssemblyVersion>1.0.9791.26955</AssemblyVersion>
 		<Title>3D Mesh Model Parsers with Voxelization and SDF Volumes</Title>
 		<Description>A 3D mesh toolkit for sciBASIC#: loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF models into one unified scene model, reads PLY point clouds, then voxelizes surfaces into signed distance volumes with BVH acceleration for CFD simulation grids.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.Imaging.Landscape</AssemblyTitle>
