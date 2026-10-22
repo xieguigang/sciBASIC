@@ -64,6 +64,8 @@
 Imports System.IO
 Imports System.Linq
 Imports System.Diagnostics
+Imports Microsoft.VisualBasic.ApplicationServices.Report
+Imports Microsoft.VisualBasic.MIME.application.pdf
 
 Public Class Program
     ''' <summary>不传参数时默认回归的测试样本。</summary>
@@ -84,6 +86,9 @@ Public Class Program
         ElseIf args.Length = 1 AndAlso (args(0) = "-h" OrElse args(0) = "--help") Then
             PrintUsage()
             Return 0
+        ElseIf args.Length = 1 AndAlso args(0) = "--render" Then
+            ' 写入侧演示：内容块 -> PdfRender -> .pdf，再用本库解析器回读校验
+            Return RenderDemo(Environment.CurrentDirectory)
         Else
             inputs.AddRange(args)
         End If
@@ -156,6 +161,103 @@ Public Class Program
 
             Return True
         End Using
+    End Function
+
+    ' ========================================================================
+    ' 写入侧自校验：内容块 -> PdfRender -> .pdf -> 回读
+    ' ========================================================================
+
+    Private Shared Function RenderDemo(outDir As String) As Integer
+        Dim failures As Integer = 0
+        Dim check As Action(Of String, Boolean) =
+            Sub(name As String, ok As Boolean)
+                If ok Then
+                    Console.WriteLine($"  [通过] {name}")
+                Else
+                    failures += 1
+                    Console.WriteLine($"  [失败] {name}")
+                End If
+            End Sub
+
+        Dim pdfPath As String = Path.Combine(outDir, "demo_render.pdf")
+
+        Dim blocks As Block() = {
+            New Block With {.type = "heading", .level = 1, .content = "第一章 报告渲染"},
+            New Block With {.type = "paragraph", .content = "本文档由 PdfRender 从内容块直接渲染为 PDF 文档。"},
+            New Block With {.type = "list", .ordered = True, .items = {"内容块模型", "PDF 排版", "文件保存"}},
+            New Block With {.type = "table",
+                            .headers = {"渲染器", "输出"},
+                            .alignments = {"left", "left"},
+                            .rows = {New String() {"PdfRender", "PDF"}, New String() {"WordRender", "docx"}}},
+            New Block With {.type = "blockquote", .content = "PDF 与 docx / RTF 共用同一份 Block 内容模型。"},
+            New Block With {.type = "hr"}
+        }
+
+        Dim render As New PdfRender() With {
+            .DocumentTitle = "PdfRender 报告示例",
+            .TableOfContents = True,
+            .Author = "sciBASIC#",
+            .Title = "PdfRender 示例",
+            .Subject = "PdfRender",
+            .Tags = New String() {"pdf", "report"}
+        }
+
+        Call render.Render(blocks)
+        Call render.Save(pdfPath)
+
+        Console.WriteLine($"已生成: {pdfPath} ({New FileInfo(pdfPath).Length:N0} 字节)")
+        check("生成文件非空", File.Exists(pdfPath) AndAlso New FileInfo(pdfPath).Length > 0)
+
+        Dim header As String
+
+        Using fs As Stream = File.OpenRead(pdfPath)
+            Dim buf(7) As Byte
+            Call fs.ReadExactly(buf, 0, buf.Length)
+            header = System.Text.Encoding.ASCII.GetString(buf)
+        End Using
+
+        check("PDF 文件头为 %PDF-", header.StartsWith("%PDF-"))
+
+        Dim pages As String()
+
+        Using fs As Stream = File.OpenRead(pdfPath)
+            pages = PDF.GetText(fs).ToArray()
+        End Using
+
+        Dim text As String = String.Join(Environment.NewLine, pages)
+
+        Console.WriteLine($"页数: {pages.Length}，回读字符数: {text.Length}")
+
+        check("解析出至少一页内容", pages.Length > 0)
+
+        For Each expected As String In {
+            "PdfRender 报告示例",
+            "第一章 报告渲染",
+            "本文档由 PdfRender 从内容块直接渲染为 PDF 文档。",
+            "内容块模型",
+            "docx"
+        }
+            check("回读包含: " & expected, text.Contains(expected))
+        Next
+
+        ' ---- 一次性生成 ----
+        Dim oneShot As String = Path.Combine(outDir, "demo_render_generate.pdf")
+
+        Call PdfRender.Generate({New Block With {.type = "paragraph", .content = "一句话生成的 PDF 报告。"}},
+                                oneShot,
+                                "一句话生成 PDF")
+
+        check("Generate 生成文件非空", File.Exists(oneShot) AndAlso New FileInfo(oneShot).Length > 0)
+
+        Console.WriteLine()
+
+        If failures = 0 Then
+            Console.WriteLine("全部检查通过。")
+            Return 0
+        Else
+            Console.WriteLine($"存在 {failures} 项失败。")
+            Return 1
+        End If
     End Function
 
     Private Shared Sub PrintUsage()
