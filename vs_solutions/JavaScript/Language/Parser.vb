@@ -282,7 +282,13 @@ Public NotInheritable Class Parser
     Private Function ParseProgram() As Program
         Dim body As New List(Of Statement)
         While Cur.name <> TokenType.Eof
-            body.Add(ParseStatement())
+            ' import declarations are module-level only; a nested one is reported by
+            ' ParseStatementCore with a location instead of being parsed here
+            If AtKeyword("import") Then
+                body.Add(ParseImport())
+            Else
+                body.Add(ParseStatement())
+            End If
         End While
         Return New Program(body)
     End Function
@@ -390,11 +396,148 @@ Public NotInheritable Class Parser
                     Return New ThrowStmt(v)
                 Case "try" : Return ParseTry()
                 Case "class" : Return ParseClassDecl()
+                Case "import"
+                    ' only ParseProgram accepts an import; a block or function body is nested
+                    Throw New ParseException($"import declarations may only appear at the top level at {Cur.Location}")
             End Select
         End If
         Dim expr = ParseExpression()
         ConsumeStatementEnd()
         Return New ExprStmt(expr)
+    End Function
+
+    ' ---------------- import declarations ----------------
+
+    ''' <summary>
+    ''' Parse one <c>import</c> declaration. Only the program's top level accepts it
+    ''' (<see cref="ParseStatementCore"/> reports a nested one); the <c>from</c> specifier
+    ''' decides the meaning — a <c>.dll</c> source imports CLR types from an assembly,
+    ''' anything else loads a JavaScript module.
+    ''' <para>
+    ''' Accepted forms: <c>import Foo.Bar as ns from 'x.dll'</c>,
+    ''' <c>import Foo.Bar from 'x.dll'</c> (alias = last segment),
+    ''' <c>import x from './m.js'</c>, <c>import * as ns from './m.js'</c>,
+    ''' <c>import {a, b as c} from './m.js'</c> and <c>import './m.js'</c>.
+    ''' </para>
+    ''' </summary>
+    Private Function ParseImport() As ImportStmt
+        Dim start = Cur
+        _pos += 1                                       ' 'import'
+
+        ' import './m.js'  — side effect only
+        If Cur.name = TokenType.String Then
+            Dim sideSpec = Cur.text
+            _pos += 1
+            ConsumeStatementEnd()
+            Return MakeImport(start, ImportKind.SideEffect, sideSpec, Nothing, Nothing, Nothing)
+        End If
+
+        ' import * as ns from './m.js'
+        If Match("*") Then
+            If Not AtIdentifierText("as") Then
+                Throw New ParseException($"expected 'as' after '*' in an import declaration at {Cur.Location}")
+            End If
+            _pos += 1
+            Dim starAlias = ExpectIdentifier()
+            Dim starSpec = ExpectFromClause()
+            If IsAssemblySpecifier(starSpec) Then
+                Throw New ParseException(
+                    $"a CLR namespace import cannot use '*': write import Foo.Bar as {starAlias} from '{starSpec}' at {Cur.Location}")
+            End If
+            ConsumeStatementEnd()
+            Return MakeImport(start, ImportKind.NamespaceObject, starSpec, Nothing, starAlias, Nothing)
+        End If
+
+        ' import {a, b as c} from './m.js'
+        If At("{") Then
+            _pos += 1
+            Dim bindings As New List(Of ImportBinding)
+            Do
+                Dim imported = ExpectIdentifier()
+                Dim local = imported
+                If AtIdentifierText("as") Then
+                    _pos += 1
+                    local = ExpectIdentifier()
+                End If
+                bindings.Add(New ImportBinding(imported, local))
+            Loop While Match(",") AndAlso Not At("}")
+            Eat("}")
+            Dim namedSpec = ExpectFromClause()
+            If IsAssemblySpecifier(namedSpec) Then
+                Throw New ParseException(
+                    $"a CLR namespace import cannot list members: write import Foo.Bar as ns from '{namedSpec}' at {Cur.Location}")
+            End If
+            ConsumeStatementEnd()
+            Return MakeImport(start, ImportKind.NamedBindings, namedSpec, Nothing, Nothing, bindings)
+        End If
+
+        ' import Foo.Bar [as ns] from '...'   /   import x from './m.js'
+        Dim chain = ExpectIdentifier()
+        Do While At(".")
+            _pos += 1
+            chain = chain & "." & ExpectMemberName()
+        Loop
+
+        Dim hasAlias = AtIdentifierText("as")
+        Dim explicitAlias As String = Nothing
+        If hasAlias Then
+            _pos += 1
+            explicitAlias = ExpectIdentifier()
+        End If
+
+        Dim specifier = ExpectFromClause()
+
+        If IsAssemblySpecifier(specifier) Then
+            Dim bound = If(hasAlias, explicitAlias, LastSegment(chain))
+            ConsumeStatementEnd()
+            Return MakeImport(start, ImportKind.ClrNamespace, specifier, chain, bound, Nothing)
+        End If
+
+        If hasAlias OrElse chain.IndexOf("."c) >= 0 Then
+            Throw New ParseException(
+                "a dotted name or 'as' is only valid for a CLR assembly import (from '...dll'); " &
+                $"use import * as ns from '{specifier}' or import {{a}} from '{specifier}' at {Cur.Location}")
+        End If
+
+        ConsumeStatementEnd()
+        Return MakeImport(start, ImportKind.DefaultAlias, specifier, Nothing, chain, Nothing)
+    End Function
+
+    Private Function MakeImport(start As Token, kind As ImportKind, specifier As String,
+                                namespaceName As String, [alias] As String,
+                                bindings As List(Of ImportBinding)) As ImportStmt
+        Dim s As New ImportStmt(kind, specifier, namespaceName, [alias], bindings)
+        s.Position = PositionOf(start)
+        Return s
+    End Function
+
+    ''' <summary>Contextual keywords (from/as/of/get/set) stay identifier tokens; match by text.</summary>
+    Private Function AtIdentifierText(text As String) As Boolean
+        Return Cur.name = TokenType.Identifier AndAlso Cur.text = text
+    End Function
+
+    ''' <summary>The <c>from '...'</c> tail of an import declaration.</summary>
+    Private Function ExpectFromClause() As String
+        If Not AtIdentifierText("from") Then
+            Throw New ParseException($"expected 'from' in an import declaration at {Cur.Location}")
+        End If
+        _pos += 1
+        If Cur.name <> TokenType.String Then
+            Throw New ParseException($"expected a string after 'from' in an import declaration at {Cur.Location}")
+        End If
+        Dim specifier = Cur.text
+        _pos += 1
+        Return specifier
+    End Function
+
+    ''' <summary>A <c>.dll</c> source imports CLR types; anything else is a JS module path.</summary>
+    Private Shared Function IsAssemblySpecifier(specifier As String) As Boolean
+        Return specifier IsNot Nothing AndAlso specifier.EndsWith(".dll", StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Shared Function LastSegment(name As String) As String
+        Dim i = name.LastIndexOf("."c)
+        Return If(i < 0, name, name.Substring(i + 1))
     End Function
 
     ''' <summary>Consume an identifier naming a label in scope; Nothing when absent.</summary>
