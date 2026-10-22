@@ -1234,7 +1234,7 @@ Public Class WordDocument : Implements IDocumentWriter
     ' ========================================================================
 
     ''' <summary>
-    ''' 将 Block 列表写入文档（兼容用户现有 JSONSchema.Block 模型）。
+    ''' 将 markdown 内容块（<see cref="Block"/>）写入文档。
     ''' </summary>
     Public Function WriteBlocks(blocks As IEnumerable(Of Block)) As WordDocument
         If blocks Is Nothing Then Return Me
