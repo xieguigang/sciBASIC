@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Report
 
@@ -19,6 +18,11 @@ Namespace ApplicationServices.Report
             Call render.Render(docBlocks)
 
             Return render.Output
+        End Function
+
+        <Extension>
+        Public Function ToMarkdownBlock(block As Block) As String
+            Return {block}.ToMarkdown
         End Function
     End Module
 End Namespace
