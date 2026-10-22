@@ -33,6 +33,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\mime\application%pdf\Pdf.NET5.vbproj" />
+    <ProjectReference Include="..\..\mime\application%rtf\RTF.vbproj" />
+    <ProjectReference Include="..\..\mime\application%xml\xml-netcore5.vbproj" />
+    <ProjectReference Include="..\..\mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vbproj" />
+    <ProjectReference Include="..\..\mime\OXPS\OXPS.vbproj" />
     <ProjectReference Include="..\..\mime\text%markdown\markdown.NET5.vbproj" />
   </ItemGroup>
 
