@@ -392,11 +392,12 @@ Namespace TypeDefinitions
                                             If(m.IsStatic, "static ", ""))
 
             Return staticPrefix & EmitMemberName(m.Name) & generic &
-                   RenderParameters(m.Parameters, exports) & ": " &
-                   TypeMapper.TsTypeName(m.ReturnType, exports) & ";"
+                   RenderParameters(m.Parameters, exports, model.GenericParameters) & ": " &
+                   TypeMapper.TsTypeName(m.ReturnType, exports, model.GenericParameters) & ";"
         End Function
 
-        Private Function RenderParameters(params As List(Of TsParameter), exports As HashSet(Of String)) As String
+        Private Function RenderParameters(params As List(Of TsParameter), exports As HashSet(Of String),
+                                          context As List(Of String)) As String
             If params Is Nothing OrElse params.Count = 0 Then Return "()"
 
             Dim parts As New List(Of String)
@@ -404,7 +405,7 @@ Namespace TypeDefinitions
             For i As Integer = 0 To params.Count - 1
                 Dim p As TsParameter = params(i)
                 Dim element As Type = If(p.IsParamArray, p.Type.GetElementType(), p.Type)
-                Dim tsType As String = TypeMapper.TsTypeName(element, exports)
+                Dim tsType As String = TypeMapper.TsTypeName(element, exports, context)
 
                 If p.IsParamArray Then
                     parts.Add("..." & p.Name & ": " & tsType & "[]")
