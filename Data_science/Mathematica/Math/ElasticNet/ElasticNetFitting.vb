@@ -243,7 +243,8 @@ Public Module ElasticNetFitting
                                               Optional tolerance As Double = 0.0001,
                                               Optional maxIterations As Integer = 10000,
                                               Optional featureNames As String() = Nothing,
-                                              Optional maxFeatures As Integer = 0) As ElasticNetPath
+                                              Optional maxFeatures As Integer = 0,
+                                              Optional penalty As Double() = Nothing) As ElasticNetPath
 
         Dim n As Integer = 0
         Dim p As Integer = 0
@@ -258,10 +259,15 @@ Public Module ElasticNetFitting
         If alphaRatio <= 0.0 OrElse alphaRatio >= 1.0 Then
             Throw New ArgumentException("the alpha ratio must be in the range (0, 1)!", NameOf(alphaRatio))
         End If
+        If penalty IsNot Nothing AndAlso penalty.Length <> p Then
+            Throw New ArgumentException(
+                $"the length of the penalty vector ({penalty.Length}) must equal the number of the feature columns ({p})!",
+                NameOf(penalty))
+        End If
 
         Dim data As ElasticNetData = PrepareColumns(columns, y, standardize, Nothing)
         Dim grid As Double() = AlphaGrid(data, l1Ratio, numberOfAlphas, alphaRatio, alphaMax)
-        Dim solution As PathSolution = RunPath(data, l1Ratio, grid, tolerance, maxIterations, maxFeatures)
+        Dim solution As PathSolution = RunPath(data, l1Ratio, grid, tolerance, maxIterations, maxFeatures, penalty)
 
         Return NewPath(data, l1Ratio, grid, solution, featureNames)
     End Function
@@ -647,7 +653,8 @@ Public Module ElasticNetFitting
                              grid As Double(),
                              tolerance As Double,
                              maxIterations As Integer,
-                             Optional maxFeatures As Integer = 0) As PathSolution
+                             Optional maxFeatures As Integer = 0,
+                             Optional penalty As Double() = Nothing) As PathSolution
 
         Dim steps As Integer = grid.Length
         Dim p As Integer = data.P
@@ -673,7 +680,7 @@ Public Module ElasticNetFitting
 
             ' warm start：beta 沿用上一步的结果；residual 也一并沿用
             ' （上一步收敛时 r 恰好等于 y - X*beta），省掉每个 alpha 一次 O(nnz*n) 的重算
-            Call CoordinateDescent(data, grid(k), l1Ratio, beta, tolerance, maxIterations, iterations, residual, initResidual)
+            Call CoordinateDescent(data, grid(k), l1Ratio, beta, tolerance, maxIterations, iterations, residual, initResidual, penalty)
             initResidual = False
 
             executed = k + 1
@@ -749,7 +756,8 @@ Public Module ElasticNetFitting
                                        maxIterations As Integer,
                                        ByRef iterations As Integer,
                                        Optional residual As Double() = Nothing,
-                                       Optional initResidual As Boolean = True) As Boolean
+                                       Optional initResidual As Boolean = True,
+                                       Optional penalty As Double() = Nothing) As Boolean
 
         Dim n As Integer = data.N
         Dim p As Integer = data.P
@@ -796,7 +804,10 @@ Public Module ElasticNetFitting
 
                 rho = rho / n + scale * beta(j)
 
-                Dim updated As Double = SoftThreshold(rho, l1) / (scale + l2)
+                ' 逐特征惩罚：先验知识支持的边用更小的 L1 权重，因而更容易存活。
+                ' penalty 为空时走原来的标量分支，热循环里不会多一次数组访问。
+                Dim l1j As Double = If(penalty Is Nothing, l1, l1 * penalty(j))
+                Dim updated As Double = SoftThreshold(rho, l1j) / (scale + l2)
 
                 If Double.IsNaN(updated) OrElse Double.IsInfinity(updated) Then
                     Return False
