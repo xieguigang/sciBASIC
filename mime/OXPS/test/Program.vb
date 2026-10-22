@@ -477,7 +477,7 @@ Module Program
         Call WriteInt32BE(stream, CInt(Crc32(crcData) And &H7FFFFFFFUI))
     End Sub
 
-    Private Shared Function Crc32(data As Byte()) As UInteger
+    Private Function Crc32(data As Byte()) As UInteger
         Dim crc As UInteger = &HFFFFFFFFUI
 
         For Each b As Byte In data

@@ -11,4 +11,11 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- test 目录为独立的控制台自校验工程（test\test.vbproj），不能编入本库 -->
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
 </Project>
