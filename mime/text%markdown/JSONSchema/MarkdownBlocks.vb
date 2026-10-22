@@ -277,7 +277,7 @@ Namespace JSONSchema
                         .alignments = aligns,
                         .rows = rows.ToArray
                     })
-                    i = j - 1
+                    i = j
                     Continue While
                 End If
 
@@ -544,18 +544,15 @@ Namespace JSONSchema
                     If j < lines.Length Then
                         Dim nxt = lines(j)
                         Dim nxtInfo = MatchListItem(nxt)
-                        If nxtInfo.match AndAlso nxtInfo.indent = indent Then
-                            If haveItem Then
-                                items.Add(curItem.JoinBy(vbLf))
-                            End If
-                            curItem = New List(Of String)
-                            haveItem = False
-                            i += 1
-                            Continue While
-                        ElseIf nxtInfo.match AndAlso nxtInfo.indent > indent Then
+                        If nxtInfo.match AndAlso nxtInfo.indent > indent Then
+                            ' 更深缩进的嵌套列表属于当前列表项
                             curItem.Add(l)
                             i += 1
                             Continue While
+                        ElseIf nxtInfo.match AndAlso nxtInfo.indent = indent Then
+                            ' 空行后的同级列表项 => 当前列表结束。
+                            ' 当前项交由循环结束后的统一收尾代码添加，避免重复计入。
+                            Exit While
                         ElseIf GetIndent(nxt) >= first.contentColumn Then
                             curItem.Add(l)
                             i += 1
