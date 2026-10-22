@@ -363,6 +363,17 @@ Public Class MarkdownBlockParser
     ''' </summary>
     Private Function RenderItemText(raw As String) As String
         Dim inner = Parse(raw)
+
+        ' 单项内容只有一个行内块时，直接输出纯文本：列表项在 Block 模型中的约定是
+        ' 纯文本，若先解析成 link/image 块再 ToMarkdownBlock 回来，项文本里会残留
+        ' [text](url) 之类的 markdown 标记，导致 html/纯文本渲染器原样输出。
+        If inner.Count = 1 Then
+            Select Case inner(0).type
+                Case "paragraph", "link", "image"
+                    Return ParseInlinePlain(raw)
+            End Select
+        End If
+
         Return inner _
             .Select(Function(b) b.ToMarkdownBlock) _
             .JoinBy(vbCrLf)

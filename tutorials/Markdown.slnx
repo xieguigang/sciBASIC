@@ -239,5 +239,6 @@
     <BuildType Solution="Surveillance-of-infectious-diseases|*" Project="Release" />
     <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
     <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="Release|x64" Project="x64" />
   </Project>
 </Solution>
