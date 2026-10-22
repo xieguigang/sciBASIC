@@ -5,7 +5,7 @@
     <RootNamespace>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Version>10.7.9782.41243</Version>
+    <Version>10.7.9791.24820</Version>
     <Description>A lightweight JavaScript engine for sciBASIC#: lexes and parses JS source into an AST, runs it on a tree-walking interpreter with weak typing and builtin runtime semantics, and transpiles programs into standalone VB.NET classes.</Description>
     <OptionStrict>On</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
@@ -27,7 +27,7 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

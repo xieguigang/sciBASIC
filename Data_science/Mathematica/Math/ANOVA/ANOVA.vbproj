@@ -17,8 +17,8 @@
     <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <Title>ANOVA, Kruskal-Wallis and Multivariate Omics Analysis Toolkit</Title>
     <Description>A statistical hypothesis testing toolkit for sciBASIC#: one-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with Bonferroni and Benjamini-Hochberg FDR correction, plus PCA, PLS-DA and OPLS-DA multivariate analysis over unified numeric tables.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA</AssemblyTitle>

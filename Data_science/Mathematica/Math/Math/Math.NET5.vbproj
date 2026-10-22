@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
 		<Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
 		<Company>sciBASIC.NET Foundation</Company>
-		<Version>10.7.9782.41243</Version>
+		<Version>10.7.9791.24820</Version>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<PackageIcon>logo-knot.png</PackageIcon>
@@ -22,7 +22,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<AssemblyTitle>Microsoft.VisualBasic.Math</AssemblyTitle>
-		<AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+		<AssemblyVersion>1.0.9791.24820</AssemblyVersion>
 		<Description>The core mathematics library for sciBASIC#: dense and sparse matrices with SVD, LU, QR and Cholesky decompositions, simplex and interior-point linear programming with MILP branch-and-bound, BigDecimal arithmetic, distributions, splines, down-sampling and an expression scripting engine.</Description>
 		<PackageTags>scibasic;linear-algebra;matrix;milp;linear-programming;sparse-matrix;svd</PackageTags>
     <PackageReleaseNotes>Adds interior-point crossover LP with sparse LDLT and PCG fallback solvers, a MILP branch-and-bound engine with Gomory cuts and SIMD-parallel numeric kernels.</PackageReleaseNotes>

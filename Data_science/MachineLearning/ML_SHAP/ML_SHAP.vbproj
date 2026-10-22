@@ -13,8 +13,8 @@
     <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance</PackageTags>
     <PackageReleaseNotes>Adds SHAP explainer models for linear, random forest and XGBoost predictors with per-sample contribution matrices and CSV report writers.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.SHAP</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>

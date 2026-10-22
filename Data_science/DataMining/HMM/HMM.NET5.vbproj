@@ -15,8 +15,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>10.7.9782.41243</Version>
-    <AssemblyVersion>1.0.9782.41243</AssemblyVersion>
+    <Version>10.7.9791.24820</Version>
+    <AssemblyVersion>1.0.9791.24820</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.HiddenMarkovChain</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
