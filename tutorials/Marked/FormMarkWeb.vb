@@ -224,8 +224,12 @@ Public Class FormMarkWeb
         Await WebView21.CoreWebView2.ExecuteScriptAsync(js)
     End Sub
 
+    ''' <summary>
+    ''' 另存为：把编辑器中的 markdown 导出为所选格式的文档。
+    ''' 实际的解析与渲染在 <see cref="DocumentExport.Export"/> 中完成。
+    ''' </summary>
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        Using file As New SaveFileDialog With {
+        Using dialog As New SaveFileDialog With {
             .Filter = {
                 "Markdown(*.md)|*.md",
                 "Microsoft Word(*.docx)|*.docx",
@@ -235,15 +239,32 @@ Public Class FormMarkWeb
                 "RTF(*.rtf)|*.rtf",
                 "Plain Text(*.txt)|*.txt",
                 "Html Document(*.html)|*.html"
-            }.JoinBy("|")
+            }.JoinBy("|"),
+            .AddExtension = True,
+            .DefaultExt = "md",
+            .FileName = "document.md",
+            .Title = "导出文档"
         }
 
-            If file.ShowDialog = DialogResult.OK Then
-                Dim blocks As Block()
-                Dim render As ReportRender
-
-                Call render.Render(blocks)
+            If dialog.ShowDialog() <> DialogResult.OK Then
+                Return
             End If
+
+            Try
+                Dim format As String = DocumentExport.Export(TextBox1.Text, dialog.FileName)
+
+                Call MessageBox.Show(Me,
+                                     $"已导出 {format}：{vbCrLf}{dialog.FileName}",
+                                     "导出完成",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Information)
+            Catch ex As Exception
+                Call MessageBox.Show(Me,
+                                     $"导出失败：{vbCrLf}{ex.Message}",
+                                     "导出失败",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Error)
+            End Try
         End Using
     End Sub
 End Class
