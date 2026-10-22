@@ -6,7 +6,7 @@
 - Source files  : 111
 - Existing Title: Graph Layout Algorithms For Network Visualization
 - Existing Desc : Supplies force-directed, spring-embedder, constrained Cola, orthogonal, radial, circular, HOLA and edge-bundling layouts behind a common IPlanner interface. Computes node coordinates before rendering sciBASIC# networks.
-- Existing Tags : scibasic;graph-layout;force-directed;spring-embedder;cola;orthogonal-routing;hola;edge-bundling;radial
+- Existing Tags : scibasic;graph-layout;force-directed;orthogonal-routing;edge-bundling
 
 ## Namespaces
 - Circular  [files: 3]

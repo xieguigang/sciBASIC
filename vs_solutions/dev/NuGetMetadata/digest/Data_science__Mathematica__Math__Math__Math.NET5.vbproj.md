@@ -3,15 +3,16 @@
 - RootNamespace : Microsoft.VisualBasic.Math
 - AssemblyName  : Microsoft.VisualBasic.Math.Core
 - TargetFramework: net10.0
-- Source files  : 269
-- Existing Title: Core Mathematics Library: Linear Algebra, Numerics and More
-- Existing Desc : Core math for sciBASIC#: dense and sparse matrices, SVD and linear solvers, simplex linear programming, BigDecimal arithmetic, splines, quantiles, distributions, fuzzy logic and an expression scripting engine.
-- Existing Tags : scibasic;mathematics;linear-algebra;sparse-matrix;svd;numerics;linear-programming;bigdecimal;spline;quantile;expression-scripting
+- Source files  : 274
+- Existing Title: Core Mathematics: Linear Algebra, MILP Solvers and Numerics
+- Existing Desc : The core mathematics library for sciBASIC#: dense and sparse matrices with SVD, LU, QR and Cholesky decompositions, simplex and interior-point linear programming with MILP branch-and-bound, BigDecimal and half precision arithmetic with SIMD kernels, distributions and quantiles, Latin hypercube sampling with discrepancy metrics, splines, down-sampling and an expression scripting engine.
+- Existing Tags : scibasic;linear-algebra;matrix;milp;linear-programming;sparse-matrix;simd;half-precision;latin-hypercube
 
 ## Namespaces
 - demo  [files: 1]
 - Distributions  [files: 14]
 - Distributions.BinBox  [files: 6]
+- Distributions.LHS  [files: 6]
 - Distributions.Summary  [files: 4]
 - DownSampling  [files: 12]
 - DownSampling.LargestTriangleBucket  [files: 11]
@@ -34,7 +35,7 @@
 - LinearAlgebra.Solvers  [files: 6]
 - Logical.FuzzyLogic  [files: 8]
 - Logical.FuzzyLogic.Models  [files: 4]
-- Numerics  [files: 6]
+- Numerics  [files: 5]
 - Quantile  [files: 11]
 - Scripting  [files: 13]
 - Scripting.BasicR  [files: 2]
@@ -147,7 +148,7 @@
 - Module SVD (Algebra\SVD.vb) - Singular Value Decomposition 本模块现在是 <see cref="SingularValueDecomposition"/>（JAMA/LINPACK 系实现） 的薄封装。与旧版 Numerical Recipes 直译实现相比，输出约定为：
 - Class Vector (Algebra\Vector\Class\DoCall.vb)
 - Class Argument (Algebra\Vector\Class\DoCall.vb) - Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/> ###### 2019-03-07 因为这个类的名称会与<see cref="ArgumentAttribute"/>产生冲突，所以将这个对象移到内部了
-- Class HalfVector (Algebra\Vector\Class\HalfVector.vb) - 精度比较低的半精度向量
+- Class HalfVector (Algebra\Vector\Class\HalfVector.vb) - 后者是 2018 年从 .NET Framework 时代移植的实现，存在若干缺陷： + 转换使用向零截断（truncate）而不是 round-to-nearest-even； + Double 转 Half 时先塌到 Single，产生二次舍入；
 - Class Vector (Algebra\Vector\Class\Math.vb)
 - Class SparseVector (Algebra\Vector\Class\SparseVector.vb)
 - Class Vector (Algebra\Vector\Class\Vector.vb) - A numeric vector this numeric vector is based on the <see cref="Vector(Of Double)"/>
@@ -163,7 +164,7 @@
 - Module BesselFunctions (Distributions\Bessel.vb) - 用于 Skellam 分布的概率密度函数计算（参见 ``dskellam``）。 实现策略： 1. 中等参数区域（``x &lt; 30 + ν``）使用幂级数定义
 - Module Beta (Distributions\Beta.vb) - Beta distribution
 - Enum BinMaps (Distributions\BinBox\BinMaps.vb)
-- ... and 199 more
+- ... and 207 more
 
 ## Notable public members
 - Public Delegate Function fx(x#) As Double
@@ -226,7 +227,7 @@
 - Public ReadOnly Property Columns As Int32 Implements ILpMatrix.Columns
 - Public ReadOnly Property NonZeros As Long Implements ILpMatrix.NonZeros
 - Public Function Mv(x As Double()) As Double() Implements ILpMatrix.Mv
-- ... and 1605 more
+- ... and 1662 more
 
 ## Imports
 - __std = System.Math
@@ -354,6 +355,12 @@
 - Distributions\ECDF.vb
 - Distributions\Gamma.vb
 - Distributions\Gaussian.vb
+- Distributions\LHS\Discrepancy.vb
+- Distributions\LHS\LatinHypercube.vb
+- Distributions\LHS\LatinHypercubeSampler.vb
+- Distributions\LHS\LhsOptimizer.vb
+- Distributions\LHS\LhsScale.vb
+- Distributions\LHS\NamespaceDoc.vb
 - Distributions\NamespaceDoc.vb
 - Distributions\pnorm.vb
 - Distributions\PoissonDiskGenerator.vb
@@ -400,11 +407,5 @@
 - FalseDiscoveryRate.vb
 - FuzzyLogic\FuzzyEngine.vb
 - FuzzyLogic\FuzzyRule.vb
-- FuzzyLogic\FuzzyRuleCollection.vb
-- FuzzyLogic\LinguisticVariable.vb
-- FuzzyLogic\LinguisticVariableCollection.vb
-- FuzzyLogic\MembershipFunction.vb
-- FuzzyLogic\MembershipFunctionCollection.vb
-- FuzzyLogic\Models\Extensions.vb
-- ... and 119 more files
+- ... and 124 more files
 

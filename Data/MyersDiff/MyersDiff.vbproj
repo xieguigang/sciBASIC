@@ -15,7 +15,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;diff;myers-algorithm;text-comparison;unified-diff;similarity</PackageTags>
-    <PackageReleaseNotes>Adds diff block grouping, unified and side-by-side renderers and a similarity score on top of the core Myers comparison engine.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixes the text comparison engine so diff blocks and the similarity score stay consistent, and adds a self-test runner covering unified, side-by-side and character level output.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

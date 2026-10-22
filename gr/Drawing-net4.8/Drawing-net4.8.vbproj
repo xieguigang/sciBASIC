@@ -23,7 +23,7 @@
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Version>10.7.9791.26955</Version>

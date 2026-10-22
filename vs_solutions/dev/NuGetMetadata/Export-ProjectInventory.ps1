@@ -191,9 +191,22 @@ foreach ($file in $allProjects) {
     })
 }
 
+# Preserve the timestamp of the previous run: the release-note generator uses it
+# as the lower bound of the git history window.
+$previousGeneratedAt = $null
+if (Test-Path -LiteralPath $OutFile) {
+    try {
+        $previous = Get-Content $OutFile -Encoding UTF8 -Raw | ConvertFrom-Json
+        $previousGeneratedAt = $previous.generatedAt
+    }
+    catch { Write-Warning "Cannot read previous inventory ($OutFile): $($_.Exception.Message)" }
+}
+
 $payload = [ordered]@{
-    generatedAt    = (Get-Date).ToString('o')
-    root           = $Root
+    generatedAt       = (Get-Date).ToString('o')
+    previousGeneratedAt = $previousGeneratedAt
+    gitBaseline       = $previousGeneratedAt
+    root              = $Root
     totalVbproj    = $allProjects.Count
     matchedCount   = $matchCount
     libraryCount   = @($records | Where-Object { $_.isLibrary }).Count

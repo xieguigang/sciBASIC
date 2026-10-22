@@ -6,7 +6,7 @@
 - Source files  : 18
 - Existing Title: Symbolic Math Engine: Calculus, Algebra and MathML Compiler
 - Existing Desc : Immutable expression-tree computer algebra for sciBASIC#: derivatives, integrals, limits, Taylor expansion, polynomial factorisation, simplification, Boolean algebra and a MathML to LINQ expression compiler.
-- Existing Tags : scibasic;symbolic-math;computer-algebra;calculus;differentiation;integration;mathml;polynomial;immutable-expression-tree
+- Existing Tags : scibasic;symbolic-math;computer-algebra;calculus;mathml;polynomial
 
 ## Namespaces
 - Symbolic  [files: 15]

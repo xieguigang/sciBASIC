@@ -25,7 +25,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;cuda;nvrtc;gpu;cuda-driver-api;jit-compilation;il-to-cuda</PackageTags>
-    <PackageReleaseNotes>Adds NVML diagnostics, GPU process counters and environment reporting alongside the new IL-to-CUDA kernel emitter and launch planner.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds CUPTI interop with per-SM performance-counter sampling and a live coloured profiler report, alongside NVML and PDH GPU process counters and hardened CUDA exception types.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

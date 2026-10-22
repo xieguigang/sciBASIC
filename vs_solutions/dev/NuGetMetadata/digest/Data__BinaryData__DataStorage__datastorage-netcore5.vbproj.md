@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 15
 - Existing Title: Tabular Frame Serialization with SAS XPORT and ASN.1 Readers
-- Existing Desc : Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader and writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file with column-level seeking.
-- Existing Tags : scibasic;data-storage;sas-xport;xpt;asn1;dataframe;binary-serialization;frame
+- Existing Desc : Reads SAS XPORT (XPT) transport files and ASN.1 encoded byte streams, and provides a binary frame reader/writer that persists sciBASIC# DataFrame objects with a typed column schema into a single seekable file.
+- Existing Tags : scibasic;data-storage;sas-xport;asn1;dataframe;binary-serialization
 
 ## Namespaces
 - ASN1  [files: 4]

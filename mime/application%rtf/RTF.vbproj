@@ -21,7 +21,7 @@
     -->
     <PackageTags>scibasic;rtf;rich-text-format;omml;document-generation;text-extraction</PackageTags>
     <Tags>scibasic;rtf;rich-text-format;omml;office-math;document-model;word;document-generation;text-extraction;markdown;idocumentwriter</Tags>
-    <PackageReleaseNotes>Added a fluent RTF 1.x writer implementing IDocumentWriter and a single-pass lexer for text and metadata extraction.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds an RTF report renderer implementing the shared report render contract on top of RtfDocument.</PackageReleaseNotes>
     <ReleaseNotes>RTF document generation, text extraction and Office Math (OMML) models for sciBASIC#. Generation: RtfDocument implements IDocumentWriter (metadata, heading levels 1-6 and other styles, page setup in twips with A4 / Letter presets, lists, task lists, definition lists, rules, page breaks, static table of contents, tables with auto-fit and three-line styles, embedded png/jpeg images) and WriteBlocks renders the Report.Block markdown content model directly; RtfRender derives from the shared TextReportRender base class and emits the whole RTF document text through its Output property before Save writes it to disk. Extraction: RtfTextReader returns the whole text, a paragraph array and document metadata through a tolerant single pass lexer that handles unicode escapes, hexadecimal escapes and raw multi-byte code pages. Model: the original Rtf / FormatedRegion / Font document object model is unchanged, and a serializable Office / OMML XML model set remains available for Word XML round-tripping.</ReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TargetFramework>net10.0</TargetFramework>

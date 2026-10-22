@@ -17,14 +17,14 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
-    <Title>2D Rigid Body Physics Engine With Particle And Fluid Solvers</Title>
-    <Description>A fixed-step 2D physics world with rigid bodies, broad and narrow phase collision, revolute, prismatic, spring and weld joints, force fields, SPH fluids and boids flocking, plus force-driven label placement for sciBASIC#.</Description>
+    <Title>2D and 3D Rigid Body Physics Engine with Joints, Fields and Fluids</Title>
+    <Description>A fixed-step rigid body physics engine for sciBASIC#: two and three dimensional worlds with broad and narrow phase collision detection, SAT based convex polyhedron contacts and manifolds, revolute, prismatic, spring, weld, ball and hinge joints, angular motors, gravity / wind / magnetic force fields, plus SPH fluid and boids hooks for particle scenes.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Engine.Physics</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;physics-engine;rigid-body;collision-detection;particle-system;sph;boids;joints</PackageTags>
-    <PackageReleaseNotes>Added a 3D physics world with quaternion rigid bodies, an SPH fluid engine with a pluggable CUDA compute backend and impeller boundaries.</PackageReleaseNotes>
+    <PackageTags>scibasic;physics-engine;rigid-body;collision-detection;convex-hull;sat;joints;3d-simulation;sph</PackageTags>
+    <PackageReleaseNotes>Adds a three dimensional physics world with SAT based convex polyhedron collision, contact manifolds and sequential impulse solvers, ball / hinge joints and angular motors, while keeping the two dimensional world, force fields and particle hooks.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

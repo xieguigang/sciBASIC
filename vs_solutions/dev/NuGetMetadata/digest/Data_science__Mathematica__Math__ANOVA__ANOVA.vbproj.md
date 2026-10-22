@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Math.Statistics.ANOVA
 - TargetFramework: net10.0
 - Source files  : 25
-- Existing Title: ANOVA and Multivariate Analysis Toolkit for VB.NET
-- Existing Desc : One-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with FDR correction, and multivariate methods (PCA, PLS, OPLS-DA) for omics data. Part of the sciBASIC# scientific computing framework.
-- Existing Tags : scibasic;anova;kruskal-wallis;fdr-correction;multivariate-analysis;pca;pls;opls-da
+- Existing Title: ANOVA, Kruskal-Wallis and Multivariate Omics Analysis Toolkit
+- Existing Desc : A statistical hypothesis testing toolkit for sciBASIC#: one-way ANOVA F-tests, Kruskal-Wallis non-parametric group comparison with Bonferroni and Benjamini-Hochberg FDR correction, plus PCA, PLS-DA and OPLS-DA multivariate analysis over unified numeric tables.
+- Existing Tags : scibasic;anova;kruskal-wallis;pca;pls-da;opls-da;omics
 
 ## Namespaces
 - stats  [files: 2]

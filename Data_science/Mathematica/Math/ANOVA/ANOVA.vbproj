@@ -25,7 +25,7 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <PackageTags>scibasic;anova;kruskal-wallis;pca;pls-da;opls-da;omics</PackageTags>
-    <PackageReleaseNotes>Adds unified NumericTable entry points for PCA, PLS-DA and OPLS-DA multivariate analysis with score and loading export to tabular projections.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

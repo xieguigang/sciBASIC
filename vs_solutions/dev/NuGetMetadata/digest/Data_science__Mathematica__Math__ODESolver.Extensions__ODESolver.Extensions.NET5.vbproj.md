@@ -6,7 +6,7 @@
 - Source files  : 2
 - Existing Title: ODE Solver Extensions: Result Export and Correlation Analysis
 - Existing Desc : Extension helpers that turn ODE integration output into data frames and CSV files, reload them, and compute Pearson or Spearman correlations between the modelled variables. Part of sciBASIC#.
-- Existing Tags : scibasic;ode-solver;data-frame;correlation;pearson;spearman;csv-export
+- Existing Tags : scibasic;ode-solver;data-frame;correlation;csv-export;pearson
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Math.Calculus)

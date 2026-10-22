@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 6
 - Existing Title: YAML to JSON Object Model Parser and Front Matter Reader
-- Existing Desc : Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader and typed deserialization helpers.
-- Existing Tags : scibasic;yaml;yaml-parser;front-matter;json;configuration;deserialization
+- Existing Desc : Parses YAML for the sciBASIC# framework into the JsonElement model with block mappings, sequences, flow collections, block scalars, anchors, aliases and comments, plus a lightweight markdown front-matter reader.
+- Existing Tags : scibasic;yaml;parser;json;front-matter
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MIME.text.yaml)
@@ -37,8 +37,8 @@
 - Public Property LineNumber As Integer
 - Public ReadOnly Property IsListItem As Boolean
 - Public Overrides Function ToString() As String
-- Public Function Parse(yamlText As String) As JsonElement
-- Public Function ParseFile(filePath As String) As JsonElement
+- Public Shared Function Parse(yamlText As String) As JsonElement
+- Public Shared Function ParseFile(filePath As String) As JsonElement
 - Public Sub New()
 - Public Sub Reset()
 

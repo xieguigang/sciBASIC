@@ -17,12 +17,12 @@
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <Title>Signal Processing: FFT, Wavelets, Filters and Peak Detection</Title>
-    <Description>Algorithms for one-dimensional signals in sciBASIC#: FFT and wavelet transforms, Savitzky-Golay filtering, peak detection, baseline removal, resampling, DTW and COW alignment, plus Kalman filtering.</Description>
+    <Description>Algorithms for one-dimensional signals in sciBASIC#: radix-2 FFT and spectrum analysis, wavelet transforms, Savitzky-Golay and DC shift filtering, peak detection, baseline removal, resampling, DTW and COW alignment, Kalman filtering, plus a wave analysis suite covering cell demodulation, scan-line sync, fold and payload analysis, period estimation and channel correlation.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Math.SignalProcessing</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;signal-processing;fft;wavelet;peak-detection;filtering</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageTags>scibasic;signal-processing;fft;wavelet;peak-detection;filtering;demodulation;wave-analysis</PackageTags>
+    <PackageReleaseNotes>Adds a DSP suite for wave analysis: radix-2 FFT and spectrum bands, cell demodulation, scan-line synchronisation, fold and payload analysis, period estimation, channel correlation, local maxima detection and DC shift filtering.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

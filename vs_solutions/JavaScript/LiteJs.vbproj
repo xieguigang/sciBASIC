@@ -6,7 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.ApplicationServices.VM.JavaScript</AssemblyName>
     <LangVersion>latest</LangVersion>
     <Version>10.7.9791.26955</Version>
-    <Description>A lightweight JavaScript engine for sciBASIC#: lexes and parses JS source into an AST, runs it on a tree-walking interpreter with weak typing and builtin runtime semantics, and transpiles programs into standalone VB.NET classes.</Description>
+    <Description>A lightweight JavaScript engine for sciBASIC#: lexes and parses JS source into an AST, runs it on a tree-walking interpreter with classes, promises, generators, async functions and source level stack traces, provides console, filesystem, path, buffer and process modules plus CLR interop, ships an interactive REPL and transpiles programs into standalone VB.NET classes.</Description>
     <OptionStrict>On</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
@@ -22,8 +22,8 @@
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>scibasic;javascript;interpreter;parser;ast;code-generator;scripting</PackageTags>
-    <PackageReleaseNotes>Rebuilt the JavaScript virtual machine with a new lexer, recursive descent parser, environment scopes and a JS-to-VB.NET code generator.</PackageReleaseNotes>
+    <PackageTags>scibasic;javascript;interpreter;parser;ast;code-generator;repl;nodejs;clr-interop;stack-trace</PackageTags>
+    <PackageReleaseNotes>Turns the engine into a usable runtime: adds an interactive REPL, JS source level stack traces and error objects, console with ANSI/HTML rendering, filesystem, path, buffer and process modules, CLR interop, class and accessor semantics, promises, generators and async/await, plus function value reflection.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -15,7 +15,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;liquid-neural-network;ode;time-series;continuous-time</PackageTags>
-    <PackageReleaseNotes>Improves the CUDA compute integration shared by the GNN and LNN graph learning models.</PackageReleaseNotes>
+    <PackageReleaseNotes>Reworks the liquid cell dynamics, adds an ODE solver adapter for the continuous-time step and time-series windowing utilities for training.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

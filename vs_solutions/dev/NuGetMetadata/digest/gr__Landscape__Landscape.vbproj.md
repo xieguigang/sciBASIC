@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Imaging.Landscape
 - TargetFramework: net10.0
 - Source files  : 48
-- Existing Title: 3D Mesh Model Parsers And Voxelization Toolkit
-- Existing Desc : Loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF meshes into one unified scene model (PLY is read separately as point clouds), then converts the surfaces into voxel and signed-distance volumes for CFD simulation, as part of the sciBASIC# imaging stack.
-- Existing Tags : scibasic;3d-model;mesh-parser;point-cloud;voxelization;sdf;stl;obj;gltf;collada;3mf
+- Existing Title: 3D Mesh Model Parsers with Voxelization and SDF Volumes
+- Existing Desc : A 3D mesh toolkit for sciBASIC#: loads STL, OBJ, glTF/GLB, COLLADA, 3DS and 3MF models into one unified scene model, reads PLY point clouds, then voxelizes surfaces into signed distance volumes with BVH acceleration for CFD simulation grids.
+- Existing Tags : scibasic;3d-mesh;stl;obj;gltf;voxelization;sdf
 
 ## Namespaces
 - Collada  [files: 3]

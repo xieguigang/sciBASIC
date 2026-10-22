@@ -27,7 +27,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;msgpack;messagepack;serialization;binary-format;deserialization</PackageTags>
-    <PackageReleaseNotes>Optimizes array I/O with buffered block writes and zero per-element allocation while keeping the MessagePack wire format fully compatible.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

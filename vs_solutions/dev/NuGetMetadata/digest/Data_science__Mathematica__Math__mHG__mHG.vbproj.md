@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 6
 - Existing Title: Minimum Hypergeometric (mHG) Test for Ranked List Enrichment
-- Existing Desc : Minimum hypergeometric (mHG) test for ranked list enrichment analysis in sciBASIC#: finds the optimal prefix cutoff, the mHG statistic and its exact p-value for gene set and feature enrichment studies.
-- Existing Tags : scibasic;statistics;hypothesis-testing;minimum-hypergeometric;gene-set-enrichment;ranked-list;bioinformatics
+- Existing Desc : A minimum hypergeometric (mHG) testing toolkit for sciBASIC#: computes the optimal prefix cutoff, the mHG statistic and its exact p-value over ranked lists, with dynamic programming hypergeometric row calculations for gene set and feature enrichment studies.
+- Existing Tags : scibasic;hypothesis-testing;minimum-hypergeometric;enrichment;ranked-list;gene-set
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Math.Statistics.Hypothesis.mHG)

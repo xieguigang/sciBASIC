@@ -6,7 +6,7 @@
 - Source files  : 6
 - Existing Title: Spatial Density Query and SLIC Superpixel Segmentation
 - Existing Desc : Estimates local point density on 2D grids and KD-tree indexes, and segments images into compact superpixels with the SLIC algorithm. Useful for outlier detection and image region grouping in the sciBASIC# framework.
-- Existing Tags : scibasic;density;superpixel;slic;kd-tree;outlier-detection;image-segmentation
+- Existing Tags : scibasic;density;superpixel;slic;kd-tree
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DataMining.DensityQuery)

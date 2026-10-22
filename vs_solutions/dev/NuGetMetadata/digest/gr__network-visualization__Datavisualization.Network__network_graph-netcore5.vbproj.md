@@ -6,7 +6,7 @@
 - Source files  : 48
 - Existing Title: Network Graph Data Model And Topology Analysis Library
 - Existing Desc : Defines the NetworkGraph node and edge model with dynamic graph tables, and supplies community detection, shortest paths, degree and betweenness centrality. The data layer of the sciBASIC# network visualization stack.
-- Existing Tags : scibasic;network-graph;graph-model;graph-analysis;centrality;community-detection;shortest-path
+- Existing Tags : scibasic;network-graph;graph-model;graph-analysis;centrality
 
 ## Namespaces
 - Analysis  [files: 8]

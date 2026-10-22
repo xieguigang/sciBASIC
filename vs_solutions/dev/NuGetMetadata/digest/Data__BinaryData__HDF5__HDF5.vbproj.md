@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 72
 - Existing Title: Pure Managed HDF5 Scientific Data File Reader
-- Existing Desc : Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes and contiguous, chunked or compact datasets, with deflate and shuffle filter support and sparse matrix helpers.
-- Existing Tags : scibasic;hdf5;scientific-data;dataset;chunked-storage;filter-pipeline;sparse-matrix;reader
+- Existing Desc : Reads HDF5 files without native libraries by decoding superblocks, B-trees, object headers, symbol tables and global heaps, exposing groups, attributes, and contiguous, chunked or compact datasets to sciBASIC# code.
+- Existing Tags : scibasic;hdf5;scientific-data;dataset;binary-format;reader
 
 ## Namespaces
 - dataset  [files: 5]

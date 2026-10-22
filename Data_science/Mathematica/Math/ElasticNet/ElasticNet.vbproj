@@ -4,7 +4,7 @@
     <RootNamespace>Microsoft.VisualBasic.Data.Bootstrapping.ElasticNet</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.Data.Bootstrapping.ElasticNet</AssemblyName>
-    <AssemblyTitle>Regularization and Variable Selection via the Elastic Net</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.Data.Bootstrapping.ElasticNet</AssemblyTitle>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Title>Regularization and Variable Selection via the Elastic Net</Title>
@@ -16,6 +16,17 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
+    <Description>Elastic net regression for sciBASIC#: a coordinate-descent solver that combines L1 and L2 penalties with an unpenalized intercept, warm-started regularization paths, cross validation over the l1Ratio and alpha grid, a polynomial view of the fitted model and NumericTable entry points for table based workflows.</Description>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scibasic;elastic-net;regularization;lasso;ridge;coordinate-descent;cross-validation;feature-selection</PackageTags>
+    <PackageReleaseNotes>Initial release: coordinate-descent elastic net fitting, alpha regularization paths with warm starts, cross validation over the l1Ratio and alpha grid, polynomial model view and NumericTable regression entry points.</PackageReleaseNotes>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -28,6 +39,14 @@
     <Compile Remove="_smoketest\**" />
     <EmbeddedResource Remove="_smoketest\**" />
     <None Remove="_smoketest\**" />
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

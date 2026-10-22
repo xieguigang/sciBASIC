@@ -22,7 +22,7 @@
 		<Description>A classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port with grid parameter selection, genetic algorithm and differential evolution engines, tabular Q-learning, activation functions and normalized sample training datasets.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning</AssemblyTitle>
 		<PackageTags>scibasic;machine-learning;random-forest;svm;genetic-algorithm;q-learning;activation-functions</PackageTags>
-    <PackageReleaseNotes>Adds JSON serializable SVM storage models, elite population replacement strategies and expanded activation functions including sinc and softplus.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

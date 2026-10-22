@@ -22,7 +22,7 @@
 		<Title>Symbolic Math Engine: Calculus, Algebra and MathML Compiler</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.Lambda</AssemblyTitle>
 		<PackageTags>scibasic;symbolic-math;computer-algebra;calculus;mathml;polynomial</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

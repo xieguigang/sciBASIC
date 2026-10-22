@@ -6,7 +6,7 @@
 - Source files  : 3
 - Existing Title: CSV Tabular Data Loader for XGBoost Training Sets
 - Existing Desc : Training data preparation for sciBASIC# XGBoost: two-pass CSV readers for test and validation tables, and converters building labelled TrainData with categorical columns and missing value indexes.
-- Existing Tags : scibasic;xgboost;dataset;csv;data-preprocessing;categorical-encoding;missing-values;train-data
+- Existing Tags : scibasic;xgboost;dataset;csv;data-preprocessing
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet)

@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.DataMining.HierarchicalClustering
 - TargetFramework: net10.0
 - Source files  : 21
-- Existing Title: Hierarchical Clustering with BIRCH and Linkage Strategies
-- Existing Desc : Agglomerative hierarchical clustering engine for sciBASIC#: the JBIRCH CF-tree for streaming data plus single, complete, average and weighted linkage strategies, distance maps and a reusable hierarchy tree builder.
-- Existing Tags : scibasic;hierarchical-clustering;birch;cf-tree;linkage;dendrogram;clustering
+- Existing Title: Hierarchical Clustering Engine with BIRCH and Linkage Strategies
+- Existing Desc : An agglomerative hierarchical clustering library for sciBASIC#: the BIRCH CF-tree preclustering engine for large streaming datasets, single, complete, average and weighted linkage strategies, weighted distance maps and a reusable dendrogram tree builder.
+- Existing Tags : scibasic;hierarchical-clustering;birch;cf-tree;linkage;clustering
 
 ## Namespaces
 - BIRCH  [files: 6]

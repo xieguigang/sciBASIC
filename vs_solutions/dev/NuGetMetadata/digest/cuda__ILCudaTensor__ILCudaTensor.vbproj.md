@@ -3,18 +3,22 @@
 - RootNamespace : Microsoft.VisualBasic.Computing.ILCuda
 - AssemblyName  : Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
 - TargetFramework: net10.0
-- Source files  : 9
+- Source files  : 12
 - Existing Title: GPU Tensor Types and CUDA Kernels for the ILCuda Runtime
-- Existing Desc : GPU tensor extension for the ILCuda framework of sciBASIC#: device resident dense and CSR sparse tensor storage with device/host caches, plus hand written double precision CUDA kernels for GEMM, softmax, reductions, convolution and pooling.
-- Existing Tags : scibasic;cuda;gpu-tensor;sparse-matrix;csr;nvrtc;cuda-kernel;deep-learning
+- Existing Desc : A GPU tensor extension for sciBASIC#: device-resident dense and CSR sparse tensor storage with host/device caches, hand-written single and double precision CUDA kernels for GEMM, softmax, convolution, pooling and sparse SpMM, plus a CUDA backend for the machine learning tensor compute interface.
+- Existing Tags : scibasic;cuda;gpu-tensor;fp32;csr;deep-learning;gpgpu;matmul
 
 ## Namespaces
-- GPUTensor  [files: 8]
+- GPUTensor  [files: 11]
 
 ## Public types
+- Enum Precision (GPUTensor\CudaTensor.vb)
 - Class CudaTensor (GPUTensor\CudaTensor.vb) - <see cref="tfCompute.ITensorCompute"/> 的 CUDA GPU 实现（全 double 精度）。
+- Class CudaTensorF (GPUTensor\CudaTensorF.vb) - <see cref="tfCompute.ITensorComputeF"/> 的 CUDA GPU 实现（单精度 float32）。
 - Module DoubleKernels (GPUTensor\DoubleKernels.vb) - 待反编译为 CUDA 的双精度逐元素函数（本身不会被托管调用）。
 - Module DoubleKernelRegistry (GPUTensor\DoubleKernels.vb) - 把 <see cref="DoubleKernels"/> 里的方法逐个翻译成 CUDA 内核并注册到编译单元。 必须在 <c>CudaEngine.TryCreate</c> 之前调用。
+- Module FloatKernels (GPUTensor\FloatKernels.vb) - 待反编译为 CUDA 的单精度（float32）逐元素函数（本身不会被托管调用）。
+- Module FloatKernelRegistry (GPUTensor\FloatKernels.vb) - 把 <see cref="FloatKernels"/> 里的方法逐个翻译成 CUDA 内核并注册到编译单元。 必须在 <c>CudaEngine.TryCreate</c> 之前调用。 与 <see cref="DoubleKernelRegistry"/> 的三段式结构保持一致：
 - Module NamespaceDoc (GPUTensor\NamespaceDoc.vb) - Device resident tensor types for the ILCuda framework: dense CudaTensor and sparse CSR storage, host/device buffer caches and the tensor kernel entry points.
 - Module TensorKernelNames (GPUTensor\TensorKernels.vb)
 - Class NamespaceDoc (NamespaceDoc.vb) - ILCudaTensor extends the ILCuda compute framework with device resident tensor types and ready to use CUDA tensor kernels for dense and sparse tensors.
@@ -80,7 +84,7 @@
 - Public Overrides Function FluxHeadBatch(h As tf.Tensor, u As tf.Tensor, wFlux As tf.Tensor,
 - Public Overrides Function SystemTauBatch(h As tf.Tensor, u As tf.Tensor, weightGate As tf.Tensor,
 - Public Overrides Function Conv2D(x As tf.Tensor, filters As tf.Tensor, bias As tf.Tensor,
-- ... and 177 more
+- ... and 322 more
 
 ## Imports
 - ILCudaKernels = Microsoft.VisualBasic.Computing.ILCuda.Kernels
@@ -96,10 +100,13 @@
 
 ## File tree
 - GPUTensor\CudaTensor.vb
+- GPUTensor\CudaTensorF.vb
 - GPUTensor\DeviceCache.vb
 - GPUTensor\DeviceResidentStore.vb
 - GPUTensor\DeviceResidentStore64.vb
+- GPUTensor\DeviceResidentStoreF.vb
 - GPUTensor\DoubleKernels.vb
+- GPUTensor\FloatKernels.vb
 - GPUTensor\NamespaceDoc.vb
 - GPUTensor\SparseCsrCache.vb
 - GPUTensor\TensorKernels.vb

@@ -11,7 +11,7 @@
     <Title>SHAP Model Interpretation and Feature Importance Analysis</Title>
     <Description>A SHAP (SHapley Additive exPlanations) analysis facade for sciBASIC# machine learning: runs linear, random forest and XGBoost explainers over sample datasets to produce per-sample contribution matrices, global feature importance rankings and CSV report export.</Description>
     <PackageTags>scibasic;shap;shapley-value;model-interpretation;explainable-ai;feature-importance</PackageTags>
-    <PackageReleaseNotes>Adds SHAP explainer models for linear, random forest and XGBoost predictors with per-sample contribution matrices and CSV report writers.</PackageReleaseNotes>
+    <PackageReleaseNotes>Expands the linear, random forest and XGBoost explainers together with the sample dataset model, prediction evaluation and CSV report writer.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>

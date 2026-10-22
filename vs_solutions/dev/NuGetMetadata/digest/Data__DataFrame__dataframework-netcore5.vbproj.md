@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 80
 - Existing Title: Tabular Data Frame and CSV/ARFF Storage Provider Framework
-- Existing Desc : Core tabular data library for sciBASIC#: DataFrame and DataSet objects, CSV and ARFF readers and writers, MySQL helpers, reflection based storage providers that map .NET classes to table rows and columns, and a streaming LINQ style I/O layer.
-- Existing Tags : scibasic;dataframe;dataset;csv;arff;storage-provider;tabular-data;reflection
+- Existing Desc : A tabular data framework for sciBASIC#: R-style DataFrame and DataSet objects, streaming CSV and ARFF readers and writers, reflection-based storage providers that map .NET classes to table rows and columns, and LINQ-style streams for querying ultra-large datasets.
+- Existing Tags : scibasic;dataframe;csv;arff;storage-provider;tabular-data
 
 ## Namespaces
 - DataSetExtensions  [files: 8]

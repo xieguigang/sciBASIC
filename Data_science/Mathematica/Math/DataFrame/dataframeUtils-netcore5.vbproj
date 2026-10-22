@@ -22,7 +22,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation</PackageTags>
-    <PackageReleaseNotes>Adds matrix data storage with save and load export APIs, improved matrix builders and XML documentation.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds a persistent correlation matrix store with on-disk caching for labelled matrices, covered by a dedicated test.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

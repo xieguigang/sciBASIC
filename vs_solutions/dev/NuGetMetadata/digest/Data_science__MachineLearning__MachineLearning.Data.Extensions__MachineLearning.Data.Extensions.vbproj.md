@@ -6,7 +6,7 @@
 - Source files  : 4
 - Existing Title: Q-Learning and Labelled Dataset Serialization Extensions
 - Existing Desc : Helpers for sciBASIC# machine learning data: export a trained Q-table with state features to netCDF, record Q-value curves per iteration to CSV, and save or load labelled clustering matrices in a compact binary format.
-- Existing Tags : scibasic;machine-learning;q-learning;q-table;dataset;serialization;netcdf;binary-format
+- Existing Tags : scibasic;machine-learning;q-learning;dataset;serialization
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineLearning.Data)

@@ -6,7 +6,7 @@
 - Source files  : 22
 - Existing Title: Machine Vision Tools: Shape, Blob, OCR and Tracking
 - Existing Desc : 2D curve and shape matching with Procrustes and Frechet distance, connected component labelling, Hough circle detection, text OCR, RANSAC point-set alignment and multi-object tracking. Part of sciBASIC#.
-- Existing Tags : scibasic;machine-vision;shape-matching;procrustes;frechet-distance;hough-transform;connected-component;ransac;ocr;tracking
+- Existing Tags : scibasic;machine-vision;shape-matching;hough-transform;connected-component;tracking
 
 ## Namespaces
 - CCL  [files: 3]

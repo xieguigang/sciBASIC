@@ -5,8 +5,8 @@
 - TargetFramework: net10.0-windows
 - Source files  : 23
 - Existing Title: GDI+ Graphics Wrapper And System.Drawing Interop For Windows
-- Existing Desc : A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing, providing the GDI raster back end of the driver based graphics engine.
-- Existing Tags : scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms;gif-encoder;tiff;font-metrics
+- Existing Desc : A Windows-only GDI+ canvas, image filter, GIF/TIFF encoder and font-metrics wrapper with converters that bridge sciBASIC# graphics models to System.Drawing. Provides the GDI raster back end used by the driver-based sciBASIC# graphics engine.
+- Existing Tags : scibasic;gdi-plus;system-drawing;graphics-interop;windows-forms
 
 ## Namespaces
 - Drawing2D.Text  [files: 4]

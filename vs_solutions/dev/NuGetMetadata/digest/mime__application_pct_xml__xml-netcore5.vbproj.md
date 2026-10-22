@@ -6,7 +6,7 @@
 - Source files  : 23
 - Existing Title: XML Toolkit with XSD Models, MathML and XPath Queries
 - Existing Desc : XML helpers for sciBASIC#: an XSD schema element data model, MathML content markup parsed into expression objects, a lightweight XPath query engine, and a generic XmlElement tree with reflection based object graph loading, plus a code generator.
-- Existing Tags : scibasic;xml;xsd;mathml;xpath;xml-parser;code-generator
+- Existing Tags : scibasic;xml;xsd;mathml;xpath;code-generator
 
 ## Namespaces
 - MathML  [files: 11]

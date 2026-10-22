@@ -25,7 +25,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;docx;word;office-openxml;document-generation;text-extraction</PackageTags>
-    <PackageReleaseNotes>Added thesis formatting themes, per-section headers and footers with page numbers, and OMML equation serialization from lambda expressions.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds a DOCX report renderer that writes report blocks as Word documents, together with thesis formatting helpers and OMML equation fixes.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

@@ -21,7 +21,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;chart;plotting;ggplot-theme;gdi-plus;heatmap;sankey</PackageTags>
-    <PackageReleaseNotes>Adds chord, Sankey and treemap plots, a ggplot2 theme unit converter with CSS mapping, and shared color scale plus legend renderers for all chart types.</PackageReleaseNotes>
+    <PackageReleaseNotes>Improves the plot engine data models, the dendrogram and heatmap plots and the bar plot baseline handling, and fixes missing component references.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

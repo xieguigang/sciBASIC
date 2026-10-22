@@ -2,11 +2,11 @@
 
 - RootNamespace : Microsoft.VisualBasic.Data.visualize
 - AssemblyName  : Microsoft.VisualBasic.Data.visualize
-- TargetFramework: net10.0-windows;net10.0
+- TargetFramework: net10.0
 - Source files  : 21
-- Existing Title: Visualization Layer for Networks, Clusters and Embeddings
-- Existing Desc : Visualization abstractions for sciBASIC#: correlation and K-means network graphs, binary tree layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus tabular CSV rendering helpers.
-- Existing Tags : scibasic;visualization;network-graph;correlation-network;embedding;clustering;kmeans;umap;tabular-rendering
+- Existing Title: Network, Cluster and Embedding Visualization Layer
+- Existing Desc : A visualization layer for sciBASIC#: correlation and K-means cluster network graph construction, binary tree partition layouts, 2D and 3D rendering of UMAP, SOM and other data embeddings, plus CSV bar chart and scatter rendering helpers for tabular data.
+- Existing Tags : scibasic;visualization;network-graph;correlation-network;umap;kmeans;embedding
 
 ## Namespaces
 - KMeans  [files: 7]

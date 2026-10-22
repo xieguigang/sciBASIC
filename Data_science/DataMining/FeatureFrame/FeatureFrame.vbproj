@@ -23,7 +23,7 @@
     <AssemblyTitle>Microsoft.VisualBasic.DataMining.FeatureFrame</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <PackageTags>scibasic;feature-engineering;encoder;dataframe;machine-learning</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

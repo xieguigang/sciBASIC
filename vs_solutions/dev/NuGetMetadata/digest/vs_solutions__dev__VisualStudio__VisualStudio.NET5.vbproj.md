@@ -6,7 +6,7 @@
 - Source files  : 89
 - Existing Title: Visual Studio Solution, VBProject And Source Code Analysis Toolkit
 - Existing Desc : Parses and writes .sln/.slnx solutions and .vbproj files, builds VB.NET symbol trees with a recursive descent parser, maps compiled assemblies by metadata reflection, decodes IL into syntax trees and resolves source maps for sciBASIC# code tooling.
-- Existing Tags : scibasic;visual-studio;solution-parser;slnx;vbproj;code-analysis;vbnet;il-decompiler;source-map;reflection
+- Existing Tags : scibasic;visual-studio;solution-parser;slnx;code-analysis;il-decompiler;source-map
 
 ## Namespaces
 - CodeSign  [files: 7]

@@ -6,7 +6,7 @@
 - Source files  : 26
 - Existing Title: Graph Neural Networks: GCN, GAT and Recurrent Temporal Graph Layers
 - Existing Desc : Graph neural network library for sciBASIC#, providing GCN and graph-attention layers, GRU and RNN recurrent graph layers, temporal graph snapshots, and graph classification models with SGD and Adam training.
-- Existing Tags : scibasic;graph-neural-network;gcn;graph-attention;message-passing;temporal-graph;graph-classification
+- Existing Tags : scibasic;graph-neural-network;gcn;graph-attention;temporal-graph
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DeepLearning.GNN)
@@ -107,10 +107,11 @@
 - Public ReadOnly Property InFeatures As Integer
 - Public ReadOnly Property OutFeatures As Integer
 - Public Sub New(inFeatures As Integer, outFeatures As Integer, Optional numHeads As Integer = 1, Optional leakyReluSlope As Single = 0.2F, Optional nam…
-- ... and 149 more
+- ... and 152 more
 
 ## Imports
 - Microsoft.VisualBasic.MachineLearning.TensorFlow
+- Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 - Microsoft.VisualBasic.Math.LinearAlgebra
 - std = System.Math
 

@@ -20,7 +20,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>scibasic;h264;mp4;video-encoding;cabac;iso-bmff</PackageTags>
-    <PackageReleaseNotes>Added CABAC entropy coding, integer motion estimation, intra prediction and an MP4 faststart muxer with AVCC sample stores.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

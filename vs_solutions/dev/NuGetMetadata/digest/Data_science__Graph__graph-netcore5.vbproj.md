@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 119
 - Existing Title: Graph Theory Algorithms, Network Models and Graph Search
-- Existing Desc : Algorithm library for sciBASIC# graphs: Dijkstra and A-star shortest paths, contraction hierarchies, Dinic max flow, Louvain, Leiden and label propagation communities, plus minimum spanning trees, Ullmann isomorphism, PageRank and HNSW search.
-- Existing Tags : scibasic;graph-theory;graph-algorithm;shortest-path;dijkstra;a-star;community-detection;louvain;leiden;max-flow;spanning-tree;hnsw;network-analysis
+- Existing Desc : Algorithm library for sciBASIC# graphs: Dijkstra and A-star shortest paths, contraction hierarchies, Dinic max flow, Louvain, Leiden and label propagation communities, plus MST, Ullmann isomorphism and HNSW search.
+- Existing Tags : scibasic;graph-theory;graph-algorithm;shortest-path;community-detection
 
 ## Namespaces
 - Analysis  [files: 3]

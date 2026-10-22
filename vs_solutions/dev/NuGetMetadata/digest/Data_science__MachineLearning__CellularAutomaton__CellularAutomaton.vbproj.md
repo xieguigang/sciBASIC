@@ -6,7 +6,7 @@
 - Source files  : 11
 - Existing Title: Cellular Automaton Grid Simulator with netCDF Snapshot Debugging
 - Existing Desc : A generic cellular automaton engine for sciBASIC#: runs tick-and-commit generations over a 2D grid of typed cells with configurable neighbourhood and boundary modes, and exports per-cell state snapshots to netCDF for analysis.
-- Existing Tags : scibasic;cellular-automaton;simulation;lattice-gas;reaction-diffusion;netcdf;grid-model
+- Existing Tags : scibasic;cellular-automaton;simulation;netcdf;grid-model
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineLearning.CellularAutomaton)

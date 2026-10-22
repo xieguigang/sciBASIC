@@ -18,13 +18,13 @@
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <Title>Pure VB.NET Tensor Engine with NumPy API and Pluggable Compute Backend</Title>
-    <Description>A self-contained tensor computation engine for sciBASIC#: managed double and float32 tensors with a NumPy-style API, TensorFlow-style nn activations and losses, plus a pluggable SIMD CPU backend with convolution, matmul and sparse SpMM operators.</Description>
+    <Description>A self-contained tensor computation engine for sciBASIC#: managed double, float32 and half precision tensors with a NumPy-style API, TensorFlow-style nn activations and losses, mixed precision policies and diagnostics, plus pluggable SIMD and CUDA CPU/GPU backends with convolution, matmul and sparse SpMM operators.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MachineLearning.TensorFlow</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;tensor;numpy;simd;compute-backend;activation-functions;sparse-matrix</PackageTags>
-    <PackageReleaseNotes>Introduces a float32 tensor backend, fused batch operators, parallel convolution kernels and LIF stepping with CSR sparse matrix support for spiking models.</PackageReleaseNotes>
+    <PackageTags>scibasic;tensor;ndarray;simd;fp16;mixed-precision;deep-learning;matmul</PackageTags>
+    <PackageReleaseNotes>Adds an fp16 tensor stack with 8-lane half SIMD kernels, mixed precision policy and diagnostics, completes the half precision compute contract and fixes the fp64 overflow checks.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

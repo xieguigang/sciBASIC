@@ -6,7 +6,7 @@
 - Source files  : 53
 - Existing Title: Restricted Boltzmann Machines with Contrastive Divergence Training
 - Existing Desc : Restricted Boltzmann machine library for sciBASIC#, offering single, deep and recurrent RBM models trained by contrastive divergence or back-error propagation, plus dense matrix math and word-encoding helpers for text input.
-- Existing Tags : scibasic;rbm;restricted-boltzmann-machine;contrastive-divergence;deep-belief-network;double-double-precision;unsupervised
+- Existing Tags : scibasic;rbm;contrastive-divergence;deep-learning;unsupervised
 
 ## Namespaces
 - math  [files: 3]

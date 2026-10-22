@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.MIME.OpenXPS</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
-    <AssemblyTitle>application/oxps</AssemblyTitle>
+    <AssemblyTitle>Microsoft.VisualBasic.MIME.OpenXPS</AssemblyTitle>
     <AssemblyName>Microsoft.VisualBasic.MIME.OpenXPS</AssemblyName>
     <Title>XPS / OXPS Document Generator and Text Extractor</Title>
     <Description>Generates and reads XPS and OpenXPS fixed-page documents for sciBASIC#: a block based writer lays out text, tables and images onto fixed pages with optional ODTTF font embedding, packs them into an OPC package, extracts plain text back out through the Glyphs content streams, and implements the shared ReportRender contract for report generation.</Description>
@@ -21,6 +21,12 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Initial release: OpenXPS and Microsoft XPS document writer with automatic line wrapping and pagination, ODTTF font embedding, OPC packaging, Glyphs based text extraction and a report renderer for the shared block model.</PackageReleaseNotes>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -30,6 +36,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

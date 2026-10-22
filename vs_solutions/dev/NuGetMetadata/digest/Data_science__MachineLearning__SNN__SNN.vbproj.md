@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork
 - TargetFramework: net10.0
 - Source files  : 13
-- Existing Title: Spiking Neural Network  ·  LIF + SurrogateGrad + STDP
-- Existing Desc : Spiking neural network toolkit for sciBASIC#: leaky integrate and fire (LIF) and recurrent/sparse LIF layers, population and rate encoders and decoders, surrogate gradient training and STDP plasticity on the tensor runtime.
-- Existing Tags : scibasic;deep-learning;spiking-neural-network;lif;surrogate-gradient;stdp;recurrent;sparse;tensor
+- Existing Title: Spiking Neural Network Toolkit with LIF, Surrogate Gradients and STDP
+- Existing Desc : A spiking neural network toolkit for sciBASIC#: leaky integrate-and-fire (LIF) layers with recurrent and sparse CSR connectivity, rate/latency spike encoders and decoders, surrogate gradient BPTT training plus STDP plasticity built on the tensor runtime.
+- Existing Tags : scibasic;spiking-neural-network;lif;surrogate-gradient;stdp;sparse-synapses;deep-learning
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DeepLearning.SpikingNeuralNetwork)
@@ -105,6 +105,7 @@
 - Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 - std = System.Math
 - System.Text
+- tf = Microsoft.VisualBasic.MachineLearning.TensorFlow.Math
 
 ## File tree
 - Decoder.vb

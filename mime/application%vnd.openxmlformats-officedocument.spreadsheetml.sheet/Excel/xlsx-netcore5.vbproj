@@ -27,7 +27,7 @@
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.Office.Excel</AssemblyTitle>
     <PackageTags>scibasic;xlsx;excel;openxml;spreadsheet</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

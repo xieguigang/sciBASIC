@@ -6,7 +6,7 @@
 - Source files  : 8
 - Existing Title: Bonsai Diffusion Tree Layout for High-Dimensional Data
 - Existing Desc : Reconstructs a diffusion tree from high-dimensional observations, optimising every branch length and internal node coordinate against a Felsenstein tree likelihood, then laying the tree out for visualisation in sciBASIC#.
-- Existing Tags : scibasic;bonsai;dimensionality-reduction;diffusion-tree;felsenstein-likelihood;visualization
+- Existing Tags : scibasic;bonsai;dimensionality-reduction;diffusion-tree;visualization
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DataMining.Bonsai)

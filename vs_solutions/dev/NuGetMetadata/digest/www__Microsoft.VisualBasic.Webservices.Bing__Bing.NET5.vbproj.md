@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 15
 - Existing Title: Microsoft Bing Web, Academic, Translation and DOI Services Client
-- Existing Desc : Bing service clients for sciBASIC# knowledge base enrichment: scrape web search results with paging, query the academic search portal for article profiles and citations, look up word translations, and decode DOI handle service responses.
-- Existing Tags : scibasic;bing;search-engine;web-scraping;academic-search;translation;doi;knowledge-base
+- Existing Desc : Bing service clients for the sciBASIC# framework: scrape web search results with paging, query the academic search portal for article profiles, look up word translations, and decode DOI handle service responses.
+- Existing Tags : scibasic;bing;search-engine;web-scraping;translation;doi
 
 ## Namespaces
 - Bing  [files: 4]

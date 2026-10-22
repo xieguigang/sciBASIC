@@ -3,16 +3,18 @@
 - RootNamespace : Microsoft.VisualBasic.Data.Wave
 - AssemblyName  : Microsoft.VisualBasic.Data.Wave
 - TargetFramework: net10.0
-- Source files  : 12
+- Source files  : 13
 - Existing Title: WAV Audio File Reader, Writer and Voiceprint Extractor
 - Existing Desc : Parses and writes RIFF/WAVE audio files with FMT and data sub-chunk access, and extracts mel-filterbank voiceprint vectors with delta coefficients, CMVN and L2 normalisation. Part of sciBASIC#.
-- Existing Tags : scibasic;wav;audio;voiceprint;mfcc;mel-filterbank;cmvn;riff
+- Existing Tags : scibasic;wav;audio;voiceprint;mfcc;riff
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Data.Wave)
 
 ## Public types
 - Class NamespaceDoc (NamespaceDoc.vb) - WAV audio file reading and writing: the RIFF wave file model and the audio data access API.
+- Class WaveSampleReader (SampleReader.vb) - frames are decoded directly from the file stream. this is the fast path which makes the batch decoding of a large wave file (for example a 384kHz 30 seconds analog recording) possible:
+- Enum SampleFormat (SampleReader.vb) - the sample data encoding which the raw byte block decoder of <see cref="WaveSampleReader"/> supports
 - Class DataSubChunk (SubChunk\Data.vb)
 - Class LazyDataChunk (SubChunk\Data.vb)
 - Module ParserDispatch (SubChunk\Data.vb) - Central dispatch for choosing the correct parser based on audio format and bits per sample.
@@ -22,7 +24,7 @@
 - Module WavFormatGuids (SubChunk\Enums.vb) - Well-known GUIDs for WAVE_FORMAT_EXTENSIBLE SubFormat field.
 - Class FMTSubChunk (SubChunk\FMT.vb) - The "fmt " subchunk describes the sound data's format
 - Structure Sample (SubChunk\Sample.vb)
-- Module SignalProcessing (VoicePrint\SignalProcessing.vb) - 信号处理工具模块，提供静态方法供声纹提取流水线调用。
+- Module SignalProcessing (VoicePrint\SignalProcessing.vb) - <see cref="FFT"/>, <see cref="PowerSpectrum(Double(), Double(), Integer)"/> and <see cref="NextPowerOf2"/> are mathematically the same thing as the ``FFT.Radix2``/``FFT.Spectrum.PowerSpectrum``/``FFT.Radix2.RoundupPow2`` members of
 - Class MelFilterbank (VoicePrint\SignalProcessing.vb) - Mel 尺度三角滤波器组，用于将功率谱转换为 Mel 频率能量。 Mel 尺度模拟人耳对频率的感知：低频分辨率高，高频分辨率低。 公式：mel = 2595 * log10(1 + hz/700)
 - Module VoicePrint (VoicePrint\VoicePrint.vb)
 - Class VoicePrintOptions (VoicePrint\VoicePrintExtractor.vb) - 声纹提取参数配置。
@@ -33,15 +35,28 @@
 - Module WaveWriter (WaveWriter.vb) - Static utility class for writing WAV audio files from sample data. Supports PCM (8/16/24/32-bit), IEEE Float (32/64-bit), and G.711 A-law/μ-law encoding output.
 
 ## Notable public members
+- Public ReadOnly Property Path As String
+- Public ReadOnly Property Channels As Integer
+- Public ReadOnly Property SampleRate As Integer
+- Public ReadOnly Property BitsPerSample As Integer
+- Public ReadOnly Property IsFloat As Boolean
+- Public ReadOnly Property FrameCount As Long
+- Public ReadOnly Property Duration As Double
+- Public ReadOnly Property DataOffset As Long
+- Public Shared Function Open(path As String) As WaveSampleReader
+- Public Function ReadChannel(channelIndex As Integer, startFrame As Long, count As Long) As Single()
+- Public Sub ReadChannel(channelIndex As Integer, startFrame As Long, buffer As Single(),
+- Public Function ReadChannels(startFrame As Long, count As Long, channels As Integer()) As Single()()
+- Public Sub Dispose() Implements IDisposable.Dispose
 - Public Property data As Sample()
-- Public Overrides Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+- Public Overrides Function LoadSamples(start As Long, length As Long, Optional scan0% = 0) As IEnumerable(Of Sample)
 - Friend Shared Function ParseData(wav As BinaryDataReader, format As FMTSubChunk) As DataSubChunk
 - Public Iterator Function GenericEnumerator() As IEnumerator(Of Sample) Implements Enumeration(Of Sample).GenericEnumerator
-- Public MustOverride Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+- Public MustOverride Iterator Function LoadSamples(start As Long, length As Long, Optional scan0% = 0) As IEnumerable(Of Sample)
 - Public Sub Close()
-- Public Overrides Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
-- Public Function MeasureChunkSize(length As Integer) As Long
-- Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
+- Public Overrides Iterator Function LoadSamples(start As Long, length As Long, Optional scan0% = 0) As IEnumerable(Of Sample)
+- Public Function MeasureChunkSize(length As Long) As Long
+- Public Function CalculateOffset(start As Long, Optional scan0% = 0) As Long
 - Public Shared Function MoveToDataChunk(wav As BinaryDataReader) As BinaryDataReader
 - Friend Function ResolveParser(audioFormat As wFormatTag, bitsPerSample As Integer) _
 - Friend Function ResolveSingleSampleParser(audioFormat As wFormatTag, bitsPerSample As Integer) _
@@ -80,20 +95,7 @@
 - Friend Shared Function ParseMuLawSample(wav As BinaryDataReader, channels As Integer) As Sample
 - Public Property chunkID As String
 - Public Property chunkSize As Integer
-- Public Function ApplyPreEmphasis(samples As Double(), coeff As Double) As Double()
-- Public Function FrameSignal(samples As Double(), frameSize As Integer, hopSize As Integer) As List(Of Double())
-- Public Function CreateHammingWindow(size As Integer) As Double()
-- Public Sub FFT(real As Double(), imag As Double())
-- Public Function PowerSpectrum(real As Double(), imag As Double(), numBins As Integer) As Double()
-- Public Function DCT(input As Double(), numCoeffs As Integer) As Double()
-- Public Function ComputeDelta(features As Double()(), N As Integer) As Double()()
-- Public Sub ComputeStatistics(data As Double(), ByRef mean As Double, ByRef std As Double,
-- Public Function NextPowerOf2(n As Integer) As Integer
-- Public Sub New(numFilters As Integer, fftSize As Integer, sampleRate As Integer,
-- Public Function Apply(powerSpectrum As Double()) As Double()
-- Public Shared Function HzToMel(hz As Double) As Double
-- Public Shared Function MelToHz(mel As Double) As Double
-- ... and 32 more
+- ... and 45 more
 
 ## Imports
 - Microsoft.VisualBasic.Data.IO
@@ -106,6 +108,7 @@
 
 ## File tree
 - NamespaceDoc.vb
+- SampleReader.vb
 - SubChunk\Data.vb
 - SubChunk\Enums.vb
 - SubChunk\FMT.vb

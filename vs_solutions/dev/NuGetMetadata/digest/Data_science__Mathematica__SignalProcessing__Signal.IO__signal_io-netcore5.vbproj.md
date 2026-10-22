@@ -6,7 +6,7 @@
 - Source files  : 3
 - Existing Title: Signal Data IO: netCDF Reader and Writer for Signals
 - Existing Desc : Reads and writes time-series signal collections with their metadata, chunk indices and measure units to netCDF files, interoperating with R-based signal analysis pipelines. Part of sciBASIC#.
-- Existing Tags : scibasic;signal-io;netcdf;time-series;chunk-index;measure-units;data-exchange;file-format
+- Existing Tags : scibasic;signal-io;netcdf;time-series;data-exchange;file-format
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Data.Signal)

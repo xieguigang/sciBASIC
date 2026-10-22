@@ -6,7 +6,7 @@
 - Source files  : 14
 - Existing Title: Interactive WinForms Network Graph Viewer Control
 - Existing Desc : A Windows Forms canvas that animates force-directed layouts, supports 2D and 3D rendering, mouse hit-testing, node tooltips and viewport panning, and can record the animation to AVI or SVG for sciBASIC# desktop apps.
-- Existing Tags : scibasic;network-canvas;winforms;interactive-viewer;data-visualization;animation
+- Existing Tags : scibasic;network-canvas;winforms;interactive-viewer;data-visualization
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Data.visualize.Network.Canvas)

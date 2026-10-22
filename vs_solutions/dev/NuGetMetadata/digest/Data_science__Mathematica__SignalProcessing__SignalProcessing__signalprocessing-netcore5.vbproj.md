@@ -3,25 +3,26 @@
 - RootNamespace : Microsoft.VisualBasic.Math.SignalProcessing
 - AssemblyName  : Microsoft.VisualBasic.Math.SignalProcessing
 - TargetFramework: net10.0
-- Source files  : 84
+- Source files  : 95
 - Existing Title: Signal Processing: FFT, Wavelets, Filters and Peak Detection
-- Existing Desc : Algorithms for one-dimensional signals in sciBASIC#: FFT and wavelet transforms, Savitzky-Golay filtering, peak detection, baseline removal, resampling, DTW and COW alignment, plus Kalman filtering.
-- Existing Tags : scibasic;signal-processing;fft;wavelet;peak-detection;filtering;savitzky-golay;kalman-filter;dtw;cow-alignment
+- Existing Desc : Algorithms for one-dimensional signals in sciBASIC#: radix-2 FFT and spectrum analysis, wavelet transforms, Savitzky-Golay and DC shift filtering, peak detection, baseline removal, resampling, DTW and COW alignment, Kalman filtering, plus a wave analysis suite covering cell demodulation, scan-line sync, fold and payload analysis, period estimation and channel correlation.
+- Existing Tags : scibasic;signal-processing;fft;wavelet;peak-detection;filtering;demodulation;wave-analysis
 
 ## Namespaces
 - COW  [files: 7]
 - EmGaussian  [files: 5]
-- FFT  [files: 5]
-- Filters  [files: 10]
+- FFT  [files: 7]
+- Filters  [files: 11]
 - HungarianAlgorithm  [files: 2]
 - KalmanFilter  [files: 3]
 - NDtw  [files: 3]
 - NDtw.Preprocessing  [files: 6]
-- PeakFinding  [files: 4]
+- PeakFinding  [files: 5]
 - Source  [files: 5]
 - Source.Arithmetic  [files: 2]
 - Source.Generators  [files: 10]
 - WaveletTransform  [files: 7]
+- Waves  [files: 7]
 
 ## Public types
 - Module Alignment (Alignment.vb)
@@ -42,9 +43,12 @@
 - Enum Direction (FFT\FourierTransform.vb) - Fourier transformation direction.
 - Module NamespaceDoc (FFT\NamespaceDoc.vb) - Fast Fourier transform and the related spectral analysis helpers.
 - Enum Plans (FFT\Plans.vb) - Plans Description
+- Module Radix2 (FFT\Radix2.vb) - scaling convention: | implementation | data layout | scaling on the forward transform | length limit | |----------------|-------------|----------------------------------|--------------|
+- Module Spectrum (FFT\Spectrum.vb) - the magnitude spectrum helpers which are built on the <see cref="Radix2"/> transform.
 - Class TransformCore (FFT\TransformCore.vb) - Core utility class to provide general utility methods
 - Class ContinuousPadder (Filters\ContinuousPadder.vb) - </ul> </para> Example:
 - Interface DataFilter (Filters\DataFilter.vb) - This interface represents types which are able to filter data, for example: eliminate redundant points. @author Marcin Rzeźnicki </summary>
+- Module DCShift (Filters\DCShift.vb) - negative range so that the rectifying based analysis (envelope, modulation measurement) would not mix the negative excursion into the positive one. ### two shift conventions of current library
 - Class Linearizer (Filters\Linearizer.vb) - <tt>i (data[i])</tt>, for <tt>0 data.length</tt>, value of <tt>|(data[i] - data[i+1])/data[i]|</tt>. Then for each range <tt>(j,k)</tt>
 - Class MeanValuePadder (Filters\MeanValuePadder.vb) - </para> Example: <para>
 - Module NamespaceDoc (Filters\NamespaceDoc.vb) - Digital filters, including FIR, IIR and smoothing filters.
@@ -73,6 +77,7 @@
 - Class ElevationAlgorithm (PeakFinding\Algorithm.vb) - 通过累加线的高度落差进行峰识别 1. 首先计算出信号的累加线 2. 然后删除所有的坡度小于给定角度值的平行段
 - Module Doppler (PeakFinding\Doppler.vb)
 - Module Implement (PeakFinding\Implement.vb)
+- Module LocalMaxima (PeakFinding\LocalMaxima.vb) - algorithms are not interchangeable: - ``ElevationAlgorithm`` works on the accumulated line of a chromatogram: it cuts the slope segments which are flatter than the given angle, the peaks are the
 - Module NamespaceDoc (PeakFinding\NamespaceDoc.vb) - Peak detection in signal series.
 - Structure SignalPeak (PeakFinding\SignalPeak.vb)
 - Class PIDController (PIDController.vb)
@@ -140,7 +145,7 @@
 - Module NamespaceDoc (WaveletTransform\NamespaceDoc.vb) - Wavelet transforms for signal analysis.
 - Module Transform (WaveletTransform\Transform.vb) - ###### WaveletTransform > https://github.com/green-rail/WaveletTransform
 - Class Wavelet (WaveletTransform\Wavelet.vb)
-- Module WaveletTransformExtensions (WaveletTransform\WaveletTransform.vb) - Why might people prefer the data in this form? We can identify large changes in the differences portion d of the transform. It is easier to quantize the data in this form.
+- ... and 17 more
 
 ## Notable public members
 - Public Function Similarity(ref As GeneralSignal, sample As GeneralSignal, Optional steps# = 0.25) As Double
@@ -200,10 +205,10 @@
 - Public Sub DFT2(data As Complex(,), direction As Direction)
 - Public Sub FFT(data As Complex(), direction As Direction)
 - Public Sub FFT2(data As Complex(,), direction As Direction)
-- Public Overridable Property PaddingLeft As Boolean = True
-- Public Overridable Property PaddingRight As Boolean = True
-- Public Sub New()
-- ... and 320 more
+- Public Sub Fft(re As Double(), im As Double(), Optional inverse As Boolean = False)
+- Public Function RoundupPow2(n As Integer) As Integer
+- Public Function PowerSpectrum(x As Double(), Optional window As Boolean = True) As Double()
+- ... and 387 more
 
 ## Imports
 - gaussianFunc = Microsoft.VisualBasic.Math.Distributions.Gaussian
@@ -251,9 +256,12 @@
 - FFT\FourierTransform.vb
 - FFT\NamespaceDoc.vb
 - FFT\Plans.vb
+- FFT\Radix2.vb
+- FFT\Spectrum.vb
 - FFT\TransformCore.vb
 - Filters\ContinuousPadder.vb
 - Filters\DataFilter.vb
+- Filters\DCShift.vb
 - Filters\Linearizer.vb
 - Filters\MeanValuePadder.vb
 - Filters\NamespaceDoc.vb
@@ -281,6 +289,7 @@
 - PeakFinding\Algorithm.vb
 - PeakFinding\Doppler.vb
 - PeakFinding\Implement.vb
+- PeakFinding\LocalMaxima.vb
 - PeakFinding\NamespaceDoc.vb
 - PeakFinding\SignalPeak.vb
 - PIDController.vb
@@ -317,4 +326,11 @@
 - WaveletTransform\Transform.vb
 - WaveletTransform\Wavelet.vb
 - WaveletTransform\WaveletTransform.vb
+- Waves\CellDemodulator.vb
+- Waves\ChannelCorrelation.vb
+- Waves\FoldAnalysis.vb
+- Waves\PayloadAnalysis.vb
+- Waves\PeriodEstimation.vb
+- Waves\ScanLineSync.vb
+- Waves\SpectrumBands.vb
 

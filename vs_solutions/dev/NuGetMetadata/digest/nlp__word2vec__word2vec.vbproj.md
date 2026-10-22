@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 9
 - Existing Title: Word2Vec Embedding Trainer with Skip-Gram and CBOW
-- Existing Desc : Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window, sampling and thread count, plus vector models for similarity and analogy queries.
-- Existing Tags : scibasic;word2vec;word-embedding;skip-gram;cbow;huffman-tree;word-similarity;machine-learning
+- Existing Desc : Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.
+- Existing Tags : scibasic;word2vec;word-embedding;skip-gram;machine-learning
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Data.NLP.Word2Vec)

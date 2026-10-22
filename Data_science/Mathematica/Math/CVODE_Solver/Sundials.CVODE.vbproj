@@ -20,7 +20,7 @@
     <PackageTags>scibasic;ode-solver;cvode;adams;bdf;stiff-equations;root-finding</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>PROJECT_SUMMARY.md</PackageReadmeFile>
-    <PackageReleaseNotes>Adds a fluent CVODEBuilder API, event root finding during integration, step size diagnostics and stiffness presets for stiff and non-stiff systems.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <IncludeSymbols>True</IncludeSymbols>

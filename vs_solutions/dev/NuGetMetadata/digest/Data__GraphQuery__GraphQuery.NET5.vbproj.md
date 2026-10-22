@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 23
 - Existing Title: Graph Query Language Engine for HTML and XML Documents
-- Existing Desc : Runs a piped graph query language over HTML and XML documents: combines CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values, and emits the result as JSON.
-- Existing Tags : scibasic;graph-query;query-language;html;css-selector;xpath;json;web-scraping
+- Existing Desc : Runs a piped graph query language over HTML/XML documents, combining CSS selectors, XPath expressions, attribute selectors and built-in functions to extract nodes, text and values and emit them as JSON.
+- Existing Tags : scibasic;graph-query;html;css-selector;xpath;json
 
 ## Namespaces
 - Language  [files: 6]

@@ -32,7 +32,7 @@
     <AssemblyTitle>Microsoft.VisualBasic.DeepLearning.LLM</AssemblyTitle>
     <Description>A pure managed decoder-only language model engine for sciBASIC#: DeepSeek-style mixture-of-experts routing, prefill and incremental KV cache with GQA/MQA, RoPE, RMSNorm and SwiGLU decoder blocks, AdamW training, and schema-constrained function calling in a multi-turn agent loop.</Description>
     <PackageTags>scibasic;llm;transformer;mixture-of-experts;kv-cache;rope;function-calling</PackageTags>
-    <PackageReleaseNotes>Extended the MoE decoder with JSON schema constrained decoding, shared-expert routing and a multi-turn tool calling agent loop.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <UseApplicationFramework>True</UseApplicationFramework>
   </PropertyGroup>
 

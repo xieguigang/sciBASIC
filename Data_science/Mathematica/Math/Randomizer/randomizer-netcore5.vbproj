@@ -22,7 +22,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;random;mersenne-twister;monte-carlo;pseudorandom;sampling;true-random;entropy;environment-noise;pdh;csprng</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds TrueRandom: a hybrid true random generator fed by PDH performance counters, process and GC timing and environmental noise, mixed with a cryptographic generator, plus a standalone entropy collector.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

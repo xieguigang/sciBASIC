@@ -6,7 +6,7 @@
 - Source files  : 4
 - Existing Title: Machine Learning Debugger: Error Curves, ROC and Sample Frame Exports
 - Existing Desc : Diagnostics helpers for sciBASIC# neural network training: builds demo sample sets, converts XML datasets to tabular rows, extracts fitness and neuron value frames from training netCDF logs, and computes ROC validation curves.
-- Existing Tags : scibasic;machine-learning;debugger;roc;error-curve;fitness-curve;training-log;diagnostics
+- Existing Tags : scibasic;machine-learning;debugger;roc;error-curve
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineLearning.Debugger)

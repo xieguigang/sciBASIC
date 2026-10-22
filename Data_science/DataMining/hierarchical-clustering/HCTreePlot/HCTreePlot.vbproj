@@ -21,7 +21,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;dendrogram;radial-tree;heatmap;visualization;hierarchical-clustering</PackageTags>
-    <PackageReleaseNotes>Adds heatmap compatibility plotting with row, column and global scaling alongside new radial and right-to-left dendrogram layouts.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

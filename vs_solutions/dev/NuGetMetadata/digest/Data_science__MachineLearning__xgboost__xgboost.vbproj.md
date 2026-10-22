@@ -6,7 +6,7 @@
 - Source files  : 38
 - Existing Title: XGBoost Model Predictor and Gradient Boosting Tree Trainer
 - Existing Desc : Gradient boosting toolkit for sciBASIC#: reads and scores XGBoost model files through GBTree, GBLinear and Dart boosters, and trains ternary gradient boosting trees with categorical and missing value handling.
-- Existing Tags : scibasic;xgboost;gradient-boosting;gbtree;gblinear;dart;decision-tree;predictor;classifier
+- Existing Tags : scibasic;xgboost;gradient-boosting;decision-tree;predictor
 
 ## Namespaces
 - config  [files: 2]

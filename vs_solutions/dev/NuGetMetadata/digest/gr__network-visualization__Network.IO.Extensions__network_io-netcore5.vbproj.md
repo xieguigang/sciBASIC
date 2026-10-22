@@ -6,7 +6,7 @@
 - Source files  : 32
 - Existing Title: Network Graph File IO And Third-Party Format Interop
 - Existing Desc : Reads and writes network graphs as CSV, JSON and VB.NET table sets, and imports or exports Cytoscape, Gephi, GML, Sigma.js and graphology documents. The IO layer of the sciBASIC# network visualization stack.
-- Existing Tags : scibasic;network-io;cytoscape;gephi;gml;sigma-js;graphology;file-format
+- Existing Tags : scibasic;network-io;cytoscape;gephi;file-format
 
 ## Namespaces
 - FileStream  [files: 10]

@@ -6,7 +6,7 @@
 - Source files  : 7
 - Existing Title: 3D Gaussian Splatting Scene Reconstruction and Rendering
 - Existing Desc : 3D Gaussian splatting for sciBASIC#: fits anisotropic Gaussian ellipsoids with positions, scales, rotations, opacities and colours to multi-view images, then rasterises them with a camera model and Adam optimisation.
-- Existing Tags : scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;novel-view-synthesis;computer-vision;adam-optimizer
+- Existing Tags : scibasic;gaussian-splatting;3d-reconstruction;neural-rendering;computer-vision
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineVision.GaussianSplatting3D)
@@ -89,6 +89,8 @@
 - ... and 5 more
 
 ## Imports
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Imaging.BitmapImage
 - Microsoft.VisualBasic.MachineLearning.TensorFlow
 - std = System.Math
 - System.Drawing
