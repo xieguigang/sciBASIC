@@ -300,7 +300,7 @@ Public Class LiteJsImportTests
         Try
             ' `var` is function-scoped to the script root — it IS a global, like a classic
             ' script include; `let`/`const` stay in the script's block scope
-            Assert.Equal("string no-ReferenceError", RunJsIn(dir,
+            Assert.Equal("number no-ReferenceError", RunJsIn(dir,
                 "var sharedValue = 1; let hiddenValue = 2;" &
                 "import * as probe from './probe.js';" &
                 "console.log(probe.readVar(), probe.readLet());")(0))
