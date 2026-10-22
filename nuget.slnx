@@ -2114,7 +2114,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Release" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Debug" />
-      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Release" />
+      <BuildType Solution="nuget_release|x86" Project="Release" />
       <BuildType Solution="PlantMAT|*" Project="Release" />
       <BuildType Solution="Publish|*" Project="Release" />
       <BuildType Solution="RsharpDev|*" Project="Debug" />
