@@ -73,8 +73,12 @@ Public Module DocumentExport
             Dim blocks As List(Of Block) = New MarkdownBlockParser().Parse(markdown)
 
             ' markdown 中的图片通常是相对路径：按源文件目录解析成绝对路径之后，
-            ' 各个写入器才能读到图片字节并内嵌到目标文档中
-            Call ResolveImages(blocks, baseDir)
+            ' 二进制/RTF 写入器才能读到图片字节并内嵌到目标文档中。
+            ' 文本类格式不需要嵌入，保持原始（相对）路径更易读；html 由 InlineImages 自行解析。
+            If NeedsAbsoluteImagePath(ext) Then
+                Call ResolveImages(blocks, baseDir)
+            End If
+
             Call ExportBlocks(blocks, outFile, ext, baseDir)
         End If
 
@@ -100,6 +104,21 @@ Public Module DocumentExport
             block.url = ResolveImagePath(block.url, baseDir)
         Next
     End Sub
+
+    ''' <summary>
+    ''' 该导出格式是否需要把图片读取为绝对路径后内嵌
+    ''' （docx / pdf / rtf / oxps / xps）。
+    ''' </summary>
+    ''' <param name="ext">小写扩展名（含点）。</param>
+    ''' <returns></returns>
+    Public Function NeedsAbsoluteImagePath(ext As String) As Boolean
+        Select Case LCase(If(ext, ""))
+            Case ".docx", ".pdf", ".rtf", ".oxps", ".xps"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
 
     ''' <summary>判断块类型是否携带图片地址。</summary>
     ''' <param name="blockType">block.type 的取值。</param>

@@ -316,7 +316,22 @@ Public Class MarkdownBlockParser
                 Continue While
             End If
 
-            ' 12. 段落（可能整行仅为图片/链接）
+            ' 12. 独立图片行（整行只有一个 ![alt](url "title")）
+            '     连续多行图片必须各自成为一个 image 块，否则会被下面的段落合并规则
+            '     拼成一行，退化成空 alt 文本而丢失图片。
+            Dim imageLine = MatchImageLine(line)
+            If imageLine.matched Then
+                blocks.Add(New Block With {
+                    .type = "image",
+                    .url = imageLine.url,
+                    .alt = imageLine.alt,
+                    .title = imageLine.title
+                })
+                i += 1
+                Continue While
+            End If
+
+            ' 13. 段落（可能整行仅为链接）
             Dim para As New List(Of String)
             While i < n
                 Dim l = lines(i)
@@ -380,6 +395,27 @@ Public Class MarkdownBlockParser
     End Function
 
     ''' <summary>
+    ''' 判断整行是否只有一个图片语法 <c>![alt](url "title")</c>。
+    ''' </summary>
+    ''' <param name="line">单行文本。</param>
+    ''' <returns>匹配结果（未匹配时 <c>matched</c> 为 False）。</returns>
+    Private Function MatchImageLine(line As String) As LinkInfo
+        Dim t = line.Trim(" "c, ASCII.TAB, vbCr, vbLf)
+
+        If Not t.StartsWith("!") Then
+            Return NoLink()
+        End If
+
+        Dim link = MatchLink(t, 0)
+
+        If link.matched AndAlso Not link.isRef AndAlso link.endIndex = t.Length Then
+            Return link
+        End If
+
+        Return NoLink()
+    End Function
+
+    ''' <summary>
     ''' 判断 <paramref name="i"/> 处是否开启了新的块，用于让段落收集在遇到块边界时停止。
     ''' </summary>
     Private Function IsBlockStart(line As String, lines As String(), i As Integer) As Boolean
@@ -388,6 +424,9 @@ Public Class MarkdownBlockParser
             Return False
         End If
         If MatchFence(line).match Then
+            Return True
+        End If
+        If MatchImageLine(line).matched Then
             Return True
         End If
         If t.Trim() = "$$" Then
