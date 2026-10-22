@@ -132,7 +132,7 @@ Public Class RtfSerializer
     Private ReadOnly headings As New List(Of RtfBlock)()
     Private orderedIndex As Integer = 0
 
-    Private Sub New(blocks As List(Of RtfBlock),
+    Friend Sub New(blocks As List(Of RtfBlock),
                     pageWidth As Integer, pageHeight As Integer,
                     marginTop As Integer, marginRight As Integer,
                     marginBottom As Integer, marginLeft As Integer,
@@ -172,20 +172,40 @@ Public Class RtfSerializer
                                             marginTop, marginRight, marginBottom, marginLeft,
                                             headingStyles, paragraphStyle, defaultStyle,
                                             codeStyle, blockquoteStyle, titleStyle, tableStyle, meta)
-        Call serializer.Render()
 
+        Call SaveText(filePath, serializer.ToText())
+    End Sub
+
+    ''' <summary>
+    ''' 把已经序列化完成的 RTF 文本写入 .rtf 文件（目录不存在时自动创建）。
+    ''' 输出为无 BOM 的 UTF-8；由于 RTF 文本本身已把非 ASCII 字符转义为 ``\uN?``，
+    ''' 因此文件内容在纯 ASCII 环境下同样可以正确显示。
+    ''' </summary>
+    ''' <param name="filePath">输出的 .rtf 文件路径。</param>
+    ''' <param name="rtfText">RTF 文档文本，通常来自 <see cref="RtfDocument.ToRtfText"/>。</param>
+    Public Shared Sub SaveText(filePath As String, rtfText As String)
         Dim dir As String = Path.GetDirectoryName(filePath)
+
         If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
             Call Directory.CreateDirectory(dir)
         End If
 
         ' 输出文本已全部转义为 ASCII，使用无 BOM 的 UTF-8 保证任何残留非 ASCII 也不会丢失
-        Call File.WriteAllText(filePath, serializer.BuildDocument(), New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
+        Call File.WriteAllText(filePath, If(rtfText, ""), New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
     End Sub
 
     ' ========================================================================
     ' 渲染
     ' ========================================================================
+
+    ''' <summary>
+    ''' 渲染内容块队列并返回完整的 RTF 文档文本（不写入文件）。
+    ''' </summary>
+    ''' <returns>RTF 1.x 文档文本。</returns>
+    Friend Function ToText() As String
+        Call Render()
+        Return BuildDocument()
+    End Function
 
     Private Sub Render()
         Call CollectHeadings()
