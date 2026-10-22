@@ -7,11 +7,11 @@ Namespace ApplicationServices.Report
     ''' markdown/text render: converts the markdown content model <see cref="Block"/> into
     ''' markdown text.
     ''' </summary>
-    Public Class TextRender : Inherits ReportRender
+    Public Class TextRender : Inherits TextReportRender
 
         ''' <summary>
         ''' render the given <see cref="Block"/> document into markdown text, the generated
-        ''' markdown text can be read from the <see cref="ReportRender.Output"/> property.
+        ''' markdown text can be read from the <see cref="TextReportRender.Output"/> property.
         ''' </summary>
         ''' <param name="report">the markdown content blocks of the target document</param>
         Public Overrides Sub Render(report As IEnumerable(Of Block))
