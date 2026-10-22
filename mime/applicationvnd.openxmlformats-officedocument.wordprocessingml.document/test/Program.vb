@@ -819,4 +819,65 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
         Console.WriteLine($"  纯文本已保存: {txtPath}")
     End Sub
 
+    ' ================================================================
+    ' Demo 5: ReportRender / WordRender（Block 块模型 + 论文主题）
+    ' ================================================================
+    Private Sub DemoWordRender(outDir As String)
+        Dim blocks As Block() = {
+            New Block With {.type = "heading", .level = 1, .content = "第一章 绪论"},
+            New Block With {.type = "paragraph", .content = "本章介绍基于块模型（Report.Block）的 word 报告自动排版方案，所有内容均由 WordRender 渲染写入。"},
+            New Block With {.type = "heading", .level = 2, .content = "1.1 研究背景"},
+            New Block With {.type = "paragraph", .content = "学位论文的版式要求繁复，人工排版容易出错，因此需要把内容（块模型）与版式（ThesisFormatting 主题）分离。"},
+            New Block With {.type = "list", .ordered = True, .items = {"内容以 Block 数组描述", "主题一次性应用到文档样式", "渲染器输出 .docx 文件"}},
+            New Block With {.type = "heading", .level = 2, .content = "1.2 参数对照表"},
+            New Block With {.type = "table", .headers = {"类型", "说明"}, .alignments = {"left", "left"}, .rows = {New String() {"heading", "标题"}, New String() {"paragraph", "正文段落"}}},
+            New Block With {.type = "code", .language = "vbnet", .content = "Dim render As New WordRender(New ThesisFormatting())" & vbCrLf & "render.Render(blocks)" & vbCrLf & "render.Save(""./thesis.docx"")"},
+            New Block With {.type = "blockquote", .content = "内容与版式分离：同一份 Block 数组可以渲染为 markdown、html 或者 word 文档。"},
+            New Block With {.type = "hr"},
+            New Block With {.type = "footnote", .id = "1", .content = "本段落由 footnote 块生成。"},
+            New Block With {.type = "heading", .level = 1, .content = "第二章 结论"},
+            New Block With {.type = "paragraph", .content = "WordRender 可以直接复用 WordDocument 的流式写入能力，并套用论文格式主题。"}
+        }
+
+        Dim theme As New ThesisFormatting()
+
+        ' ---- 方式一：渲染器对象（可配置题目、目录与文档元数据） ----
+        Dim outPath As String = Path.Combine(outDir, "demo_word_render.docx")
+        Dim render As New WordRender(theme) With {
+            .DocumentTitle = "基于块模型的学位论文自动排版",
+            .TableOfContents = True,
+            .Author = "科研数据分析系统",
+            .Title = "WordRender 演示",
+            .Subject = "报告生成",
+            .Tags = New String() {"docx", "报告", "ThesisFormatting"}
+        }
+
+        Call render.Render(blocks)
+        Call render.Save(outPath)
+
+        Console.WriteLine($"  已保存: {outPath}")
+
+        ' ---- 方式二：一次性生成 ----
+        Dim oneShot As String = Path.Combine(outDir, "demo_word_render_oneshot.docx")
+        Call WordRender.Generate(blocks, oneShot, theme, "一句话生成 word 报告")
+        Console.WriteLine($"  已保存: {oneShot}")
+
+        ' ---- 校验：读回文本并检查关键内容 ----
+        Dim reader As New DocxTextReader()
+        Dim text As String = reader.ExtractText(outPath)
+
+        Console.WriteLine($"  读回文本长度: {text.Length} 字符")
+
+        Dim keys As String() = {"基于块模型的学位论文自动排版", "第一章 绪论", "1.1 研究背景", "内容与版式分离", "第二章 结论"}
+
+        For Each key As String In keys
+            Dim hit As Boolean = text.Contains(key)
+
+            Console.WriteLine($"  校验 [{key}]: {If(hit, "ok", "缺失")}")
+            If Not hit Then
+                Throw New Exception($"word 报告内容校验失败: {key}")
+            End If
+        Next
+    End Sub
+
 End Module
