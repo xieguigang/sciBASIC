@@ -99,8 +99,11 @@ Namespace TypeDefinitions
             Return result
         End Function
 
-        ''' <summary>Generate from an already loaded assembly (no <see cref="Assembly.LoadFrom"/>).</summary>
-        Friend Function GenerateFrom(asm As Assembly, assemblyPath As String,
+        ''' <summary>
+        ''' Generate from an already loaded assembly (no <see cref="Assembly.LoadFrom"/>),
+        ''' which is what a long living host — or a test — should use.
+        ''' </summary>
+        Public Function GenerateFrom(asm As Assembly, assemblyPath As String,
                                      options As TypeDefinitionOptions) As GenerationResult
 
             If asm Is Nothing Then Throw New ArgumentNullException(NameOf(asm))

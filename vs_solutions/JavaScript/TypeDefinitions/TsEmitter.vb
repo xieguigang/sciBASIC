@@ -181,9 +181,9 @@ Namespace TypeDefinitions
             If model.Invoke Is Nothing Then
                 sb.AppendLine("(...args: any[]) => any;")
             Else
-                sb.Append(RenderParameters(model.Invoke.Parameters, exports)) _
+                sb.Append(RenderParameters(model.Invoke.Parameters, exports, model.GenericParameters)) _
                   .Append(" => ") _
-                  .Append(TypeMapper.TsTypeName(model.Invoke.ReturnType, exports)) _
+                  .Append(TypeMapper.TsTypeName(model.Invoke.ReturnType, exports, model.GenericParameters)) _
                   .AppendLine(";")
             End If
         End Sub
@@ -213,17 +213,17 @@ Namespace TypeDefinitions
 
             If model.Kind = TsTypeKind.InterfaceType Then
                 For Each i As Type In model.Interfaces
-                    Dim name As String = TypeMapper.TsTypeName(i, exports)
+                    Dim name As String = TypeMapper.TsTypeName(i, exports, model.GenericParameters)
 
                     If name <> "any" AndAlso Not extendsList.Contains(name) Then extendsList.Add(name)
                 Next
             Else
                 If model.BaseType IsNot Nothing Then
-                    extendsList.Add(TypeMapper.TsTypeName(model.BaseType, exports))
+                    extendsList.Add(TypeMapper.TsTypeName(model.BaseType, exports, model.GenericParameters))
                 End If
 
                 For Each i As Type In model.Interfaces
-                    Dim name As String = TypeMapper.TsTypeName(i, exports)
+                    Dim name As String = TypeMapper.TsTypeName(i, exports, model.GenericParameters)
 
                     If name <> "any" AndAlso Not extendsList.Contains(name) AndAlso Not implementsList.Contains(name) Then
                         implementsList.Add(name)

@@ -10,6 +10,10 @@
     <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
     <Platforms>AnyCPU;x64</Platforms>
+    <!-- the fixture XML comments are compiled into LiteJs.Tests.xml so the
+         definition generator can be tested against real compiler documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);BC42356</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
