@@ -1579,7 +1579,9 @@
       <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
       <BuildType Solution="mzkit|*" Project="Debug" />
       <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
-      <BuildType Solution="nuget_release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
       <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
       <BuildType Solution="Publish|*" Project="Rsharp_app_release" />
       <BuildType Solution="RsharpDev|*" Project="Debug" />
