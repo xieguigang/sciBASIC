@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Math.Statistics
 - TargetFramework: net10.0
 - Source files  : 86
-- Existing Title: Statistics Toolkit: Distributions, Hypothesis Tests and More
-- Existing Desc : Probability distributions, moment functions, hypothesis tests such as t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I, plus FastICA, RANSAC and Shapley/TreeSHAP values. Part of sciBASIC#.
-- Existing Tags : scibasic;statistics;hypothesis-testing;distribution;moment-functions;fastica;ransac;shapley-value;treeshap
+- Existing Title: Statistics Toolkit: Distributions, Hypothesis Tests and SHAP
+- Existing Desc : A statistics toolkit for sciBASIC#: probability distributions with method-of-moments and L-moment estimation, t-test, F-test, chi-square, Fisher exact, Mantel and Moran's I hypothesis tests, plus FastICA, RANSAC and Shapley/TreeSHAP feature attribution.
+- Existing Tags : scibasic;statistics;hypothesis-testing;distributions;fastica;ransac;shapley-value
 
 ## Namespaces
 - Distributions  [files: 5]
@@ -18,7 +18,7 @@
 - MomentFunctions  [files: 5]
 - RANSAC  [files: 5]
 - RScan  [files: 2]
-- ShapleyValue  [files: 11]
+- ShapleyValue  [files: 15]
 - ShapleyValue.TreeShap  [files: 7]
 
 ## Public types
@@ -93,6 +93,10 @@
 - Class CharacteristicFunction (ShapleyValue\CharacteristicFunction.vb) - represent the following function often written by v 2^N to R for each subset of the set {1.. N} is associated a value
 - Class CharacteristicFunctionBuilder (ShapleyValue\CharacteristicFunction.vb)
 - Enum InnerEnum (ShapleyValue\CoalitionStrategy.vb)
+- Interface IShapExplainer (ShapleyValue\Core\IShapExplainer.vb) - The unified contract of a SHAP explainer. 所有可解释模型的 SHAP 解释器都实现这个接口，从而使得 TreeSHAP（基于树结构的精确算法）与解析 SHAP（线性模型）可以
+- Class LinearShapExplainer (ShapleyValue\Core\LinearShapExplainer.vb) - 线性（以及广义线性）模型的解析 SHAP 解释器。 对于线性模型 ``f(x) = b0 + sum(bi * xi)``，在背景分布之上关于特征 i 的 精确 Shapley 值为：``phi_i = bi * (xi - E[xi])``，
+- Class ShapExplanation (ShapleyValue\Core\ShapExplanation.vb) - 单个样本的 SHAP 解释结果。
+- Class TreeShapExplainer (ShapleyValue\Core\TreeShapExplainer.vb) - 基于 TreeSHAP 算法（论文 arXiv:1802.03888）的树集成 SHAP 解释器。 该解释器把多棵 <see cref="PkTree"/> 的逐特征贡献相加， 并且把所有树的期望值（cover 加权叶值均值）与一个常数偏置项
 - Class FactorialUtil (ShapleyValue\FactorialUtil.vb)
 - Module NamespaceDoc (ShapleyValue\NamespaceDoc.vb) - Shapley value computation for feature attribution.
 - Class Node (ShapleyValue\Node.vb)
@@ -173,7 +177,7 @@
 - Public Overrides Function GetCDF(value As Double) As Double
 - Public Overrides Function GetPDF(value As Double) As Double
 - Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
-- ... and 467 more
+- ... and 498 more
 
 ## Imports
 - cephes = Microsoft.VisualBasic.Math.Statistics.SpecialFunctions
@@ -195,12 +199,12 @@
 - Microsoft.VisualBasic.Math.Statistics.Distributions
 - Microsoft.VisualBasic.Math.Statistics.Linq
 - Microsoft.VisualBasic.Math.Statistics.MomentFunctions
+- Microsoft.VisualBasic.Math.Statistics.ShapleyValue.TreeShap
 - Microsoft.VisualBasic.Serialization.JSON
 - rand = Microsoft.VisualBasic.Math.RandomExtensions
 - rand2 = Microsoft.VisualBasic.Math.RandomExtensions
 - randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 - std = System.Math
-- System
 
 ## File tree
 - Distributions\ContinuousDistribution.vb

@@ -20,7 +20,7 @@
 		<Description>Diagnostics helpers for sciBASIC# neural network training: builds demo sample sets, converts XML datasets to tabular rows, extracts fitness and neuron value frames from training netCDF logs, and computes ROC validation curves.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.MachineLearning.Debugger</AssemblyTitle>
 		<PackageTags>scibasic;machine-learning;debugger;roc;error-curve</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

@@ -6,7 +6,7 @@
 - Source files  : 7
 - Existing Title: Feature Vector Encoders for Numeric Machine Learning Data
 - Existing Desc : Encodes raw feature vectors of a data frame into numeric columns for model training: one-hot style encoding for enums and flag bit fields, numeric binning and discretisation, and automatic per-field encoder selection.
-- Existing Tags : scibasic;feature-engineering;encoder;one-hot-encoding;binning;dataframe;machine-learning
+- Existing Tags : scibasic;feature-engineering;encoder;dataframe;machine-learning
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DataMining.FeatureFrame)

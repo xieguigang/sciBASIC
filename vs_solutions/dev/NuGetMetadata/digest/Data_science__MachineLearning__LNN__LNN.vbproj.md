@@ -6,7 +6,7 @@
 - Source files  : 9
 - Existing Title: Liquid Neural Networks with ODE Solvers for Time Series
 - Existing Desc : Continuous-time liquid neural networks for sciBASIC#, where neuron dynamics follow learnable ODEs solved by Euler, Heun, RK4 or adaptive RK45 steps; includes SGD/Adam training and time-series preprocessing utilities.
-- Existing Tags : scibasic;liquid-neural-network;ode;runge-kutta;continuous-time;time-series;recurrent-network
+- Existing Tags : scibasic;liquid-neural-network;ode;time-series;continuous-time
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DeepLearning.LiquidNeuralNetwork)

@@ -21,7 +21,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;statistics;hypothesis-testing;distributions;fastica;ransac;shapley-value</PackageTags>
-    <PackageReleaseNotes>Adds the Skellam distribution, optimized TreeSHAP explainers and expanded L-moment distribution families for hydrological and omics modeling.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 14
 - Existing Title: StreamPack Virtual File System in a Single Binary File
-- Existing Desc : A packable virtual file system that stores many named streams, folders and attributes inside a single binary file: block allocation, buffered read and write, file deletion, MessagePack encoded metadata trees and read-only mounting for dataset archives.
-- Existing Tags : scibasic;hdspack;virtual-filesystem;stream-pack;archive;binary-format;container
+- Existing Desc : A packable virtual file system that stores many named streams, folders and attributes inside one binary file. Supports block allocation, buffered read/write, file deletion, metadata trees and read-only mounting for dataset archives.
+- Existing Tags : scibasic;hdspack;virtual-filesystem;stream-pack;archive;binary-format
 
 ## Namespaces
 - FileSystem  [files: 6]

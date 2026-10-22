@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Data.TrinityNLP
 - TargetFramework: net10.0
 - Source files  : 9
-- Existing Title: Trinity TextRank Keyword Extraction and Text Summarization
-- Existing Desc : NLP module of sciBASIC#: TextRank keyword and key phrase extraction, PageRank based sentence scoring for automatic summarization, Brill part-of-speech tagging, HTML article body extraction by text density analysis, and URL normalisation.
-- Existing Tags : scibasic;nlp;textrank;pagerank;keyword-extraction;summarization;pos-tagging;html-extraction
+- Existing Title: TextRank Keyword Extraction, Summarization and NLP Utilities
+- Existing Desc : An NLP text mining module for sciBASIC#: TextRank keyword and key phrase extraction, PageRank-based sentence scoring for automatic summarization, Brill part-of-speech tagging, and text-density HTML article body extraction with URL normalization helpers.
+- Existing Tags : scibasic;nlp;textrank;keyword-extraction;summarization;pos-tagging
 
 ## Namespaces
 - POSTagger  [files: 3]

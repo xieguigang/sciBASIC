@@ -29,7 +29,7 @@
 		<Company>sciBASIC.NET Foundation</Company>
 		<Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
 		<PackageTags>scibasic;3d-mesh;stl;obj;gltf;voxelization;sdf</PackageTags>
-    <PackageReleaseNotes>Adds glTF/GLB, 3DS and 3MF readers, BVH-accelerated signed distance field generation and anti-aliased column ray casting voxelization for CFD grids.</PackageReleaseNotes>
+    <PackageReleaseNotes>Extends the model loader and format detection, adds STL mesh building and writing helpers and exposes SDF triangle metadata used by the voxelizer.</PackageReleaseNotes>
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>

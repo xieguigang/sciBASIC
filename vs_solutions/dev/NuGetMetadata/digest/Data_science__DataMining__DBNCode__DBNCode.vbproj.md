@@ -6,7 +6,7 @@
 - Source files  : 26
 - Existing Title: Dynamic Bayesian Network Structure and Parameter Learning
 - Existing Desc : Learns dynamic Bayesian networks from observation sequences, combining initial and transition Bayes nets with MDL, log-likelihood and Bayesian scoring functions, optimum branching search and EM parameter fitting.
-- Existing Tags : scibasic;bayesian-network;dynamic-bayesian-network;structure-learning;scoring-function;em;data-mining
+- Existing Tags : scibasic;bayesian-network;dynamic-bayesian-network;structure-learning;data-mining
 
 ## Namespaces
 - dbn  [files: 18]

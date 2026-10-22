@@ -27,7 +27,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;wav;audio;voiceprint;mfcc;riff</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds a streaming sample reader that exposes decoded WAV samples and DSP helpers for voice-print analysis.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Data.IO.SQLite3
 - TargetFramework: net10.0
 - Source files  : 44
-- Existing Title: Managed SQLite3 Database File Reader
-- Existing Desc : A pure managed parser and writer for SQLite3 database files that decodes the database header, B-tree pages, master table and column types, exposes tables and rows, and parses CREATE TABLE schema SQL without the native SQLite engine.
-- Existing Tags : scibasic;sqlite3;database;btree;sql-parser;reader;writer;managed
+- Existing Title: Managed SQLite3 Database File Reader and Writer
+- Existing Desc : A pure managed SQLite3 file toolkit for sciBASIC#: decodes database headers, B-tree pages and the master table, parses CREATE TABLE schema SQL, exposes tables and rows, plus a commit-time writer that rebuilds whole database files without the native engine.
+- Existing Tags : scibasic;sqlite3;database;btree;sql-parser;managed
 
 ## Namespaces
 - Core.Helpers  [files: 4]

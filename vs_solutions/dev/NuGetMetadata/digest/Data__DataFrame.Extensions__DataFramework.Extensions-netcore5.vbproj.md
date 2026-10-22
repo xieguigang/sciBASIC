@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 17
 - Existing Title: Data Framework Extension Methods for Object Serialization
-- Existing Desc : Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers and property reflection utilities.
-- Existing Tags : scibasic;dataframe;extensions;serialization;datatable;outlining;template
+- Existing Desc : Extension helpers for the sciBASIC# data framework: streams CLR objects into DataTable, saves complex objects as multi-sheet Excel-like tables via outlining schemas, plus CSV template helpers.
+- Existing Tags : scibasic;dataframe;extensions;serialization;datatable;outlining
 
 ## Namespaces
 - IO.Properties  [files: 4]

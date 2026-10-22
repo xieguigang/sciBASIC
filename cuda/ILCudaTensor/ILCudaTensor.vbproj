@@ -16,9 +16,9 @@
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
 
     <Title>GPU Tensor Types and CUDA Kernels for the ILCuda Runtime</Title>
-    <Description>A GPU tensor extension for sciBASIC#: device-resident dense and CSR sparse tensor storage with host/device caches, hand-written double-precision CUDA kernels for GEMM, softmax, convolution and pooling, plus a CUDA backend for the machine learning tensor compute interface.</Description>
-    <PackageTags>scibasic;cuda;gpu-tensor;csr;deep-learning;gpgpu;matmul</PackageTags>
-    <PackageReleaseNotes>Introduces the CUDA tensor compute backend with device-resident stores, CSR sparse caches and LIF, LTC and graph layer batch kernels.</PackageReleaseNotes>
+    <Description>A GPU tensor extension for sciBASIC#: device-resident dense and CSR sparse tensor storage with host/device caches, hand-written single and double precision CUDA kernels for GEMM, softmax, convolution, pooling and sparse SpMM, plus a CUDA backend for the machine learning tensor compute interface.</Description>
+    <PackageTags>scibasic;cuda;gpu-tensor;fp32;csr;deep-learning;gpgpu;matmul</PackageTags>
+    <PackageReleaseNotes>Adds a single-precision tensor stack with device-resident stores and float32 kernels for GEMM, convolution, pooling and sparse SpMM, and reworks the host/device cache management.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <AssemblyTitle>Microsoft.VisualBasic.Computing.ILCuda.GPUTensor</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

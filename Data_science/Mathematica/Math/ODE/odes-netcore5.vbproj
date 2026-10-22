@@ -14,7 +14,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>Integrates systems of ordinary differential equations with Euler, RK2, RK4, Gill and trapezoidal solvers over a declarative model of variables, parameters and initial values. Part of sciBASIC#.</Description>
+		<Description>Integrates systems of ordinary differential equations for sciBASIC#: a shared solver core providing Euler, RK2, Gill, RK4, Runge-Kutta 23/45, Dormand-Prince, symplectic, implicit, BDF2 and Rosenbrock methods, with Jacobian and dense LU support, declarative variable/parameter models and tabular or gridded result output.</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;gcmodeller_desktop;nuget_release;CellaLAB-Desktop</Configurations>
 		<RepositoryType>git</RepositoryType>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -22,8 +22,8 @@
 		<AssemblyVersion>1.0.9791.26955</AssemblyVersion>
 		<Title>Ordinary Differential Equation Solver Core for Dynamic Models</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver</AssemblyTitle>
-		<PackageTags>scibasic;ode;runge-kutta;dynamical-system;numerical-integration;simulation</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+		<PackageTags>scibasic;ode;differential-equations;runge-kutta;dormand-prince;bdf2;solver;simulation</PackageTags>
+    <PackageReleaseNotes>Rewrites the solver engine around a shared solver core and adds explicit, implicit and symplectic integrators including RK23, RK45, Dormand-Prince, BDF2 and Rosenbrock, with Jacobian and dense LU support, result sequences and a benchmark suite.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IncludeSymbols>True</IncludeSymbols>

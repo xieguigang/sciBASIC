@@ -99,7 +99,9 @@ Namespace Javascript
 
         Public Shared ReadOnly Property NULL As JsonValue
             Get
-                Return New JsonValue(Nothing)
+                ' CObj forces the (Object) constructor: with the copy constructor
+                ' New(JsonValue) in place, VB would pick it for Nothing and dereference null
+                Return New JsonValue(CObj(Nothing))
             End Get
         End Property
 

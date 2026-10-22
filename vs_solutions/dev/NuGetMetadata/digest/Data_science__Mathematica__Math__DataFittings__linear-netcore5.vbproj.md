@@ -3,16 +3,17 @@
 - RootNamespace : Microsoft.VisualBasic.Data.Bootstrapping
 - AssemblyName  : Microsoft.VisualBasic.Data.Bootstrapping.Fittings
 - TargetFramework: net10.0
-- Source files  : 44
-- Existing Title: Curve Fitting and Regression Modelling Library
-- Existing Desc : Linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic, LASSO and Levenberg-Marquardt fitting with Bayesian and Gauss-Newton solvers. Part of sciBASIC#.
-- Existing Tags : scibasic;curve-fitting;regression;linear-least-squares;lasso;loess;logistic-regression;levenberg-marquardt
+- Source files  : 48
+- Existing Title: Curve Fitting and Regression Toolkit with LASSO and Levenberg-Marquardt
+- Existing Desc : A curve fitting and regression toolkit for sciBASIC#: linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic, LASSO and ridge fits with GCV lambda selection, plus Bayesian and Levenberg-Marquardt nonlinear solvers with unified numeric table input.
+- Existing Tags : scibasic;regression;curve-fitting;least-squares;ridge;lasso;levenberg-marquardt;loess
 
 ## Namespaces
 - LASSO  [files: 4]
 - LevenbergMarquardt  [files: 9]
 - Logistic  [files: 4]
 - Multivariate  [files: 5]
+- Ridge  [files: 4]
 
 ## Public types
 - Module Program (_smoketest\Program.vb) - DataFittings 回归算法统一 NumericTable 入口的自检程序。
@@ -43,7 +44,10 @@
 - Module NonNegativeLeastSquares (Linear\NonNegativeLeastSquares.vb) - NNLS Non-Negative Least-Squares algorithm
 - Class WeightedFit (Linear\Weighted\WeightedFit.vb) - 加权拟合的结果
 - Module WeightedLinearRegression (Linear\Weighted\WeightedLinearRegression.vb) - ## An Algorithm for Weighted Linear Regression > https://www.codeproject.com/Articles/25335/An-Algorithm-for-Weighted-Linear-Regression
-- Module LMA (LMA.vb) - ### Levenberg–Marquardt algorithm In mathematics and computing, the Levenberg–Marquardt algorithm (LMA or just LM), also known as the damped least-squares (DLS)
+- Module LMA (LMA.vb) - 本模块提供了三种拟合入口： 1. 不给出模型的入口，拟合幂律（Cobb-Douglas / 异速生长）模型 ``y = p0 * x1^p1 * x2^p2 * ...``；
+- Class LmFitModel (LMA.vb) - 驱动既有 <see cref="LmSolver"/> 内核的非线性模型桥。 任意一个 <see cref="NonLinearModel"/> 委托经由这个桥包装之后，就满足了 <see cref="LmScalarModel"/> 所要求的「逐样本给出模型值、一阶导数与二阶
+- Class LmResidualError (LMA.vb) - E(p) = 1/2 * sum(r^2) g = -J' * r H ~= J' * J
+- Class NonLinearFitResult (LMA.vb) - 非线性最小二乘拟合的结果 这个类型保存了拟合出来的参数、拟合优度、残差与预测模型，与线性拟合的 <see cref="FitResult"/> 风格一致。注意：非线性模型没有多项式形式，
 - Structure FitInput (LMA.vb)
 - Module LOESS (LOESS\LOESS.vb) - ======================================================================== LOESS回归实现 ========================================================================
 - Class LOESSModel (LOESS\LOESSModel.vb) - LOESS模型，存储训练数据和参数
@@ -55,6 +59,10 @@
 - Class NamespaceDoc (NamespaceDoc.vb) - Curve fitting and regression: linear, polynomial and non-linear data fitting models.
 - Module NumericTablePrediction (NumericTablePrediction.vb) - 将回归模型的预测结果写回到统一二维表 <see cref="NumericTable"/> 的标签矩阵之中， 从而可以方便地把预测值与原始的观测值放在同一张表里面进行对比。
 - Module NumericTableRegressions (NumericTableRegressions.vb) - 1. 自变量 X 取表的**全部**特征列（<see cref="NumericTable.features"/>） 2. 因变量 y 由参数 ``y`` 指定标签列名，缺省为表中的第一个标签列； 表中没有标签列的时候会抛出 <see cref="ArgumentException"/>
+- Module NamespaceDoc (Ridge\NamespaceDoc.vb) - Ridge (L2 regularized) regression.
+- Class RidgeFit (Ridge\RidgeFit.vb) - 岭回归的拟合结果，其中保存了 lambda 正则化路径上面的全部解（岭迹）。 路径上面的每一步都由 <see cref="lambdas"/> 之中的一个 lambda 值、 <see cref="intercepts"/> 之中的一个截距与 <see cref="coefficients"/>
+- Module RidgeFitting (Ridge\RidgeFitting.vb) - ### 为什么要标准化 L2 惩罚对各个系数是同等对待的，自变量的量纲不同会让惩罚的效果完全不一样， 因此标准做法是先对每一列做中心化与标准化再拟合，最后把系数还原回原始量纲；
+- Class RidgePolynomial (Ridge\RidgePolynomial.vb) - 岭回归模型的多项式形式：``y = c + b1*x1 + b2*x2 + ...`` 既有的 <see cref="MultivariatePolynomial"/> 只计算 ``sum(x * b)`` 而没有 截距项，而岭回归的截距是不施加惩罚的独立参数，因此这里单独给出一个
 - Class StockPredict (stockpredict.vb) - Bayesian Curve Fitting
 - Interface IFitError (TestPoint.vb)
 - Class TestPoint (TestPoint.vb)
@@ -102,12 +110,8 @@
 - Public Overridable WriteOnly Property Targets As Double()
 - Public Overridable Sub setTarget(idx As Integer, target As Double)
 - Public Overridable Function fit(maxAllowedFeaturesPerModel As Integer) As LassoFit
-- Public Shared Function getStg(arr As Double()) As Double
-- Public Shared Function getStg(arr As IList(Of Double)) As Double
 - Public Shared Function getStd(arr As Double(), avg As Double) As Double
 - Public Shared Function getStd(arr As IList(Of Double), avg As Double) As Double
-- Public Shared Function getDotProduct(vector1 As Single(), vector2 As Single(), length As Integer) As Double
-- Public Shared Function getDotProduct(vector1 As Double(), vector2 As Double(), length As Integer) As Double
 - Public Shared Sub divideInPlace(ByRef vector As Double(), val As Single)
 - Public Shared Function getFormattedDouble(val As Double, decimalPoints As Integer) As String
 - Public Shared Function solvePSDMatrixEq(A As Matrix, b As Matrix) As Matrix
@@ -120,7 +124,11 @@
 - Public Overridable Property MaxNumIter As Integer
 - Public Overridable ReadOnly Property ErrorFunc As LmModelError
 - Public Overridable Property GradientEpsilon As Double
-- ... and 137 more
+- Public Overridable Property ChangeEpsilon As Double
+- Public Overridable ReadOnly Property Iterations As Integer
+- Public Overridable ReadOnly Property Converged As Boolean
+- Public Overridable ReadOnly Property ErrorValue As Double
+- ... and 198 more
 
 ## Imports
 - CholeskyDecomposition = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.CholeskyDecomposition
@@ -144,10 +152,10 @@
 - Microsoft.VisualBasic.Math.Distributions
 - Microsoft.VisualBasic.Math.LinearAlgebra
 - Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+- Microsoft.VisualBasic.Math.LinearAlgebra.Solvers
 - Microsoft.VisualBasic.Math.Scripting
-- Microsoft.VisualBasic.Scripting.Runtime
-- Microsoft.VisualBasic.Serialization.JSON
-- MultivariateNS = Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
+- Microsoft.VisualBasic.Math.Scripting.MathExpression
+- Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 
 ## File tree
 - _smoketest\Program.vb
@@ -192,6 +200,10 @@
 - NamespaceDoc.vb
 - NumericTablePrediction.vb
 - NumericTableRegressions.vb
+- Ridge\NamespaceDoc.vb
+- Ridge\RidgeFit.vb
+- Ridge\RidgeFitting.vb
+- Ridge\RidgePolynomial.vb
 - stockpredict.vb
 - TestPoint.vb
 

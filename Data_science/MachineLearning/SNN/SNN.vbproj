@@ -18,7 +18,7 @@
     <Title>Spiking Neural Network Toolkit with LIF, Surrogate Gradients and STDP</Title>
     <PackageTags>scibasic;spiking-neural-network;lif;surrogate-gradient;stdp;sparse-synapses;deep-learning</PackageTags>
     <Description>A spiking neural network toolkit for sciBASIC#: leaky integrate-and-fire (LIF) layers with recurrent and sparse CSR connectivity, rate/latency spike encoders and decoders, surrogate gradient BPTT training plus STDP plasticity built on the tensor runtime.</Description>
-    <PackageReleaseNotes>Adds recurrent and sparse LIF layers with fused SIMD forward paths, CSR synapse matrices, STDP plasticity and Adam training with gradient clipping.</PackageReleaseNotes>
+    <PackageReleaseNotes>Synchronises the spiking layers with the shared tensor package and refreshes the sparse LIF, recurrent LIF and STDP implementations.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <OutputPath>../../../.nuget/</OutputPath>
     <Version>10.7.9791.26955</Version>

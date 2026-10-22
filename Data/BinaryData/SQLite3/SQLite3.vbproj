@@ -23,7 +23,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;sqlite3;database;btree;sql-parser;managed</PackageTags>
-    <PackageReleaseNotes>Adds a pure managed write path with table CRUD, B-tree record encoding and atomic whole-file database rebuild on commit.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

@@ -6,7 +6,7 @@
 - Source files  : 36
 - Existing Title: UMAP Uniform Manifold Approximation and Projection
 - Existing Desc : Uniform Manifold Approximation and Projection for sciBASIC#: builds a fuzzy simplicial set from k-nearest neighbours via NN-descent or KD-trees, then optimises a low-dimensional layout by stochastic gradient descent.
-- Existing Tags : scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor;fuzzy-simplicial-set;visualization
+- Existing Tags : scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor
 
 ## Namespaces
 - KNN  [files: 5]

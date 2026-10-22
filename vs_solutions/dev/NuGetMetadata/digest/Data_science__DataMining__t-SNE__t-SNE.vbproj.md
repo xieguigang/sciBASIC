@@ -6,7 +6,7 @@
 - Source files  : 9
 - Existing Title: Barnes-Hut t-SNE Dimensionality Reduction Embedding
 - Existing Desc : t-Distributed Stochastic Neighbor Embedding for sciBASIC#: converts pairwise affinities into joint probabilities at a given perplexity and minimises KL divergence, with a Barnes-Hut SPTree approximation for large data.
-- Existing Tags : scibasic;t-sne;dimensionality-reduction;barnes-hut;sptree;kl-divergence;visualization
+- Existing Tags : scibasic;t-sne;dimensionality-reduction;barnes-hut;visualization
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineLearning.tSNE)

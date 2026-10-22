@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Imaging.MPEG4
 - TargetFramework: net10.0
 - Source files  : 19
-- Existing Title: 
-- Existing Desc : 
-- Existing Tags : 
+- Existing Title: H.264 Video Encoder and MP4 ISO-BMFF Muxer
+- Existing Desc : A video encoding toolkit for sciBASIC#: encodes RGBA frames with an I-frame H.264 Main profile pipeline (CABAC, intra prediction, integer motion estimation), streams bit-level syntax with RBSP escaping, and muxes samples into MP4 containers with faststart and AVCC NAL packaging.
+- Existing Tags : scibasic;h264;mp4;video-encoding;cabac;iso-bmff
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Imaging.MPEG4)

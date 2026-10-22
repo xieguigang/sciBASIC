@@ -6,7 +6,7 @@
 - Source files  : 19
 - Existing Title: AVL Binary Tree Clustering with Newick Tree Output
 - Existing Desc : Clusters vector data by inserting items into an AVL binary tree under a fuzzy similarity comparison, then cutting the tree into partitions. Also offers Newick tree parsing, affinity propagation and KNN graph helpers.
-- Existing Tags : scibasic;clustering;binary-tree;avl-tree;newick;diffusion-map;knn-graph;affinity-propagation
+- Existing Tags : scibasic;clustering;binary-tree;avl-tree;newick
 
 ## Namespaces
 - AffinityPropagation  [files: 6]

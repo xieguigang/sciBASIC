@@ -20,7 +20,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;graph-neural-network;gcn;graph-attention;temporal-graph</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updates the temporal graph models and recurrent layers, adds a dense linear layer to the layer set and fixes the GNN build against the shared tensor package.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>

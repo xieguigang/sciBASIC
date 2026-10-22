@@ -20,7 +20,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<Description>Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, XML and JSON serialization, command line parsing, parallel helpers, application services, terminal IO and logging.</Description>
+		<Description>Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, XML and JSON serialization with a pretty-print formatter, a report and document block model with HTML, plain-text, markdown and JSON renderers, command line parsing, parallel helpers, application services, terminal IO and logging.</Description>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <UseApplicationFramework>True</UseApplicationFramework>
@@ -37,8 +37,8 @@
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <Title>Visual Basic Runtime Core Library For Scientific Computing</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>scibasic;runtime;linq;reflection;commandline;serialization;terminal</PackageTags>
-    <PackageReleaseNotes>Expanded the terminal toolkit with markdown ANSI rendering, interactive line editing with completion, and memory mapped file IPC channels.</PackageReleaseNotes>
+		<PackageTags>scibasic;runtime;collections;serialization;json;report-render;terminal;reflection</PackageTags>
+    <PackageReleaseNotes>Adds a unified report render pipeline (block model with markdown, HTML, plain-text and JSON renderers, plus docx export hooks) and rewrites the JSON formatter and serializer.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 

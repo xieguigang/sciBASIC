@@ -6,7 +6,7 @@
 - Source files  : 51
 - Existing Title: Natural Language Processing Toolkit: Tokenizers, Stemmer, BM25 and LDA
 - Existing Desc : NLP toolkit for sciBASIC#: Chinese word segmentation via max-match, HMM and a HuggingFace-compatible BPE/WordPiece/Unigram pipeline, plus a Porter stemmer, TF-IDF, bigram extraction, BM25 ranked search and Gibbs-sampled LDA topic modeling.
-- Existing Tags : scibasic;nlp;chinese-tokenizer;huggingface;tokenizer;bm25;lda;topic-model;tf-idf;stemmer;text-mining
+- Existing Tags : scibasic;nlp;tokenizer;chinese-tokenizer;bm25;lda;tf-idf
 
 ## Namespaces
 - BM25  [files: 6]

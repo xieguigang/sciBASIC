@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic.MIME.RTF
 - AssemblyName  : Microsoft.VisualBasic.MIME.RTF
 - TargetFramework: net10.0
-- Source files  : 14
-- Existing Title: Rich Text Format Document Writer, Text Extractor and Office MathML Document Model
-- Existing Desc : Reads and writes rich text format documents in the sciBASIC# framework: RtfDocument implements the shared IDocumentWriter contract to emit RTF 1.x files from fluent calls or from markdown JSONSchema content blocks (headings, paragraphs, code, lists, tables, embedded png/jpeg images, page setup and a static table of contents), RtfTextReader parses any .rtf back into plain text, a paragraph array and document metadata, and a document object model tracks styled text regions and fonts; serializable Office Math Markup Language (OMML) models cover equations and Word XML round-tripping.
-- Existing Tags : scibasic;rtf;rich-text-format;omml;office-math;document-model;word;document-generation;text-extraction;markdown;idocumentwriter
+- Source files  : 15
+- Existing Title: Rich Text Format Writer, Reader and Office MathML Models
+- Existing Desc : Reads and writes rich text format documents for sciBASIC#: RtfDocument implements the shared IDocumentWriter contract to emit RTF 1.x files with headings, tables, images and page setup, RtfTextReader parses .rtf back into text and metadata, plus serializable OMML equation models.
+- Existing Tags : scibasic;rtf;rich-text-format;omml;document-generation;text-extraction
 
 ## Namespaces
 - Models  [files: 2]
@@ -38,6 +38,7 @@
 - Class RtfBlock (Writer\RtfBlock.vb) - 单个 RTF 文档内容块。承载文本、级别、样式快照、表格/图片数据等， 由 <see cref="RtfDocument"/> 收集并在 <see cref="RtfSerializer"/> 中消费。
 - Class RtfDocument (Writer\RtfDocument.vb) - RTF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与 <c>WordDocument</c> / <c>PdfDocument</c> 完全一致的编程接口， 将文本、表格、图片写入并生成 .rtf 文件。
 - Class RtfWriteMeta (Writer\RtfDocument.vb)
+- Class RtfRender (Writer\RtfRender.vb) - RTF 报告渲染器：把 markdown 内容块（<see cref="Block"/>）渲染为 RTF 1.x 文档文本， 是 <see cref="ReportRender"/> 在富文本格式上的实现（继承 <see cref="TextReportRender"/>， 序列化结果由 <see cref="TextReportRender.Output"/> 输出）。
 - Class RtfSerializer (Writer\RtfSerializer.vb) - RTF 1.x 序列化器：把 <see cref="RtfBlock"/> 队列渲染为 RTF 文本并落盘。 一般不需要直接使用本类，调用 <see cref="RtfDocument.Save"/> 即可。
 
 ## Notable public members
@@ -101,13 +102,13 @@
 - Public Property SaveIfXMLInvalid As Boolean
 - Public Property IgnoreMixedContent As Boolean
 - Public Property AlwaysShowPlaceholderText As Boolean
-- ... and 147 more
+- ... and 165 more
 
 ## Imports
+- Microsoft.VisualBasic.ApplicationServices.Report
 - Microsoft.VisualBasic.Imaging
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.MIME.Office.WordDocument
-- Microsoft.VisualBasic.MIME.text.markdown
 - Microsoft.VisualBasic.Serialization.JSON
 - System.Drawing
 - System.IO
@@ -128,5 +129,6 @@
 - Rtf.vb
 - Writer\RtfBlock.vb
 - Writer\RtfDocument.vb
+- Writer\RtfRender.vb
 - Writer\RtfSerializer.vb
 

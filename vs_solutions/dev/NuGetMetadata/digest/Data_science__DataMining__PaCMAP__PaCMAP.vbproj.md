@@ -6,7 +6,7 @@
 - Source files  : 6
 - Existing Title: PaCMAP Pairwise Controlled Manifold Approximation Embedding
 - Existing Desc : PaCMAP dimensionality reduction for sciBASIC#: preserves local and global structure by optimising neighbour, mid-near and further point pairs with a three-phase loss and an Adagrad optimiser over tensor data.
-- Existing Tags : scibasic;pacmap;dimensionality-reduction;manifold-learning;pairwise-controlled;visualization
+- Existing Tags : scibasic;pacmap;dimensionality-reduction;manifold-learning;visualization
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.DataMining.PaCMAP)

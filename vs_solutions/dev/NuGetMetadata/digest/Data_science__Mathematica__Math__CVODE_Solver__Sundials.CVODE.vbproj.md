@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Math.Sundials.CVODE
 - TargetFramework: net10.0
 - Source files  : 17
-- Existing Title: Managed CVODE Variable-Order ODE Solver in Pure VB.NET
-- Existing Desc : A pure managed VB.NET re-implementation of the CVODE solver API with no native P/Invoke, offering variable-step variable-order Adams and BDF integration plus dense and banded linear solvers. Part of sciBASIC#.
-- Existing Tags : scibasic;ode-solver;cvode;adams-bdf;stiff-equations;numerics
+- Existing Title: Managed CVODE Variable-Step ODE Solver with Adams and BDF Methods
+- Existing Desc : A pure managed re-implementation of the CVODE ODE solver API for sciBASIC#, with no native P/Invoke: variable-step variable-order Adams and BDF integration, dense and banded LU linear solvers, event root finding and a fluent builder API.
+- Existing Tags : scibasic;ode-solver;cvode;adams;bdf;stiff-equations;root-finding
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Math.Sundials.CVODE)

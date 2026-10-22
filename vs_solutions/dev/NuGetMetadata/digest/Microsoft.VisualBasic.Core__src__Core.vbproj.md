@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic
 - AssemblyName  : Microsoft.VisualBasic.Runtime
 - TargetFramework: net10.0
-- Source files  : 1058
+- Source files  : 1049
 - Existing Title: Visual Basic Runtime Core Library For Scientific Computing
-- Existing Desc : Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, XML and JSON serialization, command line parsing, parallel helpers, application services, terminal IO and logging.
-- Existing Tags : scibasic;runtime;linq;reflection;application-services;commandline;serialization;interop;terminal
+- Existing Desc : Runtime core of sciBASIC#: LINQ and collection extensions, reflection and dynamic native interop, text and tabular data handling, XML and JSON serialization with a pretty-print formatter, a report and document block model with HTML, plain-text, markdown and JSON renderers, command line parsing, parallel helpers, application services, terminal IO and logging.
+- Existing Tags : scibasic;runtime;collections;serialization;json;report-render;terminal;reflection
 
 ## Namespaces
 - ApplicationServices  [files: 15]
@@ -20,6 +20,7 @@
 - ApplicationServices.DynamicInterop  [files: 10]
 - ApplicationServices.Globalization  [files: 4]
 - ApplicationServices.Plugin  [files: 5]
+- ApplicationServices.Report  [files: 7]
 - ApplicationServices.Terminal  [files: 19]
 - ApplicationServices.Terminal.LineEdit  [files: 7]
 - ApplicationServices.Terminal.ProgressBar  [files: 6]
@@ -48,7 +49,6 @@
 - ComponentModel.Algorithm.DynamicProgramming.Levenshtein  [files: 4]
 - ComponentModel.Collection  [files: 19]
 - ComponentModel.Collection.Deque  [files: 7]
-- ComponentModel.Collection.Generic  [files: 7]
 
 ## Public types
 - Module App (ApplicationServices\App.vb)
@@ -135,6 +135,10 @@
 - Module ParallelExtension (ApplicationServices\Parallel\Threads\ParallelExtension.vb)
 - Class ThreadPool (ApplicationServices\Parallel\Threads\ThreadPool.vb) - 使用多条线程来执行任务队列，推荐在编写Web服务器的时候使用这个模块来执行任务
 - Class ThreadQueue (ApplicationServices\Parallel\Threads\ThreadQueue.vb) - 任务线程队列
+- Class Block (ApplicationServices\Report\Block.vb) - 针对markdown格式有限的支持
+- Class HtmlRender (ApplicationServices\Report\HtmlRender.vb) - html render: converts the markdown content model <see cref="Block"/> into html text.
+- Class PlainTextRender (ApplicationServices\Report\PlainTextRender.vb) - plain text render: converts the markdown content model <see cref="Block"/> into human readable plain text, that is, no markdown or html markers are kept. (use <see cref="TextRender"/> if the markdown text is required)
+- Class TextRender (ApplicationServices\Report\TextRender.vb) - markdown/text render: converts the markdown content model <see cref="Block"/> into markdown text.
 - Class HistoryStacks (ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb)
 - Structure History (ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb)
 - Class InteractiveDevice (ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb)
@@ -167,10 +171,6 @@
 - Interface IWriteDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
 - Interface InteractiveDevice (ApplicationServices\Terminal\STDIO__\IConsole.vb)
 - Interface IConsole (ApplicationServices\Terminal\STDIO__\IConsole.vb) - Represents the standard input, output, and error streams for console applications. (表示一个输入输出流控制台界面接口)
-- Module NamespaceDoc (ApplicationServices\Terminal\STDIO__\NamespaceDoc.vb) - The standard input/output abstraction (IConsole, Shell and STDIO) used by the terminal toolkit.
-- Module Shell (ApplicationServices\Terminal\STDIO__\Shell.vb)
-- Module STDIO (ApplicationServices\Terminal\STDIO__\STDIO.vb)
-- Class CharMapDefinition (ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb)
 - ... and 1164 more
 
 ## Notable public members
@@ -234,7 +234,7 @@
 - Public ReadOnly Property StartTime As Double = App.UnixTimeStamp
 - Public Function ElapsedMilliseconds() As Long
 - Public Function ElapsedMilliseconds(startTime As Long) As TimeSpan
-- ... and 8031 more
+- ... and 8015 more
 
 ## Imports
 - _rng = Microsoft.VisualBasic.Math.RandomExtensions
@@ -254,7 +254,6 @@
 - DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Font)
 - DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 - Directory = Microsoft.VisualBasic.FileIO.Directory
-- Factory = System.Runtime.Serialization.Json.DataContractJsonSerializer
 - FieldTuple = System.Collections.Generic.KeyValuePair(Of Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute, System.Reflection.PropertyInfo)
 - FieldTuple = System.Collections.Generic.KeyValuePair(Of String, System.Reflection.PropertyInfo)
 - FS = Microsoft.VisualBasic.FileIO.FileSystem
@@ -262,6 +261,7 @@
 - IOModule = System.IO.Path
 - IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 - MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
+- Microsoft.VisualBasic.ApplicationServices
 
 ## File tree
 - ApplicationServices\App.vb
@@ -345,6 +345,13 @@
 - ApplicationServices\Parallel\Threads\ThreadPool.vb
 - ApplicationServices\Parallel\Threads\ThreadQueue.vb
 - ApplicationServices\Parallel\Threads\ThreadStart.vb
+- ApplicationServices\Report\Block.vb
+- ApplicationServices\Report\Extensions.vb
+- ApplicationServices\Report\HtmlRender.vb
+- ApplicationServices\Report\PlainTextRender.vb
+- ApplicationServices\Report\ReportRender.vb
+- ApplicationServices\Report\TextRender.vb
+- ApplicationServices\Report\TextReportRender.vb
 - ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb
 - ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb
 - ApplicationServices\Terminal\InteractiveIODevice\LineEdit\Completion.vb
@@ -407,12 +414,5 @@
 - ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb
 - ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb
 - ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Description.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Text.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\NamespaceDoc.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\Program.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\NamespaceDoc.vb
-- ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\ProgressBar.vb
-- ... and 908 more files
+- ... and 899 more files
 

@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning.Bootstrapping
 - AssemblyName  : Microsoft.VisualBasic.MachineLearning.Bootstrapping
 - TargetFramework: net10.0
-- Source files  : 42
+- Source files  : 43
 - Existing Title: Graph and Knowledge Graph Embedding Toolkit (node2vec, graph2vec, ComplEx)
 - Existing Desc : Provides graph representation learning for sciBASIC#: node2vec biased random walks with word2vec, whole-graph graph2vec vectors, and ComplEx knowledge-graph embedding variants trained by AdaGrad.
-- Existing Tags : scibasic;graph-embedding;node2vec;graph2vec;knowledge-graph;complex;random-walk;representation-learning
+- Existing Tags : scibasic;graph-embedding;node2vec;knowledge-graph;complex
 
 ## Namespaces
 - GraphEmbedding  [files: 3]
@@ -121,34 +121,34 @@
 - Public Sub New(inRule As Rule, inReal_MatrixR As Matrix, inImag_MatrixR As Matrix, inReal_MatrixRGradient As Matrix, inImag_MatrixRGradient As Matrix,…
 - Public Overridable Sub calculateGradients()
 - Public Sub New()
-- ... and 53 more
+- ... and 59 more
 
 ## Imports
 - Edge = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
+- Microsoft.VisualBasic.ComponentModel.TagData
 - Microsoft.VisualBasic.Data
 - Microsoft.VisualBasic.Data.GraphTheory
 - Microsoft.VisualBasic.Data.GraphTheory.SequenceGraphTransform
 - Microsoft.VisualBasic.Data.NLP.Word2Vec
+- Microsoft.VisualBasic.Emit
 - Microsoft.VisualBasic.Language
 - Microsoft.VisualBasic.Linq
 - Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 - Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 - Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.Calculus.Dynamics
+- Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
+- Microsoft.VisualBasic.Math.Distributions
 - Microsoft.VisualBasic.Math.LinearAlgebra
+- Microsoft.VisualBasic.Serialization.JSON
 - Microsoft.VisualBasic.Text
 - Node = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 - randf = Microsoft.VisualBasic.Math.RandomExtensions
 - std = System.Math
 - System
-- System.Collections.Generic
-- System.ComponentModel
-- System.IO
-- System.Runtime.CompilerServices
-- System.Text
-- System.Text.RegularExpressions
 
 ## File tree
 - Graph2Vec.vb
@@ -188,6 +188,7 @@
 - GraphEmbedding\util\NamespaceDoc.vb
 - GraphEmbedding\util\NegativeTripleGenerator.vb
 - GraphEmbedding\util\StringSplitter.vb
+- Model.vb
 - NamespaceDoc.vb
 - Node2Vec\AliasMethod.vb
 - Node2Vec\Graph.vb

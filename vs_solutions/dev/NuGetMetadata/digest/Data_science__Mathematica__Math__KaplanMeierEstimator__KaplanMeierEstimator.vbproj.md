@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 13
 - Existing Title: Kaplan-Meier Survival Estimator for Two-Group Studies
-- Existing Desc : Computes Kaplan-Meier survival curves for two patient cohorts, merges their time-to-event observations onto a common time axis, tests group significance, and batch-runs gene-expression split strategies in parallel. Part of sciBASIC#.
-- Existing Tags : scibasic;survival-analysis;kaplan-meier;log-rank;gene-expression;split-strategy;biostatistics
+- Existing Desc : Computes Kaplan-Meier survival curves for two patient cohorts, merges time events, tests group significance and batch-runs gene-expression split strategies in parallel. Part of sciBASIC#.
+- Existing Tags : scibasic;survival-analysis;kaplan-meier;log-rank;gene-expression;biostatistics
 
 ## Namespaces
 - Models  [files: 4]

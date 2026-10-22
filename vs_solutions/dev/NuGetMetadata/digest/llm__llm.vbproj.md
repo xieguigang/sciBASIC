@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 35
 - Existing Title: Decoder-only LLM Engine: DeepSeekMoE, KV Cache and Function Calling
-- Existing Desc : Pure managed decoder-only language model engine for sciBASIC#: DeepSeek-style mixture-of-experts with isolated shared experts and node-limited routing, prefill/incremental decoding KV cache with GQA/MQA, RoPE, RMSNorm and SwiGLU decoder blocks, AdamW training with masked cross-entropy, and schema-constrained function calling driven by a multi-turn agent loop.
-- Existing Tags : scibasic;llm;decoder-only;transformer;mixture-of-experts;deepseek-moe;kv-cache;rope;rmsnorm;swiglu;gqa;mqa;function-calling;constrained-decoding;tool-calling;agent-loop;adamw;language-model
+- Existing Desc : A pure managed decoder-only language model engine for sciBASIC#: DeepSeek-style mixture-of-experts routing, prefill and incremental KV cache with GQA/MQA, RoPE, RMSNorm and SwiGLU decoder blocks, AdamW training, and schema-constrained function calling in a multi-turn agent loop.
+- Existing Tags : scibasic;llm;transformer;mixture-of-experts;kv-cache;rope;function-calling
 
 ## Namespaces
 - Agent  [files: 4]

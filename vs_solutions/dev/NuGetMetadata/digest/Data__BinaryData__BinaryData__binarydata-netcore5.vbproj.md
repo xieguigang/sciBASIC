@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Data.BinaryData
 - TargetFramework: net10.0
 - Source files  : 57
-- Existing Title: Low-Level Binary Data Stream Reader and Writer Toolkit
-- Existing Desc : Extends BinaryReader and BinaryWriter with endianness aware primitives, length-prefixed strings, BZip2 and LZW compression, XDR encoding and a Python pickle codec for parsing custom binary file formats, plus a Java style ByteBuffer.
-- Existing Tags : scibasic;binary-data;binary-reader;endianness;bzip2;lzw;xdr;pickle;byte-buffer
+- Existing Title: Binary Data Stream Reader, Writer and Compression Codec Toolkit
+- Existing Desc : A low-level binary data toolkit for sciBASIC#: endianness-aware BinaryReader and BinaryWriter extensions, a Java-style ByteBuffer, BZip2, LZW, LZ4 and LZMA compression codecs, XDR encoding and a Python pickle codec for parsing custom binary file formats.
+- Existing Tags : scibasic;binary-data;endianness;bzip2;lzw;pickle;xdr
 
 ## Namespaces
 - Bzip2  [files: 11]

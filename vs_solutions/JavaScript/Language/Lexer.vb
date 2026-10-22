@@ -80,7 +80,8 @@ Public NotInheritable Class Lexer
         "break", "continue", "return", "throw", "try", "catch", "finally",
         "true", "false", "null", "undefined", "typeof", "new", "in", "this",
         "switch", "case", "default", "class", "extends", "super",
-        "instanceof", "delete", "void"
+        "instanceof", "delete", "void",
+        "import"
     }
 
     Private ReadOnly _src As String

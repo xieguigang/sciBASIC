@@ -1,0 +1,187 @@
+# physics/Particles/Particles.vbproj
+
+- RootNamespace : Microsoft.VisualBasic.Engine.Particles
+- AssemblyName  : Microsoft.VisualBasic.Engine.Particles
+- TargetFramework: net10.0
+- Source files  : 46
+- Existing Title: 3D SPH Fluid and Boids Flocking Particle Engine
+- Existing Desc : Particle simulation for sciBASIC#: a Structure-of-Arrays 3D SPH fluid solver with box, cylinder and impeller boundaries and a pluggable compute backend, uniform-grid neighbour search, three dimensional boids flocking kernels, a pooled 2D particle system with emitters, and force driven label placement layouts.
+- Existing Tags : scibasic;particles;sph;fluid-simulation;boids;flocking;gpu-ready;3d-simulation;force-layout
+
+## Namespaces
+- Boids  [files: 13]
+- layout  [files: 14]
+- Particles2D  [files: 4]
+
+## Public types
+- Structure Boid (Boids\Boid.vb) - Boids flocking algorithm https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
+- Structure Boid3D (Boids\Boid3D.vb) - A zero allocation value view of one boid slot of a <see cref="FlockState3D"/>. The structure does not own any data: every property reads or writes the
+- Class Field (Boids\Field.vb) - Boids flocking algorithm https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
+- Class Field3D (Boids\Field3D.vb) - This class is the three dimensional counterpart of <see cref="Field"/> and is used by the directx scene renderer of the boids demo. The two dimensional field is not touched by it: both simulations can run in the
+- Module FlockIntegrate (Boids\FlockKernels.vb) - The streaming integration kernel: apply rule forces, integrate positions, clamp speed, bounce off walls and optionally wrap around edges.
+- Module FlockIntegrate3D (Boids\FlockKernels3D.vb) - The streaming integration kernel of the three dimensional flocking simulation: apply the rule forces, integrate the positions, clamp the speed, bounce off the six walls and optionally wrap around the edges.
+- Module NamespaceDoc (Boids\NamespaceDoc.vb) - The boids flocking simulation.
+- Class FluidEngine (FluidEngine.vb)
+- Class FluidEngine3D (FluidEngine3D.vb) - and gravity pulls the water along <see cref="GravityDirection"/> (by default the +Y face, i.e. the bottom of the legacy box container). Cylindrical vessels (<see cref="CylinderBoundary3D"/>) and rotating impellers
+- Class FluidKernels (FluidKernels.vb) - 3D → 45 / (PI * h^6) + d/dr SpikyPow2 -2(h-r) : 2D → 12 / (PI * h^4) 3D → 15 / (PI * h^5)
+- Module Grid3D (Grid\Grid3D.vb) - The 3D counterpart of the 2D <see cref="GridDynamics"/> spatial hash. Particles are bucketed into cubic cells of side length equal to the SPH smoothing radius. A neighbour query then only needs to visit the 27 cells
+- Module GridDynamics (Grid\GridDynamics.vb)
+- Interface IContainer (Grid\IContainer2.vb)
+- Interface IContainer3D (Grid\IContainer3D.vb) - the 3D volume container of the particles(the 3D counterpart of the 2D <see cref="IContainer(Of T)"/>).
+- Class UniformGrid3D (Grid\UniformGrid3D.vb) - A flat uniform grid (counting sorted) neighbour search structure for the 3D SPH solver.
+- Interface Displacement (Layout\Displacement.vb) - @author Helder Suzuki
+- Class ForceLayoutData (Layout\ForceLayoutData.vb) - @author Helder Suzuki
+- Class ForceVector (Layout\ForceVector.vb) - @author Helder Suzuki
+- Class LayoutData (Layout\ForceVectorNodeLayoutData.vb)
+- Class ForceVectorNodeLayoutData (Layout\ForceVectorNodeLayoutData.vb) - @author Mathieu Bastian
+- Class ForceVectorUtils (Layout\ForceVectorUtils.vb) - @author Mathieu Jacomy
+- Class LabelAdjust (Layout\LabelAdjust.vb) - @author Mathieu Jacomy
+- Class LabelAdjustLayoutData (Layout\LabelAdjustLayoutData.vb) - @author Mathieu Bastian
+- Module NamespaceDoc (Layout\NamespaceDoc.vb) - Force driven label placement layout for 2D scenes.
+- Class Node (Layout\Node.vb) - the layout data model contains node layout position and shape size data
+- Class ProportionalDisplacement (Layout\ProportionalDisplacement.vb) - The movement of the node is in the direction of the force and it's proportional to is module. @author Helder Suzuki
+- Class QuadTree (Layout\QuadTree.vb)
+- Class QuadNode (Layout\QuadTree.vb)
+- Class StepDisplacement (Layout\StepDisplacement.vb) - The node is moved a fixed distance (step) in the direction of the force. @author Helder Suzuki
+- Class TextProperties (Layout\TextProperties.vb) - the label drawing style data text label size data
+- Class Particle (Particle.vb)
+- Class Particle3D (Particle3D.vb) - A single water particle inside the 3D SPH fluid simulation. This is the three dimensional counterpart of the 2D <see cref="Particle"/>: all of the spatial state (position, velocity, predicted position) is stored as a
+- Class Emitter (Particles2D\Emitter.vb) - 粒子发射器：在 <see cref="Position"/> 处沿 <see cref="BaseAngle"/> 方向、 以 <see cref="Spread"/> 张角随机产生粒子。支持一次性爆发或持续生成。
+- Class GameParticle (Particles2D\GameParticle.vb) - 单个粒子。数据极简（位置、速度、寿命、尺寸、颜色）， 不与其他物理系统耦合以支持海量粒子。
+- Module NamespaceDoc (Particles2D\NamespaceDoc.vb) - SPH particle based fluid simulation in 2D.
+- Class ParticleSystem (Particles2D\ParticleSystem.vb) - 轻量粒子系统。使用对象池复用 <see cref="GameParticle"/>，避免频繁分配； 每个粒子仅受重力与线性阻力影响，可承载海量粒子（爆炸、火花、灰尘、魔法等）。 不与刚体耦合，以保证性能。
+- Class BoxBoundary3D (SphBoundary3D.vb) - The axis aligned box domain used by the original engine: the fluid lives inside <c>[0,size]</c> on every axis and escapes are bounced back with the configured damping. This is the default boundary so that the existing
+- Class CylinderBoundary3D (SphBoundary3D.vb) - A vertical cylindrical vessel (axis along +Z, Z is the "up" direction of the fermenter): a radial wall of the given radius, a flat bottom and an open top (the free surface of the fermentation broth).
+- Class SphCpuCompute3D (SphCpuCompute3D.vb) - The default parallel CPU backend of the 3D SPH solver.
+- Class SphImpeller3D (SphImpeller3D.vb) - A rotating impeller (Rushton style disc turbine plus its shaft) modelled as a moving boundary that drags the surrounding SPH particles.
+- Class SphParams3D (SphParams3D.vb) - The flat parameter bundle of one 3D SPH sub step.
+- Interface ISphCompute3D (SphParams3D.vb) - A pluggable 3D SPH compute backend. The default implementation is the parallel CPU backend <see cref="SphCpuCompute3D"/>; the SPHEngine project injects a CUDA implementation of the same interface so that the physics
+- Class SphState3D (SphState3D.vb) - The Structure-of-Arrays particle state of the 3D SPH solver. All buffers are <c>Single</c> so that they can be uploaded to a CUDA device buffer without any conversion (see <c>CudaSphBackend</c> in the
+
+## Notable public members
+- Friend Sub New(state As FlockState, index As Integer)
+- Public Property x As Double Implements Layout2D.X
+- Public Property y As Double Implements Layout2D.Y
+- Public Property Xvel As Double
+- Public Property Yvel As Double
+- Public Sub MoveForward(Optional minSpeed As Double = 1, Optional maxSpeed As Double = 5)
+- Public Function GetPosition(time As Double) As (Double, Double)
+- Public Sub Accelerate(Optional scale As Double = 1.0)
+- Public Function GetAngle() As Double
+- Public Function GetSpeed() As Double
+- Friend Sub New(state As FlockState3D, index As Integer)
+- Public Property x As Double
+- Public Property y As Double
+- Public Property z As Double
+- Public Property Xvel As Double
+- Public Property Yvel As Double
+- Public Property Zvel As Double
+- Public Function GetSpeed() As Double
+- Public Shared Function Round(v As Double) As Integer
+- Public ReadOnly Property Width As Double Implements IContainer(Of Boid).Width
+- Public ReadOnly Property Height As Double Implements IContainer(Of Boid).Height
+- Public ReadOnly Property Entity As IReadOnlyCollection(Of Boid) Implements IContainer(Of Boid).Entity
+- Public ReadOnly Property MaxSpeed As Double = 6
+- Public Property PredatorCount As Integer = 6
+- Public ReadOnly Property State As FlockState
+- Friend ReadOnly Property Grid As FlockGrid
+- Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
+- Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
+- Public Sub New(state As FlockState)
+- Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of Boid).Count
+- Public Function GetEnumerator() As IEnumerator(Of Boid) Implements IEnumerable(Of Boid).GetEnumerator
+- Public Sub New(state As FlockState)
+- Public ReadOnly Property Current As Boid Implements IEnumerator(Of Boid).Current
+- Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+- Public Sub Reset() Implements IEnumerator.Reset
+- Public Sub Dispose() Implements IDisposable.Dispose
+- Public ReadOnly Property Width As Double
+- Public ReadOnly Property Height As Double
+- Public ReadOnly Property Depth As Double
+- Public ReadOnly Property MaxSpeed As Double = 6
+- Public Property PredatorCount As Integer = 6
+- Public ReadOnly Property BoidCount As Integer
+- Public ReadOnly Property State As FlockState3D
+- Friend ReadOnly Property Grid As FlockGrid3D
+- Public Sub New(width As Double, height As Double, depth As Double, Optional boidCount As Integer = 100)
+- Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
+- Public Iterator Function Enumerate() As IEnumerable(Of Boid3D)
+- Public Sub New(capacity As Integer)
+- Public Sub Build(state As FlockState, cellSize As Double)
+- Public Shared Function CellRound(v As Double) As Integer
+- Public ReadOnly Property CellSize As Double
+- Public Sub New(capacity As Integer)
+- Public Sub Build(state As FlockState3D, cellSize As Double)
+- Public Shared Function CellRound(v As Double) As Integer
+- Public Sub New(field As Field)
+- Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+- Friend Sub Integrate(state As FlockState, width As Double, height As Double,
+- Public Sub New(field As Field3D)
+- Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+- Friend Sub Integrate(state As FlockState3D, width As Double, height As Double, depth As Double,
+- ... and 241 more
+
+## Imports
+- Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+- Microsoft.VisualBasic.Engine.Physics
+- Microsoft.VisualBasic.Imaging
+- Microsoft.VisualBasic.Math
+- Microsoft.VisualBasic.Math.SIMD
+- Microsoft.VisualBasic.Parallel
+- par = System.Threading.Tasks.Parallel
+- randf = Microsoft.VisualBasic.Math.RandomExtensions
+- std = System.Math
+- System
+- System.Drawing
+- System.Math
+- System.Numerics
+- System.Runtime.CompilerServices
+
+## File tree
+- Boids\Boid.vb
+- Boids\Boid3D.vb
+- Boids\BoidMath.vb
+- Boids\Field.vb
+- Boids\Field3D.vb
+- Boids\FlockGrid.vb
+- Boids\FlockGrid3D.vb
+- Boids\FlockKernels.vb
+- Boids\FlockKernels3D.vb
+- Boids\FlockReference.vb
+- Boids\FlockState.vb
+- Boids\FlockState3D.vb
+- Boids\NamespaceDoc.vb
+- FluidEngine.vb
+- FluidEngine3D.vb
+- FluidKernels.vb
+- Grid\Grid3D.vb
+- Grid\GridDynamics.vb
+- Grid\IContainer2.vb
+- Grid\IContainer3D.vb
+- Grid\UniformGrid3D.vb
+- Layout\AbstractForce.vb
+- Layout\Displacement.vb
+- Layout\ForceLayoutData.vb
+- Layout\ForceVector.vb
+- Layout\ForceVectorNodeLayoutData.vb
+- Layout\ForceVectorUtils.vb
+- Layout\LabelAdjust.vb
+- Layout\LabelAdjustLayoutData.vb
+- Layout\NamespaceDoc.vb
+- Layout\Node.vb
+- Layout\ProportionalDisplacement.vb
+- Layout\QuadTree.vb
+- Layout\StepDisplacement.vb
+- Layout\TextProperties.vb
+- Particle.vb
+- Particle3D.vb
+- Particles2D\Emitter.vb
+- Particles2D\GameParticle.vb
+- Particles2D\NamespaceDoc.vb
+- Particles2D\ParticleSystem.vb
+- SphBoundary3D.vb
+- SphCpuCompute3D.vb
+- SphImpeller3D.vb
+- SphParams3D.vb
+- SphState3D.vb
+

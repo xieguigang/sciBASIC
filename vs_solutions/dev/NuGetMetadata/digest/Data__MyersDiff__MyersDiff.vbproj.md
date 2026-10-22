@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 7
 - Existing Title: Myers O(ND) Diff Algorithm for Text Comparison
-- Existing Desc : Implements the Myers O(ND) difference algorithm to compare text files and string sequences, producing shortest edit scripts, structured diff blocks and unified diff output at line level and character level, with a similarity score.
-- Existing Tags : scibasic;diff;myers-algorithm;text-comparison;edit-script;unified-diff;similarity
+- Existing Desc : A text differencing toolkit for sciBASIC#: implements the Myers O((N+M)D) shortest edit script algorithm to compare files, line sequences and character strings, producing structured diff blocks, unified and side-by-side output, and a sequence similarity score.
+- Existing Tags : scibasic;diff;myers-algorithm;text-comparison;unified-diff;similarity
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Data.MyersDiff)
@@ -37,6 +37,7 @@
 - Public Property Items As New List(Of DiffItem)()
 - Public Property OldCount As Integer
 - Public Property NewCount As Integer
+- Public Property Truncated As Boolean
 - Public ReadOnly Property EqualCount As Integer
 - Public ReadOnly Property DeleteCount As Integer
 - Public ReadOnly Property InsertCount As Integer
@@ -49,6 +50,7 @@
 - Public Function DiffChars(oldText As String, newText As String) As DiffResult
 - Public Function CompareFiles(oldFilePath As String, newFilePath As String) As DiffResult
 - Public Function CompareLines(oldLines As String(), newLines As String()) As DiffResult
+- Public Property MaxEditDistance As Integer = 5000
 - Public Function Compare(oldLines As String(), newLines As String()) As DiffResult
 - Public Function CompareChars(oldText As String, newText As String) As DiffResult
 - Public Function CompareFiles(oldFilePath As String, newFilePath As String, Optional encoding As Encoding = Nothing) As DiffResult

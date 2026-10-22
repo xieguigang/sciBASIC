@@ -22,7 +22,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;xml;xsd;mathml;xpath;code-generator</PackageTags>
-    <PackageReleaseNotes>Improved MathML content parsing into typed lambda expressions and extended the XSD schema models with VB.NET code generation.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

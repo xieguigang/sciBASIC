@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 15
 - Existing Title: Dendrogram and Radial Tree Plotting for Cluster Hierarchies
-- Existing Desc : Renders hierarchical clustering results as publication-ready graphics: vertical dendrograms, circular and radial layouts, and horizon or right-to-left panels, with class colour legends, leaf labels and rulers.
-- Existing Tags : scibasic;dendrogram;radial-tree;visualization;hierarchical-clustering;plot;tree-layout
+- Existing Desc : A hierarchical clustering plotting library for sciBASIC#: renders cluster trees as vertical dendrograms, circular and radial layouts, and horizon or right-to-left panels, with heatmap compatibility layers, class colour legends, leaf labels and row or column data scaling.
+- Existing Tags : scibasic;dendrogram;radial-tree;heatmap;visualization;hierarchical-clustering
 
 ## Namespaces
 - Global.Microsoft.VisualBasic.Data.Plots.Canvas  [files: 1]

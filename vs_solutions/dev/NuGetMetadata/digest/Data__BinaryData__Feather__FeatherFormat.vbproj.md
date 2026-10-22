@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 57
 - Existing Title: Feather Columnar Data Frame File Format Reader and Writer
-- Existing Desc : A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime: reads and writes typed and untyped data frames with row and column access, null handling, and categorical, date or timestamp metadata.
-- Existing Tags : scibasic;feather;arrow;columnar;dataframe;flatbuffers;interop
+- Existing Desc : A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime. Reads and writes typed and untyped data frames with row/column access, null handling, and categorical or timestamp metadata.
+- Existing Tags : scibasic;feather;arrow;columnar;dataframe;flatbuffers
 
 ## Namespaces
 - FlatBuffers  [files: 8]

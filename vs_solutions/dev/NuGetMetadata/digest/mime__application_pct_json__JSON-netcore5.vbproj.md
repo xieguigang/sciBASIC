@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic.MIME.application.json
 - AssemblyName  : Microsoft.VisualBasic.MIME.application.json
 - TargetFramework: net10.0
-- Source files  : 31
+- Source files  : 35
 - Existing Title: JSON and BSON Parser, Serializer and JavaScript Object Model
-- Existing Desc : A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, a JSON writer and formatter, BSON binary encoding, a jsonLogic rule engine and reflection based object serialization.
-- Existing Tags : scibasic;json;bson;json-parser;json-serializer;lenient-json;jsonlogic;object-serialization;llm-output
+- Existing Desc : A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, a pretty-print formatter, deep cloning helpers, JSON-RPC 2.0 client and session support, plus BSON binary encoding and object serialization.
+- Existing Tags : scibasic;json;json-rpc;bson;parser;serialization;formatter
 
 ## Namespaces
 - BSON  [files: 6]
@@ -29,6 +29,9 @@
 - Module jsonLogic (JSONLogic\jsonLogic.vb) - If you’re looking for a way to share logic between front-end and back-end code, and even store it in a database, JsonLogic might be a fit for you. JsonLogic isn't a full programming language. It’s a small, safe way to delegate one decision.
 - Module NamespaceDoc (JSONLogic\NamespaceDoc.vb) - A JSON based rule expression engine that builds and evaluates jsonLogic expression trees over JSON data.
 - Class TreeBuilder (JSONLogic\TreeBuilder.vb)
+- Module JsonReport (JsonReport.vb) - Markdown render helper for LLM outputs
+- Module JsonRpc (JsonRpc\JsonRpc.vb) - the bare json-rpc 2.0 / LSP transport layer. it implements the Content-Length framed tcp stream described in src/LSP/jsonrpc.md: the header is read byte by byte until the empty line, the body is then read exactly by
+- Class JsonRpcException (JsonRpc\JsonRpc.vb) - raised on the client side when a json-rpc response carries an <c>error</c> object. exposes the numeric <see cref="Code"/> and optional <see cref="ErrorData"/>.
 - Module JSONTextParser (JSONTextParser.vb)
 - Module LenientJsonExtensions (LenientParser\LenientJsonExtensions.vb) - Extension methods providing convenient access to the <see cref="LenientJsonParser"/>. These extensions allow you to parse potentially malformed JSON strings (e.g., from LLM output) using a fluent API style.
 - Class LenientJsonParser (LenientParser\LenientJsonParser.vb) - The repair keys off a hard guarantee of the JSON grammar rather than a heuristic: a string in <i>value</i> position may only be followed by <c>,</c>, <c>}</c>, <c>]</c> or EOF — <b>never</b> by <c>:</c>. So a colon
@@ -39,6 +42,7 @@
 - Enum JSONElements (Parser\Token.vb)
 - Class StringTokenIcer (Parser\TokenIcer.vb)
 - Class StreamTokenIcer (Parser\TokenIcer.vb)
+- Module Clone (Serializer\Clone.vb)
 - Module ExtendedDictionary (Serializer\ExtendedDictionary.vb)
 - Module JSONSerializer (Serializer\JSONSerializer.vb)
 - Class JSONSerializerOptions (Serializer\JSONSerializerOptions.vb)
@@ -108,13 +112,16 @@
 - Public ReadOnly Property size As Integer
 - Public ReadOnly Property UnderlyingType As Type
 - Public Sub Add(key As String, element As JsonElement, Optional comment As String = Nothing)
-- ... and 99 more
+- ... and 123 more
 
 ## Imports
 - any = Microsoft.VisualBasic.Scripting
 - ASCII = Microsoft.VisualBasic.Text.ASCII
 - i32 = Microsoft.VisualBasic.Language.i32
+- jsobj = Microsoft.VisualBasic.MIME.application.json.Javascript.JsonObject
+- jsVal = Microsoft.VisualBasic.MIME.application.json.Javascript.JsonValue
 - Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+- Microsoft.VisualBasic.ApplicationServices.Report
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 - Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -125,6 +132,7 @@
 - Microsoft.VisualBasic.MIME.application.json
 - Microsoft.VisualBasic.MIME.application.json.BSON
 - Microsoft.VisualBasic.MIME.application.json.Javascript
+- Microsoft.VisualBasic.MIME.application.json.LenientJson
 - Microsoft.VisualBasic.My.JavaScript
 - Microsoft.VisualBasic.Net.Http
 - Microsoft.VisualBasic.Parallel
@@ -132,10 +140,6 @@
 - Microsoft.VisualBasic.Scripting.TokenIcer
 - Microsoft.VisualBasic.Serialization.JSON
 - Microsoft.VisualBasic.Text
-- Microsoft.VisualBasic.Text.Parser
-- Microsoft.VisualBasic.ValueTypes
-- std = System.Math
-- System.Collections.Concurrent
 
 ## File tree
 - BSON\BSON.vb
@@ -153,6 +157,9 @@
 - JSONLogic\jsonLogic.vb
 - JSONLogic\NamespaceDoc.vb
 - JSONLogic\TreeBuilder.vb
+- JsonReport.vb
+- JsonRpc\JsonRpc.vb
+- JsonRpc\JsonRpcSession.vb
 - JSONTextParser.vb
 - LenientParser\LenientJsonExtensions.vb
 - LenientParser\LenientJsonParser.vb
@@ -161,6 +168,7 @@
 - Parser\JsonParser.vb
 - Parser\Token.vb
 - Parser\TokenIcer.vb
+- Serializer\Clone.vb
 - Serializer\ExtendedDictionary.vb
 - Serializer\JSONSerializer.vb
 - Serializer\JSONSerializerOptions.vb

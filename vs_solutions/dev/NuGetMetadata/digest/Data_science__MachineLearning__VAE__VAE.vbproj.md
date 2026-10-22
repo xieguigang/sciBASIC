@@ -6,7 +6,7 @@
 - Source files  : 5
 - Existing Title: Variational Autoencoders: Graph VAE, Gaussian Mixture VAE and GMM
 - Existing Desc : Generative modelling library for sciBASIC#: a graph variational autoencoder with GCN encoder and inner-product decoder, a Gaussian mixture VAE with categorical latents, and an EM-trained Gaussian mixture model.
-- Existing Tags : scibasic;variational-autoencoder;graph-vae;gaussian-mixture;gmm;generative-model;latent-space;clustering
+- Existing Tags : scibasic;variational-autoencoder;gmm;generative-model;clustering
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MachineLearning.VariationalAutoencoder)

@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Imaging
 - TargetFramework: net10.0-windows;net10.0
 - Source files  : 308
-- Existing Title: 2D And 3D Scientific Graphics Rendering Engine
-- Existing Desc : A driver-based drawing engine that renders charts, heatmaps, shapes, text and isometric 3D scenes to bitmap, SVG or PostScript output through one IGraphics API, with d3.js style scales, color palettes, heat maps and an isometric 3D engine. The visualization core of sciBASIC#.
-- Existing Tags : scibasic;graphics;imaging;svg;postscript;drawing;heatmap;color-palette;d3js;isometric-3d
+- Existing Title: 2D and 3D Graphics Engine with SVG and PostScript Drivers
+- Existing Desc : A driver-based scientific graphics engine for sciBASIC#: renders shapes, charts, heatmaps, text labels and isometric 3D scenes through one IGraphics API to bitmap, SVG or PostScript output, with d3.js-style scales, color palettes, Delaunay/Voronoi geometry and contour extraction.
+- Existing Tags : scibasic;graphics;imaging;svg;postscript;d3js;isometric-3d
 
 ## Namespaces
 - d3js  [files: 3]

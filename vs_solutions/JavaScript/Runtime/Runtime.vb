@@ -200,6 +200,61 @@ Namespace Runtime
             Return ClrInterop.HostGlobalNames()
         End Function
 
+        ' ================= imports (see Language/Parser.ParseImport) =================
+
+        <ThreadStatic>
+        Private _scriptBaseDir As String
+
+        ''' <summary>
+        ''' Directory that relative module specifiers resolve against. It defaults to the
+        ''' folder the host published for the script (<see cref="ProcessModule.ScriptDir"/>)
+        ''' and falls back to the application base directory; the interpreter narrows it to
+        ''' the folder of the script it is running.
+        ''' </summary>
+        Public Property ScriptBaseDirectory As String
+            Get
+                If Not String.IsNullOrEmpty(_scriptBaseDir) Then Return _scriptBaseDir
+                If Not String.IsNullOrEmpty(ProcessModule.ScriptDir) Then Return ProcessModule.ScriptDir
+                Return AppContext.BaseDirectory
+            End Get
+            Set(value As String)
+                _scriptBaseDir = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' <c>import Foo.Bar as ns from 'x.dll'</c>: the public types of a CLR namespace as
+        ''' a script object mapping the simple type name to a <see cref="ClrType"/>.
+        ''' </summary>
+        Public Function ImportClrNamespace(namespaceName As String, assemblySpec As String) As Object
+            Return AssemblyResolver.ImportNamespace(namespaceName, assemblySpec, ScriptBaseDirectory)
+        End Function
+
+        ''' <summary><c>import * as ns from './m.js'</c>: the module's top-level declarations.</summary>
+        Public Function ImportModuleNamespace(specifier As String) As Object
+            Return ModuleLoader.Load(specifier, ScriptBaseDirectory)
+        End Function
+
+        ''' <summary><c>import {a} from './m.js'</c>: one top-level declaration of a module.</summary>
+        Public Function ImportModuleBinding(specifier As String, name As String) As Object
+            Dim exports = ModuleLoader.Load(specifier, ScriptBaseDirectory)
+            Dim value As Object = Nothing
+            If exports.TryGetValue(name, value) Then Return value
+            Throw JsRuntimeException.Error_("SyntaxError",
+                "module '" & specifier & "' has no top-level binding named '" & name & "'")
+        End Function
+
+        ''' <summary><c>import './m.js'</c>: run the module for its side effects.</summary>
+        Public Sub ImportModuleSideEffect(specifier As String)
+            Call ModuleLoader.Load(specifier, ScriptBaseDirectory)
+        End Sub
+
+        ''' <summary>Drop the assembly / namespace / module caches (tests, hot reload).</summary>
+        Public Sub ClearImportCaches()
+            AssemblyResolver.Clear()
+            ModuleLoader.Clear()
+        End Sub
+
         ' ================= type predicates =================
 
         Public Function IsNumber(x As Object) As Boolean

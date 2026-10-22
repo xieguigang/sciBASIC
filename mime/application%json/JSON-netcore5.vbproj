@@ -16,13 +16,13 @@
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <Title>JSON and BSON Parser, Serializer and JavaScript Object Model</Title>
-    <Description>A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, plus BSON binary encoding and object serialization.</Description>
+    <Description>A JSON and BSON toolkit for sciBASIC#: a streaming JSON tokenizer and parser, a lenient parser that repairs malformed large language model output, a pretty-print formatter, deep cloning helpers, JSON-RPC 2.0 client and session support, plus BSON binary encoding and object serialization.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.MIME.application.json</AssemblyTitle>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
-    <PackageTags>scibasic;json;bson;serialization;json-parser</PackageTags>
-    <PackageReleaseNotes>Fixes JSON writer bugs and the JSON parser used inside the JavaScript runtime.</PackageReleaseNotes>
+    <PackageTags>scibasic;json;json-rpc;bson;parser;serialization;formatter</PackageTags>
+    <PackageReleaseNotes>Adds a JSON-RPC 2.0 client with request/response framing and sessions, JSON report export helpers and deep clone support, and rewrites the pretty-print JSON formatter.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

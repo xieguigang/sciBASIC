@@ -2,6 +2,11 @@
 // The translation of this file is compiled into the test assembly, so it doubles
 // as a build-time compile check of the JS-to-VB.NET code generator.
 
+// ---- import: CLR assembly types through reflection ----
+// 'from' names an assembly; the namespace becomes an object of CLR types, so
+// msil.MethodDecompiler is the VB Module and its members are called statically.
+import Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL as msil from 'Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.dll';
+
 // ---- variables, hoisting, closures ----
 var total = 0;
 if (true) { var leaked = 7; }
@@ -106,3 +111,6 @@ var clrSum = 0;
 for (const item of bridge.Items) { clrSum += item; }
 console.log('clr sum:', clrSum, Object.keys(bridge).indexOf('Title') >= 0, bridge[1]);
 try { bridge.Explode(); } catch (e) { console.log('clr error:', e.name); }
+
+// ---- imported CLR types ----
+console.log('import:', typeof msil.MethodDecompiler, Object.keys(msil).indexOf('MethodDecompiler') >= 0);

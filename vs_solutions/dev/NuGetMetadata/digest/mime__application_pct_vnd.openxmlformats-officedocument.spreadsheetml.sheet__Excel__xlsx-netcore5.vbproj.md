@@ -6,7 +6,7 @@
 - Source files  : 81
 - Existing Title: XLSX Workbook Reader, Writer and Legacy BIFF Writer
 - Existing Desc : XLSX Transitional Office Open XML support for sciBASIC#: reads an xlsx package into typed directory parts, sheets and styles, generates styled workbooks with formulas and number formats, and writes legacy BIFF 2.1 xls files.
-- Existing Tags : scibasic;xlsx;excel;openxml;spreadsheet;biff;workbook;report
+- Existing Tags : scibasic;xlsx;excel;openxml;spreadsheet
 
 ## Namespaces
 - XLS  [files: 2]

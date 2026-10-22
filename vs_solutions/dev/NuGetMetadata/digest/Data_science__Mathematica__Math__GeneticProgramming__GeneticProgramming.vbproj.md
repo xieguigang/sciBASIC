@@ -6,7 +6,7 @@
 - Source files  : 49
 - Existing Title: Symbolic Regression via Genetic Programming and GA
 - Existing Desc : Evolves mathematical expressions and polynomial models with genetic programming and genetic algorithms, using pluggable expression trees and error objectives such as MSE, MAE, SSE and SAE. Part of sciBASIC#.
-- Existing Tags : scibasic;genetic-programming;symbolic-regression;expression-tree;evolutionary-algorithm;polynomial-model;fitness-function
+- Existing Tags : scibasic;genetic-programming;symbolic-regression;expression-tree;evolutionary-algorithm
 
 ## Namespaces
 - evolution  [files: 11]

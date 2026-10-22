@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Imaging.AVIMedia
 - TargetFramework: net10.0
 - Source files  : 13
-- Existing Title: AVI Video Encoder With MJPEG Compression
-- Existing Desc : A dependency-free AVI (RIFF) writer that compresses rendered animation frames into MJPEG or uncompressed DIB video streams, with per-stream codec selection, configurable JPEG quality and no external codec dependency. Ideal for exporting rendered animation frames from the sciBASIC# imaging pipeline.
-- Existing Tags : scibasic;avi;video-encoder;riff;animation;mjpeg;bitmap;frame-stream
+- Existing Title: AVI Video Encoder with MJPEG and Uncompressed DIB Codecs
+- Existing Desc : A dependency-free AVI (RIFF) video writer for sciBASIC#: assembles main and stream headers to export rendered animation frames as MJPEG or uncompressed 32-bit DIB streams, with per-stream codec selection and configurable JPEG quality and no external codec dependency.
+- Existing Tags : scibasic;avi;video-encoder;riff;mjpeg;animation;frame-stream
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Imaging.AVIMedia)

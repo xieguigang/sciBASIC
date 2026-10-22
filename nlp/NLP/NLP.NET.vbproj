@@ -24,7 +24,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;nlp;tokenizer;chinese-tokenizer;bm25;lda;tf-idf</PackageTags>
-    <PackageReleaseNotes>Added a HuggingFace compatible tokenizer pipeline with BPE, WordPiece and Unigram models plus a BM25 ranked retrieval engine.</PackageReleaseNotes>
+    <PackageReleaseNotes>Optimises the Gibbs-sampled LDA implementation with partitioned sampling and a dedicated random source, and adds a benchmark.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

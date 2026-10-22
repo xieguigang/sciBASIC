@@ -6,7 +6,7 @@
 - Source files  : 23
 - Existing Title: Hidden Markov Model Training and Decoding Algorithms
 - Existing Desc : Implements hidden Markov models and Markov chains with forward, backward, Viterbi, Bayes and Baum-Welch EM algorithms, so you can score, decode and re-estimate state sequences from observation chains in sciBASIC#.
-- Existing Tags : scibasic;hidden-markov-model;viterbi;baum-welch;forward-backward;markov-chain;sequence-decoding
+- Existing Tags : scibasic;hidden-markov-model;viterbi;baum-welch;markov-chain
 
 ## Namespaces
 - Algorithm  [files: 3]

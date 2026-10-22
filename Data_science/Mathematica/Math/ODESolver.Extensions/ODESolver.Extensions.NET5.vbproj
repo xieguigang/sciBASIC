@@ -21,7 +21,7 @@
 		<Title>ODE Solver Extensions: Result Export and Correlation Analysis</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Math.ODEsSolver.Extensions</AssemblyTitle>
 		<PackageTags>scibasic;ode-solver;data-frame;correlation;csv-export;pearson</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adapts the solver extensions to the rewritten ODE solver core.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IncludeSymbols>True</IncludeSymbols>

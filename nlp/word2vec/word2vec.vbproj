@@ -35,7 +35,7 @@
     <Description>Trains word embeddings for sciBASIC#: a multi-threaded Word2Vec using skip-gram and CBOW over Huffman trees, a fluent factory for vector size, window and sampling, plus vector models for similarity and analogy queries.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.Data.NLP.Word2Vec</AssemblyTitle>
     <PackageTags>scibasic;word2vec;word-embedding;skip-gram;machine-learning</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageIcon>logo-knot.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>

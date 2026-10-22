@@ -24,7 +24,7 @@
 		<Description>A deep learning toolkit for sciBASIC#: trainable convolutional networks with SGD, AdaGrad and Adam trainers, a CeNiN CNN reader for image inference, character-level RNNs, a hand-written Transformer encoder-decoder with explicit backward passes, and general feed-forward neural networks.</Description>
 		<AssemblyTitle>Microsoft.VisualBasic.DeepLearning</AssemblyTitle>
 		<PackageTags>scibasic;deep-learning;cnn;rnn;transformer;attention;neural-network</PackageTags>
-    <PackageReleaseNotes>Reworks the feed-forward network onto a unified CNN compute kernel and adds an explicit backward-pass Transformer with Adam optimization.</PackageReleaseNotes>
+    <PackageReleaseNotes>Migrates the recurrent and convolutional layers onto the shared tensor stack, reworks the Transformer optimizer and removes the duplicated RNN matrix helpers.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

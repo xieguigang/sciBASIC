@@ -6,7 +6,7 @@
 - Source files  : 6
 - Existing Title: Machine Learning Dataset Storage: DataPack, MNIST and DataFrame Import
 - Existing Desc : Dataset persistence layer for sciBASIC# machine learning: imports a data frame into a normalised sample dataset, reads MNIST IDX image and label files, and packs large sample collections into streamable HDSPack archives.
-- Existing Tags : scibasic;machine-learning;dataset;mnist;idx;data-storage;hdspack;archive
+- Existing Tags : scibasic;machine-learning;dataset;mnist;data-storage
 
 ## Namespaces
 - DataPack  [files: 3]

@@ -4,9 +4,9 @@
 - AssemblyName  : Microsoft.VisualBasic.Data.DataPlot
 - TargetFramework: net10.0
 - Source files  : 134
-- Existing Title: DataPlot: GDI+ Chart Engine with ggplot2-Style Theme Units
-- Existing Desc : Standalone GDI+ charting engine for sciBASIC#: scatter (bubble/error-bar/jitter/hull), line, area, bar (grouped/stacked/percent/diverging/color-scale), histogram, box, violin, jitter, pie, radar, rose, pyramid, venn, contour, density, heatmap, cluster heatmap, correlation matrix, bubble heatmap, z-score, ROC, QQ, forest, PCA, Manhattan, regression, time trends and treemap plots rendered onto a bitmap with ggplot2-style theme units and automatic pixel layout.
-- Existing Tags : scibasic;dataplot;chart;plotting;gdi-plus;ggplot-theme;data-visualization;boxplot;violin-plot;heatmap;sankey;treemap;contour;venn;roc-curve;qq-plot;forest-plot;pca-plot;manhattan-plot;correlation-matrix
+- Existing Title: GDI+ Chart Engine with ggplot2-Style Themes and 3D Plots
+- Existing Desc : A standalone GDI+ charting engine for sciBASIC#: scatter, line, bar, box, violin, heatmap, contour, Sankey, chord, treemap and venn plots plus statistics charts such as ROC, QQ, forest, PCA and Manhattan, rendered with ggplot2-style theme units and automatic pixel layout.
+- Existing Tags : scibasic;chart;plotting;ggplot-theme;gdi-plus;heatmap;sankey
 
 ## Namespaces
 - Canvas  [files: 21]

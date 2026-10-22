@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 31
 - Existing Title: netCDF Scientific Array Data File Reader and Writer
-- Existing Desc : Reads and writes netCDF files for array oriented scientific data, handling dimensions, the record dimension, global and variable attributes, and typed data vectors over byte, char, short, integer, long, float and double.
-- Existing Tags : scibasic;netcdf;scientific-data;array-data;dimensions;variables;record-dimension;reader
+- Existing Desc : Reads and writes netCDF files for array oriented scientific data, handling dimensions, record dimensions, global and variable attributes, and typed data vectors over byte, short, integer, float and double.
+- Existing Tags : scibasic;netcdf;scientific-data;array-data;dimensions;variables
 
 ## Namespaces
 - Components  [files: 9]

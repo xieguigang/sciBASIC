@@ -714,6 +714,68 @@ Public NotInheritable Class Program
     End Sub
 End Class
 
+''' <summary>How an <see cref="ImportStmt"/> binds its source.</summary>
+Public Enum ImportKind
+    ''' <summary><c>import Foo.Bar as ns from 'x.dll'</c> — public types of a CLR namespace.</summary>
+    ClrNamespace
+    ''' <summary><c>import * as ns from './m.js'</c> — the module's top-level bindings.</summary>
+    NamespaceObject
+    ''' <summary><c>import x from './m.js'</c> — without <c>export</c> support this is the module object.</summary>
+    DefaultAlias
+    ''' <summary><c>import {a, b as c} from './m.js'</c>.</summary>
+    NamedBindings
+    ''' <summary><c>import './m.js'</c> — run the module for its side effects only.</summary>
+    SideEffect
+End Enum
+
+''' <summary>One <c>imported as local</c> pair of an import list.</summary>
+Public NotInheritable Class ImportBinding
+
+    ''' <summary>Name exported by the module (a top-level declaration).</summary>
+    Public ReadOnly Imported As String
+    ''' <summary>Name bound in this script.</summary>
+    Public ReadOnly Local As String
+
+    Public Sub New(imported As String, local As String)
+        Me.Imported = imported
+        Me.Local = local
+    End Sub
+End Class
+
+''' <summary>
+''' An import declaration — either the public types of a CLR namespace reached through
+''' an assembly (<c>from 'x.dll'</c>) or a JavaScript module (<c>from './m.js'</c>).
+''' <para>
+''' Imports are only valid at the top level and are evaluated before the body runs, by
+''' the interpreter and by generated code alike (see <c>JsRuntime.Import*</c>).
+''' </para>
+''' </summary>
+Public NotInheritable Class ImportStmt
+    Inherits Statement
+
+    Public ReadOnly Kind As ImportKind
+    ''' <summary>Dotted CLR namespace (<see cref="ImportKind.ClrNamespace"/> only).</summary>
+    Public ReadOnly NamespaceName As String
+    ''' <summary>
+    ''' Binding name for <see cref="ImportKind.ClrNamespace"/>,
+    ''' <see cref="ImportKind.NamespaceObject"/> and <see cref="ImportKind.DefaultAlias"/>.
+    ''' </summary>
+    Public ReadOnly AliasName As String
+    ''' <summary>Imported/local pairs (<see cref="ImportKind.NamedBindings"/> only).</summary>
+    Public ReadOnly Bindings As List(Of ImportBinding)
+    ''' <summary>The <c>from</c> specifier: an assembly name/path or a module path.</summary>
+    Public ReadOnly Specifier As String
+
+    Public Sub New(kind As ImportKind, specifier As String, namespaceName As String,
+                   [alias] As String, bindings As List(Of ImportBinding))
+        Me.Kind = kind
+        Me.Specifier = specifier
+        Me.NamespaceName = namespaceName
+        Me.AliasName = [alias]
+        Me.Bindings = bindings
+    End Sub
+End Class
+
 Public NotInheritable Class BlockStmt
     Inherits Statement
 

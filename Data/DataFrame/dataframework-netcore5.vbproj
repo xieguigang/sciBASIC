@@ -31,7 +31,7 @@
     <Title>Tabular Data Frame and CSV/ARFF Storage Provider Framework</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Data.Framework</AssemblyTitle>
     <PackageTags>scibasic;dataframe;csv;arff;storage-provider;tabular-data</PackageTags>
-    <PackageReleaseNotes>Adds NumericTable conversions with lossless DataFrame round trips, fast numeric CSV/TSV loading and a numeric table self-test smoke runner.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

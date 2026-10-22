@@ -6,7 +6,7 @@
 - Source files  : 22
 - Existing Title: Dynamic Programming Sequence Alignment and Knapsack Solvers
 - Existing Desc : Dynamic programming kernels for sciBASIC#, including Needleman-Wunsch global alignment, Smith-Waterman local alignment with HSP chaining, k-banded search, center star multiple alignment and the 0-1 knapsack solver.
-- Existing Tags : scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch;knapsack;hsp-chaining;multiple-alignment
+- Existing Tags : scibasic;dynamic-programming;sequence-alignment;smith-waterman;needleman-wunsch
 
 ## Namespaces
 - Knapsack  [files: 4]

@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic.MIME.Office.WordDocument
 - AssemblyName  : Microsoft.VisualBasic.MIME.Office.WordDocument
 - TargetFramework: net10.0
-- Source files  : 11
+- Source files  : 12
 - Existing Title: DOCX Word Document Generator and Text Extractor
 - Existing Desc : Generates Office Word documents in sciBASIC#: a fluent writer builds document titles, headings H1-H6, paragraphs, tables, images, lists, code blocks and a table of contents, packs them into a .docx package, and extracts plain text back out.
-- Existing Tags : scibasic;docx;word;office-openxml;document-generation;word-document;text-extraction
+- Existing Tags : scibasic;docx;word;office-openxml;document-generation;text-extraction
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MIME.Office.WordDocument)
@@ -24,6 +24,7 @@
 - Class HeaderFooterPart (WordDocument.vb)
 - Class SectionDef (WordDocument.vb) - 节属性定义。每个节可独立设置奇偶页页眉与页脚页码格式； sectPr 位于节末（段落级 sectPr 或文档末尾的 body 级 sectPr）。
 - Class ImageEntry (WordDocument.vb)
+- Class WordRender (WordRender.vb) - word 报告渲染器：将 markdown 内容块（<see cref="Block"/>）渲染为 microsoft office word 文档，是 <see cref="ReportRender"/> 在二进制文档格式上的实现。 通过 <see cref="Theme"/> 属性可以套用 <see cref="ThesisFormatting"/> 等版式主题。
 - Class TableStyle (WordStyle\TableStyle.vb) - Word 表格样式。
 - Class WordColors (WordStyle\WordColors.vb) - 常用颜色常量（使用 OOXML 的 6 位十六进制 RGB 格式）。
 - Class WordStyle (WordStyle\WordStyle.vb) - Word 文档文字样式。 控制字体名称、字号、粗体/斜体/下划线、前景色/背景色、对齐方式、行间距等。
@@ -89,12 +90,12 @@
 - Public Property RelId As String
 - Public Property Extension As String
 - Public Property Data As Byte()
-- ... and 110 more
+- ... and 126 more
 
 ## Imports
 - ImageDimensions = System.Drawing.Size
+- Microsoft.VisualBasic.ApplicationServices.Report
 - Microsoft.VisualBasic.MIME.application.xml.MathML
-- Microsoft.VisualBasic.MIME.text.markdown
 - std = System.Math
 - System.Drawing
 - System.Globalization
@@ -111,6 +112,7 @@
 - OMML.vb
 - ThesisFormatting.vb
 - WordDocument.vb
+- WordRender.vb
 - WordStyle\TableStyle.vb
 - WordStyle\WordColors.vb
 - WordStyle\WordStyle.vb

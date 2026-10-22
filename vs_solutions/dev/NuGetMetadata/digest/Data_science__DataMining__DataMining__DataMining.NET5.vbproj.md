@@ -3,13 +3,14 @@
 - RootNamespace : Microsoft.VisualBasic.DataMining
 - AssemblyName  : Microsoft.VisualBasic.DataMining.Framework
 - TargetFramework: net10.0
-- Source files  : 147
-- Existing Title: Core Data Mining Toolkit: Clustering, Association Rules and Evaluation
-- Existing Desc : Data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, decision trees, self-organizing maps and ROC or AUC model evaluation.
-- Existing Tags : scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;decision-tree;association-rules;model-evaluation
+- Source files  : 159
+- Existing Title: Data Mining Toolkit: Clustering, Association Rules and Evaluation
+- Existing Desc : A data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means, spectral and Hamming distance clustering with k-modes, a bitmap indexed Apriori engine for closed and maximal association rules, ID3 decision trees, self-organizing maps, plus a unified evaluation framework with ROC/AUC curves and clustering quality indices.
+- Existing Tags : scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;hamming;kmodes
 
 ## Namespaces
 - AprioriRules  [files: 5]
+- AprioriRules.Engine  [files: 4]
 - AprioriRules.Entities  [files: 5]
 - AprioriRules.Impl  [files: 3]
 - Clustering  [files: 8]
@@ -24,8 +25,9 @@
 - DecisionTree  [files: 6]
 - DecisionTree.Data  [files: 4]
 - DFL_Driver  [files: 3]
-- Evaluation  [files: 19]
+- Evaluation  [files: 21]
 - FuzzyCMeans  [files: 6]
+- Hamming  [files: 8]
 - HDBSCAN.Distance  [files: 8]
 - HDBSCAN.Hdbscanstar  [files: 7]
 - HDBSCAN.Runner  [files: 4]
@@ -36,6 +38,11 @@
 - Lloyds  [files: 4]
 
 ## Public types
+- Class AprioriEngine (AprioriRules\Algorithm\Engine\AprioriEngine.vb) - Apriori 高性能引擎：分层候选生成 + 位图支持度计数 + 反查式闭/极大项集 与原实现的结果完全一致（频繁项集及其支持度、闭项集、极大项集、强规则四个集合）， 差别只在于把每一处「逐事务线性 Contains」都换成了位运算或者归并联查。
+- Class IntSetComparer (AprioriRules\Algorithm\Engine\ItemSetKeys.vb) - 引擎内部的项集一律表示为「内部 id 升序排列的 <see cref="Integer"/> 数组」， 因此放进字典或者哈希集合的时候必须配套使用这个结构化比较器， 否则会退化成引用比较（同一个项集的两份副本会被当成两个不同的键）。
+- Module IntSetKeys (AprioriRules\Algorithm\Engine\ItemSetKeys.vb) - 内部项集容器的构造器助手
+- Class RuleMiner (AprioriRules\Algorithm\Engine\RuleMiner.vb) - 原实现为每个频繁项集枚举全部「大小不超过 k/2 的前件」，为其中每一个都构造 <see cref="Rule"/>（连带两个 <see cref="ItemSet"/>）塞进 <see cref="HashSet(Of T)"/> 去重， 最后才按 min_confidence 过滤掉绝大多数。这里改成：
+- Class TransactionIndex (AprioriRules\Algorithm\Engine\TransactionIndex.vb) - 这一层负责把外部表示（<see cref="Item"/> / <see cref="ItemSet"/>）转换成适合高频计数的内部表示： 1. 外部 <see cref="Item.Code"/> 映射为紧凑的内部 id（0..d-1，按 Code 升序， 这样内部的字典序与 <see cref="Encoding"/> 的字符串序完全一致）；
 - Module Apriori (AprioriRules\Algorithm\Implementation\Apriori.vb)
 - Module NamespaceDoc (AprioriRules\Algorithm\Implementation\NamespaceDoc.vb) - The internal implementation of the Apriori association rule algorithm.
 - Module StrongRules (AprioriRules\Algorithm\Implementation\StrongRules.vb)
@@ -72,6 +79,21 @@
 - Class CMeansEngine (Clustering\FuzzyCMeans\CMeansEngine.vb) - 基于数值行（``Double()``）的模糊 C 均值聚类引擎。 该引擎直接消费<see cref="NumericTable"/>的特征矩阵，不再依赖 <see cref="ComponentModel.EntityModels.ClusterEntity"/> 实体对象，
 - Class FuzzyCMeansEntity (Clustering\FuzzyCMeans\Entity.vb) - A numeric vector object that tagged with the fuzzy cmeans cluster membership values
 - Module NamespaceDoc (Clustering\FuzzyCMeans\NamespaceDoc.vb) - Fuzzy C-Means clustering.
+- Class HammingClusteringEngine (Clustering\Hamming\HammingClustering.vb) - 既拟合训练集、又能还原潜在的布尔函数。核心步骤： 1. **按类聚合**：把属于同一类别的输入模式归到一起； 2. **簇生成**：在每个类别内部，把彼此 Hamming 距离不超过 ``theta``
+- Module HammingDistance (Clustering\Hamming\HammingDistance.vb)
+- Class HammingData (Clustering\Hamming\HammingEncoder.vb) - Hamming 聚类的统一中间表示：把位串 / 类别行 / 数值行统一编码成 从 0 开始的类别码矩阵，并记录每一列（特征）的取值基数。 所有取值都可以用类别码表示之后，距离计算就退化为「同位置取值是否相同」
+- Module HammingEncoder (Clustering\Hamming\HammingEncoder.vb) - 把外部的各种输入形式统一编码成 <see cref="HammingData"/>。
+- Module HammingTableExtensions (Clustering\Hamming\HammingTableExtensions.vb)
+- Enum KmodesInitialization (Clustering\Hamming\Kmodes.vb) - k-modes 的初始中心选取策略。
+- Class KmodesResult (Clustering\Hamming\Kmodes.vb) - k-modes 聚类的计算结果。 标签为 **0 基**（``0 .. k-1``），表扩展层（ <see cref="HammingTableExtensions.hammingCluster"/>) 会统一加 1 变成
+- Class KmodesEngine (Clustering\Hamming\Kmodes.vb) - 用簇内「众数」（逐位多数表决）替代均值作为质心。 标准流程： 1. 初始化：随机或 k-modes++ 选取 k 个样本作为初始质心；
+- Module NamespaceDoc (Clustering\Hamming\NamespaceDoc.vb) - 用 Hamming 距离替代欧氏距离、用逐位众数替代均值作为质心； - <see cref="HammingClusteringEngine"/>（路线 B）：Muselli–Liberati 的监督式 规则提取，输出仅由 AND / OR / NOT 构成的可解释布尔判别网络。
+- Structure Literal (Clustering\Hamming\Rules.vb) - 合取项中的一个字面量：把某一位（特征）固定成指定的二进制取值。 例如 ``x1`` 表示「第 1 位必须为 1」，``¬x1`` 表示「第 1 位必须为 0」。
+- Class ConjunctionRule (Clustering\Hamming\Rules.vb) - 一条合取规则（AND 项）：当所有字面量都满足时规则命中。 空字面量集合表示「恒真」，只会出现在单类别数据或者无法进一步泛化的场景中。
+- Class ClassRule (Clustering\Hamming\Rules.vb) - 某一个类别的判别函数：由若干条合取规则以 OR 合并而成（DNF）。
+- Class RuleSet (Clustering\Hamming\Rules.vb) - Hamming 聚类（Muselli–Liberati 监督式规则提取）的输出：一组可读的布尔规则。 每一条规则都是「若干位的取值固定」的合取项，同一类别的多条规则以 OR 合并， 因此整个模型等价于一个只含 AND / OR / NOT 门的两级逻辑网络。
+- Class ClassReport (Clustering\Hamming\Rules.vb) - 单个类别的精度统计。
+- Class RuleSetReport (Clustering\Hamming\Rules.vb) - 规则集合在训练集上的精度报告。
 - Class CosineSimilarity (Clustering\HDBSCAN\Distance\CosineSimilarity.vb) - Computes cosine similarity between two points, d = 1 - ((X*Y) / (||X||*||Y||))
 - Interface IDistanceCalculator (Clustering\HDBSCAN\Distance\DistanceCalculator.vb) - An interface for classes which compute the distance between two points (where points are represented as arrays of doubles).
 - Class EuclideanDistance (Clustering\HDBSCAN\Distance\EuclideanDistance.vb) - Computes the euclidean distance between two points, d = sqrt((x1-y1)^2 + (x2-y2)^2 + ... + (xn-yn)^2).
@@ -136,30 +158,32 @@
 - Module NamespaceDoc (ComponentModel\Normalizer\NamespaceDoc.vb) - Data normalization used when preparing machine learning features.
 - Module Normalizations (ComponentModel\Normalizer\Normalizations.vb)
 - Class Standardizer (ComponentModel\Normalizer\Standardizer.vb) - 每维度特征的 z-score 标准化器。 训练阶段按特征维计算均值/标准差，推理阶段复用同一套参数， 解决各维度特征量纲差异大导致的梯度不稳定问题。
-- Module NamespaceDoc (ComponentModel\Serialization\NamespaceDoc.vb) - Serialization of the data mining component models.
-- Class TraceBackIterator (ComponentModel\TraceBackIterator.vb) - A helper module for record the clustering traceback information for run algorithm debug
-- Module Algorithm (DecisionTree\Algorithm.vb) - Algorithm module for train a new decision tree model
-- Class Attributes (DecisionTree\Attributes.vb) - Node attribute value
-- Class Entity (DecisionTree\DataModels\DataModels.vb) - A row in data table.(分类用的对象实例) 属性向量<see cref="Entity.entityVector"/>的最后一个值总是用来表示<see cref="Entity.decisions"/>结果值
-- Class ClassifyResult (DecisionTree\DataModels\DataModels.vb)
-- Class DataTable (DecisionTree\DataModels\DataTable.vb) - 训练集样本数据表
-- Module NamespaceDoc (DecisionTree\DataModels\NamespaceDoc.vb) - Data models used by the decision tree learner.
-- Module NamespaceDoc (DecisionTree\NamespaceDoc.vb) - Decision tree learning: tree construction and the decision tree model.
-- Class Tree (DecisionTree\Tree.vb) - Implementation of the ID3 to create a decision tree > https://github.com/WolfgangOfner/DecisionTree
-- Class TreeNode (DecisionTree\TreeNode.vb)
-- Module VisualDebugger (DecisionTree\VisualDebugger.vb) - Display debug info on console
-- Module ClusteringIndices (Evaluation\ClusteringIndices.vb) - 聚类质量指标的**唯一实现**。 输入统一为「行主序特征矩阵 + 整数簇标签」，不依赖任何具体的聚类算法模型 （避免耦合已经标记为 ``Obsolete`` 的 ``ClusterEntity`` / ``KMeans.Bisecting.Cluster``）。
-- Enum ResultKinds (Evaluation\EvaluationReport.vb) - 评估结果数据的形式（对应统一评估框架所支持的三类结果）。
-- Interface IEvaluationResult (Evaluation\EvaluationReport.vb) - 统一评估框架的输入契约：任何可被评估的结果数据都需要声明自己的种类与名字。
-- Interface IRocResult (Evaluation\EvaluationReport.vb) - 能够产生 ROC 曲线的结果数据（分类与回归结果）。
-- Class EvaluationReport (Evaluation\EvaluationReport.vb) - 统一评估报告：一个结果数据在统一框架之下计算出的全部指标。
-- Class ChangePoint (Evaluation\LabelEvaluate\ChangePoint.vb)
-- Module FakeAUCGenerator (Evaluation\LabelEvaluate\FakeAUCGenerator.vb)
-- Class PerformanceEvaluator (Evaluation\LabelEvaluate\PerformanceEvaluator.vb)
-- ... and 36 more
+- ... and 58 more
 
 ## Notable public members
+- Public Shared Function Create(items As IEnumerable(Of Item),
+- Friend Function Run() As Output
+- Public Overloads Function GetHashCode(a As Integer()) As Integer Implements IEqualityComparer(Of Integer()).GetHashCode
+- Public Overloads Function Equals(a As Integer(), b As Integer()) As Boolean Implements IEqualityComparer(Of Integer()).Equals
+- Public Function NewSupportTable() As Dictionary(Of Integer(), Integer)
+- Public Function NewSetTable(Of T)() As Dictionary(Of Integer(), T)
+- Public Function NewSetHash() As HashSet(Of Integer())
+- Public Function NewArray(Of T)(n As Integer) As T()
+- Friend Function Mine(levels As List(Of Integer()()), levelSupports As List(Of Integer())) As List(Of Rule)
+- Friend ReadOnly Property TransactionCount As Integer
+- Friend ReadOnly Property MaxLevel As Integer
+- Friend ReadOnly Property UsesBitIndex As Boolean
+- Friend Function ItemOf(id As Integer) As Item
+- Friend Function L1Support(id As Integer) As Integer
+- Friend Function WordsForLevel(level As Integer) As Integer
+- Friend Function GetL1() As Integer()
+- Friend Function BuildBitIndex(frequentIds As Integer(), budgetMB As Integer) As Boolean
+- Friend Sub BuildPrefixMask(buf As ULong(), prefixIds As Integer(), words As Integer)
+- Friend Function CountWithPrefix(prefix As ULong(), a As Integer, b As Integer, words As Integer) As Integer
+- Friend Function CountPair(baseId As Integer, otherId As Integer, words As Integer) As Integer
+- Friend Function CountHorizontal(cand As Integer(), level As Integer) As Integer
 - Public Function GetAssociateRules(<Parameter("Support.Min")> minSupport#,
+- Public Function GetAssociateRulesReference(<Parameter("Support.Min")> minSupport#,
 - Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As IEnumerable(Of TransactionTokensItem)
 - Public Function GetSupport(generatedCandidate As ItemSet, transactionsList As IEnumerable(Of ItemSet)) As Double
 - Public Function CheckIsSubset(child As ItemSet, parent As ItemSet) As Boolean
@@ -197,29 +221,7 @@
 - Public Property TransactionSize As Integer
 - Public Overrides Function ToString() As String
 - Public ReadOnly Property SupportXY As Double
-- Public ReadOnly Property SupportX As Double
-- Public ReadOnly Property length As Integer
-- Public Sub New(combination As ItemSet, remaining As ItemSet, confidence#, supports As (XY#, X#))
-- Public Overrides Function ToString() As String
-- Public Function CompareTo(other As Rule) As Integer Implements IComparable(Of Rule).CompareTo
-- Public Overrides Function GetHashCode() As Integer
-- Public Overrides Function Equals(obj As Object) As Boolean
-- Public Property Name As String
-- Public Property Items As String()
-- Public Overrides Function ToString() As String
-- Public Function BuildTransactions(data As IEnumerable(Of NamedValue(Of String()))) As IEnumerable(Of Transaction)
-- Public Function AllItems(transactions As IEnumerable(Of Transaction)) As IEnumerable(Of String)
-- Public Property Name() As ItemSet
-- Public Property Support() As Double
-- Public Overrides Function ToString() As String
-- Public Function CompareTo(other As TransactionTokensItem) As Integer Implements IComparable(Of TransactionTokensItem).CompareTo
-- Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of Item), transactions As ItemSet()) As Output
-- Public Function AnalysisTransactions(transactions As IEnumerable(Of ItemSet),
-- Public Function AnalysisTransactions(transactions As IEnumerable(Of Transaction),
-- Public ReadOnly Property CodeMappings As IReadOnlyDictionary(Of Integer, String)
-- Public ReadOnly Property AllItems As Item()
-- Public Function Encoding(item As String) As Item
-- ... and 586 more
+- ... and 725 more
 
 ## Imports
 - ASCII = Microsoft.VisualBasic.Text.ASCII
@@ -239,6 +241,7 @@
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 - Microsoft.VisualBasic.ComponentModel.Ranges.Model
 - Microsoft.VisualBasic.Data
+- Microsoft.VisualBasic.DataMining.AprioriRules.Engine
 - Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 - Microsoft.VisualBasic.DataMining.AprioriRules.Impl
 - Microsoft.VisualBasic.DataMining.Clustering
@@ -246,9 +249,12 @@
 - Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 - Microsoft.VisualBasic.DataMining.ComponentModel.EntityModels
 - Microsoft.VisualBasic.DataMining.DBSCAN
-- Microsoft.VisualBasic.DataMining.DecisionTree.Data
 
 ## File tree
+- AprioriRules\Algorithm\Engine\AprioriEngine.vb
+- AprioriRules\Algorithm\Engine\ItemSetKeys.vb
+- AprioriRules\Algorithm\Engine\RuleMiner.vb
+- AprioriRules\Algorithm\Engine\TransactionIndex.vb
 - AprioriRules\Algorithm\Implementation\Apriori.vb
 - AprioriRules\Algorithm\Implementation\NamespaceDoc.vb
 - AprioriRules\Algorithm\Implementation\StrongRules.vb
@@ -280,6 +286,14 @@
 - Clustering\FuzzyCMeans\CMeansEngine.vb
 - Clustering\FuzzyCMeans\Entity.vb
 - Clustering\FuzzyCMeans\NamespaceDoc.vb
+- Clustering\Hamming\BitPattern.vb
+- Clustering\Hamming\HammingClustering.vb
+- Clustering\Hamming\HammingDistance.vb
+- Clustering\Hamming\HammingEncoder.vb
+- Clustering\Hamming\HammingTableExtensions.vb
+- Clustering\Hamming\Kmodes.vb
+- Clustering\Hamming\NamespaceDoc.vb
+- Clustering\Hamming\Rules.vb
 - Clustering\HDBSCAN\Distance\CosineSimilarity.vb
 - Clustering\HDBSCAN\Distance\DistanceCalculator.vb
 - Clustering\HDBSCAN\Distance\EuclideanDistance.vb
@@ -387,13 +401,5 @@
 - Kernel\Bayesian.vb
 - Kernel\BayesianBeliefNetwork\BeliefNetwork.vb
 - Kernel\BayesianBeliefNetwork\BNInfer.vb
-- Kernel\BayesianBeliefNetwork\NamespaceDoc.vb
-- Kernel\NamespaceDoc.vb
-- Kernel\Neuron\Neuron.vb
-- Kernel\Neuron\NeuronEntity.vb
-- MarginalLikelihoodAnalysis.vb
-- NamespaceDoc.vb
-- SelfOrganizingMap.vb
-- Statistics.vb
-- ValueMapping.vb
+- ... and 9 more files
 

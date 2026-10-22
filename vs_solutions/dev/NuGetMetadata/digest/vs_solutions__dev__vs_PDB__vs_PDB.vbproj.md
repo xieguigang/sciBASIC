@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 19
 - Existing Title: PDB Debug Symbol File Reader For Classic And Portable Formats
-- Existing Desc : Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and CodeView type records into one uniform model, with GitHub URL rebasing, for sciBASIC# tooling.
-- Existing Tags : scibasic;pdb;debug-symbols;portable-pdb;msf;codeview;source-mapping;stack-trace
+- Existing Desc : Reads both classic MSF and Portable PDB debug symbol files, decoding source documents, sequence points, line numbers, public symbols and type records into one uniform model for sciBASIC# tooling.
+- Existing Tags : scibasic;pdb;debug-symbols;portable-pdb;source-mapping
 
 ## Namespaces
 - Models  [files: 6]

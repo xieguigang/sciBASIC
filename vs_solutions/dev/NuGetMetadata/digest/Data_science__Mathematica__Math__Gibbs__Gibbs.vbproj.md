@@ -6,7 +6,7 @@
 - Source files  : 4
 - Existing Title: Gibbs Sampling and Metropolis-Hastings Samplers
 - Existing Desc : Gibbs sampling for repeated motif discovery in biological sequences, plus a Metropolis-Hastings sampler over Markov bases for contingency table and chi-square analysis. Part of the sciBASIC# statistics stack.
-- Existing Tags : scibasic;gibbs-sampling;metropolis-hastings;mcmc;motif-finding;markov-basis;contingency-table
+- Existing Tags : scibasic;gibbs-sampling;metropolis-hastings;motif-finding;markov-chain;mcmc
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Math.GibbsSampling)

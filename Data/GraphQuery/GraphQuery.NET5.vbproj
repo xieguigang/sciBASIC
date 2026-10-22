@@ -14,7 +14,7 @@
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;graph-query;html;css-selector;xpath;json</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <OutputType>Library</OutputType>
     <StartupObject></StartupObject>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

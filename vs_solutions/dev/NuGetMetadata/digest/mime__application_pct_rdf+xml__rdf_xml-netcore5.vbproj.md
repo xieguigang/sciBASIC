@@ -6,7 +6,7 @@
 - Source files  : 14
 - Existing Title: RDF/XML and Turtle Triple Serialization Model
 - Existing Desc : Supports the application/rdf+xml MIME type for sciBASIC#: XML serialization models for RDF descriptions, bags and DCMI metadata, plus an RDF 1.1 Turtle parser that streams subject-predicate-object triples and re-materializes them as RDF entities.
-- Existing Tags : scibasic;rdf;rdf-xml;turtle;semantic-web;linked-data;dublin-core;dcmi
+- Existing Tags : scibasic;rdf;rdf-xml;turtle;semantic-web;dublin-core;dcmi
 
 ## Namespaces
 - Turtle  [files: 5]

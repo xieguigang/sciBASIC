@@ -21,7 +21,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;visual-studio;solution-parser;slnx;code-analysis;il-decompiler;source-map</PackageTags>
-    <PackageReleaseNotes>Added an IL decompiler with control flow graph, SSA construction and structured syntax recovery, plus .slnx solution support.</PackageReleaseNotes>
+    <PackageReleaseNotes>Extends the VB project object collection model and hardens project build output resolution.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>logo-knot.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

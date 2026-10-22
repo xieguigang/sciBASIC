@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic.MIME.application.pdf
 - AssemblyName  : Microsoft.VisualBasic.MIME.application.pdf
 - TargetFramework: net10.0
-- Source files  : 17
+- Source files  : 18
 - Existing Title: PDF Document Reader, Text Extractor and Writer Library
-- Existing Desc : Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text through ToUnicode CMaps, while a streaming generator lays out headings, text, tables and images via the shared IDocumentWriter contract.
-- Existing Tags : scibasic;pdf;pdf-reader;text-extraction;pdf-writer;document-generation;flate-decode
+- Existing Desc : Reads and writes PDF files for sciBASIC#: a low-level reader resolves xref tables, object streams and filters to extract page text via ToUnicode CMaps, while a streaming generator lays out text, tables and images.
+- Existing Tags : scibasic;pdf;pdf-reader;text-extraction;pdf-writer
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.MIME.application.pdf)
@@ -45,6 +45,7 @@
 - Class PdfImageXObject (PdfWriter\PdfImageXObject.vb) - 图片 XObject 编码与缓存管理。
 - Class PdfRenderResult (PdfWriter\PdfLayoutEngine.vb)
 - Class PdfLayoutEngine (PdfWriter\PdfLayoutEngine.vb)
+- Class PdfRender (PdfWriter\PdfRender.vb) - PDF 报告渲染器：把 markdown 内容块（<see cref="Block"/>）渲染为 PDF 文档， 是 <see cref="ReportRender"/> 在 PDF 二进制文档格式上的实现。 文档题目与目录会在文档第一次被访问（<see cref="Render"/>、<see cref="Save"/> 或读取
 - Structure PdfWriteMeta (PdfWriter\PdfWriter.vb)
 - Class PdfWriter (PdfWriter\PdfWriter.vb)
 
@@ -109,12 +110,12 @@
 - Public Function ToStroke() As String
 - Public Property Author As String = "" Implements IDocumentWriter.Author
 - Public Property Title As String = "" Implements IDocumentWriter.Title
-- ... and 54 more
+- ... and 68 more
 
 ## Imports
+- Microsoft.VisualBasic.ApplicationServices.Report
 - Microsoft.VisualBasic.FileIO
 - Microsoft.VisualBasic.MIME.Office.WordDocument
-- Microsoft.VisualBasic.MIME.text.markdown
 - std = System.Math
 - System.Globalization
 - System.IO
@@ -140,6 +141,7 @@
 - PdfWriter\PdfFontResource.vb
 - PdfWriter\PdfImageXObject.vb
 - PdfWriter\PdfLayoutEngine.vb
+- PdfWriter\PdfRender.vb
 - PdfWriter\PdfWriter.vb
 - Properties\AssemblyInfo.vb
 

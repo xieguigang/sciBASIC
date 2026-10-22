@@ -18,12 +18,12 @@
     <Version>10.7.9791.26955</Version>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
     <Title>Data Mining Toolkit: Clustering, Association Rules and Evaluation</Title>
-    <Description>A data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means and spectral clustering, Apriori association rules, ID3 decision trees, self-organizing maps, plus a unified evaluation framework with ROC/AUC curves and clustering quality indices.</Description>
+    <Description>A data mining library for sciBASIC#: K-means, DBSCAN, HDBSCAN, fuzzy C-means, spectral and Hamming distance clustering with k-modes, a bitmap indexed Apriori engine for closed and maximal association rules, ID3 decision trees, self-organizing maps, plus a unified evaluation framework with ROC/AUC curves and clustering quality indices.</Description>
     <AssemblyTitle>Microsoft.VisualBasic.DataMining</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;data-mining;clustering;kmeans;dbscan;hdbscan;apriori;hamming;kmodes</PackageTags>
-    <PackageReleaseNotes>Introduces NumericTable-based clustering engines and a unified evaluation report framework with clustering quality indices decoupled from legacy entity models.</PackageReleaseNotes>
+    <PackageReleaseNotes>Rewrites the Apriori engine with bitmap transaction indexing, grouped candidate generation and ap-genrules based rule mining, and adds Hamming distance clustering with bit patterns, encoder, k-modes and rule extraction.</PackageReleaseNotes>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>

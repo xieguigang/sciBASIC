@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 105
 - Existing Title: Classical Machine Learning: Random Forest, SVM, GA and Q-Learning
-- Existing Desc : Classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port, genetic algorithms and differential evolution, Q-learning tables, activation functions and normalised sample datasets.
-- Existing Tags : scibasic;machine-learning;random-forest;svm;libsvm;genetic-algorithm;differential-evolution;q-learning;reinforcement-learning
+- Existing Desc : A classical machine learning library for sciBASIC#: random forests, a LibSVM support vector machine port with grid parameter selection, genetic algorithm and differential evolution engines, tabular Q-learning, activation functions and normalized sample training datasets.
+- Existing Tags : scibasic;machine-learning;random-forest;svm;genetic-algorithm;q-learning;activation-functions
 
 ## Namespaces
 - ComponentModel  [files: 2]

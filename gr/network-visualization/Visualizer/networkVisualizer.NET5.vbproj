@@ -27,7 +27,7 @@
     <AssemblyTitle>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyTitle>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;network-rendering;data-visualization;style-mapping;convex-hull;css;graphics</PackageTags>
-    <PackageReleaseNotes>Refactored rendering into NetworkPlot and node, edge, label and hull render classes driven by a shared NetworkRenderConfig.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds KD-tree drawing support to the network visualizer and fixes the missing project references.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

@@ -9,7 +9,7 @@
     <Product>FeatherDotNet</Product>
     <Description>A VB.NET port of the Feather columnar file format, built on an embedded FlatBuffers runtime. Reads and writes typed and untyped data frames with row/column access, null handling, and categorical or timestamp metadata.</Description>
     <PackageTags>scibasic;feather;arrow;columnar;dataframe;flatbuffers</PackageTags>
-    <PackageReleaseNotes>Stores packed data with the MessagePack codec for compact Feather-style binary persistence.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
     <Platforms>AnyCPU;x64</Platforms>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <RootNamespace>Microsoft.VisualBasic.DataStorage.FeatherFormat</RootNamespace>

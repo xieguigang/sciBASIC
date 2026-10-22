@@ -3,22 +3,45 @@
 - RootNamespace : Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 - AssemblyName  : Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 - TargetFramework: net10.0
-- Source files  : 16
-- Existing Title: 
-- Existing Desc : Lightweight JavaScript parser, tree-walking interpreter and JS-to-VB.NET code generator. Pure VB.NET, .NET BCL only.
-- Existing Tags : 
+- Source files  : 44
+- Existing Title: JavaScript Parser, Interpreter and VB.NET Code Generator
+- Existing Desc : A lightweight JavaScript engine for sciBASIC#: lexes and parses JS source into an AST, runs it on a tree-walking interpreter with classes, promises, generators, async functions and source level stack traces, provides console, filesystem, path, buffer and process modules plus CLR interop, ships an interactive REPL and transpiles programs into standalone VB.NET classes.
+- Existing Tags : scibasic;javascript;interpreter;parser;ast;code-generator;repl;nodejs;clr-interop;stack-trace
 
 ## Namespaces
-- Runtime  [files: 7]
+- Runtime  [files: 32]
 
 ## Public types
+- Enum ObjectPropertyKind (AST\Ast.vb)
+- Enum ClassMemberKind (AST\Ast.vb)
+- Structure SourcePosition (Language\SourcePosition.vb) - A 1 based source location stamped on AST nodes by the parser (the lexer already tracks the line/column of every token, see <see cref="Token.Location"/>). <para>
 - Enum TokenType (Language\TokenType.vb)
+- Class BufferInstance (Runtime\API\BufferModule.vb)
+- Class FsStats (Runtime\API\FsModule.vb)
+- Class JsFsError (Runtime\API\FsModule.vb) - Node-style fs error carrying a <c>code</c> (ENOENT, EACCES, ...), <c>syscall</c> and <c>path</c>. Printed as <c>"Error: &lt;code&gt;: &lt;desc&gt;, &lt;syscall&gt; '&lt;path&gt;'"</c> and exposes <c>e.code</c> / <c>e.syscall</c> / <c>e.path</c> to scripts.
+- Module ConsoleTableFormatter (Runtime\Console\ConsoleTableFormatter.vb) - <item>array of scalars → <c>(index)</c> plus <c>Values</c>;</item> <item>object of objects / arrays / scalars → <c>(index)</c> holds the outer key, the remaining columns come from the values (Node's <c>console.table</c>
+- Module CssStyleParser (Runtime\Console\CssStyleParser.vb) - <para> Supported declarations: <c>color</c> / <c>background(-color)</c> (named CSS colours, <c>#RGB</c>, <c>#RRGGBB</c>, <c>rgb()</c> / <c>rgba()</c>),
+- Module ConsoleRenderer (Runtime\Console\CssStyleParser.vb) - Renders a rich <see cref="ConsoleMessage"/> as ANSI escaped text: the log level provides the base style (<c>warn</c> → yellow, <c>error</c>/<c>assert</c> → red, <c>trace</c> → magenta, ...) and each fragment's <c>%c</c> CSS is
+- Class HtmlIO (Runtime\Console\HtmlIO.vb) - row with a log-level colour bar and the <c>%c</c> styles are emitted as real inline CSS, so the result is a styled terminal page. <para>
+- Class ConsoleSpan (Runtime\Console\ScriptIO.vb) - One styled fragment inside a <see cref="ConsoleMessage"/>: the plain text plus the raw CSS declaration string it was styled with (the value consumed by a <c>%c</c> format specifier). A <c>Nothing</c> style means the fragment
+- Class ConsoleMessage (Runtime\Console\ScriptIO.vb) - A single console output record: the log level (<c>log</c>, <c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>assert</c>, <c>trace</c>, ...) plus the styled fragments the line is made of.
+- Class LogTextIO (Runtime\Console\ScriptIO.vb) - In-memory sink used by the unit tests: <see cref="Lines"/> keeps the plain text of every message (no ANSI escapes, no HTML markup), while <see cref="Messages"/> keeps the rich records for style assertions.
+- Class ConsoleIO (Runtime\Console\ScriptIO.vb) - Sink that writes to the .NET console. Rich fragments are rendered through <c>CssStyleParser</c> as ANSI escape sequences (SGR), so a <c>%c</c> style such as <c>"color: red; font-weight: bold"</c> really colors the output.
+- Module ClrConvert (Runtime\Interop\ClrConvert.vb) - objects stay reachable with plain dot notation. </para> <para>
+- Module ClrInterop (Runtime\Interop\ClrInterop.vb) - simply <c>Interpreter.DefineGlobal</c>. Script side: <c>obj.Name</c>, <c>obj.Name = v</c>, <c>obj.Method(...)</c>, <c>obj[i]</c>, <c>for..of</c>, <c>new T(...)</c>, <c>x instanceof T</c>. All member resolution funnels through
+- Module ClrMembers (Runtime\Interop\ClrMemberCache.vb) - Reflection scan, member cache and overload resolution behind the CLR bridge. <para> One scan per type (and per static/instance view) builds the member dictionaries
+- Class JsStackFrame (Runtime\JsStackTrace.vb) - One JavaScript call frame, stored as a <see cref="Diagnostics.StackFrame"/> (the engine reuses the platform stack frame object) extended with the two things the JS world needs but the base class
+- Module JsStackTrace (Runtime\JsStackTrace.vb) - The interpreter pushes a frame per invoked function body (<c>Interpreter.InvokeBody</c>) and stamps the executing statement position on the innermost frame, so an error captured anywhere carries the real JS
+- Class JsError (Runtime\JsType\JsError.vb) - JS stack frozen at the moment the error was constructed. <para> Engine-raised runtime errors carry one of these as their payload, so script
+- Module JsFunctions (Runtime\JsType\JsFunctions.vb) - <see cref="Func(Of Object(), Object)"/> delegate created by the interpreter — to the AST node it came from, and renders it the way Node does. <para>
+- Class JsModule (Runtime\JsType\JsModule.vb) - A <see cref="NativeObject"/> that can also hold real, non-callable property values (e.g. <c>fs.constants</c>, <c>path.sep</c>, <c>process.argv</c>). <para>
+- Enum PromiseState (Runtime\JsType\JsPromise.vb)
+- Class NativeObject (Runtime\JsType\NativeObject.vb)
 - Module NamespaceDoc (Runtime\NamespaceDoc.vb) - The single source of JavaScript dynamic semantics used by BOTH the interpreter and the generated VB.NET code: weak typing, truthiness, loose/strict equality, member/index access, invocation and all builtin
 - Module JsRuntime (Runtime\Runtime.vb)
-- Class LogTextIO (Runtime\ScriptIO.vb)
-- Class ConsoleIO (Runtime\ScriptIO.vb)
 
 ## Notable public members
+- Public Property Position As SourcePosition
 - Public Sub New(value As JsValue)
 - Public Sub New(name As String)
 - Public Sub New(op As String, operand As Expression)
@@ -26,70 +49,79 @@
 - Public Sub New(op As String, left As Expression, right As Expression)
 - Public Sub New(op As String, left As Expression, right As Expression)
 - Public Sub New(op As String, target As Expression, value As Expression)
+- Public Sub New(target As BindingTarget, value As Expression)
 - Public Sub New(test As Expression, consequent As Expression, alternate As Expression)
+- Public Sub New(callee As Expression, args As List(Of Expression), Optional isOptional As Boolean = False)
+- Public Sub New(obj As Expression, name As Object, computed As Boolean, Optional isOptional As Boolean = False)
+- Public Property InferredName As String
+- Public Property BodySource As String
+- Public Sub New(name As String, parameters As String(), body As List(Of Statement),
+- Public Sub New(operand As Expression)
+- Public Sub New(operand As Expression)
+- Public Sub New(source As String, flags As String)
 - Public Sub New(callee As Expression, args As List(Of Expression))
-- Public Sub New(obj As Expression, name As Object, computed As Boolean)
-- Public Sub New(name As String, parameters As String(), body As List(Of Statement))
 - Public Sub New(elements As List(Of Expression))
-- Public Sub New(properties As List(Of KeyValuePair(Of String, Expression)))
+- Public Sub New(properties As List(Of ObjectProperty))
+- Public Sub New(key As String, keyExpr As Expression, value As Expression, kind As ObjectPropertyKind)
+- Public Sub New(chunks As List(Of Object))
+- Public Sub New(expressions As List(Of Expression))
+- Public Sub New(argument As Expression)
+- Public Sub New(chain As Expression)
+- Public Property Position As SourcePosition
 - Public Sub New(body As List(Of Statement))
 - Public Sub New(body As List(Of Statement))
-- Public Sub New(name As String, init As Expression)
+- Public Sub New(target As Object, init As Expression)
 - Public Sub New(kind As String, declarations As List(Of VarDeclarant))
-- Public Sub New(name As String, parameters As String(), body As List(Of Statement))
+- Public Property BodySource As String
+- Public Sub New(name As String, parameters As String(), body As List(Of Statement),
 - Public Sub New(test As Expression, thenBranch As Statement, elseBranch As Statement)
 - Public Sub New(init As Object, test As Expression, update As Expression, body As Statement)
 - Public Sub New(varName As String, objectExpr As Expression, body As Statement)
 - Public Sub New(test As Expression, body As Statement)
 - Public Sub New(body As Statement, test As Expression)
+- Public Sub New(discriminant As Expression, cases As List(Of SwitchCase))
+- Public Sub New(test As Expression, body As List(Of Statement))
+- Public Sub New(kind As String, target As Object, iterable As Expression, body As Statement)
+- Public Sub New(spec As ClassSpec)
+- Public Sub New(spec As ClassSpec)
+- Public Sub New(name As String, superClass As Expression, ctor As FuncExpr, members As List(Of ClassMember))
+- Public Sub New(kind As ClassMemberKind, name As String, value As Expression, isStatic As Boolean)
+- Public Sub New(member As String)
+- Public Sub New(label As String, body As Statement)
+- Public Sub New(Optional label As String = Nothing)
+- Public Sub New(Optional label As String = Nothing)
 - Public Sub New(value As Expression)
 - Public Sub New(value As Expression)
 - Public Sub New(tryBlock As List(Of Statement), catchParam As String,
 - Public Sub New(expr As Expression)
+- Public Sub New(name As String)
+- Public Sub New(obj As Expression, name As Object, computed As Boolean)
+- Public Sub New(elements As List(Of BindingTarget), rest As BindingTarget)
+- Public Sub New(properties As List(Of KeyValuePair(Of String, BindingTarget)), rest As BindingTarget)
+- Public Sub New(target As BindingTarget, [default] As Expression)
 - Public Function Generate(program As Program, Optional className As String = "GeneratedScript") As String
-- Friend Function GenExpr(e As Expression, scope As Scope) As String
-- Public Sub Indent()
-- Public Sub UnIndent()
-- Public Sub Line(Optional text As String = "")
-- Public Sub WriteLine()
-- Public Sub Paste(text As String)
-- Public Overrides Function ToString() As String
-- Public Function Push() As Scope
-- Public Function DefineLocal(name As String) As String
-- Public Function Resolve(name As String) As String
-- Public Function ResolveOrThrow(name As String) As String
-- Public Sub New(parent As Environment)
-- Public Function TryGet(name As String, ByRef value As JsValue) As Boolean
-- Public Sub Define(name As String, value As JsValue, isConst As Boolean)
-- Public Sub Assign(name As String, value As JsValue)
-- Public Function LookupOrThrow(name As String) As JsValue
-- Public Overrides Function FindSlot(name As String, throwIfNotFound As Boolean) As ScriptSlot
-- Public Function TryGet(name As String, ByRef value As Object) As Boolean
-- Public Sub Define(name As String, value As Object, isConst As Boolean)
-- Public Sub Assign(name As String, value As Object)
-- Public Function LookupObjectOrThrow(name As String) As Object
-- Protected Overrides Sub CheckReadOnly(slot As ScriptSlot, name As String)
-- Public Sub New(Optional io As ScriptIO = Nothing)
-- Public Sub Run(program As Program)
-- Public Sub DefineGlobal(name As String, value As Object)
-- Public Sub New(value As JsValue)
-- Public Shared Function Lex(source As String) As List(Of Token)
-- Public Sub New(message As String)
-- Public Shared Function Parse(source As String) As Program
-- Public ReadOnly Property Value As Object
-- Public ReadOnly Property LineBreakBefore As Boolean
-- Public ReadOnly Property Location As String
-- ... and 69 more
+- Public Sub New(exitLabel As String, contLabel As String)
+- ... and 407 more
 
 ## Imports
+- Diagnostics = Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
+- Microsoft.VisualBasic.ApplicationServices.Terminal
+- Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+- Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 - Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 - Microsoft.VisualBasic.MIME.application.json
 - Microsoft.VisualBasic.MIME.application.json.Javascript
 - Microsoft.VisualBasic.Scripting.Runtime
 - Microsoft.VisualBasic.Scripting.TokenIcer
+- System.Collections
+- System.Diagnostics
 - System.Globalization
+- System.IO
+- System.Reflection
+- System.Runtime.CompilerServices
 - System.Text
 - System.Text.RegularExpressions
+- System.Threading.Tasks
 
 ## File tree
 - AST\Ast.vb
@@ -99,13 +131,41 @@
 - Language\Lexer.vb
 - Language\ParseException.vb
 - Language\Parser.vb
+- Language\RegexLiteral.vb
+- Language\SourcePosition.vb
+- Language\TemplateChunk.vb
 - Language\Token.vb
 - Language\TokenType.vb
+- Runtime\API\BufferModule.vb
+- Runtime\API\FsModule.vb
+- Runtime\API\PathModule.vb
+- Runtime\API\ProcessModule.vb
 - Runtime\BuiltinMethod.vb
+- Runtime\Console\ConsoleModule.vb
+- Runtime\Console\ConsoleTableFormatter.vb
+- Runtime\Console\CssStyleParser.vb
+- Runtime\Console\HtmlIO.vb
+- Runtime\Console\ScriptIO.vb
+- Runtime\Interop\ClrAttributes.vb
+- Runtime\Interop\ClrConvert.vb
+- Runtime\Interop\ClrInterop.vb
+- Runtime\Interop\ClrMemberCache.vb
+- Runtime\Interop\ClrObject.vb
 - Runtime\JsRuntimeException.vb
+- Runtime\JsStackTrace.vb
+- Runtime\JsType\AccessorProperty.vb
+- Runtime\JsType\JsClass.vb
+- Runtime\JsType\JsDate.vb
+- Runtime\JsType\JsError.vb
+- Runtime\JsType\JsFunctions.vb
+- Runtime\JsType\JsGenerator.vb
+- Runtime\JsType\JsModule.vb
+- Runtime\JsType\JsPromise.vb
+- Runtime\JsType\JsRegExp.vb
+- Runtime\JsType\NativeObject.vb
+- Runtime\JsType\SpreadMarker.vb
+- Runtime\JsType\UndefinedMarker.vb
 - Runtime\NamespaceDoc.vb
-- Runtime\NativeObject.vb
+- Runtime\OptionalChainShortCircuit.vb
 - Runtime\Runtime.vb
-- Runtime\ScriptIO.vb
-- Runtime\UndefinedMarker.vb
 

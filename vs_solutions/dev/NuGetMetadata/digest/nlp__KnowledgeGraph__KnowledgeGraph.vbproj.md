@@ -5,8 +5,8 @@
 - TargetFramework: net10.0
 - Source files  : 6
 - Existing Title: Bipartite Knowledge Graph with Synonym Disambiguation and Ontology Inference
-- Existing Desc : Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs degree-preserving permutation tests to merge synonyms, and infers typed ontology relations with confidence scores.
-- Existing Tags : scibasic;knowledge-graph;bipartite-graph;entity-disambiguation;synonym-merge;ontology;similarity;nlp
+- Existing Desc : Builds and mines bipartite entity-attribute knowledge graphs for sciBASIC#: scores entity pairs with Jaccard, Adamic-Adar and cosine metrics, runs permutation tests to merge synonyms, and infers ontology relations.
+- Existing Tags : scibasic;knowledge-graph;entity-disambiguation;ontology;similarity
 
 ## Namespaces
 - (no explicit Namespace statement; every type lives directly under the RootNamespace Microsoft.VisualBasic.Data.NLP.Knowledge)

@@ -27,7 +27,7 @@
     <Company>sciBASIC.NET Foundation</Company>
     <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
     <PackageTags>scibasic;binary-data;endianness;bzip2;lzw;pickle;xdr</PackageTags>
-    <PackageReleaseNotes>Adds a minimal Python pickle pickler and unpickler with the Python object model alongside new LZ4 and LZMA stream codecs.</PackageReleaseNotes>
+    <PackageReleaseNotes>Documents the LZ4 and LZMA stream codecs and adds hash and round-trip tests covering the LZ77 compression pipeline.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

@@ -3,16 +3,16 @@
 - RootNamespace : Microsoft.VisualBasic.Computing.ILCuda
 - AssemblyName  : Microsoft.VisualBasic.Computing.ILCuda
 - TargetFramework: net10.0
-- Source files  : 51
-- Existing Title: ILCuda: Pure-Interop VB.NET CUDA Compute Framework
-- Existing Desc : Dependency-free VB.NET CUDA framework built on the CUDA Driver API and NVRTC: device, context, stream and device-memory management, JIT compilation of embedded .cu sources, kernel catalog and launch planning, reduction, elementwise and BLAS kernels, plus an IL-to-CUDA emitter.
-- Existing Tags : scibasic;cuda;nvrtc;gpu;interop;cuda-driver-api;kernels;blas;jit-compilation;il-to-cuda
+- Source files  : 54
+- Existing Title: Pure-Interop CUDA Compute Framework with IL-to-CUDA Kernel Emitter
+- Existing Desc : A CUDA compute framework for sciBASIC#: zero-dependency Driver API and NVRTC interop for device, context, stream and memory management, JIT compilation of embedded .cu kernels, plus an IL emitter that translates marked .NET methods into CUDA C source.
+- Existing Tags : scibasic;cuda;nvrtc;gpu;cuda-driver-api;jit-compilation;il-to-cuda
 
 ## Namespaces
 - IL2Cuda  [files: 5]
 - Kernels  [files: 3]
 - Math  [files: 5]
-- Runtime  [files: 26]
+- Runtime  [files: 28]
 
 ## Public types
 - Enum CudaIndexMode (IL2Cuda\CudaAttributes.vb)
@@ -27,6 +27,45 @@
 - Module IlCudaTranslator (IL2Cuda\IlCudaKernel.vb)
 - Module NamespaceDoc (IL2Cuda\NamespaceDoc.vb) - IL to CUDA source translator: the CudaKernel and parameter/index attributes that mark .NET methods as kernels, the .NET to CUDA type mapping table, and the IL emitter that translates the marked method bodies into CUDA C source.
 - Module CudaDriverApi (Interop\CudaDriverApi.vb)
+- Enum CUptiResult (Interop\CuptiApi.vb) - CUPTI 返回码（数值与 cupti_result.h 完全一致，只列出本框架会用到的项）。
+- Enum CUptiProfilerType (Interop\CuptiApi.vb)
+- Enum CUptiMetricType (Interop\CuptiApi.vb)
+- Enum CUptiMetricCollectionScope (Interop\CuptiApi.vb)
+- Enum CUptiPmSamplingTriggerMode (Interop\CuptiApi.vb)
+- Enum CUptiPmSamplingBufferAppendMode (Interop\CuptiApi.vb)
+- Enum CUptiPmSamplingDecodeStopReason (Interop\CuptiApi.vb)
+- Enum CUptiEventGroupAttribute (Interop\CuptiApi.vb)
+- Enum CUptiReadEventFlags (Interop\CuptiApi.vb)
+- Enum CUptiEventCollectionMode (Interop\CuptiApi.vb)
+- Structure CUptiProfilerInitializeParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerDeInitializeParams (Interop\CuptiApi.vb)
+- Structure CUptiDeviceGetChipNameParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingGetCounterAvailabilityParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingEnableParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingDisableParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingSetConfigParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingStartParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingStopParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingDecodeDataParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingGetCounterDataSizeParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingCounterDataImageInitializeParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingGetCounterDataInfoParams (Interop\CuptiApi.vb)
+- Structure CUptiPmSamplingCounterDataGetSampleInfoParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerDeviceSupportedParams (Interop\CuptiApi.vb)
+- Enum CUptiProfilerApi (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostInitializeParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostDeinitializeParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostConfigAddMetricsParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetConfigImageSizeParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetConfigImageParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetNumOfPassesParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetMetricPropertiesParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetSubMetricsParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetMaxNumHardwareMetricsPerPassParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetSinglePassSetsParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostGetMetricsInSinglePassSetParams (Interop\CuptiApi.vb)
+- Structure CUptiProfilerHostEvaluateToGpuValuesParams (Interop\CuptiApi.vb)
+- Module CUptiApi (Interop\CuptiApi.vb) - CUPTI 的函数入口声明（全部按 __stdcall + 结构体指针绑定；可选符号允许为 Nothing）。
 - Class CudaException (Interop\CUresult\CudaException.vb) - CUDA 调用失败时抛出的异常
 - Enum CUdevice_attribute (Interop\CUresult\CUdevice_attribute.vb) - 设备属性查询键（CUdevice_attribute）
 - Enum CUresult (Interop\CUresult\CUresult.vb) - CUDA Driver API 的返回码（取自 cuda.h 中的 CUresult 定义，覆盖常用错误）
@@ -65,6 +104,11 @@
 - Structure MemoryInfo (Runtime\CudaMemory.vb)
 - Module CudaMemory (Runtime\CudaMemory.vb)
 - Enum CudaStreamFlags (Runtime\CudaStream.vb)
+- Structure PerSmCounterSample (Runtime\Diagnostics\CuptiPerSmEvents.vb) - 单个 SM（domain instance）在一段采集窗口内的原始计数与派生利用率。
+- Structure PmSamplingCapability (Runtime\Diagnostics\CuptiPmSampling.vb) - PM Sampling 能力探测结果。Available=False 时 <see cref="Reason"/> 给出中文原因（缺库 / 缺符号 / 权限不足 / 芯片不支持 / 指标不可单 pass 等）。
+- Structure PmSamplingSample (Runtime\Diagnostics\CuptiPmSampling.vb) - 一次 PM 采样切片：一个时间窗口内、整卡各指标的取值。
+- Module PmSamplingMetrics (Runtime\Diagnostics\CuptiPmSampling.vb) - 默认指标集合与指标名规范化工具。 用户口语里的 "sm__cycles_active" / "sm__throughput" 是基名， 求值必须带 rollup 后缀（.avg / .max / .min / .sum）或百分比后缀，
+- Structure SmBalanceEstimate (Runtime\Diagnostics\CuptiPmSampling.vb) - 由 PM 采样切片推断的 SM 负载均衡情况。 说明：PM Sampling 只有整卡聚合值（avg / max / min），没有逐 SM 明细。 这里用"两极模型"做一次粗估：假设非均衡分布只在最热与最冷之间，
 - Class DeviceReport (Runtime\Diagnostics\DeviceReport.vb) - 设备属性的纯数据快照：不持有任何 CUDA 句柄，可安全地跨层传递与格式化输出。 框架只生成它，怎么显示由调用方决定。
 - Class NvrtcCandidate (Runtime\Diagnostics\EnvironmentReport.vb)
 - Class EnvironmentReport (Runtime\Diagnostics\EnvironmentReport.vb) - 一次 CUDA 环境探测的结果：驱动版本、设备列表、NVRTC 候选、参与编译的内核源码。 全部是纯数据，探测过程中的异常会被记录到 <see cref="ErrorMessage"/> 而不抛出。
@@ -146,7 +190,7 @@
 - Friend Function cuMemcpyHtoD_v2(dstDevice As ULong, srcHost As IntPtr, byteCount As ULong) As CUresult
 - Friend Function cuMemcpyDtoH_v2(dstHost As IntPtr, srcDevice As ULong, byteCount As ULong) As CUresult
 - Friend Function cuMemsetD8_v2(dstDevice As ULong, value As Byte, count As ULong) As CUresult
-- ... and 440 more
+- ... and 553 more
 
 ## Imports
 - Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL
@@ -169,6 +213,7 @@
 - IL2Cuda\IlCudaKernel.vb
 - IL2Cuda\NamespaceDoc.vb
 - Interop\CudaDriverApi.vb
+- Interop\CuptiApi.vb
 - Interop\CUresult\CudaException.vb
 - Interop\CUresult\CUdevice_attribute.vb
 - Interop\CUresult\CUresult.vb
@@ -203,6 +248,8 @@
 - Runtime\CudaTimer.vb
 - Runtime\DeviceBuffer.vb
 - Runtime\DeviceMemory.vb
+- Runtime\Diagnostics\CuptiPerSmEvents.vb
+- Runtime\Diagnostics\CuptiPmSampling.vb
 - Runtime\Diagnostics\DeviceReport.vb
 - Runtime\Diagnostics\EnvironmentReport.vb
 - Runtime\Diagnostics\FixSuggestion.vb

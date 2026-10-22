@@ -16,6 +16,7 @@ Public NotInheritable Class GeneratedScript
         JsRuntime.Io = io
         JsRuntime.GlobalIdentifiers()
         If host IsNot Nothing Then host.Install()
+        Dim msil As JsValue = JsRuntime.ImportClrNamespace("Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL", "Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.dll")
         Dim total As JsValue = JsRuntime.Undef
         Dim leaked As JsValue = JsRuntime.Undef
         Dim counter As JsValue = JsRuntime.Undef
@@ -280,6 +281,7 @@ End Function, Func(Of Object(), Object))}, False, False)
             Dim e As JsValue = jsex28.Payload
             JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"clr error:", JsRuntime.JsGet(e, "name")}, False, False)
         End Try
+        JsRuntime.JsInvokeMethod(JsRuntime.ConsoleBuiltin, "log", New JsValue() {"import:", JsRuntime.JsTypeOf(JsRuntime.JsGet(msil, "MethodDecompiler")), JsRuntime.JsGe(JsRuntime.JsInvokeMethod(JsRuntime.JsInvokeMethod(JsRuntime.ObjectBuiltin, "keys", New JsValue() {msil}, False, False), "indexOf", New JsValue() {"MethodDecompiler"}, False, False), 0R)}, False, False)
         JsRuntime.DrainMicrotasks()
     End Sub
 End Class

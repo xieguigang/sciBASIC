@@ -3,10 +3,10 @@
 - RootNamespace : Microsoft.VisualBasic.MachineLearning
 - AssemblyName  : Microsoft.VisualBasic.DeepLearning
 - TargetFramework: net10.0
-- Source files  : 101
+- Source files  : 99
 - Existing Title: Deep Learning Framework: CNN, RNN, Transformer and ANN Models
-- Existing Desc : Deep learning toolkit for sciBASIC#: a CeNiN CNN reader, trainable convolutional networks with SGD/AdaGrad/Adam trainers, character-level RNNs, Transformer attention models, and a general artificial neural network.
-- Existing Tags : scibasic;deep-learning;cnn;rnn;transformer;attention;adam-optimizer;neural-network;cenin
+- Existing Desc : A deep learning toolkit for sciBASIC#: trainable convolutional networks with SGD, AdaGrad and Adam trainers, a CeNiN CNN reader for image inference, character-level RNNs, a hand-written Transformer encoder-decoder with explicit backward passes, and general feed-forward neural networks.
+- Existing Tags : scibasic;deep-learning;cnn;rnn;transformer;attention;neural-network
 
 ## Namespaces
 - CNN  [files: 12]
@@ -16,7 +16,7 @@
 - CNN.trainers  [files: 8]
 - Convolutional  [files: 12]
 - NeuralNetwork  [files: 5]
-- RNN  [files: 22]
+- RNN  [files: 20]
 - Transformer  [files: 13]
 
 ## Public types
@@ -85,9 +85,7 @@
 - Class Netz (NeuralNetwork\Netz.vb) - Feed forward neural network used for regression analysis. This class is a facade over a fully connected <see cref="ConvolutionalNN"/>: forward and backward propagation are both performed by the CNN kernel while the public API of the legacy Netz type is kept
 - Class CharRNN (RNN\CharRNN.vb) - Command line helpers for training, sampling and snapshotting a character level recurrent network. https://github.com/garstka/char-rnn-java
 - Class Math (RNN\math\Math.vb) - Math helper functions
-- Class Matrix (RNN\math\Matrix.vb)
 - Class Random (RNN\math\Random.vb) - Helper functions for randomness.
-- Class Utils (RNN\math\Utils.vb) - Utility functions for working with the jagged <c>Double()()</c> arrays used by the RNN matrix type.
 - Module NamespaceDoc (RNN\NamespaceDoc.vb) - Recurrent neural networks: the recurrent layers, cells and training helpers.
 - Class Alphabet (RNN\net\Alphabet.vb) - Immutable set of symbols mapped indices.
 - Interface CharacterSampleable (RNN\net\interfaces\CharacterSampleable.vb) - Network that can be sampled for a sequence of characters.
@@ -182,7 +180,7 @@
 - Public Function input_layer(size As Integer(), Optional depth As Integer = 1) As CNNLayerArguments
 - Public Function input_layer(dims As Dimension, Optional depth As Integer = 1) As CNNLayerArguments
 - Public Function conv_layer(sx As Integer,
-- ... and 567 more
+- ... and 529 more
 
 ## Imports
 - Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
@@ -205,11 +203,11 @@
 - Microsoft.VisualBasic.ApplicationServices
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 - Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
-- Microsoft.VisualBasic.ComponentModel.Collection
 - Microsoft.VisualBasic.ComponentModel.DataSourceModel
 - Microsoft.VisualBasic.Imaging
 - Microsoft.VisualBasic.Imaging.BitmapImage
 - Microsoft.VisualBasic.Imaging.Driver
+- Microsoft.VisualBasic.Language
 
 ## File tree
 - _smoketest\Program.vb
@@ -280,9 +278,7 @@
 - NeuralNetwork\Netz.vb
 - RNN\CharRNN.vb
 - RNN\math\Math.vb
-- RNN\math\Matrix.vb
 - RNN\math\Random.vb
-- RNN\math\Utils.vb
 - RNN\NamespaceDoc.vb
 - RNN\net\Alphabet.vb
 - RNN\net\BasicRNN.vb

@@ -6,7 +6,7 @@
 - Source files  : 22
 - Existing Title: Labelled Data Matrix, Correlation and Distance Utilities
 - Existing Desc : Labelled numeric matrix model with pairwise correlation and distance matrix builders, missing-value imputation, scaling and centering transforms, and Matrix Market MTX/RUA file IO. Part of sciBASIC#.
-- Existing Tags : scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation;scaling;centering
+- Existing Tags : scibasic;data-matrix;correlation;distance-matrix;matrix-market;imputation
 
 ## Namespaces
 - MatrixMarket  [files: 3]

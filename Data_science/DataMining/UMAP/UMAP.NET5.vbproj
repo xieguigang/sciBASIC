@@ -23,7 +23,7 @@
 		<AssemblyVersion>1.0.9791.26955</AssemblyVersion>
 		<AssemblyTitle>Microsoft.VisualBasic.DataMining.UMAP</AssemblyTitle>
 		<PackageTags>scibasic;umap;dimensionality-reduction;manifold-learning;nearest-neighbor</PackageTags>
-    <PackageReleaseNotes>Package maintenance release: build configuration, package version updates and project reference cleanups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
     <!-- 兼容层：ClusterEntity 已标记为 Obsolete，这里在该项目内部屏蔽其弃用警告，

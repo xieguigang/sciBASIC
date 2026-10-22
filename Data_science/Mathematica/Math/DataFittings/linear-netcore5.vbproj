@@ -14,15 +14,15 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>A curve fitting and regression toolkit for sciBASIC#: linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic and LASSO fits, plus Bayesian and Levenberg-Marquardt nonlinear solvers with unified numeric table input.</Description>
+		<Description>A curve fitting and regression toolkit for sciBASIC#: linear, polynomial, weighted and non-negative least squares, MLR, LOESS/LOWESS local regression, logistic, LASSO and ridge fits with GCV lambda selection, plus Bayesian and Levenberg-Marquardt nonlinear solvers with unified numeric table input.</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;PlantMAT;CellaLAB-Desktop</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<AssemblyVersion>1.0.9791.26955</AssemblyVersion>
 		<Title>Curve Fitting and Regression Toolkit with LASSO and Levenberg-Marquardt</Title>
 		<AssemblyTitle>Microsoft.VisualBasic.Data.Bootstrapping</AssemblyTitle>
-		<PackageTags>scibasic;curve-fitting;regression;least-squares;lasso;loess;levenberg-marquardt</PackageTags>
-    <PackageReleaseNotes>Adds unified NumericTable regression entry points, prediction export back to label matrices and LOESS model support alongside the linear and nonlinear solvers.</PackageReleaseNotes>
+		<PackageTags>scibasic;regression;curve-fitting;least-squares;ridge;lasso;levenberg-marquardt;loess</PackageTags>
+    <PackageReleaseNotes>Implements ridge regression with generalized cross validation over the lambda path and completes the Levenberg-Marquardt nonlinear fitter with a parameter result model, R squared, RMSE and formula based entry points.</PackageReleaseNotes>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

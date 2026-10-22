@@ -32,7 +32,7 @@
     <RepositoryType>git</RepositoryType>
 
     <PackageTags>scibasic;graphics;imaging;svg;postscript;d3js;isometric-3d</PackageTags>
-    <PackageReleaseNotes>Adds 3D Delaunay triangulation and Marching Cubes modules, marching squares contour tracing, force-directed label collision solving and HQx pixel upscaling.</PackageReleaseNotes>
+    <PackageReleaseNotes>Package maintenance release: build and packaging configuration updates only, no functional changes in this cycle.</PackageReleaseNotes>
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
