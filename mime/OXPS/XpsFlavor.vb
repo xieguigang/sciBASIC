@@ -176,7 +176,7 @@ Public Module XpsSpec
     ''' <summary>
     ''' 把 twips 换算为 XPS 使用的磅值并格式化。
     ''' </summary>
-    ''' <param name="twips"></param>
+    ''' <param name="value">twips 数值。</param>
     ''' <returns></returns>
     Public Function Twips(value As Integer) As String
         Return Num(value / TwipsPerPoint)

@@ -5,6 +5,17 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyTitle>application/oxps</AssemblyTitle>
     <AssemblyName>Microsoft.VisualBasic.MIME.OpenXPS</AssemblyName>
+    <Title>XPS / OXPS Document Generator and Text Extractor</Title>
+    <Description>Generates and reads XPS and OpenXPS fixed-page documents for sciBASIC#: a block based writer lays out text, tables and images onto fixed pages with optional ODTTF font embedding, packs them into an OPC package, extracts plain text back out through the Glyphs content streams, and implements the shared ReportRender contract for report generation.</Description>
+    <PackageTags>scibasic;xps;oxps;fixedpage;opc;document-generation;text-extraction;markdown</PackageTags>
+    <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+    <Company>sciBASIC.NET Foundation</Company>
+    <Copyright>Copyright (c) sciBASIC.NET Foundation</Copyright>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
