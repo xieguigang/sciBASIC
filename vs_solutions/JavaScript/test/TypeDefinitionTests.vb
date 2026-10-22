@@ -161,8 +161,10 @@ Public Class TypeDefinitionTests
 
         ' VB emits "As TsBox(Of T)" on a member of TsBox(Of T) as the unbound
         ' definition: the enclosing type parameters are substituted back
-        Assert.Contains("static Box(value: T): LiteJs.Tests.TsDemo.Generic.TsBox<T>;", text)
         Assert.Contains("Self(): LiteJs.Tests.TsDemo.Generic.TsBox<T>;", text)
+        ' a static member may not name the type parameters of its class in TypeScript,
+        ' so those references degrade to any
+        Assert.Contains("static Box(value: any): LiteJs.Tests.TsDemo.Generic.TsBox<any>;", text)
         ' a method generic parameter keeps its own name
         Assert.Contains("Map<U>(selector: any): LiteJs.Tests.TsDemo.Generic.TsBox<U>;", text)
         ' concrete arguments render as mapped types
@@ -344,8 +346,11 @@ Public Class TypeDefinitionTests
         Assert.Contains("declare namespace Microsoft.VisualBasic {", result.Text)
         ' a dotted namespace is emitted as a single declaration
         Assert.Contains("declare namespace Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly {", result.Text)
-        ' a BCL interface maps to Iterable<T>, which is legal under implements
-        Assert.Contains("class ProjectSpace implements Iterable<Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly.Project> {", result.Text)
+        ' a BCL interface (IEnumerable(Of T)) cannot be promised by implements
+        ' (it would demand [Symbol.iterator]), so the class declares the iterator
+        ' itself — the bridge really does support for-of over such a value
+        Assert.Contains("class ProjectSpace {", result.Text)
+        Assert.Contains("[Symbol.iterator](): IterableIterator<Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly.Project>;", result.Text)
     End Sub
 
 End Class

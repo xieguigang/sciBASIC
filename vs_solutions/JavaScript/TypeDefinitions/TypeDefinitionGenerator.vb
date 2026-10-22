@@ -123,7 +123,7 @@ Namespace TypeDefinitions
                 .DocumentPath = xmlPath
             }
 
-            Dim text As String = TsEmitter.Emit(scan.Types, scan.ExportNames, docs, meta)
+            Dim text As String = TsEmitter.Emit(scan.Types, docs, meta)
             Dim members As Integer = 0
 
             For Each model As TsType In scan.Types

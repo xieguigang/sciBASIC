@@ -40,6 +40,8 @@
 
 #End Region
 
+Imports System.Collections
+Imports System.Collections.Generic
 Imports System.Reflection
 Imports System.Text
 
@@ -68,10 +70,9 @@ Namespace TypeDefinitions
     ''' </summary>
     Friend Module TsEmitter
 
-        Friend Function Emit(types As List(Of TsType), exports As HashSet(Of String),
-                             docs As XmlDocIndex, meta As EmitMeta) As String
-
+        Friend Function Emit(types As List(Of TsType), docs As XmlDocIndex, meta As EmitMeta) As String
             Dim sb As New StringBuilder
+            Dim names As New NameTable(types)
 
             EmitHeader(sb, meta)
 
@@ -88,7 +89,7 @@ Namespace TypeDefinitions
                 End If
 
                 For Each model In group.OrderBy(Function(t) t.ShortName, StringComparer.OrdinalIgnoreCase)
-                    EmitType(sb, model, indent, exports, docs)
+                    EmitType(sb, model, indent, names, docs)
                 Next
 
                 If group.Key <> "" Then
@@ -97,7 +98,7 @@ Namespace TypeDefinitions
                 End If
             Next
 
-            EmitGlobals(sb, types, meta)
+            EmitGlobals(sb, types, names, meta)
 
             Return sb.ToString()
         End Function
@@ -122,23 +123,23 @@ Namespace TypeDefinitions
         ' ======================================================== types
 
         Private Sub EmitType(sb As StringBuilder, model As TsType, indent As String,
-                             exports As HashSet(Of String), docs As XmlDocIndex)
+                             names As NameTable, docs As XmlDocIndex)
 
             Select Case model.Kind
                 Case TsTypeKind.EnumType
-                    EmitEnum(sb, model, indent, docs)
+                    EmitEnum(sb, model, indent, names, docs)
                 Case TsTypeKind.DelegateType
-                    EmitDelegate(sb, model, indent, exports, docs)
+                    EmitDelegate(sb, model, indent, names, docs)
                 Case Else
-                    EmitClassLike(sb, model, indent, exports, docs)
+                    EmitClassLike(sb, model, indent, names, docs)
             End Select
 
             ' nested types merge into a namespace block carrying the outer type name
             If model.Nested.Count > 0 Then
-                sb.Append(indent).AppendLine("namespace " & model.ShortName & " {")
+                sb.Append(indent).AppendLine("namespace " & names.SimpleName(model.ClrType) & " {")
 
                 For Each nested In model.Nested.OrderBy(Function(t) t.ShortName, StringComparer.OrdinalIgnoreCase)
-                    EmitType(sb, nested, indent & "    ", exports, docs)
+                    EmitType(sb, nested, indent & "    ", names, docs)
                 Next
 
                 sb.Append(indent).AppendLine("}")
@@ -147,14 +148,15 @@ Namespace TypeDefinitions
             sb.AppendLine()
         End Sub
 
-        Private Sub EmitEnum(sb As StringBuilder, model As TsType, indent As String, docs As XmlDocIndex)
+        Private Sub EmitEnum(sb As StringBuilder, model As TsType, indent As String,
+                             names As NameTable, docs As XmlDocIndex)
             Dim block As String = JsDocWriter.ForType(
                 If(docs Is Nothing, Nothing, docs.TypeDoc(model.ClrType.FullName)),
                 model.IsObsolete, DeprecatedOf(model.ClrType), indent)
 
             If block <> "" Then sb.Append(block)
 
-            sb.Append(indent).Append("enum ").Append(model.ShortName).AppendLine(" {")
+            sb.Append(indent).Append("enum ").Append(names.SimpleName(model.ClrType)).AppendLine(" {")
 
             For Each member In model.EnumMembers
                 sb.Append(indent).Append("    ").Append(member.Key) _
@@ -166,7 +168,7 @@ Namespace TypeDefinitions
         End Sub
 
         Private Sub EmitDelegate(sb As StringBuilder, model As TsType, indent As String,
-                                 exports As HashSet(Of String), docs As XmlDocIndex)
+                                 names As NameTable, docs As XmlDocIndex)
 
             Dim block As String = JsDocWriter.ForType(
                 If(docs Is Nothing, Nothing, docs.TypeDoc(model.ClrType.FullName)),
@@ -176,20 +178,20 @@ Namespace TypeDefinitions
 
             Dim generic As String = GenericSuffix(model)
 
-            sb.Append(indent).Append("type ").Append(model.ShortName).Append(generic).Append(" = ")
+            sb.Append(indent).Append("type ").Append(names.SimpleName(model.ClrType)).Append(generic).Append(" = ")
 
             If model.Invoke Is Nothing Then
                 sb.AppendLine("(...args: any[]) => any;")
             Else
-                sb.Append(RenderParameters(model.Invoke.Parameters, exports, model.GenericParameters)) _
+                sb.Append(RenderParameters(model.Invoke.Parameters, names, model.GenericParameters)) _
                   .Append(" => ") _
-                  .Append(TypeMapper.TsTypeName(model.Invoke.ReturnType, exports, model.GenericParameters)) _
+                  .Append(TypeMapper.TsTypeName(model.Invoke.ReturnType, names, model.GenericParameters)) _
                   .AppendLine(";")
             End If
         End Sub
 
         Private Sub EmitClassLike(sb As StringBuilder, model As TsType, indent As String,
-                                  exports As HashSet(Of String), docs As XmlDocIndex)
+                                  names As NameTable, docs As XmlDocIndex)
 
             Dim block As String = JsDocWriter.ForType(
                 If(docs Is Nothing, Nothing, docs.TypeDoc(model.ClrType.FullName)),
@@ -205,7 +207,7 @@ Namespace TypeDefinitions
                 sb.Append("abstract ")
             End If
 
-            sb.Append(keyword).Append(" ").Append(model.ShortName).Append(GenericSuffix(model))
+            sb.Append(keyword).Append(" ").Append(names.SimpleName(model.ClrType)).Append(GenericSuffix(model))
 
             ' extends (one base for classes, every interface for interfaces) / implements
             Dim extendsList As New List(Of String)
@@ -213,20 +215,20 @@ Namespace TypeDefinitions
 
             If model.Kind = TsTypeKind.InterfaceType Then
                 For Each i As Type In model.Interfaces
-                    Dim name As String = TypeMapper.TsTypeName(i, exports, model.GenericParameters)
+                    Dim name As String = TypeMapper.TsTypeName(i, names, model.GenericParameters)
 
-                    ' an array type (IList(Of T) and friends) is not a valid extends target
                     If UsableBase(name) AndAlso Not extendsList.Contains(name) Then extendsList.Add(name)
                 Next
             Else
                 If model.BaseType IsNot Nothing Then
-                    extendsList.Add(TypeMapper.TsTypeName(model.BaseType, exports, model.GenericParameters))
+                    extendsList.Add(TypeMapper.TsTypeName(model.BaseType, names, model.GenericParameters))
                 End If
 
                 For Each i As Type In model.Interfaces
-                    Dim name As String = TypeMapper.TsTypeName(i, exports, model.GenericParameters)
+                    Dim name As String = TypeMapper.TsTypeName(i, names, model.GenericParameters)
 
-                    If UsableBase(name) AndAlso Not extendsList.Contains(name) AndAlso Not implementsList.Contains(name) Then
+                    If UsableBase(name) AndAlso Not extendsList.Contains(name) AndAlso
+                       Not implementsList.Contains(name) AndAlso Covered(model, i, names) Then
                         implementsList.Add(name)
                     End If
                 Next
@@ -239,18 +241,112 @@ Namespace TypeDefinitions
 
             Dim inner As String = indent & "    "
 
-            EmitDataMembers(sb, model, inner, exports, docs)
-            EmitConstructors(sb, model, inner, exports, docs)
-            EmitIndexers(sb, model, inner, exports)
-            EmitMethods(sb, model, inner, exports, docs)
+            EmitDataMembers(sb, model, inner, names, docs)
+            EmitConstructors(sb, model, inner, names, docs)
+            EmitIndexers(sb, model, inner, names)
+            EmitMethods(sb, model, inner, names, docs)
+            EmitIterator(sb, model, inner, names)
 
             sb.Append(indent).AppendLine("}")
         End Sub
 
+        ''' <summary>
+        ''' A class the bridge can iterate over (``IEnumerable``) declares the iterator:
+        ''' the script side really does support ``for (const x of obj)``, and an
+        ''' interface extending ``Iterable&lt;T&gt;`` would otherwise demand it here.
+        ''' </summary>
+        Private Sub EmitIterator(sb As StringBuilder, model As TsType, inner As String, names As NameTable)
+            If model.Kind = TsTypeKind.InterfaceType OrElse
+               model.Kind = TsTypeKind.EnumType OrElse
+               model.Kind = TsTypeKind.DelegateType Then
+                Return
+            End If
+
+            If Not ClrMembers.IsEnumerableType(model.ClrType) Then Return
+
+            Dim element As String = "any"
+
+            For Each i As Type In model.ClrType.GetInterfaces()
+                If i.IsGenericType AndAlso i.GetGenericTypeDefinition() Is GetType(IEnumerable(Of )) Then
+                    element = TypeMapper.TsTypeName(i.GetGenericArguments()(0), names, model.GenericParameters)
+                    Exit For
+                End If
+            Next
+
+            sb.Append(inner).Append("[Symbol.iterator](): IterableIterator<") _
+              .Append(element).AppendLine(">;")
+        End Sub
+
+        ''' <summary>
+        ''' May this type promise to implement that interface? A TypeScript class must
+        ''' declare every interface member, so the clause is dropped unless every
+        ''' member name of the interface is among the emitted members — Visual Basic
+        ''' implements interface members privately at times (explicit implementation),
+        ''' and a BCL interface (IEnumerable(Of T) → ``Iterable``) needs a
+        ''' ``[Symbol.iterator]`` the generated class does not declare.
+        ''' </summary>
+        Private Function Covered(model As TsType, iface As Type, names As NameTable) As Boolean
+            If Not names.IsExported(iface) Then Return False
+
+            Dim declared As New HashSet(Of String)(StringComparer.Ordinal)
+
+            For Each p In model.Properties
+                declared.Add(p.Name)
+            Next
+
+            For Each f In model.Fields
+                declared.Add(f.Name)
+            Next
+
+            For Each m In model.Methods
+                declared.Add(m.Name)
+            Next
+
+            Return CoveredMembers(model, iface, declared, names, New HashSet(Of Type)())
+        End Function
+
+        ''' <summary>
+        ''' Every member name of the interface (and of the interfaces it extends,
+        ''' which TypeScript checks transitively) must be among the emitted members.
+        ''' </summary>
+        Private Function CoveredMembers(model As TsType, iface As Type, declared As HashSet(Of String),
+                                        names As NameTable, visiting As HashSet(Of Type)) As Boolean
+            If Not visiting.Add(iface) Then Return True
+
+            For Each p In iface.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+                If p.GetIndexParameters().Length > 0 Then Continue For
+                If Not declared.Contains(ScriptNameOf(p, p.Name)) Then Return False
+            Next
+
+            For Each m In iface.GetMethods(BindingFlags.Public Or BindingFlags.Instance)
+                If m.IsSpecialName Then Continue For
+                If Not declared.Contains(ScriptNameOf(m, m.Name)) Then Return False
+            Next
+
+            For Each parent As Type In iface.GetInterfaces()
+                ' a BCL parent (IEnumerable(Of T)) is mapped away, so it asks for nothing
+                If Not names.IsExported(parent) Then Continue For
+                If Not CoveredMembers(model, parent, declared, names, visiting) Then Return False
+            Next
+
+            Return True
+        End Function
+
+        ''' <summary>The script-visible name of a member ([JsName] wins, exact name otherwise).</summary>
+        Private Function ScriptNameOf(mi As MemberInfo, fallback As String) As String
+            For Each a In mi.GetCustomAttributes(GetType(JsNameAttribute), True)
+                Dim n As JsNameAttribute = TryCast(a, JsNameAttribute)
+
+                If n IsNot Nothing AndAlso Not String.IsNullOrEmpty(n.Name) Then Return n.Name
+            Next
+
+            Return fallback
+        End Function
+
         ' ======================================================== members
 
         Private Sub EmitDataMembers(sb As StringBuilder, model As TsType, inner As String,
-                                    exports As HashSet(Of String), docs As XmlDocIndex)
+                                    names As NameTable, docs As XmlDocIndex)
 
             ' properties and fields share one member namespace in the bridge: merge
             ' them by name (a field never shadows a same-named property) and sort
@@ -280,24 +376,33 @@ Namespace TypeDefinitions
 
                 If block <> "" Then sb.Append(block)
 
+                If String.Equals(d.Name, "constructor", StringComparison.Ordinal) Then
+                    ' TypeScript refuses a class member named constructor, quoted or not
+                    sb.Append(inner).AppendLine("// skipped member 'constructor': a TypeScript class may not declare a field with that name")
+                    Continue For
+                End If
+
                 Dim staticPrefix As String = If(model.Kind = TsTypeKind.InterfaceType, "",
                                                 If(d.IsStatic, "static ", ""))
+                ' a static member may not reference the type parameters of its class
+                Dim context As List(Of String) = If(d.IsStatic, Nothing, model.GenericParameters)
+                Dim tsType As String = TypeMapper.TsTypeName(d.Type, names, context, typeParameters:=Not d.IsStatic)
 
                 If Not d.CanRead AndAlso d.CanWrite Then
                     ' write-only: a plain property type would promise a read the bridge rejects
                     sb.Append(inner).Append(staticPrefix).Append("set ").Append(EmitMemberName(d.Name)) _
-                      .Append("(value: ").Append(TypeMapper.TsTypeName(d.Type, exports, model.GenericParameters)).AppendLine(");")
+                      .Append("(value: ").Append(tsType).AppendLine(");")
                 Else
                     Dim readonlyPrefix As String = If(d.CanRead AndAlso Not d.CanWrite, "readonly ", "")
 
                     sb.Append(inner).Append(staticPrefix).Append(readonlyPrefix).Append(EmitMemberName(d.Name)) _
-                      .Append(": ").Append(TypeMapper.TsTypeName(d.Type, exports, model.GenericParameters)).AppendLine(";")
+                      .Append(": ").Append(tsType).AppendLine(";")
                 End If
             Next
         End Sub
 
         Private Sub EmitConstructors(sb As StringBuilder, model As TsType, inner As String,
-                                     exports As HashSet(Of String), docs As XmlDocIndex)
+                                     names As NameTable, docs As XmlDocIndex)
 
             If model.Kind = TsTypeKind.InterfaceType OrElse
                model.Kind = TsTypeKind.EnumType OrElse
@@ -309,6 +414,9 @@ Namespace TypeDefinitions
                 If model.Kind = TsTypeKind.StructType Then
                     ' the bridge builds value types through Activator.CreateInstance
                     sb.Append(inner).AppendLine("constructor();")
+                ElseIf model.IsAbstract Then
+                    ' an abstract class is derived from: its constructor is protected
+                    sb.Append(inner).AppendLine("protected constructor();")
                 Else
                     ' no public constructor: new T() would fail at runtime, so hide it from TS too
                     sb.Append(inner).AppendLine("private constructor();")
@@ -332,25 +440,36 @@ Namespace TypeDefinitions
                 If block <> "" Then sb.Append(block)
 
                 sb.Append(inner).Append("constructor") _
-                  .Append(RenderParameters(ctor.Parameters, exports, model.GenericParameters)).AppendLine(";")
+                  .Append(RenderParameters(ctor.Parameters, names, model.GenericParameters)).AppendLine(";")
             Next
         End Sub
 
-        Private Sub EmitIndexers(sb As StringBuilder, model As TsType, inner As String, exports As HashSet(Of String))
+        Private Sub EmitIndexers(sb As StringBuilder, model As TsType, inner As String, names As NameTable)
             For Each ix As TsIndexer In model.Indexers
                 Dim keyName As String = IndexerKeyName(ix.KeyType)
 
                 If keyName Is Nothing Then Continue For
 
                 Dim readonlyPrefix As String = If(ix.CanRead AndAlso Not ix.CanWrite, "readonly ", "")
+                Dim tsType As String = TypeMapper.TsTypeName(ix.ValueType, names, model.GenericParameters)
+
+                If keyName = "key: string" AndAlso HasOtherMembers(model) Then
+                    ' TypeScript demands every member be assignable to a string index
+                    ' type, which a class carrying properties or methods never satisfies
+                    tsType = "any"
+                End If
 
                 sb.Append(inner).Append(readonlyPrefix).Append("[").Append(keyName).Append("]: ") _
-                  .Append(TypeMapper.TsTypeName(ix.ValueType, exports, model.GenericParameters)).AppendLine(";")
+                  .Append(tsType).AppendLine(";")
             Next
         End Sub
 
+        Private Function HasOtherMembers(model As TsType) As Boolean
+            Return model.Properties.Count > 0 OrElse model.Fields.Count > 0 OrElse model.Methods.Count > 0
+        End Function
+
         Private Sub EmitMethods(sb As StringBuilder, model As TsType, inner As String,
-                                exports As HashSet(Of String), docs As XmlDocIndex)
+                                names As NameTable, docs As XmlDocIndex)
 
             Dim groups As IEnumerable(Of IGrouping(Of String, TsMethod)) = model.Methods _
                 .GroupBy(Function(m) m.Name, StringComparer.OrdinalIgnoreCase) _
@@ -360,7 +479,12 @@ Namespace TypeDefinitions
                 Dim rendered As New HashSet(Of String)(StringComparer.Ordinal)
 
                 For Each m As TsMethod In group.OrderBy(Function(x) x.Parameters.Count)
-                    Dim signature As String = RenderSignature(m, model, exports)
+                    If String.Equals(m.Name, "constructor", StringComparison.Ordinal) Then
+                        sb.Append(inner).AppendLine("// skipped member 'constructor': a TypeScript class may not declare a member with that name")
+                        Continue For
+                    End If
+
+                    Dim signature As String = RenderSignature(m, model, names)
 
                     ' shadowed members can surface twice with an identical signature
                     If Not rendered.Add(signature) Then Continue For
@@ -381,7 +505,7 @@ Namespace TypeDefinitions
 
         ' ======================================================== signatures
 
-        Private Function RenderSignature(m As TsMethod, model As TsType, exports As HashSet(Of String)) As String
+        Private Function RenderSignature(m As TsMethod, model As TsType, names As NameTable) As String
             Dim generic As String = ""
 
             If m.GenericArguments IsNot Nothing AndAlso m.GenericArguments.Count > 0 Then
@@ -391,14 +515,17 @@ Namespace TypeDefinitions
             ' TypeScript interfaces cannot declare static members
             Dim staticPrefix As String = If(model.Kind = TsTypeKind.InterfaceType, "",
                                             If(m.IsStatic, "static ", ""))
+            ' a static member may not reference the type parameters of its class
+            Dim context As List(Of String) = If(m.IsStatic, Nothing, model.GenericParameters)
 
             Return staticPrefix & EmitMemberName(m.Name) & generic &
-                   RenderParameters(m.Parameters, exports, model.GenericParameters) & ": " &
-                   TypeMapper.TsTypeName(m.ReturnType, exports, model.GenericParameters) & ";"
+                   RenderParameters(m.Parameters, names, context, typeParameters:=Not m.IsStatic) & ": " &
+                   TypeMapper.TsTypeName(m.ReturnType, names, context, typeParameters:=Not m.IsStatic) & ";"
         End Function
 
-        Private Function RenderParameters(params As List(Of TsParameter), exports As HashSet(Of String),
-                                          context As List(Of String)) As String
+        Private Function RenderParameters(params As List(Of TsParameter), names As NameTable,
+                                          context As List(Of String),
+                                          Optional typeParameters As Boolean = True) As String
             If params Is Nothing OrElse params.Count = 0 Then Return "()"
 
             Dim parts As New List(Of String)
@@ -406,7 +533,7 @@ Namespace TypeDefinitions
             For i As Integer = 0 To params.Count - 1
                 Dim p As TsParameter = params(i)
                 Dim element As Type = If(p.IsParamArray, p.Type.GetElementType(), p.Type)
-                Dim tsType As String = TypeMapper.TsTypeName(element, exports, context)
+                Dim tsType As String = TypeMapper.TsTypeName(element, names, context, typeParameters)
                 ' a TypeScript binding identifier cannot be a reserved word, so a CLR
                 ' parameter named var/default/... is emitted with a suffix
                 Dim pname As String = TsNaming.Sanitize(p.Name)
@@ -500,7 +627,7 @@ Namespace TypeDefinitions
 
         ' ======================================================== global aliases
 
-        Private Sub EmitGlobals(sb As StringBuilder, types As List(Of TsType), meta As EmitMeta)
+        Private Sub EmitGlobals(sb As StringBuilder, types As List(Of TsType), names As NameTable, meta As EmitMeta)
             If Not meta.Globals Then Return
 
             Dim aliases = types.Where(Function(t) t.Parent Is Nothing AndAlso t.TsNamespace <> "")
@@ -516,12 +643,13 @@ Namespace TypeDefinitions
             Dim used As New Dictionary(Of String, String)(StringComparer.Ordinal)
 
             For Each model In aliases.OrderBy(Function(t) t.ClrType.FullName, StringComparer.Ordinal)
-                Dim qualified As String = TsNaming.DeclarationPath(model.ClrType)
+                Dim simple As String = names.SimpleName(model.ClrType)
+                Dim qualified As String = names.Path(model.ClrType)
 
                 ' a name the TypeScript default libraries already declare would be
                 ' shadowed by the alias and break the referencing project
-                If TsNaming.TsLibGlobals.Contains(model.ShortName) Then
-                    sb.Append("// skipped global alias '").Append(model.ShortName) _
+                If TsNaming.TsLibGlobals.Contains(simple) Then
+                    sb.Append("// skipped global alias '").Append(simple) _
                       .Append("': the TypeScript default libraries declare that name; use ") _
                       .Append(qualified).AppendLine(" instead")
                     Continue For
@@ -529,26 +657,26 @@ Namespace TypeDefinitions
 
                 Dim winner As String = Nothing
 
-                If used.TryGetValue(model.ShortName, winner) Then
+                If used.TryGetValue(simple, winner) Then
                     ' first declaration wins; the loser keeps its qualified name
-                    sb.Append("// skipped global alias '").Append(model.ShortName) _
+                    sb.Append("// skipped global alias '").Append(simple) _
                       .Append("' (collides with ").Append(winner) _
                       .Append("); use ").Append(qualified).AppendLine(" instead")
                     Continue For
                 End If
 
-                used(model.ShortName) = qualified
+                used(simple) = qualified
 
                 Dim generic As String = GenericSuffix(model)
 
-                sb.Append("type ").Append(model.ShortName).Append(generic) _
+                sb.Append("type ").Append(simple).Append(generic) _
                   .Append(" = ").Append(qualified).Append(generic).AppendLine(";")
 
                 If model.Kind = TsTypeKind.InterfaceType OrElse model.Kind = TsTypeKind.DelegateType Then
                     Continue For    ' no constructible value for these kinds
                 End If
 
-                sb.Append("declare const ").Append(model.ShortName) _
+                sb.Append("declare const ").Append(simple) _
                   .Append(": typeof ").Append(qualified).AppendLine(";")
             Next
         End Sub

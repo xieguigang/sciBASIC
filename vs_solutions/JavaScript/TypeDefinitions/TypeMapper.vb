@@ -62,20 +62,37 @@ Namespace TypeDefinitions
     ''' the enclosing type's own parameters (in order) as the unbound generic
     ''' definition, so those parameters are substituted back here.
     ''' </para>
+    ''' <para>
+    ''' ``typeParameters`` is False for a static member: TypeScript forbids a static
+    ''' member from naming the type parameters of its class, so those references
+    ''' degrade to ``any`` while a method's own parameters stay named.
+    ''' </para>
     ''' </summary>
     Friend Module TypeMapper
 
-        Friend Function TsTypeName(t As Type, exports As HashSet(Of String),
-                                   Optional context As List(Of String) = Nothing) As String
+        Friend Function TsTypeName(t As Type, names As NameTable,
+                                   Optional context As List(Of String) = Nothing,
+                                   Optional typeParameters As Boolean = True) As String
+
+            Return TsTypeName(t, names, context, typeParameters, New HashSet(Of Type)())
+        End Function
+
+        Private Function TsTypeName(t As Type, names As NameTable, context As List(Of String),
+                                    typeParameters As Boolean, visiting As HashSet(Of Type)) As String
             If t Is Nothing Then Return "any"
-            If t.IsByRef Then Return TsTypeName(t.GetElementType(), exports, context)
+            If t.IsByRef Then Return TsTypeName(t.GetElementType(), names, context, typeParameters, visiting)
             If t.IsPointer Then Return "any"
-            If t.IsGenericParameter Then Return TsNaming.Sanitize(t.Name)
+
+            If t.IsGenericParameter Then
+                ' a class type parameter cannot appear inside a static member signature
+                If Not typeParameters AndAlso t.DeclaringMethod Is Nothing Then Return "any"
+                Return TsNaming.Sanitize(t.Name)
+            End If
 
             If t.IsArray Then
                 ' the bridge rejects multi-dimensional arrays, so does the definition
                 If t.GetArrayRank() = 1 Then
-                    Return TsTypeName(t.GetElementType(), exports, context) & "[]"
+                    Return TsTypeName(t.GetElementType(), names, context, typeParameters, visiting) & "[]"
                 End If
 
                 Return "any"
@@ -84,7 +101,7 @@ Namespace TypeDefinitions
             Dim nullable As Type = System.Nullable.GetUnderlyingType(t)
 
             If nullable IsNot Nothing Then
-                Return TsTypeName(nullable, exports, context) & " | null"
+                Return TsTypeName(nullable, names, context, typeParameters, visiting) & " | null"
             End If
 
             If t Is GetType(Void) Then Return "void"
@@ -101,11 +118,11 @@ Namespace TypeDefinitions
                 Dim definition As String = t.GetGenericTypeDefinition().FullName
 
                 If definition = "System.Threading.Tasks.Task`1" Then
-                    Return "Promise<" & TsTypeName(t.GetGenericArguments()(0), exports, context) & ">"
+                    Return "Promise<" & TsTypeName(t.GetGenericArguments()(0), names, context, typeParameters, visiting) & ">"
                 End If
 
                 If ClrConvert.IsGenericList(t) Then
-                    Return TsTypeName(t.GetGenericArguments()(0), exports, context) & "[]"
+                    Return TsTypeName(t.GetGenericArguments()(0), names, context, typeParameters, visiting) & "[]"
                 End If
 
                 Select Case definition
@@ -113,38 +130,57 @@ Namespace TypeDefinitions
                          "System.Collections.Generic.ICollection`1",
                          "System.Collections.Generic.IReadOnlyList`1",
                          "System.Collections.Generic.IReadOnlyCollection`1"
-                        Return TsTypeName(t.GetGenericArguments()(0), exports, context) & "[]"
+                        Return TsTypeName(t.GetGenericArguments()(0), names, context, typeParameters, visiting) & "[]"
                     Case "System.Collections.Generic.IEnumerable`1"
-                        Return "Iterable<" & TsTypeName(t.GetGenericArguments()(0), exports, context) & ">"
+                        Return "Iterable<" & TsTypeName(t.GetGenericArguments()(0), names, context, typeParameters, visiting) & ">"
                 End Select
             End If
 
             If ClrConvert.IsDelegate(t) Then
-                Return If(IsExported(t, exports), TsNaming.DeclarationPath(t), "any")
+                Return If(names.IsExported(t), ExportReference(t, names, context, typeParameters, visiting), "any")
             End If
 
-            If IsExported(t, exports) Then
-                If t.IsGenericTypeDefinition Then
-                    ' Visual Basic writes a signature that instantiates a generic type
-                    ' with the enclosing type's own parameters as the unbound
-                    ' definition; substitute those parameters back positionally
-                    Dim substituted As List(Of String) = DefinitionArguments(t, context)
-
-                    Return TsNaming.DeclarationPath(t) & "<" & String.Join(", ", substituted) & ">"
-                End If
-
-                If t.IsGenericType Then
-                    Dim definition As Type = t.GetGenericTypeDefinition()
-                    Dim args = t.GetGenericArguments().Select(Function(a) TsTypeName(a, exports, context))
-
-                    Return TsNaming.DeclarationPath(definition) & "<" & String.Join(", ", args) & ">"
-                End If
-
-                Return TsNaming.DeclarationPath(t)
+            If names.IsExported(t) Then
+                Return ExportReference(t, names, context, typeParameters, visiting)
             End If
 
             ' BCL types outside the mapping table degrade to any
             Return "any"
+        End Function
+
+        ''' <summary>
+        ''' A reference to a scanned type: the dotted path plus the rendered generic
+        ''' arguments (a generic reference without arguments is a TypeScript error).
+        ''' </summary>
+        Private Function ExportReference(t As Type, names As NameTable, context As List(Of String),
+                                        typeParameters As Boolean, visiting As HashSet(Of Type)) As String
+            If t.IsGenericTypeDefinition Then
+                ' Visual Basic writes a signature that instantiates a generic type
+                ' with the enclosing type's own parameters as the unbound
+                ' definition; substitute those parameters back positionally
+                Dim substituted As List(Of String) = DefinitionArguments(t, context)
+
+                Return names.Path(t) & "<" & String.Join(", ", substituted) & ">"
+            End If
+
+            If t.IsGenericType Then
+                Dim definition As Type = t.GetGenericTypeDefinition()
+
+                ' a nested signature type can reference its own declaring chain: the
+                ' visiting set keeps such a reference from recursing forever
+                If Not visiting.Add(t) Then Return names.Path(definition)
+
+                Try
+                    Dim args = t.GetGenericArguments() _
+                        .Select(Function(a) TsTypeName(a, names, context, typeParameters, visiting))
+
+                    Return names.Path(definition) & "<" & String.Join(", ", args) & ">"
+                Finally
+                    visiting.Remove(t)
+                End Try
+            End If
+
+            Return names.Path(t)
         End Function
 
         ''' <summary>
@@ -160,21 +196,6 @@ Namespace TypeDefinitions
             End If
 
             Return Enumerable.Repeat("any", count).ToList()
-        End Function
-
-        ''' <summary>Is the type (or its generic definition) part of the scanned assembly?</summary>
-        Private Function IsExported(t As Type, exports As HashSet(Of String)) As Boolean
-            If t.IsGenericType AndAlso Not t.IsGenericTypeDefinition Then
-                ' a constructed generic whose arguments are generic parameters carries
-                ' no FullName, so always test through its definition
-                Dim definition As Type = t.GetGenericTypeDefinition()
-
-                Return definition.FullName IsNot Nothing AndAlso exports.Contains(definition.FullName)
-            End If
-
-            If t.FullName Is Nothing Then Return False
-
-            Return exports.Contains(t.FullName)
         End Function
 
     End Module
