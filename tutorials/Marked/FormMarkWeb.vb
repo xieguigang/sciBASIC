@@ -52,6 +52,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.Web.WebView2.Core
 
@@ -177,8 +178,8 @@ Public Class FormMarkWeb
             If level > 0 AndAlso Not String.IsNullOrWhiteSpace(headingText) Then
                 headings.Add(New HeadingInfo With {
                     .Index = headings.Count,
-                    .level = level,
-                    .text = CleanHeadingText(headingText),
+                    .Level = level,
+                    .Text = CleanHeadingText(headingText),
                     .LineStart = offset,
                     .LineLength = rawLine.Length
                 })
@@ -341,7 +342,10 @@ Public Class FormMarkWeb
         }
 
             If file.ShowDialog = DialogResult.OK Then
+                Dim blocks As Block()
+                Dim render As ReportRender
 
+                Call render.Render(blocks)
             End If
         End Using
     End Sub
