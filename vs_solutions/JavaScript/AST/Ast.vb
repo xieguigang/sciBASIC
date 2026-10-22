@@ -760,7 +760,7 @@ Public NotInheritable Class ImportStmt
     ''' Binding name for <see cref="ImportKind.ClrNamespace"/>,
     ''' <see cref="ImportKind.NamespaceObject"/> and <see cref="ImportKind.DefaultAlias"/>.
     ''' </summary>
-    Public ReadOnly Alias As String
+    Public ReadOnly AliasName As String
     ''' <summary>Imported/local pairs (<see cref="ImportKind.NamedBindings"/> only).</summary>
     Public ReadOnly Bindings As List(Of ImportBinding)
     ''' <summary>The <c>from</c> specifier: an assembly name/path or a module path.</summary>
@@ -771,7 +771,7 @@ Public NotInheritable Class ImportStmt
         Me.Kind = kind
         Me.Specifier = specifier
         Me.NamespaceName = namespaceName
-        Me.Alias = [alias]
+        Me.AliasName = [alias]
         Me.Bindings = bindings
     End Sub
 End Class

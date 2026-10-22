@@ -13,9 +13,11 @@ Namespace Runtime
     ''' <para>
     ''' Modules are cached by absolute path: a module body runs exactly once, side effects
     ''' included, and a cycle is reported instead of recursing. The body is executed by
-    ''' the interpreter running the importing script (<see cref="Executor"/>), so a module
-    ''' sees the realm globals but not the importer's script-level variables; translated
-    ''' code has no interpreter in scope and falls back to a fresh engine.
+    ''' the interpreter running the importing script (<see cref="Executor"/>) in its own
+    ''' function scope, so a module sees the GLOBAL scope — builtins, host globals and the
+    ''' top-level <c>var</c>/function/class declarations, exactly like a classic script
+    ''' include — but not <c>let</c>/<c>const</c> or function locals. Translated code has
+    ''' no interpreter in scope and falls back to a fresh engine.
     ''' </para>
     ''' </summary>
     Friend Module ModuleLoader
@@ -93,7 +95,7 @@ Namespace Runtime
             Dim savedExecutor = _executor
             Try
                 ' the module's own imports resolve against its folder
-                JsRuntime.ScriptBaseDirectory = Path.GetDirectoryName(path)
+                JsRuntime.ScriptBaseDirectory = System.IO.Path.GetDirectoryName(path)
                 Dim exports = Execute(path)
                 _cache(path) = exports
                 Return exports
@@ -124,7 +126,8 @@ Namespace Runtime
             If Not path.EndsWith(".js", StringComparison.OrdinalIgnoreCase) AndAlso
                Not path.EndsWith(".mjs", StringComparison.OrdinalIgnoreCase) Then
                 list.Add(path & ".js")
-                list.Add(Path.Combine(path, "index.js"))
+                ' 'path' (the parameter) shadows the type name in VB, hence the qualification
+                list.Add(System.IO.Path.Combine(path, "index.js"))
             End If
             Return list
         End Function

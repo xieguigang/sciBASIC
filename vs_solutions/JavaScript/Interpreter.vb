@@ -117,14 +117,126 @@ Public NotInheritable Class Interpreter
     ''' <summary>Run a parsed program; output goes to <see cref="Io"/>.</summary>
     Public Sub Run(program As Program)
         Call RunInRootFrame(Function() As Object
-                                HoistFunctions(program.Body, _globals)
-                                ExecuteBlock(program.Body, _globals)
-                                ' promise reactions queued while the body ran are microtasks —
-                                ' drain them now, mirroring a JS job queue with no other work
-                                JsRuntime.DrainMicrotasks()
+                                ' imports resolve before the body runs (ES semantics) and
+                                ' relative module paths are anchored at this script's folder
+                                Dim savedBase = JsRuntime.ScriptBaseDirectory
+                                Dim savedExecutor = ModuleLoader.Executor
+                                Try
+                                    JsRuntime.ScriptBaseDirectory = ScriptDirectory()
+                                    ModuleLoader.Executor = AddressOf LoadModuleExports
 
-                                Return Nothing
+                                    BindImports(program.Body, _globals)
+                                    HoistFunctions(program.Body, _globals)
+                                    ExecuteBlock(program.Body, _globals)
+                                    ' promise reactions queued while the body ran are microtasks —
+                                    ' drain them now, mirroring a JS job queue with no other work
+                                    JsRuntime.DrainMicrotasks()
+
+                                    Return Nothing
+                                Finally
+                                    JsRuntime.ScriptBaseDirectory = savedBase
+                                    ModuleLoader.Executor = savedExecutor
+                                End Try
                             End Function)
+    End Sub
+
+    ' ---------------- imports ----------------
+
+    ''' <summary>Directory that relative import specifiers resolve against.</summary>
+    Private Function ScriptDirectory() As String
+        Dim file = SourceFile
+        If Not String.IsNullOrEmpty(file) Then
+            Try
+                Dim folder = System.IO.Path.GetDirectoryName(file)
+                If Not String.IsNullOrEmpty(folder) Then Return folder
+            Catch ex As Exception
+            End Try
+        End If
+        If Not String.IsNullOrEmpty(ProcessModule.ScriptDir) Then Return ProcessModule.ScriptDir
+        Return AppContext.BaseDirectory
+    End Function
+
+    ''' <summary>
+    ''' Resolve the import declarations of a program and bind their aliases into
+    ''' <paramref name="env"/> before the body runs.
+    ''' </summary>
+    Private Sub BindImports(body As List(Of Statement), env As Environment)
+        For Each s In body
+            Dim imp = TryCast(s, ImportStmt)
+            If imp IsNot Nothing Then BindImport(imp, env)
+        Next
+    End Sub
+
+    Private Sub BindImport(imp As ImportStmt, env As Environment)
+        Select Case imp.Kind
+            Case ImportKind.ClrNamespace
+                ' a namespace object: simple type name → ClrType, so ns.Type.Member works
+                env.Define(imp.AliasName, JsRuntime.ImportClrNamespace(imp.NamespaceName, imp.Specifier), True)
+            Case ImportKind.NamespaceObject, ImportKind.DefaultAlias
+                ' without `export` support the default binding is the module object
+                env.Define(imp.AliasName, JsRuntime.ImportModuleNamespace(imp.Specifier), True)
+            Case ImportKind.NamedBindings
+                For Each binding In imp.Bindings
+                    env.Define(binding.Local, JsRuntime.ImportModuleBinding(imp.Specifier, binding.Imported), True)
+                Next
+            Case ImportKind.SideEffect
+                JsRuntime.ImportModuleSideEffect(imp.Specifier)
+        End Select
+    End Sub
+
+    ''' <summary>
+    ''' Execute a module file in its own function scope and return its top-level
+    ''' declarations — the module surface, since <c>export</c> is not supported.
+    ''' Imports inside the module resolve against the module's own folder.
+    ''' </summary>
+    Friend Function LoadModuleExports(path As String) As Dictionary(Of String, Object)
+        Dim program = Parser.Parse(System.IO.File.ReadAllText(path))
+        ' a module gets its own function scope over the script globals: builtins, host
+        ' globals and top-level `var`s are visible (classic script-include semantics),
+        ' `let`/`const` and function locals are not
+        Dim moduleEnv As New Environment(_globals, isFunctionScope:=True)
+        Dim savedSource = SourceFile
+        Try
+            SourceFile = path
+            BindImports(program.Body, moduleEnv)
+            HoistFunctions(program.Body, moduleEnv)
+            For Each s In program.Body
+                If TypeOf s Is ImportStmt Then Continue For
+                Execute(s, moduleEnv)
+            Next
+            Return CollectExports(program.Body, moduleEnv)
+        Finally
+            SourceFile = savedSource
+        End Try
+    End Function
+
+    ''' <summary>Top-level declarations of a module, as its exported bindings.</summary>
+    Private Function CollectExports(body As List(Of Statement), env As Environment) As Dictionary(Of String, Object)
+        Dim exports As New Dictionary(Of String, Object)(StringComparer.Ordinal)
+        For Each s In body
+            Dim vars = TryCast(s, VarStmt)
+            If vars IsNot Nothing Then
+                For Each d In vars.Declarations
+                    Dim name = TryCast(d.Target, String)
+                    If name IsNot Nothing Then AddExport(exports, env, name)
+                Next
+                Continue For
+            End If
+            Dim func = TryCast(s, FuncDeclStmt)
+            If func IsNot Nothing Then
+                AddExport(exports, env, func.Name)
+                Continue For
+            End If
+            Dim cls = TryCast(s, ClassDeclStmt)
+            If cls IsNot Nothing Then AddExport(exports, env, cls.Spec.Name)
+        Next
+        Return exports
+    End Function
+
+    Private Sub AddExport(exports As Dictionary(Of String, Object), env As Environment, name As String)
+        If String.IsNullOrEmpty(name) Then Return
+        Dim value As JsValue = Nothing
+        If env.TryGet(name, value) Then exports(name) = JsRuntime.JsBox(value)
     End Sub
 
     ''' <summary>
@@ -507,6 +619,9 @@ Public NotInheritable Class Interpreter
                 Finally
                     If t.FinallyBlock IsNot Nothing Then ExecuteBlock(t.FinallyBlock, env)
                 End Try
+
+            Case TypeOf s Is ImportStmt
+                ' imports are bound before the body runs (see BindImports)
 
             Case TypeOf s Is EmptyStmt
                 ' nothing

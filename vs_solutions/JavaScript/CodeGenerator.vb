@@ -141,6 +141,9 @@ Public NotInheritable Class CodeGenerator
         w.Line("JsRuntime.GlobalIdentifiers()")
         ' host CLR objects (reflection bridge): publish them before the body runs
         w.Line("If host IsNot Nothing Then host.Install()")
+        ' imports are evaluated before the body (ES semantics): their aliases are locals
+        ' of Run, so the body and the function lambdas resolve them like any identifier
+        EmitImports(program.Body, w, top)
         ' JS var hoisting: every 'var' of this function body is declared once at
         ' the top (VB Dim is block-scoped, JS var is function-scoped)
         EmitHoistedVars(program.Body, w, top)
@@ -263,12 +266,43 @@ Public NotInheritable Class CodeGenerator
         ElseIf TypeOf s Is TryStmt Then
             GenTry(DirectCast(s, TryStmt), w, scope)
 
+        ElseIf TypeOf s Is ImportStmt Then
+            ' emitted at the top of Run (see EmitImports)
+
         ElseIf TypeOf s Is EmptyStmt Then
             ' nothing
 
         Else
             Throw New NotSupportedException($"unsupported statement {s.GetType().Name}")
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Emit the import declarations of the script as the first statements of Run.
+    ''' Resolution happens at run time through the shared runtime entry points, so a
+    ''' translated script imports exactly what an interpreted one does.
+    ''' </summary>
+    Private Sub EmitImports(body As List(Of Statement), w As IndentWriter, scope As Scope)
+        For Each s In body
+            Dim imp = TryCast(s, ImportStmt)
+            If imp Is Nothing Then Continue For
+
+            Select Case imp.Kind
+                Case ImportKind.ClrNamespace
+                    Dim vbName = scope.DefineLocal(imp.AliasName)
+                    w.Line($"Dim {vbName} As JsValue = JsRuntime.ImportClrNamespace({VbString(imp.NamespaceName)}, {VbString(imp.Specifier)})")
+                Case ImportKind.NamespaceObject, ImportKind.DefaultAlias
+                    Dim vbName = scope.DefineLocal(imp.AliasName)
+                    w.Line($"Dim {vbName} As JsValue = JsRuntime.ImportModuleNamespace({VbString(imp.Specifier)})")
+                Case ImportKind.NamedBindings
+                    For Each binding In imp.Bindings
+                        Dim vbName = scope.DefineLocal(binding.Local)
+                        w.Line($"Dim {vbName} As JsValue = JsRuntime.ImportModuleBinding({VbString(imp.Specifier)}, {VbString(binding.Imported)})")
+                    Next
+                Case ImportKind.SideEffect
+                    w.Line($"JsRuntime.ImportModuleSideEffect({VbString(imp.Specifier)})")
+            End Select
+        Next
     End Sub
 
     ' ======================================================= loops

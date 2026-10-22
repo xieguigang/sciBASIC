@@ -109,6 +109,47 @@ Namespace Runtime
         ''' </summary>
         Public Property TaskWaitTimeoutMs As Integer = 5000
 
+        Private ReadOnly _assemblyPaths As New List(Of String)
+        Private ReadOnly _assemblyGate As New Object
+
+        ''' <summary>
+        ''' Extra directories probed when an <c>import ... from 'x.dll'</c> is not
+        ''' resolvable from the loaded assemblies, an explicit path or the runtime's own
+        ''' probing — useful for plug-in assemblies living outside the application folder.
+        ''' </summary>
+        Public ReadOnly Property AssemblySearchPaths As List(Of String)
+            Get
+                SyncLock _assemblyGate
+                    Return New List(Of String)(_assemblyPaths)
+                End SyncLock
+            End Get
+        End Property
+
+        ''' <summary>Add a directory to <see cref="AssemblySearchPaths"/> (duplicates ignored).</summary>
+        Public Sub AddAssemblySearchPath(directory As String)
+            If String.IsNullOrEmpty(directory) Then Return
+            Dim full As String = directory
+            Try
+                full = System.IO.Path.GetFullPath(directory)
+            Catch ex As Exception
+            End Try
+            SyncLock _assemblyGate
+                If Not _assemblyPaths.Contains(full) Then _assemblyPaths.Add(full)
+            End SyncLock
+        End Sub
+
+        Public Sub ClearAssemblySearchPaths()
+            SyncLock _assemblyGate
+                _assemblyPaths.Clear()
+            End SyncLock
+        End Sub
+
+        ''' <summary>
+        ''' Last-chance resolver for <c>import ... from '...'</c>: called with the raw
+        ''' specifier and returns the assembly to expose, or Nothing when unknown.
+        ''' </summary>
+        Public Property AssemblyResolver As Func(Of String, Assembly)
+
         Private ReadOnly _hostGlobals As New Dictionary(Of String, Object)
         Private ReadOnly _hostGate As New Object
         Private ReadOnly _typeGate As New Object
