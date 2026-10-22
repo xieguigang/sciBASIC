@@ -285,12 +285,12 @@ Namespace TypeDefinitions
 
                 If Not d.CanRead AndAlso d.CanWrite Then
                     ' write-only: a plain property type would promise a read the bridge rejects
-                    sb.Append(inner).Append(staticPrefix).Append("set ").Append(d.Name) _
+                    sb.Append(inner).Append(staticPrefix).Append("set ").Append(EmitMemberName(d.Name)) _
                       .Append("(value: ").Append(TypeMapper.TsTypeName(d.Type, exports, model.GenericParameters)).AppendLine(");")
                 Else
                     Dim readonlyPrefix As String = If(d.CanRead AndAlso Not d.CanWrite, "readonly ", "")
 
-                    sb.Append(inner).Append(staticPrefix).Append(readonlyPrefix).Append(d.Name) _
+                    sb.Append(inner).Append(staticPrefix).Append(readonlyPrefix).Append(EmitMemberName(d.Name)) _
                       .Append(": ").Append(TypeMapper.TsTypeName(d.Type, exports, model.GenericParameters)).AppendLine(";")
                 End If
             Next
@@ -370,7 +370,7 @@ Namespace TypeDefinitions
                     If docs IsNot Nothing Then memberDoc = docs.MemberDoc(m.Info)
 
                     Dim block As String = JsDocWriter.ForMember(memberDoc, IsObsolete(m.Info), DeprecatedOf(m.Info),
-                                                                OptionalParamNames(m), inner)
+                                                                ParamDocNames(m), inner)
 
                     If block <> "" Then sb.Append(block)
 
@@ -407,11 +407,14 @@ Namespace TypeDefinitions
                 Dim p As TsParameter = params(i)
                 Dim element As Type = If(p.IsParamArray, p.Type.GetElementType(), p.Type)
                 Dim tsType As String = TypeMapper.TsTypeName(element, exports, context)
+                ' a TypeScript binding identifier cannot be a reserved word, so a CLR
+                ' parameter named var/default/... is emitted with a suffix
+                Dim pname As String = TsNaming.Sanitize(p.Name)
 
                 If p.IsParamArray Then
-                    parts.Add("..." & p.Name & ": " & tsType & "[]")
+                    parts.Add("..." & pname & ": " & tsType & "[]")
                 Else
-                    parts.Add(p.Name & If(p.IsOptional, "?", "") & ": " & tsType)
+                    parts.Add(pname & If(p.IsOptional, "?", "") & ": " & tsType)
                 End If
             Next
 
@@ -431,6 +434,16 @@ Namespace TypeDefinitions
             Return name
         End Function
 
+        ''' <summary>
+        ''' A base/interface reference must be a plain type name: ``any`` and the array
+        ''' types the collection mapping produces are not valid in an
+        ''' extends/implements clause.
+        ''' </summary>
+        Private Function UsableBase(name As String) As Boolean
+            If String.IsNullOrEmpty(name) OrElse name = "any" Then Return False
+            Return Not name.EndsWith("[]", StringComparison.Ordinal)
+        End Function
+
         Private Function GenericSuffix(model As TsType) As String
             If model.GenericParameters Is Nothing OrElse model.GenericParameters.Count = 0 Then Return ""
             Return "<" & String.Join(", ", model.GenericParameters) & ">"
@@ -444,24 +457,29 @@ Namespace TypeDefinitions
             Return Nothing
         End Function
 
-        ''' <summary>Renders ``[name=default]`` for the optional parameters of a method.</summary>
-        Private Function OptionalParamNames(m As TsMethod) As Dictionary(Of String, String)
+        ''' <summary>
+        ''' JSDoc rendering of every parameter name of a method: reserved words carry
+        ''' the same suffix as the emitted signature and optional parameters use the
+        ''' ``[name=default]`` form.
+        ''' </summary>
+        Private Function ParamDocNames(m As TsMethod) As Dictionary(Of String, String)
             If m Is Nothing OrElse m.Parameters Is Nothing Then Return Nothing
 
-            Dim map As Dictionary(Of String, String) = Nothing
+            Dim map As New Dictionary(Of String, String)(StringComparer.Ordinal)
 
             For Each p As TsParameter In m.Parameters
-                If Not p.IsOptional Then Continue For
+                Dim rendered As String = TsNaming.Sanitize(p.Name)
 
-                If map Is Nothing Then map = New Dictionary(Of String, String)(StringComparer.Ordinal)
+                If p.IsOptional Then
+                    rendered = "[" & rendered
 
-                Dim rendered As String = "[" & p.Name
+                    If p.HasDefault AndAlso p.DefaultValue IsNot Nothing Then
+                        rendered &= "=" & RenderDefault(p.DefaultValue)
+                    End If
 
-                If p.HasDefault AndAlso p.DefaultValue IsNot Nothing Then
-                    rendered &= "=" & RenderDefault(p.DefaultValue)
+                    rendered &= "]"
                 End If
 
-                rendered &= "]"
                 map(p.Name) = rendered
             Next
 
@@ -499,6 +517,16 @@ Namespace TypeDefinitions
 
             For Each model In aliases.OrderBy(Function(t) t.ClrType.FullName, StringComparer.Ordinal)
                 Dim qualified As String = TsNaming.DeclarationPath(model.ClrType)
+
+                ' a name the TypeScript default libraries already declare would be
+                ' shadowed by the alias and break the referencing project
+                If TsNaming.TsLibGlobals.Contains(model.ShortName) Then
+                    sb.Append("// skipped global alias '").Append(model.ShortName) _
+                      .Append("': the TypeScript default libraries declare that name; use ") _
+                      .Append(qualified).AppendLine(" instead")
+                    Continue For
+                End If
+
                 Dim winner As String = Nothing
 
                 If used.TryGetValue(model.ShortName, winner) Then

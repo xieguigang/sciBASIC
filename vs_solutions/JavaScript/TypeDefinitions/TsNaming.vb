@@ -62,6 +62,63 @@ Namespace TypeDefinitions
             "var", "void", "while", "with", "yield"
         }
 
+        ''' <summary>
+        ''' Identifiers the TypeScript default libraries (lib.es5 / lib.es2015+ /
+        ''' lib.dom / lib.scripthost / lib.decorators) declare as globals. A global alias
+        ''' carrying one of these names would shadow the library identifier and break
+        ''' every project that references this file (TS6200), so such aliases are
+        ''' skipped — the qualified namespace form stays available. Conservative
+        ''' snapshot: a name missing here only means the alias is emitted, which is
+        ''' harmless for names the libraries do not declare.
+        ''' </summary>
+        Friend ReadOnly TsLibGlobals As New HashSet(Of String)(StringComparer.Ordinal) From {
+            "Object", "Function", "Boolean", "Symbol", "Error", "EvalError", "RangeError",
+            "ReferenceError", "SyntaxError", "TypeError", "URIError", "AggregateError",
+            "Number", "Math", "Date", "String", "RegExp", "Array", "ArrayBuffer",
+            "SharedArrayBuffer", "DataView", "Atomics", "Int8Array", "Uint8Array",
+            "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array", "Uint32Array",
+            "Float32Array", "Float64Array", "BigInt64Array", "BigUint64Array", "JSON",
+            "Promise", "Map", "Set", "WeakMap", "WeakSet", "WeakRef", "FinalizationRegistry",
+            "Proxy", "Reflect", "Iterable", "Iterator", "IterableIterator", "Generator",
+            "AsyncGenerator", "AsyncIterable", "AsyncIterableIterator", "IteratorResult",
+            "ArrayLike", "ReadonlyArray", "Partial", "Required", "Readonly", "Pick",
+            "Record", "Exclude", "Extract", "NonNullable", "ReturnType", "InstanceType",
+            "Omit", "Awaited", "ThisType", "Uppercase", "Lowercase", "Capitalize",
+            "Uncapitalize", "globalThis", "undefined", "NaN", "Infinity", "BigInt",
+            "console", "fetch", "alert", "confirm", "prompt", "setTimeout", "clearTimeout",
+            "setInterval", "clearInterval", "queueMicrotask", "structuredClone", "atob",
+            "btoa", "crypto", "performance", "requestAnimationFrame", "cancelAnimationFrame",
+            "requestIdleCallback", "cancelIdleCallback", "matchMedia", "getComputedStyle",
+            "reportError", "open", "close", "focus", "blur", "print", "postMessage",
+            "addEventListener", "removeEventListener", "dispatchEvent", "scroll", "scrollTo",
+            "scrollBy", "CustomEvent", "Event", "EventTarget", "UIEvent", "MouseEvent",
+            "KeyboardEvent", "FocusEvent", "WheelEvent", "InputEvent", "CompositionEvent",
+            "DragEvent", "PointerEvent", "TouchEvent", "AnimationEvent", "TransitionEvent",
+            "MessageEvent", "MessageChannel", "MessagePort", "ErrorEvent",
+            "PromiseRejectionEvent", "ProgressEvent", "StorageEvent", "SubmitEvent",
+            "BeforeUnloadEvent", "HashChangeEvent", "PopStateEvent", "PageTransitionEvent",
+            "Blob", "File", "FileList", "FileReader", "FormData", "Headers", "Request",
+            "Response", "URL", "URLSearchParams", "WebSocket", "Worker", "AbortController",
+            "AbortSignal", "Image", "ImageData", "ImageBitmap", "CanvasRenderingContext2D",
+            "OffscreenCanvas", "CanvasGradient", "CanvasPattern", "Path2D", "TextMetrics",
+            "FontFace", "FontFaceSet", "Range", "DoubleRange", "Selection", "NodeFilter",
+            "NodeIterator", "TreeWalker", "Node", "NodeList", "HTMLCollection",
+            "HTMLOptionsCollection", "Element", "Text", "Document", "DocumentFragment",
+            "DocumentType", "Attr", "CharacterData", "Comment", "ProcessingInstruction",
+            "CDATASection", "ShadowRoot", "XMLDocument", "DOMParser", "XMLSerializer",
+            "MutationObserver", "MutationRecord", "IntersectionObserver",
+            "ResizeObserver", "PerformanceObserver", "TextEncoder", "TextDecoder",
+            "TextEncoderStream", "TextDecoderStream", "Storage", "localStorage",
+            "sessionStorage", "History", "Location", "Navigator", "Screen", "Window",
+            "XMLHttpRequest", "XMLHttpRequestEventTarget", "XMLHttpRequestUpload",
+            "ActiveXObject", "Enumerator", "VBArray", "ITextWriter", "FillMode",
+            "WritableStream", "ReadableStream", "TransformStream", "CompressionStream",
+            "DecompressionStream", "ByteLengthQueuingStrategy", "CountQueuingStrategy",
+            "ReadableStreamDefaultReader", "ReadableStreamDefaultController",
+            "WritableStreamDefaultWriter", "WritableStreamDefaultController",
+            "TransformStreamDefaultController", "SubtleCrypto", "CryptoKey", "CryptoKeyPair"
+        }
+
         ''' <summary>Strip the CLR generic arity suffix (``Foo`1`` → ``Foo``).</summary>
         Friend Function StripArity(name As String) As String
             If name Is Nothing Then Return ""
