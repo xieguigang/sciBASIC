@@ -56,9 +56,14 @@ Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.Web.WebView2.Core
 
+' 注意：ApplicationServices.Report 与 markdown 命名空间各有一个 HtmlRender，
+' 这里使用带主题样式的 markdown html 渲染器，因此用别名避免二义性。
+Imports MarkdownHtmlRender = Microsoft.VisualBasic.MIME.text.markdown.HtmlRender
+
 Public Class FormMarkWeb
 
-    ReadOnly render As New MarkdownRender
+    ''' <summary>带 GitHub 风格主题样式的 markdown → html 渲染器（预览用）。</summary>
+    ReadOnly render As New MarkdownRender(New MarkdownHtmlRender(MarkdownStyle.GitHub))
 
     Private _headings As List(Of HeadingInfo)
     Private _loading As Boolean = False

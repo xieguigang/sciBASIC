@@ -794,7 +794,9 @@ Public Class MarkdownParser
             Return NoLink()
         End If
 
-        Dim close = text.IndexOf("]", openBracket + 1)
+        ' 标签里可能嵌套方括号（典型场景：徽章 [![alt](img)](link)），
+        ' 因此必须按嵌套深度找配对的右方括号，而不是直接找第一个 ']'
+        Dim close = FindBracketClose(text, openBracket)
         If close = -1 Then
             Return NoLink()
         End If
@@ -824,7 +826,7 @@ Public Class MarkdownParser
         End If
 
         If close + 1 < text.Length AndAlso text(close + 1) = "["c Then
-            Dim close2 = text.IndexOf("]", close + 1)
+            Dim close2 = FindBracketClose(text, close + 1)
             If close2 = -1 Then
                 Return NoLink()
             End If
@@ -837,6 +839,41 @@ Public Class MarkdownParser
 
     Private Function NoLink() As LinkInfo
         Return New LinkInfo With {.matched = False}
+    End Function
+
+    ''' <summary>
+    ''' 从 <paramref name="openIndex"/> 处的 ``[`` 开始按嵌套深度查找配对的 ``]``。
+    ''' 支持方括号嵌套（如 ``[![alt](img)](url)``）与反斜杠转义。
+    ''' </summary>
+    ''' <param name="text">待扫描文本。</param>
+    ''' <param name="openIndex">左方括号位置。</param>
+    ''' <returns>配对右方括号位置；未闭合时返回 -1。</returns>
+    Private Function FindBracketClose(text As String, openIndex As Integer) As Integer
+        Dim depth As Integer = 0
+        Dim k As Integer = openIndex
+
+        While k < text.Length
+            Dim ch As Char = text(k)
+
+            If ch = "\"c Then
+                k += 2
+                Continue While
+            End If
+
+            If ch = "["c Then
+                depth += 1
+            ElseIf ch = "]"c Then
+                depth -= 1
+
+                If depth = 0 Then
+                    Return k
+                End If
+            End If
+
+            k += 1
+        End While
+
+        Return -1
     End Function
 
     Private Function FindParenClose(text As String, openIndex As Integer) As Integer

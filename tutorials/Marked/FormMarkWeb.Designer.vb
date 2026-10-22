@@ -175,6 +175,7 @@ Partial Class FormMarkWeb
         ' 
         ' TreeView1
         ' 
+        TreeView1.BorderStyle = BorderStyle.None
         TreeView1.Dock = DockStyle.Fill
         TreeView1.Location = New Point(0, 0)
         TreeView1.Name = "TreeView1"
