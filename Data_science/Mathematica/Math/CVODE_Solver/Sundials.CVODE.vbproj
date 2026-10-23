@@ -26,7 +26,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyVersion>1.0.9791.26955</AssemblyVersion>
-    <Configurations>nuget_release;Debug;Release</Configurations>
+    <Configurations>nuget_release;Debug;Release;Rsharp_app_release</Configurations>
     <Title>Managed CVODE Variable-Step ODE Solver with Adams and BDF Methods</Title>
     <AssemblyTitle>Microsoft.VisualBasic.Math.Sundials.CVODE</AssemblyTitle>
     <Company>sciBASIC.NET Foundation</Company>
@@ -39,6 +39,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>../../../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>../../../../.nuget/</OutputPath>
   </PropertyGroup>
