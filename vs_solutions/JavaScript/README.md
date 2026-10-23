@@ -121,6 +121,56 @@ host.Fetch().then(v => ...)     // Task(Of T) → Promise（await 同样可用�
 
 **翻译路径一致**：生成代码的入口为 `Run(io As ScriptIO, Optional host As ClrHost = Nothing)`，接受同一批宿主对象；脚本中的未知全局名解析到宿主注册表（`ClrInterop.Register`），未注册的名字抛普通 `ReferenceError`。
 
+## TypeScript 定义文件生成（.d.ts）
+
+为编译好的 CLR 程序集生成 TypeScript 声明文件，供 VS Code 等 IDE 在编写 JavaScript 时给出 .NET 类型智能提示。生成器复用与脚本桥接**同一套**成员解析与类型转换规则（`ClrMembers` / `ClrConvert`），因此 IDE 提示与脚本实际行为不会互相矛盾。
+
+```bash
+njs --dts <assembly.dll> [-o <out.d.ts>] [--xmldoc <path>] \
+    [--no-globals] [--explicit-only] [--include-nonpublic]
+```
+
+- `--xmldoc` 省略时自动探测 dll 同目录的同名 `.xml`（即编译器产出的 XML 注释文档），用 `ProjectSpace.CreateDocProject` 解析并生成 JSDoc；文档缺失则无注释、不报错。
+- 默认输出当前目录下的 `<程序集名>.d.ts`（UTF-8 无 BOM，确定性排序、无时间戳，可 diff、可入库）。
+- 库 API：`TypeDefinitionGenerator.Generate(assemblyPath, options)` / `.Write(assemblyPath, outputPath, options)`（`Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.TypeDefinitions`）。
+
+**输出形态**：每个 CLR 命名空间一个 `declare namespace`，嵌套类型通过同名 `namespace` 块做声明合并；文件末尾为每个公开类型追加全局别名——
+
+```ts
+declare namespace MyLib.Core {
+    /** 从 XML 注释文档生成的 JSDoc。 */
+    class Widget {
+        Name: string;
+        Compute(factor: number): number;
+        static Create(): Widget;
+    }
+}
+type Widget = MyLib.Core.Widget;
+declare const Widget: typeof MyLib.Core.Widget;
+```
+
+于是脚本里 `new Widget()` / `Widget.Create()` 直接有提示（对应宿主按类型名注册 host global 的用法）。interface / delegate 只生成 `type` 别名（无可构造值）；简单名重复时首个保留、其余输出注释并保留限定名；名字若与 TypeScript 默认库的全局标识符（`Element` / `File` / `URL` / …）冲突则跳过别名，避免遮蔽库标识符。`--no-globals` 关闭整个别名段。
+
+**类型映射**（逐项对齐 `ClrConvert` 的转换语义）：
+
+| CLR | TypeScript |
+|---|---|
+| 全部数值类型、枚举 | `number`（枚举在桥接上就是数值；枚举声明本身仍生成，可写 `TsState.Running`） |
+| String / Char / Guid | `string` |
+| Boolean | `boolean` |
+| Date / DateTimeOffset | `Date` |
+| Task / Task(Of T) | `Promise<void>` / `Promise<T>` |
+| Nullable(Of T) | `T \| null` |
+| `T[]`、`List(Of T)`、IList / ICollection / IReadOnlyList / IReadOnlyCollection | `T[]` |
+| `IEnumerable(Of T)` | `Iterable<T>`（并为此类补 `[Symbol.iterator]`） |
+| 本程序集类型 | 声明名（含递归渲染的泛型实参） |
+| 委托 | 函数类型 `type X = (a: number) => string;` |
+| 其余 BCL 类型 | `any` |
+
+**与桥接一致的取舍**：`<JsName>` 重命名、`<JsIgnore>` 隐藏、`<JsExpose>` 白名单（`--explicit-only` 全局强制）逐字生效；事件不生成（桥接不暴露事件）；单参数索引器生成索引签名；只读属性生成 `readonly`、只写属性生成 `set`；`params` 生成剩余参数，可选参数生成 `name?:` 且 JSDoc 带默认值；VB Module 生成全静态类，`MustInherit` 生成 `protected constructor()`、无公共构造函数生成 `private constructor()`；`[Obsolete]` 生成 `@deprecated`。
+
+**已知限制**：委托参数按函数类型生成，但脚本无法把 JS 函数转成 .NET 委托（运行时报可读错误）；多维数组、`out` / `ref`、BCL 未知类型退化为 `any`；静态成员不能引用类的类型参数（TypeScript 规则），退化为 `any`；名为 `constructor` 的成员被跳过（TypeScript 禁止）；`Iterable` / `Symbol.iterator` 需要 ES2015+ 的 lib 目标。
+
 ## 生成代码示例
 
 ```javascript
@@ -169,10 +219,10 @@ Square = JsRuntime.JsDefineClass("Square", CType(Function(args__9 As JsValue())
 ## 测试
 
 ```
-dotnet test        ' 149 项全绿
+dotnet test        ' 167 项（149 项既有 + 18 项 .d.ts 生成器）
 ```
 
-覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **import**（`LiteJsImportTests`：六种声明形态与顶层限制/错误分支、CLR 命名空间导入与静态调用 `IL.MethodDecompiler.Decompile`、扁平命名空间、显式 dll 路径、宿主回调与探测目录 API、模块命名空间/按名/默认位/副作用/缓存/模块内相对路径/循环导入/缺失模块与缺失绑定的可捕获错误、生成代码结构断言）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）· **Node.js 文件系统 API 对齐**：`test/js/*.js` 为独立脚本，先用真实 `node` 生成 `*.baseline.txt` 基准，再以 `LiteJs.Runner` 运行并逐条对齐（含 `fs` 同步/回调/Promise、`Buffer`、`path`、`process` 与错误路径）；`NodeApiCodegenTests` 断言生成代码引用同一批 `JsRuntime.*Builtin` 且解释器可对真实文件执行读写。
+覆盖：Lexer（token/ASI/转义/模板/正则歧义/数字分隔符）· Parser（优先级/ASI/错误位置/箭头/标签/解构）· 解释器（变量/算术/弱类型/闭包/控制流/异常/数组方法/对象/class/继承/super/正则/Date/Error/Promise/async-await/生成器）· 语义修正（`typeof null`、`var` 提升、`!=` 翻译）· **import**（`LiteJsImportTests`：六种声明形态与顶层限制/错误分支、CLR 命名空间导入与静态调用 `IL.MethodDecompiler.Decompile`、扁平命名空间、显式 dll 路径、宿主回调与探测目录 API、模块命名空间/按名/默认位/副作用/缓存/模块内相对路径/循环导入/缺失模块与缺失绑定的可捕获错误、生成代码结构断言）· **CLR 反射桥接**（`LiteJsClrInteropTests` + `ClrHostFixture`：属性/字段读写、只读与只写报错、重载与 params、索引器、集合迭代/展开/`length`、`Object.keys`/`in`/`delete`/`JSON.stringify`/展开拷贝、静态成员、`new`/`instanceof`、枚举/日期/Guid/struct 转换、Task→Promise、异常捕获与还原、`[JsName]`/`[JsIgnore]`/`[JsExpose]`、宿主注册表与批量注入、生成代码结构断言）· CodeGenerator 结构断言 · **产物编译期校验**：`test/artifacts/GeneratedScript.vb` 由 `test/artifacts/demo.js` 生成并编译进测试程序集（`ArtifactSyncTests` 断言其与生成器输出逐字节一致；改动生成器后用 `LITEJS_REGEN_ARTIFACTS=1` 重新生成）· **TypeScript 定义文件生成**（`TypeDefinitionTests` + `TsFixture` 夹具：文件头与命名空间/嵌套合并、类型映射表逐项、重载与 params/可选参数、可见性属性与白名单、XML 注释 → JSDoc（编译器产物与手写文档两种）、全局别名与重名/库名冲突去重、静态成员与泛型替换、真实程序集端到端）· **Node.js 文件系统 API 对齐**：`test/js/*.js` 为独立脚本，先用真实 `node` 生成 `*.baseline.txt` 基准，再以 `LiteJs.Runner` 运行并逐条对齐（含 `fs` 同步/回调/Promise、`Buffer`、`path`、`process` 与错误路径）；`NodeApiCodegenTests` 断言生成代码引用同一批 `JsRuntime.*Builtin` 且解释器可对真实文件执行读写。
 
 ## 实现要点（踩坑记录）
 
