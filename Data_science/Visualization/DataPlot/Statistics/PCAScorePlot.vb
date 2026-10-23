@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56037e92e5b2830badb97b6a8e48a37e, Data_science\Visualization\DataPlot\Statistics\PCAScorePlot.vb"
+#Region "Microsoft.VisualBasic::56037e92e5b2830badb97b6a8e48a37e, Data_science\Visualization\DataPlot\Statistics\PCAScorePlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -97,7 +98,7 @@ Public Class PCAScorePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Score Is Nothing Then Throw New InvalidOperationException("PCAScorePlot requires a score set.")
 
         Dim pc1 = Score.PC1, pc2 = Score.PC2

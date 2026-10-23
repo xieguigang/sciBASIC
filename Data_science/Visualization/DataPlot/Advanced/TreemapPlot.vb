@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::018a821ace18ab789c71c37fa46cc0a2, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
+#Region "Microsoft.VisualBasic::018a821ace18ab789c71c37fa46cc0a2, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>矩形树图节点</summary>
@@ -154,7 +155,7 @@ Public Class TreemapPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 

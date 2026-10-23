@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3fc19b08476a0eaf4204218044a28b7, Data_science\Visualization\DataPlot\Advanced\AlignmentPlot.vb"
+#Region "Microsoft.VisualBasic::d3fc19b08476a0eaf4204218044a28b7, Data_science\Visualization\DataPlot\Advanced\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -94,7 +95,7 @@ Public Class AlignmentPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Tracks Is Nothing OrElse Tracks.Count = 0 Then
             Throw New InvalidOperationException("AlignmentPlot requires at least one track.")
         End If

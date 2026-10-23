@@ -123,10 +123,16 @@ Public Module Extensions
                 New System.Drawing.Size(plot.CanvasWidth, plot.CanvasHeight),
                 Microsoft.VisualBasic.MIME.Html.CSS.Padding.Zero)
         Else
-            ' 非 GDI 驱动（SVG / PostScript / PDF / Skia 等）：
+            ' 非 GDI 驱动（SVG / PostScript / PDF）：
             ' 通过驱动注册表按 g.Driver 反查对应的驱动实现，
             ' 由驱动自己产出对应格式的 GraphicsData 派生对象
-            Dim data As IGraphicsData = DriverLoad.GetData(g, New Integer() {})
+            Dim padding As Integer() = {
+                CInt(plot.Theme.MarginTop),
+                CInt(plot.Theme.MarginRight),
+                CInt(plot.Theme.MarginBottom),
+                CInt(plot.Theme.MarginLeft)
+            }
+            Dim data As IGraphicsData = DriverLoad.GetData(g, padding)
 
             If TypeOf data Is GraphicsData Then
                 Return DirectCast(data, GraphicsData)

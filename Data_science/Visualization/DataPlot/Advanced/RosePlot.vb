@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f9d10b77ab1b874cd052f319ca0f586, Data_science\Visualization\DataPlot\Advanced\RosePlot.vb"
+#Region "Microsoft.VisualBasic::4f9d10b77ab1b874cd052f319ca0f586, Data_science\Visualization\DataPlot\Advanced\RosePlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>南丁格尔玫瑰图（等角度扇区，半径与数值成比例）</summary>
@@ -85,7 +86,7 @@ Public Class RosePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 
@@ -104,8 +105,8 @@ Public Class RosePlot
         ' 同心参考圆（网格）
         If Theme.ShowGrid Then
             Using pen As New Pen(Theme.GridColor, Theme.GridLineWidth)
-                For g = 1 To 4
-                    Dim r = maxR * g / 4
+                For ring = 1 To 4
+                    Dim r = maxR * ring / 4
                     _g.DrawEllipse(pen, cx - r, cy - r, r * 2, r * 2)
                 Next
             End Using

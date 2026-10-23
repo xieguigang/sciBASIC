@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6711722ff854500e3f7af83edd02c6fb, Data_science\Visualization\DataPlot\Statistics\BiHistogramPlot.vb"
+#Region "Microsoft.VisualBasic::6711722ff854500e3f7af83edd02c6fb, Data_science\Visualization\DataPlot\Statistics\BiHistogramPlot.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 
 ' ============================================================================

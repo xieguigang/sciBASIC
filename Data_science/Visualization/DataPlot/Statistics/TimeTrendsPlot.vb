@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2d85c0ec232d2c02ae5d5a7464e16ba, Data_science\Visualization\DataPlot\Statistics\TimeTrendsPlot.vb"
+#Region "Microsoft.VisualBasic::c2d85c0ec232d2c02ae5d5a7464e16ba, Data_science\Visualization\DataPlot\Statistics\TimeTrendsPlot.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -103,7 +104,7 @@ Public Class TimeTrendsPlot
         }
     End Function
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Trends Is Nothing OrElse Trends.Count = 0 Then
             Throw New InvalidOperationException("TimeTrendsPlot requires at least one trend series.")
         End If

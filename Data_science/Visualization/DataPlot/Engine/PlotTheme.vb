@@ -130,6 +130,27 @@ Public Class PlotTheme
     Public Property MarginTop As Single = 70
     Public Property MarginBottom As Single = 70
 
+    ''' <summary>由四个边缘像素值换算得到的 CSS padding 布局，供绘图驱动计算绘图区</summary>
+    ''' <returns>与 <see cref="MarginLeft"/>/<see cref="MarginTop"/>/<see cref="MarginRight"/>/<see cref="MarginBottom"/> 等价的 CSS padding</returns>
+    Public ReadOnly Property Padding As Padding
+        Get
+            Return New Padding With {
+                .Left = $"{CInt(MarginLeft)}px",
+                .Top = $"{CInt(MarginTop)}px",
+                .Right = $"{CInt(MarginRight)}px",
+                .Bottom = $"{CInt(MarginBottom)}px"
+            }
+        End Get
+    End Property
+
+    ''' <summary>背景色的 html 颜色表达式，用于创建绘图设备时填充画布底色</summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Background As String
+        Get
+            Return BackgroundColor.ToHtmlColor
+        End Get
+    End Property
+
     ''' <summary>色阶图例条的宽度（垂直模式下）或高度（水平模式下）</summary>
     Public Property ColorBarWidth As Single = 16.0F
     ''' <summary>色阶图例条到绘图区的间距</summary>

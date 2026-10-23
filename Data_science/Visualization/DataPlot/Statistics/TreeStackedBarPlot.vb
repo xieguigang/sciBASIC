@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::171ec2a69db16d0315d13b3dd1d2c7aa, Data_science\Visualization\DataPlot\Statistics\TreeStackedBarPlot.vb"
+#Region "Microsoft.VisualBasic::171ec2a69db16d0315d13b3dd1d2c7aa, Data_science\Visualization\DataPlot\Statistics\TreeStackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -98,7 +99,7 @@ Public Class TreeStackedBarPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If StackValues Is Nothing OrElse Categories Is Nothing OrElse Categories.Length = 0 Then
             Throw New InvalidOperationException("TreeStackedBarPlot requires categories and stack values.")
         End If

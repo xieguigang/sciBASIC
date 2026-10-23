@@ -116,6 +116,20 @@ Namespace Canvas
         ''' <summary>
         ''' function for make plot
         ''' </summary>
+        ''' <param name="size">画布尺寸，允许直接传入 <c>FloatSizeParser</c> 的结果</param>
+        ''' <param name="dpi"></param>
+        ''' <param name="driver"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Plot(size As SizeF,
+                                       Optional dpi As Integer = 300,
+                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
+            Return Plot(size.ToSize, dpi, driver)
+        End Function
+
+        ''' <summary>
+        ''' function for make plot
+        ''' </summary>
         ''' <param name="size$"></param>
         ''' <param name="ppi"></param>
         ''' <param name="driver"></param>

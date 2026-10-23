@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a957b7c829a425c22ec5c6d6cbad0a7, Data_science\Visualization\DataPlot\Advanced\RadarPlot.vb"
+#Region "Microsoft.VisualBasic::4a957b7c829a425c22ec5c6d6cbad0a7, Data_science\Visualization\DataPlot\Advanced\RadarPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>雷达图（蛛网图，多维度多系列叠加）</summary>
@@ -85,7 +86,7 @@ Public Class RadarPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 
@@ -120,8 +121,8 @@ Public Class RadarPlot
         ' ---- 同心多边形网格 ----
         If Theme.ShowGrid Then
             Using pen As New Pen(Theme.GridColor, Theme.GridLineWidth)
-                For g = 1 To GridLevels
-                    Dim rr = R * g / GridLevels
+                For level = 1 To GridLevels
+                    Dim rr = R * level / GridLevels
                     Dim pts = New PointF(nCat - 1) {}
                     For j = 0 To nCat - 1
                         pts(j) = New PointF(cx + CSng(std.Cos(angles(j))) * rr,
@@ -147,9 +148,9 @@ Public Class RadarPlot
                   sf As New StringFormat()
                 sf.Alignment = StringAlignment.Near
                 sf.LineAlignment = StringAlignment.Center
-                For g = 1 To GridLevels
-                    Dim rr = R * g / GridLevels
-                    Dim v = vmax * g / GridLevels
+                For level = 1 To GridLevels
+                    Dim rr = R * level / GridLevels
+                    Dim v = vmax * level / GridLevels
                     _g.DrawString(FormatNumber(v), Theme.TickLabelFont, br, cx + 2, cy - rr)
                 Next
             End Using

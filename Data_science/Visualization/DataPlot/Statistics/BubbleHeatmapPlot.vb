@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97e7fda763df9836d70714544bd6e500, Data_science\Visualization\DataPlot\Statistics\BubbleHeatmapPlot.vb"
+#Region "Microsoft.VisualBasic::97e7fda763df9836d70714544bd6e500, Data_science\Visualization\DataPlot\Statistics\BubbleHeatmapPlot.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
@@ -100,7 +101,7 @@ Public Class BubbleHeatmapPlot : Inherits PlotEngine
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Matrix Is Nothing Then Throw New InvalidOperationException("BubbleHeatmapPlot requires a matrix.")
 
         Dim rows = Matrix.GetLength(0)

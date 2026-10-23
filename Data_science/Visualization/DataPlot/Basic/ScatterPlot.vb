@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bece5727b60461fa601743426272e1b1, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
+#Region "Microsoft.VisualBasic::bece5727b60461fa601743426272e1b1, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
@@ -119,22 +120,13 @@ Public Class ScatterPlot : Inherits SeriesPlotEngine
         MyBase.New(g, theme)
     End Sub
 
-    Public Overloads Shared Function Plot(seriesList As IList(Of Series), size As String) As GraphicsData
-        Dim sz As Size = size.SizeParser
-
-        Using scatter As New ScatterPlot(sz.Width, sz.Height)
-            Call scatter.Plot(seriesList)
-            Throw New NotImplementedException
-        End Using
-    End Function
-
-    Public Overrides Sub Plot(seriesList As IList(Of Series))
-        If seriesList Is Nothing OrElse seriesList.Count = 0 Then
-            Throw New ArgumentException("At least one data series is required.", NameOf(seriesList))
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        If SeriesList Is Nothing OrElse SeriesList.Count = 0 Then
+            Throw New ArgumentException("At least one data series is required.", NameOf(SeriesList))
         End If
 
         ' 抖动在进入坐标计算之前完成，保证后续图形Entity完全一致
-        Dim visible = ApplyJitter(seriesList)
+        Dim visible = ApplyJitter(SeriesList)
 
         DrawBackground()
         ComputePlotArea()

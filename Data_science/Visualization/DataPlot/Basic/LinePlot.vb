@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::464345792bb8dcf1e50d0311eb5d6267, Data_science\Visualization\DataPlot\Basic\LinePlot.vb"
+#Region "Microsoft.VisualBasic::464345792bb8dcf1e50d0311eb5d6267, Data_science\Visualization\DataPlot\Basic\LinePlot.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@
 Imports System.Drawing
 
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 ''' <summary>折线图（默认无标记，可单独配置）</summary>
 Public Class LinePlot
@@ -99,9 +100,9 @@ End Sub
         MyBase.New(g, theme)
     End Sub
 
-    Public Overrides Sub Plot(seriesList As IList(Of Series))
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         ' 折线图默认不显示标记
-        For Each s In seriesList
+        For Each s In SeriesList
             If s.MarkerShape = MarkerShape.Circle Then s.MarkerShape = MarkerShape.None
         Next
         DrawBackground()
@@ -109,8 +110,8 @@ End Sub
         DrawPlotArea()
         DrawTitle()
 
-        Dim allX = seriesList.SelectMany(Function(s) s.X).ToArray()
-        Dim allY = seriesList.SelectMany(Function(s) s.Y).ToArray()
+        Dim allX = SeriesList.SelectMany(Function(s) s.X).ToArray()
+        Dim allY = SeriesList.SelectMany(Function(s) s.Y).ToArray()
         Dim xmin = If(Me.XMin, allX.Min())
         Dim xmax = If(Me.XMax, allX.Max())
         Dim ymin = If(Me.YMin, allY.Min())
@@ -128,8 +129,8 @@ End Sub
 
         DrawAxisAndGrid(xmin, xmax, ymin, ymax)
 
-        For i = 0 To seriesList.Count - 1
-            Dim s = seriesList(i)
+        For i = 0 To SeriesList.Count - 1
+            Dim s = SeriesList(i)
             If Not s.Visible Then Continue For
             Dim color = If(s.Color, Theme.Palette(i Mod Theme.Palette.Length))
             Dim pts = New List(Of PointF)()
@@ -161,7 +162,7 @@ End Sub
             End If
         Next
 
-        DrawLegend(seriesList)
+        DrawLegend(SeriesList)
     End Sub
 
     ''' <summary>把 [-err, +err] 区间铺成一个闭合多边形，得到半透明误差带</summary>

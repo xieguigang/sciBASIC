@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::306b10a37064ced42b4175148b834ca2, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
+#Region "Microsoft.VisualBasic::306b10a37064ced42b4175148b834ca2, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
 
     ' Author:
     ' 
@@ -71,6 +71,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
@@ -144,11 +145,7 @@ Public Class BarPlot : Inherits PlotEngine
         MyBase.New(g, theme)
     End Sub
 
-    Public Overloads Shared Function Plot(Serials As IReadOnlyCollection(Of BarSerial), size As String) As GraphicsData
-        Throw New NotImplementedException
-    End Function
-
-    Public Overloads Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Serials IsNot Nothing AndAlso Serials.Length > 0 Then
             DrawCustomSerials()
             Return

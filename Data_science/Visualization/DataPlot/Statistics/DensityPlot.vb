@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ef4d622228baf32ec3f317d2a282e5c, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
+#Region "Microsoft.VisualBasic::6ef4d622228baf32ec3f317d2a282e5c, Data_science\Visualization\DataPlot\Statistics\DensityPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 
@@ -97,7 +98,7 @@ Public Class DensityPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Points Is Nothing OrElse Not Points.Any() Then
             Throw New InvalidOperationException("DensityPlot requires at least one point.")
         End If

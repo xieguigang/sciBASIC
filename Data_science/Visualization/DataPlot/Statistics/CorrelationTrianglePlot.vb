@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a97d44abf989a5bbaa05d1c23d218394, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
+#Region "Microsoft.VisualBasic::a97d44abf989a5bbaa05d1c23d218394, Data_science\Visualization\DataPlot\Statistics\CorrelationTrianglePlot.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
@@ -89,7 +90,7 @@ Public Class CorrelationTrianglePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Correlation Is Nothing OrElse Not Correlation.ValidateShape() Then
             Throw New InvalidOperationException("A well-shaped correlation matrix is required.")
         End If

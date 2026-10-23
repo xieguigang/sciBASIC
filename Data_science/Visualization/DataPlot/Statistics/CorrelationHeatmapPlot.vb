@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13ea77985a450e03ef7ccd64c7205e54, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
+#Region "Microsoft.VisualBasic::13ea77985a450e03ef7ccd64c7205e54, Data_science\Visualization\DataPlot\Statistics\CorrelationHeatmapPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
@@ -96,7 +97,7 @@ Public Class CorrelationHeatmapPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Correlation Is Nothing OrElse Not Correlation.ValidateShape() Then
             Throw New InvalidOperationException("A well-shaped correlation matrix is required.")
         End If

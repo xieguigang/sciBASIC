@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0159c3515607128dfaf26cc45af073c0, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyPlot.vb"
+#Region "Microsoft.VisualBasic::0159c3515607128dfaf26cc45af073c0, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyPlot.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports stdf = System.Math
 
 ' ============================================================================
@@ -78,7 +79,7 @@ Public Class SankeyPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 

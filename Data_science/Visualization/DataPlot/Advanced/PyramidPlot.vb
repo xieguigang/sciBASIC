@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b466983c7d487003fdde2fc56c03df8, Data_science\Visualization\DataPlot\Advanced\PyramidPlot.vb"
+#Region "Microsoft.VisualBasic::6b466983c7d487003fdde2fc56c03df8, Data_science\Visualization\DataPlot\Advanced\PyramidPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -96,7 +97,7 @@ Public Class PyramidPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Categories Is Nothing OrElse Categories.Length = 0 Then
             Throw New InvalidOperationException("PyramidPlot requires at least one category.")
         End If

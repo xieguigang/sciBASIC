@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fedcb55cb438df1e1abbde5ccebcd13, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
+#Region "Microsoft.VisualBasic::2fedcb55cb438df1e1abbde5ccebcd13, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>盒须图（Box Plot / Box-and-Whisker）</summary>
@@ -79,7 +80,7 @@ Public Class BoxPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()
@@ -87,7 +88,7 @@ Public Class BoxPlot
 
         Dim nGrp = Groups.Count
         ' 计算全局 Y 范围
-        Dim allData = Groups.SelectMany(Function(g) g.Data).ToList()
+        Dim allData = Groups.SelectMany(Function(x) x.Data).ToList()
         Dim ymin = If(Me.YMin, allData.Min())
         Dim ymax = If(Me.YMax, allData.Max())
 
@@ -100,18 +101,18 @@ Public Class BoxPlot
         Dim xTicks = Enumerable.Range(0, nGrp).Select(Function(i) CDbl(i)).ToArray()
         Dim yTicks = GenerateTicks(ymin, ymax)
         If Horizontal Then
-            DrawAxisAndGrid(ymin, ymax, -0.5, nGrp - 0.5, yTicks, xTicks, Nothing, Groups.Select(Function(g) g.Name).ToArray())
+            DrawAxisAndGrid(ymin, ymax, -0.5, nGrp - 0.5, yTicks, xTicks, Nothing, Groups.Select(Function(x) x.Name).ToArray())
         Else
-            DrawAxisAndGrid(-0.5, nGrp - 0.5, ymin, ymax, xTicks, yTicks, Groups.Select(Function(g) g.Name).ToArray(), Nothing)
+            DrawAxisAndGrid(-0.5, nGrp - 0.5, ymin, ymax, xTicks, yTicks, Groups.Select(Function(x) x.Name).ToArray(), Nothing)
         End If
 
         Dim groupWidth = If(Horizontal, _plotArea.Height / nGrp, _plotArea.Width / nGrp)
         Dim boxWidth = groupWidth * 0.5
 
         For i = 0 To nGrp - 1
-            Dim g = Groups(i)
-            Dim color As Color = If(g.Color, Theme.Palette(i Mod Theme.Palette.Length))
-            Dim sorted = g.Data.OrderBy(Function(v) v).ToArray()
+            Dim grp = Groups(i)
+            Dim color As Color = If(grp.Color, Theme.Palette(i Mod Theme.Palette.Length))
+            Dim sorted = grp.Data.OrderBy(Function(v) v).ToArray()
             Dim q1 = Quantile(sorted, 0.25)
             Dim q2 = Quantile(sorted, 0.5)
             Dim q3 = Quantile(sorted, 0.75)
@@ -149,7 +150,7 @@ Public Class BoxPlot
                     _g.DrawLine(pen, pxWHi, by0 + 4, pxWHi, by1 - 4)
                     ' 均值
                     If ShowMean Then
-                        Dim mean = g.Data.Average()
+                        Dim mean = grp.Data.Average()
                         Dim pxM = ToPixelX(mean, ymin, ymax)
                         Using dsh As New Pen(color, Theme.LineWidth)
                             dsh.DashStyle = DashStyle.Dot
@@ -183,7 +184,7 @@ Public Class BoxPlot
                     _g.DrawLine(pen, CSng(bx0 + 4), pyWLo, CSng(bx1 - 4), pyWLo)
                     _g.DrawLine(pen, CSng(bx0 + 4), pyWHi, CSng(bx1 - 4), pyWHi)
                     If ShowMean Then
-                        Dim mean = g.Data.Average()
+                        Dim mean = grp.Data.Average()
                         Dim pyM = ToPixelY(mean, ymin, ymax)
                         Using dsh As New Pen(color, Theme.LineWidth)
                             dsh.DashStyle = DashStyle.Dot

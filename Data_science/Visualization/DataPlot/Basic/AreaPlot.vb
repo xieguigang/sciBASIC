@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::503700aeaf296622213f32498d152ebd, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
+#Region "Microsoft.VisualBasic::503700aeaf296622213f32498d152ebd, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
 
     ' Author:
     ' 
@@ -59,11 +59,12 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>基础面积图（曲线下面积填充）</summary>
 Public Class AreaPlot
-    Inherits PlotEngine
+    Inherits SeriesPlotEngine
 
     ''' <summary>是否启用 Catmull-Rom 平滑曲线</summary>
     Public Property Smooth As Boolean = True
@@ -83,15 +84,15 @@ Public Class AreaPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot(seriesList As IList(Of Series))
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()
         DrawTitle()
 
         ' ---- 计算坐标范围 ----
-        Dim allX = seriesList.SelectMany(Function(s) s.X).ToArray()
-        Dim allY = seriesList.SelectMany(Function(s) s.Y).ToArray()
+        Dim allX = SeriesList.SelectMany(Function(s) s.X).ToArray()
+        Dim allY = SeriesList.SelectMany(Function(s) s.Y).ToArray()
         Dim xmin = If(Me.XMin, allX.Min())
         Dim xmax = If(Me.XMax, allX.Max())
         Dim yLo = std.Min(allY.Min(), Baseline)
@@ -112,8 +113,8 @@ Public Class AreaPlot
         DrawAxisAndGrid(xmin, xmax, ymin, ymax)
 
         ' ---- 逐系列绘制面积 ----
-        For i = 0 To seriesList.Count - 1
-            Dim s = seriesList(i)
+        For i = 0 To SeriesList.Count - 1
+            Dim s = SeriesList(i)
             If Not s.Visible Then Continue For
             Dim color = If(s.Color, Theme.Palette(i Mod Theme.Palette.Length))
 
@@ -145,7 +146,7 @@ Public Class AreaPlot
             End If
         Next
 
-        DrawLegend(seriesList)
+        DrawLegend(SeriesList)
     End Sub
 
     ''' <summary>Catmull-Rom 样条插值，返回密集采样点列表</summary>

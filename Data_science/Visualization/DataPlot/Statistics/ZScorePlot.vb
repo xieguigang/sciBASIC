@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18aaca57d87adff7f775f28b911a48f9, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
+#Region "Microsoft.VisualBasic::18aaca57d87adff7f775f28b911a48f9, Data_science\Visualization\DataPlot\Statistics\ZScorePlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -99,7 +100,7 @@ Public Class ZScorePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Entries Is Nothing OrElse Entries.Count = 0 Then
             Throw New InvalidOperationException("ZScorePlot requires at least one entry.")
         End If
@@ -179,7 +180,7 @@ Public Class ZScorePlot
     End Sub
 
     Private Function GroupColor(name As String) As Color
-        Dim groups = Entries.Select(Function(e) e.Group).Distinct().OrderBy(Function(g) g).ToArray()
+        Dim groups = Entries.Select(Function(e) e.Group).Distinct().OrderBy(Function(x) x).ToArray()
         Dim idx = Array.IndexOf(groups, name)
         If idx < 0 Then idx = 0
         Return Theme.Palette(idx Mod Theme.Palette.Length)

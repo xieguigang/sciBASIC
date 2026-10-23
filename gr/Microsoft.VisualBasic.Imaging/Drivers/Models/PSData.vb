@@ -1,70 +1,22 @@
-﻿#Region "Microsoft.VisualBasic::a10ee04178bab633700a468db0dc01d9, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 36
-    '    Code Lines: 29 (80.56%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 7 (19.44%)
-    '     File Size: 1.12 KB
-
-
-    '     Class PostScriptData
-    ' 
-    '         Properties: Driver, Previews
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetDataURI, Save
-    ' 
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
+    ''' <summary>
+    ''' PostScript 格式的绘图数据：底层是 <see cref="PostScriptBuilder"/>
+    ''' 所记录的绘制指令序列，<see cref="Save(Stream)"/> 时把它写成 ASCII PostScript 文本。
+    ''' </summary>
     Public Class PostScriptData : Inherits GraphicsData
         Implements IVisualStudioPreviews
+
+        ''' <summary>绘制指令的构建器（即绘图的上下文对象）</summary>
+        ReadOnly ps As PostScriptBuilder
 
         Public Overrides ReadOnly Property Driver As Drivers
             Get
@@ -78,16 +30,40 @@ Namespace Driver
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="img">the postscript canvas context: <see cref="PostScriptBuilder"/></param>
+        ''' <param name="size"></param>
+        ''' <param name="padding"></param>
         Public Sub New(img As Object, size As Size, padding As Padding)
             MyBase.New(img, size, padding)
+
+            Me.ps = DirectCast(img, PostScriptBuilder)
         End Sub
 
+        ''' <summary>
+        ''' 把 PostScript 脚本文本编码为 data uri
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function GetDataURI() As DataURI
-            Throw New NotImplementedException()
+            Dim buffer As New MemoryStream(Encoding.UTF8.GetBytes(ps.ToString))
+
+            Return New DataURI(buffer, content_type)
         End Function
 
+        ''' <summary>
+        ''' 把 PostScript 脚本写入目标流
+        ''' </summary>
+        ''' <param name="out"></param>
+        ''' <returns></returns>
         Public Overrides Function Save(out As Stream) As Boolean
-            Throw New NotImplementedException()
+            Dim bytes As Byte() = Encoding.UTF8.GetBytes(ps.ToString)
+
+            Call out.Write(bytes, 0, bytes.Length)
+            Call out.Flush()
+
+            Return True
         End Function
     End Class
 End Namespace

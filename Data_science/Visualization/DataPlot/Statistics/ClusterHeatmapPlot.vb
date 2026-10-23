@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eef6f7b135e983c855eab7c5b92f0938, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
+#Region "Microsoft.VisualBasic::eef6f7b135e983c855eab7c5b92f0938, Data_science\Visualization\DataPlot\Statistics\ClusterHeatmapPlot.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
@@ -116,7 +117,7 @@ Public Class ClusterHeatmapPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Matrix Is Nothing Then Throw New InvalidOperationException("ClusterHeatmapPlot requires a matrix.")
 
         Dim rows = Matrix.GetLength(0)

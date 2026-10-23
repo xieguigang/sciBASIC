@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7048d941afbd58dfaab13b92c065fabc, Data_science\Visualization\DataPlot\Statistics\ForestPlot.vb"
+#Region "Microsoft.VisualBasic::7048d941afbd58dfaab13b92c065fabc, Data_science\Visualization\DataPlot\Statistics\ForestPlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
@@ -97,7 +98,7 @@ Public Class ForestPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Entries Is Nothing OrElse Entries.Count = 0 Then
             Throw New InvalidOperationException("ForestPlot requires at least one entry.")
         End If

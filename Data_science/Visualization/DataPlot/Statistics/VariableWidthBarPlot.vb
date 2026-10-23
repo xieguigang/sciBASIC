@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59247a2f58ec57acc7252744a5fe28ac, Data_science\Visualization\DataPlot\Statistics\VariableWidthBarPlot.vb"
+#Region "Microsoft.VisualBasic::59247a2f58ec57acc7252744a5fe28ac, Data_science\Visualization\DataPlot\Statistics\VariableWidthBarPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -94,7 +95,7 @@ Public Class VariableWidthBarPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Bars Is Nothing OrElse Bars.Count = 0 Then
             Throw New InvalidOperationException("VariableWidthBarPlot requires at least one bar.")
         End If
