@@ -308,10 +308,17 @@ Namespace Joints3D
                 Return
             End If
 
-            ' 位置修正系数必须很小：这个函数在**每个子步**都被调用一次，若系数取 0.2，
-            ' 一步之内就会做 8 次 20% 的"传送式"修正。传送只改位置不改速度，
+            ' 位置修正只用于消除**数值漂移**，不能承担"把锚点拉回"的职责：
+            ' 这个函数每个子步都会被调用，而它只改位置不改速度，
             ' 等于把快速运动产生的位移凭空抹掉，表现为巨大的关节阻尼
-            ' （实测 20 N·m 驱动力矩下 yaw 关节一秒只转 0.11 rad）。
+            ' （实测锚点偏离质心的 j5 在 6.9 N·m 下完全转不动）。
+            ' 因此设一个容差：小于容差的误差（正常数值漂移）不做修正。
+            Dim distance As Double = Vector3Math.Length(err)
+
+            If distance < PositionSlop Then
+                Return
+            End If
+
             Dim corr As Vector3 = err * PositionCorrection
 
             A.Position = A.Position + corr * (A.InvMass / invSum)
@@ -320,6 +327,9 @@ Namespace Joints3D
 
         ''' <summary>每个子步的位置修正比例（默认 0.02）。</summary>
         Public Property PositionCorrection As Double = 0.02
+
+        ''' <summary>位置修正的容差（米）：小于它的锚点误差视为数值漂移，不修正。</summary>
+        Public Property PositionSlop As Double = 0.002
         ''' <summary>把 Baumgarte 修正速度夹在 <see cref="BiasSpeedLimit"/> 以内。</summary>
         Private Function ClampBias(bias As Double) As Double
             If BiasSpeedLimit <= 0.0 Then

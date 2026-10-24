@@ -45,6 +45,12 @@ Namespace Joints3D
         ''' <summary>限位修正的 Baumgarte 系数。</summary>
         Public Property LimitBaumgarte As Double = 0.25
 
+        ''' <summary>角向位置修正的比例（每子步把两轴夹角消除这个比例）。</summary>
+        Public Property AngularCorrection As Double = 0.0
+
+        ''' <summary>两轴夹角收敛的偏置速度上限（rad/s）。</summary>
+        Public Property AngleBiasLimit As Double = 0.05
+
         ''' <summary>关节名称（供上层显示与调试）。</summary>
         Public Property Label As String
 
@@ -74,11 +80,13 @@ Namespace Joints3D
             ' 实测会把 yaw 关节 5 rad/s 的角速度在 10 步内衰减到 0）
             Me.Point.Relaxation = 1.0
 
-            ' 位置偏置速度必须很小：β/dt 在 1/960 的子步下会被放大上千倍，
-            ' 稍微一点锚点误差就产生 m/s 级的修正冲量，冲量穿过锚点会带来
-            ' 大量非物理的角动量交换（表现为关节被"粘住"）
-            Me.Point.Baumgarte = 0.05
-            Me.Point.BiasSpeedLimit = 0.2
+            ' 锚点分离只用**速度偏置**消除（限幅 0.3 m/s），不做位置层的"传送式"修正。
+            ' 位置层每子步都把刚体往锚点方向挪一点，只改位置不改速度，
+            ' 会抹掉旋转产生的位移，等于给关节加大阻尼：实测锚点偏离质心的 j5
+            ' 在 6.9 N·m 下完全转不动，而锚点恰好在轴上的 j1 可以自由转动。
+            Me.Point.Baumgarte = 0.1
+            Me.Point.BiasSpeedLimit = 0.3
+            Me.Point.PositionCorrection = 0.0
             Me.hingeAxisA = Vector3Math.Normalize(axisA)
             Me.hingeAxisB = Vector3Math.Normalize(axisB)
             Me.LowerLimit = lowerLimit
@@ -201,11 +209,17 @@ Namespace Joints3D
             Dim n As Vector3 = Vector3Math.Cross(axisB, axisA)
 
             If Vector3Math.LengthSquared(n) > 1.0E-12 Then
-                Dim angle As Double = std.Asin(std.Min(1.0, Vector3Math.Length(n)))
                 Dim u1 As Vector3 = Vector3Math.Normalize(n)
                 Dim u2 As Vector3 = Vector3Math.Normalize(Vector3Math.Cross(axisB, u1))
 
-                Call SolveAngularAxis(rbA, rbB, invIA, invIB, u1, Baumgarte / dt * angle, dt)
+                ' 夹角只用一个**很小的限幅**去收敛（0.05 rad/s）：
+                ' 若直接取 β/dt·夹角，量级可达几 rad/s，会把两个刚体的角速度一起拉到那个
+                ' 目标值（实测 j1 施加 20 N·m 一步只得到 0.024 rad/s，应为 1.9 rad/s）；
+                ' 完全不收敛又会让夹角一直保留（实测 j5 稳定在 0.14 rad，轴歪 8° 导致转不动）。
+                Dim limitAngle As Double = std.Asin(std.Min(1.0, Vector3Math.Length(n)))
+                Dim target As Double = std.Min(AngleBiasLimit, std.Max(-AngleBiasLimit, Baumgarte / dt * limitAngle))
+
+                Call SolveAngularAxis(rbA, rbB, invIA, invIB, u1, target, dt)
                 Call SolveAngularAxis(rbA, rbB, invIA, invIB, u2, 0.0, dt)
             Else
                 Dim u1 As Vector3 = Vector3Math.OrthogonalOf(axisA)
@@ -271,6 +285,26 @@ Namespace Joints3D
 
         Public Sub SolvePosition(dt As Double) Implements IConstraint3D.SolvePosition
             Call Point.SolvePosition(dt)
+
+            ' 角向的位置级修正：把两侧铰链轴拉回平行。
+            ' 速度层只消除"相对角速度"，不能消除已经存在的夹角；一旦因为锚点冲量产生了
+            ' 非轴向旋转，夹角会一直保留（实测 j5 稳定在 0.14 rad，相当于轴歪了 8°，
+            ' 绕轴旋转被这个偏斜"分摊"掉，伺服再也转不动）。
+            Dim axisA As Vector3 = WorldAxisA
+            Dim axisB As Vector3 = WorldAxisB
+            Dim n As Vector3 = Vector3Math.Cross(axisB, axisA)
+
+            If Vector3Math.LengthSquared(n) <= 1.0E-12 Then Return
+
+            Dim angle As Double = std.Asin(std.Min(1.0, Vector3Math.Length(n)))
+
+            If angle < 1.0E-4 Then Return
+
+            Dim correction As Quaternion = Quaternion.FromAxisAngle(
+                Vector3Math.Normalize(n), angle * AngularCorrection)
+
+            Point.B.Orientation = Quaternion.Compose(correction, Point.B.Orientation).Normalize()
+            Call Point.B.InvalidateInertiaCache()
         End Sub
 
         ''' <summary>把角速度修正量夹在 <see cref="BiasSpeedLimit"/> 以内。</summary>
