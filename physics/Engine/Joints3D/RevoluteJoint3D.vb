@@ -73,6 +73,12 @@ Namespace Joints3D
             ' 这里保持满额冲量（松弛会留下残差，残差在下一步被当作误差消除而耗散能量，
             ' 实测会把 yaw 关节 5 rad/s 的角速度在 10 步内衰减到 0）
             Me.Point.Relaxation = 1.0
+
+            ' 位置偏置速度必须很小：β/dt 在 1/960 的子步下会被放大上千倍，
+            ' 稍微一点锚点误差就产生 m/s 级的修正冲量，冲量穿过锚点会带来
+            ' 大量非物理的角动量交换（表现为关节被"粘住"）
+            Me.Point.Baumgarte = 0.05
+            Me.Point.BiasSpeedLimit = 0.2
             Me.hingeAxisA = Vector3Math.Normalize(axisA)
             Me.hingeAxisB = Vector3Math.Normalize(axisB)
             Me.LowerLimit = lowerLimit
