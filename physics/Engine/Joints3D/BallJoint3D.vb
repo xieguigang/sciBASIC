@@ -308,11 +308,18 @@ Namespace Joints3D
                 Return
             End If
 
-            Dim corr As Vector3 = err * 0.2
+            ' 位置修正系数必须很小：这个函数在**每个子步**都被调用一次，若系数取 0.2，
+            ' 一步之内就会做 8 次 20% 的"传送式"修正。传送只改位置不改速度，
+            ' 等于把快速运动产生的位移凭空抹掉，表现为巨大的关节阻尼
+            ' （实测 20 N·m 驱动力矩下 yaw 关节一秒只转 0.11 rad）。
+            Dim corr As Vector3 = err * PositionCorrection
 
             A.Position = A.Position + corr * (A.InvMass / invSum)
             B.Position = B.Position - corr * (B.InvMass / invSum)
         End Sub
+
+        ''' <summary>每个子步的位置修正比例（默认 0.02）。</summary>
+        Public Property PositionCorrection As Double = 0.02
         ''' <summary>把 Baumgarte 修正速度夹在 <see cref="BiasSpeedLimit"/> 以内。</summary>
         Private Function ClampBias(bias As Double) As Double
             If BiasSpeedLimit <= 0.0 Then
