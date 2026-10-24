@@ -49,9 +49,6 @@ Namespace Joints3D
         Public Property Label As String
 
         Private _refRelative As Quaternion = Quaternion.Identity
-        Private _angle As Double = 0.0
-        Private _prevRaw As Double = 0.0
-        Private _hasReference As Boolean = False
 
         ''' <summary>创建一个转轴关节。</summary>
         ''' <param name="a">上游刚体</param>
@@ -71,6 +68,11 @@ Namespace Joints3D
                 Optional label As String = Nothing)
 
             Me.Point = New BallJoint3D(a, b, anchorA, anchorB)
+
+            ' 锚点通常不在质心上：3×3 耦合求解已经把过冲消掉，
+            ' 这里保持满额冲量（松弛会留下残差，残差在下一步被当作误差消除而耗散能量，
+            ' 实测会把 yaw 关节 5 rad/s 的角速度在 10 步内衰减到 0）
+            Me.Point.Relaxation = 1.0
             Me.hingeAxisA = Vector3Math.Normalize(axisA)
             Me.hingeAxisB = Vector3Math.Normalize(axisB)
             Me.LowerLimit = lowerLimit
@@ -119,11 +121,10 @@ Namespace Joints3D
             End Get
         End Property
 
-        ''' <summary>相对零位的关节角度（弧度，unwrap 后的连续值）。</summary>
+        ''' <summary>相对零位的关节角度（弧度）。</summary>
         Public ReadOnly Property Position As Double Implements IJointDof3D.Position
             Get
-                Call UpdateAngle()
-                Return _angle
+                Return ComputeAngle()
             End Get
         End Property
 
@@ -176,9 +177,6 @@ Namespace Joints3D
         ''' <summary>把当前相对姿态记为角度零位。</summary>
         Public Sub SetZeroReference() Implements IJointDof3D.SetZeroReference
             _refRelative = Quaternion.Compose(Point.A.Orientation.Inverse(), Point.B.Orientation)
-            _angle = 0.0
-            _prevRaw = 0.0
-            _hasReference = True
         End Sub
 
         ' /********************************************************************************/
@@ -220,14 +218,13 @@ Namespace Joints3D
         Private Sub SolveLimit(rbA As RigidBody3D, rbB As RigidBody3D,
                                invIA As Matrix3x3, invIB As Matrix3x3, dt As Double)
 
-            Call UpdateAngle()
-
+            Dim angle As Double = ComputeAngle()
             Dim excess As Double = 0.0
 
-            If _angle > UpperLimit Then
-                excess = _angle - UpperLimit
-            ElseIf _angle < LowerLimit Then
-                excess = _angle - LowerLimit
+            If angle > UpperLimit Then
+                excess = angle - UpperLimit
+            ElseIf angle < LowerLimit Then
+                excess = angle - LowerLimit
             End If
 
             If excess = 0.0 Then Return
@@ -282,13 +279,15 @@ Namespace Joints3D
         ' /********************************************************************************/
 
         ''' <summary>
-        ''' 由两侧姿态算出相对零位的角度。用 unwrap 累加保证多圈行程（末轴 ±2π）连续。
+        ''' 由两侧姿态算出相对零位的角度（弧度，范围 (-π, π]）。
         ''' </summary>
-        Private Sub UpdateAngle()
-            If Not _hasReference Then
-                Call SetZeroReference()
-            End If
-
+        ''' <remarks>
+        ''' 这里刻意**不做**跨帧累积的 unwrap：累积值一旦在一次求解迭代里被写入 ±2π 的跳变，
+        ''' 之后就一直带着这个偏置，伺服会朝着错误方向持续出力（实测 j3/j5 会稳定在 ±0.4 rad 的
+        ''' 假平衡点上，而 Speed 的符号与 Position 相反）。关节的真实行程由 URDF 限位保证，
+        ''' 正常装配下不会跨越 ±π，因此直接用绝对相对角更稳健。
+        ''' </remarks>
+        Private Function ComputeAngle() As Double
             Dim rbA As RigidBody3D = Point.A
             Dim rbB As RigidBody3D = Point.B
             Dim relative As Quaternion = Quaternion.Compose(rbA.Orientation.Inverse(), rbB.Orientation)
@@ -297,27 +296,9 @@ Namespace Joints3D
             ' delta 是绕 hingeAxisA 的旋转（A 局部系表达），取其旋转角
             Dim axis As Vector3 = hingeAxisA
             Dim sinHalf As Double = delta.x * axis.x + delta.y * axis.y + delta.z * axis.z
-            Dim raw As Double = 2.0 * std.Atan2(sinHalf, delta.w)
 
-            ' 归一到 (-π, π]
-            Do While raw > std.PI
-                raw -= 2.0 * std.PI
-            Loop
-            Do While raw <= -std.PI
-                raw += 2.0 * std.PI
-            Loop
-
-            Dim stepAngle As Double = raw - _prevRaw
-
-            If stepAngle > std.PI Then
-                stepAngle -= 2.0 * std.PI
-            ElseIf stepAngle < -std.PI Then
-                stepAngle += 2.0 * std.PI
-            End If
-
-            _angle += stepAngle
-            _prevRaw = raw
-        End Sub
+            Return 2.0 * std.Atan2(sinHalf, delta.w)
+        End Function
     End Class
 
 End Namespace

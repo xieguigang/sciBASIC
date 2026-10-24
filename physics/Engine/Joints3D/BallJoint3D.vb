@@ -100,6 +100,18 @@ Namespace Joints3D
         Public Property BiasSpeedLimit As Double = 2.0
 
         ''' <summary>
+        ''' 逐轴求解的松弛因子（0 &lt; r ≤ 1）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 三个平移轴是分别求解的，但它们的有效质量矩阵有非对角耦合：当锚点不在质心上时，
+        ''' 沿 x 的冲量会在锚点处产生绕 y/z 的角冲量。逐轴求解忽略这部分耦合，
+        ''' 每轮都按"满额"施加冲量，多个迭代累积后就会严重过冲
+        ''' （实测：把 yaw 关节的角速度设为 5 rad/s，10 步后变成 0 —— 等于给铰链加了巨大阻尼）。
+        ''' 用一个小于 1 的松弛因子把每次冲量缩小，迭代仍然收敛到同一个解，但不会过冲。
+        ''' </remarks>
+        Public Property Relaxation As Double = 1.0
+
+        ''' <summary>
         ''' 锥角限位（弧度）。设为 ≥ π 表示不限位。
         ''' 限制 B 的 <see cref="limitAxisB"/> 相对 A 的 <see cref="limitAxisA"/> 的最大偏角，
         ''' 用于防止膝盖/肘关节反折。
@@ -144,19 +156,92 @@ Namespace Joints3D
             Dim pa As Vector3 = A.Position + rA
             Dim pb As Vector3 = B.Position + rB
             Dim err As Vector3 = pb - pa
-            Dim v As Vector3 = (B.Velocity + Vector3Math.Cross(B.AngularVelocity, rB)) -
-                               (A.Velocity + Vector3Math.Cross(A.AngularVelocity, rA))
+            Dim v As Vector3 = RelativeVelocity(rA, rB)
             Dim invIA As Matrix3x3 = A.InvInertiaWorld()
             Dim invIB As Matrix3x3 = B.InvInertiaWorld()
 
-            Call SolveAxis(New Vector3(1, 0, 0), rA, rB, v, err, invIA, invIB, dt)
-            Call SolveAxis(New Vector3(0, 1, 0), rA, rB, v, err, invIA, invIB, dt)
-            Call SolveAxis(New Vector3(0, 0, 1), rA, rB, v, err, invIA, invIB, dt)
+            ' 三轴**耦合**求解：当锚点不在质心上时，沿一个轴的冲量会在锚点处产生绕另两个轴的
+            ' 角冲量。逐轴独立求解会忽略这部分耦合，迭代累积后把绕轴旋转的角速度耗散掉
+            ' （实测：yaw 关节给定 5 rad/s，10 步后变成 0，相当于给铰链加了巨大阻尼）。
+            ' 这里直接构造 3×3 有效质量矩阵一次解出三个拉格朗日乘子。
+            Dim axes As Vector3() = {New Vector3(1, 0, 0), New Vector3(0, 1, 0), New Vector3(0, 0, 1)}
+            Dim rnA(2) As Vector3
+            Dim rnB(2) As Vector3
+            Dim k(2, 2) As Double
+
+            For i As Integer = 0 To 2
+                rnA(i) = Vector3Math.Cross(rA, axes(i))
+                rnB(i) = Vector3Math.Cross(rB, axes(i))
+            Next
+
+            For i As Integer = 0 To 2
+                For j As Integer = 0 To 2
+                    Dim value As Double = Vector3Math.Dot(rnA(i), invIA.MultiplyLeft(rnA(j))) +
+                                          Vector3Math.Dot(rnB(i), invIB.MultiplyLeft(rnB(j)))
+
+                    If i = j Then value += A.InvMass + B.InvMass
+
+                    k(i, j) = value
+                Next
+            Next
+
+            Dim rhs(2) As Double
+
+            For i As Integer = 0 To 2
+                Dim bias As Double = ClampBias(Baumgarte / dt * Vector3Math.Dot(err, axes(i)))
+                rhs(i) = -(Vector3Math.Dot(v, axes(i)) + bias)
+            Next
+
+            Dim lambda As Double() = Solve3x3(k, rhs)
+
+            If lambda Is Nothing Then Return
+
+            For i As Integer = 0 To 2
+                Dim impulse As Vector3 = axes(i) * (lambda(i) * Relaxation)
+
+                Call A.ApplyImpulse(impulse * -1.0, rA)
+                Call B.ApplyImpulse(impulse, rB)
+            Next
 
             If MaxConeAngle < std.PI Then
                 Call SolveConeLimit(invIA, invIB, dt)
             End If
         End Sub
+
+        ''' <summary>3×3 线性方程组（克拉默法则），奇异时返回 Nothing。</summary>
+        Private Shared Function Solve3x3(a As Double(,), b As Double()) As Double()
+            Dim det As Double = Determinant3(a)
+
+            If std.Abs(det) < 1.0E-14 Then Return Nothing
+
+            Dim out(2) As Double
+
+            For col As Integer = 0 To 2
+                Dim m(2, 2) As Double
+
+                For i As Integer = 0 To 2
+                    For j As Integer = 0 To 2
+                        m(i, j) = If(j = col, b(i), a(i, j))
+                    Next
+                Next
+
+                out(col) = Determinant3(m) / det
+            Next
+
+            Return out
+        End Function
+
+        Private Shared Function Determinant3(m As Double(,)) As Double
+            Return m(0, 0) * (m(1, 1) * m(2, 2) - m(1, 2) * m(2, 1)) -
+                   m(0, 1) * (m(1, 0) * m(2, 2) - m(1, 2) * m(2, 0)) +
+                   m(0, 2) * (m(1, 0) * m(2, 1) - m(1, 1) * m(2, 0))
+        End Function
+
+        ''' <summary>锚点处的相对速度（B 相对 A）。</summary>
+        Private Function RelativeVelocity(rA As Vector3, rB As Vector3) As Vector3
+            Return (B.Velocity + Vector3Math.Cross(B.AngularVelocity, rB)) -
+                   (A.Velocity + Vector3Math.Cross(A.AngularVelocity, rA))
+        End Function
 
         Private Sub SolveAxis(axis As Vector3, rA As Vector3, rB As Vector3,
                               v As Vector3, err As Vector3,
@@ -171,7 +256,7 @@ Namespace Joints3D
 
             Dim vn As Double = Vector3Math.Dot(v, axis)
             Dim bias As Double = ClampBias(Baumgarte / dt * Vector3Math.Dot(err, axis))
-            Dim j As Double = (-vn - bias) * (1.0 / k)
+            Dim j As Double = (-vn - bias) * (1.0 / k) * Relaxation
             Dim P As Vector3 = axis * j
 
             Call A.ApplyImpulse(P * -1.0, rA)
