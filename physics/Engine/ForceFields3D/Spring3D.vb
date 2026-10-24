@@ -51,6 +51,19 @@ Namespace ForceFields3D
         Public Property RestLength As Double = 0.1
 
         ''' <summary>
+        ''' 横向（剪切）刚度 k_s（N/m）。
+        ''' </summary>
+        ''' <remarks>
+        ''' 只沿轴向施力的理想压簧**不提供任何横向约束**：四角弹簧撑着的木板在水平方向是自由漂浮的，
+        ''' 一点点横向扰动就会把整块板"推走"（实测被重块撞一下横向漂了 13 cm）。
+        ''' 真实压簧有明显的剪切刚度，这里用一根把挂点拉回锚点轴线的弹簧来近似。
+        ''' </remarks>
+        Public Property ShearStiffness As Double = 0.0
+
+        ''' <summary>横向阻尼 c_s（N·s/m）。</summary>
+        Public Property ShearDamping As Double = 0.0
+
+        ''' <summary>
         ''' 只压不拉：为 True 时弹簧只能把两端推开（螺旋压簧的近似行为），
         ''' 拉伸状态不产生拉力。
         ''' </summary>
@@ -61,6 +74,9 @@ Namespace ForceFields3D
 
         ''' <summary>弹簧的标签（调试用）。</summary>
         Public Property Label As String = "spring"
+
+        ''' <summary><see cref="Apply"/> 被调用的次数（诊断用）。</summary>
+        Public Property ApplyCount As Long
 
         ''' <summary>最近一次 <see cref="Apply"/> 算出的弹簧长度（米）。</summary>
         Public Property CurrentLength As Double
@@ -109,8 +125,15 @@ Namespace ForceFields3D
         End Sub
 
         Public Overrides Sub Apply(bodies As System.Collections.Generic.IEnumerable(Of RigidBody3D))
+            ApplyCount += 1
+
             If Body Is Nothing Then Return
-            If Body.IsStatic OrElse Body.IsSleeping Then Return
+            If Body.IsStatic Then Return
+
+            ' 弹簧撑着的物体不该被判定为"静止"：一旦睡眠，弹簧就不再施力，
+            ' 整块木板会直接塌到地上并且再也起不来。这里强制唤醒它。
+            If Body.IsSleeping Then Call Body.Wake()
+
             If Stiffness <= 0.0 AndAlso Damping <= 0.0 Then Return
 
             Dim point As Vector3 = Body.Position + Body.Orientation.Rotate(LocalPoint)
@@ -138,9 +161,25 @@ Namespace ForceFields3D
             CurrentForce = magnitude
             Compression = RestLength - length
 
-            If System.Math.Abs(magnitude) < 1.0E-9 Then Return
+            Dim force As Vector3 = dir * magnitude
 
-            Call Body.ApplyForceAtPoint(point, dir * magnitude)
+            ' 横向（剪切）约束：把挂点拉回锚点所在的轴线
+            If ShearStiffness > 0.0 OrElse ShearDamping > 0.0 Then
+                Dim lateral As Vector3 = delta - dir * Vector3Math.Dot(delta, dir)
+                Dim lateralVelocity As Vector3 = pointVelocity - dir * along
+
+                force = force - lateral * ShearStiffness - lateralVelocity * ShearDamping
+            End If
+
+            If MaxForce > 0.0 Then
+                Dim total As Double = Vector3Math.Length(force)
+
+                If total > MaxForce Then force = force * (MaxForce / total)
+            End If
+
+            If Vector3Math.Length(force) < 1.0E-9 Then Return
+
+            Call Body.ApplyForceAtPoint(point, force)
         End Sub
 
         Public Overrides Function ToString() As String
