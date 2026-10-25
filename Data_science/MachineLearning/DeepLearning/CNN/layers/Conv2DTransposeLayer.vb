@@ -216,10 +216,10 @@ Namespace CNN.layers
         ''' 构造"膨胀 + 零填充"之后的输入，形状 (1, dilateH, dilateW, in_depth)。
         ''' </summary>
         Private Function BuildDilated(x4 As Tensor) As Tensor
-            Dim C = in_depth
+            Dim depthN = in_depth
             Dim pw = padWidth
             Dim H2 = dilateH, W2 = dilateW
-            Dim dst As Tensor = Tensor.Zeros(New Integer() {1, H2, W2, C})
+            Dim dst As Tensor = Tensor.Zeros(New Integer() {1, H2, W2, depthN})
             Dim d = dst.Data
             Dim s = x4.Data
 
@@ -228,10 +228,10 @@ Namespace CNN.layers
 
                 For w As Integer = 0 To in_sx - 1
                     Dim dw = w * stride + pw
-                    Dim si = (h * in_sx + w) * C
-                    Dim di = (dh * W2 + dw) * C
+                    Dim si = (h * in_sx + w) * depthN
+                    Dim di = (dh * W2 + dw) * depthN
 
-                    For c As Integer = 0 To C - 1
+                    For c As Integer = 0 To depthN - 1
                         d(di + c) = s(si + c)
                     Next
                 Next
@@ -353,10 +353,10 @@ Namespace CNN.layers
         ''' 从膨胀域的梯度之中按 stride 抽回输入位置的梯度（dX[h, w] = dX''[h*stride + pad]）。
         ''' </summary>
         Private Function GatherInputGradient(gradDilated As Tensor) As Double()
-            Dim C = in_depth
+            Dim depthN = in_depth
             Dim W2 = dilateW
             Dim pw = padWidth
-            Dim result(in_sx * in_sy * C - 1) As Double
+            Dim result(in_sx * in_sy * depthN - 1) As Double
             Dim src = gradDilated.Data
 
             For h As Integer = 0 To in_sy - 1
@@ -364,10 +364,10 @@ Namespace CNN.layers
 
                 For w As Integer = 0 To in_sx - 1
                     Dim dw = w * stride + pw
-                    Dim si = (dh * W2 + dw) * C
-                    Dim di = (h * in_sx + w) * C
+                    Dim si = (dh * W2 + dw) * depthN
+                    Dim di = (h * in_sx + w) * depthN
 
-                    For c As Integer = 0 To C - 1
+                    For c As Integer = 0 To depthN - 1
                         result(di + c) = src(si + c)
                     Next
                 Next

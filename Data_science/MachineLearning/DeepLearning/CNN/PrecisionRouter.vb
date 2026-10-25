@@ -96,8 +96,8 @@ Namespace CNN
             If filters.Shape(3) <> outC Then Return Nothing
             If gradOutput.Shape(0) <> batch Then Return Nothing
 
-            Dim ops = Ops(batch, inH, inW, inC, filtH, filtW, outC)
-            Dim decision = MixedPrecisionPolicy.Decide(PrecisionClass.ComputeBound, ops, "Conv2DBackwardInput")
+            Dim work = EstimateOps(batch, inH, inW, inC, filtH, filtW, outC)
+            Dim decision = MixedPrecisionPolicy.Decide(PrecisionClass.ComputeBound, work, "Conv2DBackwardInput")
 
             If Not decision.UseSingle Then Return Nothing
             If Not Safe(gradOutput) OrElse Not Safe(filters) Then Return Nothing
@@ -124,8 +124,8 @@ Namespace CNN
             If gradOutput.Shape(3) <> outC Then Return Nothing
             If gradOutput.Shape(0) <> batch Then Return Nothing
 
-            Dim ops = Ops(batch, inH, inW, inC, filtH, filtW, outC)
-            Dim decision = MixedPrecisionPolicy.Decide(PrecisionClass.ComputeBound, ops, "Conv2DBackwardFilter")
+            Dim work = EstimateOps(batch, inH, inW, inC, filtH, filtW, outC)
+            Dim decision = MixedPrecisionPolicy.Decide(PrecisionClass.ComputeBound, work, "Conv2DBackwardFilter")
 
             If Not decision.UseSingle Then Return Nothing
             If Not Safe(gradOutput) OrElse Not Safe(x) Then Return Nothing
@@ -158,8 +158,8 @@ Namespace CNN
         ' ---------------- 内部 ----------------
 
         ''' <summary>卷积族算子的浮点运算量估算：输出元素数 × 感受野</summary>
-        Private Function Ops(batch As Integer, h As Integer, w As Integer, c As Integer,
-                             filtH As Integer, filtW As Integer, outC As Integer) As Long
+        Private Function EstimateOps(batch As Integer, h As Integer, w As Integer, c As Integer,
+                                     filtH As Integer, filtW As Integer, outC As Integer) As Long
             Return CLng(batch) * h * w * c * filtH * filtW * outC
         End Function
 
