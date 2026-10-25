@@ -23,7 +23,8 @@
 - **二进制表格帧格式**：`FrameWriter.WriteFrame` 写入魔数头、逐列数据块与 JSON 模式尾部；`FrameReader.ReadFrame` 依据模式中的列偏移直接定位并还原 `DataFrame`；
 - **类型化列模式**：`Schema` / `VectorSchema` 记录列名、序号、`TypeCode`、元素数量、标量标记、流偏移与属性；
 - **SAS XPORT（XPT）导入**：`SASXportConverter`、`SASXportFileIterator`、`XPTReaderUtils` 完成 IBM / IEEE 浮点转换、缺失值与头部元数据解码；
-- **ASN.1 解码辅助**：`ASN1.StreamReader`、`ASN1.Index` 用于检查 tag-length-value 编码的字节流。
+- **ASN.1 解码辅助**：`ASN1.StreamReader`、`ASN1.Index` 用于检查 tag-length-value 编码的字节流；
+- **NumPy 数据文件**：`Numpy.NpyFile` / `Numpy.NpzFile` 读写 `.npy` 单数组与 `.npz` 归档，支持小端/大端、C 序/Fortran 序、数值/布尔/字符串 dtype，并可通过 pickle 还原 `dtype='O'` 的对象数组（数组里套矩阵）。
 
 ## 关键类型与 API
 
