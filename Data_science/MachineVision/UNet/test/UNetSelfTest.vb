@@ -589,15 +589,17 @@ Public Module UNetSelfTest
         Dim opt As New UNetOptions With {.InputWidth = size, .InputHeight = size, .InputChannels = 1,
                                          .NumClasses = 2, .Levels = 2, .BaseFilters = 4}
         Dim model As New UNetModel(opt)
-        Dim classWeights = SegmentationLoss.ClassWeightsFromData(samples, 2)
-        Dim trainer As New UNetTrainer(0.02, 2) With {.Augment = False, .GradClip = 0}
+        ' 前景（细胞核）像素占比只有几个百分点，过拟合小样本时按频率取倒数加权，
+        ' 否则"全预测背景"就是损失意义上的局部最优，学不出任何前景
+        Dim classWeights = SegmentationLoss.ClassWeightsFromData(samples, 2, foregroundExponent:=1.0)
+        Dim trainer As New UNetTrainer(0.05, 2) With {.Augment = False, .GradClip = 0}
 
         Dim firstLoss As Double = 0
         Dim lastLoss As Double = 0
         Dim firstIoU As Double = 0
         Dim lastIoU As Double = 0
 
-        For epoch As Integer = 0 To 5
+        For epoch As Integer = 0 To 19
             lastLoss = trainer.RunEpoch(model, samples, classWeights, epoch)
 
             If epoch = 0 Then firstLoss = lastLoss
@@ -606,11 +608,21 @@ Public Module UNetSelfTest
 
             If epoch = 0 Then firstIoU = m.MeanIoU
             lastIoU = m.MeanIoU
+
+            Dim ratio As Double = 0
+
+            For Each sample In samples
+                Dim block = model.CreateInput()
+                Call sample.WriteTo(block)
+                ratio += model.Segment(block).Count(Function(c) c > 0) / CDbl(sample.PixelCount)
+            Next
+
+            Console.WriteLine($"      epoch {epoch}: loss={lastLoss:F5} mIoU={m.MeanIoU:F4} fgIoU={m.ForegroundIoU:F4} predFg={ratio / samples.Length:P2}")
         Next
 
         Console.WriteLine($"    loss: {firstLoss:F5} -> {lastLoss:F5}, mIoU: {firstIoU:F4} -> {lastIoU:F4}")
 
-        Check("6 轮之后损失下降", lastLoss < firstLoss, $"{firstLoss:F5} -> {lastLoss:F5}")
+        Check("20 轮之后损失下降", lastLoss < firstLoss, $"{firstLoss:F5} -> {lastLoss:F5}")
         Check("平均 IoU 没有退化", lastIoU >= firstIoU - 0.05, $"{firstIoU:F4} -> {lastIoU:F4}")
 
         Dim predictedRatio = 0.0
