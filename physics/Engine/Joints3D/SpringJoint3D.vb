@@ -98,6 +98,18 @@ Namespace Joints3D
         ''' <summary><see cref="SolveVelocity"/> 被调用的次数（诊断用）。</summary>
         Public Property SolveCount As Long
 
+        ''' <summary>最近一次轴向求解的有效质量（诊断用）。</summary>
+        Public Property LastMass As Double
+
+        ''' <summary>最近一次轴向求解的 bias 项（诊断用）。</summary>
+        Public Property LastBias As Double
+
+        ''' <summary>最近一次轴向求解的冲量（诊断用）。</summary>
+        Public Property LastImpulse As Double
+
+        ''' <summary>最近一次轴向求解的柔度项 gamma（诊断用）。</summary>
+        Public Property LastGamma As Double
+
         ''' <summary>A 端的世界坐标。</summary>
         Public ReadOnly Property WorldAnchorA As Vector3
             Get
@@ -185,8 +197,12 @@ Namespace Joints3D
             End If
 
             ' ---- 横向：带死区的软约束，只把"超出死区的错位"拉回去 ----
+            '
+            ' 这里的横向参照必须是**世界水平面**，不能取"垂直于当前弹簧轴线"的分量：
+            ' 木板一旦水平漂移，整根弹簧会跟着倾斜，此时"垂直于轴线"的偏移又变回 0，
+            ' 横向约束就再也拉不回来了（实测木板漂了 8.6 cm 而约束毫无反应）。
             If ShearStiffness > 0.0 OrElse ShearDamping > 0.0 Then
-                Dim lateral As Vector3 = delta - axis * Vector3Math.Dot(delta, axis)
+                Dim lateral As New Vector3(delta.x, delta.y, 0.0)
                 Dim lateralLength As Double = Vector3Math.Length(lateral)
 
                 If lateralLength > ShearSlop Then
@@ -232,6 +248,11 @@ Namespace Joints3D
 
             Dim bias As Double = errorValue * dt * stiffness * gamma
             Dim lambda As Double = -(vn + bias) / mass
+
+            LastMass = mass
+            LastBias = bias
+            LastImpulse = lambda
+            LastGamma = gamma
 
             If MaxForce > 0.0 Then
                 Dim maxImpulse As Double = MaxForce * dt
