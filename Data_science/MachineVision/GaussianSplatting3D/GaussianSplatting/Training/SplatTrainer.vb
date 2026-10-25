@@ -156,7 +156,7 @@ Public Class SplatTrainer
 
         ''' <summary>在全量视图上评估当前模型。</summary>
         Public Function Evaluate() As (Loss As Double, Psnr As Double)
-            Dim options = Options.RenderOptions
+            Dim renderOptions = Options.RenderOptions
             Dim loss = 0.0
             Dim count = Cameras.Count
 
@@ -164,10 +164,10 @@ Public Class SplatTrainer
 
             Dim viewSums(count - 1) As Double
 
-            System.Threading.Tasks.Parallel.For(0, count, options.ParallelOptions(),
+            System.Threading.Tasks.Parallel.For(0, count, renderOptions.ParallelOptions(),
                 Sub(v)
                     Dim t0 = PerfTrace.Begin()
-                    Dim rendered = SplatRenderer.Render(Model, Cameras(v), options)
+                    Dim rendered = SplatRenderer.Render(Model, Cameras(v), renderOptions)
                     Call PerfTrace.Done(PerfPhase.Loss, t0)
 
                     viewSums(v) = SplatRenderer.ComputeMSE(rendered, Targets(v))

@@ -134,8 +134,8 @@ Public Class AdamOptimizer
         While i < [to]
             Dim g = grad(i)
 
-            Dim mm = beta1 * m(i) + omB1 * g
-            Dim vv = beta2 * v(i) + omB2 * g * g
+            Dim mm = b1 * m(i) + omB1 * g
+            Dim vv = b2 * v(i) + omB2 * g * g
 
             m(i) = mm
             v(i) = vv

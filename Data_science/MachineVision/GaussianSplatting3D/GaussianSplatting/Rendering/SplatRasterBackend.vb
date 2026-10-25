@@ -259,12 +259,12 @@ Imports std = System.Math
         Private Shared Sub RasterizeTile(request As SplatRasterRequest, options As SplatRenderOptions,
                                          image As Double(), transmittance As Double(),
                                          tile As Integer, scratch As TileScratch)
-            Dim W = request.Width
+            Dim imgW = request.Width
             Dim ts = request.TileSize
             Dim tx = tile Mod request.TilesX
             Dim ty = tile \ request.TilesX
             Dim px0 = tx * ts, py0 = ty * ts
-            Dim px1 = std.Min(px0 + ts - 1, W - 1)
+            Dim px1 = std.Min(px0 + ts - 1, imgW - 1)
             Dim py1 = std.Min(py0 + ts - 1, request.Height - 1)
 
             Dim g0 = request.TileOffsets(tile)
@@ -275,7 +275,7 @@ Imports std = System.Math
                 Dim rows = py0
 
                 While rows <= py1
-                    Dim dstT = rows * W + px0
+                    Dim dstT = rows * imgW + px0
                     Dim cnt = px1 - px0 + 1
 
                     Array.Clear(image, dstT * 3, cnt * 3)
@@ -352,9 +352,9 @@ Imports std = System.Math
 
             ' ---- 写回全局缓冲 ----
             For y = py0 To py1
-                Dim dst = (y * W + px0) * 3
+                Dim dst = (y * imgW + px0) * 3
                 Dim src = (y - py0) * ts
-                Dim dstT = y * W + px0
+                Dim dstT = y * imgW + px0
 
                 For x = px0 To px1
                     image(dst) = scratch.R(src)
@@ -373,12 +373,12 @@ Imports std = System.Math
         Private Shared Sub BackwardTile(request As SplatRasterRequest, options As SplatRenderOptions,
                                         image As Double(), imageGradient As Double(),
                                         tile As Integer, scratch As TileScratch, grads As ChannelGradients)
-            Dim W = request.Width
+            Dim imgW = request.Width
             Dim ts = request.TileSize
             Dim tx = tile Mod request.TilesX
             Dim ty = tile \ request.TilesX
             Dim px0 = tx * ts, py0 = ty * ts
-            Dim px1 = std.Min(px0 + ts - 1, W - 1)
+            Dim px1 = std.Min(px0 + ts - 1, imgW - 1)
             Dim py1 = std.Min(py0 + ts - 1, request.Height - 1)
 
             Dim g0 = request.TileOffsets(tile)
@@ -438,7 +438,7 @@ Imports std = System.Math
 
                                 If clamped Then alpha = alphaMax
 
-                                Dim pix = y * W + x
+                                Dim pix = y * imgW + x
                                 Dim gi3 = pix * 3
                                 Dim gR = imageGradient(gi3)
                                 Dim gG = imageGradient(gi3 + 1)
@@ -459,14 +459,14 @@ Imports std = System.Math
 
                                     If Not clamped Then grads.Opacities(idx) += dAlpha * e
 
-                                    Dim dQ = -0.5 * alpha * dAlpha
+                                    Dim dPower = -0.5 * alpha * dAlpha
 
-                                    grads.Conic(o3) += dQ * px * px
-                                    grads.Conic(o3 + 1) += dQ * 2 * px * dy
-                                    grads.Conic(o3 + 2) += dQ * dy * dy
+                                    grads.Conic(o3) += dPower * px * px
+                                    grads.Conic(o3 + 1) += dPower * 2 * px * dy
+                                    grads.Conic(o3 + 2) += dPower * dy * dy
 
-                                    Dim fX = dQ * 2 * (a * px + b * dy)
-                                    Dim fY = dQ * 2 * (b * px + c * dy)
+                                    Dim fX = dPower * 2 * (a * px + b * dy)
+                                    Dim fY = dPower * 2 * (b * px + c * dy)
 
                                     grads.Means(o2) -= fX
                                     grads.Means(o2 + 1) -= fY
