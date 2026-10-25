@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9abf3fe2939e783f182cd5aed202c69d, Data_science\Visualization\DataPlot\Statistics\SampleViewPlot.vb"
+#Region "Microsoft.VisualBasic::9abf3fe2939e783f182cd5aed202c69d, Data_science\Visualization\DataPlot\Statistics\SampleViewPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -102,7 +103,7 @@ Public Class SampleViewPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Sample Is Nothing OrElse Sample.Data Is Nothing OrElse Sample.Data.Length = 0 Then
             Throw New InvalidOperationException("SampleViewPlot requires sample data.")
         End If

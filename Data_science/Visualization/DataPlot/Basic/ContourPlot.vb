@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24abdace3ec58b31fcaccbde4c9ca44b, Data_science\Visualization\DataPlot\Basic\ContourPlot.vb"
+#Region "Microsoft.VisualBasic::24abdace3ec58b31fcaccbde4c9ca44b, Data_science\Visualization\DataPlot\Basic\ContourPlot.vb"
 
     ' Author:
     ' 
@@ -71,6 +71,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -142,7 +143,7 @@ Public Class ContourPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         BuildGrid()
 
         DrawBackground()

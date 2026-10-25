@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1104ae82d51455d2fc0d6c4993acd862, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
+#Region "Microsoft.VisualBasic::1104ae82d51455d2fc0d6c4993acd862, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>堆叠面积图</summary>
@@ -85,7 +86,7 @@ Public Class StackedAreaPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()

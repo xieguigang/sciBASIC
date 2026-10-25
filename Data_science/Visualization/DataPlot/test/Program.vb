@@ -51,11 +51,18 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Imaging.Driver
 
 Module Program
     Sub Main(args As String())
         Call ImageDriver.Register()
-        Call Examples.RunAll("Z:/data-plots")
+        Call PlotDrivers.Register()
+
+        If args.Length > 0 AndAlso args(0) = "--drivers" Then
+            Call DriverOutputs.RunAll("Z:/data-plots/drivers")
+        Else
+            Call Examples.RunAll("Z:/data-plots")
+        End If
     End Sub
 End Module

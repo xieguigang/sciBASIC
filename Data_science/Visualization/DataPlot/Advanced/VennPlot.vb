@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::791268a0ba717983fe2db58e19fd23ce, Data_science\Visualization\DataPlot\Advanced\VennPlot.vb"
+#Region "Microsoft.VisualBasic::791268a0ba717983fe2db58e19fd23ce, Data_science\Visualization\DataPlot\Advanced\VennPlot.vb"
 
     ' Author:
     ' 
@@ -64,6 +64,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -96,7 +97,7 @@ Public Class VennPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Sets Is Nothing OrElse Sets.Count < 2 OrElse Sets.Count > 3 Then
             Throw New InvalidOperationException("VennPlot supports exactly 2 or 3 sets.")
         End If

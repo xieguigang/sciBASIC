@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4cb0825fc823fb90a8dc2d95cd6e7c0, Data_science\Visualization\DataPlot\Statistics\ClusterTree.vb"
+#Region "Microsoft.VisualBasic::c4cb0825fc823fb90a8dc2d95cd6e7c0, Data_science\Visualization\DataPlot\Statistics\ClusterTree.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================

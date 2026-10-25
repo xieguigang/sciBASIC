@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8fa8e3f7d4886faf1ea39d9deb2f739, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
+#Region "Microsoft.VisualBasic::b8fa8e3f7d4886faf1ea39d9deb2f739, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>小提琴图（Violin Plot）</summary>
@@ -77,14 +78,14 @@ Public Class ViolinPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()
         DrawTitle()
 
         Dim nGrp = Groups.Count
-        Dim allData = Groups.SelectMany(Function(g) g.Data).ToList()
+        Dim allData = Groups.SelectMany(Function(x) x.Data).ToList()
         Dim ymin = If(Me.YMin, allData.Min())
         Dim ymax = If(Me.YMax, allData.Max())
         Dim pad = (ymax - ymin) * 0.05
@@ -93,15 +94,15 @@ Public Class ViolinPlot
         Dim xTicks = Enumerable.Range(0, nGrp).Select(Function(i) CDbl(i)).ToArray()
         Dim yTicks = GenerateTicks(ymin, ymax)
         DrawAxisAndGrid(-0.5, nGrp - 0.5, ymin, ymax, xTicks, yTicks,
-                        Groups.Select(Function(g) g.Name).ToArray(), Nothing)
+                        Groups.Select(Function(x) x.Name).ToArray(), Nothing)
 
         Dim groupWidth = _plotArea.Width / nGrp
         Dim maxViolinWidth = groupWidth * 0.4
 
         For i = 0 To nGrp - 1
-            Dim g = Groups(i)
-            Dim color = If(g.Color, Theme.Palette(i Mod Theme.Palette.Length))
-            Dim sorted = g.Data.OrderBy(Function(v) v).ToArray()
+            Dim grp = Groups(i)
+            Dim color = If(grp.Color, Theme.Palette(i Mod Theme.Palette.Length))
+            Dim sorted = grp.Data.OrderBy(Function(v) v).ToArray()
             If sorted.Length < 2 Then Continue For
 
             ' KDE：用直方图密度估计

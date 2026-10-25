@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6bf8f3068916f15a210dc243d2d9b7a, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
+#Region "Microsoft.VisualBasic::a6bf8f3068916f15a210dc243d2d9b7a, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>和弦图连接（可选辅助结构，用于显式指定连接而非矩阵）</summary>
@@ -103,7 +104,7 @@ Public Class ChordPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 

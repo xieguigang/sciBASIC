@@ -56,9 +56,13 @@
 Option Explicit On
 Option Strict Off
 
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+' .NET 10 的 System.Text 命名空间之中也定义了一个 Ascii 类型，
+' 与 Microsoft.VisualBasic.Text.ASCII 产生二义性，故这里显式指定别名
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace IO.CSVFile
 
@@ -138,6 +142,62 @@ Namespace IO.CSVFile
 
             ' 长度为零说明整个字符串都是分隔符，即为空行
             Return l = 0
+        End Function
+
+        ''' <summary>
+        ''' 引号安全的 csv 行解析：支持双引号包裹的字段以及 <c>""</c> 转义
+        ''' </summary>
+        ''' <param name="line"></param>
+        ''' <returns></returns>
+        Public Function SplitLine(line As String) As String()
+            If String.IsNullOrEmpty(line) Then
+                Return New String() {}
+            End If
+
+            Dim fields As New List(Of String)
+            Dim sb As New StringBuilder()
+            Dim quoted As Boolean = False
+            Dim i As Integer = 0
+
+            While i < line.Length
+                Dim c As Char = line(i)
+
+                If quoted Then
+                    If c = """"c Then
+                        If i + 1 < line.Length AndAlso line(i + 1) = """"c Then
+                            Call sb.Append(""""c)
+                            i += 2
+                        Else
+                            quoted = False
+                            i += 1
+                        End If
+                    Else
+                        Call sb.Append(c)
+                        i += 1
+                    End If
+                Else
+                    Select Case c
+                        Case """"c
+                            quoted = True
+                            i += 1
+                        Case ","c
+                            Call fields.Add(sb.ToString())
+                            Call sb.Clear()
+                            i += 1
+                        Case ChrW(&HD)
+                            i += 1
+                        Case ChrW(&HA)
+                            i += 1
+                        Case Else
+                            Call sb.Append(c)
+                            i += 1
+                    End Select
+                End If
+            End While
+
+            Call fields.Add(sb.ToString())
+
+            Return fields.ToArray
         End Function
     End Class
 End Namespace

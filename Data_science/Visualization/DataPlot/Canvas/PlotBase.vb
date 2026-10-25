@@ -60,7 +60,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -69,30 +68,6 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
-
-#If NET48 Then
-Imports Pen = System.Drawing.Pen
-Imports Pens = System.Drawing.Pens
-Imports Brush = System.Drawing.Brush
-Imports Font = System.Drawing.Font
-Imports Brushes = System.Drawing.Brushes
-Imports SolidBrush = System.Drawing.SolidBrush
-Imports DashStyle = System.Drawing.Drawing2D.DashStyle
-Imports Image = System.Drawing.Image
-Imports Bitmap = System.Drawing.Bitmap
-Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
-#Else
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
-Imports Pens = Microsoft.VisualBasic.Imaging.Pens
-Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
-#End If
 
 Namespace Canvas
     ''' <summary>
@@ -125,17 +100,31 @@ Namespace Canvas
         ''' <param name="dpi"></param>
         ''' <param name="driver"></param>
         ''' <returns>this function returns a graphics plot wrapper object that supports save png/svg/pdf file</returns>
-        Public Overloads Function Plot(size As SizeF,
+        Public Overloads Function Plot(size As Size,
                                        Optional dpi As Integer = 300,
                                        Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
-                size:=size.ToSize,
+                size:=size,
                 padding:=theme.padding,
                 bg:=theme.background,
                 plotAPI:=AddressOf PlotInternal,
                 driver:=driver,
                 dpi:=dpi
             )
+        End Function
+
+        ''' <summary>
+        ''' function for make plot
+        ''' </summary>
+        ''' <param name="size">画布尺寸，允许直接传入 <c>FloatSizeParser</c> 的结果</param>
+        ''' <param name="dpi"></param>
+        ''' <param name="driver"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Plot(size As SizeF,
+                                       Optional dpi As Integer = 300,
+                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
+            Return Plot(size.ToSize, dpi, driver)
         End Function
 
         ''' <summary>

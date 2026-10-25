@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63a4d1c83245dec2bf57e86c7db3c8f8, Data_science\Visualization\DataPlot\Statistics\ManhattanPlot.vb"
+#Region "Microsoft.VisualBasic::63a4d1c83245dec2bf57e86c7db3c8f8, Data_science\Visualization\DataPlot\Statistics\ManhattanPlot.vb"
 
     ' Author:
     ' 
@@ -73,6 +73,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -116,7 +117,7 @@ Public Class ManhattanPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Points Is Nothing OrElse Points.Count = 0 Then
             Throw New InvalidOperationException("ManhattanPlot requires at least one locus.")
         End If

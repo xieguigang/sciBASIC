@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d19f3cf18e902c073d2fc05bd659d6c, Data_science\Visualization\DataPlot\Statistics\QQPlot.vb"
+#Region "Microsoft.VisualBasic::0d19f3cf18e902c073d2fc05bd659d6c, Data_science\Visualization\DataPlot\Statistics\QQPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -94,7 +95,7 @@ Public Class QQPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Sample1 Is Nothing OrElse Sample2 Is Nothing OrElse Sample1.Length = 0 OrElse Sample2.Length = 0 Then
             Throw New InvalidOperationException("QQPlot requires two non-empty samples.")
         End If

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d7b59c6b0a9611d6eedd46b82b8e475, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
+#Region "Microsoft.VisualBasic::7d7b59c6b0a9611d6eedd46b82b8e475, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 
@@ -86,7 +87,7 @@ Public Class HeatmapPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3774fc10e671f3d3bb9de6dfe0bf1a, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
+#Region "Microsoft.VisualBasic::3d3774fc10e671f3d3bb9de6dfe0bf1a, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
@@ -107,19 +108,15 @@ Public Class HistogramPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Overloads Shared Function Plot(data As IEnumerable(Of Double), nbins As Integer, size As String) As GraphicsData
-        Throw New NotImplementedException
-    End Function
-
-    Public Overloads Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim sources = ResolveSources()
 
-        If sources.Count = 0 OrElse sources.All(Function(g) g.Data Is Nothing OrElse g.Data.Length = 0) Then
+        If sources.Count = 0 OrElse sources.All(Function(x) x.Data Is Nothing OrElse x.Data.Length = 0) Then
             Throw New InvalidOperationException("HistogramPlot requires at least one non-empty sample.")
         End If
 
         Dim edges = ResolveEdges(sources)
-        Dim counts = sources.Select(Function(g) CountBins(g.Data, edges)).ToArray()
+        Dim counts = sources.Select(Function(x) CountBins(x.Data, edges)).ToArray()
 
         DrawBackground()
         ComputePlotArea()
@@ -207,7 +204,7 @@ Public Class HistogramPlot
 
     Private Function ResolveSources() As List(Of CategoryGroup)
         If Groups IsNot Nothing AndAlso Groups.Count > 0 Then
-            Return Groups.Where(Function(g) g.Data IsNot Nothing AndAlso g.Data.Length > 0).ToList()
+            Return Groups.Where(Function(x) x.Data IsNot Nothing AndAlso x.Data.Length > 0).ToList()
         End If
         Return New List(Of CategoryGroup) From {
             New CategoryGroup With {.Name = "data", .Data = Data, .Color = Me.Color}
@@ -217,7 +214,7 @@ Public Class HistogramPlot
     Private Function ResolveEdges(sources As List(Of CategoryGroup)) As Double()
         If BinEdges IsNot Nothing AndAlso BinEdges.Length >= 2 Then Return BinEdges
 
-        Dim all = sources.SelectMany(Function(g) g.Data).ToArray()
+        Dim all = sources.SelectMany(Function(x) x.Data).ToArray()
         Dim dmin = all.Min(), dmax = all.Max()
         If dmax <= dmin Then dmax = dmin + 1
 

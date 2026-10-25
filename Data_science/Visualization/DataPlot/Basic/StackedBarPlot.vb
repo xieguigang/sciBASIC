@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7f08bf69b30fadfc11bfc72dd2756f7, Data_science\Visualization\DataPlot\Basic\StackedBarPlot.vb"
+#Region "Microsoft.VisualBasic::c7f08bf69b30fadfc11bfc72dd2756f7, Data_science\Visualization\DataPlot\Basic\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>堆叠柱状图（多系列沿 Y 轴累加堆叠）</summary>
@@ -81,7 +82,7 @@ Public Class StackedBarPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()

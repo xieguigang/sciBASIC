@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e084a06cce9f9f5fe5834fa311ffacce, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
+#Region "Microsoft.VisualBasic::e084a06cce9f9f5fe5834fa311ffacce, Data_science\Visualization\DataPlot\Statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -92,7 +93,7 @@ Public Class ROCPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim curves = CurveList()
         If Curves Is Nothing OrElse Curves.Count = 0 Then
             Throw New InvalidOperationException("ROCPlot requires at least one ROC curve.")

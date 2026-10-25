@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94c1afb781ac740be9d151f6ade55719, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+#Region "Microsoft.VisualBasic::94c1afb781ac740be9d151f6ade55719, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -67,6 +67,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -99,6 +100,15 @@ Namespace SVG
         ''' 所以在这里需要使用多层结构来将线性的绘图操作模拟为SVG的树形结构
         ''' </summary>
         Friend ReadOnly __svgData As SVGDataLayers
+
+        ''' <summary>
+        ''' 当前的仿射变换状态（与 GDI 的 <c>TranslateTransform</c>/<c>RotateTransform</c>/<c>ResetTransform</c> 对应）。
+        ''' SVG 本身没有画布级的变换栈，这里用一个「位移 + 旋转」的组合状态来模拟：
+        ''' 每个新加入的图元都挂上 <c>translate(tx,ty) rotate(angle)</c>，其矩阵与 GDI 的 T·R 完全一致。
+        ''' </summary>
+        Private tfX As Single = 0
+        Private tfY As Single = 0
+        Private tfAngle As Single = 0
 
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -324,20 +334,35 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
+        ''' <summary>
+        ''' 绘制椭圆：SVG 有原生的 &lt;ellipse> 元素，按 ``cx/cy/rx/ry`` 映射即可。
+        ''' </summary>
+        ''' <param name="pen"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="width"></param>
+        ''' <param name="height"></param>
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            Dim ellipse As SvgEllipse = NewEllipseElement()
 
+            ellipse.CX = x + width / 2
+            ellipse.CY = y + height / 2
+            ellipse.RX = width / 2
+            ellipse.RY = height / 2
+            ellipse.Fill = "transparent"
+            ellipse.Stroke = New Stroke(pen).CSSValue
+        End Sub
+
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
+            Call DrawEllipse(pen, CSng(rect.X), CSng(rect.Y), CSng(rect.Width), CSng(rect.Height))
         End Sub
 
         Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-
+            Call DrawEllipse(pen, rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
         Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            Call DrawEllipse(pen, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -356,7 +381,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-            Dim line As SvgLine = __svgData.svg.AddLine
+            Dim line As SvgLine = NewLineElement
 
             line.SetPoint(x1, y1, x2, y2)
             line.Style = New Stroke(pen).CSSValue
@@ -406,7 +431,7 @@ Namespace SVG
         ''' transparent填充底色来解决这个填充色为黑色默认值的问题
         ''' </remarks>
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
-            Dim pathData As SvgPath = __svgData.svg.AddPath
+            Dim pathData As SvgPath = NewPathElement
 
             pathData.D = path.SVGPathData
             pathData.Style = $"fill: transparent; {New Stroke(pen).CSSValue}"
@@ -431,14 +456,14 @@ Namespace SVG
 
         Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
             Dim path As String = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
-            Dim data As SvgPath = __svgData.svg.AddPath
+            Dim data As SvgPath = NewPathElement
 
             data.D = path
             data.Style = New Stroke(pen).CSSValue
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
-            Dim polygon As SvgPolygon = __svgData.svg.AddPolygon
+            Dim polygon As SvgPolygon = NewPolygonElement
 
             polygon.SetPolygonPath(points)
             polygon.Style = New Stroke(pen).CSSValue
@@ -450,7 +475,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
-            Dim rectangle As SvgRect = __svgData.svg.AddRect
+            Dim rectangle As SvgRect = NewRectElement
             Dim fill As String = __svgData.bg$
 
             rectangle.Style = New Stroke(pen).CSSValue & $" fill:{fill};"
@@ -459,21 +484,21 @@ Namespace SVG
         End Sub
 
         Public Overloads Sub DrawRectangle(pen As Pen, rect As Rectangle, fill As Color)
-            Dim rectangle As SvgRect = __svgData.svg.AddRect
+            Dim rectangle As SvgRect = NewRectElement
 
             rectangle.SetRectangle(rect)
             rectangle.Style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
         End Sub
 
         Public Overloads Sub DrawRectangle(pen As Pen, rect As RectangleF, fill As Color)
-            Dim rectangle As SvgRect = __svgData.svg.AddRect
+            Dim rectangle As SvgRect = NewRectElement
 
             rectangle.SetRectangle(rect)
             rectangle.Style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-            Dim rectangle As SvgRect = __svgData.svg.AddRect
+            Dim rectangle As SvgRect = NewRectElement
 
             rectangle.SetRectangle(New PointF(x, y), New SizeF(width, height))
             rectangle.Style = New Stroke(pen).CSSValue & "; fill: transparent;"
@@ -508,7 +533,7 @@ Namespace SVG
             ' 在这里尝试使用font size来修正
             Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
             Dim size As SizeF = MeasureString(s, font)
-            Dim text As SvgText = __svgData.svg.AddText
+            Dim text As SvgText = NewTextElement
 
             x = x + FontFace.SVGPointSize(size.Width, Dpi) / 6
             y = y + FontFace.SVGPointSize(size.Height, Dpi) / 1.5
@@ -537,8 +562,17 @@ Namespace SVG
             point = New PointF(x, y)
         End Sub
 
+        ''' <summary>
+        ''' 在给定矩形内绘制文本。
+        ''' 与 GDI(<c>Graphics.DrawString(String, Font, Brush, RectangleF)</c>)以及 PostScript 驱动保持一致：
+        ''' 不做自动换行与对齐，直接把矩形的左上角当作文本的基线起点。
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="font"></param>
+        ''' <param name="brush"></param>
+        ''' <param name="layoutRectangle"></param>
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
-            Throw New NotImplementedException()
+            Call DrawString(s, font, brush, layoutRectangle.Location)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -547,38 +581,61 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
-            Dim path As SvgPath = __svgData.svg.AddPath
+            Dim path As SvgPath = NewPathElement
 
             path.D = points.GraphicsPath.SVGPathData
             path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
-            Dim path As SvgPath = __svgData.svg.AddPath
+            Dim path As SvgPath = NewPathElement
 
             path.D = points.GraphicsPath.SVGPathData
             path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
 
+        ''' <summary>
+        ''' 填充椭圆
+        ''' </summary>
+        ''' <param name="brush"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="width"></param>
+        ''' <param name="height"></param>
+        Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+            Dim ellipse As SvgEllipse = NewEllipseElement()
+
+            ellipse.CX = x + width / 2
+            ellipse.CY = y + height / 2
+            ellipse.RX = width / 2
+            ellipse.RY = height / 2
+            ellipse.Fill = brushColor(brush)
+        End Sub
+
         Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
-            Throw New NotImplementedException()
+            Call FillEllipse(brush, CSng(rect.X), CSng(rect.Y), CSng(rect.Width), CSng(rect.Height))
         End Sub
 
         Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
+            Call FillEllipse(brush, rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
         Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            Call FillEllipse(brush, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
 
+        ''' <summary>把画刷转换为 CSS 颜色表达式（非纯色画刷退化为黑色填充）</summary>
+        Private Shared Function brushColor(brush As Brush) As String
+            If TypeOf brush Is SolidBrush Then
+                Return DirectCast(brush, SolidBrush).Color.ToHtmlColor
+            Else
+                Return Color.Black.ToHtmlColor
+            End If
+        End Function
+
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
-            Dim pathData As SvgPath = __svgData.svg.AddPath
+            Dim pathData As SvgPath = NewPathElement
 
             pathData.D = path.SVGPathData
             pathData.Fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
@@ -596,7 +653,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Dim path As SvgPath = __svgData.svg.AddPath
+            Dim path As SvgPath = NewPathElement
 
             path.D = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
             path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
@@ -608,7 +665,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
-            Dim polygon As SvgPolygon = __svgData.svg.AddPolygon
+            Dim polygon As SvgPolygon = NewPolygonElement
 
             polygon.SetPolygonPath(points)
             polygon.Fill = brush.SVGColorHelper
@@ -632,7 +689,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-            Dim rect As SvgRect = __svgData.svg.AddRect
+            Dim rect As SvgRect = NewRectElement
             Dim fill As String
 
             If TypeOf brush Is SolidBrush Then
@@ -662,14 +719,6 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub ResetTransform()
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub RotateTransform(angle As Single)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
             Throw New NotImplementedException()
         End Sub
@@ -691,8 +740,130 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
-            Throw New NotImplementedException()
+            tfX += dx
+            tfY += dy
         End Sub
+
+        ''' <summary>
+        ''' 叠加一个旋转角度（单位：度）。与 GDI 一致，旋转中心是变换之后的坐标原点。
+        ''' </summary>
+        ''' <param name="angle">顺时针旋转的角度（度）</param>
+        Public Overrides Sub RotateTransform(angle As Single)
+            tfAngle += angle
+        End Sub
+
+        ''' <summary>
+        ''' 还原到未变换的状态
+        ''' </summary>
+        Public Overrides Sub ResetTransform()
+            tfX = 0
+            tfY = 0
+            tfAngle = 0
+        End Sub
+
+        ''' <summary>
+        ''' 把当前的变换状态挂到刚刚创建的图元之上。
+        ''' 没有生效的变换时不做任何事情，避免给每个图元都加上多余的 transform 属性。
+        ''' </summary>
+        ''' <param name="element"></param>
+        Private Sub ApplyTransform(element As SvgElement)
+            If tfX = 0.0F AndAlso tfY = 0.0F AndAlso tfAngle = 0.0F Then
+                Return
+            End If
+            If element Is Nothing Then
+                Return
+            End If
+
+            element.Transform = $"translate({tfX.ToString("0.###", CultureInfo.InvariantCulture)},{tfY.ToString("0.###", CultureInfo.InvariantCulture)}) rotate({tfAngle.ToString("0.###", CultureInfo.InvariantCulture)})"
+        End Sub
+
+        ' ---- 下面这几个工厂方法统一在「创建图元」之后立刻挂上变换状态 ----
+
+        Private Function NewLineElement() As SvgLine
+            Dim container As SvgContainer = __svgData.svg
+
+            Return container.AddLine()
+        End Function
+
+        Private Function NewPathElement() As SvgPath
+            Dim container As SvgContainer = __svgData.svg
+
+            Return container.AddPath()
+        End Function
+
+        Private Function NewPolygonElement() As SvgPolygon
+            Dim container As SvgContainer = __svgData.svg
+
+            Return container.AddPolygon()
+        End Function
+
+        Private Function NewRectElement() As SvgRect
+            Dim container As SvgContainer = __svgData.svg
+
+            Return container.AddRect()
+        End Function
+
+        Private Function NewTextElement() As SvgText
+            Dim container As SvgContainer = __svgData.svg
+
+            Return container.AddText()
+        End Function
+
+        Private Function NewCircleElement() As SvgCircle
+            Dim container As SvgContainer = __svgData.svg
+
+            Return container.AddCircle()
+        End Function
+
+        Private Function NewEllipseElement() As SvgEllipse
+            Dim element As SvgEllipse = __svgData.svg.AddEllipse()
+
+            Call ApplyTransform(element)
+
+            Return element
+        End Function
+
+        Private Function AddLine() As SvgLine
+            Dim element As SvgLine = NewLineElement
+
+            Call ApplyTransform(element)
+            Return element
+        End Function
+
+        Private Function AddPath() As SvgPath
+            Dim element As SvgPath = NewPathElement
+
+            Call ApplyTransform(element)
+            Return element
+        End Function
+
+        Private Function AddPolygon() As SvgPolygon
+            Dim element As SvgPolygon = NewPolygonElement
+
+            Call ApplyTransform(element)
+            Return element
+        End Function
+
+        Private Function AddRect() As SvgRect
+            Dim element As SvgRect = NewRectElement
+
+            Call ApplyTransform(element)
+            Return element
+        End Function
+
+        Private Function AddText() As SvgText
+            Dim element As SvgText = NewTextElement
+
+            Call ApplyTransform(element)
+            Return element
+        End Function
+
+        Private Function AddCircle() As SvgCircle
+            Dim element As SvgCircle = NewCircleElement
+
+            Call ApplyTransform(element)
+            Return element
+        End Function
 
         Public Overrides Function GetContextInfo() As GraphicsContextInfo
             Throw New NotImplementedException()
@@ -720,7 +891,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
-            Dim circle As SvgCircle = __svgData.svg.AddCircle
+            Dim circle As SvgCircle = NewCircleElement
 
             circle.R = radius
             circle.CX = center.X

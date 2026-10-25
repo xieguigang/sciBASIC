@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1859c69acac035495820aeeef2529425, Data_science\Visualization\DataPlot\Advanced\PrincipalCurvePlot.vb"
+#Region "Microsoft.VisualBasic::1859c69acac035495820aeeef2529425, Data_science\Visualization\DataPlot\Advanced\PrincipalCurvePlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -104,7 +105,7 @@ Public Class PrincipalCurvePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If (Points Is Nothing OrElse Points.Length = 0) AndAlso (Curve Is Nothing OrElse Curve.Length = 0) Then
             Throw New InvalidOperationException("PrincipalCurvePlot needs sample points or a curve.")
         End If

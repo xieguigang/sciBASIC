@@ -81,8 +81,12 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports std = System.Math
 
@@ -91,7 +95,18 @@ Imports std = System.Math
 '  负责画布管理、坐标变换、坐标轴 / 网格 / 图例绘制、PNG 高清导出
 ' ============================================================================
 
+''' <summary>
+''' 所有以数据系列（<see cref="Series"/>）为输入的图表的基类：
+''' 散点图、折线图、面积图这一类「把若干条 (X, Y) 序列画在同一套坐标系里」的图表都从这里派生。
+''' </summary>
 Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
+
+    ''' <summary>
+    ''' 当前正在绘制的数据系列。由 <see cref="Plot(IList(Of Series))"/> 与带画布尺寸的导出重载写入，
+    ''' 子类的 <see cref="PlotEngine.PlotInternal"/> 从这里取数据。
+    ''' </summary>
+    ''' <returns></returns>
+    Protected Property SeriesList As IList(Of Series) = Nothing
 
     Protected Sub New(bmp As Bitmap)
         MyBase.New(bmp)
@@ -106,15 +121,51 @@ Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
         MyBase.New(g, theme)
     End Sub
 
-    Public MustOverride Sub Plot(seriesList As IList(Of Series))
+    ''' <summary>
+    ''' 把给定的数据系列绘制到当前画布之上（引擎自建画布，或者外部注入的宿主画布）。
+    ''' </summary>
+    ''' <param name="seriesList">数据系列</param>
+    Public Overloads Sub Plot(seriesList As IList(Of Series))
+        Me.SeriesList = seriesList
+        Call Plot()
+    End Sub
+
+    ''' <summary>
+    ''' 一次性渲染并按 <paramref name="driver"/> 指定的驱动导出绘图数据。
+    ''' </summary>
+    ''' <param name="seriesList">数据系列</param>
+    ''' <param name="size">画布尺寸</param>
+    ''' <param name="dpi">分辨率</param>
+    ''' <param name="driver">绘图驱动，决定输出格式（png/svg/pdf/ps）</param>
+    ''' <returns>可直接 <c>Save(path)</c> 落盘的绘图数据对象</returns>
+    Public Overloads Function Plot(seriesList As IList(Of Series), size As Size,
+                                   Optional dpi As Integer = 300,
+                                   Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Me.SeriesList = seriesList
+        Return Plot(size, dpi, driver)
+    End Function
+
+    ''' <summary>
+    ''' 一次性渲染并按 <paramref name="driver"/> 指定的驱动导出绘图数据。
+    ''' </summary>
+    ''' <param name="seriesList">数据系列</param>
+    ''' <param name="size">画布尺寸，``width,height``格式的字符串</param>
+    ''' <param name="ppi">分辨率</param>
+    ''' <param name="driver">绘图驱动，决定输出格式（png/svg/pdf/ps）</param>
+    ''' <returns>可直接 <c>Save(path)</c> 落盘的绘图数据对象</returns>
+    Public Overloads Function Plot(seriesList As IList(Of Series), size As String,
+                                   Optional ppi As Integer = 300,
+                                   Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Me.SeriesList = seriesList
+        Return Plot(size, ppi, driver)
+    End Function
 
 End Class
 
 ''' <summary>
 ''' 绘图引擎：所有图表类型的基类与公共能力。
-''' 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
 ''' </summary>
-Public Class PlotEngine : Implements IDisposable
+Public MustInherit Class PlotEngine : Implements IDisposable
 
     ' ---------- 画布 ----------
     Protected _g As IGraphics
@@ -167,19 +218,26 @@ Public Class PlotEngine : Implements IDisposable
     Public Property DrawFrame As Boolean = True
 
     Private _plotAreaPinned As RectangleF? = Nothing
+    ''' <summary>
+    ''' <see cref="_plotAreaPinned"/> 是否由宿主（图层叠加模式）显式钉死。
+    ''' 宿主钉死之后，<see cref="PlotCore"/> 不得再用画布的 CSS padding 覆盖绘图区，
+    ''' 否则多图层叠加时各图层会各自按自己的边距排版。
+    ''' </summary>
+    Private _hostPinned As Boolean = False
 
     ''' <summary>由宿主给定固定的绘图区；图层模式下各图层必须共用同一块绘图区。</summary>
     Public Sub SetPlotArea(area As RectangleF)
         _plotAreaPinned = area
         _plotArea = area
+        _hostPinned = True
     End Sub
 
     ''' <summary>由宿主钉死数据坐标范围（图层模式下通常由跨图层的联合计算结果提供）。</summary>
     Public Sub SetDataRange(xmin As Double, xmax As Double, ymin As Double, ymax As Double)
-        xmin = xmin
-        xmax = xmax
-        ymin = ymin
-        ymax = ymax
+        Me.XMin = xmin
+        Me.XMax = xmax
+        Me.YMin = ymin
+        Me.YMax = ymax
     End Sub
 
     ' ---------- 绘图区（数据坐标对应的像素矩形） ----------
@@ -286,6 +344,147 @@ Public Class PlotEngine : Implements IDisposable
 
         _g = Nothing
     End Sub
+
+    ' ========================================================
+    '  渲染入口（与 Canvas\PlotBase.vb 相同的两段式模式）
+    ' --------------------------------------------------------
+    '  Plot(size, dpi, driver) 负责「按驱动创建画布 → 绘制 → 取回绘图数据」，
+    '  具体画什么交给子类在 PlotInternal 里面写。
+    ' ========================================================
+    ''' <summary>
+    ''' 一次性渲染，并按 <paramref name="driver"/> 所指定的绘图驱动产生对应格式的绘图数据。
+    ''' </summary>
+    ''' <param name="size">画布尺寸</param>
+    ''' <param name="dpi">分辨率（栅格驱动下决定位图像素密度）</param>
+    ''' <param name="driver">
+    ''' 绘图驱动：<see cref="Drivers.GDI"/> 输出 png/jpeg 等栅格图、<see cref="Drivers.SVG"/> 输出矢量 svg、
+    ''' <see cref="Drivers.PostScript"/> 输出 ps、<see cref="Drivers.PDF"/> 输出 pdf。
+    ''' 非默认的驱动需要先完成注册（<c>PlotDrivers.Register()</c>）。
+    ''' </param>
+    ''' <returns>
+    ''' 与驱动对应的绘图数据对象（<see cref="ImageData"/> / <see cref="SVGData"/> /
+    ''' <see cref="PostScriptData"/> / PdfData），可直接调用 <c>Save(path)</c> 写出文件。
+    ''' </returns>
+    ''' <remarks>
+    ''' 这个入口会重新创建一块画布来完成绘制，与构造函数里创建的那块画布无关，
+    ''' 因此即便引擎是「画在宿主控件上」的模式（<c>New(g As IGraphics)</c>）也照样可以导出图形文件。
+    ''' </remarks>
+    Public Overloads Function Plot(size As Size,
+                                   Optional dpi As Integer = 300,
+                                   Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Return g.GraphicsPlots(
+            size:=size,
+            padding:=Me.Theme.Padding,
+            bg:=Me.Theme.BackgroundColor.ToHtmlColor,
+            plotAPI:=AddressOf PlotCore,
+            driver:=driver,
+            dpi:=dpi
+        )
+    End Function
+
+    ''' <summary>
+    ''' 一次性渲染，并按 <paramref name="driver"/> 所指定的绘图驱动产生对应格式的绘图数据。
+    ''' </summary>
+    ''' <param name="size">画布尺寸，``width,height``格式的字符串，例如``3600,2400``</param>
+    ''' <param name="ppi">分辨率（栅格驱动下决定位图像素密度）</param>
+    ''' <param name="driver">绘图驱动，决定输出的文件格式</param>
+    ''' <returns>与驱动对应的绘图数据对象，可直接调用 <c>Save(path)</c> 写出文件</returns>
+    Public Overloads Function Plot(size As String,
+                                   Optional ppi As Integer = 300,
+                                   Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Return Plot(size.SizeParser, ppi, driver)
+    End Function
+
+    ''' <summary>
+    ''' 把图表绘制到给定的绘图设备之上（例如宿主控件的画布、图层叠加模式下的共享画布）。
+    ''' </summary>
+    ''' <param name="g">目标绘图设备</param>
+    ''' <param name="canvas">画布布局信息（整张画布的尺寸与边距）</param>
+    Public Overloads Sub Plot(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Call PlotCore(g, canvas)
+    End Sub
+
+    ''' <summary>
+    ''' 把图表绘制到给定的绘图设备之上，绘图区由调用方直接以像素矩形给出。
+    ''' </summary>
+    ''' <param name="g">目标绘图设备</param>
+    ''' <param name="layout">绘图区（不含坐标轴与标题的留白部分）</param>
+    Public Overloads Sub Plot(ByRef g As IGraphics, layout As Rectangle)
+        Dim padding As New Padding With {
+            .Left = $"{layout.Left}px",
+            .Top = $"{layout.Top}px",
+            .Right = $"{g.Size.Width - layout.Right}px",
+            .Bottom = $"{g.Size.Height - layout.Bottom}px"
+        }
+        Dim canvas As New GraphicsRegion(g.Size, padding)
+
+        Call PlotCore(g, canvas)
+    End Sub
+
+    ''' <summary>
+    ''' 把图表绘制到引擎当前的画布之上（由 <c>New(width, height)</c> 自建，或者由 <c>New(g)</c> 注入的宿主画布）。
+    ''' </summary>
+    Public Overloads Sub Plot()
+        Dim canvas As New GraphicsRegion(New Size(_width, _height), Me.Theme.Padding)
+
+        Call PlotCore(_g, canvas)
+    End Sub
+
+    ''' <summary>
+    ''' 渲染管线：挂载目标绘图设备 → 调用子类的 <see cref="PlotInternal"/> → 恢复引擎自身的画布状态。
+    ''' </summary>
+    ''' <param name="g">本次渲染所使用的绘图设备</param>
+    ''' <param name="canvas">画布布局信息</param>
+    ''' <remarks>
+    ''' <see cref="Microsoft.VisualBasic.Imaging.Drawing2D.g.GraphicsPlots"/> 所创建的临时画布在返回之后
+    ''' 就会被释放，所以这里必须在 Finally 之中把 <c>_g</c> 等字段还原，
+    ''' 否则引擎在下一次绘制时会访问一块已经被释放的画布。
+    ''' </remarks>
+    Private Sub PlotCore(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim savedDevice As IGraphics = _g
+        Dim savedWidth As Integer = _width
+        Dim savedHeight As Integer = _height
+        Dim savedArea As RectangleF = _plotArea
+        Dim savedPinned As RectangleF? = _plotAreaPinned
+
+        Call AttachDevice(g, canvas)
+
+        Try
+            Call PlotInternal(g, canvas)
+        Finally
+            _g = savedDevice
+            _width = savedWidth
+            _height = savedHeight
+            _plotArea = savedArea
+            _plotAreaPinned = savedPinned
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' 把引擎的绘制上下文切换到目标设备：更新画布尺寸，并按画布的 CSS padding 钉死绘图区。
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="canvas"></param>
+    Private Sub AttachDevice(g As IGraphics, canvas As GraphicsRegion)
+        _g = g
+        _width = g.Size.Width
+        _height = g.Size.Height
+
+        If Not _hostPinned Then
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+
+            _plotAreaPinned = canvas.PlotRegion(css)
+            _plotArea = _plotAreaPinned.Value
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 具体的绘图代码。子类把图元（坐标轴、网格、数据图形、图例等）写在这里，
+    ''' 画布的创建与格式输出由基类的 <c>Plot</c> 重载统一负责。
+    ''' </summary>
+    ''' <param name="g">本次渲染所使用的绘图设备</param>
+    ''' <param name="canvas">画布布局信息（可用 <c>canvas.PlotRegion(css)</c> 取出绘图区）</param>
+    Protected MustOverride Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 
     ' ========================================================
     '  画质设置

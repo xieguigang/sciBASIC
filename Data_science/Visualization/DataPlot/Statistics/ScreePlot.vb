@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ddded0ca388fc3296ad347b7f14b19, Data_science\Visualization\DataPlot\Statistics\ScreePlot.vb"
+#Region "Microsoft.VisualBasic::b1ddded0ca388fc3296ad347b7f14b19, Data_science\Visualization\DataPlot\Statistics\ScreePlot.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -90,7 +91,7 @@ Public Class ScreePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Contributions Is Nothing OrElse Contributions.Length = 0 Then
             Throw New InvalidOperationException("ScreePlot requires contribution values.")
         End If

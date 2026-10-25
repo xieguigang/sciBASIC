@@ -244,7 +244,8 @@ Public Module ElasticNetFitting
                                               Optional maxIterations As Integer = 10000,
                                               Optional featureNames As String() = Nothing,
                                               Optional maxFeatures As Integer = 0,
-                                              Optional penalty As Double() = Nothing) As ElasticNetPath
+                                              Optional penalty As Double() = Nothing,
+                                              Optional sign As Integer() = Nothing) As ElasticNetPath
 
         Dim n As Integer = 0
         Dim p As Integer = 0
@@ -264,10 +265,15 @@ Public Module ElasticNetFitting
                 $"the length of the penalty vector ({penalty.Length}) must equal the number of the feature columns ({p})!",
                 NameOf(penalty))
         End If
+        If sign IsNot Nothing AndAlso sign.Length <> p Then
+            Throw New ArgumentException(
+                $"the length of the sign vector ({sign.Length}) must equal the number of the feature columns ({p})!",
+                NameOf(sign))
+        End If
 
         Dim data As ElasticNetData = PrepareColumns(columns, y, standardize, Nothing)
         Dim grid As Double() = AlphaGrid(data, l1Ratio, numberOfAlphas, alphaRatio, alphaMax)
-        Dim solution As PathSolution = RunPath(data, l1Ratio, grid, tolerance, maxIterations, maxFeatures, penalty)
+        Dim solution As PathSolution = RunPath(data, l1Ratio, grid, tolerance, maxIterations, maxFeatures, penalty, sign)
 
         Return NewPath(data, l1Ratio, grid, solution, featureNames)
     End Function
@@ -654,7 +660,8 @@ Public Module ElasticNetFitting
                              tolerance As Double,
                              maxIterations As Integer,
                              Optional maxFeatures As Integer = 0,
-                             Optional penalty As Double() = Nothing) As PathSolution
+                             Optional penalty As Double() = Nothing,
+                             Optional sign As Integer() = Nothing) As PathSolution
 
         Dim steps As Integer = grid.Length
         Dim p As Integer = data.P
@@ -680,7 +687,7 @@ Public Module ElasticNetFitting
 
             ' warm start：beta 沿用上一步的结果；residual 也一并沿用
             ' （上一步收敛时 r 恰好等于 y - X*beta），省掉每个 alpha 一次 O(nnz*n) 的重算
-            Call CoordinateDescent(data, grid(k), l1Ratio, beta, tolerance, maxIterations, iterations, residual, initResidual, penalty)
+            Call CoordinateDescent(data, grid(k), l1Ratio, beta, tolerance, maxIterations, iterations, residual, initResidual, penalty, sign)
             initResidual = False
 
             executed = k + 1
@@ -757,7 +764,8 @@ Public Module ElasticNetFitting
                                        ByRef iterations As Integer,
                                        Optional residual As Double() = Nothing,
                                        Optional initResidual As Boolean = True,
-                                       Optional penalty As Double() = Nothing) As Boolean
+                                       Optional penalty As Double() = Nothing,
+                                       Optional sign As Integer() = Nothing) As Boolean
 
         Dim n As Integer = data.N
         Dim p As Integer = data.P
@@ -811,6 +819,20 @@ Public Module ElasticNetFitting
 
                 If Double.IsNaN(updated) OrElse Double.IsInfinity(updated) Then
                     Return False
+                End If
+
+                ' signed lasso：先验给出因果符号的边被限制在半空间内。
+                ' 数据与先验冲突时系数收缩到 0（边被丢弃），而不是保留错误的方向；
+                ' 这也是唯一能确定绝对符号的做法 —— L1/L2/图拉普拉斯都是偶次惩罚，
+                ' 对 β → -β 完全对称。
+                If sign IsNot Nothing Then
+                    Dim dir As Integer = sign(j)
+
+                    If dir > 0 AndAlso updated < 0.0R Then
+                        updated = 0.0R
+                    ElseIf dir < 0 AndAlso updated > 0.0R Then
+                        updated = 0.0R
+                    End If
                 End If
 
                 Dim delta As Double = updated - beta(j)

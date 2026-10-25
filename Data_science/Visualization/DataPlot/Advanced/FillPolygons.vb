@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e01a348baed1ad5e8bea7e3acdbf095a, Data_science\Visualization\DataPlot\Advanced\FillPolygons.vb"
+#Region "Microsoft.VisualBasic::e01a348baed1ad5e8bea7e3acdbf095a, Data_science\Visualization\DataPlot\Advanced\FillPolygons.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ' ============================================================================
@@ -97,7 +98,7 @@ Public Class FillPolygons
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Groups Is Nothing OrElse Groups.Count = 0 Then
             Throw New InvalidOperationException("FillPolygons requires at least one polygon group.")
         End If

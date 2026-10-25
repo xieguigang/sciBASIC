@@ -102,7 +102,7 @@ Public Class DrawKDTree : Inherits PlotEngine
         Me.k = If(k <= 0, 1, k)
     End Sub
 
-    Public Overloads Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim allPoints = tree.GetPoints.ToArray
         If allPoints.Length = 0 Then Throw New InvalidOperationException("The KD-tree has no points.")
 
@@ -205,10 +205,19 @@ Public Class DrawKDTree : Inherits PlotEngine
 
         Dim w = Integer.Parse(parts(0).Trim)
         Dim h = Integer.Parse(parts(1).Trim)
+        Dim appTheme As PlotTheme = theme
 
-        Using gd As New DrawKDTree(w, h, tree, query, k, theme)
-            gd.Plot()
-            Return gd.AsGraphicsData()
+        If appTheme Is Nothing Then
+            appTheme = PlotTheme.Light()
+
+            If Not bg.StringEmpty Then
+                appTheme.BackgroundColor = bg.TranslateColor(throwEx:=False)
+                appTheme.PlotAreaColor = appTheme.BackgroundColor
+            End If
+        End If
+
+        Using gd As New DrawKDTree(w, h, tree, query, k, appTheme)
+            Return gd.Plot(New Size(w, h), dpi:=100, driver:=Drivers.GDI)
         End Using
     End Function
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c34e5144004f4b58058fffbe1076b78f, Data_science\Visualization\DataPlot\Advanced\PiePlot.vb"
+#Region "Microsoft.VisualBasic::c34e5144004f4b58058fffbe1076b78f, Data_science\Visualization\DataPlot\Advanced\PiePlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports std = System.Math
 
 ''' <summary>饼图</summary>
@@ -81,7 +82,7 @@ Public Class PiePlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         DrawBackground()
         DrawTitle()
 

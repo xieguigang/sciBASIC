@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc498edd354b63bcd5c916e9a6e49d0, Data_science\Visualization\DataPlot\Advanced\ImageMapPlot.vb"
+#Region "Microsoft.VisualBasic::dfc498edd354b63bcd5c916e9a6e49d0, Data_science\Visualization\DataPlot\Advanced\ImageMapPlot.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -102,7 +103,7 @@ Public Class ImageMapPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Image Is Nothing Then Throw New InvalidOperationException("ImageMapPlot requires an image matrix.")
 
         DrawBackground()

@@ -167,11 +167,51 @@ Public Class RigidBody3D
         If material IsNot Nothing Then Me.Material = material
         If mass > 0 Then Me.InertiaLocal = shape.ComputeInertia(mass)
 
-        If Me.InertiaLocal.Determinant() < 1.0E-12 Then
-            ' 退化惯量（如平面）：退化为不转动的球体惯量，避免求逆得到 NaN
-            Me.InertiaLocal = Matrix3x3.Identity
+        If Not IsUsableInertia(Me.InertiaLocal) Then
+            ' 退化惯量（如平面）或数值上不可信的惯量：用包围半径估一个各向同性惯量。
+            '
+            ' 注意不能退化成单位矩阵：对一块 5 cm / 50 g 的积木，真实惯量在 1e-6 量级，
+            ' 单位矩阵大了六个数量级，会让接触求解器与关节伺服完全失真
+            ' （实测表现为夹爪手指 1 s 内自发获得 20 rad/s 的转速）。
+            Me.InertiaLocal = FallbackInertia(shape, mass)
         End If
     End Sub
+
+    ''' <summary>
+    ''' 惯性张量是否可用：对角线必须为正且有限，且行列式相对对角量级不能过小
+    ''' （绝对阈值会把"小而合法的惯量"误判为退化）。
+    ''' </summary>
+    Private Shared Function IsUsableInertia(m As Matrix3x3) As Boolean
+        If Double.IsNaN(m.m11) OrElse Double.IsNaN(m.m22) OrElse Double.IsNaN(m.m33) Then Return False
+        If Double.IsInfinity(m.m11) OrElse Double.IsInfinity(m.m22) OrElse Double.IsInfinity(m.m33) Then Return False
+        If m.m11 <= 0.0 OrElse m.m22 <= 0.0 OrElse m.m33 <= 0.0 Then Return False
+
+        Dim scale As Double = std.Max(m.m11, std.Max(m.m22, m.m33))
+        Dim det As Double = m.Determinant()
+
+        If Double.IsNaN(det) Then Return False
+
+        Return det > scale * scale * scale * 1.0E-9
+    End Function
+
+    Private Shared Function FallbackInertia(shape As Collider3D, mass As Double) As Matrix3x3
+        Dim radius As Double = 0.01
+
+        If shape IsNot Nothing Then
+            Dim box As AABB3D = shape.GetAABB(Vector3.Zero, Quaternion.Identity)
+            Dim diagonal As Double = Vector3Math.Length(box.Extents)
+
+            If diagonal > 0.0 AndAlso Not Double.IsNaN(diagonal) Then
+                radius = diagonal
+            End If
+        End If
+
+        Dim value As Double = 0.4 * std.Max(mass, 0.001) * radius * radius
+
+        If value <= 0.0 OrElse Double.IsNaN(value) Then value = 1.0E-6
+
+        Return Matrix3x3.Diagonal(value, value, value)
+    End Function
 
     ''' <summary>设为静态物体（无限质量 / 惯量）。</summary>
     Public Sub SetStatic()

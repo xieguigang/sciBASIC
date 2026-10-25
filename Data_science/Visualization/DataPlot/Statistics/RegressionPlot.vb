@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c2f7d879ba46289136906a972c911d3, Data_science\Visualization\DataPlot\Statistics\RegressionPlot.vb"
+#Region "Microsoft.VisualBasic::8c2f7d879ba46289136906a972c911d3, Data_science\Visualization\DataPlot\Statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -96,7 +97,7 @@ Public Class RegressionPlot
         MyBase.New(g, theme)
     End Sub
 
-    Public Sub Plot()
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If Fit Is Nothing Then Throw New InvalidOperationException("RegressionPlot requires a fit result.")
 
         Dim x = Fit.X
