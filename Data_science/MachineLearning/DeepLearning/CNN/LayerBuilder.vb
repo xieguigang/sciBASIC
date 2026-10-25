@@ -170,13 +170,18 @@ Namespace CNN
         End Function
 
         ''' <summary>Appends a transposed (de)convolution layer.</summary>
-        ''' <param name="dims">The target output size.</param>
-        ''' <param name="filter">The filter window size.</param>
-        ''' <param name="filters">Number of filters.</param>
-        ''' <param name="stride">Stride.</param>
+        ''' <param name="kernel">Side length of the square filter window.</param>
+        ''' <param name="outChannels">Number of output channels; 0 表示与输入通道数相同。</param>
+        ''' <param name="stride">Stride; 2 表示空间尺寸翻倍。</param>
+        ''' <param name="padding">Zero padding of the corresponding forward convolution.</param>
+        ''' <param name="useBias">Whether a learnable bias is added.</param>
         ''' <returns>This builder.</returns>
-        Public Function buildConv2DTransposeLayer(dims As OutputDefinition, filter As Dimension, filters As Integer, stride As Integer) As LayerBuilder
-            Return add(New Conv2DTransposeLayer(def, dims, filter, filters, stride))
+        Public Function buildConv2DTransposeLayer(Optional kernel As Integer = 2,
+                                                  Optional outChannels As Integer = 0,
+                                                  Optional stride As Integer = 2,
+                                                  Optional padding As Integer = 0,
+                                                  Optional useBias As Boolean = True) As LayerBuilder
+            Return add(New Conv2DTransposeLayer(def, kernel, outChannels, stride, padding, useBias))
         End Function
 
         ''' <summary>Appends the input layer and declares the input image size.</summary>

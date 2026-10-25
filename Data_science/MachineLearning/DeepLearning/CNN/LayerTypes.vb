@@ -104,6 +104,14 @@ Namespace CNN
         <Description("svm")> SVM
         ''' <summary>Transposed (de)convolution layer (<c>conv_transpose</c>).</summary>
         <Description("conv_transpose")> Conv2DTranspose
+        ''' <summary>
+        ''' Skip connection concat layer (<c>concat</c>).
+        ''' </summary>
+        ''' <remarks>
+        ''' 沿通道维把跳跃连接的特征图与本层输入拼接起来（U-Net 的 "copy and crop"）。
+        ''' 本层只在**计算图**里有意义：串行网络里没有第二个输入可拼。
+        ''' </remarks>
+        <Description("concat")> Concat
         ''' <summary>Fourier feature mapping layer (<c>fourier_feature</c>).</summary>
         <Description("fourier_feature")> FourierFeature
         ''' <summary>Leaky ReLU activation (<c>leaky_relu</c>).</summary>
