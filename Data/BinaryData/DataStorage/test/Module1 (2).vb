@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Module Module1
+Module Module1222
 
     Sub writeTest2()
         Using out = New BinaryDataWriter("./sssss.txt".Open)
@@ -70,49 +70,49 @@ Module Module1
 
         Call writeTest2()
 
-        Call reflectionTest()
+        ' Call reflectionTest()
 
-        Call IOtest()
+        ' Call IOtest()
 
     End Sub
 
-    Sub IOtest()
-        Dim path = "./sdfsdfsdf.dat"
+    'Sub IOtest()
+    '    Dim path = "./sdfsdfsdf.dat"
 
-        Using write As New StringWriter(path)
-            Call write.Append("633333333333336")
-            Call write.Append({"ASDF", "12345", "00000"})
-        End Using
+    '    Using write As New StringWriter(path)
+    '        Call write.Append("633333333333336")
+    '        Call write.Append({"ASDF", "12345", "00000"})
+    '    End Using
 
-        Dim reader As New StringReader(path)
+    '    Dim reader As New StringReader(path)
 
-        Console.WriteLine(reader.ReadString)
-        Console.WriteLine(reader.ReadStringArray.GetJson)
+    '    Console.WriteLine(reader.ReadString)
+    '    Console.WriteLine(reader.ReadStringArray.GetJson)
 
-        Pause()
-    End Sub
+    '    Pause()
+    'End Sub
 
 
-    Sub reflectionTest()
-        Dim path$ = "./fffffffffffffffffffff.dat"
-        Dim p1$
-        Dim p2%
+    'Sub reflectionTest()
+    '    Dim path$ = "./fffffffffffffffffffff.dat"
+    '    Dim p1$
+    '    Dim p2%
 
-        Using writer As New StringWriter(path)
+    '    Using writer As New StringWriter(path)
 
-            Dim write = writer.CreateWriter(Of i32)
+    '        Dim write = writer.CreateWriter(Of i32)
 
-            p1 = write(New i32(-9876))
-            p2 = write(New i32(88888888))
+    '        p1 = write(New i32(-9876))
+    '        p2 = write(New i32(88888888))
 
-        End Using
+    '    End Using
 
-        Dim reader As New StringReader(path)
-        Dim read = reader.CreateReader(Of i32)
+    '    Dim reader As New StringReader(path)
+    '    Dim read = reader.CreateReader(Of i32)
 
-        Console.WriteLine(read(0))
-        Console.WriteLine(read(p1))
+    '    Console.WriteLine(read(0))
+    '    Console.WriteLine(read(p1))
 
-        Pause()
-    End Sub
+    '    Pause()
+    'End Sub
 End Module

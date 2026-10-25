@@ -102,7 +102,7 @@ Module Module1
 
 
 
-        Call file.ToString.__DEBUG_ECHO
+        Call file.ToString.debug
         Call file.ToString.SaveTo("./dump-writer.txt")
 
         Dim massvalue = file.getDataVariable("mass_values")
@@ -117,7 +117,7 @@ Module Module1
         Dim path$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\5ppm.CDF"
         Dim file As New netCDFReader(path, Encodings.UTF8WithoutBOM)
 
-        Call file.ToString.__DEBUG_ECHO
+        Call file.ToString.debug
         Call file.ToString.SaveTo("./dump.txt")
 
         Dim massvalue = file.getDataVariable("mass_values")
