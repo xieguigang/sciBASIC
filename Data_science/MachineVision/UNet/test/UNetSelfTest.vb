@@ -1,12 +1,10 @@
-Imports System
 Imports System.IO
-Imports System.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
-Imports UNet
+Imports Microsoft.VisualBasic.MachineVision.UNet.UNet
 Imports gpu = Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
 Imports std = System.Math
 
