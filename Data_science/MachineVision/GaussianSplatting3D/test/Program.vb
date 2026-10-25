@@ -74,8 +74,8 @@ Module Program
     Private Const DENSIFY_UNTIL_ITER As Integer = 400
 
     ' ===== 路径配置 =====
-    Private ReadOnly TestDataDir As String = "G:\pixelArtist\src\framework\Data_science\MachineVision\GaussianSplatting3D\test_data"
-    Private ReadOnly OutputDir As String = "G:\pixelArtist\src\framework\Data_science\MachineVision\GaussianSplatting3D\output"
+    Private ReadOnly TestDataDir As String = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineVision\GaussianSplatting3D\test_data"
+    Private ReadOnly OutputDir As String = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineVision\GaussianSplatting3D\output"
 
     Sub Main(args As String())
         Console.WriteLine("="c, 70)
