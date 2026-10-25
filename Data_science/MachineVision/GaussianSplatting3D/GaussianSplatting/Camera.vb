@@ -147,8 +147,44 @@ End Class
 ''' </summary>
 Public Class CameraExtrinsics
 
+    Private _r As Double(,)
+    Private _rFlat As Double()
+
     ''' <summary>3x3 旋转矩阵（行优先存储）</summary>
     Public Property R As Double(,)
+        Get
+            Return _r
+        End Get
+        Set(value As Double(,))
+            _r = value
+            _rFlat = Nothing
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 3x3 旋转矩阵的行优先扁平副本（9 元素）。供投影内核零索引器访问。
+    ''' </summary>
+    Public ReadOnly Property RFlat As Double()
+        Get
+            If _rFlat Is Nothing Then
+                Dim flat(8) As Double
+
+                If _r IsNot Nothing Then
+                    For i = 0 To 2
+                        For j = 0 To 2
+                            flat(i * 3 + j) = _r(i, j)
+                        Next
+                    Next
+                Else
+                    flat(0) = 1 : flat(4) = 1 : flat(8) = 1
+                End If
+
+                _rFlat = flat
+            End If
+
+            Return _rFlat
+        End Get
+    End Property
 
     ''' <summary>3x1 平移向量</summary>
     Public Property T As Double()

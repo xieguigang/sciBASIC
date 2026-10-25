@@ -1,82 +1,30 @@
-﻿#Region "Microsoft.VisualBasic::53a6eb1c620d8c83ff0ba7c88bf9fdb7, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\Optimizer.vb"
+﻿' ---------------------------------------------------------------------------
+' Adam 优化器
+'
+' 性能要点：
+'   * 直接操作扁平 Double() 数组（绕开 Tensor 索引器：其 setter 每次写入都会
+'     Interlocked.Increment 版本号，逐元素写会白白付出原子操作代价）；
+'   * 单遍 SIMD 内核同时更新 m / v / param（Vector(Of Double)，8 宽），
+'     而不是三次独立的逐元素循环；
+'   * 偏差校正 bc1 / bc2 在 IncrementStep 里算一次，不在每个元素上调用 Pow；
+'   * 元素数超过阈值才并行（内存带宽受限的算子并行收益有限）。
+' ---------------------------------------------------------------------------
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 117
-    '    Code Lines: 53 (45.30%)
-    ' Comment Lines: 46 (39.32%)
-    '    - Xml Docs: 76.09%
-    ' 
-    '   Blank Lines: 18 (15.38%)
-    '     File Size: 4.10 KB
-
-
-    ' Class AdamOptimizer
-    ' 
-    '     Properties: Beta1, Beta2, Epsilon, LearningRate
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: [Step], IncrementStep, StepModel
-    ' 
-    ' Class LRScheduler
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetLr
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports nv = System.Numerics
 Imports std = System.Math
 
 ''' <summary>
 ''' Adam 优化器
-''' 
-''' Adam Optimizer
-''' ==============
+'''
 ''' 参数更新规则：
-'''   m_t = β₁ * m_{t-1} + (1 - β₁) * g_t
-'''   v_t = β₂ * v_{t-1} + (1 - β₂) * g_t²
-'''   m̂_t = m_t / (1 - β₁^t)
-'''   v̂_t = v_t / (1 - β₂^t)
-'''   θ_t = θ_{t-1} - lr * m̂_t / (√v̂_t + ε)
-''' 
-''' 每个参数张量维护自己的 m 和 v 状态。
+'''   m_t = β₁·m_{t-1} + (1−β₁)·g_t
+'''   v_t = β₂·v_{t-1} + (1−β₂)·g_t²
+'''   θ_t = θ_{t-1} − lr·(m_t/(1−β₁^t)) / (√(v_t/(1−β₂^t)) + ε)
 ''' </summary>
 Public Class AdamOptimizer
+
+    ''' <summary>元素数超过该值才启用并行</summary>
+    Public Const ParallelThreshold As Integer = 262144
 
     ''' <summary>学习率</summary>
     Public Property LearningRate As Double = 0.01
@@ -93,71 +41,138 @@ Public Class AdamOptimizer
     ''' <summary>时间步</summary>
     Private _t As Integer = 0
 
+    Private _invBc1 As Double = 1.0
+    Private _invBc2 As Double = 1.0
+
     Public Sub New(Optional lr As Double = 0.01)
         Me.LearningRate = lr
     End Sub
 
+    ''' <summary>当前时间步</summary>
+    Public ReadOnly Property TimeStep As Integer
+        Get
+            Return _t
+        End Get
+    End Property
+
     Public Sub IncrementStep()
         _t += 1
+        _invBc1 = 1.0 / (1.0 - std.Pow(Beta1, _t))
+        _invBc2 = 1.0 / (1.0 - std.Pow(Beta2, _t))
     End Sub
 
-    ''' <summary>
-    ''' 对一个参数张量执行 Adam 更新
-    ''' Perform an Adam update on a single parameter tensor.
-    ''' </summary>
-    ''' <param name="param">参数张量（会被原地修改）</param>
-    ''' <param name="grad">梯度张量</param>
-    ''' <param name="m">一阶矩状态（会被原地修改）</param>
-    ''' <param name="v">二阶矩状态（会被原地修改）</param>
-    ''' <param name="lrScale">学习率缩放因子（用于不同参数组的不同学习率）</param>
-    Public Sub [Step](param As Tensor, grad As Tensor, m As Tensor, v As Tensor, Optional lrScale As Double = 1.0)
-        Dim n = param.Length
-        Dim bc1 = 1.0 - std.Pow(Beta1, _t)
-        Dim bc2 = 1.0 - std.Pow(Beta2, _t)
+    ''' <summary>对一组参数执行 Adam 更新（就地修改）。</summary>
+    Public Sub [Step](param As Double(), grad As Double(), m As Double(), v As Double(),
+                      Optional lrScale As Double = 1.0)
+        If param Is Nothing OrElse param.Length = 0 Then Return
+
         Dim lr = LearningRate * lrScale
+        Dim n = param.Length
 
-        For i = 0 To n - 1
-            Dim g = grad(i)
-            ' m = β₁ * m + (1 - β₁) * g
-            m(i) = Beta1 * m(i) + (1 - Beta1) * g
-            ' v = β₂ * v + (1 - β₂) * g²
-            v(i) = Beta2 * v(i) + (1 - Beta2) * g * g
-            ' 偏差校正
-            Dim mHat = m(i) / bc1
-            Dim vHat = v(i) / bc2
-            ' 更新参数
-            param(i) = param(i) - lr * mHat / (std.Sqrt(vHat) + Epsilon)
-        Next
+        If n < ParallelThreshold Then
+            Call UpdateKernel(param, grad, m, v, 0, n, lr)
+            Return
+        End If
+
+        Dim chunks = std.Min(std.Max(1, Environment.ProcessorCount), std.Max(1, n \ 65536))
+        Dim perChunk = (n + chunks - 1) \ chunks
+
+        System.Threading.Tasks.Parallel.For(0, chunks,
+            Sub(c)
+                Dim from = c * perChunk
+                Dim [to] = std.Min(n, from + perChunk)
+
+                Call UpdateKernel(param, grad, m, v, from, [to], lr)
+            End Sub)
     End Sub
 
-    ''' <summary>
-    ''' 对整个高斯模型执行一次 Adam 更新
-    ''' </summary>
+    ''' <summary>SIMD 单遍 Adam 内核（区间 [from, to)）。</summary>
+    Private Sub UpdateKernel(param As Double(), grad As Double(), m As Double(), v As Double(),
+                             from As Integer, [to] As Integer, lr As Double)
+        Dim width = nv.Vector(Of Double).Count
+        Dim b1 = Beta1, b2 = Beta2
+        Dim omB1 = 1.0 - b1, omB2 = 1.0 - b2
+        Dim invBc1 = _invBc1, invBc2 = _invBc2
+        Dim eps = Epsilon
+
+        Dim vBeta1 As New nv.Vector(Of Double)(b1)
+        Dim vOmB1 As New nv.Vector(Of Double)(omB1)
+        Dim vBeta2 As New nv.Vector(Of Double)(b2)
+        Dim vOmB2 As New nv.Vector(Of Double)(omB2)
+        Dim vLr As New nv.Vector(Of Double)(-lr)
+        Dim vInvBc1 As New nv.Vector(Of Double)(invBc1)
+        Dim vInvBc2 As New nv.Vector(Of Double)(invBc2)
+        Dim vEps As New nv.Vector(Of Double)(eps)
+
+        Dim i = from
+        Dim last = [to] - width
+
+        ' 就地更新：尾部必须走标量（不能用"末块重叠"技巧，否则已经更新的元素会被改两次）
+        Do While i <= last
+            Dim g = New nv.Vector(Of Double)(grad, i)
+            Dim mm = New nv.Vector(Of Double)(m, i)
+            Dim vv = New nv.Vector(Of Double)(v, i)
+            Dim pp = New nv.Vector(Of Double)(param, i)
+
+            mm = vBeta1 * mm + vOmB1 * g
+            vv = vBeta2 * vv + vOmB2 * g * g
+
+            Dim mHat = mm * vInvBc1
+            Dim vHat = vv * vInvBc2
+
+            pp = pp + vLr * (mHat / (nv.Vector.SquareRoot(vHat) + vEps))
+
+            mm.CopyTo(m, i)
+            vv.CopyTo(v, i)
+            pp.CopyTo(param, i)
+
+            i += width
+        Loop
+
+        Dim inv1 = invBc1, inv2 = invBc2
+
+        While i < [to]
+            Dim g = grad(i)
+
+            Dim mm = beta1 * m(i) + omB1 * g
+            Dim vv = beta2 * v(i) + omB2 * g * g
+
+            m(i) = mm
+            v(i) = vv
+
+            param(i) -= lr * (mm * inv1) / (std.Sqrt(vv * inv2) + eps)
+
+            i += 1
+        End While
+    End Sub
+
+    ''' <summary>对整个高斯模型执行一次 Adam 更新。</summary>
     Public Sub StepModel(model As GaussianModel)
-        IncrementStep()
-        ' 位置：标准学习率
-        [Step](model.Positions, model.PositionsGrad, model.PositionsM, model.PositionsV, 1.0)
-        ' 缩放：较低学习率（防止数值不稳定）
-        [Step](model.Scales, model.ScalesGrad, model.ScalesM, model.ScalesV, 0.1)
-        ' 旋转：较低学习率
-        [Step](model.Rotations, model.RotationsGrad, model.RotationsM, model.RotationsV, 0.1)
-        ' 颜色：标准学习率
-        [Step](model.Colors, model.ColorsGrad, model.ColorsM, model.ColorsV, 1.0)
-        ' 不透明度：较低学习率
-        [Step](model.Opacities, model.OpacitiesGrad, model.OpacitiesM, model.OpacitiesV, 0.1)
+        If model Is Nothing OrElse model.Count = 0 Then Return
+
+        Call IncrementStep()
+
+        ' 位置 / 颜色：标准学习率；缩放 / 旋转 / 不透明度：较低学习率
+        [Step](model.PositionsData, model.PositionsGradData, model.PositionsMData, model.PositionsVData, 1.0)
+        [Step](model.ScalesData, model.ScalesGradData, model.ScalesMData, model.ScalesVData, 0.1)
+        [Step](model.RotationsData, model.RotationsGradData, model.RotationsMData, model.RotationsVData, 0.1)
+        [Step](model.ColorsData, model.ColorsGradData, model.ColorsMData, model.ColorsVData, 1.0)
+        [Step](model.OpacitiesData, model.OpacitiesGradData, model.OpacitiesMData, model.OpacitiesVData, 0.1)
+
+        Call model.MarkModified()
     End Sub
 
 End Class
 
 
 ''' <summary>
-''' 学习率调度器（余弦退火 + 阶梯衰减）
+''' 学习率调度器（余弦退火）
 ''' </summary>
 Public Class LRScheduler
 
-    Private _initialLr As Double
-    Private _finalLr As Double
-    Private _totalSteps As Integer
+    Private ReadOnly _initialLr As Double
+    Private ReadOnly _finalLr As Double
+    Private ReadOnly _totalSteps As Integer
 
     Public Sub New(initialLr As Double, finalLr As Double, totalSteps As Integer)
         _initialLr = initialLr
@@ -166,12 +181,15 @@ Public Class LRScheduler
     End Sub
 
     ''' <summary>
-    ''' 获取第 step 步的学习率（余弦退火）
+    ''' 获取第 step 步的学习率（余弦退火）。
     ''' </summary>
     Public Function GetLr([step] As Integer) As Double
+        If _totalSteps <= 0 Then Return _finalLr
         If [step] >= _totalSteps Then Return _finalLr
+
         Dim progress = [step] / _totalSteps
         Dim cosine = 0.5 * (1 + std.Cos(std.PI * progress))
+
         Return _finalLr + (_initialLr - _finalLr) * cosine
     End Function
 

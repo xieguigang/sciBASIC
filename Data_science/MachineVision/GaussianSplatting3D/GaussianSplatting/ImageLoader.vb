@@ -92,17 +92,23 @@ Public Class ImageLoader
             Call Array.Copy(bmpData.RawBuffer, bytes, bytes.Length)
 
             ' Format24bppRgb: BGR 顺序，行优先，stride 可能大于 W*3
-            For Y As Integer = 0 To H - 1
-                For X As Integer = 0 To W - 1
-                    Dim offset = Y * stride + X * 3
-                    Dim b = bytes(offset) / 255.0
-                    Dim g = bytes(offset + 1) / 255.0
-                    Dim r = bytes(offset + 2) / 255.0
-                    result(Y, X, 0) = r
-                    result(Y, X, 1) = g
-                    result(Y, X, 2) = b
-                Next
-            Next
+            ' 直接写底层数组（Tensor 索引器 setter 每写一次都会 Interlocked 自增版本号）
+            Dim data = result.Data
+
+            System.Threading.Tasks.Parallel.For(0, H,
+                Sub(Y)
+                    Dim src = Y * stride
+                    Dim dst = Y * W * 3
+
+                    For X As Integer = 0 To W - 1
+                        data(dst) = bytes(src + 2) / 255.0
+                        data(dst + 1) = bytes(src + 1) / 255.0
+                        data(dst + 2) = bytes(src) / 255.0
+
+                        src += 3
+                        dst += 3
+                    Next
+                End Sub)
 
             Return result
         End Using
@@ -121,18 +127,23 @@ Public Class ImageLoader
             Dim stride = bmpData.Stride
             Dim bytes(stride * H - 1) As Byte
 
-            For Y As Integer = 0 To H - 1
-                For X As Integer = 0 To W - 1
-                    Dim offset = Y * stride + X * 3
-                    Dim r = image(Y, X, 0)
-                    Dim g = image(Y, X, 1)
-                    Dim b = image(Y, X, 2)
-                    ' clamp 到 [0, 1] 然后转换为 [0, 255]
-                    bytes(offset) = CByte(std.Max(0, std.Min(255, CInt(b * 255))))
-                    bytes(offset + 1) = CByte(std.Max(0, std.Min(255, CInt(g * 255))))
-                    bytes(offset + 2) = CByte(std.Max(0, std.Min(255, CInt(r * 255))))
-                Next
-            Next
+            Dim data = image.Data
+
+            System.Threading.Tasks.Parallel.For(0, H,
+                Sub(Y)
+                    Dim dst = Y * stride
+                    Dim src = Y * W * 3
+
+                    For X As Integer = 0 To W - 1
+                        ' clamp 到 [0, 1] 然后转换为 [0, 255]（BGR 顺序）
+                        bytes(dst) = CByte(std.Max(0, std.Min(255, CInt(data(src + 2) * 255))))
+                        bytes(dst + 1) = CByte(std.Max(0, std.Min(255, CInt(data(src + 1) * 255))))
+                        bytes(dst + 2) = CByte(std.Max(0, std.Min(255, CInt(data(src) * 255))))
+
+                        dst += 3
+                        src += 3
+                    Next
+                End Sub)
 
             Call Array.Copy(bytes, bmpData.RawBuffer, bytes.Length)
 
@@ -229,24 +240,32 @@ Public Class PointCloudIO
             sw.WriteLine("property float rot_3")
             sw.WriteLine("property float opacity")
             sw.WriteLine("end_header")
+            Dim pos = model.PositionsData
+            Dim cols = model.ColorsData
+            Dim scales = model.ScalesData
+            Dim rots = model.RotationsData
+
             For i = 0 To n - 1
-                Dim x = model.Positions(i, 0)
-                Dim y = model.Positions(i, 1)
-                Dim z = model.Positions(i, 2)
-                Dim r = CInt(std.Max(0, std.Min(255, model.Colors(i, 0) * 255)))
-                Dim g = CInt(std.Max(0, std.Min(255, model.Colors(i, 1) * 255)))
-                Dim b = CInt(std.Max(0, std.Min(255, model.Colors(i, 2) * 255)))
-                Dim sx = std.Exp(model.Scales(i, 0))
-                Dim sy = std.Exp(model.Scales(i, 1))
-                Dim sz = std.Exp(model.Scales(i, 2))
-                Dim qw = model.Rotations(i, 0)
-                Dim qx = model.Rotations(i, 1)
-                Dim qy = model.Rotations(i, 2)
-                Dim qz = model.Rotations(i, 3)
+                Dim o3 = i * 3
+                Dim o4 = i * 4
+
+                Dim x = pos(o3)
+                Dim y = pos(o3 + 1)
+                Dim z = pos(o3 + 2)
+
+                Dim r = CInt(std.Max(0, std.Min(255, cols(o3) * 255)))
+                Dim g = CInt(std.Max(0, std.Min(255, cols(o3 + 1) * 255)))
+                Dim b = CInt(std.Max(0, std.Min(255, cols(o3 + 2) * 255)))
+
+                Dim sx = std.Exp(scales(o3))
+                Dim sy = std.Exp(scales(o3 + 1))
+                Dim sz = std.Exp(scales(o3 + 2))
+
                 Dim op = model.GetOpacity(i)
+
                 sw.WriteLine($"{x:F6} {y:F6} {z:F6} 0 0 0 {r} {g} {b} " &
                              $"{sx:F6} {sy:F6} {sz:F6} " &
-                             $"{qw:F6} {qx:F6} {qy:F6} {qz:F6} " &
+                             $"{rots(o4):F6} {rots(o4 + 1):F6} {rots(o4 + 2):F6} {rots(o4 + 3):F6} " &
                              $"{op:F6}")
             Next
         End Using
