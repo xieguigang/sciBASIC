@@ -60,6 +60,9 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+' .NET 10 的 System.Text 命名空间之中也定义了一个 Ascii 类型，
+' 与 Microsoft.VisualBasic.Text.ASCII 产生二义性，故这里显式指定别名
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace IO.CSVFile
 
