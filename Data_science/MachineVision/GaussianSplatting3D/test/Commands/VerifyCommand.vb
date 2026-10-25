@@ -73,14 +73,14 @@ Module VerifyCommand
 
         For v = 0 To count - 1
             Dim src = images(v)
-            Dim H = src.Shape(0), W = src.Shape(1)
-            Dim h = std.Max(8, H \ 4), w = std.Max(8, W \ 4)
-            Dim dst As New Tensor(h, w, 3)
+            Dim srcH = src.Shape(0), srcW = src.Shape(1)
+            Dim dstH = std.Max(8, srcH \ 4), dstW = std.Max(8, srcW \ 4)
+            Dim dst As New Tensor(dstH, dstW, 3)
 
-            For y = 0 To h - 1
-                For x = 0 To w - 1
-                    Dim sy = std.Min(H - 1, y * 4)
-                    Dim sx = std.Min(W - 1, x * 4)
+            For y = 0 To dstH - 1
+                For x = 0 To dstW - 1
+                    Dim sy = std.Min(srcH - 1, y * 4)
+                    Dim sx = std.Min(srcW - 1, x * 4)
 
                     For c = 0 To 2
                         dst(y, x, c) = src(sy, sx, c)
@@ -209,6 +209,10 @@ Module VerifyCommand
 #Region "2. 前向光栅化"
 
     Private Sub VerifyForward(model As GaussianModel, camera As Camera, options As SplatRenderOptions)
+        ' 参考实现用 System.Math.Exp，因此这里必须切到精确指数才能逐位比对
+        options = options.Clone()
+        options.ExpMode = ExpMode.Exact
+
         Dim request = SplatRasterizer.Build(model, camera, options)
         Dim image As Double() = Nothing
         Dim trans As Double() = Nothing
@@ -233,14 +237,15 @@ Module VerifyCommand
     ''' 参考前向渲染：逐像素 gather（完全独立的循环结构，不复用 tile 内核）。
     ''' </summary>
     Private Function ReferenceRender(request As SplatRasterRequest, options As SplatRenderOptions) As Double()
-        Dim W = request.Width, H = request.Height
+        Dim imgW = request.Width, imgH = request.Height
         Dim screen = request.Screen
-        Dim image(W * H * 3 - 1) As Double
+        Dim image(imgW * imgH * 3 - 1) As Double
         Dim order = request.Order
         Dim alphaMax = options.AlphaMax
+        Dim cutoff = options.RadiusSigma * options.RadiusSigma
 
-        For y = 0 To H - 1
-            For x = 0 To W - 1
+        For y = 0 To imgH - 1
+            For x = 0 To imgW - 1
                 Dim tr = 1.0
                 Dim cr = 0.0, cg = 0.0, cb = 0.0
 
@@ -257,7 +262,7 @@ Module VerifyCommand
                     Dim q = screen.ConicA(idx) * dx * dx + 2 * screen.ConicB(idx) * dx * dy +
                             screen.ConicC(idx) * dy * dy
 
-                    If q > 9.0 Then Continue For
+                    If q > cutoff Then Continue For
 
                     Dim alpha = screen.Opacity(idx) * std.Exp(-0.5 * q)
 
@@ -273,7 +278,7 @@ Module VerifyCommand
                     tr *= (1 - alpha)
                 Next
 
-                Dim o = (y * W + x) * 3
+                Dim o = (y * imgW + x) * 3
 
                 image(o) = cr
                 image(o + 1) = cg
@@ -290,9 +295,14 @@ Module VerifyCommand
 
     Private Sub VerifyGradient(model As GaussianModel, cameras As List(Of Camera), targets As List(Of Tensor),
                                sample As Integer, options As SplatRenderOptions)
+        ' 差分对拍必须避开"硬截断"：把半径放到 6σ 后，截断处的权重是 e^-18 ≈ 1.5e-8，
+        ' 相当于把损失函数抹平，中心差分才有意义（3σ 时边界权重 1%，会产生非光滑跳变）。
+        Dim smooth = options.Clone()
+        smooth.RadiusSigma = 6.0
+
         Dim analytic As New GradientCalculator() With {
             .Mode = SplatGradientMode.Analytic,
-            .Options = options
+            .Options = smooth
         }
 
         Dim lossA = analytic.ComputeLossAndGradients(model, cameras, targets)
@@ -303,13 +313,6 @@ Module VerifyCommand
         Dim gColor = CType(model.ColorsGradData.Clone(), Double())
         Dim gOpac = CType(model.OpacitiesGradData.Clone(), Double())
 
-        Dim clone = CloneModel(model)
-        Dim finite As New GradientCalculator() With {
-            .Mode = SplatGradientMode.FiniteDifference,
-            .Options = options,
-            .Epsilon = 0.01
-        }
-
         Dim indices As New List(Of Integer)()
         Dim stride = std.Max(1, model.Count \ std.Max(1, sample))
 
@@ -319,43 +322,69 @@ Module VerifyCommand
             If indices.Count >= sample Then Exit For
         Next
 
-        clone.ZeroGradients()
-        Call finite.ComputeFiniteDifference(clone, cameras, targets, indices)
+        Console.WriteLine($"    多视图平均 MSE: 解析模式 {lossA:F8}")
 
-        Dim maxRel = 0.0
-        Dim worst As String = Nothing
+        ' 差分步长必须足够小才能真正逼近解析值：分别用 1e-2 与 2e-3 各测一次，
+        ' 若解析梯度正确，缩小步长会让误差单调下降（否则说明是解析侧的问题）。
+        Dim lastMax = 0.0
 
-        For Each idx In indices
-            For d = 0 To 2
-                maxRel = Compare($"pos[{idx},{d}]", analytic:=gPos(idx * 3 + d), finite:=clone.PositionsGradData(idx * 3 + d), maxRel, worst)
-                maxRel = Compare($"scale[{idx},{d}]", analytic:=gScale(idx * 3 + d), finite:=clone.ScalesGradData(idx * 3 + d), maxRel, worst)
-                maxRel = Compare($"color[{idx},{d}]", analytic:=gColor(idx * 3 + d), finite:=clone.ColorsGradData(idx * 3 + d), maxRel, worst)
+        For Each eps In New Double() {0.01, 0.002}
+            Dim clone = CloneModel(model)
+            Dim finite As New GradientCalculator() With {
+                .Mode = SplatGradientMode.FiniteDifference,
+                .Options = smooth,
+                .Epsilon = eps
+            }
+
+            clone.ZeroGradients()
+            Call finite.ComputeFiniteDifference(clone, cameras, targets, indices)
+
+            Dim stats As New Dictionary(Of String, Double)()
+            Dim worst As String = Nothing
+            Dim worstRel = 0.0
+
+            For Each idx In indices
+                For d = 0 To 2
+                    Call Compare(stats, "pos", gPos(idx * 3 + d), clone.PositionsGradData(idx * 3 + d), $"pos[{idx},{d}]", worst, worstRel)
+                    Call Compare(stats, "scale", gScale(idx * 3 + d), clone.ScalesGradData(idx * 3 + d), $"scale[{idx},{d}]", worst, worstRel)
+                    Call Compare(stats, "color", gColor(idx * 3 + d), clone.ColorsGradData(idx * 3 + d), $"color[{idx},{d}]", worst, worstRel)
+                Next
+
+                For d = 0 To 3
+                    Call Compare(stats, "rot", gRot(idx * 4 + d), clone.RotationsGradData(idx * 4 + d), $"rot[{idx},{d}]", worst, worstRel)
+                Next
+
+                Call Compare(stats, "opacity", gOpac(idx), clone.OpacitiesGradData(idx), $"opacity[{idx}]", worst, worstRel)
             Next
 
-            For d = 0 To 3
-                maxRel = Compare($"rot[{idx},{d}]", analytic:=gRot(idx * 4 + d), finite:=clone.RotationsGradData(idx * 4 + d), maxRel, worst)
-            Next
+            Dim detail = String.Join("  ", stats.Select(Function(kv) $"{kv.Key}={kv.Value:E2}"))
+            Dim overall = stats.Values.Max()
 
-            maxRel = Compare($"opacity[{idx}]", analytic:=gOpac(idx), finite:=clone.OpacitiesGradData(idx), maxRel, worst)
+            Console.WriteLine($"    eps={eps:E0}: max={overall:E2}  [{detail}]")
+            Console.WriteLine($"      最差: {worst}")
+
+            lastMax = overall
         Next
 
-        Console.WriteLine($"    多视图平均 MSE: 解析模式 {lossA:F8}")
-        Console.WriteLine($"    最大相对误差出现在: {worst}")
-
-        Call Check("解析梯度（vs 中心差分，抽样高斯 × 14 参数）", maxRel, 0.05)
+        Call Check("解析梯度（vs 中心差分，抽样高斯 × 14 参数）", lastMax, 0.02)
     End Sub
 
-    Private Function Compare(label As String, analytic As Double, finite As Double, ByRef maxRel As Double, ByRef worst As String) As Double
+    Private Sub Compare(stats As Dictionary(Of String, Double), category As String, analytic As Double,
+                        finite As Double, label As String, ByRef worst As String, ByRef worstRel As Double)
         Dim denom = std.Max(std.Max(std.Abs(analytic), std.Abs(finite)), 0.000000001)
         Dim rel = std.Abs(analytic - finite) / denom
 
-        If rel > maxRel Then
-            maxRel = rel
-            worst = $"{label}: analytic={analytic:E4}, finite={finite:E4}"
+        Dim prev As Double
+
+        If Not stats.TryGetValue(category, prev) OrElse rel > prev Then
+            stats(category) = rel
         End If
 
-        Return maxRel
-    End Function
+        If worst Is Nothing OrElse rel > worstRel Then
+            worst = $"{label}: analytic={analytic:E4}, finite={finite:E4}, rel={rel:E2}"
+            worstRel = rel
+        End If
+    End Sub
 
 #End Region
 

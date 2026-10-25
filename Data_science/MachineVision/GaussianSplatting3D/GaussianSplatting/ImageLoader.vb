@@ -60,12 +60,8 @@
 #End Region
 
 Imports System.IO
-Imports System.Drawing
-Imports System.Drawing.Imaging
-Imports std = System.Math
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports std = System.Math
 
 ''' <summary>
 ''' 图像加载器 - 从 PNG 文件加载图像并转换为 Tensor
@@ -78,40 +74,32 @@ Public Class ImageLoader
     ''' Load a PNG image as a Tensor with shape [H, W, 3], values in [0, 1].
     ''' </summary>
     Public Shared Function Load(path As String) As Tensor
-        Using bmp As New Bitmap(path)
-            Dim W = bmp.Width
-            Dim H = bmp.Height
-            Dim result = New Tensor(H, W, 3)
+        ' Core 的 BitmapReader 只支持 BMP（校验 "BM" 魔数），PNG 必须走自带编解码器
+        Dim png = PngCodec.DecodeFile(path)
+        Dim W = png.Width
+        Dim H = png.Height
+        Dim result = New Tensor(H, W, 3)
 
-            ' 锁定像素数据
-            Dim rect As New Rectangle(0, 0, W, H)
-            Dim bmpData = BitmapBuffer.FromBitmap(bmp)
-            Dim stride = bmpData.Stride
-            Dim bytes(stride * H - 1) As Byte
+        Dim src = png.Rgb
+        Dim data = result.Data
 
-            Call Array.Copy(bmpData.RawBuffer, bytes, bytes.Length)
+        ' 直接写底层数组（Tensor 索引器 setter 每写一次都会 Interlocked 自增版本号）
+        System.Threading.Tasks.Parallel.For(0, H,
+            Sub(Y)
+                Dim s = Y * W * 3
+                Dim d = Y * W * 3
 
-            ' Format24bppRgb: BGR 顺序，行优先，stride 可能大于 W*3
-            ' 直接写底层数组（Tensor 索引器 setter 每写一次都会 Interlocked 自增版本号）
-            Dim data = result.Data
+                For X As Integer = 0 To W - 1
+                    data(d) = src(s) / 255.0
+                    data(d + 1) = src(s + 1) / 255.0
+                    data(d + 2) = src(s + 2) / 255.0
 
-            System.Threading.Tasks.Parallel.For(0, H,
-                Sub(Y)
-                    Dim src = Y * stride
-                    Dim dst = Y * W * 3
+                    s += 3
+                    d += 3
+                Next
+            End Sub)
 
-                    For X As Integer = 0 To W - 1
-                        data(dst) = bytes(src + 2) / 255.0
-                        data(dst + 1) = bytes(src + 1) / 255.0
-                        data(dst + 2) = bytes(src) / 255.0
-
-                        src += 3
-                        dst += 3
-                    Next
-                End Sub)
-
-            Return result
-        End Using
+        Return result
     End Function
 
     ''' <summary>
@@ -121,39 +109,24 @@ Public Class ImageLoader
     Public Shared Sub Save(image As Tensor, path As String)
         Dim H = image.Shape(0)
         Dim W = image.Shape(1)
-        Using bmp As New Bitmap(W, H, PixelFormat.Format24bppRgb)
-            Dim rect As New Rectangle(0, 0, W, H)
-            Dim bmpData = BitmapBuffer.FromBitmap(bmp)
-            Dim stride = bmpData.Stride
-            Dim bytes(stride * H - 1) As Byte
+        Dim rgb(W * H * 3 - 1) As Byte
+        Dim data = image.Data
 
-            Dim data = image.Data
+        System.Threading.Tasks.Parallel.For(0, H,
+            Sub(Y)
+                Dim src = Y * W * 3
 
-            System.Threading.Tasks.Parallel.For(0, H,
-                Sub(Y)
-                    Dim dst = Y * stride
-                    Dim src = Y * W * 3
+                For X As Integer = 0 To W - 1
+                    ' clamp 到 [0, 1] 然后转换为 [0, 255]
+                    rgb(src) = CByte(std.Max(0, std.Min(255, CInt(data(src) * 255))))
+                    rgb(src + 1) = CByte(std.Max(0, std.Min(255, CInt(data(src + 1) * 255))))
+                    rgb(src + 2) = CByte(std.Max(0, std.Min(255, CInt(data(src + 2) * 255))))
 
-                    For X As Integer = 0 To W - 1
-                        ' clamp 到 [0, 1] 然后转换为 [0, 255]（BGR 顺序）
-                        bytes(dst) = CByte(std.Max(0, std.Min(255, CInt(data(src + 2) * 255))))
-                        bytes(dst + 1) = CByte(std.Max(0, std.Min(255, CInt(data(src + 1) * 255))))
-                        bytes(dst + 2) = CByte(std.Max(0, std.Min(255, CInt(data(src) * 255))))
+                    src += 3
+                Next
+            End Sub)
 
-                        dst += 3
-                        src += 3
-                    Next
-                End Sub)
-
-            Call Array.Copy(bytes, bmpData.RawBuffer, bytes.Length)
-
-            ' 确保目录存在
-            Dim dir = path.FileName
-            If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
-                Directory.CreateDirectory(dir)
-            End If
-            bmp.Save(path, ImageFormats.Png)
-        End Using
+        Call PngCodec.EncodeFile(path, W, H, rgb)
     End Sub
 
     ''' <summary>

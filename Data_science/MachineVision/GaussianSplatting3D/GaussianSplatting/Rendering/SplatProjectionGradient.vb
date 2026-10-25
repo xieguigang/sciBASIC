@@ -51,6 +51,11 @@ Public Module SplatProjectionGradient
                 Dim o2 = i * 2
                 Dim o4 = i * 4
 
+                ' 不透明度存的是 logit，光栅化阶段给出的是 dL/d(sigmoid)，
+                ' 这里补上 sigmoid 的链式因子 σ(1−σ)（漏掉它会差一个数量级）。
+                Dim sig = screen.Opacity(i)
+                grads.Opacities(i) *= sig * (1 - sig)
+
                 Dim gA = grads.Conic(o3)
                 Dim gB = grads.Conic(o3 + 1)
                 Dim gC = grads.Conic(o3 + 2)

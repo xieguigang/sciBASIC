@@ -107,10 +107,8 @@ Public Class SplatTrainer
 
             Dim views = SelectViews(iter)
 
-            ' 梯度（同时得到损失）
-            Dim tGrad = PerfTrace.Begin()
+            ' 梯度（同时得到损失）；分阶段计时在 ComputeAnalytic 内部按视图拆分
             Dim stepLoss = Gradients.ComputeLossAndGradients(Model, views, SelectTargets(iter))
-            Call PerfTrace.Done(PerfPhase.Backward, tGrad)
 
             ' 参数更新
             Dim tOpt = PerfTrace.Begin()

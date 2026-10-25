@@ -102,14 +102,20 @@ Public Class GradientCalculator
         For v = 0 To viewCount - 1
             Dim request As SplatRasterRequest = Nothing
             Dim transmittance As Double() = Nothing
+            Dim tForward = PerfTrace.Begin()
             Dim rendered = SplatRenderer.RenderWithRequest(model, cameras(v), Options, request, transmittance)
+            Call PerfTrace.Done(PerfPhase.Rasterize, tForward)
 
+            Dim tLoss = PerfTrace.Begin()
             Dim mse = SplatRenderer.MseAndGradient(rendered, targets(v), viewScale)
+            Call PerfTrace.Done(PerfPhase.Loss, tLoss)
+
             loss += mse.Loss
 
             perView.Clear()
 
             Dim backend = SplatBackends.Default
+            Dim tBackward = PerfTrace.Begin()
 
             If backend Is Nothing OrElse
                Not backend.RasterizeBackward(request, rendered.Data, mse.Gradient, perView) Then
@@ -120,6 +126,7 @@ Public Class GradientCalculator
 
             ' 屏幕空间中间量 → 世界空间参数
             Call SplatProjectionGradient.Chain(model, request.Screen, perView)
+            Call PerfTrace.Done(PerfPhase.Backward, tBackward)
 
             Call SplatProjectionGradient.Accumulate(perView, total)
         Next
@@ -211,7 +218,7 @@ Public Class GradientCalculator
     Private Sub DifferenceScale(model As GaussianModel, cameras As List(Of Camera), targets As List(Of Tensor), idx As Integer)
         Dim data = model.ScalesData
         Dim g = model.ScalesGradData
-        Dim eps = std.Max(Epsilon, 0.05)
+        Dim eps = Epsilon
 
         For d = 0 To 2
             Dim o = idx * 3 + d
@@ -230,7 +237,7 @@ Public Class GradientCalculator
     Private Sub DifferenceOpacity(model As GaussianModel, cameras As List(Of Camera), targets As List(Of Tensor), idx As Integer)
         Dim data = model.OpacitiesData
         Dim g = model.OpacitiesGradData
-        Dim eps = std.Max(Epsilon, 0.1)
+        Dim eps = Epsilon
         Dim orig = data(idx)
 
         data(idx) = orig + eps

@@ -78,6 +78,16 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
         ''' </summary>
         Public Property UseTensorLossBackend As Boolean = True
 
+        ''' <summary>
+        ''' 走张量后端做图像空间损失所需的最小元素数（默认 200 万）。
+        '''
+        ''' 实测（RTX A4000 / CUDA-F32）：320×240 的图像（23 万元素）走 GPU 时
+        ''' 单次 MSE 从 0.07 ms 退化到 1.1 ms —— 显存往返（1.8 MB fp64 + 0.9 MB fp32）
+        ''' 完全压倒了内核时间。只有图像大到 200 万元素以上（约 1000×700×3）时
+        ''' 传输才摊得平，因此默认阈值取得比较保守；把它调小可以用于诊断。
+        ''' </summary>
+        Public Property TensorLossMinElements As Integer = 2000000
+
         ''' <summary>并行度（0 表示使用 <see cref="Environment.ProcessorCount"/>）。</summary>
         Public Property MaxDegreeOfParallelism As Integer = 0
 
@@ -98,6 +108,7 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
                 .ExpMode = ExpMode,
                 .Precision = Precision,
                 .UseTensorLossBackend = UseTensorLossBackend,
+                .TensorLossMinElements = TensorLossMinElements,
                 .MaxDegreeOfParallelism = MaxDegreeOfParallelism,
                 .ParallelMinTiles = ParallelMinTiles,
                 .ThreadGradientBudgetMB = ThreadGradientBudgetMB

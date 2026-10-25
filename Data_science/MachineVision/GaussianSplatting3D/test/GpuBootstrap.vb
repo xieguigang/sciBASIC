@@ -8,6 +8,7 @@
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
+Imports Microsoft.VisualBasic.MachineVision.GaussianSplatting3D
 Imports gpu = Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
 Imports ILCudaRuntime = Microsoft.VisualBasic.Computing.ILCuda.Runtime
 

@@ -52,8 +52,17 @@
 #End Region
 
 ''' <summary>
-''' 3D Gaussian splatting: the Gaussian model, camera, gradient calculation, image loading,
-''' optimizer and the splat renderer.
+''' 3D Gaussian splatting：高斯模型、相机、图像 I/O、优化器与可微光栅化。
+'''
+''' 管线分为四段（对应四组类型）：
+'''   1. <see cref="SplatProjection"/> —— 逐高斯屏幕投影（相机变换 / 协方差 / conic / 包围盒）
+'''   2. <see cref="SplatRasterizer"/> —— 可见性剔除 → 深度升序排序 → tile 分箱
+'''   3. <see cref="ISplatRasterBackend"/> / <see cref="CpuTileRasterBackend"/> —— 前向合成与解析反向
+'''   4. <see cref="SplatProjectionGradient"/> —— 屏幕空间中间梯度 → 参数梯度
+'''
+''' 训练侧由 <see cref="SplatTrainer"/> 组织（梯度 <see cref="GradientCalculator"/>、
+''' Adam <see cref="AdamOptimizer"/>、密度控制 <see cref="DensityController"/>），
+''' 分阶段耗时由 <see cref="PerfTrace"/> 记录。
 ''' </summary>
 Friend Class NamespaceDoc
 End Class

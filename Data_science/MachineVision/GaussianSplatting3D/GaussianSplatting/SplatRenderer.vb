@@ -89,7 +89,7 @@ Public Class SplatRenderer
     End Function
 
     ''' <summary>分配图像与透射率缓冲并调用默认后端完成光栅化。</summary>
-    Friend Shared Sub Rasterize(request As SplatRasterRequest,
+    Public Shared Sub Rasterize(request As SplatRasterRequest,
                                 ByRef image As Double(), ByRef transmittance As Double())
         Dim pixels = request.Width * request.Height
 
@@ -118,7 +118,8 @@ Public Class SplatRenderer
         Dim options = SplatRenderOptions.Default
 
         If options.UseTensorLossBackend AndAlso IsGpuTensorBackend() AndAlso
-           n >= Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute.MixedPrecisionPolicy.ElementwiseThreshold Then
+           n >= std.Max(options.TensorLossMinElements,
+                        Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute.MixedPrecisionPolicy.ElementwiseThreshold) Then
 
             Dim a = rendered.ToTensorF()
             Dim b = target.ToTensorF()
@@ -126,7 +127,39 @@ Public Class SplatRenderer
             Return CDbl(TensorF.computeKernelF.MseLoss(a, b).Data(0))
         End If
 
-        Return SimdReduce.DistanceSquared(rendered.Data, target.Data) / n
+        Return SumSquaredError(rendered.Data, target.Data) / n
+    End Function
+
+    ''' <summary>并行分块的平方误差和（AVX 内核 + 多线程）。</summary>
+    Public Shared Function SumSquaredError(a As Double(), b As Double()) As Double
+        Dim n = a.Length
+        If n = 0 Then Return 0
+
+        Dim chunks = std.Min(std.Max(1, Environment.ProcessorCount), std.Max(1, n \ 16384))
+        Dim chunkSums(chunks - 1) As Double
+        Dim perChunk = (n + chunks - 1) \ chunks
+
+        System.Threading.Tasks.Parallel.For(0, chunks,
+            Sub(c)
+                Dim from = c * perChunk
+                Dim [to] = std.Min(n, from + perChunk)
+                Dim sum = 0.0
+
+                For i = from To [to] - 1
+                    Dim d = a(i) - b(i)
+                    sum += d * d
+                Next
+
+                chunkSums(c) = sum
+            End Sub)
+
+        Dim total = 0.0
+
+        For c = 0 To chunks - 1
+            total += chunkSums(c)
+        Next
+
+        Return total
     End Function
 
     ''' <summary>

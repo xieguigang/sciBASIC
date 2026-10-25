@@ -291,6 +291,7 @@ Imports std = System.Math
             Dim screen = request.Screen
             Dim alphaMax = options.AlphaMax
             Dim fast = options.ExpMode = ExpMode.Fast
+            Dim cutoff = options.RadiusSigma * options.RadiusSigma
 
             For gi = g0 To g1 - 1
                 Dim idx = request.TileGaussians(gi)
@@ -326,7 +327,7 @@ Imports std = System.Math
                     For x = x0 To x1
                         Dim t = scratch.T(off)
 
-                        If t > 0.000001 AndAlso q <= 9.0 Then
+                        If t > 0.000001 AndAlso q <= cutoff Then
                             Dim e = If(fast, FastExp(-0.5 * q), std.Exp(-0.5 * q))
                             Dim alpha = op * e
 
@@ -391,6 +392,7 @@ Imports std = System.Math
             Dim screen = request.Screen
             Dim alphaMax = options.AlphaMax
             Dim fast = options.ExpMode = ExpMode.Fast
+            Dim cutoff = options.RadiusSigma * options.RadiusSigma
 
             For gi = g0 To g1 - 1
                 Dim idx = request.TileGaussians(gi)
@@ -429,7 +431,7 @@ Imports std = System.Math
                     For x = x0 To x1
                         Dim t = scratch.T(off)
 
-                        If t > 0.000001 AndAlso q <= 9.0 Then
+                        If t > 0.000001 AndAlso q <= cutoff Then
                             Dim e = If(fast, FastExp(-0.5 * q), std.Exp(-0.5 * q))
                             Dim alpha = op * e
 

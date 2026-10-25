@@ -29,7 +29,13 @@ Module BenchCommand
 
         Dim images = LoadImages(Cameras.Count)
         Dim model = InitializeModel(Intrinsics, Cameras, images, splatCount)
-        Dim options = SplatRenderOptions.Default
+
+        Dim options = SplatRenderOptions.Default.Clone()
+
+        If cli.Has("serial") Then options.MaxDegreeOfParallelism = 1
+        If cli.Has("exact") Then options.ExpMode = ExpMode.Exact
+
+        options.TileSize = cli.GetInt("tile", options.TileSize)
 
         Call EnsureOutput()
 
@@ -68,11 +74,12 @@ Module BenchCommand
 
         SplatRenderer.Rasterize(request0, image0, trans0)
 
+        Dim imgBuf = image0
+        Dim trBuf = trans0
+
         t = WarmupAndTime(repeat,
             Sub()
-                Dim img As Double() = Nothing
-                Dim tr As Double() = Nothing
-                Call SplatBackends.Default.Rasterize(request0, img, tr)
+                Call SplatBackends.Default.Rasterize(request0, imgBuf, trBuf)
             End Sub)
 
         Call Report(rows, "rasterize", t, repeat, "per view")
