@@ -32,7 +32,9 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
-  <Project Path="UNet/test/test.vbproj" Id="3c948580-e82e-4569-9c8b-4746e4d1e195" />
+  <Project Path="UNet/test/test.vbproj" Id="3c948580-e82e-4569-9c8b-4746e4d1e195">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
   <Project Path="UNet/UNet.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
