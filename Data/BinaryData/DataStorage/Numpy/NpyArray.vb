@@ -1,5 +1,4 @@
 Imports System.IO
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
@@ -131,10 +130,16 @@ Namespace Numpy
             Select Case DType.Kind
                 Case NpyTypeKind.Bool
                     Return buffer(offset) <> 0
-                Case NpyTypeKind.Int
+                Case NpyTypeKind.Int, NpyTypeKind.Datetime, NpyTypeKind.Timedelta
                     Select Case DType.ItemSize
                         Case 1
-                            Return CLng(CSByte(buffer(offset)))
+                            Dim b As Byte = buffer(offset)
+
+                            If b > 127 Then
+                                Return CLng(b) - 256
+                            Else
+                                Return CLng(b)
+                            End If
                         Case 2
                             Return CLng(BitConverter.ToInt16(buffer, offset))
                         Case 4
@@ -166,7 +171,7 @@ Namespace Numpy
                     Return ReadComplex(buffer, offset)
                 Case NpyTypeKind.Bytes, NpyTypeKind.Unicode
                     Return DecodeString(buffer, offset)
-                Case NpyTypeKind.Void, NpyTypeKind.Datetime, NpyTypeKind.Timedelta
+                Case NpyTypeKind.Void
                     Dim chunk As Byte() = New Byte(ItemSize - 1) {}
 
                     Call Array.Copy(buffer, offset, chunk, 0, ItemSize)
@@ -227,11 +232,16 @@ Namespace Numpy
                                 values(i) = CDbl(BitConverter.ToHalf(buffer, i * 2))
                             Next
                         Case 4
+                            Dim singles As Single() = New Single(n - 1) {}
+
+                            Call Buffer.BlockCopy(buffer, 0, singles, 0, n * 4)
+
                             For i As Integer = 0 To n - 1
-                                values(i) = CDbl(BitConverter.ToSingle(buffer, i * 4))
+                                values(i) = CDbl(singles(i))
                             Next
                         Case 8
-                            Call MemoryMarshal.Cast(Of Byte, Double)(New ReadOnlySpan(Of Byte)(buffer)).CopyTo(values)
+                            ' 数据区已经归一化成 C 序与本机字节序，可以直接整体拷贝
+                            Call Buffer.BlockCopy(buffer, 0, values, 0, n * 8)
                         Case Else
                             Throw New NotSupportedException($"unsupported numpy float width: {DType.ItemSize} bytes")
                     End Select
