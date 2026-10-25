@@ -63,6 +63,7 @@
 
 Imports System.Globalization
 Imports System.IO
+Imports System.Numerics
 Imports System.Text
 
 Namespace Pickle
@@ -88,7 +89,11 @@ Namespace Pickle
     '''   Python set      → PythonSet
     '''   Python complex  → ComplexNumber
     '''   Python datetime → VB.NET DateTime
+    '''   CLR 类型标识    → 按 <c>clr:程序集</c> + 类型全名还原为原始 CLR 类型（字段回填）
     '''   其他自定义对象  → PythonObject
+    ''' 
+    ''' 扩展：构造与状态恢复阶段都可以插入 <see cref="IPickleObjectFactory"/>（例如 numpy 的数组重建），
+    ''' 工厂优先于默认实现被询问。
     ''' </summary>
     Public Class MinimalPickleUnpickler
 
@@ -644,21 +649,23 @@ Namespace Pickle
         End Function
 
         ''' <summary>
-        ''' 解码小端序有符号长整数。
-        ''' Python 使用任意长度的补码表示法，最高字节的最高位为符号位。
+        ''' 解码 Python 的小端序补码长整数（<c>LONG1</c>/<c>LONG4</c>）。
         ''' </summary>
-        Private Shared Function DecodeLong(bytes As Byte()) As Long
-            If bytes.Length = 0 Then Return 0L
+        ''' <remarks>
+        ''' Python 的长整数是任意精度的，字节数可能大于 8：例如 -1 会被编码成 9 个 0xFF 字节。
+        ''' 用固定 64 位整数做 <c>&lt;&lt;</c> 位移时移位量会被掩码到 0..63，从而产生错误结果
+        ''' （此前 9 字节编码的负数会整体偏移 256），因此这里改用 <see cref="BigInteger"/> 解码：
+        ''' 结果落在 Int64 范围内时返回 <see cref="Long"/>，否则返回 <see cref="BigInteger"/> 以保住精度。
+        ''' </remarks>
+        Private Shared Function DecodeLong(bytes As Byte()) As Object
+            If bytes.Length = 0 Then
+                Return 0L
+            End If
 
-            ' 读取无符号值
-            Dim value As Long = 0
-            For i = 0 To bytes.Length - 1
-                value = value Or (CLng(bytes(i)) << (8 * i))
-            Next
+            Dim value As New BigInteger(bytes)
 
-            ' 处理符号扩展：如果最高字节的最高位为1，则为负数
-            If (bytes(bytes.Length - 1) And &H80) <> 0 Then
-                value = value - (1L << (8 * bytes.Length))
+            If value >= Long.MinValue AndAlso value <= Long.MaxValue Then
+                Return CLng(value)
             End If
 
             Return value
@@ -815,6 +822,13 @@ Namespace Pickle
                 If custom IsNot Nothing Then
                     Return custom
                 End If
+            End If
+
+            ' .NET CLR 类型标识（clr: 前缀）按"程序集 + 类型全名"重建空实例
+            Dim clrInstance As Object = ClrObjectCodec.Construct(globalRef.ModuleName, globalRef.ClassName, allowLegacyName:=False)
+
+            If clrInstance IsNot Nothing Then
+                Return clrInstance
             End If
 
             Select Case fullName
@@ -1006,6 +1020,13 @@ Namespace Pickle
                     Return New PythonObject(globalRef.ModuleName, globalRef.ClassName, argArray)
 
                 Case Else
+                    ' 旧版本写出的 CLR 对象使用"命名空间 + 类名"形式，此处做一次兼容解析
+                    Dim legacy As Object = ClrObjectCodec.Construct(globalRef.ModuleName, globalRef.ClassName, allowLegacyName:=True)
+
+                    If legacy IsNot Nothing Then
+                        Return legacy
+                    End If
+
                     ' 未知类型，返回 PythonObject 包装器以保留完整信息
                     Return New PythonObject(globalRef.ModuleName, globalRef.ClassName, argArray)
             End Select
@@ -1020,6 +1041,11 @@ Namespace Pickle
             ' 优先询问第三方工厂：numpy 的 ndarray 需要把占位对象替换为携带真实数据的新实例，
             ' 因此这里必须使用 ByRef 参数
             If factory IsNot Nothing AndAlso factory.ApplyState(obj, state) Then
+                Return
+            End If
+
+            ' .NET CLR 对象：把状态字典回填到字段（或可写属性）
+            If ClrObjectCodec.ApplyState(obj, state) Then
                 Return
             End If
 

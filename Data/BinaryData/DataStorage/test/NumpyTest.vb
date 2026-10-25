@@ -18,6 +18,11 @@ Module NumpyTest
     ''' </summary>
     ''' <param name="args">可选的 npy 文件路径（默认使用 TCGA COAD 的 r160_subtype.npy）</param>
     Function Main(args As String()) As Integer
+        ' --pickle 进入 PickleSerializer 的 .NET CLR 对象往返自测
+        If args IsNot Nothing AndAlso args.Length > 0 AndAlso args(0).StartsWith("--pickle", StringComparison.OrdinalIgnoreCase) Then
+            Return PickleRoundTripTest.Run()
+        End If
+
         Dim file As String = If(args IsNot Nothing AndAlso args.Length > 0, args(0), DefaultDataFile)
         Dim workDir As String = Path.Combine(AppContext.BaseDirectory, "numpy-demo")
 
