@@ -38,7 +38,8 @@ Namespace UNet
 
         ''' <summary>单行结果。</summary>
         Public Overrides Function ToString() As String
-            Return $"pixel_acc={PixelAccuracy:F4} mIoU={MeanIoU:F4} fgIoU={ForegroundIoU:F4} bgIoU={BackgroundIoU:F4} dice={Dice:F4}"
+            Return $"pixel_acc={PixelAccuracy:F4} mIoU={MeanIoU:F4} fgIoU={ForegroundIoU:F4} " &
+                   $"bgIoU={BackgroundIoU:F4} dice={Dice:F4} predFg={PredictedForegroundRatio:F3}/gtFg={TargetForegroundRatio:F3}"
         End Function
 
     End Class

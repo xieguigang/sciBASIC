@@ -578,7 +578,8 @@ Public Module UNetSelfTest
         Section("7) 真实数据小样本过拟合")
 
         Dim size = 32
-        Dim samples = DsbDataset.LoadTrain(cfg.DataRoot, size, 4, cfg.UseCache)
+        ' 过拟合用的小样本：2 张图训 50 轮，量级在百来个前向/反向，既能验证"学得动"又不拖慢自检
+        Dim samples = DsbDataset.LoadTrain(cfg.DataRoot, size, 2, cfg.UseCache)
 
         If samples.Length = 0 Then
             Console.WriteLine("    [跳过] 训练集为空")
@@ -592,14 +593,14 @@ Public Module UNetSelfTest
         ' 前景（细胞核）像素占比只有几个百分点，过拟合小样本时按频率取倒数加权，
         ' 否则"全预测背景"就是损失意义上的局部最优，学不出任何前景
         Dim classWeights = SegmentationLoss.ClassWeightsFromData(samples, 2, foregroundExponent:=1.0)
-        Dim trainer As New UNetTrainer(0.05, 2) With {.Augment = False, .GradClip = 0}
+        Dim trainer As New UNetTrainer(0.03, 2) With {.Augment = False, .GradClip = 0}
 
         Dim firstLoss As Double = 0
         Dim lastLoss As Double = 0
         Dim firstIoU As Double = 0
         Dim lastIoU As Double = 0
 
-        For epoch As Integer = 0 To 19
+        For epoch As Integer = 0 To 49
             lastLoss = trainer.RunEpoch(model, samples, classWeights, epoch)
 
             If epoch = 0 Then firstLoss = lastLoss
@@ -617,25 +618,35 @@ Public Module UNetSelfTest
                 ratio += model.Segment(block).Count(Function(c) c > 0) / CDbl(sample.PixelCount)
             Next
 
-            Console.WriteLine($"      epoch {epoch}: loss={lastLoss:F5} mIoU={m.MeanIoU:F4} fgIoU={m.ForegroundIoU:F4} predFg={ratio / samples.Length:P2}")
+            If epoch Mod 10 = 0 OrElse epoch = 19 Then
+                Console.WriteLine($"      epoch {epoch}: loss={lastLoss:F5} mIoU={m.MeanIoU:F4} fgIoU={m.ForegroundIoU:F4} predFg={ratio / samples.Length:P2}")
+            End If
         Next
 
         Console.WriteLine($"    loss: {firstLoss:F5} -> {lastLoss:F5}, mIoU: {firstIoU:F4} -> {lastIoU:F4}")
 
-        Check("20 轮之后损失下降", lastLoss < firstLoss, $"{firstLoss:F5} -> {lastLoss:F5}")
+        Check("50 轮之后损失显著下降 (< 初始的 60%)", lastLoss < firstLoss * 0.6, $"{firstLoss:F5} -> {lastLoss:F5}")
         Check("平均 IoU 没有退化", lastIoU >= firstIoU - 0.05, $"{firstIoU:F4} -> {lastIoU:F4}")
 
+        ' "全预测背景"是这类前景稀疏任务最容易掉进去的退化解，必须显式挡住
         Dim predictedRatio = 0.0
+        Dim foregroundIou = 0.0
 
         For Each sample In samples
             Dim block = model.CreateInput()
             Call sample.WriteTo(block)
-            predictedRatio += model.Segment(block).Count(Function(c) c > 0) / CDbl(sample.PixelCount)
+
+            Dim predicted = model.Segment(block)
+
+            predictedRatio += predicted.Count(Function(c) c > 0) / CDbl(sample.PixelCount)
+            foregroundIou += SegmentationLoss.Evaluate(predicted, sample.Labels, 2).ForegroundIoU
         Next
 
         predictedRatio /= samples.Length
+        foregroundIou /= samples.Length
 
         Check("预测不是全背景的退化解", predictedRatio > 0.01, $"预测前景占比 {predictedRatio:P2}")
+        Check("前景 IoU > 0", foregroundIou > 0.01, $"fgIoU = {foregroundIou:F4}")
     End Sub
 
     ' ---------------- 8) 混合精度 ----------------
@@ -802,6 +813,7 @@ Public Module UNetSelfTest
         PrecisionRouter.Enabled = False
 
         Dim cpuModel As New UNetModel(opt)
+        Dim cpuBackend = Tensor.computeKernel.Name ' 必须在注册 GPU 之前取, 否则两行都会显示 CUDA
         Dim cpuWatch = Diagnostics.Stopwatch.StartNew()
         Dim cpuLoss = RunSteps(cpuModel, samples, classWeights, 3)
         cpuWatch.Stop()
@@ -822,6 +834,7 @@ Public Module UNetSelfTest
 
         Call CopyWeights(cpuModel, gpuModel)
 
+        Dim gpuBackend = Tensor.computeKernel.Name
         Dim gpuWatch = Diagnostics.Stopwatch.StartNew()
         Dim gpuLoss = RunSteps(gpuModel, samples, classWeights, 3)
         gpuWatch.Stop()
@@ -829,8 +842,8 @@ Public Module UNetSelfTest
         Dim diff = std.Abs(cpuLoss - gpuLoss)
         Dim scale = std.Max(1.0, std.Abs(cpuLoss))
 
-        Console.WriteLine($"    CPU({Tensor.computeKernel.Name}) loss = {cpuLoss:F8}, 耗时 {cpuWatch.Elapsed.TotalSeconds:F3}s")
-        Console.WriteLine($"    GPU({Tensor.computeKernel.Name}) loss = {gpuLoss:F8}, 耗时 {gpuWatch.Elapsed.TotalSeconds:F3}s")
+        Console.WriteLine($"    CPU({cpuBackend}) loss = {cpuLoss:F8}, 耗时 {cpuWatch.Elapsed.TotalSeconds:F3}s")
+        Console.WriteLine($"    GPU({gpuBackend}) loss = {gpuLoss:F8}, 耗时 {gpuWatch.Elapsed.TotalSeconds:F3}s")
 
         Check("GPU 与 CPU 的 loss 一致 (相对 < 5e-3)", diff / scale < 0.005, $"相对差 {diff / scale:E3}")
 

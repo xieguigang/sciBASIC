@@ -13,14 +13,17 @@ Public Class RunConfig
     Public Property Levels As Integer = 3
     ''' <summary>第一层通道数。</summary>
     Public Property BaseFilters As Integer = 8
-    ''' <summary>训练轮数。</summary>
-    Public Property Epochs As Integer = 6
+    ''' <summary>
+    ''' 训练轮数。默认 15：CPU 上单样本约 0.4 秒，24 张 × 15 轮约 2~3 分钟，
+    ''' 足以让这个 12 万参数的小 U-Net 在细胞核数据上学出可用的前景。
+    ''' </summary>
+    Public Property Epochs As Integer = 15
     ''' <summary>训练样本上限；0 表示全量 670 张。</summary>
-    Public Property Limit As Integer = 40
+    Public Property Limit As Integer = 24
     ''' <summary>测试样本上限；0 表示全部 65 张。</summary>
     Public Property TestLimit As Integer = 12
     ''' <summary>学习率。</summary>
-    Public Property LearningRate As Double = 0.005
+    Public Property LearningRate As Double = 0.01
     ''' <summary>小批量大小。</summary>
     Public Property BatchSize As Integer = 4
     ''' <summary>每轮学习率衰减。</summary>

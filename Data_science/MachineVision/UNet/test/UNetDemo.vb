@@ -73,7 +73,9 @@ Public Module UNetDemo
         Console.WriteLine()
         Console.WriteLine(">> 3) 训练")
 
-        Dim classWeights = SegmentationLoss.ClassWeightsFromData(train, opt.NumClasses)
+        ' 细胞核像素占比只有几个百分点，按类别频率取倒数加权，
+        ' 否则"全预测背景"在损失上就已经是局部最优，模型根本不会去学前景观
+        Dim classWeights = SegmentationLoss.ClassWeightsFromData(train, opt.NumClasses, foregroundExponent:=1.0)
         Console.WriteLine($"    类别权重 = [{classWeights(0):F3}, {classWeights(1):F3}]")
 
         Dim trainer As New UNetTrainer(cfg.LearningRate, cfg.BatchSize) With {
@@ -141,6 +143,7 @@ Public Module UNetDemo
     Public Function Evaluate(model As UNetModel, samples As SegmentationSample(), classWeights As Double()) As UNet.SegmentationMetrics
         Dim block = model.CreateInput()
         Dim acc As Double = 0, iou As Double = 0, dice As Double = 0, fgIoU As Double = 0
+        Dim bgIoU As Double = 0, predFg As Double = 0, gtFg As Double = 0
 
         For Each sample In samples
             Call sample.WriteTo(block)
@@ -152,6 +155,9 @@ Public Module UNetDemo
             iou += m.MeanIoU
             dice += m.Dice
             fgIoU += m.ForegroundIoU
+            bgIoU += m.BackgroundIoU
+            predFg += m.PredictedForegroundRatio
+            gtFg += m.TargetForegroundRatio
         Next
 
         Dim n = samples.Length
@@ -161,7 +167,9 @@ Public Module UNetDemo
             .MeanIoU = iou / n,
             .Dice = dice / n,
             .ForegroundIoU = fgIoU / n,
-            .BackgroundIoU = 0
+            .BackgroundIoU = bgIoU / n,
+            .PredictedForegroundRatio = predFg / n,
+            .TargetForegroundRatio = gtFg / n
         }
     End Function
 

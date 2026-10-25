@@ -93,10 +93,6 @@ Module Program
             Select Case arg.ToLower()
                 Case "demo", "selftest"
                     command = arg.ToLower()
-                Case "probe"
-                    Return Probe.Run(False)
-                Case "probereal"
-                    Return Probe.Run(True)
                 Case "help", "-h", "--help", "-?"
                     Call PrintUsage()
                     Return 0
