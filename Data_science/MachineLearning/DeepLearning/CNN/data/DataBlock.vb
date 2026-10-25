@@ -271,6 +271,28 @@ Namespace CNN.data
             Call MarkGradientModified()
         End Sub
 
+        ''' <summary>
+        ''' 把 <paramref name="values"/> 逐元素**累加**到梯度向量 <see cref="Gradients"/> 之中，并声明设备端缓存已失效。
+        ''' </summary>
+        ''' <param name="values">待累加的梯度数据；长度不足时只累加前 <c>values.Length</c> 个元素。</param>
+        ''' <remarks>
+        ''' 存在理由：U-Net 这类**有向图**结构里，同一个激活块可能被多个下游消费者同时消费
+        ''' (例如编码器的特征图既喂给池化层、又作为跳跃连接喂给拼接层)，
+        ''' 反向传播时两个分支的梯度必须**相加**而不是互相覆盖。
+        ''' 串行网络(``ConvolutionalNN``)里每个块只有一个消费者，仍然走 <c>SetGradients</c> 的覆盖语义。
+        ''' </remarks>
+        Public Overridable Sub AddGradients(values As Double())
+            If values Is Nothing OrElse dw Is Nothing Then Return
+
+            Dim n As Integer = std.Min(values.Length, dw.Length)
+
+            For i As Integer = 0 To n - 1
+                dw(i) += values(i)
+            Next
+
+            Call MarkGradientModified()
+        End Sub
+
         ''' <summary>声明值数据的设备端缓存已失效（就地改写 <see cref="w"/> 之后必须调用）</summary>
         ''' <remarks>
         ''' 需要把本块持有的**全部**视图都标记一遍：三维的 <see cref="Value"/>、四维的 <see cref="Value4D"/>、

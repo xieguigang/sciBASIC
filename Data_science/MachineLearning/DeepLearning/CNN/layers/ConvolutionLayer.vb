@@ -279,7 +279,13 @@ Namespace CNN.layers
         ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' zero out gradient wrt bottom data, we're about to fill it
-            Dim db As DataBlock = in_act.clearGradient()
+            ' (图的执行器会置 AccumulateGradient=True 并事先统一清零, 此时不能清零, 否则会丢掉
+            '  其它消费者(例如跳跃连接)已经写入本块的梯度)
+            Dim db As DataBlock = in_act
+
+            If Not AccumulateGradient Then
+                Call db.clearGradient()
+            End If
 
             Dim x4 As Tensor = db.Value4D
             Dim gradOut As Tensor = out_act.Grad4D
@@ -315,7 +321,7 @@ Namespace CNN.layers
             Dim gradInput = Tensor.computeKernel.Conv2DBackwardInput(
                 gradOut, filtersPacked, db.TensorShape4D, stride, padding)
 
-            Call db.SetGradients(gradInput.Data)
+            Call WriteInputGradient(db, gradInput.Data)
         End Sub
 
         ''' <summary>Returns a short description of this layer.</summary>

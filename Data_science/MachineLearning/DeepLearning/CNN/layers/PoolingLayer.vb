@@ -172,14 +172,21 @@ Namespace CNN.layers
         ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
             ' pooling layers have no parameters, so simply compute gradient wrt data here
-            Dim v As DataBlock = in_act.clearGradient()
+            '
+            ' 图模式下(AccumulateGradient=True)不能清零: 本块的输入同时还是跳跃连接的源,
+            ' 拼接层反向写进来的梯度必须保留下来, 清零由计算图执行器在反向开始前统一完成
+            Dim v As DataBlock = in_act
+
+            If Not AccumulateGradient Then
+                Call v.clearGradient()
+            End If
 
             ' 反向严格按前向记录下来的 argMax 做散射累加: 每个输出位置唯一对应一个输入位置,
             ' 因此既不需要原子操作, 也不存在数据竞争
             Dim gradOut As Tensor = out_act.Grad4D
             Dim dx = Tensor.computeKernel.MaxPool2DBackward(gradOut, argMaxIndex, v.TensorShape4D)
 
-            Call v.SetGradients(dx.Data)
+            Call WriteInputGradient(v, dx.Data)
         End Sub
 
         ''' <summary>Returns a short description of this layer.</summary>
