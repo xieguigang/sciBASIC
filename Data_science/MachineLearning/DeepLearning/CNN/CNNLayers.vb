@@ -153,28 +153,24 @@ Namespace CNN
         ''' Transposed convolution layer: upsamples a feature map back to a larger spatial size (decoder side of an
         ''' auto encoder, semantic segmentation, and similar scenarios).
         ''' </summary>
-        ''' <param name="dims">Target output size <c>{width, height, depth}</c>.</param>
-        ''' <param name="filter">Filter window <c>{width, height}</c>.</param>
-        ''' <param name="filters">Number of filters.</param>
-        ''' <param name="stride">Stride.</param>
+        ''' <param name="kernel">Side length of the square filter window.</param>
+        ''' <param name="filters">Number of output channels; 0 表示与输入通道数相同。</param>
+        ''' <param name="stride">Stride; 2 表示空间尺寸翻倍。</param>
+        ''' <param name="padding">Zero padding of the corresponding forward convolution.</param>
+        ''' <param name="useBias">Whether a learnable bias is added.</param>
         ''' <returns>The transposed convolution layer specification.</returns>
-        Public Function conv_transpose_layer(dims As Integer(),
-                                             filter As Integer(),
-                                             Optional filters As Integer = 3,
-                                             Optional stride As Integer = 1) As CNNLayerArguments
+        Public Function conv_transpose_layer(kernel As Integer,
+                                             Optional filters As Integer = 0,
+                                             Optional stride As Integer = 2,
+                                             Optional padding As Integer = 0,
+                                             Optional useBias As Boolean = True) As CNNLayerArguments
 
-            If dims Is Nothing OrElse dims.Length < 3 Then
-                Throw New ArgumentException("需要形如 {width, height, depth} 的输出尺寸", NameOf(dims))
-            End If
-            If filter Is Nothing OrElse filter.Length < 2 Then
-                Throw New ArgumentException("需要形如 {width, height} 的滤波窗口", NameOf(filter))
+            If kernel <= 0 Then
+                Throw New ArgumentException("卷积核窗口必须为正数", NameOf(kernel))
             End If
 
-            Dim out_dims As New OutputDefinition(dims(0), dims(1), dims(2))
-            Dim window As New Dimension(filter(0), filter(1))
-
-            Return spec($"conv_transpose_layer(dims=[{dims(0)}, {dims(1)}, {dims(2)}], filter=[{window.x}, {window.y}], filters={filters}, stride={stride})",
-                        Function(cnn) cnn.buildConv2DTransposeLayer(out_dims, window, filters, stride))
+            Return spec($"conv_transpose_layer(kernel={kernel}, filters={filters}, stride={stride}, padding={padding})",
+                        Function(cnn) cnn.buildConv2DTransposeLayer(kernel, filters, stride, padding, useBias))
         End Function
 
         ''' <summary>
