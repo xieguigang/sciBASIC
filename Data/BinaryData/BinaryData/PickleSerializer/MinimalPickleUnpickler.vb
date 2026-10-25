@@ -196,10 +196,11 @@ Namespace Pickle
         ''' 这是最便捷的入口方法，适合从文本传输或存储中恢复 Python 对象。
         ''' </summary>
         ''' <param name="base64Str">Base64 编码的 Pickle 数据</param>
+        ''' <param name="factory">可选的第三方对象构造工厂（例如 numpy 数组重建）</param>
         ''' <returns>反序列化后的 .NET 对象</returns>
-        Public Shared Function Unpickle(base64Str As String) As Object
+        Public Shared Function Unpickle(base64Str As String, Optional factory As IPickleObjectFactory = Nothing) As Object
             Dim data As Byte() = Convert.FromBase64String(base64Str)
-            Return UnpickleFromBytes(data)
+            Return UnpickleFromBytes(data, factory)
         End Function
 
         ''' <summary>
@@ -207,10 +208,11 @@ Namespace Pickle
         ''' 适合从文件读取或网络接收的原始二进制数据。
         ''' </summary>
         ''' <param name="data">Pickle 格式的字节数组</param>
+        ''' <param name="factory">可选的第三方对象构造工厂（例如 numpy 数组重建）</param>
         ''' <returns>反序列化后的 .NET 对象</returns>
-        Public Shared Function UnpickleFromBytes(data As Byte()) As Object
+        Public Shared Function UnpickleFromBytes(data As Byte(), Optional factory As IPickleObjectFactory = Nothing) As Object
             Using ms As New MemoryStream(data)
-                Return UnpickleFromStream(ms)
+                Return UnpickleFromStream(ms, factory)
             End Using
         End Function
 
@@ -219,8 +221,9 @@ Namespace Pickle
         ''' 支持任意 Stream 来源，包括文件流、网络流、内存流等。
         ''' </summary>
         ''' <param name="stream">包含 Pickle 数据的流</param>
+        ''' <param name="factory">可选的第三方对象构造工厂（例如 numpy 数组重建）</param>
         ''' <returns>反序列化后的 .NET 对象</returns>
-        Public Shared Function UnpickleFromStream(stream As Stream) As Object
+        Public Shared Function UnpickleFromStream(stream As Stream, Optional factory As IPickleObjectFactory = Nothing) As Object
             Dim stack As New Stack(Of Object)()
             Dim memo As New Dictionary(Of Integer, Object)()
             Dim reader As New BinaryReader(stream, Encoding.UTF8, leaveOpen:=True)
@@ -536,27 +539,28 @@ Namespace Pickle
                         ' 弹出参数元组和可调用引用，构造对象
                         Dim args = stack.Pop()
                         Dim callable = stack.Pop()
-                        stack.Push(ReduceCallable(callable, args))
+                        stack.Push(ReduceCallable(callable, args, factory))
 
                     Case BUILD
                         ' 弹出状态对象和目标对象，将状态应用到目标对象
+                        ' 注意：obj 采用 ByRef 传递，第三方工厂（如 numpy ndarray）可以把占位对象替换为最终实例
                         Dim state = stack.Pop()
                         Dim obj = stack.Pop()
-                        BuildObject(obj, state)
+                        BuildObject(obj, state, factory)
                         stack.Push(obj)
 
                     Case NEWOBJ
                         ' 协议2：弹出新式类参数和类引用，构造空对象
                         Dim args = stack.Pop()
                         Dim cls = stack.Pop()
-                        stack.Push(NewObjf(cls, args))
+                        stack.Push(NewObjf(cls, args, factory))
 
                     Case INST
                         ' 协议0：读取模块名和类名，弹出 Mark 以来的参数，构造旧式类实例
                         Dim moduleName = ReadLine(reader)
                         Dim className = ReadLine(reader)
                         Dim args = PopToMark(stack)
-                        stack.Push(NewObjf(New PythonGlobalRef(moduleName, className), New PythonTuple(args.ToArray())))
+                        stack.Push(NewObjf(New PythonGlobalRef(moduleName, className), New PythonTuple(args.ToArray()), factory))
 
                     Case OBJ
                         ' 协议0：弹出 Mark 以来的元素，第一个为类引用，其余为参数
@@ -564,9 +568,9 @@ Namespace Pickle
                         If items.Count >= 2 Then
                             Dim cls = items(0)
                             Dim args = items.Skip(1).ToArray()
-                            stack.Push(NewObjf(cls, New PythonTuple(args)))
+                            stack.Push(NewObjf(cls, New PythonTuple(args), factory))
                         ElseIf items.Count = 1 Then
-                            stack.Push(NewObjf(items(0), New PythonTuple(Array.Empty(Of Object)())))
+                            stack.Push(NewObjf(items(0), New PythonTuple(Array.Empty(Of Object)()), factory))
                         Else
                             Throw New InvalidDataException("OBJ 操作码需要至少一个类引用")
                         End If
@@ -753,10 +757,10 @@ Namespace Pickle
         ''' 如果可调用对象是 PythonGlobalRef，尝试构造对应的 .NET 对象；
         ''' 否则返回 PythonObject 包装器。
         ''' </summary>
-        Private Shared Function ReduceCallable(callable As Object, args As Object) As Object
+        Private Shared Function ReduceCallable(callable As Object, args As Object, factory As IPickleObjectFactory) As Object
             Dim globalRef = TryCast(callable, PythonGlobalRef)
             If globalRef IsNot Nothing Then
-                Return ConstructPythonObject(globalRef, args)
+                Return ConstructPythonObject(globalRef, args, factory)
             End If
 
             ' 无法识别的可调用对象，返回 PythonObject 包装器
@@ -767,10 +771,10 @@ Namespace Pickle
         ''' <summary>
         ''' 处理 NEWOBJ 操作码：使用类引用和参数构造新式类实例。
         ''' </summary>
-        Private Shared Function NewObjf(cls As Object, args As Object) As Object
+        Private Shared Function NewObjf(cls As Object, args As Object, factory As IPickleObjectFactory) As Object
             Dim globalRef = TryCast(cls, PythonGlobalRef)
             If globalRef IsNot Nothing Then
-                Return ConstructPythonObject(globalRef, args)
+                Return ConstructPythonObject(globalRef, args, factory)
             End If
 
             Dim argArray = ExtractArgs(args)
@@ -800,9 +804,18 @@ Namespace Pickle
         ''' 对常见的 Python 内置类型和标准库类型进行映射，
         ''' 未知类型则返回 PythonObject 包装器以保留信息。
         ''' </summary>
-        Private Shared Function ConstructPythonObject(globalRef As PythonGlobalRef, args As Object) As Object
+        Private Shared Function ConstructPythonObject(globalRef As PythonGlobalRef, args As Object, factory As IPickleObjectFactory) As Object
             Dim argArray = ExtractArgs(args)
             Dim fullName = $"{globalRef.ModuleName}.{globalRef.ClassName}"
+
+            ' 优先询问第三方工厂（例如 numpy 的 ndarray/dtype 重建）
+            If factory IsNot Nothing Then
+                Dim custom As Object = factory.Construct(globalRef.ModuleName, globalRef.ClassName, argArray)
+
+                If custom IsNot Nothing Then
+                    Return custom
+                End If
+            End If
 
             Select Case fullName
             ' ----- 集合类型 -----
@@ -1003,7 +1016,13 @@ Namespace Pickle
         ''' 对于 PythonObject，将状态字典合并到 State 属性中；
         ''' 对于字典类型，将状态字典的键值对合并到目标字典中。
         ''' </summary>
-        Private Shared Sub BuildObject(obj As Object, state As Object)
+        Private Shared Sub BuildObject(ByRef obj As Object, state As Object, factory As IPickleObjectFactory)
+            ' 优先询问第三方工厂：numpy 的 ndarray 需要把占位对象替换为携带真实数据的新实例，
+            ' 因此这里必须使用 ByRef 参数
+            If factory IsNot Nothing AndAlso factory.ApplyState(obj, state) Then
+                Return
+            End If
+
             If TypeOf obj Is PythonObject Then
                 Dim pyObj = DirectCast(obj, PythonObject)
                 If TypeOf state Is IDictionary Then
