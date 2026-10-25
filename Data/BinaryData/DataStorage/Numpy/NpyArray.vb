@@ -49,7 +49,7 @@ Namespace Numpy
         Private _normalized As Byte()
         Private _doubles As Double()
         Private _strings As String()
-        Private _objects As Object()
+        Private _objectCache As Object()
 
         ''' <summary>
         ''' 数组维数。
@@ -234,14 +234,14 @@ Namespace Numpy
                         Case 4
                             Dim singles As Single() = New Single(n - 1) {}
 
-                            Call Buffer.BlockCopy(buffer, 0, singles, 0, n * 4)
+                            Call System.Buffer.BlockCopy(buffer, 0, singles, 0, n * 4)
 
                             For i As Integer = 0 To n - 1
                                 values(i) = CDbl(singles(i))
                             Next
                         Case 8
                             ' 数据区已经归一化成 C 序与本机字节序，可以直接整体拷贝
-                            Call Buffer.BlockCopy(buffer, 0, values, 0, n * 8)
+                            Call System.Buffer.BlockCopy(buffer, 0, values, 0, n * 8)
                         Case Else
                             Throw New NotSupportedException($"unsupported numpy float width: {DType.ItemSize} bytes")
                     End Select
@@ -358,18 +358,18 @@ Namespace Numpy
         ''' 以对象数组返回所有元素（对象数组返回内嵌元素本身）。
         ''' </summary>
         Public Function AsObjectArray() As Object()
-            If _objects IsNot Nothing Then
-                Return _objects
+            If _objectCache IsNot Nothing Then
+                Return _objectCache
             End If
 
             If IsObjectArray Then
                 If Objects Is Nothing Then
-                    _objects = New Object() {}
+                    _objectCache = New Object() {}
                 Else
-                    _objects = DirectCast(Objects.Clone(), Object())
+                    _objectCache = DirectCast(Objects.Clone(), Object())
                 End If
 
-                Return _objects
+                Return _objectCache
             End If
 
             Dim n As Integer = ElementCount()
@@ -379,7 +379,7 @@ Namespace Numpy
                 result(i) = GetValue(i)
             Next
 
-            _objects = result
+            _objectCache = result
 
             Return result
         End Function
@@ -497,7 +497,7 @@ Namespace Numpy
         ''' <summary>
         ''' 把 Fortran 序（列优先）的数据区重排成 C 序（行优先）。
         ''' </summary>
-        Private Shared Function ReorderToC(raw As Byte(), n As Integer, itemSize As Integer, shape As Integer()) As Byte()
+        Friend Shared Function ReorderToC(raw As Byte(), n As Integer, itemSize As Integer, shape As Integer()) As Byte()
             Dim rank As Integer = shape.Length
             Dim stridesC As Integer() = New Integer(rank - 1) {}
             Dim stridesF As Integer() = New Integer(rank - 1) {}
@@ -530,6 +530,55 @@ Namespace Numpy
                 Call Buffer.BlockCopy(raw, src * itemSize, result, dst, itemSize)
 
                 dst += itemSize
+
+                For j As Integer = rank - 1 To 0 Step -1
+                    indices(j) += 1
+
+                    If indices(j) < shape(j) Then
+                        Exit For
+                    End If
+
+                    indices(j) = 0
+                Next
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' 把 C 序（行优先）的元素字节重排成 Fortran 序（列优先），用于写出 <c>fortran_order=True</c> 的数组。
+        ''' </summary>
+        ''' <param name="corder">按 C 序排列的元素字节</param>
+        ''' <param name="n">元素总数</param>
+        ''' <param name="itemSize">单个元素的字节宽度</param>
+        ''' <param name="shape">数组形状</param>
+        Friend Shared Function ReorderToFortran(corder As Byte(), n As Integer, itemSize As Integer, shape As Integer()) As Byte()
+            Dim rank As Integer = shape.Length
+
+            If rank <= 1 Then
+                Return corder
+            End If
+
+            Dim stridesF As Integer() = New Integer(rank - 1) {}
+            Dim acc As Integer = 1
+
+            For i As Integer = 0 To rank - 1
+                stridesF(i) = acc
+                acc *= shape(i)
+            Next
+
+            Dim result As Byte() = New Byte(n * itemSize - 1) {}
+            Dim indices As Integer() = New Integer(rank - 1) {}
+            Dim src As Integer = 0
+
+            For k As Integer = 0 To n - 1
+                Dim dst As Integer = 0
+
+                For j As Integer = 0 To rank - 1
+                    dst += indices(j) * stridesF(j)
+                Next
+
+                Call Buffer.BlockCopy(corder, k * itemSize, result, dst * itemSize, itemSize)
 
                 For j As Integer = rank - 1 To 0 Step -1
                     indices(j) += 1
@@ -637,6 +686,8 @@ Namespace Numpy
 
             If Shape Is Nothing OrElse Shape.Length = 0 Then
                 shapeText = "()"
+            ElseIf Shape.Length = 1 Then
+                shapeText = $"({Shape(0)},)"
             Else
                 shapeText = "(" & String.Join(", ", Shape) & ")"
             End If
