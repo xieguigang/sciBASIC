@@ -337,6 +337,9 @@ Namespace Numpy
             If _strings IsNot Nothing Then
                 Return _strings
             End If
+            If Not DType.IsStringType Then
+                Throw New InvalidOperationException($"numpy dtype '{DType}' is not a string type!")
+            End If
 
             Dim n As Integer = ElementCount()
             Dim buffer As Byte() = NormalizedData()
