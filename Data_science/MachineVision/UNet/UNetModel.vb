@@ -21,6 +21,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports std = System.Math
+Imports CnnLayer = Microsoft.VisualBasic.MachineLearning.CNN.layers.Layer
 
 Namespace UNet
 
@@ -35,7 +36,7 @@ Namespace UNet
         Private Class GraphNode
 
             ''' <summary>该节点对应的层。</summary>
-            Public Property Layer As CNN.layers.Layer
+            Public Property Layer As CnnLayer
             ''' <summary>
             ''' 输入节点下标；<c>-1</c> 表示模型的外部输入。
             ''' 长度为 2 时表示拼接层：[0] 主分支（解码器），[1] 跳跃分支（编码器）。
@@ -147,7 +148,7 @@ Namespace UNet
             End If
         End Sub
 
-        Private Function AddNode(layer As CNN.layers.Layer, kind As String, ParamArray inputs As Integer()) As Integer
+        Private Function AddNode(layer As CnnLayer, kind As String, ParamArray inputs As Integer()) As Integer
             nodes.Add(New GraphNode With {
                 .Layer = layer,
                 .Inputs = inputs,
