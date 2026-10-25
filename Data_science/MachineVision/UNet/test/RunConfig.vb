@@ -45,9 +45,12 @@ Public Class RunConfig
 
     ''' <summary>单行配置描述。</summary>
     Public Overrides Function ToString() As String
+        ' VB 的插值字符串里不能嵌双引号，所以先把这段文字取出来
+        Dim rleText = If(RleColumnMajor, "column-major", "row-major")
+
         Return $"data={DataRoot}, size={ImageSize}, levels={Levels}, filters={BaseFilters}, " &
                $"epochs={Epochs}, train={Limit}, test={TestLimit}, lr={LearningRate}, batch={BatchSize}, " &
-               $"mixed={MixedPrecision}, rle={If(RleColumnMajor, "column-major", "row-major")}"
-    End Sub
+               $"mixed={MixedPrecision}, rle={rleText}"
+    End Function
 
 End Class

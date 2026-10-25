@@ -202,21 +202,23 @@ Namespace UNet
                 Dim prev = cur - stride - 1
 
                 For i As Integer = 0 To stride - 1
-                    Dim a = If(i >= bpp, raw(cur + i - bpp), CByte(0))
-                    Dim b = If(y > 0, raw(prev + i), CByte(0))
-                    Dim c = If(y > 0 AndAlso i >= bpp, raw(prev + i - bpp), CByte(0))
+                    Dim a As Integer = If(i >= bpp, CInt(raw(cur + i - bpp)), 0)
+                    Dim b As Integer = If(y > 0, CInt(raw(prev + i)), 0)
+                    Dim c As Integer = If(y > 0 AndAlso i >= bpp, CInt(raw(prev + i - bpp)), 0)
                     Dim x = raw(cur + i)
 
+                    ' 注意: VB 里 Byte + Byte 的结果**仍然是 Byte**并且受溢出检查保护,
+                    ' 所以这里必须先显式拓宽到 Integer 再做加法, 否则 255+1 直接抛 OverflowException
                     Select Case filterType
                         Case 0 ' None
                         Case 1 ' Sub
-                            x = CByte((x + a) And &HFF)
+                            x = CByte((CInt(x) + CInt(a)) And &HFF)
                         Case 2 ' Up
-                            x = CByte((x + b) And &HFF)
+                            x = CByte((CInt(x) + CInt(b)) And &HFF)
                         Case 3 ' Average
-                            x = CByte((x + ((CInt(a) + CInt(b)) \ 2)) And &HFF)
+                            x = CByte((CInt(x) + ((CInt(a) + CInt(b)) \ 2)) And &HFF)
                         Case 4 ' Paeth
-                            x = CByte((x + Paeth(a, b, c)) And &HFF)
+                            x = CByte((CInt(x) + Paeth(a, b, c)) And &HFF)
                         Case Else
                             Throw New InvalidDataException($"未知的 PNG 行过滤器: {filterType}")
                     End Select
@@ -249,7 +251,7 @@ Namespace UNet
                     Dim src = y * (stride + 1) + 1
 
                     For i As Integer = 0 To width * channels - 1
-                        Dim b = raw(src + i \ perByte)
+                        Dim b As Integer = CInt(raw(src + i \ perByte))
                         Dim shift = 8 - bitDepth * ((i Mod perByte) + 1)
                         Dim value = (b >> shift) And mask
 
@@ -264,16 +266,16 @@ Namespace UNet
         End Function
 
         ''' <summary>PNG 规范里的 Paeth 预测器。</summary>
-        Private Function Paeth(a As Byte, b As Byte, c As Byte) As Integer
-            Dim p = CInt(a) + CInt(b) - CInt(c)
-            Dim pa = std.Abs(p - CInt(a))
-            Dim pb = std.Abs(p - CInt(b))
-            Dim pc = std.Abs(p - CInt(c))
+        Private Function Paeth(a As Integer, b As Integer, c As Integer) As Integer
+            Dim p = a + b - c
+            Dim pa = std.Abs(p - a)
+            Dim pb = std.Abs(p - b)
+            Dim pc = std.Abs(p - c)
 
-            If pa <= pb AndAlso pa <= pc Then Return CInt(a)
-            If pb <= pc Then Return CInt(b)
+            If pa <= pb AndAlso pa <= pc Then Return a
+            If pb <= pc Then Return b
 
-            Return CInt(c)
+            Return c
         End Function
 
         ''' <summary>把样本转成归一化像素（灰度或 RGB）。</summary>

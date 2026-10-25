@@ -1,5 +1,6 @@
 Imports System
 Imports System.IO
+Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
 Imports UNet

@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>UNet</RootNamespace>
+    <!-- 源码里已经显式 Namespace UNet，若这里再给 RootNamespace 赋值，VB 会把它**前缀**到
+         声明的命名空间之前（得到 UNet.UNet），因此这里必须留空。 -->
+    <RootNamespace></RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
