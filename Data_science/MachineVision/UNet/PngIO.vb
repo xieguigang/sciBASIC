@@ -486,7 +486,8 @@ Namespace UNet
 
         Private Sub WriteChunk(fs As Stream, type As String, data As Byte())
             Dim name = System.Text.Encoding.ASCII.GetBytes(type)
-            Dim buffer(3 + name.Length + data.Length - 1) As Byte
+            ' 4 字节长度 + 4 字节类型名 + 数据
+            Dim buffer(4 + name.Length + data.Length - 1) As Byte
 
             Call WriteBE(buffer, 0, data.Length)
             Array.Copy(name, 0, buffer, 4, name.Length)
