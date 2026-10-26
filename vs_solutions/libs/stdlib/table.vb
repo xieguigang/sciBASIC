@@ -235,7 +235,11 @@ Public Module table
         End If
 
         For i As Integer = 0 To source.labelNames.Length - 1
-            Call target.SetLabel(source.labelNames(i), values.Select(Function(row) row(i)).ToArray)
+            ' the lambda must not capture the loop variable, so copy it to a local first
+            Dim column As Integer = i
+            Dim columnValues As Double() = values.Select(Function(row) row(column)).ToArray
+
+            Call target.SetLabel(source.labelNames(i), columnValues)
         Next
 
         Return target

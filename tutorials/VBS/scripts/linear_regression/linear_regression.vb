@@ -117,5 +117,7 @@ call console.WriteLine("md  : " & doc.save(here("linear-regression.md")))
 call console.WriteLine("html: " & doc.save(here("linear-regression.html")))
 call console.WriteLine("docx: " & doc.save(here("linear-regression.docx")))
 call console.WriteLine("pdf : " & doc.save(here("linear-regression.pdf")))
+call console.WriteLine("rtf : " & doc.save(here("linear-regression.rtf")))
+call console.WriteLine("xps : " & doc.save(here("linear-regression.oxps")))
 
 call console.WriteLine("done: linear-regression")

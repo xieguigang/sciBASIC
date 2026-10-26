@@ -112,5 +112,7 @@ console.log('md  : ' + doc.save(here('linear-regression.md')));
 console.log('html: ' + doc.save(here('linear-regression.html')));
 console.log('docx: ' + doc.save(here('linear-regression.docx')));
 console.log('pdf : ' + doc.save(here('linear-regression.pdf')));
+console.log('rtf : ' + doc.save(here('linear-regression.rtf')));
+console.log('xps : ' + doc.save(here('linear-regression.oxps')));
 
 console.log('done: linear-regression');
