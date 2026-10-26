@@ -97,10 +97,18 @@ Namespace Drawing3D.Models.Isometric.Paths
         Public Sub New(origin As Point3D, radius#, startAngle#, sweepAngle#, vertices#)
             Call MyBase.New
 
+            If vertices < 1 Then
+                vertices = 1
+            End If
+
             Dim deltaAngle# = 2 * std.PI * (sweepAngle / 360) / vertices
             Dim angle# = 2 * std.PI * (startAngle / 360)
+            ' 扇形的最后一条边必须精确落在 start + sweep 上，否则
+            ' 相邻的两个扇形之间会留下一个 deltaAngle 宽度的细缝
+            ' （96 段、360 度时约为 3.75 度，肉眼可见）
+            Dim steps As Integer = If(std.Abs(sweepAngle) >= 359.999, CInt(vertices) - 1, CInt(vertices))
 
-            For i As Integer = 0 To vertices - 1
+            For i As Integer = 0 To steps
                 Dim p As New Point3D(
                     (radius * Cos(angle)) + origin.X,
                     (radius * Sin(angle)) + origin.Y,

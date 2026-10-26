@@ -234,6 +234,13 @@ Namespace Plot3D
             Dim pieChart As New List(Of Surface)
             Dim topFace As New List(Of Integer)
             Dim start As Double = 0
+            ' 切片被推出去 e 之后半径同步缩小 e，这样每一片的外弧中点仍然落在半径为 1 的
+            ' 基准圆上，分离之后外缘不会出现"台阶"
+            Dim radius As Double = 1 - explode
+
+            If radius < 0.25 Then
+                radius = 0.25
+            End If
 
             For Each x As PieSlice In slices
                 Dim sweep As Double = 360 * x.Percentage / 100
@@ -242,14 +249,26 @@ Namespace Plot3D
 
                 If explode > 0 Then
                     ' 沿切片角平分线把切片向外推出去
-                    Dim d As Double = explode
                     Dim rad As Double = mid / 180 * std.PI
 
-                    origin = New Point3D(centra.X + std.Cos(rad) * d, centra.Y + std.Sin(rad) * d, centra.Z)
+                    origin = New Point3D(
+                        centra.X + std.Cos(rad) * explode,
+                        centra.Y + std.Sin(rad) * explode,
+                        centra.Z)
                 End If
 
-                Dim pie As New Pie(origin, 1, start, sweep, vertices, thickness)
+                Dim pie As New Pie(origin, radius, start, sweep, vertices, thickness)
                 Dim model As Surface() = pie.Model3D(x.Color)
+
+                ' Extrude 的面序是固定的：0 = 底面、1 = 顶面、其余 = 侧面。
+                ' 顶面用基色、侧面压暗、底面最暗，厚度才有可辨识的明暗层次，
+                ' 否则侧面会以"随机的细色条"形式出现，看起来像是切片错位。
+                For i As Integer = 0 To model.Length - 1
+                    Dim factor As Single = If(i = 0, BottomShade, If(i = 1, 1.0F, SideShade))
+
+                    model(i).brush = New SolidBrush(ShadeColor(x.Color, factor))
+                Next
+
                 Dim top As Integer = TopFaceIndex(model)
 
                 topFace += pieChart.Count + top
@@ -292,7 +311,21 @@ Namespace Plot3D
                         .TranslateBuffer(view, view.Rotate(matrix.Matrix), illumination) _
                         .AsList
 
-                    Call g.BufferPainting(model2D)
+                    ' 逐面填充并用自己的颜色描一圈 1px 的边：
+                    ' 相邻面片之间的抗锯齿接缝会被这条描边盖掉，否则浅色切片上会出现白色细线
+                    For Each face In model2D
+                        Using br As Brush = face.brush
+                            Call g.FillPolygon(br, face.points)
+                        End Using
+
+                        Dim solid = TryCast(face.brush, SolidBrush)
+
+                        If solid IsNot Nothing Then
+                            Using pen As New Pen(solid.Color, 1.0F)
+                                Call g.DrawPolygon(pen, face.points)
+                            End Using
+                        End If
+                    Next
 
                     If showLabels Then
                         Call DrawSliceLabels(g, view, centroid, pieChart, topFace, slices, theme, plotRect)
@@ -432,6 +465,23 @@ Namespace Plot3D
             Next
 
             Return best
+        End Function
+
+        ''' <summary>饼图侧面的明度系数（相对顶面基色）</summary>
+        Private Const SideShade As Single = 0.84F
+
+        ''' <summary>饼图底面的明度系数（相对顶面基色）</summary>
+        Private Const BottomShade As Single = 0.72F
+
+        ''' <summary>按比例调整颜色的明度（保持色相与透明度不变）</summary>
+        ''' <param name="color">基色</param>
+        ''' <param name="factor">明度系数，小于 1 表示压暗</param>
+        Private Function ShadeColor(color As Color, factor As Single) As Color
+            Dim r% = CInt(std.Max(0, std.Min(255, color.R * factor)))
+            Dim g% = CInt(std.Max(0, std.Min(255, color.G * factor)))
+            Dim b% = CInt(std.Max(0, std.Min(255, color.B * factor)))
+
+            Return Color.FromArgb(color.A, r, g, b)
         End Function
 
         ''' <summary>文字光晕的四个偏移方向</summary>

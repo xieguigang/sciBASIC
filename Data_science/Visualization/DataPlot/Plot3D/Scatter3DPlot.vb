@@ -177,21 +177,20 @@ Namespace Plot3D.Impl
             End If
 
             If theme.showTicks Then
-                For Each tick As Element3D In AxisFrame.Ticks(css, X, Y, Z, theme)
+                For Each tick As Element3D In AxisFrame.Ticks(css, X, Y, Z, theme, camera)
                     Yield tick
                 Next
             End If
 
             If theme.showAxisLines Then
-                For Each item As Element3D In AxisDraw.Axis(
+                ' 轴与轴名跟随相机落在左下角，不再使用固定锚点的 AxisDraw.Axis
+                For Each item As Element3D In AxisFrame.AxisLines(
                         css,
                         xrange:=X, yrange:=Y, zrange:=Z,
-                        labelFontCss:=theme.axisLabelCSS,
                         labels:=(xlabel, ylabel, zlabel),
-                        strokeCSS:=theme.axisStroke,
-                        arrowFactor:=arrowFactor,
-                        labelColorVal:=theme.mainTextColor
-                    )
+                        theme:=theme,
+                        camera:=camera,
+                        arrowFactor:=arrowFactor)
 
                     Yield item
                 Next

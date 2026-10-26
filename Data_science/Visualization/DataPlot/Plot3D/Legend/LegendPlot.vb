@@ -302,7 +302,8 @@ Namespace Plot3D.Legend
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width + 5,
-                .Y = pos.Y + (canvas.Height - fSize.Height) / 2
+                ' 文本高于形状时不能朝上溢出（旧实现会算出负偏移，首行文字因此压到图例外框上）
+                .Y = pos.Y + std.Max(0, (canvas.Height - fSize.Height) / 2)
             }
             Dim color As Brush = l.color.GetBrush
 
@@ -368,46 +369,77 @@ Namespace Plot3D.Legend
             Dim legendList As LegendObject() = legends.ToArray
             Dim graphicSize As SizeF = gSize.FloatSizeParser
             Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rowHeight As Single = graphicSize.Height
 
             If Not regionBorder Is Nothing Then
                 Dim maxTitleSize As SizeF = legendList.MaxLegendSize(g)
-                Dim rect As RectangleF
+                Dim rect As RectangleF = LegendRegion(topLeft, graphicSize, legendList.Length, maxTitleSize, d)
+                Dim background As Brush = Nothing
 
-                With graphicSize
+                If Not fillBg.StringEmpty Then
+                    background = fillBg.GetBrush
+                End If
 
-                    Dim width! = .Width + .Height * 1.25 + maxTitleSize.Width
-                    Dim height! = (std.Max(.Height, maxTitleSize.Height) + d + 1.25) * legendList.Length
-                    Dim background As Brush = Nothing
-
-                    If Not fillBg.StringEmpty Then
-                        background = fillBg.GetBrush
+                If roundRectRegion Then
+                    Call RoundRect.Draw(g, New PointF(rect.X, rect.Y), rect.Size, 15, background, regionBorder)
+                Else
+                    If Not background Is Nothing Then
+                        Call g.FillRectangle(background, rect)
                     End If
 
-                    size = New SizeF(width, height)
-                    ZERO = New Point(ZERO.X - d, ZERO.Y - d * 1.2)
+                    Call g.DrawRectangle(pen:=css.GetPen(regionBorder), rect:=rect)
+                End If
+            End If
 
-                    If roundRectRegion Then
-                        Call RoundRect.Draw(g, ZERO, size, 15, background, regionBorder)
-                    Else
-                        rect = New RectangleF(ZERO, size)
+            Dim maxTitle As SizeF = legendList.MaxLegendSize(g)
 
-                        If Not background Is Nothing Then
-                            Call g.FillRectangle(background, rect)
-                        End If
-
-                        Call g.DrawRectangle(pen:=css.GetPen(regionBorder), rect:=rect)
-                    End If
-                End With
+            If maxTitle.Height > rowHeight Then
+                rowHeight = maxTitle.Height
             End If
 
             For Each l As LegendObject In legendList
-                size = g.DrawLegend(topLeft, graphicSize, l, shapeBorder, radius, titleBrush)
+                size = g.DrawLegend(topLeft, New SizeF(graphicSize.Width, rowHeight), l, shapeBorder, radius, titleBrush)
                 topLeft = New Point With {
                     .X = topLeft.X,
                     .Y = size.Height + d + topLeft.Y
                 }
             Next
         End Sub
+
+        ''' <summary>
+        ''' 计算图例块（含外框）在画布上占据的矩形。
+        '''
+        ''' <para>
+        ''' 这是"图例外框"的唯一计算入口：绘制外框（<see cref="DrawLegends"/>）与
+        ''' 在绘制之前预留空间 / 摆放图例（<c>Plot3DCanvas</c>）必须共用同一个函数，
+        ''' 否则两边各算一套公式，外框就会和内容错位。
+        ''' </para>
+        '''
+        ''' <para>
+        ''' 布局约定（与 <see cref="DrawLegend"/> 的绘制方式严格对应）：形状占据
+        ''' <c>[topLeft.X, topLeft.X + gSize.Width]</c>，文本从 <c>topLeft.X + gSize.Width + 5</c>
+        ''' 开始；每一行的高度为 <c>Max(gSize.Height, 文本高度)</c>，行间距为 <c>d</c>。
+        ''' </para>
+        ''' </summary>
+        ''' <param name="topLeft">第一行图例形状的左上角</param>
+        ''' <param name="gSize">图例形状的尺寸</param>
+        ''' <param name="count">图例项数量</param>
+        ''' <param name="maxTitle">最宽的图例文本尺寸</param>
+        ''' <param name="d">行间距，同时也是外框四周的留白</param>
+        Public Function LegendRegion(topLeft As PointF, gSize As SizeF,
+                                     count As Integer, maxTitle As SizeF,
+                                     Optional d As Integer = 10) As RectangleF
+
+            If count <= 0 Then
+                Return New RectangleF(topLeft, New SizeF(0, 0))
+            End If
+
+            Dim rowHeight As Single = std.Max(gSize.Height, maxTitle.Height)
+            Dim width As Single = gSize.Width + 5 + maxTitle.Width + 2 * d
+            Dim height As Single = count * rowHeight + (count - 1) * d + 2 * d
+
+            Return New RectangleF(topLeft.X - d, topLeft.Y - d, width, height)
+        End Function
 
         ''' <summary>
         ''' 这个函数返回legend之中的图例的标题字符串的最大绘制大小 

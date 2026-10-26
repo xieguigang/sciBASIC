@@ -12,6 +12,7 @@
 ' ============================================================================
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Device
@@ -22,6 +23,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
 Namespace Plot3D.Model
@@ -147,45 +149,211 @@ Namespace Plot3D.Model
         ''' <param name="zrange">Z 轴范围</param>
         ''' <param name="theme">三维绘图主题</param>
         ''' <param name="tickCount">每根轴上期望的刻度数量</param>
+        ''' <summary>
+        ''' 三维坐标系的绘制锚点：相机自适应地取"屏幕上最靠下"的盒角作为原点，
+        ''' 三条刻度轨从该角出发分别沿 X / Y / Z 方向延伸。
+        ''' </summary>
+        ''' <param name="corner">锚点（前下角，模型坐标）</param>
+        ''' <param name="xEnd">X 轨的远端</param>
+        ''' <param name="yEnd">Y 轨的远端</param>
+        ''' <param name="zEnd">Z 轨的远端</param>
+        ''' <param name="outX">X 刻度向外（盒体外侧）的方向向量</param>
+        ''' <param name="outY">Y 刻度向外的方向向量</param>
+        ''' <param name="outZ">Z 刻度向外的方向向量</param>
+        Public Structure FrameAnchor
+            Public Property corner As Point3D
+            Public Property xEnd As Point3D
+            Public Property yEnd As Point3D
+            Public Property zEnd As Point3D
+            Public Property outX As Point3D
+            Public Property outY As Point3D
+            Public Property outZ As Point3D
+        End Structure
+
+        ''' <summary>
+        ''' 依据相机朝向计算三维坐标系的绘制锚点（前下角）与三条轨道的端点。
+        '''
+        ''' <para>
+        ''' 把盒体的 8 个角点投影到屏幕，取屏幕 y 最大（最靠下）的角作为锚点；
+        ''' 这样无论相机怎么转，刻度与轴名都会落在图的下方左侧，而不是跟着跑到右上角。
+        ''' </para>
+        ''' </summary>
+        ''' <param name="camera">相机</param>
+        ''' <param name="xrange">X 轴范围</param>
+        ''' <param name="yrange">Y 轴范围</param>
+        ''' <param name="zrange">Z 轴范围</param>
+        Public Function AnchorOf(camera As Camera,
+                                 xrange As DoubleRange,
+                                 yrange As DoubleRange,
+                                 zrange As DoubleRange) As FrameAnchor
+
+            Dim xs As Double() = {xrange.Min, xrange.Max}
+            Dim ys As Double() = {yrange.Min, yrange.Max}
+            Dim zs As Double() = {zrange.Min, zrange.Max}
+            Dim corners As New List(Of Point3D)
+
+            For Each xv As Double In xs
+                For Each yv As Double In ys
+                    For Each zv As Double In zs
+                        corners.Add(New Point3D(xv, yv, zv))
+                    Next
+                Next
+            Next
+
+            Dim best As Point3D = corners(0)
+            Dim bestY As Double = Double.MinValue
+            Dim bestX As Double = Double.MaxValue
+
+            For Each pt As Point3D In corners
+                Dim screen As Point3D = camera.Project(camera.Rotate(pt))
+                ' 屏幕 y 越大表示越靠下；同高时取更靠左的那个角
+                If screen.Y > bestY + 1.0E-06 OrElse
+                   (std.Abs(screen.Y - bestY) <= 1.0E-06 AndAlso screen.X < bestX) Then
+                    best = pt
+                    bestY = screen.Y
+                    bestX = screen.X
+                End If
+            Next
+
+            Dim cx# = (xrange.Min + xrange.Max) / 2
+            Dim cy# = (yrange.Min + yrange.Max) / 2
+            Dim cz# = (zrange.Min + zrange.Max) / 2
+            ' 锚点相对盒心的方位决定了刻度应当朝哪个方向外推（永远指向盒体外侧）
+            Dim sx# = If(best.X < cx, -1.0#, 1.0#)
+            Dim sy# = If(best.Y < cy, -1.0#, 1.0#)
+            Dim sz# = If(best.Z < cz, -1.0#, 1.0#)
+
+            Return New FrameAnchor With {
+                .corner = best,
+                .xEnd = New Point3D(If(best.X < cx, xrange.Max, xrange.Min), best.Y, best.Z),
+                .yEnd = New Point3D(best.X, If(best.Y < cy, yrange.Max, yrange.Min), best.Z),
+                .zEnd = New Point3D(best.X, best.Y, If(best.Z < cz, zrange.Max, zrange.Min)),
+                .outX = New Point3D(0, sy, 0),
+                .outY = New Point3D(sx, 0, 0),
+                .outZ = New Point3D(sx * 0.7, sy * 0.7, 0)
+            }
+        End Function
+
+        ''' <summary>
+        ''' 沿三条主轴生成刻度短线与刻度值文本（锚点由相机决定，刻度集中在左下角）
+        ''' </summary>
+        ''' <param name="css">画布 CSS 环境</param>
+        ''' <param name="xrange">X 轴范围</param>
+        ''' <param name="yrange">Y 轴范围</param>
+        ''' <param name="zrange">Z 轴范围</param>
+        ''' <param name="theme">三维绘图主题</param>
+        ''' <param name="camera">相机（用于确定左下角锚点）</param>
+        ''' <param name="tickCount">每根轴上期望的刻度数量</param>
         ''' <returns>刻度短线与刻度值文本元素</returns>
         Public Iterator Function Ticks(css As CSSEnvirnment,
                                        xrange As DoubleRange,
                                        yrange As DoubleRange,
                                        zrange As DoubleRange,
                                        theme As Plot3DTheme,
+                                       camera As Camera,
                                        Optional tickCount As Integer = 6) As IEnumerable(Of Element3D)
 
             Dim pen As Pen = css.GetPen(Stroke.TryParse(theme.boxStroke))
             Dim brush As Brush = theme.mainTextColor.GetBrush
             Dim format As String = If(theme.tickFormat.StringEmpty, "G2", theme.tickFormat)
+            Dim anchor As FrameAnchor = AnchorOf(camera, xrange, yrange, zrange)
+            ' 刻度短线与文本的外推量（按各自轴长的比例缩放，避免长短轴比例悬殊时文字贴到轴上）
+            Dim stepX# = SafeLength(xrange) * 0.03
+            Dim stepY# = SafeLength(yrange) * 0.03
+            Dim stepZ# = SafeLength(zrange) * 0.03
 
-            Dim x0# = xrange.Min, x1# = xrange.Max
-            Dim y0# = yrange.Min, y1# = yrange.Max
-            Dim z0# = zrange.Min, z1# = zrange.Max
-            ' 刻度短线与文本的外推量
-            Dim dx# = (x1 - x0) * 0.03
-            Dim dy# = (y1 - y0) * 0.03
-
-            If dx <= 0 Then dx = 1
-            If dy <= 0 Then dy = 1
-
-            ' X 轴：沿 y = ymin, z = zmin
+            ' X 轴：沿锚点所在的 Y/Z 平面
             For Each xv As Double In InRangeTicks(xrange, tickCount)
-                Yield New Line(New Point3D(xv, y0, z0), New Point3D(xv, y0 - dy, z0)) With {.Stroke = pen}
-                Yield TickLabel(xv, format, New Point3D(xv, y0 - dy * 3.2, z0), theme, brush)
+                Dim p As New Point3D(xv, anchor.corner.Y, anchor.corner.Z)
+
+                Yield New Line(p, New Point3D(p.X + anchor.outX.X * stepX, p.Y + anchor.outX.Y * stepX, p.Z)) With {.Stroke = pen}
+                Yield TickLabel(xv, format, New Point3D(p.X + anchor.outX.X * stepX * 3.4, p.Y + anchor.outX.Y * stepX * 3.4, p.Z), theme, brush)
             Next
 
-            ' Y 轴：沿 x = xmax, z = zmin
+            ' Y 轴
             For Each yv As Double In InRangeTicks(yrange, tickCount)
-                Yield New Line(New Point3D(x1, yv, z0), New Point3D(x1 + dx, yv, z0)) With {.Stroke = pen}
-                Yield TickLabel(yv, format, New Point3D(x1 + dx * 3.2, yv, z0), theme, brush)
+                Dim p As New Point3D(anchor.corner.X, yv, anchor.corner.Z)
+
+                Yield New Line(p, New Point3D(p.X + anchor.outY.X * stepY, p.Y, p.Z)) With {.Stroke = pen}
+                Yield TickLabel(yv, format, New Point3D(p.X + anchor.outY.X * stepY * 3.4, p.Y, p.Z), theme, brush)
             Next
 
-            ' Z 轴：沿 x = xmax, y = ymin
+            ' Z 轴
             For Each zv As Double In InRangeTicks(zrange, tickCount)
-                Yield New Line(New Point3D(x1, y0, zv), New Point3D(x1, y0 - dy, zv)) With {.Stroke = pen}
-                Yield TickLabel(zv, format, New Point3D(x1, y0 - dy * 3.2, zv), theme, brush)
+                Dim p As New Point3D(anchor.corner.X, anchor.corner.Y, zv)
+
+                Yield New Line(p, New Point3D(p.X + anchor.outZ.X * stepZ, p.Y + anchor.outZ.Y * stepZ, p.Z)) With {.Stroke = pen}
+                Yield TickLabel(zv, format, New Point3D(p.X + anchor.outZ.X * stepZ * 3.4, p.Y + anchor.outZ.Y * stepZ * 3.4, p.Z), theme, brush)
             Next
+        End Function
+
+        ''' <summary>
+        ''' 在相机确定的左下角锚点处绘制三条带箭头的主轴与三个轴名
+        ''' （旧版 <c>AxisDraw.Axis</c> 固定把轴与轴名放在盒体的 xmax/ymin 边上，会跑到图的右上角）
+        ''' </summary>
+        ''' <param name="css">画布 CSS 环境</param>
+        ''' <param name="xrange">X 轴范围</param>
+        ''' <param name="yrange">Y 轴范围</param>
+        ''' <param name="zrange">Z 轴范围</param>
+        ''' <param name="labels">三个轴的标题</param>
+        ''' <param name="theme">三维绘图主题</param>
+        ''' <param name="camera">相机</param>
+        ''' <param name="arrowFactor">箭头尺寸因子（"宽,高"）</param>
+        Public Iterator Function AxisLines(css As CSSEnvirnment,
+                                           xrange As DoubleRange,
+                                           yrange As DoubleRange,
+                                           zrange As DoubleRange,
+                                           labels As (X$, Y$, Z$),
+                                           theme As Plot3DTheme,
+                                           camera As Camera,
+                                           Optional arrowFactor$ = "2,2") As IEnumerable(Of Element3D)
+
+            Dim pen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
+            Dim brush As Brush = theme.mainTextColor.GetBrush
+            Dim anchor As FrameAnchor = AnchorOf(camera, xrange, yrange, zrange)
+
+            With arrowFactor.FloatSizeParser
+                pen.CustomEndCap = New AdjustableArrowCap(pen.Width * .Width, pen.Width * .Height)
+            End With
+
+            Yield New Line(anchor.corner, anchor.xEnd) With {.Stroke = pen}
+            Yield New Line(anchor.corner, anchor.yEnd) With {.Stroke = pen}
+            Yield New Line(anchor.corner, anchor.zEnd) With {.Stroke = pen}
+
+            ' 轴名放在各轴的远端，并沿"盒体外侧"再推出一段，避免压住最末一个刻度值
+            Dim ox# = anchor.outX.X * SafeLength(yrange) * 0.30
+            Dim oy# = anchor.outY.X * SafeLength(xrange) * 0.30
+            Dim ozX# = anchor.outZ.X * SafeLength(xrange) * 0.35
+            Dim ozY# = anchor.outZ.Y * SafeLength(yrange) * 0.35
+
+            Yield New Label With {
+                .Text = labels.X,
+                .FontCss = theme.axisLabelCSS,
+                .Color = brush,
+                .Location = New Point3D(anchor.xEnd.X, anchor.xEnd.Y + ox, anchor.xEnd.Z)
+            }
+            Yield New Label With {
+                .Text = labels.Y,
+                .FontCss = theme.axisLabelCSS,
+                .Color = brush,
+                .Location = New Point3D(anchor.yEnd.X + oy, anchor.yEnd.Y, anchor.yEnd.Z)
+            }
+            Yield New Label With {
+                .Text = labels.Z,
+                .FontCss = theme.axisLabelCSS,
+                .Color = brush,
+                .Location = New Point3D(
+                    anchor.zEnd.X + ozX,
+                    anchor.zEnd.Y + ozY,
+                    anchor.zEnd.Z + SafeLength(zrange) * 0.08)
+            }
+        End Function
+
+        ''' <summary>轴长度的安全取值（避免退化范围导致除零或 0 偏移）</summary>
+        Private Function SafeLength(range As DoubleRange) As Double
+            Dim len# = range.Length
+
+            Return If(len > 0, len, 1)
         End Function
 
         ''' <summary>

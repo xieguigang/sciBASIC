@@ -466,7 +466,11 @@ Namespace Plot3D
                     Call elements.AddRange(AxisFrame.BackGrids(css, xrange, yrange, zrange, theme, camera))
                 End If
                 If theme.showTicks Then
-                    Call elements.AddRange(AxisFrame.Ticks(css, xrange, yrange, zrange, theme))
+                    Call elements.AddRange(AxisFrame.Ticks(css, xrange, yrange, zrange, theme, camera))
+                End If
+                If theme.showAxisLines Then
+                    Call elements.AddRange(AxisFrame.AxisLines(
+                        css, xrange, yrange, zrange, labels, theme, camera))
                 End If
 
                 ' -----------------------------------------------------------
