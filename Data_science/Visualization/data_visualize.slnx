@@ -11,6 +11,9 @@
     <Platform Name="x64" />
   </Configurations>
   <Folder Name="/framework/">
+    <Project Path="../../Data/DataFrame/dataframework-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../gr/Drawing-net4.8/Drawing-net4.8.vbproj">
       <BuildType Solution="gcmodeller_desktop|*" Project="CellaLAB-Desktop" />
       <BuildType Solution="LipidSearch|*" Project="nuget_release" />
