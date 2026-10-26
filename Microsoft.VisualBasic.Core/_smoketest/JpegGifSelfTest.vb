@@ -58,6 +58,15 @@ Module JpegGifSelfTest
     End Function
 
     Private Sub JpegRoundTrip()
+        ' solid colour isolation test
+        Dim solid As BitmapBuffer = BuildRgb(8, 8, Function(x, y) New Integer() {100, 150, 200})
+        Using sms As New MemoryStream()
+            Call JpegWriter.Save(sms, solid, 95)
+            Dim sdec As JpegImage = JpegImage.Decode(sms.ToArray())
+            Dim sb As BitmapBuffer = sdec.GetMemoryBitmap()
+            Call Console.WriteLine($"   [dbg] solid expect bgr=200,150,100 got {sb.RawBuffer(0)},{sb.RawBuffer(1)},{sb.RawBuffer(2)}")
+        End Using
+
         Dim w As Integer = 32
         Dim h As Integer = 32
 
