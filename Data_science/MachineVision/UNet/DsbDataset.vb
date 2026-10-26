@@ -17,6 +17,7 @@
 
 Imports System.IO
 Imports System.Linq
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
 Imports std = System.Math
 
 Namespace UNet
@@ -131,7 +132,7 @@ Namespace UNet
 
                 If images.Length = 0 Then Continue For
 
-                Dim image = PngIO.Decode(images(0), toGray:=True)
+                Dim image = PngReader.Decode(images(0), toGray:=True)
 
                 If image.IsBlank Then
                     ' 解码出全 0 通常意味着位深/颜色类型没处理对，属于"假通过"的典型来源
@@ -173,7 +174,7 @@ Namespace UNet
             If Not Directory.Exists(maskDir) Then Return Nothing
 
             For Each file In Directory.GetFiles(maskDir, "*.png")
-                Dim m = PngIO.Decode(file, toGray:=True)
+                Dim m = PngReader.Decode(file, toGray:=True)
 
                 If m.Width <> width OrElse m.Height <> height Then
                     Throw New InvalidDataException(

@@ -1,11 +1,8 @@
-Imports System
-Imports System.IO
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute
-Imports UNet
-Imports ILCudaRuntime = Microsoft.VisualBasic.Computing.ILCuda.Runtime
 Imports gpu = Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
+Imports ILCudaRuntime = Microsoft.VisualBasic.Computing.ILCuda.Runtime
 
 Module Program
 

@@ -55,6 +55,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -87,6 +89,33 @@ Public Module Mapper
         Next
 
         Return dataframe
+    End Function
+
+    <Extension>
+    Public Function as_dataframe(table As File) As DataFrame
+        Dim df As New DataFrame With {.features = New Dictionary(Of String, FeatureVector)}
+        Dim reader As DataFrameResolver = DataFrameResolver.CreateObject(table)
+        Dim headers = reader.Headers
+        Dim col_offset As Integer = 0
+
+        If headers(0).Name = "" Then
+            ' row names
+            col_offset = 1
+            df.rownames = reader.Column(0)
+        End If
+
+        For i As Integer = col_offset To headers.Length - 1
+            Select Case headers(i).Value
+                Case GetType(Integer) : Call df.add(headers(i).Name, reader(i).AsInteger)
+                Case GetType(Double) : Call df.add(headers(i).Name, reader(i).AsDouble)
+                Case GetType(Boolean) : Call df.add(New FeatureVector(headers(i).Name, reader(i).AsBoolean))
+                Case GetType(Single) : Call df.add(headers(i).Name, reader(i).AsSingle)
+                Case Else
+                    Call df.add(headers(i).Name, reader(i))
+            End Select
+        Next
+
+        Return df
     End Function
 
     ''' <summary>

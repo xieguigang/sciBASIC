@@ -1,0 +1,10 @@
+stage,ms,unit
+projection,2.211,per view
+projection+binning,5.439,per view
+rasterize,12.171,per view
+render,18.164,per view
+backward,43.727,per view
+adam,0.397,whole model
+mse,0.088,per view
+legacy-fd-per-splat,3199.954,per splat
+legacy-fd-projected,63999089.0,whole model

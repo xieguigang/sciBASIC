@@ -57,11 +57,11 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
 Imports System.Text
 Imports std = System.Math
-Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Pickle
 
@@ -88,13 +88,19 @@ Namespace Pickle
     '''   PythonObject      → 通过 GLOBAL+REDUCE+BUILD 还原
     '''   ComplexNumber     → complex
     '''   DateTime          → datetime.datetime
-    '''   其他对象          → 通过反射序列化属性为 dict
+    '''   Enum              → 底层整数值
+    '''   Type              → 程序集限定名字符串（反序列化端还原为 Type）
+    '''   Guid/Uri/DateTimeOffset/DateOnly/TimeOnly → 字符串
+    '''   其他 CLR 对象     → GLOBAL(clr:程序集) + REDUCE + BUILD 字段快照，
+    '''                       可被本库的反序列化端还原为原始 CLR 类型
     ''' 
     ''' 特性：
     '''   - 支持 memo 机制，正确处理共享引用和循环引用
     '''   - 使用协议4格式，兼容 Python 3.4+
     '''   - 自动选择最优的整数编码（BININT1/BININT2/BININT/LONG1）
     '''   - 自动选择最优的字符串编码（SHORT_BINUNICODE/BINUNICODE）
+    '''   - 自定义 CLR 类型以"字段快照"保存：委托与 NonSerialized 字段被跳过，
+    '''     只带参数化构造函数的类型通过未初始化对象 + 字段回填还原
     ''' </summary>
     Public Class MinimalPicklePickler
 
@@ -159,7 +165,10 @@ Namespace Pickle
 
         ' ===== 序列化上下文 =====
         Private _output As New List(Of Byte)()
-        Private _memo As New Dictionary(Of Object, Integer)()
+
+        ' memo 使用引用相等比较：覆盖了 Equals 的类如果使用默认比较器，
+        ' 两个不同实例会被误判成同一个 memo 条目，导致还原后的共享引用错乱
+        Private _memo As New Dictionary(Of Object, Integer)(ReferenceComparer.Instance)
         Private _memoIndex As Integer = 0
 
         ' ===== 公共方法 =====
@@ -236,8 +245,6 @@ Namespace Pickle
             If obj Is Nothing Then
                 _output.Add(NONE)
                 Return
-            ElseIf TypeOf obj Is Type Then
-                obj = New TypeInfo(DirectCast(obj, Type))
             End If
 
             ' ----- 检查 memo（共享引用和循环引用）-----
@@ -262,6 +269,16 @@ Namespace Pickle
             ' 布尔必须在整数之前检查（Boolean 是 ValueType 的子类）
                 Case TypeOf obj Is Boolean
                     SerializeBoolean(CBool(obj))
+
+            ' 枚举：以底层整数值保存（反序列化端按目标字段的枚举类型还原）
+                Case TypeOf obj Is [Enum]
+                    Dim underlying As Type = [Enum].GetUnderlyingType(obj.GetType())
+
+                    If underlying Is GetType(ULong) Then
+                        SerializeULong(Convert.ToUInt64(obj, CultureInfo.InvariantCulture))
+                    Else
+                        SerializeLong(Convert.ToInt64(obj, CultureInfo.InvariantCulture))
+                    End If
 
             ' 整数类型：统一转为 Long 处理
                 Case TypeOf obj Is SByte
@@ -317,6 +334,28 @@ Namespace Pickle
                 Case TypeOf obj Is TimeSpan
                     SerializeTimeSpan(DirectCast(obj, TimeSpan))
 
+            ' ----- 以字符串形式保存"无字段可序列化"或跨程序集难以重建的结构 -----
+                Case TypeOf obj Is Type
+                    ' 反序列化端由 ClrObjectCodec 按程序集限定名还原为 Type
+                    SerializeString(DirectCast(obj, Type).AssemblyQualifiedName)
+                Case TypeOf obj Is [Delegate]
+                    ' 委托绑定的是方法与其宿主实例，无法跨进程重建，写 None
+                    _output.Add(NONE)
+                Case TypeOf obj Is IntPtr
+                    SerializeLong(DirectCast(obj, IntPtr).ToInt64())
+                Case TypeOf obj Is UIntPtr
+                    SerializeULong(DirectCast(obj, UIntPtr).ToUInt64())
+                Case TypeOf obj Is Guid
+                    SerializeString(DirectCast(obj, Guid).ToString("D"))
+                Case TypeOf obj Is Uri
+                    SerializeString(DirectCast(obj, Uri).OriginalString)
+                Case TypeOf obj Is DateTimeOffset
+                    SerializeString(DirectCast(obj, DateTimeOffset).ToString("o", CultureInfo.InvariantCulture))
+                Case TypeOf obj Is DateOnly
+                    SerializeString(DirectCast(obj, DateOnly).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))
+                Case TypeOf obj Is TimeOnly
+                    SerializeString(DirectCast(obj, TimeOnly).ToString("HH:mm:ss.FFFFFFF", CultureInfo.InvariantCulture))
+
             ' 集合类型
                 Case TypeOf obj Is IDictionary
                     SerializeDict(DirectCast(obj, IDictionary))
@@ -325,7 +364,7 @@ Namespace Pickle
                 Case TypeOf obj Is Array
                     SerializeArray(DirectCast(obj, Array))
 
-                    ' 其他类型：通过反射序列化属性
+                    ' 其他类型：通过反射采集字段快照
                 Case Else
                     SerializeAsDict(obj)
             End Select
@@ -644,43 +683,53 @@ Namespace Pickle
         End Sub
 
         ''' <summary>
-        ''' 将任意 .NET 对象通过反射序列化。
-        ''' 使用 GLOBAL + REDUCE + BUILD 模式，将对象的公共属性作为状态字典传递。
-        ''' Python 端需要对应的类定义才能完整还原。
+        ''' 将任意 .NET 对象通过反射序列化为"CLR 字段快照"。
         ''' </summary>
+        ''' <remarks>
+        ''' 使用 GLOBAL + EMPTY_TUPLE + REDUCE + BUILD 模式：
+        ''' 
+        ''' <list type="number">
+        ''' <item>GLOBAL 携带 <c>clr:程序集名</c> 与类型全名，反序列化端据此解析出 CLR 类型；</item>
+        ''' <item>REDUCE 以空参数构造一个"未填充"的实例（无参构造优先，否则未初始化对象）；</item>
+        ''' <item>BUILD 以"字段名 → 值"的字典回填全部实例字段（含 Private 与基类字段）。</item>
+        ''' </list>
+        ''' 
+        ''' 只采集字段而不采集属性，可以避免"属性 setter 副作用"与"自动属性重复写两份"的问题；
+        ''' 委托字段与 <c>&lt;NonSerialized&gt;</c> 字段会被跳过。
+        ''' </remarks>
         Private Sub SerializeAsDict(obj As Object)
             Dim objType = obj.GetType()
 
-            ' GLOBAL: 引用命名空间.类名
-            _output.Add([GLOBAL])
-            Dim ns = If(objType.Namespace, "")
-            _output.AddRange(Encoding.ASCII.GetBytes(ns & vbLf))
-            _output.AddRange(Encoding.ASCII.GetBytes(objType.Name & vbLf))
+            If Not ClrObjectCodec.IsSupportedType(objType) Then
+                ' 无法重建的类型（动态类型、反射元数据等）退化成 None，避免写出无法解析的载荷
+                _output.Add(NONE)
+                Return
+            End If
 
-            ' 空构造参数
+            ' GLOBAL: 携带可解析的 CLR 类型标识
+            _output.Add([GLOBAL])
+            _output.AddRange(Encoding.ASCII.GetBytes(ClrObjectCodec.GetModuleName(objType) & vbLf))
+            _output.AddRange(Encoding.ASCII.GetBytes(ClrObjectCodec.GetClassName(objType) & vbLf))
+
+            ' 空构造参数：反序列化端创建一个空实例，随后由 BUILD 回填字段
             _output.Add(EMPTY_TUPLE)
             _output.Add(REDUCE)
             AddToMemo(obj)
 
-            ' 将公共可读属性序列化为状态字典
-            Dim props = objType.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+            ' 字段快照
+            Dim fields As FieldInfo() = ClrObjectCodec.GetSerializableFields(objType)
             Dim stateDict As New Dictionary(Of Object, Object)()
-            For Each prop In props
-                Try
-                    If prop.CanRead AndAlso prop.GetIndexParameters().Length = 0 Then
-                        stateDict(prop.Name) = prop.GetValue(obj)
-                    End If
-                Catch
-                    ' 跳过无法读取的属性（可能抛出异常的索引器等）
-                End Try
-            Next
 
-            ' 也序列化公共字段
-            Dim fields = objType.GetFields(BindingFlags.Public Or BindingFlags.Instance)
-            For Each field In fields
+            For Each field As FieldInfo In fields
                 Try
-                    stateDict(field.Name) = field.GetValue(obj)
-                Catch
+                    Dim fieldValue As Object = field.GetValue(obj)
+
+                    If TypeOf fieldValue Is [Delegate] Then
+                        Continue For
+                    End If
+
+                    stateDict(field.Name) = fieldValue
+                Catch ex As Exception
                     ' 跳过无法读取的字段
                 End Try
             Next
@@ -702,36 +751,41 @@ Namespace Pickle
         '''   - 如果最高字节的最高位与符号不一致，需要额外的符号字节
         ''' </summary>
         Private Shared Function EncodeLong(value As Long) As Byte()
-            If value = 0 Then Return Array.Empty(Of Byte)()
+            ' BitConverter 给出的是 8 字节小端补码，正是 Python LONG1/LONG4 使用的编码
+            Dim buffer As Byte() = BitConverter.GetBytes(value)
+            Dim last As Integer = 7
 
-            Dim isNegative = value < 0
-            ' 处理负数：先取绝对值
-            Dim absValue As ULong
-            If isNegative Then
-                ' 对于 Long.MinValue，直接取反会溢出，使用 ULong 中间值
-                absValue = CULng(-CLng(value And &H7FFFFFFFFFFFFFFFL)) + If((value And 1) <> 0, 0UL, 0UL)
-                ' 更简单的方法：直接处理补码
-                absValue = CULng(Not CULng(value)) + 1UL
+            If value >= 0 Then
+                ' 去掉多余的高位 0 字节（至少保留 1 字节，且最高字节的符号位必须是 0）
+                While last > 0 AndAlso buffer(last) = 0 AndAlso (buffer(last - 1) And &H80) = 0
+                    last -= 1
+                End While
+
+                If (buffer(last) And &H80) <> 0 Then
+                    ' 最高字节的符号位为 1 会被读成负数，补一个 0 字节
+                    last += 1
+                End If
             Else
-                absValue = CULng(value)
+                ' 去掉多余的高位 0xFF 字节（至少保留 1 字节，且最高字节的符号位必须是 1）
+                While last > 0 AndAlso buffer(last) = &HFF AndAlso (buffer(last - 1) And &H80) <> 0
+                    last -= 1
+                End While
+
+                If (buffer(last) And &H80) = 0 Then
+                    ' 最高字节的符号位为 0 会被读成正数，补一个 0xFF 字节
+                    last += 1
+                End If
             End If
 
-            Dim bytes As New List(Of Byte)()
-            Do While absValue > 0
-                bytes.Add(CByte(absValue And &HFF))
-                absValue >>= 8
-            Loop
+            Dim result As Byte() = New Byte(last) {}
 
-            ' 检查是否需要额外的符号字节
-            If (bytes(bytes.Count - 1) And &H80) <> 0 Then
-                ' 最高位已设置，需要额外的符号字节
-                bytes.Add(If(isNegative, &HFF, CByte(0)))
-            ElseIf isNegative Then
-                ' 负数但最高位未设置，设置符号位
-                bytes(bytes.Count - 1) = bytes(bytes.Count - 1) Or &H80
+            Call Array.Copy(buffer, 0, result, 0, System.Math.Min(8, last + 1))
+
+            If last > 7 Then
+                result(last) = If(value < 0, CByte(&HFF), CByte(0))
             End If
 
-            Return bytes.ToArray()
+            Return result
         End Function
 
         ''' <summary>

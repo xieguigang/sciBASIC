@@ -10,7 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
+    <ProjectReference Include="..\..\..\..\cuda\ILCuda\ILCuda.vbproj" />
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />
     <ProjectReference Include="..\..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\GaussianSplatting\GaussianSplatting.vbproj" />

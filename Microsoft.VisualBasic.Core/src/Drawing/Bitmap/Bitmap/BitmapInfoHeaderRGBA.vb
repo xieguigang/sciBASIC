@@ -143,6 +143,9 @@ Namespace Imaging.BitmapImage.FileStream
             ' NOTE offses are 0 based for current byteArray (different than in wiki)
             Const BITS_PER_PIXEL_OFFSET = &HE
             Const COMPRESSION_METHOD_OFFSET = &H10
+            Const IMAGE_SIZE_OFFSET = &H14
+            Const NUMBER_OF_COLORS_OFFSET = &H20
+            Const NUMBER_OF_IMPORTANT_COLORS_OFFSET = &H24
 
             Const HORIZONTAL_RESOLUTION_OFFSET = &H18
             Const VERTICAL_RESOLUTION_OFFSET = &H1C
@@ -153,28 +156,32 @@ Namespace Imaging.BitmapImage.FileStream
                 Array.Reverse(bytes, 8, 4) ' size of Height
                 Array.Reverse(bytes, BITS_PER_PIXEL_OFFSET, 2) ' BitsPerPixelEnum
                 Array.Reverse(bytes, COMPRESSION_METHOD_OFFSET, 4) ' CompressionMethod
-                Array.Reverse(bytes, &H20, 4) ' the image size. This is the size of the raw bitmap data; a dummy 0 can be given for BI_RGB bitmaps.
+                Array.Reverse(bytes, IMAGE_SIZE_OFFSET, 4) ' the image size. This is the size of the raw bitmap data; a dummy 0 can be given for BI_RGB bitmaps.
                 Array.Reverse(bytes, HORIZONTAL_RESOLUTION_OFFSET, 4) ' the horizontal resolution of the image. (pixel per metre, signed integer) 
                 Array.Reverse(bytes, VERTICAL_RESOLUTION_OFFSET, 4) ' the vertical resolution of the image. (pixel per metre, signed integer) 
-                'Array.Reverse( bytes, 0x2C, 4 ); // the number of colors in the color palette, or 0 to default to 2n (ignored)
-                'Array.Reverse( bytes, 0x32, 4 ); // the number of important colors used, or 0 when every color is important; generally ignored 
+                Array.Reverse(bytes, NUMBER_OF_COLORS_OFFSET, 4) ' the number of colors in the color palette, or 0 to default to 2n (ignored)
+                Array.Reverse(bytes, NUMBER_OF_IMPORTANT_COLORS_OFFSET, 4) ' the number of important colors used, or 0 when every color is important; generally ignored 
             End If
 
             Dim headerSize = BitConverter.ToInt32(bytes, 0)
             Dim width = BitConverter.ToInt32(bytes, 4)
             Dim height = BitConverter.ToInt32(bytes, 8)
             Dim bitsPerPixel = CType(BitConverter.ToInt16(bytes, BITS_PER_PIXEL_OFFSET), BitsPerPixelEnum)
-
-            Dim compression = CType(BitConverter.ToInt16(bytes, COMPRESSION_METHOD_OFFSET), CompressionMethod)
+            ' the compression method is a 4 bytes field of the DIB header
+            Dim compression = CType(BitConverter.ToInt32(bytes, COMPRESSION_METHOD_OFFSET), CompressionMethod)
 
             If Not (compression = CompressionMethod.BI_RGB OrElse compression = CompressionMethod.BI_BITFIELDS) Then
                 Throw New Exception($"This {[Enum].GetName(compression.GetType(), compression)} is not supported.")
             End If
 
+            Dim imageSize = BitConverter.ToInt32(bytes, IMAGE_SIZE_OFFSET)
             Dim horizontalPixelPerMeter = BitConverter.ToInt32(bytes, HORIZONTAL_RESOLUTION_OFFSET)
             Dim verticalPixelPerMeter = BitConverter.ToInt32(bytes, VERTICAL_RESOLUTION_OFFSET)
 
-            Dim infoHeader = New BitmapInfoHeaderRGBA(width, height, bitsPerPixel, rawImageSize:=0, horizontalPixelPerMeter:=horizontalPixelPerMeter, verticalPixelPerMeter:=verticalPixelPerMeter)
+            Dim infoHeader = New BitmapInfoHeaderRGBA(width, height, bitsPerPixel, rawImageSize:=imageSize,
+                                                      horizontalPixelPerMeter:=horizontalPixelPerMeter,
+                                                      verticalPixelPerMeter:=verticalPixelPerMeter,
+                                                      compressionMethod:=compression)
             Return infoHeader
         End Function
     End Class

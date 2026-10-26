@@ -1,9 +1,6 @@
-Imports System
-Imports System.Diagnostics
 Imports System.IO
-Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports UNet
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
+Imports Microsoft.VisualBasic.MachineVision.UNet.UNet
 
 ''' <summary>
 ''' 真实数据上的完整训练 + 评估 + 预测可视化流程。
@@ -109,9 +106,9 @@ Public Module UNetDemo
 
             Dim predicted = model.Segment(block)
 
-            Call PngIO.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_image.png"), sample.Width, sample.Height, sample.Pixels)
-            Call PngIO.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_gt.png"), sample.Width, sample.Height, ToDouble(sample.Labels))
-            Call PngIO.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_pred.png"), sample.Width, sample.Height, ToDouble(predicted))
+            Call PngWriter.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_image.png"), sample.Width, sample.Height, sample.Pixels)
+            Call PngWriter.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_gt.png"), sample.Width, sample.Height, ToDouble(sample.Labels))
+            Call PngWriter.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_pred.png"), sample.Width, sample.Height, ToDouble(predicted))
 
             Console.WriteLine($"    {sample.Id}: 已写出 image / gt / pred")
             Call PrintPreview("      真值", sample.Labels, sample.Width, sample.Height)
@@ -140,7 +137,7 @@ Public Module UNetDemo
     End Function
 
     ''' <summary>在测试集上评估（逐样本平均）。</summary>
-    Public Function Evaluate(model As UNetModel, samples As SegmentationSample(), classWeights As Double()) As UNet.SegmentationMetrics
+    Public Function Evaluate(model As UNetModel, samples As SegmentationSample(), classWeights As Double()) As SegmentationMetrics
         Dim block = model.CreateInput()
         Dim acc As Double = 0, iou As Double = 0, dice As Double = 0, fgIoU As Double = 0
         Dim bgIoU As Double = 0, predFg As Double = 0, gtFg As Double = 0

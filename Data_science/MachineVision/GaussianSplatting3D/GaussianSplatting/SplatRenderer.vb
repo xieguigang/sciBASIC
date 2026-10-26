@@ -1,295 +1,240 @@
-﻿#Region "Microsoft.VisualBasic::1d0f434a585976347998a4d045795421, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\SplatRenderer.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 242
-    '    Code Lines: 146 (60.33%)
-    ' Comment Lines: 69 (28.51%)
-    '    - Xml Docs: 60.87%
-    ' 
-    '   Blank Lines: 27 (11.16%)
-    '     File Size: 9.88 KB
-
-
-    ' Class SplatRenderer
-    ' 
-    '     Function: ComputeMSE, ComputePSNR, ProjectCovarianceToScreen, Render
-    ' 
-    ' /********************************************************************************/
-
-#End Region
+﻿' ---------------------------------------------------------------------------
+' 3D 高斯溅射渲染门面
+'
+' 渲染流程（与 3DGS 参考实现一致）：
+'   1. SplatProjection：把每个高斯投影到屏幕空间（相机变换 / 协方差 / conic）
+'   2. SplatRasterizer：可见性剔除 → 深度升序排序 → tile 分箱
+'   3. SplatBackends.Default：按 tile 做 front-to-back 的 alpha 合成
+'        C(pixel) = Σ_i c_i·α_i·Π_{j<i}(1−α_j)
+'      α_i = o_i·exp(−½·dᵀ·Σ'⁻¹·d)，越近的高斯先合成（near → far）。
+'
+' 与旧实现的差异（均已由调用方确认）：
+'   * 深度排序由 far → near 修正为 near → far，与 front-to-back 合成公式一致；
+'   * 3D 协方差补上世界→相机的旋转（Σ_cam = R_cam·Σ_world·R_camᵀ）。
+' ---------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 ''' <summary>
-''' 3D 高斯溅射渲染器
-''' 
-''' 3D Gaussian Splatting Renderer
-''' ==============================
-''' 渲染流程：
-'''   1. 将每个 3D 高斯变换到相机坐标系（使用相机外参 R, t）
-'''   2. 将 3D 协方差矩阵投影到 2D 屏幕空间
-'''      Σ' = J * W * Σ * W^T * J^T
-'''      其中 W = [R | t] 是世界到相机的变换，J 是投影的雅可比矩阵
-'''   3. 对每个像素，按深度排序后进行 alpha 混合：
-'''      C(pixel) = Σ_i  c_i * α_i * Π_{j<i}(1 - α_j)
-'''      其中 α_i = o_i * exp(-0.5 * d^T * Σ'^{-1} * d)
-'''      d 是像素到高斯中心的距离
-''' 
-''' 该实现是简化版本：
-'''   - 使用前向渲染（不计算完整雅可比，使用近似）
-'''   - 每个高斯在屏幕上是一个椭圆（由 2D 协方差矩阵定义）
-'''   - 对每个高斯，只渲染其 3σ 范围内的像素
+''' 3D 高斯溅射渲染器。
 ''' </summary>
 Public Class SplatRenderer
 
-    ''' <summary>渲染时考虑的半径（标准差倍数），通常为 3.0</summary>
+    ''' <summary>渲染时考虑的半径（标准差倍数）</summary>
     Public Const SPLAT_RADIUS_SIGMA As Double = 3.0
 
+    ''' <summary>默认渲染参数</summary>
+    Public Shared ReadOnly Property [Default] As SplatRenderOptions
+        Get
+            Return SplatRenderOptions.Default
+        End Get
+    End Property
+
     ''' <summary>
-    ''' 渲染单个视图
-    ''' Render a single view of the Gaussian model.
+    ''' 渲染单个视图。
     ''' </summary>
     ''' <param name="model">高斯模型</param>
     ''' <param name="camera">相机</param>
     ''' <returns>渲染的图像 [H, W, 3]，值范围 [0, 1]</returns>
     Public Shared Function Render(model As GaussianModel, camera As Camera) As Tensor
-        Dim W = camera.Intrinsics.Width
-        Dim H = camera.Intrinsics.Height
-        Dim image = Tensor.Zeros({H, W, 3})
-
-        ' ---- Step 1: 将所有高斯变换到相机坐标系 ----
-        Dim N = model.Count
-        Dim camPos(N - 1, 2) As Double   ' 相机坐标系下的位置
-        Dim depth(N - 1) As Double       ' 深度（z 值）
-        Dim screenU(N - 1) As Double     ' 屏幕坐标 u
-        Dim screenV(N - 1) As Double     ' 屏幕坐标 v
-        Dim visible(N - 1) As Boolean
-
-        For i = 0 To N - 1
-            Dim wx = model.Positions(i, 0)
-            Dim wy = model.Positions(i, 1)
-            Dim wz = model.Positions(i, 2)
-            Dim cx, cy, cz As Double
-            camera.Extrinsics.WorldToCamera(wx, wy, wz, cx, cy, cz)
-            camPos(i, 0) = cx
-            camPos(i, 1) = cy
-            camPos(i, 2) = cz
-            depth(i) = cz
-            visible(i) = (cz > 0.1)
-            If visible(i) Then
-                camera.Intrinsics.Project(cx, cy, cz, screenU(i), screenV(i))
-            End If
-        Next
-
-        ' ---- Step 2: 计算每个高斯的 2D 屏幕协方差 ----
-        Dim cov2D(N - 1, 2) As Double  ' 2x2 协方差矩阵（对称，存 3 个值: a, b, c）
-        Dim opacity(N - 1) As Double
-        For i = 0 To N - 1
-            If Not visible(i) Then Continue For
-            opacity(i) = model.GetOpacity(i)
-            If opacity(i) < 0.005 Then
-                visible(i) = False
-                Continue For
-            End If
-
-            Dim cov3D = model.GetCovariance(i)
-            Dim cov2 = ProjectCovarianceToScreen(
-                cov3D, camPos(i, 0), camPos(i, 1), camPos(i, 2),
-                camera.Intrinsics.Fx, camera.Intrinsics.Fy)
-            cov2D(i, 0) = cov2(0)
-            cov2D(i, 1) = cov2(1)
-            cov2D(i, 2) = cov2(2)
-        Next
-
-        ' ---- Step 3: 按深度排序（从远到近，便于 alpha 混合）----
-        Dim indices(N - 1) As Integer
-        For i = 0 To N - 1
-            indices(i) = i
-        Next
-        Array.Sort(indices, Function(a, b) depth(b).CompareTo(depth(a)))
-
-        ' ---- Step 4: 对每个高斯，渲染其覆盖的像素 ----
-        ' 使用 alpha 混合：C = Σ c_i * α_i * Π(1 - α_j)
-        ' 维护一个累积透射率 T 矩阵 [H, W]
-        Dim T(H - 1, W - 1) As Double
-        For y = 0 To H - 1
-            For x = 0 To W - 1
-                T(y, x) = 1.0
-            Next
-        Next
-
-        For Each idx In indices
-            If Not visible(idx) Then Continue For
-
-            Dim cu = screenU(idx)
-            Dim cv = screenV(idx)
-            Dim a = cov2D(idx, 0)
-            Dim b = cov2D(idx, 1)
-            Dim c = cov2D(idx, 2)
-            Dim det = a * c - b * b
-            If det <= 0 Then Continue For
-
-            ' 计算逆协方差
-            Dim invDet = 1.0 / det
-            Dim invA = c * invDet
-            Dim invB = -b * invDet
-            Dim invC = a * invDet
-
-            ' 3σ 半径（像素）
-            Dim sigmaX = std.Sqrt(std.Max(a, 0.0000000001))
-            Dim sigmaY = std.Sqrt(std.Max(c, 0.0000000001))
-            Dim radius = std.Max(sigmaX, sigmaY) * SPLAT_RADIUS_SIGMA
-            Dim minX = CInt(std.Floor(cu - radius))
-            Dim maxX = CInt(std.Ceiling(cu + radius))
-            Dim minY = CInt(std.Floor(cv - radius))
-            Dim maxY = CInt(std.Ceiling(cv + radius))
-            minX = std.Max(0, minX) : maxX = std.Min(W - 1, maxX)
-            minY = std.Max(0, minY) : maxY = std.Min(H - 1, maxY)
-            If minX > maxX OrElse minY > maxY Then Continue For
-
-            Dim r = model.Colors(idx, 0)
-            Dim g = model.Colors(idx, 1)
-            Dim bl = model.Colors(idx, 2)
-            Dim op = opacity(idx)
-
-            For y = minY To maxY
-                For x = minX To maxX
-                    Dim dx = x - cu
-                    Dim dy = y - cv
-                    ' Mahalanobis 距离平方
-                    Dim m2 = invA * dx * dx + 2 * invB * dx * dy + invC * dy * dy
-                    If m2 > SPLAT_RADIUS_SIGMA * SPLAT_RADIUS_SIGMA Then Continue For
-
-                    ' 高斯权重
-                    Dim weight = std.Exp(-0.5 * m2)
-                    Dim alpha = op * weight
-                    If alpha < 0.000001 Then Continue For
-
-                    Dim trans = T(y, x)
-                    If trans < 0.000001 Then Continue For
-
-                    Dim contribution = alpha * trans
-                    image(y, x, 0) += r * contribution
-                    image(y, x, 1) += g * contribution
-                    image(y, x, 2) += bl * contribution
-                    T(y, x) = trans * (1 - alpha)
-                Next
-            Next
-        Next
-
-        Return image
+        Return Render(model, camera, SplatRenderOptions.Default)
     End Function
 
     ''' <summary>
-    ''' 将 3D 协方差矩阵投影到 2D 屏幕空间
-    ''' 
-    ''' Project a 3D covariance matrix to 2D screen space.
-    ''' 使用 EWA (Elliptical Weighted Average) 滤波的简化版本：
-    '''   Σ' = J * Σ_cam * J^T
-    ''' 其中 J 是透视投影在点 (xc, yc, zc) 处的雅可比矩阵：
-    '''   J = [[fx/zc, 0, -fx*xc/zc²],
-    '''        [0, fy/zc, -fy*yc/zc²]]
-    ''' Σ_cam = R * Σ_world * R^T
+    ''' 渲染单个视图（显式参数）。
     ''' </summary>
-    Private Shared Function ProjectCovarianceToScreen(cov3D As Double(,),
-                                                       xc As Double, yc As Double, zc As Double,
-                                                       fx As Double, fy As Double) As Double()
-        ' 1. 变换到相机坐标系：Σ_cam = R * Σ_world * R^T
-        '    注意：cov3D 已经是世界坐标系下的，但这里我们假设它就是相机坐标系下的
-        '    （因为我们在调用此函数前已经将高斯中心变换到相机坐标系，
-        '    但协方差矩阵还是世界坐标系的。为简化，我们假设世界坐标系与相机坐标系对齐，
-        '    即 R = I。这在多视图训练中是不准确的，但对于 demo 验证足够。）
-        '    
-        '    更准确的做法是传入 R 并做完整变换。这里我们做完整变换。
-        '    但为了简化，我们直接使用 cov3D 作为 cov_cam（适用于 demo）。
-        Dim covCam = cov3D  ' 简化：假设 cov_cam = cov_world
+    Public Shared Function Render(model As GaussianModel, camera As Camera,
+                                  options As SplatRenderOptions) As Tensor
+        Dim request = SplatRasterizer.Build(model, camera, options)
+        Dim image As Double() = Nothing
+        Dim transmittance As Double() = Nothing
 
-        ' 2. 计算雅可比矩阵 J (2x3)
-        '    J = [[fx/zc, 0, -fx*xc/zc²],
-        '         [0, fy/zc, -fy*yc/zc²]]
-        Dim invZ = 1.0 / zc
-        Dim invZ2 = invZ * invZ
-        Dim J00 = fx * invZ
-        Dim J02 = -fx * xc * invZ2
-        Dim J11 = fy * invZ
-        Dim J12 = -fy * yc * invZ2
+        Call Rasterize(request, image, transmittance)
 
-        ' 3. 计算 J * Σ_cam (2x3)
-        Dim JS(1, 2) As Double
-        For c = 0 To 2
-            JS(0, c) = J00 * covCam(0, c) + J02 * covCam(2, c)
-            JS(1, c) = J11 * covCam(1, c) + J12 * covCam(2, c)
-        Next
-
-        ' 4. 计算 J * Σ_cam * J^T (2x2)
-        Dim a = JS(0, 0) * J00 + JS(0, 2) * J02
-        Dim b = JS(0, 0) * 0 + JS(0, 1) * J11 + JS(0, 2) * J12  ' J^T 的第二列是 (0, J11, J12)
-        Dim c2 = JS(1, 1) * J11 + JS(1, 2) * J12
-
-        ' 加上一个小的 epsilon 防止退化
-        Dim eps = 0.3 * 0.3  ' 0.3 像素的标准差
-        Return New Double() {a + eps, b, c2 + eps}
+        Return Tensor.Wrap(image, request.Height, request.Width, 3)
     End Function
 
     ''' <summary>
-    ''' 计算 MSE 损失（渲染图像 vs 目标图像）
+    ''' 渲染单个视图并输出光栅化请求与透射率（供反向传播/调试复用）。
     ''' </summary>
+    Public Shared Function RenderWithRequest(model As GaussianModel, camera As Camera,
+                                             options As SplatRenderOptions,
+                                             ByRef request As SplatRasterRequest,
+                                             ByRef transmittance As Double()) As Tensor
+        request = SplatRasterizer.Build(model, camera, options)
+
+        Dim image As Double() = Nothing
+        Call Rasterize(request, image, transmittance)
+
+        Return Tensor.Wrap(image, request.Height, request.Width, 3)
+    End Function
+
+    ''' <summary>
+    ''' 渲染多个视图（视图级并行）。
+    ''' </summary>
+    Public Shared Function RenderAll(model As GaussianModel, cameras As List(Of Camera),
+                                     Optional options As SplatRenderOptions = Nothing) As Tensor()
+        If options Is Nothing Then options = SplatRenderOptions.Default
+
+        Dim result(cameras.Count - 1) As Tensor
+
+        System.Threading.Tasks.Parallel.For(0, cameras.Count, options.ParallelOptions(),
+            Sub(v)
+                result(v) = Render(model, cameras(v), options)
+            End Sub)
+
+        Return result
+    End Function
+
+    ''' <summary>分配图像与透射率缓冲并调用默认后端完成光栅化。</summary>
+    Public Shared Sub Rasterize(request As SplatRasterRequest,
+                                ByRef image As Double(), ByRef transmittance As Double())
+        Dim pixels = request.Width * request.Height
+
+        image = New Double(pixels * 3 - 1) {}
+        transmittance = New Double(pixels - 1) {}
+
+        Dim backend = SplatBackends.Default
+
+        If backend Is Nothing OrElse Not backend.Rasterize(request, image, transmittance) Then
+            Call SplatBackends.Reset()
+            Call SplatBackends.Default.Rasterize(request, image, transmittance)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 计算 MSE 损失（渲染图像 vs 目标图像）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 纯逐元素归约：元素数达到阈值且宿主注册了 GPU 张量后端时交给张量后端
+    ''' （fp32 链，一次性调度），否则走 Core 的 SIMD 归约（AVX2/FMA）。
+    ''' </remarks>
     Public Shared Function ComputeMSE(rendered As Tensor, target As Tensor) As Double
-        Dim H = rendered.Shape(0)
-        Dim W = rendered.Shape(1)
-        Dim sum = 0.0
-        For y = 0 To H - 1
-            For x = 0 To W - 1
-                For c = 0 To 2
-                    Dim d = rendered(y, x, c) - target(y, x, c)
+        Dim n = rendered.Data.Length
+        If n = 0 Then Return 0
+
+        Dim options = SplatRenderOptions.Default
+
+        If options.UseTensorLossBackend AndAlso IsGpuTensorBackend() AndAlso
+           n >= std.Max(options.TensorLossMinElements,
+                        Microsoft.VisualBasic.MachineLearning.TensorFlow.Compute.MixedPrecisionPolicy.ElementwiseThreshold) Then
+
+            Dim a = rendered.ToTensorF()
+            Dim b = target.ToTensorF()
+
+            Return CDbl(TensorF.computeKernelF.MseLoss(a, b).Data(0))
+        End If
+
+        Return SumSquaredError(rendered.Data, target.Data) / n
+    End Function
+
+    ''' <summary>并行分块的平方误差和（AVX 内核 + 多线程）。</summary>
+    Public Shared Function SumSquaredError(a As Double(), b As Double()) As Double
+        Dim n = a.Length
+        If n = 0 Then Return 0
+
+        Dim chunks = std.Min(std.Max(1, Environment.ProcessorCount), std.Max(1, n \ 16384))
+        Dim chunkSums(chunks - 1) As Double
+        Dim perChunk = (n + chunks - 1) \ chunks
+
+        System.Threading.Tasks.Parallel.For(0, chunks,
+            Sub(c)
+                Dim from = c * perChunk
+                Dim [to] = std.Min(n, from + perChunk)
+                Dim sum = 0.0
+
+                For i = from To [to] - 1
+                    Dim d = a(i) - b(i)
                     sum += d * d
                 Next
-            Next
+
+                chunkSums(c) = sum
+            End Sub)
+
+        Dim total = 0.0
+
+        For c = 0 To chunks - 1
+            total += chunkSums(c)
         Next
-        Return sum / (H * W * 3)
+
+        Return total
     End Function
 
     ''' <summary>
-    ''' 计算 PSNR（峰值信噪比）
+    ''' 一次遍历同时算出 MSE 与损失对渲染图像的梯度 <c>dL/dC = 2(C − C_gt)/n</c>。
+    ''' </summary>
+    ''' <param name="rendered">渲染图像</param>
+    ''' <param name="target">目标图像</param>
+    ''' <param name="scale">梯度缩放因子（多视图平均时传 1/视图数）</param>
+    Public Shared Function MseAndGradient(rendered As Tensor, target As Tensor,
+                                          Optional scale As Double = 1.0) As (Loss As Double, Gradient As Double())
+        Dim r = rendered.Data
+        Dim t = target.Data
+        Dim n = r.Length
+
+        If n = 0 Then Return (0.0, New Double() {})
+
+        Dim g(n - 1) As Double
+        Dim factor = 2.0 * scale / n
+        Dim chunks = std.Min(std.Max(1, Environment.ProcessorCount), std.Max(1, n \ 16384))
+        Dim chunkSums(chunks - 1) As Double
+        Dim perChunk = (n + chunks - 1) \ chunks
+
+        System.Threading.Tasks.Parallel.For(0, chunks,
+            Sub(c)
+                Dim from = c * perChunk
+                Dim [to] = std.Min(n, from + perChunk) - 1
+                Dim sum = 0.0
+
+                For i = from To [to]
+                    Dim d = r(i) - t(i)
+                    g(i) = d * factor
+                    sum += d * d
+                Next
+
+                chunkSums(c) = sum
+            End Sub)
+
+        Dim total = 0.0
+
+        For c = 0 To chunks - 1
+            total += chunkSums(c)
+        Next
+
+        Return (total / n, g)
+    End Function
+
+    ''' <summary>
+    ''' 计算 PSNR（峰值信噪比）。
     ''' </summary>
     Public Shared Function ComputePSNR(rendered As Tensor, target As Tensor) As Double
-        Dim mse = ComputeMSE(rendered, target)
+        Return ComputePSNR(ComputeMSE(rendered, target))
+    End Function
+
+    ''' <summary>由已知 MSE 计算 PSNR。</summary>
+    Public Shared Function ComputePSNR(mse As Double) As Double
         If mse < 0.000000000001 Then Return 100.0
         Return 10.0 * std.Log10(1.0 / mse)
+    End Function
+
+    ''' <summary>当前 fp32 张量后端是否为 GPU 实现。</summary>
+    Public Shared Function IsGpuTensorBackend() As Boolean
+        Dim name = TensorF.computeKernelF?.Name
+
+        If name Is Nothing Then Return False
+
+        Return name.IndexOf("CUDA", StringComparison.OrdinalIgnoreCase) >= 0
+    End Function
+
+    ''' <summary>当前 fp64 张量后端是否为 GPU 实现。</summary>
+    Public Shared Function IsGpuDoubleBackend() As Boolean
+        Dim name = Tensor.computeKernel?.Name
+
+        If name Is Nothing Then Return False
+
+        Return name.IndexOf("CUDA", StringComparison.OrdinalIgnoreCase) >= 0
     End Function
 
 End Class

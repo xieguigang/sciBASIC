@@ -48,7 +48,7 @@
     '         Properties: FileSize, HeaderBytes
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetHeaderFromBytes
+    '         Function: GetHeaderFromBytes, InfoHeaderSize
     ' 
     ' 
     ' /********************************************************************************/
@@ -103,20 +103,51 @@ Namespace Imaging.BitmapImage.FileStream
         ''' <param name="height"></param>
         ''' <param name="bitsPerPixel"></param>
         ''' <param name="rawImageSize">Depends on row padding and number of rows</param>
+        ''' <param name="paletteSize">
+        ''' the byte length of the color palette of the indexed image, the palette 
+        ''' is stored right after the info header so that it is a part of the 
+        ''' info header here.
+        ''' </param>
         Public Sub New(Optional width As Integer = 1,
                        Optional height As Integer = 1,
                        Optional bitsPerPixel As BitsPerPixelEnum = BitsPerPixelEnum.RGB24,
-                       Optional rawImageSize As Integer = 0)
+                       Optional rawImageSize As Integer = 0,
+                       Optional paletteSize As Integer = 0)
 
             'if (System.BitConverter.IsLittleEndian)
-            Dim infoHeaderSize = If(bitsPerPixel = BitsPerPixelEnum.RGB24, BitmapInfoHeader.SizeInBytes, BitmapInfoHeaderRGBA.SizeInBytes)
+            Dim dibSize As Integer = InfoHeaderSize(bitsPerPixel, paletteSize)
+            Dim total As Long = CLng(BitmapFileHeaderSizeInBytes) + dibSize + CLng(rawImageSize)
 
-            FileSize = CUInt(BitmapFileHeaderSizeInBytes + infoHeaderSize + rawImageSize)
+            If total > UInteger.MaxValue Then
+                Throw New NotSupportedException($"the {width}x{height} {CInt(bitsPerPixel)}bpp image is too large to be saved as a bmp file: {total} bytes.")
+            End If
 
-            PixelDataOffset = CUInt(BitmapFileHeaderSizeInBytes + infoHeaderSize)
+            FileSize = CUInt(total)
+
+            PixelDataOffset = CUInt(BitmapFileHeaderSizeInBytes + dibSize)
 
             'infoHeader = new BitmapInfoHeader( Width, Height, BitsPerPixel: BitsPerPixel, rawImageSize: rawImageSize );
         End Sub
+
+        ''' <summary>
+        ''' the byte length of the DIB header of the image, the color palette of 
+        ''' the indexed image is a part of the DIB header section.
+        ''' </summary>
+        ''' <param name="bitsPerPixel"></param>
+        ''' <param name="paletteSize">the byte length of the color palette.</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the 32bpp image requires the 56 bytes BITMAPV3INFOHEADER for the four 
+        ''' channel bit masks, but the other bit depth are all handled by the 
+        ''' standard 40 bytes BITMAPINFOHEADER.
+        ''' </remarks>
+        Public Shared Function InfoHeaderSize(bitsPerPixel As BitsPerPixelEnum, paletteSize As Integer) As Integer
+            If bitsPerPixel = BitsPerPixelEnum.RGBA32 Then
+                Return BitmapInfoHeaderRGBA.SizeInBytes
+            Else
+                Return BitmapInfoHeader.SizeInBytes + paletteSize
+            End If
+        End Function
 
         ''' <summary>
         ''' Get header bytes

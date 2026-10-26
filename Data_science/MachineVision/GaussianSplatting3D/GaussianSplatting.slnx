@@ -4,6 +4,15 @@
     <Platform Name="x64" />
   </Configurations>
   <Folder Name="/framework/">
+    <Project Path="../../../cuda/ILCuda/ILCuda.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../cuda/ILCudaTensor/ILCudaTensor.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../MachineLearning/TensorFlow/TensorFlow.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
