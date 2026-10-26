@@ -97,14 +97,50 @@ Public Module stats
         Return ordered(lo) + (h - lo) * (ordered(hi) - ordered(lo))
     End Function
 
-    ''' <summary>皮尔逊相关系数。</summary>
+    ''' <summary>皮尔逊相关系数（按定义实现，避免底层实现的统计口径差异）。</summary>
     Public Function cor(x As Double(), y As Double()) As Double
-        Return SpecialFunctions.Correlation(x, y)
+        Dim terms As (sxy As Double, sxx As Double, syy As Double) = Deviations(x, y)
+
+        If terms.sxx <= 0 OrElse terms.syy <= 0 Then
+            Return Double.NaN
+        End If
+
+        Return terms.sxy / System.Math.Sqrt(terms.sxx * terms.syy)
     End Function
 
-    ''' <summary>协方差。</summary>
-    Public Function cov(x As Double(), y As Double()) As Double
-        Return SpecialFunctions.Covariance(x, y)
+    ''' <summary>协方差；<paramref name="sample"/> 为 True 时按样本口径（n-1）计算。</summary>
+    Public Function cov(x As Double(), y As Double(), Optional sample As Boolean = True) As Double
+        If x Is Nothing OrElse y Is Nothing OrElse x.Length <> y.Length OrElse x.Length < 2 Then
+            Return Double.NaN
+        End If
+
+        Dim terms As (sxy As Double, sxx As Double, syy As Double) = Deviations(x, y)
+
+        Return terms.sxy / (x.Length - If(sample, 1, 0))
+    End Function
+
+    ''' <summary>离差平方和/交叉积。</summary>
+    Private Function Deviations(x As Double(), y As Double()) As (sxy As Double, sxx As Double, syy As Double)
+        If x Is Nothing OrElse y Is Nothing OrElse x.Length <> y.Length OrElse x.Length = 0 Then
+            Return (Double.NaN, Double.NaN, Double.NaN)
+        End If
+
+        Dim avgX As Double = mean(x)
+        Dim avgY As Double = mean(y)
+        Dim sxy As Double = 0
+        Dim sxx As Double = 0
+        Dim syy As Double = 0
+
+        For i As Integer = 0 To x.Length - 1
+            Dim dx As Double = x(i) - avgX
+            Dim dy As Double = y(i) - avgY
+
+            sxy += dx * dy
+            sxx += dx * dx
+            syy += dy * dy
+        Next
+
+        Return (sxy, sxx, syy)
     End Function
 
     ''' <summary>
@@ -151,23 +187,49 @@ Public Module stats
     ''' <summary>
     ''' 双样本 t 检验（默认双侧、方差不齐）。
     ''' </summary>
-    Public Function t_test(x As Double(), y As Double(), Optional alpha As Double = 0.05) As TwoSampleResult
-        Return TTest.Test(x, y, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
+    Public Function t_test(x As Double(), y As Double(), Optional alpha As Double = 0.05) As TestResult
+        Dim result As TwoSampleResult = TTest.Test(x, y, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
+
+        Return New TestResult With {
+            .test = "two.sample",
+            .statistic = result.TestValue,
+            .pvalue = result.Pvalue,
+            .df = result.DegreeFreedom,
+            .mean = result.Mean,
+            .meanX = result.MeanX,
+            .meanY = result.MeanY,
+            .alpha = alpha
+        }
     End Function
 
     ''' <summary>单样本 t 检验（检验均值是否等于 <paramref name="mu"/>）。</summary>
-    Public Function t_test_one(x As Double(), Optional mu As Double = 0, Optional alpha As Double = 0.05) As TtestResult
-        Return TTest.Test(x, alternative:=AltHypothesis.TwoSided, mu:=mu, alpha:=alpha)
+    Public Function t_test_one(x As Double(), Optional mu As Double = 0, Optional alpha As Double = 0.05) As TestResult
+        Dim result As TtestResult = TTest.Test(x, alternative:=AltHypothesis.TwoSided, mu:=mu, alpha:=alpha)
+
+        Return New TestResult With {
+            .test = "one.sample",
+            .statistic = result.TestValue,
+            .pvalue = result.Pvalue,
+            .df = result.DegreeFreedom,
+            .mean = result.Mean,
+            .alpha = alpha
+        }
     End Function
 
     ''' <summary>
     ''' 卡方检验；<paramref name="expected"/> 为空时按 2×2 独立性检验计算期望频数。
     ''' </summary>
-    Public Function chisq(observed As Double()(), Optional expected As Double()() = Nothing) As ChiSquareTest
-        If expected Is Nothing Then
-            Return ChiSquareTest.Test(observed)
-        End If
+    Public Function chisq(observed As Double()(), Optional expected As Double()() = Nothing) As ChiSquareResult
+        Dim result As ChiSquareTest = If(expected Is Nothing, ChiSquareTest.Test(observed), ChiSquareTest.Test(observed, expected))
+        Dim rows As Integer = result.observed.Length
+        Dim cols As Integer = result.observed(0).Length
 
-        Return ChiSquareTest.Test(observed, expected)
+        Return New ChiSquareResult With {
+            .chiSquare = result.chi_square,
+            .pvalue = result.pvalue,
+            .df = (rows - 1) * (cols - 1),
+            .observed = result.observed,
+            .expected = result.expected
+        }
     End Function
 End Module

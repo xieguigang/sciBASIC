@@ -60,9 +60,9 @@ Public Module read
         End Using
     End Function
 
-    ''' <summary>读取 ARFF 数据文件（Weka 格式），返回原始的 <see cref="DataFrame"/>。</summary>
-    Public Function arff(file As String) As DataFrame
-        Return DataFrame.read_arff(Require(file))
+    ''' <summary>读取 ARFF 数据文件（Weka 格式），转换为统一二维表。</summary>
+    Public Function arff(file As String) As NumericTable
+        Return DataFrame.read_arff(Require(file)).AsNumericTable
     End Function
 
     ''' <summary>读取 excel 工作簿中的指定名称的工作表。</summary>

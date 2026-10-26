@@ -49,9 +49,10 @@ Public Module write
         Return path
     End Function
 
-    ''' <summary>把 DataFrame 写成 ARFF 数据文件。</summary>
-    Public Function arff(df As DataFrame, file As String) As String
+    ''' <summary>把二维表写成 ARFF 数据文件。</summary>
+    Public Function arff(source As NumericTable, file As String) As String
         Dim path As String = Target(file)
+        Dim df As DataFrame = source.AsDataFrame
 
         Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Call DataFrame.write_arff(df, s)

@@ -11,9 +11,10 @@ Imports Skia = Microsoft.VisualBasic.Drawing.SkiaDriver
 ''' <summary>
 ''' 数据可视化模块。
 ''' <para>
-''' 每个绘图函数都一次性完成渲染并返回 <see cref="GraphicsData"/>；
-''' 由 <see cref="save"/> 负责落盘（按文件扩展名决定 png / svg / pdf 等格式）并释放资源，
-''' 因此脚本里不需要 ``Using`` 或手动 Dispose。
+''' 每个绘图函数都一次性完成渲染并返回 <see cref="PlotImage"/>（脚本可见的图片门面，
+''' 不暴露底层的 <c>GraphicsData</c>）；由 <see cref="save"/> 或
+''' <c>PlotImage.save</c> 落盘（扩展名决定 png / svg / pdf 等格式）并释放资源，
+''' 因此脚本不需要 ``Using``，也不需要手动 Dispose。
 ''' </para>
 ''' <para>
 ''' 绘图驱动（Skia）在第一次调用时自动注册，脚本不需要再调用 <c>SkiaDriver.Register()</c>。
@@ -34,7 +35,7 @@ Public Module plot
                             Optional yLabel As String = "y",
                             Optional theme As String = "nature",
                             Optional size As String = "800,600",
-                            Optional dpi As Integer = 200) As GraphicsData
+                            Optional dpi As Integer = 200) As PlotImage
 
         Dim serials As Series() = SeriesOf(x, y, classId)
         Dim canvas As Size = size.SizeParser
@@ -42,7 +43,7 @@ Public Module plot
         Using plt As New ScatterPlot(canvas.Width, canvas.Height, PlotThemeOf(theme))
             Call ApplyLabels(plt, title, subtitle, xLabel, yLabel)
 
-            Return plt.Plot(serials, canvas, dpi)
+            Return New PlotImage(plt.Plot(serials, canvas, dpi))
         End Using
     End Function
 
@@ -56,7 +57,7 @@ Public Module plot
                          Optional smooth As Boolean = False,
                          Optional theme As String = "nature",
                          Optional size As String = "800,600",
-                         Optional dpi As Integer = 200) As GraphicsData
+                         Optional dpi As Integer = 200) As PlotImage
 
         Dim serials As Series() = SeriesOf(x, y, classId)
         Dim canvas As Size = size.SizeParser
@@ -66,7 +67,7 @@ Public Module plot
 
             plt.Smooth = smooth
 
-            Return plt.Plot(serials, canvas, dpi)
+            Return New PlotImage(plt.Plot(serials, canvas, dpi))
         End Using
     End Function
 
@@ -79,7 +80,7 @@ Public Module plot
                               Optional yLabel As String = "count",
                               Optional theme As String = "nature",
                               Optional size As String = "800,600",
-                              Optional dpi As Integer = 200) As GraphicsData
+                              Optional dpi As Integer = 200) As PlotImage
 
         Dim canvas As Size = size.SizeParser
 
@@ -90,7 +91,7 @@ Public Module plot
             plt.Bins = If(bins <= 0, 30, bins)
             plt.Density = density
 
-            Return plt.Plot(canvas, dpi)
+            Return New PlotImage(plt.Plot(canvas, dpi))
         End Using
     End Function
 
@@ -105,7 +106,7 @@ Public Module plot
                             Optional showValues As Boolean = False,
                             Optional theme As String = "light",
                             Optional size As String = "800,600",
-                            Optional dpi As Integer = 200) As GraphicsData
+                            Optional dpi As Integer = 200) As PlotImage
 
         Dim canvas As Size = size.SizeParser
 
@@ -118,17 +119,17 @@ Public Module plot
             plt.ColorMap = PaletteOf(palette)
             plt.ShowValues = showValues
 
-            Return plt.Plot(canvas, dpi)
+            Return New PlotImage(plt.Plot(canvas, dpi))
         End Using
     End Function
 
     ''' <summary>
-    ''' 把绘图结果写入文件（扩展名决定格式：png / jpg / bmp / svg / pdf），返回绝对路径。
+    ''' 把图片写入文件（扩展名决定格式：png / jpg / bmp / svg / pdf），返回绝对路径。
     ''' <para>写盘后立即释放图片资源，脚本无需再关心 Dispose。</para>
     ''' </summary>
-    Public Function save(graph As GraphicsData, file As String, Optional dpi As Integer = 200) As String
-        If graph Is Nothing Then
-            Throw New ArgumentNullException(NameOf(graph), "no plotted graphics is given")
+    Public Function save(image As PlotImage, file As String) As String
+        If image Is Nothing OrElse image.graphics Is Nothing Then
+            Throw New ArgumentNullException(NameOf(image), "no plotted graphics is given")
         End If
 
         Dim path As String = System.IO.Path.GetFullPath(file)
@@ -139,9 +140,9 @@ Public Module plot
         End If
 
         Try
-            Call graph.Save(path)
+            Call image.graphics.Save(path)
         Finally
-            graph.Dispose()
+            image.graphics.Dispose()
         End Try
 
         Return path
@@ -197,7 +198,13 @@ Public Module plot
         End If
     End Sub
 
+    ''' <summary>
+    ''' 取绘图主题。因为本函数总是作为图表构造函数的实参被求值，
+    ''' 在这里注册绘图驱动可以保证驱动一定早于 <c>New Plot(...)</c> 就位。
+    ''' </summary>
     Private Function PlotThemeOf(name As String) As PlotTheme
+        Call EnsureDriver()
+
         Select Case If(name, "").Trim.ToLower
             Case "light", "default" : Return PlotTheme.Light()
             Case "dark" : Return PlotTheme.Dark()

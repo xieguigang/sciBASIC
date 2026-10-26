@@ -1,6 +1,4 @@
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
-Imports TTest = Microsoft.VisualBasic.Math.Statistics.Hypothesis.t
-Imports AltHypothesis = Microsoft.VisualBasic.Math.Statistics.Hypothesis.Hypothesis
 
 ''' <summary>
 ''' 线性代数模块：转置、乘法、线性方程组求解、求逆、行列式，以及保留的 t 检验入口。
@@ -215,7 +213,7 @@ Public Module lapack
     End Function
 
     ''' <summary>双样本 t 检验（保留的兼容入口，与 <c>stats.t_test</c> 等价）。</summary>
-    Public Function t_test(x As Double(), y As Double(), Optional alpha As Double = 0.05) As TwoSampleResult
-        Return TTest.Test(x, y, alternative:=AltHypothesis.TwoSided, alpha:=alpha)
+    Public Function t_test(x As Double(), y As Double(), Optional alpha As Double = 0.05) As TestResult
+        Return stats.t_test(x, y, alpha)
     End Function
 End Module

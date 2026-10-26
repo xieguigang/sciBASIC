@@ -57,16 +57,6 @@ Public Module table
         Return NumericTable.FromRows(If(rowNames, uniqueNames("sample", n)), features, featureNames)
     End Function
 
-    ''' <summary>DataFrame 转换为统一二维表。</summary>
-    Public Function fromDataFrame(df As DataFrame) As NumericTable
-        Return df.AsNumericTable
-    End Function
-
-    ''' <summary>统一二维表转换为 DataFrame。</summary>
-    Public Function asDataFrame(source As NumericTable) As DataFrame
-        Return source.AsDataFrame
-    End Function
-
     ' ======================================================== 取值
 
     ''' <summary>取出完整的特征矩阵（行主序，不复制）。</summary>
@@ -191,6 +181,32 @@ Public Module table
     ''' <summary>深拷贝一张表。</summary>
     Public Function clone(source As NumericTable) As NumericTable
         Return source.Clone()
+    End Function
+
+    ''' <summary>
+    ''' 把行名改写为唯一的名字（``prefix + 序号``），返回原表。
+    ''' <para>
+    ''' 层次聚类、距离矩阵等算法要求行名唯一，而真实数据的行名常常重复
+    ''' （例如 iris 数据集里的物种名），加载后先调用本函数即可。
+    ''' </para>
+    ''' </summary>
+    Public Function uniqueRowNames(source As NumericTable, Optional prefix As String = "sample_", Optional start As Integer = 1) As NumericTable
+        Dim names As String() = New String(source.nsamples - 1) {}
+
+        For i As Integer = 0 To names.Length - 1
+            names(i) = prefix & (start + i)
+        Next
+
+        source.rowNames = names
+
+        Return source
+    End Function
+
+    ''' <summary>行名是否唯一。</summary>
+    Public Function hasUniqueRowNames(source As NumericTable) As Boolean
+        Dim names As String() = source.RowNamesOrDefault
+
+        Return names.Distinct.Count = names.Length
     End Function
 
     ' ======================================================== 辅助

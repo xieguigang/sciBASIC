@@ -159,9 +159,27 @@ Public Module nlp
 
     Private Function BuildTfidf(docs As String(), pattern As String) As TFIDF
         Dim index As New TFIDF
+        Dim tokens As String()() = docs.Select(Function(doc) doc.StringSplit(pattern)).ToArray
+        ' 先建立完整词表：每个文档的词频字典都预填 0，这样 TfidfVectorizer 内部不会对
+        ' "本文档不包含该词" 的键做缺失查找（Debug 构建下会打印 missing_index 日志）
+        Dim words As String() = tokens _
+            .SelectMany(Function(row) row) _
+            .Distinct() _
+            .OrderBy(Function(w) w) _
+            .ToArray
 
-        For i As Integer = 0 To docs.Length - 1
-            Call index.Add((i + 1).ToString, docs(i).StringSplit(pattern))
+        For i As Integer = 0 To tokens.Length - 1
+            Dim counter As New Dictionary(Of String, Integer)(StringComparer.Ordinal)
+
+            For Each word As String In words
+                counter(word) = 0
+            Next
+
+            For Each word As String In tokens(i)
+                counter(word) += 1
+            Next
+
+            Call index.Add((i + 1).ToString, counter)
         Next
 
         Return index

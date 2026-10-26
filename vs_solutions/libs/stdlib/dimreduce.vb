@@ -13,14 +13,9 @@ Imports Microsoft.VisualBasic.DataMining.PaCMAP
 ''' </summary>
 Public Module dimreduce
 
-    ''' <summary>主成分分析，返回分析结果对象（需要坐标表时请用 <see cref="pcaScore"/>）。</summary>
-    Public Function pca(source As NumericTable, Optional maxPC As Integer = 5) As MultivariateAnalysisResult
-        Return source.pca(maxPC:=maxPC)
-    End Function
-
     ''' <summary>主成分分析的得分矩阵（样本在 PC1..PCn 上的坐标）。</summary>
     Public Function pcaScore(source As NumericTable, Optional maxPC As Integer = 5) As NumericTable
-        Return source.pca(maxPC:=maxPC).ScoreTable()
+        Return ScoreOf(source, maxPC)
     End Function
 
     ''' <summary>主成分分析的载荷矩阵（特征在各主成分上的权重）。</summary>
@@ -41,5 +36,9 @@ Public Module dimreduce
     ''' <summary>PaCMAP 降维。</summary>
     Public Function pacmap(source As NumericTable, Optional dims As Integer = 2, Optional neighbors As Integer = 10) As NumericTable
         Return source.pacmap(dims:=dims, neighbors:=neighbors)
+    End Function
+
+    Private Function ScoreOf(source As NumericTable, maxPC As Integer) As NumericTable
+        Return source.pca(maxPC:=maxPC).ScoreTable()
     End Function
 End Module
