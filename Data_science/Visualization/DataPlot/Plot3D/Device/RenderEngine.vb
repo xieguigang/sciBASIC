@@ -71,6 +71,12 @@ Namespace Plot3D.Device
     Public Module RenderEngine
 
         ''' <summary>
+        ''' 调试开关：环境变量 <c>PLOT3D_DEBUG=1</c> 时输出每个文本图元的最终屏幕位置
+        ''' </summary>
+        Private ReadOnly DebugRender As Boolean =
+            String.Equals(Environment.GetEnvironmentVariable("PLOT3D_DEBUG"), "1", StringComparison.Ordinal)
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="elements"></param>
@@ -129,6 +135,15 @@ Namespace Plot3D.Device
             For i As Integer = 0 To models.Length - 1
                 Dim index As Integer = orders(i)
                 Dim model As Element3D = models(index)
+
+                If DebugRender AndAlso TypeOf model Is Label Then
+                    With DirectCast(model, Label)
+                        Dim pos As PointF = .GetPosition(plotRect.Size)
+
+                        Call Console.WriteLine(
+                            $"[3d label] '{ .Text}' at {scaleX(pos.X) + .Offset.X},{scaleY(pos.Y) + .Offset.Y}")
+                    End With
+                End If
 
                 Call model.Draw(canvas, region, scaleX, scaleY)
 

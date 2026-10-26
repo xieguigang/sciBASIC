@@ -261,17 +261,26 @@ Namespace Plot3D
                 Dim model As Surface() = pie.Model3D(x.Color)
 
                 ' Extrude 的面序是固定的：0 = 底面、1 = 顶面、其余 = 侧面。
-                ' 顶面用基色、侧面压暗、底面最暗，厚度才有可辨识的明暗层次，
+                ' 用基色去画"朝向观察者的那一层盖子"、另一层压暗、侧面再压暗一档，
+                ' 这样无论从上方还是下方看，看到的都是与图例一致的基色，同时厚度可辨识；
                 ' 否则侧面会以"随机的细色条"形式出现，看起来像是切片错位。
+                Dim nearCap As Integer = VisibleCap(model, view)
+
                 For i As Integer = 0 To model.Length - 1
-                    Dim factor As Single = If(i = 0, BottomShade, If(i = 1, 1.0F, SideShade))
+                    Dim factor As Single
+
+                    If i = nearCap Then
+                        factor = 1.0F
+                    ElseIf i <= 1 Then
+                        factor = BottomShade
+                    Else
+                        factor = SideShade
+                    End If
 
                     model(i).brush = New SolidBrush(ShadeColor(x.Color, factor))
                 Next
 
-                Dim top As Integer = TopFaceIndex(model)
-
-                topFace += pieChart.Count + top
+                topFace += pieChart.Count + nearCap
                 pieChart += model
 
                 start += sweep
@@ -448,23 +457,35 @@ Namespace Plot3D
         End Function
 
         ''' <summary>
-        ''' 找出切片顶面（Z 最大的那个面）在 <see cref="Surface"/> 数组之中的下标，
-        ''' 顶面的投影中心就是切片标签的锚点。
+        ''' 找出朝向观察者的那一层盖子（顶面或底面）在 <see cref="Surface"/> 数组之中的下标。
+        '''
+        ''' <para>
+        ''' <see cref="Shape3D.Extrude"/> 生成的面序固定为：0 = 底面、1 = 顶面、其余 = 侧面，
+        ''' 但相机可以从前上方也可以从前下方观察，只有"离观察者更近"的那一层才会被看到。
+        ''' 投影之后 Z 越小表示越近，因此比较两个盖子的投影深度即可。
+        ''' </para>
         ''' </summary>
-        Private Function TopFaceIndex(model As Surface()) As Integer
-            Dim best As Integer = 0
-            Dim maxZ As Double = Double.MinValue
+        ''' <param name="model">一个切片的全部面</param>
+        ''' <param name="camera">相机</param>
+        Private Function VisibleCap(model As Surface(), camera As Camera) As Integer
+            If model.Length < 2 Then
+                Return 0
+            End If
 
-            For i As Integer = 0 To model.Length - 1
-                Dim z As Double = model(i).vertices.Average(Function(p) p.Z)
+            Dim top As Double = Depth(camera, model(1))
+            Dim bottom As Double = Depth(camera, model(0))
 
-                If z > maxZ Then
-                    maxZ = z
-                    best = i
-                End If
-            Next
+            Return If(top <= bottom, 1, 0)
+        End Function
 
-            Return best
+        ''' <summary>面片中心在投影之后的深度（越小越靠近观察者）</summary>
+        Private Function Depth(camera As Camera, face As Surface) As Double
+            Dim center As New Point3D(
+                face.vertices.Average(Function(p) p.X),
+                face.vertices.Average(Function(p) p.Y),
+                face.vertices.Average(Function(p) p.Z))
+
+            Return camera.Project(camera.Rotate(center)).Z
         End Function
 
         ''' <summary>饼图侧面的明度系数（相对顶面基色）</summary>

@@ -257,6 +257,27 @@ Namespace Plot3D.Model
         End Function
 
         ''' <summary>
+        ''' 计算某条轨道在屏幕上的方向（单位向量，由起点指向终点）。
+        ''' 轴名沿这个方向继续外推，就能落在轴的末端之外，不会压住最后一个刻度值。
+        ''' </summary>
+        ''' <param name="camera">相机</param>
+        ''' <param name="start">轨道起点（模型坐标）</param>
+        ''' <param name="finish">轨道终点（模型坐标）</param>
+        Private Function ScreenDirection(camera As Camera, start As Point3D, finish As Point3D) As PointF
+            Dim a As Point3D = camera.Project(camera.Rotate(start))
+            Dim b As Point3D = camera.Project(camera.Rotate(finish))
+            Dim dx# = b.X - a.X
+            Dim dy# = b.Y - a.Y
+            Dim len# = std.Sqrt(dx * dx + dy * dy)
+
+            If len <= 1.0E-12 Then
+                Return New PointF(1, 0)
+            End If
+
+            Return New PointF(CSng(dx / len), CSng(dy / len))
+        End Function
+
+        ''' <summary>
         ''' 沿三条主轴生成刻度短线与刻度值文本（锚点由相机决定，刻度集中在左下角）
         ''' </summary>
         ''' <param name="css">画布 CSS 环境</param>
@@ -358,32 +379,21 @@ Namespace Plot3D.Model
             Yield New Line(anchor.corner, anchor.yEnd) With {.Stroke = pen}
             Yield New Line(anchor.corner, anchor.zEnd) With {.Stroke = pen}
 
-            ' 轴名放在各轴的远端，并沿"盒体外侧"再推出一段，避免压住最末一个刻度值
-            Dim ox# = anchor.outX.X * SafeLength(yrange) * 0.10
-            Dim oy# = anchor.outY.X * SafeLength(xrange) * 0.10
-            Dim ozX# = anchor.outZ.X * SafeLength(xrange) * 0.10
-            Dim ozY# = anchor.outZ.Y * SafeLength(yrange) * 0.10
+            ' 轴名放在各轴的末端之外（沿轴方向继续外推），不会压住最末一个刻度值
+            Yield AxisTitle(labels.X, anchor.xEnd, ScreenDirection(camera, anchor.corner, anchor.xEnd), theme, brush)
+            Yield AxisTitle(labels.Y, anchor.yEnd, ScreenDirection(camera, anchor.corner, anchor.yEnd), theme, brush)
+            Yield AxisTitle(labels.Z, anchor.zEnd, ScreenDirection(camera, anchor.corner, anchor.zEnd), theme, brush)
+        End Function
 
-            Yield New Label With {
-                .Text = labels.X,
+        ''' <summary>生成一个轴名文本元素</summary>
+        Private Function AxisTitle(text$, location As Point3D, outward As PointF,
+                                   theme As Plot3DTheme, brush As Brush) As Element3D
+            Return New Label With {
+                .Text = text,
                 .FontCss = theme.axisLabelCSS,
                 .Color = brush,
-                .Location = New Point3D(anchor.xEnd.X, anchor.xEnd.Y + ox, anchor.xEnd.Z)
-            }
-            Yield New Label With {
-                .Text = labels.Y,
-                .FontCss = theme.axisLabelCSS,
-                .Color = brush,
-                .Location = New Point3D(anchor.yEnd.X + oy, anchor.yEnd.Y, anchor.yEnd.Z)
-            }
-            Yield New Label With {
-                .Text = labels.Z,
-                .FontCss = theme.axisLabelCSS,
-                .Color = brush,
-                .Location = New Point3D(
-                    anchor.zEnd.X + ozX,
-                    anchor.zEnd.Y + ozY,
-                    anchor.zEnd.Z + SafeLength(zrange) * 0.08)
+                .Location = location,
+                .Offset = New PointF(outward.X * TitleGap, outward.Y * TitleGap)
             }
         End Function
 
