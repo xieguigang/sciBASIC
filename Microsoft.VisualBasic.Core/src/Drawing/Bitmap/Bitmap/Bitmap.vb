@@ -46,11 +46,13 @@
     '     Class Bitmap
     ' 
     '         Properties: BitsPerPixelEnum, BytesPerPixel, BytesPerRow, FileHeader, Height
-    '                     InfoHeaderBytes, PixelData, PixelDataFliped, Width
+    '                     InfoHeaderBytes, Palette, PixelData, PixelDataFliped, Stride
+    '                     Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetBmpBytes, GetBmpStream, IsPaddingRequired, RequiredBytesPerRow
+    '         Function: GetBmpBytes, GetBmpStream, GrayPalette, IsPaddingRequired,
+    '                   PaletteEntries, RequiredBytesPerRow, UnpaddedRowSize
     ' 
     '         Sub: Save
     ' 
@@ -93,14 +95,38 @@ Namespace Imaging.BitmapImage.FileStream
         End Property
 
         ''' <summary>
-        ''' NOTE: we don't care for images that are less than 24 bits
+        ''' NOTE: this is zero for the image that is less than 8 bits per pixel, 
+        ''' use the <see cref="Stride"/> of current image object or the 
+        ''' <see cref="UnpaddedRowSize(Integer, BitsPerPixelEnum)"/> helper for 
+        ''' the sub byte bit depth image instead.
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property BytesPerPixel As Integer
             Get
-                Return CInt(BitsPerPixelEnum) / 8
+                Return CInt(BitsPerPixelEnum) \ 8
             End Get
         End Property
+
+        ''' <summary>
+        ''' The byte length of a single scan line of the <see cref="PixelData"/>, 
+        ''' the 4 bytes row padding is not included. the scan line of the image 
+        ''' that is less than 8 bits per pixel is bit packed just like the way 
+        ''' that is used inside the bitmap file.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Stride As Integer
+            Get
+                Return UnpaddedRowSize(Width, BitsPerPixelEnum)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The color palette of the indexed image, the palette entry is laid out 
+        ''' as the 4 bytes BGRA color. it is nothing for the image that is more 
+        ''' than 8 bits per pixel.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Palette As Byte()
 
         Public ReadOnly Property PixelData As Byte()
 
@@ -112,16 +138,21 @@ Namespace Imaging.BitmapImage.FileStream
         ''' <returns>Pixel data with reversed (fliped) rows</returns>
         Public ReadOnly Property PixelDataFliped As Byte()
             Get
-                Dim rowListData = New List(Of Byte())()
-                Dim totalRows = Height
-                Dim pixelsInRow = Width
+                Dim rowSize As Integer = Me.Stride
+                Dim lastRow As Integer = Height - 1
+                Dim reversedBytes As Byte() = New Byte(PixelData.Length - 1) {}
 
-                For row = totalRows - 1 To 0 Step -1
-                    ' NOTE: this only works on images that are 8/24/32 bits per pixel
-                    Dim one_row = PixelData.Skip(row * Width * BytesPerPixel).Take(Width * BytesPerPixel).ToArray()
-                    rowListData.Add(one_row)
+                For row As Integer = 0 To lastRow
+                    ' NOTE: the rows are copied in one pass so that the row 
+                    ' reversing is a O(n) operation instead of the O(n^2) one 
+                    ' that is made by the linq skip/take
+                    Call Buffer.BlockCopy(src:=PixelData,
+                                          srcOffset:=row * rowSize,
+                                          dst:=reversedBytes,
+                                          dstOffset:=(lastRow - row) * rowSize,
+                                          count:=rowSize)
                 Next
-                Dim reversedBytes = rowListData.SelectMany(Function(row) row).ToArray()
+
                 Return reversedBytes
             End Get
         End Property
@@ -134,30 +165,73 @@ Namespace Imaging.BitmapImage.FileStream
         ''' </summary>
         ''' <param name="width"></param>
         ''' <param name="height"></param>
-        ''' <param name="pixelData"></param>
+        ''' <param name="pixelData">the row major pixel data, the row padding is 
+        ''' not included, the scan line of the image that is less than 8 bits per 
+        ''' pixel should be bit packed.</param>
         ''' <param name="bitsPerPixel"></param>
+        ''' <param name="palette">
+        ''' the color palette of the indexed image (1/4/8 bits per pixel), the 
+        ''' palette entry is laid out as the 4 bytes BGRA color. a gray scale 
+        ''' palette is generated automatically when it is not given.
+        ''' </param>
         Public Sub New(width As Integer, height As Integer, pixelData As Byte(),
-                       Optional bitsPerPixel As BitsPerPixelEnum = BitsPerPixelEnum.RGB24)
+                       Optional bitsPerPixel As BitsPerPixelEnum = BitsPerPixelEnum.RGB24,
+                       Optional palette As Byte() = Nothing)
+            If width <= 0 OrElse height <= 0 Then
+                Throw New ArgumentOutOfRangeException($"{width}x{height} is not a valid bitmap image size.")
+            End If
+            If pixelData Is Nothing Then
+                Throw New ArgumentNullException(NameOf(pixelData))
+            End If
+
             Me.Width = width
             Me.Height = height
             Me.PixelData = pixelData
             Me.BitsPerPixelEnum = bitsPerPixel
 
-            Dim rawImageSize = BytesPerRow * height
+            Dim rowSize As Integer = Me.Stride
+            Dim rawSize As Long = CLng(BytesPerRow) * CLng(height)
+
+            If rawSize > Integer.MaxValue Then
+                Throw New NotSupportedException($"the {width}x{height} {CInt(bitsPerPixel)}bpp image is too large to be saved at once.")
+            End If
+
+            Dim rawImageSize As Integer = CInt(rawSize)
+            Dim entries As Integer = PaletteEntries(bitsPerPixel)
 
             ' Are we receiving proper byte[] size ?
-            If pixelData.Length <> width * height * BytesPerPixel Then
-                Throw New ArgumentOutOfRangeException($"{NameOf(pixelData)} has invalid size.")
+            If pixelData.Length <> rowSize * height Then
+                Throw New ArgumentOutOfRangeException(
+                    $"{NameOf(pixelData)} has invalid size: {pixelData.Length} bytes given, " &
+                    $"but {rowSize * height} bytes are required for a {width}x{height} {CInt(bitsPerPixel)}bpp image.")
             End If
 
-            If bitsPerPixel = BitsPerPixelEnum.RGB24 Then
-                InfoHeaderBytes = New BitmapInfoHeader(width, height, bitsPerPixel, rawImageSize).HeaderInfoBytes
+            If entries > 0 Then
+                If palette Is Nothing Then
+                    Me.Palette = GrayPalette(entries)
+                ElseIf palette.Length <> entries * 4 Then
+                    Throw New ArgumentOutOfRangeException(
+                        $"{NameOf(palette)} should be {entries * 4} bytes for a {CInt(bitsPerPixel)}bpp image, but {palette.Length} bytes given.")
+                Else
+                    Me.Palette = palette
+                End If
             End If
+
             If bitsPerPixel = BitsPerPixelEnum.RGBA32 Then
                 InfoHeaderBytes = New BitmapInfoHeaderRGBA(width, height, bitsPerPixel, rawImageSize).HeaderInfoBytes
+            Else
+                Dim infoHeader As New BitmapInfoHeader(width, height, bitsPerPixel, rawImageSize)
+
+                If entries > 0 Then
+                    ' the palette of the indexed image is stored right after the 
+                    ' info header, the number of the entries must be declared
+                    infoHeader.nuberOfColorsInPallete = CUInt(entries)
+                End If
+
+                InfoHeaderBytes = infoHeader.HeaderInfoBytes
             End If
 
-            FileHeader = New BitmapFileHeader(width, height, bitsPerPixel, rawImageSize)
+            FileHeader = New BitmapFileHeader(width, height, bitsPerPixel, rawImageSize, If(Me.Palette Is Nothing, 0, Me.Palette.Length))
         End Sub
 
         ''' <summary>
@@ -176,21 +250,31 @@ Namespace Imaging.BitmapImage.FileStream
 
             writer.Write(FileHeader.HeaderBytes)
             writer.Write(InfoHeaderBytes)
+
+            If Palette IsNot Nothing Then
+                ' the color palette of the indexed image is stored right after 
+                ' the info header and before the pixel data
+                writer.Write(Palette)
+            End If
+
             writer.Flush()
             stream.Flush()
 
-            Dim paddingRequired = BytesPerRow <> Width * BytesPerPixel
-            Dim bytesToCopy = Width * BytesPerPixel
+            Dim rowSize As Integer = Me.Stride
+            Dim bytesPerRow As Integer = BytesPerRow
             Dim pixData = If(flipped, PixelDataFliped, PixelData)
 
-            If paddingRequired Then
+            If bytesPerRow > rowSize Then
+                ' the row buffer is allocated only once, the zero bytes of the 
+                ' row padding are kept by the buffer
+                Dim rowBuffer = New Byte(bytesPerRow - 1) {}
+
                 For counter = 0 To Height - 1
-                    Dim rowBuffer = New Byte(BytesPerRow - 1) {}
                     Buffer.BlockCopy(src:=pixData,
-                                     srcOffset:=counter * bytesToCopy,
+                                     srcOffset:=counter * rowSize,
                                      dst:=rowBuffer,
                                      dstOffset:=0,
-                                     count:=bytesToCopy)
+                                     count:=rowSize)
                     writer.Write(rowBuffer)
                 Next
             Else

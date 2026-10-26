@@ -16,10 +16,16 @@ Public Module read
         Dim pkg As xlsxFile = xlsxFile.Open(file)
         Dim tbl = pkg.GetTable(sheetName:=sheet)
         Dim df As DataFrame = tbl.as_dataframe
+
+        Return df
     End Function
 
     Public Function xlsx(file As String, sheet As Integer) As DataFrame
+        Dim pkg As xlsxFile = xlsxFile.Open(file)
+        Dim tbl = pkg.GetTable(index:=sheet)
+        Dim df As DataFrame = tbl.as_dataframe
 
+        Return df
     End Function
 
 End Module
