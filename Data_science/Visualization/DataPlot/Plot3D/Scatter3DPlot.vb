@@ -92,14 +92,6 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-#If NET48 Then
-Imports Font = System.Drawing.Font
-Imports SolidBrush = System.Drawing.SolidBrush
-#Else
-Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-#End If
-
 Namespace Plot3D.Impl
 
     ''' <summary>
