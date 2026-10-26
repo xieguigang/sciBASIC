@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>stdlib</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\Microsoft.VisualBasic.Drawing\src\Microsoft.VisualBasic.Drawing\Microsoft.VisualBasic.Drawing.vbproj" />
+    <ProjectReference Include="..\..\..\cuda\ILCudaTensor\ILCudaTensor.vbproj" />
+    <ProjectReference Include="..\..\..\cuda\ILCuda\ILCuda.vbproj" />
+    <ProjectReference Include="..\..\..\Data\GraphQuery\GraphQuery.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data\MyersDiff\MyersDiff.vbproj" />
+    <ProjectReference Include="..\..\..\Data\Trinity\Trinity.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\Bonsai\Bonsai.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\DBNCode\DBNCode.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\DensityQuery\DensityQuery.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\DynamicProgramming\DynamicProgramming.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\hierarchical-clustering\HCTreePlot\HCTreePlot.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\HMM\HMM.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\PaCMAP\PaCMAP.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\t-SNE\t-SNE.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\DataMining\UMAP\UMAP.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\Bootstrapping\Bootstrapping.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\DeepLearning\DeepLearning.NET6.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\GNN\GNN.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\LNN\LNN.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\MachineLearning.Data.Extensions\MachineLearning.Data.Extensions.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\MLDataStorage\MLDataStorage.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\MLDebugger\ML_debugger-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\ML_SHAP\ML_SHAP.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\RestrictedBoltzmannMachine\RestrictedBoltzmannMachine.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\SNN\SNN.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\VAE\VAE.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\XGBoostDataSet\XGBoostDataSet.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\xgboost\xgboost.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\GaussianSplatting.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineVision\UNet\UNet.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\ANOVA\ANOVA.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\CVODE_Solver\Sundials.CVODE.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\ElasticNet\ElasticNet.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\GeneticProgramming\GeneticProgramming.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Gibbs\Gibbs.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\KaplanMeierEstimator\KaplanMeierEstimator.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\MathLambda\symbolic-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\mHG\mHG.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\ODESolver.Extensions\ODESolver.Extensions.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Visualization\DataPlot\DataPlot.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Visualization\Visualization\data_visualize-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\gr\Landscape\Landscape.vbproj" />
+    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\gr\network-visualization\network_layout\network_layout.vbproj" />
+    <ProjectReference Include="..\..\..\gr\network-visualization\Visualizer\networkVisualizer.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\llm\llm.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\mime\application%rdf+xml\rdf_xml-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\mime\application%xml\xml-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\nlp\KnowledgeGraph\KnowledgeGraph.vbproj" />
+    <ProjectReference Include="..\..\..\nlp\NLP\NLP.NET.vbproj" />
+    <ProjectReference Include="..\..\..\nlp\word2vec\word2vec.vbproj" />
+    <ProjectReference Include="..\..\..\physics\Engine\PhysicsEngine.vbproj" />
+    <ProjectReference Include="..\..\..\physics\Particles\Particles.vbproj" />
+    <ProjectReference Include="..\..\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+    <ProjectReference Include="..\..\dev\vs_PDB\vs_PDB.vbproj" />
+  </ItemGroup>
+
+</Project>
