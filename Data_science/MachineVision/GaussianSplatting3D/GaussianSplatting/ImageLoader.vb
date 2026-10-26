@@ -60,6 +60,7 @@
 #End Region
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
@@ -75,7 +76,7 @@ Public Class ImageLoader
     ''' </summary>
     Public Shared Function Load(path As String) As Tensor
         ' Core 的 BitmapReader 只支持 BMP（校验 "BM" 魔数），PNG 必须走自带编解码器
-        Dim png = PngCodec.DecodeFile(path)
+        Dim png = PngReader.Load(path)
         Dim W = png.Width
         Dim H = png.Height
         Dim result = New Tensor(H, W, 3)
@@ -126,7 +127,7 @@ Public Class ImageLoader
                 Next
             End Sub)
 
-        Call PngCodec.EncodeFile(path, W, H, rgb)
+        Call PngWriter.EncodeFile(path, W, H, rgb)
     End Sub
 
     ''' <summary>

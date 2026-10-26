@@ -130,6 +130,9 @@ Module Program
 
         Call System.IO.File.Delete(file)
 
+        ' ---------- png 与 bmp 位图读写 ----------
+        failures += PngSelfTest.PngSelfTest.Run()
+
         Call Console.WriteLine()
         Call Console.WriteLine($"{(If(failures = 0, "PASS", "FAIL"))}: {failures} failure(s)")
 

@@ -43,7 +43,7 @@ Namespace Imaging.BitmapImage.Png
 
     ''' <summary>
     ''' A dependency free png image file reader and writer: the png signature, 
-    ''' the chunk layout, the CRD32/Adler32 checksum, the inflate/deflate of the 
+    ''' the chunk layout, the CRC32/Adler32 checksum, the inflate/deflate of the 
     ''' zlib stream and the Adam7 interlace grid are implemented here so that 
     ''' the png image could be decoded and encoded without any external 
     ''' graphic library dependency.

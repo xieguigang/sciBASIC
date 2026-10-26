@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
 Imports Microsoft.VisualBasic.MachineVision.UNet.UNet
 
 ''' <summary>
@@ -105,9 +106,9 @@ Public Module UNetDemo
 
             Dim predicted = model.Segment(block)
 
-            Call PngIO.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_image.png"), sample.Width, sample.Height, sample.Pixels)
-            Call PngIO.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_gt.png"), sample.Width, sample.Height, ToDouble(sample.Labels))
-            Call PngIO.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_pred.png"), sample.Width, sample.Height, ToDouble(predicted))
+            Call PngWriter.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_image.png"), sample.Width, sample.Height, sample.Pixels)
+            Call PngWriter.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_gt.png"), sample.Width, sample.Height, ToDouble(sample.Labels))
+            Call PngWriter.WriteGray(Path.Combine(cfg.OutputDir, $"{sample.Id}_pred.png"), sample.Width, sample.Height, ToDouble(predicted))
 
             Console.WriteLine($"    {sample.Id}: 已写出 image / gt / pred")
             Call PrintPreview("      真值", sample.Labels, sample.Width, sample.Height)

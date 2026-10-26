@@ -199,7 +199,7 @@ Namespace Imaging.BitmapImage.Png
                 Throw New ArgumentException($"the pixel buffer is too small: {pixels.Length} values for a {width}x{height} image")
             End If
 
-            Using fs As New FileStream(path, FileMode.Create, FileAccess.Write)
+            Using fs As New IO.FileStream(path, FileMode.Create, FileAccess.Write)
                 Using writer As New StreamWriter(fs)
                     Call writer.Write($"P5{Chr(10)}{width} {height}{Chr(10)}255{Chr(10)}")
                     Call writer.Flush()

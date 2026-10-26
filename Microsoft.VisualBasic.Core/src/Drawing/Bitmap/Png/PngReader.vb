@@ -425,14 +425,19 @@ Namespace Imaging.BitmapImage.Png
                 End If
 
                 For i As Integer = 0 To passWidth - 1
-                    Dim base As Integer = source + i * sourceChannels
+                    ' the byte offset of the first sample of current pixel: the 
+                    ' 16 bits sample occupies 2 bytes but the sample of the bit 
+                    ' depth that is less than 8 is packed into the shared bytes
+                    Dim sampleBase As Integer = If(bitDepth = 16,
+                                                   source + i * sourceChannels * 2,
+                                                   source + i * sourceChannels)
 
                     For c As Integer = 0 To sourceChannels - 1
                         Select Case bitDepth
                             Case 8
-                                sample(c) = raw(base + c)
+                                sample(c) = raw(sampleBase + c)
                             Case 16
-                                sample(c) = (CInt(raw(base + c * 2)) << 8) Or CInt(raw(base + c * 2 + 1))
+                                sample(c) = (CInt(raw(sampleBase + c * 2)) << 8) Or CInt(raw(sampleBase + c * 2 + 1))
                             Case Else
                                 Dim bitPos As Integer = (i * sourceChannels + c) * bitDepth
                                 Dim shift As Integer = 8 - bitDepth - (bitPos And 7)

@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
@@ -463,7 +464,7 @@ Public Module UNetSelfTest
             Return
         End If
 
-        Dim image = PngIO.Decode(firstImage, toGray:=True)
+        Dim image = PngReader.Decode(firstImage, toGray:=True)
 
         Check("解码尺寸有效", image.Width > 0 AndAlso image.Height > 0, $"{image.Width}x{image.Height}")
         Check("解码结果不是全 0", Not image.IsBlank)
@@ -471,8 +472,8 @@ Public Module UNetSelfTest
 
         Dim temp = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "unet_selftest_roundtrip.png")
 
-        Call PngIO.WriteGray(temp, image.Width, image.Height, image.Pixels)
-        Dim again = PngIO.Decode(temp, toGray:=True)
+        Call PngWriter.WriteGray(temp, image.Width, image.Height, image.Pixels)
+        Dim again = PngReader.Decode(temp, toGray:=True)
 
         Dim maxDiff As Double = 0
 
@@ -489,7 +490,7 @@ Public Module UNetSelfTest
             .FirstOrDefault()
 
         If firstMask IsNot Nothing Then
-            Dim mask = PngIO.Decode(firstMask, toGray:=True)
+            Dim mask = PngReader.Decode(firstMask, toGray:=True)
             Dim anyFg = mask.Pixels.Any(Function(v) v > 0.5)
             Dim anyBg = mask.Pixels.Any(Function(v) v <= 0.5)
 
@@ -535,7 +536,7 @@ Public Module UNetSelfTest
 
             If imageFile Is Nothing Then Continue For
 
-            Dim image = PngIO.Decode(imageFile, toGray:=True)
+            Dim image = PngReader.Decode(imageFile, toGray:=True)
             Dim pngMask = DsbDataset.LoadMaskFromPng(System.IO.Path.Combine(d, "masks"), image.Width, image.Height)
 
             If pngMask Is Nothing Then Continue For
