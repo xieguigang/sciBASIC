@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Font = Microsoft.VisualBasic.Imaging.Font
@@ -292,7 +293,9 @@ Public Class HeatMapAnnotation
     ''' </summary>
     ''' <param name="palette">后备色板</param>
     Public Function ResolvedColors(palette As Color()) As Dictionary(Of String, Color)
-        If _colorsCache IsNot Nothing AndAlso (_colorsPalette Is palette OrElse _colorsCache.Count > 0) Then
+        ' 缓存的失效条件：色板换了（按引用比较）。
+        ' 单元格是逐个取色的，这里必须缓存，否则每一格都要重新建立一次类别映射表。
+        If _colorsCache IsNot Nothing AndAlso _colorsPalette Is palette Then
             Return _colorsCache
         End If
 
@@ -510,6 +513,12 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
 
     ''' <summary>连续色标的偏好高度，实际高度不会超过热图主体高度。</summary>
     Public Property ColorBarHeight As Single = 240
+
+    ''' <summary>
+    ''' 调试开关：设置环境变量 <c>HEATMAP_DEBUG=1</c> 时输出逐行/逐列的绘制信息。
+    ''' </summary>
+    Friend Shared ReadOnly DebugDump As Boolean =
+        String.Equals(Environment.GetEnvironmentVariable("HEATMAP_DEBUG"), "1", StringComparison.Ordinal)
 
     Private _rowOrder As String() = Nothing
     Private _colOrder As String() = Nothing
@@ -794,7 +803,7 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
     Public Sub AutoCluster()
         Dim data As Double(,) = WorkingMatrix()
 
-        Me.RowTree = BuildTree(data, EffectiveRowNames(), RowLinkage, RowMetric)
+        Me.RowTree = BuildTree(ToRowVectors(data), EffectiveRowNames(), RowLinkage, RowMetric)
         Me.ColTree = BuildTree(Transpose(data), EffectiveColumnNames(), ColLinkage, ColMetric)
     End Sub
 
@@ -1032,6 +1041,28 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
     End Function
 
     ''' <summary>
+    ''' 把二维矩阵拆成行向量集合（每一行是一个观测，供聚类使用）。
+    ''' </summary>
+    ''' <param name="data">源矩阵</param>
+    Public Shared Function ToRowVectors(data As Double(,)) As Double()()
+        Dim nRow As Integer = data.GetLength(0)
+        Dim nCol As Integer = data.GetLength(1)
+        Dim rows(nRow - 1)() As Double
+
+        For i As Integer = 0 To nRow - 1
+            Dim v(nCol - 1) As Double
+
+            For j As Integer = 0 To nCol - 1
+                v(j) = data(i, j)
+            Next
+
+            rows(i) = v
+        Next
+
+        Return rows
+    End Function
+
+    ''' <summary>
     ''' 矩阵转置（把列当作观测送入聚类）。
     ''' </summary>
     ''' <param name="data">源矩阵</param>
@@ -1133,21 +1164,22 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
         _colNames = EffectiveColumnNames()
 
         Dim data As Double(,) = WorkingMatrix()
+        Dim rowVectors As Double()() = ToRowVectors(data)
 
-        If AutoClusterRows AndAlso RowTree Is Nothing Then
-            RowTree = BuildTree(data, _rowNames, RowLinkage, RowMetric)
+        If AutoClusterRows AndAlso Me.RowTree Is Nothing Then
+            Me.RowTree = BuildTree(rowVectors, _rowNames, RowLinkage, RowMetric)
         End If
-        If AutoClusterColumns AndAlso ColTree Is Nothing Then
-            ColTree = BuildTree(Transpose(data), _colNames, ColLinkage, ColMetric)
+        If AutoClusterColumns AndAlso Me.ColTree Is Nothing Then
+            Me.ColTree = BuildTree(Transpose(data), _colNames, ColLinkage, ColMetric)
         End If
 
-        Dim rowRoot As Cluster = RowTree
-        Dim colRoot As Cluster = ColTree
-        Dim rowTree As Cluster = Nothing
-        Dim colTree As Cluster = Nothing
+        Dim rowRoot As Cluster = Me.RowTree
+        Dim colRoot As Cluster = Me.ColTree
+        Dim rowDendro As Cluster = Nothing
+        Dim colDendro As Cluster = Nothing
 
-        Call OrderOf(rowRoot, _rowNames, _rowOrder, _rowMap, rowTree)
-        Call OrderOf(colRoot, _colNames, _colOrder, _colMap, colTree)
+        Call OrderOf(rowRoot, _rowNames, _rowOrder, _rowMap, rowDendro)
+        Call OrderOf(colRoot, _colNames, _colOrder, _colMap, colDendro)
 
         Dim rowFont As Font = If(RowLabelFont, Theme.TickLabelFont)
         Dim colFont As Font = If(ColLabelFont, Theme.TickLabelFont)
@@ -1173,8 +1205,8 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
             rowLabelWidth = std.Max(rowLabelWidth, g.MeasureString(_rowNames(_rowMap(i)), rowFont).Width)
         Next
 
-        Dim rowTreeWidth As Single = If(ShowRowDendrogram AndAlso rowTree IsNot Nothing, RowDendrogramWidth, 0)
-        Dim colTreeHeight As Single = If(ShowColDendrogram AndAlso colTree IsNot Nothing, ColDendrogramHeight, 0)
+        Dim rowTreeWidth As Single = If(ShowRowDendrogram AndAlso rowDendro IsNot Nothing, RowDendrogramWidth, 0)
+        Dim colTreeHeight As Single = If(ShowColDendrogram AndAlso colDendro IsNot Nothing, ColDendrogramHeight, 0)
         Dim colAnnoHeight As Single = ColAnnotations.Count * ColAnnotationHeight
         Dim rowAnnoWidth As Single = RowAnnotations.Count * RowAnnotationWidth
 
@@ -1231,7 +1263,8 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
             legendWidth += LegendGap
         End If
 
-        Dim bodyLeft As Single = pad + rowTreeWidth + rowAnnoWidth
+        Dim bodyLeft As Single = pad + rowTreeWidth + rowAnnoWidth +
+            If(RowLabelsOnRight, 0, rowLabelWidth + RowLabelGap)
         Dim bodyTop As Single = pad + titleHeight + colTreeHeight + colAnnoHeight
         Dim bodyRight As Single = _width - pad - legendWidth - If(RowLabelsOnRight, rowLabelWidth + RowLabelGap, 0)
         Dim bodyBottom As Single = _height - pad - colLabelHeight
@@ -1247,16 +1280,20 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
         Dim cellW As Single = body.Width / nCol
         Dim cellH As Single = body.Height / nRow
 
+        ' 单元格边界取整到整像素后再绘制，否则相邻单元格之间会出现 1px 的白色缝隙
+        Dim colEdges As Single() = PixelEdges(body.Left, body.Width, nCol)
+        Dim rowEdges As Single() = PixelEdges(body.Top, body.Height, nRow)
+
         ' ---------------------------------------------------------------
         '  聚类树
         ' ---------------------------------------------------------------
         Using pen As New Pen(DendrogramColor, DendrogramLineWidth)
-            If colTree IsNot Nothing AndAlso ShowColDendrogram Then
-                Call HeatMapDendrogram.DrawColumnTree(g, pen, colTree, _colOrder, cellW, body.Left,
+            If colDendro IsNot Nothing AndAlso ShowColDendrogram Then
+                Call HeatMapDendrogram.DrawColumnTree(g, pen, colDendro, _colOrder, cellW, body.Left,
                                                       pad + titleHeight, pad + titleHeight + colTreeHeight)
             End If
-            If rowTree IsNot Nothing AndAlso ShowRowDendrogram Then
-                Call HeatMapDendrogram.DrawRowTree(g, pen, rowTree, _rowOrder, cellH, body.Top,
+            If rowDendro IsNot Nothing AndAlso ShowRowDendrogram Then
+                Call HeatMapDendrogram.DrawRowTree(g, pen, rowDendro, _rowOrder, cellH, body.Top,
                                                    pad, pad + rowTreeWidth)
             End If
         End Using
@@ -1264,19 +1301,23 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
         ' ---------------------------------------------------------------
         '  注释条
         ' ---------------------------------------------------------------
-        Call DrawColumnAnnotations(g, body, cellW, titleFont)
-        Call DrawRowAnnotations(g, body, cellH)
+        Call DrawColumnAnnotations(g, colEdges, body.Top, titleFont)
+        Call DrawRowAnnotations(g, rowEdges, body.Left)
 
         ' ---------------------------------------------------------------
         '  热图主体
         ' ---------------------------------------------------------------
-        Call DrawCells(g, data, body, cellW, cellH, vmin, vmax)
+        Call DrawCells(g, data, colEdges, rowEdges, vmin, vmax)
 
         ' ---------------------------------------------------------------
         '  行列标签
         ' ---------------------------------------------------------------
-        Call DrawRowLabels(g, body, cellH, rowFont, rowLabelWidth)
-        Call DrawColumnLabels(g, body, cellW, colFont)
+        ' 右侧模式下标签从主体右边缘外侧开始（左对齐）；
+        ' 左侧模式下标签带位于热图最左侧（右对齐，其后才是行树）
+        Dim rowLabelX As Single = If(RowLabelsOnRight, body.Right + RowLabelGap, pad + rowLabelWidth)
+
+        Call DrawRowLabels(g, rowLabelX, rowEdges, rowFont)
+        Call DrawColumnLabels(g, body, colEdges, colFont)
 
         ' ---------------------------------------------------------------
         '  图例
@@ -1324,8 +1365,8 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
     ''' <summary>
     ''' 绘制热图主体（逐单元格填充 + 可选的数值标签与边框）。
     ''' </summary>
-    Private Sub DrawCells(g As IGraphics, data As Double(,), body As RectangleF,
-                          cellW As Single, cellH As Single, vmin As Double, vmax As Double)
+    Private Sub DrawCells(g As IGraphics, data As Double(,), colEdges As Single(), rowEdges As Single(),
+                          vmin As Double, vmax As Double)
         Dim nRow As Integer = data.GetLength(0)
         Dim nCol As Integer = data.GetLength(1)
         Dim textFont As Font = Theme.TickLabelFont
@@ -1337,29 +1378,40 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
 
         Try
             For r As Integer = 0 To nRow - 1
-                Dim y As Single = body.Top + r * cellH
+                Dim y As Single = rowEdges(r)
+                Dim h As Single = rowEdges(r + 1) - y
                 Dim row As Integer = _rowMap(r)
+
+                If DebugDump AndAlso r < 3 Then
+                    Dim vals As String() = Enumerable.Range(0, nCol).Select(Function(c) data(row, _colMap(c)).ToString("F2")).ToArray
+
+                    Call Console.WriteLine(
+                        $"[heatmap] row {r} (source #{row}) y={y} h={h} values=[{String.Join(",", vals)}] colMap=[{String.Join(",", _colMap)}]")
+                End If
 
                 For c As Integer = 0 To nCol - 1
                     Dim v As Double = data(row, _colMap(c))
                     Dim color As Color = If(Double.IsNaN(v), NaColor, ColorOf(v, vmin, vmax))
-                    Dim x As Single = body.Left + c * cellW
+                    Dim x As Single = colEdges(c)
+                    Dim w As Single = colEdges(c + 1) - x
 
                     Using br As New SolidBrush(color)
-                        g.FillRectangle(br, x, y, cellW, cellH)
+                        ' 注意：GDI 驱动的 FillRectangle(brush, x, y, w, h) 重载是空实现，
+                        ' 必须走 RectangleF 重载才能真的绘制出来
+                        g.FillRectangle(br, New RectangleF(x, y, w, h))
                     End Using
 
                     If cellPen IsNot Nothing Then
-                        g.DrawRectangle(cellPen, x, y, cellW, cellH)
+                        g.DrawRectangle(cellPen, x, y, w, h)
                     End If
 
                     If ShowValues AndAlso Not Double.IsNaN(v) Then
                         Dim label As String = FormatNumber(v)
                         Dim size As SizeF = g.MeasureString(label, textFont)
 
-                        If size.Width <= cellW AndAlso size.Height <= cellH Then
+                        If size.Width <= w AndAlso size.Height <= h Then
                             Using br As New SolidBrush(ColorScale.ReadableTextColor(color))
-                                g.DrawString(label, textFont, br, x + (cellW - size.Width) / 2, y + (cellH - size.Height) / 2)
+                                g.DrawString(label, textFont, br, x + (w - size.Width) / 2, y + (h - size.Height) / 2)
                             End Using
                         End If
                     End If
@@ -1369,6 +1421,24 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
             cellPen?.Dispose()
         End Try
     End Sub
+
+    ''' <summary>
+    ''' 把 [<paramref name="start"/>, <paramref name="start"/> + <paramref name="length"/>]
+    ''' 均匀切成 <paramref name="n"/> 段，并返回 <c>n + 1</c> 个整像素对齐的边界，
+    ''' 从而避免相邻单元格之间出现 1px 的白缝。
+    ''' </summary>
+    Private Shared Function PixelEdges(start As Single, length As Single, n As Integer) As Single()
+        Dim edges(n) As Single
+
+        For i As Integer = 0 To n
+            edges(i) = CSng(std.Round(start + length * i / n))
+        Next
+
+        edges(0) = start
+        edges(n) = start + length
+
+        Return edges
+    End Function
 
     Private Shared Function FiniteMin(data As Double(,)) As Double
         Dim min As Double = Double.MaxValue
@@ -1399,12 +1469,12 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
     ''' <summary>
     ''' 绘制列注释条（多条自上而下堆叠）以及注释名称。
     ''' </summary>
-    Private Sub DrawColumnAnnotations(g As IGraphics, body As RectangleF, cellW As Single, nameFont As Font)
+    Private Sub DrawColumnAnnotations(g As IGraphics, colEdges As Single(), bodyTop As Single, nameFont As Font)
         If ColAnnotations.Count = 0 Then
             Return
         End If
 
-        Dim top As Single = body.Top - ColAnnotations.Count * ColAnnotationHeight
+        Dim top As Single = bodyTop - ColAnnotations.Count * ColAnnotationHeight
 
         For k As Integer = 0 To ColAnnotations.Count - 1
             Dim anno As HeatMapAnnotation = ColAnnotations(k)
@@ -1417,9 +1487,10 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
 
             For c As Integer = 0 To _colMap.Length - 1
                 Dim color As Color = anno.ColorAt(_colMap(c), Theme.Palette)
+                Dim x As Single = colEdges(c)
 
                 Using br As New SolidBrush(color)
-                    g.FillRectangle(br, body.Left + c * cellW, y, cellW, ColAnnotationHeight)
+                    g.FillRectangle(br, New RectangleF(x, y, colEdges(c + 1) - x, ColAnnotationHeight))
                 End Using
             Next
 
@@ -1427,7 +1498,8 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
                 Dim size As SizeF = g.MeasureString(anno.Name, nameFont)
 
                 Using br As New SolidBrush(Theme.TextColor)
-                    g.DrawString(anno.Name, nameFont, br, body.Right + 4, y + (ColAnnotationHeight - size.Height) / 2)
+                    g.DrawString(anno.Name, nameFont, br, colEdges(colEdges.Length - 1) + 4,
+                                 y + (ColAnnotationHeight - size.Height) / 2)
                 End Using
             End If
         Next
@@ -1436,12 +1508,12 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
     ''' <summary>
     ''' 绘制行注释条（多条自左向右并排）。
     ''' </summary>
-    Private Sub DrawRowAnnotations(g As IGraphics, body As RectangleF, cellH As Single)
+    Private Sub DrawRowAnnotations(g As IGraphics, rowEdges As Single(), bodyLeft As Single)
         If RowAnnotations.Count = 0 Then
             Return
         End If
 
-        Dim left As Single = body.Left - RowAnnotations.Count * RowAnnotationWidth
+        Dim left As Single = bodyLeft - RowAnnotations.Count * RowAnnotationWidth
 
         For k As Integer = 0 To RowAnnotations.Count - 1
             Dim anno As HeatMapAnnotation = RowAnnotations(k)
@@ -1454,28 +1526,36 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
 
             For r As Integer = 0 To _rowMap.Length - 1
                 Dim color As Color = anno.ColorAt(_rowMap(r), Theme.Palette)
+                Dim y As Single = rowEdges(r)
 
                 Using br As New SolidBrush(color)
-                    g.FillRectangle(br, x, body.Top + r * cellH, RowAnnotationWidth, cellH)
+                    g.FillRectangle(br, New RectangleF(x, y, RowAnnotationWidth, rowEdges(r + 1) - y))
                 End Using
             Next
         Next
     End Sub
 
     ''' <summary>
-    ''' 绘制行标签（缺省位于热图主体右侧、逐行垂直居中且右对齐）。
+    ''' 绘制行标签：缺省位于热图主体右侧并**左对齐**（所有标签起始位置一致），
+    ''' 放在左侧时改为**右对齐**并以标签带的最右端为锚点。
     ''' </summary>
-    Private Sub DrawRowLabels(g As IGraphics, body As RectangleF, cellH As Single, font As Font, maxWidth As Single)
+    ''' <param name="g">绘图设备</param>
+    ''' <param name="labelX">
+    ''' 行标签的锚点：右侧模式下是标签的起始 x（左对齐），左侧模式下是标签带的最右端 x（右对齐）
+    ''' </param>
+    ''' <param name="rowEdges">行边界数组（标签逐行垂直居中）</param>
+    ''' <param name="font">标签字体</param>
+    Private Sub DrawRowLabels(g As IGraphics, labelX As Single, rowEdges As Single(), font As Font)
         Using br As New SolidBrush(Theme.TextColor)
             For r As Integer = 0 To _rowMap.Length - 1
                 Dim label As String = _rowNames(_rowMap(r))
                 Dim size As SizeF = g.MeasureString(label, font)
-                Dim y As Single = body.Top + r * cellH + (cellH - size.Height) / 2
+                Dim y As Single = (rowEdges(r) + rowEdges(r + 1) - size.Height) / 2
 
                 If RowLabelsOnRight Then
-                    g.DrawString(label, font, br, body.Right + RowLabelGap + maxWidth - size.Width, y)
+                    g.DrawString(label, font, br, labelX, y)
                 Else
-                    g.DrawString(label, font, br, body.Left - RowLabelGap - size.Width, y)
+                    g.DrawString(label, font, br, labelX - size.Width, y)
                 End If
             Next
         End Using
@@ -1484,12 +1564,12 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
     ''' <summary>
     ''' 绘制列标签（缺省旋转 270°，文字自下往上读，与 pheatmap 的 <c>angle_col = 270</c> 一致）。
     ''' </summary>
-    Private Sub DrawColumnLabels(g As IGraphics, body As RectangleF, cellW As Single, font As Font)
+    Private Sub DrawColumnLabels(g As IGraphics, body As RectangleF, colEdges As Single(), font As Font)
         Using br As New SolidBrush(Theme.TextColor)
             For c As Integer = 0 To _colMap.Length - 1
                 Dim label As String = _colNames(_colMap(c))
                 Dim size As SizeF = g.MeasureString(label, font)
-                Dim x As Single = body.Left + (c + 0.5) * cellW
+                Dim x As Single = (colEdges(c) + colEdges(c + 1)) / 2
 
                 If ColLabelAngle = 0 Then
                     g.DrawString(label, font, br, x - size.Width / 2, body.Bottom + ColLabelGap)
@@ -1549,7 +1629,7 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
             Dim v As Double = vmin + t * (vmax - vmin)
 
             Using br As New SolidBrush(ColorOf(v, vmin, vmax))
-                g.FillRectangle(br, x, y + i, w, 1)
+                g.FillRectangle(br, New RectangleF(x, y + i, w, 1))
             End Using
         Next
 
@@ -1603,7 +1683,7 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
 
                 For Each category As String In anno.Categories()
                     Using swatchBrush As New SolidBrush(map(category))
-                        g.FillRectangle(swatchBrush, x, y, swatch, swatch)
+                        g.FillRectangle(swatchBrush, New RectangleF(x, y, swatch, swatch))
                     End Using
 
                     Dim size As SizeF = g.MeasureString(category, Theme.LegendFont)
@@ -1621,7 +1701,7 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
                     Dim t As Double = i / CDbl(w)
 
                     Using swatchBrush As New SolidBrush(ColorScale.LerpPalette(t, stops))
-                        g.FillRectangle(swatchBrush, x + i, y, 1, h)
+                        g.FillRectangle(swatchBrush, New RectangleF(x + i, y, 1, h))
                     End Using
                 Next
 
