@@ -84,6 +84,8 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Matrix = Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.Matrix
 Imports std = System.Math
 

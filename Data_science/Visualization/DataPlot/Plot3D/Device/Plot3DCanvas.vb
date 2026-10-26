@@ -36,25 +36,42 @@ Namespace Plot3D.Device
             End If
 
             Try
+                ' 这里完全走反射：DataPlot 工程并不直接引用 System.Drawing.Common，
+                ' 因此不能在编译期写出 GDI+ 的类型
                 Dim prop As Reflection.PropertyInfo = g.GetType().GetProperty("Graphics")
 
                 If prop Is Nothing Then
                     Return
                 End If
 
-                Dim gdi = TryCast(prop.GetValue(g), System.Drawing.Graphics)
+                Dim gdi As Object = prop.GetValue(g)
 
                 If gdi Is Nothing Then
                     Return
                 End If
 
-                gdi.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
-                gdi.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality
-                gdi.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
-                gdi.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+                Dim gdiType As Type = gdi.GetType()
+
+                Call SetEnumValue(gdi, gdiType, "SmoothingMode", "HighQuality")
+                Call SetEnumValue(gdi, gdiType, "CompositingQuality", "HighQuality")
+                Call SetEnumValue(gdi, gdiType, "PixelOffsetMode", "HighQuality")
+                Call SetEnumValue(gdi, gdiType, "TextRenderingHint", "ClearTypeGridFit")
             Catch ex As Exception
                 ' 抗锯齿只是锦上添花，任何异常都不应该影响出图
             End Try
+        End Sub
+
+        ''' <summary>通过反射把 GDI+ 画布上的某个枚举属性设置为指定名称的枚举值</summary>
+        Private Sub SetEnumValue(target As Object, type As Type, propertyName$, enumValue$)
+            Dim prop As Reflection.PropertyInfo = type.GetProperty(propertyName)
+
+            If prop Is Nothing OrElse Not prop.CanWrite Then
+                Return
+            End If
+
+            Dim value As Object = [Enum].Parse(prop.PropertyType, enumValue)
+
+            Call prop.SetValue(target, value)
         End Sub
 
         ''' <summary>
@@ -98,6 +115,61 @@ Namespace Plot3D.Device
                 End Using
             End If
         End Sub
+
+        ''' <summary>
+        ''' 计算标题与副标题所需要的垂直留白（像素）；
+        ''' 没有任何标题文本时返回 0
+        ''' </summary>
+        ''' <param name="g">绘图设备</param>
+        ''' <param name="theme">三维绘图主题</param>
+        Public Function TitlesHeight(g As IGraphics, theme As Plot3DTheme) As Single
+            If theme Is Nothing Then
+                Return 0
+            End If
+            If theme.title.StringEmpty AndAlso theme.subTitle.StringEmpty Then
+                Return 0
+            End If
+
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.titleCSS))
+            Dim subFont As Font = css.GetFont(CSSFont.TryParse(theme.subtitleCSS))
+            Dim height As Single = 8
+
+            If Not theme.title.StringEmpty Then
+                height += titleFont.GetHeight(g)
+            End If
+            If Not theme.subTitle.StringEmpty Then
+                height += subFont.GetHeight(g) + 2
+            End If
+
+            Return height
+        End Function
+
+        ''' <summary>
+        ''' 复制一份绘图区域，并在右侧与顶部额外扣除一段留白，
+        ''' 供图例 / 色标与图表标题使用——这样三维场景本身就会被缩放到剩下的区域里，
+        ''' 不会与图例、标题相互叠压。
+        ''' </summary>
+        ''' <param name="region">原始绘图区域</param>
+        ''' <param name="theme">三维绘图主题</param>
+        ''' <param name="rightExtra">右侧额外扣除的像素</param>
+        ''' <param name="topExtra">顶部额外扣除的像素</param>
+        Public Function ReserveRegion(region As GraphicsRegion,
+                                      theme As Plot3DTheme,
+                                      rightExtra As Single, topExtra As Single) As GraphicsRegion
+
+            Dim scene As GraphicsRegion = region
+            Dim pad As CSS.Padding = region.Padding
+
+            scene.Padding = New Padding With {
+                .Top = $"{CInt(Val(If(pad.Top, "0")) + topExtra)}px",
+                .Right = $"{CInt(Val(If(pad.Right, "0")) + rightExtra)}px",
+                .Bottom = pad.Bottom,
+                .Left = pad.Left
+            }
+
+            Return scene
+        End Function
 
         ''' <summary>
         ''' 计算图例块（含外框）的实际像素尺寸。

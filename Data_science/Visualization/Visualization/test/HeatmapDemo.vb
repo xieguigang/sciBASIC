@@ -30,17 +30,31 @@ Module HeatmapDemo
     End Sub
 
     ''' <summary>
-    ''' 依次渲染三个演示：直接给矩阵、从 NumericTable、从 csv 文件。
+    ''' 依次渲染复合热图演示与三维图表演示。
+    '''
+    ''' <para>
+    ''' 可以用命令行参数选择只跑其中一部分：
+    ''' <c>--heatmap</c> 只跑热图，<c>--3d</c> 只跑三维图表，缺省两者都跑。
+    ''' </para>
     ''' </summary>
     Sub Main()
         Dim outDir As String = AppContext.BaseDirectory
+        Dim args As String() = Environment.GetCommandLineArgs()
+        Dim only3D As Boolean = args.Any(Function(a) a = "--3d")
+        Dim onlyHeatmap As Boolean = args.Any(Function(a) a = "--heatmap")
 
         Call Console.WriteLine($"output directory: {outDir}")
 
-        Call RenderMatrixDemo(outDir)
-        Call RenderTableDemo(outDir)
-        Call RenderCsvDemo(outDir)
-        Call RenderEdgeCases(outDir)
+        If Not only3D Then
+            Call RenderMatrixDemo(outDir)
+            Call RenderTableDemo(outDir)
+            Call RenderCsvDemo(outDir)
+            Call RenderEdgeCases(outDir)
+        End If
+
+        If Not onlyHeatmap Then
+            Call Plot3DDemo.Run(outDir)
+        End If
 
         Call Console.WriteLine("done.")
     End Sub

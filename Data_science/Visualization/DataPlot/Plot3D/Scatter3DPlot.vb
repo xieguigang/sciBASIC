@@ -223,13 +223,13 @@ Namespace Plot3D.Impl
                         .Width = serial.PointSize,
                         .Height = serial.PointSize
                     }
-                    Dim color As Brush = New SolidBrush(serial.Color)
+                    Dim pointBrush As Brush = New SolidBrush(serial.Color)
 
                     If depth IsNot Nothing Then
                         ' 离视点越远（归一化深度越接近 1）越淡、越小
                         Dim t As Double = depth(pt.Value)
 
-                        color = New SolidBrush(Color.FromArgb(
+                        pointBrush = New SolidBrush(Color.FromArgb(
                             CInt(std.Max(24, 255 * (1 - fade * t))), serial.Color))
                         size = New Size With {
                             .Width = CSng(serial.PointSize * (1 - fade * 0.35 * t)),
@@ -238,7 +238,7 @@ Namespace Plot3D.Impl
                     End If
 
                     Yield New ShapePoint With {
-                        .Fill = color,
+                        .Fill = pointBrush,
                         .Location = pt.Value,
                         .Size = size,
                         .Style = serial.Shape,
@@ -333,12 +333,17 @@ Namespace Plot3D.Impl
                 .ToArray
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim region As Rectangle = canvas.PlotRegion(css)
+            ' 在右侧与顶部为图例和标题预留空间，三维场景缩放到剩下的区域里
+            Dim legendWidth As Single = If(theme.drawLegend,
+                Plot3DCanvas.MeasureLegendBox(g, legends, theme).Width + 16, 0)
+            Dim scene As GraphicsRegion = Plot3DCanvas.ReserveRegion(
+                canvas, theme, legendWidth, Plot3DCanvas.TitlesHeight(g, theme))
 
             ' 要先绘制三维图形，要不然会将图例遮住的
             Call populateModels(css).RenderAs3DChart(
                 canvas:=g,
                 camera:=camera,
-                region:=canvas,
+                region:=scene,
                 theme:=theme
             )
 

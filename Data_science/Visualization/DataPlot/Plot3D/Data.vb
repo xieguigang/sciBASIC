@@ -116,12 +116,16 @@ Namespace Plot3D
                     Dim data As (pt As Point3D, C#)() = {
                         pY0, previousX(i), xline(i), pY1
                     }
+                    ' 注意：必须显式 ToArray，否则把 LINQ 迭代器赋给数组会抛出 InvalidCastException
                     Dim v As Point3D() = data _
-                        .Select(Function(d) d.pt)
+                        .Select(Function(d) d.pt) _
+                        .ToArray
                     Dim sf As New Surface With {    ' 使用一个矩形来生成一个3维表面
                         .vertices = v
                     }
-                    Dim zc#() = data.Select(Function(d) d.C)
+                    Dim zc#() = data _
+                        .Select(Function(d) d.C) _
+                        .ToArray
 
                     Yield (sf, zc)
 
@@ -203,9 +207,8 @@ Namespace Plot3D
 
             Dim ticks As Double() = seq(x.Min, x.Max, by:=xsteps).ToArray
 
-            Call "populates 2d grid data points...".info
-
-            For Each xi As Double In Tqdm.Wrap(ticks)
+            ' 库代码里不再输出进度信息（旧的 Tqdm 进度条会污染调用方的控制台）
+            For Each xi As Double In ticks
                 If parallel Then
                     Dim dy As New List(Of Double)
                     Dim x0# = xi
