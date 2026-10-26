@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript
 Imports Microsoft.VisualBasic.ApplicationServices.VM.JavaScript.Runtime
 Imports IL = Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL
 Imports Microsoft.VisualBasic.Computing.ILCuda.IL2Cuda
+Imports std = System.Math
 
 ' ---------------------------------------------------------------------------
 '  JavaScript AST  ->  IL 风格 AST（MethodSyntax）
@@ -619,10 +620,69 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
                     Return New IL.LiteralExpression(item.AsInt32, GetType(Integer))
                 End If
 
+                ' a JavaScript number is a double, but an integral one prints as the very same C
+                ' integer literal ("3" not "3.0"), which is what keeps subscripts and loop counters
+                ' valid device code
+                If IsIntegralLiteral(item.AsDouble) Then
+                    Return New IL.LiteralExpression(CInt(item.AsDouble), GetType(Integer))
+                End If
+
                 Return Number(item.AsDouble)
             End If
 
             Throw OfNode(node, "only numeric literals are supported inside a GPU kernel")
+        End Function
+
+        Private Shared Function IsIntegralLiteral(value As Double) As Boolean
+            If Double.IsNaN(value) OrElse Double.IsInfinity(value) Then Return False
+            If std.Abs(value) > Integer.MaxValue Then Return False
+
+            Return std.Floor(value) = value
+        End Function
+
+        ''' <summary>Does this expression yield a value that prints as a C integer literal?</summary>
+        Private Function IsIntegralOperand(node As Expression) As Boolean
+            If node Is Nothing Then Return False
+
+            If TypeOf node Is LiteralExpr Then
+                Dim item = DirectCast(node, LiteralExpr).Value
+
+                If item.IsBoolean Then Return True
+                If Not item.IsNumber Then Return False
+
+                Return item.VarType = TypeCode.Int32 OrElse IsIntegralLiteral(item.AsDouble)
+            End If
+
+            If TypeOf node Is IdentExpr Then
+                Dim name = DirectCast(node, IdentExpr).Name
+
+                Return _symbols.ContainsKey(name) AndAlso _symbols(name) Is GetType(Integer)
+            End If
+
+            If TypeOf node Is UnaryExpr Then
+                Dim unary = DirectCast(node, UnaryExpr)
+
+                If unary.Op = "-" OrElse unary.Op = "+" Then Return IsIntegralOperand(unary.Operand)
+
+                Return False
+            End If
+
+            If TypeOf node Is BinaryExpr Then
+                Dim bin = DirectCast(node, BinaryExpr)
+
+                If bin.Op = "/" OrElse bin.Op = "**" Then Return False
+                If CompareOperators.ContainsKey(bin.Op) Then Return False
+
+                Return IsIntegralOperand(bin.Left) AndAlso IsIntegralOperand(bin.Right)
+            End If
+
+            If TypeOf node Is CondExpr Then
+                Dim cond = DirectCast(node, CondExpr)
+
+                Return IsIntegralOperand(cond.Consequent) AndAlso IsIntegralOperand(cond.Alternate)
+            End If
+
+            Return False
         End Function
 
         Private Function TranslateIdent(node As IdentExpr) As IL.Expression
@@ -659,7 +719,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
             End If
 
             If node.Op = "%" Then
-                If InferType(node.Left) IsNot GetType(Integer) OrElse InferType(node.Right) IsNot GetType(Integer) Then
+                If Not IsIntegralOperand(node.Left) OrElse Not IsIntegralOperand(node.Right) Then
                     Throw OfNode(node,
                         "the modulo operator is only supported on integer operands on the device; " &
                         "use x - floor(x / n) * n for floating point values")
@@ -826,6 +886,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
 
                 If literal.Value.IsBoolean Then Return GetType(Boolean)
                 If literal.Value.VarType = TypeCode.Int32 Then Return GetType(Integer)
+                If IsIntegralLiteral(literal.Value.AsDouble) Then Return GetType(Integer)
 
                 Return GetType(Double)
             End If
