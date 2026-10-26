@@ -16,10 +16,6 @@ Shared Function CorrelationCell(p_dot As Single(), p_rowSum As Single(), p_rowSu
     Dim V_5 As Single = 0F
     Dim V_6 As Single = 0F
     Dim V_7 As Single = 0F
-    Dim V_8 As Single = 0F
-    Dim V_9 As Single = 0F
-    Dim V_10 As Boolean = False
-    Dim V_11 As Boolean = False
     Dim V_0_1 As Single
     Dim V_1_1 As Single
     Dim V_2_1 As Single
@@ -27,30 +23,23 @@ Shared Function CorrelationCell(p_dot As Single(), p_rowSum As Single(), p_rowSu
     Dim V_4_1 As Single
     Dim V_5_1 As Single
     Dim V_6_1 As Single
+    Dim V_7_2 As Single
     Dim V_7_1 As Single
-    Dim V_8_1 As Single
-    Dim V_11_1 As Boolean
-    Dim V_9_2 As Single
-    Dim V_9_1 As Single
-    Dim V_10_1 As Boolean = (p_i = p_j)
-    If (Not V_10_1) Then
+    If (p_i <> p_j) Then
         Dim V_1_2 As Single = CType(p_cols, Single)
         Dim V_2_2 As Single = (p_rowSum[p_i] / V_1_2)
         Dim V_3_2 As Single = (p_rowSum[p_j] / V_1_2)
-        Dim V_4_2 As Single = (p_rowSumSq[p_i] - ((V_1_2 * V_2_2) * V_2_2))
-        Dim V_5_2 As Single = (p_rowSumSq[p_j] - ((V_1_2 * V_3_2) * V_3_2))
-        Dim V_6_2 As Single = p_dot[((p_i * p_rows) + p_j)]
-        Dim V_7_2 As Single = (V_6_2 - ((V_1_2 * V_2_2) * V_3_2))
-        Dim V_8_2 As Single = (System.MathF.Sqrt(System.MathF.Max(V_4_2, 0F)) * System.MathF.Sqrt(System.MathF.Max(V_5_2, 0F)))
-        Dim V_11_2 As Boolean = (V_8_2 > 1E-12F)
-        If (Not V_11_2) Then
-            Dim V_9_4 As Single = 0F
-            V_9_1 = V_9_4
+        Dim V_4_2 As Single = (p_rowSumSq[p_j] - ((V_1_2 * V_3_2) * V_3_2))
+        Dim V_5_2 As Single = (p_dot[((p_i * p_rows) + p_j)] - ((V_1_2 * V_2_2) * V_3_2))
+        Dim V_6_2 As Single = (System.MathF.Sqrt(System.MathF.Max((p_rowSumSq[p_i] - ((V_1_2 * V_2_2) * V_2_2)), 0F)) * System.MathF.Sqrt(System.MathF.Max(V_4_2, 0F)))
+        If (V_6_2 <= 1E-12F) Then
+            Dim V_7_4 As Single = 0F
+            V_7_1 = V_7_4
         Else
-            Dim V_9_3 As Single = (V_7_2 / V_8_2)
-            V_9_1 = V_9_3
+            Dim V_7_3 As Single = (V_5_2 / V_6_2)
+            V_7_1 = V_7_3
         End If
-        Dim V_0_3 As Single = System.MathF.Min(1F, System.MathF.Max(-1F, V_9_1))
+        Dim V_0_3 As Single = System.MathF.Min(1F, System.MathF.Max(-1F, V_7_1))
         V_0_1 = V_0_3
         V_1_1 = V_1_2
         V_2_1 = V_2_2
@@ -58,10 +47,7 @@ Shared Function CorrelationCell(p_dot As Single(), p_rowSum As Single(), p_rowSu
         V_4_1 = V_4_2
         V_5_1 = V_5_2
         V_6_1 = V_6_2
-        V_7_1 = V_7_2
-        V_8_1 = V_8_2
-        V_11_1 = V_11_2
-        V_9_2 = V_9_1
+        V_7_2 = V_7_1
     Else
         Dim V_0_2 As Single = 1F
         V_0_1 = V_0_2
@@ -71,10 +57,7 @@ Shared Function CorrelationCell(p_dot As Single(), p_rowSum As Single(), p_rowSu
         V_4_1 = V_4
         V_5_1 = V_5
         V_6_1 = V_6
-        V_7_1 = V_7
-        V_8_1 = V_8
-        V_11_1 = V_11
-        V_9_2 = V_9
+        V_7_2 = V_7
     End If
     Return V_0_1
 End Function
@@ -89,24 +72,17 @@ End Function
 __device__ float il_DistanceCell_scalar(const float* __restrict__ p_dot, const float* __restrict__ p_rowSumSq, int p_rows, int p_i, int p_j) {
     float V_0 = 0.0f;
     float V_1 = 0.0f;
-    float V_2 = 0.0f;
-    int V_3 = 0;
     float V_0_1;
     float V_1_1;
-    float V_2_1;
-    int V_3_1 = p_i == p_j;
-    if ((!V_3_1)) {
+    if (p_i != p_j) {
         float V_1_2 = p_dot[(p_i * p_rows) + p_j];
-        float V_2_2 = fmaxf((p_rowSumSq[p_i] + p_rowSumSq[p_j]) - (2.0f * V_1_2), 0.0f);
-        float V_0_3 = sqrtf(V_2_2);
+        float V_0_3 = sqrtf(fmaxf((p_rowSumSq[p_i] + p_rowSumSq[p_j]) - (2.0f * V_1_2), 0.0f));
         V_0_1 = V_0_3;
         V_1_1 = V_1_2;
-        V_2_1 = V_2_2;
     } else {
         float V_0_2 = 0.0f;
         V_0_1 = V_0_2;
         V_1_1 = V_1;
-        V_2_1 = V_2;
     }
     return V_0_1;
 }
@@ -129,7 +105,7 @@ extern "C" __global__ void il_DistanceCell_kernel(const float* __restrict__ p_do
 
 === 3) GPU computation (512 x 512 input matrix) ===
   device           : NVIDIA RTX A4000
-  elapsed          : 3.7845 ms
+  elapsed          : 5.6038 ms
   correlation error: 0.000000259 (tolerance 1.0E-3)
   distance error   : 0.000009506 (tolerance 1.0E-2)
 

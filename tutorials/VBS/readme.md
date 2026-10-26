@@ -39,7 +39,7 @@ dotnet build vs_solutions/VBS/VBS.vbproj -c Release
 
 ```bat
 cd .nuget\net10.0
-vbs.exe G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\tuple.vb
+vbs.exe G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\tuple\tuple.vb
 ```
 
 命令行格式为：
@@ -213,10 +213,9 @@ For i As Integer = 1 To 10
     Call Console.WriteLine(i)
 Next
 
-' 顶层 Using 块（kmeans.vb 就是这么画图的）
-Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
-    plt.Title = "demo"
-    plt.SavePng("Z:/demo.png", 300)
+' 顶层 Using 块（标准库的绘图不需要 Using，这里只是演示语法）
+Using plt As New System.IO.StringWriter()
+    Call plt.Write("demo")
 End Using
 ```
 

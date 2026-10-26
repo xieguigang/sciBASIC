@@ -4,7 +4,6 @@ doc_2   36.0000    0.0000   44.0000   37.0000   50.0000
 doc_3   34.0000   44.0000    0.0000   27.0000   42.0000 
 doc_4   29.0000   37.0000   27.0000    0.0000   39.0000 
 doc_5   32.0000   50.0000   42.0000   39.0000    0.0000 
-info, 913 ms - The default graphics driver value is config as GDI().
 plot: G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\tf-idf\tfidf-heatmap.png
 csv : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\tf-idf\tfidf-distance.csv
 done: tfidf-heatmap.png

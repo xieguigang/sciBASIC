@@ -7,7 +7,7 @@
     training config = 2 passes x 120 images
 
 === 2) CPU(SIMD) training + evaluation ===
-    backend=SIMD  loss=2.252847359505498  correct=72/120 (60.00%)  elapsed=12.127s
+    backend=SIMD  loss=2.252847359505498  correct=72/120 (60.00%)  elapsed=7.781s
 
 === 3) register the CUDA compute engine ===
     [OK] current backend = CUDA
@@ -15,7 +15,7 @@
     IL2Cuda double-precision kernels: all translated and registered successfully
 
 === 4) CUDA(GPU) training + evaluation ===
-    backend=CUDA  loss=2.2528473599758057  correct=72/120 (60.00%)  elapsed=9.670s
+    backend=CUDA  loss=2.2528473599758057  correct=72/120 (60.00%)  elapsed=7.140s
 
 === 5) actual execution backend of every tensor operator ===
     operator                  size  gating operand    verdict
@@ -34,12 +34,12 @@
 
 === 6) CPU(SIMD) vs CUDA(GPU) ===
     backend       loss                    accuracy          elapsed(s)
-    SIMD(CPU)     2.252847359505498       60.00%            12.127
-    CUDA(GPU)     2.2528473599758057      60.00%            9.670
+    SIMD(CPU)     2.252847359505498       60.00%            7.781
+    CUDA(GPU)     2.2528473599758057      60.00%            7.140
 
     loss max abs error = 0.000000000   OK (tolerance 1.0E-6)
     correct count      = CPU 72/120  GPU 72/120   OK
-    elapsed ratio      = CPU 12.127s  GPU 9.670s  ratio=1.25x
+    elapsed ratio      = CPU 7.781s  GPU 7.140s  ratio=1.09x
 
 md  : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\mnist_cnn\mnist-cnn.md
 done: mnist-cnn

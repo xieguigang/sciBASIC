@@ -109,6 +109,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.MIME.application.pdf.xml</DocumentationFile>
+    <!-- the image writer scales pixels to EMU (pixels * 9525) unchecked, like every other
+         configuration of this project; without it the embedded image encoding overflows -->
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
