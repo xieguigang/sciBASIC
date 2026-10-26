@@ -75,7 +75,9 @@ Public Module Dendrogram
                          Optional pointSize% = 5,
                          Optional linkStroke$ = Stroke.HighlightStroke,
                          Optional axisStroke As String = Stroke.AxisStroke,
-                         Optional layout As Layouts = Layouts.Vertical) As GraphicsData
+                         Optional layout As Layouts = Layouts.Vertical,
+                         Optional dpi As Integer = 300,
+                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -105,9 +107,9 @@ Public Module Dendrogram
         End If
 
         Select Case layout
-            Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)
-            Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size)
-            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo, maxRadial:=std.PI).Plot(size)
+            Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size, ppi:=dpi, driver:=driver)
+            Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size, ppi:=dpi, driver:=driver)
+            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo, maxRadial:=std.PI).Plot(size, ppi:=dpi, driver:=driver)
             Case Else
                 Throw New NotImplementedException(layout.ToString)
         End Select
