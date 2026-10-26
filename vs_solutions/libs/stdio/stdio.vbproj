@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\..\Data\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data_science\DataMining\FeatureFrame\FeatureFrame.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\MachineLearning\MLDataStorage\MLDataStorage.vbproj" />
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data_science\Mathematica\SignalProcessing\wav\wav\waveFile-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
