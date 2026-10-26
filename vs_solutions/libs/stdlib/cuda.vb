@@ -5,437 +5,333 @@ Imports Microsoft.VisualBasic.Computing.ILCuda.IL2Cuda
 Imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
 Imports std = System.Math
 
-''' <summary>
-''' IL → CUDA 模块：把 <see cref="PearsonMetrics"/> 里的普通 VB.NET 方法编译成 CUDA 内核，
-''' 在 GPU 上计算皮尔逊相关矩阵与欧氏距离矩阵，并提供 CPU 参考实现用于对拍。
-''' <para>
-''' 当机器上没有可用的 CUDA 环境时，<see cref="available"/> 返回 False、<see cref="metrics"/>
-''' 抛出带诊断信息的异常；脚本应当先探测再决定是否走 GPU 路径（demo 里会降级到 CPU）。
-''' </para>
-''' </summary>
-Public Module cuda
+Namespace stdlib
 
-    Private ReadOnly _gate As New Object()
-    Private _kernels As Dictionary(Of String, IlCudaKernel)
+    ''' <summary>
+    ''' IL → CUDA 的通用脚本接口：把任意 <c>Shared</c> VB.NET 方法编译成 CUDA 内核、注册、创建引擎、
+    ''' 分配显存、启动内核、读回结果。
+    '''
+    ''' <para>
+    ''' 这里**不包含任何算法**：需要 GPU 计算的函数写在脚本自己（或调用方自己）的类型里，
+    ''' 脚本把 <see cref="System.Reflection.MethodInfo"/> 交给 <see cref="compile"/> 即可。
+    ''' 这样标准库与具体 demo 的数学内容解耦：同一个 <c>cuda.compile</c> 既能跑皮尔逊相关，
+    ''' 也能跑任意逐元素公式。
+    ''' </para>
+    '''
+    ''' <para>
+    ''' 使用顺序（内核源码必须在创建引擎之前注册，它们会被合成一个 NVRTC 编译单元）：
+    ''' <code>
+    ''' dim k = cuda.compile(GetType(MyKernels).GetMethod("RowSum"))
+    ''' call cuda.register(k)
+    ''' dim engine = cuda.createEngine()
+    ''' dim x = cuda.buffer(values)        ' DeviceBuffer(Of Single)
+    ''' dim out = cuda.bufferSize(rows)
+    ''' call cuda.launch1D(k, engine, rows, 256, x, cols, out, rows)
+    ''' dim result = cuda.read(out)
+    ''' </code>
+    ''' </para>
+    ''' </summary>
+    Public Module cuda
 
-    ''' <summary>CUDA 环境是否可用（驱动 + 设备 + NVRTC）。</summary>
-    Public Function available() As Boolean
-        Dim options As New EngineOptions()
+#Region "设备探测"
 
-        Using engine As CudaEngine = CudaEngine.TryCreate(options)
-            Return engine IsNot Nothing
-        End Using
-    End Function
+        ''' <summary>当前进程是否可以使用 CUDA 设备 + NVRTC。</summary>
+        Public Function available() As Boolean
+            Dim options As New EngineOptions()
 
-    ''' <summary>探测当前 CUDA 环境并返回诊断信息（不会抛异常）。</summary>
-    Public Function diagnostics() As String()
-        Dim report = CudaEnvironment.Probe()
-        Dim lines As New List(Of String)
+            Try
+                Using engine As CudaEngine = CudaEngine.TryCreate(options)
+                    Return engine IsNot Nothing
+                End Using
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
 
-        Call lines.Add($"driver   : {report.DriverVersionText}")
-        Call lines.Add($"devices  : {report.DeviceCount}")
+        ''' <summary>探测报告：可用时给出设备名，不可用时给出失败原因。</summary>
+        Public Function diagnostics() As String()
+            Dim lines As New List(Of String)
+            Dim options As New EngineOptions()
 
-        If report.Devices IsNot Nothing Then
-            For Each device In report.Devices
-                Call lines.Add($"  - {device.Name}")
-            Next
-        End If
+            Try
+                Using engine As CudaEngine = CudaEngine.TryCreate(options)
+                    If engine IsNot Nothing Then
+                        Call lines.Add("device      : " & engine.Device.Name)
 
-        Call lines.Add($"nvrtc    : {report.HasNvrtc}")
-        Call lines.Add($"sources  : {report.HasKernelSource}")
+                        Return lines.ToArray
+                    End If
+                End Using
+            Catch ex As Exception
+                Call lines.Add("engine error: " & ex.Message)
+            End Try
 
-        If report.HasError Then
-            Call lines.Add($"error    : {report.ErrorMessage}")
-        End If
+            If Not String.IsNullOrEmpty(options.ErrorMessage) Then
+                Call lines.Add("error       : " & options.ErrorMessage)
+            End If
 
-        For Each suggestion In CudaEnvironment.Suggest(report)
-            Call lines.Add($"suggestion: {suggestion.Title} — {suggestion.Detail}")
-        Next
+            If options.Diagnostics IsNot Nothing Then
+                For Each item As String In options.Diagnostics
+                    Call lines.Add("  " & item)
+                Next
+            End If
 
-        Return lines.ToArray
-    End Function
+            Return lines.ToArray
+        End Function
 
-    ''' <summary>当前 CUDA 设备名称（不可用时返回空字符串）。</summary>
-    Public Function deviceName() As String
-        Dim options As New EngineOptions()
+        ''' <summary>当前 CUDA 设备名称（不可用时返回空字符串）。</summary>
+        Public Function deviceName() As String
+            Dim options As New EngineOptions()
 
-        Using engine As CudaEngine = CudaEngine.TryCreate(options)
-            If engine Is Nothing Then
+            Try
+                Using engine As CudaEngine = CudaEngine.TryCreate(options)
+                    If engine Is Nothing Then
+                        Return ""
+                    End If
+
+                    Return engine.Device.Name
+                End Using
+            Catch ex As Exception
                 Return ""
-            End If
-
-            Return engine.Device.Name
-        End Using
-    End Function
-
-    ''' <summary>把 <see cref="PearsonMetrics"/> 的每个方法翻译成 CUDA 内核并返回内核名列表。</summary>
-    Public Function kernelNames() As String()
-        Return EnsureKernels().Keys.ToArray
-    End Function
-
-    ''' <summary>取回某个内核生成的 CUDA 源码。</summary>
-    Public Function kernelSource(name As String) As String
-        Dim kernel As IlCudaKernel = FindKernel(name)
-
-        Return If(kernel Is Nothing, Nothing, kernel.Source)
-    End Function
-
-    ''' <summary>取回某个内核的索引模式（``1D`` / ``2D`` / ``ElementWise``）。</summary>
-    Public Function kernelIndexMode(name As String) As String
-        Dim kernel As IlCudaKernel = FindKernel(name)
-
-        Return If(kernel Is Nothing, Nothing, kernel.IndexMode.ToString)
-    End Function
-
-    ''' <summary>取回某个内核反编译得到的方法伪代码。</summary>
-    Public Function kernelPseudoCode(name As String) As String
-        Dim kernel As IlCudaKernel = FindKernel(name)
-
-        If kernel Is Nothing OrElse kernel.Syntax Is Nothing Then
-            Return Nothing
-        End If
-
-        Return SyntaxWriter.WriteMethod(kernel.Syntax)
-    End Function
-
-    ''' <summary>
-    ''' 用 AST 解释器对内核做一次自检（解释执行结果 vs 直接调用原方法），
-    ''' 返回 ``"内核名: diff=... OK|FAIL"`` 形式的诊断行。
-    ''' </summary>
-    Public Function selfCheck(m As Single(), rows As Integer, cols As Integer) As String()
-        Dim kernels As Dictionary(Of String, IlCudaKernel) = EnsureKernels()
-        Dim lines As New List(Of String)
-
-        ' 先算出 CorrelationCell / DistanceCell 需要的中间数组
-        Dim rowSum(rows - 1) As Single
-        Dim rowSumSq(rows - 1) As Single
-
-        For i As Integer = 0 To rows - 1
-            rowSum(i) = PearsonMetrics.RowSum(m, cols, i)
-            rowSumSq(i) = PearsonMetrics.RowSumSq(m, cols, i)
-        Next
-
-        Dim dot(rows * rows - 1) As Single
-
-        For i As Integer = 0 To rows - 1
-            For j As Integer = 0 To rows - 1
-                dot(i * rows + j) = PearsonMetrics.GramDot(m, cols, i, j)
-            Next
-        Next
-
-        Dim cases As New List(Of (Name As String, Args As Object(), Expected As Object))
-        Dim i0 As Integer = 0
-        Dim j0 As Integer = If(rows > 1, 1, 0)
-
-        Call cases.Add(("RowSum", New Object() {m, cols, i0}, PearsonMetrics.RowSum(m, cols, i0)))
-        Call cases.Add(("RowSumSq", New Object() {m, cols, i0}, PearsonMetrics.RowSumSq(m, cols, i0)))
-        Call cases.Add(("GramDot", New Object() {m, cols, i0, j0}, PearsonMetrics.GramDot(m, cols, i0, j0)))
-        Call cases.Add(("CorrelationCell",
-                        New Object() {dot, rowSum, rowSumSq, rows, cols, i0, j0},
-                        PearsonMetrics.CorrelationCell(dot, rowSum, rowSumSq, rows, cols, i0, j0)))
-        Call cases.Add(("DistanceCell",
-                        New Object() {dot, rowSumSq, rows, i0, j0},
-                        PearsonMetrics.DistanceCell(dot, rowSumSq, rows, i0, j0)))
-        Call cases.Add(("PearsonClamp", New Object() {CSng(0.25), CSng(0.5)}, PearsonMetrics.PearsonClamp(CSng(0.25), CSng(0.5))))
-
-        For Each item In cases
-            Dim kernel As IlCudaKernel = Nothing
-
-            If Not kernels.TryGetValue(item.Name, kernel) Then
-                Call lines.Add($"{item.Name}: not translated")
-                Continue For
-            End If
-
-            Dim actual As Object = New AstInterpreter(kernel.Syntax).Invoke(item.Args)
-            Dim diff As Double = std.Abs(Convert.ToDouble(item.Expected) - Convert.ToDouble(actual))
-            Dim tolerance As Double = 1.0E-6 * std.Max(1.0, std.Abs(Convert.ToDouble(item.Expected)))
-
-            Call lines.Add($"{item.Name}: interpreter diff={diff.ToString("E2")} {If(diff <= tolerance, "OK", "FAIL")}")
-        Next
-
-        Return lines.ToArray
-    End Function
-
-    ' ======================================================== GPU 计算
-
-    ''' <summary>
-    ''' 在 GPU 上一次性算出皮尔逊相关矩阵与欧氏距离矩阵。
-    ''' </summary>
-    ''' <param name="m">行主序的矩阵数据，长度为 rows * cols</param>
-    Public Function metrics(m As Single(), rows As Integer, cols As Integer) As CudaMetrics
-        Dim kernels As Dictionary(Of String, IlCudaKernel) = EnsureKernels()
-        Dim options As New EngineOptions With {.DeviceOrdinal = 0}
-        Dim engine As CudaEngine = CudaEngine.TryCreate(options)
-
-        If engine Is Nothing Then
-            Throw New InvalidOperationException("CUDA is not available: " & options.ErrorMessage)
-        End If
-
-        Dim cells As Integer = rows * rows
-        Dim watch As Stopwatch = Stopwatch.StartNew()
-
-        Using engine
-            Using bufX As New DeviceBuffer(Of Single)(m.Length),
-                  bufSum As New DeviceBuffer(Of Single)(rows),
-                  bufSumSq As New DeviceBuffer(Of Single)(rows),
-                  bufDot As New DeviceBuffer(Of Single)(cells),
-                  bufCorr As New DeviceBuffer(Of Single)(cells),
-                  bufDist As New DeviceBuffer(Of Single)(cells)
-
-                Call bufX.Write(m)
-
-                Call kernels("RowSum").Launch(engine, LaunchPlanner.For1D(rows, 256), bufX, cols, bufSum, rows)
-                Call kernels("RowSumSq").Launch(engine, LaunchPlanner.For1D(rows, 256), bufX, cols, bufSumSq, rows)
-                Call kernels("GramDot").Launch(engine, LaunchPlanner.For2D(rows, rows, 16, 16), bufX, cols, bufDot, rows, rows)
-                Call kernels("CorrelationCell").Launch(engine, LaunchPlanner.For2D(rows, rows, 16, 16),
-                                                       bufDot, bufSum, bufSumSq, rows, cols, bufCorr, rows, rows)
-                Call kernels("DistanceCell").Launch(engine, LaunchPlanner.For2D(rows, rows, 16, 16),
-                                                    bufDot, bufSumSq, rows, bufDist, rows, rows)
-
-                Call engine.Synchronize()
-
-                watch.Stop()
-
-                Return New CudaMetrics With {
-                    .device = engine.Device.Name,
-                    .correlation = bufCorr.Read(),
-                    .distance = bufDist.Read(),
-                    .rows = rows,
-                    .cols = cols,
-                    .elapsedMs = watch.Elapsed.TotalMilliseconds
-                }
-            End Using
-        End Using
-    End Function
-
-    ''' <summary>只计算皮尔逊相关矩阵（GPU 不可用时抛出异常）。</summary>
-    Public Function pearson(m As Single(), rows As Integer, cols As Integer) As Single()
-        Return metrics(m, rows, cols).correlation
-    End Function
-
-    ''' <summary>只计算欧氏距离矩阵（GPU 不可用时抛出异常）。</summary>
-    Public Function distance(m As Single(), rows As Integer, cols As Integer) As Single()
-        Return metrics(m, rows, cols).distance
-    End Function
-
-    ' ======================================================== CPU 参考实现
-
-    ''' <summary>皮尔逊相关矩阵的 CPU 双精度参考实现。</summary>
-    Public Function pearsonCpu(m As Single(), rows As Integer, cols As Integer) As Double()
-        Dim n As Double = cols
-        Dim mean(rows - 1) As Double
-        Dim sd(rows - 1) As Double
-
-        For i As Integer = 0 To rows - 1
-            Dim sum As Double = 0
-            Dim sumSq As Double = 0
-
-            For k As Integer = 0 To cols - 1
-                Dim v As Double = m(i * cols + k)
-                sum += v
-                sumSq += v * v
-            Next
-
-            mean(i) = sum / n
-            sd(i) = std.Sqrt(std.Max(sumSq - n * mean(i) * mean(i), 0.0))
-        Next
-
-        Dim out(rows * rows - 1) As Double
-
-        For i As Integer = 0 To rows - 1
-            For j As Integer = 0 To rows - 1
-                Dim dot As Double = 0
-
-                For k As Integer = 0 To cols - 1
-                    dot += m(i * cols + k) * m(j * cols + k)
-                Next
-
-                Dim cov As Double = dot - n * mean(i) * mean(j)
-                Dim denom As Double = sd(i) * sd(j)
-                Dim c As Double = If(denom > 0, cov / denom, 0)
-
-                out(i * rows + j) = If(i = j, 1.0, std.Min(1.0, std.Max(-1.0, c)))
-            Next
-        Next
-
-        Return out
-    End Function
-
-    ''' <summary>欧氏距离矩阵的 CPU 双精度参考实现。</summary>
-    Public Function distanceCpu(m As Single(), rows As Integer, cols As Integer) As Double()
-        Dim sumSq(rows - 1) As Double
-
-        For i As Integer = 0 To rows - 1
-            Dim sum As Double = 0
-
-            For k As Integer = 0 To cols - 1
-                Dim v As Double = m(i * cols + k)
-                sum += v * v
-            Next
-
-            sumSq(i) = sum
-        Next
-
-        Dim out(rows * rows - 1) As Double
-
-        For i As Integer = 0 To rows - 1
-            For j As Integer = 0 To rows - 1
-                Dim dot As Double = 0
-
-                For k As Integer = 0 To cols - 1
-                    dot += m(i * cols + k) * m(j * cols + k)
-                Next
-
-                out(i * rows + j) = If(i = j, 0.0, std.Sqrt(std.Max(sumSq(i) + sumSq(j) - 2.0 * dot, 0.0)))
-            Next
-        Next
-
-        Return out
-    End Function
-
-    ''' <summary>生成 [-1, 1] 区间内的确定性随机矩阵（行主序）。</summary>
-    Public Function makeMatrix(rows As Integer, cols As Integer, Optional seed As Integer = 42) As Single()
-        Dim random As New Random(seed)
-        Dim data(rows * cols - 1) As Single
-
-        For i As Integer = 0 To data.Length - 1
-            data(i) = CSng(random.NextDouble() * 2.0 - 1.0)
-        Next
-
-        Return data
-    End Function
-
-    ''' <summary>把行主序的一维矩阵数据还原成 ``rows × cols`` 的交错数组。</summary>
-    Public Function toMatrix(values As Double(), rows As Integer, cols As Integer) As Double()()
-        Dim out(rows - 1)() As Double
-
-        For i As Integer = 0 To rows - 1
-            Dim row(cols - 1) As Double
-
-            For j As Integer = 0 To cols - 1
-                row(j) = values(i * cols + j)
-            Next
-
-            out(i) = row
-        Next
-
-        Return out
-    End Function
-
-    ''' <summary>取矩阵左上角 n×n 的单元格，格式化为文本预览。</summary>
-    Public Function preview(values As Double(), rows As Integer, Optional n As Integer = 6) As String
-        Dim lines As New List(Of String)
-
-        For i As Integer = 0 To std.Min(n, rows) - 1
-            Dim sb As New Text.StringBuilder()
-
-            For j As Integer = 0 To std.Min(n, rows) - 1
-                Call sb.Append(values(i * rows + j).ToString("F4").PadLeft(10))
-            Next
-
-            Call lines.Add(sb.ToString)
-        Next
-
-        Return String.Join(Environment.NewLine, lines)
-    End Function
-
-    ''' <summary>取单精度矩阵左上角 n×n 的单元格，格式化为文本预览。</summary>
-    Public Function preview(values As Single(), rows As Integer, Optional n As Integer = 6) As String
-        Dim lines As New List(Of String)
-
-        For i As Integer = 0 To std.Min(n, rows) - 1
-            Dim sb As New Text.StringBuilder()
-
-            For j As Integer = 0 To std.Min(n, rows) - 1
-                Call sb.Append(values(i * rows + j).ToString("F4").PadLeft(10))
-            Next
-
-            Call lines.Add(sb.ToString)
-        Next
-
-        Return String.Join(Environment.NewLine, lines)
-    End Function
-
-    ''' <summary>GPU 结果与双精度参考实现之间的最大绝对误差。</summary>
-    Public Function maxError(got As Single(), expected As Double()) As Double
-        Dim maxDiff As Double = 0
-
-        For i As Integer = 0 To got.Length - 1
-            Dim diff As Double = std.Abs(CDbl(got(i)) - expected(i))
-
-            If diff > maxDiff Then
-                maxDiff = diff
-            End If
-        Next
-
-        Return maxDiff
-    End Function
-
-    ' ======================================================== 内部辅助
-
-    Private Function EnsureKernels() As Dictionary(Of String, IlCudaKernel)
-        SyncLock _gate
-            If _kernels IsNot Nothing Then
-                Return _kernels
-            End If
-
-            Dim translations As New Dictionary(Of String, IlCudaKernel)(StringComparer.Ordinal)
-            Dim target As Type = GetType(PearsonMetrics)
-
-            For Each methodName As String In {"RowSum", "RowSumSq", "GramDot", "CorrelationCell", "DistanceCell", "PearsonClamp"}
-                Dim method As MethodInfo = target.GetMethod(methodName)
-
-                Call translations.Add(methodName, IlCudaTranslator.Translate(method))
-            Next
-
-            ' 内核必须在创建 CUDA 引擎之前注册
-            For Each kernel As IlCudaKernel In translations.Values
-                Call kernel.Register()
-            Next
-
-            _kernels = translations
-        End SyncLock
-
-        Return _kernels
-    End Function
-
-    Private Function FindKernel(name As String) As IlCudaKernel
-        Dim kernel As IlCudaKernel = Nothing
-
-        If EnsureKernels().TryGetValue(If(name, "").Trim, kernel) Then
-            Return kernel
-        End If
-
-        Return Nothing
-    End Function
-
-    ''' <summary>GPU 矩阵计算结果。</summary>
-    Public Class CudaMetrics
-
-        ''' <summary>计算所用的设备名称。</summary>
-        Public Property device As String
-        ''' <summary>行主序的皮尔逊相关矩阵（``rows × rows``）。</summary>
-        Public Property correlation As Single()
-        ''' <summary>行主序的欧氏距离矩阵（``rows × rows``）。</summary>
-        Public Property distance As Single()
-        ''' <summary>矩阵行数 / 样本数。</summary>
-        Public Property rows As Integer
-        ''' <summary>特征列数。</summary>
-        Public Property cols As Integer
-        ''' <summary>GPU 计算耗时（毫秒）。</summary>
-        Public Property elapsedMs As Double
-
-        ''' <summary>取相关矩阵的前 n×n 个单元格，格式化为文本预览。</summary>
-        Public Function previewCorrelation(Optional n As Integer = 6) As String
-            Return preview(correlation, rows, n)
+            End Try
         End Function
 
-        ''' <summary>取距离矩阵的前 n×n 个单元格，格式化为文本预览。</summary>
-        Public Function previewDistance(Optional n As Integer = 6) As String
-            Return preview(distance, rows, n)
+        ''' <summary>创建 CUDA 引擎（必须先 <see cref="register"/> 全部内核）。</summary>
+        Public Function createEngine(Optional deviceOrdinal As Integer = 0) As CudaEngine
+            Dim options As New EngineOptions With {.DeviceOrdinal = deviceOrdinal}
+            Dim engine As CudaEngine = CudaEngine.TryCreate(options)
+
+            If engine Is Nothing Then
+                Throw New InvalidOperationException("CUDA is not available: " & options.ErrorMessage)
+            End If
+
+            Return engine
         End Function
 
-        Private Function preview(values As Single(), rows As Integer, n As Integer) As String
+#End Region
+
+#Region "翻译"
+
+        ''' <summary>
+        ''' 把一个已编译的 <c>Shared</c> 方法反编译并翻译成 CUDA 内核（<c>__device__</c> 标量函数 +
+        ''' <c>__global__</c> 内核）。方法体里不要出现业务之外的东西——它就是设备代码本身。
+        ''' </summary>
+        ''' <param name="method">目标方法，必须是 <c>Shared</c></param>
+        ''' <param name="name">可选的内核名；留空时用 <c>il_&lt;方法名&gt;_kernel</c></param>
+        Public Function compile(method As MethodInfo, Optional name As String = Nothing) As IlCudaKernel
+            If method Is Nothing Then
+                Throw New ArgumentNullException(NameOf(method))
+            End If
+
+            Return IlCudaTranslator.Translate(method, name)
+        End Function
+
+        ''' <summary>把内核源码注册进框架（必须在创建引擎之前调用）。</summary>
+        Public Function register(kernel As IlCudaKernel) As String
+            If kernel Is Nothing Then
+                Throw New ArgumentNullException(NameOf(kernel))
+            End If
+
+            Call kernel.Register()
+
+            Return kernel.Name
+        End Function
+
+        ''' <summary>内核生成的 .cu 源码。</summary>
+        Public Function kernelSource(kernel As IlCudaKernel) As String
+            Return If(kernel Is Nothing, Nothing, kernel.Source)
+        End Function
+
+        ''' <summary>内核的线程索引模式（<c>Grid1D</c> / <c>Grid2D</c> / <c>None</c>）。</summary>
+        Public Function kernelIndexMode(kernel As IlCudaKernel) As String
+            Return If(kernel Is Nothing, Nothing, kernel.IndexMode.ToString)
+        End Function
+
+        ''' <summary>反编译得到的方法伪代码（调试用）。</summary>
+        Public Function kernelPseudoCode(kernel As IlCudaKernel) As String
+            If kernel Is Nothing OrElse kernel.Syntax Is Nothing Then
+                Return Nothing
+            End If
+
+            Return SyntaxWriter.WriteMethod(kernel.Syntax)
+        End Function
+
+        ''' <summary>
+        ''' 用 AST 解释器对内核做一次自检（解释执行结果 vs 直接调用原方法的期望值）。
+        ''' </summary>
+        ''' <returns>形如 ``内核名: interpreter diff=... OK|FAIL`` 的一行诊断文本</returns>
+        Public Function selfCheck(kernel As IlCudaKernel, args As Object(), expected As Double) As String
+            If kernel Is Nothing Then
+                Return "self check: no kernel"
+            End If
+            If kernel.Syntax Is Nothing Then
+                Return kernel.Name & ": not translated"
+            End If
+
+            Dim actual As Object
+
+            Try
+                actual = New AstInterpreter(kernel.Syntax).Invoke(args)
+            Catch ex As Exception
+                Return kernel.Name & ": interpreter error " & ex.Message
+            End Try
+
+            Dim diff As Double = std.Abs(expected - Convert.ToDouble(actual))
+            Dim tolerance As Double = 1.0E-6 * std.Max(1.0, std.Abs(expected))
+
+            Return $"{kernel.Name}: interpreter diff={diff.ToString("E2")} {If(diff <= tolerance, "OK", "FAIL")}"
+        End Function
+
+#End Region
+
+#Region "显存"
+
+        ''' <summary>分配单精度显存缓冲并上传数据。</summary>
+        Public Function buffer(values As Single()) As DeviceBuffer(Of Single)
+            If values Is Nothing Then
+                Throw New ArgumentNullException(NameOf(values))
+            End If
+
+            Dim allocated As New DeviceBuffer(Of Single)(values.Length)
+
+            Call allocated.Write(values)
+
+            Return allocated
+        End Function
+
+        ''' <summary>分配双精度显存缓冲并上传数据。</summary>
+        Public Function bufferDouble(values As Double()) As DeviceBuffer(Of Double)
+            If values Is Nothing Then
+                Throw New ArgumentNullException(NameOf(values))
+            End If
+
+            Dim allocated As New DeviceBuffer(Of Double)(values.Length)
+
+            Call allocated.Write(values)
+
+            Return allocated
+        End Function
+
+        ''' <summary>分配单精度显存缓冲（零填充）。</summary>
+        Public Function bufferSize(count As Integer) As DeviceBuffer(Of Single)
+            If count <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(count))
+            End If
+
+            Return New DeviceBuffer(Of Single)(count)
+        End Function
+
+        ''' <summary>分配双精度显存缓冲（零填充）。</summary>
+        Public Function bufferSizeDouble(count As Integer) As DeviceBuffer(Of Double)
+            If count <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(count))
+            End If
+
+            Return New DeviceBuffer(Of Double)(count)
+        End Function
+
+        ''' <summary>把单精度显存缓冲读回主机。</summary>
+        Public Function read(buffer As DeviceMemory) As Single()
+            Dim typed = TryCast(buffer, DeviceBuffer(Of Single))
+
+            If typed Is Nothing Then
+                Throw New ArgumentException("read() 需要 cuda.buffer/cuda.bufferSize 创建的单精度缓冲")
+            End If
+
+            Return typed.Read()
+        End Function
+
+        ''' <summary>把双精度显存缓冲读回主机。</summary>
+        Public Function readDouble(buffer As DeviceMemory) As Double()
+            Dim typed = TryCast(buffer, DeviceBuffer(Of Double))
+
+            If typed Is Nothing Then
+                Throw New ArgumentException("readDouble() 需要 cuda.bufferDouble/cuda.bufferSizeDouble 创建的双精度缓冲")
+            End If
+
+            Return typed.Read()
+        End Function
+
+#End Region
+
+#Region "启动"
+
+        ''' <summary>
+        ''' 一维启动：<paramref name="args"/> 按内核签名顺序给出（线程索引参数不在其中），
+        ''' 末尾由框架补上输出数组与元素个数。
+        ''' </summary>
+        Public Sub launch1D(kernel As IlCudaKernel, engine As CudaEngine,
+                            totalElements As Integer, blockSize As Integer,
+                            output As DeviceMemory,
+                            ParamArray args As Object())
+            If kernel Is Nothing Then Throw New ArgumentNullException(NameOf(kernel))
+            If engine Is Nothing Then Throw New ArgumentNullException(NameOf(engine))
+
+            Dim all As New List(Of Object)(args)
+
+            Call all.Add(output)
+            Call all.Add(totalElements)
+            Call kernel.Launch(engine, LaunchPlanner.For1D(totalElements, If(blockSize > 0, blockSize, 256)), all.ToArray)
+        End Sub
+
+        ''' <summary>二维启动：<paramref name="rows"/> × <paramref name="cols"/> 的输出矩阵。</summary>
+        Public Sub launch2D(kernel As IlCudaKernel, engine As CudaEngine,
+                            rows As Integer, cols As Integer, tile As Integer,
+                            output As DeviceMemory,
+                            ParamArray args As Object())
+            If kernel Is Nothing Then Throw New ArgumentNullException(NameOf(kernel))
+            If engine Is Nothing Then Throw New ArgumentNullException(NameOf(engine))
+
+            Dim size As Integer = If(tile > 0, tile, 16)
+            Dim all As New List(Of Object)(args)
+
+            Call all.Add(output)
+            Call all.Add(rows)
+            Call all.Add(cols)
+            Call kernel.Launch(engine, LaunchPlanner.For2D(rows, cols, size, size), all.ToArray)
+        End Sub
+
+        ''' <summary>阻塞等待引擎上已提交的计算全部完成（读回结果之前调用）。</summary>
+        Public Sub synchronize(engine As CudaEngine)
+            If engine Is Nothing Then Return
+
+            Call engine.Synchronize()
+        End Sub
+
+#End Region
+
+#Region "工具函数"
+
+        ''' <summary>生成 [-1, 1] 区间内的确定性随机矩阵（行主序）。</summary>
+        Public Function makeMatrix(rows As Integer, cols As Integer, Optional seed As Integer = 42) As Single()
+            Dim random As New Random(seed)
+            Dim data(rows * cols - 1) As Single
+
+            For i As Integer = 0 To data.Length - 1
+                data(i) = CSng(random.NextDouble() * 2.0 - 1.0)
+            Next
+
+            Return data
+        End Function
+
+        ''' <summary>把行主序的一维矩阵数据还原成 ``rows × cols`` 的交错数组。</summary>
+        Public Function toMatrix(values As Double(), rows As Integer, cols As Integer) As Double()()
+            Dim out(rows - 1)() As Double
+
+            For i As Integer = 0 To rows - 1
+                Dim row(cols - 1) As Double
+
+                For j As Integer = 0 To cols - 1
+                    row(j) = values(i * cols + j)
+                Next
+
+                out(i) = row
+            Next
+
+            Return out
+        End Function
+
+        ''' <summary>取矩阵左上角 n×n 的单元格，格式化为文本预览。</summary>
+        Public Function preview(values As Double(), rows As Integer, Optional n As Integer = 6) As String
             Dim lines As New List(Of String)
 
             For i As Integer = 0 To std.Min(n, rows) - 1
@@ -450,5 +346,41 @@ Public Module cuda
 
             Return String.Join(Environment.NewLine, lines)
         End Function
-    End Class
-End Module
+
+        ''' <summary>取单精度矩阵左上角 n×n 的单元格，格式化为文本预览。</summary>
+        Public Function preview(values As Single(), rows As Integer, Optional n As Integer = 6) As String
+            Dim lines As New List(Of String)
+
+            For i As Integer = 0 To std.Min(n, rows) - 1
+                Dim sb As New Text.StringBuilder()
+
+                For j As Integer = 0 To std.Min(n, rows) - 1
+                    Call sb.Append(values(i * rows + j).ToString("F4").PadLeft(10))
+                Next
+
+                Call lines.Add(sb.ToString)
+            Next
+
+            Return String.Join(Environment.NewLine, lines)
+        End Function
+
+        ''' <summary>GPU 结果与双精度参考实现之间的最大绝对误差。</summary>
+        Public Function maxError(got As Single(), expected As Double()) As Double
+            Dim maxDiff As Double = 0
+
+            For i As Integer = 0 To got.Length - 1
+                Dim diff As Double = std.Abs(CDbl(got(i)) - expected(i))
+
+                If diff > maxDiff Then
+                    maxDiff = diff
+                End If
+            Next
+
+            Return maxDiff
+        End Function
+
+#End Region
+
+    End Module
+
+End Namespace

@@ -38,7 +38,7 @@ Public Class JsCudaTranslationTests
 
         ' __device__ scalar function: index parameters are int, buffers are const pointers
         Assert.Contains("__device__ double js_cell_scalar(int i, int j, const double* __restrict__ dot", source)
-        Assert.Contains("const double* __restrict__ rowSumSq", source)
+        Assert.Contains("double rowSumSq", source)
         ' __global__ wrapper: thread index, bounds check, output write
         Assert.Contains("extern ""C"" __global__ void js_cell_kernel(", source)
         Assert.Contains("int i = blockIdx.y * blockDim.y + threadIdx.y;", source)
@@ -53,8 +53,8 @@ Public Class JsCudaTranslationTests
     Public Sub Translate_KeepsControlFlow()
         Dim source = JsCudaTranslator.TranslateSource(CellKernel).Source
 
-        Assert.Contains("if ((c > 1)) {", source)
-        Assert.Contains("c = 1.0;", source)
+        Assert.Contains("if (c > 1) {", source)
+        Assert.Contains("c = 1;", source)
         Assert.Contains("return c;", source)
     End Sub
 
@@ -64,7 +64,7 @@ Public Class JsCudaTranslationTests
         ' must be an integer, otherwise the device compiler rejects the code
         Dim source = JsCudaTranslator.TranslateSource(CellKernel).Source
 
-        Assert.Contains("dot[((int)", source.Replace("((int)(i", "((int)"))
+        Assert.Contains("dot[((int)", source)
     End Sub
 
     ' ======================================================== element-wise
@@ -77,9 +77,9 @@ Public Class JsCudaTranslationTests
         Assert.Equal("js_square_kernel", kernel.Name)
         Assert.Equal(CudaIndexMode.Grid1D, kernel.IndexMode)
         ' every scalar parameter is read at the thread index
-        Assert.Contains("int i = blockIdx.x * blockDim.x + threadIdx.x;", source)
-        Assert.Contains("if (i >= js_n) return;", source)
-        Assert.Contains("js_out[i] = js_square_scalar(x[i]);", source)
+        Assert.Contains("int il_i = blockIdx.x * blockDim.x + threadIdx.x;", source)
+        Assert.Contains("if (il_i >= js_n) return;", source)
+        Assert.Contains("js_out[il_i] = js_square_scalar(x[il_i]);", source)
         Assert.Contains("const double* __restrict__ x", source)
     End Sub
 
@@ -88,6 +88,8 @@ Public Class JsCudaTranslationTests
         Dim source = JsCudaTranslator.TranslateSource(
             "function scale(i, x, factor) { return x[i] * factor; }").Source
 
+        ' a real index parameter is used as-is (the element-wise synthetic index is il_i)
+        Assert.Contains("int i = blockIdx.x * blockDim.x + threadIdx.x;", source)
         Assert.Contains("if (i >= js_n) return;", source)
         Assert.Contains("js_out[i] = js_scale_scalar(i, x, factor);", source)
     End Sub
@@ -150,7 +152,7 @@ Public Class JsCudaTranslationTests
         Assert.Equal("dot", kinds(0).Name)
         Assert.Equal(JsKernelParamKind.Buffer, kinds(0).Kind)
         Assert.Equal("rowSumSq", kinds(1).Name)
-        Assert.Equal(JsKernelParamKind.Buffer, kinds(1).Kind)
+        Assert.Equal(JsKernelParamKind.Number, kinds(1).Kind)
         Assert.Equal("rows", kinds(2).Name)
         Assert.Equal(JsKernelParamKind.Number, kinds(2).Kind)
     End Sub
@@ -201,10 +203,11 @@ Public Class JsCudaTranslationTests
 
     <Fact>
     Public Sub Translate_ScriptFunctionCallIsRejected()
+        ' the first function of the source is the kernel, so 'f' comes first here
         Dim ex = Assert.Throws(Of JsCudaException)(
             Function() JsCudaTranslator.TranslateSource(
-                "function helper(v) { return v; }
-                 function f(i, x) { return helper(x[i]); }"))
+                "function f(i, x) { return helper(x[i]); }
+                 function helper(v) { return v; }"))
 
         Assert.Contains("only the Math.* functions", ex.Message)
     End Sub
@@ -263,7 +266,7 @@ Public Class JsCudaTranslationTests
                 return s;
             }").Source
 
-        Assert.Contains("for (k = 0; (k < cols); k = k + 1) {", source)
+        Assert.Contains("for (k = 0; k < cols; k = k + 1) {", source)
         Assert.Contains("return s;", source)
     End Sub
 
@@ -276,7 +279,7 @@ Public Class JsCudaTranslationTests
                 return k;
             }").Source
 
-        Assert.Contains("while ((k > 0)) {", source)
+        Assert.Contains("while (k > 0) {", source)
     End Sub
 
 End Class
