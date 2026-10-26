@@ -11,6 +11,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>U-Net: Convolutional Networks for Biomedical Image Segmentation</Title>
+    <Configurations>Debug;Release;nuget_release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
