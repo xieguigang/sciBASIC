@@ -199,16 +199,14 @@ Namespace Plot3D.Device
         Public Function MeasureLegendBox(g As IGraphics, legends As IEnumerable(Of LegendObject),
                                          theme As Plot3DTheme, Optional d As Integer = 5) As SizeF
             Dim list As LegendObject() = legends.SafeQuery.ToArray
-            Dim shape As SizeF = ShapeSize(theme)
-            Dim maxTitle As SizeF = list.MaxLegendSize(g)
 
             If list.Length = 0 Then
                 Return New SizeF(0, 0)
             End If
 
-            Return New SizeF(
-                shape.Width + shape.Height * 1.25F + maxTitle.Width,
-                (std.Max(shape.Height, maxTitle.Height) + d + 1.25F) * list.Length)
+            ' 与 DrawLegends 共用同一个外框几何，避免"预留空间"和"实际画框"各算一套
+            Return LegendRegion(PointF.Empty, ShapeSize(theme), list.Length,
+                                 list.MaxLegendSize(g), d).Size
         End Function
 
         ''' <summary>
@@ -232,15 +230,14 @@ Namespace Plot3D.Device
             Dim box As SizeF = MeasureLegendBox(g, list, theme, d)
             Dim margin As Single = 8
 
-            ' 外框左上角会被 DrawLegends 从 topLeft 再向左、向上平移 (d, 1.2d)
-            Dim bx As Single = plotRect.Right - box.Width - d - margin
+            ' 这里定位的是"外框"的左上角；DrawLegends 会以 topLeft = 外框 + (d, d) 反推
+            Dim bx As Single = plotRect.Right - box.Width - margin
             Dim by As Single = plotRect.Top + (plotRect.Height - box.Height) / 2
 
-            bx = std.Max(plotRect.Left + d + 2, std.Min(bx, canvasSize.Width - box.Width - margin))
-            by = std.Max(plotRect.Top + 1.2F * d + 2,
-                         std.Min(by, canvasSize.Height - box.Height - margin))
+            bx = std.Max(plotRect.Left + 2, std.Min(bx, canvasSize.Width - box.Width - margin))
+            by = std.Max(plotRect.Top + 2, std.Min(by, canvasSize.Height - box.Height - margin))
 
-            Dim topLeft As New PointF(bx + d, by + 1.2F * d)
+            Dim topLeft As New PointF(bx + d, by + d)
 
             Call g.DrawLegends(
                 topLeft:=topLeft,

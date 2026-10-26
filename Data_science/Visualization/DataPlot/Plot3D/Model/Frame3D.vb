@@ -147,27 +147,19 @@ Namespace Plot3D.Model
         ''' <param name="xrange">X 轴范围</param>
         ''' <param name="yrange">Y 轴范围</param>
         ''' <param name="zrange">Z 轴范围</param>
-        ''' <param name="theme">三维绘图主题</param>
-        ''' <param name="tickCount">每根轴上期望的刻度数量</param>
         ''' <summary>
         ''' 三维坐标系的绘制锚点：相机自适应地取"屏幕上最靠下"的盒角作为原点，
         ''' 三条刻度轨从该角出发分别沿 X / Y / Z 方向延伸。
         ''' </summary>
-        ''' <param name="corner">锚点（前下角，模型坐标）</param>
-        ''' <param name="xEnd">X 轨的远端</param>
-        ''' <param name="yEnd">Y 轨的远端</param>
-        ''' <param name="zEnd">Z 轨的远端</param>
-        ''' <param name="outX">X 刻度向外（盒体外侧）的方向向量</param>
-        ''' <param name="outY">Y 刻度向外的方向向量</param>
-        ''' <param name="outZ">Z 刻度向外的方向向量</param>
         Public Structure FrameAnchor
+            ''' <summary>锚点（屏幕最下方的那个盒角，模型坐标）</summary>
             Public Property corner As Point3D
+            ''' <summary>X 轨的远端</summary>
             Public Property xEnd As Point3D
+            ''' <summary>Y 轨的远端</summary>
             Public Property yEnd As Point3D
+            ''' <summary>Z 轨的远端</summary>
             Public Property zEnd As Point3D
-            Public Property outX As Point3D
-            Public Property outY As Point3D
-            Public Property outZ As Point3D
         End Structure
 
         ''' <summary>
@@ -218,20 +210,50 @@ Namespace Plot3D.Model
             Dim cx# = (xrange.Min + xrange.Max) / 2
             Dim cy# = (yrange.Min + yrange.Max) / 2
             Dim cz# = (zrange.Min + zrange.Max) / 2
-            ' 锚点相对盒心的方位决定了刻度应当朝哪个方向外推（永远指向盒体外侧）
-            Dim sx# = If(best.X < cx, -1.0#, 1.0#)
-            Dim sy# = If(best.Y < cy, -1.0#, 1.0#)
-            Dim sz# = If(best.Z < cz, -1.0#, 1.0#)
 
             Return New FrameAnchor With {
                 .corner = best,
                 .xEnd = New Point3D(If(best.X < cx, xrange.Max, xrange.Min), best.Y, best.Z),
                 .yEnd = New Point3D(best.X, If(best.Y < cy, yrange.Max, yrange.Min), best.Z),
-                .zEnd = New Point3D(best.X, best.Y, If(best.Z < cz, zrange.Max, zrange.Min)),
-                .outX = New Point3D(0, sy, 0),
-                .outY = New Point3D(sx, 0, 0),
-                .outZ = New Point3D(sx * 0.7, sy * 0.7, 0)
+                .zEnd = New Point3D(best.X, best.Y, If(best.Z < cz, zrange.Max, zrange.Min))
             }
+        End Function
+
+        ''' <summary>
+        ''' 计算某条轨道在屏幕上的"外法向"（单位向量，指向远离盒心的一侧）。
+        '''
+        ''' <para>
+        ''' 刻度值/轴名用这个方向做像素级偏移：既保证文字永远落在盒体外侧，
+        ''' 又不会像三维外推那样把缩放域撑大、进而缩小整个盒体。
+        ''' </para>
+        ''' </summary>
+        ''' <param name="camera">相机</param>
+        ''' <param name="start">轨道起点（模型坐标）</param>
+        ''' <param name="finish">轨道终点（模型坐标）</param>
+        ''' <param name="center">盒心（模型坐标）</param>
+        Private Function ScreenOutward(camera As Camera, start As Point3D, finish As Point3D, center As Point3D) As PointF
+            Dim a As Point3D = camera.Project(camera.Rotate(start))
+            Dim b As Point3D = camera.Project(camera.Rotate(finish))
+            Dim c As Point3D = camera.Project(camera.Rotate(center))
+            Dim dx# = b.X - a.X
+            Dim dy# = b.Y - a.Y
+            Dim nx# = -dy
+            Dim ny# = dx
+            Dim mx# = (a.X + b.X) / 2 - c.X
+            Dim my# = (a.Y + b.Y) / 2 - c.Y
+
+            If nx * mx + ny * my < 0 Then
+                nx = -nx
+                ny = -ny
+            End If
+
+            Dim len# = std.Sqrt(nx * nx + ny * ny)
+
+            If len <= 1.0E-12 Then
+                Return New PointF(0, 1)
+            End If
+
+            Return New PointF(CSng(nx / len), CSng(ny / len))
         End Function
 
         ''' <summary>
@@ -253,38 +275,47 @@ Namespace Plot3D.Model
                                        camera As Camera,
                                        Optional tickCount As Integer = 6) As IEnumerable(Of Element3D)
 
-            Dim pen As Pen = css.GetPen(Stroke.TryParse(theme.boxStroke))
             Dim brush As Brush = theme.mainTextColor.GetBrush
             Dim format As String = If(theme.tickFormat.StringEmpty, "G2", theme.tickFormat)
             Dim anchor As FrameAnchor = AnchorOf(camera, xrange, yrange, zrange)
-            ' 刻度短线与文本的外推量（按各自轴长的比例缩放，避免长短轴比例悬殊时文字贴到轴上）
-            Dim stepX# = SafeLength(xrange) * 0.03
-            Dim stepY# = SafeLength(yrange) * 0.03
-            Dim stepZ# = SafeLength(zrange) * 0.03
+            Dim center As New Point3D(
+                (xrange.Min + xrange.Max) / 2,
+                (yrange.Min + yrange.Max) / 2,
+                (zrange.Min + zrange.Max) / 2)
+            ' 三条轨道在屏幕上的外法向：刻度值沿这个方向做像素偏移
+            Dim outX As PointF = ScreenOutward(camera, anchor.corner, anchor.xEnd, center)
+            Dim outY As PointF = ScreenOutward(camera, anchor.corner, anchor.yEnd, center)
+            Dim outZ As PointF = ScreenOutward(camera, anchor.corner, anchor.zEnd, center)
 
             ' X 轴：沿锚点所在的 Y/Z 平面
             For Each xv As Double In InRangeTicks(xrange, tickCount)
                 Dim p As New Point3D(xv, anchor.corner.Y, anchor.corner.Z)
 
-                Yield New Line(p, New Point3D(p.X + anchor.outX.X * stepX, p.Y + anchor.outX.Y * stepX, p.Z)) With {.Stroke = pen}
-                Yield TickLabel(xv, format, New Point3D(p.X + anchor.outX.X * stepX * 3.4, p.Y + anchor.outX.Y * stepX * 3.4, p.Z), theme, brush)
+                Yield TickLabel(xv, format, p, outX, theme, brush)
             Next
 
-            ' Y 轴
+            ' Y 轴（跳过与锚点重合的那个刻度值，避免和 Z 轴的最小刻度叠在一起）
             For Each yv As Double In InRangeTicks(yrange, tickCount)
-                Dim p As New Point3D(anchor.corner.X, yv, anchor.corner.Z)
+                If Near(yv, anchor.corner.Y, SafeLength(yrange) * 0.02) Then
+                    Continue For
+                End If
 
-                Yield New Line(p, New Point3D(p.X + anchor.outY.X * stepY, p.Y, p.Z)) With {.Stroke = pen}
-                Yield TickLabel(yv, format, New Point3D(p.X + anchor.outY.X * stepY * 3.4, p.Y, p.Z), theme, brush)
+                Yield TickLabel(yv, format, New Point3D(anchor.corner.X, yv, anchor.corner.Z), outY, theme, brush)
             Next
 
             ' Z 轴
             For Each zv As Double In InRangeTicks(zrange, tickCount)
-                Dim p As New Point3D(anchor.corner.X, anchor.corner.Y, zv)
+                If Near(zv, anchor.corner.Z, SafeLength(zrange) * 0.02) Then
+                    Continue For
+                End If
 
-                Yield New Line(p, New Point3D(p.X + anchor.outZ.X * stepZ, p.Y + anchor.outZ.Y * stepZ, p.Z)) With {.Stroke = pen}
-                Yield TickLabel(zv, format, New Point3D(p.X + anchor.outZ.X * stepZ * 3.4, p.Y + anchor.outZ.Y * stepZ * 3.4, p.Z), theme, brush)
+                Yield TickLabel(zv, format, New Point3D(anchor.corner.X, anchor.corner.Y, zv), outZ, theme, brush)
             Next
+        End Function
+
+        ''' <summary>判断两个数值是否在给定容差内相等（用于剔除与锚点重合的刻度值）</summary>
+        Private Function Near(a As Double, b As Double, tolerance As Double) As Boolean
+            Return std.Abs(a - b) <= std.Max(tolerance, 1.0E-09)
         End Function
 
         ''' <summary>
@@ -316,15 +347,22 @@ Namespace Plot3D.Model
                 pen.CustomEndCap = New AdjustableArrowCap(pen.Width * .Width, pen.Width * .Height)
             End With
 
+            If DebugFrame Then
+                Call Console.WriteLine(
+                    $"[3d frame] corner={anchor.corner} -> x={anchor.xEnd} y={anchor.yEnd} z={anchor.zEnd}")
+                Call Console.WriteLine(
+                    $"[3d frame] screen: corner={Project(camera, anchor.corner)} x={Project(camera, anchor.xEnd)} y={Project(camera, anchor.yEnd)} z={Project(camera, anchor.zEnd)}")
+            End If
+
             Yield New Line(anchor.corner, anchor.xEnd) With {.Stroke = pen}
             Yield New Line(anchor.corner, anchor.yEnd) With {.Stroke = pen}
             Yield New Line(anchor.corner, anchor.zEnd) With {.Stroke = pen}
 
             ' 轴名放在各轴的远端，并沿"盒体外侧"再推出一段，避免压住最末一个刻度值
-            Dim ox# = anchor.outX.X * SafeLength(yrange) * 0.30
-            Dim oy# = anchor.outY.X * SafeLength(xrange) * 0.30
-            Dim ozX# = anchor.outZ.X * SafeLength(xrange) * 0.35
-            Dim ozY# = anchor.outZ.Y * SafeLength(yrange) * 0.35
+            Dim ox# = anchor.outX.X * SafeLength(yrange) * 0.10
+            Dim oy# = anchor.outY.X * SafeLength(xrange) * 0.10
+            Dim ozX# = anchor.outZ.X * SafeLength(xrange) * 0.10
+            Dim ozY# = anchor.outZ.Y * SafeLength(yrange) * 0.10
 
             Yield New Label With {
                 .Text = labels.X,
@@ -357,6 +395,19 @@ Namespace Plot3D.Model
         End Function
 
         ''' <summary>
+        ''' 调试开关：环境变量 <c>PLOT3D_DEBUG=1</c> 时输出三维坐标系锚点的投影位置
+        ''' </summary>
+        Private ReadOnly DebugFrame As Boolean =
+            String.Equals(Environment.GetEnvironmentVariable("PLOT3D_DEBUG"), "1", StringComparison.Ordinal)
+
+        ''' <summary>把模型坐标投影成屏幕坐标（仅用于诊断输出）</summary>
+        Private Function Project(camera As Camera, pt As Point3D) As PointF
+            Dim p As Point3D = camera.Project(camera.Rotate(pt))
+
+            Return New PointF(CSng(p.X), CSng(p.Y))
+        End Function
+
+        ''' <summary>
         ''' 格式化刻度值：接近 0 的浮点噪声统一显示成 <c>0</c>（否则会出现 <c>-0</c> 这种不雅的标签）
         ''' </summary>
         ''' <param name="v">刻度值</param>
@@ -369,13 +420,21 @@ Namespace Plot3D.Model
             Return v.ToString(If(format.StringEmpty, "G2", format))
         End Function
 
-        ''' <summary>生成一个刻度值文本元素</summary>
-        Private Function TickLabel(v As Double, format$, location As Point3D, theme As Plot3DTheme, brush As Brush) As Element3D
+        ''' <summary>刻度值相对轨道的屏幕偏移量（像素）</summary>
+        Private Const TickGap As Single = 12
+
+        ''' <summary>轴名相对轴端的屏幕偏移量（像素）</summary>
+        Private Const TitleGap As Single = 24
+
+        ''' <summary>生成一个刻度值文本元素（沿 <paramref name="outward"/> 方向做像素外偏移）</summary>
+        Private Function TickLabel(v As Double, format$, location As Point3D,
+                                   outward As PointF, theme As Plot3DTheme, brush As Brush) As Element3D
             Return New Label With {
                 .Text = FormatTick(v, format),
                 .FontCss = theme.tickCSS,
                 .Color = brush,
-                .Location = location
+                .Location = location,
+                .Offset = New PointF(outward.X * TickGap, outward.Y * TickGap)
             }
         End Function
 

@@ -300,9 +300,9 @@ Namespace Plot3D.Legend
 
             Dim font As Font = l.GetFont(g.LoadEnvironment)
             Dim fSize As SizeF = g.MeasureString(l.title, font)
+            ' 文本高于形状时不能朝上溢出（旧实现会算出负偏移，首行文字因此压到图例外框上）
             Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width + 5,
-                ' 文本高于形状时不能朝上溢出（旧实现会算出负偏移，首行文字因此压到图例外框上）
                 .Y = pos.Y + std.Max(0, (canvas.Height - fSize.Height) / 2)
             }
             Dim color As Brush = l.color.GetBrush
