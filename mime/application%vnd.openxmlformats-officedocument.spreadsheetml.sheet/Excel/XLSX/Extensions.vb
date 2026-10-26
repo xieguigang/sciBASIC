@@ -170,6 +170,21 @@ Namespace XLSX
             Next
         End Sub
 
+        <Extension>
+        Public Sub WriteSheetTable(workbook As Workbook, data As DataFrame)
+            Dim sheet As Worksheet = workbook.CurrentWorksheet
+
+            For Each row As NamedCollection(Of Object) In data.foreachRow
+                Call sheet.AddNextCell(row.name)
+
+                For Each col As Object In row
+                    Call sheet.AddNextCell(col)
+                Next
+
+                Call sheet.GoToNextRow()
+            Next
+        End Sub
+
         ''' <summary>
         ''' Save target object collection into a given xlsx table file
         ''' </summary>

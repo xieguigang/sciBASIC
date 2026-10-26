@@ -12,6 +12,10 @@ Public Module read
         Return DataFrame.read_csv(file, delimiter:=ASCII.TAB)
     End Function
 
+    Public Function arff(file As String) As DataFrame
+        Return DataFrame.read_arff(file)
+    End Function
+
     Public Function xlsx(file As String, sheet As String) As DataFrame
         Dim pkg As xlsxFile = xlsxFile.Open(file)
         Dim tbl = pkg.GetTable(sheetName:=sheet)
