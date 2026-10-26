@@ -153,10 +153,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
@@ -164,9 +161,6 @@
     <ProjectReference Include="..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
     <ProjectReference Include="..\..\DataMining\UMAP\UMAP.NET5.vbproj" />
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
-    <ProjectReference Include="..\..\MachineLearning\DeepLearning\DeepLearning.NET6.vbproj" />
-    <ProjectReference Include="..\..\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
-    <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\DataPlot\DataPlot.vbproj" />
   </ItemGroup>

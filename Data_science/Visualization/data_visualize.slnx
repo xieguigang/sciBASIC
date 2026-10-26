@@ -20,6 +20,10 @@
     <Project Path="../../gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj">
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -38,7 +42,18 @@
     <Project Path="../DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../DataMining/UMAP/UMAP.NET5.vbproj">
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Graph/graph-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Mathematica/Math/Randomizer/randomizer-netcore5.vbproj">
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
