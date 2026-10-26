@@ -1,0 +1,42 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../mime/text%html/html_netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../DataMining/DataMining/DataMining.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="DataPlot/DataPlot.vbproj">
+    <BuildType Solution="gcmodeller_desktop|*" Project="nuget_release" />
+    <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+    <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Visualization/data_visualize-netcore5.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

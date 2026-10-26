@@ -59,7 +59,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
-Namespace ComponentModel.Encoder
+Namespace ComponentModel
 
     ''' <summary>
     ''' Object entity classification class

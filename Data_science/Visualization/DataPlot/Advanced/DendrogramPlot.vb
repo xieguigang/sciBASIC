@@ -122,7 +122,7 @@ Public Class DendrogramPlot
     Protected Friend ReadOnly classIndex As Dictionary(Of String, ColorClass)
 
     ''' <summary>
-    ''' leaf id map to <see cref="ColorClass.name"/>
+    ''' leaf id map to "ColorClass.name"
     ''' </summary>
     Public ReadOnly Property classinfo As Dictionary(Of String, String)
 
