@@ -262,7 +262,7 @@ Public Module cuda
         If session Is Nothing Then Throw New ArgumentNullException(NameOf(session))
         If output Is Nothing Then Throw New ArgumentNullException(NameOf(output))
 
-        Dim all As New List(Of Object)(args)
+        Dim all As List(Of Object) = unwrap(args)
 
         Call all.Add(output.Memory)
         Call all.Add(totalElements)
@@ -281,13 +281,35 @@ Public Module cuda
         If output Is Nothing Then Throw New ArgumentNullException(NameOf(output))
 
         Dim size As Integer = If(tile > 0, tile, 16)
-        Dim all As New List(Of Object)(args)
+        Dim all As List(Of Object) = unwrap(args)
 
         Call all.Add(output.Memory)
         Call all.Add(rows)
         Call all.Add(cols)
         Call kernel.Kernel.Launch(session.Engine, LaunchPlanner.For2D(rows, cols, size, size), all.ToArray)
     End Sub
+
+    ''' <summary>
+    ''' 把脚本侧的 <see cref="CudaBuffer"/> 门面换成内核真正需要的显存对象；
+    ''' 其它参数（整数 / 单精度 / 双精度标量）原样传递。
+    ''' </summary>
+    Private Function unwrap(args As Object()) As List(Of Object)
+        Dim all As New List(Of Object)()
+
+        If args IsNot Nothing Then
+            For Each item As Object In args
+                Dim buffer = TryCast(item, CudaBuffer)
+
+                If buffer IsNot Nothing Then
+                    Call all.Add(buffer.Memory)
+                Else
+                    Call all.Add(item)
+                End If
+            Next
+        End If
+
+        Return all
+    End Function
 
     ''' <summary>阻塞等待会话上已提交的计算全部完成（读回结果之前调用）。</summary>
     Public Sub synchronize(session As CudaSession)

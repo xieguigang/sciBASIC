@@ -34,26 +34,26 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ''' <summary>
         ''' Translate a script function value into a CUDA kernel (<c>js_&lt;name&gt;_kernel</c>).
         ''' </summary>
-        Public Shared Function Translate(function_ As Object,
+        Public Shared Function translate(function_ As Object,
                                          Optional options As JsKernelOptions = Nothing) As IlCudaKernel
             Return JsCudaTranslator.Translate(function_, options)
         End Function
 
         ''' <summary>Translate JavaScript source text (one function declaration) into a CUDA kernel.</summary>
-        Public Shared Function TranslateSource(source As String,
+        Public Shared Function translateSource(source As String,
                                                Optional options As JsKernelOptions = Nothing) As IlCudaKernel
             Return JsCudaTranslator.TranslateSource(source, options)
         End Function
 
         ''' <summary>The generated <c>.cu</c> source of a kernel (header comments included).</summary>
-        Public Shared Function CudaSource(kernel As IlCudaKernel) As String
+        Public Shared Function cudaSource(kernel As IlCudaKernel) As String
             If kernel Is Nothing Then Throw New ArgumentNullException(NameOf(kernel))
 
             Return kernel.Source
         End Function
 
         ''' <summary>The recovered pseudo code of the typed AST (debugging aid).</summary>
-        Public Shared Function PseudoCode(kernel As IlCudaKernel) As String
+        Public Shared Function pseudoCode(kernel As IlCudaKernel) As String
             If kernel Is Nothing OrElse kernel.Syntax Is Nothing Then Return ""
 
             Return IL.SyntaxWriter.WriteMethod(kernel.Syntax)
@@ -63,7 +63,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ''' Register the kernel with the framework. It must be called before the engine is created
         ''' (the sources are compiled as one NVRTC unit).
         ''' </summary>
-        Public Shared Function Register(kernel As IlCudaKernel) As String
+        Public Shared Function register(kernel As IlCudaKernel) As String
             If kernel Is Nothing Then Throw New ArgumentNullException(NameOf(kernel))
 
             Call kernel.Register()
@@ -72,7 +72,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Thread index mode of the kernel (<c>Grid1D</c> / <c>Grid2D</c> / <c>None</c>).</summary>
-        Public Shared Function IndexMode(kernel As IlCudaKernel) As String
+        Public Shared Function indexMode(kernel As IlCudaKernel) As String
             If kernel Is Nothing Then Return ""
 
             Return kernel.IndexMode.ToString()
@@ -81,7 +81,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ' ======================================================== device
 
         ''' <summary>Is a usable CUDA device + NVRTC available in this process?</summary>
-        Public Shared Function Available() As Boolean
+        Public Shared Function available() As Boolean
             Dim options As New EngineOptions()
 
             Try
@@ -94,7 +94,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Name of the CUDA device used by this process, or <c>""</c> when unavailable.</summary>
-        Public Shared Function DeviceName() As String
+        Public Shared Function deviceName() As String
             Dim options As New EngineOptions()
 
             Try
@@ -109,7 +109,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Human readable probe report: the device, or why no device could be created.</summary>
-        Public Shared Function Diagnostics() As String()
+        Public Shared Function diagnostics() As String()
             Dim lines As New List(Of String)()
             Dim options As New EngineOptions()
 
@@ -147,7 +147,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Create the CUDA engine (register the kernels first).</summary>
-        Public Shared Function CreateEngine(Optional deviceOrdinal As Integer = 0) As CudaEngine
+        Public Shared Function createEngine(Optional deviceOrdinal As Integer = 0) As CudaEngine
             Dim options As New EngineOptions With {.DeviceOrdinal = deviceOrdinal}
             Dim engine As CudaEngine = CudaEngine.TryCreate(options)
 
@@ -159,7 +159,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Block until all the work submitted to the engine finished.</summary>
-        Public Shared Sub Synchronize(engine As CudaEngine)
+        Public Shared Sub synchronize(engine As CudaEngine)
             If engine Is Nothing Then Return
 
             Call engine.Synchronize()
@@ -168,7 +168,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ' ======================================================== buffers
 
         ''' <summary>Allocate a device buffer holding <paramref name="values"/> (double precision).</summary>
-        Public Shared Function Buffer(values As Double()) As DeviceBuffer(Of Double)
+        Public Shared Function buffer(values As Double()) As DeviceBuffer(Of Double)
             If values Is Nothing Then Throw New ArgumentNullException(NameOf(values))
 
             Dim allocated As New DeviceBuffer(Of Double)(values.Length)
@@ -179,17 +179,17 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Allocate a zero filled device buffer of <paramref name="count"/> doubles.</summary>
-        Public Shared Function BufferSize(count As Integer) As DeviceBuffer(Of Double)
+        Public Shared Function bufferSize(count As Integer) As DeviceBuffer(Of Double)
             If count <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(count))
 
             Return New DeviceBuffer(Of Double)(count)
         End Function
 
         ''' <summary>Read a device buffer back to the host.</summary>
-        Public Shared Function Read(buffer As DeviceMemory) As Double()
-            If buffer Is Nothing Then Throw New ArgumentNullException(NameOf(buffer))
+        Public Shared Function read(memory As DeviceMemory) As Double()
+            If memory Is Nothing Then Throw New ArgumentNullException(NameOf(memory))
 
-            Dim typed = TryCast(buffer, DeviceBuffer(Of Double))
+            Dim typed = TryCast(memory, DeviceBuffer(Of Double))
 
             If typed Is Nothing Then
                 Throw New ArgumentException(
@@ -205,17 +205,10 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ''' Launch a 1D kernel: <paramref name="totalElements"/> threads, the output buffer and the
         ''' kernel arguments given in signature order (thread index parameters excluded).
         ''' </summary>
-        Public Shared Sub Launch1D(kernel As IlCudaKernel, engine As CudaEngine,
+        Public Shared Sub launch1D(kernel As IlCudaKernel, engine As CudaEngine,
                                    totalElements As Integer,
-                                   output As DeviceMemory,
-                                   ParamArray args As Object())
-            Call Launch1D(kernel, engine, totalElements, output, 256, args)
-        End Sub
-
-        Public Shared Sub Launch1D(kernel As IlCudaKernel, engine As CudaEngine,
-                                   totalElements As Integer,
-                                   output As DeviceMemory,
                                    blockSize As Integer,
+                                   output As DeviceMemory,
                                    ParamArray args As Object())
             If kernel Is Nothing Then Throw New ArgumentNullException(NameOf(kernel))
             If engine Is Nothing Then Throw New ArgumentNullException(NameOf(engine))
@@ -229,17 +222,10 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ''' <summary>
         ''' Launch a 2D kernel over a <paramref name="rows"/> × <paramref name="cols"/> matrix.
         ''' </summary>
-        Public Shared Sub Launch2D(kernel As IlCudaKernel, engine As CudaEngine,
+        Public Shared Sub launch2D(kernel As IlCudaKernel, engine As CudaEngine,
                                    rows As Integer, cols As Integer,
-                                   output As DeviceMemory,
-                                   ParamArray args As Object())
-            Call Launch2D(kernel, engine, rows, cols, output, 16, args)
-        End Sub
-
-        Public Shared Sub Launch2D(kernel As IlCudaKernel, engine As CudaEngine,
-                                   rows As Integer, cols As Integer,
-                                   output As DeviceMemory,
                                    tile As Integer,
+                                   output As DeviceMemory,
                                    ParamArray args As Object())
             If kernel Is Nothing Then Throw New ArgumentNullException(NameOf(kernel))
             If engine Is Nothing Then Throw New ArgumentNullException(NameOf(engine))
@@ -271,8 +257,10 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ''' the launcher would write 8 bytes into a 4 byte parameter slot.
         ''' </summary>
         Private Shared Function Marshal(kernel As IlCudaKernel, args As Object()) As List(Of Object)
+            Dim typed = JsCudaTranslator.FindKernel(kernel)
             Dim kinds = JsCudaTranslator.ParameterKinds(kernel)
             Dim values As Object() = If(args, New Object() {})
+            Dim elementWise As Boolean = typed IsNot Nothing AndAlso typed.ElementWise
 
             If kinds.Length <> values.Length Then
                 Throw New ArgumentException(
@@ -287,21 +275,23 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
                 Dim kind = kinds(i).Kind
                 Dim argument = values(i)
 
-                Select Case kind
-                    Case JsKernelParamKind.Buffer
-                        Dim memory = TryCast(argument, DeviceMemory)
+                ' an element-wise kernel reads every scalar parameter at the thread index, so the
+                ' host must hand over a buffer even though the device function takes a scalar
+                If kind = JsKernelParamKind.Buffer OrElse
+                   (kind = JsKernelParamKind.Number AndAlso elementWise) Then
+                    Dim memory = TryCast(argument, DeviceMemory)
 
-                        If memory Is Nothing Then
-                            Throw New ArgumentException(
-                                $"kernel '{kernel.Name}': argument {i + 1} ('{kinds(i).Name}') must be a device buffer")
-                        End If
+                    If memory Is Nothing Then
+                        Throw New ArgumentException(
+                            $"kernel '{kernel.Name}': argument {i + 1} ('{kinds(i).Name}') must be a device buffer")
+                    End If
 
-                        Call marshalled.Add(memory)
-                    Case JsKernelParamKind.Int32
-                        Call marshalled.Add(CInt(JsRuntime.JsNum(argument)))
-                    Case Else
-                        Call marshalled.Add(JsRuntime.JsNum(argument))
-                End Select
+                    Call marshalled.Add(memory)
+                ElseIf kind = JsKernelParamKind.Int32 Then
+                    Call marshalled.Add(CInt(JsRuntime.JsNum(argument)))
+                Else
+                    Call marshalled.Add(JsRuntime.JsNum(argument))
+                End If
             Next
 
             Return marshalled
@@ -310,7 +300,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         ' ======================================================== comparison helpers
 
         ''' <summary>Largest absolute difference between the GPU result and the CPU reference.</summary>
-        Public Shared Function MaxError(gpu As Double(), cpu As Double()) As Double
+        Public Shared Function maxError(gpu As Double(), cpu As Double()) As Double
             If gpu Is Nothing OrElse cpu Is Nothing Then Return Double.NaN
 
             Dim n As Integer = std.Min(gpu.Length, cpu.Length)
@@ -328,7 +318,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
         End Function
 
         ''' <summary>Format the top-left <paramref name="n"/> × <paramref name="n"/> cells of a matrix.</summary>
-        Public Shared Function Preview(values As Double(), rows As Integer, Optional n As Integer = 6) As String
+        Public Shared Function preview(values As Double(), rows As Integer, Optional n As Integer = 6) As String
             If values Is Nothing Then Return ""
 
             Dim lines As New List(Of String)()

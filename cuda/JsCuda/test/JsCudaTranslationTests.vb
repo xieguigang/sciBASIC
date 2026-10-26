@@ -160,7 +160,7 @@ Public Class JsCudaTranslationTests
     <Fact>
     Public Sub Translate_ProducesReadablePseudoCode()
         Dim kernel = JsCudaTranslator.TranslateSource("function f(i, x) { return x[i] * 2; }")
-        Dim code = JsCudaHost.PseudoCode(kernel)
+        Dim code = JsCudaHost.pseudoCode(kernel)
 
         Assert.False(String.IsNullOrWhiteSpace(code))
         Assert.Contains("Function", code)
