@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.Computing.JSCuda</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.Computing.JSCuda</AssemblyName>
+    <AssemblyTitle>CUDA Interface for Javascript Interpreter</AssemblyTitle>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;nuget_release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+    <ProjectReference Include="..\ILCuda\ILCuda.vbproj" />
+  </ItemGroup>
+
+</Project>
