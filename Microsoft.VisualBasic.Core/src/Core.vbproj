@@ -634,8 +634,8 @@
 
 	<ItemGroup>
 
-		<PackageReference Include="System.Composition" Version="10.0.13" />
-		<PackageReference Include="System.Resources.Extensions" Version="10.0.13" />
+		<PackageReference Include="System.Composition" Version="10.0.14" />
+		<PackageReference Include="System.Resources.Extensions" Version="10.0.14" />
 	</ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
