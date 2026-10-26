@@ -9,8 +9,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 //  dynamic values are handed to the standard library.
 // ============================================================================
 
-const here = (name) => path.join(__dirname, name);
-
 // a strongly typed CLR integer (the VB ``Dim a As Integer`` counterpart)
 let a = 123;
 console.log(`a := ${a}`);

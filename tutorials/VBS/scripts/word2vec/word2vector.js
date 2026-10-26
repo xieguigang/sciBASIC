@@ -5,7 +5,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 // Word2Vec + UMAP + KMeans demo — the njs twin of word2vector.vb
 // ---------------------------------------------------------------------------
 
-const here = (name) => path.join(__dirname, name);
 const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
 
 const textfile = path.join(__dirname, '../../data/Rapunzel.txt');

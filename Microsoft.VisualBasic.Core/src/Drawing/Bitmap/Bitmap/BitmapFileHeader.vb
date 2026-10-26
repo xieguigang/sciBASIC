@@ -65,7 +65,6 @@ Namespace Imaging.BitmapImage.FileStream
     <StructLayout(LayoutKind.Sequential, Pack:=1)>
     Public Class BitmapFileHeader
 
-        Private _FileSize As UInteger
         ''' <summary>
         ''' FileHeader headerSize in bytes (fist 14 bytes from start)
         ''' </summary>
@@ -74,6 +73,13 @@ Namespace Imaging.BitmapImage.FileStream
         Public Const ByteZero As Byte = &H42
         Public Const ByteOne As Byte = &H4D
 
+        Public ReadOnly Property FileSize As UInteger
+
+        ''' <summary>
+        ''' The offset, i.e. starting address, of the byte where the bitmap image data (pixel array) can be found from the beggining of the file
+        ''' </summary>
+        Public PixelDataOffset As UInteger
+
         ''' <summary>
         ''' Explicitly set file in size
         ''' </summary>
@@ -81,20 +87,6 @@ Namespace Imaging.BitmapImage.FileStream
         Public Sub New(fileSize As UInteger)
             Me.FileSize = fileSize
         End Sub
-
-        Public Property FileSize As UInteger
-            Get
-                Return _FileSize
-            End Get
-            Private Set(value As UInteger)
-                _FileSize = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' The offset, i.e. starting address, of the byte where the bitmap image data (pixel array) can be found from the beggining of the file
-        ''' </summary>
-        Public PixelDataOffset As UInteger
 
         ''' <summary>
         ''' Create header and calculate file size depending on input data
@@ -193,10 +185,9 @@ Namespace Imaging.BitmapImage.FileStream
 
             Dim sizeBytes = BitConverter.ToUInt32(headerBytes, 2)
             Dim offset = BitConverter.ToUInt32(headerBytes, 10)
-
-            Dim header = New BitmapFileHeader() With {
+            Dim header As New BitmapFileHeader() With {
                 .PixelDataOffset = offset,
-                .FileSize = sizeBytes
+                ._FileSize = sizeBytes
             }
 
             Return header

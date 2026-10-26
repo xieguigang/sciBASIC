@@ -74,11 +74,43 @@ import u from './utils.js';                             // 无 export：等同�
 import './shim.js';                                     // 仅执行（副作用），重复导入只执行一次
 ```
 
-**CLR 解析顺序**：已加载程序集 → 显式 dll 路径（绝对路径或相对脚本目录）→ `Assembly.Load(简单名)` → 宿主探测目录（`ClrInterop.AddAssemblySearchPath`）→ 宿主回调（`ClrInterop.AssemblyResolver`）→ 抛脚本可捕获错误（消息列出尝试过的位置）。命名空间映射是**扁平**的：不含子命名空间、不含嵌套类型、跳过开放泛型定义，结果按（程序集, 命名空间）缓存。
+**CLR 解析顺序**：已加载程序集 → 显式 dll 路径（绝对路径或相对某个搜索根）→ `Assembly.Load(简单名)` → 各搜索根下的 `<name>.dll` → 宿主回调（`ClrInterop.AssemblyResolver`）→ 抛脚本可捕获错误（消息列出尝试过的位置）。命名空间映射是**扁平**的：不含子命名空间、不含嵌套类型、跳过开放泛型定义，结果按（程序集, 命名空间）缓存。
+
+**程序集搜索根**（与 VBS 的 `#include` 规则同源，`JsRuntime.AssemblySearchRoots()` 可查看）：
+
+```
+1. 脚本所在目录
+2. AppContext.BaseDirectory        （解释器 / njs.exe 所在目录）
+3. AppContext.BaseDirectory\libs
+4. AppContext.BaseDirectory\..\libs
+5. ClrInterop.AddAssemblySearchPath 注册的宿主目录
+```
+
+被导入 dll 的依赖也沿这些目录探测（托管程序集按简单名，原生库还会找 `runtimes\*/native`），所以把 `stdlib.dll` 放在 `..\.nuget\net10.0\`、把共享库放在 `libs\` 都能直接 `import` 到。
 
 **模块语义**：按绝对路径缓存（同一模块只执行一次）、循环导入明确报错、模块体在独立函数作用域中执行；`var`/函数/类声明属于全局作用域（相当于经典 script include），`let`/`const` 与函数局部变量对外不可见。**因为未实现 `export`**，模块的"导出面"就是它顶层的 `var/let/const/function/class` 声明。
 
 **宿主侧**：`JsRuntime.ScriptBaseDirectory` 指定相对路径的基准目录（默认取 `process` 的脚本目录，其次应用目录）；`JsRuntime.ClearImportCaches()` 清空程序集/命名空间/模块缓存。
+
+## 内建脚本魔法函数（here / 脚本自省）
+
+与 VBS 引擎的 `Magics.Build` 对齐，解释器内置下列全局函数，脚本不需要（也不应该）自己实现：
+
+| 函数 | 说明 |
+| --- | --- |
+| `here(relpath)` | 把相对路径解析为**相对当前脚本目录**的绝对路径；绝对路径原样规范化；`here('')` 返回脚本目录 |
+| `scriptDir()` | 当前脚本所在目录 |
+| `scriptFile()` | 当前脚本的绝对路径（无脚本文件时返回 `""`） |
+| `scriptName(withExtension?)` | 脚本文件名；`false` 去掉扩展名 |
+| `scriptText()` | 当前脚本的源码文本（无脚本文件时可捕获报错） |
+| `scriptLines()` | 当前脚本的源码行数组 |
+
+```javascript
+const csv = here('result.csv');        // <脚本目录>\result.csv
+console.log(scriptName(), scriptName(false), scriptDir());
+```
+
+语义与 VBS 的 `Here(relpath)` 完全一致（同一个 `__magicResolve` 规则：空串→脚本目录、绝对路径→`GetFullPath`、其余→`Combine(脚本目录, relpath)` 后 `GetFullPath`）。目录锚点取自 `JsRuntime.ScriptBaseDirectory`（`Interpreter.Run` 会按正在运行的脚本收窄），因此**解释执行与代码生成（翻译执行）两条路径行为相同**——`CodeGenerator` 把它们解析成 `JsGet(GlobalObj, name)`。
 
 ## 宿主互操作：CLR 反射桥接
 

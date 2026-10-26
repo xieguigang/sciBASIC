@@ -11,7 +11,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 //  ml.syntheticDigits is used, so the tutorial always runs.
 // ============================================================================
 
-const here = (name) => path.join(__dirname, name);
 const padEnd = (value, width) => String(value).padEnd(width);
 const fixed = (value, digits) => value.toFixed(digits);
 const percent = (value) => (value * 100).toFixed(2) + '%';

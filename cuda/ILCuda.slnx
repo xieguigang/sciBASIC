@@ -15,11 +15,17 @@
     <Project Path="ILCuda/test/test.vbproj" Id="2c38bbd3-7e26-4278-8128-1dc6a66b9059">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="JsCuda/test/JsCuda.Tests.vbproj" Id="8ef4b1d6-2a3c-4a71-9d05-6c1f2b7ae431">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
   <Project Path="GTop/GTop.vbproj" Id="185d6c5a-b8a7-45ed-be6e-07dfad15c78e">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
   <Project Path="ILCuda/ILCuda.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="JsCuda/JsCuda.vbproj" Id="c4d92a10-7b55-4c8e-a1f3-0d6e5b9c2a87">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>

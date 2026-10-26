@@ -182,14 +182,27 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
                     Call _indexNames.Add(name)
                 ElseIf indexed.Contains(name) Then
                     type = GetType(Double())
-                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Buffer))
                 Else
                     type = GetType(Double)
-                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Number))
                 End If
 
                 _symbols(name) = type
                 Call _parameterNames.Add(name)
+            Next
+
+            ' the kernel argument order is deterministic: buffers first, then scalars, each group in
+            ' order of appearance — so a context kernel has a readable, documented calling
+            ' convention (see JsCudaHost.parameterNames)
+            For Each name As String In members
+                If _symbols(name) Is GetType(Double()) Then
+                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Buffer))
+                End If
+            Next
+
+            For Each name As String In members
+                If _symbols(name) Is GetType(Double) Then
+                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Number))
+                End If
             Next
 
             Call OrderIndexNames()
@@ -420,11 +433,17 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
                     Throw OfNode(node, "destructuring declarations are not supported inside a GPU kernel")
                 End If
 
-                Dim type As Type = If(declarant.Init Is Nothing, GetType(Double), InferType(declarant.Init))
+                ' JavaScript numbers are doubles: a local must stay double even when it is
+                ' initialised with an integral literal, otherwise "let s = 0; s = s + x[k]"
+                ' would truncate every fractional value (the classic silent-wrong-result bug).
+                ' Subscripts are cast to int at the point of use instead.
+                Dim inferred As Type = If(declarant.Init Is Nothing, GetType(Double), InferType(declarant.Init))
 
-                If type Is GetType(Double()) Then
+                If inferred Is GetType(Double()) Then
                     Throw OfNode(node, $"'{name}' is assigned a buffer, which is not supported")
                 End If
+
+                Dim type As Type = GetType(Double)
 
                 _symbols(name) = type
                 Call translated.Statements.Add(

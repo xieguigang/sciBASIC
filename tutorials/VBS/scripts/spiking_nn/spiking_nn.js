@@ -5,8 +5,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 // Spiking neural network tutorial — the njs twin of spiking_nn.vb
 // =========================================================================
 
-const here = (name) => path.join(__dirname, name);
-
 const pad = (value, width) => String(value).padStart(width);
 const padEnd = (value, width) => String(value).padEnd(width);
 const fixed = (value, digits) => value.toFixed(digits);

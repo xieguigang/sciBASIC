@@ -5,7 +5,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 // KMeans + PCA demo — the njs twin of kmeans.vb
 // ---------------------------------------------------------------------------
 
-const here = (name) => path.join(__dirname, name);
 const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
 
 const file = path.join(__dirname, '../../data/bezdekIris.csv');
