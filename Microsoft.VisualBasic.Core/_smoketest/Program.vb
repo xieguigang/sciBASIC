@@ -133,6 +133,7 @@ Module Program
         ' ---------- png 与 bmp 位图读写 ----------
         failures += PngSelfTest.PngSelfTest.Run()
         failures += BitmapSelfTest.BitmapSelfTest.Run()
+        failures += JpegGifSelfTest.Run()
 
         Call Console.WriteLine()
         Call Console.WriteLine($"{(If(failures = 0, "PASS", "FAIL"))}: {failures} failure(s)")

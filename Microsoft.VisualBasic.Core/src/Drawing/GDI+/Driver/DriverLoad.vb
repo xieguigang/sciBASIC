@@ -62,6 +62,9 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
 
 Namespace Imaging.Driver
 
@@ -116,6 +119,81 @@ Namespace Imaging.Driver
             Else
                 Return loadImage(s)
             End If
+        End Function
+
+        ''' <summary>
+        ''' the built in image decoder used as a fallback when no external raster
+        ''' image loader driver has been registered through <see cref="Register"/>
+        ''' . the function inspects the first few bytes of the stream (the file magic
+        ''' number) and dispatches to the matching dependency free decoder:
+        ''' jpeg (<c>FF D8 FF</c>), gif (<c>GIF87a</c> / <c>GIF89a</c>), png and bmp.
+        ''' </summary>
+        ''' <param name="s">the encoded image stream.</param>
+        ''' <returns>a decoded image object.</returns>
+        Public Function DefaultLoadImage(s As Stream) As Image
+            If s Is Nothing Then
+                Throw New ArgumentNullException(NameOf(s))
+            End If
+
+            Dim pos As Long = s.Position
+            Dim sig(7) As Byte
+            Dim n As Integer = s.Read(sig, 0, 8)
+            Call s.Seek(pos, SeekOrigin.Begin)
+
+            If n >= 3 AndAlso sig(0) = &HFF AndAlso sig(1) = &HD8 AndAlso sig(2) = &HFF Then
+                ' jpeg baseline / progressive
+                Return JpegImage.Decode(ReadAllBytes(s))
+            ElseIf n >= 6 AndAlso sig(0) = &H47 AndAlso sig(1) = &H49 AndAlso sig(2) = &H46 Then
+                ' gif (G I F)
+                Return GifImage.Decode(ReadAllBytes(s))
+            ElseIf n >= 8 AndAlso sig(0) = &H89 AndAlso sig(1) = &H50 AndAlso sig(2) = &H4E AndAlso sig(3) = &H47 AndAlso sig(4) = &HD AndAlso sig(5) = &HA AndAlso sig(6) = &H1A AndAlso sig(7) = &HA Then
+                ' png
+                Return PngToBitmap(PngReader.Load(s))
+            Else
+                ' fall back to the bitmap (bmp) decoder
+                Return New Bitmap(New BitmapReader(s).LoadMemory)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' read the remaining bytes of a stream into a byte array.
+        ''' </summary>
+        Private Function ReadAllBytes(s As Stream) As Byte()
+            Using ms As New MemoryStream()
+                Call s.CopyTo(ms)
+                Return ms.ToArray()
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' convert a decoded <see cref="PngImage"/> (which stores row major rgb / rgba
+        ''' samples) into a <see cref="Bitmap"/> whose <see cref="BitmapBuffer"/> uses the
+        ''' bgr / bgra layout expected by the rest of the imaging pipeline.
+        ''' </summary>
+        Private Function PngToBitmap(png As PngImage) As Bitmap
+            Dim w As Integer = png.Width
+            Dim h As Integer = png.Height
+            Dim channels As Integer = png.Channels
+            Dim src As Byte() = png.Pixels
+            Dim dst(w * h * channels - 1) As Byte
+
+            For i As Integer = 0 To w * h - 1
+                Dim s As Integer = i * channels
+                Dim d As Integer = i * channels
+
+                If channels >= 3 Then
+                    ' swap red and blue
+                    dst(d) = src(s + 2)
+                    dst(d + 1) = src(s + 1)
+                    dst(d + 2) = src(s)
+                    If channels = 4 Then dst(d + 3) = src(s + 3)
+                Else
+                    dst(d) = src(s)
+                    If channels = 2 Then dst(d + 1) = src(s + 1)
+                End If
+            Next
+
+            Return New Bitmap(New BitmapBuffer(dst, New Size(w, h), channels))
         End Function
 
         ''' <summary>
