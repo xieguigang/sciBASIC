@@ -173,15 +173,17 @@ Namespace Imaging.BitmapImage.Gif
         End Sub
 
         Private Sub ParseGraphicControl()
+            ' ReadSubBlocksAdvance already strips the sub block length bytes, so the
+            ' returned content is : [packed, delay_lo, delay_hi, transparent index]
             Dim subData As Byte() = ReadSubBlocksAdvance()
 
             If subData.Length >= 4 Then
-                Dim packed As Integer = subData(1)
-                pendingDelay = subData(2) Or (subData(3) << 8)
+                Dim packed As Integer = subData(0)
+                pendingDelay = subData(1) Or (subData(2) << 8)
                 pendingDisposal = (packed >> 2) And 7
 
                 If (packed And 1) <> 0 Then
-                    pendingTransparent = subData(4)
+                    pendingTransparent = subData(3)
                 Else
                     pendingTransparent = -1
                 End If
@@ -195,18 +197,10 @@ Namespace Imaging.BitmapImage.Gif
                 Dim name As String = System.Text.Encoding.ASCII.GetString(subData, 0, 11)
 
                 If name = GifCodec.NETSCAPE Then
-                    Dim i As Integer = 11
-
-                    While i < subData.Length
-                        Dim blockLen As Integer = subData(i)
-                        i += 1
-
-                        If blockLen = 3 AndAlso i + 2 < subData.Length Then
-                            loopCount = subData(i + 1) Or (subData(i + 2) << 8)
-                        End If
-
-                        i += blockLen
-                    End While
+                    ' stripped sub data : [0x01, loop_lo, loop_hi]
+                    If subData.Length >= 14 AndAlso subData(11) = &H1 Then
+                        loopCount = subData(12) Or (subData(13) << 8)
+                    End If
                 End If
             End If
         End Sub
@@ -309,7 +303,11 @@ Namespace Imaging.BitmapImage.Gif
         End Function
 
         Public Function BuildImage() As GifImage
-            Return New GifImage(frames, logicalWidth, logicalHeight, loopCount, frameDelays, frameDisposals, transparentIndices)
+            ' clamp the loop count : -1 means "no loop extension", which is treated
+            ' as 0 (loop forever) for playback purposes.
+            Dim loopNum As Integer = If(loopCount >= 0, loopCount, 0)
+
+            Return New GifImage(frames, logicalWidth, logicalHeight, loopNum, frameDelays, frameDisposals, transparentIndices)
         End Function
 
     End Class

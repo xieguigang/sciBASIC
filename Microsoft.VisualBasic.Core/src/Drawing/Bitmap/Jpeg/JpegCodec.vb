@@ -29,7 +29,7 @@ Namespace Imaging.BitmapImage.Jpeg
         Public Const C_RST0 As Byte = &HD0
         Public Const C_RST7 As Byte = &HD7
 
-        ' ---- zigzag natural order (index in natural 8x8 -> zigzag position) ----
+        ' ---- zigzag scan order : ZigZag(zigzagIndex) = natural index ----
         Public ReadOnly ZigZag As Integer() = {
             0, 1, 8, 16, 9, 2, 3, 10,
             17, 24, 32, 25, 18, 11, 4, 5,
@@ -41,7 +41,7 @@ Namespace Imaging.BitmapImage.Jpeg
             53, 60, 61, 54, 47, 55, 62, 63
         }
 
-        ' inverse of ZigZag
+        ' ---- inverse of ZigZag : UnZigZag(naturalIndex) = zigzag index ----
         Public ReadOnly UnZigZag As Integer() = {
             0, 1, 5, 6, 14, 15, 27, 28,
             2, 4, 7, 13, 16, 26, 29, 42,
@@ -187,7 +187,7 @@ Namespace Imaging.BitmapImage.Jpeg
         ''' inverse 2D 8x8 dct, in place on <paramref name="block"/>, the result is
         ''' level shifted by +128 and clamped into the destination byte buffer.
         ''' </summary>
-        Public Sub IDCT(block() As Double, dst() As Byte, dstOff As Integer)
+        Public Sub IDCT(block() As Double, dst() As Byte, dstOff As Integer, Optional stride As Integer = 8)
             Dim tmp(63) As Double
             Dim col(7) As Double
             Dim work(7) As Double
@@ -208,21 +208,26 @@ Namespace Imaging.BitmapImage.Jpeg
                 Call idct1d(col, 0, work, 0)
 
                 For y As Integer = 0 To 7
-                    dst(dstOff + y * 8 + x) = Clamp8(CInt(work(y)) + 128)
+                    ' the destination plane row stride may differ from 8 (the full
+                    ' component plane is wider than a single 8x8 block).
+                    dst(dstOff + y * stride + x) = Clamp8(CInt(work(y)) + 128)
                 Next
             Next
         End Sub
 
         Private Sub dct1d(inp() As Double, inOff As Integer, out() As Double, outOff As Integer)
-            For x As Integer = 0 To 7
+            ' forward dct : the output is indexed by the frequency u and the sum runs
+            ' over the spatial samples x. the c(u) normalisation applies to the
+            ' frequency (output) side.
+            For u As Integer = 0 To 7
                 Dim sum As Double = 0.0
 
-                For u As Integer = 0 To 7
-                    Dim cu As Double = If(u = 0, 0.7071067811865476, 1.0)
-                    sum += cu * inp(inOff + u) * System.Math.Cos((2 * x + 1) * u * System.Math.PI / 16.0)
+                For x As Integer = 0 To 7
+                    sum += inp(inOff + x) * System.Math.Cos((2 * x + 1) * u * System.Math.PI / 16.0)
                 Next
 
-                out(outOff + x) = sum / 2.0
+                Dim cu As Double = If(u = 0, 0.7071067811865476, 1.0)
+                out(outOff + u) = cu * sum / 2.0
             Next
         End Sub
 
