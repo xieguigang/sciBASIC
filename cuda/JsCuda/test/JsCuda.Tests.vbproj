@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>JsCuda.Tests</RootNamespace>
+    <AssemblyName>JsCuda.Tests</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
+    <OptionStrict>On</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <Platforms>AnyCPU;x64</Platforms>
+    <NoWarn>$(NoWarn);BC42356</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\vs_solutions\JavaScript\LiteJs.vbproj" />
+    <ProjectReference Include="..\..\ILCuda\ILCuda.vbproj" />
+    <ProjectReference Include="..\JsCuda.vbproj" />
+  </ItemGroup>
+
+</Project>

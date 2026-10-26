@@ -1,17 +1,21 @@
-mnist table: 20000 samples x 784 pixels
+﻿[data] no mnist dataset given (--data=<dir>), using the synthetic digit set
+mnist table: 300 samples x 784 pixels
 Create NNDescent
 Set Iteration Parameters
-make 12 trees...
-[MakeNNDescent] Start sample rejection loop... [parallel: 24]
-Build candidates... [parallel: 24]
-Build candidates... [parallel: 24]
-Build candidates... [parallel: 24]
-Build candidates... [parallel: 24]
-Nearest Neighbor Descent: 24.499s
-DeHeapSort... [parallel: 24]
-DeHeapSort in parallel...
+make 6 trees...
+[MakeNNDescent] Start sample rejection loop... [parallel: 1]
+                                         | 0.0% [ 0 / 300 | 2ms < 106751991808.000days ]  .                                        | 0.3% [ 1 / 300 | 9ms < 23.026s ]               :                                        | 0.7% [ 2 / 300 | 10ms < 1.198s ]  -                                        | 1.0% [ 3 / 300 | 10ms < 499ms ]   █                                        | 1.3% [ 4 / 300 | 10ms < 309ms ]  █                                        | 1.7% [ 5 / 300 | 10ms < 224ms ]  █                                        | 2.0% [ 6 / 300 | 11ms < 181ms ]  █                                        | 2.3% [ 7 / 300 | 11ms < 151ms ]  █.                                       | 2.7% [ 8 / 300 | 11ms < 133ms ]  █:                                       | 3.0% [ 9 / 300 | 11ms < 126ms ]  █-                                       | 3.3% [ 10 / 300 | 12ms < 116ms ]  ████████████████████████████████████████| 100.0% [ 300 / 300 | 21ms < 0ms ]  ████████████████████████████████████████| 100.0% [ 300 / 300 | 52ms < 0ms ]  
+
+Build candidates... [parallel: 1]
+Build candidates... [parallel: 1]
+Nearest Neighbor Descent: 74ms
+DeHeapSort... [parallel: 1]
+                                         | 0.0% [ 0 / 300 | 0ms < 106751991808.000days ]  .                                        | 0.3% [ 1 / 300 | 1ms < 2.365s ]                :                                        | 0.7% [ 2 / 300 | 1ms < 528ms ]   -                                        | 1.0% [ 3 / 300 | 1ms < 240ms ]  █                                        | 1.3% [ 4 / 300 | 1ms < 146ms ]  █                                        | 1.7% [ 5 / 300 | 1ms < 105ms ]  █                                        | 2.0% [ 6 / 300 | 2ms < 84ms ]   █                                        | 2.3% [ 7 / 300 | 2ms < 69ms ]  █.                                       | 2.7% [ 8 / 300 | 2ms < 62ms ]  █:                                       | 3.0% [ 9 / 300 | 2ms < 55ms ]  ████████████████████████████████████████| 100.0% [ 300 / 300 | 2ms < 0ms ]  ████████████████████████████████████████| 100.0% [ 300 / 300 | 3ms < 0ms ]  
+
 SmoothKNNDistance...
-ComputeMembershipStrengths... [parallel: 24]
-umap embedding: 20000 samples x 2 dims
+ComputeMembershipStrengths... [parallel: 1]
+umap embedding: 300 samples x 2 dims
+plot: G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\mnist_umap\mnist-umap.png
+csv : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\mnist_umap\mnist-umap.csv
 done: mnist-umap.png
 done: mnist-umap.csv

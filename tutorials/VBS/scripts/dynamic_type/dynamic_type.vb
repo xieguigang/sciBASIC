@@ -1,3 +1,9 @@
+#include "stdlib.dll"
+#include "stdio.dll"
+
+imports stdlib
+imports stdio
+
 ' ============================================================================
 '  Dynamic type tutorial
 '
@@ -10,9 +16,6 @@
 '      let b = 456       -> a CLR dynamic/weak-typed variable; the runtime
 '                           infers the type from the assigned value and infers
 '                           it again on every new assignment
-'
-'  Run:
-'      vbs.exe tutorials\VBS\dynamic_type\dynamic_type.vb
 '
 '  Expected output:
 '      a := 123
@@ -37,15 +40,27 @@ let b = 456
 console.writeline($"b := {b}")
 
 ' ``b`` is re-inferred as an anonymous type with two fields (a and b).
-' The dynamic variable exposes those fields directly.
-
 b = new with {.a = 123, .b = 456}
 
 console.writeline($"b.a := {b.a}")
 console.writeline($"b.b := {b.b}")
 
 ' ``b`` is re-inferred once more, this time as a Boolean.
-
 b = false
 
 console.writeline($"check boolean := {b}")
+
+' ---------------------------------------------------------------------------
+' The dynamic values are ordinary CLR numbers, so they can be handed to the
+' standard library directly: build a one column table and compute statistics.
+' ---------------------------------------------------------------------------
+let values = New Double() {a, 456, 789}
+
+console.writeline($"stats: count = {values.length}, sum = {stats.sum(values)}, mean = {stats.mean(values):F4}")
+
+dim dataset = table.fromColumns(New String() {"value"}, New Double()() {values}, table.names("row", 3))
+
+console.writeline($"table: {dataset.nsamples} samples x {dataset.nfeatures} feature")
+console.writeline("csv : " & write.csv(dataset, here("dynamic_type.csv")))
+
+console.writeline("done: dynamic_type")

@@ -39,7 +39,7 @@ dotnet build vs_solutions/VBS/VBS.vbproj -c Release
 
 ```bat
 cd .nuget\net10.0
-vbs.exe G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\tuple.vb
+vbs.exe G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\tuple\tuple.vb
 ```
 
 命令行格式为：
@@ -59,20 +59,34 @@ vbs.exe <脚本文件路径> [--参数名=参数值 ...] [--verbose]
 
 ### 1.4 试跑全部示例
 
+示例脚本现在只依赖 `stdlib` / `stdio` 两个标准库（见 [`vs_solutions\libs\readme.md`](../../vs_solutions/libs/readme.md)），
+每个 demo 目录里都有一份 vbs 版本和一份等价的 njs 版本：
+
 ```bat
 cd .nuget\net10.0
-vbs.exe <repo>\tutorials\VBS\tuple.vb
-vbs.exe <repo>\tutorials\VBS\kmeans.vb
-vbs.exe <repo>\tutorials\VBS\hola_layout.vb
-vbs.exe <repo>\tutorials\VBS\cuda.vb
-vbs.exe <repo>\tutorials\VBS\mnist_umap.vb
-vbs.exe <repo>\tutorials\VBS\word2vector.vb
-vbs.exe <repo>\tutorials\VBS\tfidf.vb
-vbs.exe <repo>\tutorials\VBS\linear_regression.vb
-vbs.exe <repo>\tutorials\VBS\hierarchical_clustering.vb
+vbs.exe <repo>\tutorials\VBS\scripts\linear_regression\linear_regression.vb
+vbs.exe <repo>\tutorials\VBS\scripts\kmeans\kmeans.vb
+vbs.exe <repo>\tutorials\VBS\scripts\hierarchical_clustering\hierarchical_clustering.vb
+vbs.exe <repo>\tutorials\VBS\scripts\tf-idf\tfidf.vb
+vbs.exe <repo>\tutorials\VBS\scripts\word2vec\word2vector.vb
+vbs.exe <repo>\tutorials\VBS\scripts\hola_layout\hola_layout.vb
+vbs.exe <repo>\tutorials\VBS\scripts\cuda\cuda.vb
+vbs.exe <repo>\tutorials\VBS\scripts\spiking_nn\spiking_nn.vb
+vbs.exe <repo>\tutorials\VBS\scripts\mnist_umap\mnist_umap.vb --data=<MNIST dir>
+vbs.exe <repo>\tutorials\VBS\scripts\mnist_cnn\mnist_cnn.vb --mnist-data=<MNIST dir>
+vbs.exe <repo>\tutorials\VBS\scripts\tuple\tuple.vb
+vbs.exe <repo>\tutorials\VBS\scripts\dynamic_type\dynamic_type.vb
+
+cd ..\tools
+njs.exe <repo>\tutorials\VBS\scripts\linear_regression\linear_regression.js
+...
 ```
 
-> 上面这些脚本都会把结果图/结果表写到 `Z:\`；其中 `kmeans.vb` / `hierarchical_clustering.vb` / `mnist_umap.vb` / `word2vector.vb` / `tfidf.vb` 还需要读取外部数据文件（`linear_regression.vb` 使用的是脚本内部生成的合成数据）。若相应数据文件或盘符不存在，请按需修改脚本里的路径。
+> * 所有结果图、结果表、报告都写到脚本所在目录（`here("...")` / `path.join(__dirname, ...)`）；
+> * `kmeans` / `hierarchical_clustering` / `word2vec` / `tf-idf` 读取 `tutorials\VBS\data\` 下的示例数据；
+> * `mnist_umap` / `mnist_cnn` 在没有 MNIST 数据目录时会自动切换到 `ml.syntheticDigits` 生成的
+>   合成数据，因此任何机器上都能跑通（`--data=` / `--mnist-data=` 指定真实数据目录即可切换）；
+> * `cuda` 在没有 CUDA 环境时会打印探测报告并回退到 CPU 参考实现。
 
 ---
 
@@ -199,10 +213,9 @@ For i As Integer = 1 To 10
     Call Console.WriteLine(i)
 Next
 
-' 顶层 Using 块（kmeans.vb 就是这么画图的）
-Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
-    plt.Title = "demo"
-    plt.SavePng("Z:/demo.png", 300)
+' 顶层 Using 块（标准库的绘图不需要 Using，这里只是演示语法）
+Using plt As New System.IO.StringWriter()
+    Call plt.Write("demo")
 End Using
 ```
 
@@ -224,7 +237,8 @@ Dim B As Boolean = ?"--flag"
 ### 3.3 引用外部程序集（#include）
 
 ```vbnet
-#include "Microsoft.VisualBasic.Drawing.dll"
+#include "stdlib.dll"
+#include "stdio.dll"
 #include "D:\libs\MyLib.dll"
 ```
 
@@ -359,28 +373,37 @@ console.writeLine(a+b)
 | 4 | 控制流块必须正确闭合 | `For...Next`、`Do...Loop`、`If...End If` 等；未闭合时引擎会把残留代码兜底输出，但生成的代码位置可能不符合预期 |
 | 5 | 需要的命名空间自己 `imports` | 引擎只自动导入 [3.4](#34-imports-与自动导入) 列出的那几个 |
 | 6 | 只支持能写进函数体的语法 | 例如不能在顶层再写 `Namespace`、`Module`、属性/字段声明等 |
-| 7 | 行尾注释用 `'` | 引擎用 `'` 识别注释；注意字符串字面量里若含 `'` 会影响块结构判定 |
+| 7 | 行尾注释用 `'` | 引擎用 `'` 识别注释；字符串字面量里**不要出现** `'`（例如 `"the 'rapunzel' text"`），否则会被当成注释起点并触发 `BC30004: Character constant must contain exactly one character` |
 | 8 | 不需要写 `Return 0` | 引擎会在 `Main` 末尾自动补 `Return 0`；想返回其它退出码就自己写 `Return <n>` |
+| 9 | 交错数组字面量要显式声明类型 | `{{1,2},{3,4}}` 会被 VB 解析成**二维数组** `Double(,)`，传给 `Double()()` 参数会报 `BC30414`；请写成 `New Double()() {New Double() {1,2}, New Double() {3,4}}` |
+| 10 | 循环变量不要与库函数同名 | 例如 `for each line in ...` 里的 `line` 与标准库的 `plot.line` 冲突，会报 `BC30455: Argument not specified for parameter 'x'`；换名（`op_line` 等）即可 |
 
 ---
 
 ## 5. 示例脚本导览
 
-按"由浅入深"的顺序阅读效果最好：
+每个 demo 目录里都有一份 **vbs** 脚本和一份**等价**的 **njs** 脚本，两者只使用
+`stdlib` / `stdio` 两个标准库的 api，输出与产物一一对应。按"由浅入深"的顺序阅读效果最好：
 
-| 脚本 | 演示内容 | 涉及语法 |
-| --- | --- | --- |
-| `tuple.vb` | 最小可运行示例：元组分解后打印 | [3.7 元组分解](#37-元组分解) |
-| `linear_regression.vb` | 合成数据 → 线性/多项式回归 → 预测与残差写回标签列 → 散点+拟合线存盘 | `NumericTable` 表入口、`label:` 标签列约定、顶层 `Using` 块 |
-| `kmeans.vb` | 读 CSV → kmeans 聚类 → PCA → 散点图存盘 | `#include` 多个程序集、顶层语句、顶层 `Using` 块 |
-| `hierarchical_clustering.vb` | 读 CSV → 距离矩阵 → 层次聚类（`hca` / `hcut`）→ 与真实物种交叉表 → PCA 散点图存盘 | 距离矩阵契约、`label:` 标签列约定、顶层 `Using` 块 |
-| `hola_layout.vb` | HOLA 正交布局，45 节点 / 61 边网络 | **顶层 `Function` / `Sub` 捕获顶层变量**（[3.6](#36-顶层函数与落位规则) 的标准范例） |
-| `tfidf.vb` | TF-IDF 文档距离矩阵 + 热力图 | 顶层 `For` 循环、交错数组、绘图 |
-| `mnist_umap.vb` | MNIST 手写数字 → UMAP 降维可视化 | 大数据集加载、长耗时计算 |
-| `word2vector.vb` | 文本 → word2vec → UMAP → kmeans 聚类 | 完整数据处理流水线 |
-| `cuda.vb` | **IL → AST → CUDA**：把脚本里的 VB.NET 数学函数反编译成 `.cu`，在 GPU 上算皮尔逊相关矩阵与欧氏距离矩阵 | **类型定义块 + 反射**（[3.5](#35-类型定义块)）、`imports System.Reflection` |
+| demo | vbs / js | 演示内容 | 主要标准库 api |
+| --- | --- | --- | --- |
+| `tuple` | `tuple.vb` / `tuple.js` | 元组分解后打印，再把元组数据做成表 | `table.fromColumns`、`stats.sum`、`write.csv` |
+| `dynamic_type` | `dynamic_type.vb` / `.js` | `Dim` 强类型与 `let` 动态类型，把动态值交给标准库 | `table.fromColumns`、`stats.mean`、`write.csv` |
+| `linear_regression` | `linear_regression.vb` / `.js` | 合成数据 → 线性/二次回归 → 预测与残差写回 → 散点+拟合线 → 六种格式报告 | `fit.linear/poly/setPrediction`、`plot.scatter/save`、`report.*` |
+| `kmeans` | `kmeans.vb` / `.js` | 读 CSV → kmeans 聚类 → PCA → 散点图 → 导出 CSV | `read.csv`、`cluster.kmeans`、`dimreduce.pcaScore`、`write.csv` |
+| `hierarchical_clustering` | `...vb` / `.js` | 读 CSV → 距离矩阵 → `hca`/`hcut` → 与真实物种交叉表 → PCA 散点图 | `table.uniqueRowNames`、`cluster.distanceMatrix/hcut/crossTable` |
+| `tf-idf` | `tfidf.vb` / `.js` | TF-IDF 文档距离矩阵 + 热力图 | `nlp.tfidfTable`、`plot.heatmap` |
+| `word2vec` | `word2vector.vb` / `.js` | 文本 → word2vec → UMAP → kmeans → 散点图 | `nlp.word2vec`、`dimreduce.umap`、`cluster.kmeans` |
+| `hola_layout` | `hola_layout.vb` / `.js` | HOLA 正交布局，45 节点 / 61 边，出图 + 坐标导出 | `net.create/addNode/addEdge/hola/draw` |
+| `cuda` | `cuda.vb` / `.js` | **IL → AST → CUDA**：把标准库里的 VB.NET 数学函数反编译成 `.cu`，GPU 上算相关/距离矩阵并与 CPU 对拍 | `cuda.kernelNames/kernelSource/selfCheck/metrics` |
+| `spiking_nn` | `spiking_nn.vb` / `.js` | LIF 脉冲网络训练 3 类高斯团簇，栅格/火花线可视化 + 报告 | `ml.snnTrain`、`ml.sparkline`、`report.*` |
+| `mnist_umap` | `mnist_umap.vb` / `.js` | MNIST（或合成数字）→ UMAP 降维可视化 | `read.mnist`、`ml.syntheticDigits`、`dimreduce.umap` |
+| `mnist_cnn` | `mnist_cnn.vb` / `.js` | CNN 训练 + CUDA 后端对比 + 逐算子后端表 | `ml.cnnTrainTable/useCuda/cnnOperatorTable` |
 
-其中 `cuda.vb` 是最能体现"脚本也能做重活"的一个：目标函数写在脚本的 `Public Class PearsonMetrics` 里（纯 VB.NET，零 CUDA 概念），脚本运行时把它们反编译成表达式树、发射成 `.cu` 内核源码，注册进 `KernelSources` 后用 NVRTC 即时编译并在 GPU 上执行，最后与 CPU 参考实现比对误差。它同时演示了"为什么目标函数要写进 `Class` 而不是写在顶层"——顶层函数会变成匿名函数，拿不到 `Shared` 的 `MethodInfo`。
+> **关于 `cuda` demo**：目标函数（`RowSum` / `GramDot` / `CorrelationCell` / …）现在写在标准库程序集里
+> （`stdlib.PearsonMetrics`），而不是脚本里。原因有两个：IL 反编译器需要可反射的 `Shared` 方法，
+> 而 JS 函数不是 CLR 方法；把它放进标准库之后，两种语言的 demo 才能"调用同一套 api"。
+> 脚本里仍然完整演示了「反编译 → `.cu` 源码 → NVRTC → GPU 计算 → 与 CPU 对拍」的全过程。
 
 ---
 
@@ -406,6 +429,8 @@ vbs.exe G:\...\hola_layout.vb --verbose
 | `BC30734: 'args' is already declared as a parameter` | 顶层变量命名为 `args` | 改名 |
 | `BC30027 / BC30289: 'End Function' expected / Statement cannot appear within a method body` | 顶层函数没被重写成匿名函数（通常是参数列表里出现了数组类型） | 把函数移进 `Public Class` 写成 `Shared` 方法（[规则 2](#4-编写规则与注意事项)） |
 | `BC30451: 'Xxx' is not declared` | 缺少 `imports`，或 `#include` 的程序集没找到 | 补 `imports`；确认程序集在 [3.3](#33-引用外部程序集include) 的探测路径里 |
+| `BC30414: Value of type 'Double(*,*)' cannot be converted to 'Double()()'` | 交错数组写成了 `{{...},{...}}` 字面量 | 见 [规则 9](#4-编写规则与注意事项) |
+| `BC30455: Argument not specified for parameter ...` | 循环变量/局部变量与标准库函数同名（`line`、`image` …） | 见 [规则 10](#4-编写规则与注意事项) |
 | `BC30035 / 语法错误` | 顶层出现了不能写进函数体的语法 | 见 [规则 6](#4-编写规则与注意事项) |
 
 ### 6.3 代码莫名"消失"
@@ -417,21 +442,34 @@ vbs.exe G:\...\hola_layout.vb --verbose
 ## 附：一个最小模板
 
 ```vbnet
-#include "Microsoft.VisualBasic.Drawing.dll"
+#include "stdlib.dll"
+#include "stdio.dll"
 
-imports microsoft.visualbasic.drawing
+imports stdlib
+imports stdio
 
 ' 读取命令行参数: vbs demo.vb --n=10
 Dim n As Integer = ?"--n"
+
+' 生成 n 个样本的合成数据并写成表
+Dim values(n - 1) As Double
+
+For i As Integer = 1 To n
+    values(i - 1) = i
+Next
+
+Dim dataset = table.fromColumns(New String() {"x"}, New Double()() {values}, table.names("sample", n))
+
+Call Console.WriteLine($"n = {dataset.nsamples}, mean = {stats.mean(values)}, sd = {stats.sd(values)}")
+
+' 画图 + 导出
+Dim figure = plot.scatter(values, values, title:=Describe(n), xLabel:="x", yLabel:="x")
+
+Call Console.WriteLine(plot.save(figure, here("demo.png")))
+Call Console.WriteLine(write.csv(dataset, here("demo.csv")))
 
 ' 顶层函数（不捕获任何顶层变量，可以写在任何位置）
 Public Function Describe(count As Integer) As String
     Return $"count = {count}"
 End Function
-
-Call Console.WriteLine(Describe(n))
-
-For i As Integer = 1 To n
-    Call Console.WriteLine(i)
-Next
 ```

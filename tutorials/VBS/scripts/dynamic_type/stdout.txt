@@ -1,5 +1,9 @@
-a := 123
+﻿a := 123
 b := 456
 b.a := 123
 b.b := 456
 check boolean := False
+stats: count = 3, sum = 1368, mean = 456.0000
+table: 3 samples x 1 feature
+csv : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\dynamic_type\dynamic_type.csv
+done: dynamic_type

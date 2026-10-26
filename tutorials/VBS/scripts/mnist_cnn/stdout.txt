@@ -1,31 +1,23 @@
-=== 1) Environment probe ===
+﻿[data] no mnist dataset given (--mnist-data=<dir>), using the synthetic digit set
+
+=== 1) environment probe ===
     default backend = SIMD
     random seed     = 12345 (weight init)
-    training config = 5 passes x 1000 images
+    dataset         = 120 samples x 784 pixels
+    training config = 2 passes x 120 images
 
 === 2) CPU(SIMD) training + evaluation ===
-    pass 1/5  loss=2.390096552476107
-    pass 2/5  loss=0.8209807836912226
-    pass 3/5  loss=0.5247906421962469
-    pass 4/5  loss=0.4266240644466655
-    pass 5/5  loss=0.3594098222432395
-    backend=SIMD  loss=0.3594098222432395  correct=915/1000 (91.50%)  elapsed=77.354s
+    backend=SIMD  loss=2.252847359505498  correct=72/120 (60.00%)  elapsed=7.781s
 
-=== 3) Register the CUDA compute engine ===
+=== 3) register the CUDA compute engine ===
     [OK] current backend = CUDA
     thresholds  : MinGpuElements=4096, MinGemmElements=65536
     IL2Cuda double-precision kernels: all translated and registered successfully
 
 === 4) CUDA(GPU) training + evaluation ===
-    pass 1/5  loss=2.3900965524761064
-    pass 2/5  loss=0.8209807836912223
-    pass 3/5  loss=0.5247906421962472
-    pass 4/5  loss=0.42662406444666534
-    pass 5/5  loss=0.3594098222432393
-    backend=CUDA  loss=0.3594098222432393  correct=915/1000 (91.50%)  elapsed=107.877s
+    backend=CUDA  loss=2.2528473599758057  correct=72/120 (60.00%)  elapsed=7.140s
 
-=== 5) Actual execution backend of every tensor operator ===
-    backend = CUDA; single sample (N=1); thresholds MinGpuElements=4096, MinGemmElements=65536
+=== 5) actual execution backend of every tensor operator ===
     operator                  size  gating operand    verdict
     conv1 fwd                  784  input x           CPU fallback
     conv1 bwd                25088  gradOutput        GPU
@@ -42,19 +34,12 @@
 
 === 6) CPU(SIMD) vs CUDA(GPU) ===
     backend       loss                    accuracy          elapsed(s)
-    SIMD(CPU)     0.3594098222432395      91.50%            77.354
-    CUDA(GPU)     0.3594098222432393      91.50%            107.877
+    SIMD(CPU)     2.252847359505498       60.00%            7.781
+    CUDA(GPU)     2.2528473599758057      60.00%            7.140
 
-    loss max abs error = 1.665E-016   OK
-    correct count      = CPU 915/1000  GPU 915/1000   OK
-    elapsed ratio      = CPU 77.354s  GPU 107.877s  ratio=0.72x
+    loss max abs error = 0.000000000   OK (tolerance 1.0E-6)
+    correct count      = CPU 72/120  GPU 72/120   OK
+    elapsed ratio      = CPU 7.781s  GPU 7.140s  ratio=1.09x
 
-    note: a loss difference only at the rounding level means the GPU and CPU
-          numeric implementations agree. With a single sample (N=1) the end-to-end
-          run is not faster than the CPU -- ILCudaTensor uses a copy-based
-          execution model that performs an H2D upload + kernel + D2H read-back
-          on every operator call, and pooling/full-connected/softmax are below
-          the GPU threshold and already fall back to the CPU. GPU throughput only
-          shows up with large batched tensors.
-
+md  : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\mnist_cnn\mnist-cnn.md
 done: mnist-cnn

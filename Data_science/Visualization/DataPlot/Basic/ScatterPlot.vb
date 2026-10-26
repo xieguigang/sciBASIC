@@ -120,6 +120,10 @@ Public Class ScatterPlot : Inherits SeriesPlotEngine
         MyBase.New(g, theme)
     End Sub
 
+    Sub New()
+        Call MyBase.New()
+    End Sub
+
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         If SeriesList Is Nothing OrElse SeriesList.Count = 0 Then
             Throw New ArgumentException("At least one data series is required.", NameOf(SeriesList))

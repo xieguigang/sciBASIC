@@ -57,6 +57,21 @@ Namespace Imaging.BitmapImage
     ''' <summary>
     ''' Bitmap image types and pixel processing helpers.
     ''' </summary>
+    ''' <remarks>
+    ''' The pixel rows of the <see cref="FileStream.Bitmap"/> object are stored in 
+    ''' the order that is used by the bitmap file: the rows of the standard bottom 
+    ''' up DIB are stored from the bottom to the top, so that the first scan line 
+    ''' of the <see cref="FileStream.Bitmap.PixelData"/> is the lowest row of the 
+    ''' image. the <see cref="FileStream.Bitmap.PixelDataFliped"/> property and the 
+    ''' <c>flipRows</c> option of the <see cref="FileStream.BitmapFileHelper"/> are 
+    ''' used for reversing the pixel rows into the top down order.
+    ''' 
+    ''' The scan line of the image that is less than 8 bits per pixel is bit packed 
+    ''' and the color palette of the indexed image is stored right after the DIB 
+    ''' header of the file, both of them are handled by the 
+    ''' <see cref="FileStream.Bitmap.Stride"/> and the 
+    ''' <see cref="FileStream.Bitmap.Palette"/> property.
+    ''' </remarks>
     Module NamespaceDoc
     End Module
 End Namespace

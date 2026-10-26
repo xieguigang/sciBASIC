@@ -1396,6 +1396,10 @@ Public NotInheritable Class CodeGenerator
             Case "Infinity" : Return "Double.PositiveInfinity"
             Case "parseInt", "parseFloat", "isNaN", "isFinite", "String", "Number", "Boolean"
                 Return $"JsRuntime.JsGet(JsRuntime.GlobalObj, {VbString(name)})"
+            ' script introspection magics: resolved through the same 'global' object as the
+            ' interpreter does, so here()/scriptDir()/... behave identically in translated code
+            Case "here", "scriptDir", "scriptFile", "scriptName", "scriptText", "scriptLines"
+                Return $"JsRuntime.JsGet(JsRuntime.GlobalObj, {VbString(name)})"
         End Select
         ' An identifier the generator does not know may be a host object injected through
         ' the reflection bridge (ClrInterop.Register / ClrHost), so it resolves at run

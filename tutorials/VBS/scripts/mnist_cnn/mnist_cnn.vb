@@ -1,152 +1,56 @@
-#include "Microsoft.VisualBasic.DeepLearning.dll"
-#include "Microsoft.VisualBasic.MachineLearning.TensorFlow.dll"
-#include "Microsoft.VisualBasic.MachineLearning.DataStorage.dll"
-#include "Microsoft.VisualBasic.Computing.ILCuda.dll"
-#include "Microsoft.VisualBasic.Computing.ILCuda.GPUTensor.dll"
+#include "stdlib.dll"
+#include "stdio.dll"
 
-imports Microsoft.VisualBasic.ApplicationServices
-imports Microsoft.VisualBasic.Language
-imports Microsoft.VisualBasic.Linq
-imports Microsoft.VisualBasic.MachineLearning.CNN
-imports Microsoft.VisualBasic.MachineLearning.CNN.data
-imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
-imports Microsoft.VisualBasic.MachineLearning.DataStorage
-imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-imports Microsoft.VisualBasic.Computing.ILCuda.Runtime
-imports Microsoft.VisualBasic.Computing.ILCuda.GPUTensor
+imports stdlib
+imports stdio
 
 ' ============================================================================
-'  MNIST CNN CUDA acceleration demo (script version)
+'  MNIST CNN demo (standard library edition)
 '
-'  The same logic as the MnistCnnGpuTest project under DeepLearning\test:
-'      1) environment probe (default backend / random seed / training config)
-'      2) run one pass with the CPU (SIMD) backend as the baseline
-'      3) register the CUDA compute engine; on failure print diagnostics and
-'         fall back to CPU (so the script always produces a result)
-'      4) run the very same configuration again with the CUDA backend
-'      5) print, for every tensor operator of this network, whether it is gated
-'         onto the GPU or falls back to the CPU
-'      6) CPU vs GPU numeric consistency, wall-clock time and speedup
+'  The whole "build network -> train -> evaluate" pipeline now lives in
+'  ml.cnnTrainTable, so this script only orchestrates the two passes:
+'
+'      1) CPU (SIMD) baseline
+'      2) register the CUDA tensor backend and run the very same configuration
+'      3) print the actual backend of every tensor operator of the network
+'      4) compare loss / accuracy / elapsed time between the two backends
 '
 '  Run:
-'      vbs.exe tutorials\VBS\scripts\mnist_cnn\mnist_cnn.vb --mnist-data=<MNIST dir>
+'      vbs.exe mnist_cnn.vb --mnist-data=<MNIST dir>
 '
-'  Notes:
-'    * The network weights are initialized through a shared "unseeded" random
-'      generator; without fixing the seed every run starts from different
-'      weights and the results cannot be compared. The seed is therefore reset
-'      before each pass, so the CPU and GPU paths see exactly the same initial
-'      weights and sample order -- any difference can only come from the numeric
-'      implementation of the backend.
-'    * The training flow lives in the Public Class below (a top-level Function
-'      in a script is rewritten by the engine into an anonymous function, which
-'      can neither capture outer variables nor be reflected; type blocks are
-'      kept verbatim).
+'  Without a real MNIST folder the demo trains on the deterministic synthetic
+'  digit set that ml.syntheticDigits generates, so the tutorial always runs.
 ' ============================================================================
 
-''' <summary>
-''' One complete "build network -> train -> evaluate" pass.
-''' </summary>
-''' <remarks>
-''' Executes on whichever backend <c>Tensor.computeKernel</c> currently points
-''' to, so the same code can run on CPU (SIMD) or CUDA and the two can be
-''' compared directly.
-''' </remarks>
-Public Class CnnRunner
-
-    ''' <summary>
-    ''' Run one deterministic training + evaluation pass.
-    ''' </summary>
-    ''' <returns>``{last pass loss, number of correct classifications, total samples, elapsed seconds}``</returns>
-    Public Shared Function Execute(imagesPath As String, labelsPath As String,
-                                  randomSeed As Integer, passes As Integer, samples As Integer) As (lastLoss as double, correct as double, size as double, cost_ms as double)
-        ' The seed must be set before the network is built (i.e. before the
-        ' first call to Vector.rand)
-        Call Microsoft.VisualBasic.Math.RandomExtensions.SetSeed(randomSeed)
-
-        Dim reader As New MNIST(imagesPath, labelsPath)
-
-        ' Materialize the samples first, guaranteeing that every pass and every
-        ' run sees the same batch of data in the same order
-        Dim dataset = reader.ExtractVectors.Take(samples).ToArray
-
-        ' The network structure is identical to MnistTest in the repository:
-        '   input 28x28x1 -> conv5x32 -> relu -> pool2 -> conv5x64 -> relu -> pool2 -> fc10 -> softmax
-        '
-        ' Streamed with the LayerBuilder + operator, one-to-one with R# auto_encoder.R:
-        '   let cnn = cnn() + input_layer([28,28],1) + conv_layer(5,32,1,2) + pool_layer(2,2,0) + ...
-        ' The only difference is that VB implicit line continuation requires the
-        ' binary operator to stay at the end of the previous line.
-        Dim cnn As LayerBuilder = New LayerBuilder() +
-            input_layer({reader.ImageSize.Width, reader.ImageSize.Height}, 1) +
-            conv_layer(5, 32, 1, 2) +
-            relu_layer() +
-            pool_layer(2, 2, 0) +
-            conv_layer(5, 64, 1, 2) +
-            relu_layer() +
-            pool_layer(2, 2, 0) +
-            full_connected_layer(10) +
-            softmax_layer()
-
-        Dim net As ConvolutionalNN = New ConvolutionalNN(cnn)
-        Dim trainer As TrainerAlgorithm = New AdaGradTrainer(20, 0.001F).SetKernel(net)
-        Dim db As New DataBlock(reader.ImageSize.Width, reader.ImageSize.Height, 1, 0)
-
-        Dim watch As Stopwatch = Stopwatch.StartNew()
-        Dim lastLoss As Double = 0
-
-        For p As Integer = 1 To passes
-            Dim passLoss As Double = 0
-            Dim check As New PerformanceCounter()
-
-            For Each digit In dataset
-                Call db.addImageData(digit.value, digit.value.Max)
-
-                Dim result As TrainResult = trainer.train(db, {Val(digit.description)}, check.Set)
-
-                passLoss += result.Loss
-            Next
-
-            lastLoss = passLoss / dataset.Length
-
-            Call Console.WriteLine($"    pass {p}/{passes}  loss={lastLoss:R}")
-        Next
-
-        Dim correct As double = 0
-
-        For Each digit In dataset
-            Call db.addImageData(digit.value, digit.value.Max)
-
-            If CInt(Val(digit.description)) = CInt(Which.Max(net.predict(db))) Then
-                correct += 1
-            End If
-        Next
-
-        watch.Stop()
-
-        Return (lastLoss, correct, cdbl( dataset.Length), cdbl( watch.Elapsed.TotalSeconds))
-    End Function
-
-End Class
+dim mnist_dir = ?"--mnist-data"
+dim images_file = mnist_dir & "\train-images-idx3-ubyte"
+dim labels_file = mnist_dir & "\train-labels-idx1-ubyte"
+dim passes = 2
+dim samples = 120
+dim seed = 12345
 
 ' ---------------------------------------------------------------------------
-' 0) Command line arguments
+' 0) dataset: the real MNIST files when available, the synthetic one otherwise
 ' ---------------------------------------------------------------------------
-dim mnist_repo = ?"--mnist-data"
-dim images_file = $"{mnist_repo}\train-images-idx3-ubyte"
-dim labels_file = $"{mnist_repo}\train-labels-idx1-ubyte"
+dim dataset
 
-dim random_seed = 12345
-dim train_passes = 5
-dim train_samples = 1000
+if not String.IsNullOrEmpty(mnist_dir) andalso System.IO.File.Exists(images_file) andalso System.IO.File.Exists(labels_file) then
+    call console.WriteLine($"[data] mnist: {images_file}")
+    dataset = read.mnist(images_file, labels_file, samples)
+else
+    call console.WriteLine("[data] no mnist dataset given (--mnist-data=<dir>), using the synthetic digit set")
+    dataset = ml.syntheticDigits(12, seed)
+end if
 
 ' ---------------------------------------------------------------------------
-' 1) Environment probe
+' 1) environment probe
 ' ---------------------------------------------------------------------------
-call console.WriteLine("=== 1) Environment probe ===")
-call console.WriteLine($"    default backend = {Tensor.computeKernel.Name}")
-call console.WriteLine($"    random seed     = {random_seed} (weight init)")
-call console.WriteLine($"    training config = {train_passes} passes x {train_samples} images")
+call console.WriteLine()
+call console.WriteLine("=== 1) environment probe ===")
+call console.WriteLine($"    default backend = {ml.backendName()}")
+call console.WriteLine($"    random seed     = {seed} (weight init)")
+call console.WriteLine($"    dataset         = {dataset.nsamples} samples x {dataset.nfeatures} pixels")
+call console.WriteLine($"    training config = {passes} passes x {samples} images")
 
 ' ---------------------------------------------------------------------------
 ' 2) CPU (SIMD) baseline
@@ -154,128 +58,88 @@ call console.WriteLine($"    training config = {train_passes} passes x {train_sa
 call console.WriteLine()
 call console.WriteLine("=== 2) CPU(SIMD) training + evaluation ===")
 
-dim (cpu_loss, cpu_correct,cpu_total,cpu_seconds) = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
+dim cpu_result = ml.cnnTrainTable(dataset, "class", seed, passes, samples, false)
 
-call console.WriteLine($"    backend={Tensor.computeKernel.Name}  loss={cpu_loss:R}  " &
-                      $"correct={cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})  elapsed={cpu_seconds:F3}s")
+call console.WriteLine($"    backend={cpu_result.backend}  loss={cpu_result.loss}  correct={cpu_result.correct}/{cpu_result.total} ({cpu_result.accuracy:P2})  elapsed={cpu_result.seconds:F3}s")
 
 ' ---------------------------------------------------------------------------
-' 3) Register the CUDA compute engine
+' 3) register the CUDA compute engine
 ' ---------------------------------------------------------------------------
 call console.WriteLine()
-call console.WriteLine("=== 3) Register the CUDA compute engine ===")
+call console.WriteLine("=== 3) register the CUDA compute engine ===")
 
-dim gpu_enabled = false
-dim gpu_options as new EngineOptions()
+dim gpu_enabled = ml.useCuda()
 
-if CudaTensor.Register(gpu_options) then
-    gpu_enabled = true
+if gpu_enabled then
+    call console.WriteLine($"    [OK] current backend = {ml.backendName()}")
+    call console.WriteLine($"    thresholds  : MinGpuElements={ml.cudaMinGpuElements()}, MinGemmElements={ml.cudaMinGemmElements()}")
 
-    call console.WriteLine($"    [OK] current backend = {Tensor.computeKernel.Name}")
-    call console.WriteLine($"    thresholds  : MinGpuElements={CudaTensor.MinGpuElements}, MinGemmElements={CudaTensor.MinGemmElements}")
+    dim failures = ml.cudaKernelFailures()
 
-    if CudaTensor.KernelFailures.Count = 0 then
+    if failures.length = 0 then
         call console.WriteLine("    IL2Cuda double-precision kernels: all translated and registered successfully")
     else
-        for each failure in CudaTensor.KernelFailures
-            call console.WriteLine($"    [kernel translation failed] {failure.Key} -> {failure.Value}")
+        for each failure in failures
+            call console.WriteLine($"    [kernel translation failed] {failure}")
         next
     end if
 else
-    call console.WriteLine($"    [fallback] registration failed, using the CPU this run: {CudaTensor.LastError}")
-
-    for each line in gpu_options.Diagnostics
-        call console.WriteLine($"      {line}")
-    next
+    call console.WriteLine($"    [fallback] registration failed, using the CPU this run: {ml.cudaLastError()}")
 end if
 
 ' ---------------------------------------------------------------------------
-' 4) CUDA (GPU) training + evaluation
+' 4) CUDA (GPU) pass, operator backend table and CPU vs GPU comparison
 ' ---------------------------------------------------------------------------
 if gpu_enabled then
     call console.WriteLine()
     call console.WriteLine("=== 4) CUDA(GPU) training + evaluation ===")
 
-    dim (gpu_loss ,gpu_correct,gpu_total,gpu_seconds) = CnnRunner.Execute(images_file, labels_file, random_seed, train_passes, train_samples)
+    dim gpu_result = ml.cnnTrainTable(dataset, "class", seed, passes, samples, false)
 
-    call console.WriteLine($"    backend={Tensor.computeKernel.Name}  loss={gpu_loss:R}  " &
-                          $"correct={gpu_correct}/{gpu_total} ({gpu_correct / gpu_total:P2})  elapsed={gpu_seconds:F3}s")
+    call console.WriteLine($"    backend={gpu_result.backend}  loss={gpu_result.loss}  correct={gpu_result.correct}/{gpu_result.total} ({gpu_result.accuracy:P2})  elapsed={gpu_result.seconds:F3}s")
 
-    ' -----------------------------------------------------------------------
-    ' 5) The actual execution backend of every tensor operator of this network
-    '
-    '    Key point: the gating operand is not the same for every operator
-    '    (all verified against the CudaTensor implementation):
-    '      * element-wise operators / MaxPool2D -- gated on the element count of
-    '        the input tensor itself
-    '      * Conv2D forward                    -- gated on the element count of
-    '        the **input** x (NOT the output!)
-    '      * Conv2DBackward*                   -- gated on gradOutput (i.e. the
-    '        output of this layer)
-    '      * MatMul                            -- gated on m*k*n
-    '    Without making the gating operand explicit it is very easy to misread
-    '    "some operators run on the GPU" as "everything runs on the GPU".
-    ' -----------------------------------------------------------------------
     call console.WriteLine()
-    call console.WriteLine("=== 5) Actual execution backend of every tensor operator ===")
+    call console.WriteLine("=== 5) actual execution backend of every tensor operator ===")
 
-    dim min_gpu = CudaTensor.MinGpuElements
-    dim min_gemm = CudaTensor.MinGemmElements
-    dim image_size = 28
-    dim relu1_size = 28 * 28 * 32
-    dim pool1_size = 14 * 14 * 32
-    dim conv2_size = 14 * 14 * 64
-    dim pool2_size = 7 * 7 * 64
-    dim fc_gemm = 10 * pool2_size * 1
+    ' note: the loop variable must not be named 'line' — that identifier would collide
+    ' with the stdlib plot.line function inside the script preprocessor
+    for each op_line in ml.cnnOperatorTable()
+        call console.WriteLine(op_line)
+    next
 
-    call console.WriteLine($"    backend = {Tensor.computeKernel.Name}; single sample (N=1); thresholds MinGpuElements={min_gpu}, MinGemmElements={min_gemm}")
-
-    call console.WriteLine($"    {"operator",-16}{"size",14}{"  gating operand",-20}{"verdict"}")
-    call console.WriteLine($"    {"conv1 fwd",-16}{image_size * image_size,14}{"  input x",-20}{If(image_size * image_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"conv1 bwd",-16}{relu1_size,14}{"  gradOutput",-20}{If(relu1_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"pool1 fwd",-16}{relu1_size,14}{"  input x",-20}{If(relu1_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"pool1 bwd",-16}{pool1_size,14}{"  gradOutput",-20}{If(pool1_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"relu1 fwd/bwd",-16}{relu1_size,14}{"  input x",-20}{If(relu1_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"conv2 fwd",-16}{pool1_size,14}{"  input x",-20}{If(pool1_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"conv2 bwd",-16}{conv2_size,14}{"  gradOutput",-20}{If(conv2_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"pool2 fwd",-16}{conv2_size,14}{"  input x",-20}{If(conv2_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"pool2 bwd",-16}{pool2_size,14}{"  gradOutput",-20}{If(pool2_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"relu2 fwd/bwd",-16}{conv2_size,14}{"  input x",-20}{If(conv2_size >= min_gpu, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"fc  MatMul",-16}{fc_gemm,14}{"  m*k*n",-20}{If(fc_gemm >= min_gemm, "GPU", "CPU fallback")}")
-    call console.WriteLine($"    {"softmax",-16}{10,14}{"  input x",-20}{If(10 >= min_gpu, "GPU", "CPU fallback")}")
-
-    ' -----------------------------------------------------------------------
-    ' 6) CPU vs GPU comparison
-    ' -----------------------------------------------------------------------
     call console.WriteLine()
     call console.WriteLine("=== 6) CPU(SIMD) vs CUDA(GPU) ===")
 
-    dim loss_error = System.Math.Abs(cpu_loss - gpu_loss)
+    dim loss_error = System.Math.Abs(cpu_result.loss - gpu_result.loss)
 
     call console.WriteLine($"    {"backend",-14}{"loss",-24}{"accuracy",-18}{"elapsed(s)"}")
-    call console.WriteLine($"    {"SIMD(CPU)",-14}{cpu_loss,-24:R}{cpu_correct / cpu_total,-18:P2}{cpu_seconds:F3}")
-    call console.WriteLine($"    {"CUDA(GPU)",-14}{gpu_loss,-24:R}{gpu_correct / gpu_total,-18:P2}{gpu_seconds:F3}")
+    call console.WriteLine($"    {"SIMD(CPU)",-14}{cpu_result.loss,-24:R}{cpu_result.accuracy,-18:P2}{cpu_result.seconds:F3}")
+    call console.WriteLine($"    {"CUDA(GPU)",-14}{gpu_result.loss,-24:R}{gpu_result.accuracy,-18:P2}{gpu_result.seconds:F3}")
     call console.WriteLine()
-    call console.WriteLine($"    loss max abs error = {loss_error:E3}   " &
-                          If(loss_error < 1.0E-9, "OK", "FAIL"))
-    call console.WriteLine($"    correct count      = CPU {cpu_correct}/{cpu_total}  GPU {gpu_correct}/{gpu_total}   " &
-                          If(cpu_correct = gpu_correct, "OK", "difference see above"))
-    call console.WriteLine($"    elapsed ratio      = CPU {cpu_seconds:F3}s  GPU {gpu_seconds:F3}s  " &
-                          $"ratio={cpu_seconds / gpu_seconds:F2}x")
-
-    call console.WriteLine()
-    call console.WriteLine("    note: a loss difference only at the rounding level means the GPU and CPU")
-    call console.WriteLine("          numeric implementations agree. With a single sample (N=1) the end-to-end")
-    call console.WriteLine("          run is not faster than the CPU -- ILCudaTensor uses a copy-based")
-    call console.WriteLine("          execution model that performs an H2D upload + kernel + D2H read-back")
-    call console.WriteLine("          on every operator call, and pooling/full-connected/softmax are below")
-    call console.WriteLine("          the GPU threshold and already fall back to the CPU. GPU throughput only")
-    call console.WriteLine("          shows up with large batched tensors.")
+    ' float32 kernels vs the SIMD double path: 1e-6 is the rounding level of this comparison
+    call console.WriteLine($"    loss max abs error = {loss_error:F9}   {If(loss_error < 1.0E-6, "OK", "FAIL")} (tolerance 1.0E-6)")
+    call console.WriteLine($"    correct count      = CPU {cpu_result.correct}/{cpu_result.total}  GPU {gpu_result.correct}/{gpu_result.total}   {If(cpu_result.correct = gpu_result.correct, "OK", "difference see above")}")
+    call console.WriteLine($"    elapsed ratio      = CPU {cpu_result.seconds:F3}s  GPU {gpu_result.seconds:F3}s  ratio={cpu_result.seconds / gpu_result.seconds:F2}x")
 else
     call console.WriteLine()
     call console.WriteLine("=== 4-6) skipped ===")
-    call console.WriteLine($"    GPU not enabled, CPU result = loss {cpu_loss:R}, {cpu_correct}/{cpu_total} ({cpu_correct / cpu_total:P2})")
+    call console.WriteLine($"    GPU not enabled, CPU result = loss {cpu_result.loss}, {cpu_result.correct}/{cpu_result.total} ({cpu_result.accuracy:P2})")
 end if
 
+' ---------------------------------------------------------------------------
+' 7) a small markdown report about the run
+' ---------------------------------------------------------------------------
+dim doc = report.document("MNIST CNN backend comparison", "sciBASIC standard library")
+
+call doc.add(report.heading("1. Configuration"))
+call doc.add(report.list(New String() {
+    $"dataset: {dataset.nsamples} samples x {dataset.nfeatures} pixels",
+    $"{passes} training passes x {samples} images, weight seed {seed}",
+    $"CUDA backend: {If(gpu_enabled, "enabled", "not available")}"
+}))
+call doc.add(report.heading("2. CPU baseline"))
+call doc.add(report.paragraph($"loss = {cpu_result.loss}, accuracy = {cpu_result.accuracy:P2}, elapsed = {cpu_result.seconds:F3}s"))
+
 call console.WriteLine()
+call console.WriteLine("md  : " & doc.save(here("mnist-cnn.md")))
 call console.WriteLine("done: mnist-cnn")

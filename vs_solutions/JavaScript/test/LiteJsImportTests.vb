@@ -226,6 +226,78 @@ Public Class LiteJsImportTests
         End Try
     End Sub
 
+    ' ======================================================== search roots
+
+    <Fact>
+    Public Sub Import_SearchRootsMirrorTheVbsIncludeRoots()
+        Dim scriptDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(),
+                                               "litejs-roots-" & Guid.NewGuid().ToString("N"))
+        System.IO.Directory.CreateDirectory(scriptDir)
+
+        Try
+            Dim roots = JsRuntime.AssemblySearchRoots(scriptDir)
+            Dim app = System.IO.Path.GetFullPath(AppContext.BaseDirectory)
+
+            ' script folder -> interpreter folder -> <interpreter>\libs -> <interpreter>\..\libs
+            Assert.Equal(System.IO.Path.GetFullPath(scriptDir), roots(0))
+            Assert.Equal(app, roots(1))
+            Assert.Equal(System.IO.Path.GetFullPath(System.IO.Path.Combine(app, "libs")), roots(2))
+            Assert.Equal(System.IO.Path.GetFullPath(System.IO.Path.Combine(app, "..", "libs")), roots(3))
+            ' stable + free of duplicates
+            Assert.Equal(roots.Length, roots.Select(Function(r) r.ToLowerInvariant()).Distinct().Count())
+        Finally
+            Try : System.IO.Directory.Delete(scriptDir, True) : Catch : End Try
+        End Try
+    End Sub
+
+    <Fact>
+    Public Sub Import_SearchRootsAppendTheHostPaths()
+        ClrInterop.ClearAssemblySearchPaths()
+        Try
+            Dim hosted = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "litejs-hosted-libs")
+            ClrInterop.AddAssemblySearchPath(hosted)
+
+            Dim roots = JsRuntime.AssemblySearchRoots()
+
+            Assert.Equal(System.IO.Path.GetFullPath(hosted), roots.Last())
+        Finally
+            ClrInterop.ClearAssemblySearchPaths()
+        End Try
+    End Sub
+
+    <Fact>
+    Public Sub Import_ProbesTheLibsFolderUnderTheInterpreterFolder()
+        ' a dll under <interpreter>\libs is found by the search roots: the decoy file (not a
+        ' managed image) makes the load error name WHICH path was probed, which proves that
+        ' the libs root participates in resolution.
+        Dim libs = System.IO.Path.Combine(AppContext.BaseDirectory, "libs")
+        Dim probe = System.IO.Path.Combine(libs, "LiteJsProbe_NotAnAssembly.dll")
+
+        System.IO.Directory.CreateDirectory(libs)
+        System.IO.File.WriteAllText(probe, "not a managed assembly")
+
+        Try
+            Dim ex = Assert.Throws(Of JsRuntimeException)(
+                Function() OneLine("import probe from 'LiteJsProbe_NotAnAssembly.dll';"))
+
+            Assert.Contains("cannot load assembly", ex.Message)
+            Assert.Contains(probe, ex.Message)
+        Finally
+            Try : System.IO.File.Delete(probe) : Catch : End Try
+        End Try
+    End Sub
+
+    <Fact>
+    Public Sub Import_FailureMessageListsTheProbedCandidates()
+        Dim ex = Assert.Throws(Of JsRuntimeException)(
+            Function() OneLine("import nope from 'no-such-assembly-xyz.dll';"))
+
+        Assert.Contains("cannot load assembly", ex.Message)
+        Assert.Contains("tried:", ex.Message)
+        ' the libs roots are part of the diagnostic trail
+        Assert.Contains("libs", ex.Message)
+    End Sub
+
     ' ======================================================== module imports
 
     <Fact>

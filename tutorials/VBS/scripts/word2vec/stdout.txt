@@ -1,21 +1,23 @@
-read 461 word totally.
+﻿read 461 word totally.
 alpha:0.025	Progress: 99.93021632937894%	
 word vectors: 461 tokens x 30 dims
 Create NNDescent
 Set Iteration Parameters
 make 6 trees...
 [MakeNNDescent] Start sample rejection loop... [parallel: 1]
-████████████████████████████████████████| 100.0% [ 461 / 461 | 29ms < 0ms ] 
+                                         | 0.0% [ 0 / 461 | 2ms < 106751991808.000days ]  .                                        | 0.2% [ 1 / 461 | 9ms < 35.275s ]               .                                        | 0.4% [ 2 / 461 | 10ms < 1.396s ]  :                                        | 0.7% [ 3 / 461 | 10ms < 520ms ]   -                                        | 0.9% [ 4 / 461 | 10ms < 299ms ]  -                                        | 1.1% [ 5 / 461 | 10ms < 223ms ]  █                                        | 1.3% [ 6 / 461 | 10ms < 188ms ]  █                                        | 1.5% [ 7 / 461 | 11ms < 182ms ]  █                                        | 1.7% [ 8 / 461 | 11ms < 153ms ]  █                                        | 2.0% [ 9 / 461 | 11ms < 131ms ]  █                                        | 2.2% [ 10 / 461 | 11ms < 115ms ]  ████████████████████████████████████████| 100.0% [ 461 / 461 | 13ms < 0ms ]  ████████████████████████████████████████| 100.0% [ 461 / 461 | 19ms < 0ms ]  
 
 Build candidates... [parallel: 1]
 Build candidates... [parallel: 1]
-Nearest Neighbor Descent: 42ms
+Nearest Neighbor Descent: 25ms
 DeHeapSort... [parallel: 1]
-████████████████████████████████████████| 100.0% [ 461 / 461 | 4ms < 0ms ]     
+                                         | 0.0% [ 0 / 461 | 0ms < 106751991808.000days ]  .                                        | 0.2% [ 1 / 461 | 1ms < 3.144s ]                .                                        | 0.4% [ 2 / 461 | 1ms < 821ms ]   :                                        | 0.7% [ 3 / 461 | 1ms < 406ms ]  -                                        | 0.9% [ 4 / 461 | 1ms < 254ms ]  -                                        | 1.1% [ 5 / 461 | 1ms < 197ms ]  █                                        | 1.3% [ 6 / 461 | 1ms < 150ms ]  █                                        | 1.5% [ 7 / 461 | 2ms < 127ms ]  █                                        | 1.7% [ 8 / 461 | 2ms < 110ms ]  █                                        | 2.0% [ 9 / 461 | 2ms < 96ms ]   ████████████████████████████████████████| 100.0% [ 461 / 461 | 2ms < 0ms ]  ████████████████████████████████████████| 100.0% [ 461 / 461 | 3ms < 0ms ]  
 
 SmoothKNNDistance...
 ComputeMembershipStrengths... [parallel: 1]
 umap embedding: 461 samples x 9 dims
-kmeans cluster sizes: 52, 34, 55, 67, 42, 60, 55, 36, 60
+kmeans cluster sizes: 39, 66, 59, 43, 46, 53, 48, 59, 48
+plot: G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\word2vec\rapunzel-umap-groups.png
+csv : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\word2vec\rapunzel-umap-groups.csv
 done: rapunzel-umap-groups.png
 done: rapunzel-umap-groups.csv

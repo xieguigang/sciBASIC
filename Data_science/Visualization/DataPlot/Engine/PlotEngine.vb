@@ -121,6 +121,10 @@ Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
         MyBase.New(g, theme)
     End Sub
 
+    Protected Sub New()
+        Call MyBase.New()
+    End Sub
+
     ''' <summary>
     ''' 把给定的数据系列绘制到当前画布之上（引擎自建画布，或者外部注入的宿主画布）。
     ''' </summary>
@@ -171,7 +175,7 @@ Public MustInherit Class PlotEngine : Implements IDisposable
     Protected _g As IGraphics
     Protected _width As Integer
     Protected _height As Integer
-    Protected _bitmap As Microsoft.VisualBasic.Imaging.Bitmap = Nothing
+    Protected _bitmap As Bitmap = Nothing
 
     ''' <summary>
     ''' 画布是否由本对象创建（决定 <see cref="Dispose"/> 时要不要把它一起释放）。
@@ -269,6 +273,9 @@ Public MustInherit Class PlotEngine : Implements IDisposable
         _Theme = If(theme, PlotTheme.Light())
         _g = DriverLoad.CreateGraphicsDevice(New Size(width, height), driver:=driver)
         ApplyQuality(_g)
+    End Sub
+
+    Sub New()
     End Sub
 
     ''' <summary>

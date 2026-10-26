@@ -1,7 +1,11 @@
-demo test result of variable tuple deconstruct in vb:
+﻿demo test result of variable tuple deconstruct in vb:
 a := 1
 b := 2
 (a+b) := 3
 a => 123.0000
 b => 456.0000
 c => 789.0000
+table: 3 samples x 1 feature, names = a, b, c
+stats: sum = 1368, mean = 456, median = 456
+csv : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\tuple\tuple.csv
+done: tuple
