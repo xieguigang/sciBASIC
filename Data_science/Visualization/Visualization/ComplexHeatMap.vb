@@ -42,13 +42,13 @@ End Enum
 ''' </summary>
 Public Enum LinkageMethod
     ''' <summary>单连接（最近邻）。</summary>
-    Single = 0
+    SingleLinkage = 0
     ''' <summary>全连接（最远邻）。</summary>
-    Complete = 1
+    CompleteLinkage = 1
     ''' <summary>平均连接（UPGMA）。</summary>
-    Average = 2
+    AverageLinkage = 2
     ''' <summary>加权平均连接（WPGMA）。</summary>
-    Weighted = 3
+    WeightedLinkage = 3
     ''' <summary>
     ''' Ward.D2 最小方差法（与 R 的 <c>hclust(method = "ward.D2")</c> 一致）。
     '''
@@ -826,9 +826,9 @@ Public Class ComplexHeatMap : Inherits HeatmapPlot
         Dim strategy As LinkageStrategy
 
         Select Case linkage
-            Case LinkageMethod.Single : strategy = New SingleLinkageStrategy()
-            Case LinkageMethod.Complete : strategy = New CompleteLinkageStrategy()
-            Case LinkageMethod.Weighted : strategy = New WeightedLinkageStrategy()
+            Case LinkageMethod.SingleLinkage : strategy = New SingleLinkageStrategy()
+            Case LinkageMethod.CompleteLinkage : strategy = New CompleteLinkageStrategy()
+            Case LinkageMethod.WeightedLinkage : strategy = New WeightedLinkageStrategy()
             Case Else : strategy = New AverageLinkageStrategy()
         End Select
 
