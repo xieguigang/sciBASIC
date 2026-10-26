@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>stdlib</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
