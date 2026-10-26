@@ -1,6 +1,9 @@
-load table: 150 samples x 4 features
-Calculate component 1... cost 3ms and run 17 loop [DONE]
+﻿load table: 150 samples x 4 features
+kmeans cluster sizes: 38, 50, 62
+Calculate component 1... cost 4ms and run 17 loop [DONE]
 Calculate component 2... cost 0ms and run 10 loop [DONE]
-kmeans cluster sizes: 50, 62, 38
+info, 1.0 seconds - The default graphics driver value is config as GDI().
+plot: G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\kmeans\bezdekIris-pca-groups.png
+csv : G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\kmeans\bezdekIris-kmeans.csv
 done: bezdekIris-pca-groups.png
 done: bezdekIris-kmeans.csv

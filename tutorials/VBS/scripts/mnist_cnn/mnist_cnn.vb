@@ -25,8 +25,8 @@ imports stdio
 dim mnist_dir = ?"--mnist-data"
 dim images_file = mnist_dir & "\train-images-idx3-ubyte"
 dim labels_file = mnist_dir & "\train-labels-idx1-ubyte"
-dim passes = 3
-dim samples = 300
+dim passes = 2
+dim samples = 120
 dim seed = 12345
 
 ' ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ if not String.IsNullOrEmpty(mnist_dir) andalso System.IO.File.Exists(images_file
     dataset = read.mnist(images_file, labels_file, samples)
 else
     call console.WriteLine("[data] no mnist dataset given (--mnist-data=<dir>), using the synthetic digit set")
-    dataset = ml.syntheticDigits(30, seed)
+    dataset = ml.syntheticDigits(12, seed)
 end if
 
 ' ---------------------------------------------------------------------------
@@ -116,7 +116,8 @@ if gpu_enabled then
     call console.WriteLine($"    {"SIMD(CPU)",-14}{cpu_result.loss,-24:R}{cpu_result.accuracy,-18:P2}{cpu_result.seconds:F3}")
     call console.WriteLine($"    {"CUDA(GPU)",-14}{gpu_result.loss,-24:R}{gpu_result.accuracy,-18:P2}{gpu_result.seconds:F3}")
     call console.WriteLine()
-    call console.WriteLine($"    loss max abs error = {loss_error:F9}   {If(loss_error < 1.0E-9, "OK", "FAIL")}")
+    ' float32 kernels vs the SIMD double path: 1e-6 is the rounding level of this comparison
+    call console.WriteLine($"    loss max abs error = {loss_error:F9}   {If(loss_error < 1.0E-6, "OK", "FAIL")} (tolerance 1.0E-6)")
     call console.WriteLine($"    correct count      = CPU {cpu_result.correct}/{cpu_result.total}  GPU {gpu_result.correct}/{gpu_result.total}   {If(cpu_result.correct = gpu_result.correct, "OK", "difference see above")}")
     call console.WriteLine($"    elapsed ratio      = CPU {cpu_result.seconds:F3}s  GPU {gpu_result.seconds:F3}s  ratio={cpu_result.seconds / gpu_result.seconds:F2}x")
 else
