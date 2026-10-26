@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -24,9 +25,17 @@ Module Plot3DDemo
     ''' </summary>
     ''' <param name="outDir">输出目录（一般为 <c>AppContext.BaseDirectory</c>）</param>
     Friend Sub Run(outDir As String)
-        Call Scatter3DDemo(outDir)
-        Call Pie3DDemo(outDir)
-        Call Surface3DDemo(outDir)
+        Call ImageDriver.Register()
+
+        Call Scatter3DDemo(outDir.Trim("/"c, "\"c) & "-gdi-backend/")
+        Call Pie3DDemo(outDir.Trim("/"c, "\"c) & "-gdi-backend/")
+        Call Surface3DDemo(outDir.Trim("/"c, "\"c) & "-gdi-backend/")
+
+        Call SkiaDriver.Register()
+
+        Call Scatter3DDemo(outDir.Trim("/"c, "\"c) & "-skia-backend/")
+        Call Pie3DDemo(outDir.Trim("/"c, "\"c) & "-skia-backend/")
+        Call Surface3DDemo(outDir.Trim("/"c, "\"c) & "-skia-backend/")
     End Sub
 
     ' ------------------------------------------------------------------
