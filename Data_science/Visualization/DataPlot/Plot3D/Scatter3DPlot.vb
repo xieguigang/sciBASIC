@@ -91,6 +91,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports std = System.Math
 
 Namespace Plot3D.Impl
 
@@ -114,6 +115,12 @@ Namespace Plot3D.Impl
         Public Property xlabel As String = "X"
         Public Property ylabel As String = "Y"
         Public Property zlabel As String = "Z"
+
+        ''' <summary>
+        ''' 深度淡化强度（覆盖 <see cref="Plot3DTheme.depthFade"/>，仅在大于 0 时生效）：
+        ''' 离视点越远的点越淡、越小，从而增强三维层次感。
+        ''' </summary>
+        Public Property depthFade As Double = -1
 
         ''' <summary>
         ''' </summary>
@@ -154,33 +161,52 @@ Namespace Plot3D.Impl
                 Z = DirectCast(.Z, IEnumerable(Of Double)).Range.CreateAxisTicks
             End With
 
+            ' ---------------------------------------------------------------
+            '  出版级三维坐标系：盒框 → 背板网格 → 三轴刻度 → 主轴与轴名
+            ' ---------------------------------------------------------------
+            If theme.showBox Then
+                For Each edge As Element3D In AxisFrame.Box(css, X, Y, Z, theme)
+                    Yield edge
+                Next
+            End If
 
-            ' 然后生成底部的网格
-            For Each line As Element3D In Grids.Grid1(css, X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
-                Yield line
-            Next
+            If theme.showGrid Then
+                For Each line As Element3D In AxisFrame.BackGrids(css, X, Y, Z, theme, camera)
+                    Yield line
+                Next
+            End If
 
-            For Each item As Element3D In AxisDraw.Axis(
-                    css,
-                    xrange:=X, yrange:=Y, zrange:=Z,
-                    labelFontCss:=theme.axisLabelCSS,
-                    labels:=(xlabel, ylabel, zlabel),
-                    strokeCSS:=theme.axisStroke,
-                    arrowFactor:=arrowFactor,
-                    labelColorVal:=theme.mainTextColor
-                )
+            If theme.showTicks Then
+                For Each tick As Element3D In AxisFrame.Ticks(css, X, Y, Z, theme)
+                    Yield tick
+                Next
+            End If
 
-                Yield item
-            Next
+            If theme.showAxisLines Then
+                For Each item As Element3D In AxisDraw.Axis(
+                        css,
+                        xrange:=X, yrange:=Y, zrange:=Z,
+                        labelFontCss:=theme.axisLabelCSS,
+                        labels:=(xlabel, ylabel, zlabel),
+                        strokeCSS:=theme.axisStroke,
+                        arrowFactor:=arrowFactor,
+                        labelColorVal:=theme.mainTextColor
+                    )
+
+                    Yield item
+                Next
+            End If
 
             ' 最后混合进入系列点
+            Dim fade As Double = If(depthFade >= 0, depthFade, theme.depthFade)
+            Dim depth As Func(Of Point3D, Double) = Nothing
+
+            If fade > 0 Then
+                depth = DepthNormalize(points, camera)
+            End If
+
             For Each serial As Serial3D In serials
                 Dim data As NamedValue(Of Point3D)() = serial.Points
-                Dim size As New Size With {
-                    .Width = serial.PointSize,
-                    .Height = serial.PointSize
-                }
-                Dim color As New SolidBrush(serial.Color)
 
                 If showHull Then
                     Yield New ConvexHullPolygon With {
@@ -193,6 +219,24 @@ Namespace Plot3D.Impl
                 End If
 
                 For Each pt As NamedValue(Of Point3D) In data
+                    Dim size As New Size With {
+                        .Width = serial.PointSize,
+                        .Height = serial.PointSize
+                    }
+                    Dim color As Brush = New SolidBrush(serial.Color)
+
+                    If depth IsNot Nothing Then
+                        ' 离视点越远（归一化深度越接近 1）越淡、越小
+                        Dim t As Double = depth(pt.Value)
+
+                        color = New SolidBrush(Color.FromArgb(
+                            CInt(std.Max(24, 255 * (1 - fade * t))), serial.Color))
+                        size = New Size With {
+                            .Width = CSng(serial.PointSize * (1 - fade * 0.35 * t)),
+                            .Height = CSng(serial.PointSize * (1 - fade * 0.35 * t))
+                        }
+                    End If
+
                     Yield New ShapePoint With {
                         .Fill = color,
                         .Location = pt.Value,
@@ -202,6 +246,40 @@ Namespace Plot3D.Impl
                     }
                 Next
             Next
+        End Function
+
+        ''' <summary>
+        ''' 预先计算所有数据点投影之后的归一化视图深度：0 表示最近，1 表示最远。
+        ''' </summary>
+        Private Shared Function DepthNormalize(points As Point3D(), camera As Camera) As Func(Of Point3D, Double)
+            Dim depths As New Dictionary(Of Point3D, Double)
+            Dim dmin As Double = Double.MaxValue
+            Dim dmax As Double = Double.MinValue
+
+            For Each pt As Point3D In points
+                ' 投影之后 Z 越大表示离视点越远
+                Dim z As Double = camera.Project(camera.Rotate(pt)).Z
+
+                depths(pt) = z
+
+                If z < dmin Then dmin = z
+                If z > dmax Then dmax = z
+            Next
+
+            Dim span As Double = dmax - dmin
+
+            Return Function(pt As Point3D) As Double
+                       Dim z As Double
+
+                       If Not depths.TryGetValue(pt, z) Then
+                           Return 0
+                       End If
+                       If span <= 0 Then
+                           Return 0
+                       End If
+
+                       Return std.Max(0, std.Min(1, (z - dmin) / span))
+                   End Function
         End Function
 
         Public Function Plot(Optional size$ = Nothing,
@@ -239,6 +317,10 @@ Namespace Plot3D.Impl
         End Sub
 
         Private Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+            If theme.antiAlias Then
+                Call Plot3DCanvas.ApplyAntiAlias(g)
+            End If
+
             Dim legends As LegendObject() = serials _
                 .Select(Function(s)
                             Return New LegendObject With {
@@ -250,21 +332,7 @@ Namespace Plot3D.Impl
                         End Function) _
                 .ToArray
             Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim font As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
             Dim region As Rectangle = canvas.PlotRegion(css)
-
-            Dim legendHeight! = (legends.Length * (font.Height + 5))
-            Dim legendTop! = (region.Height - legendHeight) / 2
-            Dim maxLegendLabelSize As SizeF = legends.Select(Function(s) s.title) _
-                .MaxLengthString _
-                .MeasureSize(g, font)
-            Dim legendWidth = maxLegendLabelSize.Height * 1.125
-            Dim legendLeft! = region.Right - maxLegendLabelSize.Width - legendWidth
-            Dim topLeft As New Point With {
-                .X = legendLeft,
-                .Y = legendTop
-            }
-            Dim legendSize$ = $"{legendWidth},{legendWidth}"
 
             ' 要先绘制三维图形，要不然会将图例遮住的
             Call populateModels(css).RenderAs3DChart(
@@ -274,14 +342,12 @@ Namespace Plot3D.Impl
                 theme:=theme
             )
 
+            ' 标题与副标题
+            Call Plot3DCanvas.DrawTitles(g, region, theme)
+
+            ' 图例：按实测尺寸排版，并钳制在画布之内
             If theme.drawLegend Then
-                Call g.DrawLegends(
-                    topLeft:=topLeft,
-                    legends:=legends,
-                    gSize:=legendSize,
-                    d:=5,
-                    regionBorder:=Stroke.AxisStroke
-                )
+                Call Plot3DCanvas.DrawLegendBlock(g, region, canvas.Size, legends, theme)
             End If
         End Sub
     End Class
@@ -297,15 +363,31 @@ Namespace Plot3D
         ''' <summary>
         ''' plot scatter 3D
         ''' </summary>
-        ''' <param name="serials"></param>
-        ''' <param name="camera"></param>
-        ''' <param name="bg$"></param>
-        ''' <param name="padding$"></param>
-        ''' <param name="axisLabelFontCSS$"></param>
-        ''' <param name="elementLabelFont$"></param>
-        ''' <param name="boxStroke$"></param>
-        ''' <param name="axisStroke$"></param>
+        ''' <param name="serials">三维散点系列</param>
+        ''' <param name="camera">相机</param>
+        ''' <param name="bg$">画布背景色</param>
+        ''' <param name="padding$">页边距 CSS</param>
+        ''' <param name="axisLabelFontCSS$">轴标题字体</param>
+        ''' <param name="elementLabelFont$">数据点标签字体</param>
+        ''' <param name="boxStroke$">图例外框描边</param>
+        ''' <param name="axisStroke$">坐标轴线描边</param>
+        ''' <param name="labX$">X 轴标题</param>
+        ''' <param name="labY$">Y 轴标题</param>
+        ''' <param name="labZ$">Z 轴标题</param>
+        ''' <param name="arrowFactor$">主轴箭头尺寸</param>
+        ''' <param name="showLegend">是否绘制图例</param>
         ''' <param name="showHull">show convex hull for each <paramref name="serials"/> data.</param>
+        ''' <param name="hullAlpha">凸包透明度 ``[0,255]``</param>
+        ''' <param name="hullBspline">凸包平滑阶数</param>
+        ''' <param name="driver">绘图驱动</param>
+        ''' <param name="title$">图表标题</param>
+        ''' <param name="subTitle$">图表副标题</param>
+        ''' <param name="dpi">导出分辨率</param>
+        ''' <param name="showBox">是否绘制三维盒框</param>
+        ''' <param name="showGrid">是否绘制背板网格</param>
+        ''' <param name="showTicks">是否绘制三轴刻度与刻度值</param>
+        ''' <param name="depthFade">深度淡化强度 ``[0,1]``，0 表示关闭</param>
+        ''' <param name="antiAlias">是否尝试开启抗锯齿</param>
         ''' <returns></returns>
         <Extension>
         Public Function Plot(serials As IEnumerable(Of Serial3D),
@@ -324,7 +406,15 @@ Namespace Plot3D
                              Optional showHull As Boolean = True,
                              Optional hullAlpha As Integer = 150,
                              Optional hullBspline As Single = 2,
-                             Optional driver As Drivers = Drivers.Default) As GraphicsData
+                             Optional driver As Drivers = Drivers.Default,
+                             Optional title$ = "",
+                             Optional subTitle$ = "",
+                             Optional dpi As Integer = 100,
+                             Optional showBox As Boolean = True,
+                             Optional showGrid As Boolean = True,
+                             Optional showTicks As Boolean = True,
+                             Optional depthFade As Double = 0,
+                             Optional antiAlias As Boolean = True) As GraphicsData
 
             Dim theme As New Plot3DTheme With {
                 .padding = padding,
@@ -333,7 +423,14 @@ Namespace Plot3D
                 .axisLabelCSS = axisLabelFontCSS,
                 .tagCSS = elementLabelFont,
                 .drawLegend = showLegend,
-                .legendBoxStroke = boxStroke
+                .legendBoxStroke = boxStroke,
+                .title = title,
+                .subTitle = subTitle,
+                .showBox = showBox,
+                .showGrid = showGrid,
+                .showTicks = showTicks,
+                .depthFade = depthFade,
+                .antiAlias = antiAlias
             }
 
             Return New Impl.Scatter3D(
@@ -348,7 +445,7 @@ Namespace Plot3D
                 .xlabel = labX,
                 .ylabel = labY,
                 .zlabel = labZ
-            }.Plot(size:=$"{camera.screen.Width},{camera.screen.Height}", driver:=driver)
+            }.Plot(size:=$"{camera.screen.Width},{camera.screen.Height}", dpi:=dpi, driver:=driver)
         End Function
     End Module
 End Namespace
