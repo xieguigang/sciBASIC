@@ -9,7 +9,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 //  standard library table and exported.
 // ============================================================================
 
-const here = (name) => path.join(__dirname, name);
 const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
 
 // Deconstruct the pair [1, 2] into two variables in a single line.

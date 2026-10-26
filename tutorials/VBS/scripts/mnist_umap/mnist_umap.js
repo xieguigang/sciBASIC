@@ -8,8 +8,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 //     njs mnist_umap.js --data=<MNIST dir>
 // ---------------------------------------------------------------------------
 
-const here = (name) => path.join(__dirname, name);
-
 const argValue = (name) => {
     const prefix = name + '=';
 

@@ -8,8 +8,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 // rendered image are identical on both engines.
 // ---------------------------------------------------------------------------
 
-const here = (name) => path.join(__dirname, name);
-
 const g = stdlib.net.create();
 let nodeId = 0;
 

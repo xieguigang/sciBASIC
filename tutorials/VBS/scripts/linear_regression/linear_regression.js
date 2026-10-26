@@ -10,7 +10,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 // ---------------------------------------------------------------------------
 
 // the njs host publishes the node style 'path' / 'fs' / 'process' globals, no require()
-const here = (name) => path.join(__dirname, name);
 const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
 
 // ---------------------------------------------------------------------------

@@ -5,7 +5,6 @@ import stdio from '../../../../.nuget/net10.0/stdio.dll';
 //  TF-IDF document distance tutorial — the njs twin of tfidf.vb
 // ============================================================================
 
-const here = (name) => path.join(__dirname, name);
 const join = (values, sep) => [...values].join(sep === undefined ? ',' : sep);
 
 // 1) a small in-memory corpus
