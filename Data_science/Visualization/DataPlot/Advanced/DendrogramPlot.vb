@@ -73,9 +73,9 @@
 ' ============================================================================
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -118,7 +118,7 @@ End Class
 ''' </summary>
 Public Class DendrogramPlot
 
-    Protected Friend ReadOnly hist As Cluster
+    Protected Friend ReadOnly hist As IHierarchyTree
     Protected Friend ReadOnly classIndex As Dictionary(Of String, ColorClass)
 
     ''' <summary>
@@ -139,7 +139,7 @@ Public Class DendrogramPlot
     Protected labels As New List(Of NamedValue(Of PointF))
     Protected legendWidth As Single = 20
 
-    Public Sub New(hist As Cluster, theme As DendrogramTheme,
+    Public Sub New(hist As IHierarchyTree, theme As DendrogramTheme,
                    Optional classes As ColorClass() = Nothing,
                    Optional classinfo As Dictionary(Of String, String) = Nothing,
                    Optional showAllLabels As Boolean = False,
@@ -176,7 +176,7 @@ Public Class DendrogramPlot
     ''' </summary>
     Public Function Plot(Optional size$ = "2100,1600",
                          Optional dpi As Integer = 100,
-                         Optional driver As Microsoft.VisualBasic.Imaging.Driver.Drivers = Microsoft.VisualBasic.Imaging.Driver.Drivers.Default) As GraphicsData
+                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Return g.GraphicsPlots(
             size:=size.SizeParser,
@@ -244,7 +244,7 @@ Public Class DendrogramPlot
         Call DendrogramTree(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding, charWidth)
     End Sub
 
-    Protected Overridable Sub DendrogramTree(partition As Cluster,
+    Protected Overridable Sub DendrogramTree(partition As IHierarchyTree,
                                              unitWidth As Double,
                                              g As IGraphics,
                                              plotRegion As Rectangle,
@@ -254,7 +254,7 @@ Public Class DendrogramPlot
                                              labelPadding As Integer,
                                              charWidth As Integer)
 
-        Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
+        Dim orders As IHierarchyTree() = partition.AsEnumerable.OrderBy(Function(a) a.Leafs).ToArray
         Dim x = plotRegion.Left + plotRegion.Right - scaleX(partition.DistanceValue)
         Dim y As Integer
         Dim css As CSSEnvirnment = g.LoadEnvironment
@@ -303,7 +303,7 @@ Public Class DendrogramPlot
 
             parentPt = New PointF(x, y)
 
-            For Each part As Cluster In orders
+            For Each part As IHierarchyTree In orders
                 Call DendrogramTree(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt, labelPadding, charWidth)
                 n += part.Leafs
             Next
