@@ -42,7 +42,7 @@ Public Module table
         End If
 
         Dim n As Integer = columns(0).Length
-        Dim features(n - 1) As Double()
+        Dim features(n - 1)() As Double
 
         For i As Integer = 0 To n - 1
             Dim row(columns.Length - 1) As Double

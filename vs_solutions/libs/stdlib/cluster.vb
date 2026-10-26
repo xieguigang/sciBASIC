@@ -1,6 +1,9 @@
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+' this module is itself named 'cluster', which would shadow the hierachical clustering tree
+' type in a case insensitive language, so the tree type is aliased here
+Imports HCluster = Microsoft.VisualBasic.DataMining.HierarchicalClustering.Cluster
 
 ''' <summary>
 ''' 聚类模块：k-means、层次聚类（距离矩阵 → 树 → 剪枝）。
@@ -26,7 +29,7 @@ Public Module cluster
     End Function
 
     ''' <summary>对距离矩阵做层次聚类，返回树根节点。</summary>
-    Public Function hca(dist As NumericTable) As Cluster
+    Public Function hca(dist As NumericTable) As HCluster
         Return dist.hca(Nothing, silent:=True)
     End Function
 
@@ -43,22 +46,22 @@ Public Module cluster
     ' ======================================================== 树结构信息
 
     ''' <summary>叶节点数量。</summary>
-    Public Function leafCount(tree As Cluster) As Integer
+    Public Function leafCount(tree As HCluster) As Integer
         Return tree.Leafs
     End Function
 
     ''' <summary>按树的顺序展开的叶节点名称。</summary>
-    Public Function leafs(tree As Cluster) As String()
+    Public Function leafs(tree As HCluster) As String()
         Return tree.OrderLeafs()
     End Function
 
     ''' <summary>子节点数量。</summary>
-    Public Function children(tree As Cluster) As Integer
+    Public Function children(tree As HCluster) As Integer
         Return If(tree.Children Is Nothing, 0, tree.Children.Count)
     End Function
 
     ''' <summary>树的总连接距离。</summary>
-    Public Function totalDistance(tree As Cluster) As Double
+    Public Function totalDistance(tree As HCluster) As Double
         Return tree.TotalDistance
     End Function
 
