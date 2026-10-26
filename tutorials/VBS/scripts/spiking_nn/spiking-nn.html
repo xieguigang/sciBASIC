@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Spiking neural network</title>
+<style>
+body{max-width:960px;margin:2.5rem auto;padding:0 1.25rem;font-family:"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.65;color:#1f2933;}
+h1,h2,h3,h4{line-height:1.25;margin-top:2rem;}
+h1{border-bottom:2px solid #e4e7eb;padding-bottom:.5rem;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem;}
+th,td{border:1px solid #cbd2d9;padding:.35rem .6rem;}
+th{background:#f5f7fa;text-align:left;}
+tr:nth-child(even){background:#fafbfc;}
+pre{background:#0f172a;color:#e2e8f0;padding:1rem;border-radius:6px;overflow:auto;}
+code{font-family:Consolas,monospace;}
+img{max-width:100%;height:auto;}
+blockquote{border-left:4px solid #cbd2d9;margin-left:0;padding-left:1rem;color:#52606d;}
+hr{border:none;border-top:1px solid #e4e7eb;margin:2rem 0;}
+</style>
+</head>
+<body>
+<h1>1. 训练配置</h1>
+
+<ul>
+  <li>3 类 × 8 维高斯团簇（σ=0.09），训练 360 / 测试 90 样本</li>
+  <li>LIF×64 → LIF×3，仿真步数 T=30，β=0.85，θ=1.0</li>
+  <li>Adam(lr=0.002) + 梯度裁剪 1.0 + FastSigmoid 替代梯度</li>
+</ul>
+
+<h1>2. 测试集准确率</h1>
+
+<p>100.0%，40 轮训练后的 loss = 0.0003</p>
+
+<h1>3. 推理轨迹</h1>
+
+<pre><code class="language-text">    in0 |·█···██·········█·····█······█|
+    in1 |························█·····|
+    in2 |·██··██████·████··███████·████|
+    in3 |██████·█████·██·██████·███████|
+    in4 |█·██··█···██···█····█···███···|
+    in5 |█·█··█··███·██·█·██··█····█·██|
+    in6 |█··█···█······█·█··█·██·█·····|
+    in7 |█████████··████████·█··████·██|</code></pre>
+
+<pre><code class="language-text">    out0 |··█·██··███·███···██···█··████| 计数=16 ← 真实类别
+    out1 |······························| 计数=0
+    out2 |························█·····| 计数=1
+    → 预测类别: 0（真实: 0） [正确]</code></pre>
+</body>
+</html>

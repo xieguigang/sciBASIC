@@ -140,6 +140,41 @@ Public Module ml
                              Optional samples As Integer = 1000,
                              Optional useCuda As Boolean = False) As CnnReport
 
+        Dim dataset As NumericTable
+
+        Using reader As New MNIST(imagesFile, labelsFile)
+            Dim pixels As New List(Of Double())
+            Dim classes As New List(Of Double)
+            Dim names As New List(Of String)
+
+            For Each digit In reader.ExtractVectors()
+                If samples > 0 AndAlso pixels.Count >= samples Then
+                    Exit For
+                End If
+
+                Call pixels.Add(digit.value.Select(Function(b) CDbl(b)).ToArray)
+                Call classes.Add(Val(digit.description))
+                Call names.Add($"sample_{pixels.Count + 1}")
+            Next
+
+            dataset = NumericTable.FromRows(names.ToArray, pixels.ToArray, featureNames("p", pixels(0).Length))
+            Call dataset.SetLabel("class", classes.ToArray)
+        End Using
+
+        Return cnnTrainTable(dataset, "class", seed, passes, samples, useCuda)
+    End Function
+
+    ''' <summary>
+    ''' 用统一的二维表训练卷积网络：每行是一个 28x28 灰度图像（特征列 ``p_1 .. p_784``，
+    ''' 取值 0-255 或 0-1 均可），标签列是 0-9 的数字类别。
+    ''' </summary>
+    Public Function cnnTrainTable(source As NumericTable,
+                                  Optional labelName As String = "class",
+                                  Optional seed As Integer = 12345,
+                                  Optional passes As Integer = 5,
+                                  Optional samples As Integer = 0,
+                                  Optional useCuda As Boolean = False) As CnnReport
+
         If useCuda AndAlso Not ml.useCuda() Then
             ' GPU 不可用时保持 CPU 后端，脚本侧通过 report.backend 观察实际后端
         End If
@@ -149,65 +184,107 @@ Public Module ml
 
         Dim report As New CnnReport With {
             .backend = Tensor.computeKernel.Name,
-            .samples = samples,
+            .samples = If(samples > 0, samples, source.nsamples),
             .passes = passes
         }
 
-        Using reader As New MNIST(imagesFile, labelsFile)
-            Dim dataset = reader.ExtractVectors().Take(samples).ToArray
-            Dim builder As LayerBuilder = New LayerBuilder() +
-                input_layer({reader.ImageSize.Width, reader.ImageSize.Height}, 1) +
-                conv_layer(5, 32, 1, 2) +
-                relu_layer() +
-                pool_layer(2, 2, 0) +
-                conv_layer(5, 64, 1, 2) +
-                relu_layer() +
-                pool_layer(2, 2, 0) +
-                full_connected_layer(10) +
-                softmax_layer()
+        Dim side As Integer = CInt(std.Sqrt(source.nfeatures))
+        Dim total As Integer = If(samples > 0, std.Min(samples, source.nsamples), source.nsamples)
+        Dim labels As Integer() = source.GetClassLabel(std.Max(0, Array.IndexOf(source.labelNames, labelName)))
 
-            Dim network As New ConvolutionalNN(builder)
-            Dim trainer As TrainerAlgorithm = New AdaGradTrainer(20, 0.001F).SetKernel(network)
-            Dim db As New DataBlock(reader.ImageSize.Width, reader.ImageSize.Height, 1, 0)
-            Dim watch As Stopwatch = Stopwatch.StartNew()
-            Dim lossHistory(passes - 1) As Double
+        Dim builder As LayerBuilder = New LayerBuilder() +
+            input_layer({side, side}, 1) +
+            conv_layer(5, 32, 1, 2) +
+            relu_layer() +
+            pool_layer(2, 2, 0) +
+            conv_layer(5, 64, 1, 2) +
+            relu_layer() +
+            pool_layer(2, 2, 0) +
+            full_connected_layer(10) +
+            softmax_layer()
 
-            For p As Integer = 1 To passes
-                Dim passLoss As Double = 0
-                Dim check As New PerformanceCounter()
+        Dim network As New ConvolutionalNN(builder)
+        Dim trainer As TrainerAlgorithm = New AdaGradTrainer(20, 0.001F).SetKernel(network)
+        Dim db As New DataBlock(side, side, 1, 0)
+        Dim watch As Stopwatch = Stopwatch.StartNew()
+        Dim lossHistory(passes - 1) As Double
+        Dim images As New List(Of Byte())
 
-                For Each digit In dataset
-                    Call db.addImageData(digit.value, digit.value.Max)
+        For i As Integer = 0 To total - 1
+            Call images.Add(ToImage(source.features(i)))
+        Next
 
-                    Dim result As TrainResult = trainer.train(db, {Val(digit.description)}, check.Set)
+        For p As Integer = 1 To passes
+            Dim passLoss As Double = 0
+            Dim check As New PerformanceCounter()
 
-                    passLoss += result.Loss
-                Next
+            For i As Integer = 0 To total - 1
+                Call db.addImageData(images(i), 255)
 
-                lossHistory(p - 1) = passLoss / dataset.Length
+                Dim result As TrainResult = trainer.train(db, {CDbl(labels(i))}, check.Set)
+
+                passLoss += result.Loss
             Next
 
-            Dim correct As Double = 0
+            lossHistory(p - 1) = passLoss / total
+        Next
 
-            For Each digit In dataset
-                Call db.addImageData(digit.value, digit.value.Max)
+        Dim correct As Double = 0
 
-                If CInt(Val(digit.description)) = CInt(Which.Max(network.predict(db))) Then
-                    correct += 1
-                End If
-            Next
+        For i As Integer = 0 To total - 1
+            Call db.addImageData(images(i), 255)
 
-            watch.Stop()
+            If labels(i) = CInt(Which.Max(network.predict(db))) Then
+                correct += 1
+            End If
+        Next
 
-            report.loss = lossHistory(lossHistory.Length - 1)
-            report.correct = correct
-            report.total = dataset.Length
-            report.seconds = watch.Elapsed.TotalSeconds
-            report.lossHistory = lossHistory
-            report.backend = Tensor.computeKernel.Name
-        End Using
+        watch.Stop()
+
+        report.loss = lossHistory(lossHistory.Length - 1)
+        report.correct = correct
+        report.total = total
+        report.seconds = watch.Elapsed.TotalSeconds
+        report.lossHistory = lossHistory
+        report.backend = Tensor.computeKernel.Name
 
         Return report
+    End Function
+
+    ''' <summary>
+    ''' 生成一份确定性的"合成手写数字"数据集（10 类，每类一条不同高度的亮带），
+    ''' 让 mnist 教程在没有真实 MNIST 数据文件时仍然可以完整运行。
+    ''' </summary>
+    Public Function syntheticDigits(Optional perClass As Integer = 30, Optional seed As Integer = 2024) As NumericTable
+        Dim random As New Random(seed)
+        Dim rows As New List(Of Double())
+        Dim classes As New List(Of Double)
+        Dim names As New List(Of String)
+
+        For cls As Integer = 0 To 9
+            Dim bandY As Integer = 2 + cls * 2.4
+
+            For n As Integer = 1 To perClass
+                Dim pixels(783) As Double
+
+                For y As Integer = 0 To 27
+                    For x As Integer = 0 To 27
+                        Dim base As Double = If(std.Abs(y - bandY) <= 1.2 AndAlso x >= 4 AndAlso x <= 23, 0.85, 0.05)
+                        Dim noise As Double = random.NextDouble() * 0.1
+
+                        pixels(y * 28 + x) = std.Min(1.0, base + noise)
+                    Next
+                Next
+
+                Call rows.Add(pixels)
+                Call classes.Add(cls)
+                Call names.Add($"digit_{rows.Count}")
+            Next
+        Next
+
+        Dim table As NumericTable = NumericTable.FromRows(names.ToArray, rows.ToArray, featureNames("p", 784))
+
+        Return table.SetLabel("class", classes.ToArray)
     End Function
 
     ''' <summary>
@@ -386,6 +463,18 @@ Public Module ml
             New Double() {0.75, 0.75, 0.2, 0.2, 0.8, 0.2, 0.5, 0.5},
             New Double() {0.5, 0.8, 0.5, 0.8, 0.2, 0.75, 0.8, 0.2}
         }
+    End Function
+
+    ''' <summary>把一行的灰度特征（0-1 或 0-255）转成 8 位像素。</summary>
+    Private Function ToImage(pixels As Double()) As Byte()
+        Dim out(pixels.Length - 1) As Byte
+        Dim scale As Double = If(pixels.Max <= 1.0, 255.0, 1.0)
+
+        For i As Integer = 0 To pixels.Length - 1
+            out(i) = CByte(std.Round(std.Max(0.0, std.Min(255.0, pixels(i) * scale))))
+        Next
+
+        Return out
     End Function
 
     Private Function featureNames(prefix As String, n As Integer) As String()
