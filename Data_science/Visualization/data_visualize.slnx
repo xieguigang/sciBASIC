@@ -23,6 +23,12 @@
     <Project Path="../DataMining/DataMining/DataMining.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj">
+      <BuildType Solution="gcmodeller_desktop|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
