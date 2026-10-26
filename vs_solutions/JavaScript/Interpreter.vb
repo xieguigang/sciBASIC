@@ -120,9 +120,11 @@ Public NotInheritable Class Interpreter
                                 ' imports resolve before the body runs (ES semantics) and
                                 ' relative module paths are anchored at this script's folder
                                 Dim savedBase = JsRuntime.ScriptBaseDirectory
+                                Dim savedFile = JsRuntime.CurrentScriptFile
                                 Dim savedExecutor = ModuleLoader.Executor
                                 Try
                                     JsRuntime.ScriptBaseDirectory = ScriptDirectory()
+                                    JsRuntime.CurrentScriptFile = SourceFile
                                     ModuleLoader.Executor = AddressOf LoadModuleExports
 
                                     BindImports(program.Body, _globals)
@@ -135,6 +137,7 @@ Public NotInheritable Class Interpreter
                                     Return Nothing
                                 Finally
                                     JsRuntime.ScriptBaseDirectory = savedBase
+                                    JsRuntime.CurrentScriptFile = savedFile
                                     ModuleLoader.Executor = savedExecutor
                                 End Try
                             End Function)

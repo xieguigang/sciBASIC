@@ -9,12 +9,17 @@ Namespace Runtime
     ''' Assembly and namespace resolution behind <c>import Foo.Bar as ns from 'x.dll'</c>.
     ''' <para>
     ''' The specifier is resolved in this order: an already loaded assembly with that
-    ''' simple (file) name, an explicit path — absolute, or relative to the importing
-    ''' script and then to the application base — <see cref="System.Reflection.Assembly.Load(AssemblyName)"/>
-    ''' (which honours the runtime's own probing), the host search paths
-    ''' (<see cref="ClrInterop.AddAssemblySearchPath"/>) and finally the host resolver
-    ''' callback (<see cref="ClrInterop.AssemblyResolver"/>). A specifier that no step
-    ''' accepts raises a script-catchable error listing what was tried.
+    ''' simple (file) name, an explicit path — absolute, or relative to one of the search
+    ''' roots (the importing script folder, <see cref="AppContext.BaseDirectory"/>, its
+    ''' <c>libs</c> folder and its parent's <c>libs</c> folder, see <see cref="SearchRoots"/>),
+    ''' <see cref="System.Reflection.Assembly.Load(AssemblyName)"/> (which honours the
+    ''' runtime's own probing), <c>&lt;root&gt;\name.dll</c> for every search root, the host
+    ''' search paths (<see cref="ClrInterop.AddAssemblySearchPath"/>) and finally the host
+    ''' resolver callback (<see cref="ClrInterop.AssemblyResolver"/>). An <c>import</c>
+    ''' specifier must name a dll (otherwise it is a JavaScript module — a specifier without an
+    ''' extension is a module, exactly like in Node); a bare assembly name is accepted by
+    ''' <see cref="Resolve"/> for host callers. A specifier that no step accepts raises a
+    ''' script-catchable error listing what was tried.
     ''' </para>
     ''' <para>
     ''' A namespace is exposed as a FLAT map of simple type name → <see cref="ClrType"/>:
@@ -57,7 +62,7 @@ Namespace Runtime
             Dim found = FindLoaded(spec)
 
             If found Is Nothing Then
-                ' an explicit dll path (absolute, or relative to the script / app base)
+                ' an explicit dll path (absolute, or relative to the script / the search roots)
                 Dim path = ResolveExistingPath(spec, baseDirectory)
                 If path IsNot Nothing Then
                     tried.Add(path)
@@ -77,14 +82,17 @@ Namespace Runtime
                 Try
                     found = Assembly.Load(New AssemblyName(bare))
                 Catch ex As Exception
-                    ' not resolvable by name: the host paths / callback below may still know it
+                    ' not resolvable by name: the search roots / callback below may still know it
                 End Try
             End If
 
             If found Is Nothing Then
-                For Each directory In ClrInterop.AssemblySearchPaths
-                    Dim candidate = Path.Combine(directory, BareAssemblyName(spec) & ".dll")
-                    tried.Add(candidate)
+                ' <root>/name.dll for every root: script folder, the interpreter folder,
+                ' <interpreter>\libs and <interpreter>\..\libs (the VBS include search order),
+                ' then whatever the host registered through ClrInterop.AddAssemblySearchPath
+                For Each folder As String In SearchRoots(baseDirectory)
+                    Dim candidate = Path.Combine(folder, BareAssemblyName(spec) & ".dll")
+                    Call tried.Add(candidate)
                     If Not File.Exists(candidate) Then Continue For
                     Try
                         found = Assembly.LoadFrom(candidate)
@@ -216,10 +224,12 @@ Namespace Runtime
             End SyncLock
 
             Dim candidates As New List(Of String)
-            For Each folder In directories
+
+            ' the folders of previously imported dlls win over the standard search roots
+            For Each folder As String In directories
                 Call candidates.Add(Path.Combine(folder, name.Name & ".dll"))
             Next
-            For Each folder In ClrInterop.AssemblySearchPaths
+            For Each folder As String In SearchRoots()
                 Call candidates.Add(Path.Combine(folder, name.Name & ".dll"))
             Next
 
@@ -304,17 +314,103 @@ Namespace Runtime
 
         ''' <summary>Existing file path for a specifier that names a dll, or Nothing.</summary>
         Private Function ResolveExistingPath(spec As String, baseDirectory As String) As String
-            If Not spec.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) Then Return Nothing
+            If Not LooksLikeAssembly(spec) Then Return Nothing
+
+            ' 'x' and 'x.dll' are both accepted: the extension may be omitted, exactly like the
+            ' '#include "x.dll"' directive of the VBS engine
+            Dim names As String() = If(spec.EndsWith(".dll", StringComparison.OrdinalIgnoreCase),
+                                       New String() {spec},
+                                       New String() {spec, spec & ".dll"})
+
             If Path.IsPathRooted(spec) Then
-                Return If(File.Exists(spec), Path.GetFullPath(spec), Nothing)
+                For Each name As String In names
+                    If File.Exists(name) Then Return Path.GetFullPath(name)
+                Next
+
+                Return Nothing
             End If
-            If Not String.IsNullOrEmpty(baseDirectory) Then
-                Dim relative = Path.Combine(baseDirectory, spec)
-                If File.Exists(relative) Then Return Path.GetFullPath(relative)
-            End If
-            Dim application = Path.Combine(AppContext.BaseDirectory, spec)
-            If File.Exists(application) Then Return Path.GetFullPath(application)
+
+            For Each folder As String In SearchRoots(baseDirectory)
+                For Each name As String In names
+                    Dim candidate = Path.Combine(folder, name)
+
+                    If File.Exists(candidate) Then Return Path.GetFullPath(candidate)
+                Next
+            Next
+
             Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' The directories an assembly specifier is probed in, mirroring the VBS
+        ''' <c>#include</c> search roots (<c>VBScript.vb</c>):
+        ''' <code>
+        ''' script folder, AppContext.BaseDirectory, AppContext.BaseDirectory\libs,
+        ''' AppContext.BaseDirectory\..\libs, + ClrInterop.AssemblySearchPaths
+        ''' </code>
+        ''' Duplicates (a deployment where the parent folder is the application base, for
+        ''' instance) are removed while keeping the order stable.
+        ''' </summary>
+        Friend Function SearchRoots(Optional baseDirectory As String = Nothing) As String()
+            Dim roots As New List(Of String)()
+
+            Call AddRoot(roots, baseDirectory)
+
+            Dim application As String = AppContext.BaseDirectory
+
+            Call AddRoot(roots, application)
+            Call AddRoot(roots, Combine(application, "libs"))
+            Call AddRoot(roots, Combine(Combine(application, ".."), "libs"))
+
+            For Each folder As String In ClrInterop.AssemblySearchPaths
+                Call AddRoot(roots, folder)
+            Next
+
+            Return roots.ToArray
+        End Function
+
+        Private Sub AddRoot(roots As List(Of String), folder As String)
+            If String.IsNullOrWhiteSpace(folder) Then Return
+
+            Dim full As String
+
+            Try
+                full = Path.GetFullPath(folder)
+            Catch ex As Exception
+                Return
+            End Try
+
+            For Each existing As String In roots
+                If String.Equals(existing, full, StringComparison.OrdinalIgnoreCase) Then Return
+            Next
+
+            Call roots.Add(full)
+        End Sub
+
+        Private Function Combine(root As String, name As String) As String
+            If String.IsNullOrEmpty(root) Then Return Nothing
+
+            Try
+                Return Path.Combine(root, name)
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' Does the specifier look like a managed assembly (a dll path or a bare assembly name)?
+        ''' Module specifiers (<c>./m.js</c>, <c>./m</c>) are handled by the module loader and must
+        ''' never be probed as assemblies.
+        ''' </summary>
+        Private Function LooksLikeAssembly(spec As String) As Boolean
+            If String.IsNullOrWhiteSpace(spec) Then Return False
+
+            Select Case Path.GetExtension(spec).ToLowerInvariant()
+                Case ".js", ".mjs", ".cjs", ".json", ".ts"
+                    Return False
+                Case Else
+                    Return True
+            End Select
         End Function
 
         ''' <summary>File name without directory and without the <c>.dll</c> extension.</summary>

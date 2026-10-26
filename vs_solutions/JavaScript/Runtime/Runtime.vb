@@ -177,6 +177,10 @@ Namespace Runtime
             For Each name In {"TypeError", "RangeError", "SyntaxError", "ReferenceError"}
                 g(name) = New BuiltinMethod(GlobalObj, name)
             Next
+            ' script introspection magics (here / scriptDir / ... , see ScriptMagic)
+            For Each name As String In ScriptMagic.Names
+                g(name) = New BuiltinMethod(GlobalObj, name)
+            Next
             Return g
         End Function
 
@@ -249,11 +253,45 @@ Namespace Runtime
             Call ModuleLoader.Load(specifier, ScriptBaseDirectory)
         End Sub
 
+        ' ================= script introspection (see ScriptMagic) =================
+
+        <ThreadStatic>
+        Private _scriptFile As String
+
+        ''' <summary>
+        ''' The script file currently running (<c>scriptFile()</c> / <c>scriptName()</c> /
+        ''' <c>scriptText()</c> read it). It defaults to the file the host published
+        ''' (<see cref="ProcessModule.ScriptFile"/>) and the interpreter narrows it to the
+        ''' source it is running; sources without a file (<c>-e</c> snippets, the REPL,
+        ''' tests that only parse text) report <c>""</c>.
+        ''' </summary>
+        Public Property CurrentScriptFile As String
+            Get
+                If Not String.IsNullOrEmpty(_scriptFile) Then Return _scriptFile
+                Return ProcessModule.ScriptFile
+            End Get
+            Set(value As String)
+                _scriptFile = value
+            End Set
+        End Property
+
         ''' <summary>Drop the assembly / namespace / module caches (tests, hot reload).</summary>
         Public Sub ClearImportCaches()
             AssemblyResolver.Clear()
             ModuleLoader.Clear()
         End Sub
+
+        ''' <summary>
+        ''' The directories an <c>import ns from 'x.dll'</c> specifier is probed in, in priority
+        ''' order: the folder of the running script, <see cref="AppContext.BaseDirectory"/>,
+        ''' <c>&lt;base&gt;\libs</c>, <c>&lt;base&gt;\..\libs</c> and finally the paths the host
+        ''' registered through <see cref="ClrInterop.AddAssemblySearchPath"/> — the same shape
+        ''' as the <c>#include</c> search roots of the VBS engine. Handy for diagnostics when an
+        ''' import cannot be resolved.
+        ''' </summary>
+        Public Function AssemblySearchRoots(Optional baseDirectory As String = Nothing) As String()
+            Return AssemblyResolver.SearchRoots(baseDirectory)
+        End Function
 
         ' ================= type predicates =================
 
@@ -1876,6 +1914,10 @@ Namespace Runtime
         End Function
 
         Private Function BuiltinGlobalFn(name As String, args As Object()) As Object
+            If ScriptMagic.IsMagic(name) Then
+                Return ScriptMagic.Dispatch(name, args)
+            End If
+
             Select Case name
                 Case "String" : Return JsStr(Arg(args, 0))
                 Case "Number" : Return JsNum(Arg(args, 0))
