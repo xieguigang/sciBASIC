@@ -68,12 +68,12 @@
 
 Imports System.IO
 
-Namespace LZW
+Namespace Serialization
 
     ''' <summary>
     ''' LZW Based Decompressor - basic algorithm used as described on Mark Nelson's website  http://marknelson.us
     ''' </summary>
-    Public MustInherit Class LZW
+    Public MustInherit Class LZWStream
 
         ''' <summary>
         ''' maimxum bits allowed to read
@@ -125,16 +125,16 @@ Namespace LZW
         End Sub
 
         Public Shared Function Compress(input As Stream, out As Stream) As Boolean
-            Return New Encoder(input).Compress(out)
+            Return New LzwEncoder(input).Compress(out)
         End Function
 
         Public Shared Function Decompress(input As Stream, out As Stream) As Boolean
-            Return New Decoder(input).Decompress(out)
+            Return New LzwDecoder(input).Decompress(out)
         End Function
 
     End Class
 
-    Friend Class Encoder : Inherits LZW
+    Friend Class LzwEncoder : Inherits LZWStream
 
         Friend Sub New(input As Stream)
             Call MyBase.New(input)
@@ -217,7 +217,7 @@ Namespace LZW
 
     End Class
 
-    Friend Class Decoder : Inherits LZW
+    Friend Class LzwDecoder : Inherits LZWStream
 
         Friend Sub New(input As Stream)
             Call MyBase.New(input)
