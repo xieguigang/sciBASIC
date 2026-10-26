@@ -121,7 +121,16 @@ Public Module ThemeBridge
         Return t
     End Function
 
-    ''' <summary>把 ggplot 的 CSS 主题转换为 3D 绘图所使用的 <see cref="Plot3D.Plot3DTheme"/></summary>
+    ''' <summary>
+    ''' 把 ggplot 的 CSS 主题转换为 3D 绘图所使用的 <see cref="Plot3D.Plot3DTheme"/>。
+    '''
+    ''' <para>
+    ''' 转换时会顺带把 ggplot 的标题 / 刻度 / 网格样式映射到三维主题的同名扩展字段上；
+    ''' ggplot 自己的三维渲染器（<c>g3d</c>）会自行构建坐标元素，
+    ''' 因此这里的盒框 / 刻度开关不会改变它的输出。
+    ''' </para>
+    ''' </summary>
+    ''' <param name="theme">ggplot 的 CSS 主题</param>
     Public Function ToPlot3DTheme(theme As Theme) As Plot3D.Plot3DTheme
         Return New Plot3D.Plot3DTheme With {
             .padding = If(theme.padding, "padding: 70px 30px 70px 80px;"),
@@ -133,7 +142,11 @@ Public Module ThemeBridge
             .mainTextColor = If(theme.mainTextColor, "black"),
             .legendBoxStroke = If(theme.legendBoxStroke, "stroke: black; stroke-width: 1px; stroke-dash: solid;"),
             .drawLegend = theme.drawLegend,
-            .drawLabels = theme.drawLabels
+            .drawLabels = theme.drawLabels,
+            .titleCSS = If(theme.mainCSS, CSSFont.Win7LargeBold),
+            .subtitleCSS = If(theme.subtitleCSS, CSSFont.Win7Normal),
+            .tickCSS = If(theme.axisTickCSS, CSSFont.Win7Normal),
+            .gridStroke = If(theme.gridStrokeX, Stroke.AxisGridStroke)
         }
     End Function
 

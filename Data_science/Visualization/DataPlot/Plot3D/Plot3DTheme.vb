@@ -155,8 +155,11 @@ Namespace Plot3D
         ''' <summary>图表副标题（为空则不绘制）</summary>
         Public Property subTitle As String = ""
 
-        ''' <summary>图例项的形状尺寸（"宽,高"，单位像素）</summary>
-        Public Property legendShapeSize As String = "12,12"
+        ''' <summary>
+        ''' 图例项的形状尺寸（"宽,高"，单位像素）。
+        ''' 高度要略大于图例文本的高度，否则第一项的文字会顶到图例外框上。
+        ''' </summary>
+        Public Property legendShapeSize As String = "13,17"
 
         ''' <summary>连续色标（colorbar）的宽度与高度（"宽,高"，单位像素）</summary>
         Public Property colorBarSize As String = "16,240"

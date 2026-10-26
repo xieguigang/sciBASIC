@@ -85,11 +85,13 @@ Namespace Plot3D.Device
                                    theme As Plot3DTheme)
 
             ' 首先对模型执行rotate和project，然后再进行Z排序
-            Dim models As Element3D() = elements.ToArray
-
-            For Each element As Element3D In models
-                Call element.Transform(camera)
-            Next
+            '
+            ' 注意：Transform 返回的是变换之后的"新"元素，必须把结果写回数组，
+            ' 否则后续的 Z 排序与 Draw 用的仍然是未旋转的原始坐标，
+            ' 整张图会退化成 (x, y) 的二维正交投影（旧版本的实际行为）。
+            Dim models As Element3D() = elements _
+                .Select(Function(e) e.Transform(camera)) _
+                .ToArray
 
             Dim css As CSSEnvirnment = canvas.LoadEnvironment
 

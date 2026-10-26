@@ -9,6 +9,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Legend
+Imports Microsoft.VisualBasic.Data.Plots.Plot3D.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
@@ -80,7 +81,14 @@ Namespace Plot3D.Device
         ''' <param name="g">绘图设备</param>
         ''' <param name="plotRect">绘图区像素矩形</param>
         ''' <param name="theme">三维绘图主题</param>
-        Public Sub DrawTitles(g As IGraphics, plotRect As Rectangle, theme As Plot3DTheme)
+        ''' <param name="bandTop">
+        ''' 标题带的起始 y 坐标（可选）。当调用方已经通过 <see cref="ReserveRegion"/>
+        ''' 在绘图区顶部预留了标题带时，把标题画在这条带子里（从 <paramref name="bandTop"/>
+        ''' 开始向下排布），避免与三维场景内的刻度文字相互叠压；
+        ''' 缺省时标题画在绘图区上方的页边距里。
+        ''' </param>
+        Public Sub DrawTitles(g As IGraphics, plotRect As Rectangle, theme As Plot3DTheme,
+                              Optional bandTop As Single = Single.NaN)
             If theme Is Nothing Then
                 Return
             End If
@@ -96,10 +104,10 @@ Namespace Plot3D.Device
             Dim subSize As SizeF = If(theme.subTitle.StringEmpty,
                 New SizeF(0, 0), g.MeasureString(theme.subTitle, subFont))
             Dim cx As Single = plotRect.Left + plotRect.Width / 2
-            ' 标题优先画在绘图区上方的留白里，留白不足时退回绘图区内部的顶部
-            Dim top As Single = If(plotRect.Top - titleSize.Height - subSize.Height - 6 >= 0,
+            ' 标题优先画在预留的标题带里；没有预留时画在绘图区上方的留白里
+            Dim top As Single = If(Single.IsNaN(bandTop),
                 plotRect.Top - titleSize.Height - subSize.Height - 6,
-                plotRect.Top + 2)
+                bandTop + 2)
 
             If Not theme.title.StringEmpty Then
                 Using br As Brush = theme.mainTextColor.GetBrush
@@ -133,13 +141,16 @@ Namespace Plot3D.Device
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.titleCSS))
             Dim subFont As Font = css.GetFont(CSSFont.TryParse(theme.subtitleCSS))
-            Dim height As Single = 8
+            ' 注意：这里必须用 MeasureString 实测高度。
+            ' Font.GetHeight 在该字体模型下返回的数值明显偏小，
+            ' 会导致预留的标题带不够高、副标题与三维场景顶部的刻度文字叠压。
+            Dim height As Single = 14
 
             If Not theme.title.StringEmpty Then
-                height += titleFont.GetHeight(g)
+                height += g.MeasureString("Ag", titleFont).Height
             End If
             If Not theme.subTitle.StringEmpty Then
-                height += subFont.GetHeight(g) + 2
+                height += g.MeasureString("Ag", subFont).Height + 4
             End If
 
             Return height
@@ -159,7 +170,7 @@ Namespace Plot3D.Device
                                       rightExtra As Single, topExtra As Single) As GraphicsRegion
 
             Dim scene As GraphicsRegion = region
-            Dim pad As CSS.Padding = region.Padding
+            Dim pad As Padding = region.Padding
 
             scene.Padding = New Padding With {
                 .Top = $"{CInt(Val(If(pad.Top, "0")) + topExtra)}px",
@@ -290,7 +301,7 @@ Namespace Plot3D.Device
 
                     Dim pos As Single = If(max = min, 0, CSng((tick - min) / (max - min)))
                     Dim py As Single = y + height - pos * height
-                    Dim label As String = tick.ToString(theme.tickFormat)
+                    Dim label As String = AxisFrame.FormatTick(tick, theme.tickFormat)
                     Dim size As SizeF = g.MeasureString(label, tickFont)
 
                     Call g.DrawLine(border, x + width, py, x + width + 4, py)
@@ -301,7 +312,8 @@ Namespace Plot3D.Device
                     Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
                     Dim size As SizeF = g.MeasureString(title, titleFont)
 
-                    Call g.DrawString(title, titleFont, text, x - size.Width / 2 + width / 2, y - size.Height - 4)
+                    ' 标题左对齐到色标条的左边界，避免居中之后向左侧越界压到三维场景的刻度文字
+                    Call g.DrawString(title, titleFont, text, x, y - size.Height - 4)
                 End If
             End Using
         End Sub

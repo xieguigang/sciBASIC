@@ -172,26 +172,39 @@ Namespace Plot3D.Model
             ' X 轴：沿 y = ymin, z = zmin
             For Each xv As Double In InRangeTicks(xrange, tickCount)
                 Yield New Line(New Point3D(xv, y0, z0), New Point3D(xv, y0 - dy, z0)) With {.Stroke = pen}
-                Yield TickLabel(xv, format, New Point3D(xv, y0 - dy * 2.2, z0), theme, brush)
+                Yield TickLabel(xv, format, New Point3D(xv, y0 - dy * 3.2, z0), theme, brush)
             Next
 
             ' Y 轴：沿 x = xmax, z = zmin
             For Each yv As Double In InRangeTicks(yrange, tickCount)
                 Yield New Line(New Point3D(x1, yv, z0), New Point3D(x1 + dx, yv, z0)) With {.Stroke = pen}
-                Yield TickLabel(yv, format, New Point3D(x1 + dx * 2.2, yv, z0), theme, brush)
+                Yield TickLabel(yv, format, New Point3D(x1 + dx * 3.2, yv, z0), theme, brush)
             Next
 
             ' Z 轴：沿 x = xmax, y = ymin
             For Each zv As Double In InRangeTicks(zrange, tickCount)
                 Yield New Line(New Point3D(x1, y0, zv), New Point3D(x1, y0 - dy, zv)) With {.Stroke = pen}
-                Yield TickLabel(zv, format, New Point3D(x1, y0 - dy * 2.2, zv), theme, brush)
+                Yield TickLabel(zv, format, New Point3D(x1, y0 - dy * 3.2, zv), theme, brush)
             Next
+        End Function
+
+        ''' <summary>
+        ''' 格式化刻度值：接近 0 的浮点噪声统一显示成 <c>0</c>（否则会出现 <c>-0</c> 这种不雅的标签）
+        ''' </summary>
+        ''' <param name="v">刻度值</param>
+        ''' <param name="format">数字格式，缺省 <c>G2</c></param>
+        Public Function FormatTick(v As Double, Optional format$ = "G2") As String
+            If std.Abs(v) < 0.05 Then
+                Return "0"
+            End If
+
+            Return v.ToString(If(format.StringEmpty, "G2", format))
         End Function
 
         ''' <summary>生成一个刻度值文本元素</summary>
         Private Function TickLabel(v As Double, format$, location As Point3D, theme As Plot3DTheme, brush As Brush) As Element3D
             Return New Label With {
-                .Text = v.ToString(format),
+                .Text = FormatTick(v, format),
                 .FontCss = theme.tickCSS,
                 .Color = brush,
                 .Location = location

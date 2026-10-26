@@ -138,12 +138,12 @@ Module Plot3DDemo
     '  演示 3：三维曲面图
     ' ------------------------------------------------------------------
 
-    ''' <summary>sin·cos 混合曲面的三维曲面图（含盒框、刻度与色标）</summary>
+    ''' <summary>高斯峰 + 正弦褶皱曲面的三维曲面图（含盒框、刻度与色标）</summary>
     Private Sub Surface3DDemo(outDir As String)
         Dim f As Func(Of Double, Double, (Z#, c#)) =
             Function(x, y)
-                Dim r As Double = std.Sqrt(x * x + y * y) + 1.0E-9
-                Dim z As Double = std.Sin(r) / r * 2
+                ' 一个高斯峰叠加一点正弦褶皱，使 z 方向有足够的起伏来展示三维效果
+                Dim z As Double = 8 * std.Exp(-(x * x + y * y) / 12) + std.Sin(x) * std.Cos(y)
 
                 Return (z, z)
             End Function

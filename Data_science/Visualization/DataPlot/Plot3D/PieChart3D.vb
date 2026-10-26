@@ -187,6 +187,10 @@ Namespace Plot3D
         ''' <param name="labelFont$">切片标签字体</param>
         ''' <param name="legendFont$">图例字体</param>
         ''' <param name="dpi">导出分辨率</param>
+        ''' <param name="illumination">
+        ''' 是否启用光照着色。开启后面片颜色会随法向与光源方向的夹角变化；
+        ''' 缺省关闭，使切片颜色与图例完全一致（论文插图的常规做法）。
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Function Plot3D(data As IEnumerable(Of PieSlice),
@@ -202,7 +206,8 @@ Namespace Plot3D
                                Optional explode! = 0!,
                                Optional labelFont$ = CSSFont.Win7Normal,
                                Optional legendFont$ = CSSFont.Win7Normal,
-                               Optional dpi As Integer = 100) As GraphicsData
+                               Optional dpi As Integer = 100,
+                               Optional illumination As Boolean = False) As GraphicsData
 
             Dim slices As PieSlice() = PieSlice.WithPercentages(data)
             Dim theme As New Plot3DTheme With {
@@ -284,7 +289,7 @@ Namespace Plot3D
                     view.Offset = New PointF(camera.Offset.X - CSng(legendBox.Width / 2), camera.Offset.Y)
 
                     Dim model2D = matrix _
-                        .TranslateBuffer(view, view.Rotate(matrix.Matrix), True) _
+                        .TranslateBuffer(view, view.Rotate(matrix.Matrix), illumination) _
                         .AsList
 
                     Call g.BufferPainting(model2D)
@@ -307,6 +312,71 @@ Namespace Plot3D
                 plot3DInternal,
                 driver:=driver,
                 dpi:=dpi)
+        End Function
+
+        ''' <summary>
+        ''' 直接以二维饼图的分片数据（<see cref="Canvas.FractionData"/>）绘制三维饼图。
+        '''
+        ''' <para>
+        ''' 这是一个便捷重载：旧调用方（例如 GCModeller 的 KOBAS 富集分析插画）
+        ''' 手里拿到的是 <c>FractionData()</c> 而不是 <see cref="PieSlice"/>，
+        ''' 这里直接完成类型转换并转发给主入口，避免调用方自己拼装切片。
+        ''' </para>
+        ''' </summary>
+        ''' <param name="fractions">二维饼图分片数据</param>
+        ''' <param name="camera">相机</param>
+        ''' <param name="driver">绘图驱动</param>
+        ''' <param name="title">图表标题</param>
+        ''' <param name="showLegend">是否绘制分类图例</param>
+        ''' <param name="showLabels">是否在切片上绘制标签</param>
+        ''' <param name="bg">画布背景色</param>
+        ''' <param name="padding">页边距 CSS</param>
+        ''' <param name="thickness">饼体厚度（相对半径的比例）</param>
+        ''' <param name="vertices">圆弧细分数</param>
+        ''' <param name="explode">切片分离强度</param>
+        ''' <param name="dpi">导出分辨率</param>
+        ''' <param name="illumination">是否启用光照着色</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Plot3D(fractions As IEnumerable(Of Canvas.FractionData),
+                               camera As Camera,
+                               Optional driver As Drivers = Drivers.Default,
+                               Optional title$ = "",
+                               Optional showLegend As Boolean = True,
+                               Optional showLabels As Boolean = True,
+                               Optional bg$ = "white",
+                               Optional padding$ = g.DefaultPadding,
+                               Optional thickness! = 0.24!,
+                               Optional vertices% = 96,
+                               Optional explode! = 0!,
+                               Optional dpi As Integer = 100,
+                               Optional illumination As Boolean = False) As GraphicsData
+
+            Dim slices As PieSlice() = fractions _
+                .SafeQuery _
+                .Select(Function(f)
+                            Return New PieSlice With {
+                                .Name = f.Name,
+                                .Value = f.Value,
+                                .Color = f.Color,
+                                .Percentage = CSng(f.Percentage)
+                            }
+                        End Function) _
+                .ToArray
+
+            Return slices.Plot3D(
+                camera:=camera,
+                driver:=driver,
+                title:=title,
+                showLegend:=showLegend,
+                showLabels:=showLabels,
+                bg:=bg,
+                padding:=padding,
+                thickness:=thickness,
+                vertices:=vertices,
+                explode:=explode,
+                dpi:=dpi,
+                illumination:=illumination)
         End Function
 
         ''' <summary>
@@ -364,6 +434,12 @@ Namespace Plot3D
             Return best
         End Function
 
+        ''' <summary>文字光晕的四个偏移方向</summary>
+        Private ReadOnly HaloOffsets As PointF() = {
+            New PointF(-1.2F, 0), New PointF(1.2F, 0),
+            New PointF(0, -1.2F), New PointF(0, 1.2F)
+        }
+
         ''' <summary>
         ''' 在每一个切片的顶面中心绘制"名称 + 百分比"标签
         ''' </summary>
@@ -392,7 +468,15 @@ Namespace Plot3D
                 x = std.Max(plotRect.Left, std.Min(x, plotRect.Right - size.Width))
                 y = std.Max(plotRect.Top, std.Min(y, plotRect.Bottom - size.Height))
 
-                Using br As New SolidBrush(ColorScale.ReadableTextColor(slices(i).Color))
+                ' 先描一圈白色光晕再写字：标签往往会跨出切片边界，
+                ' 单色文字落在背景上会"消失"（白字落白底 / 黑字落深色切片）
+                Using halo As New SolidBrush(Color.FromArgb(210, Color.White))
+                    For Each offset As PointF In HaloOffsets
+                        Call g.DrawString(text, font, halo, x + offset.X, y + offset.Y)
+                    Next
+                End Using
+
+                Using br As New SolidBrush(Color.Black)
                     Call g.DrawString(text, font, br, x, y)
                 End Using
             Next

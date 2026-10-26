@@ -175,6 +175,23 @@ Namespace Plot3D.Device
 
         Public Property bspline As Single = 2
 
+        ''' <summary>
+        ''' 保留 <see cref="bspline"/> 的变换：基类的变换会退化成一个普通多边形，
+        ''' 那样 <see cref="Draw"/> 里就不再对投影后的点做凸包排序，
+        ''' 直接按原始顺序填充会画出星形的自交图形。
+        ''' </summary>
+        ''' <param name="camera">相机</param>
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim path = Me.Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
+
+            Return New ConvexHullPolygon With {
+                .Brush = Brush,
+                .Location = path.Center,
+                .Path = path,
+                .bspline = bspline
+            }
+        End Function
+
         Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
             Dim screen As Size = rect.Size
             Dim shape As PointF() = Path _

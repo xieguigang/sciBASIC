@@ -347,8 +347,8 @@ Namespace Plot3D.Impl
                 theme:=theme
             )
 
-            ' 标题与副标题
-            Call Plot3DCanvas.DrawTitles(g, region, theme)
+            ' 标题与副标题（画在预留的顶部标题带里）
+            Call Plot3DCanvas.DrawTitles(g, region, theme, region.Top)
 
             ' 图例：按实测尺寸排版，并钳制在画布之内
             If theme.drawLegend Then

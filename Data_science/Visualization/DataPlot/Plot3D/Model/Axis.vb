@@ -102,10 +102,25 @@ Namespace Plot3D.Model
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
             Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
             Dim labelColor As Brush = labelColorVal.GetBrush
-            Dim labX As New Label With {.Location = X, .FontCss = labelFontCss, .Color = labelColor, .Text = labels.X}
-            Dim labY As New Label With {.Location = Y, .FontCss = labelFontCss, .Color = labelColor, .Text = labels.Y}
+
+            ' 轴标题沿各自的轴向外再推出一段距离，避免与新增的刻度值文本相互叠压
+            Dim dx As Double = xrange.Length * 0.08
+            Dim dy As Double = yrange.Length * 0.08
+            Dim dz As Double = zrange.Length * 0.18
+            Dim labX As New Label With {
+                .Location = New Point3D(X.X - dx, X.Y, X.Z),
+                .FontCss = labelFontCss,
+                .Color = labelColor,
+                .Text = labels.X
+            }
+            Dim labY As New Label With {
+                .Location = New Point3D(Y.X, Y.Y + dy, Y.Z),
+                .FontCss = labelFontCss,
+                .Color = labelColor,
+                .Text = labels.Y
+            }
             Dim labZ As New Label With {
-                .Location = New Point3D(Z.X, Z.Y, Z.Z + zrange.Length / 20),
+                .Location = New Point3D(Z.X, Z.Y, Z.Z + dz),
                 .FontCss = labelFontCss,
                 .Color = labelColor,
                 .Text = labels.Z

@@ -250,6 +250,9 @@ Namespace Plot3D
                 axisFont, legendFont, showLegend, title, padding)
         End Function
 
+
+
+
         ''' <summary>
         ''' 生成可以复用到宿主画布之上的绘图委托（已采样好的曲面数据）
         ''' </summary>
@@ -278,7 +281,8 @@ Namespace Plot3D
 
             Dim internal As __plot = __plot.Create(
                 data, legendTitle, mapName, mapLevels, bg,
-                axisFont, legendFont, showLegend, title)
+                axisFont, legendFont, showLegend, title,
+                padding:=padding)
 
             Return Sub(ByRef g, camera)
                        If internal.theme.antiAlias Then
@@ -342,7 +346,8 @@ Namespace Plot3D
             Dim internal As __plot = __plot.Create(
                 data, legendTitle, mapName, mapLevels, bg,
                 axisFont, legendFont, showLegend, title,
-                labX, labY, labZ, showBox, showGrid, showTicks, drawPath, illumination)
+                labX, labY, labZ, showBox, showGrid, showTicks, drawPath, illumination,
+                padding:=padding)
 
             Return GraphicsPlots(
                 camera.screen,
@@ -446,6 +451,11 @@ Namespace Plot3D
                     Call Plot3DCanvas.ApplyAntiAlias(g)
                 End If
 
+                ' 在右侧与顶部为色标和标题预留空间，三维场景缩放到剩下的区域里
+                Dim legendWidth As Single = If(showLegend, ColorBarReservedWidth(g), 0)
+                Dim scene As GraphicsRegion = Plot3DCanvas.ReserveRegion(
+                    region, theme, legendWidth, Plot3DCanvas.TitlesHeight(g, theme))
+
                 ' -----------------------------------------------------------
                 '  1. 三维坐标系
                 ' -----------------------------------------------------------
@@ -493,7 +503,7 @@ Namespace Plot3D
                 Call elements.RenderAs3DChart(
                     canvas:=g,
                     camera:=camera,
-                    region:=region,
+                    region:=scene,
                     theme:=theme)
 
                 ' -----------------------------------------------------------
@@ -503,8 +513,29 @@ Namespace Plot3D
                     Call DrawLegend(g, plotRect, region.Size)
                 End If
 
-                Call Plot3DCanvas.DrawTitles(g, plotRect, theme)
+                Call Plot3DCanvas.DrawTitles(g, plotRect, theme, plotRect.Top)
             End Sub
+
+            ''' <summary>计算色标（含刻度数字）所需要预留的宽度</summary>
+            Private Function ColorBarReservedWidth(g As IGraphics) As Single
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim bar As SizeF = theme.colorBarSize.FloatSizeParser
+                Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.tickCSS))
+                Dim min As Double = std.Round(averages.Min, 1)
+                Dim max As Double = std.Round(averages.Max, 1)
+                Dim tickWidth As Single = 0
+
+                For Each tick As Double In Geometry.NiceTicks(min, max, 5)
+                    If tick < min OrElse tick > max Then
+                        Continue For
+                    End If
+
+                    tickWidth = std.Max(tickWidth, g.MeasureString(AxisFrame.FormatTick(tick, theme.tickFormat), tickFont).Width)
+                Next
+
+                ' 额外预留一段空间给三维场景自身向外伸出的刻度值文本
+                Return bar.Width + tickWidth + 56
+            End Function
 
             ''' <summary>在绘图区右侧绘制连续色标（按画布尺寸钳制，不会越界）</summary>
             Private Sub DrawLegend(g As IGraphics, plotRect As Rectangle, canvas As Size)
@@ -520,7 +551,7 @@ Namespace Plot3D
                         Continue For
                     End If
 
-                    tickWidth = std.Max(tickWidth, g.MeasureString(tick.ToString(theme.tickFormat), tickFont).Width)
+                    tickWidth = std.Max(tickWidth, g.MeasureString(AxisFrame.FormatTick(tick, theme.tickFormat), tickFont).Width)
                 Next
 
                 Dim x As Single = plotRect.Right - bar.Width - tickWidth - 12

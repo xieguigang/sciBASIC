@@ -60,6 +60,12 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
+  <Project Path="../../../../../../Microsoft.VisualBasic.Drawing/src/Microsoft.VisualBasic.Drawing/Microsoft.VisualBasic.Drawing.vbproj">
+    <BuildType Solution="gcmodeller_desktop|*" Project="CellaLAB-Desktop" />
+    <BuildType Solution="LipidSearch|*" Project="nuget_release" />
+    <BuildType Solution="mzkit_win32|*" Project="CellaLAB-Desktop" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="DataPlot/DataPlot.vbproj">
     <BuildType Solution="gcmodeller_desktop|*" Project="nuget_release" />
     <BuildType Solution="LipidSearch|*" Project="nuget_release" />
