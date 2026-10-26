@@ -33,7 +33,8 @@
 
     '     Module PngReader
     ' 
-    '         Function: Decode, Load, ScaleTrnsValue
+    '         Function: Decode, DecodeImage, IsUsableTrns, Load, OutputChannels,
+    '                   ScaleTrnsValue
     ' 
     '         Sub: ConvertPass, UnfilterPass
     ' 

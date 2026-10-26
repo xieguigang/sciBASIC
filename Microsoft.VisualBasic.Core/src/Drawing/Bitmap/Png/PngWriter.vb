@@ -33,7 +33,8 @@
 
     '     Module PngWriter
     ' 
-    '         Function: Encode, ColorTypeOf, ToGrayBuffer
+    '         Function: ColorTypeOf, Encode, EncodeRow, FilterRow, Ihdr, ToGrayBuffer,
+    '                   ToGrayByte
     ' 
     '         Sub: EncodeFile, Save, WriteGray, WriteImage, WritePgm
     ' 
