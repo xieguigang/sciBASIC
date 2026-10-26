@@ -84,6 +84,12 @@ Module JpegGifSelfTest
             Dim a As Byte() = src.RawBuffer
             Dim b As Byte() = db.RawBuffer
 
+            Dim dbg As String = ""
+            For pi As Integer = 0 To 5
+                dbg &= $"[{pi}] src={a(pi * 3)},{a(pi * 3 + 1)},{a(pi * 3 + 2)} dec={b(pi * 3)},{b(pi * 3 + 1)},{b(pi * 3 + 2)} | "
+            Next
+            Call Console.WriteLine($"   [dbg] channels src={src.GetPixelChannels()} dec={db.GetPixelChannels()} {dbg}")
+
             Dim maxDiff As Integer = 0
             Dim sumDiff As Long = 0
 
@@ -108,14 +114,6 @@ Module JpegGifSelfTest
                 Dim decStream As New MemoryStream()
                 Call GifLzwDecoder.Decode(ms2, decStream, 2)
                 Dim dec As Byte() = decStream.ToArray()
-                Dim ds As String = "", es As String = ""
-                For i As Integer = 0 To testIdx.Length - 1
-                    If i < dec.Length Then ds &= dec(i).ToString() & " "
-                Next
-                For i As Integer = 0 To testIdx.Length - 1 : es &= testIdx(i).ToString() & " " : Next
-                Call Console.WriteLine($"   [dbg] enc={enc.Length}B dec={dec.Length}B")
-                Call Console.WriteLine($"   [dbg] exp: {es}")
-                Call Console.WriteLine($"   [dbg] got: {ds}")
                 Dim same As Boolean = (dec.Length = testIdx.Length)
                 If same Then
                     For i As Integer = 0 To testIdx.Length - 1
@@ -141,13 +139,6 @@ Module JpegGifSelfTest
             Call GifWriter.Save(ms, src)
             Dim gif As Byte() = ms.ToArray()
 
-            Call System.IO.File.WriteAllBytes("gif_debug.gif", gif)
-            Dim head As String = ""
-            For i As Integer = 0 To Math.Min(60, gif.Length) - 1
-                head &= gif(i).ToString("X2") & " "
-            Next
-            Call Console.WriteLine($"   [dbg] gif len={gif.Length} minCodeSize@35={gif(35)} firstLen@36={gif(36)} :: {head}")
-
             Call Check(gif.Length > 0, $"gif encoded size > 0 (got {gif.Length} bytes)")
 
             Dim dec As GifImage = GifImage.Decode(gif)
@@ -155,22 +146,38 @@ Module JpegGifSelfTest
             Call Check(dec.Width = w AndAlso dec.Height = h, $"gif size matches ({dec.Width}x{dec.Height})")
             Call Check(dec.FrameCount = 1, $"gif single frame (got {dec.FrameCount})")
 
-            Dim a As Byte() = src.RawBuffer
-            Dim b As Byte() = dec.GetMemoryBitmap().RawBuffer
-            Dim same As Boolean = (a.Length = b.Length)
-
-            If same Then
-                For i As Integer = 0 To a.Length - 1 Step 3
-                    If a(i) <> b(i) OrElse a(i + 1) <> b(i + 1) OrElse a(i + 2) <> b(i + 2) Then
-                        same = False
-                        Exit For
-                    End If
-                Next
-            End If
-
-            Call Check(same, "gif static pixels exact round-trip")
+            Call Check(SameRgb(src, dec.GetMemoryBitmap()), "gif static pixels exact round-trip")
         End Using
     End Sub
+
+    ''' <summary>
+    ''' compare the first three channels (bgr) of two buffers, ignoring any alpha and
+    ''' the difference between 3 and 4 channel layouts.
+    ''' </summary>
+    Private Function SameRgb(a As BitmapBuffer, b As BitmapBuffer) As Boolean
+        If a Is Nothing OrElse b Is Nothing Then
+            Return False
+        End If
+        If a.Width <> b.Width OrElse a.Height <> b.Height Then
+            Return False
+        End If
+
+        Dim ac As Integer = a.GetPixelChannels()
+        Dim bc As Integer = b.GetPixelChannels()
+        Dim ar As Byte() = a.RawBuffer
+        Dim br As Byte() = b.RawBuffer
+
+        For i As Integer = 0 To a.Width * a.Height - 1
+            Dim ai As Integer = i * ac
+            Dim bi As Integer = i * bc
+
+            If ar(ai) <> br(bi) OrElse ar(ai + 1) <> br(bi + 1) OrElse ar(ai + 2) <> br(bi + 2) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
 
     Private Sub GifAnimatedRoundTrip()
         Dim w As Integer = 8
@@ -200,20 +207,7 @@ Module JpegGifSelfTest
             Call Check(dec.LoopCount = 0, $"loop count = 0 (got {dec.LoopCount})")
             Call Check(dec.Delays.Length = 3 AndAlso dec.Delays(0) = 10 AndAlso dec.Delays(1) = 20 AndAlso dec.Delays(2) = 30, "per frame delays preserved")
 
-            Dim a As Byte() = frames(0).RawBuffer
-            Dim b As Byte() = dec.Frame(0).RawBuffer
-            Dim same As Boolean = (a.Length = b.Length)
-
-            If same Then
-                For i As Integer = 0 To a.Length - 1 Step 3
-                    If a(i) <> b(i) OrElse a(i + 1) <> b(i + 1) OrElse a(i + 2) <> b(i + 2) Then
-                        same = False
-                        Exit For
-                    End If
-                Next
-            End If
-
-            Call Check(same, "animated first frame exact round-trip")
+            Call Check(SameRgb(frames(0), dec.Frame(0)), "animated first frame exact round-trip")
         End Using
     End Sub
 
