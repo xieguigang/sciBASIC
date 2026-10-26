@@ -132,6 +132,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.BitmapImage.FileStream
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Jpeg
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Gif
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.Png
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Net.Http
 Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
@@ -197,7 +200,7 @@ Namespace Imaging
             If DriverLoad.CheckRasterImageLoader Then
                 Return DriverLoad.LoadFromStream(s)
             Else
-                Return New Bitmap(New BitmapReader(s).LoadMemory)
+                Return DriverLoad.DefaultLoadImage(s)
             End If
         End Function
 
@@ -344,10 +347,20 @@ Namespace Imaging
         ''' <param name="s"></param>
         ''' <param name="format"></param>
         Public Overrides Sub Save(s As Stream, format As ImageFormats)
-            Dim pixelFormat As BitsPerPixelEnum = If(MemoryBuffer.GetPixelChannels = 3, BitsPerPixelEnum.RGB24, BitsPerPixelEnum.RGBA32)
-            Dim writer As New MemoryBmp(Width, Height, MemoryBuffer.RawBuffer, pixelFormat)
+            Select Case format
+                Case ImageFormats.Jpeg
+                    Call JpegWriter.Save(s, MemoryBuffer, 75)
+                Case ImageFormats.Gif
+                    Call GifWriter.Save(s, MemoryBuffer)
+                Case ImageFormats.Png
+                    Call PngWriter.Save(s, MemoryBuffer.RawBuffer, Width, Height, MemoryBuffer.GetPixelChannels)
+                Case Else
+                    Dim pixelFormat As BitsPerPixelEnum = If(MemoryBuffer.GetPixelChannels = 3, BitsPerPixelEnum.RGB24, BitsPerPixelEnum.RGBA32)
+                    Dim writer As New MemoryBmp(Width, Height, MemoryBuffer.RawBuffer, pixelFormat)
 
-            Call writer.Save(s, flipped:=True)
+                    Call writer.Save(s, flipped:=True)
+            End Select
+
             Call s.Flush()
         End Sub
 

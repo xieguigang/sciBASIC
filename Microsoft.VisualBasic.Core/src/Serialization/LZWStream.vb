@@ -294,4 +294,309 @@ Namespace Serialization
             Return temp
         End Function
     End Class
+
+    ' -------------------------------------------------------------------------
+    ' gif compatible lzw codec.
+    '
+    ' the generic <see cref="LzwEncoder"/> / <see cref="LzwDecoder"/> above use a
+    ' fixed 14 bits code width and a custom termination scheme and are therefore
+    ' not compatible with the gif lzw specification. the two classes below reuse
+    ' the bit buffer infrastructure of the base class but implement the gif
+    ' semantics: a configurable minimum code size, the clear / end-of-information
+    ' codes, a variable code width that grows up to 12 bits and a dictionary that
+    ' is reset on a clear code.
+    ' -------------------------------------------------------------------------
+
+    ''' <summary>
+    ''' a gif compatible lzw encoder. the input is a stream of palette indices
+    ''' (one byte per pixel) and the output is the raw lzw code byte stream (the
+    ''' sub block framing has to be performed by the caller).
+    ''' </summary>
+    Public Class GifLzwEncoder : Inherits LZWStream
+
+        Private ReadOnly minCodeSize As Integer
+        Private ReadOnly clearCode As Integer
+        Private ReadOnly eoiCode As Integer
+        Private ReadOnly initCodeSize As Integer
+
+        Public Sub New(input As Stream, minCodeSize As Integer)
+            Call MyBase.New(input)
+
+            If minCodeSize < 2 Then
+                minCodeSize = 2
+            End If
+
+            Me.minCodeSize = minCodeSize
+            clearCode = 1 << minCodeSize
+            eoiCode = clearCode + 1
+            initCodeSize = minCodeSize + 1
+        End Sub
+
+        ''' <summary>
+        ''' encode the palette index stream into the raw gif lzw code stream.
+        ''' </summary>
+        Public Sub EncodeTo(out As Stream)
+            Dim codeSize As Integer = initCodeSize
+            Dim nextCode As Integer = eoiCode + 1
+            Dim dict As New Dictionary(Of Long, Integer)()
+
+            Call WriteCode(out, clearCode, codeSize)
+
+            Dim prefix As Integer = input.ReadByte()
+
+            If prefix = -1 Then
+                Call WriteCode(out, eoiCode, codeSize)
+                Call Flush(out)
+                Return
+            End If
+
+            While True
+                Dim c As Integer = input.ReadByte()
+
+                If c = -1 Then
+                    Exit While
+                End If
+
+                Dim key As Long = (CLng(prefix) << 8) Or c
+
+                If dict.ContainsKey(key) Then
+                    prefix = dict(key)
+                Else
+                    Call WriteCode(out, prefix, codeSize)
+
+                    ' only add a new dictionary entry while the table is not full.
+                    ' when the table is full we emit a clear code on the next turn.
+                    If nextCode < 4096 Then
+                        dict(key) = nextCode
+                        nextCode += 1
+
+                        If nextCode = (1 << codeSize) AndAlso codeSize < 12 Then
+                            codeSize += 1
+                        End If
+                    End If
+
+                    If nextCode = 4096 Then
+                        Call WriteCode(out, clearCode, codeSize)
+                        dict.Clear()
+                        codeSize = initCodeSize
+                        nextCode = eoiCode + 1
+                    End If
+
+                    prefix = c
+                End If
+            End While
+
+            Call WriteCode(out, prefix, codeSize)
+            Call WriteCode(out, eoiCode, codeSize)
+            Call Flush(out)
+        End Sub
+
+        Private Sub WriteCode(out As Stream, code As Integer, size As Integer)
+            bitBuffer = (bitBuffer << size) Or (code And ((1 << size) - 1))
+            bitCounter += size
+
+            While bitCounter >= 8
+                Dim b As Integer = CInt((bitBuffer >> (bitCounter - 8)) And &HFFUL)
+                Call out.WriteByte(CByte(b))
+                bitCounter -= 8
+            End While
+
+            bitBuffer = bitBuffer And ((1UL << bitCounter) - 1UL)
+        End Sub
+
+        Private Sub Flush(out As Stream)
+            If bitCounter > 0 Then
+                Dim b As Integer = CInt((bitBuffer << (8 - bitCounter)) And &HFFUL)
+                Call out.WriteByte(CByte(b))
+                bitCounter = 0
+            End If
+
+            bitBuffer = 0
+        End Sub
+
+        ''' <summary>
+        ''' convenience helper that encodes <paramref name="indices"/> into the
+        ''' raw gif lzw code stream.
+        ''' </summary>
+        Public Shared Sub Encode(indices As Byte(), out As Stream, minCodeSize As Integer)
+            Using ms As New MemoryStream(indices)
+                Dim enc As New GifLzwEncoder(ms, minCodeSize)
+                Call enc.EncodeTo(out)
+            End Using
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' a gif compatible lzw decoder. the input is the raw lzw code byte stream
+    ''' (already de-framed from the gif sub blocks) and the output is the palette
+    ''' index stream (one byte per pixel).
+    ''' </summary>
+    Public Class GifLzwDecoder : Inherits LZWStream
+
+        Private ReadOnly minCodeSize As Integer
+        Private ReadOnly clearCode As Integer
+        Private ReadOnly eoiCode As Integer
+        Private ReadOnly initCodeSize As Integer
+
+        Private prefix(4095) As Integer
+        Private suffix(4095) As Byte
+
+        Private codeSize As Integer
+        Private nextCode As Integer
+
+        Public Sub New(input As Stream, minCodeSize As Integer)
+            Call MyBase.New(input)
+
+            If minCodeSize < 2 Then
+                minCodeSize = 2
+            End If
+
+            Me.minCodeSize = minCodeSize
+            clearCode = 1 << minCodeSize
+            eoiCode = clearCode + 1
+            initCodeSize = minCodeSize + 1
+        End Sub
+
+        ''' <summary>
+        ''' decode the raw gif lzw code stream into the palette index stream.
+        ''' </summary>
+        Public Sub DecodeTo(out As Stream)
+            Call InitTable()
+
+            codeSize = initCodeSize
+            nextCode = eoiCode + 1
+
+            ' the first code in a gif lzw data stream is always the clear code.
+            ' after (optionally) handling it we read the first real code.
+            Dim first As Integer = ReadCode(codeSize)
+            Dim oldCode As Integer
+
+            If first = clearCode Then
+                oldCode = ReadCode(codeSize)
+            Else
+                ' defensive : tolerate a stream that does not start with a clear code
+                oldCode = first
+            End If
+
+            Call Output(out, oldCode)
+
+            While True
+                Dim code As Integer = ReadCode(codeSize)
+
+                If code = eoiCode Then
+                    Exit While
+                End If
+
+                If code = clearCode Then
+                    Call InitTable()
+                    codeSize = initCodeSize
+                    nextCode = eoiCode + 1
+                    oldCode = ReadCode(codeSize)
+                    Call Output(out, oldCode)
+                    Continue While
+                End If
+
+                If code < nextCode Then
+                    Call Output(out, code)
+
+                    If nextCode < 4096 Then
+                        prefix(nextCode) = oldCode
+                        suffix(nextCode) = FirstCharOf(code)
+                        nextCode += 1
+                        Call Increase()
+                    End If
+                Else
+                    ' the kwkwk special case : the code is not yet in the table
+                    Call Output(out, oldCode)
+                    Call out.WriteByte(FirstCharOf(oldCode))
+
+                    If nextCode < 4096 Then
+                        prefix(nextCode) = oldCode
+                        suffix(nextCode) = FirstCharOf(oldCode)
+                        nextCode += 1
+                        Call Increase()
+                    End If
+                End If
+
+                oldCode = code
+            End While
+        End Sub
+
+        Private Sub InitTable()
+            For i As Integer = 0 To clearCode - 1
+                prefix(i) = -1
+                suffix(i) = CByte(i)
+            Next
+        End Sub
+
+        Private Function FirstCharOf(code As Integer) As Byte
+            Dim c As Integer = code
+
+            While c >= clearCode
+                c = prefix(c)
+            End While
+
+            Return CByte(c)
+        End Function
+
+        Private Sub Output(out As Stream, code As Integer)
+            If code < clearCode Then
+                Call out.WriteByte(CByte(code))
+                Return
+            End If
+
+            Dim stack(4095) As Byte
+            Dim sp As Integer = 0
+            Dim c As Integer = code
+
+            While c >= clearCode
+                stack(sp) = suffix(c)
+                sp += 1
+                c = prefix(c)
+            End While
+
+            stack(sp) = CByte(c)
+            sp += 1
+
+            For i As Integer = sp - 1 To 0 Step -1
+                Call out.WriteByte(stack(i))
+            Next
+        End Sub
+
+        Private Sub Increase()
+            If nextCode = (1 << codeSize) AndAlso codeSize < 12 Then
+                codeSize += 1
+            End If
+        End Sub
+
+        Private Function ReadCode(size As Integer) As Integer
+            While bitCounter < size
+                Dim b As Integer = input.ReadByte()
+
+                If b < 0 Then
+                    Return eoiCode
+                End If
+
+                bitBuffer = (bitBuffer << 8) Or b
+                bitCounter += 8
+            End While
+
+            bitCounter -= size
+            Dim code As Integer = CInt((bitBuffer >> bitCounter) And ((1 << size) - 1))
+            bitBuffer = bitBuffer And ((1UL << bitCounter) - 1UL)
+
+            Return code
+        End Function
+
+        ''' <summary>
+        ''' convenience helper that decodes the raw gif lzw code stream into
+        ''' <paramref name="out"/>.
+        ''' </summary>
+        Public Shared Sub Decode(input As Stream, out As Stream, minCodeSize As Integer)
+            Dim dec As New GifLzwDecoder(input, minCodeSize)
+            Call dec.DecodeTo(out)
+        End Sub
+
+    End Class
 End Namespace
