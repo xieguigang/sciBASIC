@@ -214,15 +214,18 @@ Namespace Imaging.BitmapImage.Jpeg
         End Sub
 
         Private Sub dct1d(inp() As Double, inOff As Integer, out() As Double, outOff As Integer)
-            For x As Integer = 0 To 7
+            ' forward dct : the output is indexed by the frequency u and the sum runs
+            ' over the spatial samples x. the c(u) normalisation applies to the
+            ' frequency (output) side.
+            For u As Integer = 0 To 7
                 Dim sum As Double = 0.0
 
-                For u As Integer = 0 To 7
-                    Dim cu As Double = If(u = 0, 0.7071067811865476, 1.0)
-                    sum += cu * inp(inOff + u) * System.Math.Cos((2 * x + 1) * u * System.Math.PI / 16.0)
+                For x As Integer = 0 To 7
+                    sum += inp(inOff + x) * System.Math.Cos((2 * x + 1) * u * System.Math.PI / 16.0)
                 Next
 
-                out(outOff + x) = sum / 2.0
+                Dim cu As Double = If(u = 0, 0.7071067811865476, 1.0)
+                out(outOff + u) = cu * sum / 2.0
             Next
         End Sub
 
