@@ -7,7 +7,7 @@ imports stdio
 ' ============================================================================
 '  IL -> CUDA tutorial
 '
-'  The maths lives here, in the script: PearsonMetrics is ordinary VB.NET —
+'  The maths lives here, in the script: PearsonMetrics is ordinary VB.NET -
 '  row sums, Gram dot products, a correlation cell, a distance cell, a clamp.
 '  It contains no CUDA concept at all. The standard library only offers the
 '  plumbing (cuda.compile / cuda.launch* / cuda.read), so this tutorial is a
@@ -27,7 +27,7 @@ imports stdio
 '
 '  NOTE: everything that takes or returns an array lives in a Class below — a
 '  top level Function is rewritten into an anonymous function, which cannot have
-'  array parameters (see the tutorial readme, "编写规则与注意事项").
+'  array parameters (see the tutorial readme, the 编写规则与注意事项 section).
 ' ============================================================================
 
 ' ---------------------------------------------------------------------------
@@ -91,18 +91,27 @@ public class PearsonMetrics
     end function
 
     ''' <summary>Euclidean distance between the rows i and j, from the Gram matrix.</summary>
+    ''' <remarks>
+    ''' Device functions should avoid "if ... then local = value" statements outside a full
+    ''' if/else: the IL decompiler rejects that control-flow shape (the phi node of the local
+    ''' cannot be placed). Assigning the result variable in both branches keeps it decompilable.
+    ''' </remarks>
     public shared function DistanceCell(dot as single(), rowSumSq as single(), rows as integer,
                                         i as integer, j as integer) as single
         dim d = rowSumSq(i) + rowSumSq(j) - 2 * dot(i * rows + j)
+        dim r as single = 0
 
         if i = j then
-            return 0
-        end if
-        if d < 0 then
-            d = 0
+            r = 0
+        else
+            if d < 0 then
+                r = 0
+            else
+                r = System.Math.Sqrt(d)
+            end if
         end if
 
-        return System.Math.Sqrt(d)
+        return r
     end function
 
     ''' <summary>A pure scalar kernel: clamps a value from below (element wise).</summary>
@@ -206,7 +215,7 @@ dim cols = 512
 dim seed = 42
 dim previewSize = 6
 
-call console.WriteLine("=== 1) decompile the script's own VB.NET functions into CUDA kernels ===")
+call console.WriteLine("=== 1) decompile the VB.NET functions of this script into CUDA kernels ===")
 
 dim k_rowSum = cuda.compile(GetType(PearsonMetrics).GetMethod("RowSum"))
 dim k_rowSumSq = cuda.compile(GetType(PearsonMetrics).GetMethod("RowSumSq"))
@@ -216,15 +225,15 @@ dim k_distance = cuda.compile(GetType(PearsonMetrics).GetMethod("DistanceCell"))
 dim k_clamp = cuda.compile(GetType(PearsonMetrics).GetMethod("PearsonClamp"))
 
 for each k in New Object() {k_rowSum, k_rowSumSq, k_gramDot, k_correlation, k_distance, k_clamp}
-    call console.WriteLine($"  {k.Name,-22} index mode = {cuda.kernelIndexMode(k)}")
+    call console.WriteLine($"  {k.Name,-22} index mode = {k.indexMode}")
 next
 
 call console.WriteLine()
 call console.WriteLine("  ---- CorrelationCell pseudo code ----")
-call console.WriteLine(cuda.kernelPseudoCode(k_correlation))
+call console.WriteLine(k_correlation.pseudoCode)
 call console.WriteLine()
 call console.WriteLine("  ---- DistanceCell cuda source ----")
-call console.WriteLine(cuda.kernelSource(k_distance))
+call console.WriteLine(k_distance.source)
 
 ' ===========================================================================
 ' 2) interpreter self check: the same AST is executed on the CPU and compared
@@ -276,13 +285,13 @@ dim cpu_distance = CudaReference.Distance(data, rows, cols)
 
 if cuda.available() then
     ' kernels must be registered before the engine compiles them
-    call cuda.register(k_rowSum)
-    call cuda.register(k_rowSumSq)
-    call cuda.register(k_gramDot)
-    call cuda.register(k_correlation)
-    call cuda.register(k_distance)
+    call k_rowSum.register()
+    call k_rowSumSq.register()
+    call k_gramDot.register()
+    call k_correlation.register()
+    call k_distance.register()
 
-    dim engine = cuda.createEngine()
+    dim session = cuda.createEngine()
     dim cells = rows * rows
     dim buf_x = cuda.buffer(data)
     dim buf_sum = cuda.bufferSize(rows)
@@ -292,12 +301,12 @@ if cuda.available() then
     dim buf_dist = cuda.bufferSize(cells)
     dim watch = Stopwatch.StartNew()
 
-    call cuda.launch1D(k_rowSum, engine, rows, 256, buf_sum, buf_x, cols)
-    call cuda.launch1D(k_rowSumSq, engine, rows, 256, buf_sumSq, buf_x, cols)
-    call cuda.launch2D(k_gramDot, engine, rows, rows, 16, buf_dot, buf_x, cols)
-    call cuda.launch2D(k_correlation, engine, rows, rows, 16, buf_corr, buf_dot, buf_sum, buf_sumSq, rows, cols)
-    call cuda.launch2D(k_distance, engine, rows, rows, 16, buf_dist, buf_dot, buf_sumSq, rows)
-    call cuda.synchronize(engine)
+    call cuda.launch1D(k_rowSum, session, rows, 256, buf_sum, buf_x, cols)
+    call cuda.launch1D(k_rowSumSq, session, rows, 256, buf_sumSq, buf_x, cols)
+    call cuda.launch2D(k_gramDot, session, rows, rows, 16, buf_dot, buf_x, cols)
+    call cuda.launch2D(k_correlation, session, rows, rows, 16, buf_corr, buf_dot, buf_sum, buf_sumSq, rows, cols)
+    call cuda.launch2D(k_distance, session, rows, rows, 16, buf_dist, buf_dot, buf_sumSq, rows)
+    call cuda.synchronize(session)
 
     watch.Stop()
 
@@ -316,13 +325,13 @@ if cuda.available() then
     call console.WriteLine(cuda.preview(gpu_distance, rows, previewSize))
 
     ' release the device buffers
-    call buf_x.Dispose()
-    call buf_sum.Dispose()
-    call buf_sumSq.Dispose()
-    call buf_dot.Dispose()
-    call buf_corr.Dispose()
-    call buf_dist.Dispose()
-    call engine.Dispose()
+    call buf_x.free()
+    call buf_sum.free()
+    call buf_sumSq.free()
+    call buf_dot.free()
+    call buf_corr.free()
+    call buf_dist.free()
+    call session.free()
 
     ' 16x16 of the GPU result goes to a csv table
     dim corner(16 * 16 - 1) as double
