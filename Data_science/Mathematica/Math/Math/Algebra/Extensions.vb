@@ -323,9 +323,11 @@ Namespace LinearAlgebra
         End Function
     End Module
 
-    Public Enum ApplyOnAxis As Integer
+    Public Enum AxisMargins As Integer
         Any = -1
         Column = 0
         Row = 1
+        Both
+        None
     End Enum
 End Namespace
