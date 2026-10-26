@@ -284,6 +284,19 @@ Namespace Imaging.BitmapImage.Jpeg
             End Get
         End Property
 
+        ''' <summary>
+        ''' advance the reader past the currently surfaced <see cref="Marker"/> (a
+        ''' restart marker). call this after resetting the dc predictors so the next
+        ''' call to the entropy decoder continues on the byte after the marker.
+        ''' </summary>
+        Public Sub ConsumeMarker()
+            If MarkerStart >= 0 Then
+                pos = MarkerStart + 2
+            End If
+
+            Marker = -1
+        End Sub
+
         Public Function ReadBit() As Integer
             If bitCount = 0 Then
                 Call FillByte()
@@ -515,7 +528,7 @@ Namespace Imaging.BitmapImage.Jpeg
             For l As Integer = 1 To 16
                 code = (code << 1) Or reader.ReadBit()
 
-                If maxcode(l) >= 0 AndAlso code <= maxcode(l) Then
+                If maxcode(l) >= 0 AndAlso code >= mincode(l) AndAlso code <= maxcode(l) Then
                     Return vals(valptr(l) + (code - mincode(l)))
                 End If
             Next

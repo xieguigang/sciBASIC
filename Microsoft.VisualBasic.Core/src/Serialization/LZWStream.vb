@@ -565,7 +565,9 @@ Namespace Serialization
         End Sub
 
         Private Sub Increase()
-            If nextCode = (1 << codeSize) AndAlso codeSize < 12 Then
+            ' the decoder builds its dictionary one code behind the encoder, so the
+            ' code size must be widened one step earlier than on the encode side.
+            If nextCode = (1 << codeSize) - 1 AndAlso codeSize < 12 Then
                 codeSize += 1
             End If
         End Sub

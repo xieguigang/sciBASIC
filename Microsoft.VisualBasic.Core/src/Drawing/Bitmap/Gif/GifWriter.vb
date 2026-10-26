@@ -112,6 +112,9 @@ Namespace Imaging.BitmapImage.Gif
 
                 Call WriteImageDescriptor(s, f.Width, f.Height)
 
+                ' the minimum code size byte precedes the lzw sub block stream
+                Call s.WriteByte(CByte(minCodeSize))
+
                 Dim indices As Byte() = BuildIndices(f, palette, transparent, transparentIndex, cache)
 
                 Using lzw As New MemoryStream()

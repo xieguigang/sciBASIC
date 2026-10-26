@@ -355,7 +355,7 @@ Namespace Imaging.BitmapImage.Jpeg
                                 Next
                             End If
 
-                            reader.Marker = -1
+                            Call reader.ConsumeMarker()
                         Else
                             ' eoi or the next sos terminates this scan
                             HaveImage = True

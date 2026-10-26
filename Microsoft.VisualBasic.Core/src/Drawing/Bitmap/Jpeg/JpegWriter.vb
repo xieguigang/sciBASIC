@@ -113,6 +113,8 @@ Namespace Imaging.BitmapImage.Jpeg
 
             For Each c As JpegEncodeComponent In comps
                 c.qnat = If(c.tq = 0, lumaNat, chromaNat)
+                c.td = c.tq
+                c.ta = c.tq
             Next
 
             ' ---- write the file skeleton ----
@@ -122,6 +124,7 @@ Namespace Imaging.BitmapImage.Jpeg
             Call WriteDQT(s, 1, chromaZig)
             Call WriteSOF0(s, width, height, comps)
             Call WriteDHT(s)
+            Call WriteSOS(s, comps)
 
             ' ---- entropy coded data ----
             Using e As New MemoryStream()
@@ -307,10 +310,27 @@ Namespace Imaging.BitmapImage.Jpeg
             Call s.WriteByte(1) ' major version
             Call s.WriteByte(1) ' minor version
             Call s.WriteByte(0) ' units
-            Call s.WriteByte(1) ' xdensity
-            Call s.WriteByte(1) ' ydensity
+            Call WriteShort(s, 1) ' xdensity
+            Call WriteShort(s, 1) ' ydensity
             Call s.WriteByte(0) ' xthumbnail
             Call s.WriteByte(0) ' ythumbnail
+        End Sub
+
+        Private Sub WriteSOS(s As Stream, comps As List(Of JpegEncodeComponent))
+            Call WriteMarker(s, &HDA)
+            Call WriteShort(s, 6 + 2 * comps.Count)
+
+            Call s.WriteByte(CByte(comps.Count))
+
+            For Each c As JpegEncodeComponent In comps
+                Call s.WriteByte(CByte(c.id))
+                Call s.WriteByte(CByte((c.td << 4) Or c.ta))
+            Next
+
+            ' spectral selection / successive approximation (baseline : 0 / 63 / 0)
+            Call s.WriteByte(0)
+            Call s.WriteByte(63)
+            Call s.WriteByte(0)
         End Sub
 
         Private Sub WriteDQT(s As Stream, tq As Integer, table() As Integer)
