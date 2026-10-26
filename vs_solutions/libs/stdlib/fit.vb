@@ -21,7 +21,7 @@ Public Module fit
         Return umapHelper.umap(x, dims)
     End Function
 
-    Public Function tsne()
+    Public Function tsne(x As NumericTable, Optional dims As Integer = 3) As NumericTable
 
     End Function
 
