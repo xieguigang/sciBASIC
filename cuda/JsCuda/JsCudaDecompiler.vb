@@ -182,14 +182,27 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
                     Call _indexNames.Add(name)
                 ElseIf indexed.Contains(name) Then
                     type = GetType(Double())
-                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Buffer))
                 Else
                     type = GetType(Double)
-                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Number))
                 End If
 
                 _symbols(name) = type
                 Call _parameterNames.Add(name)
+            Next
+
+            ' the kernel argument order is deterministic: buffers first, then scalars, each group in
+            ' order of appearance — so a context kernel has a readable, documented calling
+            ' convention (see JsCudaHost.parameterNames)
+            For Each name As String In members
+                If _symbols(name) Is GetType(Double()) Then
+                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Buffer))
+                End If
+            Next
+
+            For Each name As String In members
+                If _symbols(name) Is GetType(Double) Then
+                    Call _parameters.Add(New JsKernelParam(name, JsKernelParamKind.Number))
+                End If
             Next
 
             Call OrderIndexNames()

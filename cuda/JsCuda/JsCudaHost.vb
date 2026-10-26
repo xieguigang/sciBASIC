@@ -78,6 +78,22 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
             Return kernel.IndexMode.ToString()
         End Function
 
+        ''' <summary>
+        ''' The argument order the kernel expects (thread index parameters excluded). For a context
+        ''' (<c>ctx</c>) kernel this is the contract: buffers first, then scalars, each group in the
+        ''' order the body uses them.
+        ''' </summary>
+        Public Shared Function parameterNames(kernel As IlCudaKernel) As String()
+            Dim kinds = JsCudaTranslator.ParameterKinds(kernel)
+            Dim names As New List(Of String)()
+
+            For Each parameter As JsKernelParam In kinds
+                Call names.Add(parameter.Name & ":" & parameter.Kind.ToString())
+            Next
+
+            Return names.ToArray()
+        End Function
+
         ' ======================================================== device
 
         ''' <summary>Is a usable CUDA device + NVRTC available in this process?</summary>

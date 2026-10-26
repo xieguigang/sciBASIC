@@ -281,7 +281,7 @@ if (jscuda.JsCudaHost.available()) {
     jscuda.JsCudaHost.launch1D(kRowSumSq, engine, rows, 256, bufSumSq, bufX, cols);
     jscuda.JsCudaHost.launch2D(kGramDot, engine, rows, rows, 16, bufDot, bufX, cols);
     jscuda.JsCudaHost.launch2D(kCorrelation, engine, rows, rows, 16, bufCorr, bufDot, bufSum, bufSumSq, rows, cols);
-    jscuda.JsCudaHost.launch2D(kDistance, engine, rows, rows, 16, bufDist, bufDot, bufSumSq, rows);
+    jscuda.JsCudaHost.launch2D(kDistance, engine, rows, rows, 16, bufDist, bufSumSq, bufDot, rows);
     jscuda.JsCudaHost.synchronize(engine);
 
     const elapsed = new Date().getTime() - started.getTime();
