@@ -400,7 +400,7 @@ Namespace Plot3D
                              Optional padding$ = g.DefaultPadding,
                              Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
                              Optional elementLabelFont$ = CSSFont.Win10Normal,
-                             Optional boxStroke$ = Stroke.StrongHighlightStroke,
+                             Optional boxStroke$ = "stroke: black; stroke-width: 1px; stroke-dash: solid;",
                              Optional axisStroke$ = Stroke.AxisStroke,
                              Optional labX$ = "X",
                              Optional labY$ = "Y",

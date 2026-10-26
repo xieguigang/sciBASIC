@@ -61,6 +61,7 @@ Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports TextureBrush = Microsoft.VisualBasic.Imaging.TextureBrush
 
+
 ''' <summary>
 ''' helper for make gdi+ graphics component conversion
 ''' </summary>
@@ -83,7 +84,24 @@ Public Module DrawingInterop
     ''' <returns></returns>
     <Extension>
     Public Function CTypePenObject(stroke As Pen) As System.Drawing.Pen
-        Return New System.Drawing.Pen(stroke.Color, stroke.Width)
+        Dim pen As New System.Drawing.Pen(stroke.Color, stroke.Width)
+
+        ' 之前只复制了颜色与线宽，CSS 里声明的虚线样式在 GDI 后端会被丢掉，
+        ' 而 Skia 后端会照着画 —— 同一张图在两个后端就会出现"一边实线一边虚线"的差异
+        Select Case stroke.DashStyle
+            Case Microsoft.VisualBasic.Imaging.DashStyle.Dash
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+            Case Microsoft.VisualBasic.Imaging.DashStyle.Dot
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot
+            Case Microsoft.VisualBasic.Imaging.DashStyle.DashDot
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot
+            Case Microsoft.VisualBasic.Imaging.DashStyle.DashDotDot
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDotDot
+            Case Else
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid
+        End Select
+
+        Return pen
     End Function
 
     ''' <summary>

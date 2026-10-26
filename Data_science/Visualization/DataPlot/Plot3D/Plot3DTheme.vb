@@ -91,8 +91,11 @@ Namespace Plot3D
         ''' <summary>轴标签文本颜色</summary>
         Public Property mainTextColor As String = "black"
 
-        ''' <summary>图例框描边 CSS</summary>
-        Public Property legendBoxStroke As String = Stroke.StrongHighlightStroke
+        ''' <summary>
+        ''' 图例框描边 CSS。
+        ''' 缺省使用实线：图例外框是"版面分隔线"，虚线会让出版插图显得杂乱。
+        ''' </summary>
+        Public Property legendBoxStroke As String = "stroke: black; stroke-width: 1px; stroke-dash: solid;"
 
         ''' <summary>是否绘制图例</summary>
         Public Property drawLegend As Boolean = True

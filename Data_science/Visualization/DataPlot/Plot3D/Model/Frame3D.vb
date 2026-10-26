@@ -308,25 +308,30 @@ Namespace Plot3D.Model
             Dim outY As PointF = ScreenOutward(camera, anchor.corner, anchor.yEnd, center)
             Dim outZ As PointF = ScreenOutward(camera, anchor.corner, anchor.zEnd, center)
 
-            ' X 轴：沿锚点所在的 Y/Z 平面
-            For Each xv As Double In InRangeTicks(xrange, tickCount)
-                Dim p As New Point3D(xv, anchor.corner.Y, anchor.corner.Z)
+            ' 三条轴的两端都会放轴名/与盒角重合，因此只保留中间的刻度值，
+            ' 否则首尾的刻度值会和相邻轴的刻度、轴名叠在一起
+            Dim tolX# = SafeLength(xrange) * 0.02
+            Dim tolY# = SafeLength(yrange) * 0.02
+            Dim tolZ# = SafeLength(zrange) * 0.02
 
-                Yield TickLabel(xv, format, p, outX, theme, brush)
+            For Each xv As Double In InRangeTicks(xrange, tickCount)
+                If Near(xv, anchor.corner.X, tolX) OrElse Near(xv, anchor.xEnd.X, tolX) Then
+                    Continue For
+                End If
+
+                Yield TickLabel(xv, format, New Point3D(xv, anchor.corner.Y, anchor.corner.Z), outX, theme, brush)
             Next
 
-            ' Y 轴（跳过与锚点重合的那个刻度值，避免和 Z 轴的最小刻度叠在一起）
             For Each yv As Double In InRangeTicks(yrange, tickCount)
-                If Near(yv, anchor.corner.Y, SafeLength(yrange) * 0.02) Then
+                If Near(yv, anchor.corner.Y, tolY) OrElse Near(yv, anchor.yEnd.Y, tolY) Then
                     Continue For
                 End If
 
                 Yield TickLabel(yv, format, New Point3D(anchor.corner.X, yv, anchor.corner.Z), outY, theme, brush)
             Next
 
-            ' Z 轴
             For Each zv As Double In InRangeTicks(zrange, tickCount)
-                If Near(zv, anchor.corner.Z, SafeLength(zrange) * 0.02) Then
+                If Near(zv, anchor.corner.Z, tolZ) OrElse Near(zv, anchor.zEnd.Z, tolZ) Then
                     Continue For
                 End If
 
@@ -434,7 +439,7 @@ Namespace Plot3D.Model
         Private Const TickGap As Single = 12
 
         ''' <summary>轴名相对轴端的屏幕偏移量（像素）</summary>
-        Private Const TitleGap As Single = 24
+        Private Const TitleGap As Single = 30
 
         ''' <summary>生成一个刻度值文本元素（沿 <paramref name="outward"/> 方向做像素外偏移）</summary>
         Private Function TickLabel(v As Double, format$, location As Point3D,
