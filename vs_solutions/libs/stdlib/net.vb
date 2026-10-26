@@ -129,6 +129,9 @@ Public Module net
                          Optional labelerIterations As Integer = -1,
                          Optional ppi As Integer = 100) As String
 
+        ' the network renderer draws through the same raster driver as plot.*
+        Call plot.register()
+
         Dim graphData As GraphicsData = NetworkVisualizer.DrawImage(
             graph.inner,
             canvasSize:=If(size, "1400,1400"),

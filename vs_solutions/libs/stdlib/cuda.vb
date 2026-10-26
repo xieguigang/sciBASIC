@@ -305,6 +305,57 @@ Public Module cuda
         Return data
     End Function
 
+    ''' <summary>把行主序的一维矩阵数据还原成 ``rows × cols`` 的交错数组。</summary>
+    Public Function toMatrix(values As Double(), rows As Integer, cols As Integer) As Double()()
+        Dim out(rows - 1)() As Double
+
+        For i As Integer = 0 To rows - 1
+            Dim row(cols - 1) As Double
+
+            For j As Integer = 0 To cols - 1
+                row(j) = values(i * cols + j)
+            Next
+
+            out(i) = row
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>取矩阵左上角 n×n 的单元格，格式化为文本预览。</summary>
+    Public Function preview(values As Double(), rows As Integer, Optional n As Integer = 6) As String
+        Dim lines As New List(Of String)
+
+        For i As Integer = 0 To std.Min(n, rows) - 1
+            Dim sb As New Text.StringBuilder()
+
+            For j As Integer = 0 To std.Min(n, rows) - 1
+                Call sb.Append(values(i * rows + j).ToString("F4").PadLeft(10))
+            Next
+
+            Call lines.Add(sb.ToString)
+        Next
+
+        Return String.Join(Environment.NewLine, lines)
+    End Function
+
+    ''' <summary>取单精度矩阵左上角 n×n 的单元格，格式化为文本预览。</summary>
+    Public Function preview(values As Single(), rows As Integer, Optional n As Integer = 6) As String
+        Dim lines As New List(Of String)
+
+        For i As Integer = 0 To std.Min(n, rows) - 1
+            Dim sb As New Text.StringBuilder()
+
+            For j As Integer = 0 To std.Min(n, rows) - 1
+                Call sb.Append(values(i * rows + j).ToString("F4").PadLeft(10))
+            Next
+
+            Call lines.Add(sb.ToString)
+        Next
+
+        Return String.Join(Environment.NewLine, lines)
+    End Function
+
     ''' <summary>GPU 结果与双精度参考实现之间的最大绝对误差。</summary>
     Public Function maxError(got As Single(), expected As Double()) As Double
         Dim maxDiff As Double = 0

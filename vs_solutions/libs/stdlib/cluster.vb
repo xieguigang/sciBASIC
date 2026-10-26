@@ -19,7 +19,18 @@ Public Module cluster
     ''' k-means 聚类。聚类编号写入标签列 ``cluster``（从 1 开始），返回原表。
     ''' </summary>
     ''' <param name="threads">并行线程数；小于等于 0 时使用默认值 16</param>
-    Public Function kmeans(source As NumericTable, k As Integer, Optional threads As Integer = 0) As NumericTable
+    ''' <param name="seed">
+    ''' 初始中心的随机种子；大于等于 0 时先重置全局随机数种子，
+    ''' 这样同一份数据在任何引擎、任何一次运行中都会得到相同的聚类编号
+    ''' </param>
+    Public Function kmeans(source As NumericTable, k As Integer,
+                           Optional threads As Integer = 0,
+                           Optional seed As Integer = 13) As NumericTable
+
+        If seed >= 0 Then
+            Call Microsoft.VisualBasic.Math.RandomExtensions.SetSeed(seed)
+        End If
+
         Return source.kmeans(k, If(threads <= 0, 16, threads), debug:=False)
     End Function
 
@@ -28,9 +39,9 @@ Public Module cluster
         Return source.distanceMatrix()
     End Function
 
-    ''' <summary>对距离矩阵做层次聚类，返回树根节点。</summary>
-    Public Function hca(dist As NumericTable) As HCluster
-        Return dist.hca(Nothing, silent:=True)
+    ''' <summary>对距离矩阵做层次聚类，返回树门面对象。</summary>
+    Public Function hca(dist As NumericTable) As ClusterTree
+        Return New ClusterTree(dist.hca(Nothing, silent:=True))
     End Function
 
     ''' <summary>按聚类数量剪枝，聚类编号写入标签列 ``cluster``（从 1 开始），返回原表。</summary>
@@ -46,23 +57,23 @@ Public Module cluster
     ' ======================================================== 树结构信息
 
     ''' <summary>叶节点数量。</summary>
-    Public Function leafCount(tree As HCluster) As Integer
-        Return tree.Leafs
+    Public Function leafCount(tree As ClusterTree) As Integer
+        Return tree.leafCount()
     End Function
 
     ''' <summary>按树的顺序展开的叶节点名称。</summary>
-    Public Function leafs(tree As HCluster) As String()
-        Return tree.OrderLeafs()
+    Public Function leafs(tree As ClusterTree) As String()
+        Return tree.leafs()
     End Function
 
     ''' <summary>子节点数量。</summary>
-    Public Function children(tree As HCluster) As Integer
-        Return If(tree.Children Is Nothing, 0, tree.Children.Count)
+    Public Function children(tree As ClusterTree) As Integer
+        Return tree.children()
     End Function
 
     ''' <summary>树的总连接距离。</summary>
-    Public Function totalDistance(tree As HCluster) As Double
-        Return tree.TotalDistance
+    Public Function totalDistance(tree As ClusterTree) As Double
+        Return tree.totalDistance()
     End Function
 
     ''' <summary>统计聚类编号（从 1 开始）各有多少个样本。</summary>
@@ -122,4 +133,45 @@ Public Module cluster
 
         Return out
     End Function
+
+    ''' <summary>
+    ''' 层次聚类树的脚本门面对象（隐藏底层的 <c>Cluster</c> 类型）。
+    ''' </summary>
+    Public Class ClusterTree
+
+        Friend ReadOnly inner As HCluster
+
+        Friend Sub New(tree As HCluster)
+            inner = tree
+        End Sub
+
+        ''' <summary>叶节点（样本）数量。</summary>
+        Public Function leafCount() As Integer
+            Return inner.Leafs
+        End Function
+
+        ''' <summary>按树的顺序展开的叶节点名称。</summary>
+        Public Function leafs() As String()
+            Return inner.OrderLeafs()
+        End Function
+
+        ''' <summary>直接子节点数量。</summary>
+        Public Function children() As Integer
+            Return If(inner.Children Is Nothing, 0, inner.Children.Count)
+        End Function
+
+        ''' <summary>树的根节点名称。</summary>
+        Public Function name() As String
+            Return inner.Name
+        End Function
+
+        ''' <summary>总连接距离。</summary>
+        Public Function totalDistance() As Double
+            Return inner.TotalDistance
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"dendrogram({leafCount()} leafs, total distance={totalDistance():F4})"
+        End Function
+    End Class
 End Module

@@ -23,6 +23,17 @@
     <ProjectReference Include="..\JavaScript\LiteJs.vbproj" />
   </ItemGroup>
 
-
+  <!--
+    The standard library (stdlib) renders its charts through the skia based raster driver, so the
+    host has to ship the skia native asset: a script that imports
+    '../../.nuget/net10.0/stdlib.dll' would otherwise fail with
+    'The type initializer for SkiaSharp.SKImageInfo threw an exception', because the native
+    library of an assembly loaded from outside the application base is not probed by the
+    default load context.
+  -->
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="4.153.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="4.153.1" />
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Linear regression report</title>
+<style>
+body{max-width:960px;margin:2.5rem auto;padding:0 1.25rem;font-family:"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.65;color:#1f2933;}
+h1,h2,h3,h4{line-height:1.25;margin-top:2rem;}
+h1{border-bottom:2px solid #e4e7eb;padding-bottom:.5rem;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem;}
+th,td{border:1px solid #cbd2d9;padding:.35rem .6rem;}
+th{background:#f5f7fa;text-align:left;}
+tr:nth-child(even){background:#fafbfc;}
+pre{background:#0f172a;color:#e2e8f0;padding:1rem;border-radius:6px;overflow:auto;}
+code{font-family:Consolas,monospace;}
+img{max-width:100%;height:auto;}
+blockquote{border-left:4px solid #cbd2d9;margin-left:0;padding-left:1rem;color:#52606d;}
+hr{border:none;border-top:1px solid #e4e7eb;margin:2rem 0;}
+</style>
+</head>
+<body>
+<h1>1. Synthetic dataset</h1>
+
+<p>The dataset contains 100 samples of one feature column x and the label y = 2x + 3 + noise.</p>
+
+<h1>2. Fitted models</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>model</th>
+      <th>R2</th>
+      <th>RMSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>linear</td>
+      <td>0.998790</td>
+      <td>0.201119</td>
+    </tr>
+    <tr>
+      <td>poly(2)</td>
+      <td>0.998794</td>
+      <td>0.200790</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>3. Observation and fitted line</h1>
+
+<img src="G:\GCModeller\src\runtime\sciBASIC#\tutorials\VBS\scripts\linear_regression\linear-regression.png" alt="linear regression" />
+
+<h1>4. First 5 prediction rows</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left;"></th>
+      <th style="text-align:right;">x</th>
+      <th style="text-align:right;">label:y</th>
+      <th style="text-align:right;">label:prediction</th>
+      <th style="text-align:right;">label:residual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left;">sample_1</td>
+      <td style="text-align:right;">0</td>
+      <td style="text-align:right;">2.7</td>
+      <td style="text-align:right;">2.98624</td>
+      <td style="text-align:right;">0.286238</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">sample_2</td>
+      <td style="text-align:right;">0.1</td>
+      <td style="text-align:right;">3</td>
+      <td style="text-align:right;">3.18641</td>
+      <td style="text-align:right;">0.186415</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">sample_3</td>
+      <td style="text-align:right;">0.2</td>
+      <td style="text-align:right;">3.3</td>
+      <td style="text-align:right;">3.38659</td>
+      <td style="text-align:right;">0.0865917</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">sample_4</td>
+      <td style="text-align:right;">0.3</td>
+      <td style="text-align:right;">3.6</td>
+      <td style="text-align:right;">3.58677</td>
+      <td style="text-align:right;">-0.0132313</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">sample_5</td>
+      <td style="text-align:right;">0.4</td>
+      <td style="text-align:right;">3.9</td>
+      <td style="text-align:right;">3.78695</td>
+      <td style="text-align:right;">-0.113054</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

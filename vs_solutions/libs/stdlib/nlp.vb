@@ -79,7 +79,13 @@ Public Module nlp
                              Optional method As String = "cbow",
                              Optional freqThreshold As Integer = 1,
                              Optional window As Integer = 5,
-                             Optional threads As Integer = 1) As NumericTable
+                             Optional threads As Integer = 1,
+                             Optional seed As Integer = 42) As NumericTable
+
+        ' 训练的初始权重是随机的：重置种子后同一份语料在任何引擎中都得到同样的词向量
+        If seed >= 0 Then
+            Call Microsoft.VisualBasic.Math.RandomExtensions.SetSeed(seed)
+        End If
 
         Dim factory As Word2VecFactory = Word2VecExtensions.BuildWord2VecFactory() _
             .setVectorSize(vectorSize) _

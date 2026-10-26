@@ -148,16 +148,25 @@ Public Module plot
         Return path
     End Function
 
-    ' ======================================================== 内部辅助
+    ' ======================================================== 驱动注册
 
-    ''' <summary>第一次绘图前注册 Skia 绘图驱动（可重复调用）。</summary>
-    Private Sub EnsureDriver()
+    ''' <summary>
+    ''' 注册 Skia 绘图驱动（幂等）。所有绘图函数都会自动调用它，
+    ''' 只有在"先自己调用其它绘图库、之后才用标准库出图"的场景才需要显式调用。
+    ''' </summary>
+    Public Sub register()
         If _driverReady Then
             Return
         End If
 
         Skia.Register()
         _driverReady = True
+    End Sub
+
+    ' ======================================================== 内部辅助
+
+    Private Sub EnsureDriver()
+        Call register()
     End Sub
 
     Private Function SeriesOf(x As Double(), y As Double(), classId As String()) As Series()

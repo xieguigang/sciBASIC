@@ -1,58 +1,47 @@
-#include "Microsoft.VisualBasic.DataMining.HierarchicalClustering.dll"
-#include "Microsoft.VisualBasic.Data.Framework.dll"
-#include "Microsoft.VisualBasic.Data.DataPlot.dll"
-#include "Microsoft.VisualBasic.Math.Statistics.ANOVA.dll"
-#include "Microsoft.VisualBasic.Drawing.dll"
+#include "stdlib.dll"
+#include "stdio.dll"
 
-imports Microsoft.VisualBasic.Data
-imports Microsoft.VisualBasic.Data.Framework
-imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
-imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
-imports microsoft.visualbasic.data.plots
-imports microsoft.visualbasic.drawing
+imports stdlib
+imports stdio
 
 ' ---------------------------------------------------------------------------
-' Hierarchical clustering demo
+' Hierarchical clustering demo (standard library edition)
 '
-'   feature table -> distanceMatrix() -> distance matrix table
-'    -> hca() dendrogram / hcut() cut into clusters
-'    -> compare with the real species -> PCA scatter plot -> export csv
+'   feature table -> cluster.distanceMatrix -> cluster.hca / cluster.hcut
+'    -> compare with the real species -> PCA scatter -> export csv
 ' ---------------------------------------------------------------------------
+
 dim file = here("../../data/bezdekIris.csv")
 dim k = 3
 
 ' ---------------------------------------------------------------------------
 ' 1. Load the iris dataset as the unified 2D table format
-'    (first column = row names, then the D1..D4 feature columns)
 ' ---------------------------------------------------------------------------
-dim table = NumericTableIO.ReadCsv(file, columns := {"D1","D2","D3","D4"})
+dim dataset = read.csv(file, columns:={"D1", "D2", "D3", "D4"})
 
 ' The first column of the iris file is the species name (with duplicates), but
-' hierarchical clustering requires unique sample names. So the row names are
-' rewritten to unique sample ids here, while the real species is mapped to a
-' numeric label column named species and kept on the table.
-dim species = table.rowNames
-dim spNames as new List(Of String)
-dim sp(table.nsamples - 1) as double
-dim ids(table.nsamples - 1) as string
+' hierarchical clustering requires unique sample names. The real species is
+' therefore mapped to a numeric label column named species, and the row names
+' are rewritten to unique sample ids.
+dim species = table.rowNames(dataset)
+dim sp_names As New List(Of String)
+dim sp(dataset.nsamples - 1) as double
 
 for i = 0 to species.length - 1
-    if not spNames.Contains(species(i)) then call spNames.Add(species(i))
+    if not sp_names.Contains(species(i)) then call sp_names.Add(species(i))
 
-    sp(i) = spNames.IndexOf(species(i)) + 1
-    ids(i) = "sample_" & (i + 1)
+    sp(i) = sp_names.IndexOf(species(i)) + 1
 next
 
-table.rowNames = ids
+call table.setLabel(dataset, "species", sp)
+call table.uniqueRowNames(dataset, "sample_")
 
-call table.SetLabel("species", sp)
-
-call console.WriteLine($"dataset: {table.nsamples} samples x {table.nfeatures} features, {spNames.Count} species")
+call console.WriteLine($"dataset: {dataset.nsamples} samples x {dataset.nfeatures} features, {sp_names.Count} species")
 
 ' ---------------------------------------------------------------------------
 ' 2. Feature table -> symmetric distance matrix table (Euclidean by default)
 ' ---------------------------------------------------------------------------
-dim dist = table.distanceMatrix()
+dim dist = cluster.distanceMatrix(dataset)
 
 call console.WriteLine($"distance matrix: {dist.nsamples} x {dist.nfeatures} (square matrix)")
 
@@ -63,83 +52,55 @@ call console.WriteLine($"distance matrix: {dist.nsamples} x {dist.nfeatures} (sq
 '    + hcut() cuts the dendrogram into the requested number of clusters and
 '      writes the cluster id into the cluster label column
 ' ---------------------------------------------------------------------------
-dim tree = dist.hca()
-dim flat = dist.hcut(k := k)
-dim labels = flat.ClusterLabels()
-dim sizes(k - 1) as integer
+dim tree = cluster.hca(dist)
+dim flat = cluster.hcut(dist, k)
+dim labels = table.classLabels(flat)
 
-for i = 0 to labels.length - 1
-    sizes(labels(i) - 1) += 1
-next
-
-dim leafs = tree.OrderLeafs()
-dim leafHead(4) as string
-
-for i = 0 to 4
-    leafHead(i) = leafs(i)
-next
-
-call console.WriteLine($"dendrogram: leafs = {tree.Leafs}, leaf order head = {String.Join(", ", leafHead)}")
-call console.WriteLine($"hcut(k := {k}) cluster sizes: {String.Join(", ", sizes)}")
+call console.WriteLine($"dendrogram: leafs = {cluster.leafCount(tree)}")
+call console.WriteLine($"hcut(k := {k}) cluster sizes: {String.Join(", ", cluster.clusterSizes(labels))}")
 
 ' Cut the dendrogram by a distance threshold (clusters are merged while the
 ' linkage distance is below the threshold)
-dim byThreshold = dist.hcut(threshold := 3.0)
-dim thresholdLabels = byThreshold.ClusterLabels()
-dim clusterNumber = 0
+dim by_threshold = cluster.hcutByDistance(dist, 3.0)
+dim threshold_number = cluster.clusterSizes(table.classLabels(by_threshold)).length
 
-for i = 0 to thresholdLabels.length - 1
-    if thresholdLabels(i) > clusterNumber then clusterNumber = thresholdLabels(i)
-next
-
-call console.WriteLine($"hcut(threshold := 3.0) -> {clusterNumber} clusters")
+call console.WriteLine($"hcut(threshold := 3.0) -> {threshold_number} clusters")
 
 ' ---------------------------------------------------------------------------
 ' 4. Compare the clusters with the real species (cross tabulation)
 ' ---------------------------------------------------------------------------
-for each name in spNames
-    dim counts(k - 1) as integer
-    dim spId = spNames.IndexOf(name) + 1
+dim cross = cluster.crossTable(table.classLabelAt(dataset, 0), labels)
+dim cross_values = table.matrix(cross)
 
-    for i = 0 to labels.length - 1
-        if sp(i) = spId then counts(labels(i) - 1) += 1
-    next
-
-    call console.WriteLine($"  {name}: {String.Join(", ", counts)}")
+for i = 0 to cross.nsamples - 1
+    call console.WriteLine($"  {sp_names(i)}: {String.Join(", ", cross_values(i))}")
 next
 
 ' ---------------------------------------------------------------------------
 ' 5. Run PCA on the feature table and colour the scatter plot by the
 '    hierarchical cluster id
 ' ---------------------------------------------------------------------------
-dim score = table.pca(maxPC := 2).ScoreTable()
+dim score = dimreduce.pcaScore(dataset, 2)
 dim class_id(labels.length - 1) as string
 
 for i = 0 to labels.length - 1
     class_id(i) = "cluster " & labels(i)
 next
 
-call SkiaDriver.Register()
+dim figure = plot.scatter(
+    table.feature(score, "PC1"), table.feature(score, "PC2"),
+    classId:=class_id,
+    title:="Hierarchical clustering of bezdek-Iris",
+    subtitle:=$"average linkage + hcut(k := {k})",
+    xLabel:="PC1", yLabel:="PC2", size:="1200,800")
 
-Using plt As New ScatterPlot(800, 600, PlotTheme.Nature())
-    plt.Title = "Hierarchical clustering of bezdek-Iris"
-    plt.SubTitle = $"average linkage + hcut(k := {k})"
-    plt.XLabel = "PC1"
-    plt.YLabel = "PC2"
-    plt.Plot(DataSerials(score.Feature("PC1"), score.Feature("PC2"), class_id).tolist())
-    plt.SavePng(here("bezdekIris-hclust.png"), 300)
-End Using
+call console.WriteLine("plot: " & plot.save(figure, here("bezdekIris-hclust.png")))
 
 ' ---------------------------------------------------------------------------
-' 6. Write the hierarchical cluster ids back onto the original feature table
-'    and export it as csv
-'
-'    The exported layout still follows the convention of
-'    "row names + feature columns + label: prefixed label columns"
+' 6. Export the hierarchical cluster ids together with the original table
 ' ---------------------------------------------------------------------------
-dim result = table.SetLabel("cluster", labels)
-
-call result.WriteCsv(here("bezdekIris-hclust.csv"))
+call table.setClassLabel(dataset, "cluster", labels)
+call console.WriteLine("csv : " & write.csv(dataset, here("bezdekIris-hclust.csv")))
 
 call console.WriteLine("done: bezdekIris-hclust.png")
 call console.WriteLine("done: bezdekIris-hclust.csv")

@@ -1,133 +1,116 @@
-#include "Microsoft.VisualBasic.Data.visualize.Network.Visualizer.dll"
-#include "Microsoft.VisualBasic.Data.visualize.Network.Layouts.dll"
-#include "Microsoft.VisualBasic.Data.visualize.Network.dll"
-#include "Microsoft.VisualBasic.Drawing.dll"
-#include "Microsoft.VisualBasic.Data.GraphTheory.dll"
-#include "Microsoft.VisualBasic.Imaging.dll"
+#include "stdlib.dll"
+#include "stdio.dll"
 
-imports microsoft.visualbasic.drawing
-Imports Microsoft.VisualBasic.Data.visualize.Network
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Hola
-Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
+imports stdlib
+imports stdio
 
 ' ---------------------------------------------------------------------------
-' HOLA orthogonal layout demo
+' HOLA orthogonal layout demo (standard library edition)
 '
 '   Build a deliberately messy network (grid + chain + star + an isolated ring)
-'   and run the HOLA layout on it, then render the result to a PNG.
+'   with net.addNode / net.addEdge, run the HOLA layout and render it to a PNG.
 '
-'   The script exercises crossing removal, edge alignment and overlap removal,
-'   and prints the final node/edge/bend statistics.
-'
-'   Run:
-'       vbs.exe tutorials\VBS\hola_layout\hola_layout.vb
+'   The starting positions are computed arithmetically (not randomly), so the
+'   layout — and therefore the rendered image — is identical on every engine.
 ' ---------------------------------------------------------------------------
 
-Dim g As New NetworkGraph
-Dim rnd As New Random(12345)
+dim g = net.create()
+dim node_id = 0
 
-' Use fixed-seed random scatter points as the HOLA starting positions, so the
-' crossing-removal / alignment / overlap-removal effect stands out
-public function rndPos() as FDGVector2 
-    return New FDGVector2(rnd.NextDouble() * 1000.0, rnd.NextDouble() * 1000.0)
-End function
+' deterministic "random" scatter points used as the HOLA starting positions
+public function startX(i as integer) as double
+    return ((i * 7919) mod 1000) + 0.5
+end function
 
-public sub addNode(label As String)
-    Call g.AddNode(New inode With {
-        .label = label,
-        .data = New NodeData With {
-            .initialPostion = rndPos(),
-            .size = {18, 18}
-        }
-    })
-End Sub
+public function startY(i as integer) as double
+    return ((i * 104729) mod 1000) + 0.5
+end function
+
+public sub addNode(label as string)
+    dim x = startX(node_id)
+    dim y = startY(node_id)
+
+    call net.addNode(g, label, x, y)
+    node_id += 1
+end sub
 
 ' === 1) Grid block: 5 x 4 = 20 nodes ===
-Dim rows = 5, cols = 4
-Dim grid(rows - 1, cols - 1) As String
-Dim nodeId = 0
-For r As Integer = 0 To rows - 1
-    For c As Integer = 0 To cols - 1
-        Dim id = "n" & nodeId
+dim rows = 5, cols = 4
+dim grid(rows - 1, cols - 1) as string
+
+for r = 0 to rows - 1
+    for c = 0 to cols - 1
+        dim id = "n" & node_id
+
         grid(r, c) = id
-        addNode(id)
-        nodeId += 1
-    Next
-Next
-' Row/column adjacency edges
-For r As Integer = 0 To rows - 1
-    For c As Integer = 0 To cols - 1
-        If c + 1 < cols Then Call g.AddEdge(grid(r, c), grid(r, c + 1))
-        If r + 1 < rows Then Call g.AddEdge(grid(r, c), grid(r + 1, c))
-    Next
-Next
-' Cross-row / cross-column edges, deliberately creating crossings
-Call g.AddEdge(grid(0, 0), grid(4, 3))
-Call g.AddEdge(grid(0, 3), grid(4, 0))
-Call g.AddEdge(grid(1, 1), grid(3, 2))
-Call g.AddEdge(grid(2, 0), grid(2, 3))
+        call addNode(id)
+    next
+next
 
-' === 2) Chain structure with 12 nodes; both ends attach to the grid block to create long crossing edges ===
-Dim chain(11) As String
-For i As Integer = 0 To 11
+' row / column adjacency edges
+for r = 0 to rows - 1
+    for c = 0 to cols - 1
+        if c + 1 < cols then call net.addEdge(g, grid(r, c), grid(r, c + 1))
+        if r + 1 < rows then call net.addEdge(g, grid(r, c), grid(r + 1, c))
+    next
+next
+
+' cross-row / cross-column edges, deliberately creating crossings
+call net.addEdge(g, grid(0, 0), grid(4, 3))
+call net.addEdge(g, grid(0, 3), grid(4, 0))
+call net.addEdge(g, grid(1, 1), grid(3, 2))
+call net.addEdge(g, grid(2, 0), grid(2, 3))
+
+' === 2) Chain structure with 12 nodes; both ends attach to the grid block ===
+dim chain(11) as string
+
+for i = 0 to 11
     chain(i) = "c" & i
-    addNode(chain(i))
-Next
-For i As Integer = 0 To 10
-    Call g.AddEdge(chain(i), chain(i + 1))
-Next
-' Attach the two chain ends to opposite grid corners to create long cross-graph edges
-Call g.AddEdge(chain(0), grid(0, 0))
-Call g.AddEdge(chain(11), grid(4, 3))
+    call addNode(chain(i))
+next
 
-' === 3) Star structure: 1 hub + 7 leaves; the hub connects to the grid block ===
-Dim hub = "hub"
-Call addNode(hub)
-Call g.AddEdge(hub, grid(2, 1))   ' attach the hub to the centre of the grid block
-For i As Integer = 0 To 6
-    Dim leaf = "leaf" & i
-    Call addNode(leaf)
-    Call g.AddEdge(hub, leaf)
-Next
+for i = 0 to 10
+    call net.addEdge(g, chain(i), chain(i + 1))
+next
 
-' === 4) Independent 5-node ring component, verifying that separate components are not wrongly connected ===
-Dim ring = {"r0", "r1", "r2", "r3", "r4"}
-For Each rn In ring
-    Call addNode(rn)
-Next
-For i As Integer = 0 To ring.Length - 1
-    Call g.AddEdge(ring(i), ring((i + 1) Mod ring.Length))
-Next
+call net.addEdge(g, chain(0), grid(0, 0))
+call net.addEdge(g, chain(11), grid(4, 3))
+
+' === 3) Star structure: 1 hub + 7 leaves ===
+dim hub = "hub"
+
+call addNode(hub)
+call net.addEdge(g, hub, grid(2, 1))
+
+for i = 0 to 6
+    dim leaf = "leaf" & i
+
+    call addNode(leaf)
+    call net.addEdge(g, hub, leaf)
+next
+
+' === 4) Independent 5-node ring component ===
+dim ring = {"r0", "r1", "r2", "r3", "r4"}
+
+for each rn in ring
+    call addNode(rn)
+next
+
+for i = 0 to ring.length - 1
+    call net.addEdge(g, ring(i), ring((i + 1) mod ring.length))
+next
 
 ' === Run the HOLA layout ===
-Call HOLA.DoLayout(g)
+call net.hola(g)
 
-' Count nodes, edges and edges that received orthogonal bends
-Dim nodeCount = 0
-For Each n As inode In g.connectedNodes
-    nodeCount += 1
-Next
-Dim totalEdges = 0, bendCount = 0
-For Each e As Edge In g.graphEdges
-    totalEdges += 1
-    If e.data.bends IsNot Nothing AndAlso e.data.bends.Length > 0 Then
-        bendCount += 1
-    End If
-Next
+call console.WriteLine($"=== HOLA complex network: {net.nodeCount(g)} nodes, {net.edgeCount(g)} edges, {net.bendCount(g)} edges with bends ===")
 
-console.WriteLine($"=== HOLA complex network: {nodeCount} nodes, {totalEdges} edges, {bendCount} edges with bends ===")
+' === Render to PNG ===
+call console.WriteLine("plot: " & net.draw(g, here("HOLA_complex_layout.png"), "1400,1400", true, 8, false, -1, 100))
 
-' Render to PNG (enlarge the canvas to hold more nodes; enable drawEdgeBends to
-' display the orthogonal bend points)
-Call SkiaDriver.Register()
-Call NetworkVisualizer.DrawImage(g, "1400,1400",
-                                 displayId:=False,
-                                 drawEdgeBends:=True,
-                                 labelerIterations:=-1,
-                                 minLinkWidth:=8) _
-    .Save(here("HOLA_complex_layout.png"))
+' === Export the final node coordinates ===
+dim coordinates = net.coordinates(g)
 
-console.WriteLine("[HOLA] complex test done. see ./HOLA_complex_layout.png")
+call console.WriteLine("csv : " & write.csv(coordinates, here("HOLA_node_positions.csv")))
+
+call console.WriteLine("[HOLA] complex test done. see ./HOLA_complex_layout.png")
