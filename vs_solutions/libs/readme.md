@@ -238,17 +238,50 @@ sparkline(values) / raster(frames, rows)
 ```
 
 ```
-cuda.available() / deviceName() / diagnostics()
-cuda.kernelNames() / kernelIndexMode(name) / kernelSource(name) / kernelPseudoCode(name)
-cuda.selfCheck(m, rows, cols)                   cuda.metrics(m, rows, cols) → CudaMetrics
-cuda.pearson / distance / pearsonCpu / distanceCpu / makeMatrix / toMatrix / preview / maxError
+cuda.available() / deviceName() / diagnostics()        cuda.makeMatrix(rows, cols, seed?)
+cuda.compile(method, name?) → CudaKernel                cuda.toMatrix / preview / maxError
+cuda.selfCheck(kernel, args, expected) → String         cuda.createEngine() → CudaSession
+cuda.buffer(values) / bufferSize(n) → CudaBuffer        cuda.read(buf) / readDouble(buf)
+cuda.launch1D(kernel, session, n, blockSize, output, ...args)
+cuda.launch2D(kernel, session, rows, cols, tile, output, ...args)
 ```
 
-`cuda` decompiles the `stdlib.PearsonMetrics` functions (ordinary VB.NET maths,
-no CUDA concepts) into `.cu` kernels through ILCuda, runs them on the GPU and
-offers double precision CPU references for comparison. The kernels live in the
-library assembly because only a CLR method can be decompiled — a JS function
-cannot.
+`cuda` is the **generic** IL → CUDA plumbing: it contains no algorithm at all. The device code
+lives in the caller's own VB.NET type as plain `Shared` functions (no CUDA concept), and
+`cuda.compile(method)` decompiles one of them into a `.cu` kernel through ILCuda:
+
+```vbnet
+public class MyKernels
+    ' i is the thread index, x is a buffer, cols is a scalar
+    public shared function RowSum(x as single(), cols as integer, i as integer) as single
+        dim s as single = 0
+        for k = 0 to cols - 1
+            s += x(i * cols + k)
+        next
+        return s
+    end function
+end class
+
+dim kernel = cuda.compile(GetType(MyKernels).GetMethod("RowSum"))
+call kernel.register()                       ' before the engine compiles the sources
+dim session = cuda.createEngine()
+dim x = cuda.buffer(values)
+dim out = cuda.bufferSize(rows)
+call cuda.launch1D(kernel, session, rows, 256, out, x, cols)
+call cuda.synchronize(session)
+dim sums = cuda.read(out)
+```
+
+`CudaKernel` / `CudaBuffer` / `CudaSession` are the library's own façades, so a script only needs
+`#include "stdlib.dll"` — it never references ILCuda directly.
+
+> Device function shape matters for the IL decompiler: keep a **single exit**. A
+> `if ... then local = value` statement (an incomplete if) cannot be decompiled — assign the
+> result in both branches of a full if/else instead, or return early inside the if (which is
+> supported). See `tutorials\VBS\scripts\cuda\cuda.vb`.
+
+> The JavaScript side of the same idea lives in `cuda\JsCuda` (`JsCudaHost.translate(fn)` turns a
+> **JavaScript function** into a kernel of the same shape).
 
 ---
 

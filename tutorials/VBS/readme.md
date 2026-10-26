@@ -378,6 +378,15 @@ console.writeLine(a+b)
 | 9 | 交错数组字面量要显式声明类型 | `{{1,2},{3,4}}` 会被 VB 解析成**二维数组** `Double(,)`，传给 `Double()()` 参数会报 `BC30414`；请写成 `New Double()() {New Double() {1,2}, New Double() {3,4}}` |
 | 10 | 循环变量不要与库函数同名 | 例如 `for each line in ...` 里的 `line` 与标准库的 `plot.line` 冲突，会报 `BC30455: Argument not specified for parameter 'x'`；换名（`op_line` 等）即可 |
 
+上表是 **VB 脚本**的坑；写 **JavaScript 脚本（njs）** 时另外注意：
+
+| # | 注意点 | 说明 |
+| --- | --- | --- |
+| 1 | 用内置 `here()`，不要自己实现 | `here("a.csv")` / `scriptDir()` / `scriptFile()` / `scriptName()` / `scriptText()` / `scriptLines()` 都是解释器内置全局（与 VBS 的 `Here` 同源），不要再写 `const here = (n) => path.join(__dirname, n)` |
+| 2 | CLR 导入必须写全命名空间 | `import Microsoft.VisualBasic.Computing.JSCuda as jscuda from '....dll'` —— 省略 `as` 时别名取命名空间最后一段，等于去导入一个叫 `jscuda` 的命名空间（会报 `has no public types`） |
+| 3 | CLR 成员名**大小写敏感** | 脚本里必须写 `k.Name` / `JsCudaHost.translate(...)`；写错大小写会得到 `undefined is not a function` |
+| 4 | CLR 返回的数组不是 JS 数组 | `diagnostics()` 之类的 `String()` 返回代理对象，没有 `.join()`；用 `for (const x of result)` 遍历，或自己 push 到 JS 数组 |
+
 ---
 
 ## 5. 示例脚本导览
@@ -395,15 +404,24 @@ console.writeLine(a+b)
 | `tf-idf` | `tfidf.vb` / `.js` | TF-IDF 文档距离矩阵 + 热力图 | `nlp.tfidfTable`、`plot.heatmap` |
 | `word2vec` | `word2vector.vb` / `.js` | 文本 → word2vec → UMAP → kmeans → 散点图 | `nlp.word2vec`、`dimreduce.umap`、`cluster.kmeans` |
 | `hola_layout` | `hola_layout.vb` / `.js` | HOLA 正交布局，45 节点 / 61 边，出图 + 坐标导出 | `net.create/addNode/addEdge/hola/draw` |
-| `cuda` | `cuda.vb` / `.js` | **IL → AST → CUDA**：把标准库里的 VB.NET 数学函数反编译成 `.cu`，GPU 上算相关/距离矩阵并与 CPU 对拍 | `cuda.kernelNames/kernelSource/selfCheck/metrics` |
+| `cuda` | `cuda.vb` / `.js` | **→ AST → CUDA**：脚本内写数学内核（VB 版走 IL 反编译，JS 版走 JS AST 翻译），GPU 上算相关/距离矩阵并与 CPU 对拍 | `cuda.compile/launch1D/launch2D/read`、`JsCudaHost.translate/launch*` |
 | `spiking_nn` | `spiking_nn.vb` / `.js` | LIF 脉冲网络训练 3 类高斯团簇，栅格/火花线可视化 + 报告 | `ml.snnTrain`、`ml.sparkline`、`report.*` |
 | `mnist_umap` | `mnist_umap.vb` / `.js` | MNIST（或合成数字）→ UMAP 降维可视化 | `read.mnist`、`ml.syntheticDigits`、`dimreduce.umap` |
 | `mnist_cnn` | `mnist_cnn.vb` / `.js` | CNN 训练 + CUDA 后端对比 + 逐算子后端表 | `ml.cnnTrainTable/useCuda/cnnOperatorTable` |
 
-> **关于 `cuda` demo**：目标函数（`RowSum` / `GramDot` / `CorrelationCell` / …）现在写在标准库程序集里
-> （`stdlib.PearsonMetrics`），而不是脚本里。原因有两个：IL 反编译器需要可反射的 `Shared` 方法，
-> 而 JS 函数不是 CLR 方法；把它放进标准库之后，两种语言的 demo 才能"调用同一套 api"。
-> 脚本里仍然完整演示了「反编译 → `.cu` 源码 → NVRTC → GPU 计算 → 与 CPU 对拍」的全过程。
+> **关于 `cuda` demo**：数学内核写在**脚本自己**里，标准库只提供与业务无关的管线。
+> * `cuda.vb`：脚本内 `Public Class PearsonMetrics` 写普通 VB.NET 函数，`cuda.compile(GetType(...).GetMethod("RowSum"))`
+>   把方法反编译成 `.cu`；CPU 参考实现在 `Public Class CudaReference`。
+> * `cuda.js`：脚本内用**普通 JavaScript 函数**写同一组内核，`jscuda.JsCudaHost.translate(fn)` 把 JS AST
+>   翻译成 `.cu`（见 `cuda\JsCuda\README.md`）；其中 `distanceCell` 演示了 `ctx` 写法。
+>
+> 两个版本都完整演示「翻译 → `.cu` 源码 → NVRTC → GPU 计算 → 与 CPU 对拍」，各自的 CPU 参考实现
+> 就是脚本里的同一个函数（JS 直接在宿主上调用它，VB 用 `CudaReference` 的双精度版本）。
+>
+> **VB 内核的形状约束**：IL 反编译器要求设备函数**单一出口**，并且不支持
+> `if ... then 局部变量 = 值` 这种"半截 if"（phi 无法落位）。`cuda.vb` 里的 `DistanceCell`
+> 就是为此写成完整 if/else、两条分支都赋值的形式；`CorrelationCell` 则采用"if 里直接 return"的形态。
+> JS 侧没有这个限制（JS AST 直接发射，不经过 SSA）。
 
 ---
 

@@ -1,63 +1,29 @@
-﻿=== 1) decompile the VB.NET functions into an AST and emit .cu source ===
-  RowSum           index mode = Grid1D
-  RowSumSq         index mode = Grid1D
-  GramDot          index mode = Grid2D
-  CorrelationCell  index mode = Grid2D
-  DistanceCell     index mode = Grid2D
-  PearsonClamp     index mode = Grid1D
+﻿=== 1) decompile the VB.NET functions of this script into CUDA kernels ===
+  il_RowSum_kernel       index mode = Grid1D
+  il_RowSumSq_kernel     index mode = Grid1D
+  il_GramDot_kernel      index mode = Grid2D
+  il_CorrelationCell_kernel index mode = Grid2D
+  il_DistanceCell_kernel index mode = Grid2D
+  il_PearsonClamp_kernel index mode = Grid1D
 
   ---- CorrelationCell pseudo code ----
 Shared Function CorrelationCell(p_dot As Single(), p_rowSum As Single(), p_rowSumSq As Single(), p_rows As Integer, p_cols As Integer, p_i As Integer, p_j As Integer) As Single
     Dim V_0 As Single = 0F
-    Dim V_1 As Single = 0F
+    Dim V_1 As Integer = 0
     Dim V_2 As Single = 0F
     Dim V_3 As Single = 0F
-    Dim V_4 As Single = 0F
-    Dim V_5 As Single = 0F
-    Dim V_6 As Single = 0F
-    Dim V_7 As Single = 0F
+    Dim V_4 As Double = 0
     Dim V_0_1 As Single
-    Dim V_1_1 As Single
-    Dim V_2_1 As Single
-    Dim V_3_1 As Single
-    Dim V_4_1 As Single
-    Dim V_5_1 As Single
-    Dim V_6_1 As Single
-    Dim V_7_2 As Single
-    Dim V_7_1 As Single
-    If (p_i <> p_j) Then
-        Dim V_1_2 As Single = CType(p_cols, Single)
-        Dim V_2_2 As Single = (p_rowSum[p_i] / V_1_2)
-        Dim V_3_2 As Single = (p_rowSum[p_j] / V_1_2)
-        Dim V_4_2 As Single = (p_rowSumSq[p_j] - ((V_1_2 * V_3_2) * V_3_2))
-        Dim V_5_2 As Single = (p_dot[((p_i * p_rows) + p_j)] - ((V_1_2 * V_2_2) * V_3_2))
-        Dim V_6_2 As Single = (System.MathF.Sqrt(System.MathF.Max((p_rowSumSq[p_i] - ((V_1_2 * V_2_2) * V_2_2)), 0F)) * System.MathF.Sqrt(System.MathF.Max(V_4_2, 0F)))
-        If (V_6_2 <= 1E-12F) Then
-            Dim V_7_4 As Single = 0F
-            V_7_1 = V_7_4
-        Else
-            Dim V_7_3 As Single = (V_5_2 / V_6_2)
-            V_7_1 = V_7_3
-        End If
-        Dim V_0_3 As Single = System.MathF.Min(1F, System.MathF.Max(-1F, V_7_1))
+    Dim V_1_1 As Integer = p_cols
+    Dim V_2_1 As Single = (p_dot[((p_i * p_rows) + p_j)] - ((CType(V_1_1, Single) * (p_rowSum[p_i] / CType(V_1_1, Single))) * (p_rowSum[p_j] / CType(V_1_1, Single))))
+    Dim V_3_1 As Single = (p_rowSumSq[p_j] - ((CType(V_1_1, Single) * (p_rowSum[p_j] / CType(V_1_1, Single))) * (p_rowSum[p_j] / CType(V_1_1, Single))))
+    Dim V_4_1 As Double = (System.Math.Sqrt(CType((p_rowSumSq[p_i] - ((CType(V_1_1, Single) * (p_rowSum[p_i] / CType(V_1_1, Single))) * (p_rowSum[p_i] / CType(V_1_1, Single)))), Double)) * System.Math.Sqrt(CType(V_3_1, Double)))
+    If (V_4_1 > 0) Then
+        Dim V_0_3 As Single = CType((CType(V_2_1, Double) / V_4_1), Single)
         V_0_1 = V_0_3
-        V_1_1 = V_1_2
-        V_2_1 = V_2_2
-        V_3_1 = V_3_2
-        V_4_1 = V_4_2
-        V_5_1 = V_5_2
-        V_6_1 = V_6_2
-        V_7_2 = V_7_1
     Else
-        Dim V_0_2 As Single = 1F
+        Dim V_0_2 As Single = 0F
         V_0_1 = V_0_2
-        V_1_1 = V_1
-        V_2_1 = V_2
-        V_3_1 = V_3
-        V_4_1 = V_4
-        V_5_1 = V_5
-        V_6_1 = V_6
-        V_7_2 = V_7
     End If
     Return V_0_1
 End Function
@@ -72,19 +38,22 @@ End Function
 __device__ float il_DistanceCell_scalar(const float* __restrict__ p_dot, const float* __restrict__ p_rowSumSq, int p_rows, int p_i, int p_j) {
     float V_0 = 0.0f;
     float V_1 = 0.0f;
-    float V_0_1;
     float V_1_1;
+    float V_0_1 = (p_rowSumSq[p_i] + p_rowSumSq[p_j]) - (2.0f * p_dot[(p_i * p_rows) + p_j]);
+    float V_1_2 = 0.0f;
     if (p_i != p_j) {
-        float V_1_2 = p_dot[(p_i * p_rows) + p_j];
-        float V_0_3 = sqrtf(fmaxf((p_rowSumSq[p_i] + p_rowSumSq[p_j]) - (2.0f * V_1_2), 0.0f));
-        V_0_1 = V_0_3;
-        V_1_1 = V_1_2;
+        if (V_0_1 >= 0.0f) {
+            float V_1_5 = ((float)sqrt(((double)V_0_1)));
+            V_1_1 = V_1_5;
+        } else {
+            float V_1_4 = 0.0f;
+            V_1_1 = V_1_4;
+        }
     } else {
-        float V_0_2 = 0.0f;
-        V_0_1 = V_0_2;
-        V_1_1 = V_1;
+        float V_1_3 = 0.0f;
+        V_1_1 = V_1_3;
     }
-    return V_0_1;
+    return V_1_1;
 }
 
 extern "C" __global__ void il_DistanceCell_kernel(const float* __restrict__ p_dot, const float* __restrict__ p_rowSumSq, int p_rows, float* __restrict__ il_out, int il_nRows, int il_nCols) {
@@ -96,17 +65,17 @@ extern "C" __global__ void il_DistanceCell_kernel(const float* __restrict__ p_do
 
 
 === 2) interpreter self check ===
-  RowSum: interpreter diff=0.00E+000 OK
-  RowSumSq: interpreter diff=0.00E+000 OK
-  GramDot: interpreter diff=0.00E+000 OK
-  CorrelationCell: interpreter diff=0.00E+000 OK
-  DistanceCell: interpreter diff=0.00E+000 OK
-  PearsonClamp: interpreter diff=0.00E+000 OK
+  il_RowSum_kernel: interpreter diff=0.00E+000 OK
+  il_RowSumSq_kernel: interpreter diff=0.00E+000 OK
+  il_GramDot_kernel: interpreter diff=0.00E+000 OK
+  il_CorrelationCell_kernel: interpreter diff=0.00E+000 OK
+  il_DistanceCell_kernel: interpreter diff=0.00E+000 OK
+  il_PearsonClamp_kernel: interpreter diff=0.00E+000 OK
 
 === 3) GPU computation (512 x 512 input matrix) ===
   device           : NVIDIA RTX A4000
-  elapsed          : 5.6038 ms
-  correlation error: 0.000000259 (tolerance 1.0E-3)
+  elapsed          : 3.1777 ms
+  correlation error: 0.000000255 (tolerance 1.0E-3)
   distance error   : 0.000009506 (tolerance 1.0E-2)
 
   Pearson correlation matrix (GPU, top-left 6 x 6):
