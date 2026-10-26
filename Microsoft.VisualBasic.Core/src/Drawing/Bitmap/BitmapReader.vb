@@ -118,8 +118,47 @@ Namespace Imaging.BitmapImage
             VerticalPixelsPerMeter = s.ReadInt32
             NumberOfColorsUsed = s.ReadInt32
             NumberOfImportantColors = s.ReadInt32
-            RowSize = RoundUpToNearestFour(ImageWidth * BitsPerPixel / 8.0)
+
+            ' the file header is the 14 bytes BITMAPFILEHEADER, the DIB header and 
+            ' the color palette are stored right after it
+
+            ' the row size is rounded up to the nearest 4 bytes, the row of the 
+            ' image that is less than 8 bits per pixel is bit packed so that the 
+            ' row size should be evaluated on the bit count instead of the byte 
+            ' count (the 1 bit per pixel image of 1 pixel still requires 4 bytes)
+            RowSize = RoundUpToNearestFour(CInt((CLng(ImageWidth) * CInt(BitsPerPixel) + 7) \ 8))
         End Sub
+
+        ''' <summary>
+        ''' the byte length of the BITMAPFILEHEADER of the image file
+        ''' </summary>
+        Friend Const BitmapFileHeaderSize As Integer = 14
+
+        ''' <summary>
+        ''' the byte location of the first entry of the color palette, the palette 
+        ''' is stored right after the DIB header of the file.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property PaletteOffset As Integer
+            Get
+                Return BitmapFileHeaderSize + HeaderSize
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the byte length of a single entry of the color palette, it is 3 bytes 
+        ''' for the BITMAPCOREHEADER and 4 bytes for the BITMAPINFOHEADER.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property PaletteEntrySize As Integer
+            Get
+                If HeaderSize <= 12 Then
+                    Return 3
+                Else
+                    Return 4
+                End If
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
@@ -155,11 +194,16 @@ Namespace Imaging.BitmapImage
                     Throw New InvalidDataException
             End Select
 
-            Return 54 + colorNumber * 4
+            Return PaletteOffset + colorNumber * PaletteEntrySize
         End Function
 
         Public Function GetOffset(row As Integer, column As Integer) As Integer
-            row = ImageHeight - 1 - row
+            If ImageHeight > 0 Then
+                ' the pixel rows of the bottom up DIB are stored from the bottom 
+                ' to the top, a negative image height means that the rows are in 
+                ' the top down order
+                row = ImageHeight - 1 - row
+            End If
 
             Select Case BitsPerPixel
                 Case BitsPerPixel.One : Return Offset + row * RowSize + column / 8

@@ -261,13 +261,13 @@ Namespace Imaging.BitmapImage.FileStream
             stream.Flush()
 
             Dim rowSize As Integer = Me.Stride
-            Dim bytesPerRow As Integer = BytesPerRow
+            Dim paddedRowSize As Integer = BytesPerRow
             Dim pixData = If(flipped, PixelDataFliped, PixelData)
 
-            If bytesPerRow > rowSize Then
+            If paddedRowSize > rowSize Then
                 ' the row buffer is allocated only once, the zero bytes of the 
                 ' row padding are kept by the buffer
-                Dim rowBuffer = New Byte(bytesPerRow - 1) {}
+                Dim rowBuffer = New Byte(paddedRowSize - 1) {}
 
                 For counter = 0 To Height - 1
                     Buffer.BlockCopy(src:=pixData,
@@ -311,7 +311,21 @@ Namespace Imaging.BitmapImage.FileStream
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function RequiredBytesPerRow(width As Integer, bitsPerPixel As BitsPerPixelEnum) As Integer
-            Return CInt(std.Ceiling(CDec(width * bitsPerPixel) / 32)) * 4
+            Return CInt(((CLng(width) * CInt(bitsPerPixel) + 31) \ 32) * 4)
+        End Function
+
+        ''' <summary>
+        ''' the byte length of a scan line of the image, the 4 bytes row padding 
+        ''' is not included.
+        ''' </summary>
+        ''' <param name="width">Width of image</param>
+        ''' <param name="bitsPerPixel">Bits per pixels to calculate actual byte requirement</param>
+        ''' <returns>the byte count of a single scan line, the scan line of the 
+        ''' image that is less than 8 bits per pixel is bit packed.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function UnpaddedRowSize(width As Integer, bitsPerPixel As BitsPerPixelEnum) As Integer
+            Return CInt((CLng(width) * CInt(bitsPerPixel) + 7) \ 8)
         End Function
 
         ''' <summary>
@@ -324,7 +338,41 @@ Namespace Imaging.BitmapImage.FileStream
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsPaddingRequired(width As Integer, bitsPerPixel As BitsPerPixelEnum, bytesPerRow As Integer) As Boolean
-            Return bytesPerRow <> width * bitsPerPixel / 8
+            Return bytesPerRow <> UnpaddedRowSize(width, bitsPerPixel)
+        End Function
+
+        ''' <summary>
+        ''' the number of the palette entries of the indexed image, zero is 
+        ''' returned for the image that is more than 8 bits per pixel.
+        ''' </summary>
+        ''' <param name="bitsPerPixel"></param>
+        ''' <returns></returns>
+        Public Shared Function PaletteEntries(bitsPerPixel As BitsPerPixelEnum) As Integer
+            Select Case bitsPerPixel
+                Case BitsPerPixelEnum.Monochrome : Return 2
+                Case BitsPerPixelEnum.Four : Return 16
+                Case BitsPerPixelEnum.Eight : Return 256
+                Case Else : Return 0
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' generate a gray scale color palette for the indexed image
+        ''' </summary>
+        ''' <param name="entries">the number of the palette entries.</param>
+        ''' <returns>the palette entries are laid out as the 4 bytes BGRA color.</returns>
+        Public Shared Function GrayPalette(entries As Integer) As Byte()
+            Dim palette As Byte() = New Byte(entries * 4 - 1) {}
+
+            For i As Integer = 0 To entries - 1
+                Dim v As Byte = CByte(std.Round(i * 255.0 / (entries - 1)))
+
+                palette(i * 4) = v
+                palette(i * 4 + 1) = v
+                palette(i * 4 + 2) = v
+            Next
+
+            Return palette
         End Function
     End Class
 End Namespace
