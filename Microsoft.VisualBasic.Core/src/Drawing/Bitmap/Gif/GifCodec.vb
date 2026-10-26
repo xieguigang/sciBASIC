@@ -169,8 +169,24 @@ Namespace Imaging.BitmapImage.Gif
             End If
 
             Dim target As Integer = System.Math.Min(256, System.Math.Max(2, targetColors))
+
+            ' median cut should operate on the set of distinct colours, otherwise boxes
+            ' full of duplicate pixels keep splitting and waste palette entries.
+            Dim distinct As New List(Of Color)()
+            Dim seen As New HashSet(Of Integer)()
+
+            For Each c As Color In colors
+                ' widen to Integer before shifting : the shift operators keep the
+                ' operand type, so a raw Byte << 16 would simply be zero.
+                Dim key As Integer = (CInt(c.R) << 16) Or (CInt(c.G) << 8) Or CInt(c.B)
+
+                If seen.Add(key) Then
+                    distinct.Add(c)
+                End If
+            Next
+
             Dim boxes As New List(Of MedianBox)()
-            boxes.Add(New MedianBox(colors))
+            boxes.Add(New MedianBox(distinct))
 
             While boxes.Count < target
                 Dim best As MedianBox = Nothing

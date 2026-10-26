@@ -58,15 +58,6 @@ Module JpegGifSelfTest
     End Function
 
     Private Sub JpegRoundTrip()
-        ' solid colour isolation test
-        Dim solid As BitmapBuffer = BuildRgb(8, 8, Function(x, y) New Integer() {100, 150, 200})
-        Using sms As New MemoryStream()
-            Call JpegWriter.Save(sms, solid, 95)
-            Dim sdec As JpegImage = JpegImage.Decode(sms.ToArray())
-            Dim sb As BitmapBuffer = sdec.GetMemoryBitmap()
-            Call Console.WriteLine($"   [dbg] solid expect bgr=200,150,100 got {sb.RawBuffer(0)},{sb.RawBuffer(1)},{sb.RawBuffer(2)}")
-        End Using
-
         Dim w As Integer = 32
         Dim h As Integer = 32
 
@@ -93,12 +84,6 @@ Module JpegGifSelfTest
             Dim a As Byte() = src.RawBuffer
             Dim b As Byte() = db.RawBuffer
 
-            Dim dbg As String = ""
-            For pi As Integer = 0 To 5
-                dbg &= $"[{pi}] src={a(pi * 3)},{a(pi * 3 + 1)},{a(pi * 3 + 2)} dec={b(pi * 3)},{b(pi * 3 + 1)},{b(pi * 3 + 2)} | "
-            Next
-            Call Console.WriteLine($"   [dbg] channels src={src.GetPixelChannels()} dec={db.GetPixelChannels()} {dbg}")
-
             Dim maxDiff As Integer = 0
             Dim sumDiff As Long = 0
 
@@ -114,8 +99,11 @@ Module JpegGifSelfTest
     End Sub
 
     Private Sub GifStaticRoundTrip()
-        ' isolated lzw round trip
-        Dim testIdx As Byte() = {0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 3, 3, 3, 2, 2, 1, 1, 0, 0, 1, 2, 3, 1, 1, 1, 2, 2, 2, 3, 3}
+        ' isolated lzw round trip (varying indices exercise the code size transitions)
+        Dim testIdx(255) As Byte
+        For i As Integer = 0 To 255
+            testIdx(i) = CByte((i * 7 + (i \ 3)) Mod 4)
+        Next
         Using ms As New MemoryStream()
             Call GifLzwEncoder.Encode(testIdx, ms, 2)
             Dim enc As Byte() = ms.ToArray()

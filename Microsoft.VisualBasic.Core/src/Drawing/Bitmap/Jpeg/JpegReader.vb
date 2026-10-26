@@ -185,12 +185,14 @@ Namespace Imaging.BitmapImage.Jpeg
 
                 If pq = 0 Then
                     For k As Integer = 0 To 63
-                        table(JpegCodec.UnZigZag(k)) = payload(i)
+                        ' payload is in zigzag order : map each zigzag position to its
+                        ' natural index.
+                        table(JpegCodec.ZigZag(k)) = payload(i)
                         i += 1
                     Next
                 Else
                     For k As Integer = 0 To 63
-                        table(JpegCodec.UnZigZag(k)) = (payload(i) << 8) Or payload(i + 1)
+                        table(JpegCodec.ZigZag(k)) = (payload(i) << 8) Or payload(i + 1)
                         i += 2
                     Next
                 End If
@@ -412,7 +414,9 @@ Namespace Imaging.BitmapImage.Jpeg
             If Se > 0 Then
                 ' ---- ac ----
                 Dim acTable As HuffmanTable = If(acTables(comp.ta) Is Nothing, stdAc(System.Math.Min(comp.ta, 1)), acTables(comp.ta))
-                Dim k As Integer = Ss
+                ' in a sequential scan (Ss = 0) the dc coefficient is handled above, so
+                ' the ac coefficients start at zigzag position 1.
+                Dim k As Integer = If(Ss = 0, 1, Ss)
 
                 Do While k <= Se
                     Dim rs As Integer = acTable.Decode(reader)
@@ -436,10 +440,11 @@ Namespace Imaging.BitmapImage.Jpeg
 
                     If Ah = 0 Then
                         Dim v As Integer = JpegCodec.Extend(reader.ReadBits(s), s)
-                        comp.coefs(offset + JpegCodec.UnZigZag(k)) = v << Al
+                        ' k is the zigzag scan position : store at the natural index
+                        comp.coefs(offset + JpegCodec.ZigZag(k)) = v << Al
                     Else
                         Dim bit As Integer = reader.ReadBit()
-                        comp.coefs(offset + JpegCodec.UnZigZag(k)) = comp.coefs(offset + JpegCodec.UnZigZag(k)) Or (bit << Al)
+                        comp.coefs(offset + JpegCodec.ZigZag(k)) = comp.coefs(offset + JpegCodec.ZigZag(k)) Or (bit << Al)
                     End If
 
                     k += 1
@@ -515,7 +520,7 @@ Namespace Imaging.BitmapImage.Jpeg
 
                     Dim dstOff As Integer = (by * 8) * comp.compW + (bx * 8)
 
-                    Call JpegCodec.IDCT(block, comp.samples, dstOff)
+                    Call JpegCodec.IDCT(block, comp.samples, dstOff, comp.compW)
                 Next
             Next
         End Sub

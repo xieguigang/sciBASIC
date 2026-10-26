@@ -185,7 +185,8 @@ Namespace Imaging.BitmapImage.Jpeg
 
             For k As Integer = 0 To 63
                 Dim val As Integer = CInt(System.Math.Round(block(k) / c.qnat(k)))
-                zz(JpegCodec.ZigZag(k)) = val
+                ' place the natural order coefficient at its zigzag scan position
+                zz(JpegCodec.UnZigZag(k)) = val
             Next
 
             ' dc
