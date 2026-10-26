@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::aa0a67802b435b8dc1601aa6d151635f, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Circular.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 145
-    '    Code Lines: 116 (80.00%)
-    ' Comment Lines: 5 (3.45%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 24 (16.55%)
-    '     File Size: 6.35 KB
+' Summaries:
 
 
-    ' Class Circular
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: DendrogramPlot, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 145
+'    Code Lines: 116 (80.00%)
+' Comment Lines: 5 (3.45%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 24 (16.55%)
+'     File Size: 6.35 KB
+
+
+' Class Circular
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: DendrogramPlot, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.Plots
 Imports Microsoft.VisualBasic.Data.Plots.Canvas
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -100,14 +100,14 @@ Public Class Circular : Inherits DendrogramPanel
         ' 绘制距离标尺
         Dim outer = scaleR(axisTicks.Max)
         Dim inner = scaleR(0)
-        Dim tickFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String
         Dim tickLabelSize As SizeF
         Dim labelPadding As Integer
         Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
-        Dim axisPen As Pen = CSS.GetPen(Stroke.TryParse(theme.axisStroke))
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim angle As Double = 0
         Dim r As Double
 
