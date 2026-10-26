@@ -10,6 +10,12 @@
     <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
 
+  <!-- the xunit project lives in a sub folder; it must not be globbed into this assembly -->
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj" />

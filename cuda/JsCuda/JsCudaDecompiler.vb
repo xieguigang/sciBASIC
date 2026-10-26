@@ -1082,21 +1082,30 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
 
             If nodeType.IsValueType Then Return
 
-            Dim properties As PropertyInfo()
+            ' the JavaScript AST exposes most members as public READ-ONLY FIELDS and only a few as
+            ' properties, so both must be walked
+            Dim members As New List(Of MemberInfo)()
 
             Try
-                properties = nodeType.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+                Call members.AddRange(nodeType.GetProperties(BindingFlags.Public Or BindingFlags.Instance))
+                Call members.AddRange(nodeType.GetFields(BindingFlags.Public Or BindingFlags.Instance))
             Catch ex As Exception
                 Return
             End Try
 
-            For Each propertyInfo In properties
-                If propertyInfo.GetIndexParameters().Length > 0 Then Continue For
+            For Each memberInfo In members
+                Dim propertyInfo = TryCast(memberInfo, PropertyInfo)
+
+                If propertyInfo IsNot Nothing AndAlso propertyInfo.GetIndexParameters().Length > 0 Then Continue For
 
                 Dim child As Object
 
                 Try
-                    child = propertyInfo.GetValue(node)
+                    If propertyInfo IsNot Nothing Then
+                        child = propertyInfo.GetValue(node)
+                    Else
+                        child = DirectCast(memberInfo, FieldInfo).GetValue(node)
+                    End If
                 Catch ex As Exception
                     Continue For
                 End Try
@@ -1111,7 +1120,7 @@ Namespace Global.Microsoft.VisualBasic.Computing.JSCuda
 
                 Dim items = TryCast(child, IEnumerable)
 
-                If items IsNot Nothing AndAlso Not (TypeOf child Is String) Then
+                If items IsNot Nothing Then
                     For Each item In items
                         Call WalkObject(item, visit, depth + 1)
                     Next
