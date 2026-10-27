@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::dff40165f54c463459fccbfaf105ba1e, Data_science\Mathematica\Math\Math\Distributions\Summary\SampleDistribution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 260
-    '    Code Lines: 160 (61.54%)
-    ' Comment Lines: 56 (21.54%)
-    '    - Xml Docs: 85.71%
-    ' 
-    '   Blank Lines: 44 (16.92%)
-    '     File Size: 9.78 KB
+' Summaries:
 
 
-    '     Class SampleDistribution
-    ' 
-    '         Properties: average, CI95Range, CV, max, median
-    '                     min, mode, outlierBoundary, quantile, range
-    '                     size, stdErr, sum, variance
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: FromBlocks, GetPercentile, GetRange, ToString
-    ' 
-    '         Sub: Evaluate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 260
+'    Code Lines: 160 (61.54%)
+' Comment Lines: 56 (21.54%)
+'    - Xml Docs: 85.71%
+' 
+'   Blank Lines: 44 (16.92%)
+'     File Size: 9.78 KB
+
+
+'     Class SampleDistribution
+' 
+'         Properties: average, CI95Range, CV, max, median
+'                     min, mode, outlierBoundary, quantile, range
+'                     size, stdErr, sum, variance
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: FromBlocks, GetPercentile, GetRange, ToString
+' 
+'         Sub: Evaluate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,7 +64,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
@@ -263,47 +263,26 @@ Namespace Distributions.Summary
             End If
 
             ' 2. 一次性排序，复用于分位数和众数（避免多次排序和分配内存）
-            Dim sortedArr As Double() = CType(v.Clone(), Double())
-
-            Call Array.Sort(sortedArr)
+            Dim sortedArr As New LinearQuantile(CType(v.Clone(), Double()))
 
             If estimateQuantile Then
                 ' 精确分位数计算（基于线性插值法，与R/numpy默认类型一致）
                 sample.quantile = {
                     sortedArr(0),
-                    GetPercentile(sortedArr, 0.25),
-                    GetPercentile(sortedArr, 0.5),
-                    GetPercentile(sortedArr, 0.75),
+                    sortedArr(0.25),
+                    sortedArr(0.5),
+                    sortedArr(0.75),
                     sortedArr(sample.size - 1)
                 }
                 sample.median = sample.quantile(2)
             Else
                 ' 即使不计算分位数，原逻辑也要求计算众数
-                sample.median = GetPercentile(sortedArr, 0.5)
+                sample.median = sortedArr.Query(0.5)
             End If
 
             ' 计算众数
-            sample.mode = sortedArr.EvaluateMode
+            sample.mode = sortedArr.Mode
         End Sub
-
-        ''' <summary>
-        ''' 计算精确分位数 (Linear interpolation, similar to R type 7)
-        ''' </summary>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function GetPercentile(sortedData As Double(), p As Double) As Double
-            If sortedData.Length = 0 Then Return Double.NaN
-            If sortedData.Length = 1 Then Return sortedData(0)
-
-            Dim n As Integer = sortedData.Length
-            Dim idx As Double = p * (n - 1)
-            Dim lower As Integer = CInt(std.Floor(idx))
-            Dim upper As Integer = CInt(std.Ceiling(idx))
-
-            If lower = upper Then Return sortedData(lower)
-
-            Dim frac As Double = idx - lower
-            Return sortedData(lower) + (sortedData(upper) - sortedData(lower)) * frac
-        End Function
 
         ''' <summary>
         ''' <see cref="DoubleRange"/> = ``[<see cref="min"/>, <see cref="max"/>]``

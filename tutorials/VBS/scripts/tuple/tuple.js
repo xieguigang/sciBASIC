@@ -1,5 +1,5 @@
-import stdlib from '../../../../.nuget/net10.0/stdlib.dll';
-import stdio from '../../../../.nuget/net10.0/stdio.dll';
+import stdlib from 'stdlib.dll';
+import stdio from 'stdio.dll';
 
 // ============================================================================
 //  Tuple / array destructuring tutorial — the njs twin of tuple.vb

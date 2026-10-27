@@ -62,7 +62,7 @@ next
 dim dataset = table.fromColumns(New String() {"value"}, New Double()() {values.toarray}, row_names)
 
 call console.WriteLine($"table: {dataset.nsamples} samples x {dataset.nfeatures} feature, names = {String.Join(", ", table.rowNames(dataset))}")
-call console.WriteLine($"stats: sum = {stats.sum(values)}, mean = {stats.mean(values)}, median = {stats.median(values)}")
+call console.WriteLine($"stats: sum = {values.sum}, mean = {values.mean}, median = {values.median}")
 
 call console.WriteLine("csv : " & write.csv(dataset, here("tuple.csv")))
 

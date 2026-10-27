@@ -1,10 +1,17 @@
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports AltHypothesis = Microsoft.VisualBasic.Math.Statistics.Hypothesis.Hypothesis
 ' the hypothesis test module is named 't' and its alternative-hypothesis enum is named
 ' 'Hypothesis', so both are aliased to keep the call sites readable
 Imports TTest = Microsoft.VisualBasic.Math.Statistics.Hypothesis.t
+Imports std = System.Math
+Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 ''' <summary>
 ''' 描述统计与假设检验模块。
@@ -18,44 +25,68 @@ Public Module stats
     ' ======================================================== 描述统计
 
     ''' <summary>算术平均值。</summary>
-    Public Function mean(x As Double()) As Double
-        If x Is Nothing OrElse x.Length = 0 Then Return Double.NaN
+    ''' 
+    <Extension>
+    Public Function mean(x As IEnumerable(Of Double)) As Double
+        If x Is Nothing Then
+            Return 0
+        Else
+            Dim vx As Double() = x.ToArray
 
-        Dim sum As Double = 0
-
-        For i As Integer = 0 To x.Length - 1
-            sum += x(i)
-        Next
-
-        Return sum / x.Length
+            If vx.Length = 0 Then
+                Return 0
+            Else
+                Return SimdReduce.Mean(vx)
+            End If
+        End If
     End Function
 
     ''' <summary>求和。</summary>
-    Public Function sum(x As Double()) As Double
-        Dim acc As Double = 0
-
-        If x Is Nothing Then Return acc
-
-        For i As Integer = 0 To x.Length - 1
-            acc += x(i)
-        Next
-
-        Return acc
+    ''' 
+    <Extension>
+    Public Function sum(x As IEnumerable(Of Double)) As Double
+        Return If(x Is Nothing, 0, SimdReduce.Sum(x.ToArray))
     End Function
 
     ''' <summary>最小值。</summary>
-    Public Function min(x As Double()) As Double
-        Return If(x Is Nothing OrElse x.Length = 0, Double.NaN, x.Min)
+    ''' 
+    <Extension>
+    Public Function min(x As IEnumerable(Of Double)) As Double
+        If x Is Nothing Then
+            Return Double.NaN
+        Else
+            Dim vx As Double() = x.ToArray
+
+            If vx.Length = 0 Then
+                Return Double.NaN
+            Else
+                Return SimdReduce.Min(vx)
+            End If
+        End If
     End Function
 
     ''' <summary>最大值。</summary>
-    Public Function max(x As Double()) As Double
-        Return If(x Is Nothing OrElse x.Length = 0, Double.NaN, x.Max)
+    ''' 
+    <Extension>
+    Public Function max(x As IEnumerable(Of Double)) As Double
+        If x Is Nothing Then
+            Return Double.NaN
+        Else
+            Dim vx As Double() = x.ToArray
+
+            If vx.Length = 0 Then
+                Return Double.NaN
+            Else
+                Return SimdReduce.Max(vx)
+            End If
+        End If
     End Function
 
     ''' <summary>
     ''' 方差；<paramref name="sample"/> 为 True 时按样本口径（n-1）计算。
     ''' </summary>
+    ''' 
+    <Extension>
     Public Function variance(x As Double(), Optional sample As Boolean = True) As Double
         If x Is Nothing OrElse x.Length < 2 Then Return Double.NaN
 
@@ -70,11 +101,15 @@ Public Module stats
     End Function
 
     ''' <summary>标准差；口径与 <see cref="variance"/> 一致。</summary>
+    ''' 
+    <Extension>
     Public Function sd(x As Double(), Optional sample As Boolean = True) As Double
-        Return System.Math.Sqrt(variance(x, sample))
+        Return std.Sqrt(variance(x, sample))
     End Function
 
     ''' <summary>中位数。</summary>
+    ''' 
+    <Extension>
     Public Function median(x As Double()) As Double
         Return quantile(x, 0.5)
     End Function
@@ -83,28 +118,15 @@ Public Module stats
     ''' 分位数（线性插值口径，与 R 的 type = 7 一致）。
     ''' </summary>
     ''' <param name="p">分位点，取值 [0, 1]</param>
+    ''' 
+    <Extension>
     Public Function quantile(x As Double(), p As Double) As Double
-        If x Is Nothing OrElse x.Length = 0 Then Return Double.NaN
-        If p <= 0 Then Return min(x)
-        If p >= 1 Then Return max(x)
-
-        Dim ordered As Double() = x.OrderBy(Function(v) v).ToArray
-        Dim h As Double = (ordered.Length - 1) * p
-        Dim lo As Integer = CInt(System.Math.Floor(h))
-        Dim hi As Integer = CInt(System.Math.Ceiling(h))
-
-        Return ordered(lo) + (h - lo) * (ordered(hi) - ordered(lo))
+        Return x.LinearQuantile(p)
     End Function
 
     ''' <summary>皮尔逊相关系数（按定义实现，避免底层实现的统计口径差异）。</summary>
-    Public Function cor(x As Double(), y As Double()) As Double
-        Dim terms As (sxy As Double, sxx As Double, syy As Double) = Deviations(x, y)
-
-        If terms.sxx <= 0 OrElse terms.syy <= 0 Then
-            Return Double.NaN
-        End If
-
-        Return terms.sxy / System.Math.Sqrt(terms.sxx * terms.syy)
+    Public Function cor(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Double
+        Return Correlations.GetPearson(x.ToNullArray, y.ToNullArray)
     End Function
 
     ''' <summary>协方差；<paramref name="sample"/> 为 True 时按样本口径（n-1）计算。</summary>
@@ -145,7 +167,10 @@ Public Module stats
     ''' <summary>
     ''' 一组数据的描述统计摘要（count / min / max / mean / median / sd / variance）。
     ''' </summary>
-    Public Function describe(x As Double()) As Dictionary(Of String, Double)
+    ''' 
+    <Extension>
+    Public Function describe(x As IEnumerable(Of Double)) As Dictionary(Of String, Double)
+        Dim sample As New SampleDistribution(x)
         Dim d As New Dictionary(Of String, Double) From {
             {"count", If(x Is Nothing, 0, x.Length)},
             {"min", min(x)},
