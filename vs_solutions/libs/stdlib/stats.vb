@@ -1,17 +1,17 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.Distributions.Summary
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports AltHypothesis = Microsoft.VisualBasic.Math.Statistics.Hypothesis.Hypothesis
+Imports std = System.Math
 ' the hypothesis test module is named 't' and its alternative-hypothesis enum is named
 ' 'Hypothesis', so both are aliased to keep the call sites readable
 Imports TTest = Microsoft.VisualBasic.Math.Statistics.Hypothesis.t
-Imports std = System.Math
-Imports Microsoft.VisualBasic.Math.Quantile
-Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.Math.Distributions.Summary
 
 ''' <summary>
 ''' 描述统计与假设检验模块。
@@ -43,14 +43,12 @@ Public Module stats
 
     ''' <summary>求和。</summary>
     ''' 
-    <Extension>
     Public Function sum(x As IEnumerable(Of Double)) As Double
         Return If(x Is Nothing, 0, SimdReduce.Sum(x.ToArray))
     End Function
 
     ''' <summary>最小值。</summary>
     ''' 
-    <Extension>
     Public Function min(x As IEnumerable(Of Double)) As Double
         If x Is Nothing Then
             Return Double.NaN
@@ -67,7 +65,6 @@ Public Module stats
 
     ''' <summary>最大值。</summary>
     ''' 
-    <Extension>
     Public Function max(x As IEnumerable(Of Double)) As Double
         If x Is Nothing Then
             Return Double.NaN
@@ -110,7 +107,7 @@ Public Module stats
     ''' <summary>中位数。</summary>
     ''' 
     <Extension>
-    Public Function median(x As Double()) As Double
+    Public Function median(x As IEnumerable(Of Double)) As Double
         Return quantile(x, 0.5)
     End Function
 
@@ -120,8 +117,14 @@ Public Module stats
     ''' <param name="p">分位点，取值 [0, 1]</param>
     ''' 
     <Extension>
-    Public Function quantile(x As Double(), p As Double) As Double
-        Return x.LinearQuantile(p)
+    Public Function quantile(x As IEnumerable(Of Double), p As Double) As Double
+        Dim vx As Double() = x.ToNullArray
+
+        If vx.IsNullOrEmpty Then
+            Return Double.NaN
+        Else
+            Return vx.LinearQuantile(p)
+        End If
     End Function
 
     ''' <summary>皮尔逊相关系数（按定义实现，避免底层实现的统计口径差异）。</summary>
