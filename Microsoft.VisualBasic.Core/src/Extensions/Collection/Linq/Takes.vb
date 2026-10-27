@@ -55,12 +55,11 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Linq
 
+    <HideModuleName>
     Public Module TakesExtension
 
         ''' <summary>
