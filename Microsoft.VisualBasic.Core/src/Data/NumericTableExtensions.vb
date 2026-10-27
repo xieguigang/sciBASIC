@@ -1,71 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::a2e5ad90b454fc2164e36be382059fdd, Microsoft.VisualBasic.Core\src\Data\NumericTableExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 565
-    '    Code Lines: 318 (56.28%)
-    ' Comment Lines: 161 (28.50%)
-    '    - Xml Docs: 92.55%
-    ' 
-    '   Blank Lines: 86 (15.22%)
-    '     File Size: 23.34 KB
+' Summaries:
 
 
-    '     Module NumericTableExtensions
-    ' 
-    '         Function: ClusterLabels, ColumnNames, ColumnVectors, dataframe, ElementType
-    '                   EmptyTable, EncodeColumn, EncodeFactor, EnumerateColumn, FillNaN
-    '                   GroupByLabel, IsScalarType, LabelMatrix, LevelToken, name
-    '                   NumericRows, RowIds, SingleColumn, TakeColumns, TakeRows
-    '                   ToEmbeddingTable, ToNumeric, Transpose, WithCluster
-    ' 
-    '         Sub: CheckDuplicated
-    '         Structure EncodedColumn
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 565
+'    Code Lines: 318 (56.28%)
+' Comment Lines: 161 (28.50%)
+'    - Xml Docs: 92.55%
+' 
+'   Blank Lines: 86 (15.22%)
+'     File Size: 23.34 KB
+
+
+'     Module NumericTableExtensions
+' 
+'         Function: ClusterLabels, ColumnNames, ColumnVectors, dataframe, ElementType
+'                   EmptyTable, EncodeColumn, EncodeFactor, EnumerateColumn, FillNaN
+'                   GroupByLabel, IsScalarType, LabelMatrix, LevelToken, name
+'                   NumericRows, RowIds, SingleColumn, TakeColumns, TakeRows
+'                   ToEmbeddingTable, ToNumeric, Transpose, WithCluster
+' 
+'         Sub: CheckDuplicated
+'         Structure EncodedColumn
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Collections
 Imports System.Globalization
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -96,7 +99,7 @@ Namespace Data
         Private Const MissingLevel As String = "<NA>"
 
         Public Function name(x As String) As ArgumentReference
-            Return New ArgumentReference With {.name = x}
+            Return New ArgumentReference With {.Name = x}
         End Function
 
         ''' <summary>
@@ -153,7 +156,7 @@ Namespace Data
                 If col Is Nothing Then
                     Throw New InvalidConstraintException($"the column at index {i} is Nothing!")
                 End If
-                If String.IsNullOrWhiteSpace(col.name) Then
+                If String.IsNullOrWhiteSpace(col.Name) Then
                     Throw New InvalidConstraintException($"the column name at index {i} is empty!")
                 End If
 
@@ -163,22 +166,22 @@ Namespace Data
                     nsamples = values.Length
                 ElseIf values.Length <> nsamples Then
                     Throw New InvalidConstraintException(
-                        $"the column '{col.name}' has {values.Length} values, but the expected sample size is {nsamples}!"
+                        $"the column '{col.Name}' has {values.Length} values, but the expected sample size is {nsamples}!"
                     )
                 End If
 
-                If col.name.StartsWith(DefaultLabelPrefix, StringComparison.Ordinal) Then
-                    Dim labelName As String = col.name.Substring(DefaultLabelPrefix.Length)
+                If col.Name.StartsWith(DefaultLabelPrefix, StringComparison.Ordinal) Then
+                    Dim labelName As String = col.Name.Substring(DefaultLabelPrefix.Length)
 
                     If String.IsNullOrWhiteSpace(labelName) Then
                         Throw New InvalidConstraintException(
-                            $"the label column '{col.name}' has no label name after the '{DefaultLabelPrefix}' prefix!"
+                            $"the label column '{col.Name}' has no label name after the '{DefaultLabelPrefix}' prefix!"
                         )
                     End If
 
                     Call labelCols.Add(EncodeColumn(labelName, values))
                 Else
-                    Call featureCols.Add(EncodeColumn(col.name, values))
+                    Call featureCols.Add(EncodeColumn(col.Name, values))
                 End If
             Next
 
@@ -626,5 +629,24 @@ Namespace Data
         End Function
 
 #End Region
+
+        <Extension>
+        Public Function AsTable(Of T As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of T)) As NumericTable
+            Dim matrix As T() = data.ToNullArray
+
+            If matrix Is Nothing Then
+                Return Nothing
+            End If
+
+            Dim tbl As New NumericTable With {
+                .rowNames = matrix.Keys,
+                .featureNames = matrix.PropertyNames,
+                .features = matrix _
+                    .Select(Function(r) r(.featureNames)) _
+                    .ToArray
+            }
+
+            Return tbl
+        End Function
     End Module
 End Namespace
