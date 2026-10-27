@@ -1,7 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.Plots
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Scripting.Runtime
 ' the skia based raster/svg/pdf driver lives in a separate assembly; aliased because the

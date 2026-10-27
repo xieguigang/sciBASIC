@@ -1,11 +1,10 @@
 Imports Microsoft.VisualBasic.Data
-Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
+Imports AltHypothesis = Microsoft.VisualBasic.Math.Statistics.Hypothesis.Hypothesis
 ' the hypothesis test module is named 't' and its alternative-hypothesis enum is named
 ' 'Hypothesis', so both are aliased to keep the call sites readable
 Imports TTest = Microsoft.VisualBasic.Math.Statistics.Hypothesis.t
-Imports AltHypothesis = Microsoft.VisualBasic.Math.Statistics.Hypothesis.Hypothesis
 
 ''' <summary>
 ''' 描述统计与假设检验模块。

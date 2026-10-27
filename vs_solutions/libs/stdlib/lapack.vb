@@ -1,5 +1,3 @@
-Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
-
 ''' <summary>
 ''' 线性代数模块：转置、乘法、线性方程组求解、求逆、行列式，以及保留的 t 检验入口。
 ''' <para>
@@ -91,7 +89,7 @@ Public Module lapack
                 End If
             Next
 
-            If maxValue < 1.0E-14 Then
+            If maxValue < 0.00000000000001 Then
                 Throw New InvalidOperationException("the matrix is singular or nearly singular")
             End If
 
@@ -174,7 +172,7 @@ Public Module lapack
                 End If
             Next
 
-            If maxValue < 1.0E-14 Then
+            If maxValue < 0.00000000000001 Then
                 Return 0
             End If
 
@@ -210,10 +208,5 @@ Public Module lapack
         Next
 
         Return out
-    End Function
-
-    ''' <summary>双样本 t 检验（保留的兼容入口，与 <c>stats.t_test</c> 等价）。</summary>
-    Public Function t_test(x As Double(), y As Double(), Optional alpha As Double = 0.05) As TestResult
-        Return stats.t_test(x, y, alpha)
     End Function
 End Module

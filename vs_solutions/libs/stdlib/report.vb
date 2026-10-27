@@ -2,10 +2,10 @@ Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Report
 Imports Microsoft.VisualBasic.Data
-Imports Microsoft.VisualBasic.MIME.Office.WordDocument
 Imports Microsoft.VisualBasic.MIME.application.pdf
-Imports Microsoft.VisualBasic.MIME.RTF
+Imports Microsoft.VisualBasic.MIME.Office.WordDocument
 Imports Microsoft.VisualBasic.MIME.OpenXPS
+Imports Microsoft.VisualBasic.MIME.RTF
 
 ''' <summary>
 ''' 数据报告模块。
