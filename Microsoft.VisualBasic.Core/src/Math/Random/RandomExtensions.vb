@@ -410,7 +410,8 @@ Namespace Math
         ''' <returns></returns>
         ''' 
         <ExportAPI("NextTriangular")>
-        <Extension> Public Function NextTriangular(r As Random, a As Double, b As Double, c As Double) As Double
+        <Extension>
+        Public Function NextTriangular(r As Random, a As Double, b As Double, c As Double) As Double
             Dim u As Double = r.NextDouble()
             Return If(u < (c - a) / (b - a), a + std.Sqrt(u * (b - a) * (c - a)), b - std.Sqrt((1 - u) * (b - a) * (b - c)))
         End Function

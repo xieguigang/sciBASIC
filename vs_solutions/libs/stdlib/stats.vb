@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports AltHypothesis = Microsoft.VisualBasic.Math.Statistics.Hypothesis.Hypothesis
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 ' the hypothesis test module is named 't' and its alternative-hypothesis enum is named
 ' 'Hypothesis', so both are aliased to keep the call sites readable
@@ -258,5 +259,9 @@ Public Module stats
             .observed = result.observed,
             .expected = result.expected
         }
+    End Function
+
+    Public Function runif(n As Integer, Optional min As Double = 0, Optional max As Double = 1) As Double()
+        Return Enumerable.Range(0, n).Select(Function(any) randf.NextDouble(min, max)).ToArray
     End Function
 End Module
